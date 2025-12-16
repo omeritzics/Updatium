@@ -1,17 +1,8 @@
-# ![Obtainium Icon](./assets/graphics/icon_small.png) Obtainium
+# ![Upgradium Icon](./assets/graphics/icon_small.png) Upgradium
 
-Upgrade your Android apps directly from the APK source. Forked from Obtanium due to the developer's problematic political views and his terrible behaviour toward Jews who wanted to contribute to his app.
+Upgrade your Android apps directly from the APK source. Forked from [Obtainium](https://github.com/ImranR98/Obtainium) due to the developer's problematic political views and his terrible behaviour toward Jews who wanted to contribute to his app.
 
-Obtainium allows you to install and update apps directly from their releases pages, and receive notifications when new releases are made available.
-
-More info:
-- [Obtainium Wiki](https://wiki.obtainium.imranr.dev/) ([repository](https://github.com/ImranR98/Obtainium-Wiki))
-- [Obtainium 101](https://www.youtube.com/watch?v=0MF_v2OBncw) - Tutorial video
-- [AppVerifier](https://github.com/soupslurpr/AppVerifier) - App verification tool (recommended, integrates with Obtainium)
-- [apps.obtainium.imranr.dev](https://apps.obtainium.imranr.dev/) - Crowdsourced app configurations ([repository](https://github.com/ImranR98/apps.obtainium.imranr.dev))
-- [Side Of Burritos - You should use this instead of F-Droid | How to use app RSS feed](https://youtu.be/FFz57zNR_M0) - Original motivation for this app
-- [Website](https://obtainium.imranr.dev) ([repository](https://github.com/ImranR98/obtainium.imranr.dev))
-- [Source code](https://github.com/ImranR98/Obtainium)
+Upgradium allows you to install and update apps directly from their releases pages, and receive notifications when new releases are made available.
 
 Currently supported App sources:
 - Open Source - General:
@@ -39,14 +30,6 @@ Currently supported App sources:
   - [Neutron Code](https://neutroncode.com/)
 - Direct APK Link
 - "HTML" (Fallback): Any other URL that returns an HTML page with links to APK files
-
-## Finding App Configurations
-
-You can find crowdsourced app configurations at [apps.obtainium.imranr.dev](https://apps.obtainium.imranr.dev).
-
-If you can't find the configuration for an app you want, feel free to leave a request on the [discussions page](https://github.com/ImranR98/apps.obtainium.imranr.dev/discussions/new?category=app-requests).
-
-Or, contribute some configurations to the website by creating a PR at [this repo](https://github.com/ImranR98/apps.obtainium.imranr.dev).
 
 ## Installation
 
