@@ -1,8 +1,6 @@
-
-
 # ![Obtainium Icon](./assets/graphics/icon_small.png) Obtainium
 
-Upgrade your Android apps directly from the APK source.
+Upgrade your Android apps directly from the APK source. Forked from Obtanium due to the developer's problematic political views and his terrible behaviour toward Jews who wanted to contribute to his app.
 
 Obtainium allows you to install and update apps directly from their releases pages, and receive notifications when new releases are made available.
 
