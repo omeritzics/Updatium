@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
-steps:
+    steps:
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
@@ -24,8 +24,6 @@ steps:
           large-packages: true
           docker-images: true
           swap-storage: true
-
-      - uses: actions/che
 
       - uses: actions/checkout@v4
 
@@ -45,7 +43,7 @@ steps:
 
       - name: Build APK (Debug Mode)
         run: |
-          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle.kts || true
+          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
           flutter build apk --debug
 
       - name: Upload Artifact
