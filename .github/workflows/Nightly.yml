@@ -12,8 +12,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
-    steps:
+      - uses: actions/che
+
       - uses: actions/checkout@v4
 
       - name: Setup Java
