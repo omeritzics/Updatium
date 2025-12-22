@@ -15,8 +15,8 @@ import 'package:shared_storage/shared_storage.dart' as saf;
 
 String obtainiumTempId = 'imranr98_obtainium_${GitHub().hosts[0]}';
 String obtainiumId = 'dev.imranr.obtainium';
-String obtainiumUrl = 'https://github.com/ImranR98/Updatium';
-Color obtainiumThemeColor = const Color(0xFF6438B5);
+String obtainiumUrl = 'https://github.com/omeritzics/Updatium';
+Color obtainiumThemeColor = const Color(0xFF3a79b7);
 
 enum ThemeSettings { system, light, dark }
 
@@ -29,7 +29,7 @@ class SettingsProvider with ChangeNotifier {
   String? defaultAppDir;
   bool justStarted = true;
 
-  String sourceUrl = 'https://github.com/ImranR98/Updatium';
+  String sourceUrl = 'https://github.com/omeritzics/Updatium';
 
   // Not done in constructor as we want to be able to await it
   Future<void> initializeSettings() async {
