@@ -708,14 +708,6 @@ class AddAppPageState extends State<AddAppPage> {
                 fontStyle: FontStyle.italic,
               ),
             ),
-            child: Text(
-              tr('crowdsourcedConfigsShort'),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                decoration: TextDecoration.underline,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
           ),
         ],
       ),
