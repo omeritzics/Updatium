@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-lts
+    runs-on: ubuntu-latest
     
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -51,14 +51,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Updatium-Debug-APK
-          path: build/app/outputs/flutter-apk/**/app-normal-debug.apk
+          path: build/app/outputs/flutter-apk/**/updatium-nightly-debug.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: nightly-build
           name: "Updatium Nightly"
-          files: build/app/outputs/flutter-apk/**/app-normal-debug.apk
+          files: build/app/outputs/flutter-apk/**/updatium-nightly-debug.apk
           prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
