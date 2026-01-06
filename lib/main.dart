@@ -19,11 +19,13 @@ import 'package:easy_localization/src/easy_localization_controller.dart';
 // ignore: implementation_imports
 import 'package:easy_localization/src/localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
-// Added for PO file support
-import 'package:easy_gettext/easy_gettext.dart';
+
+// ✅ CORRECT IMPORT for PO support
+import 'package:easy_localization_loader/easy_localization_loader.dart';
 
 List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('en'), 'English'),
+  MapEntry(Locale('he'), 'עברית'), // Added Hebrew to the list
   MapEntry(Locale('zh'), '简体中文'),
   MapEntry(Locale('zh', 'Hant_TW'), '臺灣話'),
   MapEntry(Locale('it'), 'Italiano'),
@@ -45,16 +47,14 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('tr'), 'Türkçe'),
   MapEntry(Locale('uk'), 'Українська'),
   MapEntry(Locale('da'), 'Dansk'),
-  MapEntry(
-    Locale('en', 'EO'),
-    'Esperanto',
-  ), // https://github.com/aissat/easy_localization/issues/220#issuecomment-846035493
+  MapEntry(Locale('en', 'EO'), 'Esperanto'), 
   MapEntry(Locale('in'), 'Bahasa Indonesia'),
   MapEntry(Locale('ko'), '한국어'),
   MapEntry(Locale('ca'), 'Català'),
   MapEntry(Locale('ar'), 'العربية'),
-  MapEntry(Locale('ml'), 'മലയാളം'),
+  MapEntry(Locale('ml'), 'മലയാളם'),
 ];
+
 const fallbackLocale = Locale('en');
 const localeDir = 'assets/translations';
 var fdroid = false;
@@ -62,18 +62,18 @@ var fdroid = false;
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> loadTranslations() async {
-  // See easy_localization/issues/210
   await EasyLocalizationController.initEasyLocation();
   var s = SettingsProvider();
   await s.initializeSettings();
   var forceLocale = s.forcedLocale;
+  
   final controller = EasyLocalizationController(
     saveLocale: true,
     forceLocale: forceLocale,
     fallbackLocale: fallbackLocale,
     supportedLocales: supportedLocales.map((e) => e.key).toList(),
-    // Updated to use GettextLoader for PO files
-    assetLoader: const GettextLoader(),
+    // ✅ Updated to the stable PO loader
+    assetLoader: const GettextAssetLoader(),
     useOnlyLangCode: false,
     useFallbackTranslations: true,
     path: localeDir,
@@ -81,6 +81,7 @@ Future<void> loadTranslations() async {
       throw e;
     },
   );
+  
   await controller.loadTranslations();
   Localization.load(
     controller.locale,
@@ -107,60 +108,4 @@ void startCallback() {
   FlutterForegroundTask.setTaskHandler(MyTaskHandler());
 }
 
-class MyTaskHandler extends TaskHandler {
-  static const String incrementCountCommand = 'incrementCount';
-
-  @override
-  Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
-    print('onStart(starter: ${starter.name})');
-    bgUpdateCheck('bg_check', null);
-  }
-
-  @override
-  void onRepeatEvent(DateTime timestamp) {
-    bgUpdateCheck('bg_check', null);
-  }
-
-  @override
-  Future<void> onDestroy(DateTime timestamp, bool isTimeout) async {
-    print('Foreground service onDestroy(isTimeout: $isTimeout)');
-  }
-
-  @override
-  void onReceiveData(Object data) {}
-}
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  try {
-    ByteData data = await PlatformAssetBundle().load(
-      'assets/ca/lets-encrypt-r3.pem',
-    );
-    SecurityContext.defaultContext.setTrustedCertificatesBytes(
-      data.buffer.asUint8List(),
-    );
-  } catch (e) {
-    // Already added, do nothing (see #375)
-  }
-  await EasyLocalization.ensureInitialized();
-  if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent),
-    );
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  }
-  final np = NotificationsProvider();
-  await np.initialize();
-  FlutterForegroundTask.initCommunicationPort();
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => AppsProvider()),
-        ChangeNotifierProvider(create: (context) => SettingsProvider()),
-        Provider(create: (context) => np),
-        Provider(create: (context) => LogsProvider()),
-      ],
-      child: EasyLocalization(
-        supportedLocales: supportedLocales.map((e) => e.key).toList(),
-        path: localeDir,
-        fallbackLocale:
+class MyTaskHandler extends TaskHandler
