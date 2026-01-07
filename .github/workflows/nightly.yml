@@ -45,11 +45,17 @@ jobs:
           channel: stable
           cache: true
 
-      # Force update the Gradle version to 8.13 to satisfy plugin requirements
+      # Completely overwrite the gradle-wrapper.properties to ensure Gradle 8.13 is used
       - name: Force Update Gradle Wrapper to 8.13
         run: |
-          sed -i 's/gradle-[0-9.]\+-bin.zip/gradle-8.13-bin.zip/g' android/gradle/wrapper/gradle-wrapper.properties
-          echo "Current gradle-wrapper.properties:"
+          cat > android/gradle/wrapper/gradle-wrapper.properties <<EOF
+          distributionBase=GRADLE_USER_HOME
+          distributionPath=wrapper/dists
+          zipStoreBase=GRADLE_USER_HOME
+          zipStorePath=wrapper/dists
+          distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip
+          EOF
+          echo "Verified gradle-wrapper.properties content:"
           cat android/gradle/wrapper/gradle-wrapper.properties
 
       # Get Flutter dependencies and repair cache if needed
