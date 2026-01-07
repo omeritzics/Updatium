@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      # Clean up disk space to avoid "no space left on device" errors
+      # Freeing space to ensure the build doesn't run out of storage
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
@@ -26,64 +26,63 @@ jobs:
           docker-images: true
           swap-storage: true
 
-      # Checkout the repository with full history for git dependencies
+      # Checkout the repository with full history
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Set up Java environment required for Android builds
+      # Java 17 is required for modern Android/Flutter builds
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # Set up Flutter environment and enable caching
+      # Standard Flutter setup with caching enabled
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
 
-      # Completely overwrite the gradle-wrapper.properties to ensure Gradle 8.13 is used
+      # FORCE Gradle Update: Rewriting the properties file to 8.13
       - name: Force Update Gradle Wrapper to 8.13
         run: |
-          cat > android/gradle/wrapper/gradle-wrapper.properties <<EOF
-          distributionBase=GRADLE_USER_HOME
-          distributionPath=wrapper/dists
-          zipStoreBase=GRADLE_USER_HOME
-          zipStorePath=wrapper/dists
-          distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip
-          EOF
-          echo "Verified gradle-wrapper.properties content:"
-          cat android/gradle/wrapper/gradle-wrapper.properties
+          mkdir -p android/gradle/wrapper
+          printf "distributionBase=GRADLE_USER_HOME\ndistributionPath=wrapper/dists\nzipStoreBase=GRADLE_USER_HOME\nzipStorePath=wrapper/dists\ndistributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip" > android/gradle/wrapper/gradle-wrapper.properties
 
-      # Get Flutter dependencies and repair cache if needed
+      # Fix Kotlin DSL jvmTarget error: Migrate to compilerOptions
+      # This replaces the old jvmTarget syntax with the new required format
+      - name: Fix Kotlin jvmTarget Syntax
+        run: |
+          sed -i 's/jvmTarget = JavaVersion.VERSION_11.toString()/compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) }/g' android/app/build.gradle.kts || true
+
+      # Repair cache and fetch pub dependencies
       - name: Get Dependencies
         run: |
           flutter pub cache repair
           flutter pub get
 
-      # Build the debug APK and disable release signing configurations
+      # Build Step: Disabling signing configs to allow unsigned debug APK build
       - name: Build APK (Debug Mode)
         run: |
-          # Remove signingConfig from build.gradle files to allow unsigned debug builds
+          # Remove signingConfig from build.gradle files
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
           
           flutter build apk --debug --flavor normal
           
-          # Create a dedicated output directory and copy the APK
+          # Prepare output directory and copy the APK
           mkdir -p build/outputs/
           cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/updatium-nightly-debug.apk
 
-      # Upload the built APK as a workflow artifact
+      # Uploading the APK as a workflow artifact
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Updatium-Debug-APK
           path: build/outputs/updatium-nightly-debug.apk
 
-      # Create or update a GitHub Release for the nightly build
+      # Create/Update the "Nightly Build" release on GitHub
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
