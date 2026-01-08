@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      # Freeing space to ensure the build doesn't run out of storage
+      # Step 1: Free space to prevent storage issues
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
@@ -26,65 +26,68 @@ jobs:
           docker-images: true
           swap-storage: true
 
-      # Checkout the repository with full history
+      # Step 2: Checkout code
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Java 17 is required for modern Android/Flutter builds
+      # Step 3: Setup Java
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # Standard Flutter setup with caching enabled
+      # Step 4: Setup Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
 
-      # FORCE Gradle Update: Rewriting the properties file to 8.13
+      # Step 5: Force Update Gradle Wrapper to 8.13
       - name: Force Update Gradle Wrapper to 8.13
         run: |
           mkdir -p android/gradle/wrapper
           printf "distributionBase=GRADLE_USER_HOME\ndistributionPath=wrapper/dists\nzipStoreBase=GRADLE_USER_HOME\nzipStorePath=wrapper/dists\ndistributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip" > android/gradle/wrapper/gradle-wrapper.properties
 
-      # Fix Kotlin jvmTarget: Instead of complex DSL, we use the property directly
-      # This version is compatible with both older and newer Gradle versions
+      # Step 6: Fix Kotlin jvmTarget by removing the problematic block
+      # This sed command finds the kotlinOptions block and replaces it with a compatible version
       - name: Fix Kotlin jvmTarget Syntax
         run: |
-          # We use a broader search/replace to ensure it finds the line regardless of exact formatting
-          sed -i 's/jvmTarget = JavaVersion.VERSION_11.toString()/kotlinOptions.jvmTarget = "11"/g' android/app/build.gradle.kts || true
+          # We use a multi-line sed or simply replace the specific line with a comment if it fails
+          # This approach attempts to use the most basic compatibility mode
+          sed -i 's/jvmTarget = JavaVersion.VERSION_11.toString()//g' android/app/build.gradle.kts || true
+          sed -i 's/kotlinOptions.jvmTarget = "11"//g' android/app/build.gradle.kts || true
+          
+          # Injecting a clean compiler options block that works with Kotlin 2.0+
+          sed -i '/kotlinOptions {/a \        freeCompilerArgs += listOf("-Xjvm-default=all")' android/app/build.gradle.kts || true
 
-      # Repair cache and fetch pub dependencies
+      # Step 7: Fetch dependencies
       - name: Get Dependencies
         run: |
           flutter pub cache repair
           flutter pub get
 
-      # Build Step: Disabling signing configs to allow unsigned debug APK build
+      # Step 8: Build APK
       - name: Build APK (Debug Mode)
         run: |
-          # Remove signingConfig from build.gradle files to avoid CI failure
+          # Disable signing configuration
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
           
           flutter build apk --debug --flavor normal
           
-          # Prepare output directory and copy the APK
           mkdir -p build/outputs/
           cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/updatium-nightly-debug.apk
 
-      # Uploading the APK as a workflow artifact
+      # Step 9: Artifacts and Release
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Updatium-Debug-APK
           path: build/outputs/updatium-nightly-debug.apk
 
-      # Create/Update the "Nightly Build" release on GitHub
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
