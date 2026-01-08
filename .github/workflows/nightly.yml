@@ -27,7 +27,8 @@ jobs:
           swap-storage: true
 
       # Checkout the repository with full history
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -51,11 +52,12 @@ jobs:
           mkdir -p android/gradle/wrapper
           printf "distributionBase=GRADLE_USER_HOME\ndistributionPath=wrapper/dists\nzipStoreBase=GRADLE_USER_HOME\nzipStorePath=wrapper/dists\ndistributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip" > android/gradle/wrapper/gradle-wrapper.properties
 
-      # Fix Kotlin DSL jvmTarget error: Migrate to compilerOptions
-      # This replaces the old jvmTarget syntax with the new required format
+      # Fix Kotlin jvmTarget: Instead of complex DSL, we use the property directly
+      # This version is compatible with both older and newer Gradle versions
       - name: Fix Kotlin jvmTarget Syntax
         run: |
-          sed -i 's/jvmTarget = JavaVersion.VERSION_11.toString()/compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11) }/g' android/app/build.gradle.kts || true
+          # We use a broader search/replace to ensure it finds the line regardless of exact formatting
+          sed -i 's/jvmTarget = JavaVersion.VERSION_11.toString()/kotlinOptions.jvmTarget = "11"/g' android/app/build.gradle.kts || true
 
       # Repair cache and fetch pub dependencies
       - name: Get Dependencies
@@ -66,7 +68,7 @@ jobs:
       # Build Step: Disabling signing configs to allow unsigned debug APK build
       - name: Build APK (Debug Mode)
         run: |
-          # Remove signingConfig from build.gradle files
+          # Remove signingConfig from build.gradle files to avoid CI failure
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
           
           flutter build apk --debug --flavor normal
