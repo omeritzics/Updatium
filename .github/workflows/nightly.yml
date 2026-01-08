@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      # Step 1: Maximize disk space for the build process
+      # Standard cleanup to ensure enough disk space
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
@@ -26,68 +26,43 @@ jobs:
           docker-images: true
           swap-storage: true
 
-      # Step 2: Checkout the code
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Step 3: Setup Java environment
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # Step 4: Setup Flutter environment
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
 
-      # Step 5: Fix Infrastructure (Gradle 8.13)
-      - name: Force Update Gradle Wrapper to 8.13
+      # This step is still needed to ensure the environment matches the latest AGP requirements
+      - name: Update Gradle Wrapper
         run: |
           mkdir -p android/gradle/wrapper
           printf "distributionBase=GRADLE_USER_HOME\ndistributionPath=wrapper/dists\nzipStoreBase=GRADLE_USER_HOME\nzipStorePath=wrapper/dists\ndistributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip" > android/gradle/wrapper/gradle-wrapper.properties
 
-      # Step 6: Fix Kotlin Syntax for build.gradle.kts
-      - name: Fix Kotlin jvmTarget Syntax
+      - name: Get Dependencies
         run: |
-          sed -i 's/jvmTarget = JavaVersion.VERSION_11.toString()//g' android/app/build.gradle.kts || true
-          sed -i 's/kotlinOptions.jvmTarget = "11"//g' android/app/build.gradle.kts || true
-
-      # Step 7: Resolve Dependency Hell with Overrides
-      # This step fixes version conflicts by forcing compatible versions of shared dependencies
-      - name: Resolve Package Conflicts
-        run: |
-          # Ensure SDK constraints support modern packages (3.0.0+)
-          sed -i 's/sdk: ">=2.7.0 <3.0.0"/sdk: ">=3.0.0 <4.0.0"/g' pubspec.yaml || true
-          
-          # Inject dependency_overrides to force 'web' and 'connectivity' to compatible versions
-          # This prevents conflicts between battery_plus, connectivity_plus and easy_localization_loader
-          cat >> pubspec.yaml <<EOF
-
-dependency_overrides:
-  web: ^1.0.0
-  connectivity_plus: ^6.0.3
-EOF
           flutter pub get
 
-      # Step 8: Build APK
       - name: Build APK (Debug Mode)
         run: |
-          # Disable signing configuration for CI
+          # Strip signing config for CI build
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
           
-          # Build the APK while ignoring common dart-defined errors if possible
           flutter build apk --debug --flavor normal
           
           mkdir -p build/outputs/
           cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/updatium-nightly-debug.apk
 
-      # Step 9: Artifacts and Release
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
