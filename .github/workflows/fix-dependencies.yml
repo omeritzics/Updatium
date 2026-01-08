@@ -1,0 +1,51 @@
+name: Auto-Fix Dependencies
+
+on:
+  pull_request:
+    paths:
+      - 'pubspec.yaml'
+  workflow_dispatch: # Allows you to run this manually from the Actions tab
+
+jobs:
+  downgrade_and_fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }} # Checkout the PR branch
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      # This script tries to run 'pub get'. If it fails, it injects known stable overrides.
+      - name: Attempt Dependency Resolution
+        run: |
+          if ! flutter pub get; then
+            echo "Conflict detected! Injecting stable dependency overrides..."
+            
+            # Check if dependency_overrides already exists, if not, add the header
+            if ! grep -q "dependency_overrides:" pubspec.yaml; then
+              printf "\ndependency_overrides:\n" >> pubspec.yaml
+            fi
+            
+            # Force-inject known stable versions that often cause "Dependency Hell"
+            # You can add/remove packages here based on your common issues
+            printf "  connectivity_plus: 6.0.3\n" >> pubspec.yaml
+            printf "  battery_plus: 6.2.2\n" >> pubspec.yaml
+            printf "  web: ^1.0.0\n" >> pubspec.yaml
+            
+            echo "Overrides injected. Retrying pub get..."
+            flutter pub get
+            
+            # Commit the fixes back to the PR branch
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions@github.com"
+            git add pubspec.yaml
+            git commit -m "Auto-fix: Downgraded conflicting dependencies via overrides"
+            git push
+          else
+            echo "Dependencies are healthy. No action needed."
+          fi
