@@ -108,4 +108,19 @@ void startCallback() {
   FlutterForegroundTask.setTaskHandler(MyTaskHandler());
 }
 
-class MyTaskHandler extends TaskHandler
+class MyTaskHandler extends TaskHandler {
+  @override
+  Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
+    // Your start logic here
+  }
+
+  @override
+  void onRepeatEvent(DateTime timestamp) {
+    // Your repeat logic here
+  }
+
+  @override
+  Future<void> onDestroy(DateTime timestamp, bool isTimeout) async {
+    // Your destroy logic here
+  }
+}
