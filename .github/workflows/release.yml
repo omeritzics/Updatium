@@ -34,6 +34,21 @@ jobs:
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
           echo "beta=${{ github.event.inputs.beta }}" >> $GITHUB_OUTPUT
 
+- name: Generate Temporary Keystore
+        run: |
+          keytool -genkey -v -keystore upload-keystore.jks \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -alias upload -dname "CN=Updatium, OU=Dev, O=Updatium, L=IL, S=IL, C=IL" \
+            -storepass "password123" -keypass "password123"
+          echo "storePassword=password123" > android/key.properties
+          echo "keyPassword=password123" >> android/key.properties
+          echo "alias=upload" >> android/key.properties
+          echo "storeFile=../upload-keystore.jks" >> android/key.properties
+
+      - name: Build APKs
+        run: |
+          flutter build apk --flavor normal --release
+          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release
       - name: Build APKs
         run: |
           flutter build apk --flavor normal --release
