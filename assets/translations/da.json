@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "Del nye apps med AppVerifier (hvis tilgængelig)",
     "appVerifierInstructionToast": "Del til AppVerifier, og vend tilbage, når du er klar.",
     "wiki": "Hjælp/Wiki",
-    "crowdsourcedConfigsLabel": "Crowdsourcede app-konfigurationer (brug på egen risiko)",
-    "crowdsourcedConfigsShort": "Crowdsourcede app-konfigurationer",
     "allowInsecure": "Tillad usikre HTTP-anmodninger",
     "stayOneVersionBehind": "Forbliv én version bagud den seneste",
     "useFirstApkOfVersion": "Vælg automatisk den første af flere APK'er",

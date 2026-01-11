@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "AppVerifierで新しいアプリを共有する（利用可能な場合）",
     "appVerifierInstructionToast": "AppVerifierに共有し、準備ができたらここに戻ってください。",
     "wiki": "ヘルプ/ウィキ",
-    "crowdsourcedConfigsLabel": "クラウドソーシングによるアプリの設定（利用は自己責任で）",
-    "crowdsourcedConfigsShort": "クラウドソーシングによるアプリの設定",
     "allowInsecure": "安全でないHTTPリクエストを許可する",
     "stayOneVersionBehind": "最新のバージョンから1つ前のものを使用する",
     "useFirstApkOfVersion": "複数のAPKから最初のAPKを自動選択する",

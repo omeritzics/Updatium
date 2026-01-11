@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "通过 AppVerifier 校验新应用（如果可用）",
     "appVerifierInstructionToast": "分享至 AppVerifier，完成后返回此处。",
     "wiki": "帮助/Wiki",
-    "crowdsourcedConfigsLabel": "来自社区的应用配置（谨慎使用）",
-    "crowdsourcedConfigsShort": "来自社区的应用配置",
     "allowInsecure": "允许不安全的 HTTP 请求",
     "stayOneVersionBehind": "始终延后一个版本进行更新",
     "useFirstApkOfVersion": "存在多个 APK 文件时自动选择第一个",

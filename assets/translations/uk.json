@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "Діліться новими додатками з AppVerifier (якщо доступно)",
     "appVerifierInstructionToast": "Надішліть на AppVerifier, а потім поверніться сюди, коли будете готові.",
     "wiki": "Довідка/Вікі",
-    "crowdsourcedConfigsLabel": "Краудсорсингові конфігурації додатків (використовуйте на свій страх і ризик)",
-    "crowdsourcedConfigsShort": "Налаштування краудсорсингових додатків",
     "allowInsecure": "Дозволити незахищені HTTP-запити",
     "stayOneVersionBehind": "Залишайтеся на одну версію актуальнішою",
     "useFirstApkOfVersion": "Автоматичний вибір першого з декількох APK",

@@ -709,22 +709,7 @@ class AddAppPageState extends State<AddAppPage> {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              launchUrlString(
-                'https://apps.updatium.imranr.dev/',
-                mode: LaunchMode.externalApplication,
-              );
-            },
-            child: Text(
-              tr('crowdsourcedConfigsShort'),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                decoration: TextDecoration.underline,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-          ),
+
         ],
       ),
     );

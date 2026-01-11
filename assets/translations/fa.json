@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "اشتراک‌گذاری برنامه‌های جدید با AppVerifier (در صورت وجود)",
     "appVerifierInstructionToast": "در AppVerifier به اشتراک بگذارید، سپس پس از آماده شدن به اینجا برگردید.",
     "wiki": "راهنما/ویکی",
-    "crowdsourcedConfigsLabel": "تنظیمات برنامه های مشارکت جمعی (با مسئولیت خود استفاده کنید)",
-    "crowdsourcedConfigsShort": "تنظیمات برنامه های مشارکت جمعی",
     "allowInsecure": "درخواست های HTTP ناامن را مجاز کنید",
     "stayOneVersionBehind": "یک نسخه از آخرین نسخه پشت سر بگذارید",
     "useFirstApkOfVersion": "اولین بار از چندین APK",

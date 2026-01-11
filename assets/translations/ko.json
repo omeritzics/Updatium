@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "새 앱을 AppVerifier와 공유 (가능한 경우)",
     "appVerifierInstructionToast": "AppVerifier에 공유한 후 준비가 되면 여기로 돌아오세요.",
     "wiki": "도움말/위키",
-    "crowdsourcedConfigsLabel": "크라우드소싱 앱 구성 (자신의 책임 하에 사용)",
-    "crowdsourcedConfigsShort": "크라우드소싱 앱 구성",
     "allowInsecure": "안전하지 않은 HTTP 요청 허용",
     "stayOneVersionBehind": "최신 버전보다 한 버전 뒤에 머무르기",
     "useFirstApkOfVersion": "여러 앱 중 첫 번째 앱 자동 선택",

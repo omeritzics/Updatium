@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "Sdílet nové aplikace s aplikací AppVerifier (pokud je k dispozici)",
     "appVerifierInstructionToast": "Sdílejte do aplikace AppVerifier a po dokončení se sem vraťte.",
     "wiki": "Nápověda/Wiki",
-    "crowdsourcedConfigsLabel": "Komunitní konfigurace aplikací (použití na vlastní nebezpečí)",
-    "crowdsourcedConfigsShort": "Konfigurace aplikací s využitím crowdsourcingu",
     "allowInsecure": "Povolit nezabezpečené požadavků HTTP",
     "stayOneVersionBehind": "Zůstaňte o jednu verzi pozadu za nejnovější",
     "useFirstApkOfVersion": "Automatický výběr prvního z více souborů APK",

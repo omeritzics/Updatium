@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "Új alkalmazások megosztása az AppVerifierrel (ha elérhető)",
     "appVerifierInstructionToast": "Ossza meg az AppVerifierrel, majd térjen vissza ide, ha kész.",
     "wiki": "Súgó/Wiki",
-    "crowdsourcedConfigsLabel": "Közreműködők által összeállított alkalmazásbeállítások (saját felelősségére használja)",
-    "crowdsourcedConfigsShort": "Alkalmazáslista",
     "allowInsecure": "Nem biztonságos HTTP-kérések engedélyezése",
     "stayOneVersionBehind": "Maradjon egy verzióval a legújabb mögött",
     "useFirstApkOfVersion": "Legelső APK automatikus kiválasztása, ha több APK is található",

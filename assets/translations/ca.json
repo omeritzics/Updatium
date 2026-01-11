@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "Comparteix les aplicacions noves amb AppVerifier (si està instal·lat)",
     "appVerifierInstructionToast": "Comparteix amb AppVerifier i torna aquí quan estigui fet.",
     "wiki": "Ajuda/Wiki",
-    "crowdsourcedConfigsLabel": "Configuració de les aplicacions crowdsourcing (usa-ho sota la teva responsabilitat)",
-    "crowdsourcedConfigsShort": "Configuració de les aplicacions crowdsourcing",
     "allowInsecure": "Permet les sol·licituds HTTP insegures",
     "stayOneVersionBehind": "Roman a la versió anterior a l'última",
     "useFirstApkOfVersion": "Tria automàticament la primera aplicació entre moltes",

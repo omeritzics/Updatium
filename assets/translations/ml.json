@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "പുതിയ ആപ്പുകൾ AppVerifier-ലേക്ക് പങ്കിടുക (ലഭ്യമെങ്കിൽ)",
     "appVerifierInstructionToast": "AppVerifier-ലേക്ക് പങ്കിടുക, തുടർന്ന് തയ്യാറാകുമ്പോൾ ഇവിടെ തിരിച്ചെത്തുക.",
     "wiki": "സഹായം/വിക്കി",
-    "crowdsourcedConfigsLabel": "ക്രൗഡ്‌സോഴ്‌സ് ചെയ്ത ആപ്പ് കോൺഫിഗറേഷനുകൾ (സ്വന്തം ഉത്തരവാദിത്തത്തിൽ ഉപയോഗിക്കുക)",
-    "crowdsourcedConfigsShort": "ക്രൗഡ്‌സോഴ്‌സ് ചെയ്ത ആപ്പ് കോൺഫിഗറേഷനുകൾ",
     "allowInsecure": "സുരക്ഷിതമല്ലാത്ത HTTP അഭ്യർത്ഥനകൾ അനുവദിക്കുക",
     "stayOneVersionBehind": "ഏറ്റവും പുതിയ പതിപ്പിന് ഒരു പതിപ്പ് പിന്നിൽ തുടരുക",
     "useFirstApkOfVersion": "ഒന്നിലധികം APK-കളിൽ നിന്ന് ആദ്യത്തേത് സ്വയമേവ തിരഞ്ഞെടുക്കുക",

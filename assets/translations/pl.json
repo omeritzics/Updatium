@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "Udostępnij nowe aplikacje za pomocą weryfikatora aplikacji (jeśli jest dostępny)",
     "appVerifierInstructionToast": "Udostępnij do weryfikatora aplikacji, a następnie wróć tutaj.",
     "wiki": "Pomoc/Wiki",
-    "crowdsourcedConfigsLabel": "Baza konfiguracji",
-    "crowdsourcedConfigsShort": "Baza konfiguracji",
     "allowInsecure": "Zezwalaj na niezabezpieczone żądania HTTP",
     "stayOneVersionBehind": "Pozostań jedną wersję w tyle za najnowszą",
     "useFirstApkOfVersion": "Automatyczny wybór pierwszego z wielu plików APK",

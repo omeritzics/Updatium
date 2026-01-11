@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "Neue Apps mit AppVerifier teilen (falls verfügbar)",
     "appVerifierInstructionToast": "Teile die Daten mit AppVerifier und kehre im Anschluss hierher zurück.",
     "wiki": "Hilfe/Wiki",
-    "crowdsourcedConfigsLabel": "Komplexe Appkonfigurationen (Verwendung auf eigene Gefahr)",
-    "crowdsourcedConfigsShort": "Komplexe Appkonfigurationen",
     "allowInsecure": "Unsichere HTTP-Anfragen zulassen",
     "stayOneVersionBehind": "Eine Version hinter der neuesten Version bleiben",
     "useFirstApkOfVersion": "Automatische Auswahl der ersten von mehreren APKs",

@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "將新應用程式分享到 AppVerifier（如果可用）",
     "appVerifierInstructionToast": "分享至 AppVerifier，然後準備好時回到此處。",
     "wiki": "幫助/維基",
-    "crowdsourcedConfigsLabel": "群眾外包的應用程式設定（使用風險自負）",
-    "crowdsourcedConfigsShort": "群眾外包的應用程式設定",
     "allowInsecure": "允許不安全的 HTTP 請求",
     "stayOneVersionBehind": "保持比最新版本落後一個版本",
     "useFirstApkOfVersion": "自动选择多个APK 的第一个",

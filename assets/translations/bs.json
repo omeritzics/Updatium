@@ -316,8 +316,6 @@
     "beforeNewInstallsShareToAppVerifier": "Dijeli nove aplikacije sa AppVerifier-om (ako je dostupno)",
     "appVerifierInstructionToast": "Dijeli sa AppVerifier-om, zatim se vratite kada ste spremni.",
     "wiki": "Pomoć/Wiki",
-    "crowdsourcedConfigsLabel": "Konfiguracije aplikacije obezbeđene pomoću velikog broja ljudi (crowdsourcing) (koristite na svoju odgovornost)",
-    "crowdsourcedConfigsShort": "Konfiguracije aplikacije drugih korisnika",
     "allowInsecure": "Dozvoli nesigurne HTTP zahtjeve",
     "stayOneVersionBehind": "Ostani na verziji koja prethodi posljednjoj",
     "useFirstApkOfVersion": "Automatski izaberi prvi ako postoji više APK-ova",
