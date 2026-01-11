@@ -37,21 +37,20 @@ jobs:
 
       - name: Decode Keystore
         run: |
-          # The keystore is decoded into the 'android' directory as expected by your Gradle logs
+          # Decoding the keystore to the exact location requested by Gradle
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/upload-keystore.jks
 
       - name: Create key.properties
         run: |
-          # Creating the properties file in the 'android' folder
-          # The storeFile points directly to the file in the same directory
+          # Using an absolute path to ensure Gradle finds the keystore file regardless of the working directory
           echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "alias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "storeFile=upload-keystore.jks" >> android/key.properties
+          echo "storeFile=/home/runner/work/Updatium/Updatium/android/upload-keystore.jks" >> android/key.properties
 
       - name: Build APKs
         run: |
-          # Building both flavors with the permanent signature
+          # Building the app flavors. Gradle will now use the absolute path for signing.
           flutter build apk --flavor normal --release
           flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release
 
