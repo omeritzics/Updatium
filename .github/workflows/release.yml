@@ -37,24 +37,22 @@ jobs:
 
       - name: Decode Keystore
         run: |
-          # Decoding the keystore into the android/app folder 
-          # to make it easier for the Kotlin file() command to locate it.
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
+          # Recover the permanent keystore file to the root of the project
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > upload-keystore.jks
 
       - name: Create key.properties
         run: |
-          # Creating key.properties in the root directory as expected by rootProject.file("key.properties")
-          # We use 'keyAlias' to match your build.gradle.kts: keystoreProperties["keyAlias"]
+          # We create the properties file in the root
+          # We use the absolute path from GITHUB_WORKSPACE to ensure 'storeFile' is never missing
           echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> key.properties
           echo "keyAlias=upload" >> key.properties
-          # Path is relative to the 'android/app' directory where Gradle runs
-          echo "storeFile=upload-keystore.jks" >> key.properties
+          echo "storeFile=$GITHUB_WORKSPACE/upload-keystore.jks" >> key.properties
 
       - name: Build APKs
         run: |
           # Building the app flavors. 
-          # Gradle will now find key.properties in the root and match the alias 'upload'
+          # The storeFile property now contains the full, absolute path to the .jks file.
           flutter build apk --flavor normal --release
           flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release
 
