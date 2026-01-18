@@ -5,24 +5,37 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Updatium",
+            "name": "Updatium (debug mode)",
             "request": "launch",
             "type": "dart",
-            "args":[ "--flavor", "normal" ]
+            "flutterMode": "debug",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "normal"
+            ]
         },
         {
             "name": "Updatium (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile",
-            "args":[ "--flavor", "normal" ]
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "normal"
+            ]
         },
         {
             "name": "Updatium (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release",
-            "args":[ "--flavor", "normal" ]
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "normal"
+            ]
         }
     ]
 }

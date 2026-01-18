@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
@@ -1309,6 +1309,24 @@ getDisplayedList() {
       persistentFooterButtons: appsProvider.apps.isEmpty
           ? null
           : [getFilterButtonsRow()],
+    );
+  }
+
+  void openAppById(String appId) {
+    AppsProvider appsProvider = context.read<AppsProvider>();
+
+    AppInMemory? app = appsProvider.apps[appId];
+
+    // Should exist, since we just looked it up, but just in case...
+    if (app == null) {
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => AppPage(appId: app.app.id),
+      ),
     );
   }
 }
