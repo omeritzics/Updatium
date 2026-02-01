@@ -408,24 +408,35 @@ class _UpdatiumState extends State<Updatium> {
               filledButtonTheme: FilledButtonThemeData(
                 style: FilledButton.styleFrom(
                   shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  backgroundColor: lightColorScheme.primary,
-                  foregroundColor: lightColorScheme.onPrimary,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  backgroundColor: settingsProvider.theme == ThemeSettings.dark
+                      ? darkColorScheme.primaryContainer
+                      : lightColorScheme.primary,
+                  foregroundColor: settingsProvider.theme == ThemeSettings.dark
+                      ? darkColorScheme.onPrimaryContainer
+                      : lightColorScheme.onPrimary,
                 ),
               ),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
                   elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   backgroundColor: settingsProvider.theme == ThemeSettings.dark
                       ? darkColorScheme.secondaryContainer
                       : lightColorScheme.secondaryContainer,
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                      backgroundColor: lightColorScheme.secondaryContainer,
-                      foregroundColor: lightColorScheme.onSecondaryContainer,
-                    ),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  foregroundColor: settingsProvider.theme == ThemeSettings.dark
+                      ? darkColorScheme.onSecondaryContainer
+                      : lightColorScheme.onSecondaryContainer,
+                ),
+              ),
+              outlinedButtonTheme: OutlinedButtonThemeData(
+                style: OutlinedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 ),
               ),
             ),
@@ -444,7 +455,8 @@ class _UpdatiumState extends State<Updatium> {
               filledButtonTheme: FilledButtonThemeData(
                 style: FilledButton.styleFrom(
                   shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   backgroundColor: settingsProvider.theme == ThemeSettings.light
                       ? lightColorScheme.primary
                       : darkColorScheme.primaryContainer,
@@ -457,7 +469,8 @@ class _UpdatiumState extends State<Updatium> {
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
                   elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   backgroundColor: settingsProvider.theme == ThemeSettings.light
                       ? lightColorScheme.secondaryContainer
                       : darkColorScheme.secondaryContainer,
@@ -469,7 +482,8 @@ class _UpdatiumState extends State<Updatium> {
               outlinedButtonTheme: OutlinedButtonThemeData(
                 style: OutlinedButton.styleFrom(
                   shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 ),
               ),
             ),

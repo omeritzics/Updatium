@@ -1538,9 +1538,8 @@ class AppsPageState extends State<AppsPage> {
           IconButton(
             color: Theme.of(context).colorScheme.primary,
             style: const ButtonStyle(visualDensity: VisualDensity.compact),
-            tooltip: settingsProvider.useGridView
-                ? tr('listView')
-                : tr('gridView'),
+            tooltip:
+                settingsProvider.useGridView ? tr('listView') : tr('gridView'),
             onPressed: () {
               settingsProvider.useGridView = !settingsProvider.useGridView;
             },
@@ -1570,9 +1569,31 @@ class AppsPageState extends State<AppsPage> {
           const SizedBox(width: 10),
           const VerticalDivider(),
           Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: getMainBottomButtons(),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: SlideTransition(
+                    position: animation.drive(
+                      Tween<Offset>(
+                        begin: const Offset(0.2, 0),
+                        end: Offset.zero,
+                      ).chain(CurveTween(curve: Curves.easeOutCubic)),
+                    ),
+                    child: child,
+                  ),
+                );
+              },
+              child: selectedAppIds.isNotEmpty
+                  ? Row(
+                      key: const ValueKey('active_actions'),
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: getMainBottomButtons(),
+                    )
+                  : const SizedBox(
+                      key: ValueKey('no_actions'),
+                    ),
             ),
           ),
         ],
