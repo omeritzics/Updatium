@@ -421,14 +421,10 @@ class _UpdatiumState extends State<Updatium> {
                   backgroundColor: settingsProvider.theme == ThemeSettings.dark
                       ? darkColorScheme.secondaryContainer
                       : lightColorScheme.secondaryContainer,
-                  foregroundColor: settingsProvider.theme == ThemeSettings.dark
-                      ? darkColorScheme.onSecondaryContainer
-                      : lightColorScheme.onSecondaryContainer,
-                ),
-              ),
-              outlinedButtonTheme: OutlinedButtonThemeData(
-                style: OutlinedButton.styleFrom(
-                  shape: const StadiumBorder(),
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      backgroundColor: lightColorScheme.secondaryContainer,
+                      foregroundColor: lightColorScheme.onSecondaryContainer,
+                    ),
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 ),
               ),
