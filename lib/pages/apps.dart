@@ -1013,7 +1013,7 @@ class AppsPageState extends State<AppsPage> {
                       // For example:
                       // final filteredItems = listedApps.asMap().entries.where(...).toList();
                       // Then use `filteredItems` in both `itemCount` and `itemBuilder`.
-                      var filteredItems = listedApps
+                      final filteredItems = listedApps
                           .asMap()
                           .entries
                           .where(
@@ -1023,7 +1023,7 @@ class AppsPageState extends State<AppsPage> {
                                     listedCategories[index] == null,
                           )
                           .toList();
-                      return getSingleAppGridTile(filteredItems[gridIndex].key);
+                      // Move this before GridView.builder and use in both itemCount and itemBuilder
                     },
                   ),
                 )
