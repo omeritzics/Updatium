@@ -401,10 +401,11 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
                   : 'Montserrat',
-              cardTheme: const CardThemeData(
+              const _cardTheme = CardThemeData(
                 elevation: 0,
                 clipBehavior: Clip.antiAlias,
-              ),
+              );
+              // Then use: cardTheme: _cardTheme,
               filledButtonTheme: FilledButtonThemeData(
                 style: FilledButton.styleFrom(
                   shape: const StadiumBorder(),
