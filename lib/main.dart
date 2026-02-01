@@ -58,6 +58,8 @@ List<MapEntry<Locale, String>> supportedLocales = const [
 const fallbackLocale = Locale('en');
 const localeDir = 'assets/translations';
 var fdroid = false;
+const updatiumId = 'com.omeritzics.updatium';
+const updatiumUrl = 'https://github.com/Omeritzics/Updatium';
 
 final _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
