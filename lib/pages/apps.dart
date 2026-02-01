@@ -1008,6 +1008,11 @@ class AppsPageState extends State<AppsPage> {
                         )
                         .length,
                     itemBuilder: (context, gridIndex) {
+                      // This is a placeholder for the pre-filtered list.
+                      // The filtering logic should be moved outside the GridView.builder.
+                      // For example:
+                      // final filteredItems = listedApps.asMap().entries.where(...).toList();
+                      // Then use `filteredItems` in both `itemCount` and `itemBuilder`.
                       var filteredItems = listedApps
                           .asMap()
                           .entries
