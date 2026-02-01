@@ -409,12 +409,8 @@ class _UpdatiumState extends State<Updatium> {
                 style: FilledButton.styleFrom(
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  backgroundColor: settingsProvider.theme == ThemeSettings.dark
-                      ? darkColorScheme.primaryContainer
-                      : lightColorScheme.primary,
-                  foregroundColor: settingsProvider.theme == ThemeSettings.dark
-                      ? darkColorScheme.onPrimaryContainer
-                      : lightColorScheme.onPrimary,
+                  backgroundColor: lightColorScheme.primary,
+                  foregroundColor: lightColorScheme.onPrimary,
                 ),
               ),
               elevatedButtonTheme: ElevatedButtonThemeData(
