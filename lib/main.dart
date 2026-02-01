@@ -401,6 +401,41 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
                   : 'Montserrat',
+              cardTheme: const CardThemeData(
+                elevation: 0,
+                clipBehavior: Clip.antiAlias,
+              ),
+              filledButtonTheme: FilledButtonThemeData(
+                style: FilledButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  backgroundColor: settingsProvider.theme == ThemeSettings.dark
+                      ? darkColorScheme.primaryContainer
+                      : lightColorScheme.primary,
+                  foregroundColor: settingsProvider.theme == ThemeSettings.dark
+                      ? darkColorScheme.onPrimaryContainer
+                      : lightColorScheme.onPrimary,
+                ),
+              ),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  backgroundColor: settingsProvider.theme == ThemeSettings.dark
+                      ? darkColorScheme.secondaryContainer
+                      : lightColorScheme.secondaryContainer,
+                  foregroundColor: settingsProvider.theme == ThemeSettings.dark
+                      ? darkColorScheme.onSecondaryContainer
+                      : lightColorScheme.onSecondaryContainer,
+                ),
+              ),
+              outlinedButtonTheme: OutlinedButtonThemeData(
+                style: OutlinedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+              ),
             ),
             darkTheme: ThemeData(
               useMaterial3: true,
@@ -410,6 +445,41 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
                   : 'Montserrat',
+              cardTheme: const CardThemeData(
+                elevation: 0,
+                clipBehavior: Clip.antiAlias,
+              ),
+              filledButtonTheme: FilledButtonThemeData(
+                style: FilledButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  backgroundColor: settingsProvider.theme == ThemeSettings.light
+                      ? lightColorScheme.primary
+                      : darkColorScheme.primaryContainer,
+                  foregroundColor: settingsProvider.theme == ThemeSettings.light
+                      ? lightColorScheme.onPrimary
+                      : darkColorScheme.onPrimaryContainer,
+                ),
+              ),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  backgroundColor: settingsProvider.theme == ThemeSettings.light
+                      ? lightColorScheme.secondaryContainer
+                      : darkColorScheme.secondaryContainer,
+                  foregroundColor: settingsProvider.theme == ThemeSettings.light
+                      ? lightColorScheme.onSecondaryContainer
+                      : darkColorScheme.onSecondaryContainer,
+                ),
+              ),
+              outlinedButtonTheme: OutlinedButtonThemeData(
+                style: OutlinedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+              ),
             ),
             home: Shortcuts(
               shortcuts: <LogicalKeySet, Intent>{

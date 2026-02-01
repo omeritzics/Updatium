@@ -574,9 +574,6 @@ class AppsPageState extends State<AppsPage> {
                       return <String>[];
                     });
                   },
-            style: const ButtonStyle(
-              visualDensity: VisualDensity.compact,
-            ),
             child: Text(tr('install')),
           );
         } else if (hasUpdateLocal) {
@@ -595,9 +592,6 @@ class AppsPageState extends State<AppsPage> {
                       return <String>[];
                     });
                   },
-            style: const ButtonStyle(
-              visualDensity: VisualDensity.compact,
-            ),
             child: Text(tr('update')),
           );
         } else {
@@ -830,8 +824,8 @@ class AppsPageState extends State<AppsPage> {
                   ),
                 ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   const SizedBox(height: 12),
                   SizedBox(
@@ -901,9 +895,6 @@ class AppsPageState extends State<AppsPage> {
                                     return <String>[];
                                   });
                                 },
-                          style: const ButtonStyle(
-                            visualDensity: VisualDensity.compact,
-                          ),
                           child: Text(tr('install')),
                         );
                       }
@@ -923,9 +914,6 @@ class AppsPageState extends State<AppsPage> {
                                     return <String>[];
                                   });
                                 },
-                          style: const ButtonStyle(
-                            visualDensity: VisualDensity.compact,
-                          ),
                           child: Text(tr('update')),
                         );
                       }
@@ -948,6 +936,7 @@ class AppsPageState extends State<AppsPage> {
                       );
                     }),
                   ),
+                  const SizedBox(height: 12),
                 ],
               ),
               if (listedApps[index].downloadProgress != null)
@@ -994,7 +983,52 @@ class AppsPageState extends State<AppsPage> {
         ),
         controlAffinity: ListTileControlAffinity.leading,
         trailing: Text(tiles.length.toString()),
-        children: tiles,
+        children: [
+          settingsProvider.useGridView
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                  child: GridView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 150,
+                      childAspectRatio: 0.7,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                    ),
+                    itemCount: listedApps
+                        .asMap()
+                        .entries
+                        .where(
+                          (e) =>
+                              e.value.app.categories.contains(listedCategories[index]) ||
+                              e.value.app.categories.isEmpty &&
+                                  listedCategories[index] == null,
+                        )
+                        .length,
+                    itemBuilder: (context, gridIndex) {
+                      // This is a placeholder for the pre-filtered list.
+                      // The filtering logic should be moved outside the GridView.builder.
+                      // For example:
+                      // final filteredItems = listedApps.asMap().entries.where(...).toList();
+                      // Then use `filteredItems` in both `itemCount` and `itemBuilder`.
+                      var filteredItems = listedApps
+                          .asMap()
+                          .entries
+                          .where(
+                            (e) =>
+                                e.value.app.categories.contains(listedCategories[index]) ||
+                                e.value.app.categories.isEmpty &&
+                                    listedCategories[index] == null,
+                          )
+                          .toList();
+                      return getSingleAppGridTile(filteredItems[gridIndex].key);
+                    },
+                  ),
+                )
+              : Column(children: tiles),
+        ],
       );
     }
 
@@ -1565,7 +1599,7 @@ class AppsPageState extends State<AppsPage> {
           return SliverGrid(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 150,
-              childAspectRatio: 0.8,
+              childAspectRatio: 0.7,
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
             ),
