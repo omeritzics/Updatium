@@ -227,7 +227,7 @@ class _AppPageState extends State<AppPage> {
                       'downloadX',
                       args: [lowerCaseIfEnglish(tr('releaseAsset'))],
                     ),
-                    style: const TextStyle(
+                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       decoration: TextDecoration.underline,
                       fontStyle: FontStyle.italic,
                     ),
