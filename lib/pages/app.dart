@@ -211,6 +211,7 @@ class _AppPageState extends State<AppPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
+                  style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
                   onPressed: app?.app == null || updating
                       ? null
                       : () async {
