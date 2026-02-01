@@ -895,9 +895,6 @@ class AppsPageState extends State<AppsPage> {
                                     return <String>[];
                                   });
                                 },
-                          style: const ButtonStyle(
-                            visualDensity: VisualDensity.compact,
-                          ),
                           child: Text(tr('install')),
                         );
                       }
@@ -917,9 +914,6 @@ class AppsPageState extends State<AppsPage> {
                                     return <String>[];
                                   });
                                 },
-                          style: const ButtonStyle(
-                            visualDensity: VisualDensity.compact,
-                          ),
                           child: Text(tr('update')),
                         );
                       }
