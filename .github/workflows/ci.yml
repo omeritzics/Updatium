@@ -42,13 +42,15 @@ jobs:
         run: |
           flutter pub get
           # Strip signing config to build debug APK safely without keystores
-          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
+          sed -i 's/signingConfig = signingConfigs.getByName("release")/signingConfig = null/g' android/app/build.gradle* || true
 
       - name: Build APK (Unique ID)
         run: |
           # Inject the short SHA into the Application ID to allow side-by-side testing
           # This replaces the existing applicationId with a unique one for this commit
-          sed -i 's/applicationId ".*"/applicationId "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle || true
+          # For Kotlin DSL (.kts), use targetSdk = ... and applicationId = ...
+          sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle* || true
+          sed -i 's/applicationId ".*"/applicationId "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle* || true
           
           # Build the debug APK for the normal flavor
           flutter build apk --debug --flavor normal

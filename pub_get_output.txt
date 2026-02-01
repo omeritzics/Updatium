@@ -1,0 +1,10 @@
+Resolving dependencies...
+The current Dart SDK version is 3.10.3.
+
+Because equations 6.0.0 requires SDK version ^3.10.4 and no versions of equations match >6.0.0 <7.0.0, equations ^6.0.0 is forbidden.
+So, because updatium depends on equations ^6.0.0, version solving failed.
+
+
+You can try the following suggestion to make the pubspec resolve:
+* Try using the Flutter SDK version: 3.38.9. 
+Failed to update packages.

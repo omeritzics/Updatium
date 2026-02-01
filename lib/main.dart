@@ -59,6 +59,31 @@ const fallbackLocale = Locale('en');
 const localeDir = 'assets/translations';
 var fdroid = false;
 
+final _elevatedButtonTheme = ElevatedButtonThemeData(
+  style: ElevatedButton.styleFrom(
+    shape: const StadiumBorder(),
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+  ),
+);
+final _filledButtonTheme = FilledButtonThemeData(
+  style: FilledButton.styleFrom(
+    shape: const StadiumBorder(),
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+  ),
+);
+final _outlinedButtonTheme = OutlinedButtonThemeData(
+  style: OutlinedButton.styleFrom(
+    shape: const StadiumBorder(),
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+  ),
+);
+final _textButtonTheme = TextButtonThemeData(
+  style: TextButton.styleFrom(
+    shape: const StadiumBorder(),
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+  ),
+);
+
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> loadTranslations() async {
@@ -401,6 +426,10 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
                   : 'Montserrat',
+              elevatedButtonTheme: _elevatedButtonTheme,
+              filledButtonTheme: _filledButtonTheme,
+              outlinedButtonTheme: _outlinedButtonTheme,
+              textButtonTheme: _textButtonTheme,
             ),
             darkTheme: ThemeData(
               useMaterial3: true,
@@ -410,6 +439,10 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
                   : 'Montserrat',
+              elevatedButtonTheme: _elevatedButtonTheme,
+              filledButtonTheme: _filledButtonTheme,
+              outlinedButtonTheme: _outlinedButtonTheme,
+              textButtonTheme: _textButtonTheme,
             ),
             home: Shortcuts(
               shortcuts: <LogicalKeySet, Intent>{
