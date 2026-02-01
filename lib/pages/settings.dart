@@ -596,6 +596,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     tr('beforeNewInstallsShareToAppVerifier'),
                                   ),
                                   TextButton(
+                                    style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
                                     onPressed: () {
                                       launchUrlString(
                                         'https://github.com/soupslurpr/AppVerifier',
