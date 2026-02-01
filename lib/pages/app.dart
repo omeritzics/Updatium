@@ -207,54 +207,33 @@ class _AppPageState extends State<AppPage> {
           ),
           if (app?.app.apkUrls.isNotEmpty == true ||
               app?.app.otherAssetUrls.isNotEmpty == true)
-            GestureDetector(
-              onTap: app?.app == null || updating
-                  ? null
-                  : () async {
-                      try {
-                        await appsProvider.downloadAppAssets([
-                          app!.app.id,
-                        ], context);
-                      } catch (e) {
-                        showError(e, context);
-                      }
-                    },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: settingsProvider.highlightTouchTargets
-                          ? (Theme.of(context).brightness == Brightness.light
-                                    ? Theme.of(context).primaryColor
-                                    : Theme.of(context).primaryColorLight)
-                                .withAlpha(
-                                  Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? 20
-                                      : 40,
-                                )
-                          : null,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: app?.app == null || updating
+                      ? null
+                      : () async {
+                          try {
+                            await appsProvider.downloadAppAssets([
+                              app!.app.id,
+                            ], context);
+                          } catch (e) {
+                            showError(e, context);
+                          }
+                        },
+                  child: Text(
+                    tr(
+                      'downloadX',
+                      args: [lowerCaseIfEnglish(tr('releaseAsset'))],
                     ),
-                    padding: settingsProvider.highlightTouchTargets
-                        ? const EdgeInsetsDirectional.fromSTEB(12, 6, 12, 6)
-                        : const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 2),
-                    margin: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
-                    child: Text(
-                      tr(
-                        'downloadX',
-                        args: [lowerCaseIfEnglish(tr('releaseAsset'))],
-                      ),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                        decoration: TextDecoration.underline,
-                        fontStyle: FontStyle.italic,
-                      ),
+                    style: const TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
 
           /* Certificate Hashes */
@@ -402,53 +381,33 @@ class _AppPageState extends State<AppPage> {
               : Theme.of(context).textTheme.headlineMedium,
         ),
         SizedBox(height: settingsProvider.highlightTouchTargets ? 2 : 8),
-        GestureDetector(
-          onTap: () {
-            if (app?.app.url != null) {
-              launchUrlString(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                if (app?.app.url != null) {
+                  launchUrlString(
+                    app?.app.url ?? '',
+                    mode: LaunchMode.externalApplication,
+                  );
+                }
+              },
+              onLongPress: () {
+                Clipboard.setData(ClipboardData(text: app?.app.url ?? ''));
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(tr('copiedToClipboard'))));
+              },
+              child: Text(
                 app?.app.url ?? '',
-                mode: LaunchMode.externalApplication,
-              );
-            }
-          },
-          onLongPress: () {
-            Clipboard.setData(ClipboardData(text: app?.app.url ?? ''));
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(tr('copiedToClipboard'))));
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: settingsProvider.highlightTouchTargets
-                      ? (Theme.of(context).brightness == Brightness.light
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).primaryColorLight)
-                            .withAlpha(
-                              Theme.of(context).brightness == Brightness.light
-                                  ? 20
-                                  : 40,
-                            )
-                      : null,
-                ),
-                padding: settingsProvider.highlightTouchTargets
-                    ? const EdgeInsetsDirectional.fromSTEB(12, 6, 12, 6)
-                    : const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                margin: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                child: Text(
-                  app?.app.url ?? '',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                    decoration: TextDecoration.underline,
-                    fontStyle: FontStyle.italic,
-                  ),
+                style: const TextStyle(
+                  decoration: TextDecoration.underline,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         Text(
           app?.app.id ?? '',
@@ -564,7 +523,7 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => TextButton(
+    getInstallOrUpdateButton() => FilledButton(
       onPressed:
           !updating &&
               (app?.app.installedVersion == null ||

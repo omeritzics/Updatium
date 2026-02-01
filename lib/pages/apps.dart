@@ -574,9 +574,6 @@ class AppsPageState extends State<AppsPage> {
                       return <String>[];
                     });
                   },
-            style: const ButtonStyle(
-              visualDensity: VisualDensity.compact,
-            ),
             child: Text(tr('install')),
           );
         } else if (hasUpdateLocal) {
@@ -595,9 +592,6 @@ class AppsPageState extends State<AppsPage> {
                       return <String>[];
                     });
                   },
-            style: const ButtonStyle(
-              visualDensity: VisualDensity.compact,
-            ),
             child: Text(tr('update')),
           );
         } else {
