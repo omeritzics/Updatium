@@ -401,7 +401,7 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
                   : 'Montserrat',
-              cardTheme: const CardTheme(
+              cardTheme: const CardThemeData(
                 elevation: 0,
                 clipBehavior: Clip.antiAlias,
               ),
@@ -445,7 +445,7 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
                   : 'Montserrat',
-              cardTheme: const CardTheme(
+              cardTheme: const CardThemeData(
                 elevation: 0,
                 clipBehavior: Clip.antiAlias,
               ),
