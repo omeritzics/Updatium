@@ -655,6 +655,7 @@ class AddAppPageState extends State<AddAppPage> {
         spacing: 12,
         children: [
           TextButton(
+            style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
             onPressed: () {
               showDialog(
                 context: context,
