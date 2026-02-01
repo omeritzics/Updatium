@@ -278,6 +278,7 @@ class AddAppPageState extends State<AddAppPage> {
           ),
         ),
         const SizedBox(width: 16),
+        doingSomething
             ? const CircularProgressIndicator()
             : FilledButton(
                 onPressed:
