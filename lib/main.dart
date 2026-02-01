@@ -401,11 +401,10 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
                   : 'Montserrat',
-              const _cardTheme = CardThemeData(
+              cardTheme: const CardTheme(
                 elevation: 0,
                 clipBehavior: Clip.antiAlias,
-              );
-              // Then use: cardTheme: _cardTheme,
+              ),
               filledButtonTheme: FilledButtonThemeData(
                 style: FilledButton.styleFrom(
                   shape: const StadiumBorder(),
@@ -449,7 +448,7 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
                   : 'Montserrat',
-              cardTheme: const CardThemeData(
+              cardTheme: const CardTheme(
                 elevation: 0,
                 clipBehavior: Clip.antiAlias,
               ),
