@@ -88,6 +88,8 @@
     "author": "Pencipta",
     "upToDateApps": "Aplikasi terbaru",
     "nonInstalledApps": "Aplikasi tidak terpasang",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "Impor/ekspor",
     "settings": "Pengaturan",
     "exportedTo": "Diekspor ke {}",

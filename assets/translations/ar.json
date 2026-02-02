@@ -88,6 +88,8 @@
     "author": "المؤلف",
     "upToDateApps": "تطبيقات محدثة",
     "nonInstalledApps": "تطبيقات غير مثبتة",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "استيراد/تصدير",
     "settings": "الإعدادات",
     "exportedTo": "تم التصدير إلى {}",

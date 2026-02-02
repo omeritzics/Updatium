@@ -88,6 +88,8 @@
     "author": "Autor",
     "upToDateApps": "Aktuální aplikace",
     "nonInstalledApps": "Nenainstalované aplikace",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "Dovoz / vývoz",
     "settings": "Nastavení",
     "exportedTo": "Exportováno do {}",

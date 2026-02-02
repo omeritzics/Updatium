@@ -88,6 +88,8 @@
     "author": "Автор",
     "upToDateApps": "Актуальні застосунки",
     "nonInstalledApps": "Невстановлені застосунки",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "Імпорт/Експорт",
     "settings": "Налаштування",
     "exportedTo": "Експортовано в {}",

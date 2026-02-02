@@ -9,6 +9,7 @@ import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/pages/apps.dart';
+import 'package:updatium/pages/download.dart';
 import 'package:updatium/pages/import_export.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
@@ -43,7 +44,12 @@ class _HomePageState extends State<HomePage> {
 
   List<NavigationPageItem> pages = [
     NavigationPageItem(
-      tr('appsString'),
+      tr('download'),
+      Icons.cloud_download,
+      DownloadPage(key: GlobalKey()),
+    ),
+    NavigationPageItem(
+      tr('updates'),
       Icons.apps,
       AppsPage(key: GlobalKey<AppsPageState>()),
     ),
@@ -355,12 +361,59 @@ class _HomePageState extends State<HomePage> {
               .widget,
         ),
         bottomNavigationBar: NavigationBar(
-          destinations: pages
-              .map(
-                (e) =>
-                    NavigationDestination(icon: Icon(e.icon), label: e.title),
-              )
-              .toList(),
+          destinations: List.generate(
+            pages.length,
+            (i) {
+              final e = pages[i];
+              Widget icon = Icon(e.icon);
+              // Show badge on Download tab (index 0) when non-installed apps exist
+              if (i == 0) {
+                final nonInstalledCount = appsProvider
+                    .getAppValues()
+                    .where((v) => v.app.installedVersion == null)
+                    .length;
+                if (nonInstalledCount > 0) {
+                  final badgeText = nonInstalledCount > 99
+                      ? '99+'
+                      : nonInstalledCount.toString();
+                  icon = Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Icon(e.icon),
+                      Positioned(
+                        right: -6,
+                        top: -6,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 4.0, vertical: 1.0),
+                          decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              width: 1.2,
+                            ),
+                          ),
+                          constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                          child: Center(
+                            child: Text(
+                              badgeText,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              }
+              return NavigationDestination(icon: icon, label: e.title);
+            },
+          ),
           onDestinationSelected: (int index) async {
             HapticFeedback.selectionClick();
             switchToPage(index);

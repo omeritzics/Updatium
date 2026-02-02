@@ -88,6 +88,8 @@
     "author": "Utvecklare",
     "upToDateApps": "Uppdaterade Appar",
     "nonInstalledApps": "Icke-Installerade Appar",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "Importera/Exportera",
     "settings": "Inställningar",
     "exportedTo": "Exporterad till {}",

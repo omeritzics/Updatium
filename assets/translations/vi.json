@@ -88,6 +88,8 @@
     "author": "Tác giả",
     "upToDateApps": "Ứng dụng cập nhật",
     "nonInstalledApps": "Ứng dụng chưa được cài đặt",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "Nhập/Xuất",
     "settings": "Thiết đặt",
     "exportedTo": "Đã xuất sang {}",

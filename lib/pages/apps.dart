@@ -20,7 +20,8 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:markdown/markdown.dart' as md;
 
 class AppsPage extends StatefulWidget {
-  const AppsPage({super.key});
+  final AppsFilter? initialFilter;
+  const AppsPage({super.key, this.initialFilter});
 
   @override
   State<AppsPage> createState() => AppsPageState();
@@ -174,6 +175,15 @@ class AppsPageState extends State<AppsPage> {
     var settingsProvider = context.watch<SettingsProvider>();
     var listedApps = appsProvider.getAppValues().toList();
 
+    // If page was created with an initial filter, apply it once.
+    if (widget.initialFilter != null) {
+      try {
+        if (!filter.isIdenticalTo(widget.initialFilter!, settingsProvider)) {
+          filter = widget.initialFilter!;
+        }
+      } catch (_) {}
+    }
+
     refresh() {
       HapticFeedback.lightImpact();
       setState(() {
@@ -218,9 +228,15 @@ class AppsPageState extends State<AppsPage> {
           !(filter.includeUptodate)) {
         return false;
       }
-      if (app.app.installedVersion == null &&
-          (settingsProvider.hideNonInstalled || !(filter.includeNonInstalled))) {
-        return false;
+      if (filter.onlyNonInstalled) {
+        if (app.app.installedVersion != null) {
+          return false;
+        }
+      } else {
+        if (app.app.installedVersion == null &&
+            (settingsProvider.hideNonInstalled || !(filter.includeNonInstalled))) {
+          return false;
+        }
       }
       if (filter.nameFilter.isNotEmpty || filter.authorFilter.isNotEmpty) {
         List<String> nameTokens = filter.nameFilter
@@ -1498,6 +1514,13 @@ class AppsPageState extends State<AppsPage> {
                 ),
               ],
               [
+                GeneratedFormSwitch(
+                  'onlyNonInstalled',
+                  label: tr('onlyNonInstalled'),
+                  defaultValue: vals['onlyNonInstalled'],
+                ),
+              ],
+              [
                 GeneratedFormDropdown(
                   'sourceFilter',
                   label: tr('appSource'),
@@ -1694,6 +1717,7 @@ class AppsFilter {
   late String idFilter;
   late bool includeUptodate;
   late bool includeNonInstalled;
+  late bool onlyNonInstalled;
   late Set<String> categoryFilter;
   late String sourceFilter;
 
@@ -1703,6 +1727,7 @@ class AppsFilter {
     this.idFilter = '',
     this.includeUptodate = true,
     this.includeNonInstalled = true,
+    this.onlyNonInstalled = false,
     this.categoryFilter = const {},
     this.sourceFilter = '',
   });
@@ -1714,6 +1739,7 @@ class AppsFilter {
       'appId': idFilter,
       'upToDateApps': includeUptodate,
       'nonInstalledApps': includeNonInstalled,
+      'onlyNonInstalled': onlyNonInstalled,
       'sourceFilter': sourceFilter,
     };
   }
@@ -1724,6 +1750,7 @@ class AppsFilter {
     idFilter = values['appId']!;
     includeUptodate = values['upToDateApps'];
     includeNonInstalled = values['nonInstalledApps'];
+    onlyNonInstalled = values['onlyNonInstalled'] ?? false;
     sourceFilter = values['sourceFilter'];
   }
 
@@ -1733,6 +1760,8 @@ class AppsFilter {
       idFilter.trim() == other.idFilter.trim() &&
       includeUptodate == other.includeUptodate &&
       includeNonInstalled == other.includeNonInstalled &&
+      onlyNonInstalled == other.onlyNonInstalled &&
       settingsProvider.setEqual(categoryFilter, other.categoryFilter) &&
       sourceFilter.trim() == other.sourceFilter.trim();
 }
+

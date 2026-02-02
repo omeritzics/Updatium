@@ -88,6 +88,8 @@
     "author": "Autor",
     "upToDateApps": "Aktualne aplikacje",
     "nonInstalledApps": "Niezainstalowane aplikacje",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "Import/Eksport",
     "settings": "Ustawienia",
     "exportedTo": "Wyeksportowano do {}",

@@ -88,6 +88,8 @@
     "author": "저자",
     "upToDateApps": "최신 상태의 앱",
     "nonInstalledApps": "설치되지 않은 앱",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "가져오기/내보내기",
     "settings": "설정",
     "exportedTo": "{}로 내보내기 완료",

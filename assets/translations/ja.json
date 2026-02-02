@@ -88,6 +88,8 @@
     "author": "作者",
     "upToDateApps": "最新のアプリ",
     "nonInstalledApps": "未インストールのアプリ",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "インポート/エクスポート",
     "settings": "設定",
     "exportedTo": "{} にエクスポートしました",

@@ -88,6 +88,8 @@
     "author": "سازنده",
     "upToDateApps": "برنامه های به روز",
     "nonInstalledApps": "برنامه های نصب نشده",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "وارد کردن/صادر کردن",
     "settings": "تنظیمات",
     "exportedTo": "صادر کردن به{}",

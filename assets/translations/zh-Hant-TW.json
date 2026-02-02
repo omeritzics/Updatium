@@ -88,6 +88,8 @@
     "author": "作者",
     "upToDateApps": "最新的應用程式",
     "nonInstalledApps": "未安裝的應用程式",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "匯入/匯出",
     "settings": "設定",
     "exportedTo": "匯出到 {}",

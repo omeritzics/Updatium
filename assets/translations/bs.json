@@ -88,6 +88,8 @@
     "author": "Autor",
     "upToDateApps": "Ažurirane aplikacije",
     "nonInstalledApps": "Neinstalirane aplikacije",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "Uvoz/izvoz",
     "settings": "Postavke",
     "exportedTo": "Izvezeno u {}",

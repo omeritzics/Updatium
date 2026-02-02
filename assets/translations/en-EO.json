@@ -88,6 +88,8 @@
     "author": "Aŭtoro",
     "upToDateApps": "Ĝisdataj apoj",
     "nonInstalledApps": "Neinstalita apoj",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "Importi/Eksporti",
     "settings": "Agordoj",
     "exportedTo": "Eksportita en {}",

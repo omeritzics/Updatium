@@ -88,6 +88,8 @@
     "author": "Szerző",
     "upToDateApps": "Naprakész alkalmazások",
     "nonInstalledApps": "Nem telepített alkalmazások",
+    "onlyNonInstalled": "Only non-installed apps",
+    "download": "Download",
     "importExport": "Adatmozgatás",
     "settings": "Beállítások",
     "exportedTo": "Exportálva ide: {}",
