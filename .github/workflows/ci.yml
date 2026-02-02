@@ -42,7 +42,7 @@ jobs:
         run: |
           flutter pub get
           # Strip signing config to build debug APK safely without keystores
-          sed -i 's/signingConfig = signingConfigs.getByName("release")/signingConfig = null/g' android/app/build.gradle* || true
+          find android/app -name "build.gradle*" -type f -exec sed -i 's/signingConfig = signingConfigs.getByName("release")/signingConfig = null/g' {} \;
 
       - name: Build APK (Unique ID)
         run: |
