@@ -8,6 +8,7 @@ class DownloadPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppsPage(
+      key: GlobalKey<AppsPageState>(),
       initialFilter: AppsFilter(
         onlyNonInstalled: true,
         includeNonInstalled: true,
