@@ -2,20 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/pages/apps.dart';
 
-class DownloadPage extends StatefulWidget {
+class DownloadPage extends StatelessWidget {
   const DownloadPage({super.key});
-
-  @override
-  State<DownloadPage> createState() => _DownloadPageState();
-}
-
-class _DownloadPageState extends State<DownloadPage> {
-  final GlobalKey<AppsPageState> _appsPageKey = GlobalKey<AppsPageState>();
 
   @override
   Widget build(BuildContext context) {
     return AppsPage(
-      key: _appsPageKey,
+      key: GlobalKey<AppsPageState>(),
       initialFilter: AppsFilter(
         onlyNonInstalled: true,
         includeNonInstalled: true,
