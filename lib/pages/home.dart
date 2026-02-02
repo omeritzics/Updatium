@@ -9,6 +9,8 @@ import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/pages/apps.dart';
+import 'package:updatium/pages/download.dart';
+import 'package:updatium/pages/installed.dart';
 import 'package:updatium/pages/import_export.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
@@ -43,7 +45,17 @@ class _HomePageState extends State<HomePage> {
 
   List<NavigationPageItem> pages = [
     NavigationPageItem(
-      tr('appsString'),
+      tr('download'),
+      Icons.cloud_download,
+      DownloadPage(key: GlobalKey()),
+    ),
+    NavigationPageItem(
+      tr('installedApps'),
+      Icons.phone_android,
+      InstalledPage(key: GlobalKey()),
+    ),
+    NavigationPageItem(
+      tr('updates'),
       Icons.apps,
       AppsPage(key: GlobalKey<AppsPageState>()),
     ),

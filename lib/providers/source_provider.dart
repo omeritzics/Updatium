@@ -26,7 +26,6 @@ import 'package:updatium/app_sources/izzyondroid.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/app_sources/jenkins.dart';
 import 'package:updatium/app_sources/liteapks.dart';
-import 'package:updatium/app_sources/moddroid.dart';
 import 'package:updatium/app_sources/neutroncode.dart';
 import 'package:updatium/app_sources/rockmods.dart';
 import 'package:updatium/app_sources/rustore.dart';

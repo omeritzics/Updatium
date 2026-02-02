@@ -99,6 +99,7 @@
     "searchQuery": "Arama Sorgusu",
     "appURLList": "Uygulama URL Listesi",
     "line": "Satır",
+<<<<<<< HEAD
     "searchX": "{}'yi ara",
     "noResults": "Sonuç bulunamadı",
     "importX": "{}'yi içe aktar",
@@ -108,6 +109,17 @@
     "followingURLsHadErrors": "Şu URL'lerde hata oluştu:",
     "selectURL": "URL seç",
     "selectURLs": "URL'leri seç",
+=======
+    "searchX": "{}'yi Ara",
+    "noResults": "Sonuç Bulunamadı",
+    "importX": "{} İçe Aktar",
+    "importedAppsIdDisclaimer": "İçe Aktarılan Uygulamalar yanlışlıkla \"Yüklenmedi\" olarak gösterilebilir.\nBunu düzeltmek için bunları Obtainium üzerinden yeniden yükleyin.\nBu, yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.\n\nYalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.",
+    "importErrors": "İçe Aktarma Hataları",
+    "importedXOfYApps": "{}'den {} Uygulama İçe Aktarıldı.",
+    "followingURLsHadErrors": "Aşağıdaki URL'lerde hatalar oluştu:",
+    "selectURL": "URL Seç",
+    "selectURLs": "URL'leri Seç",
+>>>>>>> 6e72f8d2081d5d99b349d786c6a1a6ca1bf542f5
     "pick": "Seç",
     "theme": "Tema",
     "dark": "Karanlık",

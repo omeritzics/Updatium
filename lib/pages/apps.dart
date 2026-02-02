@@ -222,6 +222,16 @@ class AppsPageState extends State<AppsPage> {
           (settingsProvider.hideNonInstalled || !(filter.includeNonInstalled))) {
         return false;
       }
+      if (filter.onlyInstalled) {
+        if (app.app.installedVersion == null) {
+          return false;
+        }
+      }
+      if (filter.onlyNonInstalled) {
+        if (app.app.installedVersion != null) {
+          return false;
+        }
+      }
       if (filter.nameFilter.isNotEmpty || filter.authorFilter.isNotEmpty) {
         List<String> nameTokens = filter.nameFilter
             .split(' ')
@@ -824,8 +834,8 @@ class AppsPageState extends State<AppsPage> {
                   ),
                 ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   const SizedBox(height: 12),
                   SizedBox(
@@ -936,6 +946,7 @@ class AppsPageState extends State<AppsPage> {
                       );
                     }),
                   ),
+                  const SizedBox(height: 12),
                 ],
               ),
               if (listedApps[index].downloadProgress != null)
@@ -1018,7 +1029,52 @@ class AppsPageState extends State<AppsPage> {
         ),
         controlAffinity: ListTileControlAffinity.leading,
         trailing: Text(tiles.length.toString()),
-        children: tiles,
+        children: [
+          settingsProvider.useGridView
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                  child: GridView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 150,
+                      childAspectRatio: 0.7,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                    ),
+                    itemCount: listedApps
+                        .asMap()
+                        .entries
+                        .where(
+                          (e) =>
+                              e.value.app.categories.contains(listedCategories[index]) ||
+                              e.value.app.categories.isEmpty &&
+                                  listedCategories[index] == null,
+                        )
+                        .length,
+                    itemBuilder: (context, gridIndex) {
+                      // This is a placeholder for the pre-filtered list.
+                      // The filtering logic should be moved outside the GridView.builder.
+                      // For example:
+                      // final filteredItems = listedApps.asMap().entries.where(...).toList();
+                      // Then use `filteredItems` in both `itemCount` and `itemBuilder`.
+                      var filteredItems = listedApps
+                          .asMap()
+                          .entries
+                          .where(
+                            (e) =>
+                                e.value.app.categories.contains(listedCategories[index]) ||
+                                e.value.app.categories.isEmpty &&
+                                    listedCategories[index] == null,
+                          )
+                          .toList();
+                      return getSingleAppGridTile(filteredItems[gridIndex].key);
+                    },
+                  ),
+                )
+              : Column(children: tiles),
+        ],
       );
     }
 
@@ -1488,6 +1544,13 @@ class AppsPageState extends State<AppsPage> {
                 ),
               ],
               [
+                GeneratedFormSwitch(
+                  'onlyInstalled',
+                  label: tr('onlyInstalled'),
+                  defaultValue: vals['onlyInstalled'],
+                ),
+              ],
+              [
                 GeneratedFormDropdown(
                   'sourceFilter',
                   label: tr('appSource'),
@@ -1589,7 +1652,7 @@ class AppsPageState extends State<AppsPage> {
           return SliverGrid(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 150,
-              childAspectRatio: 0.8,
+              childAspectRatio: 0.7,
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
             ),
@@ -1665,6 +1728,8 @@ class AppsFilter {
   late bool includeNonInstalled;
   late Set<String> categoryFilter;
   late String sourceFilter;
+  late bool onlyInstalled;
+  late bool onlyNonInstalled;
 
   AppsFilter({
     this.nameFilter = '',
@@ -1674,6 +1739,8 @@ class AppsFilter {
     this.includeNonInstalled = true,
     this.categoryFilter = const {},
     this.sourceFilter = '',
+    this.onlyInstalled = false,
+    this.onlyNonInstalled = false,
   });
 
   Map<String, dynamic> toFormValuesMap() {
@@ -1684,6 +1751,7 @@ class AppsFilter {
       'upToDateApps': includeUptodate,
       'nonInstalledApps': includeNonInstalled,
       'sourceFilter': sourceFilter,
+      'onlyInstalled': onlyInstalled,
     };
   }
 
@@ -1694,6 +1762,7 @@ class AppsFilter {
     includeUptodate = values['upToDateApps'];
     includeNonInstalled = values['nonInstalledApps'];
     sourceFilter = values['sourceFilter'];
+    onlyInstalled = values['onlyInstalled'] ?? false;
   }
 
   bool isIdenticalTo(AppsFilter other, SettingsProvider settingsProvider) =>
@@ -1703,5 +1772,6 @@ class AppsFilter {
       includeUptodate == other.includeUptodate &&
       includeNonInstalled == other.includeNonInstalled &&
       settingsProvider.setEqual(categoryFilter, other.categoryFilter) &&
-      sourceFilter.trim() == other.sourceFilter.trim();
+      sourceFilter.trim() == other.sourceFilter.trim() &&
+      onlyInstalled == other.onlyInstalled;
 }
