@@ -222,6 +222,9 @@ class AppsPageState extends State<AppsPage> {
           (settingsProvider.hideNonInstalled || !(filter.includeNonInstalled))) {
         return false;
       }
+      if (filter.onlyInstalled && filter.onlyNonInstalled) {
+        return false;
+      }
       if (filter.onlyInstalled) {
         if (app.app.installedVersion == null) {
           return false;
