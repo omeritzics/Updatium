@@ -222,9 +222,10 @@ class AppsPageState extends State<AppsPage> {
           (settingsProvider.hideNonInstalled || !(filter.includeNonInstalled))) {
         return false;
       }
-      if (filter.onlyInstalled && filter.onlyNonInstalled) {
-        return false;
-      }
+      // This check should be moved to AppsFilter constructor/validation
+      // to prevent invalid filter states from being created
+      assert(!(filter.onlyInstalled && filter.onlyNonInstalled),
+        'Cannot have both onlyInstalled and onlyNonInstalled set to true');
       if (filter.onlyInstalled) {
         if (app.app.installedVersion == null) {
           return false;
