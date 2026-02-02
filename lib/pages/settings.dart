@@ -595,8 +595,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                   Text(
                                     tr('beforeNewInstallsShareToAppVerifier'),
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
+                                  TextButton(
+                                    onPressed: () {
                                       launchUrlString(
                                         'https://github.com/soupslurpr/AppVerifier',
                                         mode: LaunchMode.externalApplication,

@@ -324,7 +324,7 @@
     "wiki": "幫助/維基",
     "allowInsecure": "允許不安全的 HTTP 請求",
     "stayOneVersionBehind": "保持比最新版本落後一個版本",
-    "useFirstApkOfVersion": "自動選擇多個 APK 的第一個",
+    "useFirstApkOfVersion": "自動選擇多個  APK 的第一個",
     "refreshBeforeDownload": "下載前刷新應用程式詳細資訊",
     "tencentAppStore": "騰訊應用寶",
     "coolApk": "CoolApk",

@@ -56,7 +56,7 @@ jobs:
       - name: Build APK (Debug Mode)
         run: |
           # Removing signing configurations to prevent errors in CI
-          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
+          sed -i 's/signingConfig = signingConfigs.getByName("release")/signingConfig = null/g' android/app/build.gradle* || true
           
           flutter build apk --debug --flavor normal
           
