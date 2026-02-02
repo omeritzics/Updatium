@@ -1752,6 +1752,7 @@ class AppsFilter {
       'nonInstalledApps': includeNonInstalled,
       'sourceFilter': sourceFilter,
       'onlyInstalled': onlyInstalled,
+      'onlyNonInstalled': onlyNonInstalled,
     };
   }
 
