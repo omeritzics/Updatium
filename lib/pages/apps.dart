@@ -1769,6 +1769,9 @@ class AppsFilter {
     sourceFilter = values['sourceFilter'];
     onlyInstalled = values['onlyInstalled'] ?? false;
     onlyNonInstalled = values['onlyNonInstalled'] ?? false;
+    if (onlyInstalled && onlyNonInstalled) {
+      onlyNonInstalled = false;
+    }
   }
 
   bool isIdenticalTo(AppsFilter other, SettingsProvider settingsProvider) =>
