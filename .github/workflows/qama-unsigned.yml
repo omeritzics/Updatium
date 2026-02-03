@@ -56,12 +56,9 @@ jobs:
           # 2. Remove signature configuration to prevent errors when building without Keystore
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
           
-          # 3. Building APK
-          flutter build apk --debug --flavor normal \
-            --build-name="26.2" \
+          flutter build apk --debug \
+            --build-name="26.2.0" \
             --build-number="${{ github.run_number }}"
-          
-
           mkdir -p build/outputs/
           cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/updatium-qama-v26.2-run${{ github.run_number }}.apk
 
@@ -75,8 +72,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: qama-v26.2-run${{ github.run_number }}
-          name: "Updatium Qama v26.2 (Run ${{ github.run_number }})"
-          files: build/outputs/updatium-qama-v26.2-run${{ github.run_number }}.apk
+          name: "Updatium Qama v26.2"
+          files: build/outputs/updatium-qama-v26.2.0.apk
           prerelease: true
           draft: true
           body: "This is an automated build of Updatium Qama. Version: 26.2 (Build ${{ github.run_number }})"
