@@ -31,7 +31,6 @@ if (keystorePropertiesExists) {
 android {
     namespace = "com.omeritzics.updatium"
     compileSdk = 34
-    ndkVersion = "28.2.13676358"
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
