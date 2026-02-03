@@ -9,33 +9,22 @@ Update your Android apps directly from the APK source. Forked from [Obtainium](h
 Updatium allows you to install and update apps directly from their releases pages or APK sources, and receive notifications when new releases are available.
 
 Currently supported App sources:
-- Open Source - General:
-  - [GitHub](https://github.com/)
-  - [GitLab](https://gitlab.com/)
-  - [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/))
-  - [F-Droid](https://f-droid.org/)
-  - Third Party F-Droid Repos
-  - [IzzyOnDroid](https://android.izzysoft.de/)
-  - [SourceHut](https://git.sr.ht/)
-- Other - General:
-  - [APKPure](https://apkpure.net/)
-  - [Aptoide](https://aptoide.com/)
-  - [Uptodown](https://uptodown.com/)
-  - [Huawei AppGallery](https://appgallery.huawei.com/)
-  - [Tencent App Store](https://sj.qq.com/)
-  - [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/)
-  - [RuStore](https://rustore.ru/)
-  - [Farsroid](https://www.farsroid.com)
-  - [CoolApk](https://coolapk.com/)
-  - [RockMods](https://rockmods.net/)
-  - [LiteAPKs](https://liteapks.com/)
-  - Jenkins Jobs
-  - [APKMirror](https://apkmirror.com/) (Track-Only)
-- Other - App-Specific:
-  - [Telegram App](https://telegram.org/)
-  - [Neutron Code](https://neutroncode.com/)
-- Direct APK Link
-- "HTML" (Fallback): Any other URL that returns an HTML page with links to APK files
+| Open Source (General) | Other (General) | Other (App-specific) |
+| ------- | ------------------ | ------------ |
+|  [GitHub](https://github.com/) |  [APKPure](https://apkpure.net/) | [Telegram App](https://telegram.org/) |
+|  [GitLab](https://gitlab.com/) | [Aptoide](https://aptoide.com/) | [Neutron Code](https://neutroncode.com/) |
+|  [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/)) | [Uptodown](https://uptodown.com/) | Direct APK Link |
+|  [F-Droid](https://f-droid.org/) | [Huawei AppGallery](https://appgallery.huawei.com/) | "HTML" (Fallback): Any other URL that returns an HTML page with links to APK files |
+|  Third Party F-Droid Repos | [Tencent App Store](https://sj.qq.com/) |
+|  [IzzyOnDroid](https://android.izzysoft.de/) | [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) |
+|  [SourceHut](https://git.sr.ht/)   | [RuStore](https://rustore.ru/) |
+| | [Farsroid](https://www.farsroid.com) |
+| | [CoolApk](https://coolapk.com/) |
+| | [RockMods](https://rockmods.net/) |
+| | [LiteAPKs](https://liteapks.com/) |
+| | Jenkins Jobs |
+| | [APKMirror](https://apkmirror.com/) (Track-Only)|
+
 ## Download
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium)](https://github.com/omeritzics/Updatium/releases/latest)
 
