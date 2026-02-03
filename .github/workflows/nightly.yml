@@ -54,7 +54,8 @@ jobs:
 
       - name: Generate Build Number
         run: |
-          echo "BUILD_NUMBER=$(date +'%y%m%d%H%M')" >> $GITHUB_ENV
+          # Format: YYMMDDHH (e.g., 26020315) - well within Android's 2.1B limit
+          echo "BUILD_NUMBER=$(date +'%y%m%d%H')" >> $GITHUB_ENV
           
       - name: Build APK (Debug Mode)
         run: |
@@ -66,7 +67,6 @@ jobs:
             --build-number=${{ env.BUILD_NUMBER }}
           
           mkdir -p build/outputs/
-          # Ensuring the source file matches standard Flutter debug output
           cp build/app/outputs/flutter-apk/app-debug.apk build/outputs/updatium-nightly-debug.apk
             
       - name: Upload Artifact
