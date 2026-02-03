@@ -33,6 +33,23 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Setup Android SDK (API 35 + NDK)
+        shell: bash
+        run: |
+          set -euxo pipefail
+          ANDROID_SDK_ROOT="$HOME/android-sdk"
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
+          echo "PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools" >> "$GITHUB_ENV"
+          
+          mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
+          curl -sSL -o /tmp/tools.zip https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip
+          unzip -q /tmp/tools.zip -d "$ANDROID_SDK_ROOT/cmdline-tools"
+          mv "$ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools" "$ANDROID_SDK_ROOT/cmdline-tools/latest"
+          
+          yes | sdkmanager --licenses
+          sdkmanager --update
+          sdkmanager "platforms;android-35" "build-tools;35.0.0" "platform-tools" "ndk;28.2.13676358"
+
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -60,7 +77,7 @@ jobs:
           # 2. Remove signature configuration to prevent errors when building without Keystore
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
           
-          flutter build apk --debug \
+          flutter build apk --debug --flavor normal \
             --build-name="26.2.0-nightly" \
             --build-number=${{ env.BUILD_NUMBER }}
           mkdir -p build/outputs/
@@ -77,7 +94,7 @@ jobs:
         with:
           tag_name: qama-v26.2-run${{ github.run_number }}
           name: "Updatium Qama v26.2"
-          files: build/outputs/updatium-qama-v26.2.0.apk
+          files: build/outputs/updatium-qama-v26.2-run${{ github.run_number }}.apk
           prerelease: true
           draft: true
           body: "This is an automated build of Updatium Qama. Version: 26.2 (Build ${{ github.run_number }})"
