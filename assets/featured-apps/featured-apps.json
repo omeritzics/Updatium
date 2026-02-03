@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Fossify Messages",
+    "package_id": "org.fossify.messages",
+    "download_url": "https://github.com/FossifyOrg/Messages",
+    "license": "GPLv3"
+  },
+  {
+    "name": "Fossify Notes",
+    "package_id": "org.fossify.notes",
+    "download_url": "https://github.com/FossifyOrg/Notes",
+    "license": "GPLv3"
+  },
+  {
+    "name": "Lawnchair",
+    "package_id": "app.lawnchair",
+    "download_url": "https://github.com/lawnchairlauncher/lawnchair",
+    "license": "GPLv3"
+  },
+  {
+    "name": "Joplin",
+    "package_id": "net.cozic.joplin",
+    "download_url": "https://github.com/laurent22/joplin-android",
+    "license": "MIT"
+  },
+  {
+    "name": "Material Files",
+    "package_id": "me.zhanghai.android.files",
+    "download_url": "https://github.com/zhanghai/MaterialFiles",
+    "license": "GPLv3"
+  },
+  {
+    "name": "HeliBoard",
+    "package_id": "helium314.keyboard",
+    "download_url": "https://github.com/Helium314/HeliBoard",
+    "license": "GPLv3"
+  },
+  {
+    "name": "Breezy Weather",
+    "package_id": "org.breezyweather",
+    "download_url": "https://github.com/breezy-weather/breezy-weather",
+    "license": "GPLv3"
+  },
+  {
+    "name": "FlorisBoard",
+    "package_id": "dev.patrickgold.florisboard",
+    "download_url": "https://github.com/florisboard/florisboard",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "Tasks.org",
+    "package_id": "org.tasks",
+    "download_url": "https://f-droid.org/packages/org.tasks/",
+    "license": "GPLv3"
+  },
+  {
+    "name": "Thunderbird",
+    "package_id": "net.thunderbird.android",
+    "download_url": "https://github.com/thunderbird/thunderbird-android",
+    "license": "MPL-2.0"
+  },
+  {
+    "name": "VLC",
+    "package_id": "org.videolan.vlc",
+    "download_url": "https://get.videolan.org/vlc-android/",
+    "license": "GPLv3"
+  }
+]
