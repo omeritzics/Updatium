@@ -993,9 +993,9 @@ class AppsPageState extends State<AppsPage> {
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 150,
-                      childAspectRatio: 0.7,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
+                      childAspectRatio: 0.6,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
                     ),
                     itemCount: listedApps
                         .asMap()
@@ -1599,9 +1599,9 @@ class AppsPageState extends State<AppsPage> {
           return SliverGrid(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 150,
-              childAspectRatio: 0.7,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
+              childAspectRatio: 0.6,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
             ),
             delegate: SliverChildBuilderDelegate((
               BuildContext context,

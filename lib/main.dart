@@ -132,6 +132,7 @@ class MyTaskHandler extends TaskHandler {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
+    // Load Let's Encrypt certificate for network compatibility
     ByteData data = await PlatformAssetBundle().load(
       'assets/ca/lets-encrypt-r3.pem',
     );
@@ -142,15 +143,19 @@ void main() async {
     // Already added, do nothing (see #375)
   }
   await EasyLocalization.ensureInitialized();
+  
+  // Enable edge-to-edge mode for Android 10+ (API 29)
   if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent),
     );
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
+  
   final np = NotificationsProvider();
   await np.initialize();
   FlutterForegroundTask.initCommunicationPort();
+  
   runApp(
     MultiProvider(
       providers: [
@@ -191,6 +196,7 @@ class _UpdatiumState extends State<Updatium> {
   }
 
   Future<void> requestNonOptionalPermissions() async {
+    // Handle notification and battery optimization permissions
     final NotificationPermission notificationPermission =
         await FlutterForegroundTask.checkNotificationPermission();
     if (notificationPermission != NotificationPermission.granted) {
@@ -202,7 +208,7 @@ class _UpdatiumState extends State<Updatium> {
   }
 
   void initForegroundService() {
-    // ignore: invalid_use_of_visible_for_testing_member
+    // Initialize foreground service if not already initialized
     if (!FlutterForegroundTask.isInitialized) {
       FlutterForegroundTask.init(
         androidNotificationOptions: AndroidNotificationOptions(
@@ -254,18 +260,13 @@ class _UpdatiumState extends State<Updatium> {
     return null;
   }
 
-  // void onReceiveForegroundServiceData(Object data) {
-  //   print('onReceiveTaskData: $data');
-  // }
-
   @override
   void dispose() {
-    // Remove a callback to receive data sent from the TaskHandler.
-    // FlutterForegroundTask.removeTaskDataCallback(onReceiveForegroundServiceData);
     super.dispose();
   }
 
   Future<void> initPlatformState() async {
+    // Configure background fetch tasks
     await BackgroundFetch.configure(
       BackgroundFetchConfig(
         minimumFetchInterval: 15,
@@ -296,6 +297,8 @@ class _UpdatiumState extends State<Updatium> {
     AppsProvider appsProvider = context.read<AppsProvider>();
     LogsProvider logs = context.read<LogsProvider>();
     NotificationsProvider notifs = context.read<NotificationsProvider>();
+    
+    // Toggle between Foreground Service and Background Fetch
     if (settingsProvider.updateInterval == 0) {
       stopForegroundService();
       BackgroundFetch.stop();
@@ -308,13 +311,14 @@ class _UpdatiumState extends State<Updatium> {
         BackgroundFetch.start();
       }
     }
+
     if (settingsProvider.prefs == null) {
       settingsProvider.initializeSettings();
     } else {
       bool isFirstRun = settingsProvider.checkAndFlipFirstRun();
       if (isFirstRun) {
         logs.add('This is the first ever run of Updatium.');
-        // If this is the first run, add Updatium to the Apps list
+        // Auto-add Updatium to tracked apps list on first run
         if (!fdroid) {
           getInstalledInfo(updatiumId)
               .then((value) {
@@ -345,6 +349,8 @@ class _UpdatiumState extends State<Updatium> {
               });
         }
       }
+      
+      // Sync local and device locale if needed
       if (!supportedLocales.map((e) => e.key).contains(context.locale) ||
           (settingsProvider.forcedLocale == null &&
               context.deviceLocale != context.locale)) {
@@ -359,9 +365,10 @@ class _UpdatiumState extends State<Updatium> {
     return WithForegroundTask(
       child: DynamicColorBuilder(
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-          // Decide on a color/brightness scheme based on OS and user settings
           ColorScheme lightColorScheme;
           ColorScheme darkColorScheme;
+
+          // Configure ColorScheme (Material You vs Seed)
           if (lightDynamic != null &&
               darkDynamic != null &&
               settingsProvider.useMaterialYou) {
@@ -377,7 +384,7 @@ class _UpdatiumState extends State<Updatium> {
             );
           }
 
-          // set the background and surface colors to pure black in the amoled theme
+          // Apply pure black surface for AMOLED black theme
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme
                 .copyWith(surface: Colors.black)
@@ -386,6 +393,35 @@ class _UpdatiumState extends State<Updatium> {
 
           if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
 
+          // Shared theme component generator
+          ThemeData createTheme(ColorScheme scheme, bool isDark) {
+            return ThemeData(
+              useMaterial3: true,
+              colorScheme: scheme,
+              fontFamily: settingsProvider.useSystemFont ? 'SystemFont' : 'Montserrat',
+              cardTheme: const CardThemeData(
+                elevation: 0,
+                clipBehavior: Clip.antiAlias,
+              ),
+              // Unified FilledButton styling (Tonal style by default)
+              filledButtonTheme: FilledButtonThemeData(
+                style: FilledButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  backgroundColor: isDark ? scheme.secondaryContainer : scheme.secondaryContainer,
+                  foregroundColor: isDark ? scheme.onSecondaryContainer : scheme.onSecondaryContainer,
+                ),
+              ),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+              ),
+            );
+          }
+
           return MaterialApp(
             title: 'Updatium',
             localizationsDelegates: context.localizationDelegates,
@@ -393,98 +429,14 @@ class _UpdatiumState extends State<Updatium> {
             locale: context.locale,
             navigatorKey: globalNavigatorKey,
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: settingsProvider.theme == ThemeSettings.dark
-                  ? darkColorScheme
-                  : lightColorScheme,
-              fontFamily: settingsProvider.useSystemFont
-                  ? 'SystemFont'
-                  : 'Montserrat',
-              cardTheme: const CardThemeData(
-                elevation: 0,
-                clipBehavior: Clip.antiAlias,
-              ),
-              filledButtonTheme: FilledButtonThemeData(
-                style: FilledButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  backgroundColor: settingsProvider.theme == ThemeSettings.dark
-                      ? darkColorScheme.primaryContainer
-                      : lightColorScheme.primary,
-                  foregroundColor: settingsProvider.theme == ThemeSettings.dark
-                      ? darkColorScheme.onPrimaryContainer
-                      : lightColorScheme.onPrimary,
-                ),
-              ),
-              elevatedButtonTheme: ElevatedButtonThemeData(
-                style: ElevatedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  backgroundColor: settingsProvider.theme == ThemeSettings.dark
-                      ? darkColorScheme.secondaryContainer
-                      : lightColorScheme.secondaryContainer,
-                  foregroundColor: settingsProvider.theme == ThemeSettings.dark
-                      ? darkColorScheme.onSecondaryContainer
-                      : lightColorScheme.onSecondaryContainer,
-                ),
-              ),
-              outlinedButtonTheme: OutlinedButtonThemeData(
-                style: OutlinedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                ),
-              ),
-            ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              colorScheme: settingsProvider.theme == ThemeSettings.light
-                  ? lightColorScheme
-                  : darkColorScheme,
-              fontFamily: settingsProvider.useSystemFont
-                  ? 'SystemFont'
-                  : 'Montserrat',
-              cardTheme: const CardThemeData(
-                elevation: 0,
-                clipBehavior: Clip.antiAlias,
-              ),
-              filledButtonTheme: FilledButtonThemeData(
-                style: FilledButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  backgroundColor: settingsProvider.theme == ThemeSettings.light
-                      ? lightColorScheme.primary
-                      : darkColorScheme.primaryContainer,
-                  foregroundColor: settingsProvider.theme == ThemeSettings.light
-                      ? lightColorScheme.onPrimary
-                      : darkColorScheme.onPrimaryContainer,
-                ),
-              ),
-              elevatedButtonTheme: ElevatedButtonThemeData(
-                style: ElevatedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  backgroundColor: settingsProvider.theme == ThemeSettings.light
-                      ? lightColorScheme.secondaryContainer
-                      : darkColorScheme.secondaryContainer,
-                  foregroundColor: settingsProvider.theme == ThemeSettings.light
-                      ? lightColorScheme.onSecondaryContainer
-                      : darkColorScheme.onSecondaryContainer,
-                ),
-              ),
-              outlinedButtonTheme: OutlinedButtonThemeData(
-                style: OutlinedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                ),
-              ),
-            ),
+            theme: createTheme(lightColorScheme, false),
+            darkTheme: createTheme(darkColorScheme, true),
+            themeMode: settingsProvider.theme == ThemeSettings.dark 
+                ? ThemeMode.dark 
+                : (settingsProvider.theme == ThemeSettings.light ? ThemeMode.light : ThemeMode.system),
             home: Shortcuts(
               shortcuts: <LogicalKeySet, Intent>{
-                LogicalKeySet(LogicalKeyboardKey.select):
-                    const ActivateIntent(),
+                LogicalKeySet(LogicalKeyboardKey.select): const ActivateIntent(),
               },
               child: const HomePage(),
             ),
