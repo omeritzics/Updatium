@@ -168,7 +168,7 @@ class _AppPageState extends State<AppPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
             child: Column(
               children: [
-                const SizedBox(height: 32),
+                const SizedBox(height: 24),
                 Text(
                   versionLines,
                   textAlign: TextAlign.start,
@@ -196,7 +196,7 @@ class _AppPageState extends State<AppPage> {
                         ),
                       )
                     : const SizedBox.shrink(),
-                const SizedBox(height: 40),
+                const SizedBox(height: 32),
               ],
             ),
           ),
@@ -262,7 +262,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 40),
+                const SizedBox(height: 32),
                 Text(
                   "${plural('certificateHash', app.certificateHashes.length)}"
                   "${app.hasMultipleSigners ? " (${tr('multipleSigners')})" : ""}",
@@ -296,7 +296,7 @@ class _AppPageState extends State<AppPage> {
               ],
             ),
 
-          const SizedBox(height: 40),
+          const SizedBox(height: 32),
           CategoryEditorSelector(
             alignment: WrapAlignment.center,
             preselected: app?.app.categories != null
@@ -314,7 +314,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 32),
+                const SizedBox(height: 24),
                 GestureDetector(
                   onLongPress: () {
                     Clipboard.setData(
