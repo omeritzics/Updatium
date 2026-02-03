@@ -14,7 +14,7 @@ Currently supported App sources:
 |  [GitHub](https://github.com/) |  [APKPure](https://apkpure.net/) | [Telegram App](https://telegram.org/) |
 |  [GitLab](https://gitlab.com/) | [Aptoide](https://aptoide.com/) | [Neutron Code](https://neutroncode.com/) |
 |  [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/)) | [Uptodown](https://uptodown.com/) | Direct APK Link |
-|  [F-Droid](https://f-droid.org/) | [Huawei AppGallery](https://appgallery.huawei.com/) | "HTML" (Fallback): Any other URL that returns an HTML page with links to APK files |
+|  [F-Droid](https://f-droid.org/) | [Huawei AppGallery](https://appgallery.huawei.com/) | HTML page fallback with links to APK files |
 |  Third Party F-Droid Repos | [Tencent App Store](https://sj.qq.com/) |
 |  [IzzyOnDroid](https://android.izzysoft.de/) | [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) |
 |  [SourceHut](https://git.sr.ht/)   | [RuStore](https://rustore.ru/) |
