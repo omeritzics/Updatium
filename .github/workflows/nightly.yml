@@ -54,13 +54,17 @@ jobs:
 
       - name: Generate Build Number
         run: |
-          # Format: YYMMDDHH (e.g., 26020315) - well within Android's 2.1B limit
+          # Format: YYMMDDHH (e.g., 26020315) - stays under Android's 2.1B limit
           echo "BUILD_NUMBER=$(date +'%y%m%d%H')" >> $GITHUB_ENV
           
       - name: Build APK (Debug Mode)
         run: |
+          # Force update compileSdk and targetSdk to 34 in Kotlin DSL (.kts)
+          sed -i 's/compileSdk = .*/compileSdk = 34/g' android/app/build.gradle.kts
+          sed -i 's/targetSdk = .*/targetSdk = 34/g' android/app/build.gradle.kts
+          
           # Remove signing configurations to prevent errors in CI
-          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
+          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle.kts || true
           
           flutter build apk --debug \
             --build-name="26.2.0-nightly" \
