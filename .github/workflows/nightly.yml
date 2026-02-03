@@ -53,16 +53,23 @@ jobs:
             echo "Sync script not found, skipping..."
           fi
 
+      - name: Generate Build Number
+        run: |
+          echo "BUILD_NUMBER=$(date +'%y%m%d%H%M')" >> $GITHUB_ENV
+          
       - name: Build APK (Debug Mode)
         run: |
           # Removing signing configurations to prevent errors in CI
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
           
-          flutter build apk --debug --flavor normal
+          flutter build apk --debug \
+            --build-name="26.2.0-nightly" \
+            --build-number=${{ env.BUILD_NUMBER }}
           
           mkdir -p build/outputs/
-          cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/updatium-nightly-debug.apk
+          cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/updatium-nightly.apk
 
+            
       - name: Upload Artifact
         uses: actions/upload-artifact@v6
         with:
