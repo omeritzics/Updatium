@@ -52,8 +52,9 @@ RUN \
     rm -v /tmp/tools.zip && \
     mkdir -p /root/.android/ && touch /root/.android/repositories.cfg &&\
     apt-get install -y --no-install-recommends openjdk-21-jdk openjdk-21-jre &&\
-    yes | sdkmanager --licenses &&\
-    sdkmanager --update
+    yes | sdkmanager --licenses --sdk_root=${ANDROID_SDK_ROOT} &&\
+    sdkmanager --update --sdk_root=${ANDROID_SDK_ROOT} &&\
+    sdkmanager --sdk_root=${ANDROID_SDK_ROOT} "platforms;android-35" "build-tools;35.0.0" "platform-tools" "ndk;28.2.13676358"
 
     # Platform tools
 # Get latest with sdkmanager --list

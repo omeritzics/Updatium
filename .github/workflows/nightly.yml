@@ -42,7 +42,9 @@ jobs:
         run: |
           set -euxo pipefail
           ANDROID_SDK_ROOT="$HOME/android-sdk"
+          ANDROID_HOME="$ANDROID_SDK_ROOT"
           echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_HOME=$ANDROID_HOME" >> "$GITHUB_ENV"
           
           mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
           curl -sSL -o /tmp/tools.zip https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip
@@ -53,9 +55,9 @@ jobs:
           export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools"
           echo "PATH=$PATH" >> "$GITHUB_ENV"
 
-          yes | sdkmanager --licenses > /dev/null
-          sdkmanager --update > /dev/null
-          sdkmanager "platforms;android-35" "build-tools;35.0.0" "platform-tools" "ndk;28.2.13676358" > /dev/null
+          yes | sdkmanager --licenses --sdk_root=$ANDROID_SDK_ROOT
+          sdkmanager --update --sdk_root=$ANDROID_SDK_ROOT
+          sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-35" "build-tools;35.0.0" "platform-tools" "ndk;28.2.13676358"
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
