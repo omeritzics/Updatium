@@ -1,0 +1,111 @@
+name: Build and Release Qama (Signed)
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21' # Upgraded to Java 21 to match the new Flutter/Android standards
+          cache: 'gradle'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Decode Keystore
+        run: |
+          # Reconstruct the keystore file from the Base64-encoded GitHub Secret
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/release-keystore.jks
+
+      - name: Create key.properties
+        run: |
+          # Generate the properties file that Gradle uses to locate and authenticate the keystore
+          cat > android/key.properties << EOF
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storeFile=release-keystore.jks
+          EOF
+
+      - name: Run Environment Sync
+        run: |
+          if [ -f "scripts/fix_environment.sh" ]; then
+            chmod +x scripts/fix_environment.sh
+            ./scripts/fix_environment.sh
+          else
+            echo "Sync script not found, skipping..."
+          fi
+
+      - name: Build Signed Release APK
+        run: |
+          # 1. Update the app name in AndroidManifest to remove "debug" suffixes
+          sed -i 's/android:label=".*"/android:label="Updatium"/g' android/app/src/main/AndroidManifest.xml
+          
+          # 2. Build the APK in true Release mode to apply the signing configuration
+          # This replaces the previous --debug bypass
+          flutter build apk --flavor normal --release \
+            --build-name="26.2" \
+            --build-number="${{ github.run_number }}" \
+            --obfuscate --split-debug-info=build/debug-info
+
+          mkdir -p build/outputs/
+          # Copy the signed release APK to the output directory
+          cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/updatium-qama-v26.2-run${{ github.run_number }}.apk
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Updatium-Qama-v26.2-run${{ github.run_number }}
+          path: build/outputs/updatium-qama-v26.2-run${{ github.run_number }}.apk
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: qama-v26.2-run${{ github.run_number }}
+          name: "Updatium Qama v26.2 (Signed - Run ${{ github.run_number }})"
+          files: build/outputs/updatium-qama-v26.2-run${{ github.run_number }}.apk
+          prerelease: true
+          draft: true # Kept as draft for final manual verification before publishing
+          body: |
+            ### Updatium Qama v26.2 - Signed Release
+            This build is officially signed with the release keystore.
+            - **Build Number**: ${{ github.run_number }}
+            - **Java Version**: 21
+          overwrite: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cleanup signing files
+        if: always()
+        run: |
+          # Securely remove sensitive signing files after the build is complete
+          rm -f android/app/release-keystore.jks
+          rm -f android/key.properties
