@@ -27,12 +27,12 @@ jobs:
           swap-storage: true
 
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -43,7 +43,6 @@ jobs:
           channel: stable
           cache: true
 
-      # Running sync script to ensure no broken dependencies before building
       - name: Run Environment Sync
         run: |
           if [ -f "scripts/fix_environment.sh" ]; then
@@ -59,7 +58,7 @@ jobs:
           
       - name: Build APK (Debug Mode)
         run: |
-          # Removing signing configurations to prevent errors in CI
+          # Remove signing configurations to prevent errors in CI
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
           
           flutter build apk --debug \
@@ -67,8 +66,8 @@ jobs:
             --build-number=${{ env.BUILD_NUMBER }}
           
           mkdir -p build/outputs/
-          cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/updatium-nightly.apk
-
+          # Ensuring the source file matches standard Flutter debug output
+          cp build/app/outputs/flutter-apk/app-debug.apk build/outputs/updatium-nightly-debug.apk
             
       - name: Upload Artifact
         uses: actions/upload-artifact@v6
