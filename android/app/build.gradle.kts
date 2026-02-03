@@ -30,7 +30,8 @@ if (keystorePropertiesExists) {
 
 android {
     namespace = "com.omeritzics.updatium"
-    compileSdk = 34
+    compileSdk = 35
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
@@ -47,7 +48,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = flutterVersionCode.toInt()
         versionName = flutterVersionName
     }
