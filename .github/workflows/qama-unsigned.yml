@@ -47,7 +47,11 @@ jobs:
           else
             echo "Sync script not found, skipping..."
           fi
-
+    
+      - name: Generate Build Number
+        run: |
+          echo "BUILD_NUMBER=$(date +'%y%m%d%H%M')" >> $GITHUB_ENV
+          
       - name: Set App Name and Build APK
         run: |
           # 1. Removing "debug" suffix from the Updatium's name
