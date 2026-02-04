@@ -10,6 +10,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:html/dom.dart';
 import 'package:http/http.dart';
+import 'package:updatium/app_sources/apkcombo.dart';
 import 'package:updatium/app_sources/apkmirror.dart';
 import 'package:updatium/app_sources/apkpure.dart';
 import 'package:updatium/app_sources/aptoide.dart';
@@ -1120,6 +1121,7 @@ class SourceProvider {
     FDroidRepo(),
     IzzyOnDroid(),
     SourceHut(),
+    APKCombo(),
     APKPure(),
     Aptoide(),
     Uptodown(),
