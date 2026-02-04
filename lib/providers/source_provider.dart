@@ -25,7 +25,6 @@ import 'package:updatium/app_sources/huaweiappgallery.dart';
 import 'package:updatium/app_sources/izzyondroid.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/app_sources/jenkins.dart';
-import 'package:updatium/app_sources/liteapks.dart';
 import 'package:updatium/app_sources/neutroncode.dart';
 import 'package:updatium/app_sources/rustore.dart';
 import 'package:updatium/app_sources/sourceforge.dart';
@@ -1130,7 +1129,6 @@ class SourceProvider {
     RuStore(),
     Farsroid(),
     CoolApk(),
-    LiteAPKs(),
     Jenkins(),
     APKMirror(),
     TelegramApp(),
