@@ -13,14 +13,14 @@ Currently supported App sources:
 | :--- | :--- | :--- |
 | <img src="https://www.google.com/s2/favicons?sz=32&domain=github.com" width="16"/> [GitHub](https://github.com/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=apkpure.com" width="16"/> [APKPure](https://apkpure.net/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=telegram.org" width="16"/> [Telegram App](https://telegram.org/) |
 | <img src="https://www.google.com/s2/favicons?sz=32&domain=gitlab.com" width="16"/> [GitLab](https://gitlab.com/) | <img src="https://icons.duckduckgo.com/ip3/aptoide.com.ico" width="16"/> [Aptoide](https://aptoide.com/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=neutroncode.com" width="16"/> [Neutron Code](https://neutroncode.com/) |
-| <img src="https://www.google.com/s2/favicons?sz=32&domain=forgejo.org" width="16"/> [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/)) | <img src="https://www.google.com/s2/favicons?sz=32&domain=uptodown.com" width="16"/> [Uptodown](https://uptodown.com/) | 📦 Direct APK Link |
-| <img src="https://icons.duckduckgo.com/ip3/f-droid.org.ico" width="16"/> [F-Droid](https://f-droid.org/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=huawei.com" width="16"/> [Huawei AppGallery](https://appgallery.huawei.com/) | 🌐 HTML page fallback |
-| 🧩 Third Party F-Droid Repos | <img src="https://icons.duckduckgo.com/ip3/sj.qq.com.ico" width="16"/> [Tencent App Store](https://sj.qq.com/) | |
+| <img src="https://www.google.com/s2/favicons?sz=32&domain=forgejo.org" width="16"/> [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/)) | <img src="https://www.google.com/s2/favicons?sz=32&domain=uptodown.com" width="16"/> [Uptodown](https://uptodown.com/) | 🏗️ Jenkins Jobs |
+| <img src="https://icons.duckduckgo.com/ip3/f-droid.org.ico" width="16"/> [F-Droid](https://f-droid.org/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=huawei.com" width="16"/> [Huawei AppGallery](https://appgallery.huawei.com/) | 📦 Direct APK Link |
+| 🧩 Third Party F-Droid Repos | <img src="https://icons.duckduckgo.com/ip3/sj.qq.com.ico" width="16"/> [Tencent App Store](https://sj.qq.com/) | 🌐 HTML page fallback |
 | <img src="https://www.google.com/s2/favicons?sz=32&domain=android.izzysoft.de" width="16"/> [IzzyOnDroid](https://android.izzysoft.de/) | <img src="https://icons.duckduckgo.com/ip3/h5.appstore.vivo.com.cn.ico" width="16"/> [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) | |
-| <img src="https://icons.duckduckgo.com/ip3/sourcehut.org.ico" width="16"/> [SourceHut](https://git.sr.ht/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=rustore.ru" width="16"/> [RuStore](https://rustore.ru/) | |
+| <img src="https://icons.duckduckgo.com/ip3/sourcehut.org.ico" width="16"/> [SourceHut](https://git.sr.ht/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=rustore.ru" width="16"/> [RuStore](https://rustore.ru/) |  | |
 | | <img src="https://www.google.com/s2/favicons?sz=32&domain=farsroid.com" width="16"/> [Farsroid](https://www.farsroid.com) | |
 | | <img src="https://www.google.com/s2/favicons?sz=32&domain=coolapk.com" width="16"/> [CoolApk](https://coolapk.com/) | |
-| | 🏗️ Jenkins Jobs | |
+| | <img src="https://www.google.com/s2/favicons?sz=32&domain=apkcombo.com" width="16"/> [APKCombo](https://apkcombo.com/) | |
 | | <img src="https://icons.duckduckgo.com/ip3/apkmirror.com.ico" width="16"/> [APKMirror](https://apkmirror.com/) (Track-Only) | |
 
 ## Download

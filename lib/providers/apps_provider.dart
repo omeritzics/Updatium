@@ -1696,7 +1696,15 @@ class AppsProvider with ChangeNotifier {
               notifyListeners();
               try {
                 // Try getting the app's source to ensure no invalid apps get loaded
-                sp.getSource(app.url, overrideSource: app.overrideSource);
+                // Handle removed overrideSource gracefully by clearing it if source doesn't exist
+                String? overrideSource = app.overrideSource;
+                if (overrideSource != null &&
+                    !sp.sourceExists(overrideSource)) {
+                  // Clear the removed overrideSource and update the app
+                  app.overrideSource = null;
+                  overrideSource = null;
+                }
+                sp.getSource(app.url, overrideSource: overrideSource);
                 // If the app is installed, grab its OS data and reconcile install statuses
                 PackageInfo? installedInfo;
                 try {

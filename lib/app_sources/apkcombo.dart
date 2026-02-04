@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:html/parser.dart';
+import 'package:html/parser.dart' show parse;
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
@@ -27,7 +27,13 @@ class APKCombo extends AppSource {
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
-    return Uri.parse(standardUrl).pathSegments.last;
+    try {
+      return Uri.parse(standardUrl).pathSegments.last;
+    } catch (e) {
+      // Log parsing error for debugging but return null for graceful degradation
+      print('Failed to infer app ID from APKCombo URL "$standardUrl": $e');
+      return null;
+    }
   }
 
   @override
@@ -53,8 +59,21 @@ class APKCombo extends AppSource {
       throw getUpdatiumHttpError(res);
     }
     var html = parse(res.body);
-    return html
-        .querySelectorAll('#variants-tab > div > ul > li')
+
+    // Try multiple selectors for APK variants
+    var apkElements = html.querySelectorAll('#variants-tab > div > ul > li');
+    if (apkElements.isEmpty) {
+      apkElements = html.querySelectorAll('.variant-item');
+    }
+    if (apkElements.isEmpty) {
+      apkElements = html.querySelectorAll('.download-variant');
+    }
+
+    if (apkElements.isEmpty) {
+      throw NoReleasesError();
+    }
+
+    return apkElements
         .map((e) {
           String? arch = e
               .querySelector('code')
@@ -103,28 +122,76 @@ class APKCombo extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    String appId = (await tryInferringAppId(standardUrl))!;
+    String? appId = await tryInferringAppId(standardUrl);
+    if (appId == null) {
+      throw NoVersionError();
+    }
     var preres = await sourceRequest(standardUrl, additionalSettings);
     if (preres.statusCode != 200) {
       throw getUpdatiumHttpError(preres);
     }
     var res = parse(preres.body);
+
+    // Try multiple selectors for version
     String? version = res.querySelector('div.version')?.text.trim();
+    version ??= res.querySelector('.version')?.text.trim();
+    version ??= res.querySelector('[data-version]')?.attributes['data-version'];
     if (version == null) {
       throw NoVersionError();
     }
-    String appName = res.querySelector('div.app_name')?.text.trim() ?? appId;
-    String author = res.querySelector('div.author')?.text.trim() ?? appName;
+
+    // Try multiple selectors for app name
+    String? appName = res.querySelector('div.app_name')?.text.trim();
+    if (appName == null || appName.isEmpty) {
+      appName = res.querySelector('.app-name')?.text.trim();
+    }
+    if (appName == null || appName.isEmpty) {
+      appName = res.querySelector('h1')?.text.trim();
+    }
+    appName = (appName?.isNotEmpty == true) ? appName! : appId;
+
+    // Try multiple selectors for author
+    String? author = res.querySelector('div.author')?.text.trim();
+    if (author == null || author.isEmpty) {
+      author = res.querySelector('.author')?.text.trim();
+    }
+    if (author == null || author.isEmpty) {
+      author = res.querySelector('.developer')?.text.trim();
+    }
+    author = (author?.isNotEmpty == true) ? author! : appName;
+
+    // Try multiple selectors for release date
     List<String> infoArray = res
         .querySelectorAll('div.information-table > .item > div.value')
         .map((e) => e.text.trim())
         .toList();
+
+    if (infoArray.isEmpty) {
+      infoArray = res
+          .querySelectorAll('.info-item .value')
+          .map((e) => e.text.trim())
+          .toList();
+    }
+
     DateTime? releaseDate;
     if (infoArray.length >= 2) {
+      String dateString = infoArray[1];
       try {
-        releaseDate = DateFormat('MMMM d, yyyy').parse(infoArray[1]);
-      } catch (e) {
-        // ignore
+        releaseDate = DateFormat('MMMM d, yyyy').parse(dateString);
+      } catch (fullMonthError) {
+        try {
+          releaseDate = DateFormat('MMM d, yyyy').parse(dateString);
+        } catch (abbrevMonthError) {
+          try {
+            releaseDate = DateFormat('yyyy-MM-dd').parse(dateString);
+          } catch (isoDateError) {
+            // Log all failed date parsing attempts for debugging
+            print(
+              'Failed to parse APKCombo release date "$dateString" with formats: MMMM d, yyyy ($fullMonthError), MMM d, yyyy ($abbrevMonthError), yyyy-MM-dd ($isoDateError)',
+            );
+            // releaseDate remains null for graceful degradation
+          }
+        }
       }
     }
     return APKDetails(
