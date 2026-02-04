@@ -39,9 +39,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       foregroundColor: WidgetStateProperty.all(
         Theme.of(context).colorScheme.onPrimary,
       ),
-      shape: WidgetStateProperty.all(
-        const StadiumBorder(),
-      ),
+      shape: WidgetStateProperty.all(const StadiumBorder()),
     );
 
     urlListImport({String? initValue, bool overrideInitValid = false}) {
