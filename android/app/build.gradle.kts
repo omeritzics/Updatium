@@ -120,7 +120,11 @@ android.applicationVariants.configureEach {
     variant.outputs.forEach { output ->
         val abiVersionCode = abiCodes[output.filters.find { it.filterType == "ABI" }?.identifier]
         if (abiVersionCode != null) {
-            (output as ApkVariantOutputImpl).versionCodeOverride = variant.versionCode * 10 + abiVersionCode
+            // Create a version code within Android limits (max 2100000000)
+            // Use: (YYMMDDHH % 100000) * 100 + ABI to stay well under limits
+            val baseBuildNumber = flutterVersionCode.toLong()
+            val compressedCode = (baseBuildNumber % 100000) * 100 + abiVersionCode
+            (output as ApkVariantOutputImpl).versionCodeOverride = compressedCode.toInt()
         }
     }
 }

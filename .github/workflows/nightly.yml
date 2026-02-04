@@ -53,12 +53,26 @@ jobs:
             echo "Sync script not found, skipping..."
           fi
 
+      - name: Generate Version
+        id: version
+        run: |
+          # Generate version: Year.Month format
+          YEAR=$(date +'%Y')
+          MONTH=$(date +'%-m')
+          VERSION="$YEAR.$MONTH"
+          
+          # Generate build number: YearMonthDayHour format
+          BUILD_NUMBER=$(date +'%Y%m%d%H')
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
+
       - name: Build APK (Debug Mode)
         run: |
           # Removing signing configurations to prevent errors in CI
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
           
-          flutter build apk --debug --flavor normal
+          flutter build apk --debug --flavor normal --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
           
           mkdir -p build/outputs/
           cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/updatium-nightly-debug.apk

@@ -20,7 +20,7 @@ Currently supported App sources:
 | <img src="https://icons.duckduckgo.com/ip3/sourcehut.org.ico" width="16"/> [SourceHut](https://git.sr.ht/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=apkcombo.com" width="16"/> [APKCombo](https://apkcombo.com/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=rustore.ru" width="16"/> [RuStore](https://rustore.ru/) | |
 | | <img src="https://www.google.com/s2/favicons?sz=32&domain=farsroid.com" width="16"/> [Farsroid](https://www.farsroid.com) | |
 | | <img src="https://www.google.com/s2/favicons?sz=32&domain=coolapk.com" width="16"/> [CoolApk](https://coolapk.com/) | |
-| | 🏗️ Jenkins Jobs | |
+| | | 🏗️ Jenkins Jobs |
 | | <img src="https://icons.duckduckgo.com/ip3/apkmirror.com.ico" width="16"/> [APKMirror](https://apkmirror.com/) (Track-Only) | |
 
 ## Download
