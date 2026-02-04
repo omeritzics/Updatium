@@ -30,6 +30,8 @@ class APKCombo extends AppSource {
     try {
       return Uri.parse(standardUrl).pathSegments.last;
     } catch (e) {
+      // Log parsing error for debugging but return null for graceful degradation
+      print('Failed to infer app ID from APKCombo URL "$standardUrl": $e');
       return null;
     }
   }
@@ -65,6 +67,10 @@ class APKCombo extends AppSource {
     }
     if (apkElements.isEmpty) {
       apkElements = html.querySelectorAll('.download-variant');
+    }
+
+    if (apkElements.isEmpty) {
+      throw NoReleasesError();
     }
 
     return apkElements
@@ -129,7 +135,7 @@ class APKCombo extends AppSource {
     // Try multiple selectors for version
     String? version = res.querySelector('div.version')?.text.trim();
     version ??= res.querySelector('.version')?.text.trim();
-    version ??= res.querySelector('[data-version]')?.attributes['version'];
+    version ??= res.querySelector('[data-version]')?.attributes['data-version'];
     if (version == null) {
       throw NoVersionError();
     }
@@ -169,16 +175,19 @@ class APKCombo extends AppSource {
 
     DateTime? releaseDate;
     if (infoArray.length >= 2) {
+      String dateString = infoArray[1];
       try {
-        releaseDate = DateFormat('MMMM d, yyyy').parse(infoArray[1]);
-      } catch (e) {
+        releaseDate = DateFormat('MMMM d, yyyy').parse(dateString);
+      } catch (fullMonthError) {
         try {
-          releaseDate = DateFormat('MMM d, yyyy').parse(infoArray[1]);
-        } catch (e2) {
+          releaseDate = DateFormat('MMM d, yyyy').parse(dateString);
+        } catch (abbrevMonthError) {
           try {
-            releaseDate = DateFormat('yyyy-MM-dd').parse(infoArray[1]);
-          } catch (e3) {
-            // ignore date parsing errors
+            releaseDate = DateFormat('yyyy-MM-dd').parse(dateString);
+          } catch (isoDateError) {
+            // Log all failed date parsing attempts for debugging
+            print('Failed to parse APKCombo release date "$dateString" with formats: MMMM d, yyyy ($fullMonthError), MMM d, yyyy ($abbrevMonthError), yyyy-MM-dd ($isoDateError)');
+            // releaseDate remains null for graceful degradation
           }
         }
       }

@@ -76,10 +76,18 @@ List<MapEntry<String, String>> assumed2DlistToStringMapList(
 // App JSON schema has changed multiple times over the many versions of Updatium
 // This function takes an App JSON and modifies it if needed to conform to the latest (current) version
 Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
-  var source = SourceProvider().getSource(
+  var sourceProvider = SourceProvider();
+  
+  // Check if overrideSource points to a removed source and clear it if needed
+  if (json['overrideSource'] != null && !sourceProvider.sourceExists(json['overrideSource'])) {
+    json['overrideSource'] = null;
+  }
+  
+  var source = sourceProvider.getSource(
     json['url'],
     overrideSource: json['overrideSource'],
   );
+  
   var formItems = source.combinedAppSpecificSettingFormItems.reduce(
     (value, element) => [...value, ...element],
   );
@@ -1141,6 +1149,12 @@ class SourceProvider {
 
   // Add more mass url source classes here so they are available via the service
   List<MassAppUrlSource> massUrlSources = [GitHubStars()];
+
+  // Helper method to check if a source exists without throwing an error
+  bool sourceExists(String? overrideSource) {
+    if (overrideSource == null) return true;
+    return sources.any((e) => e.runtimeType.toString() == overrideSource);
+  }
 
   AppSource getSource(String url, {String? overrideSource}) {
     url = preStandardizeUrl(url);
