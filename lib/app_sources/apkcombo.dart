@@ -57,7 +57,7 @@ class APKCombo extends AppSource {
       throw getUpdatiumHttpError(res);
     }
     var html = parse(res.body);
-    
+
     // Try multiple selectors for APK variants
     var apkElements = html.querySelectorAll('#variants-tab > div > ul > li');
     if (apkElements.isEmpty) {
@@ -66,7 +66,7 @@ class APKCombo extends AppSource {
     if (apkElements.isEmpty) {
       apkElements = html.querySelectorAll('.download-variant');
     }
-    
+
     return apkElements
         .map((e) {
           String? arch = e
@@ -125,19 +125,15 @@ class APKCombo extends AppSource {
       throw getUpdatiumHttpError(preres);
     }
     var res = parse(preres.body);
-    
+
     // Try multiple selectors for version
     String? version = res.querySelector('div.version')?.text.trim();
-    if (version == null) {
-      version = res.querySelector('.version')?.text.trim();
-    }
-    if (version == null) {
-      version = res.querySelector('[data-version]')?.attributes['version'];
-    }
+    version ??= res.querySelector('.version')?.text.trim();
+    version ??= res.querySelector('[data-version]')?.attributes['version'];
     if (version == null) {
       throw NoVersionError();
     }
-    
+
     // Try multiple selectors for app name
     String? appName = res.querySelector('div.app_name')?.text.trim();
     if (appName == null || appName.isEmpty) {
@@ -147,7 +143,7 @@ class APKCombo extends AppSource {
       appName = res.querySelector('h1')?.text.trim();
     }
     appName = (appName?.isNotEmpty == true) ? appName! : appId;
-    
+
     // Try multiple selectors for author
     String? author = res.querySelector('div.author')?.text.trim();
     if (author == null || author.isEmpty) {
@@ -157,20 +153,20 @@ class APKCombo extends AppSource {
       author = res.querySelector('.developer')?.text.trim();
     }
     author = (author?.isNotEmpty == true) ? author! : appName;
-    
+
     // Try multiple selectors for release date
     List<String> infoArray = res
         .querySelectorAll('div.information-table > .item > div.value')
         .map((e) => e.text.trim())
         .toList();
-    
+
     if (infoArray.isEmpty) {
       infoArray = res
           .querySelectorAll('.info-item .value')
           .map((e) => e.text.trim())
           .toList();
     }
-    
+
     DateTime? releaseDate;
     if (infoArray.length >= 2) {
       try {
