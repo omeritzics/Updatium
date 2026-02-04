@@ -37,10 +37,6 @@ jobs:
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
           echo "beta=${{ github.event.inputs.beta }}" >> $GITHUB_OUTPUT
 
-      - name: Generate Build Number
-        run: |
-          echo "BUILD_NUMBER=$(date +'%y%m%d%H%M')" >> $GITHUB_ENV
-
       - name: Decode Keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/upload-keystore.jks
