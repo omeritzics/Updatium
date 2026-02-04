@@ -408,5 +408,14 @@
     "certificateHash": {
         "one": "Certificate Hash",
         "other": "Certificate Hashes"
-    }
+    },
+    "securityDisclaimerTitle": "Bezbednosno i Pravno Odricanje Odgovornosti",
+    "license": "Licenca",
+    "licenseText": "Ova aplikacija se distribuira pod GPL v3 licencom.",
+    "disclaimer": "Odgovornost",
+    "disclaimerText": "Ova aplikacija ne distribuira, ne hostuje niti verifikuje nijednu od eksternih aplikacija. Korisnik snosi punu odgovornost za bezbednost i zakonitost bilo kog softvera instaliranog putem ovog alata.",
+    "privacy": "Privatnost",
+    "privacyText": "Ova aplikacija je fokusirana na privatnost i ne prikuplja lične podatke.",
+    "acceptAndContinue": "Prihvati i nastavi",
+    "decline": "Odbij"
 }

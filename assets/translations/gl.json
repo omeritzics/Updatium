@@ -410,5 +410,14 @@
     "certificateHash": {
         "one": "Certificado hash",
         "other": "Certificado Hashes"
-    }
+    },
+    "securityDisclaimerTitle": "Aviso de Seguridade e Legal",
+    "license": "Licenza",
+    "licenseText": "Este aplicativo distribúese baixo a Licenza GPL v3.",
+    "disclaimer": "Aviso",
+    "disclaimerText": "Este aplicativo non distribúe, aloxa nin verifica ningún dos aplicativos externos. O usuario asume a responsabilidade total pola seguridade e legalidade de calquera software instalado a través desta ferramenta.",
+    "privacy": "Privacidade",
+    "privacyText": "Este aplicativo está centrado na privacidade e non recolle datos persoais.",
+    "acceptAndContinue": "Aceptar e continuar",
+    "decline": "Rexeitar"
 }

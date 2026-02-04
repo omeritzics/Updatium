@@ -20,7 +20,7 @@
     "cancel": "ביטול",
     "continue": "המשך",
     "requiredInBrackets": "(חובה)",
-    "dropdownNoOptsError": "ERROR: DROPDOWN MUST HAVE AT LEAST ONE OPT",
+    "dropdownNoOptsError": "שגיאה: על תפריטים נפתחים להציג לפחות אפשרות אחת",
     "color": "צבע",
     "standard": "סטנדרטי",
     "custom": "מותאם אישית",
@@ -403,5 +403,14 @@
     "apk": {
         "one": "קובץ APK אחד",
         "other": "{} קובצי APK"
-    }
+    },
+    "securityDisclaimerTitle": "כתב ויתור בנוגע לאבטחה ונושאים משפטיים",
+    "license": "רישיון",
+    "licenseText": "יישום זה מופץ תחת רישיון GPL v3.",
+    "disclaimer": "כתב ויתור",
+    "disclaimerText": "יישום זה אינו מפיץ, מארח או מאמת יישומים חיצוניים כלשהם. המשתמש נושא באחריות המלאה לביטחון וחוקיות כל תוכנה המותקנת באמצעות כלי זה.",
+    "privacy": "פרטיות",
+    "privacyText": "יישום זה ממוקד פרטיות ואינו אוסף נתונים אישיים.",
+    "acceptAndContinue": "קבלה והמשך",
+    "decline": "סירוב"
 }

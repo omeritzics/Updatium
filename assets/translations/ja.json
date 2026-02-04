@@ -408,5 +408,14 @@
     "certificateHash": {
         "one": "証明書ハッシュ",
         "other": "証明書ハッシュ"
-    }
+    },
+    "securityDisclaimerTitle": "セキュリティおよび法的免責事項",
+    "license": "ライセンス",
+    "licenseText": "このアプリケーションはGPL v3ライセンスの下で配布されています。",
+    "disclaimer": "免責事項",
+    "disclaimerText": "このアプリケーションは外部アプリケーションを配布、ホスト、または検証しません。ユーザーはこのツールを通じてインストールされたソフトウェアの安全性と合法性について全責任を負います。",
+    "privacy": "プライバシー",
+    "privacyText": "このアプリはプライバシー重視で、個人データを収集しません。",
+    "acceptAndContinue": "同意して続行",
+    "decline": "拒否"
 }

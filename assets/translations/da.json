@@ -408,5 +408,14 @@
     "certificateHash": {
         "one": "Certifikathash",
         "other": "Certifikathash"
-    }
+    },
+    "securityDisclaimerTitle": "Sikkerheds- og Juridisk Ansvarsfraskrivelse",
+    "license": "Licens",
+    "licenseText": "Denne applikation distribueres under GPL v3-licensen.",
+    "disclaimer": "Ansvarsfraskrivelse",
+    "disclaimerText": "Denne applikation distribuerer, hoster eller verificerer ingen af de eksterne applikationer. Brugeren bærer det fulde ansvar for sikkerheden og lovligheden af enhver software installeret via dette værktøj.",
+    "privacy": "Privatliv",
+    "privacyText": "Denne app er privatlivsfokuseret og indsamler ikke personlige data.",
+    "acceptAndContinue": "Accepter og fortsæt",
+    "decline": "Afvis"
 }

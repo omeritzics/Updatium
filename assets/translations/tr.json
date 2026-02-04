@@ -410,5 +410,14 @@
     "certificateHash": {
         "one": "Sertifika Hash'i",
         "other": "Sertifika Hash'leri"
-    }
+    },
+    "securityDisclaimerTitle": "Güvenlik ve Yasal Sorumluluk Reddi",
+    "license": "Lisans",
+    "licenseText": "Bu uygulama GPL v3 Lisansı altında dağıtılmaktadır.",
+    "disclaimer": "Sorumluluk Reddi",
+    "disclaimerText": "Bu uygulama harici uygulamaları dağıtmaz, barındırmaz veya doğrulamaz. Kullanıcı, bu araç üzerinden yüklenen herhangi bir yazılımın güvenliği ve yasallığından tamamen sorumludur.",
+    "privacy": "Gizlilik",
+    "privacyText": "Bu uygulama gizlilik odaklıdır ve kişisel veri toplamaz.",
+    "acceptAndContinue": "Kabul Et ve Devam Et",
+    "decline": "Reddet"
 }

@@ -10,6 +10,7 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/pages/apps.dart';
 import 'package:updatium/pages/import_export.dart';
+import 'package:updatium/pages/security_disclaimer.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -66,47 +67,23 @@ class _HomePageState extends State<HomePage> {
     initDeepLinks();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var sp = context.read<SettingsProvider>();
-      if (!sp.welcomeShown) {
-        await showDialog(
-          context: context,
-          builder: (BuildContext ctx) {
-            return AlertDialog(
-              title: Text(tr('welcome')),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 20,
-                children: [
-                  Text(tr('documentationLinksNote')),
-                  GestureDetector(
-                    onTap: () {
-                      launchUrlString(
-                        'https://github.com/omeritzics/Updatium/blob/main/README.md',
-                        mode: LaunchMode.externalApplication,
-                      );
-                    },
-                    child: Text(
-                      'https://github.com/omeritzics/Updatium/blob/main/README.md',
-                      style: const TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    sp.welcomeShown = true;
-                    Navigator.of(context).pop(null);
-                  },
-                  child: Text(tr('ok')),
-                ),
-              ],
-            );
-          },
+      
+      // Check if security disclaimer has been accepted
+      final disclaimerAccepted = await SecurityDisclaimerScreen.isDisclaimerAccepted();
+      if (!disclaimerAccepted) {
+        final accepted = await Navigator.of(context).push<bool>(
+          MaterialPageRoute(
+            builder: (context) => const SecurityDisclaimerScreen(),
+          ),
         );
+        
+        // If user declined, exit the app
+        if (accepted != true) {
+          SystemNavigator.pop();
+          return;
+        }
       }
+      
       if (!sp.googleVerificationWarningShown && DateTime.now().year == 2026) {
         await showDialog(
           context: context,
