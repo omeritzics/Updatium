@@ -413,7 +413,9 @@ class AppsPageState extends State<AppsPage> {
                   Icon(
                     Icons.widgets_outlined,
                     size: 80,
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withOpacity(0.6),
                   ),
                   const SizedBox(height: 24),
                   Text(
@@ -431,7 +433,9 @@ class AppsPageState extends State<AppsPage> {
                       child: Text(
                         tr('noAppsSubtext'),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withOpacity(0.7),
                         ),
                         textAlign: TextAlign.center,
                       ),
