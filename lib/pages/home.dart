@@ -67,23 +67,24 @@ class _HomePageState extends State<HomePage> {
     initDeepLinks();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var sp = context.read<SettingsProvider>();
-      
+
       // Check if security disclaimer has been accepted
-      final disclaimerAccepted = await SecurityDisclaimerScreen.isDisclaimerAccepted();
+      final disclaimerAccepted =
+          await SecurityDisclaimerScreen.isDisclaimerAccepted();
       if (!disclaimerAccepted) {
         final accepted = await Navigator.of(context).push<bool>(
           MaterialPageRoute(
             builder: (context) => const SecurityDisclaimerScreen(),
           ),
         );
-        
+
         // If user declined, exit the app
         if (accepted != true) {
           SystemNavigator.pop();
           return;
         }
       }
-      
+
       if (!sp.googleVerificationWarningShown && DateTime.now().year == 2026) {
         await showDialog(
           context: context,

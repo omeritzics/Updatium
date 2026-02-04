@@ -7,7 +7,8 @@ class SecurityDisclaimerScreen extends StatefulWidget {
   const SecurityDisclaimerScreen({super.key});
 
   @override
-  State<SecurityDisclaimerScreen> createState() => _SecurityDisclaimerScreenState();
+  State<SecurityDisclaimerScreen> createState() =>
+      _SecurityDisclaimerScreenState();
 }
 
 class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
@@ -16,7 +17,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Scaffold(
       backgroundColor: colorScheme.surface,
       body: SafeArea(
@@ -41,26 +42,27 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                         color: colorScheme.onPrimaryContainer,
                       ),
                     ),
-                    
+
                     const SizedBox(height: 32),
-                    
+
                     // Title
                     Text(
                       tr('securityDisclaimerTitle'),
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.onSurface,
-                      ),
+                      style: Theme.of(context).textTheme.headlineMedium
+                          ?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: colorScheme.onSurface,
+                          ),
                       textAlign: TextAlign.center,
                     ),
-                    
+
                     const SizedBox(height: 24),
-                    
+
                     // Disclaimer Content
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: colorScheme.surfaceVariant,
+                        color: colorScheme.surfaceContainerHighest,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
@@ -72,18 +74,18 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                             tr('license'),
                             tr('licenseText'),
                           ),
-                          
+
                           const SizedBox(height: 16),
-                          
+
                           _buildDisclaimerItem(
                             context,
                             Icons.warning_amber,
                             tr('disclaimer'),
                             tr('disclaimerText'),
                           ),
-                          
+
                           const SizedBox(height: 16),
-                          
+
                           _buildDisclaimerItem(
                             context,
                             Icons.privacy_tip,
@@ -96,7 +98,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                   ],
                 ),
               ),
-              
+
               // Action Buttons
               Column(
                 children: [
@@ -117,13 +119,16 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                       ),
                       child: Text(
                         tr('acceptAndContinue'),
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 12),
-                  
+
                   // Decline Button
                   SizedBox(
                     width: double.infinity,
@@ -162,15 +167,11 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
     String content,
   ) {
     final colorScheme = Theme.of(context).colorScheme;
-    
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          icon,
-          size: 20,
-          color: colorScheme.primary,
-        ),
+        Icon(icon, size: 20, color: colorScheme.primary),
         const SizedBox(width: 12),
         Expanded(
           child: Column(
