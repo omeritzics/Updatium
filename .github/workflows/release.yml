@@ -1,4 +1,4 @@
-name: Build and Release
+name: Build and Release Qama
 permissions:
   contents: write
 
@@ -37,19 +37,32 @@ jobs:
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
           echo "beta=${{ github.event.inputs.beta }}" >> $GITHUB_OUTPUT
 
+      - name: Generate Build Number
+        run: |
+          echo "BUILD_NUMBER=$(date +'%y%m%d%H%M')" >> $GITHUB_ENV
+
       - name: Decode Keystore
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > $GITHUB_WORKSPACE/upload-keystore.jks
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/upload-keystore.jks
 
       - name: Create key.properties
         run: |
           echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "storeFile=$GITHUB_WORKSPACE/upload-keystore.jks" >> android/key.properties
+          echo "storeFile=../upload-keystore.jks" >> android/key.properties
 
-      - name: Build APKs
+      - name: Verify Keystore
         run: |
+          ls -la android/upload-keystore.jks
+          file android/upload-keystore.jks
+          keytool -list -v -keystore android/upload-keystore.jks -storepass "${{ secrets.KEYSTORE_PASSWORD }}" || echo "Keystore verification failed"
+
+      - name: Set App Name and Build APKs
+        run: |
+          # Removing "debug" suffix from the Updatium's name
+          sed -i 's/android:label=".*"/android:label="Updatium"/g' android/app/src/main/AndroidManifest.xml
+          
           flutter pub get
 
           # Building Normal release
@@ -60,7 +73,7 @@ jobs:
       - name: Save APKs as Artifacts
         uses: actions/upload-artifact@v6
         with:
-          name: release-apks
+          name: updatium-release-v${{ steps.extract_version.outputs.version }}-run${{ github.run_number }}
           path: build/app/outputs/flutter-apk/*.apk
 
       - name: Create Release
@@ -68,7 +81,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.extract_version.outputs.tag }}
-          name: "Release ${{ steps.extract_version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
+          name: "Updatium Qama ${{ steps.extract_version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
           prerelease: ${{ github.event.inputs.beta == true }}
           draft: true
           files: build/app/outputs/flutter-apk/*.apk
@@ -78,7 +91,7 @@ jobs:
         if: always()
         run: |
           if [ -n "$GITHUB_WORKSPACE" ]; then
-            rm -f "$GITHUB_WORKSPACE/upload-keystore.jks" || true
+            rm -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" || true
             rm -f "$GITHUB_WORKSPACE/android/key.properties" || true
             unset KEYSTORE_PASSWORD || true
             unset KEY_PASSWORD || true
