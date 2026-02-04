@@ -32,14 +32,15 @@ class _ImportExportPageState extends State<ImportExportPage> {
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
 
-    var outlineButtonStyle = ButtonStyle(
+    var filledButtonStyle = ButtonStyle(
+      backgroundColor: WidgetStateProperty.all(
+        Theme.of(context).colorScheme.primary,
+      ),
+      foregroundColor: WidgetStateProperty.all(
+        Theme.of(context).colorScheme.onPrimary,
+      ),
       shape: WidgetStateProperty.all(
-        StadiumBorder(
-          side: BorderSide(
-            width: 1,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
+        const StadiumBorder(),
       ),
     );
 
@@ -395,7 +396,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                             children: [
                               Expanded(
                                 child: TextButton(
-                                  style: outlineButtonStyle,
+                                  style: filledButtonStyle,
                                   onPressed: importInProgress
                                       ? null
                                       : () {
@@ -410,7 +411,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               const SizedBox(width: 16),
                               Expanded(
                                 child: TextButton(
-                                  style: outlineButtonStyle,
+                                  style: filledButtonStyle,
                                   onPressed:
                                       importInProgress || snapshot.data == null
                                       ? null
@@ -428,7 +429,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                             children: [
                               Expanded(
                                 child: TextButton(
-                                  style: outlineButtonStyle,
+                                  style: filledButtonStyle,
                                   onPressed: importInProgress
                                       ? null
                                       : runUpdatiumImport,
@@ -584,7 +585,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   const Divider(height: 32),
                   Text(
                     tr('importedAppsIdDisclaimer'),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
                     style: const TextStyle(
                       fontStyle: FontStyle.italic,
                       fontSize: 12,
