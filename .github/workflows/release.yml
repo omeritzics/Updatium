@@ -51,17 +51,22 @@ jobs:
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
           echo "storeFile=../upload-keystore.jks" >> android/key.properties
+          chmod 600 android/key.properties
+          echo "Created keystore properties file with restricted permissions"
 
       - name: Verify Keystore
         run: |
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
-          keytool -list -v -keystore android/upload-keystore.jks -storepass "${{ secrets.KEYSTORE_PASSWORD }}" || echo "Keystore verification failed"
+          echo "${{ secrets.KEYSTORE_PASSWORD }}" | keytool -list -v -keystore android/upload-keystore.jks -storepass:env KEYSTORE_PASS || echo "Keystore verification failed"
+        env:
+          KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASSWORD }}
 
       - name: Set App Name and Build APKs
         run: |
-          # Removing "debug" suffix from the Updatium's name
-          sed -i 's/android:label=".*"/android:label="Updatium"/g' android/app/src/main/AndroidManifest.xml
+          # Update app label in string resources for release builds
+          sed -i 's/<string name="label">.*<\/string>/<string name="label">Updatium<\/string>/g' android/app/src/main/res/values/string.xml
+          echo "Updated app label to 'Updatium' in string resources"
           
           flutter pub get
 
@@ -90,10 +95,36 @@ jobs:
       - name: Cleanup signing files
         if: always()
         run: |
-          if [ -n "$GITHUB_WORKSPACE" ]; then
-            rm -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" || true
-            rm -f "$GITHUB_WORKSPACE/android/key.properties" || true
-            unset KEYSTORE_PASSWORD || true
-            unset KEY_PASSWORD || true
-            unset KEY_ALIAS || true
+          echo "Starting cleanup of sensitive signing files..."
+          
+          # Cleanup keystore file
+          if [ -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" ]; then
+            rm -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" || echo "WARNING: Failed to delete keystore file"
+            if [ -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" ]; then
+              echo "ERROR: Keystore file still exists after cleanup attempt"
+            else
+              echo "Successfully deleted keystore file"
+            fi
+          else
+            echo "Keystore file not found, nothing to cleanup"
           fi
+          
+          # Cleanup key.properties file
+          if [ -f "$GITHUB_WORKSPACE/android/key.properties" ]; then
+            rm -f "$GITHUB_WORKSPACE/android/key.properties" || echo "WARNING: Failed to delete key.properties file"
+            if [ -f "$GITHUB_WORKSPACE/android/key.properties" ]; then
+              echo "ERROR: key.properties file still exists after cleanup attempt"
+            else
+              echo "Successfully deleted key.properties file"
+            fi
+          else
+            echo "key.properties file not found, nothing to cleanup"
+          fi
+          
+          # Unset environment variables
+          unset KEYSTORE_PASSWORD || echo "WARNING: Failed to unset KEYSTORE_PASSWORD"
+          unset KEY_PASSWORD || echo "WARNING: Failed to unset KEY_PASSWORD"
+          unset KEY_ALIAS || echo "WARNING: Failed to unset KEY_ALIAS"
+          unset KEYSTORE_PASS || echo "WARNING: Failed to unset KEYSTORE_PASS"
+          
+          echo "Cleanup completed"
