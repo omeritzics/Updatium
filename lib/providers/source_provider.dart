@@ -77,17 +77,18 @@ List<MapEntry<String, String>> assumed2DlistToStringMapList(
 // This function takes an App JSON and modifies it if needed to conform to the latest (current) version
 Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
   var sourceProvider = SourceProvider();
-  
+
   // Check if overrideSource points to a removed source and clear it if needed
-  if (json['overrideSource'] != null && !sourceProvider.sourceExists(json['overrideSource'])) {
+  if (json['overrideSource'] != null &&
+      !sourceProvider.sourceExists(json['overrideSource'])) {
     json['overrideSource'] = null;
   }
-  
+
   var source = sourceProvider.getSource(
     json['url'],
     overrideSource: json['overrideSource'],
   );
-  
+
   var formItems = source.combinedAppSpecificSettingFormItems.reduce(
     (value, element) => [...value, ...element],
   );

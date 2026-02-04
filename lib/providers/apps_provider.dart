@@ -1698,7 +1698,8 @@ class AppsProvider with ChangeNotifier {
                 // Try getting the app's source to ensure no invalid apps get loaded
                 // Handle removed overrideSource gracefully by clearing it if source doesn't exist
                 String? overrideSource = app.overrideSource;
-                if (overrideSource != null && !sp.sourceExists(overrideSource)) {
+                if (overrideSource != null &&
+                    !sp.sourceExists(overrideSource)) {
                   // Clear the removed overrideSource and update the app
                   app.overrideSource = null;
                   overrideSource = null;
