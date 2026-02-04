@@ -56,13 +56,13 @@ jobs:
       - name: Generate Version
         id: version
         run: |
-          # Generate version: Year.Month format
-          YEAR=$(date +'%Y')
+          # Generate version: YY.M.0 format (semantic versioning)
+          YEAR=$(date +'%y')
           MONTH=$(date +'%-m')
-          VERSION="$YEAR.$MONTH"
+          VERSION="$YEAR.$MONTH.0"
           
-          # Generate build number: YearMonthDayHour format
-          BUILD_NUMBER=$(date +'%Y%m%d%H')
+          # Generate build number: YYMMDDHH format
+          BUILD_NUMBER=$(date +'%y%m%d%H')
           
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
