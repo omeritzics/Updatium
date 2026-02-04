@@ -407,14 +407,36 @@ class AppsPageState extends State<AppsPage> {
         if (listedApps.isEmpty)
           SliverFillRemaining(
             child: Center(
-              child: Text(
-                appsProvider.apps.isEmpty
-                    ? appsProvider.loadingApps
-                          ? tr('pleaseWait')
-                          : tr('noApps')
-                    : tr('noAppsForFilter'),
-                style: Theme.of(context).textTheme.headlineMedium,
-                textAlign: TextAlign.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.widgets_outlined,
+                    size: 80,
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    appsProvider.apps.isEmpty
+                        ? appsProvider.loadingApps
+                              ? tr('pleaseWait')
+                              : tr('noApps')
+                        : tr('noAppsForFilter'),
+                    style: Theme.of(context).textTheme.headlineMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        tr('noAppsSubtext'),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                ],
               ),
             ),
           ),
