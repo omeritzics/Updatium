@@ -1,0 +1,34 @@
+name: Lint, Format and Auto-Fix
+
+on: [push, pull_request]
+
+jobs:
+  format-and-lint:
+    runs-on: ubuntu-latest
+    # Permissions needed to push changes back to the repository
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Auto-fix linting issues
+        run: dart fix --apply
+
+      - name: Format code
+        run: dart format .
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "style: auto-fix linting and formatting issues"
+          branch: ${{ github.head_ref }}
