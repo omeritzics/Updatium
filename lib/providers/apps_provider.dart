@@ -510,8 +510,8 @@ Future<PackageInfo?> getInstalledInfo(
   if (packageName != null) {
     try {
       return await pm.getPackageInfo(
-          packageName: packageName,
-          flags: packageInfoFlags
+        packageName: packageName,
+        flags: packageInfoFlags,
       );
     } catch (e) {
       if (printErr) {

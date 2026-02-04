@@ -219,7 +219,8 @@ class AppsPageState extends State<AppsPage> {
         return false;
       }
       if (app.app.installedVersion == null &&
-          (settingsProvider.hideNonInstalled || !(filter.includeNonInstalled))) {
+          (settingsProvider.hideNonInstalled ||
+              !(filter.includeNonInstalled))) {
         return false;
       }
       if (filter.nameFilter.isNotEmpty || filter.authorFilter.isNotEmpty) {
@@ -446,8 +447,8 @@ class AppsPageState extends State<AppsPage> {
       return IconButton(
         visualDensity: VisualDensity.compact,
         color: Theme.of(context).colorScheme.primary,
-        tooltip: listedApps[appIndex].app.additionalSettings['trackOnly'] ==
-                true
+        tooltip:
+            listedApps[appIndex].app.additionalSettings['trackOnly'] == true
             ? tr('markUpdated')
             : tr('update'),
         onPressed: appsProvider.areDownloadsRunning()
@@ -547,77 +548,68 @@ class AppsPageState extends State<AppsPage> {
           listedApps[index].app.installedVersion !=
               listedApps[index].app.latestVersion;
       // New trailing: show Install / Update button or Updated indicator
-      Widget trailingRow = Builder(builder: (ctx) {
-        final ai = listedApps[index];
-        final app = ai.app;
-        final isInstalled = app.installedVersion != null;
-        final hasUpdateLocal = isInstalled &&
-            app.installedVersion != app.latestVersion;
-        final isTrackOnly = app.additionalSettings['trackOnly'] == true;
+      Widget trailingRow = Builder(
+        builder: (ctx) {
+          final ai = listedApps[index];
+          final app = ai.app;
+          final isInstalled = app.installedVersion != null;
+          final hasUpdateLocal =
+              isInstalled && app.installedVersion != app.latestVersion;
+          final isTrackOnly = app.additionalSettings['trackOnly'] == true;
 
-        Widget action;
-        if (isTrackOnly) {
-          action = const Icon(Icons.check_circle_outline);
-        } else if (!isInstalled) {
-          action = FilledButton.tonal(
-            onPressed: appsProvider.areDownloadsRunning()
-                ? null
-                : () {
-                    appsProvider
-                        .downloadAndInstallLatestApps([
-                          app.id,
-                        ],
-                            globalNavigatorKey
-                                .currentContext)
-                        .catchError((e) {
-                      showError(e, context);
-                      return <String>[];
-                    });
-                  },
-            child: Text(tr('install')),
-          );
-        } else if (hasUpdateLocal) {
-          action = FilledButton.tonal(
-            onPressed: appsProvider.areDownloadsRunning()
-                ? null
-                : () {
-                    appsProvider
-                        .downloadAndInstallLatestApps([
-                          app.id,
-                        ],
-                            globalNavigatorKey
-                                .currentContext)
-                        .catchError((e) {
-                      showError(e, context);
-                      return <String>[];
-                    });
-                  },
-            child: Text(tr('update')),
-          );
-        } else {
-          action = Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.check_circle,
-                color: Colors.green[600],
-                size: 20,
-              ),
-              const SizedBox(width: 6),
-              Text(
-                tr('updated'),
-                style: TextStyle(color: Colors.green[600]),
-              ),
-            ],
-          );
-        }
+          Widget action;
+          if (isTrackOnly) {
+            action = const Icon(Icons.check_circle_outline);
+          } else if (!isInstalled) {
+            action = FilledButton.tonal(
+              onPressed: appsProvider.areDownloadsRunning()
+                  ? null
+                  : () {
+                      appsProvider
+                          .downloadAndInstallLatestApps([
+                            app.id,
+                          ], globalNavigatorKey.currentContext)
+                          .catchError((e) {
+                            showError(e, context);
+                            return <String>[];
+                          });
+                    },
+              child: Text(tr('install')),
+            );
+          } else if (hasUpdateLocal) {
+            action = FilledButton.tonal(
+              onPressed: appsProvider.areDownloadsRunning()
+                  ? null
+                  : () {
+                      appsProvider
+                          .downloadAndInstallLatestApps([
+                            app.id,
+                          ], globalNavigatorKey.currentContext)
+                          .catchError((e) {
+                            showError(e, context);
+                            return <String>[];
+                          });
+                    },
+              child: Text(tr('update')),
+            );
+          } else {
+            action = Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.check_circle, color: Colors.green[600], size: 20),
+                const SizedBox(width: 6),
+                Text(tr('updated'), style: TextStyle(color: Colors.green[600])),
+              ],
+            );
+          }
 
-        return SizedBox(
-          width: 120,
-          height: double.infinity,
-          child: Center(child: action),
-        );
-      });
+          return SizedBox(
+            width: 120,
+            height: double.infinity,
+            child: Center(child: action),
+          );
+        },
+      );
 
       var transparent = Theme.of(
         context,
@@ -719,7 +711,7 @@ class AppsPageState extends State<AppsPage> {
       );
     }
 
-    List<double> _categoryStops(List<String> categories) {
+    List<double> categoryStops(List<String> categories) {
       final n = categories.length;
       final cached = _stopsCache[n];
       if (cached != null) return cached;
@@ -727,7 +719,9 @@ class AppsPageState extends State<AppsPage> {
       if (n > 1) {
         result = [
           ...List<double>.generate(
-              n, (i) => ((i / (n - 1)) - 0.0001).clamp(0.0, 1.0)),
+            n,
+            (i) => ((i / (n - 1)) - 0.0001).clamp(0.0, 1.0),
+          ),
           1.0,
         ];
       } else if (n == 1) {
@@ -748,7 +742,7 @@ class AppsPageState extends State<AppsPage> {
         context,
       ).colorScheme.surface.withAlpha(0).value;
       final categories = listedApps[index].app.categories;
-      final stops = _categoryStops(categories);
+      final stops = categoryStops(categories);
 
       return Container(
         decoration: BoxDecoration(
@@ -861,80 +855,84 @@ class AppsPageState extends State<AppsPage> {
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 11),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.copyWith(fontSize: 11),
                       ),
                     ),
                   ),
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Builder(builder: (ctx) {
-                      final ai = listedApps[index];
-                      final app = ai.app;
-                      final isInstalled = app.installedVersion != null;
-                      final hasUpdateLocal = isInstalled &&
-                          app.installedVersion != app.latestVersion;
-                      final isTrackOnly = app.additionalSettings['trackOnly'] == true;
+                    child: Builder(
+                      builder: (ctx) {
+                        final ai = listedApps[index];
+                        final app = ai.app;
+                        final isInstalled = app.installedVersion != null;
+                        final hasUpdateLocal =
+                            isInstalled &&
+                            app.installedVersion != app.latestVersion;
+                        final isTrackOnly =
+                            app.additionalSettings['trackOnly'] == true;
 
-                      if (isTrackOnly) {
-                        return const SizedBox.shrink();
-                      }
+                        if (isTrackOnly) {
+                          return const SizedBox.shrink();
+                        }
 
-                      if (!isInstalled) {
-                        return FilledButton.tonal(
-                          onPressed: appsProvider.areDownloadsRunning()
-                              ? null
-                              : () {
-                                  appsProvider
-                                      .downloadAndInstallLatestApps([
-                                        app.id,
-                                      ],
-                                          globalNavigatorKey.currentContext)
-                                      .catchError((e) {
-                                    showError(e, context);
-                                    return <String>[];
-                                  });
-                                },
-                          child: Text(tr('install')),
+                        if (!isInstalled) {
+                          return FilledButton.tonal(
+                            onPressed: appsProvider.areDownloadsRunning()
+                                ? null
+                                : () {
+                                    appsProvider
+                                        .downloadAndInstallLatestApps([
+                                          app.id,
+                                        ], globalNavigatorKey.currentContext)
+                                        .catchError((e) {
+                                          showError(e, context);
+                                          return <String>[];
+                                        });
+                                  },
+                            child: Text(tr('install')),
+                          );
+                        }
+
+                        if (hasUpdateLocal) {
+                          return FilledButton.tonal(
+                            onPressed: appsProvider.areDownloadsRunning()
+                                ? null
+                                : () {
+                                    appsProvider
+                                        .downloadAndInstallLatestApps([
+                                          app.id,
+                                        ], globalNavigatorKey.currentContext)
+                                        .catchError((e) {
+                                          showError(e, context);
+                                          return <String>[];
+                                        });
+                                  },
+                            child: Text(tr('update')),
+                          );
+                        }
+
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.check_circle,
+                              color: Colors.green[600],
+                              size: 18,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              tr('updated'),
+                              style: TextStyle(color: Colors.green[600]),
+                            ),
+                          ],
                         );
-                      }
-
-                      if (hasUpdateLocal) {
-                        return FilledButton.tonal(
-                          onPressed: appsProvider.areDownloadsRunning()
-                              ? null
-                              : () {
-                                  appsProvider
-                                      .downloadAndInstallLatestApps([
-                                        app.id,
-                                      ],
-                                          globalNavigatorKey.currentContext)
-                                      .catchError((e) {
-                                    showError(e, context);
-                                    return <String>[];
-                                  });
-                                },
-                          child: Text(tr('update')),
-                        );
-                      }
-
-                      return Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.check_circle,
-                            color: Colors.green[600],
-                            size: 18,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            tr('updated'),
-                            style: TextStyle(color: Colors.green[600]),
-                          ),
-                        ],
-                      );
-                    }),
+                      },
+                    ),
                   ),
                   const SizedBox(height: 12),
                 ],
@@ -986,23 +984,29 @@ class AppsPageState extends State<AppsPage> {
         children: [
           settingsProvider.useGridView
               ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                    vertical: 8.0,
+                  ),
                   child: GridView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 150,
-                      childAspectRatio: 0.6,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 150,
+                          childAspectRatio: 0.6,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                        ),
                     itemCount: listedApps
                         .asMap()
                         .entries
                         .where(
                           (e) =>
-                              e.value.app.categories.contains(listedCategories[index]) ||
+                              e.value.app.categories.contains(
+                                listedCategories[index],
+                              ) ||
                               e.value.app.categories.isEmpty &&
                                   listedCategories[index] == null,
                         )
@@ -1018,7 +1022,9 @@ class AppsPageState extends State<AppsPage> {
                           .entries
                           .where(
                             (e) =>
-                                e.value.app.categories.contains(listedCategories[index]) ||
+                                e.value.app.categories.contains(
+                                  listedCategories[index],
+                                ) ||
                                 e.value.app.categories.isEmpty &&
                                     listedCategories[index] == null,
                           )

@@ -143,7 +143,7 @@ void main() async {
     // Already added, do nothing (see #375)
   }
   await EasyLocalization.ensureInitialized();
-  
+
   // Enable edge-to-edge mode for Android 10+ (API 29)
   if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -151,11 +151,11 @@ void main() async {
     );
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
-  
+
   final np = NotificationsProvider();
   await np.initialize();
   FlutterForegroundTask.initCommunicationPort();
-  
+
   runApp(
     MultiProvider(
       providers: [
@@ -297,7 +297,7 @@ class _UpdatiumState extends State<Updatium> {
     AppsProvider appsProvider = context.read<AppsProvider>();
     LogsProvider logs = context.read<LogsProvider>();
     NotificationsProvider notifs = context.read<NotificationsProvider>();
-    
+
     // Toggle between Foreground Service and Background Fetch
     if (settingsProvider.updateInterval == 0) {
       stopForegroundService();
@@ -349,7 +349,7 @@ class _UpdatiumState extends State<Updatium> {
               });
         }
       }
-      
+
       // Sync local and device locale if needed
       if (!supportedLocales.map((e) => e.key).contains(context.locale) ||
           (settingsProvider.forcedLocale == null &&
@@ -398,7 +398,9 @@ class _UpdatiumState extends State<Updatium> {
             return ThemeData(
               useMaterial3: true,
               colorScheme: scheme,
-              fontFamily: settingsProvider.useSystemFont ? 'SystemFont' : 'Montserrat',
+              fontFamily: settingsProvider.useSystemFont
+                  ? 'SystemFont'
+                  : 'Montserrat',
               cardTheme: const CardThemeData(
                 elevation: 0,
                 clipBehavior: Clip.antiAlias,
@@ -407,16 +409,26 @@ class _UpdatiumState extends State<Updatium> {
               filledButtonTheme: FilledButtonThemeData(
                 style: FilledButton.styleFrom(
                   shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  backgroundColor: isDark ? scheme.secondaryContainer : scheme.secondaryContainer,
-                  foregroundColor: isDark ? scheme.onSecondaryContainer : scheme.onSecondaryContainer,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  backgroundColor: isDark
+                      ? scheme.secondaryContainer
+                      : scheme.secondaryContainer,
+                  foregroundColor: isDark
+                      ? scheme.onSecondaryContainer
+                      : scheme.onSecondaryContainer,
                 ),
               ),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
                   elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
                 ),
               ),
             );
@@ -431,12 +443,15 @@ class _UpdatiumState extends State<Updatium> {
             debugShowCheckedModeBanner: false,
             theme: createTheme(lightColorScheme, false),
             darkTheme: createTheme(darkColorScheme, true),
-            themeMode: settingsProvider.theme == ThemeSettings.dark 
-                ? ThemeMode.dark 
-                : (settingsProvider.theme == ThemeSettings.light ? ThemeMode.light : ThemeMode.system),
+            themeMode: settingsProvider.theme == ThemeSettings.dark
+                ? ThemeMode.dark
+                : (settingsProvider.theme == ThemeSettings.light
+                      ? ThemeMode.light
+                      : ThemeMode.system),
             home: Shortcuts(
               shortcuts: <LogicalKeySet, Intent>{
-                LogicalKeySet(LogicalKeyboardKey.select): const ActivateIntent(),
+                LogicalKeySet(LogicalKeyboardKey.select):
+                    const ActivateIntent(),
               },
               child: const HomePage(),
             ),
