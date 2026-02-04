@@ -153,5 +153,7 @@ flutter:
       - family: Montserrat
         fonts:
           - asset: assets/fonts/Montserrat-Regular.ttf
+          
 dev_dependencies:
-  flutter_test: any
+  flutter_test:
+    sdk: flutter
