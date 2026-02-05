@@ -31,7 +31,7 @@ class APKCombo extends AppSource {
       return Uri.parse(standardUrl).pathSegments.last;
     } catch (e) {
       // Log parsing error for debugging but return null for graceful degradation
-      print('Failed to infer app ID from APKCombo URL "$standardUrl": $e');
+      LogsProvider().add('Failed to infer app ID from APKCombo URL "$standardUrl": $e');
       return null;
     }
   }
