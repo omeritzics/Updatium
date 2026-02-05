@@ -442,7 +442,9 @@ class App {
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['releaseDate']),
       changeLog: json['changeLog'] == null ? null : json['changeLog'] as String,
-      remoteIconUrl: json['remoteIconUrl'] == null ? null : json['remoteIconUrl'] as String,
+      remoteIconUrl: json['remoteIconUrl'] == null
+          ? null
+          : json['remoteIconUrl'] as String,
       overrideSource: json['overrideSource'],
       allowIdChange: json['allowIdChange'] ?? false,
       otherAssetUrls: assumed2DlistToStringMapList(

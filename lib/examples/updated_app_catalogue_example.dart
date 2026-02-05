@@ -8,10 +8,12 @@ class UpdatedAppCatalogueExample extends StatefulWidget {
   const UpdatedAppCatalogueExample({super.key});
 
   @override
-  State<UpdatedAppCatalogueExample> createState() => _UpdatedAppCatalogueExampleState();
+  State<UpdatedAppCatalogueExample> createState() =>
+      _UpdatedAppCatalogueExampleState();
 }
 
-class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample> {
+class _UpdatedAppCatalogueExampleState
+    extends State<UpdatedAppCatalogueExample> {
   String _searchQuery = '';
   bool _showInstalledOnly = false;
   bool _showUpdatesOnly = false;
@@ -52,7 +54,9 @@ class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample>
                   Icon(
                     Icons.apps_outage,
                     size: 64,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withOpacity(0.5),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -63,7 +67,9 @@ class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample>
                   Text(
                     'Try adjusting your filters or add some apps',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withOpacity(0.7),
                     ),
                   ),
                 ],
@@ -74,9 +80,7 @@ class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample>
           return Column(
             children: [
               _buildStatsBar(filteredApps),
-              Expanded(
-                child: _buildAppGrid(filteredApps),
-              ),
+              Expanded(child: _buildAppGrid(filteredApps)),
             ],
           );
         },
@@ -146,15 +150,18 @@ class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample>
 
   Widget _buildStatsBar(List apps) {
     int installedCount = apps.where((app) => app.installedInfo != null).length;
-    int updateCount = apps.where((app) => 
-        app.installedInfo != null && 
-        app.installedVersion != app.app.latestVersion
-    ).length;
+    int updateCount = apps
+        .where(
+          (app) =>
+              app.installedInfo != null &&
+              app.installedVersion != app.app.latestVersion,
+        )
+        .length;
     int cachedCount = 0;
 
     return Container(
       padding: const EdgeInsets.all(16),
-      color: Theme.of(context).colorScheme.surfaceVariant,
+      color: Theme.of(context).colorScheme.surfaceContainerHighest,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -174,14 +181,11 @@ class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample>
         const SizedBox(height: 4),
         Text(
           value,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
+        Text(label, style: Theme.of(context).textTheme.bodySmall),
       ],
     );
   }
@@ -229,9 +233,9 @@ class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample>
                   onDoubleTap: () => _launchApp(app),
                 ),
               ),
-              
+
               const SizedBox(height: 8),
-              
+
               // App Name
               Expanded(
                 flex: 1,
@@ -252,20 +256,25 @@ class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample>
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withOpacity(0.7),
                       ),
                     ),
                   ],
                 ),
               ),
-              
+
               // Status Indicators
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (hasUpdate)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.orange,
                         borderRadius: BorderRadius.circular(10),
@@ -279,11 +288,7 @@ class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample>
                       ),
                     ),
                   if (isInstalled && !hasUpdate)
-                    Icon(
-                      Icons.check_circle,
-                      size: 16,
-                      color: Colors.green,
-                    ),
+                    Icon(Icons.check_circle, size: 16, color: Colors.green),
                   if (!isInstalled)
                     Icon(
                       Icons.cloud_download,
@@ -302,26 +307,27 @@ class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample>
   List _filterApps(List apps) {
     return apps.where((appInMemory) {
       final app = appInMemory.app;
-      
+
       // Search filter
       if (_searchQuery.isNotEmpty) {
         final matchesName = app.name.toLowerCase().contains(_searchQuery);
         final matchesAuthor = app.author.toLowerCase().contains(_searchQuery);
         if (!matchesName && !matchesAuthor) return false;
       }
-      
+
       // Installed filter
       if (_showInstalledOnly && appInMemory.installedInfo == null) {
         return false;
       }
-      
+
       // Updates filter
       if (_showUpdatesOnly) {
-        final hasUpdate = appInMemory.installedInfo != null && 
-                        app.installedVersion != app.latestVersion;
+        final hasUpdate =
+            appInMemory.installedInfo != null &&
+            app.installedVersion != app.latestVersion;
         if (!hasUpdate) return false;
       }
-      
+
       return true;
     }).toList();
   }
@@ -330,9 +336,7 @@ class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample>
     // Navigate to app details page
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => AppDetailsPage(app: app),
-      ),
+      MaterialPageRoute(builder: (context) => AppDetailsPage(app: app)),
     );
   }
 
@@ -350,26 +354,23 @@ class _UpdatedAppCatalogueExampleState extends State<UpdatedAppCatalogueExample>
 
   void _refreshAllIcons() {
     final appsProvider = Provider.of<AppsProvider>(context, listen: false);
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Refreshing all icons...'),
         duration: Duration(seconds: 2),
       ),
     );
-    
+
     // Trigger icon refresh for all apps
-    appsProvider.apps.values.forEach((appInMemory) {
+    for (var appInMemory in appsProvider.apps.values) {
       appsProvider.updateAppIcon(appInMemory.app.id, ignoreCache: true);
-    });
+    }
   }
 
   void _showAddAppDialog() {
     // Show add app dialog
-    showDialog(
-      context: context,
-      builder: (context) => const AddAppDialog(),
-    );
+    showDialog(context: context, builder: (context) => const AddAppDialog());
   }
 }
 
@@ -382,9 +383,7 @@ class AppDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(app.name),
-      ),
+      appBar: AppBar(title: Text(app.name)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -397,7 +396,7 @@ class AppDetailsPage extends StatelessWidget {
               showInstalledIndicator: true,
             ),
             const SizedBox(height: 16),
-            
+
             // App info
             Text(
               app.name,
@@ -410,7 +409,7 @@ class AppDetailsPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
-            
+
             // Version info
             if (app.installedVersion != null)
               Text(
@@ -421,7 +420,7 @@ class AppDetailsPage extends StatelessWidget {
               'Latest: ${app.latestVersion}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            
+
             if (app.remoteIconUrl != null) ...[
               const SizedBox(height: 16),
               Text(

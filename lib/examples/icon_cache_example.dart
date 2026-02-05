@@ -11,15 +11,17 @@ class IconCacheExample extends StatefulWidget {
 }
 
 class _IconCacheExampleState extends State<IconCacheExample> {
-  final TextEditingController _appIdController = TextEditingController(text: 'com.example.app');
-  final TextEditingController _urlController = TextEditingController(text: 'https://example.com/icon.png');
+  final TextEditingController _appIdController = TextEditingController(
+    text: 'com.example.app',
+  );
+  final TextEditingController _urlController = TextEditingController(
+    text: 'https://example.com/icon.png',
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Icon Cache Example'),
-      ),
+      appBar: AppBar(title: const Text('Icon Cache Example')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -69,7 +71,7 @@ class _IconCacheExampleState extends State<IconCacheExample> {
 
   Future<void> _loadIcon(BuildContext context) async {
     final appsProvider = Provider.of<AppsProvider>(context, listen: false);
-    
+
     try {
       final iconData = await appsProvider.getIcon(
         _appIdController.text,
@@ -86,11 +88,7 @@ class _IconCacheExampleState extends State<IconCacheExample> {
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.memory(
-                    iconData,
-                    width: 64,
-                    height: 64,
-                  ),
+                  Image.memory(iconData, width: 64, height: 64),
                   const SizedBox(height: 16),
                   Text('Size: ${iconData.length} bytes'),
                 ],
@@ -106,23 +104,23 @@ class _IconCacheExampleState extends State<IconCacheExample> {
         }
       } else {
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Failed to load icon')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('Failed to load icon')));
         }
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     }
   }
 
   Future<void> _checkCache(BuildContext context) async {
     final appsProvider = Provider.of<AppsProvider>(context, listen: false);
-    
+
     try {
       final isCached = await appsProvider.isIconCached(
         _appIdController.text,
@@ -130,22 +128,22 @@ class _IconCacheExampleState extends State<IconCacheExample> {
       );
 
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Icon is cached: $isCached')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Icon is cached: $isCached')));
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     }
   }
 
   Future<void> _getCacheStats(BuildContext context) async {
     final appsProvider = Provider.of<AppsProvider>(context, listen: false);
-    
+
     try {
       final stats = await appsProvider.getIconCacheStats();
 
@@ -177,16 +175,16 @@ class _IconCacheExampleState extends State<IconCacheExample> {
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     }
   }
 
   Future<void> _clearCache(BuildContext context) async {
     final appsProvider = Provider.of<AppsProvider>(context, listen: false);
-    
+
     try {
       await appsProvider.clearIconCache();
 
@@ -197,9 +195,9 @@ class _IconCacheExampleState extends State<IconCacheExample> {
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
       }
     }
   }

@@ -516,9 +516,7 @@ class AppsPageState extends State<AppsPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AppPage(
-                appId: listedApps[appIndex].app.id,
-              ),
+              builder: (context) => AppPage(appId: listedApps[appIndex].app.id),
             ),
           );
         },

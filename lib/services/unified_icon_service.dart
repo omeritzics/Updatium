@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
-import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
@@ -11,7 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 
 /// Unified icon service that manages the entire icon-loading pipeline
-/// 
+///
 /// Features:
 /// - Memory and disk caching
 /// - Request deduplication
@@ -45,7 +44,7 @@ class UnifiedIconService {
   Timer? _cleanupTimer;
 
   // Stream controllers
-  final StreamController<IconLoadingEvent> _eventController = 
+  final StreamController<IconLoadingEvent> _eventController =
       StreamController<IconLoadingEvent>.broadcast();
 
   Stream<IconLoadingEvent> get eventStream => _eventController.stream;
@@ -67,7 +66,10 @@ class UnifiedIconService {
     }
 
     // Start periodic cleanup
-    _cleanupTimer = Timer.periodic(const Duration(hours: 6), (_) => _performCleanup());
+    _cleanupTimer = Timer.periodic(
+      const Duration(hours: 6),
+      (_) => _performCleanup(),
+    );
 
     // Load existing cache metadata
     await _loadCacheMetadata();
@@ -75,7 +77,7 @@ class UnifiedIconService {
 
   /// Get icon with comprehensive caching and deduplication
   Future<IconResult> getIcon(
-    String appId, 
+    String appId,
     String? remoteIconUrl, {
     bool forceRefresh = false,
     Uint8List? fallbackIcon,
@@ -86,23 +88,27 @@ class UnifiedIconService {
     final cacheKey = _generateCacheKey(appId, remoteIconUrl);
 
     try {
-      _emitEvent(IconLoadingEvent(
-        type: IconEventType.loading,
-        appId: appId,
-        url: remoteIconUrl,
-      ));
+      _emitEvent(
+        IconLoadingEvent(
+          type: IconEventType.loading,
+          appId: appId,
+          url: remoteIconUrl,
+        ),
+      );
 
       // Check memory cache first
       if (!forceRefresh && _memoryCache.containsKey(cacheKey)) {
         final cached = _memoryCache[cacheKey]!;
         if (!cached.isExpired) {
           _recordPerformance(cacheKey, startTime, IconSource.memory);
-          _emitEvent(IconLoadingEvent(
-            type: IconEventType.loaded,
-            appId: appId,
-            url: remoteIconUrl,
-            source: IconSource.memory,
-          ));
+          _emitEvent(
+            IconLoadingEvent(
+              type: IconEventType.loaded,
+              appId: appId,
+              url: remoteIconUrl,
+              source: IconSource.memory,
+            ),
+          );
           return IconResult.success(cached.data, source: IconSource.memory);
         } else {
           _memoryCache.remove(cacheKey);
@@ -114,7 +120,7 @@ class UnifiedIconService {
         final completer = Completer<Uint8List?>();
         _pendingRequests[cacheKey]!.add(completer);
         final result = await completer.future;
-        
+
         if (result != null) {
           _recordPerformance(cacheKey, startTime, IconSource.deduplicated);
           return IconResult.success(result, source: IconSource.deduplicated);
@@ -135,30 +141,38 @@ class UnifiedIconService {
             _addToMemoryCache(cacheKey, iconData);
             _completePendingRequests(cacheKey, iconData);
             _recordPerformance(cacheKey, startTime, IconSource.disk);
-            _emitEvent(IconLoadingEvent(
-              type: IconEventType.loaded,
-              appId: appId,
-              url: remoteIconUrl,
-              source: IconSource.disk,
-            ));
+            _emitEvent(
+              IconLoadingEvent(
+                type: IconEventType.loaded,
+                appId: appId,
+                url: remoteIconUrl,
+                source: IconSource.disk,
+              ),
+            );
             return IconResult.success(iconData, source: IconSource.disk);
           }
         }
 
         // Download from network
         if (remoteIconUrl != null && remoteIconUrl.isNotEmpty) {
-          iconData = await _downloadIcon(remoteIconUrl, maxSize, preferredFormat);
+          iconData = await _downloadIcon(
+            remoteIconUrl,
+            maxSize,
+            preferredFormat,
+          );
           if (iconData != null) {
             await _saveToCache(cacheKey, iconData, remoteIconUrl);
             _addToMemoryCache(cacheKey, iconData);
             _completePendingRequests(cacheKey, iconData);
             _recordPerformance(cacheKey, startTime, IconSource.network);
-            _emitEvent(IconLoadingEvent(
-              type: IconEventType.loaded,
-              appId: appId,
-              url: remoteIconUrl,
-              source: IconSource.network,
-            ));
+            _emitEvent(
+              IconLoadingEvent(
+                type: IconEventType.loaded,
+                appId: appId,
+                url: remoteIconUrl,
+                source: IconSource.network,
+              ),
+            );
             return IconResult.success(iconData, source: IconSource.network);
           }
         }
@@ -166,33 +180,37 @@ class UnifiedIconService {
         // Use fallback
         _completePendingRequests(cacheKey, fallbackIcon);
         _recordPerformance(cacheKey, startTime, IconSource.fallback);
-        _emitEvent(IconLoadingEvent(
-          type: IconEventType.fallback,
-          appId: appId,
-          url: remoteIconUrl,
-        ));
+        _emitEvent(
+          IconLoadingEvent(
+            type: IconEventType.fallback,
+            appId: appId,
+            url: remoteIconUrl,
+          ),
+        );
         return IconResult.success(fallbackIcon, source: IconSource.fallback);
-
       } catch (e) {
         _completePendingRequests(cacheKey, null);
         _recordError(cacheKey, e);
-        _emitEvent(IconLoadingEvent(
+        _emitEvent(
+          IconLoadingEvent(
+            type: IconEventType.error,
+            appId: appId,
+            url: remoteIconUrl,
+            error: e.toString(),
+          ),
+        );
+        return IconResult.error(e.toString());
+      }
+    } catch (e) {
+      _recordError(cacheKey, e);
+      _emitEvent(
+        IconLoadingEvent(
           type: IconEventType.error,
           appId: appId,
           url: remoteIconUrl,
           error: e.toString(),
-        ));
-        return IconResult.error(e.toString());
-      }
-
-    } catch (e) {
-      _recordError(cacheKey, e);
-      _emitEvent(IconLoadingEvent(
-        type: IconEventType.error,
-        appId: appId,
-        url: remoteIconUrl,
-        error: e.toString(),
-      ));
+        ),
+      );
       return IconResult.error(e.toString());
     }
   }
@@ -204,16 +222,18 @@ class UnifiedIconService {
     int successCount = 0;
     int errorCount = 0;
 
-    _emitEvent(IconLoadingEvent(
-      type: IconEventType.batchStarted,
-      count: requests.length,
-    ));
+    _emitEvent(
+      IconLoadingEvent(
+        type: IconEventType.batchStarted,
+        count: requests.length,
+      ),
+    );
 
     // Process in batches to avoid overwhelming the system
     const batchSize = 5;
     for (int i = 0; i < requests.length; i += batchSize) {
       final batch = requests.skip(i).take(batchSize).toList();
-      
+
       final futures = batch.map((request) async {
         final result = await getIcon(
           request.appId,
@@ -223,27 +243,32 @@ class UnifiedIconService {
           maxSize: request.maxSize,
           preferredFormat: request.preferredFormat,
         );
-        
+
         results[request.appId] = result;
-        if (result.isSuccess) successCount++;
-        else errorCount++;
+        if (result.isSuccess) {
+          successCount++;
+        } else {
+          errorCount++;
+        }
       });
 
       await Future.wait(futures);
-      
+
       // Small delay between batches
       if (i + batchSize < requests.length) {
         await Future.delayed(const Duration(milliseconds: 50));
       }
     }
 
-    _emitEvent(IconLoadingEvent(
-      type: IconEventType.batchCompleted,
-      count: requests.length,
-      successCount: successCount,
-      errorCount: errorCount,
-      duration: DateTime.now().difference(startTime),
-    ));
+    _emitEvent(
+      IconLoadingEvent(
+        type: IconEventType.batchCompleted,
+        count: requests.length,
+        successCount: successCount,
+        errorCount: errorCount,
+        duration: DateTime.now().difference(startTime),
+      ),
+    );
 
     return BatchIconResult(
       results: results,
@@ -267,11 +292,11 @@ class UnifiedIconService {
           final stat = await entity.stat();
           diskSize += stat.size;
           diskFiles++;
-          
-          if (oldestFile == null || stat.modified.isBefore(oldestFile!)) {
+
+          if (oldestFile == null || stat.modified.isBefore(oldestFile)) {
             oldestFile = stat.modified;
           }
-          if (newestFile == null || stat.modified.isAfter(newestFile!)) {
+          if (newestFile == null || stat.modified.isAfter(newestFile)) {
             newestFile = stat.modified;
           }
         }
@@ -279,8 +304,10 @@ class UnifiedIconService {
     }
 
     return IconCacheStats(
-      memoryCacheSize: _memoryCache.values
-          .fold(0, (sum, icon) => sum + icon.data.length),
+      memoryCacheSize: _memoryCache.values.fold(
+        0,
+        (sum, icon) => sum + icon.data.length,
+      ),
       memoryCacheCount: _memoryCache.length,
       diskCacheSize: diskSize,
       diskCacheCount: diskFiles,
@@ -291,7 +318,10 @@ class UnifiedIconService {
   }
 
   /// Clear all caches
-  Future<void> clearCache({bool clearMemory = true, bool clearDisk = true}) async {
+  Future<void> clearCache({
+    bool clearMemory = true,
+    bool clearDisk = true,
+  }) async {
     if (clearMemory) {
       _memoryCache.clear();
     }
@@ -301,11 +331,13 @@ class UnifiedIconService {
       await _cacheDir.create(recursive: true);
     }
 
-    _emitEvent(IconLoadingEvent(
-      type: IconEventType.cacheCleared,
-      memoryCleared: clearMemory,
-      diskCleared: clearDisk,
-    ));
+    _emitEvent(
+      IconLoadingEvent(
+        type: IconEventType.cacheCleared,
+        memoryCleared: clearMemory,
+        diskCleared: clearDisk,
+      ),
+    );
   }
 
   /// Get performance metrics
@@ -350,16 +382,18 @@ class UnifiedIconService {
   }
 
   Future<Uint8List?> _downloadIcon(
-    String url, 
-    int? maxSize, 
-    ImageFormat preferredFormat
+    String url,
+    int? maxSize,
+    ImageFormat preferredFormat,
   ) async {
     try {
       final uri = Uri.parse(url);
-      final response = await http.get(uri).timeout(
-        const Duration(seconds: 30),
-        onTimeout: () => throw TimeoutException('Icon download timeout'),
-      );
+      final response = await http
+          .get(uri)
+          .timeout(
+            const Duration(seconds: 30),
+            onTimeout: () => throw TimeoutException('Icon download timeout'),
+          );
 
       if (response.statusCode != 200 || response.bodyBytes.isEmpty) {
         return null;
@@ -417,7 +451,11 @@ class UnifiedIconService {
     return originalBytes;
   }
 
-  Future<void> _saveToCache(String cacheKey, Uint8List iconData, String url) async {
+  Future<void> _saveToCache(
+    String cacheKey,
+    Uint8List iconData,
+    String url,
+  ) async {
     try {
       final cachedFile = File(path.join(_cacheDir.path, '$cacheKey.cache'));
       await cachedFile.writeAsBytes(iconData);
@@ -437,7 +475,8 @@ class UnifiedIconService {
 
   void _addToMemoryCache(String cacheKey, Uint8List iconData) {
     // Remove oldest entries if memory cache is full
-    while (_getMemoryCacheSize() > _maxMemoryCacheSize && _memoryCache.isNotEmpty) {
+    while (_getMemoryCacheSize() > _maxMemoryCacheSize &&
+        _memoryCache.isNotEmpty) {
       final oldestKey = _memoryCache.keys.first;
       _memoryCache.remove(oldestKey);
     }
@@ -449,8 +488,7 @@ class UnifiedIconService {
   }
 
   int _getMemoryCacheSize() {
-    return _memoryCache.values
-        .fold(0, (sum, icon) => sum + icon.data.length);
+    return _memoryCache.values.fold(0, (sum, icon) => sum + icon.data.length);
   }
 
   void _completePendingRequests(String cacheKey, Uint8List? result) {
@@ -460,7 +498,11 @@ class UnifiedIconService {
     }
   }
 
-  void _recordPerformance(String cacheKey, DateTime startTime, IconSource source) {
+  void _recordPerformance(
+    String cacheKey,
+    DateTime startTime,
+    IconSource source,
+  ) {
     final duration = DateTime.now().difference(startTime);
     _performanceMetrics[cacheKey] = IconPerformanceMetrics(
       loadTime: duration,
@@ -537,7 +579,7 @@ class UnifiedIconService {
     for (final fileInfo in cacheFiles) {
       final file = fileInfo['file'] as File;
       final modified = fileInfo['modified'] as DateTime;
-      
+
       if (now.difference(modified) > _maxAge) {
         try {
           await file.delete();
@@ -552,14 +594,14 @@ class UnifiedIconService {
     // Enforce size limit
     if (totalSize > _maxCacheSize) {
       cacheFiles.sort((a, b) => a['modified'].compareTo(b['modified']));
-      
+
       int currentSize = totalSize;
       for (final fileInfo in cacheFiles) {
         if (currentSize <= _maxCacheSize) break;
-        
+
         final file = fileInfo['file'] as File;
         final size = fileInfo['size'] as int;
-        
+
         try {
           await file.delete();
           final metaFile = File('${file.path}.meta');
@@ -607,13 +649,13 @@ class IconResult {
   final bool isSuccess;
 
   IconResult.success(this.data, {required this.source})
-      : error = null,
-        isSuccess = true;
+    : error = null,
+      isSuccess = true;
 
   IconResult.error(this.error)
-      : data = null,
-        source = IconSource.fallback,
-        isSuccess = false;
+    : data = null,
+      source = IconSource.fallback,
+      isSuccess = false;
 }
 
 class BatchIconResult {
@@ -658,10 +700,7 @@ class MemoryCachedIcon {
   final Uint8List data;
   final DateTime timestamp;
 
-  MemoryCachedIcon({
-    required this.data,
-    required this.timestamp,
-  });
+  MemoryCachedIcon({required this.data, required this.timestamp});
 
   bool get isExpired {
     return DateTime.now().difference(timestamp) > const Duration(days: 1);
@@ -738,17 +777,6 @@ enum IconEventType {
   cacheCleared,
 }
 
-enum IconSource {
-  memory,
-  disk,
-  network,
-  fallback,
-  deduplicated,
-}
+enum IconSource { memory, disk, network, fallback, deduplicated }
 
-enum ImageFormat {
-  auto,
-  png,
-  jpeg,
-  webp,
-}
+enum ImageFormat { auto, png, jpeg, webp }

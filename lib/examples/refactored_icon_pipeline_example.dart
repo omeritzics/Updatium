@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:updatium/components/enhanced_app_icon.dart';
 import 'package:updatium/models/enhanced_app.dart';
-import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/services/enhanced_icon_prefetcher.dart';
 import 'package:updatium/services/unified_icon_service.dart';
 
 /// Complete example demonstrating the refactored icon-loading pipeline
-/// 
+///
 /// This example shows:
 /// - Unified icon service usage
 /// - Enhanced app model integration
@@ -18,10 +16,12 @@ class RefactoredIconPipelineExample extends StatefulWidget {
   const RefactoredIconPipelineExample({super.key});
 
   @override
-  State<RefactoredIconPipelineExample> createState() => _RefactoredIconPipelineExampleState();
+  State<RefactoredIconPipelineExample> createState() =>
+      _RefactoredIconPipelineExampleState();
 }
 
-class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineExample> {
+class _RefactoredIconPipelineExampleState
+    extends State<RefactoredIconPipelineExample> {
   List<EnhancedApp> _apps = [];
   EnhancedPrefetchStatus? _prefetchStatus;
   IconCacheStats? _cacheStats;
@@ -131,7 +131,9 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
         debugPrint('Icon error: ${event.appId} - ${event.error}');
         break;
       case IconEventType.batchCompleted:
-        debugPrint('Batch completed: ${event.successCount}/${event.count} successful');
+        debugPrint(
+          'Batch completed: ${event.successCount}/${event.count} successful',
+        );
         break;
       default:
         break;
@@ -162,7 +164,9 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
         title: const Text('Refactored Icon Pipeline'),
         actions: [
           IconButton(
-            icon: Icon(_showPerformanceOverlay ? Icons.speed : Icons.speed_outlined),
+            icon: Icon(
+              _showPerformanceOverlay ? Icons.speed : Icons.speed_outlined,
+            ),
             onPressed: () {
               setState(() {
                 _showPerformanceOverlay = !_showPerformanceOverlay;
@@ -181,9 +185,7 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
         children: [
           _buildControlPanel(),
           _buildStatsBar(),
-          Expanded(
-            child: _buildAppGrid(),
-          ),
+          Expanded(child: _buildAppGrid()),
         ],
       ),
       floatingActionButton: Column(
@@ -192,15 +194,15 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
           FloatingActionButton(
             heroTag: 'prefetch',
             onPressed: _startPrefetching,
-            child: const Icon(Icons.download),
             tooltip: 'Start Pre-fetching',
+            child: const Icon(Icons.download),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
             heroTag: 'clear',
             onPressed: _clearCache,
-            child: const Icon(Icons.clear),
             tooltip: 'Clear Cache',
+            child: const Icon(Icons.clear),
           ),
         ],
       ),
@@ -210,7 +212,7 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
   Widget _buildControlPanel() {
     return Container(
       padding: const EdgeInsets.all(16),
-      color: Theme.of(context).colorScheme.surfaceVariant,
+      color: Theme.of(context).colorScheme.surfaceContainerHighest,
       child: Column(
         children: [
           Row(
@@ -221,7 +223,8 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
                     labelText: 'Pre-fetch Strategy',
                     border: OutlineInputBorder(),
                   ),
-                  value: _prefetchStatus?.strategy ?? PrefetchStrategy.priority,
+                  initialValue:
+                      _prefetchStatus?.strategy ?? PrefetchStrategy.priority,
                   items: PrefetchStrategy.values.map((strategy) {
                     return DropdownMenuItem(
                       value: strategy,
@@ -236,24 +239,26 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
               const SizedBox(width: 16),
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: _prefetchStatus?.isRunning == true ? null : _startPrefetching,
-                  icon: _prefetchStatus?.isRunning == true 
+                  onPressed: _prefetchStatus?.isRunning == true
+                      ? null
+                      : _startPrefetching,
+                  icon: _prefetchStatus?.isRunning == true
                       ? const SizedBox(
                           width: 16,
                           height: 16,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
                       : const Icon(Icons.play_arrow),
-                  label: Text(_prefetchStatus?.isRunning == true ? 'Running...' : 'Start'),
+                  label: Text(
+                    _prefetchStatus?.isRunning == true ? 'Running...' : 'Start',
+                  ),
                 ),
               ),
             ],
           ),
           if (_prefetchStatus?.isRunning == true) ...[
             const SizedBox(height: 8),
-            LinearProgressIndicator(
-              value: _prefetchStatus?.progress ?? 0.0,
-            ),
+            LinearProgressIndicator(value: _prefetchStatus?.progress ?? 0.0),
             const SizedBox(height: 4),
             Text(
               '${_prefetchStatus?.completedCount ?? 0}/${_prefetchStatus?.totalCount ?? 0} apps',
@@ -273,9 +278,21 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildStatItem('Apps', '${_apps.length}', Icons.apps),
-          _buildStatItem('Memory Cache', '${_cacheStats?.memoryCacheCount ?? 0}', Icons.memory),
-          _buildStatItem('Disk Cache', '${_cacheStats?.diskCacheCount ?? 0}', Icons.storage),
-          _buildStatItem('Pending', '${_cacheStats?.pendingRequests ?? 0}', Icons.pending),
+          _buildStatItem(
+            'Memory Cache',
+            '${_cacheStats?.memoryCacheCount ?? 0}',
+            Icons.memory,
+          ),
+          _buildStatItem(
+            'Disk Cache',
+            '${_cacheStats?.diskCacheCount ?? 0}',
+            Icons.storage,
+          ),
+          _buildStatItem(
+            'Pending',
+            '${_cacheStats?.pendingRequests ?? 0}',
+            Icons.pending,
+          ),
         ],
       ),
     );
@@ -288,14 +305,11 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
         const SizedBox(height: 4),
         Text(
           value,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
+        Text(label, style: Theme.of(context).textTheme.bodySmall),
       ],
     );
   }
@@ -338,9 +352,9 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
                   enablePerformanceOverlay: _showPerformanceOverlay,
                 ),
               ),
-              
+
               const SizedBox(height: 8),
-              
+
               // App info
               Expanded(
                 flex: 2,
@@ -361,13 +375,18 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withOpacity(0.7),
                       ),
                     ),
                     const SizedBox(height: 4),
                     // Priority indicator
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
                         color: _getPriorityColor(app.iconPriority),
                         borderRadius: BorderRadius.circular(10),
@@ -415,10 +434,10 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
   void _clearCache() async {
     await UnifiedIconService.instance.clearCache();
     _refreshCacheStats();
-    
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Cache cleared')),
-    );
+
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Cache cleared')));
   }
 
   Future<void> _refreshCacheStats() async {
@@ -456,7 +475,7 @@ class _RefactoredIconPipelineExampleState extends State<RefactoredIconPipelineEx
 class _AppDetailsDialog extends StatelessWidget {
   final EnhancedApp app;
 
-  const _AppDetailsDialog({super.key, required this.app});
+  const _AppDetailsDialog({required this.app});
 
   @override
   Widget build(BuildContext context) {
@@ -477,19 +496,25 @@ class _AppDetailsDialog extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             // App details
             _buildDetailRow('ID', app.id),
             _buildDetailRow('Author', app.author),
-            _buildDetailRow('Installed', app.installedVersion ?? 'Not installed'),
+            _buildDetailRow(
+              'Installed',
+              app.installedVersion ?? 'Not installed',
+            ),
             _buildDetailRow('Latest', app.latestVersion),
             _buildDetailRow('Priority', app.iconPriority.name),
-            _buildDetailRow('Prefetch Score', app.prefetchScore.toStringAsFixed(1)),
+            _buildDetailRow(
+              'Prefetch Score',
+              app.prefetchScore.toStringAsFixed(1),
+            ),
             if (app.remoteIconUrl != null)
               _buildDetailRow('Icon URL', app.remoteIconUrl!),
             if (app.fallbackIconUrl != null)
               _buildDetailRow('Fallback URL', app.fallbackIconUrl!),
-            
+
             // Loading state
             const SizedBox(height: 16),
             Text(
@@ -526,9 +551,7 @@ class _AppDetailsDialog extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          Expanded(
-            child: Text(value),
-          ),
+          Expanded(child: Text(value)),
         ],
       ),
     );
@@ -539,7 +562,7 @@ class _AppDetailsDialog extends StatelessWidget {
 class _AppOptionsSheet extends StatelessWidget {
   final EnhancedApp app;
 
-  const _AppOptionsSheet({super.key, required this.app});
+  const _AppOptionsSheet({required this.app});
 
   @override
   Widget build(BuildContext context) {
@@ -591,7 +614,7 @@ class _AppOptionsSheet extends StatelessWidget {
 class _PrefetchDetailsDialog extends StatelessWidget {
   final EnhancedPrefetchResult result;
 
-  const _PrefetchDetailsDialog({super.key, required this.result});
+  const _PrefetchDetailsDialog({required this.result});
 
   @override
   Widget build(BuildContext context) {
@@ -603,28 +626,39 @@ class _PrefetchDetailsDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildDetailRow('Strategy', result.strategy.name),
-            _buildDetailRow('Success Rate', '${(result.successRate * 100).toStringAsFixed(1)}%'),
-            _buildDetailRow('Completed', '${result.completedCount}/${result.totalCount}'),
+            _buildDetailRow(
+              'Success Rate',
+              '${(result.successRate * 100).toStringAsFixed(1)}%',
+            ),
+            _buildDetailRow(
+              'Completed',
+              '${result.completedCount}/${result.totalCount}',
+            ),
             _buildDetailRow('Successes', '${result.successCount}'),
             _buildDetailRow('Errors', '${result.errorCount}'),
             _buildDetailRow('Duration', '${result.duration.inSeconds}s'),
-            _buildDetailRow('Throughput', '${result.throughput.toStringAsFixed(1)} apps/s'),
-            
+            _buildDetailRow(
+              'Throughput',
+              '${result.throughput.toStringAsFixed(1)} apps/s',
+            ),
+
             if (result.errors.isNotEmpty) ...[
               const SizedBox(height: 16),
               const Text(
                 'Errors:',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              ...result.errors.take(5).map((error) => 
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Text(
-                    '• ${error.appName}: ${error.error}',
-                    style: const TextStyle(color: Colors.red, fontSize: 12),
+              ...result.errors
+                  .take(5)
+                  .map(
+                    (error) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: Text(
+                        '• ${error.appName}: ${error.error}',
+                        style: const TextStyle(color: Colors.red, fontSize: 12),
+                      ),
+                    ),
                   ),
-                ),
-              ),
               if (result.errors.length > 5)
                 Text(
                   '... and ${result.errors.length - 5} more',
@@ -655,9 +689,7 @@ class _PrefetchDetailsDialog extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          Expanded(
-            child: Text(value),
-          ),
+          Expanded(child: Text(value)),
         ],
       ),
     );

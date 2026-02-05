@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
-import 'package:async/async.dart';
 import 'package:battery_plus/battery_plus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:crypto/crypto.dart';
@@ -1768,7 +1767,7 @@ class AppsProvider with ChangeNotifier {
     }
     loadingApps = false;
     notifyListeners();
-    
+
     // Start icon pre-fetching after apps are loaded
     _startIconPrefetching();
   }
@@ -1780,20 +1779,24 @@ class AppsProvider with ChangeNotifier {
       try {
         // Only start pre-fetching if there are apps with remote icon URLs
         final appsWithRemoteIcons = apps.values
-            .where((appInMemory) => 
-                appInMemory.app.remoteIconUrl != null && 
-                appInMemory.app.remoteIconUrl!.isNotEmpty)
+            .where(
+              (appInMemory) =>
+                  appInMemory.app.remoteIconUrl != null &&
+                  appInMemory.app.remoteIconUrl!.isNotEmpty,
+            )
             .length;
 
         if (appsWithRemoteIcons > 0) {
-          LogsProvider().add('Starting background icon pre-fetching for $appsWithRemoteIcons apps');
-          
+          LogsProvider().add(
+            'Starting background icon pre-fetching for $appsWithRemoteIcons apps',
+          );
+
           // Start pre-fetching without awaiting to avoid blocking
           unawaited(
             IconPrefetcher.instance.startPrefetching(
               apps: apps.values.map((appInMemory) => appInMemory.app).toList(),
               forceRefresh: false,
-            )
+            ),
           );
         }
       } catch (e) {
@@ -1806,7 +1809,7 @@ class AppsProvider with ChangeNotifier {
     if (apps[appId]?.icon == null) {
       final app = apps[appId]?.app;
       Uint8List? icon;
-      
+
       // Try to get icon from IconCache using remoteIconUrl first
       if (app?.remoteIconUrl != null && app!.remoteIconUrl!.isNotEmpty) {
         icon = await IconCache.instance.getIcon(
@@ -1816,12 +1819,10 @@ class AppsProvider with ChangeNotifier {
           fallbackIcon: null,
         );
       }
-      
+
       // If no icon from cache, try installed app icon
-      if (icon == null) {
-        icon = await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
-      }
-      
+      icon ??= await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
+
       if (icon != null) {
         apps.update(
           apps[appId]!.app.id,
@@ -1846,7 +1847,7 @@ class AppsProvider with ChangeNotifier {
   /// Get icon for an app using the IconCache service
   /// This is the main API for getting app icons with remote URL support
   Future<Uint8List?> getIcon(
-    String appId, 
+    String appId,
     String? remoteIconUrl, {
     bool forceRefresh = false,
     Uint8List? fallbackIcon,
@@ -1955,31 +1956,38 @@ class AppsProvider with ChangeNotifier {
     );
     notifyListeners();
     // Export safely without blocking, handle errors gracefully
-    unawaited(export(isAuto: true).catchError((e) {
-      // Log export errors but don't crash the app
-      // Export failures shouldn't prevent the main operation from completing
-    }));
+    unawaited(
+      export(isAuto: true).catchError((e) {
+        // Log export errors but don't crash the app
+        // Export failures shouldn't prevent the main operation from completing
+      }),
+    );
   }
 
   /// Lightweight method for load-time corrections that avoids expensive operations
   /// Only writes JSON file and updates in-memory map without:
   /// - getInstalledInfo() calls
-  /// - icon/label retrieval  
+  /// - icon/label retrieval
   /// - auto-export triggers
   Future<void> persistAppJsonOnly(App app, {bool updateMemory = true}) async {
-    if (!this.apps.containsKey(app.id)) {
+    if (!apps.containsKey(app.id)) {
       return;
     }
-    
+
     String filePath = '${(await getAppsDir()).path}/${app.id}.json';
     File('$filePath.tmp').writeAsStringSync(jsonEncode(app.toJson()));
     File('$filePath.tmp').renameSync(filePath);
-    
+
     if (updateMemory) {
       try {
-        this.apps.update(
+        apps.update(
           app.id,
-          (value) => AppInMemory(app, value.downloadProgress, value.installedInfo, value.icon),
+          (value) => AppInMemory(
+            app,
+            value.downloadProgress,
+            value.installedInfo,
+            value.icon,
+          ),
           ifAbsent: () => AppInMemory(app, null, null, null),
         );
       } catch (e) {
@@ -2013,10 +2021,12 @@ class AppsProvider with ChangeNotifier {
     if (appIds.isNotEmpty) {
       notifyListeners();
       // Export safely without blocking, handle errors gracefully
-      unawaited(export(isAuto: true).catchError((e) {
-        // Log export errors but don't crash the app
-        // Export failures shouldn't prevent app removal from completing
-      }));
+      unawaited(
+        export(isAuto: true).catchError((e) {
+          // Log export errors but don't crash the app
+          // Export failures shouldn't prevent app removal from completing
+        }),
+      );
     }
   }
 

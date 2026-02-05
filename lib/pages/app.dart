@@ -370,7 +370,7 @@ class _AppPageState extends State<AppPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: () => pm.openApp(app!.app.id),
+                onTap: () => pm.openApp(app.app.id),
                 child: CachedAppIcon(
                   app: app!.app,
                   size: small ? 70 : 150,

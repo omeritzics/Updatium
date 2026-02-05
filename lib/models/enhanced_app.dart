@@ -146,15 +146,15 @@ class EnhancedApp {
 
   // Check if icon should be pre-fetched
   bool get shouldPrefetch {
-    return hasIcon && 
-           iconPriority != IconPriority.low &&
-           (pinned || installedVersion != null);
+    return hasIcon &&
+        iconPriority != IconPriority.low &&
+        (pinned || installedVersion != null);
   }
 
   // Get icon priority score for pre-fetching
   double get prefetchScore {
     double score = 0.0;
-    
+
     // Priority based on app importance
     switch (iconPriority) {
       case IconPriority.high:
@@ -167,20 +167,24 @@ class EnhancedApp {
         score += 10;
         break;
     }
-    
+
     // Bonus for pinned apps
     if (pinned) score += 30;
-    
+
     // Bonus for installed apps
     if (installedVersion != null) score += 20;
-    
+
     // Bonus for recently updated apps
     if (lastUpdateCheck != null) {
-      final daysSinceUpdate = DateTime.now().difference(lastUpdateCheck!).inDays;
-      if (daysSinceUpdate < 7) score += 15;
-      else if (daysSinceUpdate < 30) score += 10;
+      final daysSinceUpdate = DateTime.now()
+          .difference(lastUpdateCheck!)
+          .inDays;
+      if (daysSinceUpdate < 7) {
+        score += 15;
+      } else if (daysSinceUpdate < 30)
+        score += 10;
     }
-    
+
     return score;
   }
 
@@ -304,18 +308,13 @@ class IconMetadata {
 }
 
 /// Icon loading states for UI optimization
-enum IconLoadingState {
-  notStarted,
-  loading,
-  loaded,
-  error,
-}
+enum IconLoadingState { notStarted, loading, loaded, error }
 
 /// Icon priority for pre-fetching
 enum IconPriority {
-  low,    // Background apps, rarely used
-  normal,  // Regular apps
-  high,    // Pinned, frequently used apps
+  low, // Background apps, rarely used
+  normal, // Regular apps
+  high, // Pinned, frequently used apps
 }
 
 /// Icon request configuration for fine-tuned loading

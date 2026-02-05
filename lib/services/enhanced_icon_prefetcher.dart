@@ -1,7 +1,4 @@
 import 'dart:async';
-import 'dart:isolate';
-import 'dart:ui';
-import 'package:flutter/foundation.dart';
 import 'package:updatium/models/enhanced_app.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/services/unified_icon_service.dart';
@@ -27,25 +24,26 @@ class EnhancedIconPrefetcher {
   bool _isRunning = false;
   bool _isPaused = false;
   PrefetchStrategy _strategy = PrefetchStrategy.priority;
-  
+
   // Progress tracking
   int _completedCount = 0;
   int _totalCount = 0;
   int _successCount = 0;
   int _errorCount = 0;
   final List<PrefetchError> _errors = [];
-  
+
   // Performance tracking
   final Map<String, PrefetchMetrics> _metrics = {};
   DateTime? _startTime;
 
   // Stream controllers
-  final StreamController<EnhancedPrefetchProgress> _progressController = 
+  final StreamController<EnhancedPrefetchProgress> _progressController =
       StreamController<EnhancedPrefetchProgress>.broadcast();
-  final StreamController<EnhancedPrefetchResult> _resultController = 
+  final StreamController<EnhancedPrefetchResult> _resultController =
       StreamController<EnhancedPrefetchResult>.broadcast();
 
-  Stream<EnhancedPrefetchProgress> get progressStream => _progressController.stream;
+  Stream<EnhancedPrefetchProgress> get progressStream =>
+      _progressController.stream;
   Stream<EnhancedPrefetchResult> get resultStream => _resultController.stream;
 
   // Getters
@@ -81,7 +79,7 @@ class EnhancedIconPrefetcher {
     try {
       // Get apps list if not provided
       apps ??= await _getTopApps(topCount, strategy);
-      
+
       if (apps.isEmpty) {
         LogsProvider().add('No apps available for icon pre-fetching');
         _completePrefetching();
@@ -89,20 +87,29 @@ class EnhancedIconPrefetcher {
       }
 
       _totalCount = apps.length;
-      _emitProgress(EnhancedPrefetchProgress(
-        phase: PrefetchPhase.starting,
-        completed: 0,
-        total: _totalCount,
-        currentApp: '',
-        strategy: strategy,
-      ));
+      _emitProgress(
+        EnhancedPrefetchProgress(
+          phase: PrefetchPhase.starting,
+          completed: 0,
+          total: _totalCount,
+          currentApp: '',
+          strategy: strategy,
+        ),
+      );
 
-      LogsProvider().add('Starting enhanced icon pre-fetching for ${apps.length} apps with strategy: $strategy');
+      LogsProvider().add(
+        'Starting enhanced icon pre-fetching for ${apps.length} apps with strategy: $strategy',
+      );
 
       // Execute based on strategy
       switch (strategy) {
         case PrefetchStrategy.priority:
-          await _executePriorityBased(apps, maxConcurrent, forceRefresh, config);
+          await _executePriorityBased(
+            apps,
+            maxConcurrent,
+            forceRefresh,
+            config,
+          );
           break;
         case PrefetchStrategy.sequential:
           await _executeSequential(apps, forceRefresh, config);
@@ -116,7 +123,6 @@ class EnhancedIconPrefetcher {
       }
 
       _completePrefetching();
-
     } catch (e) {
       _handleError(e, 'Prefetching execution');
     } finally {
@@ -125,16 +131,19 @@ class EnhancedIconPrefetcher {
   }
 
   /// Get top apps based on strategy
-  Future<List<EnhancedApp>> _getTopApps(int count, PrefetchStrategy strategy) async {
+  Future<List<EnhancedApp>> _getTopApps(
+    int count,
+    PrefetchStrategy strategy,
+  ) async {
     try {
       // This would integrate with AppsProvider to get the list
       // For now, we'll return an empty list as placeholder
       final apps = <EnhancedApp>[];
-      
+
       if (apps.isEmpty) return [];
 
       List<EnhancedApp> sortedApps;
-      
+
       switch (strategy) {
         case PrefetchStrategy.priority:
           sortedApps = List.from(apps)
@@ -158,9 +167,10 @@ class EnhancedIconPrefetcher {
           .take(count)
           .toList();
 
-      LogsProvider().add('Found ${filteredApps.length} apps eligible for pre-fetching');
+      LogsProvider().add(
+        'Found ${filteredApps.length} apps eligible for pre-fetching',
+      );
       return filteredApps;
-
     } catch (e) {
       LogsProvider().add('Error getting top apps for pre-fetching: $e');
       return [];
@@ -175,24 +185,33 @@ class EnhancedIconPrefetcher {
     PrefetchConfig? config,
   ) async {
     // Group by priority
-    final highPriority = apps.where((app) => app.iconPriority == IconPriority.high).toList();
-    final normalPriority = apps.where((app) => app.iconPriority == IconPriority.normal).toList();
-    final lowPriority = apps.where((app) => app.iconPriority == IconPriority.low).toList();
+    final highPriority = apps
+        .where((app) => app.iconPriority == IconPriority.high)
+        .toList();
+    final normalPriority = apps
+        .where((app) => app.iconPriority == IconPriority.normal)
+        .toList();
+    final lowPriority = apps
+        .where((app) => app.iconPriority == IconPriority.low)
+        .toList();
 
     // Execute in priority order
     for (final group in [highPriority, normalPriority, lowPriority]) {
       if (group.isEmpty) continue;
-      
-      _emitProgress(EnhancedPrefetchProgress(
-        phase: PrefetchPhase.processing,
-        completed: _completedCount,
-        total: _totalCount,
-        currentApp: 'Processing ${group.length} ${group.first.iconPriority.name} priority apps',
-        strategy: _strategy,
-      ));
+
+      _emitProgress(
+        EnhancedPrefetchProgress(
+          phase: PrefetchPhase.processing,
+          completed: _completedCount,
+          total: _totalCount,
+          currentApp:
+              'Processing ${group.length} ${group.first.iconPriority.name} priority apps',
+          strategy: _strategy,
+        ),
+      );
 
       await _processBatch(group, maxConcurrent, forceRefresh, config);
-      
+
       // Small delay between priority groups
       if (group != lowPriority) {
         await Future.delayed(const Duration(milliseconds: 200));
@@ -212,17 +231,19 @@ class EnhancedIconPrefetcher {
       }
 
       final app = apps[i];
-      
-      _emitProgress(EnhancedPrefetchProgress(
-        phase: PrefetchPhase.processing,
-        completed: _completedCount,
-        total: _totalCount,
-        currentApp: '${app.name} (${i + 1}/${apps.length})',
-        strategy: _strategy,
-      ));
+
+      _emitProgress(
+        EnhancedPrefetchProgress(
+          phase: PrefetchPhase.processing,
+          completed: _completedCount,
+          total: _totalCount,
+          currentApp: '${app.name} (${i + 1}/${apps.length})',
+          strategy: _strategy,
+        ),
+      );
 
       await _prefetchSingleApp(app, forceRefresh, config);
-      
+
       // Small delay between sequential requests
       if (i < apps.length - 1) {
         await Future.delayed(const Duration(milliseconds: 50));
@@ -238,10 +259,10 @@ class EnhancedIconPrefetcher {
     PrefetchConfig? config,
   ) async {
     final batches = <List<EnhancedApp>>[];
-    
+
     for (int i = 0; i < apps.length; i += maxConcurrent) {
-      final end = (i + maxConcurrent < apps.length) 
-          ? i + maxConcurrent 
+      final end = (i + maxConcurrent < apps.length)
+          ? i + maxConcurrent
           : apps.length;
       batches.add(apps.sublist(i, end));
     }
@@ -252,17 +273,19 @@ class EnhancedIconPrefetcher {
       }
 
       final batch = batches[batchIndex];
-      
-      _emitProgress(EnhancedPrefetchProgress(
-        phase: PrefetchPhase.processing,
-        completed: _completedCount,
-        total: _totalCount,
-        currentApp: 'Batch ${batchIndex + 1}/${batches.length}',
-        strategy: _strategy,
-      ));
+
+      _emitProgress(
+        EnhancedPrefetchProgress(
+          phase: PrefetchPhase.processing,
+          completed: _completedCount,
+          total: _totalCount,
+          currentApp: 'Batch ${batchIndex + 1}/${batches.length}',
+          strategy: _strategy,
+        ),
+      );
 
       await _processBatch(batch, maxConcurrent, forceRefresh, config);
-      
+
       // Delay between batches
       if (batchIndex < batches.length - 1) {
         await Future.delayed(_defaultBatchDelay);
@@ -287,22 +310,25 @@ class EnhancedIconPrefetcher {
       }
 
       final batch = apps.skip(i).take(currentConcurrency).toList();
-      
-      _emitProgress(EnhancedPrefetchProgress(
-        phase: PrefetchPhase.processing,
-        completed: _completedCount,
-        total: _totalCount,
-        currentApp: 'Adaptive batch (concurrency: $currentConcurrency)',
-        strategy: _strategy,
-      ));
+
+      _emitProgress(
+        EnhancedPrefetchProgress(
+          phase: PrefetchPhase.processing,
+          completed: _completedCount,
+          total: _totalCount,
+          currentApp: 'Adaptive batch (concurrency: $currentConcurrency)',
+          strategy: _strategy,
+        ),
+      );
 
       final batchStartTime = DateTime.now();
       await _processBatch(batch, currentConcurrency, forceRefresh, config);
       final batchDuration = DateTime.now().difference(batchStartTime);
 
       // Adjust concurrency based on performance
-      final batchSuccesses = batch.where((app) => 
-          _metrics[app.id]?.lastSuccess ?? false).length;
+      final batchSuccesses = batch
+          .where((app) => _metrics[app.id]?.lastSuccess ?? false)
+          .length;
       final batchFailures = batch.length - batchSuccesses;
 
       recentSuccesses += batchSuccesses;
@@ -312,12 +338,20 @@ class EnhancedIconPrefetcher {
       if ((i ~/ currentConcurrency) % 5 == 0) {
         if (recentFailures > recentSuccesses && currentConcurrency > 1) {
           currentConcurrency = (currentConcurrency / 2).ceil();
-          LogsProvider().add('Reducing concurrency to $currentConcurrency due to failures');
-        } else if (recentSuccesses > recentFailures * 2 && currentConcurrency < maxConcurrent) {
-          currentConcurrency = (currentConcurrency * 1.5).ceil().clamp(1, maxConcurrent);
-          LogsProvider().add('Increasing concurrency to $currentConcurrency due to success');
+          LogsProvider().add(
+            'Reducing concurrency to $currentConcurrency due to failures',
+          );
+        } else if (recentSuccesses > recentFailures * 2 &&
+            currentConcurrency < maxConcurrent) {
+          currentConcurrency = (currentConcurrency * 1.5).ceil().clamp(
+            1,
+            maxConcurrent,
+          );
+          LogsProvider().add(
+            'Increasing concurrency to $currentConcurrency due to success',
+          );
         }
-        
+
         recentSuccesses = 0;
         recentFailures = 0;
       }
@@ -337,14 +371,16 @@ class EnhancedIconPrefetcher {
     bool forceRefresh,
     PrefetchConfig? config,
   ) async {
-    final futures = batch.map((app) => _prefetchSingleApp(app, forceRefresh, config));
+    final futures = batch.map(
+      (app) => _prefetchSingleApp(app, forceRefresh, config),
+    );
     final results = await Future.wait(futures);
 
     // Update counters
     for (int i = 0; i < results.length; i++) {
       final result = results[i];
       final app = batch[i];
-      
+
       if (result.success) {
         _successCount++;
         _metrics[app.id] = (_metrics[app.id] ?? PrefetchMetrics(app.id))
@@ -355,7 +391,7 @@ class EnhancedIconPrefetcher {
         _metrics[app.id] = (_metrics[app.id] ?? PrefetchMetrics(app.id))
             .copyWith(lastSuccess: false, lastError: result.error);
       }
-      
+
       _completedCount++;
     }
   }
@@ -367,7 +403,7 @@ class EnhancedIconPrefetcher {
     PrefetchConfig? config,
   ) async {
     final startTime = DateTime.now();
-    
+
     try {
       if (_isPaused) {
         await _waitForResume();
@@ -387,8 +423,10 @@ class EnhancedIconPrefetcher {
 
       if (iconResult.isSuccess && iconResult.data != null) {
         app.setIconLoaded(iconResult.data!);
-        LogsProvider().add('Successfully prefetched icon for ${app.name} (${app.id}) in ${duration.inMilliseconds}ms');
-        
+        LogsProvider().add(
+          'Successfully prefetched icon for ${app.name} (${app.id}) in ${duration.inMilliseconds}ms',
+        );
+
         return PrefetchAppResult(
           appId: app.id,
           appName: app.name,
@@ -399,8 +437,10 @@ class EnhancedIconPrefetcher {
         );
       } else {
         app.setIconError(iconResult.error ?? 'Unknown error');
-        LogsProvider().add('Failed to prefetch icon for ${app.name} (${app.id}): ${iconResult.error}');
-        
+        LogsProvider().add(
+          'Failed to prefetch icon for ${app.name} (${app.id}): ${iconResult.error}',
+        );
+
         return PrefetchAppResult(
           appId: app.id,
           appName: app.name,
@@ -409,12 +449,13 @@ class EnhancedIconPrefetcher {
           duration: duration,
         );
       }
-
     } catch (e) {
       final duration = DateTime.now().difference(startTime);
       app.setIconError(e.toString());
-      LogsProvider().add('Error prefetching icon for ${app.name} (${app.id}): $e');
-      
+      LogsProvider().add(
+        'Error prefetching icon for ${app.name} (${app.id}): $e',
+      );
+
       return PrefetchAppResult(
         appId: app.id,
         appName: app.name,
@@ -430,7 +471,9 @@ class EnhancedIconPrefetcher {
     // Sort by a combination of priority, recent usage, and performance metrics
     return List.from(apps)..sort((a, b) {
       // Primary: priority
-      final priorityComparison = b.iconPriority.index.compareTo(a.iconPriority.index);
+      final priorityComparison = b.iconPriority.index.compareTo(
+        a.iconPriority.index,
+      );
       if (priorityComparison != 0) return priorityComparison;
 
       // Secondary: prefetch score
@@ -440,7 +483,7 @@ class EnhancedIconPrefetcher {
       // Tertiary: historical performance
       final aMetrics = _metrics[a.id];
       final bMetrics = _metrics[b.id];
-      
+
       if (aMetrics != null && bMetrics != null) {
         final aSuccessRate = aMetrics.successRate;
         final bSuccessRate = bMetrics.successRate;
@@ -454,7 +497,7 @@ class EnhancedIconPrefetcher {
   /// Calculate adaptive delay based on performance
   Duration _calculateAdaptiveDelay(Duration batchDuration, int batchSize) {
     final avgDurationPerRequest = batchDuration.inMilliseconds / batchSize;
-    
+
     if (avgDurationPerRequest > 2000) {
       // Slow requests - increase delay
       return const Duration(milliseconds: 200);
@@ -522,50 +565,56 @@ class EnhancedIconPrefetcher {
   }
 
   void _completePrefetching() {
-    final duration = _startTime != null 
+    final duration = _startTime != null
         ? DateTime.now().difference(_startTime!)
         : Duration.zero;
 
-    _emitProgress(EnhancedPrefetchProgress(
-      phase: PrefetchPhase.completed,
-      completed: _completedCount,
-      total: _totalCount,
-      currentApp: '',
-      strategy: _strategy,
-    ));
+    _emitProgress(
+      EnhancedPrefetchProgress(
+        phase: PrefetchPhase.completed,
+        completed: _completedCount,
+        total: _totalCount,
+        currentApp: '',
+        strategy: _strategy,
+      ),
+    );
 
-    _emitResult(EnhancedPrefetchResult(
-      success: true,
-      strategy: _strategy,
-      completedCount: _completedCount,
-      successCount: _successCount,
-      errorCount: _errorCount,
-      totalCount: _totalCount,
-      duration: duration,
-      errors: List.from(_errors),
-      metrics: Map.from(_metrics),
-    ));
+    _emitResult(
+      EnhancedPrefetchResult(
+        success: true,
+        strategy: _strategy,
+        completedCount: _completedCount,
+        successCount: _successCount,
+        errorCount: _errorCount,
+        totalCount: _totalCount,
+        duration: duration,
+        errors: List.from(_errors),
+        metrics: Map.from(_metrics),
+      ),
+    );
 
     LogsProvider().add(
       'Enhanced icon pre-fetching completed. Strategy: $_strategy, '
       'Success: $_successCount/$_totalCount, '
       'Errors: $_errorCount, '
-      'Duration: ${duration.inSeconds}s'
+      'Duration: ${duration.inSeconds}s',
     );
   }
 
   void _handleError(dynamic error, String context) {
     LogsProvider().add('Error in $context: $error');
-    _emitResult(EnhancedPrefetchResult(
-      success: false,
-      strategy: _strategy,
-      error: error.toString(),
-      completedCount: _completedCount,
-      successCount: _successCount,
-      errorCount: _errorCount,
-      totalCount: _totalCount,
-      errors: List.from(_errors),
-    ));
+    _emitResult(
+      EnhancedPrefetchResult(
+        success: false,
+        strategy: _strategy,
+        error: error.toString(),
+        completedCount: _completedCount,
+        successCount: _successCount,
+        errorCount: _errorCount,
+        totalCount: _totalCount,
+        errors: List.from(_errors),
+      ),
+    );
   }
 
   Future<void> _waitForResume() async {
@@ -688,7 +737,8 @@ class EnhancedPrefetchResult {
   });
 
   double get successRate => totalCount > 0 ? successCount / totalCount : 0.0;
-  double get throughput => totalCount > 0 ? totalCount / duration.inSeconds : 0.0;
+  double get throughput =>
+      totalCount > 0 ? totalCount / duration.inSeconds : 0.0;
 
   @override
   String toString() {
@@ -722,7 +772,8 @@ class EnhancedPrefetchStatus {
   });
 
   double get progress => totalCount > 0 ? completedCount / totalCount : 0.0;
-  Duration? get elapsed => startTime != null ? DateTime.now().difference(startTime!) : null;
+  Duration? get elapsed =>
+      startTime != null ? DateTime.now().difference(startTime!) : null;
 
   @override
   String toString() {
@@ -752,7 +803,9 @@ class PrefetchMetrics {
     Duration? lastDuration,
   }) {
     final metrics = PrefetchMetrics(appId);
-    metrics.successCount = lastSuccess == true ? successCount + 1 : successCount;
+    metrics.successCount = lastSuccess == true
+        ? successCount + 1
+        : successCount;
     metrics.errorCount = lastSuccess == false ? errorCount + 1 : errorCount;
     return metrics;
   }
@@ -785,7 +838,7 @@ class PrefetchError {
   final DateTime timestamp;
 
   PrefetchError(this.appId, this.appName, this.error)
-      : timestamp = DateTime.now();
+    : timestamp = DateTime.now();
 
   @override
   String toString() {
@@ -794,15 +847,10 @@ class PrefetchError {
 }
 
 enum PrefetchStrategy {
-  priority,    // High priority apps first
-  sequential,  // One at a time
-  batch,       // Controlled concurrency
-  adaptive,    // Performance-based adjustment
+  priority, // High priority apps first
+  sequential, // One at a time
+  batch, // Controlled concurrency
+  adaptive, // Performance-based adjustment
 }
 
-enum PrefetchPhase {
-  starting,
-  processing,
-  completed,
-  error,
-}
+enum PrefetchPhase { starting, processing, completed, error }

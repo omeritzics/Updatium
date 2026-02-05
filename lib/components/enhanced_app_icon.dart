@@ -6,7 +6,7 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/services/unified_icon_service.dart';
 
 /// Enhanced App Icon Widget with unified service integration
-/// 
+///
 /// Features:
 /// - Unified icon service integration
 /// - Advanced loading states
@@ -52,13 +52,13 @@ class EnhancedAppIcon extends StatefulWidget {
   State<EnhancedAppIcon> createState() => _EnhancedAppIconState();
 }
 
-class _EnhancedAppIconState extends State<EnhancedAppIcon> 
+class _EnhancedAppIconState extends State<EnhancedAppIcon>
     with TickerProviderStateMixin {
   late AnimationController _shimmerController;
   late AnimationController _pulseController;
   late Animation<double> _shimmerAnimation;
   late Animation<double> _pulseAnimation;
-  
+
   IconResult? _lastResult;
   bool _isLoading = false;
   String? _lastAppId;
@@ -76,12 +76,12 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
   @override
   void didUpdateWidget(EnhancedAppIcon oldWidget) {
     super.didUpdateWidget(oldWidget);
-    
+
     // Check if we need to reload
     final appIdChanged = oldWidget.app.id != widget.app.id;
     final urlChanged = oldWidget.app.remoteIconUrl != widget.app.remoteIconUrl;
     final forceRefresh = widget.config.forceRefresh;
-    
+
     if (appIdChanged || urlChanged || forceRefresh) {
       _loadIcon();
     }
@@ -99,31 +99,23 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    _shimmerAnimation = Tween<double>(
-      begin: -2.0,
-      end: 2.0,
-    ).animate(CurvedAnimation(
-      parent: _shimmerController,
-      curve: Curves.easeInOut,
-    ));
+    _shimmerAnimation = Tween<double>(begin: -2.0, end: 2.0).animate(
+      CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
+    );
 
     _pulseController = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
-    _pulseAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.2,
-    ).animate(CurvedAnimation(
-      parent: _pulseController,
-      curve: Curves.easeInOut,
-    ));
+    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    );
   }
 
   Future<void> _loadIcon() async {
     // Skip if already loading the same app
-    if (_isLoading && 
-        _lastAppId == widget.app.id && 
+    if (_isLoading &&
+        _lastAppId == widget.app.id &&
         _lastRemoteUrl == widget.app.remoteIconUrl) {
       return;
     }
@@ -134,7 +126,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
       _lastRemoteUrl = widget.app.remoteIconUrl;
       _loadStartTime = DateTime.now();
       widget.app.setIconLoading();
-      
+
       if (widget.showLoadingIndicator) {
         _shimmerController.repeat();
         _pulseController.repeat(reverse: true);
@@ -158,7 +150,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
           _retryCount = 0;
           _shimmerController.stop();
           _pulseController.stop();
-          
+
           if (result.isSuccess) {
             widget.app.setIconLoaded(result.data!);
           } else {
@@ -188,11 +180,13 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
   void _logPerformance(IconResult result) {
     if (_loadStartTime != null && widget.enablePerformanceOverlay) {
       final loadTime = DateTime.now().difference(_loadStartTime!);
-      debugPrint('Icon load performance for ${widget.app.name}: '
-                '${loadTime.inMilliseconds}ms, '
-                'Source: ${result.source}, '
-                'Size: ${result.data?.length ?? 0} bytes, '
-                'Retries: $_retryCount');
+      debugPrint(
+        'Icon load performance for ${widget.app.name}: '
+        '${loadTime.inMilliseconds}ms, '
+        'Source: ${result.source}, '
+        'Size: ${result.data?.length ?? 0} bytes, '
+        'Retries: $_retryCount',
+      );
     }
   }
 
@@ -222,7 +216,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
       onTap: widget.onTap,
       onDoubleTap: widget.onDoubleTap,
       onLongPress: widget.onLongPress,
-      child: Container(
+      child: SizedBox(
         width: widget.size,
         height: widget.size,
         child: Stack(
@@ -241,8 +235,8 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
       return widget.customPlaceholder!;
     }
 
-    final borderRadius = widget.borderRadius ?? 
-        BorderRadius.circular(widget.size * 0.125);
+    final borderRadius =
+        widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125);
 
     return Stack(
       children: [
@@ -252,19 +246,22 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
           height: widget.size,
           decoration: BoxDecoration(
             borderRadius: borderRadius,
-            color: widget.backgroundColor ?? 
-                   Theme.of(context).colorScheme.surfaceVariant,
+            color:
+                widget.backgroundColor ??
+                Theme.of(context).colorScheme.surfaceContainerHighest,
             border: widget.border,
           ),
           child: Center(
             child: Icon(
               Icons.apps,
               size: widget.size * 0.5,
-              color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.5),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurfaceVariant.withOpacity(0.5),
             ),
           ),
         ),
-        
+
         // Shimmer effect
         if (widget.showLoadingIndicator)
           ClipRRect(
@@ -294,7 +291,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
               },
             ),
           ),
-        
+
         // Pulse effect for loading indicator
         if (widget.showLoadingIndicator)
           Positioned.fill(
@@ -309,7 +306,9 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                     decoration: BoxDecoration(
                       borderRadius: borderRadius,
                       border: Border.all(
-                        color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primary.withOpacity(0.5),
                         width: 2.0,
                       ),
                     ),
@@ -327,8 +326,8 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
       return widget.customErrorWidget!;
     }
 
-    final borderRadius = widget.borderRadius ?? 
-        BorderRadius.circular(widget.size * 0.125);
+    final borderRadius =
+        widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125);
 
     return Stack(
       children: [
@@ -349,8 +348,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                 size: widget.size * 0.4,
                 color: Theme.of(context).colorScheme.error,
               ),
-              if (widget.size > 32)
-                SizedBox(height: widget.size * 0.05),
+              if (widget.size > 32) SizedBox(height: widget.size * 0.05),
               if (widget.size > 32)
                 Text(
                   '!',
@@ -363,7 +361,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
             ],
           ),
         ),
-        
+
         // Retry button for larger icons
         if (widget.size > 40)
           Positioned.fill(
@@ -390,8 +388,8 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
   }
 
   Widget _buildIconWidget(Uint8List iconData) {
-    final borderRadius = widget.borderRadius ?? 
-        BorderRadius.circular(widget.size * 0.125);
+    final borderRadius =
+        widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125);
 
     return Stack(
       children: [
@@ -405,9 +403,12 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
             gaplessPlayback: true,
             fit: BoxFit.cover,
             opacity: AlwaysStoppedAnimation(
-              widget.showInstalledIndicator && 
-                      Provider.of<AppsProvider>(context, listen: false)
-                          .apps[widget.app.id]?.installedInfo == null
+              widget.showInstalledIndicator &&
+                      Provider.of<AppsProvider>(
+                            context,
+                            listen: false,
+                          ).apps[widget.app.id]?.installedInfo ==
+                          null
                   ? 0.6
                   : 1.0,
             ),
@@ -416,22 +417,20 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
             },
           ),
         ),
-        
+
         // Installed indicator
         if (widget.showInstalledIndicator)
           Positioned.fill(
             child: Consumer<AppsProvider>(
               builder: (context, appsProvider, child) {
-                final isInstalled = appsProvider.apps[widget.app.id]?.installedInfo != null;
+                final isInstalled =
+                    appsProvider.apps[widget.app.id]?.installedInfo != null;
                 if (!isInstalled) return const SizedBox.shrink();
-                
+
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: borderRadius,
-                    border: Border.all(
-                      color: Colors.green,
-                      width: 2.0,
-                    ),
+                    border: Border.all(color: Colors.green, width: 2.0),
                   ),
                 );
               },
@@ -446,7 +445,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
       return const SizedBox.shrink();
     }
 
-    final loadTime = _loadStartTime != null 
+    final loadTime = _loadStartTime != null
         ? DateTime.now().difference(_loadStartTime!).inMilliseconds
         : 0;
 
@@ -472,11 +471,8 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
               ),
             ),
             Text(
-              '${_lastResult!.source.name}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 8,
-              ),
+              _lastResult!.source.name,
+              style: const TextStyle(color: Colors.white, fontSize: 8),
             ),
             if (_retryCount > 0)
               Text(

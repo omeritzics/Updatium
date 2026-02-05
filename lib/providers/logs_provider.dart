@@ -72,14 +72,20 @@ create table if not exists $logTable (
       onUpgrade: (Database db, int oldVersion, int newVersion) async {
         if (oldVersion < 2) {
           // Add context column for structured logging
-          await db.execute('ALTER TABLE $logTable ADD COLUMN $contextColumn text');
+          await db.execute(
+            'ALTER TABLE $logTable ADD COLUMN $contextColumn text',
+          );
         }
       },
     );
     return db!;
   }
 
-  Future<Log> add(String message, {LogLevels level = LogLevels.info, String? context}) async {
+  Future<Log> add(
+    String message, {
+    LogLevels level = LogLevels.info,
+    String? context,
+  }) async {
     Log l = Log(message, level, context: context);
     l.id = await (await getDB()).insert(logTable, l.toMap());
     if (kDebugMode) {
@@ -96,14 +102,12 @@ create table if not exists $logTable (
     String? errorCode,
     LogLevels level = LogLevels.info,
   }) async {
-    final structuredMessage = '$operation - $component${errorCode != null ? ' - Error: $errorCode' : ''}';
-    final context = '{"operation":"$operation","component":"$component"${errorCode != null ? ',"error":"$errorCode"' : ''}}';
-    
-    return await add(
-      structuredMessage,
-      level: level,
-      context: context,
-    );
+    final structuredMessage =
+        '$operation - $component${errorCode != null ? ' - Error: $errorCode' : ''}';
+    final context =
+        '{"operation":"$operation","component":"$component"${errorCode != null ? ',"error":"$errorCode"' : ''}}';
+
+    return await add(structuredMessage, level: level, context: context);
   }
 
   Future<List<Log>> get({DateTime? before, DateTime? after}) async {

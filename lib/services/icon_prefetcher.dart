@@ -1,7 +1,4 @@
 import 'dart:async';
-import 'dart:isolate';
-import 'dart:ui';
-import 'package:flutter/foundation.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/services/icon_cache.dart';
@@ -28,9 +25,9 @@ class IconPrefetcher {
   final List<String> _failedApps = [];
 
   // Stream controllers for progress tracking
-  final StreamController<PrefetchProgress> _progressController = 
+  final StreamController<PrefetchProgress> _progressController =
       StreamController<PrefetchProgress>.broadcast();
-  final StreamController<PrefetchResult> _resultController = 
+  final StreamController<PrefetchResult> _resultController =
       StreamController<PrefetchResult>.broadcast();
 
   Stream<PrefetchProgress> get progressStream => _progressController.stream;
@@ -62,7 +59,7 @@ class IconPrefetcher {
     try {
       // Get apps list if not provided
       apps ??= await _getTopApps(topCount);
-      
+
       if (apps.isEmpty) {
         LogsProvider().add('No apps available for icon pre-fetching');
         _isRunning = false;
@@ -70,45 +67,52 @@ class IconPrefetcher {
       }
 
       _totalCount = apps.length;
-      _progressController.add(PrefetchProgress(
-        completed: 0,
-        total: _totalCount,
-        currentApp: '',
-        phase: PrefetchPhase.starting,
-      ));
+      _progressController.add(
+        PrefetchProgress(
+          completed: 0,
+          total: _totalCount,
+          currentApp: '',
+          phase: PrefetchPhase.starting,
+        ),
+      );
 
       LogsProvider().add('Starting icon pre-fetching for ${apps.length} apps');
 
       // Process apps in batches to avoid overwhelming the system
       await _processAppsInBatches(apps, forceRefresh);
 
-      _progressController.add(PrefetchProgress(
-        completed: _completedCount,
-        total: _totalCount,
-        currentApp: '',
-        phase: PrefetchPhase.completed,
-      ));
-
-      _resultController.add(PrefetchResult(
-        success: true,
-        completedCount: _completedCount,
-        totalCount: _totalCount,
-        failedApps: List.from(_failedApps),
-      ));
-
-      LogsProvider().add(
-        'Icon pre-fetching completed. Success: $_completedCount/${_totalCount}, Failed: ${_failedApps.length}'
+      _progressController.add(
+        PrefetchProgress(
+          completed: _completedCount,
+          total: _totalCount,
+          currentApp: '',
+          phase: PrefetchPhase.completed,
+        ),
       );
 
+      _resultController.add(
+        PrefetchResult(
+          success: true,
+          completedCount: _completedCount,
+          totalCount: _totalCount,
+          failedApps: List.from(_failedApps),
+        ),
+      );
+
+      LogsProvider().add(
+        'Icon pre-fetching completed. Success: $_completedCount/$_totalCount, Failed: ${_failedApps.length}',
+      );
     } catch (e) {
       LogsProvider().add('Error during icon pre-fetching: $e');
-      _resultController.add(PrefetchResult(
-        success: false,
-        completedCount: _completedCount,
-        totalCount: _totalCount,
-        failedApps: List.from(_failedApps),
-        error: e.toString(),
-      ));
+      _resultController.add(
+        PrefetchResult(
+          success: false,
+          completedCount: _completedCount,
+          totalCount: _totalCount,
+          failedApps: List.from(_failedApps),
+          error: e.toString(),
+        ),
+      );
     } finally {
       _isRunning = false;
     }
@@ -118,7 +122,10 @@ class IconPrefetcher {
   Future<List<App>> _getTopApps(int count) async {
     try {
       final appsProvider = AppsProvider();
-      final allApps = appsProvider.getAppValues().map((appInMemory) => appInMemory.app).toList();
+      final allApps = appsProvider
+          .getAppValues()
+          .map((appInMemory) => appInMemory.app)
+          .toList();
 
       if (allApps.isEmpty) return [];
 
@@ -148,20 +155,25 @@ class IconPrefetcher {
         }
 
         // Recently updated apps
-        final aDate = a.lastUpdateCheck ?? DateTime.fromMillisecondsSinceEpoch(0);
-        final bDate = b.lastUpdateCheck ?? DateTime.fromMillisecondsSinceEpoch(0);
+        final aDate =
+            a.lastUpdateCheck ?? DateTime.fromMillisecondsSinceEpoch(0);
+        final bDate =
+            b.lastUpdateCheck ?? DateTime.fromMillisecondsSinceEpoch(0);
         return bDate.compareTo(aDate);
       });
 
       // Filter apps that have remote icon URLs
       final appsWithIcons = allApps
-          .where((app) => app.remoteIconUrl != null && app.remoteIconUrl!.isNotEmpty)
+          .where(
+            (app) => app.remoteIconUrl != null && app.remoteIconUrl!.isNotEmpty,
+          )
           .take(count)
           .toList();
 
-      LogsProvider().add('Found ${appsWithIcons.length} apps with remote icon URLs for pre-fetching');
+      LogsProvider().add(
+        'Found ${appsWithIcons.length} apps with remote icon URLs for pre-fetching',
+      );
       return appsWithIcons;
-
     } catch (e) {
       LogsProvider().add('Error getting top apps for pre-fetching: $e');
       return [];
@@ -171,11 +183,11 @@ class IconPrefetcher {
   /// Process apps in batches to control concurrency
   Future<void> _processAppsInBatches(List<App> apps, bool forceRefresh) async {
     final batches = <List<App>>[];
-    
+
     // Create batches of max concurrent downloads
     for (int i = 0; i < apps.length; i += _maxConcurrentDownloads) {
-      final end = (i + _maxConcurrentDownloads < apps.length) 
-          ? i + _maxConcurrentDownloads 
+      final end = (i + _maxConcurrentDownloads < apps.length)
+          ? i + _maxConcurrentDownloads
           : apps.length;
       batches.add(apps.sublist(i, end));
     }
@@ -186,13 +198,15 @@ class IconPrefetcher {
       }
 
       final batch = batches[batchIndex];
-      
-      _progressController.add(PrefetchProgress(
-        completed: _completedCount,
-        total: _totalCount,
-        currentApp: 'Processing batch ${batchIndex + 1}/${batches.length}',
-        phase: PrefetchPhase.processing,
-      ));
+
+      _progressController.add(
+        PrefetchProgress(
+          completed: _completedCount,
+          total: _totalCount,
+          currentApp: 'Processing batch ${batchIndex + 1}/${batches.length}',
+          phase: PrefetchPhase.processing,
+        ),
+      );
 
       // Process batch concurrently
       final futures = batch.map((app) => _prefetchAppIcon(app, forceRefresh));
@@ -221,12 +235,14 @@ class IconPrefetcher {
         await _waitForResume();
       }
 
-      _progressController.add(PrefetchProgress(
-        completed: _completedCount,
-        total: _totalCount,
-        currentApp: app.name,
-        phase: PrefetchPhase.downloading,
-      ));
+      _progressController.add(
+        PrefetchProgress(
+          completed: _completedCount,
+          total: _totalCount,
+          currentApp: app.name,
+          phase: PrefetchPhase.downloading,
+        ),
+      );
 
       // Use IconCache to download and cache the icon
       final iconData = await IconCache.instance.getIcon(
@@ -237,7 +253,9 @@ class IconPrefetcher {
       );
 
       if (iconData != null) {
-        LogsProvider().add('Successfully prefetched icon for ${app.name} (${app.id})');
+        LogsProvider().add(
+          'Successfully prefetched icon for ${app.name} (${app.id})',
+        );
         return PrefetchAppResult(
           appId: app.id,
           appName: app.name,
@@ -245,7 +263,9 @@ class IconPrefetcher {
           iconSize: iconData.length,
         );
       } else {
-        LogsProvider().add('Failed to prefetch icon for ${app.name} (${app.id}): No data returned');
+        LogsProvider().add(
+          'Failed to prefetch icon for ${app.name} (${app.id}): No data returned',
+        );
         return PrefetchAppResult(
           appId: app.id,
           appName: app.name,
@@ -253,9 +273,10 @@ class IconPrefetcher {
           error: 'No icon data returned',
         );
       }
-
     } catch (e) {
-      LogsProvider().add('Error prefetching icon for ${app.name} (${app.id}): $e');
+      LogsProvider().add(
+        'Error prefetching icon for ${app.name} (${app.id}): $e',
+      );
       return PrefetchAppResult(
         appId: app.id,
         appName: app.name,
@@ -394,10 +415,4 @@ class PrefetchStatus {
 }
 
 /// Phases of pre-fetching process
-enum PrefetchPhase {
-  starting,
-  processing,
-  downloading,
-  completed,
-  error,
-}
+enum PrefetchPhase { starting, processing, downloading, completed, error }

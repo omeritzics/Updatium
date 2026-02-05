@@ -30,11 +30,11 @@ class CachedAppIcon extends StatefulWidget {
   State<CachedAppIcon> createState() => _CachedAppIconState();
 }
 
-class _CachedAppIconState extends State<CachedAppIcon> 
+class _CachedAppIconState extends State<CachedAppIcon>
     with SingleTickerProviderStateMixin {
   late AnimationController _shimmerController;
   late Animation<double> _shimmerAnimation;
-  
+
   Uint8List? _iconData;
   bool _isLoading = false;
   bool _hasError = false;
@@ -48,14 +48,10 @@ class _CachedAppIconState extends State<CachedAppIcon>
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    _shimmerAnimation = Tween<double>(
-      begin: -2.0,
-      end: 2.0,
-    ).animate(CurvedAnimation(
-      parent: _shimmerController,
-      curve: Curves.easeInOut,
-    ));
-    
+    _shimmerAnimation = Tween<double>(begin: -2.0, end: 2.0).animate(
+      CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
+    );
+
     // Start loading the icon
     _loadIcon();
   }
@@ -63,9 +59,9 @@ class _CachedAppIconState extends State<CachedAppIcon>
   @override
   void didUpdateWidget(CachedAppIcon oldWidget) {
     super.didUpdateWidget(oldWidget);
-    
+
     // Reload icon if app changed or remote URL changed
-    if (oldWidget.app.id != widget.app.id || 
+    if (oldWidget.app.id != widget.app.id ||
         oldWidget.app.remoteIconUrl != widget.app.remoteIconUrl) {
       _loadIcon();
     }
@@ -79,7 +75,9 @@ class _CachedAppIconState extends State<CachedAppIcon>
 
   Future<void> _loadIcon() async {
     // Skip if already loading this same app
-    if (_isLoading && _lastAppId == widget.app.id && _lastRemoteUrl == widget.app.remoteIconUrl) {
+    if (_isLoading &&
+        _lastAppId == widget.app.id &&
+        _lastRemoteUrl == widget.app.remoteIconUrl) {
       return;
     }
 
@@ -89,7 +87,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
       _iconData = null;
       _lastAppId = widget.app.id;
       _lastRemoteUrl = widget.app.remoteIconUrl;
-      
+
       if (widget.enableShimmer) {
         _shimmerController.repeat();
       }
@@ -97,10 +95,10 @@ class _CachedAppIconState extends State<CachedAppIcon>
 
     try {
       final appsProvider = Provider.of<AppsProvider>(context, listen: false);
-      
+
       // First, try to get the existing icon from AppsProvider
       final existingIcon = appsProvider.apps[widget.app.id]?.icon;
-      
+
       if (existingIcon != null) {
         if (mounted) {
           setState(() {
@@ -158,7 +156,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
       onTap: widget.onTap,
       onDoubleTap: widget.onDoubleTap,
       onLongPress: widget.onLongPress,
-      child: Container(
+      child: SizedBox(
         width: widget.size,
         height: widget.size,
         child: iconWidget,
@@ -179,17 +177,19 @@ class _CachedAppIconState extends State<CachedAppIcon>
           height: widget.size,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(widget.size * 0.125),
-            color: Theme.of(context).colorScheme.surfaceVariant,
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
           ),
           child: Center(
             child: Icon(
               Icons.apps,
               size: widget.size * 0.5,
-              color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.5),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurfaceVariant.withOpacity(0.5),
             ),
           ),
         ),
-        
+
         // Shimmer effect
         if (widget.enableShimmer)
           ClipRRect(
@@ -242,8 +242,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
                 size: widget.size * 0.4,
                 color: Theme.of(context).colorScheme.error,
               ),
-              if (widget.size > 32)
-                SizedBox(height: widget.size * 0.05),
+              if (widget.size > 32) SizedBox(height: widget.size * 0.05),
               if (widget.size > 32)
                 Text(
                   '!',
@@ -256,7 +255,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
             ],
           ),
         ),
-        
+
         // Retry button for larger icons
         if (widget.size > 40)
           Positioned.fill(
@@ -295,9 +294,12 @@ class _CachedAppIconState extends State<CachedAppIcon>
             gaplessPlayback: true,
             fit: BoxFit.cover,
             opacity: AlwaysStoppedAnimation(
-              widget.showInstalledIndicator && 
-                      Provider.of<AppsProvider>(context, listen: false)
-                          .apps[widget.app.id]?.installedInfo == null
+              widget.showInstalledIndicator &&
+                      Provider.of<AppsProvider>(
+                            context,
+                            listen: false,
+                          ).apps[widget.app.id]?.installedInfo ==
+                          null
                   ? 0.6
                   : 1.0,
             ),
@@ -306,22 +308,20 @@ class _CachedAppIconState extends State<CachedAppIcon>
             },
           ),
         ),
-        
+
         // Installed indicator
         if (widget.showInstalledIndicator)
           Positioned.fill(
             child: Consumer<AppsProvider>(
               builder: (context, appsProvider, child) {
-                final isInstalled = appsProvider.apps[widget.app.id]?.installedInfo != null;
+                final isInstalled =
+                    appsProvider.apps[widget.app.id]?.installedInfo != null;
                 if (!isInstalled) return const SizedBox.shrink();
-                
+
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(widget.size * 0.125),
-                    border: Border.all(
-                      color: Colors.green,
-                      width: 2.0,
-                    ),
+                    border: Border.all(color: Colors.green, width: 2.0),
                   ),
                 );
               },

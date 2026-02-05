@@ -46,7 +46,7 @@ class IconCache {
 
   /// Get icon for an app, returns cached version if available, downloads otherwise
   Future<Uint8List?> getIcon(
-    String appId, 
+    String appId,
     String? remoteIconUrl, {
     bool forceRefresh = false,
     Uint8List? fallbackIcon,
@@ -111,10 +111,12 @@ class IconCache {
   Future<Uint8List?> _downloadIcon(String url) async {
     try {
       final uri = Uri.parse(url);
-      final response = await http.get(uri).timeout(
-        const Duration(seconds: 30),
-        onTimeout: () => throw TimeoutException('Icon download timeout'),
-      );
+      final response = await http
+          .get(uri)
+          .timeout(
+            const Duration(seconds: 30),
+            onTimeout: () => throw TimeoutException('Icon download timeout'),
+          );
 
       if (response.statusCode == 200 && response.bodyBytes.isNotEmpty) {
         // Validate that it's actually an image
@@ -124,7 +126,9 @@ class IconCache {
           LogsProvider().add('Downloaded file is not a valid image: $url');
         }
       } else {
-        LogsProvider().add('Failed to download icon: ${response.statusCode} for $url');
+        LogsProvider().add(
+          'Failed to download icon: ${response.statusCode} for $url',
+        );
       }
     } catch (e) {
       LogsProvider().add('Error downloading icon from $url: $e');
@@ -166,10 +170,14 @@ class IconCache {
   }
 
   /// Save icon data to cache with metadata
-  Future<void> _saveToCache(File cacheFile, Uint8List iconData, String url) async {
+  Future<void> _saveToCache(
+    File cacheFile,
+    Uint8List iconData,
+    String url,
+  ) async {
     try {
       await cacheFile.writeAsBytes(iconData);
-      
+
       // Save metadata file
       final metadataFile = File('${cacheFile.path}.meta');
       final metadata = {
@@ -252,7 +260,9 @@ class IconCache {
           }
           totalSize -= size;
         } catch (e) {
-          LogsProvider().add('Error deleting cache file during size enforcement: $e');
+          LogsProvider().add(
+            'Error deleting cache file during size enforcement: $e',
+          );
         }
       }
     } catch (e) {
@@ -295,10 +305,10 @@ class IconCache {
           totalFiles++;
           totalSize += stat.size;
 
-          if (oldestEntry == null || stat.modified.isBefore(oldestEntry!)) {
+          if (oldestEntry == null || stat.modified.isBefore(oldestEntry)) {
             oldestEntry = stat.modified;
           }
-          if (newestEntry == null || stat.modified.isAfter(newestEntry!)) {
+          if (newestEntry == null || stat.modified.isAfter(newestEntry)) {
             newestEntry = stat.modified;
           }
         }
@@ -312,9 +322,7 @@ class IconCache {
       };
     } catch (e) {
       LogsProvider().add('Error getting cache stats: $e');
-      return {
-        'error': e.toString(),
-      };
+      return {'error': e.toString()};
     }
   }
 
@@ -338,11 +346,11 @@ class IconCache {
     try {
       final cacheKey = _generateCacheKey(appId, remoteIconUrl);
       final cachedFile = File(path.join(_cacheDir.path, '$cacheKey.cache'));
-      
+
       if (await cachedFile.exists()) {
         await cachedFile.delete();
       }
-      
+
       final metadataFile = File('${cachedFile.path}.meta');
       if (await metadataFile.exists()) {
         await metadataFile.delete();

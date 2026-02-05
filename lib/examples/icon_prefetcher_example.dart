@@ -25,7 +25,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
 
   void _setupStreams() {
     final appsProvider = Provider.of<AppsProvider>(context, listen: false);
-    
+
     // Listen to progress updates
     appsProvider.getIconPrefetchingProgress().listen((progress) {
       if (mounted) {
@@ -102,8 +102,14 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
             if (_status != null) ...[
               _buildStatusRow('Running', _status!.isRunning.toString()),
               _buildStatusRow('Paused', _status!.isPaused.toString()),
-              _buildStatusRow('Progress', '${(_status!.progress * 100).toStringAsFixed(1)}%'),
-              _buildStatusRow('Completed', '${_status!.completedCount}/${_status!.totalCount}'),
+              _buildStatusRow(
+                'Progress',
+                '${(_status!.progress * 100).toStringAsFixed(1)}%',
+              ),
+              _buildStatusRow(
+                'Completed',
+                '${_status!.completedCount}/${_status!.totalCount}',
+              ),
               _buildStatusRow('Failed Apps', '${_status!.failedApps.length}'),
               if (_status!.failedApps.isNotEmpty) ...[
                 const SizedBox(height: 8),
@@ -111,18 +117,26 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
                   'Failed Apps:',
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                ..._status!.failedApps.take(5).map((appId) => 
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, top: 4.0),
-                    child: Text('• $appId', style: const TextStyle(fontSize: 12)),
-                  ),
-                ),
+                ..._status!.failedApps
+                    .take(5)
+                    .map(
+                      (appId) => Padding(
+                        padding: const EdgeInsets.only(left: 16.0, top: 4.0),
+                        child: Text(
+                          '• $appId',
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ),
                 if (_status!.failedApps.length > 5)
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, top: 4.0),
                     child: Text(
                       '... and ${_status!.failedApps.length - 5} more',
-                      style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
               ],
@@ -141,10 +155,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text('$label:'),
-          Text(
-            value,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -193,10 +204,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Last Result',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            Text('Last Result', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),
             Row(
               children: [
@@ -215,15 +223,18 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
               ],
             ),
             const SizedBox(height: 8),
-            _buildStatusRow('Success Rate', '${(_lastResult!.successRate * 100).toStringAsFixed(1)}%'),
-            _buildStatusRow('Completed', '${_lastResult!.completedCount}/${_lastResult!.totalCount}'),
+            _buildStatusRow(
+              'Success Rate',
+              '${(_lastResult!.successRate * 100).toStringAsFixed(1)}%',
+            ),
+            _buildStatusRow(
+              'Completed',
+              '${_lastResult!.completedCount}/${_lastResult!.totalCount}',
+            ),
             _buildStatusRow('Failed', '${_lastResult!.failedApps.length}'),
             if (_lastResult!.error != null) ...[
               const SizedBox(height: 8),
-              Text(
-                'Error:',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
+              Text('Error:', style: Theme.of(context).textTheme.titleSmall),
               Text(
                 _lastResult!.error!,
                 style: const TextStyle(color: Colors.red, fontSize: 12),
@@ -243,7 +254,9 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
           children: [
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: (_status?.isRunning ?? false) ? null : _startPrefetching,
+                onPressed: (_status?.isRunning ?? false)
+                    ? null
+                    : _startPrefetching,
                 icon: const Icon(Icons.download),
                 label: const Text('Start Prefetching'),
               ),
@@ -251,7 +264,9 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
             const SizedBox(width: 8),
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: (_status?.isRunning ?? false) ? _pausePrefetching : null,
+                onPressed: (_status?.isRunning ?? false)
+                    ? _pausePrefetching
+                    : null,
                 icon: const Icon(Icons.pause),
                 label: const Text('Pause'),
               ),
@@ -263,7 +278,9 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
           children: [
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: (_status?.isPaused ?? false) ? _resumePrefetching : null,
+                onPressed: (_status?.isPaused ?? false)
+                    ? _resumePrefetching
+                    : null,
                 icon: const Icon(Icons.play_arrow),
                 label: const Text('Resume'),
               ),
@@ -271,7 +288,9 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
             const SizedBox(width: 8),
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: (_status?.isRunning ?? false) ? _stopPrefetching : null,
+                onPressed: (_status?.isRunning ?? false)
+                    ? _stopPrefetching
+                    : null,
                 icon: const Icon(Icons.stop),
                 label: const Text('Stop'),
               ),
@@ -305,13 +324,13 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
 
   Future<void> _startPrefetching() async {
     final appsProvider = Provider.of<AppsProvider>(context, listen: false);
-    
+
     try {
       await appsProvider.startIconPrefetching(
         topCount: 40,
         forceRefresh: false,
       );
-      
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Icon pre-fetching started')),
@@ -343,10 +362,10 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
 
   Future<void> _showCacheStats() async {
     final appsProvider = Provider.of<AppsProvider>(context, listen: false);
-    
+
     try {
       final stats = await appsProvider.getIconCacheStats();
-      
+
       if (mounted) {
         showDialog(
           context: context,

@@ -49,7 +49,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 32),
-                    
+
                     // Security Icon
                     Container(
                       padding: const EdgeInsets.all(24),
@@ -116,14 +116,14 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                         ],
                       ),
                     ),
-                    
+
                     // Add bottom padding to ensure content doesn't get hidden by buttons
                     const SizedBox(height: 24),
                   ],
                 ),
               ),
             ),
-            
+
             // Fixed Action Buttons at Bottom
             SafeArea(
               child: Padding(
@@ -234,7 +234,10 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
   Future<void> _saveDisclaimerAccepted() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(SecurityDisclaimerScreen._disclaimerAcceptedKey, true);
+      await prefs.setBool(
+        SecurityDisclaimerScreen._disclaimerAcceptedKey,
+        true,
+      );
     } catch (e) {
       // Log structured error without exposing raw exception details
       final logsProvider = LogsProvider();
