@@ -39,14 +39,17 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
     return Scaffold(
       backgroundColor: colorScheme.surface,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            children: [
-              Expanded(
+        child: Column(
+          children: [
+            // Scrollable Content Area
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const SizedBox(height: 32),
+                    
                     // Security Icon
                     Container(
                       padding: const EdgeInsets.all(24),
@@ -113,66 +116,75 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                         ],
                       ),
                     ),
+                    
+                    // Add bottom padding to ensure content doesn't get hidden by buttons
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
-
-              // Action Buttons
-              Column(
-                children: [
-                  // Accept Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: () async {
-                        HapticFeedback.lightImpact();
-                        await _saveDisclaimerAccepted();
-                        if (mounted) {
-                          Navigator.of(context).pop(true);
-                        }
-                      },
-                      style: FilledButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: const StadiumBorder(),
-                      ),
-                      child: Text(
-                        tr('acceptAndContinue'),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+            ),
+            
+            // Fixed Action Buttons at Bottom
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Accept Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton(
+                        onPressed: () async {
+                          HapticFeedback.lightImpact();
+                          await _saveDisclaimerAccepted();
+                          if (mounted) {
+                            Navigator.of(context).pop(true);
+                          }
+                        },
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: const StadiumBorder(),
+                        ),
+                        child: Text(
+                          tr('acceptAndContinue'),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
-                  ),
 
-                  const SizedBox(height: 12),
+                    const SizedBox(height: 12),
 
-                  // Decline Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        HapticFeedback.lightImpact();
-                        SystemNavigator.pop();
-                      },
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: const StadiumBorder(),
-                      ),
-                      child: Text(
-                        tr('decline'),
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: colorScheme.error,
+                    // Decline Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          HapticFeedback.lightImpact();
+                          SystemNavigator.pop();
+                        },
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: const StadiumBorder(),
+                        ),
+                        child: Text(
+                          tr('decline'),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: colorScheme.error,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
