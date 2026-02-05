@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/custom_app_bar.dart';
+import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -502,44 +503,12 @@ class AppsPageState extends State<AppsPage> {
     }
 
     getAppIcon(int appIndex) {
-      return GestureDetector(
-        child: FutureBuilder(
-          future: appsProvider.updateAppIcon(listedApps[appIndex].app.id),
-          builder: (ctx, val) {
-            return listedApps[appIndex].icon != null
-                ? Image.memory(
-                    listedApps[appIndex].icon!,
-                    gaplessPlayback: true,
-                    opacity: AlwaysStoppedAnimation(
-                      listedApps[appIndex].installedInfo == null ? 0.6 : 1,
-                    ),
-                  )
-                : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.rotationZ(0.31),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Image(
-                            image: const AssetImage(
-                              'assets/graphics/icon_small.png',
-                            ),
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white.withOpacity(0.4)
-                                : Colors.white.withOpacity(0.3),
-                            colorBlendMode: BlendMode.modulate,
-                            gaplessPlayback: true,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-          },
-        ),
+      return CachedAppIconSimple(
+        app: listedApps[appIndex].app,
+        size: 48.0,
+        onTap: () {
+          // Handle tap if needed
+        },
         onDoubleTap: () {
           pm.openApp(listedApps[appIndex].app.id);
         },
@@ -549,7 +518,6 @@ class AppsPageState extends State<AppsPage> {
             MaterialPageRoute(
               builder: (context) => AppPage(
                 appId: listedApps[appIndex].app.id,
-                showOppositeOfPreferredView: true,
               ),
             ),
           );

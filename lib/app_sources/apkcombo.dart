@@ -31,11 +31,6 @@ class APKCombo extends AppSource {
     try {
       return Uri.parse(standardUrl).pathSegments.last;
     } catch (e) {
-<<<<<<< Updated upstream
-      // Log parsing error for debugging but return null for graceful degradation
-      LogsProvider().add(
-        'Failed to infer app ID from APKCombo URL "$standardUrl": $e',
-=======
       // Use structured logging without exposing sensitive URL details or raw exception
       final logsProvider = LogsProvider();
       await logsProvider.addStructured(
@@ -43,7 +38,6 @@ class APKCombo extends AppSource {
         component: 'APKCombo',
         errorCode: 'url_parsing_error',
         level: LogLevels.error,
->>>>>>> Stashed changes
       );
       return null;
     }

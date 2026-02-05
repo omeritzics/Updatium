@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
@@ -364,28 +365,21 @@ class _AppPageState extends State<AppPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SizedBox(height: 0),
-        FutureBuilder(
-          future: appsProvider.updateAppIcon(app?.app.id, ignoreCache: true),
-          builder: (ctx, val) {
-            return app?.icon != null
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: app == null
-                            ? null
-                            : () => pm.openApp(app.app.id),
-                        child: Image.memory(
-                          app!.icon!,
-                          height: small ? 70 : 150,
-                          gaplessPlayback: true,
-                        ),
-                      ),
-                    ],
-                  )
-                : Container();
-          },
-        ),
+        if (app?.app != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () => pm.openApp(app!.app.id),
+                child: CachedAppIcon(
+                  app: app!.app,
+                  size: small ? 70 : 150,
+                  enableShimmer: true,
+                  showInstalledIndicator: false,
+                ),
+              ),
+            ],
+          ),
         SizedBox(height: small ? 10 : 24),
         Text(
           app?.name ?? tr('app'),
