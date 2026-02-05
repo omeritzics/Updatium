@@ -1703,6 +1703,7 @@ class AppsProvider with ChangeNotifier {
                   // Clear the removed overrideSource and update the app
                   app.overrideSource = null;
                   overrideSource = null;
+                  await saveApps([app], attemptToCorrectInstallStatus: false);
                 }
                 sp.getSource(app.url, overrideSource: overrideSource);
                 // If the app is installed, grab its OS data and reconcile install statuses
