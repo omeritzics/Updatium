@@ -2,18 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/providers/logs_provider.dart';
 
 class SecurityDisclaimerScreen extends StatefulWidget {
+  static const String _disclaimerAcceptedKey = 'security_disclaimer_accepted';
+
   const SecurityDisclaimerScreen({super.key});
 
   @override
   State<SecurityDisclaimerScreen> createState() =>
       _SecurityDisclaimerScreenState();
+
+  /// Checks if the security disclaimer has been accepted by the user
+  /// Returns true if accepted, false otherwise
+  static Future<bool> isDisclaimerAccepted() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getBool(_disclaimerAcceptedKey) ?? false;
+    } catch (e) {
+      // Log structured error without exposing raw exception details
+      final logsProvider = LogsProvider();
+      await logsProvider.add(
+        'Failed to check security disclaimer acceptance from SharedPreferences',
+        level: LogLevels.error,
+      );
+      return false;
+    }
+  }
 }
 
 class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
-  static const String _disclaimerAcceptedKey = 'security_disclaimer_accepted';
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -204,20 +222,14 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
   Future<void> _saveDisclaimerAccepted() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(_disclaimerAcceptedKey, true);
+      await prefs.setBool(SecurityDisclaimerScreen._disclaimerAcceptedKey, true);
     } catch (e) {
-      // Handle error gracefully, but allow user to continue
-      print('Error saving disclaimer acceptance: $e');
-    }
-  }
-
-  static Future<bool> isDisclaimerAccepted() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      return prefs.getBool(_disclaimerAcceptedKey) ?? false;
-    } catch (e) {
-      print('Error checking disclaimer acceptance: $e');
-      return false;
+      // Log structured error without exposing raw exception details
+      final logsProvider = LogsProvider();
+      await logsProvider.add(
+        'Failed to save security disclaimer acceptance to SharedPreferences',
+        level: LogLevels.error,
+      );
     }
   }
 }

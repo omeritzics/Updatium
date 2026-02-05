@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
+import 'package:async/async.dart';
 import 'package:battery_plus/battery_plus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:crypto/crypto.dart';
@@ -1700,10 +1701,10 @@ class AppsProvider with ChangeNotifier {
                 String? overrideSource = app.overrideSource;
                 if (overrideSource != null &&
                     !sp.sourceExists(overrideSource)) {
-                  // Clear the removed overrideSource and update the app
+                  // Clear the removed overrideSource and update the app using lightweight method
                   app.overrideSource = null;
                   overrideSource = null;
-                  await saveApps([app], attemptToCorrectInstallStatus: false);
+                  await persistAppJsonOnly(app, updateMemory: true);
                 }
                 sp.getSource(app.url, overrideSource: overrideSource);
                 // If the app is installed, grab its OS data and reconcile install statuses
@@ -1832,7 +1833,40 @@ class AppsProvider with ChangeNotifier {
       }),
     );
     notifyListeners();
-    export(isAuto: true);
+    // Export safely without blocking, handle errors gracefully
+    unawaited(export(isAuto: true).catchError((e) {
+      // Log export errors but don't crash the app
+      // Export failures shouldn't prevent the main operation from completing
+    }));
+  }
+
+  /// Lightweight method for load-time corrections that avoids expensive operations
+  /// Only writes JSON file and updates in-memory map without:
+  /// - getInstalledInfo() calls
+  /// - icon/label retrieval  
+  /// - auto-export triggers
+  Future<void> persistAppJsonOnly(App app, {bool updateMemory = true}) async {
+    if (!this.apps.containsKey(app.id)) {
+      return;
+    }
+    
+    String filePath = '${(await getAppsDir()).path}/${app.id}.json';
+    File('$filePath.tmp').writeAsStringSync(jsonEncode(app.toJson()));
+    File('$filePath.tmp').renameSync(filePath);
+    
+    if (updateMemory) {
+      try {
+        this.apps.update(
+          app.id,
+          (value) => AppInMemory(app, value.downloadProgress, value.installedInfo, value.icon),
+          ifAbsent: () => AppInMemory(app, null, null, null),
+        );
+      } catch (e) {
+        if (e is! ArgumentError || e.name != 'key') {
+          rethrow;
+        }
+      }
+    }
   }
 
   Future<void> removeApps(List<String> appIds) async {
@@ -1857,7 +1891,11 @@ class AppsProvider with ChangeNotifier {
     );
     if (appIds.isNotEmpty) {
       notifyListeners();
-      export(isAuto: true);
+      // Export safely without blocking, handle errors gracefully
+      unawaited(export(isAuto: true).catchError((e) {
+        // Log export errors but don't crash the app
+        // Export failures shouldn't prevent app removal from completing
+      }));
     }
   }
 

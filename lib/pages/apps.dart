@@ -431,7 +431,11 @@ class AppsPageState extends State<AppsPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                        tr('noAppsSubtext'),
+                        () {
+                          final subtext = tr('noAppsSubtext');
+                          // Hide subtext if translation key is not found (returns the key itself)
+                          return subtext == 'noAppsSubtext' ? '' : subtext;
+                        }(),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(
                             context,

@@ -48,7 +48,8 @@
     "trackOnlyInBrackets": "(Samo za praćenje)",
     "searchableInBrackets": "(Može se pretraživati)",
     "appsString": "Aplikacije",
-    "noApps": "Nema aplikacija",
+    "noApps": "Dobrodošli!",
+    "noAppsSubtext": "Možete dodati svoju prvu aplikaciju dodirivanjem 'Dodaj aplikaciju' ispod.",
     "noAppsForFilter": "Nema aplikacija za filter",
     "byX": "Autor {}",
     "percentProgress": "Napredak: {}%",
@@ -416,6 +417,6 @@
     "disclaimerText": "Ova aplikacija ne distribuira, ne hostuje niti verifikuje nijednu od eksternih aplikacija. Korisnik snosi punu odgovornost za bezbednost i zakonitost bilo kog softvera instaliranog putem ovog alata.",
     "privacy": "Privatnost",
     "privacyText": "Ova aplikacija je fokusirana na privatnost i ne prikuplja lične podatke.",
-    "acceptAndContinue": "Prihvati i nastavi",
+    "acceptAndContinue": "Prihvatam i Nastavim",
     "decline": "Odbij"
 }
