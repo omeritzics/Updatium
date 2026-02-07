@@ -178,16 +178,31 @@ class UnifiedIconService {
         }
 
         // Use fallback
-        _completePendingRequests(cacheKey, fallbackIcon);
-        _recordPerformance(cacheKey, startTime, IconSource.fallback);
-        _emitEvent(
-          IconLoadingEvent(
-            type: IconEventType.fallback,
-            appId: appId,
-            url: remoteIconUrl,
-          ),
-        );
-        return IconResult.success(fallbackIcon, source: IconSource.fallback);
+        if (fallbackIcon != null) {
+          _completePendingRequests(cacheKey, fallbackIcon);
+          _recordPerformance(cacheKey, startTime, IconSource.fallback);
+          _emitEvent(
+            IconLoadingEvent(
+              type: IconEventType.fallback,
+              appId: appId,
+              url: remoteIconUrl,
+            ),
+          );
+          return IconResult.success(fallbackIcon, source: IconSource.fallback);
+        } else {
+          // No fallback available, return error
+          _completePendingRequests(cacheKey, null);
+          _recordPerformance(cacheKey, startTime, IconSource.fallback);
+          _emitEvent(
+            IconLoadingEvent(
+              type: IconEventType.error,
+              appId: appId,
+              url: remoteIconUrl,
+              error: 'No icon data available',
+            ),
+          );
+          return IconResult.error('No icon data available');
+        }
       } catch (e) {
         _completePendingRequests(cacheKey, null);
         _recordError(cacheKey, e);
@@ -387,9 +402,15 @@ class UnifiedIconService {
     ImageFormat preferredFormat,
   ) async {
     try {
-      final uri = Uri.parse(url);
+      // Validate and sanitize URL
+      final sanitizedUri = _validateAndSanitizeUrl(url);
+      if (sanitizedUri == null) {
+        LogsProvider().add('Invalid or unsafe URL rejected: $url');
+        return null;
+      }
+
       final response = await http
-          .get(uri)
+          .get(sanitizedUri)
           .timeout(
             const Duration(seconds: 30),
             onTimeout: () => throw TimeoutException('Icon download timeout'),
@@ -620,6 +641,141 @@ class UnifiedIconService {
     _memoryCache.clear();
     _pendingRequests.clear();
   }
+
+  /// Validate and sanitize URL for security compliance
+  Uri? _validateAndSanitizeUrl(String url) {
+    try {
+      // Parse the URL
+      final uri = Uri.parse(url);
+      
+      // Security checks
+      if (!_isUrlSafe(uri)) {
+        return null;
+      }
+      
+      // Sanitize the URL by removing potentially dangerous components
+      return uri.replace(
+        fragment: null, // Remove fragments
+        query: _sanitizeQueryParameters(uri.query), // Sanitize query params
+      );
+    } catch (e) {
+      LogsProvider().add('URL parsing error: $e');
+      return null;
+    }
+  }
+
+  /// Check if URL meets security requirements
+  bool _isUrlSafe(Uri uri) {
+    // Must be HTTP or HTTPS
+    if (!['http', 'https'].contains(uri.scheme)) {
+      return false;
+    }
+    
+    // Must have a host
+    if (uri.host.isEmpty) {
+      return false;
+    }
+    
+    // Block private/internal IP ranges
+    if (_isPrivateOrInternalHost(uri.host)) {
+      return false;
+    }
+    
+    // Block localhost and loopback
+    if (_isLocalhost(uri.host)) {
+      return false;
+    }
+    
+    // Block file:// and other dangerous schemes
+    final dangerousSchemes = ['file', 'ftp', 'javascript', 'data', 'blob'];
+    if (dangerousSchemes.contains(uri.scheme)) {
+      return false;
+    }
+    
+    // Block URLs with suspicious patterns
+    if (_hasSuspiciousPatterns(uri)) {
+      return false;
+    }
+    
+    return true;
+  }
+
+  /// Check if host is private or internal IP range
+  bool _isPrivateOrInternalHost(String host) {
+    // IPv4 private ranges
+    final ipv4Pattern = RegExp(r'^(10\.|172\.(1[6-9]|2[0-9]|3[01])\.|192\.168\.|127\.|169\.254\.|::1$)');
+    if (ipv4Pattern.hasMatch(host)) {
+      return true;
+    }
+    
+    // IPv6 private ranges
+    final ipv6Pattern = RegExp(r'^(fc[0-9a-f]{2}:|fe80:|::1$)');
+    if (ipv6Pattern.hasMatch(host)) {
+      return true;
+    }
+    
+    // Common internal hostnames
+    final internalHosts = ['localhost', 'local', 'internal', 'private', 'intranet'];
+    if (internalHosts.contains(host.toLowerCase())) {
+      return true;
+    }
+    
+    return false;
+  }
+
+  /// Check if host is localhost
+  bool _isLocalhost(String host) {
+    final localhostPatterns = ['localhost', '127.0.0.1', '::1', '0.0.0.0'];
+    return localhostPatterns.contains(host.toLowerCase());
+  }
+
+  /// Check for suspicious URL patterns
+  bool _hasSuspiciousPatterns(Uri uri) {
+    final url = uri.toString().toLowerCase();
+    
+    // Block URLs with suspicious characters or patterns
+    final suspiciousPatterns = [
+      r'\.\./',  // Directory traversal
+      r'<script', // XSS attempts
+      r'javascript:', // JavaScript protocol
+      r'data:', // Data URLs
+      r'file:', // File protocol
+      r'ftp:', // FTP protocol
+    ];
+    
+    for (final pattern in suspiciousPatterns) {
+      if (RegExp(pattern).hasMatch(url)) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+
+  /// Sanitize query parameters
+  String _sanitizeQueryParameters(String query) {
+    if (query.isEmpty) return '';
+    
+    final params = query.split('&');
+    final sanitizedParams = <String>[];
+    
+    for (final param in params) {
+      if (param.isEmpty) continue;
+      
+      // Skip parameters with suspicious content
+      if (_hasSuspiciousPatterns(Uri.parse('http://example.com?$param'))) {
+        continue;
+      }
+      
+      // Only allow alphanumeric, hyphen, underscore, and common URL characters
+      final sanitizedParam = param.replaceAll(RegExp(r'[^a-zA-Z0-9\-_=%&\.]'), '');
+      if (sanitizedParam.isNotEmpty) {
+        sanitizedParams.add(sanitizedParam);
+      }
+    }
+    
+    return sanitizedParams.join('&');
+  }
 }
 
 // Supporting classes
@@ -650,7 +806,7 @@ class IconResult {
 
   IconResult.success(this.data, {required this.source})
     : error = null,
-      isSuccess = true;
+      isSuccess = data != null;
 
   IconResult.error(this.error)
     : data = null,

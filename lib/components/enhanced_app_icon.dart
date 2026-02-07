@@ -151,10 +151,10 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
           _shimmerController.stop();
           _pulseController.stop();
 
-          if (result.isSuccess) {
+          if (result.isSuccess && result.data != null) {
             widget.app.setIconLoaded(result.data!);
           } else {
-            widget.app.setIconError(result.error ?? 'Unknown error');
+            widget.app.setIconError(result.error ?? 'No icon data available');
           }
         });
 
