@@ -372,12 +372,12 @@ class IconCache {
     try {
       // Parse the URL
       final uri = Uri.parse(url);
-      
+
       // Security checks
       if (!_isUrlSafe(uri)) {
         return null;
       }
-      
+
       // Sanitize the URL by removing potentially dangerous components
       return uri.replace(
         fragment: null, // Remove fragments
@@ -395,56 +395,64 @@ class IconCache {
     if (!['http', 'https'].contains(uri.scheme)) {
       return false;
     }
-    
+
     // Must have a host
     if (uri.host.isEmpty) {
       return false;
     }
-    
+
     // Block private/internal IP ranges
     if (_isPrivateOrInternalHost(uri.host)) {
       return false;
     }
-    
+
     // Block localhost and loopback
     if (_isLocalhost(uri.host)) {
       return false;
     }
-    
+
     // Block file:// and other dangerous schemes
     final dangerousSchemes = ['file', 'ftp', 'javascript', 'data', 'blob'];
     if (dangerousSchemes.contains(uri.scheme)) {
       return false;
     }
-    
+
     // Block URLs with suspicious patterns
     if (_hasSuspiciousPatterns(uri)) {
       return false;
     }
-    
+
     return true;
   }
 
   /// Check if host is private or internal IP range
   bool _isPrivateOrInternalHost(String host) {
     // IPv4 private ranges
-    final ipv4Pattern = RegExp(r'^(10\.|172\.(1[6-9]|2[0-9]|3[01])\.|192\.168\.|127\.|169\.254\.|::1$)');
+    final ipv4Pattern = RegExp(
+      r'^(10\.|172\.(1[6-9]|2[0-9]|3[01])\.|192\.168\.|127\.|169\.254\.|::1$)',
+    );
     if (ipv4Pattern.hasMatch(host)) {
       return true;
     }
-    
+
     // IPv6 private ranges
     final ipv6Pattern = RegExp(r'^(fc[0-9a-f]{2}:|fe80:|::1$)');
     if (ipv6Pattern.hasMatch(host)) {
       return true;
     }
-    
+
     // Common internal hostnames
-    final internalHosts = ['localhost', 'local', 'internal', 'private', 'intranet'];
+    final internalHosts = [
+      'localhost',
+      'local',
+      'internal',
+      'private',
+      'intranet',
+    ];
     if (internalHosts.contains(host.toLowerCase())) {
       return true;
     }
-    
+
     return false;
   }
 
@@ -457,48 +465,51 @@ class IconCache {
   /// Check for suspicious URL patterns
   bool _hasSuspiciousPatterns(Uri uri) {
     final url = uri.toString().toLowerCase();
-    
+
     // Block URLs with suspicious characters or patterns
     final suspiciousPatterns = [
-      r'\.\./',  // Directory traversal
+      r'\.\./', // Directory traversal
       r'<script', // XSS attempts
       r'javascript:', // JavaScript protocol
       r'data:', // Data URLs
       r'file:', // File protocol
       r'ftp:', // FTP protocol
     ];
-    
+
     for (final pattern in suspiciousPatterns) {
       if (RegExp(pattern).hasMatch(url)) {
         return true;
       }
     }
-    
+
     return false;
   }
 
   /// Sanitize query parameters
   String _sanitizeQueryParameters(String query) {
     if (query.isEmpty) return '';
-    
+
     final params = query.split('&');
     final sanitizedParams = <String>[];
-    
+
     for (final param in params) {
       if (param.isEmpty) continue;
-      
+
       // Skip parameters with suspicious content
       if (_hasSuspiciousPatterns(Uri.parse('http://example.com?$param'))) {
         continue;
       }
-      
+
       // Only allow alphanumeric, hyphen, underscore, and common URL characters
-      final sanitizedParam = param.replaceAll(RegExp(r'[^a-zA-Z0-9\-_=%&\.]'), '');
+      final sanitizedParam = param.replaceAll(
+        RegExp(r'[^a-zA-Z0-9\-_=%&\.]'),
+        '',
+      );
       if (sanitizedParam.isNotEmpty) {
         sanitizedParams.add(sanitizedParam);
       }
     }
-    
+
     return sanitizedParams.join('&');
   }
 }
