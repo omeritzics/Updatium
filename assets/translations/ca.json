@@ -48,7 +48,8 @@
     "trackOnlyInBrackets": "(només per a seguiment)",
     "searchableInBrackets": "(permet la cerca)",
     "appsString": "Aplicacions",
-    "noApps": "No hi ha aplicacions",
+    "noApps": "Benvingut!",
+    "noAppsSubtext": "Pots afegir la teva primera aplicació tocant 'Afegir aplicació' a sota.",
     "noAppsForFilter": "No hi ha aplicacions per filtrar",
     "byX": "Per: {}",
     "percentProgress": "Progrés: {} %",
@@ -408,5 +409,14 @@
     "certificateHash": {
         "one": "Suma de certificat",
         "other": "Resums del certificat"
-    }
+    },
+    "securityDisclaimerTitle": "Avís de Seguretat i Legal",
+    "license": "Llicència",
+    "licenseText": "Aquesta aplicació es distribueix sota la Llicència GPL v3.",
+    "disclaimer": "Avís",
+    "disclaimerText": "Aquesta aplicació no distribueix, allotja ni verifica cap de les aplicacions externes. L'usuari assumeix la plena responsabilitat per la seguretat i legalitat de qualsevol programari instal·lat a través d'aquesta eina.",
+    "privacy": "Privacitat",
+    "privacyText": "Aquesta aplicació està centrada en la privacitat i no recull dades personals.",
+    "acceptAndContinue": "Acceptar i continuar",
+    "decline": "Rebutjar"
 }

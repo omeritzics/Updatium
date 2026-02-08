@@ -408,5 +408,14 @@
     "certificateHash": {
         "one": "Certificaat Hash",
         "other": "Certificaat Hashes"
-    }
+    },
+    "securityDisclaimerTitle": "Veiligheids- en Juridische Vrijwaringsclausule",
+    "license": "Licentie",
+    "licenseText": "Deze applicatie wordt gedistribueerd onder de GPL v3 Licentie.",
+    "disclaimer": "Vrijwaringsclausule",
+    "disclaimerText": "Deze applicatie distribueert, host of verifieert geen van de externe applicaties. De gebruiker draagt de volledige verantwoordelijkheid voor de veiligheid en legaliteit van alle software die via deze tool wordt geïnstalleerd.",
+    "privacy": "Privacy",
+    "privacyText": "Deze app is privacy-gericht en verzamelt geen persoonlijke gegevens.",
+    "acceptAndContinue": "Accepteren en doorgaan",
+    "decline": "Weigeren"
 }

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/logs_provider.dart';
 
 class APKCombo extends AppSource {
   APKCombo() {
@@ -30,8 +31,14 @@ class APKCombo extends AppSource {
     try {
       return Uri.parse(standardUrl).pathSegments.last;
     } catch (e) {
-      // Log parsing error for debugging but return null for graceful degradation
-      print('Failed to infer app ID from APKCombo URL "$standardUrl": $e');
+      // Use structured logging without exposing sensitive URL details or raw exception
+      final logsProvider = LogsProvider();
+      await logsProvider.addStructured(
+        operation: 'app_id_inference_failed',
+        component: 'APKCombo',
+        errorCode: 'url_parsing_error',
+        level: LogLevels.error,
+      );
       return null;
     }
   }

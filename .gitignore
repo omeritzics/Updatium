@@ -12,6 +12,7 @@
 .swiftpm/
 migrate_working_dir/
 .vscode/*
+.mockups/*
 !.vscode/launch.json
 
 # IntelliJ related

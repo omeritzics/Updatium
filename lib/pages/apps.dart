@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/custom_app_bar.dart';
+import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -407,14 +408,44 @@ class AppsPageState extends State<AppsPage> {
         if (listedApps.isEmpty)
           SliverFillRemaining(
             child: Center(
-              child: Text(
-                appsProvider.apps.isEmpty
-                    ? appsProvider.loadingApps
-                          ? tr('pleaseWait')
-                          : tr('noApps')
-                    : tr('noAppsForFilter'),
-                style: Theme.of(context).textTheme.headlineMedium,
-                textAlign: TextAlign.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.widgets_outlined,
+                    size: 80,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withOpacity(0.6),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    appsProvider.apps.isEmpty
+                        ? appsProvider.loadingApps
+                              ? tr('pleaseWait')
+                              : tr('noApps')
+                        : tr('noAppsForFilter'),
+                    style: Theme.of(context).textTheme.headlineMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                  if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        () {
+                          final subtext = tr('noAppsSubtext');
+                          // Hide subtext if translation key is not found (returns the key itself)
+                          return subtext == 'noAppsSubtext' ? '' : subtext;
+                        }(),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withOpacity(0.7),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                ],
               ),
             ),
           ),
@@ -472,44 +503,12 @@ class AppsPageState extends State<AppsPage> {
     }
 
     getAppIcon(int appIndex) {
-      return GestureDetector(
-        child: FutureBuilder(
-          future: appsProvider.updateAppIcon(listedApps[appIndex].app.id),
-          builder: (ctx, val) {
-            return listedApps[appIndex].icon != null
-                ? Image.memory(
-                    listedApps[appIndex].icon!,
-                    gaplessPlayback: true,
-                    opacity: AlwaysStoppedAnimation(
-                      listedApps[appIndex].installedInfo == null ? 0.6 : 1,
-                    ),
-                  )
-                : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.rotationZ(0.31),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Image(
-                            image: const AssetImage(
-                              'assets/graphics/icon_small.png',
-                            ),
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white.withOpacity(0.4)
-                                : Colors.white.withOpacity(0.3),
-                            colorBlendMode: BlendMode.modulate,
-                            gaplessPlayback: true,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-          },
-        ),
+      return CachedAppIconSimple(
+        app: listedApps[appIndex].app,
+        size: 48.0,
+        onTap: () {
+          // Handle tap if needed
+        },
         onDoubleTap: () {
           pm.openApp(listedApps[appIndex].app.id);
         },
@@ -517,10 +516,7 @@ class AppsPageState extends State<AppsPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AppPage(
-                appId: listedApps[appIndex].app.id,
-                showOppositeOfPreferredView: true,
-              ),
+              builder: (context) => AppPage(appId: listedApps[appIndex].app.id),
             ),
           );
         },

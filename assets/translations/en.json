@@ -48,7 +48,8 @@
     "trackOnlyInBrackets": "(track-only)",
     "searchableInBrackets": "(searchable)",
     "appsString": "Apps",
-    "noApps": "No apps",
+    "noApps": "Welcome!",
+    "noAppsSubtext": "You can add your first app by tapping on 'Add app' below.",
     "noAppsForFilter": "No apps for filter",
     "byX": "By {}",
     "percentProgress": "Progress: {}%",
@@ -408,5 +409,14 @@
     "certificateHash": {
         "one": "Certificate Hash",
         "other": "Certificate Hashes"
-    }
+    },
+    "securityDisclaimerTitle": "Security & Legal Disclaimer",
+    "license": "License",
+    "licenseText": "This application is distributed under the GPL v3 License.",
+    "disclaimer": "Disclaimer",
+    "disclaimerText": "This application does not distribute, host, or verify any of the external applications. The user bears full responsibility for the safety and legality of any software installed through this tool.",
+    "privacy": "Privacy",
+    "privacyText": "This app is privacy-focused and does not collect personal data.",
+    "acceptAndContinue": "Accept & Continue",
+    "decline": "Decline"
 }

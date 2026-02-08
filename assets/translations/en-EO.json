@@ -408,5 +408,14 @@
     "certificateHash": {
         "one": "Certificate Hash",
         "other": "Certificate Hashes"
-    }
+    },
+    "securityDisclaimerTitle": "Sekureca kaj Jura Malrespondeco",
+    "license": "Permesilo",
+    "licenseText": "Ĉi tiu aplikaĵo estas distribuita sub la GPL v3 Permesilo.",
+    "disclaimer": "Malrespondeco",
+    "disclaimerText": "Ĉi tiu aplikaĵo ne distribuas, gastigas aŭ verigas iujn el la eksteraj aplikaĵoj. La uzanto portas la plenan respondecon por la sekureco kaj laŭleĝeco de iu ajn programaro instalita tra ĉi tiu ilo.",
+    "privacy": "Privateco",
+    "privacyText": "Ĉi tiu aplikaĵo fokusiĝas pri privateco kaj ne kolektas personajn datumojn.",
+    "acceptAndContinue": "Akcepti kaj Daŭrigi",
+    "decline": "Rifuzi"
 }

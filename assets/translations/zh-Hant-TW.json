@@ -408,5 +408,14 @@
     "certificateHash": {
         "one": "憑證雜湊",
         "other": "憑證雜湊"
-    }
+    },
+    "securityDisclaimerTitle": "安全與法律免責聲明",
+    "license": "授權",
+    "licenseText": "此應用程式採用 GPL v3 授權條款分發。",
+    "disclaimer": "免責聲明",
+    "disclaimerText": "此應用程式不分發、託管或驗證任何外部應用程式。使用者對透過此工具安裝的任何軟體的安全性和合法性承擔全部責任。",
+    "privacy": "隱私",
+    "privacyText": "此應用程式注重隱私，不收集個人資料。",
+    "acceptAndContinue": "接受並繼續",
+    "decline": "拒絕"
 }

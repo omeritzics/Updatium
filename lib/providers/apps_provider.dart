@@ -27,6 +27,8 @@ import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/services/icon_cache.dart';
+import 'package:updatium/services/icon_prefetcher.dart';
 import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -561,6 +563,8 @@ class AppsProvider with ChangeNotifier {
         if (!iconsCacheDir.existsSync()) {
           iconsCacheDir.createSync();
         }
+        // Initialize IconCache with the icons directory
+        await IconCache.instance.initialize(cacheDir: iconsCacheDir);
       } else {
         APKDir = Directory('${(await getAppStorageDir()).path}/apks');
         if (!APKDir.existsSync()) {
@@ -570,6 +574,8 @@ class AppsProvider with ChangeNotifier {
         if (!iconsCacheDir.existsSync()) {
           iconsCacheDir.createSync();
         }
+        // Initialize IconCache with the icons directory
+        await IconCache.instance.initialize(cacheDir: iconsCacheDir);
       }
       if (!isBg) {
         // Load Apps into memory (in background processes, this is done later instead of in the constructor)
@@ -1700,9 +1706,10 @@ class AppsProvider with ChangeNotifier {
                 String? overrideSource = app.overrideSource;
                 if (overrideSource != null &&
                     !sp.sourceExists(overrideSource)) {
-                  // Clear the removed overrideSource and update the app
+                  // Clear the removed overrideSource and update the app using lightweight method
                   app.overrideSource = null;
                   overrideSource = null;
+                  await persistAppJsonOnly(app, updateMemory: true);
                 }
                 sp.getSource(app.url, overrideSource: overrideSource);
                 // If the app is installed, grab its OS data and reconcile install statuses
@@ -1760,18 +1767,62 @@ class AppsProvider with ChangeNotifier {
     }
     loadingApps = false;
     notifyListeners();
+
+    // Start icon pre-fetching after apps are loaded
+    _startIconPrefetching();
+  }
+
+  /// Start icon pre-fetching in background after metadata sync
+  void _startIconPrefetching() {
+    // Run in background to avoid blocking UI
+    Future.microtask(() async {
+      try {
+        // Only start pre-fetching if there are apps with remote icon URLs
+        final appsWithRemoteIcons = apps.values
+            .where(
+              (appInMemory) =>
+                  appInMemory.app.remoteIconUrl != null &&
+                  appInMemory.app.remoteIconUrl!.isNotEmpty,
+            )
+            .length;
+
+        if (appsWithRemoteIcons > 0) {
+          LogsProvider().add(
+            'Starting background icon pre-fetching for $appsWithRemoteIcons apps',
+          );
+
+          // Start pre-fetching without awaiting to avoid blocking
+          unawaited(
+            IconPrefetcher.instance.startPrefetching(
+              apps: apps.values.map((appInMemory) => appInMemory.app).toList(),
+              forceRefresh: false,
+            ),
+          );
+        }
+      } catch (e) {
+        LogsProvider().add('Error starting icon pre-fetching: $e');
+      }
+    });
   }
 
   Future<void> updateAppIcon(String? appId, {bool ignoreCache = false}) async {
     if (apps[appId]?.icon == null) {
-      var cachedIcon = File('${iconsCacheDir.path}/$appId.png');
-      var alreadyCached = cachedIcon.existsSync() && !ignoreCache;
-      var icon = alreadyCached
-          ? (await cachedIcon.readAsBytes())
-          : (await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon());
-      if (icon != null && !alreadyCached) {
-        cachedIcon.writeAsBytes(icon.toList());
+      final app = apps[appId]?.app;
+      Uint8List? icon;
+
+      // Try to get icon from IconCache using remoteIconUrl first
+      if (app?.remoteIconUrl != null && app!.remoteIconUrl!.isNotEmpty) {
+        icon = await IconCache.instance.getIcon(
+          app.id,
+          app.remoteIconUrl,
+          forceRefresh: ignoreCache,
+          fallbackIcon: null,
+        );
       }
+
+      // If no icon from cache, try installed app icon
+      icon ??= await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
+
       if (icon != null) {
         apps.update(
           apps[appId]!.app.id,
@@ -1791,6 +1842,79 @@ class AppsProvider with ChangeNotifier {
         notifyListeners();
       }
     }
+  }
+
+  /// Get icon for an app using the IconCache service
+  /// This is the main API for getting app icons with remote URL support
+  Future<Uint8List?> getIcon(
+    String appId,
+    String? remoteIconUrl, {
+    bool forceRefresh = false,
+    Uint8List? fallbackIcon,
+  }) async {
+    return await IconCache.instance.getIcon(
+      appId,
+      remoteIconUrl,
+      forceRefresh: forceRefresh,
+      fallbackIcon: fallbackIcon,
+    );
+  }
+
+  /// Check if an icon is cached for the given app
+  Future<bool> isIconCached(String appId, String? remoteIconUrl) async {
+    return await IconCache.instance.isIconCached(appId, remoteIconUrl);
+  }
+
+  /// Clear the icon cache
+  Future<void> clearIconCache() async {
+    await IconCache.instance.clearCache();
+  }
+
+  /// Get icon cache statistics
+  Future<Map<String, dynamic>> getIconCacheStats() async {
+    return await IconCache.instance.getCacheStats();
+  }
+
+  /// Start icon pre-fetching manually
+  Future<void> startIconPrefetching({
+    int topCount = 40,
+    bool forceRefresh = false,
+  }) async {
+    await IconPrefetcher.instance.startPrefetching(
+      apps: apps.values.map((appInMemory) => appInMemory.app).toList(),
+      topCount: topCount,
+      forceRefresh: forceRefresh,
+    );
+  }
+
+  /// Get icon pre-fetching status
+  PrefetchStatus getIconPrefetchingStatus() {
+    return IconPrefetcher.instance.getStatus();
+  }
+
+  /// Pause icon pre-fetching
+  void pauseIconPrefetching() {
+    IconPrefetcher.instance.pause();
+  }
+
+  /// Resume icon pre-fetching
+  void resumeIconPrefetching() {
+    IconPrefetcher.instance.resume();
+  }
+
+  /// Stop icon pre-fetching
+  void stopIconPrefetching() {
+    IconPrefetcher.instance.stop();
+  }
+
+  /// Get icon pre-fetching progress stream
+  Stream<PrefetchProgress> getIconPrefetchingProgress() {
+    return IconPrefetcher.instance.progressStream;
+  }
+
+  /// Get icon pre-fetching result stream
+  Stream<PrefetchResult> getIconPrefetchingResults() {
+    return IconPrefetcher.instance.resultStream;
   }
 
   Future<void> saveApps(
@@ -1831,7 +1955,47 @@ class AppsProvider with ChangeNotifier {
       }),
     );
     notifyListeners();
-    export(isAuto: true);
+    // Export safely without blocking, handle errors gracefully
+    unawaited(
+      export(isAuto: true).catchError((e) {
+        // Log export errors but don't crash the app
+        // Export failures shouldn't prevent the main operation from completing
+      }),
+    );
+  }
+
+  /// Lightweight method for load-time corrections that avoids expensive operations
+  /// Only writes JSON file and updates in-memory map without:
+  /// - getInstalledInfo() calls
+  /// - icon/label retrieval
+  /// - auto-export triggers
+  Future<void> persistAppJsonOnly(App app, {bool updateMemory = true}) async {
+    if (!apps.containsKey(app.id)) {
+      return;
+    }
+
+    String filePath = '${(await getAppsDir()).path}/${app.id}.json';
+    File('$filePath.tmp').writeAsStringSync(jsonEncode(app.toJson()));
+    File('$filePath.tmp').renameSync(filePath);
+
+    if (updateMemory) {
+      try {
+        apps.update(
+          app.id,
+          (value) => AppInMemory(
+            app,
+            value.downloadProgress,
+            value.installedInfo,
+            value.icon,
+          ),
+          ifAbsent: () => AppInMemory(app, null, null, null),
+        );
+      } catch (e) {
+        if (e is! ArgumentError || e.name != 'key') {
+          rethrow;
+        }
+      }
+    }
   }
 
   Future<void> removeApps(List<String> appIds) async {
@@ -1856,7 +2020,13 @@ class AppsProvider with ChangeNotifier {
     );
     if (appIds.isNotEmpty) {
       notifyListeners();
-      export(isAuto: true);
+      // Export safely without blocking, handle errors gracefully
+      unawaited(
+        export(isAuto: true).catchError((e) {
+          // Log export errors but don't crash the app
+          // Export failures shouldn't prevent app removal from completing
+        }),
+      );
     }
   }
 

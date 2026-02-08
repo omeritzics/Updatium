@@ -48,7 +48,8 @@
     "trackOnlyInBrackets": "(Csak nyomon követés)",
     "searchableInBrackets": "(Kereshető)",
     "appsString": "Alkalmazások",
-    "noApps": "Nincsenek alkalmazások",
+    "noApps": "Üdvözlünk!",
+    "noAppsSubtext": "Az első alkalmazás hozzáadásához koppintson alul a 'Hozzáadás' gombra.",
     "noAppsForFilter": "Nincsenek alkalmazások a szűrőhöz",
     "byX": "Fejlesztő: {}",
     "percentProgress": "Folyamat: {}%",
@@ -408,5 +409,14 @@
     "certificateHash": {
         "one": "Tanúsítványkivonat",
         "other": "Tanúsítványkivonatok"
-    }
+    },
+    "securityDisclaimerTitle": "Biztonsági és Jogi Felelősségkorlátozás",
+    "license": "Licenc",
+    "licenseText": "Ez az alkalmazás a GPL v3 licenc alatt kerül terjesztésre.",
+    "disclaimer": "Felelősségkorlátozás",
+    "disclaimerText": "Ez az alkalmazás nem terjeszti, nem hosztolja és nem ellenőrzi a külső alkalmazások egyikét sem. A felhasználó viseli a teljes felelősséget az ezen eszközzel telepített bármely szoftver biztonságáért és jogszerűségéért.",
+    "privacy": "Adatvédelem",
+    "privacyText": "Ez az alkalmazás adatvédelem-központú és nem gyűjt személyes adatokat.",
+    "acceptAndContinue": "Elfogadás és folytatás",
+    "decline": "Elutasítás"
 }

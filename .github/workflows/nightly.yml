@@ -41,6 +41,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          version: '3.38.9'  # Use specific stable version that meets requirements
           cache: true
 
       # Running sync script to ensure no broken dependencies before building

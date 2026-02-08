@@ -53,6 +53,7 @@ class APKDetails {
   late AppNames names;
   late DateTime? releaseDate;
   late String? changeLog;
+  late String? remoteIconUrl;
   late List<MapEntry<String, String>> allAssetUrls;
 
   APKDetails(
@@ -61,6 +62,7 @@ class APKDetails {
     this.names, {
     this.releaseDate,
     this.changeLog,
+    this.remoteIconUrl,
     this.allAssetUrls = const [],
   });
 }
@@ -333,6 +335,7 @@ class App {
   List<String> categories;
   late DateTime? releaseDate;
   late String? changeLog;
+  late String? remoteIconUrl;
   late String? overrideSource;
   bool allowIdChange = false;
   App(
@@ -350,6 +353,7 @@ class App {
     this.categories = const [],
     this.releaseDate,
     this.changeLog,
+    this.remoteIconUrl,
     this.overrideSource,
     this.allowIdChange = false,
     this.otherAssetUrls = const [],
@@ -392,6 +396,7 @@ class App {
     pinned,
     categories: categories,
     changeLog: changeLog,
+    remoteIconUrl: remoteIconUrl,
     releaseDate: releaseDate,
     overrideSource: overrideSource,
     allowIdChange: allowIdChange,
@@ -437,6 +442,9 @@ class App {
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['releaseDate']),
       changeLog: json['changeLog'] == null ? null : json['changeLog'] as String,
+      remoteIconUrl: json['remoteIconUrl'] == null
+          ? null
+          : json['remoteIconUrl'] as String,
       overrideSource: json['overrideSource'],
       allowIdChange: json['allowIdChange'] ?? false,
       otherAssetUrls: assumed2DlistToStringMapList(
@@ -461,6 +469,7 @@ class App {
     'categories': categories,
     'releaseDate': releaseDate?.microsecondsSinceEpoch,
     'changeLog': changeLog,
+    'remoteIconUrl': remoteIconUrl,
     'overrideSource': overrideSource,
     'allowIdChange': allowIdChange,
   };
@@ -1300,6 +1309,7 @@ class SourceProvider {
       categories: currentApp?.categories ?? const [],
       releaseDate: apk.releaseDate,
       changeLog: apk.changeLog,
+      remoteIconUrl: apk.remoteIconUrl,
       overrideSource: sourceIsOverriden
           ? source.runtimeType.toString()
           : currentApp?.overrideSource,

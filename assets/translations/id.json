@@ -48,7 +48,8 @@
     "trackOnlyInBrackets": "(Pelacakan Saja)",
     "searchableInBrackets": "(Dapat dicari)",
     "appsString": "Aplikasi",
-    "noApps": "Tidak ada aplikasi",
+    "noApps": "Selamat datang!",
+    "noAppsSubtext": "Anda dapat menambahkan aplikasi pertama dengan mengetuk 'Tambah aplikasi' di bawah.",
     "noAppsForFilter": "Tidak ada aplikasi untuk difilter",
     "byX": "Oleh {}",
     "percentProgress": "Perkembangan: {}%",
@@ -408,5 +409,14 @@
     "certificateHash": {
         "one": "Hash Sertifikat",
         "other": "Hashes Sertifikat"
-    }
+    },
+    "securityDisclaimerTitle": "Penafian Keamanan dan Hukum",
+    "license": "Lisensi",
+    "licenseText": "Aplikasi ini didistribusikan di bawah Lisensi GPL v3.",
+    "disclaimer": "Penafian",
+    "disclaimerText": "Aplikasi ini tidak mendistribusikan, menghosting, atau memverifikasi aplikasi eksternal mana pun. Pengguna menanggung tanggung jawab penuh atas keamanan dan legalitas perangkat lunak apa pun yang diinstal melalui alat ini.",
+    "privacy": "Privasi",
+    "privacyText": "Aplikasi ini berfokus pada privasi dan tidak mengumpulkan data pribadi.",
+    "acceptAndContinue": "Terima dan Lanjutkan",
+    "decline": "Tolak"
 }

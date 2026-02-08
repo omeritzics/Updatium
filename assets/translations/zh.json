@@ -408,5 +408,14 @@
     "certificateHash": {
         "one": "证书散列",
         "other": "Hashes 证书"
-    }
+    },
+    "securityDisclaimerTitle": "安全与法律免责声明",
+    "license": "许可证",
+    "licenseText": "本应用程序采用 GPL v3 许可证分发。",
+    "disclaimer": "免责声明",
+    "disclaimerText": "本应用程序不分发、托管或验证任何外部应用程序。用户对通过此工具安装的任何软件的安全性和合法性承担全部责任。",
+    "privacy": "隐私",
+    "privacyText": "此应用注重隐私，不收集个人数据。",
+    "acceptAndContinue": "接受并继续",
+    "decline": "拒绝"
 }
