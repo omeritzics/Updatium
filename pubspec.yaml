@@ -151,9 +151,9 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
   fonts:
-      - family: Montserrat
-        fonts:
-          - asset: assets/fonts/Montserrat-Regular.ttf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
           
 dev_dependencies:
   flutter_test:

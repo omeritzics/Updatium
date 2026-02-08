@@ -36,13 +36,20 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          version: '3.38.9'  # Use specific stable version that meets requirements
           cache: true
 
       - name: Prepare Build
         run: |
           flutter pub get
           # Strip signing config to build debug APK safely without keystores
-          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
+          # Handle both .gradle and .gradle.kts files
+          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle || true
+          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle.kts || true
+
+      - name: Analyze Code
+        run: |
+          flutter analyze
 
       - name: Build APK (Unique ID)
         run: |
