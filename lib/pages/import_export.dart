@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
+import 'package:updatium/components/app_button.dart';
 import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
@@ -393,7 +394,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: TextButton(
+                                child: AppTextButton(
                                   style: filledButtonStyle,
                                   onPressed: importInProgress
                                       ? null
@@ -408,7 +409,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               ),
                               const SizedBox(width: 16),
                               Expanded(
-                                child: TextButton(
+                                child: AppTextButton(
                                   style: filledButtonStyle,
                                   onPressed:
                                       importInProgress || snapshot.data == null
@@ -426,7 +427,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: TextButton(
+                                child: AppTextButton(
                                   style: filledButtonStyle,
                                   onPressed: importInProgress
                                       ? null
@@ -504,7 +505,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         Row(
                           children: [
                             Expanded(
-                              child: TextButton(
+                              child: AppTextButton(
                                 onPressed: importInProgress
                                     ? null
                                     : () async {
@@ -552,12 +553,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           ],
                         ),
                         const SizedBox(height: 8),
-                        TextButton(
+                        AppTextButton(
                           onPressed: importInProgress ? null : urlListImport,
                           child: Text(tr('importFromURLList')),
                         ),
                         const SizedBox(height: 8),
-                        TextButton(
+                        AppTextButton(
                           onPressed: importInProgress ? null : runUrlImport,
                           child: Text(tr('importFromURLsInFile')),
                         ),
@@ -568,7 +569,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const SizedBox(height: 8),
-                        TextButton(
+                        AppTextButton(
                           onPressed: importInProgress
                               ? null
                               : () {
@@ -651,7 +652,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
         ],
       ),
       actions: [
-        TextButton(
+        AppTextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
@@ -744,7 +745,7 @@ class _SelectionModalState extends State<SelectionModal> {
       }
       var noneSelected = entrySelections.values.where((v) => v == true).isEmpty;
       return noneSelected
-          ? TextButton(
+          ? AppTextButton(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
               onPressed: () {
                 setState(() {
@@ -753,7 +754,7 @@ class _SelectionModalState extends State<SelectionModal> {
               },
               child: Text(tr('selectAll')),
             )
-          : TextButton(
+          : AppTextButton(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
               onPressed: () {
                 setState(() {
@@ -934,13 +935,13 @@ class _SelectionModalState extends State<SelectionModal> {
       ),
       actions: [
         getSelectAllButton(),
-        TextButton(
+        AppTextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(tr('cancel')),
         ),
-        TextButton(
+        AppTextButton(
           onPressed: entrySelections.values.where((b) => b).isEmpty
               ? null
               : () {

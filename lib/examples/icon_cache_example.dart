@@ -94,7 +94,7 @@ class _IconCacheExampleState extends State<IconCacheExample> {
                 ],
               ),
               actions: [
-                TextButton(
+                AppTextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: const Text('OK'),
                 ),
@@ -165,7 +165,7 @@ class _IconCacheExampleState extends State<IconCacheExample> {
               ],
             ),
             actions: [
-              TextButton(
+              AppTextButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text('OK'),
               ),

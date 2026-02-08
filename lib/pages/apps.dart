@@ -1036,8 +1036,7 @@ class AppsPageState extends State<AppsPage> {
 
     getSelectAllButton() {
       return selectedAppIds.isEmpty
-          ? TextButton.icon(
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
+          ? AppTextButton.icon(
               onPressed: () {
                 selectThese(listedApps.map((e) => e.app).toList());
               },
@@ -1047,8 +1046,7 @@ class AppsPageState extends State<AppsPage> {
               ),
               label: Text(listedApps.length.toString()),
             )
-          : TextButton.icon(
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
+          : AppTextButton.icon(
               onPressed: () {
                 selectedAppIds.isEmpty
                     ? selectThese(listedApps.map((e) => e.app).toList())
@@ -1261,13 +1259,13 @@ class AppsPageState extends State<AppsPage> {
               ),
             ),
             actions: [
-              TextButton(
+              AppTextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(tr('no')),
               ),
-              TextButton(
+              AppTextButton(
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   appsProvider.saveApps(
@@ -1316,7 +1314,7 @@ class AppsPageState extends State<AppsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  TextButton(
+                  AppTextButton(
                     onPressed: pinSelectedApps,
                     child: Text(
                       selectedApps.where((element) => element.pinned).isEmpty
@@ -1326,7 +1324,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  TextButton(
+                  AppTextButton(
                     onPressed: () {
                       String urls = '';
                       for (var a in selectedApps) {
@@ -1345,7 +1343,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  TextButton(
+                  AppTextButton(
                     onPressed: selectedAppIds.isEmpty
                         ? null
                         : () {
@@ -1374,7 +1372,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  TextButton(
+                  AppTextButton(
                     onPressed: () {
                       appsProvider
                           .downloadAppAssets(
@@ -1399,7 +1397,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  TextButton(
+                  AppTextButton(
                     onPressed: appsProvider.areDownloadsRunning()
                         ? null
                         : showMassMarkDialog,
