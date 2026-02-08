@@ -334,7 +334,7 @@
     "sortMethod": "Sıralama yöntemi",
     "welcome": "Hoş geldiniz",
     "documentationLinksNote": "Aşağıda bağlantısı verilen Updatium GitHub sayfası, uygulamayı nasıl kullanacağınızı anlamanıza yardımcı olacak videolara, makalelere, tartışmalara ve diğer kaynaklara bağlantılar içerir.",
-    "batteryOptimizationNote": "Updatium için işletim sistemi pil optimizasyonlarını devre dışı bırakırsanız arka planda indirmelerin daha güvenilir şekilde çalışabileceğini unutmayın.",
+    "batteryOptimizationNote": "Updatium ayarlarında \"ön plan hizmeti\"ne geçerseniz ve/veya Updatium için işletim sistemi pil optimizasyonlarını devre dışı bırakırsanız arka planda indirmelerin daha güvenilir şekilde çalışabileceğini unutmayın.",
     "fileDeletionError": "Dosya silinemedi (elle silmeyi deneyin ve sonra tekrar deneyin): \"{}\"",
     "foregroundService": "Updatium ön plan hizmeti",
     "foregroundServiceExplanation": "Güncelleme denetimi için bir ön plan hizmeti kullanın (daha güvenilir, daha fazla güç tüketir)",
