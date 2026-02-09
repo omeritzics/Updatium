@@ -79,27 +79,30 @@ class IconPrefetcher {
       // Process apps in batches to avoid overwhelming the system
       await _processAppsInBatches(apps, forceRefresh);
 
-      _progressController.add(
-        PrefetchProgress(
-          completed: _completedCount,
-          total: _totalCount,
-          currentApp: '',
-          phase: PrefetchPhase.completed,
-        ),
-      );
+      // Only emit success result if prefetching wasn't stopped
+      if (_isRunning) {
+        _progressController.add(
+          PrefetchProgress(
+            completed: _completedCount,
+            total: _totalCount,
+            currentApp: '',
+            phase: PrefetchPhase.completed,
+          ),
+        );
 
-      _resultController.add(
-        PrefetchResult(
-          success: true,
-          completedCount: _completedCount,
-          totalCount: _totalCount,
-          failedApps: List.from(_failedApps),
-        ),
-      );
+        _resultController.add(
+          PrefetchResult(
+            success: true,
+            completedCount: _completedCount,
+            totalCount: _totalCount,
+            failedApps: List.from(_failedApps),
+          ),
+        );
 
-      LogsProvider().add(
-        'Icon pre-fetching completed. Success: $_completedCount/$_totalCount, Failed: ${_failedApps.length}',
-      );
+        LogsProvider().add(
+          'Icon pre-fetching completed. Success: $_completedCount/$_totalCount, Failed: ${_failedApps.length}',
+        );
+      }
     } catch (e) {
       LogsProvider().add('Error during icon pre-fetching: $e');
       _resultController.add(

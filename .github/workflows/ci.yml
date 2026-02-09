@@ -55,7 +55,7 @@ jobs:
         run: |
           # Inject the short SHA into the Application ID to allow side-by-side testing
           # This replaces the existing applicationId with a unique one for this commit
-          sed -i 's/applicationId ".*"/applicationId "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle.kts || true
+          sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle.kts || true
           
           # Build debug APKs split by ABI for smaller size (focus on 64-bit phones)
           flutter build apk --debug --flavor normal --split-per-abi
