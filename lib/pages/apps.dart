@@ -412,7 +412,7 @@ class AppsPageState extends State<AppsPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.widgets_outlined,
+                    Icons.widgets,
                     size: 80,
                     color: Theme.of(
                       context,
@@ -496,7 +496,7 @@ class AppsPageState extends State<AppsPage> {
               },
         icon: Icon(
           listedApps[appIndex].app.additionalSettings['trackOnly'] == true
-              ? Icons.check_circle_outline
+              ? Icons.check_circle
               : Icons.install_mobile,
         ),
       );
@@ -555,7 +555,7 @@ class AppsPageState extends State<AppsPage> {
 
           Widget action;
           if (isTrackOnly) {
-            action = const Icon(Icons.check_circle_outline);
+            action = const Icon(Icons.check_circle);
           } else if (!isInstalled) {
             action = FilledButton.tonal(
               onPressed: appsProvider.areDownloadsRunning()
@@ -1041,7 +1041,7 @@ class AppsPageState extends State<AppsPage> {
                 selectThese(listedApps.map((e) => e.app).toList());
               },
               icon: Icon(
-                Icons.select_all_outlined,
+                Icons.select_all,
                 color: Theme.of(context).colorScheme.primary,
               ),
               label: Text(listedApps.length.toString()),
@@ -1053,9 +1053,7 @@ class AppsPageState extends State<AppsPage> {
                     : clearSelected();
               },
               icon: Icon(
-                selectedAppIds.isEmpty
-                    ? Icons.select_all_outlined
-                    : Icons.deselect_outlined,
+                selectedAppIds.isEmpty ? Icons.select_all : Icons.deselect,
                 color: Theme.of(context).colorScheme.primary,
               ),
               label: Text(selectedAppIds.length.toString()),
@@ -1422,7 +1420,7 @@ class AppsPageState extends State<AppsPage> {
           tooltip: selectedAppIds.isEmpty
               ? tr('installUpdateApps')
               : tr('installUpdateSelectedApps'),
-          icon: const Icon(Icons.file_download_outlined),
+          icon: const Icon(Icons.file_download),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
@@ -1435,13 +1433,13 @@ class AppsPageState extends State<AppsPage> {
                   );
                 },
           tooltip: tr('removeSelectedApps'),
-          icon: const Icon(Icons.delete_outline_outlined),
+          icon: const Icon(Icons.delete),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
           onPressed: selectedAppIds.isEmpty ? null : launchCategorizeDialog(),
           tooltip: tr('categorize'),
-          icon: const Icon(Icons.category_outlined),
+          icon: const Icon(Icons.category),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
