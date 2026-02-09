@@ -45,22 +45,22 @@ class _IconCacheExampleState extends State<IconCacheExample> {
               ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
+            FilledButton.tonal(
               onPressed: () => _loadIcon(context),
               child: const Text('Load Icon'),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
+            FilledButton.tonal(
               onPressed: () => _checkCache(context),
               child: const Text('Check Cache Status'),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
+            FilledButton.tonal(
               onPressed: () => _getCacheStats(context),
               child: const Text('Get Cache Statistics'),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
+            FilledButton.tonal(
               onPressed: () => _clearCache(context),
               child: const Text('Clear Cache'),
             ),

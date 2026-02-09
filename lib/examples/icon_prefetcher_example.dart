@@ -254,7 +254,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
         Row(
           children: [
             Expanded(
-              child: ElevatedButton.icon(
+              child: FilledButton.tonal.icon(
                 onPressed: (_status?.isRunning ?? false)
                     ? null
                     : _startPrefetching,
@@ -264,7 +264,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: ElevatedButton.icon(
+              child: FilledButton.tonal.icon(
                 onPressed: (_status?.isRunning ?? false)
                     ? _pausePrefetching
                     : null,
@@ -278,7 +278,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
         Row(
           children: [
             Expanded(
-              child: ElevatedButton.icon(
+              child: FilledButton.tonal.icon(
                 onPressed: (_status?.isPaused ?? false)
                     ? _resumePrefetching
                     : null,
@@ -288,7 +288,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: ElevatedButton.icon(
+              child: FilledButton.tonal.icon(
                 onPressed: (_status?.isRunning ?? false)
                     ? _stopPrefetching
                     : null,
@@ -299,7 +299,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
           ],
         ),
         const SizedBox(height: 8),
-        ElevatedButton.icon(
+        FilledButton.tonal.icon(
           onPressed: _showCacheStats,
           icon: const Icon(Icons.storage),
           label: const Text('View Cache Statistics'),

@@ -238,7 +238,7 @@ class _RefactoredIconPipelineExampleState
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: ElevatedButton.icon(
+                child: FilledButton.tonal.icon(
                   onPressed: _prefetchStatus?.isRunning == true
                       ? null
                       : _startPrefetching,
