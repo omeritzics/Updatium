@@ -78,7 +78,7 @@ class _ExpressiveRefreshIndicatorState extends State<ExpressiveRefreshIndicator>
       _animationController.repeat();
       
       try {
-        await widget.onRefresh();
+        await widget.onRefresh!();
       } finally {
         if (mounted) {
           // Stop animations
@@ -101,40 +101,6 @@ class _ExpressiveRefreshIndicatorState extends State<ExpressiveRefreshIndicator>
       backgroundColor: colorScheme.surface,
       strokeWidth: 2.5,
       onRefresh: _handleRefresh,
-      indicator: _isRefreshing
-          ? AnimatedBuilder(
-              animation: _animationController,
-              builder: (context, child) {
-                return Transform.rotate(
-                  angle: _rotationAnimation.value * 2 * 3.14159,
-                  child: Transform.scale(
-                    scale: _scaleAnimation.value,
-                    child: AnimatedOpacity(
-                      opacity: _opacityAnimation.value,
-                      duration: const Duration(milliseconds: 150),
-                      child: Container(
-                        width: 24,
-                        height: 24,
-                        decoration: BoxDecoration(
-                          color: (widget.color ?? colorScheme.primary).withOpacity(0.8),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: IconTheme(
-                            data: IconThemeData(
-                              color: colorScheme.onPrimary,
-                              size: 16,
-                            ),
-                            child: Icon(Icons.refresh),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            )
-          : const SizedBox.shrink(),
       child: widget.child,
     );
   }

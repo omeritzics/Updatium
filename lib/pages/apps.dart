@@ -6,6 +6,7 @@ import 'package:updatium/components/expressive_refresh_indicator.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/cached_app_icon.dart';
+import 'package:updatium/components/app_button.dart';
 import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/expressive_components.dart';
 import 'package:updatium/components/generated_form.dart';
@@ -140,6 +141,7 @@ class AppsPageState extends State<AppsPage> {
   );
   Set<String> selectedAppIds = {};
   DateTime? refreshingSince;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
 
   // Cache gradient stops by category count to avoid recomputation
   final Map<int, List<double>> _stopsCache = {};

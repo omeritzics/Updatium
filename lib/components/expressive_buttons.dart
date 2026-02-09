@@ -145,7 +145,9 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
         effectiveStyle?.elevation?.resolve({}) ?? 
         2.0;
     final effectiveBorderRadius = widget.borderRadius ?? 
-        effectiveStyle?.shape?.resolve({})?.borderRadius ?? 
+        (effectiveStyle?.shape?.resolve({}) is OutlinedBorder 
+            ? (effectiveStyle?.shape?.resolve({}) as OutlinedBorder).borderRadius 
+            : null) ?? 
         BorderRadius.circular(12);
     final effectivePadding = widget.padding ?? 
         effectiveStyle?.padding?.resolve({}) ?? 

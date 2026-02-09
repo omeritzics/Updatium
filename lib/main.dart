@@ -550,7 +550,7 @@ class _UpdatiumState extends State<Updatium> {
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
                   elevation: isDark ? 3 : 2,
-                  shadowColor: isDark ? Colors.black38 : Colors.black20,
+                  shadowColor: isDark ? Colors.black38 : Colors.black.withOpacity(0.2),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 28,
                     vertical: 14,
