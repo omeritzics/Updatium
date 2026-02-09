@@ -223,7 +223,9 @@ class IconPrefetcher {
       );
 
       // Process batch concurrently
-      final futures = batch.map((app) => _prefetchAppIcon(app, forceRefresh)).toList();
+      final futures = batch
+          .map((app) => _prefetchAppIcon(app, forceRefresh))
+          .toList();
       final results = await Future.wait(futures);
 
       // Update counters
