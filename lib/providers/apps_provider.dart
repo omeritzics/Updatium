@@ -1852,12 +1852,25 @@ class AppsProvider with ChangeNotifier {
     bool forceRefresh = false,
     Uint8List? fallbackIcon,
   }) async {
-    return await IconCache.instance.getIcon(
+    // First try IconCache with remote URL
+    final icon = await IconCache.instance.getIcon(
       appId,
       remoteIconUrl,
       forceRefresh: forceRefresh,
       fallbackIcon: fallbackIcon,
     );
+    
+    // If no icon from cache and no fallback provided, try installed app icon
+    if (icon == null && fallbackIcon == null) {
+      final installedIcon = await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
+      if (installedIcon != null) {
+        // Cache the installed icon for future use
+        await IconCache.instance.saveIcon(appId, installedIcon);
+        return installedIcon;
+      }
+    }
+    
+    return icon;
   }
 
   /// Check if an icon is cached for the given app
