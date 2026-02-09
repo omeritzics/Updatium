@@ -394,8 +394,8 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      _colorAnimation.value!,
-                      _colorAnimation.value!.withOpacity(0.8),
+                      _colorAnimation.value ?? (widget.backgroundColor ?? colorScheme.primary),
+                      (_colorAnimation.value ?? (widget.backgroundColor ?? colorScheme.primary)).withOpacity(0.8),
                     ],
                   ),
                 ),
