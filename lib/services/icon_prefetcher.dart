@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/icon_cache.dart';
 
 /// Background service for pre-fetching app icons
@@ -222,7 +223,7 @@ class IconPrefetcher {
       );
 
       // Process batch concurrently
-      final futures = batch.map((app) => _prefetchAppIcon(app, forceRefresh));
+      final futures = batch.map((app) => _prefetchAppIcon(app, forceRefresh)).toList();
       final results = await Future.wait(futures);
 
       // Update counters

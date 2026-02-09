@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:updatium/components/app_button.dart';
 import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/components/generated_form.dart';
