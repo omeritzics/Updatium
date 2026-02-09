@@ -66,7 +66,8 @@ create table if not exists $logTable (
   $idColumn integer primary key autoincrement, 
   $levelColumn integer not null,
   $messageColumn text not null,
-  $timestampColumn integer not null)
+  $timestampColumn integer not null,
+  $contextColumn text)
 ''');
       },
       onUpgrade: (Database db, int oldVersion, int newVersion) async {

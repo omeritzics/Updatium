@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/services/icon_cache.dart';
-import 'package:updatium/providers/source_provider.dart';
 
 /// Background service for pre-fetching app icons
 class IconPrefetcher {
@@ -14,7 +13,6 @@ class IconPrefetcher {
 
   IconPrefetcher._();
 
-  static const String _isolateName = 'IconPrefetcherIsolate';
   static const int _maxConcurrentDownloads = 5;
   static const int _topAppsCount = 40;
 
@@ -193,8 +191,20 @@ class IconPrefetcher {
     }
 
     for (int batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+      // Check if prefetching has been stopped
+      if (!_isRunning) {
+        LogsProvider().add('Icon pre-fetching stopped during batch processing');
+        break;
+      }
+      
       if (_isPaused) {
         await _waitForResume();
+      }
+      
+      // Check again after resume in case stop was called during pause
+      if (!_isRunning) {
+        LogsProvider().add('Icon pre-fetching stopped during batch processing');
+        break;
       }
 
       final batch = batches[batchIndex];
@@ -231,8 +241,28 @@ class IconPrefetcher {
   /// Prefetch icon for a single app
   Future<PrefetchAppResult> _prefetchAppIcon(App app, bool forceRefresh) async {
     try {
+      // Check if prefetching has been stopped
+      if (!_isRunning) {
+        return PrefetchAppResult(
+          appId: app.id,
+          appName: app.name,
+          success: false,
+          error: 'Prefetching was stopped',
+        );
+      }
+      
       if (_isPaused) {
         await _waitForResume();
+      }
+      
+      // Check again after resume in case stop was called during pause
+      if (!_isRunning) {
+        return PrefetchAppResult(
+          appId: app.id,
+          appName: app.name,
+          success: false,
+          error: 'Prefetching was stopped',
+        );
       }
 
       _progressController.add(
@@ -300,9 +330,34 @@ class IconPrefetcher {
 
   /// Stop the pre-fetching process
   void stop() {
-    _isRunning = false;
-    _isPaused = false;
-    LogsProvider().add('Icon pre-fetching stopped');
+    if (_isRunning) {
+      _isRunning = false;
+      _isPaused = false;
+      LogsProvider().add('Icon pre-fetching stopped by user request');
+      
+      // Emit final progress update to show stopped state
+      _progressController.add(
+        PrefetchProgress(
+          completed: _completedCount,
+          total: _totalCount,
+          currentApp: '',
+          phase: PrefetchPhase.completed,
+        ),
+      );
+      
+      // Emit result indicating partial completion
+      _resultController.add(
+        PrefetchResult(
+          success: false, // Mark as unsuccessful since it was stopped
+          completedCount: _completedCount,
+          totalCount: _totalCount,
+          failedApps: List.from(_failedApps),
+          error: 'Prefetching was stopped',
+        ),
+      );
+    } else {
+      LogsProvider().add('Icon pre-fetching stop called but not running');
+    }
   }
 
   /// Wait for resume if paused

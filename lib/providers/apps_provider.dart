@@ -1794,7 +1794,7 @@ class AppsProvider with ChangeNotifier {
           // Start pre-fetching without awaiting to avoid blocking
           unawaited(
             IconPrefetcher.instance.startPrefetching(
-              apps: apps.values.map((appInMemory) => appInMemory.app).toList(),
+              topCount: 40, // Limit to top 40 apps to avoid overwhelming
               forceRefresh: false,
             ),
           );
