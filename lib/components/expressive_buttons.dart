@@ -377,7 +377,7 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
             color: _colorAnimation.value,
             shadowColor: colorScheme.shadow.withOpacity(0.3),
             child: InkWell(
-              onTap: widget.onPressed != null ? _handleTapDown : null,
+              onTapDown: widget.onPressed != null ? _handleTapDown : null,
               onTapUp: widget.onPressed != null ? _handleTapUp : null,
               onTapCancel: _handleTapCancel,
               onLongPress: widget.onLongPress,
