@@ -1,12 +1,13 @@
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/components/expressive_refresh_indicator.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:updatium/components/app_button.dart';
-import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/cached_app_icon.dart';
+import 'package:updatium/components/custom_app_bar.dart';
+import 'package:updatium/components/expressive_components.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -163,8 +164,6 @@ class AppsPageState extends State<AppsPage> {
     }
   }
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
 
   late final ScrollController scrollController = ScrollController();
 
@@ -741,41 +740,44 @@ class AppsPageState extends State<AppsPage> {
       final categories = listedApps[index].app.categories;
       final stops = categoryStops(categories);
 
-      return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(
-            stops: stops,
-            begin: const Alignment(-1, -1),
-            end: const Alignment(1, 1),
-            colors: [
-              ...listedApps[index].app.categories.map(
-                (e) => Color(
-                  settingsProvider.categories[e] ?? transparent,
-                ).withAlpha(40),
-              ),
-              Color(transparent),
-            ],
-          ),
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            if (selectedAppIds.isNotEmpty) {
-              toggleAppSelected(listedApps[index].app);
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      AppPage(appId: listedApps[index].app.id),
-                ),
-              );
-            }
-          },
-          onLongPress: () {
+      return ExpressiveCard(
+        onTap: () {
+          if (selectedAppIds.isNotEmpty) {
             toggleAppSelected(listedApps[index].app);
-          },
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AppPage(appId: listedApps[index].app.id),
+              ),
+            );
+          }
+        },
+        onLongPress: () {
+          toggleAppSelected(listedApps[index].app);
+        },
+        margin: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
+        borderRadius: BorderRadius.circular(12),
+        elevation: 2,
+        enableAnimation: true,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            gradient: LinearGradient(
+              stops: stops,
+              begin: const Alignment(-1, -1),
+              end: const Alignment(1, 1),
+              colors: [
+                ...listedApps[index].app.categories.map(
+                  (e) => Color(
+                    settingsProvider.categories[e] ?? transparent,
+                  ).withAlpha(40),
+                ),
+                Color(transparent),
+              ],
+            ),
+          ),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -818,7 +820,7 @@ class AppsPageState extends State<AppsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
                   SizedBox(
                     height: 64,
                     width: 64,
@@ -827,7 +829,7 @@ class AppsPageState extends State<AppsPage> {
                       child: getAppIcon(index),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Flexible(
@@ -843,9 +845,9 @@ class AppsPageState extends State<AppsPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 8),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Flexible(
                       child: Text(
                         listedApps[index].author,
@@ -858,9 +860,9 @@ class AppsPageState extends State<AppsPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Builder(
                       builder: (ctx) {
                         final ai = listedApps[index];
@@ -931,7 +933,7 @@ class AppsPageState extends State<AppsPage> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
                 ],
               ),
               if (listedApps[index].downloadProgress != null)
@@ -982,8 +984,8 @@ class AppsPageState extends State<AppsPage> {
           settingsProvider.useGridView
               ? Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 8.0,
+                    horizontal: 16.0,
+                    vertical: 16.0,
                   ),
                   child: GridView.builder(
                     padding: EdgeInsets.zero,
@@ -991,10 +993,10 @@ class AppsPageState extends State<AppsPage> {
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 150,
+                          maxCrossAxisExtent: 200,
                           childAspectRatio: 0.6,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
                         ),
                     itemCount: listedApps
                         .asMap()
@@ -1566,7 +1568,7 @@ class AppsPageState extends State<AppsPage> {
               isFilterOff ? Icons.search_rounded : Icons.search_off_rounded,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 16),
           const VerticalDivider(),
           Expanded(
             child: Row(
@@ -1597,10 +1599,10 @@ class AppsPageState extends State<AppsPage> {
         if (settingsProvider.useGridView) {
           return SliverGrid(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 150,
+              maxCrossAxisExtent: 200,
               childAspectRatio: 0.6,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
             ),
             delegate: SliverChildBuilderDelegate((
               BuildContext context,
@@ -1624,8 +1626,7 @@ class AppsPageState extends State<AppsPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: RefreshIndicator(
-        key: _refreshIndicatorKey,
+      body: ExpressiveRefreshIndicator(
         onRefresh: refresh,
         child: Scrollbar(
           interactive: true,

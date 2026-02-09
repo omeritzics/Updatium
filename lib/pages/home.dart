@@ -5,7 +5,7 @@ import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/components/app_button.dart';
+import 'package:updatium/components/animated_navigation_bar.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
@@ -334,20 +334,20 @@ class _HomePageState extends State<HomePage> {
               )
               .widget,
         ),
-        bottomNavigationBar: NavigationBar(
+        bottomNavigationBar: AnimatedNavigationBar(
           destinations: pages
               .map(
                 (e) =>
                     NavigationDestination(icon: Icon(e.icon), label: e.title),
               )
               .toList(),
+          selectedIndex: selectedIndexHistory.isEmpty
+              ? 0
+              : selectedIndexHistory.last,
           onDestinationSelected: (int index) async {
             HapticFeedback.selectionClick();
             switchToPage(index);
           },
-          selectedIndex: selectedIndexHistory.isEmpty
-              ? 0
-              : selectedIndexHistory.last,
         ),
       ),
       onWillPop: () async {

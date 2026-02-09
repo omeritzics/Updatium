@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/utils/expressive_motion.dart';
 
 /// Widget that displays app icons with caching and loading states
 class CachedAppIcon extends StatefulWidget {
@@ -35,22 +36,48 @@ class _CachedAppIconState extends State<CachedAppIcon>
     with SingleTickerProviderStateMixin {
   late AnimationController _shimmerController;
   late Animation<double> _shimmerAnimation;
+  late AnimationController _scaleController;
+  late Animation<double> _scaleAnimation;
+  late AnimationController _rotationController;
+  late Animation<double> _rotationAnimation;
 
   Uint8List? _iconData;
   bool _isLoading = false;
   bool _hasError = false;
   String? _lastAppId;
   String? _lastRemoteUrl;
+  bool _isHovered = false;
+  bool _isPressed = false;
 
   @override
   void initState() {
     super.initState();
+    
+    // Shimmer animation for loading state
     _shimmerController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
     _shimmerAnimation = Tween<double>(begin: -2.0, end: 2.0).animate(
-      CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
+      CurvedAnimation(parent: _shimmerController, curve: ExpressiveMotion.standard),
+    );
+    
+    // Scale animation for interactions
+    _scaleController = AnimationController(
+      duration: ExpressiveMotion.durationShort,
+      vsync: this,
+    );
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.9).animate(
+      CurvedAnimation(parent: _scaleController, curve: ExpressiveMotion.emphasizedAccelerate),
+    );
+    
+    // Rotation animation for loading/error states
+    _rotationController = AnimationController(
+      duration: ExpressiveMotion.durationLong,
+      vsync: this,
+    );
+    _rotationAnimation = Tween<double>(begin: 0.0, end: 0.1).animate(
+      CurvedAnimation(parent: _rotationController, curve: ExpressiveMotion.standard),
     );
 
     // Start loading the icon
@@ -71,7 +98,37 @@ class _CachedAppIconState extends State<CachedAppIcon>
   @override
   void dispose() {
     _shimmerController.dispose();
+    _scaleController.dispose();
+    _rotationController.dispose();
     super.dispose();
+  }
+
+  void _handleTapDown(TapDownDetails details) {
+    setState(() {
+      _isPressed = true;
+    });
+    _scaleController.forward();
+  }
+
+  void _handleTapUp(TapUpDetails details) {
+    setState(() {
+      _isPressed = false;
+    });
+    _scaleController.reverse();
+    widget.onTap?.call();
+  }
+
+  void _handleTapCancel() {
+    setState(() {
+      _isPressed = false;
+    });
+    _scaleController.reverse();
+  }
+
+  void _handleHover(bool hovering) {
+    setState(() {
+      _isHovered = hovering;
+    });
   }
 
   Future<void> _loadIcon() async {
@@ -153,14 +210,57 @@ class _CachedAppIconState extends State<CachedAppIcon>
       iconWidget = _buildIconWidget();
     }
 
-    return GestureDetector(
-      onTap: widget.onTap,
-      onDoubleTap: widget.onDoubleTap,
-      onLongPress: widget.onLongPress,
-      child: SizedBox(
-        width: widget.size,
-        height: widget.size,
-        child: iconWidget,
+    return MouseRegion(
+      onEnter: (_) => _handleHover(true),
+      onExit: (_) => _handleHover(false),
+      child: GestureDetector(
+        onTapDown: widget.onTap != null ? _handleTapDown : null,
+        onTapUp: widget.onTap != null ? _handleTapUp : null,
+        onTapCancel: widget.onTap != null ? _handleTapCancel : null,
+        onDoubleTap: widget.onDoubleTap,
+        onLongPress: widget.onLongPress,
+        child: AnimatedBuilder(
+          animation: Listenable.merge([_scaleController, _rotationController]),
+          builder: (context, child) {
+            return Transform.scale(
+              scale: _scaleAnimation.value,
+              child: Transform.rotate(
+                angle: _rotationAnimation.value,
+                child: AnimatedContainer(
+                  duration: ExpressiveMotion.durationShort,
+                  transform: Matrix4.identity()
+                    ..translate(
+                      0.0,
+                      _isHovered ? -4.0 : 0.0,
+                    ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(widget.size * 0.2),
+                    boxShadow: _isHovered
+                        ? [
+                            BoxShadow(
+                              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                              blurRadius: 20,
+                              offset: const Offset(0, 8),
+                            ),
+                          ]
+                        : [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                  ),
+                  child: SizedBox(
+                    width: widget.size,
+                    height: widget.size,
+                    child: iconWidget,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -172,53 +272,65 @@ class _CachedAppIconState extends State<CachedAppIcon>
 
     return Stack(
       children: [
-        // Base placeholder
+        // Base placeholder with expressive design
         Container(
           width: widget.size,
           height: widget.size,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(widget.size * 0.125),
-            color: Theme.of(context).colorScheme.surfaceContainerHighest,
-          ),
-          child: Center(
-            child: Icon(
-              Icons.apps,
-              size: widget.size * 0.5,
-              color: Theme.of(
-                context,
-              ).colorScheme.onSurfaceVariant.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(widget.size * 0.2),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Theme.of(context).colorScheme.surfaceContainerHighest,
+                Theme.of(context).colorScheme.surfaceContainer,
+              ],
             ),
           ),
-        ),
-
-        // Shimmer effect
-        if (widget.enableShimmer)
-          ClipRRect(
-            borderRadius: BorderRadius.circular(widget.size * 0.125),
+          child: Center(
             child: AnimatedBuilder(
-              animation: _shimmerAnimation,
+              animation: _rotationController,
               builder: (context, child) {
-                return ShaderMask(
-                  shaderCallback: (bounds) {
-                    return LinearGradient(
-                      colors: [
-                        Colors.transparent,
-                        Colors.white.withOpacity(0.3),
-                        Colors.transparent,
-                      ],
-                      stops: const [0.0, 0.5, 1.0],
-                      begin: Alignment(-1.0 + _shimmerAnimation.value, 0.0),
-                      end: Alignment(1.0 + _shimmerAnimation.value, 0.0),
-                    ).createShader(bounds);
-                  },
-                  child: Container(
-                    width: widget.size,
-                    height: widget.size,
-                    color: Colors.white,
+                return Transform.rotate(
+                  angle: _rotationAnimation.value * 2 * 3.14159,
+                  child: Icon(
+                    Icons.apps,
+                    size: widget.size * 0.5,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.6),
                   ),
                 );
               },
             ),
+          ),
+        ),
+
+        // Expressive shimmer effect
+        if (widget.enableShimmer)
+          AnimatedBuilder(
+            animation: _shimmerAnimation,
+            builder: (context, child) {
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(widget.size * 0.2),
+                child: Transform.translate(
+                  offset: Offset(_shimmerAnimation.value * widget.size * 0.5, 0),
+                  child: Container(
+                    width: widget.size * 0.3,
+                    height: widget.size,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Colors.transparent,
+                          Colors.white.withOpacity(0.3),
+                          Colors.transparent,
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
       ],
     );
