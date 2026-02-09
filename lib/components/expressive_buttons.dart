@@ -262,14 +262,13 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
                 child: SizedBox(
                   width: buttonSize,
                   height: buttonSize,
-                  child: Icon(
-                    widget.icon,
-                    size: widget.iconSize ?? 24.0,
-                    color:
-                        widget.foregroundColor ??
-                        (widget.onPressed != null
-                            ? colorScheme.primary
-                            : colorScheme.onSurface.withOpacity(0.6)),
+                  child: IconTheme(
+                    data: IconThemeData(
+                      size: widget.iconSize ?? 24.0,
+                      color: widget.foregroundColor ??
+                          (widget.onPressed != null ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.6)),
+                    ),
+                    child: Center(child: widget.icon),
                   ),
                 ),
               ),
