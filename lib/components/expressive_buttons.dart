@@ -343,6 +343,7 @@ class ExpressiveFilledButton extends StatefulWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
   final EdgeInsetsGeometry? padding;
+  final ButtonStyle? style;
   final bool enableAnimation;
   final Duration animationDuration;
 
@@ -354,6 +355,7 @@ class ExpressiveFilledButton extends StatefulWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.padding,
+    this.style,
     this.enableAnimation = true,
     this.animationDuration = const Duration(milliseconds: 200),
   });

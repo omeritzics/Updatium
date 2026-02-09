@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/components/expressive_refresh_indicator.dart';
 import 'package:flutter/services.dart';
@@ -819,7 +820,7 @@ class AppsPageState extends State<AppsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
                   SizedBox(
                     height: 64,
                     width: 64,
@@ -828,7 +829,7 @@ class AppsPageState extends State<AppsPage> {
                       child: getAppIcon(index),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Flexible(
@@ -844,9 +845,9 @@ class AppsPageState extends State<AppsPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 8),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Flexible(
                       child: Text(
                         listedApps[index].author,
@@ -859,9 +860,9 @@ class AppsPageState extends State<AppsPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 12),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Builder(
                       builder: (ctx) {
                         final ai = listedApps[index];
@@ -932,7 +933,7 @@ class AppsPageState extends State<AppsPage> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
                 ],
               ),
               if (listedApps[index].downloadProgress != null)
@@ -983,8 +984,8 @@ class AppsPageState extends State<AppsPage> {
           settingsProvider.useGridView
               ? Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 8.0,
+                    horizontal: 16.0,
+                    vertical: 16.0,
                   ),
                   child: GridView.builder(
                     padding: EdgeInsets.zero,
@@ -992,10 +993,10 @@ class AppsPageState extends State<AppsPage> {
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 150,
+                          maxCrossAxisExtent: 200,
                           childAspectRatio: 0.6,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
                         ),
                     itemCount: listedApps
                         .asMap()
@@ -1567,7 +1568,7 @@ class AppsPageState extends State<AppsPage> {
               isFilterOff ? Icons.search_rounded : Icons.search_off_rounded,
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 16),
           const VerticalDivider(),
           Expanded(
             child: Row(
@@ -1598,10 +1599,10 @@ class AppsPageState extends State<AppsPage> {
         if (settingsProvider.useGridView) {
           return SliverGrid(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 150,
+              maxCrossAxisExtent: 200,
               childAspectRatio: 0.6,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
             ),
             delegate: SliverChildBuilderDelegate((
               BuildContext context,

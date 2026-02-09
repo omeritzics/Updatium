@@ -182,7 +182,6 @@ class _ExpressiveContainerState extends State<ExpressiveContainer>
             transform: Matrix4.identity()..scale(_scaleAnimation.value),
             decoration: BoxDecoration(
               color: widget.backgroundColor ?? colorScheme.surface,
-              foregroundColor: widget.foregroundColor,
               borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
               border: widget.border,
               gradient:
@@ -208,8 +207,15 @@ class _ExpressiveContainerState extends State<ExpressiveContainer>
             ),
             child: Opacity(
               opacity: _opacityAnimation.value,
-              child: widget.child,
-            ),
+              child: widget.foregroundColor != null
+                  ? DefaultTextStyle(
+                      style: TextStyle(color: widget.foregroundColor),
+                      child: widget.child,
+                    )
+                  : IconTheme(
+                      data: IconThemeData(color: widget.foregroundColor),
+                      child: widget.child,
+                    ),
           ),
         );
       },

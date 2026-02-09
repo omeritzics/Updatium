@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:animations/animations.dart';
 
 /// Utility class for Material Design Expressive motion and transitions
 class ExpressiveMotion {

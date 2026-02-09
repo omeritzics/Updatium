@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// Animated Navigation Bar with expressive interactions and animations
 class AnimatedNavigationBar extends StatefulWidget {
@@ -84,15 +85,15 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
         color: colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.1),
-            blurRadius: 8,
+            color: colorScheme.shadow.withOpacity(0.12),
+            blurRadius: 12,
             offset: const Offset(0, -2),
           ),
         ],
       ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: widget.destinations.asMap().entries.map((entry) {
@@ -140,7 +141,7 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
                             opacity: opacity,
                             duration: const Duration(milliseconds: 200),
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 color: isSelected

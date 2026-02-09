@@ -74,10 +74,16 @@ class _ExpressiveRefreshIndicatorState extends State<ExpressiveRefreshIndicator>
     if (widget.onRefresh != null && widget.enabled && !_isRefreshing) {
       setState(() => _isRefreshing = true);
       
+      // Start animations
+      _animationController.repeat();
+      
       try {
         await widget.onRefresh();
       } finally {
         if (mounted) {
+          // Stop animations
+          _animationController.stop();
+          _animationController.reset();
           setState(() => _isRefreshing = false);
         }
       }
@@ -94,6 +100,7 @@ class _ExpressiveRefreshIndicatorState extends State<ExpressiveRefreshIndicator>
       color: widget.color ?? colorScheme.primary,
       backgroundColor: colorScheme.surface,
       strokeWidth: 2.5,
+      onRefresh: _handleRefresh,
       indicator: _isRefreshing
           ? AnimatedBuilder(
               animation: _animationController,

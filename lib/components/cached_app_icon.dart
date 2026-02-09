@@ -335,34 +335,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
       ],
     );
   }
-            child: AnimatedBuilder(
-              animation: _shimmerAnimation,
-              builder: (context, child) {
-                return ShaderMask(
-                  shaderCallback: (bounds) {
-                    return LinearGradient(
-                      colors: [
-                        Colors.transparent,
-                        Colors.white.withOpacity(0.3),
-                        Colors.transparent,
-                      ],
-                      stops: const [0.0, 0.5, 1.0],
-                      begin: Alignment(-1.0 + _shimmerAnimation.value, 0.0),
-                      end: Alignment(1.0 + _shimmerAnimation.value, 0.0),
-                    ).createShader(bounds);
-                  },
-                  child: Container(
-                    width: widget.size,
-                    height: widget.size,
-                    color: Colors.white,
-                  ),
-                );
-              },
-            ),
-          ),
-      ],
-    );
-  }
 
   Widget _buildErrorWidget() {
     return Stack(

@@ -478,7 +478,7 @@ class _UpdatiumState extends State<Updatium> {
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0.25,
-                  height: 1.43,
+                  height: 1.5,
                   color: scheme.onSurface,
                 ),
                 bodySmall: TextStyle(

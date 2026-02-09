@@ -51,6 +51,13 @@ class _ExpressiveCardState extends State<ExpressiveCard>
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.98).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
+    
+    _elevationAnimation = Tween<double>(
+      begin: widget.elevation ?? 2.0,
+      end: (widget.elevation ?? 2.0) + 4.0,
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
   }
 
   @override
