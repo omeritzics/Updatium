@@ -11,7 +11,7 @@ class ExpressiveMotion {
 
   // Standard Material 3 motion curves
   static const Curve standardDecelerate = Curves.decelerate;
-  static const Curve standardAccelerate = Curves.accelerate;
+  static const Curve standardAccelerate = Curves.easeIn;
   static const Curve emphasizedDecelerate = Curves.easeOutCubic;
   static const Curve emphasizedAccelerate = Curves.easeInCubic;
   static const Curve standard = Curves.easeInOut;
@@ -78,16 +78,11 @@ class ExpressiveMotion {
     required Widget child,
     required Animation<double> animation,
   }) {
-    return ContainerTransform(
-      transitionBuilder: (child, animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
+    return SharedAxisTransition(
       animation: animation,
-      closedBuilder: (context, action) => child,
-      openBuilder: (context, action) => child,
+      secondaryAnimation: const AlwaysStoppedAnimation(0.0),
+      transitionType: SharedAxisTransitionType.scaled,
+      child: child,
     );
   }
 
@@ -109,7 +104,7 @@ class ExpressiveMotion {
       child: GestureDetector(
         onTapDown: enabled ? (_) => {} : null,
         onTapUp: enabled ? (_) => onPressed() : null,
-        onTapCancel: enabled ? (_) => {} : null,
+        onTapCancel: enabled ? () {} : null,
         child: AnimatedScale(
           scale: enabled ? 1.0 : 0.95,
           duration: durationShort,

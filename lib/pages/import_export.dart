@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
 import 'package:updatium/components/expressive_buttons.dart';
+import 'package:updatium/components/app_button.dart';
 import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
