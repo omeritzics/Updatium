@@ -265,8 +265,11 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
                   child: IconTheme(
                     data: IconThemeData(
                       size: widget.iconSize ?? 24.0,
-                      color: widget.foregroundColor ??
-                          (widget.onPressed != null ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.6)),
+                      color:
+                          widget.foregroundColor ??
+                          (widget.onPressed != null
+                              ? colorScheme.primary
+                              : colorScheme.onSurface.withOpacity(0.6)),
                     ),
                     child: Center(child: widget.icon),
                   ),
@@ -393,8 +396,11 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      _colorAnimation.value ?? (widget.backgroundColor ?? colorScheme.primary),
-                      (_colorAnimation.value ?? (widget.backgroundColor ?? colorScheme.primary)).withOpacity(0.8),
+                      _colorAnimation.value ??
+                          (widget.backgroundColor ?? colorScheme.primary),
+                      (_colorAnimation.value ??
+                              (widget.backgroundColor ?? colorScheme.primary))
+                          .withOpacity(0.8),
                     ],
                   ),
                 ),
