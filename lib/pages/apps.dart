@@ -4,8 +4,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/cached_app_icon.dart';
+import 'package:updatium/components/custom_app_bar.dart';
+import 'package:updatium/components/expressive_components.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -740,41 +741,43 @@ class AppsPageState extends State<AppsPage> {
       final categories = listedApps[index].app.categories;
       final stops = categoryStops(categories);
 
-      return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(
-            stops: stops,
-            begin: const Alignment(-1, -1),
-            end: const Alignment(1, 1),
-            colors: [
-              ...listedApps[index].app.categories.map(
-                (e) => Color(
-                  settingsProvider.categories[e] ?? transparent,
-                ).withAlpha(40),
-              ),
-              Color(transparent),
-            ],
-          ),
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            if (selectedAppIds.isNotEmpty) {
-              toggleAppSelected(listedApps[index].app);
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      AppPage(appId: listedApps[index].app.id),
-                ),
-              );
-            }
-          },
-          onLongPress: () {
+      return ExpressiveCard(
+        onTap: () {
+          if (selectedAppIds.isNotEmpty) {
             toggleAppSelected(listedApps[index].app);
-          },
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    AppPage(appId: listedApps[index].app.id),
+              ),
+            );
+          }
+        },
+        onLongPress: () {
+          toggleAppSelected(listedApps[index].app);
+        },
+        borderRadius: BorderRadius.circular(12),
+        elevation: 2,
+        enableAnimation: true,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            gradient: LinearGradient(
+              stops: stops,
+              begin: const Alignment(-1, -1),
+              end: const Alignment(1, 1),
+              colors: [
+                ...listedApps[index].app.categories.map(
+                  (e) => Color(
+                    settingsProvider.categories[e] ?? transparent,
+                  ).withAlpha(40),
+                ),
+                Color(transparent),
+              ],
+            ),
+          ),
           child: Stack(
             alignment: Alignment.center,
             children: [

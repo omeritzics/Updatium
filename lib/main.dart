@@ -401,9 +401,13 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
                   : 'Montserrat',
-              cardTheme: const CardThemeData(
-                elevation: 0,
+              cardTheme: CardThemeData(
+                elevation: 1,
                 clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               ),
               // Unified FilledButton styling (Tonal style by default)
               filledButtonTheme: FilledButtonThemeData(
@@ -429,6 +433,172 @@ class _UpdatiumState extends State<Updatium> {
                     horizontal: 24,
                     vertical: 12,
                   ),
+                ),
+              ),
+              inputDecorationTheme: InputDecorationTheme(
+                filled: true,
+                fillColor: scheme.surfaceContainerHighest,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: scheme.primary, width: 2),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              ),
+              floatingActionButtonTheme: FloatingActionButtonThemeData(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                ),
+                elevation: 4,
+                extendedTextStyle: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              appBarTheme: AppBarTheme(
+                backgroundColor: scheme.surface,
+                foregroundColor: scheme.onSurface,
+                elevation: 0,
+                scrolledUnderElevation: 1,
+                centerTitle: true,
+                titleTextStyle: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: -0.5,
+                ),
+                iconTheme: IconThemeData(
+                  color: scheme.onSurface,
+                  size: 24,
+                ),
+              ),
+              listTileTheme: ListTileThemeData(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                tileColor: Colors.transparent,
+                selectedTileColor: scheme.surfaceContainerHighest,
+                iconColor: scheme.onSurfaceVariant,
+                textColor: scheme.onSurface,
+                titleTextStyle: TextStyle(
+                  color: scheme.onSurface,
+                  fontWeight: FontWeight.w500,
+                ),
+                subtitleTextStyle: TextStyle(
+                  color: scheme.onSurfaceVariant,
+                  fontSize: 14,
+                ),
+              ),
+              pageTransitionsTheme: const PageTransitionsTheme(
+                builders: {
+                  TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+                  TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                },
+              ),
+              textSelectionTheme: TextSelectionThemeData(
+                selectionColor: scheme.primary.withOpacity(0.3),
+                selectionHandleColor: scheme.primary,
+              ),
+              splashFactory: InkRipple.splashFactory,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              textTheme: TextTheme(
+                displayLarge: TextStyle(
+                  fontSize: 57,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: -0.25,
+                  color: scheme.onSurface,
+                ),
+                displayMedium: TextStyle(
+                  fontSize: 45,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0,
+                  color: scheme.onSurface,
+                ),
+                displaySmall: TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0,
+                  color: scheme.onSurface,
+                ),
+                headlineLarge: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0,
+                  color: scheme.onSurface,
+                ),
+                headlineMedium: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0,
+                  color: scheme.onSurface,
+                ),
+                headlineSmall: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0,
+                  color: scheme.onSurface,
+                ),
+                titleLarge: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: scheme.onSurface,
+                ),
+                titleMedium: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.15,
+                  color: scheme.onSurface,
+                ),
+                titleSmall: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.1,
+                  color: scheme.onSurface,
+                ),
+                bodyLarge: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.5,
+                  color: scheme.onSurface,
+                ),
+                bodyMedium: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.25,
+                  color: scheme.onSurface,
+                ),
+                bodySmall: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.4,
+                  color: scheme.onSurface,
+                ),
+                labelLarge: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.1,
+                  color: scheme.onSurface,
+                ),
+                labelMedium: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.5,
+                  color: scheme.onSurface,
+                ),
+                labelSmall: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.5,
+                  color: scheme.onSurface,
                 ),
               ),
             );
