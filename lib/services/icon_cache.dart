@@ -202,13 +202,9 @@ class IconCache {
   Future<void> saveIcon(String appId, Uint8List iconData) async {
     try {
       // Ensure cache is initialized
-      if (_cacheDir == null) {
-        await initialize();
-      }
-      
       final cacheFile = File(path.join(_cacheDir.path, '$appId.png'));
       await _saveToCache(cacheFile, iconData, 'installed_app_icon');
-      
+
       // Use structured logging for success case
       await LogsProvider().addStructured(
         operation: 'icon_save_success',
@@ -220,7 +216,8 @@ class IconCache {
       await LogsProvider().addStructured(
         operation: 'icon_save_error',
         component: 'IconCache',
-        errorCode: 'CACHE_WRITE_FAILED', // Generic error code instead of raw exception
+        errorCode:
+            'CACHE_WRITE_FAILED', // Generic error code instead of raw exception
         level: LogLevels.error,
       );
     }

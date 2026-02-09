@@ -31,11 +31,7 @@ class AppTextButton extends StatelessWidget {
       enabled: enabled,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          icon,
-          const SizedBox(width: 8),
-          label,
-        ],
+        children: [icon, const SizedBox(width: 8), label],
       ),
     );
   }
