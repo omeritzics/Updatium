@@ -1794,7 +1794,7 @@ class AppsProvider with ChangeNotifier {
           // Start pre-fetching without awaiting to avoid blocking
           unawaited(
             IconPrefetcher.instance.startPrefetching(
-              apps: apps.values.map((appInMemory) => appInMemory.app).toList(),
+              topCount: 40, // Limit to top 40 apps to avoid overwhelming
               forceRefresh: false,
             ),
           );
@@ -1852,12 +1852,26 @@ class AppsProvider with ChangeNotifier {
     bool forceRefresh = false,
     Uint8List? fallbackIcon,
   }) async {
-    return await IconCache.instance.getIcon(
+    // First try IconCache with remote URL
+    final icon = await IconCache.instance.getIcon(
       appId,
       remoteIconUrl,
       forceRefresh: forceRefresh,
       fallbackIcon: fallbackIcon,
     );
+
+    // If no icon from cache and no fallback provided, try installed app icon
+    if (icon == null && fallbackIcon == null) {
+      final installedIcon = await apps[appId]?.installedInfo?.applicationInfo
+          ?.getAppIcon();
+      if (installedIcon != null) {
+        // Cache the installed icon for future use
+        await IconCache.instance.saveIcon(appId, installedIcon);
+        return installedIcon;
+      }
+    }
+
+    return icon;
   }
 
   /// Check if an icon is cached for the given app
@@ -2459,13 +2473,13 @@ class _AppFilePickerState extends State<AppFilePicker> {
         ],
       ),
       actions: [
-        TextButton(
+        AppTextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        TextButton(
+        AppTextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(fileUrl);
@@ -2507,13 +2521,13 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        AppTextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        TextButton(
+        AppTextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);

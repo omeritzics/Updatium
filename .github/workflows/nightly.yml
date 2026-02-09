@@ -68,30 +68,73 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
 
-      - name: Build APK (Debug Mode)
+      - name: Build APK (Debug Mode with ABI Splitting)
         run: |
           # Removing signing configurations to prevent errors in CI
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle* || true
           
-          flutter build apk --debug --flavor normal --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
+          # Build debug APKs split by ABI for smaller size
+          flutter build apk --debug --flavor normal --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --split-per-abi
           
           mkdir -p build/outputs/
-          cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/updatium-nightly-debug.apk
+          
+          # Copy and organize split APKs
+          echo "📊 Nightly Debug APK Sizes:"
+          if [ -f "build/app/outputs/flutter-apk/app-normal-arm64-v8a-debug.apk" ]; then
+            cp build/app/outputs/flutter-apk/app-normal-arm64-v8a-debug.apk build/outputs/updatium-nightly-arm64-v8a-debug.apk
+            echo "📦 arm64-v8a (64-bit phones): $(ls -lh build/app/outputs/flutter-apk/app-normal-arm64-v8a-debug.apk | awk '{print $5}')"
+          fi
+          if [ -f "build/app/outputs/flutter-apk/app-normal-armeabi-v7a-debug.apk" ]; then
+            cp build/app/outputs/flutter-apk/app-normal-armeabi-v7a-debug.apk build/outputs/updatium-nightly-armeabi-v7a-debug.apk
+            echo "📦 armeabi-v7a (32-bit phones): $(ls -lh build/app/outputs/flutter-apk/app-normal-armeabi-v7a-debug.apk | awk '{print $5}')"
+          fi
+          if [ -f "build/app/outputs/flutter-apk/app-normal-x86_64-debug.apk" ]; then
+            cp build/app/outputs/flutter-apk/app-normal-x86_64-debug.apk build/outputs/updatium-nightly-x86_64-debug.apk
+            echo "📦 x86_64 (emulators): $(ls -lh build/app/outputs/flutter-apk/app-normal-x86_64-debug.apk | awk '{print $5}')"
+          fi
+          
+          # Create universal APK as fallback
+          flutter build apk --debug --flavor normal --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
+          cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/updatium-nightly-universal-debug.apk
+          echo "📦 universal (all architectures): $(ls -lh build/app/outputs/flutter-apk/app-normal-debug.apk | awk '{print $5}')"
+          
+          echo "\n🎯 Recommendation: Use arm64-v8a for most users"
 
-      - name: Upload Artifact
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v6
         with:
           name: Updatium-Debug-APK
-          path: build/outputs/updatium-nightly-debug.apk
+          path: build/outputs/updatium-nightly-*.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: nightly-build
           name: "Updatium Nightly"
-          files: build/outputs/updatium-nightly-debug.apk
+          files: build/outputs/updatium-nightly-*.apk
           prerelease: true
           overwrite: true
+          body: |
+            ## 📱 Updatium Nightly Build
+            
+            ### Available APK variants:
+            
+            **🏆 Recommended for most users:**
+            - `updatium-nightly-arm64-v8a-debug.apk` - For modern 64-bit phones
+            
+            **📱 Legacy support:**
+            - `updatium-nightly-armeabi-v7a-debug.apk` - For older 32-bit phones
+            
+            **🖥️ Development:**
+            - `updatium-nightly-x86_64-debug.apk` - For emulators
+            
+            **📦 Fallback:**
+            - `updatium-nightly-universal-debug.apk` - Works on all devices (larger size)
+            
+            ### Size Information:
+            Check the workflow logs for detailed size information.
+            
+            ⚠️ **Note:** These are debug builds for testing purposes.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

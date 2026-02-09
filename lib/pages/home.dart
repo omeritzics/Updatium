@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               actions: [
-                TextButton(
+                AppTextButton(
                   onPressed: () {
                     sp.googleVerificationWarningShown = true;
                     Navigator.of(context).pop(null);

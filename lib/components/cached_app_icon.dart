@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
-import 'package:updatium/providers/source_provider.dart';
 
 /// Widget that displays app icons with caching and loading states
 class CachedAppIcon extends StatefulWidget {

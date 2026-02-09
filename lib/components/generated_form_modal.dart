@@ -65,7 +65,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
         ],
       ),
       actions: [
-        TextButton(
+        AppTextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
@@ -76,7 +76,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
           ),
         ),
         widget.singleNullReturnButton == null
-            ? TextButton(
+            ? AppTextButton(
                 style: widget.primaryActionColor == null
                     ? null
                     : TextButton.styleFrom(

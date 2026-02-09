@@ -198,6 +198,18 @@ class IconCache {
     }
   }
 
+  /// Save icon data to cache (public method for installed app icons)
+  Future<void> saveIcon(String appId, Uint8List iconData) async {
+    try {
+      final cacheDir = await _getCacheDir();
+      final cacheFile = File(path.join(cacheDir.path, '$appId.png'));
+      await _saveToCache(cacheFile, iconData, 'installed_app_icon');
+      LogsProvider().add('Saved installed app icon for $appId');
+    } catch (e) {
+      LogsProvider().add('Error saving installed app icon: $e');
+    }
+  }
+
   /// Clean up old cache entries
   Future<void> _cleanupOldEntries() async {
     try {

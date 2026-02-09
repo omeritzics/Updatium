@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/services/icon_prefetcher.dart';
 
 /// Widget demonstrating IconPrefetcher background service usage
@@ -253,7 +254,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
         Row(
           children: [
             Expanded(
-              child: ElevatedButton.icon(
+              child: FilledButton.tonal.icon(
                 onPressed: (_status?.isRunning ?? false)
                     ? null
                     : _startPrefetching,
@@ -263,7 +264,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: ElevatedButton.icon(
+              child: FilledButton.tonal.icon(
                 onPressed: (_status?.isRunning ?? false)
                     ? _pausePrefetching
                     : null,
@@ -277,7 +278,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
         Row(
           children: [
             Expanded(
-              child: ElevatedButton.icon(
+              child: FilledButton.tonal.icon(
                 onPressed: (_status?.isPaused ?? false)
                     ? _resumePrefetching
                     : null,
@@ -287,7 +288,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: ElevatedButton.icon(
+              child: FilledButton.tonal.icon(
                 onPressed: (_status?.isRunning ?? false)
                     ? _stopPrefetching
                     : null,
@@ -298,7 +299,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
           ],
         ),
         const SizedBox(height: 8),
-        ElevatedButton.icon(
+        FilledButton.tonal.icon(
           onPressed: _showCacheStats,
           icon: const Icon(Icons.storage),
           label: const Text('View Cache Statistics'),
@@ -337,9 +338,16 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
         );
       }
     } catch (e) {
+      // Log detailed error for debugging
+      LogsProvider().add('Failed to start pre-fetching: $e');
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error starting pre-fetching: $e')),
+          const SnackBar(
+            content: Text(
+              'Failed to start icon pre-fetching. Please try again.',
+            ),
+          ),
         );
       }
     }
@@ -384,7 +392,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
               ],
             ),
             actions: [
-              TextButton(
+              AppTextButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text('OK'),
               ),
@@ -393,9 +401,16 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
         );
       }
     } catch (e) {
+      // Log detailed error for debugging
+      LogsProvider().add('Failed to get cache stats: $e');
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error getting cache stats: $e')),
+          const SnackBar(
+            content: Text(
+              'Failed to retrieve cache statistics. Please try again.',
+            ),
+          ),
         );
       }
     }

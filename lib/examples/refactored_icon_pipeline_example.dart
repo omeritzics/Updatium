@@ -238,7 +238,7 @@ class _RefactoredIconPipelineExampleState
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: ElevatedButton.icon(
+                child: FilledButton.tonal.icon(
                   onPressed: _prefetchStatus?.isRunning == true
                       ? null
                       : _startPrefetching,
@@ -530,7 +530,7 @@ class _AppDetailsDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        TextButton(
+        AppTextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Close'),
         ),
@@ -669,7 +669,7 @@ class _PrefetchDetailsDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        TextButton(
+        AppTextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Close'),
         ),
