@@ -113,11 +113,13 @@ class _IconCacheExampleState extends State<IconCacheExample> {
     } catch (e) {
       // Log detailed error for debugging
       LogsProvider().add('Failed to load icon: $e');
-      
+
       if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Failed to load icon. Please try again.')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to load icon. Please try again.'),
+          ),
+        );
       }
     }
   }
@@ -139,11 +141,13 @@ class _IconCacheExampleState extends State<IconCacheExample> {
     } catch (e) {
       // Log detailed error for debugging
       LogsProvider().add('Failed to check cache: $e');
-      
+
       if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Failed to check cache status. Please try again.')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to check cache status. Please try again.'),
+          ),
+        );
       }
     }
   }
@@ -183,11 +187,15 @@ class _IconCacheExampleState extends State<IconCacheExample> {
     } catch (e) {
       // Log detailed error for debugging
       LogsProvider().add('Failed to get cache stats: $e');
-      
+
       if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Failed to retrieve cache statistics. Please try again.')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Failed to retrieve cache statistics. Please try again.',
+            ),
+          ),
+        );
       }
     }
   }
@@ -206,11 +214,13 @@ class _IconCacheExampleState extends State<IconCacheExample> {
     } catch (e) {
       // Log detailed error for debugging
       LogsProvider().add('Failed to clear cache: $e');
-      
+
       if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Failed to clear cache. Please try again.')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to clear cache. Please try again.'),
+          ),
+        );
       }
     }
   }

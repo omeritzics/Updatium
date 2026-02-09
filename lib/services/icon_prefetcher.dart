@@ -196,11 +196,11 @@ class IconPrefetcher {
         LogsProvider().add('Icon pre-fetching stopped during batch processing');
         break;
       }
-      
+
       if (_isPaused) {
         await _waitForResume();
       }
-      
+
       // Check again after resume in case stop was called during pause
       if (!_isRunning) {
         LogsProvider().add('Icon pre-fetching stopped during batch processing');
@@ -250,11 +250,11 @@ class IconPrefetcher {
           error: 'Prefetching was stopped',
         );
       }
-      
+
       if (_isPaused) {
         await _waitForResume();
       }
-      
+
       // Check again after resume in case stop was called during pause
       if (!_isRunning) {
         return PrefetchAppResult(
@@ -334,7 +334,7 @@ class IconPrefetcher {
       _isRunning = false;
       _isPaused = false;
       LogsProvider().add('Icon pre-fetching stopped by user request');
-      
+
       // Emit final progress update to show stopped state
       _progressController.add(
         PrefetchProgress(
@@ -344,7 +344,7 @@ class IconPrefetcher {
           phase: PrefetchPhase.completed,
         ),
       );
-      
+
       // Emit result indicating partial completion
       _resultController.add(
         PrefetchResult(

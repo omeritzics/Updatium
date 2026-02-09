@@ -340,10 +340,14 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
     } catch (e) {
       // Log detailed error for debugging
       LogsProvider().add('Failed to start pre-fetching: $e');
-      
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to start icon pre-fetching. Please try again.')),
+          const SnackBar(
+            content: Text(
+              'Failed to start icon pre-fetching. Please try again.',
+            ),
+          ),
         );
       }
     }
@@ -399,10 +403,14 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
     } catch (e) {
       // Log detailed error for debugging
       LogsProvider().add('Failed to get cache stats: $e');
-      
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to retrieve cache statistics. Please try again.')),
+          const SnackBar(
+            content: Text(
+              'Failed to retrieve cache statistics. Please try again.',
+            ),
+          ),
         );
       }
     }
