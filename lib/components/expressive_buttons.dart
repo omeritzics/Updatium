@@ -144,8 +144,15 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
     final effectiveElevation = widget.elevation ?? 
         effectiveStyle?.elevation?.resolve({}) ?? 
         2.0;
+    // Extract border radius from shape if it's a RoundedRectangleBorder, otherwise use default
+    BorderRadius? shapeBorderRadius;
+    final shape = effectiveStyle?.shape?.resolve({});
+    if (shape is RoundedRectangleBorder) {
+      shapeBorderRadius = shape.borderRadius.resolve(Directionality.of(context));
+    }
+    
     final effectiveBorderRadius = widget.borderRadius ?? 
-        effectiveStyle?.shape?.resolve({})?.borderRadius ?? 
+        shapeBorderRadius ?? 
         BorderRadius.circular(12);
     final effectivePadding = widget.padding ?? 
         effectiveStyle?.padding?.resolve({}) ?? 
