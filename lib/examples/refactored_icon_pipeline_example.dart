@@ -165,7 +165,7 @@ class _RefactoredIconPipelineExampleState
         actions: [
           IconButton(
             icon: Icon(
-              _showPerformanceOverlay ? Icons.speed : Icons.speed_outlined,
+              _showPerformanceOverlay ? Icons.speed : Icons.speed,
             ),
             onPressed: () {
               setState(() {

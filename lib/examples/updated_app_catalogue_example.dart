@@ -52,7 +52,7 @@ class _UpdatedAppCatalogueExampleState
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.apps_outage,
+                    Icons.apps,
                     size: 64,
                     color: Theme.of(
                       context,
@@ -87,7 +87,7 @@ class _UpdatedAppCatalogueExampleState
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddAppDialog,
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add_circle),
       ),
     );
   }
