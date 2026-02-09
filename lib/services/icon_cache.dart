@@ -201,12 +201,25 @@ class IconCache {
   /// Save icon data to cache (public method for installed app icons)
   Future<void> saveIcon(String appId, Uint8List iconData) async {
     try {
-      final cacheDir = await _getCacheDir();
-      final cacheFile = File(path.join(cacheDir.path, '$appId.png'));
+      // Ensure cache is initialized
+      final cacheFile = File(path.join(_cacheDir.path, '$appId.png'));
       await _saveToCache(cacheFile, iconData, 'installed_app_icon');
-      LogsProvider().add('Saved installed app icon for $appId');
+
+      // Use structured logging for success case
+      await LogsProvider().addStructured(
+        operation: 'icon_save_success',
+        component: 'IconCache',
+        level: LogLevels.info,
+      );
     } catch (e) {
-      LogsProvider().add('Error saving installed app icon: $e');
+      // Use structured logging for error case without sensitive exception details
+      await LogsProvider().addStructured(
+        operation: 'icon_save_error',
+        component: 'IconCache',
+        errorCode:
+            'CACHE_WRITE_FAILED', // Generic error code instead of raw exception
+        level: LogLevels.error,
+      );
     }
   }
 

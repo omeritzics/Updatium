@@ -19,6 +19,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:updatium/components/app_button.dart';
 import 'package:http/io_client.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/html.dart';
@@ -1794,6 +1795,14 @@ class AppsProvider with ChangeNotifier {
           // Start pre-fetching without awaiting to avoid blocking
           unawaited(
             IconPrefetcher.instance.startPrefetching(
+              apps: apps.values
+                  .where(
+                    (appInMemory) =>
+                        appInMemory.app.remoteIconUrl != null &&
+                        appInMemory.app.remoteIconUrl!.isNotEmpty,
+                  )
+                  .map((appInMemory) => appInMemory.app)
+                  .toList(),
               topCount: 40, // Limit to top 40 apps to avoid overwhelming
               forceRefresh: false,
             ),
