@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:updatium/components/expressive_refresh_indicator.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/cached_app_icon.dart';
@@ -163,8 +163,6 @@ class AppsPageState extends State<AppsPage> {
     }
   }
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
 
   late final ScrollController scrollController = ScrollController();
 
@@ -1627,8 +1625,7 @@ class AppsPageState extends State<AppsPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: RefreshIndicator(
-        key: _refreshIndicatorKey,
+      body: ExpressiveRefreshIndicator(
         onRefresh: refresh,
         child: Scrollbar(
           interactive: true,

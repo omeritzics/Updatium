@@ -82,9 +82,10 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
     
     // Use effective background color from style or individual property
     final effectiveStyle = widget.style;
+    final isDisabled = widget.onPressed == null;
     final effectiveBackgroundColor = widget.backgroundColor ?? 
         effectiveStyle?.backgroundColor?.resolve({}) ?? 
-        colorScheme.primary;
+        (isDisabled ? colorScheme.surface : colorScheme.primary);
 
     _elevationAnimation = Tween<double>(
       begin: widget.elevation ?? 
@@ -97,7 +98,7 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
 
     _colorAnimation = ColorTween(
       begin: effectiveBackgroundColor,
-      end: effectiveBackgroundColor.withOpacity(0.8),
+      end: isDisabled ? effectiveBackgroundColor : effectiveBackgroundColor.withOpacity(0.8),
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
@@ -108,7 +109,7 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
   }
 
   void _handleTapDown(TapDownDetails details) {
-    if (widget.enableAnimation) {
+    if (widget.enableAnimation && widget.onPressed != null) {
       _controller.forward();
     }
   }
@@ -133,12 +134,13 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
 
     // Apply style if provided, otherwise use individual properties
     final effectiveStyle = widget.style;
+    final isDisabled = widget.onPressed == null;
     final effectiveBackgroundColor = widget.backgroundColor ?? 
         effectiveStyle?.backgroundColor?.resolve({}) ?? 
-        colorScheme.primary;
+        (isDisabled ? colorScheme.surface : colorScheme.primary);
     final effectiveForegroundColor = widget.foregroundColor ?? 
         effectiveStyle?.foregroundColor?.resolve({}) ?? 
-        colorScheme.onPrimary;
+        (isDisabled ? colorScheme.onSurface.withOpacity(0.38) : colorScheme.onPrimary);
     final effectiveElevation = widget.elevation ?? 
         effectiveStyle?.elevation?.resolve({}) ?? 
         2.0;
@@ -244,7 +246,7 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
 
     _scaleAnimation = Tween<double>(
       begin: 1.0,
-      end: 0.9,
+      end: 0.95,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _rotationAnimation = Tween<double>(
@@ -260,7 +262,7 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
   }
 
   void _handleTapDown(TapDownDetails details) {
-    if (widget.enableAnimation) {
+    if (widget.enableAnimation && widget.onPressed != null) {
       _controller.forward();
     }
   }
@@ -283,6 +285,7 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final buttonSize = widget.size ?? 40.0;
+    final isDisabled = widget.onPressed == null;
 
     return AnimatedBuilder(
       animation: _controller,
@@ -294,7 +297,9 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
             child: Material(
               elevation: widget.onPressed != null ? 4.0 : 2.0,
               borderRadius: BorderRadius.circular(12),
-              color: widget.backgroundColor ?? colorScheme.surface,
+              color: isDisabled 
+                  ? colorScheme.surface
+                  : (widget.backgroundColor ?? colorScheme.surface),
               shadowColor: colorScheme.shadow.withOpacity(0.2),
               child: InkWell(
                 onTapDown: widget.onPressed != null ? _handleTapDown : null,
@@ -311,11 +316,12 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
                   child: IconTheme(
                     data: IconThemeData(
                       size: widget.iconSize ?? 24.0,
-                      color:
-                          widget.foregroundColor ??
-                          (widget.onPressed != null
-                              ? colorScheme.primary
-                              : colorScheme.onSurface.withOpacity(0.6)),
+                      color: isDisabled
+                          ? colorScheme.onSurface.withOpacity(0.38)
+                          : (widget.foregroundColor ??
+                              (widget.onPressed != null
+                                  ? colorScheme.primary
+                                  : colorScheme.onSurface.withOpacity(0.6))),
                     ),
                     child: Center(child: widget.icon),
                   ),
@@ -372,7 +378,7 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
 
     _scaleAnimation = Tween<double>(
       begin: 1.0,
-      end: 0.98,
+      end: 0.95,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
@@ -394,11 +400,16 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
   void _updateAnimations() {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final baseColor = widget.backgroundColor ?? colorScheme.primary;
+    
+    final effectiveStyle = widget.style;
+    final isDisabled = widget.onPressed == null;
+    final effectiveBackgroundColor = widget.backgroundColor ?? 
+        effectiveStyle?.backgroundColor?.resolve({}) ?? 
+        (isDisabled ? colorScheme.surface : colorScheme.primary);
 
     _colorAnimation = ColorTween(
-      begin: baseColor,
-      end: baseColor.withOpacity(0.8),
+      begin: effectiveBackgroundColor,
+      end: isDisabled ? effectiveBackgroundColor : effectiveBackgroundColor.withOpacity(0.8),
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
@@ -409,7 +420,7 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
   }
 
   void _handleTapDown(TapDownDetails details) {
-    if (widget.enableAnimation) {
+    if (widget.enableAnimation && widget.onPressed != null) {
       _controller.forward();
     }
   }
@@ -431,6 +442,9 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final isDisabled = widget.onPressed == null;
+    final effectiveForegroundColor = widget.foregroundColor ?? 
+        colorScheme.onPrimary;
 
     return AnimatedBuilder(
       animation: _controller,
@@ -438,23 +452,23 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
         return Transform.scale(
           scale: _scaleAnimation.value,
           child: Material(
-            elevation: 1.0,
-            borderRadius: BorderRadius.circular(20),
+            elevation: 2.0,
+            borderRadius: BorderRadius.circular(12),
             color: _colorAnimation.value,
-            shadowColor: colorScheme.shadow.withOpacity(0.3),
+            shadowColor: colorScheme.shadow.withOpacity(0.2),
             child: InkWell(
               onTapDown: widget.onPressed != null ? _handleTapDown : null,
               onTapUp: widget.onPressed != null ? _handleTapUp : null,
               onTapCancel: _handleTapCancel,
               onLongPress: widget.onLongPress,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(12),
               splashFactory: InkRipple.splashFactory,
               child: Container(
                 padding:
                     widget.padding ??
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(12),
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -469,7 +483,9 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
                 ),
                 child: DefaultTextStyle(
                   style: TextStyle(
-                    color: widget.foregroundColor ?? colorScheme.onPrimary,
+                    color: isDisabled 
+                        ? colorScheme.onSurface.withOpacity(0.38)
+                        : effectiveForegroundColor,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.5,
