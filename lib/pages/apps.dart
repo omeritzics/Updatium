@@ -757,6 +757,8 @@ class AppsPageState extends State<AppsPage> {
         onLongPress: () {
           toggleAppSelected(listedApps[index].app);
         },
+        margin: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
         borderRadius: BorderRadius.circular(12),
         elevation: 2,
         enableAnimation: true,

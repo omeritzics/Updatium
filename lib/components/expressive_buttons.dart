@@ -57,15 +57,33 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
       begin: 1.0,
       end: 0.95,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updateAnimations();
+  }
+
+  @override
+  void didUpdateWidget(ExpressiveButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.elevation != widget.elevation ||
+        oldWidget.backgroundColor != widget.backgroundColor ||
+        oldWidget.animationDuration != widget.animationDuration) {
+      _updateAnimations();
+    }
+  }
+
+  void _updateAnimations() {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final baseColor = widget.backgroundColor ?? colorScheme.primary;
 
     _elevationAnimation = Tween<double>(
       begin: widget.elevation ?? 2.0,
       end: (widget.elevation ?? 2.0) + 4.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final baseColor = widget.backgroundColor ?? colorScheme.primary;
 
     _colorAnimation = ColorTween(
       begin: baseColor,
@@ -328,7 +346,24 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
       begin: 1.0,
       end: 0.98,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updateAnimations();
+  }
+
+  @override
+  void didUpdateWidget(ExpressiveFilledButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.backgroundColor != widget.backgroundColor ||
+        oldWidget.animationDuration != widget.animationDuration) {
+      _updateAnimations();
+    }
+  }
+
+  void _updateAnimations() {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final baseColor = widget.backgroundColor ?? colorScheme.primary;

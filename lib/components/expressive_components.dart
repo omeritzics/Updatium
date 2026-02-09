@@ -51,7 +51,18 @@ class _ExpressiveCardState extends State<ExpressiveCard>
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.98).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
+  }
 
+  @override
+  void didUpdateWidget(ExpressiveCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.elevation != widget.elevation ||
+        oldWidget.animationDuration != widget.animationDuration) {
+      _updateAnimations();
+    }
+  }
+
+  void _updateAnimations() {
     _elevationAnimation =
         Tween<double>(
           begin: widget.elevation ?? 2.0,
@@ -104,9 +115,9 @@ class _ExpressiveCardState extends State<ExpressiveCard>
           onEnter: (_) => setState(() => _isHovered = true),
           onExit: (_) => setState(() => _isHovered = false),
           child: GestureDetector(
-            onTapDown: _handleTapDown,
-            onTapUp: _handleTapUp,
-            onTapCancel: _handleTapCancel,
+            onTapDown: widget.onTap != null ? _handleTapDown : null,
+            onTapUp: widget.onTap != null ? _handleTapUp : null,
+            onTapCancel: widget.onTap != null ? _handleTapCancel : null,
             onLongPress: widget.onLongPress,
             child: AnimatedContainer(
               duration: widget.animationDuration,
@@ -251,7 +262,9 @@ class _ExpressiveChipState extends State<ExpressiveChip>
       CurvedAnimation(parent: _animationController, curve: Curves.elasticOut),
     );
 
-    _animationController.forward();
+    if (widget.enableAnimation) {
+      _animationController.forward();
+    }
   }
 
   @override
@@ -265,12 +278,52 @@ class _ExpressiveChipState extends State<ExpressiveChip>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return AnimatedBuilder(
-      animation: _scaleAnimation,
-      builder: (context, child) {
-        return Transform.scale(
-          scale: _scaleAnimation.value,
-          child: Material(
+    return widget.enableAnimation
+        ? AnimatedBuilder(
+            animation: _scaleAnimation,
+            builder: (context, child) {
+              return Transform.scale(
+                scale: _scaleAnimation.value,
+                child: Material(
+                  color: widget.backgroundColor ?? colorScheme.secondaryContainer,
+                  borderRadius: BorderRadius.circular(8),
+                  child: InkWell(
+                    onTap: widget.onDeleted,
+                    borderRadius: BorderRadius.circular(8),
+                    child: Padding(
+                      padding:
+                          widget.padding ??
+                          const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (widget.avatar != null) ...[
+                            widget.avatar!,
+                            const SizedBox(width: 8),
+                          ],
+                          DefaultTextStyle(
+                            style: TextStyle(
+                              color:
+                                  widget.foregroundColor ??
+                                  colorScheme.onSecondaryContainer,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            child: widget.label,
+                          ),
+                          if (widget.deleteIcon != null) ...[
+                            const SizedBox(width: 8),
+                            widget.deleteIcon!,
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          )
+        : Material(
             color: widget.backgroundColor ?? colorScheme.secondaryContainer,
             borderRadius: BorderRadius.circular(8),
             child: InkWell(
@@ -305,9 +358,6 @@ class _ExpressiveChipState extends State<ExpressiveChip>
                 ),
               ),
             ),
-          ),
-        );
-      },
-    );
+          );
   }
 }

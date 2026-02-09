@@ -133,6 +133,14 @@ class _ExpressiveContainerState extends State<ExpressiveContainer>
   }
 
   @override
+  void didUpdateWidget(ExpressiveContainer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.animationDuration != widget.animationDuration) {
+      _controller.duration = widget.animationDuration;
+    }
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -264,6 +272,15 @@ class _ExpressiveBadgeState extends State<ExpressiveBadge>
 
     if (widget.enableAnimation) {
       _controller.forward();
+    }
+  }
+
+  @override
+  void didUpdateWidget(ExpressiveBadge oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.color != widget.color ||
+        oldWidget.textColor != widget.textColor) {
+      setState(() {});
     }
   }
 
