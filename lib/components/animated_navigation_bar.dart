@@ -198,7 +198,7 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
                   ),
                 ),
               );
-            }).values.toList(),
+            }).toList(),
           ),
         ),
       ),

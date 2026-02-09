@@ -214,9 +214,9 @@ class _CachedAppIconState extends State<CachedAppIcon>
       onEnter: (_) => _handleHover(true),
       onExit: (_) => _handleHover(false),
       child: GestureDetector(
-        onTapDown: _handleTapDown,
-        onTapUp: _handleTapUp,
-        onTapCancel: _handleTapCancel,
+        onTapDown: widget.onTap != null ? _handleTapDown : null,
+        onTapUp: widget.onTap != null ? _handleTapUp : null,
+        onTapCancel: widget.onTap != null ? _handleTapCancel : null,
         onDoubleTap: widget.onDoubleTap,
         onLongPress: widget.onLongPress,
         child: AnimatedBuilder(
