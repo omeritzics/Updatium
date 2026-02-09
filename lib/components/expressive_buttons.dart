@@ -251,7 +251,7 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
               color: widget.backgroundColor ?? colorScheme.surface,
               shadowColor: colorScheme.shadow.withOpacity(0.2),
               child: InkWell(
-                onTap: widget.onPressed != null ? _handleTapDown : null,
+                onTapDown: widget.onPressed != null ? _handleTapDown : null,
                 onTapUp: widget.onPressed != null ? _handleTapUp : null,
                 onTapCancel: _handleTapCancel,
                 onLongPress: widget.onLongPress,
