@@ -164,9 +164,7 @@ class _RefactoredIconPipelineExampleState
         title: const Text('Refactored Icon Pipeline'),
         actions: [
           IconButton(
-            icon: Icon(
-              _showPerformanceOverlay ? Icons.speed : Icons.speed,
-            ),
+            icon: Icon(_showPerformanceOverlay ? Icons.speed : Icons.speed),
             onPressed: () {
               setState(() {
                 _showPerformanceOverlay = !_showPerformanceOverlay;

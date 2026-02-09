@@ -1053,9 +1053,7 @@ class AppsPageState extends State<AppsPage> {
                     : clearSelected();
               },
               icon: Icon(
-                selectedAppIds.isEmpty
-                    ? Icons.select_all
-                    : Icons.deselect,
+                selectedAppIds.isEmpty ? Icons.select_all : Icons.deselect,
                 color: Theme.of(context).colorScheme.primary,
               ),
               label: Text(selectedAppIds.length.toString()),
