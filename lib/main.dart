@@ -450,7 +450,10 @@ class _UpdatiumState extends State<Updatium> {
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(color: scheme.primary, width: 2),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
               ),
               floatingActionButtonTheme: FloatingActionButtonThemeData(
                 shape: const RoundedRectangleBorder(
@@ -474,13 +477,13 @@ class _UpdatiumState extends State<Updatium> {
                   fontWeight: FontWeight.w600,
                   letterSpacing: -0.5,
                 ),
-                iconTheme: IconThemeData(
-                  color: scheme.onSurface,
-                  size: 24,
-                ),
+                iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
               ),
               listTileTheme: ListTileThemeData(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -499,7 +502,8 @@ class _UpdatiumState extends State<Updatium> {
               ),
               pageTransitionsTheme: const PageTransitionsTheme(
                 builders: {
-                  TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+                  TargetPlatform.android:
+                      PredictiveBackPageTransitionsBuilder(),
                   TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
                 },
               ),

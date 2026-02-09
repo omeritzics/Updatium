@@ -117,13 +117,15 @@ class _ExpressiveContainerState extends State<ExpressiveContainer>
       vsync: this,
     );
 
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.95,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
-    _opacityAnimation = Tween<double>(begin: 1.0, end: 0.8).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _opacityAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.8,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     if (widget.enableAnimation) {
       _controller.forward();
@@ -179,16 +181,19 @@ class _ExpressiveContainerState extends State<ExpressiveContainer>
               foregroundColor: widget.foregroundColor,
               borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
               border: widget.border,
-              gradient: widget.gradient ??
+              gradient:
+                  widget.gradient ??
                   LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
                       (widget.backgroundColor ?? colorScheme.surface),
-                      (widget.backgroundColor ?? colorScheme.surface).withOpacity(0.8),
+                      (widget.backgroundColor ?? colorScheme.surface)
+                          .withOpacity(0.8),
                     ],
                   ),
-              boxShadow: widget.boxShadow ??
+              boxShadow:
+                  widget.boxShadow ??
                   [
                     BoxShadow(
                       color: colorScheme.shadow.withOpacity(0.1),
@@ -247,13 +252,15 @@ class _ExpressiveBadgeState extends State<ExpressiveBadge>
       vsync: this,
     );
 
-    _scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.elasticOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
 
-    _rotationAnimation = Tween<double>(begin: -0.1, end: 0.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.elasticOut),
-    );
+    _rotationAnimation = Tween<double>(
+      begin: -0.1,
+      end: 0.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
 
     if (widget.enableAnimation) {
       _controller.forward();
@@ -281,7 +288,9 @@ class _ExpressiveBadgeState extends State<ExpressiveBadge>
           child: Transform.rotate(
             angle: _rotationAnimation.value,
             child: Container(
-              padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding:
+                  widget.padding ??
+                  const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                 color: badgeColor,
                 borderRadius: BorderRadius.circular(12),

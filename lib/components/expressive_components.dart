@@ -48,21 +48,20 @@ class _ExpressiveCardState extends State<ExpressiveCard>
       vsync: this,
     );
 
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.98,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.98).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
 
-    _elevationAnimation = Tween<double>(
-      begin: widget.elevation ?? 2.0,
-      end: (widget.elevation ?? 2.0) + 4.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
+    _elevationAnimation =
+        Tween<double>(
+          begin: widget.elevation ?? 2.0,
+          end: (widget.elevation ?? 2.0) + 4.0,
+        ).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
   }
 
   @override
@@ -111,7 +110,9 @@ class _ExpressiveCardState extends State<ExpressiveCard>
             onLongPress: widget.onLongPress,
             child: AnimatedContainer(
               duration: widget.animationDuration,
-              margin: widget.margin ?? const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              margin:
+                  widget.margin ??
+                  const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               transform: Matrix4.identity()..scale(_scaleAnimation.value),
               child: Material(
                 elevation: _elevationAnimation.value,
@@ -121,7 +122,8 @@ class _ExpressiveCardState extends State<ExpressiveCard>
                 child: AnimatedContainer(
                   duration: widget.animationDuration,
                   decoration: BoxDecoration(
-                    borderRadius: widget.borderRadius ?? BorderRadius.circular(16),
+                    borderRadius:
+                        widget.borderRadius ?? BorderRadius.circular(16),
                     border: Border.all(
                       color: _isHovered
                           ? colorScheme.outline.withOpacity(0.3)
@@ -195,11 +197,11 @@ class ExpressiveListTile extends StatelessWidget {
         title: title,
         subtitle: subtitle,
         trailing: trailing,
-        contentPadding: contentPadding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        contentPadding:
+            contentPadding ??
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         tileColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
@@ -245,13 +247,9 @@ class _ExpressiveChipState extends State<ExpressiveChip>
       vsync: this,
     );
 
-    _scaleAnimation = Tween<double>(
-      begin: 0.8,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.elasticOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.elasticOut),
+    );
 
     _animationController.forward();
   }
@@ -279,7 +277,9 @@ class _ExpressiveChipState extends State<ExpressiveChip>
               onTap: widget.onDeleted,
               borderRadius: BorderRadius.circular(8),
               child: Padding(
-                padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding:
+                    widget.padding ??
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -289,7 +289,9 @@ class _ExpressiveChipState extends State<ExpressiveChip>
                     ],
                     DefaultTextStyle(
                       style: TextStyle(
-                        color: widget.foregroundColor ?? colorScheme.onSecondaryContainer,
+                        color:
+                            widget.foregroundColor ??
+                            colorScheme.onSecondaryContainer,
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),

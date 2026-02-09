@@ -53,9 +53,10 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
       vsync: this,
     );
 
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.95,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _elevationAnimation = Tween<double>(
       begin: widget.elevation ?? 2.0,
@@ -65,7 +66,7 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final baseColor = widget.backgroundColor ?? colorScheme.primary;
-    
+
     _colorAnimation = ColorTween(
       begin: baseColor,
       end: baseColor.withOpacity(0.8),
@@ -116,10 +117,16 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
             onTapCancel: _handleTapCancel,
             onLongPress: widget.onLongPress,
             borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
-            splashFactory: widget.enableRipple ? InkRipple.splashFactory : NoSplash.splashFactory,
-            highlightColor: widget.overlayColor?.withOpacity(0.1) ?? colorScheme.primary.withOpacity(0.1),
+            splashFactory: widget.enableRipple
+                ? InkRipple.splashFactory
+                : NoSplash.splashFactory,
+            highlightColor:
+                widget.overlayColor?.withOpacity(0.1) ??
+                colorScheme.primary.withOpacity(0.1),
             child: Container(
-              padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding:
+                  widget.padding ??
+                  const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               decoration: BoxDecoration(
                 borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
                 border: Border.all(
@@ -189,13 +196,15 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
       vsync: this,
     );
 
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.9).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.9,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
-    _rotationAnimation = Tween<double>(begin: 0.0, end: 0.1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _rotationAnimation = Tween<double>(
+      begin: 0.0,
+      end: 0.1,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -247,17 +256,20 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
                 onTapCancel: _handleTapCancel,
                 onLongPress: widget.onLongPress,
                 borderRadius: BorderRadius.circular(12),
-                splashFactory: widget.enableRipple ? InkRipple.splashFactory : NoSplash.splashFactory,
+                splashFactory: widget.enableRipple
+                    ? InkRipple.splashFactory
+                    : NoSplash.splashFactory,
                 child: SizedBox(
                   width: buttonSize,
                   height: buttonSize,
                   child: Icon(
                     widget.icon,
                     size: widget.iconSize ?? 24.0,
-                    color: widget.foregroundColor ?? 
-                           (widget.onPressed != null 
-                               ? colorScheme.primary 
-                               : colorScheme.onSurface.withOpacity(0.6)),
+                    color:
+                        widget.foregroundColor ??
+                        (widget.onPressed != null
+                            ? colorScheme.primary
+                            : colorScheme.onSurface.withOpacity(0.6)),
                   ),
                 ),
               ),
@@ -310,14 +322,15 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
       vsync: this,
     );
 
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.98).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.98,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final baseColor = widget.backgroundColor ?? colorScheme.primary;
-    
+
     _colorAnimation = ColorTween(
       begin: baseColor,
       end: baseColor.withOpacity(0.8),
@@ -372,7 +385,9 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
               borderRadius: BorderRadius.circular(20),
               splashFactory: InkRipple.splashFactory,
               child: Container(
-                padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding:
+                    widget.padding ??
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   gradient: LinearGradient(
