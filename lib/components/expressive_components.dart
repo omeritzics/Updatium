@@ -223,6 +223,7 @@ class ExpressiveChip extends StatefulWidget {
   final Widget label;
   final Widget? avatar;
   final Widget? deleteIcon;
+  final VoidCallback? onTap;
   final VoidCallback? onDeleted;
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -234,6 +235,7 @@ class ExpressiveChip extends StatefulWidget {
     required this.label,
     this.avatar,
     this.deleteIcon,
+    this.onTap,
     this.onDeleted,
     this.backgroundColor,
     this.foregroundColor,
@@ -288,7 +290,7 @@ class _ExpressiveChipState extends State<ExpressiveChip>
                   color: widget.backgroundColor ?? colorScheme.secondaryContainer,
                   borderRadius: BorderRadius.circular(8),
                   child: InkWell(
-                    onTap: widget.onDeleted,
+                    onTap: widget.onTap,
                     borderRadius: BorderRadius.circular(8),
                     child: Padding(
                       padding:
@@ -313,7 +315,10 @@ class _ExpressiveChipState extends State<ExpressiveChip>
                           ),
                           if (widget.deleteIcon != null) ...[
                             const SizedBox(width: 8),
-                            widget.deleteIcon!,
+                            GestureDetector(
+                              onTap: widget.onDeleted,
+                              child: widget.deleteIcon!,
+                            ),
                           ],
                         ],
                       ),
@@ -327,7 +332,7 @@ class _ExpressiveChipState extends State<ExpressiveChip>
             color: widget.backgroundColor ?? colorScheme.secondaryContainer,
             borderRadius: BorderRadius.circular(8),
             child: InkWell(
-              onTap: widget.onDeleted,
+              onTap: widget.onTap,
               borderRadius: BorderRadius.circular(8),
               child: Padding(
                 padding:
@@ -352,7 +357,10 @@ class _ExpressiveChipState extends State<ExpressiveChip>
                     ),
                     if (widget.deleteIcon != null) ...[
                       const SizedBox(width: 8),
-                      widget.deleteIcon!,
+                      GestureDetector(
+                        onTap: widget.onDeleted,
+                        child: widget.deleteIcon!,
+                      ),
                     ],
                   ],
                 ),

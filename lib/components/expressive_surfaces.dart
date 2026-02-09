@@ -126,10 +126,6 @@ class _ExpressiveContainerState extends State<ExpressiveContainer>
       begin: 1.0,
       end: 0.8,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-
-    if (widget.enableAnimation) {
-      _controller.forward();
-    }
   }
 
   @override

@@ -70,7 +70,8 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
     super.didUpdateWidget(oldWidget);
     if (oldWidget.elevation != widget.elevation ||
         oldWidget.backgroundColor != widget.backgroundColor ||
-        oldWidget.animationDuration != widget.animationDuration) {
+        oldWidget.animationDuration != widget.animationDuration ||
+        oldWidget.style != widget.style) {
       _updateAnimations();
     }
   }
@@ -78,16 +79,25 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
   void _updateAnimations() {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final baseColor = widget.backgroundColor ?? colorScheme.primary;
+    
+    // Use effective background color from style or individual property
+    final effectiveStyle = widget.style;
+    final effectiveBackgroundColor = widget.backgroundColor ?? 
+        effectiveStyle?.backgroundColor?.resolve({}) ?? 
+        colorScheme.primary;
 
     _elevationAnimation = Tween<double>(
-      begin: widget.elevation ?? 2.0,
-      end: (widget.elevation ?? 2.0) + 4.0,
+      begin: widget.elevation ?? 
+          effectiveStyle?.elevation?.resolve({}) ?? 
+          2.0,
+      end: (widget.elevation ?? 
+          effectiveStyle?.elevation?.resolve({}) ?? 
+          2.0) + 4.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _colorAnimation = ColorTween(
-      begin: baseColor,
-      end: baseColor.withOpacity(0.8),
+      begin: effectiveBackgroundColor,
+      end: effectiveBackgroundColor.withOpacity(0.8),
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
@@ -121,12 +131,32 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
+    // Apply style if provided, otherwise use individual properties
+    final effectiveStyle = widget.style;
+    final effectiveBackgroundColor = widget.backgroundColor ?? 
+        effectiveStyle?.backgroundColor?.resolve({}) ?? 
+        colorScheme.primary;
+    final effectiveForegroundColor = widget.foregroundColor ?? 
+        effectiveStyle?.foregroundColor?.resolve({}) ?? 
+        colorScheme.onPrimary;
+    final effectiveElevation = widget.elevation ?? 
+        effectiveStyle?.elevation?.resolve({}) ?? 
+        2.0;
+    final effectiveBorderRadius = widget.borderRadius ?? 
+        effectiveStyle?.shape?.resolve({})?.borderRadius ?? 
+        BorderRadius.circular(12);
+    final effectivePadding = widget.padding ?? 
+        effectiveStyle?.padding?.resolve({}) ?? 
+        const EdgeInsets.symmetric(horizontal: 24, vertical: 12);
+    final effectiveOverlayColor = widget.overlayColor ?? 
+        effectiveStyle?.overlayColor?.resolve({});
+
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
         return Material(
           elevation: _elevationAnimation.value,
-          borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
+          borderRadius: effectiveBorderRadius,
           color: _colorAnimation.value,
           shadowColor: colorScheme.shadow.withOpacity(0.2),
           child: InkWell(
@@ -134,19 +164,17 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
             onTapUp: widget.onPressed != null ? _handleTapUp : null,
             onTapCancel: _handleTapCancel,
             onLongPress: widget.onLongPress,
-            borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
+            borderRadius: effectiveBorderRadius,
             splashFactory: widget.enableRipple
                 ? InkRipple.splashFactory
                 : NoSplash.splashFactory,
             highlightColor:
-                widget.overlayColor?.withOpacity(0.1) ??
+                effectiveOverlayColor?.withOpacity(0.1) ??
                 colorScheme.primary.withOpacity(0.1),
             child: Container(
-              padding:
-                  widget.padding ??
-                  const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: effectivePadding,
               decoration: BoxDecoration(
-                borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
+                borderRadius: effectiveBorderRadius,
                 border: Border.all(
                   color: colorScheme.outline.withOpacity(0.2),
                   width: 1,
@@ -154,7 +182,7 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
               ),
               child: DefaultTextStyle(
                 style: TextStyle(
-                  color: widget.foregroundColor ?? colorScheme.onPrimary,
+                  color: effectiveForegroundColor,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.5,
