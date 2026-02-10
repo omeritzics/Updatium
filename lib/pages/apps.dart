@@ -67,8 +67,10 @@ void showChangeLogDialog(
               : const SizedBox.shrink(),
           appSource.changeLogIfAnyIsMarkDown
               ? SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height - 350,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height - 400,
+                  ),
                   child: Markdown(
                     styleSheet: MarkdownStyleSheet(
                       blockquoteDecoration: BoxDecoration(
@@ -653,14 +655,16 @@ class AppsPageState extends State<AppsPage> {
             toggleAppSelected(listedApps[index].app);
           },
           leading: getAppIcon(index),
-          title: Text(
-            maxLines: 1,
-            listedApps[index].name,
-            style: TextStyle(
-              overflow: TextOverflow.ellipsis,
-              fontWeight: listedApps[index].app.pinned
-                  ? FontWeight.bold
-                  : FontWeight.normal,
+          title: Flexible(
+            child: Text(
+              maxLines: 2,
+              listedApps[index].name,
+              style: TextStyle(
+                overflow: TextOverflow.ellipsis,
+                fontWeight: listedApps[index].app.pinned
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+              ),
             ),
           ),
           subtitle: Text(
@@ -838,7 +842,7 @@ class AppsPageState extends State<AppsPage> {
                       child: Text(
                         listedApps[index].name,
                         textAlign: TextAlign.center,
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
