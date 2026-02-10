@@ -67,12 +67,13 @@ void showChangeLogDialog(
               ? const SizedBox(height: 16)
               : const SizedBox.shrink(),
           appSource.changeLogIfAnyIsMarkDown
-              ? SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
+              ? ConstrainedBox(
                   constraints: BoxConstraints(
                     maxHeight: math.max(200, MediaQuery.of(context).size.height - 400),
                   ),
-                  child: Markdown(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Markdown(
                     styleSheet: MarkdownStyleSheet(
                       blockquoteDecoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
@@ -98,7 +99,8 @@ void showChangeLogDialog(
                       ],
                     ),
                   ),
-                )
+                ),
+              )
               : Text(changeLog),
         ],
         singleNullReturnButton: tr('ok'),
