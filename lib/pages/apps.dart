@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -69,7 +70,7 @@ void showChangeLogDialog(
               ? SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
                   constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height - 400,
+                    maxHeight: math.max(0, MediaQuery.of(context).size.height - 400),
                   ),
                   child: Markdown(
                     styleSheet: MarkdownStyleSheet(
@@ -657,8 +658,8 @@ class AppsPageState extends State<AppsPage> {
           leading: getAppIcon(index),
           title: Flexible(
             child: Text(
-              maxLines: 2,
               listedApps[index].name,
+              maxLines: 2,
               style: TextStyle(
                 overflow: TextOverflow.ellipsis,
                 fontWeight: listedApps[index].app.pinned
