@@ -656,16 +656,14 @@ class AppsPageState extends State<AppsPage> {
             toggleAppSelected(listedApps[index].app);
           },
           leading: getAppIcon(index),
-          title: Flexible(
-            child: Text(
-              listedApps[index].name,
-              maxLines: 2,
-              style: TextStyle(
-                overflow: TextOverflow.ellipsis,
-                fontWeight: listedApps[index].app.pinned
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-              ),
+          title: Text(
+            listedApps[index].name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: listedApps[index].app.pinned
+                  ? FontWeight.bold
+                  : FontWeight.normal,
             ),
           ),
           subtitle: Text(
