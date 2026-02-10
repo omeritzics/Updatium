@@ -44,6 +44,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('tr'), 'Türkçe'),
   MapEntry(Locale('uk'), 'Українська'),
   MapEntry(Locale('da'), 'Dansk'),
+  MapEntry(Locale('et'), 'Eesti'),
   MapEntry(
     Locale('en', 'EO'),
     'Esperanto',
