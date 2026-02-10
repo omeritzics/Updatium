@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -67,8 +68,10 @@ void showChangeLogDialog(
               : const SizedBox.shrink(),
           appSource.changeLogIfAnyIsMarkDown
               ? SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height - 350,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  constraints: BoxConstraints(
+                    maxHeight: math.max(200, MediaQuery.of(context).size.height - 400),
+                  ),
                   child: Markdown(
                     styleSheet: MarkdownStyleSheet(
                       blockquoteDecoration: BoxDecoration(
@@ -654,10 +657,10 @@ class AppsPageState extends State<AppsPage> {
           },
           leading: getAppIcon(index),
           title: Text(
-            maxLines: 1,
             listedApps[index].name,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              overflow: TextOverflow.ellipsis,
               fontWeight: listedApps[index].app.pinned
                   ? FontWeight.bold
                   : FontWeight.normal,
@@ -838,7 +841,7 @@ class AppsPageState extends State<AppsPage> {
                       child: Text(
                         listedApps[index].name,
                         textAlign: TextAlign.center,
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,

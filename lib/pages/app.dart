@@ -433,12 +433,17 @@ class _AppPageState extends State<AppPage> {
                     ? const EdgeInsetsDirectional.fromSTEB(12, 6, 12, 6)
                     : const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                 margin: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                child: Text(
-                  app?.app.url ?? '',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                    decoration: TextDecoration.underline,
-                    fontStyle: FontStyle.italic,
+                child: Tooltip(
+                  message: app?.app.url ?? '',
+                  child: Text(
+                    app?.app.url ?? '',
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      decoration: TextDecoration.underline,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ),
               ),
@@ -601,10 +606,10 @@ class _AppPageState extends State<AppPage> {
 
     getBottomSheetMenu() => Padding(
       padding: EdgeInsets.fromLTRB(
-        0,
-        0,
-        0,
-        MediaQuery.of(context).padding.bottom,
+        16,
+        8,
+        16,
+        MediaQuery.of(context).padding.bottom + 16,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
