@@ -70,7 +70,7 @@ void showChangeLogDialog(
               ? SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
                   constraints: BoxConstraints(
-                    maxHeight: math.max(0, MediaQuery.of(context).size.height - 400),
+                    maxHeight: math.max(200, MediaQuery.of(context).size.height - 400),
                   ),
                   child: Markdown(
                     styleSheet: MarkdownStyleSheet(

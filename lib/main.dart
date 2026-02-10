@@ -66,27 +66,32 @@ Future<void> loadTranslations() async {
   // See easy_localization/issues/210
   await EasyLocalizationController.initEasyLocation();
   var s = SettingsProvider();
-  await s.initializeSettings();
-  var forceLocale = s.forcedLocale;
-  final controller = EasyLocalizationController(
-    saveLocale: true,
-    forceLocale: forceLocale,
-    fallbackLocale: fallbackLocale,
-    supportedLocales: supportedLocales.map((e) => e.key).toList(),
-    assetLoader: const RootBundleAssetLoader(),
-    useOnlyLangCode: false,
-    useFallbackTranslations: true,
-    path: localeDir,
-    onLoadError: (FlutterError e) {
-      throw e;
-    },
-  );
-  await controller.loadTranslations();
-  Localization.load(
-    controller.locale,
-    translations: controller.translations,
-    fallbackTranslations: controller.fallbackTranslations,
-  );
+  try {
+    await s.initializeSettings();
+    var forceLocale = s.forcedLocale;
+    final controller = EasyLocalizationController(
+      saveLocale: true,
+      forceLocale: forceLocale,
+      fallbackLocale: fallbackLocale,
+      supportedLocales: supportedLocales.map((e) => e.key).toList(),
+      assetLoader: const RootBundleAssetLoader(),
+      useOnlyLangCode: false,
+      useFallbackTranslations: true,
+      path: localeDir,
+      onLoadError: (FlutterError e) {
+        throw e;
+      },
+    );
+    await controller.loadTranslations();
+    Localization.load(
+      controller.locale,
+      translations: controller.translations,
+      fallbackTranslations: controller.fallbackTranslations,
+    );
+  } finally {
+    // Clean up the temporary SettingsProvider instance
+    s.dispose();
+  }
 }
 
 @pragma('vm:entry-point')

@@ -62,7 +62,7 @@ jobs:
         run: |
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
-          printf '%s\n' '${{ secrets.KEYSTORE_PASSWORD }}' | keytool -list -v -keystore android/upload-keystore.jks -storepass:stdin || echo "Keystore verification failed"
+          printf '%s\n' '${{ secrets.KEYSTORE_PASSWORD }}' | keytool -list -v -keystore android/upload-keystore.jks -storepass:stdin 2>/dev/null || echo "Keystore verification failed"
 
       - name: Set App Name and Build APKs
         run: |
