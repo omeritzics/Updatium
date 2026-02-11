@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/components/custom_app_bar.dart';
+import 'package:updatium/components/app_button.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -719,7 +719,20 @@ class AddAppPageState extends State<AddAppPage> {
       body: CustomScrollView(
         shrinkWrap: true,
         slivers: <Widget>[
-          CustomAppBar(title: tr('addApp')),
+          SliverAppBar(
+            pinned: true,
+            automaticallyImplyLeading: false,
+            expandedHeight: MediaQuery.of(context).size.height * 0.15,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              title: Text(
+                tr('addApp'),
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyMedium!.color,
+                ),
+              ),
+            ),
+          ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -749,6 +762,26 @@ class AddAppPageState extends State<AddAppPage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) => const ImportExportPage(),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                return SharedAxisTransition(
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  transitionType: SharedAxisTransitionType.vertical,
+                  child: child,
+                );
+              },
+            ),
+          );
+        },
+        icon: const Icon(Icons.import_export),
+        label: Text(tr('importExport')),
       ),
     );
   }

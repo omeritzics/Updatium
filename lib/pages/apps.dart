@@ -3,13 +3,10 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:updatium/components/expressive_refresh_indicator.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/components/app_button.dart';
-import 'package:updatium/components/custom_app_bar.dart';
-import 'package:updatium/components/expressive_components.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -69,7 +66,7 @@ void showChangeLogDialog(
           appSource.changeLogIfAnyIsMarkDown
               ? ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight: math.max(200, MediaQuery.of(context).size.height - 400),
+                    maxHeight: math.max(MediaQuery.of(context).size.height * 0.25, MediaQuery.of(context).size.height - MediaQuery.of(context).size.height * 0.5),
                   ),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
@@ -423,7 +420,7 @@ class AppsPageState extends State<AppsPage> {
                   children: [
                     Icon(
                       Icons.widgets,
-                      size: 80,
+                      size: MediaQuery.of(context).size.width * 0.2,
                       color: Theme.of(
                         context,
                       ).colorScheme.primary.withOpacity(0.6),
@@ -520,7 +517,7 @@ class AppsPageState extends State<AppsPage> {
     getAppIcon(int appIndex) {
       return CachedAppIconSimple(
         app: listedApps[appIndex].app,
-        size: 48.0,
+        size: MediaQuery.of(context).size.width * 0.1,
         onTap: () {
           // Handle tap if needed
         },
@@ -607,15 +604,15 @@ class AppsPageState extends State<AppsPage> {
             action = Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.check_circle, color: Colors.green[600], size: 20),
-                const SizedBox(width: 6),
+                Icon(Icons.check_circle, color: Colors.green[600], size: MediaQuery.of(context).size.width * 0.05),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.015),
                 Text(tr('updated'), style: TextStyle(color: Colors.green[600])),
               ],
             );
           }
 
           return SizedBox(
-            width: 120,
+            width: MediaQuery.of(context).size.width * 0.25,
             height: double.infinity,
             child: Center(child: action),
           );
@@ -653,37 +650,39 @@ class AppsPageState extends State<AppsPage> {
           ),
         ),
         child: ListTile(
-          tileColor: listedApps[index].app.pinned
-              ? Colors.grey.withOpacity(0.1)
-              : Colors.transparent,
-          selectedTileColor: Theme.of(context).colorScheme.primary.withOpacity(
-            listedApps[index].app.pinned ? 0.2 : 0.1,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 8,
           ),
-          selected: selectedAppIds
-              .map((e) => e)
-              .contains(listedApps[index].app.id),
-          onLongPress: () {
-            toggleAppSelected(listedApps[index].app);
-          },
-          leading: getAppIcon(index),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          tileColor: Theme.of(context).colorScheme.surface,
+          selectedTileColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+          leading: SizedBox(
+            height: MediaQuery.of(context).size.width * 0.1,
+            width: MediaQuery.of(context).size.width * 0.1,
+            child: getAppIcon(index),
+          ),
           title: Text(
             listedApps[index].name,
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: listedApps[index].app.pinned
-                  ? FontWeight.bold
-                  : FontWeight.normal,
+                  ? FontWeight.w600
+                  : FontWeight.w500,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           subtitle: Text(
             tr('byX', args: [listedApps[index].author]),
             maxLines: 1,
-            style: TextStyle(
-              overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               fontWeight: listedApps[index].app.pinned
-                  ? FontWeight.bold
-                  : FontWeight.normal,
+                  ? FontWeight.w500
+                  : FontWeight.w400,
             ),
           ),
           trailing: listedApps[index].downloadProgress != null
@@ -711,9 +710,16 @@ class AppsPageState extends State<AppsPage> {
             } else {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      AppPage(appId: listedApps[index].app.id),
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) => AppPage(appId: listedApps[index].app.id),
+                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                    return SharedAxisTransition(
+                      animation: animation,
+                      secondaryAnimation: secondaryAnimation,
+                      transitionType: SharedAxisTransitionType.horizontal,
+                      child: child,
+                    );
+                  },
                 ),
               );
             }
@@ -755,44 +761,50 @@ class AppsPageState extends State<AppsPage> {
       final categories = listedApps[index].app.categories;
       final stops = categoryStops(categories);
 
-      return ExpressiveCard(
-        onTap: () {
-          if (selectedAppIds.isNotEmpty) {
-            toggleAppSelected(listedApps[index].app);
-          } else {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AppPage(appId: listedApps[index].app.id),
-              ),
-            );
-          }
-        },
-        onLongPress: () {
-          toggleAppSelected(listedApps[index].app);
-        },
-        margin: EdgeInsets.zero,
-        padding: EdgeInsets.zero,
-        borderRadius: BorderRadius.circular(12),
-        elevation: 2,
-        enableAnimation: true,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            gradient: LinearGradient(
-              stops: stops,
-              begin: const Alignment(-1, -1),
-              end: const Alignment(1, 1),
-              colors: [
-                ...listedApps[index].app.categories.map(
-                  (e) => Color(
-                    settingsProvider.categories[e] ?? transparent,
-                  ).withAlpha(40),
+      return Card.outlined(
+        margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+        child: InkWell(
+          onTap: () {
+            if (selectedAppIds.isNotEmpty) {
+              toggleAppSelected(listedApps[index].app);
+            } else {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) => AppPage(appId: listedApps[index].app.id),
+                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                    return SharedAxisTransition(
+                      animation: animation,
+                      secondaryAnimation: secondaryAnimation,
+                      transitionType: SharedAxisTransitionType.horizontal,
+                      child: child,
+                    );
+                  },
                 ),
-                Color(transparent),
-              ],
+              );
+            }
+          },
+          onLongPress: () {
+            toggleAppSelected(listedApps[index].app);
+          },
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              gradient: LinearGradient(
+                stops: stops,
+                begin: const Alignment(-1, -1),
+                end: const Alignment(1, 1),
+                colors: [
+                  ...listedApps[index].app.categories.map(
+                    (e) => Color(
+                      settingsProvider.categories[e] ?? transparent,
+                    ).withAlpha(40),
+                  ),
+                  Color(transparent),
+                ],
+              ),
             ),
-          ),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -800,10 +812,15 @@ class AppsPageState extends State<AppsPage> {
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(20),
                       color: Theme.of(
                         context,
-                      ).colorScheme.primary.withOpacity(0.2),
+                      ).colorScheme.primaryContainer,
+                    ),
+                    child: Icon(
+                      Icons.check_circle,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+                      size: MediaQuery.of(context).size.width * 0.08,
                     ),
                   ),
                 ),
@@ -814,7 +831,7 @@ class AppsPageState extends State<AppsPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.push_pin,
-                      size: 16,
+                      size: MediaQuery.of(context).size.width * 0.04,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
@@ -826,7 +843,7 @@ class AppsPageState extends State<AppsPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.circle,
-                      size: 10,
+                      size: MediaQuery.of(context).size.width * 0.025,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
@@ -837,8 +854,8 @@ class AppsPageState extends State<AppsPage> {
                 children: [
                   const SizedBox(height: 16),
                   SizedBox(
-                    height: 64,
-                    width: 64,
+                    height: MediaQuery.of(context).size.width * 0.15,
+                    width: MediaQuery.of(context).size.width * 0.15,
                     child: FittedBox(
                       fit: BoxFit.contain,
                       child: getAppIcon(index),
@@ -853,9 +870,9 @@ class AppsPageState extends State<AppsPage> {
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ),
@@ -871,7 +888,10 @@ class AppsPageState extends State<AppsPage> {
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(
                           context,
-                        ).textTheme.bodySmall?.copyWith(fontSize: 11),
+                        ).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontSize: 11,
+                        ),
                       ),
                     ),
                   ),
@@ -936,9 +956,9 @@ class AppsPageState extends State<AppsPage> {
                             Icon(
                               Icons.check_circle,
                               color: Colors.green[600],
-                              size: 18,
+                              size: MediaQuery.of(context).size.width * 0.04,
                             ),
-                            const SizedBox(width: 6),
+                            SizedBox(width: MediaQuery.of(context).size.width * 0.015),
                             Text(
                               tr('updated'),
                               style: TextStyle(color: Colors.green[600]),
@@ -1007,11 +1027,11 @@ class AppsPageState extends State<AppsPage> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 200,
+                        SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
                           childAspectRatio: 0.6,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
+                          crossAxisSpacing: MediaQuery.of(context).size.width * 0.04,
+                          mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
                         ),
                     itemCount: listedApps
                         .asMap()
@@ -1269,9 +1289,8 @@ class AppsPageState extends State<AppsPage> {
             ),
             content: Text(
               tr('onlyWorksWithNonVersionDetectApps'),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             actions: [
@@ -1583,7 +1602,7 @@ class AppsPageState extends State<AppsPage> {
               isFilterOff ? Icons.search_rounded : Icons.search_off_rounded,
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.04),
           const VerticalDivider(),
           Expanded(
             child: Row(
@@ -1641,8 +1660,9 @@ class AppsPageState extends State<AppsPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: ExpressiveRefreshIndicator(
+      body: RefreshIndicator(
         onRefresh: refresh,
+        displacement: MediaQuery.of(context).size.height * 0.1,
         child: Scrollbar(
           interactive: true,
           controller: scrollController,
@@ -1650,7 +1670,20 @@ class AppsPageState extends State<AppsPage> {
             physics: const AlwaysScrollableScrollPhysics(),
             controller: scrollController,
             slivers: <Widget>[
-              CustomAppBar(title: tr('appsString')),
+              SliverAppBar(
+                pinned: true,
+                automaticallyImplyLeading: false,
+                expandedHeight: MediaQuery.of(context).size.height * 0.15,
+                flexibleSpace: FlexibleSpaceBar(
+                  titlePadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  title: Text(
+                    tr('appsString'),
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.bodyMedium!.color,
+                    ),
+                  ),
+                ),
+              ),
               ...getLoadingWidgets(),
               getDisplayedList(),
             ],
