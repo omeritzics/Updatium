@@ -69,38 +69,41 @@ void showChangeLogDialog(
           appSource.changeLogIfAnyIsMarkDown
               ? ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight: math.max(200, MediaQuery.of(context).size.height - 400),
+                    maxHeight: math.max(
+                      200,
+                      MediaQuery.of(context).size.height - 400,
+                    ),
                   ),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Markdown(
-                    styleSheet: MarkdownStyleSheet(
-                      blockquoteDecoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
+                      styleSheet: MarkdownStyleSheet(
+                        blockquoteDecoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                        ),
+                      ),
+                      data: changeLog,
+                      onTapLink: (text, href, title) {
+                        if (href != null) {
+                          launchUrlString(
+                            href.startsWith('http://') ||
+                                    href.startsWith('https://')
+                                ? href
+                                : '${Uri.parse(app.url).origin}/$href',
+                            mode: LaunchMode.externalApplication,
+                          );
+                        }
+                      },
+                      extensionSet: md.ExtensionSet(
+                        md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                        [
+                          md.EmojiSyntax(),
+                          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
+                        ],
                       ),
                     ),
-                    data: changeLog,
-                    onTapLink: (text, href, title) {
-                      if (href != null) {
-                        launchUrlString(
-                          href.startsWith('http://') ||
-                                  href.startsWith('https://')
-                              ? href
-                              : '${Uri.parse(app.url).origin}/$href',
-                          mode: LaunchMode.externalApplication,
-                        );
-                      }
-                    },
-                    extensionSet: md.ExtensionSet(
-                      md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                      [
-                        md.EmojiSyntax(),
-                        ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
-                      ],
-                    ),
                   ),
-                ),
-              )
+                )
               : Text(changeLog),
         ],
         singleNullReturnButton: tr('ok'),
@@ -170,7 +173,6 @@ class AppsPageState extends State<AppsPage> {
       });
     }
   }
-
 
   late final ScrollController scrollController = ScrollController();
 
@@ -432,8 +434,8 @@ class AppsPageState extends State<AppsPage> {
                     Text(
                       appsProvider.apps.isEmpty
                           ? appsProvider.loadingApps
-                              ? tr('pleaseWait')
-                              : tr('noApps')
+                                ? tr('pleaseWait')
+                                : tr('noApps')
                           : tr('noAppsForFilter'),
                       style: Theme.of(context).textTheme.headlineMedium,
                       textAlign: TextAlign.center,
@@ -449,11 +451,12 @@ class AppsPageState extends State<AppsPage> {
                             // Hide subtext if translation key is not found (returns the key itself)
                             return subtext == 'noAppsSubtext' ? '' : subtext;
                           }(),
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurface.withOpacity(0.7),
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withOpacity(0.7),
+                              ),
                           textAlign: TextAlign.center,
                           maxLines: 5,
                           overflow: TextOverflow.ellipsis,

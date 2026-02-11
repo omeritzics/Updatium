@@ -52,32 +52,41 @@ class _CachedAppIconState extends State<CachedAppIcon>
   @override
   void initState() {
     super.initState();
-    
+
     // Shimmer animation for loading state
     _shimmerController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
     _shimmerAnimation = Tween<double>(begin: -2.0, end: 2.0).animate(
-      CurvedAnimation(parent: _shimmerController, curve: ExpressiveMotion.standard),
+      CurvedAnimation(
+        parent: _shimmerController,
+        curve: ExpressiveMotion.standard,
+      ),
     );
-    
+
     // Scale animation for interactions
     _scaleController = AnimationController(
       duration: ExpressiveMotion.durationShort,
       vsync: this,
     );
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.9).animate(
-      CurvedAnimation(parent: _scaleController, curve: ExpressiveMotion.emphasizedAccelerate),
+      CurvedAnimation(
+        parent: _scaleController,
+        curve: ExpressiveMotion.emphasizedAccelerate,
+      ),
     );
-    
+
     // Rotation animation for loading/error states
     _rotationController = AnimationController(
       duration: ExpressiveMotion.durationLong,
       vsync: this,
     );
     _rotationAnimation = Tween<double>(begin: 0.0, end: 0.1).animate(
-      CurvedAnimation(parent: _rotationController, curve: ExpressiveMotion.standard),
+      CurvedAnimation(
+        parent: _rotationController,
+        curve: ExpressiveMotion.standard,
+      ),
     );
 
     // Start loading the icon
@@ -229,16 +238,15 @@ class _CachedAppIconState extends State<CachedAppIcon>
                 child: AnimatedContainer(
                   duration: ExpressiveMotion.durationShort,
                   transform: Matrix4.identity()
-                    ..translate(
-                      0.0,
-                      _isHovered ? -4.0 : 0.0,
-                    ),
+                    ..translate(0.0, _isHovered ? -4.0 : 0.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(widget.size * 0.2),
                     boxShadow: _isHovered
                         ? [
                             BoxShadow(
-                              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primary.withOpacity(0.3),
                               blurRadius: 20,
                               offset: const Offset(0, 8),
                             ),
@@ -296,7 +304,9 @@ class _CachedAppIconState extends State<CachedAppIcon>
                   child: Icon(
                     Icons.apps,
                     size: widget.size * 0.5,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.6),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurfaceVariant.withOpacity(0.6),
                   ),
                 );
               },
@@ -312,7 +322,10 @@ class _CachedAppIconState extends State<CachedAppIcon>
               return ClipRRect(
                 borderRadius: BorderRadius.circular(widget.size * 0.2),
                 child: Transform.translate(
-                  offset: Offset(_shimmerAnimation.value * widget.size * 0.5, 0),
+                  offset: Offset(
+                    _shimmerAnimation.value * widget.size * 0.5,
+                    0,
+                  ),
                   child: Container(
                     width: widget.size * 0.3,
                     height: widget.size,

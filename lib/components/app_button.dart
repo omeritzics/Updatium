@@ -36,11 +36,7 @@ class AppTextButton extends StatefulWidget {
       useExpressiveAnimation: useExpressiveAnimation,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          icon,
-          const SizedBox(width: 8),
-          label,
-        ],
+        children: [icon, const SizedBox(width: 8), label],
       ),
     );
   }
@@ -64,22 +60,20 @@ class _AppTextButtonState extends State<AppTextButton>
       duration: ExpressiveMotion.durationShort,
       vsync: this,
     );
-    
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.95,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: ExpressiveMotion.emphasizedAccelerate,
-    ));
-    
-    _opacityAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.8,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: ExpressiveMotion.standard,
-    ));
+
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: ExpressiveMotion.emphasizedAccelerate,
+      ),
+    );
+
+    _opacityAnimation = Tween<double>(begin: 1.0, end: 0.8).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: ExpressiveMotion.standard,
+      ),
+    );
   }
 
   @override
@@ -146,16 +140,15 @@ class _AppTextButtonState extends State<AppTextButton>
               child: AnimatedContainer(
                 duration: ExpressiveMotion.durationShort,
                 transform: Matrix4.identity()
-                  ..translate(
-                    0.0,
-                    _isHovered ? -2.0 : 0.0,
-                  ),
+                  ..translate(0.0, _isHovered ? -2.0 : 0.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: _isHovered && widget.enabled
                       ? [
                           BoxShadow(
-                            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withOpacity(0.2),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),

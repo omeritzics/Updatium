@@ -51,13 +51,17 @@ class _ExpressiveCardState extends State<ExpressiveCard>
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.98).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
-    
-    _elevationAnimation = Tween<double>(
-      begin: widget.elevation ?? 2.0,
-      end: (widget.elevation ?? 2.0) + 4.0,
-    ).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
-    );
+
+    _elevationAnimation =
+        Tween<double>(
+          begin: widget.elevation ?? 2.0,
+          end: (widget.elevation ?? 2.0) + 4.0,
+        ).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
   }
 
   @override
@@ -294,7 +298,8 @@ class _ExpressiveChipState extends State<ExpressiveChip>
               return Transform.scale(
                 scale: _scaleAnimation.value,
                 child: Material(
-                  color: widget.backgroundColor ?? colorScheme.secondaryContainer,
+                  color:
+                      widget.backgroundColor ?? colorScheme.secondaryContainer,
                   borderRadius: BorderRadius.circular(8),
                   child: InkWell(
                     onTap: widget.onTap,
@@ -302,7 +307,10 @@ class _ExpressiveChipState extends State<ExpressiveChip>
                     child: Padding(
                       padding:
                           widget.padding ??
-                          const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 4,
+                          ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [

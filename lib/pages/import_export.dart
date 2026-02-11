@@ -34,7 +34,6 @@ class _ImportExportPageState extends State<ImportExportPage> {
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
 
-
     urlListImport({String? initValue, bool overrideInitValid = false}) {
       showDialog<Map<String, dynamic>?>(
         context: context,

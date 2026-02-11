@@ -33,21 +33,13 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
       vsync: this,
     );
 
-    _slideAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOutCubic,
-    ));
+    _slideAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOutCubic),
+    );
 
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOutCubic,
-    ));
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOutCubic),
+    );
 
     _previousIndex = widget.selectedIndex;
     _animationController.forward();
@@ -100,7 +92,7 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
               final index = entry.key;
               final destination = entry.value;
               final isSelected = index == widget.selectedIndex;
-              
+
               return Expanded(
                 child: GestureDetector(
                   onTap: () => _handleDestinationSelected(index),
@@ -108,13 +100,15 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
                     animation: _animationController,
                     builder: (context, child) {
                       // Calculate animation progress
-                      final bool isEntering = isSelected && _previousIndex != index;
-                      final bool isExiting = !isSelected && _previousIndex == index;
-                      
+                      final bool isEntering =
+                          isSelected && _previousIndex != index;
+                      final bool isExiting =
+                          !isSelected && _previousIndex == index;
+
                       double scale = 1.0;
                       double opacity = 1.0;
                       double verticalOffset = 0.0;
-                      
+
                       if (isEntering) {
                         scale = 0.8 + (0.2 * _slideAnimation.value);
                         opacity = _fadeAnimation.value;
@@ -141,7 +135,10 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
                             opacity: opacity,
                             duration: const Duration(milliseconds: 200),
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 color: isSelected
@@ -167,7 +164,9 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
                                       data: IconThemeData(
                                         color: isSelected
                                             ? colorScheme.onSecondaryContainer
-                                            : colorScheme.onSurface.withOpacity(0.7),
+                                            : colorScheme.onSurface.withOpacity(
+                                                0.7,
+                                              ),
                                         size: 24,
                                       ),
                                       child: destination.icon,
@@ -175,7 +174,9 @@ class _AnimatedNavigationBarState extends State<AnimatedNavigationBar>
                                   ),
                                   if (isSelected)
                                     AnimatedContainer(
-                                      duration: const Duration(milliseconds: 200),
+                                      duration: const Duration(
+                                        milliseconds: 200,
+                                      ),
                                       curve: Curves.easeOutCubic,
                                       transform: Matrix4.identity()
                                         ..scale(_slideAnimation.value),
