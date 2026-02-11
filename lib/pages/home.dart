@@ -5,7 +5,6 @@ import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/components/animated_navigation_bar.dart';
 import 'package:updatium/components/app_button.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -54,11 +53,6 @@ class _HomePageState extends State<HomePage> {
       tr('addApp'),
       Icons.add_circle,
       AddAppPage(key: GlobalKey<AddAppPageState>()),
-    ),
-    NavigationPageItem(
-      tr('importExport'),
-      Icons.import_export,
-      const ImportExportPage(),
     ),
     NavigationPageItem(tr('settings'), Icons.settings, const SettingsPage()),
   ];
@@ -335,7 +329,7 @@ class _HomePageState extends State<HomePage> {
               )
               .widget,
         ),
-        bottomNavigationBar: AnimatedNavigationBar(
+        bottomNavigationBar: NavigationBar(
           destinations: pages
               .map(
                 (e) =>
