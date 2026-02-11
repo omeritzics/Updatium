@@ -69,38 +69,41 @@ void showChangeLogDialog(
           appSource.changeLogIfAnyIsMarkDown
               ? ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight: math.max(200, MediaQuery.of(context).size.height - 400),
+                    maxHeight: math.max(
+                      200,
+                      MediaQuery.of(context).size.height - 400,
+                    ),
                   ),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Markdown(
-                    styleSheet: MarkdownStyleSheet(
-                      blockquoteDecoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
+                      styleSheet: MarkdownStyleSheet(
+                        blockquoteDecoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                        ),
+                      ),
+                      data: changeLog,
+                      onTapLink: (text, href, title) {
+                        if (href != null) {
+                          launchUrlString(
+                            href.startsWith('http://') ||
+                                    href.startsWith('https://')
+                                ? href
+                                : '${Uri.parse(app.url).origin}/$href',
+                            mode: LaunchMode.externalApplication,
+                          );
+                        }
+                      },
+                      extensionSet: md.ExtensionSet(
+                        md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                        [
+                          md.EmojiSyntax(),
+                          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
+                        ],
                       ),
                     ),
-                    data: changeLog,
-                    onTapLink: (text, href, title) {
-                      if (href != null) {
-                        launchUrlString(
-                          href.startsWith('http://') ||
-                                  href.startsWith('https://')
-                              ? href
-                              : '${Uri.parse(app.url).origin}/$href',
-                          mode: LaunchMode.externalApplication,
-                        );
-                      }
-                    },
-                    extensionSet: md.ExtensionSet(
-                      md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                      [
-                        md.EmojiSyntax(),
-                        ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
-                      ],
-                    ),
                   ),
-                ),
-              )
+                )
               : Text(changeLog),
         ],
         singleNullReturnButton: tr('ok'),
@@ -170,7 +173,6 @@ class AppsPageState extends State<AppsPage> {
       });
     }
   }
-
 
   late final ScrollController scrollController = ScrollController();
 
@@ -414,45 +416,54 @@ class AppsPageState extends State<AppsPage> {
       return [
         if (listedApps.isEmpty)
           SliverFillRemaining(
+            hasScrollBody: false,
             child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.widgets,
-                    size: 80,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary.withOpacity(0.6),
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    appsProvider.apps.isEmpty
-                        ? appsProvider.loadingApps
-                              ? tr('pleaseWait')
-                              : tr('noApps')
-                        : tr('noAppsForFilter'),
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                  if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        () {
-                          final subtext = tr('noAppsSubtext');
-                          // Hide subtext if translation key is not found (returns the key itself)
-                          return subtext == 'noAppsSubtext' ? '' : subtext;
-                        }(),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withOpacity(0.7),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.widgets,
+                      size: 80,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.primary.withOpacity(0.6),
                     ),
-                ],
+                    const SizedBox(height: 24),
+                    Text(
+                      appsProvider.apps.isEmpty
+                          ? appsProvider.loadingApps
+                                ? tr('pleaseWait')
+                                : tr('noApps')
+                          : tr('noAppsForFilter'),
+                      style: Theme.of(context).textTheme.headlineMedium,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          () {
+                            final subtext = tr('noAppsSubtext');
+                            // Hide subtext if translation key is not found (returns the key itself)
+                            return subtext == 'noAppsSubtext' ? '' : subtext;
+                          }(),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withOpacity(0.7),
+                              ),
+                          textAlign: TextAlign.center,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

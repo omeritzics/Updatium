@@ -216,6 +216,7 @@ class _ExpressiveContainerState extends State<ExpressiveContainer>
                       data: IconThemeData(color: widget.foregroundColor),
                       child: widget.child,
                     ),
+            ),
           ),
         );
       },

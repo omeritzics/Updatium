@@ -24,17 +24,10 @@ class ExpressiveMotion {
     double scaleEnd = 1.0,
   }) {
     return ScaleTransition(
-      scale: Tween<double>(
-        begin: scaleStart,
-        end: scaleEnd,
-      ).animate(CurvedAnimation(
-        parent: animation,
-        curve: emphasizedDecelerate,
-      )),
-      child: FadeTransition(
-        opacity: animation,
-        child: child,
+      scale: Tween<double>(begin: scaleStart, end: scaleEnd).animate(
+        CurvedAnimation(parent: animation, curve: emphasizedDecelerate),
       ),
+      child: FadeTransition(opacity: animation, child: child),
     );
   }
 
@@ -45,17 +38,10 @@ class ExpressiveMotion {
     Offset slideStart = const Offset(0.0, 0.1),
   }) {
     return SlideTransition(
-      position: Tween<Offset>(
-        begin: slideStart,
-        end: Offset.zero,
-      ).animate(CurvedAnimation(
-        parent: animation,
-        curve: emphasizedDecelerate,
-      )),
-      child: FadeTransition(
-        opacity: animation,
-        child: child,
+      position: Tween<Offset>(begin: slideStart, end: Offset.zero).animate(
+        CurvedAnimation(parent: animation, curve: emphasizedDecelerate),
       ),
+      child: FadeTransition(opacity: animation, child: child),
     );
   }
 
@@ -96,10 +82,7 @@ class ExpressiveMotion {
       duration: durationShort,
       tween: Tween<double>(begin: 1.0, end: 1.0),
       builder: (context, scale, child) {
-        return Transform.scale(
-          scale: scale,
-          child: child,
-        );
+        return Transform.scale(scale: scale, child: child);
       },
       child: GestureDetector(
         onTapDown: enabled ? (_) => {} : null,
@@ -170,10 +153,7 @@ class ExpressiveMotion {
       builder: (context, value, child) {
         return Transform.translate(
           offset: Offset(0.0, 50 * (1 - value)),
-          child: Opacity(
-            opacity: value,
-            child: child,
-          ),
+          child: Opacity(opacity: value, child: child),
         );
       },
       child: child,
@@ -181,10 +161,7 @@ class ExpressiveMotion {
   }
 
   /// Expressive shimmer effect
-  static Widget shimmerEffect({
-    required Widget child,
-    bool isLoading = false,
-  }) {
+  static Widget shimmerEffect({required Widget child, bool isLoading = false}) {
     if (!isLoading) return child;
 
     return ShaderMask(
@@ -216,17 +193,14 @@ class ExpressiveMotion {
       pageBuilder: (context, animation, secondaryAnimation) => builder(context),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(1.0, 0.0),
-            end: Offset.zero,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: emphasizedDecelerate,
-          )),
-          child: FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
+          position:
+              Tween<Offset>(
+                begin: const Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(
+                CurvedAnimation(parent: animation, curve: emphasizedDecelerate),
+              ),
+          child: FadeTransition(opacity: animation, child: child),
         );
       },
     );
@@ -292,14 +266,21 @@ class ExpressivePageRoute<T> extends PageRoute<T> {
   final bool maintainState;
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     return builder(context);
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return ExpressiveMotion.slideFadeTransition(
       animation: animation,
       child: child,
