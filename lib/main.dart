@@ -407,7 +407,7 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
                   : 'Montserrat',
-              
+
               // Expressive Typography
               textTheme: TextTheme(
                 displayLarge: TextStyle(
@@ -516,7 +516,7 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                 ),
               ),
-              
+
               // Expressive Card Design
               cardTheme: CardThemeData(
                 elevation: isDark ? 2 : 1,
@@ -550,13 +550,15 @@ class _UpdatiumState extends State<Updatium> {
                   ),
                 ),
               ),
-              
+
               // Expressive ElevatedButton with subtle shadows
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
                   elevation: isDark ? 3 : 2,
-                  shadowColor: isDark ? Colors.black38 : Colors.black.withOpacity(0.2),
+                  shadowColor: isDark
+                      ? Colors.black38
+                      : Colors.black.withOpacity(0.2),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 28,
                     vertical: 14,
@@ -567,15 +569,12 @@ class _UpdatiumState extends State<Updatium> {
                   ),
                 ),
               ),
-              
+
               // Expressive OutlinedButton
               outlinedButtonTheme: OutlinedButtonThemeData(
                 style: OutlinedButton.styleFrom(
                   shape: const StadiumBorder(),
-                  side: BorderSide(
-                    color: scheme.outline,
-                    width: 1.5,
-                  ),
+                  side: BorderSide(color: scheme.outline, width: 1.5),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 28,
                     vertical: 14,
@@ -586,7 +585,7 @@ class _UpdatiumState extends State<Updatium> {
                   ),
                 ),
               ),
-              
+
               // Expressive TextButton
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
@@ -642,7 +641,7 @@ class _UpdatiumState extends State<Updatium> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              
+
               // Expressive Floating Action Button
               floatingActionButtonTheme: FloatingActionButtonThemeData(
                 shape: const RoundedRectangleBorder(
@@ -661,7 +660,7 @@ class _UpdatiumState extends State<Updatium> {
                 backgroundColor: scheme.primaryContainer,
                 iconSize: 24,
               ),
-              
+
               // Expressive App Bar
               appBarTheme: AppBarTheme(
                 backgroundColor: scheme.surface,
@@ -678,16 +677,13 @@ class _UpdatiumState extends State<Updatium> {
                   letterSpacing: -0.5,
                   height: 1.27,
                 ),
-                iconTheme: IconThemeData(
-                  color: scheme.onSurface,
-                  size: 24,
-                ),
+                iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
                 actionsIconTheme: IconThemeData(
                   color: scheme.onSurface,
                   size: 24,
                 ),
               ),
-              
+
               // Expressive List Tiles
               listTileTheme: ListTileThemeData(
                 contentPadding: const EdgeInsets.symmetric(
@@ -714,7 +710,7 @@ class _UpdatiumState extends State<Updatium> {
                   letterSpacing: 0.25,
                 ),
               ),
-              
+
               // Expressive Page Transitions
               pageTransitionsTheme: const PageTransitionsTheme(
                 builders: {
@@ -723,25 +719,25 @@ class _UpdatiumState extends State<Updatium> {
                   TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
                 },
               ),
-              
+
               // Expressive Text Selection
               textSelectionTheme: TextSelectionThemeData(
                 selectionColor: scheme.primary.withOpacity(0.3),
                 selectionHandleColor: scheme.primary,
                 cursorColor: scheme.primary,
               ),
-              
+
               // Expressive Touch Feedback
               splashFactory: InkRipple.splashFactory,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              
+
               // Expressive Divider
               dividerTheme: DividerThemeData(
                 color: scheme.outlineVariant,
                 thickness: 1,
                 space: 1,
               ),
-              
+
               // Expressive Chip Theme
               chipTheme: ChipThemeData(
                 backgroundColor: scheme.surfaceContainerHighest,
@@ -757,12 +753,15 @@ class _UpdatiumState extends State<Updatium> {
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              
+
               // Expressive Bottom Navigation Bar
               bottomNavigationBarTheme: BottomNavigationBarThemeData(
                 backgroundColor: scheme.surface,
@@ -780,7 +779,7 @@ class _UpdatiumState extends State<Updatium> {
                 elevation: isDark ? 3 : 8,
                 landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
               ),
-              
+
               // Expressive Progress Indicators
               progressIndicatorTheme: ProgressIndicatorThemeData(
                 color: scheme.primary,
