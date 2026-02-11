@@ -4,6 +4,7 @@ import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:updatium/components/app_button.dart';
+import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -141,11 +142,11 @@ class _SettingsPageState extends State<SettingsPage> {
           tr('selectX', args: [tr('color').toLowerCase()]),
           style: Theme.of(context).textTheme.titleLarge,
         ),
-        wheelDiameter: MediaQuery.of(context).size.width * 0.45,
-        wheelSquareBorderRadius: MediaQuery.of(context).size.width * 0.075,
-        width: MediaQuery.of(context).size.width * 0.11,
-        height: MediaQuery.of(context).size.width * 0.11,
-        borderRadius: MediaQuery.of(context).size.width * 0.055,
+        wheelDiameter: 192,
+        wheelSquareBorderRadius: 32,
+        width: 48,
+        height: 48,
+        borderRadius: 24,
         spacing: 8,
         runSpacing: 8,
         enableShadesSelection: false,
@@ -178,85 +179,44 @@ class _SettingsPageState extends State<SettingsPage> {
     }
 
     var colorPicker = ListTile(
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 8,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      tileColor: Theme.of(context).colorScheme.surface,
-      title: Text(
-        tr('selectX', args: [tr('color').toLowerCase()]),
-        style: Theme.of(context).textTheme.titleMedium,
-      ),
+      dense: true,
+      contentPadding: EdgeInsets.zero,
+      title: Text(tr('selectX', args: [tr('color').toLowerCase()])),
       subtitle: Text(
         "${ColorTools.nameThatColor(settingsProvider.themeColor)} "
         "(${ColorTools.materialNameAndCode(settingsProvider.themeColor, colorSwatchNameMap: colorsNameMap)})",
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: Theme.of(context).colorScheme.onSurfaceVariant,
-        ),
       ),
-      trailing: Container(
-        width: MediaQuery.of(context).size.width * 0.1,
-        height: MediaQuery.of(context).size.width * 0.1,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
-          color: settingsProvider.themeColor,
-          border: Border.all(
-            color: Theme.of(context).colorScheme.outline,
-            width: 1,
-          ),
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
-            onTap: () async {
-              final Color colorBeforeDialog = settingsProvider.themeColor;
-              if (!(await colorPickerDialog())) {
-                setState(() {
-                  settingsProvider.themeColor = colorBeforeDialog;
-                });
-              }
-            },
-            child: Icon(
-              Icons.palette,
-              color: settingsProvider.themeColor.computeLuminance() > 0.5
-                  ? Colors.black
-                  : Colors.white,
-              size: MediaQuery.of(context).size.width * 0.05,
-            ),
-          ),
-        ),
+      trailing: ColorIndicator(
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        color: settingsProvider.themeColor,
+        onSelectFocus: false,
+        onSelect: () async {
+          final Color colorBeforeDialog = settingsProvider.themeColor;
+          if (!(await colorPickerDialog())) {
+            setState(() {
+              settingsProvider.themeColor = colorBeforeDialog;
+            });
+          }
+        },
       ),
     );
 
     var useMaterialThemeSwitch = FutureBuilder(
       builder: (ctx, val) {
         return ((val.data?.version.sdkInt ?? 0) >= 31)
-            ? Card.outlined(
-                margin: const EdgeInsets.all(16),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          tr('useMaterialYou'),
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                      Switch(
-                        value: settingsProvider.useMaterialYou,
-                        onChanged: (value) {
-                          settingsProvider.useMaterialYou = value;
-                        },
-                      ),
-                    ],
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(child: Text(tr('useMaterialYou'))),
+                  Switch(
+                    value: settingsProvider.useMaterialYou,
+                    onChanged: (value) {
+                      settingsProvider.useMaterialYou = value;
+                    },
                   ),
-                ),
+                ],
               )
             : const SizedBox.shrink();
       },
@@ -397,20 +357,7 @@ class _SettingsPageState extends State<SettingsPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
-            pinned: true,
-            automaticallyImplyLeading: false,
-            expandedHeight: MediaQuery.of(context).size.height * 0.15,
-            flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-              title: Text(
-                tr('settings'),
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium!.color,
-                ),
-              ),
-            ),
-          ),
+          CustomAppBar(title: tr('settings')),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),

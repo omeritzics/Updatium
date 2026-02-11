@@ -5,7 +5,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
+import 'package:updatium/components/expressive_buttons.dart';
 import 'package:updatium/components/app_button.dart';
+import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -368,19 +370,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
-            pinned: true,
-            expandedHeight: MediaQuery.of(context).size.height * 0.15,
-            flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-              title: Text(
-                tr('importExport'),
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium!.color,
-                ),
-              ),
-            ),
-          ),
+          CustomAppBar(title: tr('importExport')),
           SliverFillRemaining(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -395,14 +385,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: FilledButton.icon(
+                                child: ExpressiveFilledButton(
                                   onPressed: importInProgress
                                       ? null
                                       : () {
                                           runUpdatiumExport(pickOnly: true);
                                         },
-                                  icon: const Icon(Icons.folder_open),
-                                  label: Text(
+                                  child: Text(
                                     tr('pickExportDir'),
                                     textAlign: TextAlign.center,
                                   ),
@@ -410,13 +399,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               ),
                               const SizedBox(width: 16),
                               Expanded(
-                                child: FilledButton.icon(
+                                child: ExpressiveFilledButton(
                                   onPressed:
                                       importInProgress || snapshot.data == null
                                       ? null
                                       : runUpdatiumExport,
-                                  icon: const Icon(Icons.upload_file),
-                                  label: Text(
+                                  child: Text(
                                     tr('updatiumExport'),
                                     textAlign: TextAlign.center,
                                   ),
@@ -428,12 +416,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: FilledButton.icon(
+                                child: ExpressiveFilledButton(
                                   onPressed: importInProgress
                                       ? null
                                       : runUpdatiumImport,
-                                  icon: const Icon(Icons.download),
-                                  label: Text(
+                                  child: Text(
                                     tr('updatiumImport'),
                                     textAlign: TextAlign.center,
                                   ),
@@ -506,7 +493,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         Row(
                           children: [
                             Expanded(
-                              child: FilledButton.icon(
+                              child: ExpressiveFilledButton(
                                 onPressed: importInProgress
                                     ? null
                                     : () async {
@@ -554,16 +541,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           ],
                         ),
                         const SizedBox(height: 8),
-                        FilledButton.icon(
+                        ExpressiveFilledButton(
                           onPressed: importInProgress ? null : urlListImport,
-                          icon: const Icon(Icons.list_alt),
-                          label: Text(tr('importFromURLList')),
+                          child: Text(tr('importFromURLList')),
                         ),
                         const SizedBox(height: 8),
-                        FilledButton.icon(
+                        ExpressiveFilledButton(
                           onPressed: importInProgress ? null : runUrlImport,
-                          icon: const Icon(Icons.link),
-                          label: Text(tr('importFromURLsInFile')),
+                          child: Text(tr('importFromURLsInFile')),
                         ),
                       ],
                     ),
@@ -572,14 +557,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const SizedBox(height: 8),
-                        FilledButton.icon(
+                        ExpressiveFilledButton(
                           onPressed: importInProgress
                               ? null
                               : () {
                                   runMassSourceImport(source);
                                 },
-                          icon: const Icon(Icons.cloud_download),
-                          label: Text(tr('importX', args: [source.name])),
+                          child: Text(tr('importX', args: [source.name])),
                         ),
                       ],
                     ),
@@ -589,9 +573,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   Text(
                     tr('importedAppsIdDisclaimer'),
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    style: const TextStyle(
                       fontStyle: FontStyle.italic,
+                      fontSize: 12,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -641,36 +625,26 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
           const SizedBox(height: 16),
           Text(
             tr('followingURLsHadErrors'),
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           ...widget.errors.map((e) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 16),
-                Text(e[0], style: Theme.of(context).textTheme.titleSmall),
-                Text(
-                  e[1], 
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontStyle: FontStyle.italic,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                ),
+                Text(e[0]),
+                Text(e[1], style: const TextStyle(fontStyle: FontStyle.italic)),
               ],
             );
           }),
         ],
       ),
       actions: [
-        TextButton.icon(
+        ExpressiveButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          icon: const Icon(Icons.close),
-          label: Text(tr('ok')),
+          child: Text(tr('ok')),
         ),
       ],
     );
@@ -759,23 +733,23 @@ class _SelectionModalState extends State<SelectionModal> {
       }
       var noneSelected = entrySelections.values.where((v) => v == true).isEmpty;
       return noneSelected
-          ? TextButton(
+          ? ExpressiveButton(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
               onPressed: () {
                 setState(() {
-                  entrySelections.updateAll((key, value) => true);
+                  selectAll();
                 });
               },
               child: Text(tr('selectAll')),
             )
-          : TextButton(
+          : ExpressiveButton(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
               onPressed: () {
                 setState(() {
-                  entrySelections.updateAll((key, value) => false);
+                  selectAll(deselect: true);
                 });
               },
-              child: Text(tr('deselectX', args: [tr('all')])),
+              child: Text(tr('deselectX', args: [''])),
             );
     }
 
