@@ -66,7 +66,7 @@ void showChangeLogDialog(
           appSource.changeLogIfAnyIsMarkDown
               ? ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight: math.max(MediaQuery.of(context).size.height * 0.25, MediaQuery.of(context).size.height - MediaQuery.of(context).size.height * 0.5),
+                    maxHeight: MediaQuery.of(context).size.height * 0.5,
                   ),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
