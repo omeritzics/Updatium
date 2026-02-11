@@ -407,46 +407,51 @@ class AppsPageState extends State<AppsPage> {
     getLoadingWidgets() {
       return [
         if (listedApps.isEmpty)
-          SliverFillRemaining(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.widgets,
-                    size: 80,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary.withOpacity(0.6),
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    appsProvider.apps.isEmpty
-                        ? appsProvider.loadingApps
-                              ? tr('pleaseWait')
-                              : tr('noApps')
-                        : tr('noAppsForFilter'),
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                  if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        () {
-                          final subtext = tr('noAppsSubtext');
-                          // Hide subtext if translation key is not found (returns the key itself)
-                          return subtext == 'noAppsSubtext' ? '' : subtext;
-                        }(),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withOpacity(0.7),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+          SliverPadding(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.2,
+              bottom: MediaQuery.of(context).size.height * 0.2,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: Center(
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.widgets,
+                      size: 80,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.primary.withOpacity(0.6),
                     ),
-                ],
+                    const SizedBox(height: 24),
+                    Text(
+                      appsProvider.apps.isEmpty
+                          ? appsProvider.loadingApps
+                                ? tr('pleaseWait')
+                                : tr('noApps')
+                          : tr('noAppsForFilter'),
+                      style: Theme.of(context).textTheme.headlineMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                    if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          () {
+                            final subtext = tr('noAppsSubtext');
+                            // Hide subtext if translation key is not found (returns the key itself)
+                            return subtext == 'noAppsSubtext' ? '' : subtext;
+                          }(),
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withOpacity(0.7),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
