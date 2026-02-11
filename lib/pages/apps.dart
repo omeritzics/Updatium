@@ -649,61 +649,8 @@ class AppsPageState extends State<AppsPage> {
             ],
           ),
         ),
-        child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 8,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          tileColor: Theme.of(context).colorScheme.surface,
-          selectedTileColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-          leading: SizedBox(
-            height: MediaQuery.of(context).size.width * 0.1,
-            width: MediaQuery.of(context).size.width * 0.1,
-            child: getAppIcon(index),
-          ),
-          title: Text(
-            listedApps[index].name,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: listedApps[index].app.pinned
-                  ? FontWeight.w600
-                  : FontWeight.w500,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-          ),
-          subtitle: Text(
-            tr('byX', args: [listedApps[index].author]),
-            maxLines: 1,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-              fontWeight: listedApps[index].app.pinned
-                  ? FontWeight.w500
-                  : FontWeight.w400,
-            ),
-          ),
-          trailing: listedApps[index].downloadProgress != null
-              ? SizedBox(
-                  child: Text(
-                    listedApps[index].downloadProgress! >= 0
-                        ? tr(
-                            'percentProgress',
-                            args: [
-                              listedApps[index].downloadProgress!
-                                  .toInt()
-                                  .toString(),
-                            ],
-                          )
-                        : tr('installing'),
-                    textAlign: (listedApps[index].downloadProgress! >= 0)
-                        ? TextAlign.start
-                        : TextAlign.end,
-                  ),
-                )
-              : trailingRow,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
           onTap: () {
             if (selectedAppIds.isNotEmpty) {
               toggleAppSelected(listedApps[index].app);
@@ -724,6 +671,69 @@ class AppsPageState extends State<AppsPage> {
               );
             }
           },
+          onLongPress: () {
+            if (selectedAppIds.isEmpty) {
+              toggleAppSelected(listedApps[index].app);
+            } else {
+              toggleAppSelected(listedApps[index].app);
+            }
+          },
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 8,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            tileColor: Theme.of(context).colorScheme.surface,
+            selectedTileColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+            leading: SizedBox(
+              height: MediaQuery.of(context).size.width * 0.1,
+              width: MediaQuery.of(context).size.width * 0.1,
+              child: getAppIcon(index),
+            ),
+            title: Text(
+              listedApps[index].name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: listedApps[index].app.pinned
+                    ? FontWeight.w600
+                    : FontWeight.w500,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            subtitle: Text(
+              tr('byX', args: [listedApps[index].author]),
+              maxLines: 1,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontWeight: listedApps[index].app.pinned
+                    ? FontWeight.w500
+                    : FontWeight.w400,
+              ),
+            ),
+            trailing: listedApps[index].downloadProgress != null
+                ? SizedBox(
+                  child: Text(
+                    listedApps[index].downloadProgress! >= 0
+                        ? tr(
+                            'percentProgress',
+                            args: [
+                              listedApps[index].downloadProgress!
+                                  .toInt()
+                                  .toString(),
+                            ],
+                          )
+                        : tr('installing'),
+                    textAlign: (listedApps[index].downloadProgress! >= 0)
+                        ? TextAlign.start
+                        : TextAlign.end,
+                  ),
+                )
+              : trailingRow,
+          ),
         ),
       );
     }

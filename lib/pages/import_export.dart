@@ -370,7 +370,6 @@ class _ImportExportPageState extends State<ImportExportPage> {
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
-            automaticallyImplyLeading: false,
             expandedHeight: MediaQuery.of(context).size.height * 0.15,
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -776,7 +775,7 @@ class _SelectionModalState extends State<SelectionModal> {
                   entrySelections.updateAll((key, value) => false);
                 });
               },
-              child: Text(tr('deselectAll')),
+              child: Text(tr('deselectX', args: [tr('all')])),
             );
     }
 
