@@ -24,7 +24,7 @@
     "color": "カラー",
     "standard": "スタンダード",
     "custom": "カスタム",
-    "useMaterialYou": "Material Youを使用する",
+    "useMaterialYou": "Material Youのカラーを使用",
     "githubStarredRepos": "GitHubでスターしたリポジトリ",
     "uname": "ユーザー名",
     "wrongArgNum": "引数の数が間違っています",

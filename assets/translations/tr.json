@@ -24,7 +24,7 @@
     "color": "Renk",
     "standard": "Standart",
     "custom": "Özel",
-    "useMaterialYou": "Material You kullan",
+    "useMaterialYou": "Material You renklerini kullan",
     "githubStarredRepos": "GitHub yıldızlı depolar",
     "uname": "Kullanıcı adı",
     "wrongArgNum": "Yanlış sayıda argüman sağlandı",

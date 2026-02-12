@@ -24,7 +24,7 @@
     "color": "color",
     "standard": "Estándar",
     "custom": "A medida",
-    "useMaterialYou": "Aplicar 'Material You'",
+    "useMaterialYou": "Aplicar colores Material You",
     "githubStarredRepos": "repositorios favoritos en GitHub",
     "uname": "Nombre de usuario",
     "wrongArgNum": "Número de argumentos provistos inválido",
