@@ -372,7 +372,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
             pinned: true,
             expandedHeight: MediaQuery.of(context).size.height * 0.15,
             flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              titlePadding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 20,
+              ),
               title: Text(
                 tr('importExport'),
                 style: TextStyle(
@@ -654,7 +657,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
                 const SizedBox(height: 16),
                 Text(e[0], style: Theme.of(context).textTheme.titleSmall),
                 Text(
-                  e[1], 
+                  e[1],
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontStyle: FontStyle.italic,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
