@@ -343,7 +343,7 @@
     "GHReqPrefix": "GitHub istekleri için 'sky22333/hubproxy' örneği",
     "includeZips": "ZIP dosyalarını dahil et",
     "zippedApkFilterRegEx": "ZIP içindeki APK'ları filtrele",
-    "googleVerificationWarningP1": "Google, 2026/2027'den itibaren \"sertifikalı\" Android cihazlardaki bütün uygulamaların, geliştiricinin kişisel kimlik bilgilerini doğrudan Google'a göndermesini gerektireceğini duyurdu.\n\nBu uygulamanın geliştiricileri bu şartı kabul etmedikleri için, Updatium bu tarihten sonra sertifikalı Android cihazlarda çalışmayacaktır.",
+    "googleVerificationWarningP1": "Google, 2026/2027'den itibaren \"sertifikalı\" Android cihazlardaki bütün uygulamaların, geliştiricinin kişisel kimlik bilgilerini doğrudan Google'a göndermesini gerektireceğini duyurdu.\n\nBu tarihten sonra, Updatium sertifikalı Android cihazlarda çalışmayı durabilir.",
     "googleVerificationWarningP2": "Daha fazla bilgi için https://keepandroidopen.org/ adresine gidin.",
     "googleVerificationWarningP3": "Kısa vadede, Google'ın duyurudan sonra aldığı geniş tepkilerin ardından yapacağına söz verdiği \"gelişmiş akış\" işlemi ile \"doğrulanmamış\" (şartı yerine getirmeyen) uygulamaları yüklemek mümkün olabilir; ancak nasıl çalışacağını detaylandırmadıkları için bunun kullanıcı özgürlüğünü pratik anlamda gerçekten koruyup koruyamayacağı belirsizdir.\n\nHer halükârda Google'ın bu hamlesi; bireyler için ücretsiz, genel amaçlı bilişim hizmetlerinin sonuna doğru atılmış önemli bir adımdır.\n\nVar olmalarına müsaade edildiği sürece, GrapheneOS gibi sertifikasız işletim sistemleri bundan etkilenmemelidir.",
     "multipleSigners": "Birden fazla imzacı",
