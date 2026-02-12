@@ -792,7 +792,8 @@ class PrefetchMetrics {
   int successCount = 0;
   int errorCount = 0;
 
-  PrefetchMetrics(this.appId, {
+  PrefetchMetrics(
+    this.appId, {
     this.lastSuccess,
     this.lastError,
     this.lastDuration,
