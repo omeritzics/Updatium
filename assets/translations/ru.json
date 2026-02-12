@@ -24,7 +24,7 @@
     "color": "Цвет",
     "standard": "Стандартный",
     "custom": "Индивидуальный",
-    "useMaterialYou": "Использовать Material You",
+    "useMaterialYou": "Использовать цвета Material You",
     "githubStarredRepos": "Избранные репозитории GitHub",
     "uname": "Имя пользователя",
     "wrongArgNum": "Неправильное количество предоставленных аргументов",
