@@ -142,7 +142,8 @@ androidComponents {
                 // Use: (YYMMDDHH % 100000) * 100 + ABI to stay well under limits
                 val baseBuildNumber = flutterVersionCode.toLongOrNull() ?: 1L
                 val compressedCode = (baseBuildNumber % 100000) * 100 + abiVersionCode
-                val safeVersionCode = compressedCode.coerceIn(1L, Int.MAX_VALUE.toLong())
+                val maxPlayVersionCode = 2_100_000_000L
+                val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode)
                 output.versionCode.set(safeVersionCode.toInt())
             }
         }
