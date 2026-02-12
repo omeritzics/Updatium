@@ -372,7 +372,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
             pinned: true,
             expandedHeight: MediaQuery.of(context).size.height * 0.15,
             flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              titlePadding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 20,
+              ),
               title: Text(
                 tr('importExport'),
                 style: TextStyle(
@@ -416,7 +419,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       ? null
                                       : runUpdatiumExport,
                                   icon: const Icon(Icons.upload_file),
-                                  label: Text(
+                                  child: Text(
                                     tr('updatiumExport'),
                                     textAlign: TextAlign.center,
                                   ),
@@ -433,7 +436,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       ? null
                                       : runUpdatiumImport,
                                   icon: const Icon(Icons.download),
-                                  label: Text(
+                                  child: Text(
                                     tr('updatiumImport'),
                                     textAlign: TextAlign.center,
                                   ),
@@ -544,7 +547,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           runSourceSearch(searchSource[0]);
                                         }
                                       },
-                                label: Text(
+                                child: Text(
                                   tr(
                                     'searchX',
                                     args: [lowerCaseIfEnglish(tr('source'))],
@@ -558,13 +561,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         FilledButton.icon(
                           onPressed: importInProgress ? null : urlListImport,
                           icon: const Icon(Icons.list_alt),
-                          label: Text(tr('importFromURLList')),
+                          child: Text(tr('importFromURLList')),
                         ),
                         const SizedBox(height: 8),
                         FilledButton.icon(
                           onPressed: importInProgress ? null : runUrlImport,
                           icon: const Icon(Icons.link),
-                          label: Text(tr('importFromURLsInFile')),
+                          child: Text(tr('importFromURLsInFile')),
                         ),
                       ],
                     ),
@@ -580,7 +583,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   runMassSourceImport(source);
                                 },
                           icon: const Icon(Icons.cloud_download),
-                          label: Text(tr('importX', args: [source.name])),
+                          child: Text(tr('importX', args: [source.name])),
                         ),
                       ],
                     ),
@@ -654,7 +657,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
                 const SizedBox(height: 16),
                 Text(e[0], style: Theme.of(context).textTheme.titleSmall),
                 Text(
-                  e[1], 
+                  e[1],
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontStyle: FontStyle.italic,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -671,7 +674,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
             Navigator.of(context).pop(null);
           },
           icon: const Icon(Icons.close),
-          label: Text(tr('ok')),
+          child: Text(tr('ok')),
         ),
       ],
     );
@@ -767,7 +770,7 @@ class _SelectionModalState extends State<SelectionModal> {
                   entrySelections.updateAll((key, value) => true);
                 });
               },
-              label: Text(tr('selectAll')),
+              child: Text(tr('selectAll')),
             )
           : TextButton(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
@@ -776,7 +779,7 @@ class _SelectionModalState extends State<SelectionModal> {
                   entrySelections.updateAll((key, value) => false);
                 });
               },
-              label: Text(tr('deselectX', args: [tr('all')])),
+              child: Text(tr('deselectX', args: [tr('all')])),
             );
     }
 
@@ -954,7 +957,7 @@ class _SelectionModalState extends State<SelectionModal> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          label: Text(tr('cancel')),
+          child: Text(tr('cancel')),
         ),
         AppTextButton(
           onPressed: entrySelections.values.where((b) => b).isEmpty
@@ -967,7 +970,7 @@ class _SelectionModalState extends State<SelectionModal> {
                         .toList(),
                   );
                 },
-          label: Text(
+          child: Text(
             widget.onlyOneSelectionAllowed
                 ? tr('pick')
                 : tr(

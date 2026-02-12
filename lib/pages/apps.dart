@@ -1,6 +1,5 @@
 import 'package:animations/animations.dart';
 import 'dart:convert';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -72,33 +71,33 @@ void showChangeLogDialog(
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Markdown(
-                    styleSheet: MarkdownStyleSheet(
-                      blockquoteDecoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
+                      styleSheet: MarkdownStyleSheet(
+                        blockquoteDecoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                        ),
+                      ),
+                      data: changeLog,
+                      onTapLink: (text, href, title) {
+                        if (href != null) {
+                          launchUrlString(
+                            href.startsWith('http://') ||
+                                    href.startsWith('https://')
+                                ? href
+                                : '${Uri.parse(app.url).origin}/$href',
+                            mode: LaunchMode.externalApplication,
+                          );
+                        }
+                      },
+                      extensionSet: md.ExtensionSet(
+                        md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                        [
+                          md.EmojiSyntax(),
+                          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
+                        ],
                       ),
                     ),
-                    data: changeLog,
-                    onTapLink: (text, href, title) {
-                      if (href != null) {
-                        launchUrlString(
-                          href.startsWith('http://') ||
-                                  href.startsWith('https://')
-                              ? href
-                              : '${Uri.parse(app.url).origin}/$href',
-                          mode: LaunchMode.externalApplication,
-                        );
-                      }
-                    },
-                    extensionSet: md.ExtensionSet(
-                      md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                      [
-                        md.EmojiSyntax(),
-                        ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
-                      ],
-                    ),
                   ),
-                ),
-              )
+                )
               : Text(changeLog),
         ],
         singleNullReturnButton: tr('ok'),
@@ -168,7 +167,6 @@ class AppsPageState extends State<AppsPage> {
       });
     }
   }
-
 
   late final ScrollController scrollController = ScrollController();
 
@@ -430,8 +428,8 @@ class AppsPageState extends State<AppsPage> {
                     Text(
                       appsProvider.apps.isEmpty
                           ? appsProvider.loadingApps
-                              ? tr('pleaseWait')
-                              : tr('noApps')
+                                ? tr('pleaseWait')
+                                : tr('noApps')
                           : tr('noAppsForFilter'),
                       style: Theme.of(context).textTheme.headlineMedium,
                       textAlign: TextAlign.center,
@@ -447,11 +445,12 @@ class AppsPageState extends State<AppsPage> {
                             // Hide subtext if translation key is not found (returns the key itself)
                             return subtext == 'noAppsSubtext' ? '' : subtext;
                           }(),
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurface.withOpacity(0.7),
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withOpacity(0.7),
+                              ),
                           textAlign: TextAlign.center,
                           maxLines: 5,
                           overflow: TextOverflow.ellipsis,
@@ -605,7 +604,11 @@ class AppsPageState extends State<AppsPage> {
             action = Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.check_circle, color: Colors.green[600], size: MediaQuery.of(context).size.width * 0.05),
+                Icon(
+                  Icons.check_circle,
+                  color: Colors.green[600],
+                  size: MediaQuery.of(context).size.width * 0.05,
+                ),
                 SizedBox(width: MediaQuery.of(context).size.width * 0.015),
                 Text(tr('updated'), style: TextStyle(color: Colors.green[600])),
               ],
@@ -659,15 +662,17 @@ class AppsPageState extends State<AppsPage> {
               Navigator.push(
                 context,
                 PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => AppPage(appId: listedApps[index].app.id),
-                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                    return SharedAxisTransition(
-                      animation: animation,
-                      secondaryAnimation: secondaryAnimation,
-                      transitionType: SharedAxisTransitionType.horizontal,
-                      child: child,
-                    );
-                  },
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      AppPage(appId: listedApps[index].app.id),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                        return SharedAxisTransition(
+                          animation: animation,
+                          secondaryAnimation: secondaryAnimation,
+                          transitionType: SharedAxisTransitionType.horizontal,
+                          child: child,
+                        );
+                      },
                 ),
               );
             }
@@ -688,7 +693,9 @@ class AppsPageState extends State<AppsPage> {
               borderRadius: BorderRadius.circular(16),
             ),
             tileColor: Theme.of(context).colorScheme.surface,
-            selectedTileColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+            selectedTileColor: Theme.of(
+              context,
+            ).colorScheme.surfaceContainerHighest,
             leading: SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
               width: MediaQuery.of(context).size.width * 0.1,
@@ -717,23 +724,23 @@ class AppsPageState extends State<AppsPage> {
             ),
             trailing: listedApps[index].downloadProgress != null
                 ? SizedBox(
-                  child: Text(
-                    listedApps[index].downloadProgress! >= 0
-                        ? tr(
-                            'percentProgress',
-                            args: [
-                              listedApps[index].downloadProgress!
-                                  .toInt()
-                                  .toString(),
-                            ],
-                          )
-                        : tr('installing'),
-                    textAlign: (listedApps[index].downloadProgress! >= 0)
-                        ? TextAlign.start
-                        : TextAlign.end,
-                  ),
-                )
-              : trailingRow,
+                    child: Text(
+                      listedApps[index].downloadProgress! >= 0
+                          ? tr(
+                              'percentProgress',
+                              args: [
+                                listedApps[index].downloadProgress!
+                                    .toInt()
+                                    .toString(),
+                              ],
+                            )
+                          : tr('installing'),
+                      textAlign: (listedApps[index].downloadProgress! >= 0)
+                          ? TextAlign.start
+                          : TextAlign.end,
+                    ),
+                  )
+                : trailingRow,
           ),
         ),
       );
@@ -782,15 +789,17 @@ class AppsPageState extends State<AppsPage> {
               Navigator.push(
                 context,
                 PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => AppPage(appId: listedApps[index].app.id),
-                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                    return SharedAxisTransition(
-                      animation: animation,
-                      secondaryAnimation: secondaryAnimation,
-                      transitionType: SharedAxisTransitionType.horizontal,
-                      child: child,
-                    );
-                  },
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      AppPage(appId: listedApps[index].app.id),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                        return SharedAxisTransition(
+                          animation: animation,
+                          secondaryAnimation: secondaryAnimation,
+                          transitionType: SharedAxisTransitionType.horizontal,
+                          child: child,
+                        );
+                      },
                 ),
               );
             }
@@ -816,189 +825,193 @@ class AppsPageState extends State<AppsPage> {
                 ],
               ),
             ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              if (selectedAppIds.contains(listedApps[index].app.id))
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.primaryContainer,
-                    ),
-                    child: Icon(
-                      Icons.check_circle,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      size: MediaQuery.of(context).size.width * 0.08,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                if (selectedAppIds.contains(listedApps[index].app.id))
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                      child: Icon(
+                        Icons.check_circle,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        size: MediaQuery.of(context).size.width * 0.08,
+                      ),
                     ),
                   ),
+                if (listedApps[index].app.pinned)
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.push_pin,
+                        size: MediaQuery.of(context).size.width * 0.04,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                if (hasUpdate)
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.circle,
+                        size: MediaQuery.of(context).size.width * 0.025,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: getAppIcon(index),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Flexible(
+                        child: Text(
+                          listedApps[index].name,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Flexible(
+                        child: Text(
+                          listedApps[index].author,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
+                                fontSize: 11,
+                              ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Builder(
+                        builder: (ctx) {
+                          final ai = listedApps[index];
+                          final app = ai.app;
+                          final isInstalled = app.installedVersion != null;
+                          final hasUpdateLocal =
+                              isInstalled &&
+                              app.installedVersion != app.latestVersion;
+                          final isTrackOnly =
+                              app.additionalSettings['trackOnly'] == true;
+
+                          if (isTrackOnly) {
+                            return const SizedBox.shrink();
+                          }
+
+                          if (!isInstalled) {
+                            return FilledButton.tonal(
+                              onPressed: appsProvider.areDownloadsRunning()
+                                  ? null
+                                  : () {
+                                      appsProvider
+                                          .downloadAndInstallLatestApps([
+                                            app.id,
+                                          ], globalNavigatorKey.currentContext)
+                                          .catchError((e) {
+                                            showError(e, context);
+                                            return <String>[];
+                                          });
+                                    },
+                              child: Text(tr('install')),
+                            );
+                          }
+
+                          if (hasUpdateLocal) {
+                            return FilledButton.tonal(
+                              onPressed: appsProvider.areDownloadsRunning()
+                                  ? null
+                                  : () {
+                                      appsProvider
+                                          .downloadAndInstallLatestApps([
+                                            app.id,
+                                          ], globalNavigatorKey.currentContext)
+                                          .catchError((e) {
+                                            showError(e, context);
+                                            return <String>[];
+                                          });
+                                    },
+                              child: Text(tr('update')),
+                            );
+                          }
+
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.green[600],
+                                size: MediaQuery.of(context).size.width * 0.04,
+                              ),
+                              SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.015,
+                              ),
+                              Text(
+                                tr('updated'),
+                                style: TextStyle(color: Colors.green[600]),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
                 ),
-              if (listedApps[index].app.pinned)
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.push_pin,
-                      size: MediaQuery.of(context).size.width * 0.04,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ),
-              if (hasUpdate)
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.circle,
-                      size: MediaQuery.of(context).size.width * 0.025,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.15,
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: getAppIcon(index),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Flexible(
-                      child: Text(
-                        listedApps[index].name,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).colorScheme.onSurface,
+                if (listedApps[index].downloadProgress != null)
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.black45,
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value: listedApps[index].downloadProgress! >= 0
+                              ? listedApps[index].downloadProgress! / 100
+                              : null,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Flexible(
-                      child: Text(
-                        listedApps[index].author,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                          fontSize: 11,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Builder(
-                      builder: (ctx) {
-                        final ai = listedApps[index];
-                        final app = ai.app;
-                        final isInstalled = app.installedVersion != null;
-                        final hasUpdateLocal =
-                            isInstalled &&
-                            app.installedVersion != app.latestVersion;
-                        final isTrackOnly =
-                            app.additionalSettings['trackOnly'] == true;
-
-                        if (isTrackOnly) {
-                          return const SizedBox.shrink();
-                        }
-
-                        if (!isInstalled) {
-                          return FilledButton.tonal(
-                            onPressed: appsProvider.areDownloadsRunning()
-                                ? null
-                                : () {
-                                    appsProvider
-                                        .downloadAndInstallLatestApps([
-                                          app.id,
-                                        ], globalNavigatorKey.currentContext)
-                                        .catchError((e) {
-                                          showError(e, context);
-                                          return <String>[];
-                                        });
-                                  },
-                            child: Text(tr('install')),
-                          );
-                        }
-
-                        if (hasUpdateLocal) {
-                          return FilledButton.tonal(
-                            onPressed: appsProvider.areDownloadsRunning()
-                                ? null
-                                : () {
-                                    appsProvider
-                                        .downloadAndInstallLatestApps([
-                                          app.id,
-                                        ], globalNavigatorKey.currentContext)
-                                        .catchError((e) {
-                                          showError(e, context);
-                                          return <String>[];
-                                        });
-                                  },
-                            child: Text(tr('update')),
-                          );
-                        }
-
-                        return Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.check_circle,
-                              color: Colors.green[600],
-                              size: MediaQuery.of(context).size.width * 0.04,
-                            ),
-                            SizedBox(width: MediaQuery.of(context).size.width * 0.015),
-                            Text(
-                              tr('updated'),
-                              style: TextStyle(color: Colors.green[600]),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                ],
-              ),
-              if (listedApps[index].downloadProgress != null)
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.black45,
-                    ),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        value: listedApps[index].downloadProgress! >= 0
-                            ? listedApps[index].downloadProgress! / 100
-                            : null,
-                      ),
-                    ),
-                  ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       );
@@ -1037,13 +1050,14 @@ class AppsPageState extends State<AppsPage> {
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
-                          childAspectRatio: 0.6,
-                          crossAxisSpacing: MediaQuery.of(context).size.width * 0.04,
-                          mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
-                        ),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent:
+                          MediaQuery.of(context).size.width * 0.5,
+                      childAspectRatio: 0.6,
+                      crossAxisSpacing:
+                          MediaQuery.of(context).size.width * 0.04,
+                      mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
+                    ),
                     itemCount: listedApps
                         .asMap()
                         .entries
@@ -1686,7 +1700,10 @@ class AppsPageState extends State<AppsPage> {
                 automaticallyImplyLeading: false,
                 expandedHeight: MediaQuery.of(context).size.height * 0.15,
                 flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  titlePadding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 20,
+                  ),
                   title: Text(
                     tr('appsString'),
                     style: TextStyle(

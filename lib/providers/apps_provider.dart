@@ -2406,31 +2406,33 @@ class AppsProvider with ChangeNotifier {
         await saveApps([app], onlyIfExists: false);
       }
     }
-    List<List<String>> errors = errorsMap.keys
-        .map((e) {
-          // Log detailed error internally for debugging
-          print('Import error for $e: ${errorsMap[e]}');
-          
-          // Return user-friendly error message
-          String userMessage;
-          final errorDetail = errorsMap[e].toString();
-          
-          // Categorize errors and provide user-friendly messages
-          if (errorDetail.contains('timeout') || errorDetail.contains('connection')) {
-            userMessage = tr('networkError');
-          } else if (errorDetail.contains('404') || errorDetail.contains('not found')) {
-            userMessage = tr('appNotFound');
-          } else if (errorDetail.contains('parse') || errorDetail.contains('format')) {
-            userMessage = tr('invalidUrlFormat');
-          } else if (errorDetail.contains('permission') || errorDetail.contains('access')) {
-            userMessage = tr('accessDenied');
-          } else {
-            userMessage = tr('importFailed');
-          }
-          
-          return [e, userMessage];
-        })
-        .toList();
+    List<List<String>> errors = errorsMap.keys.map((e) {
+      // Log detailed error internally for debugging
+      print('Import error for $e: ${errorsMap[e]}');
+
+      // Return user-friendly error message
+      String userMessage;
+      final errorDetail = errorsMap[e].toString();
+
+      // Categorize errors and provide user-friendly messages
+      if (errorDetail.contains('timeout') ||
+          errorDetail.contains('connection')) {
+        userMessage = tr('networkError');
+      } else if (errorDetail.contains('404') ||
+          errorDetail.contains('not found')) {
+        userMessage = tr('appNotFound');
+      } else if (errorDetail.contains('parse') ||
+          errorDetail.contains('format')) {
+        userMessage = tr('invalidUrlFormat');
+      } else if (errorDetail.contains('permission') ||
+          errorDetail.contains('access')) {
+        userMessage = tr('accessDenied');
+      } else {
+        userMessage = tr('importFailed');
+      }
+
+      return [e, userMessage];
+    }).toList();
     return errors;
   }
 }
