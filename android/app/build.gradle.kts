@@ -133,7 +133,7 @@ val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
 android.applicationVariants.configureEach {
     val variant = this
     variant.outputs.forEach { output ->
-        val abiVersionCode = abiCodes[output.filters.find { it.filterType == ABI }?.identifier]
+        val abiVersionCode = abiCodes[output.filters.find { it.filterType == com.android.build.api.variant.FilterConfiguration.FilterType.ABI }?.identifier]
         if (abiVersionCode != null) {
             // Create a version code within Android limits (max 2100000000)
             // Use: (YYMMDDHH % 100000) * 100 + ABI to stay well under limits
