@@ -178,13 +178,8 @@ class _SettingsPageState extends State<SettingsPage> {
     }
 
     var colorPicker = ListTile(
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 8,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       tileColor: Theme.of(context).colorScheme.surface,
       title: Text(
         tr('selectX', args: [tr('color').toLowerCase()]),
@@ -201,7 +196,9 @@ class _SettingsPageState extends State<SettingsPage> {
         width: MediaQuery.of(context).size.width * 0.1,
         height: MediaQuery.of(context).size.width * 0.1,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
+          borderRadius: BorderRadius.circular(
+            MediaQuery.of(context).size.width * 0.05,
+          ),
           color: settingsProvider.themeColor,
           border: Border.all(
             color: Theme.of(context).colorScheme.outline,
@@ -211,7 +208,9 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
+            borderRadius: BorderRadius.circular(
+              MediaQuery.of(context).size.width * 0.05,
+            ),
             onTap: () async {
               final Color colorBeforeDialog = settingsProvider.themeColor;
               if (!(await colorPickerDialog())) {
@@ -402,7 +401,10 @@ class _SettingsPageState extends State<SettingsPage> {
             automaticallyImplyLeading: false,
             expandedHeight: MediaQuery.of(context).size.height * 0.15,
             flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              titlePadding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 20,
+              ),
               title: Text(
                 tr('settings'),
                 style: TextStyle(

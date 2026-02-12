@@ -58,10 +58,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
       vsync: this,
     );
     _shimmerAnimation = Tween<double>(begin: -2.0, end: 2.0).animate(
-      CurvedAnimation(
-        parent: _shimmerController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
     );
 
     // Scale animation for interactions
@@ -70,10 +67,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
       vsync: this,
     );
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.9).animate(
-      CurvedAnimation(
-        parent: _scaleController,
-        curve: Curves.easeOutCubic,
-      ),
+      CurvedAnimation(parent: _scaleController, curve: Curves.easeOutCubic),
     );
 
     // Rotation animation for loading/error states
@@ -82,10 +76,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
       vsync: this,
     );
     _rotationAnimation = Tween<double>(begin: 0.0, end: 0.1).animate(
-      CurvedAnimation(
-        parent: _rotationController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: _rotationController, curve: Curves.easeInOut),
     );
 
     // Start loading the icon
