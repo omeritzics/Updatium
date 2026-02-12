@@ -1001,7 +1001,7 @@ class AppsPageState extends State<AppsPage> {
             ],
           ),
         ),
-          );
+      );
     }
 
     getCategoryCollapsibleTile(int index) {
