@@ -140,7 +140,9 @@ androidComponents {
             if (abiVersionCode != null) {
                 // Create a version code within Android limits (max 2100000000)
                 // Use: (YYMMDDHH % 100000) * 100 + ABI to stay well under limits
-                val baseBuildNumber = flutterVersionCode.toLongOrNull() ?: 1L
+                val baseBuildNumber = requireNotNull(flutterVersionCode.toLongOrNull()) {
+                    "Invalid flutter.versionCode='$flutterVersionCode' in local.properties; must be a number."
+                }
                 val compressedCode = (baseBuildNumber % 100000) * 100 + abiVersionCode
                 val maxPlayVersionCode = 2_100_000_000L
                 val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode)
