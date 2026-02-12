@@ -507,6 +507,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           children: [
                             Expanded(
                               child: FilledButton.icon(
+                                icon: const Icon(Icons.search),
                                 onPressed: importInProgress
                                     ? null
                                     : () async {
@@ -543,7 +544,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           runSourceSearch(searchSource[0]);
                                         }
                                       },
-                                child: Text(
+                                label: Text(
                                   tr(
                                     'searchX',
                                     args: [lowerCaseIfEnglish(tr('source'))],
@@ -766,7 +767,7 @@ class _SelectionModalState extends State<SelectionModal> {
                   entrySelections.updateAll((key, value) => true);
                 });
               },
-              child: Text(tr('selectAll')),
+              label: Text(tr('selectAll')),
             )
           : TextButton(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
@@ -775,7 +776,7 @@ class _SelectionModalState extends State<SelectionModal> {
                   entrySelections.updateAll((key, value) => false);
                 });
               },
-              child: Text(tr('deselectX', args: [tr('all')])),
+              label: Text(tr('deselectX', args: [tr('all')])),
             );
     }
 
@@ -953,7 +954,7 @@ class _SelectionModalState extends State<SelectionModal> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(tr('cancel')),
+          label: Text(tr('cancel')),
         ),
         AppTextButton(
           onPressed: entrySelections.values.where((b) => b).isEmpty
@@ -966,7 +967,7 @@ class _SelectionModalState extends State<SelectionModal> {
                         .toList(),
                   );
                 },
-          child: Text(
+          label: Text(
             widget.onlyOneSelectionAllowed
                 ? tr('pick')
                 : tr(

@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'dart:convert';
 import 'dart:math' as math;
 
