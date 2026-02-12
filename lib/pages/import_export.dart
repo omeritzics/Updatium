@@ -405,7 +405,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           runUpdatiumExport(pickOnly: true);
                                         },
                                   icon: const Icon(Icons.folder_open),
-                                  label: Text(
+                                  child: Text(
                                     tr('pickExportDir'),
                                     textAlign: TextAlign.center,
                                   ),

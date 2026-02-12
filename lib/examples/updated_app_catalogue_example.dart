@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:updatium/components/app_button.dart';
 import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/providers/apps_provider.dart';
 
@@ -168,7 +169,7 @@ class _UpdatedAppCatalogueExampleState
           _buildStatItem('Total', '${apps.length}', Icons.apps),
           _buildStatItem('Installed', '$installedCount', Icons.download_done),
           _buildStatItem('Updates', '$updateCount', Icons.system_update),
-          _buildStatItem('Cached', '$cachedCount', Icons.cache),
+          _buildStatItem('Cached', '$cachedCount', Icons.storage),
         ],
       ),
     );
