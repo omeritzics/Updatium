@@ -51,6 +51,11 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInt()
         versionName = flutterVersionName
+        
+        // Enable split APKs for different ABIs
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+        }
     }
 
     flavorDimensions += "default"
@@ -111,6 +116,16 @@ android {
             versionNameSuffix = "-debug"
         }
     }
+    
+    // Configure split APK generation
+    splits {
+        abi {
+            enable = true
+            reset()
+            include("armeabi-v7a", "arm64-v8a", "x86_64")
+            universalApk = true
+        }
+    }
 }
 
 val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
@@ -118,7 +133,7 @@ val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
 android.applicationVariants.configureEach {
     val variant = this
     variant.outputs.forEach { output ->
-        val abiVersionCode = abiCodes[output.filters.find { it.filterType == "ABI" }?.identifier]
+        val abiVersionCode = abiCodes[output.filters.find { it.filterType == ABI }?.identifier]
         if (abiVersionCode != null) {
             // Create a version code within Android limits (max 2100000000)
             // Use: (YYMMDDHH % 100000) * 100 + ABI to stay well under limits
