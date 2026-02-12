@@ -81,7 +81,7 @@
     "shareSelectedAppURLs": "שיתוף כתובות היישומים שנבחרו",
     "resetInstallStatus": "איפוס מצב התקנה",
     "more": "עוד",
-    "removeOutdatedFilter": "Remove out-of-date app filter",
+    "removeOutdatedFilter": "סינון להסרת יישומים שאינם מעודכנים",
     "showOutdatedOnly": "הצגת יישומים לא מעודכנים בלבד",
     "filter": "סינון",
     "filterApps": "סינון יישומים",
@@ -126,7 +126,7 @@
     "bgUpdateCheckInterval": "מרווח זמן לבדיקת עדכונים ברקע",
     "neverManualOnly": "אף פעם - באופן ידני בלבד",
     "appearance": "מראה",
-    "showWebInAppView": "Show source webpage in app view",
+    "showWebInAppView": "הצגת עמוד האינטרנט של המקור בתצוגת היישום",
     "pinUpdates": "הצמדת עדכונים לחלק העליון של רשימת היישומים",
     "updates": "עדכונים",
     "sourceSpecific": "לפי מקור",
@@ -178,14 +178,14 @@
     "fdroid": "מאגר F-Droid הרשמי",
     "appIdOrName": "מזהה או שם של יישום",
     "appId": "מזהה יישום",
-    "appWithIdOrNameNotFound": "No app was found with that ID or name",
+    "appWithIdOrNameNotFound": "לא נמצא יישום עם שם או מזהה זה",
     "reposHaveMultipleApps": "מאגרים עשויים להכיל יישומים מרובים",
     "fdroidThirdPartyRepo": "מאגר צד שלישי של F-Droid",
     "install": "התקנה",
-    "markInstalled": "Mark installed",
+    "markInstalled": "סימון כמותקן",
     "update": "עדכון",
     "updated": "מעודכן",
-    "markUpdated": "Mark updated",
+    "markUpdated": "סימון כמעודכן",
     "additionalOptions": "אפשרויות נוספות",
     "disableVersionDetection": "השבתת זיהוי גרסה",
     "noVersionDetectionExplanation": "This option should only be used for apps where version detection does not work correctly.",
@@ -213,8 +213,8 @@
     "removeFromUpdatium": "הסרה מ־Updatium",
     "uninstallFromDevice": "הסרה מהמכשיר",
     "onlyWorksWithNonVersionDetectApps": "Only works for apps with version detection disabled.",
-    "releaseDateAsVersion": "Use release date as version string",
-    "releaseTitleAsVersion": "Use release title as version string",
+    "releaseDateAsVersion": "שימוש בתאריך פרסום המהדורה בתור מחרוזת הגרסה",
+    "releaseTitleAsVersion": "שימוש בכותרת המהדורה בתור מחרוזת הגרסה",
     "releaseDateAsVersionExplanation": "This option should only be used for apps where version detection does not work correctly, but a release date is available.",
     "changes": "שינויים",
     "releaseDate": "תאריך שחרור גרסה",
@@ -242,21 +242,21 @@
     "pickHighestVersionCode": "בחירה אוטומטית של קובץ ה־APK עם קוד הגרסה הגבוה ביותר",
     "checkUpdateOnDetailPage": "Check for updates on opening an app detail page",
     "disablePageTransitions": "השבתת הנפשות מעבר בין עמודים",
-    "reversePageTransitions": "Reverse page transition animations",
+    "reversePageTransitions": "היפוך הנפשות מעבר בין עמודים",
     "minStarCount": "מספר כוכבים מינימלי",
     "addInfoBelow": "Add this info below.",
-    "addInfoInSettings": "Add this info in the Settings.",
+    "addInfoInSettings": "יש להוסיף מידע זה בהגדרות.",
     "githubSourceNote": "GitHub rate limiting can be avoided using an API key.",
     "sortByLastLinkSegment": "Sort by only the last segment of the link",
     "filterReleaseNotesByRegEx": "Filter release notes by regular expression",
     "customLinkFilterRegex": "Custom APK link filter by regular expression (default '.apk$')",
-    "appsPossiblyUpdated": "App updates attempted",
+    "appsPossiblyUpdated": "בוצעו ניסיונות לעדכון יישומים",
     "appsPossiblyUpdatedNotifDescription": "Notifies the user that updates to one or more apps were potentially applied in the background",
-    "xWasPossiblyUpdatedToY": "{} may have been updated to {}.",
+    "xWasPossiblyUpdatedToY": "ייתכן כי היישום {} עודכן לגרסה {}.",
     "enableBackgroundUpdates": "הפעלת עדכונים ברקע",
     "backgroundUpdateReqsExplanation": "Background updates may not be possible for all apps.",
     "backgroundUpdateLimitsExplanation": "The success of a background install can only be determined when Updatium is opened.",
-    "verifyLatestTag": "Verify the 'latest' tag",
+    "verifyLatestTag": "אימות התגית ‚latest’ (גרסה עדכנית)",
     "intermediateLinkRegex": "Filter for an 'intermediate' link to visit",
     "filterByLinkText": "Filter links by link text",
     "matchLinksOutsideATags": "Match links outside <a> tags",
@@ -277,15 +277,15 @@
     "filterVersionsByRegEx": "Filter versions by regular expression",
     "trySelectingSuggestedVersionCode": "Try selecting suggested versionCode APK",
     "dontSortReleasesList": "Retain release order from API",
-    "reverseSort": "Reverse sorting",
+    "reverseSort": "היפוך סדר",
     "takeFirstLink": "בחירת הקישור הראשון",
     "skipSort": "Skip sorting",
     "debugMenu": "תפריט ניפוי שגיאות",
-    "bgTaskStarted": "Background task started - check logs.",
+    "bgTaskStarted": "המשימה ברקע החלה - נא לעיין ביומן.",
     "runBgCheckNow": "הרצת בדיקת עדכונים ברקע כעת",
     "versionExtractWholePage": "Apply version string extraction Regex to entire page",
     "installing": "מתבצעת התקנה",
-    "skipUpdateNotifications": "Skip update notifications",
+    "skipUpdateNotifications": "דילוג על התראות בנוגע לעדכונים",
     "updatesAvailableNotifChannel": "עדכונים זמינים",
     "appsUpdatedNotifChannel": "היישומים עודכנו",
     "appsPossiblyUpdatedNotifChannel": "App updates attempted",
@@ -347,62 +347,77 @@
     "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\n\nIn any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.\n\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
     "removeAppQuestion": {
         "one": "להסיר את היישום?",
+        "two": "להסיר את שני היישומים?",
         "other": "להסיר את היישומים?"
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "Too many requests (rate limited) - try again in {} minute",
+        "two": "Too many requests (rate limited) - try again in {} minutes",
         "other": "Too many requests (rate limited) - try again in {} minutes"
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "BG update checking encountered a {}, will schedule a retry check in {} minute",
+        "two": "BG update checking encountered a {}, will schedule a retry check in {} minutes",
         "other": "BG update checking encountered a {}, will schedule a retry check in {} minutes"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "BG update checking found {} update - will notify user if needed",
+        "two": "BG update checking found {} updates - will notify user if needed",
         "other": "BG update checking found {} updates - will notify user if needed"
     },
     "apps": {
         "one": "יישום אחד",
+        "two": "שני יישומים",
         "other": "{} יישומים"
     },
     "url": {
         "one": "כתובת אחת",
+        "two": "שתי כתובות",
         "other": "{} כתובות"
     },
     "minute": {
         "one": "דקה אחת",
+        "two": "שתי דקות",
         "other": "{} דקות"
     },
     "hour": {
         "one": "שעה אחת",
+        "two": "שעתיים",
         "other": "{} שעות"
     },
     "day": {
         "one": "יום אחד",
+        "two": "יומיים",
         "other": "{} ימים"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Cleared {n} log (before = {before}, after = {after})",
+        "two": "Cleared {n} logs (before = {before}, after = {after})",
         "other": "Cleared {n} logs (before = {before}, after = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{} and 1 more app have updates.",
+        "two": "{} and 2 more apps have updates.",
         "other": "{} and {} more apps have updates."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{} and 1 more app was updated.",
+        "two": "{} and 2 more apps were updated.",
         "other": "{} and {} more apps were updated."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Failed to update {} and 1 more app.",
+        "two": "Failed to update {} and 2 more apps.",
         "other": "Failed to update {} and {} more apps."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{} and 1 more app may have been updated.",
+        "two": "{} and 2 more apps may have been updated.",
         "other": "{} and {} more apps may have been updated."
     },
     "apk": {
         "one": "קובץ APK אחד",
+        "two": "שני קובצי APK",
         "other": "{} קובצי APK"
     },
     "securityDisclaimerTitle": "כתב ויתור בנוגע לאבטחה ונושאים משפטיים",
