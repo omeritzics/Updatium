@@ -148,12 +148,6 @@ androidComponents {
         }
     }
 }
-            val baseBuildNumber = flutterVersionCode.toLong()
-            val compressedCode = (baseBuildNumber % 100000) * 100 + abiVersionCode
-            (output as ApkVariantOutputImpl).versionCodeOverride = compressedCode.toInt()
-        }
-    }
-}
 
 
 dependencies {
