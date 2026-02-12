@@ -51,6 +51,14 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInt()
         versionName = flutterVersionName
+        
+        // Enable split APKs for different ABIs
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+        }
+        
+        // Configure universal APK
+        universalApk = true
     }
 
     flavorDimensions += "default"
@@ -110,6 +118,16 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
         }
+    }
+}
+
+// Configure split APK generation
+splits {
+    abi {
+        enable = true
+        reset()
+        include("armeabi-v7a", "arm64-v8a", "x86_64")
+        universalApk = true
     }
 }
 
