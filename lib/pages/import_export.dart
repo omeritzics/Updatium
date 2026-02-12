@@ -507,6 +507,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           children: [
                             Expanded(
                               child: FilledButton.icon(
+                                icon: const Icon(Icons.search),
                                 onPressed: importInProgress
                                     ? null
                                     : () async {

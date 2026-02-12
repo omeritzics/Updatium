@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'dart:convert';
 import 'dart:math' as math;
 
@@ -1000,7 +1001,7 @@ class AppsPageState extends State<AppsPage> {
             ],
           ),
         ),
-      );
+          );
     }
 
     getCategoryCollapsibleTile(int index) {
