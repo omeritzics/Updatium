@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:updatium/utils/expressive_motion.dart';
 
 /// A custom text button widget that provides consistent styling and expressive interactions across the app
 class AppTextButton extends StatefulWidget {
@@ -57,21 +56,21 @@ class _AppTextButtonState extends State<AppTextButton>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: ExpressiveMotion.durationShort,
+      duration: const Duration(milliseconds: 150),
       vsync: this,
     );
 
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: ExpressiveMotion.emphasizedAccelerate,
+        curve: Curves.easeOutCubic,
       ),
     );
 
     _opacityAnimation = Tween<double>(begin: 1.0, end: 0.8).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: ExpressiveMotion.standard,
+        curve: Curves.easeInOut,
       ),
     );
   }
@@ -136,9 +135,9 @@ class _AppTextButtonState extends State<AppTextButton>
             scale: _scaleAnimation.value,
             child: AnimatedOpacity(
               opacity: _opacityAnimation.value,
-              duration: ExpressiveMotion.durationShort,
+              duration: const Duration(milliseconds: 150),
               child: AnimatedContainer(
-                duration: ExpressiveMotion.durationShort,
+                duration: const Duration(milliseconds: 150),
                 transform: Matrix4.identity()
                   ..translate(0.0, _isHovered ? -2.0 : 0.0),
                 decoration: BoxDecoration(

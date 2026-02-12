@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/utils/expressive_motion.dart';
 
 /// Widget that displays app icons with caching and loading states
 class CachedAppIcon extends StatefulWidget {
@@ -61,31 +60,31 @@ class _CachedAppIconState extends State<CachedAppIcon>
     _shimmerAnimation = Tween<double>(begin: -2.0, end: 2.0).animate(
       CurvedAnimation(
         parent: _shimmerController,
-        curve: ExpressiveMotion.standard,
+        curve: Curves.easeInOut,
       ),
     );
 
     // Scale animation for interactions
     _scaleController = AnimationController(
-      duration: ExpressiveMotion.durationShort,
+      duration: const Duration(milliseconds: 150),
       vsync: this,
     );
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.9).animate(
       CurvedAnimation(
         parent: _scaleController,
-        curve: ExpressiveMotion.emphasizedAccelerate,
+        curve: Curves.easeOutCubic,
       ),
     );
 
     // Rotation animation for loading/error states
     _rotationController = AnimationController(
-      duration: ExpressiveMotion.durationLong,
+      duration: const Duration(milliseconds: 600),
       vsync: this,
     );
     _rotationAnimation = Tween<double>(begin: 0.0, end: 0.1).animate(
       CurvedAnimation(
         parent: _rotationController,
-        curve: ExpressiveMotion.standard,
+        curve: Curves.easeInOut,
       ),
     );
 
@@ -236,7 +235,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
               child: Transform.rotate(
                 angle: _rotationAnimation.value,
                 child: AnimatedContainer(
-                  duration: ExpressiveMotion.durationShort,
+                  duration: const Duration(milliseconds: 150),
                   transform: Matrix4.identity()
                     ..translate(0.0, _isHovered ? -4.0 : 0.0),
                   decoration: BoxDecoration(
