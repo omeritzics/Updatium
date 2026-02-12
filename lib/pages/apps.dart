@@ -969,13 +969,9 @@ class AppsPageState extends State<AppsPage> {
                             : null,
                       ),
                     ),
-                  ),
-                ),
-            ],
-          ),
         ),
-      );
-    }
+      ),
+    );
 
     getCategoryCollapsibleTile(int index) {
       var tiles = listedApps
