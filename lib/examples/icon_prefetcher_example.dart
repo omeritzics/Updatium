@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:updatium/components/app_button.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/services/icon_prefetcher.dart';
@@ -254,7 +255,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
         Row(
           children: [
             Expanded(
-              child: FilledButton.tonal.icon(
+              child: FilledButton.tonalIcon(
                 onPressed: (_status?.isRunning ?? false)
                     ? null
                     : _startPrefetching,
@@ -264,7 +265,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: FilledButton.tonal.icon(
+              child: FilledButton.tonalIcon(
                 onPressed: (_status?.isRunning ?? false)
                     ? _pausePrefetching
                     : null,
@@ -278,7 +279,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
         Row(
           children: [
             Expanded(
-              child: FilledButton.tonal.icon(
+              child: FilledButton.tonalIcon(
                 onPressed: (_status?.isPaused ?? false)
                     ? _resumePrefetching
                     : null,
@@ -288,7 +289,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: FilledButton.tonal.icon(
+              child: FilledButton.tonalIcon(
                 onPressed: (_status?.isRunning ?? false)
                     ? _stopPrefetching
                     : null,
@@ -299,7 +300,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
           ],
         ),
         const SizedBox(height: 8),
-        FilledButton.tonal.icon(
+        FilledButton.tonalIcon(
           onPressed: _showCacheStats,
           icon: const Icon(Icons.storage),
           label: const Text('View Cache Statistics'),
