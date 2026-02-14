@@ -39,8 +39,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+    kotlin {
+        jvmToolchain(17)
     }
 
     defaultConfig {
@@ -51,6 +51,11 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInt()
         versionName = flutterVersionName
+        
+        // Enable split APKs for different ABIs
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+        }
     }
 
     flavorDimensions += "default"
@@ -111,20 +116,38 @@ android {
             versionNameSuffix = "-debug"
         }
     }
+    
+    // Configure split APK generation
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("armeabi-v7a", "arm64-v8a", "x86_64")
+            isUniversalApk = true
+        }
+    }
 }
 
 val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.forEach { output ->
+            val abiFilter = output.filters.find {
+                it.filterType == com.android.build.api.variant.VariantOutputConfiguration.FilterType.ABI
+            }
+            val abiVersionCode = abiFilter?.identifier?.let { abiCodes[it] }
 
-android.applicationVariants.configureEach {
-    val variant = this
-    variant.outputs.forEach { output ->
-        val abiVersionCode = abiCodes[output.filters.find { it.filterType == "ABI" }?.identifier]
-        if (abiVersionCode != null) {
-            // Create a version code within Android limits (max 2100000000)
-            // Use: (YYMMDDHH % 100000) * 100 + ABI to stay well under limits
-            val baseBuildNumber = flutterVersionCode.toLong()
-            val compressedCode = (baseBuildNumber % 100000) * 100 + abiVersionCode
-            (output as ApkVariantOutputImpl).versionCodeOverride = compressedCode.toInt()
+            if (abiVersionCode != null) {
+                // Create a version code within Android limits (max 2100000000)
+                // Use: (YYMMDDHH % 100000) * 100 + ABI to stay well under limits
+                val baseBuildNumber = requireNotNull(flutterVersionCode.toLongOrNull()) {
+                    "Invalid flutter.versionCode='$flutterVersionCode' in local.properties; must be a number."
+                }
+                val compressedCode = (baseBuildNumber % 100000) * 100 + abiVersionCode
+                val maxPlayVersionCode = 2_100_000_000L
+                val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode)
+                output.versionCode.set(safeVersionCode.toInt())
+            }
         }
     }
 }

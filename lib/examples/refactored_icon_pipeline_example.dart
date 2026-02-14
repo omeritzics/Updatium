@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:updatium/components/app_button.dart';
 import 'package:updatium/components/enhanced_app_icon.dart';
 import 'package:updatium/models/enhanced_app.dart';
 import 'package:updatium/services/enhanced_icon_prefetcher.dart';
@@ -347,7 +348,6 @@ class _RefactoredIconPipelineExampleState
                 child: EnhancedAppIconGrid(
                   app: app,
                   onTap: () => _showAppDetails(app),
-                  enablePerformanceOverlay: _showPerformanceOverlay,
                 ),
               ),
 
