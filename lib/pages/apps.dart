@@ -1,5 +1,5 @@
+import 'package:animations/animations.dart';
 import 'dart:convert';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -877,58 +877,78 @@ class AppsPageState extends State<AppsPage> {
                         ).textTheme.bodySmall?.copyWith(fontSize: 11),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 12),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Builder(
-                      builder: (ctx) {
-                        final ai = listedApps[index];
-                        final app = ai.app;
-                        final isInstalled = app.installedVersion != null;
-                        final hasUpdateLocal =
-                            isInstalled &&
-                            app.installedVersion != app.latestVersion;
-                        final isTrackOnly =
-                            app.additionalSettings['trackOnly'] == true;
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Builder(
+                        builder: (ctx) {
+                          final ai = listedApps[index];
+                          final app = ai.app;
+                          final isInstalled = app.installedVersion != null;
+                          final hasUpdateLocal =
+                              isInstalled &&
+                              app.installedVersion != app.latestVersion;
+                          final isTrackOnly =
+                              app.additionalSettings['trackOnly'] == true;
 
-                        if (isTrackOnly) {
-                          return const SizedBox.shrink();
-                        }
+                          if (isTrackOnly) {
+                            return const SizedBox.shrink();
+                          }
 
-                        if (!isInstalled) {
-                          return FilledButton.tonal(
-                            onPressed: appsProvider.areDownloadsRunning()
-                                ? null
-                                : () {
-                                    appsProvider
-                                        .downloadAndInstallLatestApps([
-                                          app.id,
-                                        ], globalNavigatorKey.currentContext)
-                                        .catchError((e) {
-                                          showError(e, context);
-                                          return <String>[];
-                                        });
-                                  },
-                            child: Text(tr('install')),
-                          );
-                        }
+                          if (!isInstalled) {
+                            return FilledButton.tonal(
+                              onPressed: appsProvider.areDownloadsRunning()
+                                  ? null
+                                  : () {
+                                      appsProvider
+                                          .downloadAndInstallLatestApps([
+                                            app.id,
+                                          ], globalNavigatorKey.currentContext)
+                                          .catchError((e) {
+                                            showError(e, context);
+                                            return <String>[];
+                                          });
+                                    },
+                              child: Text(tr('install')),
+                            );
+                          }
 
-                        if (hasUpdateLocal) {
-                          return FilledButton.tonal(
-                            onPressed: appsProvider.areDownloadsRunning()
-                                ? null
-                                : () {
-                                    appsProvider
-                                        .downloadAndInstallLatestApps([
-                                          app.id,
-                                        ], globalNavigatorKey.currentContext)
-                                        .catchError((e) {
-                                          showError(e, context);
-                                          return <String>[];
-                                        });
-                                  },
-                            child: Text(tr('update')),
+                          if (hasUpdateLocal) {
+                            return FilledButton.tonal(
+                              onPressed: appsProvider.areDownloadsRunning()
+                                  ? null
+                                  : () {
+                                      appsProvider
+                                          .downloadAndInstallLatestApps([
+                                            app.id,
+                                          ], globalNavigatorKey.currentContext)
+                                          .catchError((e) {
+                                            showError(e, context);
+                                            return <String>[];
+                                          });
+                                    },
+                              child: Text(tr('update')),
+                            );
+                          }
+
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.green[600],
+                                size: MediaQuery.of(context).size.width * 0.04,
+                              ),
+                              SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.015,
+                              ),
+                              Text(
+                                tr('updated'),
+                                style: TextStyle(color: Colors.green[600]),
+                              ),
+                            ],
                           );
                         }
 
@@ -961,20 +981,27 @@ class AppsPageState extends State<AppsPage> {
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.black45,
                     ),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        value: listedApps[index].downloadProgress! >= 0
-                            ? listedApps[index].downloadProgress! / 100
-                            : null,
+                    const SizedBox(height: 16),
+                  ],
+                ),
+                if (listedApps[index].downloadProgress != null)
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.black45,
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value: listedApps[index].downloadProgress! >= 0
+                              ? listedApps[index].downloadProgress! / 100
+                              : null,
+                        ),
                       ),
                     ),
-                  ),
-                ),
-            ],
-          ),
         ),
-      );
-    }
+      ),
+    );
 
     getCategoryCollapsibleTile(int index) {
       var tiles = listedApps

@@ -612,7 +612,9 @@ class EnhancedIconPrefetcher {
         successCount: _successCount,
         errorCount: _errorCount,
         totalCount: _totalCount,
+        duration: Duration.zero,
         errors: List.from(_errors),
+        metrics: Map.from(_metrics),
       ),
     );
   }
@@ -683,7 +685,7 @@ class PrefetchConfig {
 
   static const PrefetchConfig highQuality = PrefetchConfig(
     maxSize: 512,
-    retryCount = 5,
+    retryCount: 5,
     timeout: Duration(seconds: 60),
   );
 }
@@ -790,7 +792,13 @@ class PrefetchMetrics {
   int successCount = 0;
   int errorCount = 0;
 
-  PrefetchMetrics(this.appId);
+  PrefetchMetrics(
+    this.appId, {
+    this.lastSuccess,
+    this.lastError,
+    this.lastDuration,
+    this.lastAttempt,
+  });
 
   double get successRate {
     final total = successCount + errorCount;

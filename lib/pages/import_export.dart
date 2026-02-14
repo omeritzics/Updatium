@@ -530,7 +530,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           runSourceSearch(searchSource[0]);
                                         }
                                       },
-                                child: Text(
+                                label: Text(
                                   tr(
                                     'searchX',
                                     args: [lowerCaseIfEnglish(tr('source'))],
@@ -749,7 +749,7 @@ class _SelectionModalState extends State<SelectionModal> {
                   selectAll(deselect: true);
                 });
               },
-              child: Text(tr('deselectX', args: [''])),
+              child: Text(tr('deselectX', args: [tr('all')])),
             );
     }
 
@@ -927,7 +927,7 @@ class _SelectionModalState extends State<SelectionModal> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(tr('cancel')),
+          label: Text(tr('cancel')),
         ),
         AppTextButton(
           onPressed: entrySelections.values.where((b) => b).isEmpty
@@ -940,7 +940,7 @@ class _SelectionModalState extends State<SelectionModal> {
                         .toList(),
                   );
                 },
-          child: Text(
+          label: Text(
             widget.onlyOneSelectionAllowed
                 ? tr('pick')
                 : tr(
