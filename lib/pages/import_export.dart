@@ -530,7 +530,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           runSourceSearch(searchSource[0]);
                                         }
                                       },
-                                label: Text(
+                                child: Text(
                                   tr(
                                     'searchX',
                                     args: [lowerCaseIfEnglish(tr('source'))],
@@ -927,7 +927,7 @@ class _SelectionModalState extends State<SelectionModal> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          label: Text(tr('cancel')),
+          child: Text(tr('cancel')),
         ),
         AppTextButton(
           onPressed: entrySelections.values.where((b) => b).isEmpty
@@ -940,7 +940,7 @@ class _SelectionModalState extends State<SelectionModal> {
                         .toList(),
                   );
                 },
-          label: Text(
+          child: Text(
             widget.onlyOneSelectionAllowed
                 ? tr('pick')
                 : tr(
