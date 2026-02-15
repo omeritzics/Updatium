@@ -1762,5 +1762,14 @@ class AppsFilter {
       includeNonInstalled == other.includeNonInstalled &&
       settingsProvider.setEqual(categoryFilter, other.categoryFilter) &&
       sourceFilter.trim() == other.sourceFilter.trim();
-}
+      }
+
+      @override
+      int get hashCode => Object.hash(
+        idFilter.trim(),
+        includeUptodate,
+        includeNonInstalled,
+        Object.hashAll(categoryFilter),
+        sourceFilter.trim(),
+      );
 }
