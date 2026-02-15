@@ -2,7 +2,6 @@ name: CI Commit Build
 
 on:
   pull_request:
-  push:
   workflow_dispatch:
 
 jobs:
