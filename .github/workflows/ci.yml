@@ -63,7 +63,7 @@ jobs:
           base: ${{ github.ref_name }}
           commit-message: "style: auto-fix linting and formatting issues"
           title: "Auto-fix linting and formatting issues"
-          body: "Automated lint fixes applied by CI workflow"
+          branch: ${{ github.ref_name }}-auto-fix-lint-${{ github.run_number }}
           branch: auto-fix-lint-${{ github.run_number }}
           delete-branch: true
 
