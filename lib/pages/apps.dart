@@ -1000,10 +1000,13 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                 ),
+            ],
+          ),
+        ),
       ),
     );
 
-    getCategoryCollapsibleTile(int index) {
+    Widget getCategoryCollapsibleTile(int index) {
       var tiles = listedApps
           .asMap()
           .entries
@@ -1759,4 +1762,5 @@ class AppsFilter {
       includeNonInstalled == other.includeNonInstalled &&
       settingsProvider.setEqual(categoryFilter, other.categoryFilter) &&
       sourceFilter.trim() == other.sourceFilter.trim();
+}
 }
