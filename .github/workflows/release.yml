@@ -38,10 +38,23 @@ jobs:
         run: dart fix --apply
 
       - name: Commit and Push changes
+        id: commit
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "style: auto-fix linting and formatting issues"
           branch: ${{ github.ref_name }}
+        continue-on-error: true
+
+      - name: Create Pull Request if push failed
+        if: steps.commit.outcome == 'failure'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "style: auto-fix linting and formatting issues"
+          title: "Auto-fix linting and formatting issues"
+          body: "Automated lint fixes applied by release workflow"
+          branch: auto-fix-lint-release-${{ github.run_number }}
+          delete-branch: true
 
       - name: Extract Version
         id: extract_version
