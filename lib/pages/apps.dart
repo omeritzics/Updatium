@@ -193,10 +193,11 @@ class AppsPageState extends State<AppsPage> {
       showError(e is Map ? e['errors'] : e, context);
       return <App>[];
     } finally {
-      if (!mounted) return;
-      setState(() {
-        refreshingSince = null;
-      });
+      if (mounted) {
+        setState(() {
+          refreshingSince = null;
+        });
+      }
     }
   }
 
@@ -881,7 +882,8 @@ class AppsPageState extends State<AppsPage> {
                         ).textTheme.bodySmall?.copyWith(fontSize: 11),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                  ),
+                  const SizedBox(height: 12),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Builder(
