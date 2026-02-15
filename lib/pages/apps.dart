@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -178,29 +179,32 @@ class AppsPageState extends State<AppsPage> {
 
   var sourceProvider = SourceProvider();
 
+  Future<List<App>> refresh() async {
+    HapticFeedback.lightImpact();
+    if (!mounted) return <App>[];
+
+    setState(() {
+      refreshingSince = DateTime.now();
+    });
+
+    try {
+      return await context.read<AppsProvider>().checkUpdates();
+    } catch (e) {
+      showError(e is Map ? e['errors'] : e, context);
+      return <App>[];
+    } finally {
+      if (!mounted) return;
+      setState(() {
+        refreshingSince = null;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
     var listedApps = appsProvider.getAppValues().toList();
-
-    refresh() {
-      HapticFeedback.lightImpact();
-      setState(() {
-        refreshingSince = DateTime.now();
-      });
-      return appsProvider
-          .checkUpdates()
-          .catchError((e) {
-            showError(e is Map ? e['errors'] : e, context);
-            return <App>[];
-          })
-          .whenComplete(() {
-            setState(() {
-              refreshingSince = null;
-            });
-          });
-    }
 
     if (!appsProvider.loadingApps &&
         appsProvider.apps.isNotEmpty &&
@@ -981,25 +985,19 @@ class AppsPageState extends State<AppsPage> {
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.black45,
                     ),
-                    const SizedBox(height: 16),
-                  ],
-                ),
-                if (listedApps[index].downloadProgress != null)
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.black45,
-                      ),
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          value: listedApps[index].downloadProgress! >= 0
-                              ? listedApps[index].downloadProgress! / 100
-                              : null,
-                        ),
-                      ),
+                    child: Builder(
+                      builder: (_) {
+                        final progress = listedApps[index].downloadProgress;
+                        if (progress == null) return const SizedBox.shrink();
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: progress >= 0 ? progress / 100 : null,
+                          ),
+                        );
+                      },
                     ),
-        ),
+                  ),
+                ),
       ),
     );
 

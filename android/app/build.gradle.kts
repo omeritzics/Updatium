@@ -1,7 +1,5 @@
 import java.io.FileInputStream
 import java.util.Properties
-import com.android.build.api.variant.FilterConfiguration.FilterType.*
-import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 
 plugins {
     id("com.android.application")
@@ -133,7 +131,7 @@ androidComponents {
     onVariants { variant ->
         variant.outputs.forEach { output ->
             val abiFilter = output.filters.find {
-                it.filterType == com.android.build.api.variant.VariantOutputConfiguration.FilterType.ABI
+                it.filterType.name == "ABI"
             }
             val abiVersionCode = abiFilter?.identifier?.let { abiCodes[it] }
 
