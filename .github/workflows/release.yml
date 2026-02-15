@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -28,6 +30,21 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Auto-fix linting issues
+        run: dart fix --apply
+
+      - name: Format code
+        run: dart format .
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: auto-fix linting and formatting issues"
+          branch: ${{ github.ref_name }}
 
       - name: Extract Version
         id: extract_version

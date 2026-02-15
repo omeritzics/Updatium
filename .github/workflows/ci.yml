@@ -8,7 +8,7 @@ jobs:
   build_artifact:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
 
     steps:
       - name: Free Disk Space
@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Commit SHA
         id: vars
@@ -42,7 +43,21 @@ jobs:
       - name: Prepare Build
         run: |
           flutter pub get
-          # Strip signing config to build debug APK safely without keystores
+          
+      - name: Auto-fix linting issues
+        run: dart fix --apply
+
+      - name: Format code
+        run: dart format .
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: auto-fix linting and formatting issues"
+          branch: ${{ github.ref_name }}
+
+      - name: Strip signing config to build debug APK safely without keystores
+        run: |
           # Handle both .gradle and .gradle.kts files
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle || true
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle.kts || true

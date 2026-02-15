@@ -30,6 +30,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Java
         uses: actions/setup-java@v5
@@ -43,6 +44,21 @@ jobs:
           channel: stable
           version: '3.38.9'  # Use specific stable version that meets requirements
           cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Auto-fix linting issues
+        run: dart fix --apply
+
+      - name: Format code
+        run: dart format .
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: auto-fix linting and formatting issues"
+          branch: ${{ github.ref_name }}
 
       # Running sync script to ensure no broken dependencies before building
       - name: Run Environment Sync
