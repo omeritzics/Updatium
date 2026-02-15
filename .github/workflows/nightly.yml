@@ -51,9 +51,6 @@ jobs:
       - name: Auto-fix linting issues
         run: dart fix --apply
 
-      - name: Format code
-        run: dart format .
-
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
