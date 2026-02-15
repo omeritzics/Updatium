@@ -60,6 +60,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          base: ${{ github.ref_name }}
           commit-message: "style: auto-fix linting and formatting issues"
           title: "Auto-fix linting and formatting issues"
           body: "Automated lint fixes applied by CI workflow"
