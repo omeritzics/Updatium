@@ -179,22 +179,25 @@ class AppsPageState extends State<AppsPage> {
 
   var sourceProvider = SourceProvider();
 
-  refresh() {
+  Future<List<App>> refresh() async {
     HapticFeedback.lightImpact();
+    if (!mounted) return <App>[];
+
     setState(() {
       refreshingSince = DateTime.now();
     });
-    return appsProvider
-        .checkUpdates()
-        .catchError((e) {
-          showError(e is Map ? e['errors'] : e, context);
-          return <App>[];
-        })
-        .whenComplete(() {
-          setState(() {
-            refreshingSince = null;
-          });
-        });
+
+    try {
+      return await context.read<AppsProvider>().checkUpdates();
+    } catch (e) {
+      showError(e is Map ? e['errors'] : e, context);
+      return <App>[];
+    } finally {
+      if (!mounted) return;
+      setState(() {
+        refreshingSince = null;
+      });
+    }
   }
 
   @override
