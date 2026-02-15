@@ -56,7 +56,7 @@ jobs:
         continue-on-error: true
 
       - name: Create Pull Request if push failed
-        if: steps.commit.outcome == 'failure'
+        if: steps.commit.outcome == 'failure' && steps.commit.outputs.changes_detected == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
