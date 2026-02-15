@@ -1,4 +1,6 @@
-Information to be added...
+# Contributing to Updatium
+
+Welcome! We appreciate your interest in helping improve Updatium.
 
 ## Testing and QA
 
