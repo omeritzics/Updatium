@@ -985,12 +985,16 @@ class AppsPageState extends State<AppsPage> {
                       borderRadius: BorderRadius.circular(12),
                       color: Colors.black45,
                     ),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        value: listedApps[index].downloadProgress! >= 0
-                            ? listedApps[index].downloadProgress! / 100
-                            : null,
-                      ),
+                    child: Builder(
+                      builder: (_) {
+                        final progress = listedApps[index].downloadProgress;
+                        if (progress == null) return const SizedBox.shrink();
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: progress >= 0 ? progress / 100 : null,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
