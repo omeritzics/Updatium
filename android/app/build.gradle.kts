@@ -131,7 +131,7 @@ androidComponents {
     onVariants { variant ->
         variant.outputs.forEach { output ->
             val abiFilter = output.filters.find {
-                it.filterType == com.android.build.api.variant.FilterConfiguration.FilterType.ABI
+                it.filterType.name == "ABI"
             }
             val abiVersionCode = abiFilter?.identifier?.let { abiCodes[it] }
 
