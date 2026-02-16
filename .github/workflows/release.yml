@@ -65,7 +65,7 @@ jobs:
           env:
             KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASSWORD }}
           run: |
-            if ! keytool -list -v -keystore android/upload-keystore.jks -storepass:env KEYSTORE_PASS >/dev/null 2>&1; then
+            if ! keytool -list -v -keystore android/upload-keystore.jks -storepass:env KEYSTORE_PASS >/dev/null; then
               echo "ERROR: Keystore verification failed - aborting build"
               exit 1
             fi
