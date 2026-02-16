@@ -107,16 +107,15 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number,
               per_page: 100,
-            });
-            
-            // Check if CI has already reviewed this PR
-            const existingReview = reviews.find(
+
+            // Only skip if CI already requested changes
+            const alreadyRejected = reviews.some(
               (review) =>
                 review.user.login === 'github-actions[bot]' &&
-                (review.state === 'CHANGES_REQUESTED' || review.state === 'APPROVED')
+                review.state === 'CHANGES_REQUESTED'
             );
-            
-            if (!existingReview) {
+
+            if (!alreadyRejected) {
               await github.rest.pulls.createReview({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -124,10 +123,11 @@ jobs:
                 event: 'REQUEST_CHANGES',
                 body: '🚫 **CI Build Failed**\n\nThe automated build process failed. Please review the build logs and fix the issues before requesting another review.\n\n**Next steps:**\n1. Check the build logs for specific errors\n2. Fix the identified issues\n3. Push your fixes to this branch\n4. The CI will automatically re-run\n\nOnce the build passes, this review will be dismissed automatically.'
               });
-              
+
               console.log(`Auto-rejected PR #${context.issue.number} due to build failure`);
             } else {
-              console.log(`PR #${context.issue.number} already has a review from CI`);
+              console.log(`PR #${context.issue.number} already has a CI rejection review`);
+            }
             }
 
   auto_approve_on_success:
