@@ -678,11 +678,7 @@ class AppsPageState extends State<AppsPage> {
             }
           },
           onLongPress: () {
-            if (selectedAppIds.isEmpty) {
-              toggleAppSelected(listedApps[index].app);
-            } else {
-              toggleAppSelected(listedApps[index].app);
-            }
+            toggleAppSelected(listedApps[index].app);
           },
           child: ListTile(
             contentPadding: const EdgeInsets.symmetric(
