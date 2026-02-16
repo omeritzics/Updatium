@@ -64,7 +64,7 @@ jobs:
         run: |
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
-          if ! keytool -list -v -keystore android/upload-keystore.jks -storepass:env KEYSTORE_PASS >/dev/null; then
+          if ! keytool -list -v -keystore android/upload-keystore.jks -storepass env:KEYSTORE_PASS >/dev/null; then
             echo "ERROR: Keystore verification failed - aborting build"
             exit 1
           fi
