@@ -612,7 +612,9 @@ class EnhancedIconPrefetcher {
         successCount: _successCount,
         errorCount: _errorCount,
         totalCount: _totalCount,
-        duration: _startTime != null ? DateTime.now().difference(_startTime!) : Duration.zero,
+        duration: _startTime != null
+            ? DateTime.now().difference(_startTime!)
+            : Duration.zero,
         errors: List.from(_errors),
         metrics: Map.from(_metrics),
       ),
