@@ -2408,7 +2408,10 @@ class AppsProvider with ChangeNotifier {
     }
     List<List<String>> errors = errorsMap.keys.map((e) {
       // Log detailed error internally for debugging
-      print('Import error for $e: ${errorsMap[e]}');
+      // Log error internally without sensitive URL components
+      final uri = Uri.tryParse(e);
+      final sanitizedUrl = uri != null ? uri.replace(userInfo: '').toString() : e;
+      debugPrint('Import error for $sanitizedUrl: ${errorsMap[e]}');
 
       // Return user-friendly error message
       String userMessage;
