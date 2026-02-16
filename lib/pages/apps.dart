@@ -80,7 +80,7 @@ void showChangeLogDialog(
                       onTapLink: (text, href, title) {
                         if (href == null) return;
 
-                        final base = Uri.tryParse(app.url);
+                        final base = Uri.tryParse(appSource.url);
                         final tapped = Uri.tryParse(href);
 
                         final resolved = (tapped == null)
