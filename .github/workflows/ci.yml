@@ -148,13 +148,13 @@ jobs:
             });
             
             // Find and dismiss any existing CI rejection reviews
-            const ciReviews = reviews.filter(
+            const ciRejectionReviews = reviews.filter(
               (review) =>
                 review.user.login === 'github-actions[bot]' &&
                 review.state === 'CHANGES_REQUESTED'
             );
 
-            for (const review of ciReviews) {
+            for (const review of ciRejectionReviews) {
               await github.rest.pulls.dismissReview({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -163,9 +163,22 @@ jobs:
                 message: '✅ **CI Build Passed** - Automatically dismissing previous rejection as the build now succeeds.'
               });
             }
-            
-            if (ciReviews.length > 0) {
-              console.log(`Dismissed ${ciReviews.length} CI rejection reviews for PR #${context.issue.number}`);
+
+            const alreadyApproved = reviews.some(
+              (review) =>
+                review.user.login === 'github-actions[bot]' &&
+                review.state === 'APPROVED'
+            );
+
+            if (!alreadyApproved) {
+              await github.rest.pulls.createReview({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                event: 'APPROVE',
+                body: '✅ **CI Build Passed**\n\nAutomatically approving this PR because the build succeeded.'
+              });
+              console.log(`Auto-approved PR #${context.issue.number} after successful build`);
             } else {
-              console.log(`No CI rejection reviews found for PR #${context.issue.number}`);
+              console.log(`PR #${context.issue.number} already has a CI approval review`);
             }
