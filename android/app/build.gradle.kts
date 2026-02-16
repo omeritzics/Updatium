@@ -133,9 +133,9 @@ androidComponents {
         variant.outputs.forEach { output ->
             // Extract ABI from output file name instead of using filters
             val abiName = when {
-                output.outputFile.name.contains("arm64-v8a") -> "arm64-v8a"
-                output.outputFile.name.contains("armeabi-v7a") -> "armeabi-v7a"
-                output.outputFile.name.contains("x86_64") -> "x86_64"
+                output.outputFileName.contains("arm64-v8a") -> "arm64-v8a"
+                output.outputFileName.contains("armeabi-v7a") -> "armeabi-v7a"
+                output.outputFileName.contains("x86_64") -> "x86_64"
                 else -> null
             }
             val abiVersionCode = abiName?.let { abiCodes[it] }
