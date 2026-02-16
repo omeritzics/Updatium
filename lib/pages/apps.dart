@@ -86,8 +86,8 @@ void showChangeLogDialog(
                         final resolved = (tapped == null)
                             ? null
                             : (tapped.hasScheme
-                                ? tapped
-                                : (base != null ? base.resolveUri(tapped) : null));
+                                  ? tapped
+                                  : (base?.resolveUri(tapped)));
 
                         if (resolved == null) return;
 
