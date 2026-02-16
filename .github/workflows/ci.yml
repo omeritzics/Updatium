@@ -110,8 +110,7 @@ jobs:
             
             // Check if CI has already reviewed this PR
             const existingReview = reviews.find(review => 
-              review.user.login === 'github-actions[bot]' || 
-              review.user.login === context.actor
+              review.user.login === 'github-actions[bot]'
             );
             
             if (!existingReview) {
