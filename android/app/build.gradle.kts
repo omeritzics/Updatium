@@ -149,7 +149,7 @@ androidComponents {
                 val compressedCode = (baseBuildNumber % 10_000_000) * 100 + abiVersionCode
                 val maxPlayVersionCode = 2_100_000_000L
                 val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode)
-                (output as ApkVariantOutputImpl).versionCode.set(safeVersionCode.toInt())
+                (output as ApkVariantOutputImpl).versionCodeOverride = safeVersionCode.toInt()
             }
         }
     }

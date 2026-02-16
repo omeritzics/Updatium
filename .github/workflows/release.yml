@@ -59,17 +59,16 @@ jobs:
           echo "Created keystore properties file with restricted permissions"
 
       - name: Verify Keystore
+        env:
+          KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
-          env:
-            KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASSWORD }}
-          run: |
-            if ! keytool -list -v -keystore android/upload-keystore.jks -storepass:env KEYSTORE_PASS >/dev/null; then
-              echo "ERROR: Keystore verification failed - aborting build"
-              exit 1
-            fi
-            echo "Keystore verification successful"
+          if ! keytool -list -v -keystore android/upload-keystore.jks -storepass:env KEYSTORE_PASS >/dev/null; then
+            echo "ERROR: Keystore verification failed - aborting build"
+            exit 1
+          fi
+          echo "Keystore verification successful"
 
       - name: Set App Name and Build APKs
         run: |
