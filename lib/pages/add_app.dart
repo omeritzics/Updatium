@@ -721,7 +721,6 @@ class AddAppPageState extends State<AddAppPage> {
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
-            automaticallyImplyLeading: false,
             expandedHeight: MediaQuery.of(context).size.height * 0.15,
             flexibleSpace: FlexibleSpaceBar(
               titlePadding: const EdgeInsets.symmetric(
