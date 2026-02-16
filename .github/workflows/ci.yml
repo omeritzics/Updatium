@@ -89,3 +89,82 @@ jobs:
           name: Updatium-Commit-${{ steps.vars.outputs.sha_short }}
           path: build/outputs/artifacts/
           retention-days: 14 # Keep artifacts for 14 days to save space
+
+  auto_reject_on_failure:
+    runs-on: ubuntu-latest
+    needs: build_artifact
+    if: failure() && github.event_name == 'pull_request'
+    permissions:
+      pull-requests: write
+    
+    steps:
+      - name: Auto-Reject PR on Build Failure
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: reviews } = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+            
+            // Check if CI has already reviewed this PR
+            const existingReview = reviews.find(review => 
+              review.user.login === 'github-actions[bot]' || 
+              review.user.login === context.actor
+            );
+            
+            if (!existingReview) {
+              await github.rest.pulls.createReview({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                event: 'REQUEST_CHANGES',
+                body: '🚫 **CI Build Failed**\n\nThe automated build process failed. Please review the build logs and fix the issues before requesting another review.\n\n**Next steps:**\n1. Check the build logs for specific errors\n2. Fix the identified issues\n3. Push your fixes to this branch\n4. The CI will automatically re-run\n\nOnce the build passes, this review will be dismissed automatically.'
+              });
+              
+              console.log(`Auto-rejected PR #${context.issue.number} due to build failure`);
+            } else {
+              console.log(`PR #${context.issue.number} already has a review from CI`);
+            }
+
+  auto_approve_on_success:
+    runs-on: ubuntu-latest
+    needs: build_artifact
+    if: success() && github.event_name == 'pull_request'
+    permissions:
+      pull-requests: write
+    
+    steps:
+      - name: Auto-Approve PR on Build Success
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: reviews } = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+            
+            // Find and dismiss any existing CI rejection reviews
+            const ciReviews = reviews.filter(review => 
+              (review.user.login === 'github-actions[bot]' || 
+               review.user.login === context.actor) &&
+              review.state === 'CHANGES_REQUESTED'
+            );
+            
+            for (const review of ciReviews) {
+              await github.rest.pulls.dismissReview({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                review_id: review.id,
+                message: '✅ **CI Build Passed** - Automatically dismissing previous rejection as the build now succeeds.'
+              });
+            }
+            
+            if (ciReviews.length > 0) {
+              console.log(`Dismissed ${ciReviews.length} CI rejection reviews for PR #${context.issue.number}`);
+            } else {
+              console.log(`No CI rejection reviews found for PR #${context.issue.number}`);
+            }

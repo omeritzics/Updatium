@@ -138,11 +138,3 @@ jobs:
             ⚠️ **Note:** These are debug builds for testing purposes.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Revert on Failure
-        if: failure() && github.event_name == 'push'
-        run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
-          git revert --no-edit HEAD
-          git push origin ${{ github.ref_name }}
