@@ -93,7 +93,7 @@ jobs:
   auto_reject_on_failure:
     runs-on: ubuntu-latest
     needs: build_artifact
-    if: failure() && github.event_name == 'pull_request'
+    if: ${{ always() && github.event_name == 'pull_request' && needs.build_artifact.result == 'failure' }}
     permissions:
       pull-requests: write
     
