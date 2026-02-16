@@ -78,15 +78,26 @@ void showChangeLogDialog(
                       ),
                       data: changeLog,
                       onTapLink: (text, href, title) {
-                        if (href != null) {
-                          launchUrlString(
-                            href.startsWith('http://') ||
-                                    href.startsWith('https://')
-                                ? href
-                                : '${Uri.parse(app.url).origin}/$href',
-                            mode: LaunchMode.externalApplication,
-                          );
-                        }
+                        if (href == null) return;
+
+                        final base = Uri.tryParse(app.url);
+                        final tapped = Uri.tryParse(href);
+
+                        final resolved = (tapped == null)
+                            ? null
+                            : (tapped.hasScheme
+                                ? tapped
+                                : (base != null ? base.resolveUri(tapped) : null));
+
+                        if (resolved == null) return;
+
+                        final scheme = resolved.scheme.toLowerCase();
+                        if (scheme != 'http' && scheme != 'https') return;
+
+                        launchUrlString(
+                          resolved.toString(),
+                          mode: LaunchMode.externalApplication,
+                        );
                       },
                       extensionSet: md.ExtensionSet(
                         md.ExtensionSet.gitHubFlavored.blockSyntaxes,
