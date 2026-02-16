@@ -998,7 +998,7 @@ class AppsPageState extends State<AppsPage> {
                   Positioned.fill(
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(20),
                         color: Colors.black45,
                       ),
                       child: Center(
