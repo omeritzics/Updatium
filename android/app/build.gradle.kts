@@ -131,10 +131,14 @@ val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
 androidComponents {
     onVariants { variant ->
         variant.outputs.forEach { output ->
-            val abiFilter = output.filters.find {
-                it.filterType.name == "ABI"
+            // Extract ABI from output file name instead of using filters
+            val abiName = when {
+                output.outputFile.name.contains("arm64-v8a") -> "arm64-v8a"
+                output.outputFile.name.contains("armeabi-v7a") -> "armeabi-v7a"
+                output.outputFile.name.contains("x86_64") -> "x86_64"
+                else -> null
             }
-            val abiVersionCode = abiFilter?.identifier?.let { abiCodes[it] }
+            val abiVersionCode = abiName?.let { abiCodes[it] }
 
             if (abiVersionCode != null) {
                 // Create a version code within Android limits (max 2100000000)
