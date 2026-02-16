@@ -2410,7 +2410,9 @@ class AppsProvider with ChangeNotifier {
       // Log detailed error internally for debugging
       // Log error internally without sensitive URL components
       final uri = Uri.tryParse(e);
-      final sanitizedUrl = uri != null ? uri.replace(userInfo: '').toString() : e;
+      final sanitizedUrl = uri != null
+          ? uri.replace(userInfo: '').toString()
+          : e;
       debugPrint('Import error for $sanitizedUrl: ${errorsMap[e]}');
 
       // Return user-friendly error message
