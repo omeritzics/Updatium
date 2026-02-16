@@ -110,9 +110,7 @@ class _AppTextButtonState extends State<AppTextButton>
   @override
   Widget build(BuildContext context) {
     final button = TextButton(
-      onPressed: (!widget.useExpressiveAnimation && widget.enabled)
-          ? widget.onPressed
-          : null,
+      onPressed: widget.enabled ? widget.onPressed : null,
       style: widget.style ?? Theme.of(context).textButtonTheme.style,
       child: widget.child,
     );
@@ -156,11 +154,10 @@ class _AppTextButtonState extends State<AppTextButton>
           );
         },
         child: GestureDetector(
-          onTapDown: _handleTapDown,
-          onTapUp: _handleTapUp,
-          onTapCancel: _handleTapCancel,
+          onTapDown: widget.enabled ? _handleTapDown : null,
+          onTapUp: widget.enabled ? (d) => _handleTapUp(d) : null,
+          onTapCancel: widget.enabled ? _handleTapCancel : null,
           child: button,
-        ),
       ),
     );
   }
