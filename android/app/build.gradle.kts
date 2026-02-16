@@ -133,9 +133,9 @@ androidComponents {
         variant.outputs.forEach { output ->
             // Extract ABI from output file name instead of using filters
             val abiName = when {
-                output.outputFile.name.contains("arm64-v8a") -> "arm64-v8a"
-                output.outputFile.name.contains("armeabi-v7a") -> "armeabi-v7a"
-                output.outputFile.name.contains("x86_64") -> "x86_64"
+                (output as ApkVariantOutputImpl).outputFile.name.contains("arm64-v8a") -> "arm64-v8a"
+                (output as ApkVariantOutputImpl).outputFile.name.contains("armeabi-v7a") -> "armeabi-v7a"
+                (output as ApkVariantOutputImpl).outputFile.name.contains("x86_64") -> "x86_64"
                 else -> null
             }
             val abiVersionCode = abiName?.let { abiCodes[it] }
@@ -149,7 +149,7 @@ androidComponents {
                 val compressedCode = (baseBuildNumber % 100000) * 100 + abiVersionCode
                 val maxPlayVersionCode = 2_100_000_000L
                 val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode)
-                output.versionCode.set(safeVersionCode.toInt())
+                (output as ApkVariantOutputImpl).versionCode.set(safeVersionCode.toInt())
             }
         }
     }
