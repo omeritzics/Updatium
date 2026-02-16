@@ -79,6 +79,11 @@ class _CachedAppIconState extends State<CachedAppIcon>
       CurvedAnimation(parent: _rotationController, curve: Curves.easeInOut),
     );
 
+    // Drive rotation only when needed
+    if (_isLoading) {
+      _rotationController.repeat(reverse: true);
+    }
+
     // Start loading the icon
     _loadIcon();
   }
