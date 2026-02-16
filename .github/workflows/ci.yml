@@ -132,7 +132,7 @@ jobs:
   auto_approve_on_success:
     runs-on: ubuntu-latest
     needs: build_artifact
-    if: ${{ always() && github.event_name == 'pull_request' && needs.build_artifact.result == 'success' }}
+    if: ${{ always() && github.event_name == 'pull_request' && needs.build_artifact.result == 'success' && github.event.pull_request.head.repo.fork == false }}
     permissions:
       pull-requests: write
     
