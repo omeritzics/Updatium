@@ -146,11 +146,12 @@ jobs:
             });
             
             // Find and dismiss any existing CI rejection reviews
-            const ciReviews = reviews.filter(review => 
-              const ciReviews = reviews.filter(review => 
+            const ciReviews = reviews.filter(
+              (review) =>
                 review.user.login === 'github-actions[bot]' &&
                 review.state === 'CHANGES_REQUESTED'
-            
+            );
+
             for (const review of ciReviews) {
               await github.rest.pulls.dismissReview({
                 owner: context.repo.owner,
