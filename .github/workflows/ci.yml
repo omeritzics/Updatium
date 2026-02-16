@@ -107,6 +107,7 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number,
               per_page: 100,
+            });
 
             // Only skip if CI already requested changes
             const alreadyRejected = reviews.some(
@@ -127,7 +128,6 @@ jobs:
               console.log(`Auto-rejected PR #${context.issue.number} due to build failure`);
             } else {
               console.log(`PR #${context.issue.number} already has a CI rejection review`);
-            }
             }
 
   auto_approve_on_success:
