@@ -692,6 +692,7 @@ class AppsPageState extends State<AppsPage> {
             toggleAppSelected(listedApps[index].app);
           },
           child: ListTile(
+            selected: selectedAppIds.contains(listedApps[index].app.id),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 20,
               vertical: 8,
@@ -1693,6 +1694,7 @@ class AppsPageState extends State<AppsPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: RefreshIndicator(
+        key:_refreshIndicatorKey,
         onRefresh: refresh,
         displacement: MediaQuery.of(context).size.height * 0.1,
         child: Scrollbar(

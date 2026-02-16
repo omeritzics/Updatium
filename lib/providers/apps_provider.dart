@@ -2415,7 +2415,8 @@ class AppsProvider with ChangeNotifier {
               userInfo: '',
               query: '',
               fragment: '',
-          )toString()
+          )
+          .toString()
             : e;
       debugPrint('Import error for $sanitizedUrl: ${errorsMap[e]}');
 
