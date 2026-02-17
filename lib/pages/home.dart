@@ -307,11 +307,14 @@ class _HomePageState extends State<HomePage> {
     prevAppCount = appsProvider.apps.length;
     prevIsLoading = appsProvider.loadingApps;
 
+    final appsState =
+        (pages[0].widget.key as GlobalKey<AppsPageState>).currentState;
+    final hasSelection = appsState?.selectedAppIds.isNotEmpty ?? false;
     return PopScope(
-      canPop: !(pages[0].widget.key as GlobalKey<AppsPageState>).currentState!
-          .clearSelected(),
+      canPop: !hasSelection,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
+        if (appsState?.clearSelected() == true) return;
 
         if (isLinkActivity &&
             selectedIndexHistory.length == 1 &&
