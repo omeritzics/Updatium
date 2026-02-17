@@ -223,10 +223,11 @@ class _CachedAppIconState extends State<CachedAppIcon>
               scale: _scaleAnimation.value,
               child: Transform.rotate(
                 angle: _rotationAnimation.value,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 150),
-                  transform: Matrix4.identity()
-                    ..translate(0.0, _isHovered ? -4.0 : 0.0, 0.0),
+                child: Transform.translate(
+                  offset: Offset(0.0, _isHovered ? -4.0 : 0.0),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 150),
+                    decoration: BoxDecoration(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(widget.size * 0.2),
                     boxShadow: _isHovered
