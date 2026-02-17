@@ -145,9 +145,15 @@ androidComponents {
                 val compressedCode = (baseBuildNumber % 10_000_000) * 100 + abiVersionCode
                 val maxPlayVersionCode = 2_100_000_000L
                 val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode)
-                (output as ApkVariantOutputImpl).versionCodeOverride = safeVersionCode.toInt()
-            }
-        }
+                }
+                // Using a larger modulo reduces the chance of collision.
+                // Max version code is 2,100,000,000.
+                // Our scheme is `(base % X) * 100 + abi`.
+                // To stay within limits, `(X-1)*100 + 99` should be < 2,100,000,000.
+                // `X*100 - 1 < 2,100,000,000` -> `X < 21,000,000.01`.
+                // So we can use 21,000,000 as the modulo.
+                val compressedCode = (baseBuildNumber % 21_000_000) * 100 + abiVersionCode
+                val maxPlayVersionCode = 2_100_000_000L
     }
 }
 
