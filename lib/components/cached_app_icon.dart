@@ -46,7 +46,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
   String? _lastAppId;
   String? _lastRemoteUrl;
   bool _isHovered = false;
-  bool _isPressed = false;
 
   @override
   void initState() {
@@ -105,24 +104,15 @@ class _CachedAppIconState extends State<CachedAppIcon>
   }
 
   void _handleTapDown(TapDownDetails details) {
-    setState(() {
-      _isPressed = true;
-    });
     _scaleController.forward();
   }
 
   void _handleTapUp(TapUpDetails details) {
-    setState(() {
-      _isPressed = false;
-    });
     _scaleController.reverse();
     widget.onTap?.call();
   }
 
   void _handleTapCancel() {
-    setState(() {
-      _isPressed = false;
-    });
     _scaleController.reverse();
   }
 
@@ -230,7 +220,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 150),
                   transform: Matrix4.identity()
-                    ..translate(0.0, _isHovered ? -4.0 : 0.0),
+                    ..translateByDouble(0.0, _isHovered ? -4.0 : 0.0, 0.0, 1.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(widget.size * 0.2),
                     boxShadow: _isHovered
@@ -238,14 +228,14 @@ class _CachedAppIconState extends State<CachedAppIcon>
                             BoxShadow(
                               color: Theme.of(
                                 context,
-                              ).colorScheme.primary.withOpacity(0.3),
+                              ).colorScheme.primary.withValues(alpha: 0.3),
                               blurRadius: 20,
                               offset: const Offset(0, 8),
                             ),
                           ]
                         : [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),
@@ -298,7 +288,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
                     size: widget.size * 0.5,
                     color: Theme.of(
                       context,
-                    ).colorScheme.onSurfaceVariant.withOpacity(0.6),
+                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                   ),
                 );
               },
@@ -327,7 +317,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
                         end: Alignment.centerRight,
                         colors: [
                           Colors.transparent,
-                          Colors.white.withOpacity(0.3),
+                          Colors.white.withValues(alpha: 0.3),
                           Colors.transparent,
                         ],
                       ),

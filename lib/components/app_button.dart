@@ -50,7 +50,6 @@ class _AppTextButtonState extends State<AppTextButton>
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
   bool _isHovered = false;
-  bool _isPressed = false;
 
   @override
   void initState() {
@@ -77,27 +76,18 @@ class _AppTextButtonState extends State<AppTextButton>
 
   void _handleTapDown(TapDownDetails details) {
     if (widget.enabled) {
-      setState(() {
-        _isPressed = true;
-      });
       _animationController.forward();
     }
   }
 
   void _handleTapUp(TapUpDetails details) {
     if (widget.enabled) {
-      setState(() {
-        _isPressed = false;
-      });
       _animationController.reverse();
       widget.onPressed?.call();
     }
   }
 
   void _handleTapCancel() {
-    setState(() {
-      _isPressed = false;
-    });
     _animationController.reverse();
   }
 
@@ -133,7 +123,7 @@ class _AppTextButtonState extends State<AppTextButton>
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 150),
                 transform: Matrix4.identity()
-                  ..translate(0.0, _isHovered ? -2.0 : 0.0),
+                  ..translateByDouble(0.0, _isHovered ? -2.0 : 0.0, 0.0, 1.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: _isHovered && widget.enabled
@@ -141,7 +131,7 @@ class _AppTextButtonState extends State<AppTextButton>
                           BoxShadow(
                             color: Theme.of(
                               context,
-                            ).colorScheme.primary.withOpacity(0.2),
+                            ).colorScheme.primary.withValues(alpha: 0.2),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
