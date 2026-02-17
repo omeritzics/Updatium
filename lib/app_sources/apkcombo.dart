@@ -193,7 +193,7 @@ class APKCombo extends AppSource {
             releaseDate = DateFormat('yyyy-MM-dd').parse(dateString);
           } catch (isoDateError) {
             // Log all failed date parsing attempts for debugging
-            LogsProvider().add(
+            LogsProvider.instance.add(
               'Failed to parse APKCombo release date "$dateString" with formats: MMMM d, yyyy ($fullMonthError), MMM d, yyyy ($abbrevMonthError), yyyy-MM-dd ($isoDateError)',
             );
             // releaseDate remains null for graceful degradation
