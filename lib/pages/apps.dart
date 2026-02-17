@@ -159,6 +159,10 @@ class AppsPageState extends State<AppsPage> {
   // Cache gradient stops by category count to avoid recomputation
   final Map<int, List<double>> _stopsCache = {};
 
+  bool hasSelectedItems() {
+    return selectedAppIds.isNotEmpty;
+  }
+
   bool clearSelected() {
     if (selectedAppIds.isNotEmpty) {
       setState(() {

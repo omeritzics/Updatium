@@ -47,22 +47,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
   String? _lastRemoteUrl;
   bool _isHovered = false;
 
-  @override
-  void _setLoading(bool value) {
-    if (_isLoading == value) return;
-
-    setState(() {
-      _isLoading = value;
-    });
-
-    if (_isLoading) {
-      _rotationController.repeat(reverse: true);
-    } else {
-      _rotationController.stop();
-      _rotationController.reset();
-    }
-  }
-
+  
   @override
   void initState() {
     super.initState();
@@ -71,7 +56,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
     _shimmerController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
-    )..repeat();
+    );
 
     _shimmerAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
@@ -151,11 +136,12 @@ class _CachedAppIconState extends State<CachedAppIcon>
       _iconData = null;
       _lastAppId = widget.app.id;
       _lastRemoteUrl = widget.app.remoteIconUrl;
-
-      if (widget.enableShimmer) {
-        _shimmerController.repeat();
-      }
     });
+
+    // Start shimmer only if enabled and not already running
+    if (widget.enableShimmer && !_shimmerController.isAnimating) {
+      _shimmerController.repeat();
+    }
 
     try {
       final appsProvider = Provider.of<AppsProvider>(context, listen: false);
@@ -168,8 +154,8 @@ class _CachedAppIconState extends State<CachedAppIcon>
           setState(() {
             _iconData = existingIcon;
             _isLoading = false;
-            _shimmerController.stop();
           });
+          _stopShimmerIfNeeded();
         }
         return;
       }
@@ -186,17 +172,23 @@ class _CachedAppIconState extends State<CachedAppIcon>
           _iconData = iconData;
           _isLoading = false;
           _hasError = iconData == null;
-          _shimmerController.stop();
         });
+        _stopShimmerIfNeeded();
       }
     } catch (e) {
       if (mounted) {
         setState(() {
           _isLoading = false;
           _hasError = true;
-          _shimmerController.stop();
         });
+        _stopShimmerIfNeeded();
       }
+    }
+  }
+
+  void _stopShimmerIfNeeded() {
+    if (_shimmerController.isAnimating) {
+      _shimmerController.stop();
     }
   }
 
@@ -235,7 +227,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 150),
                   transform: Matrix4.identity()
-                    ..translate(0.0, _isHovered ? -4.0 : 0.0),
+                    ..translateByDouble(0.0, _isHovered ? -4.0 : 0.0, 0.0, 1.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(widget.size * 0.2),
                     boxShadow: _isHovered

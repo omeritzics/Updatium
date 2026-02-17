@@ -192,10 +192,13 @@ class APKCombo extends AppSource {
           try {
             releaseDate = DateFormat('yyyy-MM-dd').parse(dateString);
           } catch (isoDateError) {
-            // Log all failed date parsing attempts for debugging
+            // Log all failed date parsing attempts for debugging using structured logging
             try {
-              LogsProvider.instance.add(
-                'Failed to parse APKCombo release date "$dateString" with formats: MMMM d, yyyy ($fullMonthError), MMM d, yyyy ($abbrevMonthError), yyyy-MM-dd ($isoDateError)',
+              await LogsProvider.instance.addStructured(
+                operation: 'Date parsing failed',
+                component: 'APKCombo',
+                errorCode: 'DATE_PARSE_ERROR',
+                level: LogLevels.warning,
               );
             } catch (_) {
               // Best-effort logging only; never fail parsing due to logging.

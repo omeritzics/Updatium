@@ -123,7 +123,7 @@ class _AppTextButtonState extends State<AppTextButton>
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 150),
                 transform: Matrix4.identity()
-                  ..translate(0.0, _isHovered ? -2.0 : 0.0),
+                  ..translateByDouble(0.0, _isHovered ? -2.0 : 0.0, 0.0, 1.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: _isHovered && widget.enabled

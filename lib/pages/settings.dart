@@ -692,33 +692,42 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ShizukuApkInstaller.checkPermission().then((
                                     resCode,
                                   ) {
+                                    var ctx = context;
                                     settingsProvider.useShizuku = resCode!
                                         .startsWith('granted');
                                     switch (resCode) {
                                       case 'binder_not_found':
-                                        showError(
-                                          UpdatiumError(
-                                            tr('shizukuBinderNotFound'),
-                                          ),
-                                          context,
-                                        );
+                                        if (ctx.mounted) {
+                                          showError(
+                                            UpdatiumError(
+                                              tr('shizukuBinderNotFound'),
+                                            ),
+                                            ctx,
+                                          );
+                                        }
                                       case 'old_shizuku':
-                                        showError(
-                                          UpdatiumError(tr('shizukuOld')),
-                                          context,
-                                        );
+                                        if (ctx.mounted) {
+                                          showError(
+                                            UpdatiumError(tr('shizukuOld')),
+                                            ctx,
+                                          );
+                                        }
                                       case 'old_android_with_adb':
-                                        showError(
-                                          UpdatiumError(
-                                            tr('shizukuOldAndroidWithADB'),
-                                          ),
-                                          context,
-                                        );
+                                        if (ctx.mounted) {
+                                          showError(
+                                            UpdatiumError(
+                                              tr('shizukuOldAndroidWithADB'),
+                                            ),
+                                            ctx,
+                                          );
+                                        }
                                       case 'denied':
-                                        showError(
-                                          UpdatiumError(tr('cancelled')),
-                                          context,
-                                        );
+                                        if (ctx.mounted) {
+                                          showError(
+                                            UpdatiumError(tr('cancelled')),
+                                            ctx,
+                                          );
+                                        }
                                     }
                                   });
                                 } else {
@@ -1039,16 +1048,21 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     IconButton(
                       onPressed: () {
+                        var ctx = context;
                         context.read<LogsProvider>().get().then((logs) {
                           if (logs.isEmpty) {
-                            showMessage(UpdatiumError(tr('noLogs')), context);
+                            if (ctx.mounted) {
+                              showMessage(UpdatiumError(tr('noLogs')), ctx);
+                            }
                           } else {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext ctx) {
-                                return const LogsDialog();
-                              },
-                            );
+                            if (ctx.mounted) {
+                              showDialog(
+                                context: ctx,
+                                builder: (BuildContext ctx) {
+                                  return const LogsDialog();
+                                },
+                              );
+                            }
                           }
                         });
                       },
@@ -1120,9 +1134,10 @@ class _LogsDialogState extends State<LogsDialog> {
       actions: [
         AppTextButton(
           onPressed: () async {
+            var ctx = context;
             var cont =
                 (await showDialog<Map<String, dynamic>?>(
-                  context: context,
+                  context: ctx,
                   builder: (BuildContext ctx) {
                     return GeneratedFormModal(
                       title: tr('appLogs'),
@@ -1148,7 +1163,12 @@ class _LogsDialogState extends State<LogsDialog> {
         ),
         AppTextButton(
           onPressed: () {
-            Share.share(logString ?? '', subject: tr('appLogs'));
+            SharePlus.instance.share(
+              ShareParams(
+                text: logString ?? '',
+                subject: tr('appLogs'),
+              ),
+            );
             Navigator.of(context).pop();
           },
           child: Text(tr('share')),

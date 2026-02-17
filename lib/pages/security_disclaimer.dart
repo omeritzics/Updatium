@@ -142,9 +142,10 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                       child: FilledButton(
                         onPressed: () async {
                           HapticFeedback.lightImpact();
+                          var ctx = context;
                           await _saveDisclaimerAccepted();
-                          if (mounted) {
-                            Navigator.of(context).pop(true);
+                          if (mounted && ctx.mounted) {
+                            Navigator.of(ctx).pop(true);
                           }
                         },
                         style: FilledButton.styleFrom(

@@ -311,10 +311,14 @@ class _HomePageState extends State<HomePage> {
         (pages[0].widget.key as GlobalKey<AppsPageState>).currentState;
     final hasSelection = appsState?.selectedAppIds.isNotEmpty ?? false;
     return PopScope(
-      canPop: !hasSelection,
+      canPop: !(pages[0].widget.key as GlobalKey<AppsPageState>).currentState!
+          .hasSelectedItems(),
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
         if (appsState?.clearSelected() == true) return;
+
+        // Clear selected items if they exist
+        (pages[0].widget.key as GlobalKey<AppsPageState>).currentState?.clearSelected();
 
         if (isLinkActivity &&
             selectedIndexHistory.length == 1 &&
