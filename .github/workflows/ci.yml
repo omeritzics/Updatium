@@ -132,11 +132,10 @@ jobs:
             } else {
               console.log(`PR #${context.issue.number} already has a CI rejection review`);
             }
-if: github.event_name == 'pull_request' && needs.build_artifact.result == 'success'
-  auto_approve_on_success:
-    runs-on: ubuntu-latest
-    needs: build_artifact
-    if: ${{ always() && github.event_name == 'pull_request' && needs.build_artifact.result == 'success' && github.event.pull_request.head.repo.fork == false && contains(github.event.pull_request.labels.*.name, 'ci-auto-approve') }}
+auto_approve_on_success:
+  if: ${{ always() && github.event_name == 'pull_request' && needs.build_artifact.result == 'success' && github.event.pull_request.head.repo.fork == false && contains(github.event.pull_request.labels.*.name, 'ci-auto-approve') }}
+  runs-on: ubuntu-latest
+  needs: build_artifact
     permissions:
       pull-requests: write
     
