@@ -67,22 +67,25 @@ class _HomePageState extends State<HomePage> {
       final disclaimerAccepted =
           await SecurityDisclaimerScreen.isDisclaimerAccepted();
       if (!disclaimerAccepted) {
-        final accepted = await Navigator.of(context).push<bool>(
-          MaterialPageRoute(
-            builder: (context) => const SecurityDisclaimerScreen(),
-          ),
-        );
+        if (mounted) {
+          final accepted = await Navigator.of(context).push<bool>(
+            MaterialPageRoute(
+              builder: (context) => const SecurityDisclaimerScreen(),
+            ),
+          );
 
-        // If user declined, exit the app
-        if (accepted != true) {
-          SystemNavigator.pop();
-          return;
+          // If user declined, exit the app
+          if (accepted != true) {
+            SystemNavigator.pop();
+            return;
+          }
         }
       }
 
       if (!sp.googleVerificationWarningShown && DateTime.now().year == 2026) {
-        await showDialog(
-          context: context,
+        if (mounted) {
+          await showDialog(
+            context: context,
           builder: (BuildContext ctx) {
             return AlertDialog(
               title: Text(tr('note')),
@@ -122,6 +125,7 @@ class _HomePageState extends State<HomePage> {
             );
           },
         );
+        }
       }
     });
   }
@@ -217,19 +221,23 @@ class _HomePageState extends State<HomePage> {
                   : '{ "apps": $dataStr }',
             );
             // ignore: use_build_context_synchronously
-            showMessage(
-              tr(
-                'importedX',
-                args: [plural('apps', result.key.length).toLowerCase()],
-              ),
-              context,
-            );
+            if (mounted) {
+              showMessage(
+                tr(
+                  'importedX',
+                  args: [plural('apps', result.key.length).toLowerCase()],
+                ),
+                context,
+              );
+            }
           }
         } else {
           throw UpdatiumError(tr('unknown'));
         }
       } catch (e) {
-        showError(e, context);
+        if (mounted) {
+          showError(e, context);
+        }
       }
     }
 
@@ -299,7 +307,28 @@ class _HomePageState extends State<HomePage> {
     prevAppCount = appsProvider.apps.length;
     prevIsLoading = appsProvider.loadingApps;
 
-    return WillPopScope(
+    return PopScope(
+      canPop: !(pages[0].widget.key as GlobalKey<AppsPageState>).currentState!
+          .clearSelected(),
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        
+        if (isLinkActivity &&
+            selectedIndexHistory.length == 1 &&
+            selectedIndexHistory.last == 1) {
+          return;
+        }
+        setIsReversing(
+          selectedIndexHistory.length >= 2
+              ? selectedIndexHistory.reversed.toList()[1]
+              : 0,
+        );
+        if (selectedIndexHistory.isNotEmpty) {
+          setState(() {
+            selectedIndexHistory.removeLast();
+          });
+        }
+      },
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: PageTransitionSwitcher(
@@ -344,26 +373,6 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ),
-      onWillPop: () async {
-        if (isLinkActivity &&
-            selectedIndexHistory.length == 1 &&
-            selectedIndexHistory.last == 1) {
-          return true;
-        }
-        setIsReversing(
-          selectedIndexHistory.length >= 2
-              ? selectedIndexHistory.reversed.toList()[1]
-              : 0,
-        );
-        if (selectedIndexHistory.isNotEmpty) {
-          setState(() {
-            selectedIndexHistory.removeLast();
-          });
-          return false;
-        }
-        return !(pages[0].widget.key as GlobalKey<AppsPageState>).currentState!
-            .clearSelected();
-      },
     );
   }
 

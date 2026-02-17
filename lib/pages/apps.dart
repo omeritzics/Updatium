@@ -197,7 +197,9 @@ class AppsPageState extends State<AppsPage> {
       return appsProvider
           .checkUpdates()
           .catchError((e) {
-            showError(e is Map ? e['errors'] : e, context);
+            if (context.mounted == true) {
+              showError(e is Map ? e['errors'] : e, context);
+            }
             return <App>[];
           })
           .whenComplete(() {
@@ -433,7 +435,7 @@ class AppsPageState extends State<AppsPage> {
                       size: MediaQuery.of(context).size.width * 0.2,
                       color: Theme.of(
                         context,
-                      ).colorScheme.primary.withOpacity(0.6),
+                      ).colorScheme.primary.withValues(alpha: 0.6),
                     ),
                     const SizedBox(height: 24),
                     Text(
@@ -540,7 +542,7 @@ class AppsPageState extends State<AppsPage> {
                             app.id,
                           ], globalNavigatorKey.currentContext)
                           .catchError((e) {
-                            if (mounted) {
+                            if (mounted && context.mounted == true) {
                               showError(e, context);
                             }
                             return <String>[];
@@ -558,7 +560,7 @@ class AppsPageState extends State<AppsPage> {
                             app.id,
                           ], globalNavigatorKey.currentContext)
                           .catchError((e) {
-                            if (mounted) {
+                            if (mounted && context.mounted == true) {
                               showError(e, context);
                             }
                             return <String>[];
@@ -591,7 +593,7 @@ class AppsPageState extends State<AppsPage> {
 
       var transparent = Theme.of(
         context,
-      ).colorScheme.surface.withAlpha(0).value;
+      ).colorScheme.surface.withAlpha(0).toARGB32();
       List<double> stops = [
         ...listedApps[index].app.categories.asMap().entries.map(
           (e) =>
@@ -906,7 +908,7 @@ class AppsPageState extends State<AppsPage> {
                                             app.id,
                                           ], globalNavigatorKey.currentContext)
                                           .catchError((e) {
-                                            if (mounted) {
+                                            if (mounted && context.mounted == true) {
                                               showError(e, context);
                                             }
                                             return <String>[];
@@ -926,7 +928,7 @@ class AppsPageState extends State<AppsPage> {
                                             app.id,
                                           ], globalNavigatorKey.currentContext)
                                           .catchError((e) {
-                                            if (mounted) {
+                                            if (mounted && context.mounted == true) {
                                               showError(e, context);
                                             }
                                             return <String>[];
@@ -1189,14 +1191,16 @@ class AppsPageState extends State<AppsPage> {
                         globalNavigatorKey.currentContext,
                       )
                       .catchError((e) {
-                        if (mounted) {
+                        if (mounted && context.mounted == true) {
                           showError(e, context);
                         }
                         return <String>[];
                       })
                       .then((value) {
                         if (value.isNotEmpty && shouldInstallUpdates) {
-                          showMessage(tr('appsUpdated'), context);
+                          if (context.mounted == true) {
+                            showMessage(tr('appsUpdated'), context);
+                          }
                         }
                       });
                 }
@@ -1238,9 +1242,10 @@ class AppsPageState extends State<AppsPage> {
           }
           if (cont) {
             // ignore: use_build_context_synchronously
-            await showDialog<Map<String, dynamic>?>(
-              context: context,
-              builder: (BuildContext ctx) {
+            if (context.mounted == true) {
+              await showDialog<Map<String, dynamic>?>(
+                context: context,
+                builder: (BuildContext ctx) {
                 return GeneratedFormModal(
                   title: tr('categorize'),
                   items: const [],
@@ -1263,9 +1268,12 @@ class AppsPageState extends State<AppsPage> {
                 );
               },
             );
+            }
           }
         } catch (err) {
-          showError(err, context);
+          if (context.mounted == true) {
+            showError(err, context);
+          }
         }
       };
     }
@@ -1317,7 +1325,9 @@ class AppsPageState extends State<AppsPage> {
           );
         },
       ).whenComplete(() {
-        Navigator.of(context).pop();
+        if (context.mounted == true) {
+          Navigator.of(context).pop();
+        }
       });
     }
 

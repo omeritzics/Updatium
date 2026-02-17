@@ -218,7 +218,9 @@ class _AppPageState extends State<AppPage> {
                           app!.app.id,
                         ], context);
                       } catch (e) {
-                        showError(e, context);
+                        if (context.mounted == true) {
+                          showError(e, context);
+                        }
                       }
                     },
               child: Row(
@@ -582,9 +584,11 @@ class _AppPageState extends State<AppPage> {
                 );
                 if (res.isNotEmpty && !trackOnly) {
                   // ignore: use_build_context_synchronously
-                  showMessage(successMessage, context);
+                  if (context.mounted == true) {
+                    showMessage(successMessage, context);
+                  }
                 }
-                if (res.isNotEmpty && mounted) {
+                if (res.isNotEmpty && mounted && context.mounted == true) {
                   Navigator.of(context).pop();
                 }
               } catch (e) {
@@ -701,7 +705,7 @@ class _AppPageState extends State<AppPage> {
                                 app != null ? [app.app] : [],
                               )
                               .then((value) {
-                                if (value == true) {
+                                if (value == true && context.mounted == true) {
                                   Navigator.of(context).pop();
                                 }
                               });

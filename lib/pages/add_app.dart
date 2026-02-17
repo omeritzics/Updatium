@@ -186,7 +186,7 @@ class AddAppPageState extends State<AddAppPage> {
             // ignore: use_build_context_synchronously
             var apkUrl = await appsProvider.confirmAppFileUrl(
               app,
-              context,
+              context.mounted == true ? context : null,
               false,
             );
             if (apkUrl == null) {
@@ -228,7 +228,9 @@ class AddAppPageState extends State<AddAppPage> {
           );
         }
       } catch (e) {
-        showError(e, context);
+        if (context.mounted == true) {
+          showError(e, context);
+        }
       } finally {
         setState(() {
           gettingAppInfo = false;
@@ -392,7 +394,9 @@ class AddAppPageState extends State<AddAppPage> {
                       rethrow;
                     } else {
                       err.unexpected = true;
-                      showError(err, context);
+                      if (context.mounted == true) {
+                        showError(err, context);
+                      }
                       return null;
                     }
                   }
@@ -421,16 +425,18 @@ class AddAppPageState extends State<AddAppPage> {
           List<String>? selectedUrls = res.isEmpty
               ? []
               // ignore: use_build_context_synchronously
-              : await showDialog<List<String>?>(
-                  context: context,
-                  builder: (BuildContext ctx) {
-                    return SelectionModal(
-                      entries: res.map((k, v) => MapEntry(k, v.value)),
-                      selectedByDefault: false,
-                      onlyOneSelectionAllowed: true,
-                    );
-                  },
-                );
+              : context.mounted == true 
+                  ? await showDialog<List<String>?>(
+                      context: context,
+                      builder: (BuildContext ctx) {
+                        return SelectionModal(
+                          entries: res.map((k, v) => MapEntry(k, v.value)),
+                          selectedByDefault: false,
+                          onlyOneSelectionAllowed: true,
+                        );
+                      },
+                    )
+                  : null;
           if (selectedUrls != null && selectedUrls.isNotEmpty) {
             var sourceName = res[selectedUrls[0]]?.key;
             changeUserInput(
@@ -443,7 +449,9 @@ class AddAppPageState extends State<AddAppPage> {
           }
         }
       } catch (e) {
-        showError(e, context);
+        if (context.mounted == true) {
+          showError(e, context);
+        }
       } finally {
         setState(() {
           searching = false;

@@ -77,16 +77,18 @@ class _ImportExportPageState extends State<ImportExportPage> {
               .then((errors) {
                 if (errors.isEmpty) {
                 if (mounted) {
-                  showMessage(
-                    tr(
-                      'importedX',
-                      args: [plural('apps', urls.length).toLowerCase()],
-                    ),
-                    context,
-                  );
+                  if (context.mounted == true) {
+                    showMessage(
+                      tr(
+                        'importedX',
+                        args: [plural('apps', urls.length).toLowerCase()],
+                      ),
+                      context,
+                    );
+                  }
                 }
                 } else {
-                if (mounted) {
+                if (mounted && context.mounted == true) {
                   showDialog(
                     context: context,
                     builder: (BuildContext ctx) {

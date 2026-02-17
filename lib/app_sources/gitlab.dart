@@ -12,6 +12,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GitLab extends AppSource {
+  // Supported file types - centralized for reuse across the class
+  static const List<String> supportedFileTypes = ['.apk', '.xapk'];
+
   GitLab({bool hostChanged = false}) {
     hosts = ['gitlab.com'];
     canSearch = true;
@@ -135,8 +138,8 @@ class GitLab extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    String? PAT = await getPATIfAny(hostChanged ? additionalSettings : {});
-    String optionalAuth = (PAT != null) ? 'private_token=$PAT' : '';
+    String? pat = await getPATIfAny(hostChanged ? additionalSettings : {});
+    String optionalAuth = (pat != null) ? 'private_token=$pat' : '';
     return '$assetUrl${(Uri.parse(assetUrl).query.isEmpty ? '?' : '&')}$optionalAuth';
   }
 
@@ -149,8 +152,8 @@ class GitLab extends AppSource {
     var names = GitHub(hostChanged: true).getAppNames(standardUrl);
     String projectUriComponent =
         '${Uri.encodeComponent(names.author)}%2F${Uri.encodeComponent(names.name)}';
-    String? PAT = await getPATIfAny(hostChanged ? additionalSettings : {});
-    String optionalAuth = (PAT != null) ? 'private_token=$PAT' : '';
+    String? pat = await getPATIfAny(hostChanged ? additionalSettings : {});
+    String optionalAuth = (pat != null) ? 'private_token=$pat' : '';
 
     bool trackOnly = additionalSettings['trackOnly'] == true;
 
@@ -199,9 +202,7 @@ class GitLab extends AppSource {
                 (s.key.toLowerCase().endsWith('.apk') ||
                     s.key.toLowerCase().endsWith('.xapk') ||
                     s.value.toLowerCase().endsWith('.apk') ||
-                    s.value.toLowerCase().endsWith(
-                      '.xapk',
-                    )), // TODO: Supported file types should be centralized somewhere and shared between sources
+                    s.value.toLowerCase().endsWith('.xapk')),
           )
           .toList();
       var uploadedAPKsFromDescription = ((e['description'] ?? '') as String)
@@ -215,10 +216,7 @@ class GitLab extends AppSource {
           .where(
             (s) =>
                 s.startsWith('/uploads/') &&
-                (s.endsWith('apk') ||
-                    s.endsWith(
-                      'xapk',
-                    )), // TODO: Supported file types should be centralized somewhere and shared between sources
+                (s.endsWith('apk') || s.endsWith('xapk')),
           )
           .map((s) => 'https://${hosts[0]}/-/project/$projectId$s')
           .map((l) => MapEntry(Uri.parse(l).pathSegments.last, l))

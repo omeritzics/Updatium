@@ -257,7 +257,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
               size: widget.size * 0.5,
               color: Theme.of(
                 context,
-              ).colorScheme.onSurfaceVariant.withOpacity(0.5),
+              ).colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
           ),
         ),
@@ -274,7 +274,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                     return LinearGradient(
                       colors: [
                         Colors.transparent,
-                        Colors.white.withOpacity(0.3),
+                        Colors.white.withValues(alpha: 0.3),
                         Colors.transparent,
                       ],
                       stops: const [0.0, 0.5, 1.0],
@@ -308,7 +308,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                       border: Border.all(
                         color: Theme.of(
                           context,
-                        ).colorScheme.primary.withOpacity(0.5),
+                        ).colorScheme.primary.withValues(alpha: 0.5),
                         width: 2.0,
                       ),
                     ),
@@ -455,7 +455,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.7),
+          color: Colors.black.withValues(alpha: 0.7),
           borderRadius: BorderRadius.circular(4),
         ),
         child: Column(

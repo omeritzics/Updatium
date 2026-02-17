@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:updatium/components/app_button.dart';
 import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 /// Example demonstrating the updated App Catalogue UI with caching system
 class UpdatedAppCatalogueExample extends StatefulWidget {
@@ -57,7 +58,7 @@ class _UpdatedAppCatalogueExampleState
                     size: 64,
                     color: Theme.of(
                       context,
-                    ).colorScheme.onSurface.withOpacity(0.5),
+                    ).colorScheme.onSurface.withValues(alpha: 0.5),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -70,7 +71,7 @@ class _UpdatedAppCatalogueExampleState
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(
                         context,
-                      ).colorScheme.onSurface.withOpacity(0.7),
+                      ).colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                 ],
@@ -208,7 +209,7 @@ class _UpdatedAppCatalogueExampleState
     );
   }
 
-  Widget _buildAppCard(appInMemory) {
+  Widget _buildAppCard(AppInMemory appInMemory) {
     final app = appInMemory.app;
     final isInstalled = appInMemory.installedInfo != null;
     final hasUpdate = isInstalled && app.installedVersion != app.latestVersion;
@@ -259,7 +260,7 @@ class _UpdatedAppCatalogueExampleState
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(
                           context,
-                        ).colorScheme.onSurface.withOpacity(0.7),
+                        ).colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -333,7 +334,7 @@ class _UpdatedAppCatalogueExampleState
     }).toList();
   }
 
-  void _openAppDetails(app) {
+  void _openAppDetails(App app) {
     // Navigate to app details page
     Navigator.push(
       context,
@@ -341,12 +342,12 @@ class _UpdatedAppCatalogueExampleState
     );
   }
 
-  void _launchApp(app) {
+  void _launchApp(App app) {
     // Launch the app
     // Implementation depends on your app launching logic
   }
 
-  void _showAppOptions(app) {
+  void _showAppOptions(App app) {
     showModalBottomSheet(
       context: context,
       builder: (context) => AppOptionsSheet(app: app),
@@ -377,7 +378,7 @@ class _UpdatedAppCatalogueExampleState
 
 /// Simple app details page to demonstrate individual app view
 class AppDetailsPage extends StatelessWidget {
-  final app;
+  final App app;
 
   const AppDetailsPage({super.key, required this.app});
 
@@ -443,7 +444,7 @@ class AppDetailsPage extends StatelessWidget {
 
 /// App options bottom sheet
 class AppOptionsSheet extends StatelessWidget {
-  final app;
+  final App app;
 
   const AppOptionsSheet({super.key, required this.app});
 
