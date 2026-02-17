@@ -146,8 +146,12 @@ class GitLab extends AppSource {
     final uri = Uri.tryParse(assetUrl);
     if (uri == null) return assetUrl;
 
+    final isHttps = uri.scheme.toLowerCase() == 'https';
+    final isExpectedHost = hosts.contains(uri.host);
+    if (!isHttps || !isExpectedHost) return assetUrl;
+
     final qp = Map<String, String>.from(uri.queryParameters);
-    qp.putIfAbsent('private_token', () => pat);
+    qp['private_token'] = pat;
 
     return uri.replace(queryParameters: qp).toString();
   }
