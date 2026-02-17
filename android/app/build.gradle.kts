@@ -53,7 +53,7 @@ android {
         
         // Enable split APKs for different ABIs
         ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
         }
     }
 
@@ -121,13 +121,13 @@ android {
         abi {
             isEnable = true
             reset()
-            include("armeabi-v7a", "arm64-v8a", "x86_64")
+            include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
             isUniversalApk = true
         }
     }
 }
 
-val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
+val abiCodes = mapOf("x86_64" to 4, "armeabi-v7a" to 1, "arm64-v8a" to 2, "x86" to 3)
     androidComponents {
         onVariants { variant ->
             variant.outputs.forEach { output ->
@@ -142,8 +142,9 @@ val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
                     "Invalid flutter.versionCode='$flutterVersionCode' in local.properties; must be a number."
                 }
 
-                // Using a larger modulo reduces the chance of collision.
-                val compressedCode = (baseBuildNumber % 21_000_000) * 100 + abiVersionCode
+                // Using a larger modulo reduces the chance of collision and handles large version codes
+                val baseCode = baseBuildNumber % 1_000_000_000
+                val compressedCode = baseCode * 10 + abiVersionCode
                 val maxPlayVersionCode = 2_100_000_000L
                 val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode)
 
