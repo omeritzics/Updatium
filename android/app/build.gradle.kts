@@ -144,9 +144,9 @@ val abiCodes = mapOf("x86_64" to 4, "armeabi-v7a" to 1, "arm64-v8a" to 2, "x86" 
                 val baseCode = baseBuildNumber % 1_000_000_000
                 val compressedCode = baseCode * 10 + abiVersionCode
                 val maxPlayVersionCode = 2_100_000_000L
-                val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode)
+                val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode).toInt()
 
-                (output as ApkVariantOutputImpl).versionCodeOverride = safeVersionCode.toInt()
+                output.versionCode.set(safeVersionCode)
             }
         }
     }
