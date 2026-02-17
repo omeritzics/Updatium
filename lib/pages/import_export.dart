@@ -405,7 +405,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           runUpdatiumExport(pickOnly: true);
                                         },
                                   icon: const Icon(Icons.folder_open),
-                                  child: Text(
+                                  label: Text(
                                     tr('pickExportDir'),
                                     textAlign: TextAlign.center,
                                   ),
@@ -419,7 +419,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       ? null
                                       : runUpdatiumExport,
                                   icon: const Icon(Icons.upload_file),
-                                  child: Text(
+                                  label: Text(
                                     tr('updatiumExport'),
                                     textAlign: TextAlign.center,
                                   ),
@@ -436,7 +436,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       ? null
                                       : runUpdatiumImport,
                                   icon: const Icon(Icons.download),
-                                  child: Text(
+                                  label: Text(
                                     tr('updatiumImport'),
                                     textAlign: TextAlign.center,
                                   ),
@@ -547,7 +547,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           runSourceSearch(searchSource[0]);
                                         }
                                       },
-                                child: Text(
+                                label: Text(
                                   tr(
                                     'searchX',
                                     args: [lowerCaseIfEnglish(tr('source'))],
@@ -561,13 +561,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         FilledButton.icon(
                           onPressed: importInProgress ? null : urlListImport,
                           icon: const Icon(Icons.list_alt),
-                          child: Text(tr('importFromURLList')),
+                          label: Text(tr('importFromURLList')),
                         ),
                         const SizedBox(height: 8),
                         FilledButton.icon(
                           onPressed: importInProgress ? null : runUrlImport,
                           icon: const Icon(Icons.link),
-                          child: Text(tr('importFromURLsInFile')),
+                          label: Text(tr('importFromURLsInFile')),
                         ),
                       ],
                     ),

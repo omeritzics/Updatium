@@ -2411,13 +2411,13 @@ class AppsProvider with ChangeNotifier {
       // Log error internally without sensitive URL components
       final uri = Uri.tryParse(e);
       final sanitizedUrl = uri != null
-          : url.replace(
+          ? uri.replace(
               userInfo: '',
               query: '',
               fragment: '',
           )
           .toString()
-            : e;
+          : e;
       debugPrint('Import error for $sanitizedUrl: ${errorsMap[e]}');
 
       // Return user-friendly error message

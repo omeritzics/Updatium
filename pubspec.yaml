@@ -98,9 +98,10 @@ dependencies:
   flutter_foreground_task: ^9.2.0
   flutter_markdown_plus: ^1.0.7
   path: any
-flutter_launcher_icons:
-  android: "ic_launcher"
-  image_path: "assets/graphics/icon.png"
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.14.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -153,7 +154,3 @@ flutter:
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat-Regular.ttf
-          
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
