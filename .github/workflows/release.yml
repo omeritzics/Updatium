@@ -62,6 +62,8 @@ jobs:
         env:
           KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
+          set -euo pipefail
+          test -f android/upload-keystore.jks
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
           if ! keytool -list -v -keystore android/upload-keystore.jks -storepass:env KEYSTORE_PASS >/dev/null; then
