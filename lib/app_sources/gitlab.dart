@@ -138,7 +138,9 @@ class GitLab extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    final String? pat = await getPATIfAny(hostChanged ? additionalSettings : {});
+    final String? pat = await getPATIfAny(
+      hostChanged ? additionalSettings : {},
+    );
     if (pat == null) return assetUrl;
 
     final separator = Uri.parse(assetUrl).query.isEmpty ? '?' : '&';
