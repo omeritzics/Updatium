@@ -117,9 +117,9 @@ class _AppTextButtonState extends State<AppTextButton>
         builder: (context, child) {
           return Transform.scale(
             scale: _scaleAnimation.value,
-            child: AnimatedOpacity(
+            child: Opacity(
               opacity: _opacityAnimation.value,
-              duration: const Duration(milliseconds: 150),
+              child: AnimatedContainer(
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 150),
                 transform: Matrix4.identity()
