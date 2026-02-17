@@ -110,9 +110,7 @@ class _AppTextButtonState extends State<AppTextButton>
   @override
   Widget build(BuildContext context) {
     final button = TextButton(
-      onPressed: (!widget.useExpressiveAnimation && widget.enabled)
-          ? widget.onPressed
-          : null,
+      onPressed: widget.enabled ? widget.onPressed : null,
       style: widget.style ?? Theme.of(context).textButtonTheme.style,
       child: widget.child,
     );
