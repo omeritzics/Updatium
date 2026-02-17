@@ -2,7 +2,7 @@
 # This file scopes which files Qodo can read for RAG/context,
 # enforces size limits, ignores binaries, and respects .gitignore.
 [pr_code_suggestions]
-extra_instructions = """\
+extra_instructions = """
 When proposing code diffs, do not anchor suggestions on deleted (-) lines.
 Prefer patches that apply cleanly to the current file content (existing/+ lines only).
 If the best fix relates to removed code, provide a manual step-by-step edit instead of an apply-ready diff.
