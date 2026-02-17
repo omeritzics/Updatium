@@ -76,6 +76,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               .addAppsByURL(urls)
               .then((errors) {
                 if (errors.isEmpty) {
+                if (mounted) {
                   showMessage(
                     tr(
                       'importedX',
@@ -83,20 +84,25 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     ),
                     context,
                   );
+                }
                 } else {
+                if (mounted) {
                   showDialog(
                     context: context,
                     builder: (BuildContext ctx) {
-                      return ImportErrorDialog(
-                        urlsLength: urls.length,
-                        errors: errors,
-                      );
-                    },
+                    return ImportErrorDialog(
+                      urlsLength: urls.length,
+                      errors: errors,
+                    );
+                  },
                   );
+                }
                 }
               })
               .catchError((e) {
-                showError(e, context);
+                if (mounted) {
+                  showError(e, context);
+                }
               })
               .whenComplete(() {
                 setState(() {
@@ -116,12 +122,18 @@ class _ImportExportPageState extends State<ImportExportPage> {
             sp: settingsProvider,
           )
           .then((String? result) {
-            if (result != null) {
-              showMessage(tr('exportedTo', args: [result]), context);
+            if (result != null && mounted) {
+              if (mounted) {
+                showMessage(tr('exportedTo', args: [result]), context);
+              }
             }
           })
           .catchError((e) {
-            showError(e, context);
+            if (mounted) {
+              if (mounted) {
+                showError(e, context);
+              }
+            }
           });
     }
 
@@ -145,22 +157,30 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 appsProvider.apps.forEach((key, value) {
                   for (var c in value.app.categories) {
                     if (!cats.containsKey(c)) {
-                      cats[c] = generateRandomLightColor().value;
+                      cats[c] = generateRandomLightColor().toARGB32();
                     }
                   }
                 });
                 appsProvider.addMissingCategories(settingsProvider);
-                showMessage(
-                  '${tr('importedX', args: [plural('apps', value.key.length).toLowerCase()])}${value.value ? ' + ${tr('settings').toLowerCase()}' : ''}',
-                  context,
-                );
+                if (mounted) {
+                  if (mounted) {
+                    showMessage(
+                      '${tr('importedX', args: [plural('apps', value.key.length).toLowerCase()])}${value.value ? ' + ${tr('settings').toLowerCase()}' : ''}',
+                      context,
+                    );
+                  }
+                }
               });
             } else {
               // User canceled the picker
             }
           })
           .catchError((e) {
-            showError(e, context);
+            if (mounted) {
+              if (mounted) {
+                showError(e, context);
+              }
+            }
           })
           .whenComplete(() {
             setState(() {
@@ -257,27 +277,33 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     sourceOverride: source,
                   );
                   if (errors.isEmpty) {
-                    // ignore: use_build_context_synchronously
-                    showMessage(
-                      tr(
-                        'importedX',
-                        args: [
-                          plural('apps', selectedUrls.length).toLowerCase(),
-                        ],
-                      ),
-                      context,
-                    );
-                  } else {
-                    // ignore: use_build_context_synchronously
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext ctx) {
-                        return ImportErrorDialog(
-                          urlsLength: selectedUrls.length,
-                          errors: errors,
+                    if (mounted) {
+                      if (mounted) {
+                        showMessage(
+                          tr(
+                            'importedX',
+                            args: [
+                              plural('apps', selectedUrls.length).toLowerCase(),
+                            ],
+                          ),
+                          context,
                         );
-                      },
-                    );
+                      }
+                    }
+                  } else {
+                    if (mounted) {
+                      if (mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext ctx) {
+                            return ImportErrorDialog(
+                              urlsLength: selectedUrls.length,
+                              errors: errors,
+                            );
+                          },
+                        );
+                      }
+                    }
                   }
                 }
               } else {
@@ -286,7 +312,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
             }
           }()
           .catchError((e) {
-            showError(e, context);
+            if (mounted) {
+              if (mounted) {
+                showError(e, context);
+              }
+            }
           })
           .whenComplete(() {
             setState(() {
@@ -326,31 +356,41 @@ class _ImportExportPageState extends State<ImportExportPage> {
               if (selectedUrls != null) {
                 var errors = await appsProvider.addAppsByURL(selectedUrls);
                 if (errors.isEmpty) {
-                  // ignore: use_build_context_synchronously
-                  showMessage(
-                    tr(
-                      'importedX',
-                      args: [plural('apps', selectedUrls.length).toLowerCase()],
-                    ),
-                    context,
-                  );
-                } else {
-                  // ignore: use_build_context_synchronously
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext ctx) {
-                      return ImportErrorDialog(
-                        urlsLength: selectedUrls.length,
-                        errors: errors,
+                  if (mounted) {
+                    if (mounted) {
+                      showMessage(
+                        tr(
+                          'importedX',
+                          args: [plural('apps', selectedUrls.length).toLowerCase()],
+                        ),
+                        context,
                       );
-                    },
-                  );
+                    }
+                  }
+                } else {
+                  if (mounted) {
+                    if (mounted) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext ctx) {
+                          return ImportErrorDialog(
+                            urlsLength: selectedUrls.length,
+                            errors: errors,
+                          );
+                        },
+                      );
+                    }
+                  }
                 }
               }
             }
           }()
           .catchError((e) {
-            showError(e, context);
+            if (mounted) {
+              if (mounted) {
+                showError(e, context);
+              }
+            }
           })
           .whenComplete(() {
             setState(() {
@@ -535,16 +575,18 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                               },
                                             ) ??
                                             [];
-                                        var searchSource = sourceProvider
-                                            .sources
-                                            .where(
-                                              (e) => searchSourceName.contains(
-                                                e.name,
-                                              ),
-                                            )
-                                            .toList();
-                                        if (searchSource.isNotEmpty) {
-                                          runSourceSearch(searchSource[0]);
+                                        if (mounted) {
+                                          var searchSource = sourceProvider
+                                              .sources
+                                              .where(
+                                                (e) => searchSourceName.contains(
+                                                  e.name,
+                                                ),
+                                              )
+                                              .toList();
+                                          if (searchSource.isNotEmpty) {
+                                            runSourceSearch(searchSource[0]);
+                                          }
                                         }
                                       },
                                 label: Text(
@@ -674,7 +716,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
             Navigator.of(context).pop(null);
           },
           icon: const Icon(Icons.close),
-          child: Text(tr('ok')),
+          label: Text(tr('ok')),
         ),
       ],
     );
@@ -899,11 +941,6 @@ class _SelectionModalState extends State<SelectionModal> {
                 groupValue: selectedEntries.isEmpty
                     ? null
                     : selectedEntries.first.key.key,
-                onChanged: (value) {
-                  setState(() {
-                    selectOnlyOne(entry.key);
-                  });
-                },
               ),
             );
 
@@ -946,7 +983,16 @@ class _SelectionModalState extends State<SelectionModal> {
             );
 
             return widget.onlyOneSelectionAllowed
-                ? singleSelectTile
+                ? RadioGroup<String>(
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() {
+                          selectOnlyOne(entry.key);
+                        });
+                      }
+                    },
+                    child: singleSelectTile,
+                  )
                 : multiSelectTile;
           }),
         ],

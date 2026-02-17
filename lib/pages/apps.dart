@@ -517,11 +517,6 @@ class AppsPageState extends State<AppsPage> {
     }
 
     getSingleAppHorizTile(int index) {
-      var showChangesFn = getChangeLogFn(context, listedApps[index].app);
-      var hasUpdate =
-          listedApps[index].app.installedVersion != null &&
-          listedApps[index].app.installedVersion !=
-              listedApps[index].app.latestVersion;
       // New trailing: show Install / Update button or Updated indicator
       Widget trailingRow = Builder(
         builder: (ctx) {
