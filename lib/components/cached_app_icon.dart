@@ -71,19 +71,28 @@ class _CachedAppIconState extends State<CachedAppIcon>
 
     // Rotation animation for loading/error states
     _rotationController = AnimationController(
-      void _setLoading(bool value) {
-        if (_isLoading == value) return;
-        setState(() {
-          _isLoading = value;
-        });
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+    _rotationAnimation =
+        Tween<double>(begin: 0, end: 0.1).animate(CurvedAnimation(
+      parent: _rotationController,
+      curve: Curves.easeInOut,
+    ));
 
-        if (_isLoading) {
-          _rotationController.repeat(reverse: true);
-        } else {
-          _rotationController.stop();
-          _rotationController.reset();
-        }
+    void _setLoading(bool value) {
+      if (_isLoading == value) return;
+      setState(() {
+        _isLoading = value;
+      });
+
+      if (_isLoading) {
+        _rotationController.repeat(reverse: true);
+      } else {
+        _rotationController.stop();
+        _rotationController.reset();
       }
+    }
     // Start loading the icon
     _loadIcon();
   }
