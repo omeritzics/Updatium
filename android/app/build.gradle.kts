@@ -131,18 +131,16 @@ val abiCodes = mapOf("x86_64" to 4, "armeabi-v7a" to 1, "arm64-v8a" to 2, "x86" 
     androidComponents {
         onVariants { variant ->
             variant.outputs.forEach { output ->
-                // Get ABI from the variant output
-                val abiFilter = output.getFilter(
+                // Get ABI from the variant output (null for universal APK)
+                val abiName = output.getFilter(
                     com.android.build.api.variant.FilterConfiguration.FilterType.ABI
-                )
-                val abiName = abiFilter?.identifier
-                val abiVersionCode = abiName?.let { abiCodes[it] } ?: return@forEach
+                )?.identifier
+                val abiVersionCode = abiName?.let { abiCodes[it] } ?: 0
 
                 val baseBuildNumber = requireNotNull(flutterVersionCode.toLongOrNull()) {
                     "Invalid flutter.versionCode='$flutterVersionCode' in local.properties; must be a number."
                 }
 
-                // Using a larger modulo reduces the chance of collision and handles large version codes
                 val baseCode = baseBuildNumber % 1_000_000_000
                 val compressedCode = baseCode * 10 + abiVersionCode
                 val maxPlayVersionCode = 2_100_000_000L
