@@ -138,9 +138,11 @@ class GitLab extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    String? pat = await getPATIfAny(hostChanged ? additionalSettings : {});
-    String optionalAuth = (pat != null) ? 'private_token=$pat' : '';
-    return '$assetUrl${(Uri.parse(assetUrl).query.isEmpty ? '?' : '&')}$optionalAuth';
+    final String? pat = await getPATIfAny(hostChanged ? additionalSettings : {});
+    if (pat == null) return assetUrl;
+
+    final separator = Uri.parse(assetUrl).query.isEmpty ? '?' : '&';
+    return '$assetUrl${separator}private_token=$pat';
   }
 
   @override
