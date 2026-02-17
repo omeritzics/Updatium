@@ -48,6 +48,22 @@ class _CachedAppIconState extends State<CachedAppIcon>
   bool _isHovered = false;
 
   @override
+  void _setLoading(bool value) {
+    if (_isLoading == value) return;
+
+    setState(() {
+      _isLoading = value;
+    });
+
+    if (_isLoading) {
+      _rotationController.repeat(reverse: true);
+    } else {
+      _rotationController.stop();
+      _rotationController.reset();
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
 
@@ -55,8 +71,9 @@ class _CachedAppIconState extends State<CachedAppIcon>
     _shimmerController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
-    );
-    _shimmerAnimation = Tween<double>(begin: -2.0, end: 2.0).animate(
+    )..repeat();
+
+    _shimmerAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
     );
 
@@ -77,20 +94,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
     _rotationAnimation = Tween<double>(begin: 0, end: 0.1).animate(
       CurvedAnimation(parent: _rotationController, curve: Curves.easeInOut),
     );
-
-    void setLoading(bool value) {
-      if (_isLoading == value) return;
-      setState(() {
-        _isLoading = value;
-      });
-
-      if (_isLoading) {
-        _rotationController.repeat(reverse: true);
-      } else {
-        _rotationController.stop();
-        _rotationController.reset();
-      }
-    }
 
     // Start loading the icon
     _loadIcon();
