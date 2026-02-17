@@ -63,6 +63,7 @@ jobs:
           KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
           set -euo pipefail
+          : "${KEYSTORE_PASS:?KEYSTORE_PASSWORD secret is missing/empty}"
           test -f android/upload-keystore.jks
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
