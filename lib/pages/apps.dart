@@ -1694,7 +1694,7 @@ class AppsPageState extends State<AppsPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: RefreshIndicator(
-        key:_refreshIndicatorKey,
+        key: _refreshIndicatorKey,
         onRefresh: refresh,
         displacement: MediaQuery.of(context).size.height * 0.1,
         child: Scrollbar(

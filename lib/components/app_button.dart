@@ -141,10 +141,9 @@ class _AppTextButtonState extends State<AppTextButton>
                   boxShadow: _isHovered && widget.enabled
                       ? [
                           BoxShadow(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(0.2),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withOpacity(0.2),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
