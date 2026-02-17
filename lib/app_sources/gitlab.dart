@@ -141,10 +141,15 @@ class GitLab extends AppSource {
     final String? pat = await getPATIfAny(
       hostChanged ? additionalSettings : {},
     );
-    if (pat == null) return assetUrl;
+    if (pat == null || pat.isEmpty) return assetUrl;
 
-    final separator = Uri.parse(assetUrl).query.isEmpty ? '?' : '&';
-    return '$assetUrl${separator}private_token=$pat';
+    final uri = Uri.tryParse(assetUrl);
+    if (uri == null) return assetUrl;
+
+    final qp = Map<String, String>.from(uri.queryParameters);
+    qp.putIfAbsent('private_token', () => pat);
+
+    return uri.replace(queryParameters: qp).toString();
   }
 
   @override
