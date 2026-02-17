@@ -425,18 +425,18 @@ class AddAppPageState extends State<AddAppPage> {
           List<String>? selectedUrls = res.isEmpty
               ? []
               // ignore: use_build_context_synchronously
-              : context.mounted == true 
-                  ? await showDialog<List<String>?>(
-                      context: context,
-                      builder: (BuildContext ctx) {
-                        return SelectionModal(
-                          entries: res.map((k, v) => MapEntry(k, v.value)),
-                          selectedByDefault: false,
-                          onlyOneSelectionAllowed: true,
-                        );
-                      },
-                    )
-                  : null;
+              : context.mounted == true
+              ? await showDialog<List<String>?>(
+                  context: context,
+                  builder: (BuildContext ctx) {
+                    return SelectionModal(
+                      entries: res.map((k, v) => MapEntry(k, v.value)),
+                      selectedByDefault: false,
+                      onlyOneSelectionAllowed: true,
+                    );
+                  },
+                )
+              : null;
           if (selectedUrls != null && selectedUrls.isNotEmpty) {
             var sourceName = res[selectedUrls[0]]?.key;
             changeUserInput(

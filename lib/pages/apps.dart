@@ -908,7 +908,8 @@ class AppsPageState extends State<AppsPage> {
                                             app.id,
                                           ], globalNavigatorKey.currentContext)
                                           .catchError((e) {
-                                            if (mounted && context.mounted == true) {
+                                            if (mounted &&
+                                                context.mounted == true) {
                                               showError(e, context);
                                             }
                                             return <String>[];
@@ -928,7 +929,8 @@ class AppsPageState extends State<AppsPage> {
                                             app.id,
                                           ], globalNavigatorKey.currentContext)
                                           .catchError((e) {
-                                            if (mounted && context.mounted == true) {
+                                            if (mounted &&
+                                                context.mounted == true) {
                                               showError(e, context);
                                             }
                                             return <String>[];
@@ -1246,28 +1248,28 @@ class AppsPageState extends State<AppsPage> {
               await showDialog<Map<String, dynamic>?>(
                 context: context,
                 builder: (BuildContext ctx) {
-                return GeneratedFormModal(
-                  title: tr('categorize'),
-                  items: const [],
-                  initValid: true,
-                  singleNullReturnButton: tr('continue'),
-                  additionalWidgets: [
-                    CategoryEditorSelector(
-                      preselected: !showPrompt ? preselected ?? {} : {},
-                      showLabelWhenNotEmpty: false,
-                      onSelected: (categories) {
-                        appsProvider.saveApps(
-                          selectedApps.map((e) {
-                            e.categories = categories;
-                            return e;
-                          }).toList(),
-                        );
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
+                  return GeneratedFormModal(
+                    title: tr('categorize'),
+                    items: const [],
+                    initValid: true,
+                    singleNullReturnButton: tr('continue'),
+                    additionalWidgets: [
+                      CategoryEditorSelector(
+                        preselected: !showPrompt ? preselected ?? {} : {},
+                        showLabelWhenNotEmpty: false,
+                        onSelected: (categories) {
+                          appsProvider.saveApps(
+                            selectedApps.map((e) {
+                              e.categories = categories;
+                              return e;
+                            }).toList(),
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
             }
           }
         } catch (err) {

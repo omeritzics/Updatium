@@ -583,7 +583,8 @@ class AppsProvider with ChangeNotifier {
         await loadApps();
         // Delete any partial APKs (if safe to do so)
         var cutoff = DateTime.now().subtract(const Duration(days: 7));
-        apkDir.listSync()
+        apkDir
+            .listSync()
             .where((element) => element.statSync().modified.isBefore(cutoff))
             .forEach((partialApk) {
               if (!areDownloadsRunning()) {
@@ -926,9 +927,10 @@ class AppsProvider with ChangeNotifier {
           firstTimeWithContext?.mounted == true ? firstTimeWithContext : null,
           needsBGWorkaround: needsBGWorkaround,
           shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
-          additionalAPKs: apkFiles.sublist(
-            1,
-          ).map((a) => DownloadedApk(dir.appId, a)).toList(),
+          additionalAPKs: apkFiles
+              .sublist(1)
+              .map((a) => DownloadedApk(dir.appId, a))
+              .toList(),
         );
         somethingInstalled = somethingInstalled || wasInstalled;
         dir.file.delete(recursive: true);
@@ -2496,12 +2498,14 @@ class _AppFilePickerState extends State<AppFilePicker> {
               }
             },
             child: Column(
-              children: urlsToSelectFrom.map(
-                (u) => RadioListTile<String>(
-                  title: Text(u.key),
-                  value: u.value,
-                ),
-              ).toList(),
+              children: urlsToSelectFrom
+                  .map(
+                    (u) => RadioListTile<String>(
+                      title: Text(u.key),
+                      value: u.value,
+                    ),
+                  )
+                  .toList(),
             ),
           ),
           if (widget.archs != null) const SizedBox(height: 16),

@@ -86,45 +86,45 @@ class _HomePageState extends State<HomePage> {
         if (mounted) {
           await showDialog(
             context: context,
-          builder: (BuildContext ctx) {
-            return AlertDialog(
-              title: Text(tr('note')),
-              scrollable: true,
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 20,
-                children: [
-                  Text(tr('googleVerificationWarningP1')),
-                  GestureDetector(
-                    onTap: () {
-                      launchUrlString(
-                        'https://keepandroidopen.org/',
-                        mode: LaunchMode.externalApplication,
-                      );
-                    },
-                    child: Text(
-                      tr('googleVerificationWarningP2'),
-                      style: const TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.bold,
+            builder: (BuildContext ctx) {
+              return AlertDialog(
+                title: Text(tr('note')),
+                scrollable: true,
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 20,
+                  children: [
+                    Text(tr('googleVerificationWarningP1')),
+                    GestureDetector(
+                      onTap: () {
+                        launchUrlString(
+                          'https://keepandroidopen.org/',
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: Text(
+                        tr('googleVerificationWarningP2'),
+                        style: const TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  Text(tr('googleVerificationWarningP3')),
-                ],
-              ),
-              actions: [
-                AppTextButton(
-                  onPressed: () {
-                    sp.googleVerificationWarningShown = true;
-                    Navigator.of(context).pop(null);
-                  },
-                  child: Text(tr('ok')),
+                    Text(tr('googleVerificationWarningP3')),
+                  ],
                 ),
-              ],
-            );
-          },
-        );
+                actions: [
+                  AppTextButton(
+                    onPressed: () {
+                      sp.googleVerificationWarningShown = true;
+                      Navigator.of(context).pop(null);
+                    },
+                    child: Text(tr('ok')),
+                  ),
+                ],
+              );
+            },
+          );
         }
       }
     });
@@ -312,7 +312,7 @@ class _HomePageState extends State<HomePage> {
           .clearSelected(),
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
-        
+
         if (isLinkActivity &&
             selectedIndexHistory.length == 1 &&
             selectedIndexHistory.last == 1) {
