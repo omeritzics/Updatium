@@ -433,7 +433,7 @@ class AppsPageState extends State<AppsPage> {
                       size: MediaQuery.of(context).size.width * 0.2,
                       color: Theme.of(
                         context,
-                      ).colorScheme.primary.withOpacity(0.6),
+                      ).colorScheme.primary.withValues(alpha: 0.6),
                     ),
                     const SizedBox(height: 24),
                     Text(
@@ -460,7 +460,7 @@ class AppsPageState extends State<AppsPage> {
                               ?.copyWith(
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.onSurface.withOpacity(0.7),
+                                ).colorScheme.onSurface.withValues(alpha: 0.7),
                               ),
                           textAlign: TextAlign.center,
                           maxLines: 5,
@@ -495,37 +495,7 @@ class AppsPageState extends State<AppsPage> {
       ];
     }
 
-    getUpdateButton(int appIndex) {
-      // Legacy single-icon updater - kept for backward compatibility but not used
-      // by the new FilledButton approach.
-      return IconButton(
-        visualDensity: VisualDensity.compact,
-        color: Theme.of(context).colorScheme.primary,
-        tooltip:
-            listedApps[appIndex].app.additionalSettings['trackOnly'] == true
-            ? tr('markUpdated')
-            : tr('update'),
-        onPressed: appsProvider.areDownloadsRunning()
-            ? null
-            : () {
-                appsProvider
-                    .downloadAndInstallLatestApps([
-                      listedApps[appIndex].app.id,
-                    ], globalNavigatorKey.currentContext)
-                    .catchError((e) {
-                      showError(e, context);
-                      return <String>[];
-                    });
-              },
-        icon: Icon(
-          listedApps[appIndex].app.additionalSettings['trackOnly'] == true
-              ? Icons.check_circle
-              : Icons.install_mobile,
-        ),
-      );
-    }
-
-    getAppIcon(int appIndex) {
+getAppIcon(int appIndex) {
       return CachedAppIconSimple(
         app: listedApps[appIndex].app,
         size: MediaQuery.of(context).size.width * 0.1,
@@ -546,21 +516,7 @@ class AppsPageState extends State<AppsPage> {
       );
     }
 
-    getVersionText(int appIndex) {
-      return listedApps[appIndex].app.installedVersion ?? tr('notInstalled');
-    }
-
-    getChangesButtonString(int appIndex, bool hasChangeLogFn) {
-      return listedApps[appIndex].app.releaseDate == null
-          ? hasChangeLogFn
-                ? tr('changes')
-                : ''
-          : DateFormat(
-              'yyyy-MM-dd',
-            ).format(listedApps[appIndex].app.releaseDate!.toLocal());
-    }
-
-    getSingleAppHorizTile(int index) {
+getSingleAppHorizTile(int index) {
       var showChangesFn = getChangeLogFn(context, listedApps[index].app);
       var hasUpdate =
           listedApps[index].app.installedVersion != null &&
@@ -589,7 +545,9 @@ class AppsPageState extends State<AppsPage> {
                             app.id,
                           ], globalNavigatorKey.currentContext)
                           .catchError((e) {
-                            showError(e, context);
+                            if (mounted) {
+                              showError(e, context);
+                            }
                             return <String>[];
                           });
                     },
@@ -605,7 +563,9 @@ class AppsPageState extends State<AppsPage> {
                             app.id,
                           ], globalNavigatorKey.currentContext)
                           .catchError((e) {
-                            showError(e, context);
+                            if (mounted) {
+                              showError(e, context);
+                            }
                             return <String>[];
                           });
                     },
@@ -636,7 +596,7 @@ class AppsPageState extends State<AppsPage> {
 
       var transparent = Theme.of(
         context,
-      ).colorScheme.surface.withAlpha(0).value;
+      ).colorScheme.surface.withAlpha(0).toARGB32();
       List<double> stops = [
         ...listedApps[index].app.categories.asMap().entries.map(
           (e) =>
@@ -783,7 +743,7 @@ class AppsPageState extends State<AppsPage> {
               listedApps[index].app.latestVersion;
       var transparent = Theme.of(
         context,
-      ).colorScheme.surface.withAlpha(0).value;
+      ).colorScheme.surface.withAlpha(0).toARGB32();
       final categories = listedApps[index].app.categories;
       final stops = categoryStops(categories);
 
@@ -951,7 +911,9 @@ class AppsPageState extends State<AppsPage> {
                                             app.id,
                                           ], globalNavigatorKey.currentContext)
                                           .catchError((e) {
-                                            showError(e, context);
+                                            if (mounted) {
+                              showError(e, context);
+                            }
                                             return <String>[];
                                           });
                                     },
@@ -969,7 +931,9 @@ class AppsPageState extends State<AppsPage> {
                                             app.id,
                                           ], globalNavigatorKey.currentContext)
                                           .catchError((e) {
-                                            showError(e, context);
+                                            if (mounted) {
+                              showError(e, context);
+                            }
                                             return <String>[];
                                           });
                                     },
@@ -1230,7 +1194,9 @@ class AppsPageState extends State<AppsPage> {
                         globalNavigatorKey.currentContext,
                       )
                       .catchError((e) {
-                        showError(e, context);
+                        if (mounted) {
+                              showError(e, context);
+                            }
                         return <String>[];
                       })
                       .then((value) {
@@ -1399,9 +1365,11 @@ class AppsPageState extends State<AppsPage> {
                         urls += '${a.url}\n';
                       }
                       urls = urls.substring(0, urls.length - 1);
-                      Share.share(
-                        urls,
-                        subject: 'Updatium - ${tr('appsString')}',
+                      SharePlus.instance.share(
+                        ShareParams(
+                          text: urls,
+                          subject: 'Updatium - ${tr('appsString')}',
+                        ),
                       );
                       Navigator.of(context).pop();
                     },
@@ -1429,9 +1397,11 @@ class AppsPageState extends State<AppsPage> {
                               mimeType: 'application/json',
                               name: fn,
                             );
-                            Share.shareXFiles(
-                              [f],
-                              fileNameOverrides: ['$fn.json'],
+                            SharePlus.instance.share(
+                              ShareParams(
+                                files: [f],
+                                fileNameOverrides: ['$fn.json'],
+                              ),
                             );
                           },
                     child: Text(

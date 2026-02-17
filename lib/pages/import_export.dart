@@ -583,7 +583,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   runMassSourceImport(source);
                                 },
                           icon: const Icon(Icons.cloud_download),
-                          child: Text(tr('importX', args: [source.name])),
+                          label: Text(tr('importX', args: [source.name])),
                         ),
                       ],
                     ),
