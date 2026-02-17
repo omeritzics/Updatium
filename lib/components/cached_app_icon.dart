@@ -47,7 +47,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
   String? _lastRemoteUrl;
   bool _isHovered = false;
 
-  
   @override
   void initState() {
     super.initState();

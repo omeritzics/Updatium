@@ -318,7 +318,8 @@ class _HomePageState extends State<HomePage> {
         if (appsState?.clearSelected() == true) return;
 
         // Clear selected items if they exist
-        (pages[0].widget.key as GlobalKey<AppsPageState>).currentState?.clearSelected();
+        (pages[0].widget.key as GlobalKey<AppsPageState>).currentState
+            ?.clearSelected();
 
         if (isLinkActivity &&
             selectedIndexHistory.length == 1 &&

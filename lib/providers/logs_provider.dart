@@ -51,9 +51,9 @@ class Log {
 
 class LogsProvider {
   static final LogsProvider instance = LogsProvider._internal();
-  
+
   LogsProvider._internal();
-  
+
   LogsProvider({bool runDefaultClear = true}) {
     clear(before: DateTime.now().subtract(const Duration(days: 7)));
   }

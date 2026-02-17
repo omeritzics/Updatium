@@ -949,9 +949,7 @@ class _SelectionModalState extends State<SelectionModal> {
                       },
                       child: descriptionText,
                     ),
-              leading: Radio<String>(
-                value: entry.key,
-              ),
+              leading: Radio<String>(value: entry.key),
             );
 
             var multiSelectTile = Row(

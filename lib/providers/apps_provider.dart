@@ -2412,16 +2412,18 @@ class AppsProvider with ChangeNotifier {
     }
     List<List<String>> errors = errorsMap.keys.map((e) {
       // Log detailed error internally for debugging using structured logging
-      LogsProvider.instance.addStructured(
-        operation: 'Import error',
-        component: 'AppsProvider',
-        errorCode: 'IMPORT_ERROR',
-        level: LogLevels.warning,
-      ).catchError((_) {
-        // Best-effort logging only; never fail import due to logging.
-        // Return a dummy log to satisfy the Future<Log> return type
-        return Log('', LogLevels.debug);
-      });
+      LogsProvider.instance
+          .addStructured(
+            operation: 'Import error',
+            component: 'AppsProvider',
+            errorCode: 'IMPORT_ERROR',
+            level: LogLevels.warning,
+          )
+          .catchError((_) {
+            // Best-effort logging only; never fail import due to logging.
+            // Return a dummy log to satisfy the Future<Log> return type
+            return Log('', LogLevels.debug);
+          });
 
       // Return user-friendly error message
       String userMessage;
