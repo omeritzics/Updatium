@@ -433,7 +433,7 @@ class AppsPageState extends State<AppsPage> {
                       size: MediaQuery.of(context).size.width * 0.2,
                       color: Theme.of(
                         context,
-                      ).colorScheme.primary.withValues(alpha: 0.6),
+                      ).colorScheme.primary.withOpacity(0.6),
                     ),
                     const SizedBox(height: 24),
                     Text(
