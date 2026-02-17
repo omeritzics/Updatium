@@ -128,34 +128,29 @@ android {
 }
 
 val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
-androidComponents {
-    onVariants { variant ->
-        variant.outputs.forEach { output ->
-            // Get ABI from the variant output
-            val abiFilter = output.getFilter(com.android.build.api.variant.FilterConfiguration.FilterType.ABI)
-            val abiName = abiFilter?.identifier
-            val abiVersionCode = abiName?.let { abiCodes[it] }
+    androidComponents {
+        onVariants { variant ->
+            variant.outputs.forEach { output ->
+                // Get ABI from the variant output
+                val abiFilter = output.getFilter(
+                    com.android.build.api.variant.FilterConfiguration.FilterType.ABI
+                )
+                val abiName = abiFilter?.identifier
+                val abiVersionCode = abiName?.let { abiCodes[it] } ?: return@forEach
 
-            if (abiVersionCode != null) {
-                // Create a version code within Android limits (max 2100000000)
-                // Use: (YYMMDDHH % 100000) * 100 + ABI to stay well under limits
                 val baseBuildNumber = requireNotNull(flutterVersionCode.toLongOrNull()) {
                     "Invalid flutter.versionCode='$flutterVersionCode' in local.properties; must be a number."
                 }
-                val compressedCode = (baseBuildNumber % 10_000_000) * 100 + abiVersionCode
-                val maxPlayVersionCode = 2_100_000_000L
-                val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode)
-                }
+
                 // Using a larger modulo reduces the chance of collision.
-                // Max version code is 2,100,000,000.
-                // Our scheme is `(base % X) * 100 + abi`.
-                // To stay within limits, `(X-1)*100 + 99` should be < 2,100,000,000.
-                // `X*100 - 1 < 2,100,000,000` -> `X < 21,000,000.01`.
-                // So we can use 21,000,000 as the modulo.
                 val compressedCode = (baseBuildNumber % 21_000_000) * 100 + abiVersionCode
                 val maxPlayVersionCode = 2_100_000_000L
+                val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode)
+
+                (output as ApkVariantOutputImpl).versionCodeOverride = safeVersionCode.toInt()
+            }
+        }
     }
-}
 
 
 dependencies {
