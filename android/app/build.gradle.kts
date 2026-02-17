@@ -141,12 +141,14 @@ val abiCodes = mapOf("x86_64" to 4, "armeabi-v7a" to 1, "arm64-v8a" to 2, "x86" 
                     "Invalid flutter.versionCode='$flutterVersionCode' in local.properties; must be a number."
                 }
 
-                val baseCode = baseBuildNumber % 1_000_000_000
+                val baseCode = baseBuildNumber % 200_000_000L
                 val compressedCode = baseCode * 10 + abiVersionCode
                 val maxPlayVersionCode = 2_100_000_000L
-                val safeVersionCode = compressedCode.coerceIn(1L, maxPlayVersionCode).toInt()
+                require(compressedCode in 1L..maxPlayVersionCode) {
+                    "Computed versionCode=$compressedCode is out of Play Store range (1..$maxPlayVersionCode)."
+                }
 
-                output.versionCode.set(safeVersionCode)
+                output.versionCode.set(compressedCode.toInt())
             }
         }
     }
