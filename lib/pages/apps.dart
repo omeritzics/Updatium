@@ -596,7 +596,7 @@ class AppsPageState extends State<AppsPage> {
 
       var transparent = Theme.of(
         context,
-      ).colorScheme.surface.withAlpha(0).toARGB32();
+      ).colorScheme.surface.withAlpha(0).value;
       List<double> stops = [
         ...listedApps[index].app.categories.asMap().entries.map(
           (e) =>
