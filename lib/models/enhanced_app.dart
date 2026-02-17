@@ -181,8 +181,9 @@ class EnhancedApp {
           .inDays;
       if (daysSinceUpdate < 7) {
         score += 15;
-      } else if (daysSinceUpdate < 30)
+      } else if (daysSinceUpdate < 30) {
         score += 10;
+      }
     }
 
     return score;

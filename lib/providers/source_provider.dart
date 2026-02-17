@@ -16,7 +16,7 @@ import 'package:updatium/app_sources/apkpure.dart';
 import 'package:updatium/app_sources/aptoide.dart';
 import 'package:updatium/app_sources/codeberg.dart';
 import 'package:updatium/app_sources/coolapk.dart';
-import 'package:updatium/app_sources/directAPKLink.dart';
+import 'package:updatium/app_sources/direct_apk_link.dart';
 import 'package:updatium/app_sources/farsroid.dart';
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
