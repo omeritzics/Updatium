@@ -228,30 +228,30 @@ class _CachedAppIconState extends State<CachedAppIcon>
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 150),
                     decoration: BoxDecoration(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(widget.size * 0.2),
-                    boxShadow: _isHovered
-                        ? [
-                            BoxShadow(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primary.withValues(alpha: 0.3),
-                              blurRadius: 20,
-                              offset: const Offset(0, 8),
-                            ),
-                          ]
-                        : [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.1),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                  ),
-                  child: SizedBox(
-                    width: widget.size,
-                    height: widget.size,
-                    child: iconWidget,
+                      borderRadius: BorderRadius.circular(widget.size * 0.2),
+                      boxShadow: _isHovered
+                          ? [
+                              BoxShadow(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.primary.withValues(alpha: 0.3),
+                                blurRadius: 20,
+                                offset: const Offset(0, 8),
+                              ),
+                            ]
+                          : [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.1),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                    ),
+                    child: SizedBox(
+                      width: widget.size,
+                      height: widget.size,
+                      child: iconWidget,
+                    ),
                   ),
                 ),
               ),
