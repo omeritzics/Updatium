@@ -216,24 +216,24 @@ class _UpdatiumState extends State<Updatium> {
   void initForegroundService() {
     // Initialize foreground service
     FlutterForegroundTask.init(
-        androidNotificationOptions: AndroidNotificationOptions(
-          channelId: 'bg_update',
-          channelName: tr('foregroundService'),
-          channelDescription: tr('foregroundService'),
-          onlyAlertOnce: true,
-        ),
-        iosNotificationOptions: const IOSNotificationOptions(
-          showNotification: false,
-          playSound: false,
-        ),
-        foregroundTaskOptions: ForegroundTaskOptions(
-          eventAction: ForegroundTaskEventAction.repeat(900000),
-          autoRunOnBoot: true,
-          autoRunOnMyPackageReplaced: true,
-          allowWakeLock: true,
-          allowWifiLock: true,
-        ),
-      );
+      androidNotificationOptions: AndroidNotificationOptions(
+        channelId: 'bg_update',
+        channelName: tr('foregroundService'),
+        channelDescription: tr('foregroundService'),
+        onlyAlertOnce: true,
+      ),
+      iosNotificationOptions: const IOSNotificationOptions(
+        showNotification: false,
+        playSound: false,
+      ),
+      foregroundTaskOptions: ForegroundTaskOptions(
+        eventAction: ForegroundTaskEventAction.repeat(900000),
+        autoRunOnBoot: true,
+        autoRunOnMyPackageReplaced: true,
+        allowWakeLock: true,
+        allowWifiLock: true,
+      ),
+    );
   }
 
   Future<ServiceRequestResult?> startForegroundService(bool restart) async {

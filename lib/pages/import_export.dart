@@ -76,27 +76,27 @@ class _ImportExportPageState extends State<ImportExportPage> {
               .addAppsByURL(urls)
               .then((errors) {
                 if (errors.isEmpty) {
-                if (mounted) {
-                  showMessage(
-                    tr(
-                      'importedX',
-                      args: [plural('apps', urls.length).toLowerCase()],
-                    ),
-                    context,
-                  );
-                }
-                } else {
-                if (mounted) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext ctx) {
-                    return ImportErrorDialog(
-                      urlsLength: urls.length,
-                      errors: errors,
+                  if (mounted) {
+                    showMessage(
+                      tr(
+                        'importedX',
+                        args: [plural('apps', urls.length).toLowerCase()],
+                      ),
+                      context,
                     );
-                  },
-                  );
-                }
+                  }
+                } else {
+                  if (mounted) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext ctx) {
+                        return ImportErrorDialog(
+                          urlsLength: urls.length,
+                          errors: errors,
+                        );
+                      },
+                    );
+                  }
                 }
               })
               .catchError((e) {
@@ -361,7 +361,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       showMessage(
                         tr(
                           'importedX',
-                          args: [plural('apps', selectedUrls.length).toLowerCase()],
+                          args: [
+                            plural('apps', selectedUrls.length).toLowerCase(),
+                          ],
                         ),
                         context,
                       );
@@ -579,9 +581,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           var searchSource = sourceProvider
                                               .sources
                                               .where(
-                                                (e) => searchSourceName.contains(
-                                                  e.name,
-                                                ),
+                                                (e) => searchSourceName
+                                                    .contains(e.name),
                                               )
                                               .toList();
                                           if (searchSource.isNotEmpty) {
