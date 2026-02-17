@@ -495,7 +495,7 @@ class AppsPageState extends State<AppsPage> {
       ];
     }
 
-getAppIcon(int appIndex) {
+    getAppIcon(int appIndex) {
       return CachedAppIconSimple(
         app: listedApps[appIndex].app,
         size: MediaQuery.of(context).size.width * 0.1,
@@ -516,7 +516,7 @@ getAppIcon(int appIndex) {
       );
     }
 
-getSingleAppHorizTile(int index) {
+    getSingleAppHorizTile(int index) {
       var showChangesFn = getChangeLogFn(context, listedApps[index].app);
       var hasUpdate =
           listedApps[index].app.installedVersion != null &&
@@ -912,8 +912,8 @@ getSingleAppHorizTile(int index) {
                                           ], globalNavigatorKey.currentContext)
                                           .catchError((e) {
                                             if (mounted) {
-                              showError(e, context);
-                            }
+                                              showError(e, context);
+                                            }
                                             return <String>[];
                                           });
                                     },
@@ -932,8 +932,8 @@ getSingleAppHorizTile(int index) {
                                           ], globalNavigatorKey.currentContext)
                                           .catchError((e) {
                                             if (mounted) {
-                              showError(e, context);
-                            }
+                                              showError(e, context);
+                                            }
                                             return <String>[];
                                           });
                                     },
@@ -1195,8 +1195,8 @@ getSingleAppHorizTile(int index) {
                       )
                       .catchError((e) {
                         if (mounted) {
-                              showError(e, context);
-                            }
+                          showError(e, context);
+                        }
                         return <String>[];
                       })
                       .then((value) {
