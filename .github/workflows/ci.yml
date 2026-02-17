@@ -145,10 +145,11 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { data: reviews } = await github.rest.pulls.listReviews({
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
+              per_page: 100,
             });
             
             // Find and dismiss any existing CI rejection reviews
@@ -159,13 +160,17 @@ jobs:
             );
 
             for (const review of ciRejectionReviews) {
-              await github.rest.pulls.dismissReview({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.issue.number,
-                review_id: review.id,
-                message: '✅ **CI Build Passed** - Automatically dismissing previous rejection as the build now succeeds.'
-              });
+              try {
+                await github.rest.pulls.dismissReview({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: context.issue.number,
+                  review_id: review.id,
+                  message: '✅ **CI Build Passed** - Automatically dismissing previous rejection as the build now succeeds.'
+                });
+              } catch (e) {
+                console.log(`Dismiss review failed/skipped: ${e?.message ?? e}`);
+              }
             }
 
             const alreadyApproved = reviews.some(
@@ -175,14 +180,18 @@ jobs:
             );
 
             if (!alreadyApproved) {
-              await github.rest.pulls.createReview({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.issue.number,
-                event: 'APPROVE',
-                body: '✅ **CI Build Passed**\n\nAutomatically approving this PR because the build succeeded.'
-              });
-              console.log(`Auto-approved PR #${context.issue.number} after successful build`);
+              try {
+                await github.rest.pulls.createReview({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: context.issue.number,
+                  event: 'APPROVE',
+                  body: '✅ **CI Build Passed**\n\nAutomatically approving this PR because the build succeeded.'
+                });
+                console.log(`Auto-approved PR #${context.issue.number} after successful build`);
+              } catch (e) {
+                console.log(`Auto-approve failed/skipped: ${e?.message ?? e}`);
+              }
             } else {
               console.log(`PR #${context.issue.number} already has a CI approval review`);
             }
