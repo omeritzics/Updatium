@@ -74,13 +74,11 @@ class _CachedAppIconState extends State<CachedAppIcon>
       duration: const Duration(seconds: 2),
       vsync: this,
     );
-    _rotationAnimation =
-        Tween<double>(begin: 0, end: 0.1).animate(CurvedAnimation(
-      parent: _rotationController,
-      curve: Curves.easeInOut,
-    ));
+    _rotationAnimation = Tween<double>(begin: 0, end: 0.1).animate(
+      CurvedAnimation(parent: _rotationController, curve: Curves.easeInOut),
+    );
 
-    void _setLoading(bool value) {
+    void setLoading(bool value) {
       if (_isLoading == value) return;
       setState(() {
         _isLoading = value;
@@ -93,6 +91,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
         _rotationController.reset();
       }
     }
+
     // Start loading the icon
     _loadIcon();
   }
