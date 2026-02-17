@@ -54,8 +54,11 @@ class LogsProvider {
 
   LogsProvider._internal();
 
-  LogsProvider({bool runDefaultClear = true}) {
-    clear(before: DateTime.now().subtract(const Duration(days: 7)));
+  factory LogsProvider({bool runDefaultClear = true}) {
+    if (runDefaultClear) {
+      instance.clear(before: DateTime.now().subtract(const Duration(days: 7)));
+    }
+    return instance;
   }
 
   Database? db;
