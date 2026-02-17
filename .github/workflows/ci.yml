@@ -174,7 +174,7 @@ jobs:
 
             const alreadyApproved = reviews.some(
               (review) =>
-                review.user.login === 'github-actions[bot]' &&
+                review.user?.login === 'github-actions[bot]' &&
                 review.state === 'APPROVED'
             );
 
