@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     ),
     NavigationPageItem(
       tr('addApp'),
-      Icons.add,
+      Icons.add_circle,
       AddAppPage(key: GlobalKey<AddAppPageState>()),
     ),
     NavigationPageItem(
@@ -202,6 +202,7 @@ class _HomePageState extends State<HomePage> {
                     items: const [],
                     additionalWidgets: [
                       ExpansionTile(
+                        leading: const Icon(Icons.info_outlined),
                         title: const Text('Raw JSON'),
                         children: [
                           Text(
