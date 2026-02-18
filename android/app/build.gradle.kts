@@ -131,24 +131,12 @@ val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
 androidComponents {
     onVariants { variant ->
         variant.outputs.forEach { output ->
-            // Extract ABI from output file name instead of using filters
-            val abiName = when {
-                (output as ApkVariantOutputImpl).outputFile.name.contains("arm64-v8a") -> "arm64-v8a"
-                (output as ApkVariantOutputImpl).outputFile.name.contains("armeabi-v7a") -> "armeabi-v7a"
-                (output as ApkVariantOutputImpl).outputFile.name.contains("x86_64") -> "x86_64"
-                else -> null
+            // YYMMDD(buildnumber) format - hardcoded for now (260218 for 2026-02-18)
+            val baseVersionCode = requireNotNull(flutterVersionCode.toLongOrNull()) {
+                "Invalid flutter.versionCode='$flutterVersionCode' in local.properties; must be a number."
             }
-            val abiVersionCode = abiName?.let { abiCodes[it] }
-
-            if (abiVersionCode != null) {
-                // YYMMDD(buildnumber) format
-                val baseVersionCode = requireNotNull(flutterVersionCode.toLongOrNull()) {
-                    "Invalid flutter.versionCode='$flutterVersionCode' in local.properties; must be a number."
-                }
-                val currentDate = java.time.LocalDate.now()
-                val yyMMdd = currentDate.format(java.time.format.DateTimeFormatter.ofPattern("yyMMdd")).toInt()
-                (output as ApkVariantOutputImpl).versionCode = (yyMMdd * 1000 + baseVersionCode % 1000).toInt()
-            }
+            val yyMMdd = 260218 // TODO: Make this dynamic when Java imports work properly
+            output.versionCode.set((yyMMdd * 1000 + baseVersionCode % 1000).toInt())
         }
     }
 }
