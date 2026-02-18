@@ -47,47 +47,23 @@ jobs:
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle || true
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle.kts || true
           
-      - name: Build APK (Debug with ABI Splitting)
+      - name: Build APK (Unique ID)
         run: |
           # Inject the short SHA into the Application ID to allow side-by-side testing
           # This replaces the existing applicationId with a unique one for this commit
-          sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle.kts || true
+          sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle || true
           
-          # Build debug APKs split by ABI for smaller size (focus on 64-bit phones)
-          flutter build apk --debug --flavor normal --split-per-abi
+          # Build the debug APK for the normal flavor
+          flutter build apk --debug --flavor normal
           
           mkdir -p build/outputs/artifacts/
-          
-          # Copy and rename split APKs (prioritize 64-bit ARM for phones)
-          if [ -f "build/app/outputs/flutter-apk/app-normal-arm64-v8a-debug.apk" ]; then
-            cp build/app/outputs/flutter-apk/app-normal-arm64-v8a-debug.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}-arm64-v8a.apk
-            echo "✅ ARM64-v8a (64-bit phones): $(ls -lh build/app/outputs/flutter-apk/app-normal-arm64-v8a-debug.apk | awk '{print $5}')"
-          fi
-          if [ -f "build/app/outputs/flutter-apk/app-normal-armeabi-v7a-debug.apk" ]; then
-            cp build/app/outputs/flutter-apk/app-normal-armeabi-v7a-debug.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}-armeabi-v7a.apk
-            echo "✅ ARM32-v7a (32-bit phones): $(ls -lh build/app/outputs/flutter-apk/app-normal-armeabi-v7a-debug.apk | awk '{print $5}')"
-          fi
-          if [ -f "build/app/outputs/flutter-apk/app-normal-x86_64-debug.apk" ]; then
-            cp build/app/outputs/flutter-apk/app-normal-x86_64-debug.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}-x86_64.apk
-            echo "✅ x86_64 (emulators/tablets): $(ls -lh build/app/outputs/flutter-apk/app-normal-x86_64-debug.apk | awk '{print $5}')"
-          fi
-          
-          # Create a universal APK as fallback (will be larger but supports all devices)
-          flutter build apk --debug --flavor normal
-          cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}-universal.apk
-          echo "📦 Universal (all architectures): $(ls -lh build/app/outputs/flutter-apk/app-normal-debug.apk | awk '{print $5}')"
-          
-          echo "\n📊 APK Size Summary:"
-          echo "Primary recommendation: arm64-v8a (for modern 64-bit phones)"
-          echo "Legacy support: armeabi-v7a (for older 32-bit phones)"
-          echo "Testing/emulation: x86_64 (for emulators and some tablets)"
-          echo "Universal: For devices that don't fit the above categories"
+          cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
 
-      - name: Upload Build Artifacts
+      - name: Upload Build Artifact
         uses: actions/upload-artifact@v6
         with:
           name: Updatium-Commit-${{ steps.vars.outputs.sha_short }}
-          path: build/outputs/artifacts/
+          path: build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
           retention-days: 14 # Keep artifacts for 14 days to save space
 
   auto_reject_on_failure:

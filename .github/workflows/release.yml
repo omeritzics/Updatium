@@ -76,26 +76,16 @@ jobs:
           
           flutter pub get
 
-          # Building Normal release with dynamic version and ABI splitting
-          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.extract_version.outputs.version }}" --build-number="${{ steps.extract_version.outputs.build_number }}" --split-per-abi
+          # Building Normal release with dynamic version
+          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.extract_version.outputs.version }}" --build-number="${{ steps.extract_version.outputs.build_number }}"
 
-          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.extract_version.outputs.version }}" --build-number="${{ steps.extract_version.outputs.build_number }}" --split-per-abi
+          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.extract_version.outputs.version }}" --build-number="${{ steps.extract_version.outputs.build_number }}"
 
       - name: Save APKs as Artifacts
         uses: actions/upload-artifact@v6
         with:
           name: updatium-release-v${{ steps.extract_version.outputs.version }}-run${{ github.run_number }}
           path: build/app/outputs/flutter-apk/*.apk
-
-      - name: Display APK Sizes
-        run: |
-          echo "📊 Release APK Sizes:"
-          ls -lh build/app/outputs/flutter-apk/*.apk | while read line; do
-            size=$(echo $line | awk '{print $5}')
-            filename=$(echo $line | awk '{print $9}')
-            echo "📦 $filename: $size"
-          done
-          echo "\n🎯 Recommendation: Use arm64-v8a for most users (modern 64-bit phones)"
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
