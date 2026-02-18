@@ -406,7 +406,7 @@ class _UpdatiumState extends State<Updatium> {
               colorScheme: scheme,
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
-                  : 'Montserrat',
+                  : 'Inter',
 
               // Expressive Typography
               textTheme: TextTheme(
