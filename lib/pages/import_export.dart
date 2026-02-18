@@ -405,10 +405,16 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       : () {
                                           runUpdatiumExport(pickOnly: true);
                                         },
-                                  icon: const Icon(Icons.folder_open),
-                                  child: Text(
-                                    tr('pickExportDir'),
-                                    textAlign: TextAlign.center,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(Icons.folder_open),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        tr('pickExportDir'),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -419,10 +425,16 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       importInProgress || snapshot.data == null
                                       ? null
                                       : runUpdatiumExport,
-                                  icon: const Icon(Icons.upload_file),
-                                  child: Text(
-                                    tr('updatiumExport'),
-                                    textAlign: TextAlign.center,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(Icons.upload_file),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        tr('updatiumExport'),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -436,10 +448,16 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   onPressed: importInProgress
                                       ? null
                                       : runUpdatiumImport,
-                                  icon: const Icon(Icons.download),
-                                  child: Text(
-                                    tr('updatiumImport'),
-                                    textAlign: TextAlign.center,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(Icons.download),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        tr('updatiumImport'),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -548,7 +566,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           runSourceSearch(searchSource[0]);
                                         }
                                       },
-                                child: Text(
+                                label: Text(
                                   tr(
                                     'searchX',
                                     args: [lowerCaseIfEnglish(tr('source'))],
@@ -561,14 +579,26 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         const SizedBox(height: 8),
                         ExpressiveFilledButton(
                           onPressed: importInProgress ? null : urlListImport,
-                          icon: const Icon(Icons.list_alt),
-                          child: Text(tr('importFromURLList')),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.list_alt),
+                              const SizedBox(width: 8),
+                              Text(tr('importFromURLList')),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 8),
                         ExpressiveFilledButton(
                           onPressed: importInProgress ? null : runUrlImport,
-                          icon: const Icon(Icons.link),
-                          child: Text(tr('importFromURLsInFile')),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.link),
+                              const SizedBox(width: 8),
+                              Text(tr('importFromURLsInFile')),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -583,8 +613,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               : () {
                                   runMassSourceImport(source);
                                 },
-                          icon: const Icon(Icons.cloud_download),
-                          child: Text(tr('importX', args: [source.name])),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.cloud_download),
+                              const SizedBox(width: 8),
+                              Text(tr('importX', args: [source.name])),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -671,8 +707,14 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          icon: const Icon(Icons.close),
-          child: Text(tr('ok')),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.close),
+              const SizedBox(width: 8),
+              Text(tr('ok')),
+            ],
+          ),
         ),
       ],
     );
