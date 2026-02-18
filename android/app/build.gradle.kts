@@ -50,11 +50,6 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInt()
         versionName = flutterVersionName
-        
-        // Enable split APKs for different ABIs
-        ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
-        }
     }
 
     flavorDimensions += "default"
@@ -115,34 +110,8 @@ android {
             versionNameSuffix = "-debug"
         }
     }
-    
-    // Configure split APK generation
-    splits {
-        abi {
-            isEnable = true
-            reset()
-            include("armeabi-v7a", "arm64-v8a", "x86_64")
-            isUniversalApk = true
-        }
-    }
 }
 
-val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
-androidComponents {
-    onVariants { variant ->
-        variant.outputs.forEach { output ->
-            // YYMMDD(buildnumber) format - dynamic date
-            val baseVersionCode = requireNotNull(flutterVersionCode.toLongOrNull()) {
-                "Invalid flutter.versionCode='$flutterVersionCode' in local.properties; must be a number."
-            }
-            val currentDate = org.gradle.api.internal.provider.DefaultProvider { 
-                java.text.SimpleDateFormat("yyMMdd").format(java.util.Date()) 
-            }.get()
-            val yyMMdd = currentDate.toInt()
-            output.versionCode.set((yyMMdd * 1000 + baseVersionCode % 1000).toInt())
-        }
-    }
-}
 
 
 dependencies {
