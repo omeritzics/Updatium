@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:updatium/components/expressive_refresh_indicator.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/cached_app_icon.dart';
@@ -420,7 +419,7 @@ class AppsPageState extends State<AppsPage> {
                   children: [
                     Icon(
                       Icons.widgets,
-                      size: 80,
+                      size: MediaQuery.of(context).size.width * 0.2,
                       color: Theme.of(
                         context,
                       ).colorScheme.primary.withOpacity(0.6),
@@ -518,7 +517,7 @@ class AppsPageState extends State<AppsPage> {
     getAppIcon(int appIndex) {
       return CachedAppIconSimple(
         app: listedApps[appIndex].app,
-        size: 48.0,
+        size: MediaQuery.of(context).size.width * 0.1,
         onTap: () {
           // Handle tap if needed
         },
@@ -605,15 +604,15 @@ class AppsPageState extends State<AppsPage> {
             action = Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.check_circle, color: Colors.green[600], size: 20),
-                const SizedBox(width: 6),
+                Icon(Icons.check_circle, color: Colors.green[600], size: MediaQuery.of(context).size.width * 0.05),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.015),
                 Text(tr('updated'), style: TextStyle(color: Colors.green[600])),
               ],
             );
           }
 
           return SizedBox(
-            width: 120,
+            width: MediaQuery.of(context).size.width * 0.25,
             height: double.infinity,
             child: Center(child: action),
           );
@@ -969,7 +968,7 @@ class AppsPageState extends State<AppsPage> {
                               Icon(
                                 Icons.check_circle,
                                 color: Colors.green[600],
-                                size: 18,
+                                size: MediaQuery.of(context).size.width * 0.04,
                               ),
                               const SizedBox(width: 6),
                               Text(
@@ -1041,11 +1040,11 @@ class AppsPageState extends State<AppsPage> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 200,
+                        SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
                           childAspectRatio: 0.6,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
+                          crossAxisSpacing: MediaQuery.of(context).size.width * 0.04,
+                          mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
                         ),
                     itemCount: listedApps
                         .asMap()
@@ -1303,9 +1302,8 @@ class AppsPageState extends State<AppsPage> {
             ),
             content: Text(
               tr('onlyWorksWithNonVersionDetectApps'),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             actions: [
@@ -1617,7 +1615,7 @@ class AppsPageState extends State<AppsPage> {
               isFilterOff ? Icons.search_rounded : Icons.search_off_rounded,
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: MediaQuery.of(context).size.width * 0.04),
           const VerticalDivider(),
           Expanded(
             child: Row(
@@ -1675,8 +1673,9 @@ class AppsPageState extends State<AppsPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: ExpressiveRefreshIndicator(
+      body: RefreshIndicator(
         onRefresh: refresh,
+        displacement: MediaQuery.of(context).size.height * 0.1,
         child: Scrollbar(
           interactive: true,
           controller: scrollController,

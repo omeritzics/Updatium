@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
-import 'package:updatium/components/expressive_buttons.dart';
 import 'package:updatium/components/app_button.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
@@ -399,7 +398,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: ExpressiveFilledButton(
+                                child: FilledButton.icon(
                                   onPressed: importInProgress
                                       ? null
                                       : () {
@@ -420,7 +419,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               ),
                               const SizedBox(width: 16),
                               Expanded(
-                                child: ExpressiveFilledButton(
+                                child: FilledButton.icon(
                                   onPressed:
                                       importInProgress || snapshot.data == null
                                       ? null
@@ -444,7 +443,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: ExpressiveFilledButton(
+                                child: FilledButton.icon(
                                   onPressed: importInProgress
                                       ? null
                                       : runUpdatiumImport,
@@ -577,7 +576,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           ],
                         ),
                         const SizedBox(height: 8),
-                        ExpressiveFilledButton(
+                        FilledButton.icon(
                           onPressed: importInProgress ? null : urlListImport,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -589,7 +588,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        ExpressiveFilledButton(
+                        FilledButton.icon(
                           onPressed: importInProgress ? null : runUrlImport,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -607,7 +606,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const SizedBox(height: 8),
-                        ExpressiveFilledButton(
+                        FilledButton.icon(
                           onPressed: importInProgress
                               ? null
                               : () {
@@ -630,9 +629,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   Text(
                     tr('importedAppsIdDisclaimer'),
                     textAlign: TextAlign.start,
-                    style: const TextStyle(
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                       fontStyle: FontStyle.italic,
-                      fontSize: 12,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -682,7 +681,10 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
           const SizedBox(height: 16),
           Text(
             tr('followingURLsHadErrors'),
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+              fontWeight: FontWeight.w500,
+            ),
           ),
           ...widget.errors.map((e) {
             return Column(
@@ -703,7 +705,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
         ],
       ),
       actions: [
-        ExpressiveButton(
+        TextButton.icon(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
@@ -803,20 +805,20 @@ class _SelectionModalState extends State<SelectionModal> {
       }
       var noneSelected = entrySelections.values.where((v) => v == true).isEmpty;
       return noneSelected
-          ? ExpressiveButton(
+          ? TextButton(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
               onPressed: () {
                 setState(() {
-                  selectAll();
+                  entrySelections.updateAll((key, value) => true);
                 });
               },
               child: Text(tr('selectAll')),
             )
-          : ExpressiveButton(
+          : TextButton(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
               onPressed: () {
                 setState(() {
-                  selectAll(deselect: true);
+                  entrySelections.updateAll((key, value) => false);
                 });
               },
               child: Text(tr('deselectX', args: [tr('all')])),

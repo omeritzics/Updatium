@@ -141,11 +141,11 @@ class _SettingsPageState extends State<SettingsPage> {
           tr('selectX', args: [tr('color').toLowerCase()]),
           style: Theme.of(context).textTheme.titleLarge,
         ),
-        wheelDiameter: 192,
-        wheelSquareBorderRadius: 32,
-        width: 48,
-        height: 48,
-        borderRadius: 24,
+        wheelDiameter: MediaQuery.of(context).size.width * 0.45,
+        wheelSquareBorderRadius: MediaQuery.of(context).size.width * 0.075,
+        width: MediaQuery.of(context).size.width * 0.11,
+        height: MediaQuery.of(context).size.width * 0.11,
+        borderRadius: MediaQuery.of(context).size.width * 0.055,
         spacing: 8,
         runSpacing: 8,
         enableShadesSelection: false,
@@ -188,6 +188,9 @@ class _SettingsPageState extends State<SettingsPage> {
       subtitle: Text(
         "${ColorTools.nameThatColor(settingsProvider.themeColor)} "
         "(${ColorTools.materialNameAndCode(settingsProvider.themeColor, colorSwatchNameMap: colorsNameMap)})",
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
       ),
       trailing: Container(
         width: MediaQuery.of(context).size.width * 0.1,
@@ -231,17 +234,28 @@ class _SettingsPageState extends State<SettingsPage> {
     var useMaterialThemeSwitch = FutureBuilder(
       builder: (ctx, val) {
         return ((val.data?.version.sdkInt ?? 0) >= 31)
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(child: Text(tr('useMaterialYou'))),
-                  Switch(
-                    value: settingsProvider.useMaterialYou,
-                    onChanged: (value) {
-                      settingsProvider.useMaterialYou = value;
-                    },
+            ? Card.outlined(
+                margin: const EdgeInsets.all(16),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          tr('useMaterialYou'),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      Switch(
+                        value: settingsProvider.useMaterialYou,
+                        onChanged: (value) {
+                          settingsProvider.useMaterialYou = value;
+                        },
+                      ),
+                    ],
                   ),
-                ],
+                ),
               )
             : const SizedBox.shrink();
       },
