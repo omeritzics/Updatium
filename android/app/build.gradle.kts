@@ -131,11 +131,14 @@ val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
 androidComponents {
     onVariants { variant ->
         variant.outputs.forEach { output ->
-            // YYMMDD(buildnumber) format - hardcoded for now (260218 for 2026-02-18)
+            // YYMMDD(buildnumber) format - dynamic date
             val baseVersionCode = requireNotNull(flutterVersionCode.toLongOrNull()) {
                 "Invalid flutter.versionCode='$flutterVersionCode' in local.properties; must be a number."
             }
-            val yyMMdd = 260218 // TODO: Make this dynamic when Java imports work properly
+            val currentDate = org.gradle.api.internal.provider.DefaultProvider { 
+                java.text.SimpleDateFormat("yyMMdd").format(java.util.Date()) 
+            }.get()
+            val yyMMdd = currentDate.toInt()
             output.versionCode.set((yyMMdd * 1000 + baseVersionCode % 1000).toInt())
         }
     }
