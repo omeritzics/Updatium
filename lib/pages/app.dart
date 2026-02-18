@@ -186,6 +186,8 @@ class _AppPageState extends State<AppPage> {
                               ? tr('changes')
                               : app!.app.releaseDate!.toLocal().toString(),
                           textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.labelSmall!
                               .copyWith(
                                 decoration: changeLogFn != null
@@ -249,6 +251,8 @@ class _AppPageState extends State<AppPage> {
                         args: [lowerCaseIfEnglish(tr('releaseAsset'))],
                       ),
                       textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.labelSmall!.copyWith(
                         decoration: TextDecoration.underline,
                         fontStyle: FontStyle.italic,
@@ -290,6 +294,8 @@ class _AppPageState extends State<AppPage> {
                           hash,
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 12),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     );
@@ -453,6 +459,8 @@ class _AppPageState extends State<AppPage> {
         Text(
           app?.app.id ?? '',
           textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),

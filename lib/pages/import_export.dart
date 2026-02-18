@@ -691,13 +691,18 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 16),
-                Text(e[0], style: Theme.of(context).textTheme.titleSmall),
+                Text(e[0], 
+                  style: Theme.of(context).textTheme.titleSmall,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis),
                 Text(
                   e[1],
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontStyle: FontStyle.italic,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             );
@@ -888,6 +893,8 @@ class _SelectionModalState extends State<SelectionModal> {
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.start,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   if (widget.titlesAreLinks)
                     Text(
@@ -896,6 +903,8 @@ class _SelectionModalState extends State<SelectionModal> {
                         decoration: TextDecoration.underline,
                         fontSize: 12,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                 ],
               ),
@@ -911,6 +920,8 @@ class _SelectionModalState extends State<SelectionModal> {
                       fontStyle: FontStyle.italic,
                       fontSize: 12,
                     ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                   );
 
             var selectedEntries = entrySelections.entries

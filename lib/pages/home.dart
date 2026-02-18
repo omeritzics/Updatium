@@ -10,7 +10,6 @@ import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/pages/apps.dart';
-import 'package:updatium/pages/import_export.dart';
 import 'package:updatium/pages/security_disclaimer.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
@@ -329,17 +328,22 @@ class _HomePageState extends State<HomePage> {
               )
               .widget,
         ),
-        bottomNavigationBar: NavigationBar(
-          destinations: pages
+        bottomNavigationBar: BottomNavigationBar(
+          items: pages
               .map(
                 (e) =>
-                    NavigationDestination(icon: Icon(e.icon), label: e.title),
+                    BottomNavigationBarItem(icon: Icon(e.icon), label: e.title),
               )
               .toList(),
-          selectedIndex: selectedIndexHistory.isEmpty
+          currentIndex: selectedIndexHistory.isEmpty
               ? 0
               : selectedIndexHistory.last,
-          onDestinationSelected: (int index) async {
+          type: BottomNavigationBarType.fixed,
+          enableFeedback: true,
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+          iconSize: 24,
+          onTap: (int index) async {
             HapticFeedback.selectionClick();
             switchToPage(index);
           },

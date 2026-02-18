@@ -350,7 +350,13 @@ class _GeneratedFormState extends State<GeneratedForm> {
               );
             },
             itemBuilder: (context, value) {
-              return ListTile(title: Text(value));
+              return ListTile(
+                title: Text(
+                  value,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              );
             },
             onSelected: (value) {
               ctrl.text = value;

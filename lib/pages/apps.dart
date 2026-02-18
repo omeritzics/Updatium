@@ -51,6 +51,8 @@ void showChangeLogDialog(
                       decoration: TextDecoration.underline,
                       fontStyle: FontStyle.italic,
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   onTap: () {
                     launchUrlString(
@@ -862,7 +864,7 @@ class AppsPageState extends State<AppsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.15,
                       width: MediaQuery.of(context).size.width * 0.15,
@@ -871,7 +873,7 @@ class AppsPageState extends State<AppsPage> {
                         child: getAppIcon(index),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Flexible(
@@ -888,7 +890,7 @@ class AppsPageState extends State<AppsPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 4),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Flexible(
@@ -907,80 +909,85 @@ class AppsPageState extends State<AppsPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Builder(
-                        builder: (ctx) {
-                          final ai = listedApps[index];
-                          final app = ai.app;
-                          final isInstalled = app.installedVersion != null;
-                          final hasUpdateLocal =
-                              isInstalled &&
-                              app.installedVersion != app.latestVersion;
-                          final isTrackOnly =
-                              app.additionalSettings['trackOnly'] == true;
+                      child: Flexible(
+                        child: Builder(
+                          builder: (ctx) {
+                            final ai = listedApps[index];
+                            final app = ai.app;
+                            final isInstalled = app.installedVersion != null;
+                            final hasUpdateLocal =
+                                isInstalled &&
+                                app.installedVersion != app.latestVersion;
+                            final isTrackOnly =
+                                app.additionalSettings['trackOnly'] == true;
 
-                          if (isTrackOnly) {
-                            return const SizedBox.shrink();
-                          }
+                            if (isTrackOnly) {
+                              return const SizedBox.shrink();
+                            }
 
-                          if (!isInstalled) {
-                            return FilledButton.tonal(
-                              onPressed: appsProvider.areDownloadsRunning()
-                                  ? null
-                                  : () {
-                                      appsProvider
-                                          .downloadAndInstallLatestApps([
-                                            app.id,
-                                          ], globalNavigatorKey.currentContext)
-                                          .catchError((e) {
-                                            showError(e, context);
-                                            return <String>[];
-                                          });
-                                    },
-                              child: Text(tr('install')),
+                            if (!isInstalled) {
+                              return FilledButton.tonal(
+                                onPressed: appsProvider.areDownloadsRunning()
+                                    ? null
+                                    : () {
+                                        appsProvider
+                                            .downloadAndInstallLatestApps([
+                                              app.id,
+                                            ], globalNavigatorKey.currentContext)
+                                            .catchError((e) {
+                                              showError(e, context);
+                                              return <String>[];
+                                            });
+                                      },
+                                child: Text(tr('install')),
+                              );
+                            }
+
+                            if (hasUpdateLocal) {
+                              return FilledButton.tonal(
+                                onPressed: appsProvider.areDownloadsRunning()
+                                    ? null
+                                    : () {
+                                        appsProvider
+                                            .downloadAndInstallLatestApps([
+                                              app.id,
+                                            ], globalNavigatorKey.currentContext)
+                                            .catchError((e) {
+                                              showError(e, context);
+                                              return <String>[];
+                                            });
+                                      },
+                                child: Text(tr('update')),
+                              );
+                            }
+
+                            return Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.check_circle,
+                                  color: Colors.green[600],
+                                  size: MediaQuery.of(context).size.width * 0.04,
+                                ),
+                                const SizedBox(width: 4),
+                                Flexible(
+                                  child: Text(
+                                    tr('updated'),
+                                    style: TextStyle(color: Colors.green[600]),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
                             );
-                          }
-
-                          if (hasUpdateLocal) {
-                            return FilledButton.tonal(
-                              onPressed: appsProvider.areDownloadsRunning()
-                                  ? null
-                                  : () {
-                                      appsProvider
-                                          .downloadAndInstallLatestApps([
-                                            app.id,
-                                          ], globalNavigatorKey.currentContext)
-                                          .catchError((e) {
-                                            showError(e, context);
-                                            return <String>[];
-                                          });
-                                    },
-                              child: Text(tr('update')),
-                            );
-                          }
-
-                          return Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.check_circle,
-                                color: Colors.green[600],
-                                size: MediaQuery.of(context).size.width * 0.04,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                tr('updated'),
-                                style: TextStyle(color: Colors.green[600]),
-                              ),
-                            ],
-                          );
-                        },
+                          },
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                   ],
                 ),
                 if (listedApps[index].downloadProgress != null)
@@ -1025,6 +1032,8 @@ class AppsPageState extends State<AppsPage> {
         title: Text(
           capFirstChar(listedCategories[index] ?? tr('noCategory')),
           style: const TextStyle(fontWeight: FontWeight.bold),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         controlAffinity: ListTileControlAffinity.leading,
         trailing: Text(tiles.length.toString()),
@@ -1042,7 +1051,7 @@ class AppsPageState extends State<AppsPage> {
                     gridDelegate:
                         SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
-                          childAspectRatio: 0.6,
+                          childAspectRatio: 0.55,
                           crossAxisSpacing: MediaQuery.of(context).size.width * 0.04,
                           mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
                         ),
@@ -1647,7 +1656,7 @@ class AppsPageState extends State<AppsPage> {
           return SliverGrid(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200,
-              childAspectRatio: 0.6,
+              childAspectRatio: 0.55,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
             ),
