@@ -8,8 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/components/app_button.dart';
-import 'package:updatium/components/custom_app_bar.dart';
-import 'package:updatium/components/expressive_components.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -607,11 +605,7 @@ class AppsPageState extends State<AppsPage> {
             action = Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  Icons.check_circle,
-                  color: Colors.green[600],
-                  size: 20,
-                ),
+                Icon(Icons.check_circle, color: Colors.green[600], size: 20),
                 const SizedBox(width: 6),
                 Text(tr('updated'), style: TextStyle(color: Colors.green[600])),
               ],
@@ -977,10 +971,7 @@ class AppsPageState extends State<AppsPage> {
                                 color: Colors.green[600],
                                 size: 18,
                               ),
-                              const SizedBox(
-                                width:
-                                    6,
-                              ),
+                              const SizedBox(width: 6),
                               Text(
                                 tr('updated'),
                                 style: TextStyle(color: Colors.green[600]),
@@ -1049,14 +1040,13 @@ class AppsPageState extends State<AppsPage> {
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent:
-                          200,
-                      childAspectRatio: 0.6,
-                      crossAxisSpacing:
-                          16,
-                      mainAxisSpacing: 16,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 0.6,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                        ),
                     itemCount: listedApps
                         .asMap()
                         .entries

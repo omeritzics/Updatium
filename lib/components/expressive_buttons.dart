@@ -79,26 +79,27 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
   void _updateAnimations() {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    
+
     // Use effective background color from style or individual property
     final effectiveStyle = widget.style;
     final isDisabled = widget.onPressed == null;
-    final effectiveBackgroundColor = widget.backgroundColor ?? 
-        effectiveStyle?.backgroundColor?.resolve({}) ?? 
+    final effectiveBackgroundColor =
+        widget.backgroundColor ??
+        effectiveStyle?.backgroundColor?.resolve({}) ??
         (isDisabled ? colorScheme.surface : colorScheme.primary);
 
     _elevationAnimation = Tween<double>(
-      begin: widget.elevation ?? 
-          effectiveStyle?.elevation?.resolve({}) ?? 
-          2.0,
-      end: (widget.elevation ?? 
-          effectiveStyle?.elevation?.resolve({}) ?? 
-          2.0) + 4.0,
+      begin: widget.elevation ?? effectiveStyle?.elevation?.resolve({}) ?? 2.0,
+      end:
+          (widget.elevation ?? effectiveStyle?.elevation?.resolve({}) ?? 2.0) +
+          4.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _colorAnimation = ColorTween(
       begin: effectiveBackgroundColor,
-      end: isDisabled ? effectiveBackgroundColor : effectiveBackgroundColor.withOpacity(0.8),
+      end: isDisabled
+          ? effectiveBackgroundColor
+          : effectiveBackgroundColor.withOpacity(0.8),
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
@@ -135,30 +136,35 @@ class _ExpressiveButtonState extends State<ExpressiveButton>
     // Apply style if provided, otherwise use individual properties
     final effectiveStyle = widget.style;
     final isDisabled = widget.onPressed == null;
-    final effectiveBackgroundColor = widget.backgroundColor ?? 
-        effectiveStyle?.backgroundColor?.resolve({}) ?? 
+    final effectiveBackgroundColor =
+        widget.backgroundColor ??
+        effectiveStyle?.backgroundColor?.resolve({}) ??
         (isDisabled ? colorScheme.surface : colorScheme.primary);
-    final effectiveForegroundColor = widget.foregroundColor ?? 
-        effectiveStyle?.foregroundColor?.resolve({}) ?? 
-        (isDisabled ? colorScheme.onSurface.withOpacity(0.38) : colorScheme.onPrimary);
-    final effectiveElevation = widget.elevation ?? 
-        effectiveStyle?.elevation?.resolve({}) ?? 
-        2.0;
+    final effectiveForegroundColor =
+        widget.foregroundColor ??
+        effectiveStyle?.foregroundColor?.resolve({}) ??
+        (isDisabled
+            ? colorScheme.onSurface.withOpacity(0.38)
+            : colorScheme.onPrimary);
+    final effectiveElevation =
+        widget.elevation ?? effectiveStyle?.elevation?.resolve({}) ?? 2.0;
     // Extract border radius from shape if it's a RoundedRectangleBorder, otherwise use default
     BorderRadius? shapeBorderRadius;
     final shape = effectiveStyle?.shape?.resolve({});
     if (shape is RoundedRectangleBorder) {
-      shapeBorderRadius = shape.borderRadius.resolve(Directionality.of(context));
+      shapeBorderRadius = shape.borderRadius.resolve(
+        Directionality.of(context),
+      );
     }
-    
-    final effectiveBorderRadius = widget.borderRadius ?? 
-        shapeBorderRadius ?? 
-        BorderRadius.circular(12);
-    final effectivePadding = widget.padding ?? 
-        effectiveStyle?.padding?.resolve({}) ?? 
+
+    final effectiveBorderRadius =
+        widget.borderRadius ?? shapeBorderRadius ?? BorderRadius.circular(12);
+    final effectivePadding =
+        widget.padding ??
+        effectiveStyle?.padding?.resolve({}) ??
         const EdgeInsets.symmetric(horizontal: 24, vertical: 12);
-    final effectiveOverlayColor = widget.overlayColor ?? 
-        effectiveStyle?.overlayColor?.resolve({});
+    final effectiveOverlayColor =
+        widget.overlayColor ?? effectiveStyle?.overlayColor?.resolve({});
 
     return AnimatedBuilder(
       animation: _controller,
@@ -304,7 +310,7 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
             child: Material(
               elevation: widget.onPressed != null ? 4.0 : 2.0,
               borderRadius: BorderRadius.circular(12),
-              color: isDisabled 
+              color: isDisabled
                   ? colorScheme.surface
                   : (widget.backgroundColor ?? colorScheme.surface),
               shadowColor: colorScheme.shadow.withOpacity(0.2),
@@ -326,9 +332,9 @@ class _ExpressiveIconButtonState extends State<ExpressiveIconButton>
                       color: isDisabled
                           ? colorScheme.onSurface.withOpacity(0.38)
                           : (widget.foregroundColor ??
-                              (widget.onPressed != null
-                                  ? colorScheme.primary
-                                  : colorScheme.onSurface.withOpacity(0.6))),
+                                (widget.onPressed != null
+                                    ? colorScheme.primary
+                                    : colorScheme.onSurface.withOpacity(0.6))),
                     ),
                     child: Center(child: widget.icon),
                   ),
@@ -409,16 +415,19 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
   void _updateAnimations() {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    
+
     final effectiveStyle = widget.style;
     final isDisabled = widget.onPressed == null;
-    final effectiveBackgroundColor = widget.backgroundColor ?? 
-        effectiveStyle?.backgroundColor?.resolve({}) ?? 
+    final effectiveBackgroundColor =
+        widget.backgroundColor ??
+        effectiveStyle?.backgroundColor?.resolve({}) ??
         (isDisabled ? colorScheme.surface : colorScheme.primary);
 
     _colorAnimation = ColorTween(
       begin: effectiveBackgroundColor,
-      end: isDisabled ? effectiveBackgroundColor : effectiveBackgroundColor.withOpacity(0.8),
+      end: isDisabled
+          ? effectiveBackgroundColor
+          : effectiveBackgroundColor.withOpacity(0.8),
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
@@ -452,8 +461,8 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isDisabled = widget.onPressed == null;
-    final effectiveForegroundColor = widget.foregroundColor ?? 
-        colorScheme.onPrimary;
+    final effectiveForegroundColor =
+        widget.foregroundColor ?? colorScheme.onPrimary;
 
     return AnimatedBuilder(
       animation: _controller,
@@ -492,7 +501,7 @@ class _ExpressiveFilledButtonState extends State<ExpressiveFilledButton>
                 ),
                 child: DefaultTextStyle(
                   style: TextStyle(
-                    color: isDisabled 
+                    color: isDisabled
                         ? colorScheme.onSurface.withOpacity(0.38)
                         : effectiveForegroundColor,
                     fontSize: 16,
