@@ -4,6 +4,7 @@ import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:updatium/components/app_button.dart';
+import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -141,11 +142,11 @@ class _SettingsPageState extends State<SettingsPage> {
           tr('selectX', args: [tr('color').toLowerCase()]),
           style: Theme.of(context).textTheme.titleLarge,
         ),
-        wheelDiameter: MediaQuery.of(context).size.width * 0.45,
-        wheelSquareBorderRadius: MediaQuery.of(context).size.width * 0.075,
-        width: MediaQuery.of(context).size.width * 0.11,
-        height: MediaQuery.of(context).size.width * 0.11,
-        borderRadius: MediaQuery.of(context).size.width * 0.055,
+        wheelDiameter: 192,
+        wheelSquareBorderRadius: 32,
+        width: 48,
+        height: 48,
+        borderRadius: 24,
         spacing: 8,
         runSpacing: 8,
         enableShadesSelection: false,
@@ -188,9 +189,6 @@ class _SettingsPageState extends State<SettingsPage> {
       subtitle: Text(
         "${ColorTools.nameThatColor(settingsProvider.themeColor)} "
         "(${ColorTools.materialNameAndCode(settingsProvider.themeColor, colorSwatchNameMap: colorsNameMap)})",
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: Theme.of(context).colorScheme.onSurfaceVariant,
-        ),
       ),
       trailing: Container(
         width: MediaQuery.of(context).size.width * 0.1,
@@ -234,28 +232,17 @@ class _SettingsPageState extends State<SettingsPage> {
     var useMaterialThemeSwitch = FutureBuilder(
       builder: (ctx, val) {
         return ((val.data?.version.sdkInt ?? 0) >= 31)
-            ? Card.outlined(
-                margin: const EdgeInsets.all(16),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          tr('useMaterialYou'),
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                      Switch(
-                        value: settingsProvider.useMaterialYou,
-                        onChanged: (value) {
-                          settingsProvider.useMaterialYou = value;
-                        },
-                      ),
-                    ],
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(child: Text(tr('useMaterialYou'))),
+                  Switch(
+                    value: settingsProvider.useMaterialYou,
+                    onChanged: (value) {
+                      settingsProvider.useMaterialYou = value;
+                    },
                   ),
-                ),
+                ],
               )
             : const SizedBox.shrink();
       },
