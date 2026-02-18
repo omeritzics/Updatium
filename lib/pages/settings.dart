@@ -1020,7 +1020,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mode: LaunchMode.externalApplication,
                         );
                       },
-                      icon: const Icon(Icons.help),
+                      icon: const Icon(Icons.help_outline_rounded),
                       tooltip: tr('wiki'),
                     ),
                     IconButton(
@@ -1038,7 +1038,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           }
                         });
                       },
-                      icon: const Icon(Icons.bug_report),
+                      icon: const Icon(Icons.bug_report_outlined),
                       tooltip: tr('appLogs'),
                     ),
                   ],

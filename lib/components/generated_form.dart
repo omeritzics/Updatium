@@ -761,7 +761,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                         label: Text(
                           '${(widget.items[r][e] as GeneratedFormSubForm).label} (${i + 1})',
                         ),
-                        icon: const Icon(Icons.delete),
+                        icon: const Icon(Icons.delete_outline_rounded),
                       ),
                     ],
                   ),

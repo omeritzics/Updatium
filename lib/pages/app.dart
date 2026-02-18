@@ -707,7 +707,7 @@ class _AppPageState extends State<AppPage> {
                               });
                         },
                   tooltip: tr('remove'),
-                  icon: const Icon(Icons.delete),
+                  icon: const Icon(Icons.delete_outline),
                 ),
               ],
             ),

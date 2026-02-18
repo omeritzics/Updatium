@@ -509,7 +509,7 @@ class AppsPageState extends State<AppsPage> {
               },
         icon: Icon(
           listedApps[appIndex].app.additionalSettings['trackOnly'] == true
-              ? Icons.check_circle
+              ? Icons.check_circle_outline
               : Icons.install_mobile,
         ),
       );
@@ -568,7 +568,7 @@ class AppsPageState extends State<AppsPage> {
 
           Widget action;
           if (isTrackOnly) {
-            action = const Icon(Icons.check_circle);
+            action = const Icon(Icons.check_circle_outline);
           } else if (!isInstalled) {
             action = FilledButton.tonal(
               onPressed: appsProvider.areDownloadsRunning()
@@ -1093,7 +1093,7 @@ class AppsPageState extends State<AppsPage> {
                 selectThese(listedApps.map((e) => e.app).toList());
               },
               icon: Icon(
-                Icons.select_all,
+                Icons.select_all_outlined,
                 color: Theme.of(context).colorScheme.primary,
               ),
               label: Text(listedApps.length.toString()),
@@ -1472,7 +1472,7 @@ class AppsPageState extends State<AppsPage> {
           tooltip: selectedAppIds.isEmpty
               ? tr('installUpdateApps')
               : tr('installUpdateSelectedApps'),
-          icon: const Icon(Icons.file_download),
+          icon: const Icon(Icons.file_download_outlined),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
@@ -1485,13 +1485,13 @@ class AppsPageState extends State<AppsPage> {
                   );
                 },
           tooltip: tr('removeSelectedApps'),
-          icon: const Icon(Icons.delete),
+          icon: const Icon(Icons.delete_outline_outlined),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
           onPressed: selectedAppIds.isEmpty ? null : launchCategorizeDialog(),
           tooltip: tr('categorize'),
-          icon: const Icon(Icons.category),
+          icon: const Icon(Icons.category_outlined),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
