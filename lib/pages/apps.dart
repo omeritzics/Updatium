@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/components/expressive_refresh_indicator.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/cached_app_icon.dart';
@@ -421,7 +422,7 @@ class AppsPageState extends State<AppsPage> {
                   children: [
                     Icon(
                       Icons.widgets,
-                      size: MediaQuery.of(context).size.width * 0.2,
+                      size: 80,
                       color: Theme.of(
                         context,
                       ).colorScheme.primary.withOpacity(0.6),
@@ -519,7 +520,7 @@ class AppsPageState extends State<AppsPage> {
     getAppIcon(int appIndex) {
       return CachedAppIconSimple(
         app: listedApps[appIndex].app,
-        size: MediaQuery.of(context).size.width * 0.1,
+        size: 48.0,
         onTap: () {
           // Handle tap if needed
         },
@@ -606,15 +607,15 @@ class AppsPageState extends State<AppsPage> {
             action = Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.check_circle, color: Colors.green[600], size: MediaQuery.of(context).size.width * 0.05),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.015),
+                Icon(Icons.check_circle, color: Colors.green[600], size: 20),
+                const SizedBox(width: 6),
                 Text(tr('updated'), style: TextStyle(color: Colors.green[600])),
               ],
             );
           }
 
           return SizedBox(
-            width: MediaQuery.of(context).size.width * 0.25,
+            width: 120,
             height: double.infinity,
             child: Center(child: action),
           );
@@ -1311,8 +1312,9 @@ class AppsPageState extends State<AppsPage> {
             ),
             content: Text(
               tr('onlyWorksWithNonVersionDetectApps'),
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
               ),
             ),
             actions: [
@@ -1624,7 +1626,7 @@ class AppsPageState extends State<AppsPage> {
               isFilterOff ? Icons.search_rounded : Icons.search_off_rounded,
             ),
           ),
-          SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+          const SizedBox(width: 16),
           const VerticalDivider(),
           Expanded(
             child: Row(
@@ -1682,9 +1684,8 @@ class AppsPageState extends State<AppsPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: RefreshIndicator(
+      body: ExpressiveRefreshIndicator(
         onRefresh: refresh,
-        displacement: MediaQuery.of(context).size.height * 0.1,
         child: Scrollbar(
           interactive: true,
           controller: scrollController,
