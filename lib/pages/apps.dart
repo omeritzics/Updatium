@@ -408,10 +408,7 @@ class AppsPageState extends State<AppsPage> {
       return [
         if (listedApps.isEmpty)
           SliverPadding(
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.2,
-              bottom: MediaQuery.of(context).size.height * 0.2,
-            ),
+            padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.2),
             sliver: SliverToBoxAdapter(
               child: Center(
                 child: Column(
