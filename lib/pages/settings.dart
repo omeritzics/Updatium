@@ -1020,7 +1020,12 @@ class _SettingsPageState extends State<SettingsPage> {
                           mode: LaunchMode.externalApplication,
                         );
                       },
-                      icon: const Icon(Icons.help),
+                      icon: context.locale.languageCode == 'he'
+                      ? Transform(
+                          transform: Matrix4.identity(),
+                          child: const Icon(Icons.help),
+                        )
+                      : const Icon(Icons.help),
                       tooltip: tr('wiki'),
                     ),
                     IconButton(

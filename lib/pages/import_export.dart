@@ -5,8 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
-import 'package:updatium/components/expressive_buttons.dart';
-import 'package:updatium/components/app_button.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -399,42 +397,30 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: ExpressiveFilledButton(
+                                child: FilledButton.icon(
                                   onPressed: importInProgress
                                       ? null
                                       : () {
                                           runUpdatiumExport(pickOnly: true);
                                         },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Icon(Icons.folder_open),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        tr('pickExportDir'),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
+                                  icon: const Icon(Icons.folder_open),
+                                  label: Text(
+                                    tr('pickExportDir'),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               ),
                               const SizedBox(width: 16),
                               Expanded(
-                                child: ExpressiveFilledButton(
+                                child: FilledButton.icon(
                                   onPressed:
                                       importInProgress || snapshot.data == null
                                       ? null
                                       : runUpdatiumExport,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Icon(Icons.upload_file),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        tr('updatiumExport'),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
+                                  icon: const Icon(Icons.upload_file),
+                                  label: Text(
+                                    tr('updatiumExport'),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               ),
@@ -444,20 +430,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: ExpressiveFilledButton(
+                                child: FilledButton.icon(
                                   onPressed: importInProgress
                                       ? null
                                       : runUpdatiumImport,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Icon(Icons.download),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        tr('updatiumImport'),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
+                                  icon: const Icon(Icons.download),
+                                  label: Text(
+                                    tr('updatiumImport'),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               ),
@@ -577,28 +557,16 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           ],
                         ),
                         const SizedBox(height: 8),
-                        ExpressiveFilledButton(
+                        FilledButton.icon(
                           onPressed: importInProgress ? null : urlListImport,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.list_alt),
-                              const SizedBox(width: 8),
-                              Text(tr('importFromURLList')),
-                            ],
-                          ),
+                          icon: const Icon(Icons.list_alt),
+                          label: Text(tr('importFromURLList')),
                         ),
                         const SizedBox(height: 8),
-                        ExpressiveFilledButton(
+                        FilledButton.icon(
                           onPressed: importInProgress ? null : runUrlImport,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.link),
-                              const SizedBox(width: 8),
-                              Text(tr('importFromURLsInFile')),
-                            ],
-                          ),
+                          icon: const Icon(Icons.link),
+                          label: Text(tr('importFromURLsInFile')),
                         ),
                       ],
                     ),
@@ -607,20 +575,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const SizedBox(height: 8),
-                        ExpressiveFilledButton(
+                        FilledButton.icon(
                           onPressed: importInProgress
                               ? null
                               : () {
                                   runMassSourceImport(source);
                                 },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.cloud_download),
-                              const SizedBox(width: 8),
-                              Text(tr('importX', args: [source.name])),
-                            ],
-                          ),
+                          icon: const Icon(Icons.cloud_download),
+                          label: Text(tr('importX', args: [source.name])),
                         ),
                       ],
                     ),
@@ -708,18 +670,12 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
         ],
       ),
       actions: [
-        ExpressiveButton(
+        TextButton.icon(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.close),
-              const SizedBox(width: 8),
-              Text(tr('ok')),
-            ],
-          ),
+          icon: const Icon(Icons.close),
+          label: Text(tr('ok')),
         ),
       ],
     );
@@ -808,7 +764,7 @@ class _SelectionModalState extends State<SelectionModal> {
       }
       var noneSelected = entrySelections.values.where((v) => v == true).isEmpty;
       return noneSelected
-          ? ExpressiveButton(
+          ? TextButton(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
               onPressed: () {
                 setState(() {
@@ -817,7 +773,7 @@ class _SelectionModalState extends State<SelectionModal> {
               },
               child: Text(tr('selectAll')),
             )
-          : ExpressiveButton(
+          : TextButton(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
               onPressed: () {
                 setState(() {
@@ -1004,13 +960,13 @@ class _SelectionModalState extends State<SelectionModal> {
       ),
       actions: [
         getSelectAllButton(),
-        AppTextButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(tr('cancel')),
         ),
-        AppTextButton(
+        TextButton(
           onPressed: entrySelections.values.where((b) => b).isEmpty
               ? null
               : () {
