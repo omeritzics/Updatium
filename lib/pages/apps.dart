@@ -571,37 +571,53 @@ class AppsPageState extends State<AppsPage> {
           if (isTrackOnly) {
             action = const Icon(Icons.check_circle);
           } else if (!isInstalled) {
-            action = FilledButton.tonal(
-              onPressed: appsProvider.areDownloadsRunning()
-                  ? null
-                  : () {
-                      appsProvider
-                          .downloadAndInstallLatestApps([
-                            app.id,
-                          ], globalNavigatorKey.currentContext)
-                          .catchError((e) {
-                            showError(e, context);
-                            return <String>[];
-                          });
-                    },
-              child: Text(tr('install')),
-            );
+            action = Semantics(
+                      button: true,
+                      label: tr('install'),
+                      hint: appsProvider.areDownloadsRunning()
+                          ? 'Please wait, downloads in progress'
+                          : 'Install ${app.name} on your device',
+                      excludeSemantics: true,
+                      child: FilledButton.tonal(
+                        onPressed: appsProvider.areDownloadsRunning()
+                            ? null
+                            : () {
+                                appsProvider
+                                    .downloadAndInstallLatestApps([
+                                      app.id,
+                                    ], globalNavigatorKey.currentContext)
+                                    .catchError((e) {
+                                      showError(e, context);
+                                      return <String>[];
+                                    });
+                              },
+                        child: Text(tr('install')),
+                      ),
+                    );
           } else if (hasUpdateLocal) {
-            action = FilledButton.tonal(
-              onPressed: appsProvider.areDownloadsRunning()
-                  ? null
-                  : () {
-                      appsProvider
-                          .downloadAndInstallLatestApps([
-                            app.id,
-                          ], globalNavigatorKey.currentContext)
-                          .catchError((e) {
-                            showError(e, context);
-                            return <String>[];
-                          });
-                    },
-              child: Text(tr('update')),
-            );
+            action = Semantics(
+                      button: true,
+                      label: tr('update'),
+                      hint: appsProvider.areDownloadsRunning()
+                          ? 'Please wait, downloads in progress'
+                          : 'Update ${app.name} to version ${app.latestVersion}',
+                      excludeSemantics: true,
+                      child: FilledButton.tonal(
+                        onPressed: appsProvider.areDownloadsRunning()
+                            ? null
+                            : () {
+                                appsProvider
+                                    .downloadAndInstallLatestApps([
+                                      app.id,
+                                    ], globalNavigatorKey.currentContext)
+                                    .catchError((e) {
+                                      showError(e, context);
+                                      return <String>[];
+                                    });
+                              },
+                        child: Text(tr('update')),
+                      ),
+                    );
           } else {
             action = Row(
               mainAxisSize: MainAxisSize.min,
@@ -1478,26 +1494,42 @@ class AppsPageState extends State<AppsPage> {
 
     getMainBottomButtons() {
       return [
-        IconButton(
-          visualDensity: VisualDensity.compact,
-          onPressed: getMassObtainFunction(),
-          tooltip: selectedAppIds.isEmpty
+        Semantics(
+          button: true,
+          label: selectedAppIds.isEmpty
               ? tr('installUpdateApps')
               : tr('installUpdateSelectedApps'),
-          icon: const Icon(Icons.file_download),
+          hint: selectedAppIds.isEmpty
+              ? 'Install or update all apps'
+              : 'Install or update ${selectedAppIds.length} selected apps',
+          child: IconButton(
+            visualDensity: VisualDensity.compact,
+            onPressed: getMassObtainFunction(),
+            tooltip: selectedAppIds.isEmpty
+                ? tr('installUpdateApps')
+                : tr('installUpdateSelectedApps'),
+            icon: const Icon(Icons.file_download),
+          ),
         ),
-        IconButton(
-          visualDensity: VisualDensity.compact,
-          onPressed: selectedAppIds.isEmpty
-              ? null
-              : () {
-                  appsProvider.removeAppsWithModal(
-                    context,
-                    selectedApps.toList(),
-                  );
-                },
-          tooltip: tr('removeSelectedApps'),
-          icon: const Icon(Icons.delete),
+        Semantics(
+          button: true,
+          label: tr('removeSelectedApps'),
+          hint: selectedAppIds.isEmpty
+              ? 'No apps selected'
+              : 'Remove ${selectedAppIds.length} selected apps',
+          child: IconButton(
+            visualDensity: VisualDensity.compact,
+            onPressed: selectedAppIds.isEmpty
+                ? null
+                : () {
+                    appsProvider.removeAppsWithModal(
+                      context,
+                      selectedApps.toList(),
+                    );
+                  },
+            tooltip: tr('removeSelectedApps'),
+            icon: const Icon(Icons.delete),
+          ),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,

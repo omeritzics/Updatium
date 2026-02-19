@@ -348,38 +348,42 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               )
               .widget,
         ),
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: selectedIndexHistory.isEmpty
-              ? 0
-              : selectedIndexHistory.last,
-          animationDuration: const Duration(milliseconds: 300),
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-          onDestinationSelected: (int index) async {
-            HapticFeedback.selectionClick();
+        bottomNavigationBar: Semantics(
+          label: 'Main navigation',
+          hint: 'Navigate between apps, add app, and settings',
+          child: NavigationBar(
+            selectedIndex: selectedIndexHistory.isEmpty
+                ? 0
+                : selectedIndexHistory.last,
+            animationDuration: const Duration(milliseconds: 300),
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            onDestinationSelected: (int index) async {
+              HapticFeedback.selectionClick();
 
-            // Trigger full-rotation animation
-            _iconControllers[index].forward().then((_) {
-              _iconControllers[index].reset();
-            });
+              // Trigger full-rotation animation
+              _iconControllers[index].forward().then((_) {
+                _iconControllers[index].reset();
+              });
 
-            switchToPage(index);
-          },
-          destinations: pages.asMap().entries.map((entry) {
-            int index = entry.key;
-            var page = entry.value;
-            return NavigationDestination(
-              icon: AnimatedBuilder(
-                animation: _iconAnimations[index],
-                builder: (context, child) {
-                  return Transform.rotate(
-                    angle: _iconAnimations[index].value * 2 * 3.14159,
-                    child: Icon(page.icon),
-                  );
-                },
-              ),
-              label: page.title,
-            );
-          }).toList(),
+              switchToPage(index);
+            },
+            destinations: pages.asMap().entries.map((entry) {
+              int index = entry.key;
+              var page = entry.value;
+              return NavigationDestination(
+                icon: AnimatedBuilder(
+                  animation: _iconAnimations[index],
+                  builder: (context, child) {
+                    return Transform.rotate(
+                      angle: _iconAnimations[index].value * 2 * 3.14159,
+                      child: Icon(page.icon),
+                    );
+                  },
+                ),
+                label: page.title,
+              );
+            }).toList(),
+          ),
         ),
       ),
       onWillPop: () async {
