@@ -15,9 +15,7 @@ import 'package:updatium/app_sources/apkmirror.dart';
 import 'package:updatium/app_sources/apkpure.dart';
 import 'package:updatium/app_sources/aptoide.dart';
 import 'package:updatium/app_sources/codeberg.dart';
-import 'package:updatium/app_sources/coolapk.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
-import 'package:updatium/app_sources/farsroid.dart';
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
 import 'package:updatium/app_sources/github.dart';
@@ -1147,8 +1145,6 @@ class SourceProvider {
     Tencent(),
     VivoAppStore(),
     RuStore(),
-    Farsroid(),
-    CoolApk(),
     Jenkins(),
     APKMirror(),
     TelegramApp(),
