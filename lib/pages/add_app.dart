@@ -280,7 +280,7 @@ class AddAppPageState extends State<AddAppPage> {
         const SizedBox(width: 16),
         gettingAppInfo
             ? const CircularProgressIndicator()
-            : ElevatedButton(
+            : FilledButton(
                 onPressed:
                     doingSomething ||
                         pickedSource == null ||
@@ -542,7 +542,7 @@ class AddAppPageState extends State<AddAppPage> {
         const SizedBox(width: 16),
         searching
             ? const CircularProgressIndicator()
-            : ElevatedButton(
+            : FilledButton(
                 onPressed: searchQuery.isEmpty || doingSomething
                     ? null
                     : () {
