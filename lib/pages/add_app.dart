@@ -451,84 +451,105 @@ class AddAppPageState extends State<AddAppPage> {
       }
     }
 
-    Widget getHTMLSourceOverrideDropdown() => Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: GeneratedForm(
-                items: [
-                  [
-                    GeneratedFormDropdown(
-                      'overrideSource',
-                      defaultValue: pickedSourceOverride ?? '',
-                      [
-                        MapEntry('', tr('none')),
-                        ...sourceProvider.sources
-                            .where(
-                              (s) =>
-                                  s.allowOverride ||
-                                  (pickedSource != null &&
-                                      pickedSource.runtimeType ==
-                                          s.runtimeType),
-                            )
-                            .map(
-                              (s) => MapEntry(s.runtimeType.toString(), s.name),
-                            ),
-                      ],
-                      label: tr('overrideSource'),
-                    ),
-                  ],
-                ],
-                onValueChanges: (values, valid, isBuilding) {
-                  fn() {
-                    pickedSourceOverride =
-                        (values['overrideSource'] == null ||
-                            values['overrideSource'] == '')
-                        ? null
-                        : values['overrideSource'];
-                  }
-
-                  if (!isBuilding) {
-                    setState(() {
-                      fn();
-                    });
-                  } else {
-                    fn();
-                  }
-                  changeUserInput(userInput, valid, isBuilding);
-                },
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-      ],
-    );
-
     bool shouldShowSearchBar() =>
         sourceProvider.sources.where((e) => e.canSearch).isNotEmpty &&
         pickedSource == null &&
         userInput.isEmpty;
 
+    Widget getHTMLSourceOverrideDropdown() => Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: DropdownButtonFormField<String>(
+                value: pickedSourceOverride ?? '',
+                decoration: InputDecoration(
+                  labelText: tr('overrideSource'),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(28),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Theme.of(context).colorScheme.surfaceVariant,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                ),
+                items: [
+                  DropdownMenuItem(
+                    value: '',
+                    child: Text(tr('none')),
+                  ),
+                  ...sourceProvider.sources
+                      .where(
+                        (s) =>
+                            s.allowOverride ||
+                            (pickedSource != null &&
+                                pickedSource.runtimeType == s.runtimeType),
+                      )
+                      .map(
+                        (s) => DropdownMenuItem(
+                          value: s.runtimeType.toString(),
+                          child: Text(s.name),
+                        ),
+                      ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    pickedSourceOverride = (value == null || value == '') ? null : value;
+                  });
+                  changeUserInput(userInput, true, false);
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+
     Widget getSearchBarRow() => Row(
       children: [
         Expanded(
-          child: GeneratedForm(
-            items: [
-              [
-                GeneratedFormTextField(
-                  'searchSomeSources',
-                  label: tr('searchSomeSourcesLabel'),
-                  required: false,
-                ),
-              ],
-            ],
-            onValueChanges: (values, valid, isBuilding) {
-              if (values.isNotEmpty && valid && !isBuilding) {
-                setState(() {
-                  searchQuery = values['searchSomeSources']!.trim();
-                });
+          child: TextFormField(
+            decoration: InputDecoration(
+              hintText: tr('searchSomeSourcesLabel'),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(28),
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(28),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(28),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: Theme.of(context).colorScheme.surfaceVariant,
+              prefixIcon: const Icon(Icons.search),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
+            ),
+            onChanged: (value) {
+              setState(() {
+                searchQuery = value.trim();
+              });
+            },
+            onFieldSubmitted: (value) {
+              if (value.isNotEmpty && !doingSomething) {
+                runSearch();
               }
             },
           ),

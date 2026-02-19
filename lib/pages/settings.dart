@@ -326,7 +326,7 @@ class _SettingsPageState extends State<SettingsPage> {
         valueIndicatorTextStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
           color: Theme.of(context).colorScheme.onPrimary,
         ),
-        showValueIndicator: ShowValueIndicator.always,
+        showValueIndicator: ShowValueIndicator.onDrag,
       ),
       child: Slider(
         value: settingsProvider.updateIntervalSliderVal,
