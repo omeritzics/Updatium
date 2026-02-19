@@ -317,28 +317,40 @@ class _SettingsPageState extends State<SettingsPage> {
       },
     );
 
-    var intervalSlider = Slider(
-      value: settingsProvider.updateIntervalSliderVal,
-      max: updateIntervalNodes.length.toDouble(),
-      divisions: updateIntervalNodes.length * 20,
-      label: updateIntervalLabel,
-      onChanged: (double value) {
-        setState(() {
-          settingsProvider.updateIntervalSliderVal = value;
-          processIntervalSliderValue(value);
-        });
-      },
-      onChangeStart: (double value) {
-        setState(() {
-          showIntervalLabel = false;
-        });
-      },
-      onChangeEnd: (double value) {
-        setState(() {
-          showIntervalLabel = true;
-          settingsProvider.updateInterval = updateInterval;
-        });
-      },
+    var intervalSlider = SliderTheme(
+      data: SliderTheme.of(context).copyWith(
+        trackHeight: 4,
+        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
+        overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
+        valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+        valueIndicatorTextStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
+        showValueIndicator: ShowValueIndicator.always,
+      ),
+      child: Slider(
+        value: settingsProvider.updateIntervalSliderVal,
+        max: updateIntervalNodes.length.toDouble(),
+        divisions: updateIntervalNodes.length * 20,
+        label: updateIntervalLabel,
+        onChanged: (double value) {
+          setState(() {
+            settingsProvider.updateIntervalSliderVal = value;
+            processIntervalSliderValue(value);
+          });
+        },
+        onChangeStart: (double value) {
+          setState(() {
+            showIntervalLabel = false;
+          });
+        },
+        onChangeEnd: (double value) {
+          setState(() {
+            showIntervalLabel = true;
+            settingsProvider.updateInterval = updateInterval;
+          });
+        },
+      ),
     );
 
     var sourceSpecificFields = sourceProvider.sources.map((e) {
