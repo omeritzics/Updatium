@@ -242,49 +242,38 @@ class AddAppPageState extends State<AddAppPage> {
     Widget getUrlInputRow() => Row(
       children: [
         Expanded(
-          child: TextFormField(
+          child: GeneratedForm(
             key: Key(urlInputKey.toString()),
-            decoration: InputDecoration(
-              labelText: tr('appSourceURL'),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(28),
-                borderSide: BorderSide.none,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(28),
-                borderSide: BorderSide.none,
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(28),
-                borderSide: BorderSide.none,
-              ),
-              filled: true,
-              fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 12,
-              ),
-            ),
-            initialValue: userInput,
-            onChanged: (value) {
-              changeUserInput(value, true, false);
-            },
-            validator: (value) {
-              try {
-                sourceProvider
-                    .getSource(
-                      value ?? '',
-                      overrideSource: pickedSourceOverride,
-                    )
-                    .standardizeUrl(value ?? '');
-              } catch (e) {
-                return e is String
-                    ? e
-                    : e is UpdatiumError
-                    ? e.toString()
-                    : tr('error');
-              }
-              return null;
+            items: [
+              [
+                GeneratedFormTextField(
+                  'appSourceURL',
+                  label: tr('appSourceURL'),
+                  defaultValue: userInput,
+                  additionalValidators: [
+                    (value) {
+                      try {
+                        sourceProvider
+                            .getSource(
+                              value ?? '',
+                              overrideSource: pickedSourceOverride,
+                            )
+                            .standardizeUrl(value ?? '');
+                      } catch (e) {
+                        return e is String
+                            ? e
+                            : e is UpdatiumError
+                            ? e.toString()
+                            : tr('error');
+                      }
+                      return null;
+                    },
+                  ],
+                ),
+              ],
+            ],
+            onValueChanges: (values, valid, isBuilding) {
+              changeUserInput(values['appSourceURL']!, valid, isBuilding);
             },
           ),
         ),
