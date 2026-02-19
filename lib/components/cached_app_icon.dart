@@ -201,7 +201,9 @@ class _CachedAppIconState extends State<CachedAppIcon>
                   boxShadow: _isHovered
                       ? [
                           BoxShadow(
-                            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withOpacity(0.3),
                             blurRadius: 20,
                             offset: const Offset(0, 8),
                           ),
@@ -253,7 +255,9 @@ class _CachedAppIconState extends State<CachedAppIcon>
                   child: Icon(
                     Icons.apps,
                     size: widget.size * 0.5,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.6),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurfaceVariant.withOpacity(0.6),
                   ),
                 );
               },

@@ -84,7 +84,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
       vsync: this,
     );
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
-    CurvedAnimation(parent: _scaleController, curve: Curves.easeOutCubic),
+      CurvedAnimation(parent: _scaleController, curve: Curves.easeOutCubic),
     );
     _loadIcon();
   }
@@ -206,11 +206,15 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                 width: widget.size,
                 height: widget.size,
                 decoration: BoxDecoration(
-                  borderRadius: widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125),
+                  borderRadius:
+                      widget.borderRadius ??
+                      BorderRadius.circular(widget.size * 0.125),
                   boxShadow: _isHovered
                       ? [
                           BoxShadow(
-                            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withOpacity(0.3),
                             blurRadius: 20,
                             offset: const Offset(0, 8),
                           ),
@@ -243,7 +247,9 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
           width: widget.size,
           height: widget.size,
           decoration: BoxDecoration(
-            borderRadius: widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125),
+            borderRadius:
+                widget.borderRadius ??
+                BorderRadius.circular(widget.size * 0.125),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -262,7 +268,9 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                   child: Icon(
                     Icons.apps,
                     size: widget.size * 0.5,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.6),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurfaceVariant.withOpacity(0.6),
                   ),
                 );
               },
@@ -278,7 +286,9 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                 if (!isInstalled) return const SizedBox.shrink();
                 return Container(
                   decoration: BoxDecoration(
-                    borderRadius: widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125),
+                    borderRadius:
+                        widget.borderRadius ??
+                        BorderRadius.circular(widget.size * 0.125),
                     border: Border.all(color: Colors.green, width: 2.0),
                   ),
                 );
@@ -289,7 +299,9 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125),
+                borderRadius:
+                    widget.borderRadius ??
+                    BorderRadius.circular(widget.size * 0.125),
                 color: Colors.black.withOpacity(0.5),
               ),
               child: Center(
@@ -319,7 +331,9 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
           width: widget.size,
           height: widget.size,
           decoration: BoxDecoration(
-            borderRadius: widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125),
+            borderRadius:
+                widget.borderRadius ??
+                BorderRadius.circular(widget.size * 0.125),
             color: Theme.of(context).colorScheme.errorContainer,
           ),
           child: Column(
@@ -348,7 +362,9 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                borderRadius: widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125),
+                borderRadius:
+                    widget.borderRadius ??
+                    BorderRadius.circular(widget.size * 0.125),
                 onTap: _retryLoad,
                 child: Container(
                   width: widget.size,
@@ -371,13 +387,12 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
     return Stack(
       children: [
         ClipRRect(
-          borderRadius: widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125),
+          borderRadius:
+              widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125),
           child: Container(
             width: widget.size,
             height: widget.size,
-            decoration: BoxDecoration(
-              color: widget.backgroundColor,
-            ),
+            decoration: BoxDecoration(color: widget.backgroundColor),
             child: Image.memory(
               _iconData!,
               width: widget.size,
@@ -404,7 +419,9 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125),
+                borderRadius:
+                    widget.borderRadius ??
+                    BorderRadius.circular(widget.size * 0.125),
                 border: widget.border,
               ),
             ),
@@ -418,7 +435,9 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                 if (!isInstalled) return const SizedBox.shrink();
                 return Container(
                   decoration: BoxDecoration(
-                    borderRadius: widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125),
+                    borderRadius:
+                        widget.borderRadius ??
+                        BorderRadius.circular(widget.size * 0.125),
                     border: Border.all(color: Colors.green, width: 2.0),
                   ),
                 );
@@ -429,7 +448,9 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: widget.borderRadius ?? BorderRadius.circular(widget.size * 0.125),
+                borderRadius:
+                    widget.borderRadius ??
+                    BorderRadius.circular(widget.size * 0.125),
                 color: Colors.black.withOpacity(0.3),
               ),
               child: Center(
