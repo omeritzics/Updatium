@@ -360,9 +360,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           onDestinationSelected: (int index) async {
             HapticFeedback.selectionClick();
             
-            // Trigger rotation animation
+            // Trigger rotation animation (forward only)
             _iconControllers[index].forward().then((_) {
-              _iconControllers[index].reverse();
+              _iconControllers[index].reset();
             });
             
             switchToPage(index);
