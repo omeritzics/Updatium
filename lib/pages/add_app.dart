@@ -289,13 +289,13 @@ class AddAppPageState extends State<AddAppPage> {
                 hint: doingSomething
                     ? 'Please wait, operation in progress'
                     : pickedSource == null
-                        ? 'Select a source first'
-                        : (pickedSource!
-                                .combinedAppSpecificSettingFormItems
-                                .isNotEmpty &&
-                            !additionalSettingsValid)
-                            ? 'Complete additional settings first'
-                            : 'Add this app to your collection',
+                    ? 'Select a source first'
+                    : (pickedSource!
+                              .combinedAppSpecificSettingFormItems
+                              .isNotEmpty &&
+                          !additionalSettingsValid)
+                    ? 'Complete additional settings first'
+                    : 'Add this app to your collection',
                 excludeSemantics: true,
                 child: FilledButton(
                   onPressed:
@@ -566,7 +566,7 @@ class AddAppPageState extends State<AddAppPage> {
             : Semantics(
                 button: true,
                 label: tr('search'),
-                hint: searchQuery.isEmpty 
+                hint: searchQuery.isEmpty
                     ? 'Enter search terms first'
                     : 'Search for apps',
                 excludeSemantics: true,

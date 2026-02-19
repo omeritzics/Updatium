@@ -297,7 +297,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                 child: Semantics(
                                   button: true,
                                   label: tr('pickExportDir'),
-                                  hint: 'Choose a directory to export your apps and settings',
+                                  hint:
+                                      'Choose a directory to export your apps and settings',
                                   excludeSemantics: true,
                                   child: FilledButton.icon(
                                     onPressed: importInProgress
@@ -324,7 +325,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   excludeSemantics: true,
                                   child: FilledButton.icon(
                                     onPressed:
-                                        importInProgress || snapshot.data == null
+                                        importInProgress ||
+                                            snapshot.data == null
                                         ? null
                                         : runUpdatiumExport,
                                     icon: const Icon(Icons.upload_file),
@@ -344,7 +346,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                 child: Semantics(
                                   button: true,
                                   label: tr('updatiumImport'),
-                                  hint: 'Import apps and settings from a backup file',
+                                  hint:
+                                      'Import apps and settings from a backup file',
                                   excludeSemantics: true,
                                   child: FilledButton.icon(
                                     onPressed: importInProgress
@@ -425,7 +428,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         Semantics(
                           button: true,
                           label: tr('importFromURLList'),
-                          hint: 'Import multiple apps by entering their URLs in a list',
+                          hint:
+                              'Import multiple apps by entering their URLs in a list',
                           excludeSemantics: true,
                           child: FilledButton.icon(
                             onPressed: importInProgress ? null : urlListImport,
