@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/app_sources/fdroidrepo.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -192,108 +191,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       });
     }
 
-    runSourceSearch(AppSource source) {
-      () async {
-            var values = await showDialog<Map<String, dynamic>?>(
-              context: context,
-              builder: (BuildContext ctx) {
-                return GeneratedFormModal(
-                  title: tr('searchX', args: [source.name]),
-                  items: [
-                    [
-                      GeneratedFormTextField(
-                        'searchQuery',
-                        label: tr('searchQuery'),
-                        required: source.name != FDroidRepo().name,
-                      ),
-                    ],
-                    ...source.searchQuerySettingFormItems.map((e) => [e]),
-                    [
-                      GeneratedFormTextField(
-                        'url',
-                        label: source.hosts.isNotEmpty
-                            ? tr('overrideSource')
-                            : plural('url', 1).substring(2),
-                        defaultValue: source.hosts.isNotEmpty
-                            ? source.hosts[0]
-                            : '',
-                        required: true,
-                      ),
-                    ],
-                  ],
-                );
-              },
-            );
-            if (values != null) {
-              setState(() {
-                importInProgress = true;
-              });
-              if (source.hosts.isEmpty || values['url'] != source.hosts[0]) {
-                source = sourceProvider.getSource(
-                  values['url'],
-                  overrideSource: source.runtimeType.toString(),
-                );
-              }
-              var urlsWithDescriptions = await source.search(
-                values['searchQuery'] as String,
-                querySettings: values,
-              );
-              if (urlsWithDescriptions.isNotEmpty) {
-                var selectedUrls =
-                    // ignore: use_build_context_synchronously
-                    await showDialog<List<String>?>(
-                      context: context,
-                      builder: (BuildContext ctx) {
-                        return SelectionModal(
-                          entries: urlsWithDescriptions,
-                          selectedByDefault: false,
-                        );
-                      },
-                    );
-                if (selectedUrls != null && selectedUrls.isNotEmpty) {
-                  var errors = await appsProvider.addAppsByURL(
-                    selectedUrls,
-                    sourceOverride: source,
-                  );
-                  if (errors.isEmpty) {
-                    // ignore: use_build_context_synchronously
-                    showMessage(
-                      tr(
-                        'importedX',
-                        args: [
-                          plural('apps', selectedUrls.length).toLowerCase(),
-                        ],
-                      ),
-                      context,
-                    );
-                  } else {
-                    // ignore: use_build_context_synchronously
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext ctx) {
-                        return ImportErrorDialog(
-                          urlsLength: selectedUrls.length,
-                          errors: errors,
-                        );
-                      },
-                    );
-                  }
-                }
-              } else {
-                throw UpdatiumError(tr('noResults'));
-              }
-            }
-          }()
-          .catchError((e) {
-            showError(e, context);
-          })
-          .whenComplete(() {
-            setState(() {
-              importInProgress = false;
-            });
-          });
-    }
-
+    
     runMassSourceImport(MassAppUrlSource source) {
       () async {
             var values = await showDialog<Map<String, dynamic>?>(
@@ -505,58 +403,6 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     Column(
                       children: [
                         SizedBox(height: 32),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: FilledButton.icon(
-                                icon: const Icon(Icons.search),
-                                onPressed: importInProgress
-                                    ? null
-                                    : () async {
-                                        var searchSourceName =
-                                            await showDialog<List<String>?>(
-                                              context: context,
-                                              builder: (BuildContext ctx) {
-                                                return SelectionModal(
-                                                  title: tr(
-                                                    'selectX',
-                                                    args: [
-                                                      tr(
-                                                        'source',
-                                                      ).toLowerCase(),
-                                                    ],
-                                                  ),
-                                                  entries: sourceStrings,
-                                                  selectedByDefault: false,
-                                                  onlyOneSelectionAllowed: true,
-                                                  titlesAreLinks: false,
-                                                );
-                                              },
-                                            ) ??
-                                            [];
-                                        var searchSource = sourceProvider
-                                            .sources
-                                            .where(
-                                              (e) => searchSourceName.contains(
-                                                e.name,
-                                              ),
-                                            )
-                                            .toList();
-                                        if (searchSource.isNotEmpty) {
-                                          runSourceSearch(searchSource[0]);
-                                        }
-                                      },
-                                label: Text(
-                                  tr(
-                                    'searchX',
-                                    args: [lowerCaseIfEnglish(tr('source'))],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
                         FilledButton.icon(
                           onPressed: importInProgress ? null : urlListImport,
                           icon: const Icon(Icons.list_alt),
