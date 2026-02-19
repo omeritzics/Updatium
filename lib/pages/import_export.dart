@@ -651,10 +651,12 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 16),
-                Text(e[0], 
+                Text(
+                  e[0],
                   style: Theme.of(context).textTheme.titleSmall,
                   maxLines: 2,
-                  overflow: TextOverflow.ellipsis),
+                  overflow: TextOverflow.ellipsis,
+                ),
                 Text(
                   e[1],
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(

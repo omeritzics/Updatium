@@ -934,9 +934,10 @@ class AppsPageState extends State<AppsPage> {
                                     ? null
                                     : () {
                                         appsProvider
-                                            .downloadAndInstallLatestApps([
-                                              app.id,
-                                            ], globalNavigatorKey.currentContext)
+                                            .downloadAndInstallLatestApps(
+                                              [app.id],
+                                              globalNavigatorKey.currentContext,
+                                            )
                                             .catchError((e) {
                                               showError(e, context);
                                               return <String>[];
@@ -952,9 +953,10 @@ class AppsPageState extends State<AppsPage> {
                                     ? null
                                     : () {
                                         appsProvider
-                                            .downloadAndInstallLatestApps([
-                                              app.id,
-                                            ], globalNavigatorKey.currentContext)
+                                            .downloadAndInstallLatestApps(
+                                              [app.id],
+                                              globalNavigatorKey.currentContext,
+                                            )
                                             .catchError((e) {
                                               showError(e, context);
                                               return <String>[];
@@ -971,7 +973,8 @@ class AppsPageState extends State<AppsPage> {
                                 Icon(
                                   Icons.check_circle,
                                   color: Colors.green[600],
-                                  size: MediaQuery.of(context).size.width * 0.04,
+                                  size:
+                                      MediaQuery.of(context).size.width * 0.04,
                                 ),
                                 const SizedBox(width: 4),
                                 Flexible(
@@ -1048,13 +1051,14 @@ class AppsPageState extends State<AppsPage> {
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
-                          childAspectRatio: 0.55,
-                          crossAxisSpacing: MediaQuery.of(context).size.width * 0.04,
-                          mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
-                        ),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent:
+                          MediaQuery.of(context).size.width * 0.5,
+                      childAspectRatio: 0.55,
+                      crossAxisSpacing:
+                          MediaQuery.of(context).size.width * 0.04,
+                      mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
+                    ),
                     itemCount: listedApps
                         .asMap()
                         .entries

@@ -40,14 +40,18 @@ class AppTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: enabled ? onPressed : null,
-      style: style ?? TextButton.styleFrom(
-        foregroundColor: Theme.of(context).colorScheme.primary,
-        disabledForegroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.38),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
+      style:
+          style ??
+          TextButton.styleFrom(
+            foregroundColor: Theme.of(context).colorScheme.primary,
+            disabledForegroundColor: Theme.of(
+              context,
+            ).colorScheme.onSurface.withOpacity(0.38),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
       child: child,
     );
   }

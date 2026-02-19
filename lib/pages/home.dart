@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    
+
     // Initialize animation controllers for each nav item
     _iconControllers = List.generate(
       pages.length,
@@ -70,17 +70,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         vsync: this,
       ),
     );
-    
+
     _iconAnimations = _iconControllers
-        .map((controller) => Tween<double>(
-              begin: 0,
-              end: 1,
-            ).animate(CurvedAnimation(
-              parent: controller,
-              curve: Curves.easeInOut,
-            )))
+        .map(
+          (controller) => Tween<double>(begin: 0, end: 1).animate(
+            CurvedAnimation(parent: controller, curve: Curves.easeInOut),
+          ),
+        )
         .toList();
-    
+
     initDeepLinks();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var sp = context.read<SettingsProvider>();
@@ -358,32 +356,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           onDestinationSelected: (int index) async {
             HapticFeedback.selectionClick();
-            
+
             // Trigger full-rotation animation
             _iconControllers[index].forward().then((_) {
               _iconControllers[index].reset();
             });
-            
+
             switchToPage(index);
           },
-          destinations: pages.asMap().entries.map(
-            (entry) {
-              int index = entry.key;
-              var page = entry.value;
-              return NavigationDestination(
-                icon: AnimatedBuilder(
-                  animation: _iconAnimations[index],
-                  builder: (context, child) {
-                    return Transform.rotate(
-                      angle: _iconAnimations[index].value * 2 * 3.14159,
-                      child: Icon(page.icon),
-                    );
-                  },
-                ),
-                label: page.title,
-              );
-            },
-          ).toList(),
+          destinations: pages.asMap().entries.map((entry) {
+            int index = entry.key;
+            var page = entry.value;
+            return NavigationDestination(
+              icon: AnimatedBuilder(
+                animation: _iconAnimations[index],
+                builder: (context, child) {
+                  return Transform.rotate(
+                    angle: _iconAnimations[index].value * 2 * 3.14159,
+                    child: Icon(page.icon),
+                  );
+                },
+              ),
+              label: page.title,
+            );
+          }).toList(),
         ),
       ),
       onWillPop: () async {

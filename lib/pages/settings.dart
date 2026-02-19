@@ -323,9 +323,8 @@ class _SettingsPageState extends State<SettingsPage> {
         thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
         overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
         valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-        valueIndicatorTextStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          color: Theme.of(context).colorScheme.onPrimary,
-        ),
+        valueIndicatorTextStyle: Theme.of(context).textTheme.bodyMedium
+            ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
         showValueIndicator: ShowValueIndicator.onDrag,
       ),
       child: Slider(
@@ -1033,11 +1032,11 @@ class _SettingsPageState extends State<SettingsPage> {
                         );
                       },
                       icon: context.locale.languageCode == 'he'
-                      ? Transform(
-                          transform: Matrix4.identity(),
-                          child: const Icon(Icons.help),
-                        )
-                      : const Icon(Icons.help),
+                          ? Transform(
+                              transform: Matrix4.identity(),
+                              child: const Icon(Icons.help),
+                            )
+                          : const Icon(Icons.help),
                       tooltip: tr('wiki'),
                     ),
                     IconButton(

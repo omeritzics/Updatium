@@ -16,7 +16,9 @@ void main() {
           ? testDir.parent
           : testDir;
 
-      translationsDir = Directory(path.join(projectRoot.path, 'assets', 'translations'));
+      translationsDir = Directory(
+        path.join(projectRoot.path, 'assets', 'translations'),
+      );
 
       // Load English translations as reference
       final englishFile = File(path.join(translationsDir.path, 'en.json'));
@@ -31,17 +33,26 @@ void main() {
     });
 
     test('translations directory exists and contains files', () {
-      expect(translationsDir.existsSync(), isTrue,
-          reason: 'Translations directory should exist at assets/translations');
-      expect(translationFiles.isNotEmpty, isTrue,
-          reason: 'Translations directory should contain JSON files');
+      expect(
+        translationsDir.existsSync(),
+        isTrue,
+        reason: 'Translations directory should exist at assets/translations',
+      );
+      expect(
+        translationFiles.isNotEmpty,
+        isTrue,
+        reason: 'Translations directory should contain JSON files',
+      );
     });
 
     test('all translation files are valid JSON', () {
       for (final file in translationFiles) {
         final content = File(file.path).readAsStringSync();
-        expect(() => json.decode(content), returnsNormally,
-            reason: 'File ${path.basename(file.path)} should be valid JSON');
+        expect(
+          () => json.decode(content),
+          returnsNormally,
+          reason: 'File ${path.basename(file.path)} should be valid JSON',
+        );
       }
     });
 
@@ -66,8 +77,11 @@ void main() {
         final fileName = path.basename(file.path);
 
         for (final key in requiredKeys) {
-          expect(translations.containsKey(key), isTrue,
-              reason: 'File $fileName should contain required key "$key"');
+          expect(
+            translations.containsKey(key),
+            isTrue,
+            reason: 'File $fileName should contain required key "$key"',
+          );
         }
       }
     });
@@ -86,8 +100,12 @@ void main() {
             final allMatches = placeholderPattern.allMatches(value);
             for (final match in allMatches) {
               final placeholder = match.group(0)!;
-              expect(placeholder, matches(RegExp(r'^\{[a-zA-Z0-9_]*\}$')),
-                  reason: 'In $fileName at "$keyPath": placeholder $placeholder should use valid format');
+              expect(
+                placeholder,
+                matches(RegExp(r'^\{[a-zA-Z0-9_]*\}$')),
+                reason:
+                    'In $fileName at "$keyPath": placeholder $placeholder should use valid format',
+              );
             }
           } else if (value is Map) {
             value.forEach((k, v) => checkPlaceholders(v, '$keyPath.$k'));
@@ -109,8 +127,12 @@ void main() {
 
         // Check if all English keys exist in this translation
         for (final englishKey in englishTranslations.keys) {
-          expect(translations.containsKey(englishKey), isTrue,
-              reason: 'File $fileName is missing key "$englishKey" that exists in en.json');
+          expect(
+            translations.containsKey(englishKey),
+            isTrue,
+            reason:
+                'File $fileName is missing key "$englishKey" that exists in en.json',
+          );
         }
 
         // Warn about extra keys (not a failure, might be intentional)
@@ -130,8 +152,11 @@ void main() {
 
         void checkEmpty(dynamic value, String keyPath) {
           if (value is String) {
-            expect(value.trim(), isNotEmpty,
-                reason: 'In $fileName at "$keyPath": value should not be empty');
+            expect(
+              value.trim(),
+              isNotEmpty,
+              reason: 'In $fileName at "$keyPath": value should not be empty',
+            );
           } else if (value is Map) {
             value.forEach((k, v) => checkEmpty(v, '$keyPath.$k'));
           }
@@ -166,17 +191,26 @@ void main() {
         final filePath = path.join(translationsDir.path, fileName);
         final file = File(filePath);
 
-        expect(file.existsSync(), isTrue,
-            reason: 'Translation file $fileName should exist');
+        expect(
+          file.existsSync(),
+          isTrue,
+          reason: 'Translation file $fileName should exist',
+        );
 
         if (file.existsSync()) {
           final content = file.readAsStringSync();
-          expect(() => json.decode(content), returnsNormally,
-              reason: 'Translation file $fileName should be valid JSON');
+          expect(
+            () => json.decode(content),
+            returnsNormally,
+            reason: 'Translation file $fileName should be valid JSON',
+          );
 
           final translations = json.decode(content) as Map<String, dynamic>;
-          expect(translations.isNotEmpty, isTrue,
-              reason: 'Translation file $fileName should not be empty');
+          expect(
+            translations.isNotEmpty,
+            isTrue,
+            reason: 'Translation file $fileName should not be empty',
+          );
         }
       }
     });
@@ -194,8 +228,12 @@ void main() {
           if (translations.containsKey(key) && translations[key] is Map) {
             final pluralForms = translations[key] as Map<String, dynamic>;
             // Should have at least 'one' and 'other' forms
-            expect(pluralForms.containsKey('other'), isTrue,
-                reason: 'In $fileName: plural key "$key" should have "other" form');
+            expect(
+              pluralForms.containsKey('other'),
+              isTrue,
+              reason:
+                  'In $fileName: plural key "$key" should have "other" form',
+            );
           }
         }
       }
@@ -218,8 +256,12 @@ void main() {
         }
 
         for (final entry in keyCounts.entries) {
-          expect(entry.value, equals(1),
-              reason: 'In $fileName: key "${entry.key}" appears ${entry.value} times, should appear only once');
+          expect(
+            entry.value,
+            equals(1),
+            reason:
+                'In $fileName: key "${entry.key}" appears ${entry.value} times, should appear only once',
+          );
         }
       }
     });
@@ -244,8 +286,11 @@ void main() {
         final fileName = path.basename(file.path);
 
         for (final key in securityKeys) {
-          expect(translations.containsKey(key), isTrue,
-              reason: 'File $fileName should contain security key "$key"');
+          expect(
+            translations.containsKey(key),
+            isTrue,
+            reason: 'File $fileName should contain security key "$key"',
+          );
         }
       }
     });
@@ -259,7 +304,9 @@ void main() {
       final projectRoot = testDir.path.endsWith('test')
           ? testDir.parent
           : testDir;
-      translationsDir = Directory(path.join(projectRoot.path, 'assets', 'translations'));
+      translationsDir = Directory(
+        path.join(projectRoot.path, 'assets', 'translations'),
+      );
     });
 
     test('all translation files use UTF-8 encoding', () {
@@ -273,8 +320,11 @@ void main() {
         final fileName = path.basename(file.path);
 
         // Try to decode as UTF-8, should not throw
-        expect(() => utf8.decode(bytes), returnsNormally,
-            reason: 'File $fileName should be valid UTF-8');
+        expect(
+          () => utf8.decode(bytes),
+          returnsNormally,
+          reason: 'File $fileName should be valid UTF-8',
+        );
       }
     });
   });
@@ -288,7 +338,9 @@ void main() {
       final projectRoot = testDir.path.endsWith('test')
           ? testDir.parent
           : testDir;
-      translationsDir = Directory(path.join(projectRoot.path, 'assets', 'translations'));
+      translationsDir = Directory(
+        path.join(projectRoot.path, 'assets', 'translations'),
+      );
 
       final englishFile = File(path.join(translationsDir.path, 'en.json'));
       final englishContent = await englishFile.readAsString();
@@ -315,11 +367,19 @@ void main() {
           final transValue = translations[key];
 
           if (enValue is String && transValue is String) {
-            final enPlaceholders = RegExp(r'\{[^}]*\}').allMatches(enValue).length;
-            final transPlaceholders = RegExp(r'\{[^}]*\}').allMatches(transValue).length;
+            final enPlaceholders = RegExp(
+              r'\{[^}]*\}',
+            ).allMatches(enValue).length;
+            final transPlaceholders = RegExp(
+              r'\{[^}]*\}',
+            ).allMatches(transValue).length;
 
-            expect(transPlaceholders, equals(enPlaceholders),
-                reason: 'In $fileName at key "$key": expected $enPlaceholders placeholders, found $transPlaceholders');
+            expect(
+              transPlaceholders,
+              equals(enPlaceholders),
+              reason:
+                  'In $fileName at key "$key": expected $enPlaceholders placeholders, found $transPlaceholders',
+            );
           }
         }
       }

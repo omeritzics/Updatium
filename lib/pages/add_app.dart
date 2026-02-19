@@ -462,7 +462,7 @@ class AddAppPageState extends State<AddAppPage> {
           children: [
             Expanded(
               child: DropdownButtonFormField<String>(
-                value: pickedSourceOverride ?? '',
+                initialValue: pickedSourceOverride ?? '',
                 decoration: InputDecoration(
                   labelText: tr('overrideSource'),
                   border: OutlineInputBorder(
@@ -478,17 +478,16 @@ class AddAppPageState extends State<AddAppPage> {
                     borderSide: BorderSide.none,
                   ),
                   filled: true,
-                  fillColor: Theme.of(context).colorScheme.surfaceVariant,
+                  fillColor: Theme.of(
+                    context,
+                  ).colorScheme.surfaceContainerHighest,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 12,
                   ),
                 ),
                 items: [
-                  DropdownMenuItem(
-                    value: '',
-                    child: Text(tr('none')),
-                  ),
+                  DropdownMenuItem(value: '', child: Text(tr('none'))),
                   ...sourceProvider.sources
                       .where(
                         (s) =>
@@ -505,7 +504,9 @@ class AddAppPageState extends State<AddAppPage> {
                 ],
                 onChanged: (value) {
                   setState(() {
-                    pickedSourceOverride = (value == null || value == '') ? null : value;
+                    pickedSourceOverride = (value == null || value == '')
+                        ? null
+                        : value;
                   });
                   changeUserInput(userInput, true, false);
                 },
@@ -535,7 +536,7 @@ class AddAppPageState extends State<AddAppPage> {
                 borderSide: BorderSide.none,
               ),
               filled: true,
-              fillColor: Theme.of(context).colorScheme.surfaceVariant,
+              fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               prefixIcon: const Icon(Icons.search),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
