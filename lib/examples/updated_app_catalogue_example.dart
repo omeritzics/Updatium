@@ -495,7 +495,7 @@ class AddAppDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Add App'),
-      content: const Text('Add app functionality would be implemented here.'),
+      content: const Text('Add App functionality would be implemented here.'),
       actions: [
         AppTextButton(
           onPressed: () => Navigator.pop(context),

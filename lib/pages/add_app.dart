@@ -279,21 +279,39 @@ class AddAppPageState extends State<AddAppPage> {
         ),
         const SizedBox(width: 16),
         gettingAppInfo
-            ? const CircularProgressIndicator()
-            : FilledButton(
-                onPressed:
-                    doingSomething ||
-                        pickedSource == null ||
-                        (pickedSource!
+            ? Semantics(
+                label: tr('gettingAppInfo'),
+                child: const CircularProgressIndicator(),
+              )
+            : Semantics(
+                button: true,
+                label: tr('add'),
+                hint: doingSomething
+                    ? 'Please wait, operation in progress'
+                    : pickedSource == null
+                        ? 'Select a source first'
+                        : (pickedSource!
                                 .combinedAppSpecificSettingFormItems
                                 .isNotEmpty &&
                             !additionalSettingsValid)
-                    ? null
-                    : () {
-                        HapticFeedback.selectionClick();
-                        addApp();
-                      },
-                child: Text(tr('add')),
+                            ? 'Complete additional settings first'
+                            : 'Add this app to your collection',
+                excludeSemantics: true,
+                child: FilledButton(
+                  onPressed:
+                      doingSomething ||
+                          pickedSource == null ||
+                          (pickedSource!
+                                  .combinedAppSpecificSettingFormItems
+                                  .isNotEmpty &&
+                              !additionalSettingsValid)
+                      ? null
+                      : () {
+                          HapticFeedback.selectionClick();
+                          addApp();
+                        },
+                  child: Text(tr('add')),
+                ),
               ),
       ],
     );
@@ -541,14 +559,25 @@ class AddAppPageState extends State<AddAppPage> {
         ),
         const SizedBox(width: 16),
         searching
-            ? const CircularProgressIndicator()
-            : FilledButton(
-                onPressed: searchQuery.isEmpty || doingSomething
-                    ? null
-                    : () {
-                        runSearch();
-                      },
-                child: Text(tr('search')),
+            ? Semantics(
+                label: tr('searching'),
+                child: const CircularProgressIndicator(),
+              )
+            : Semantics(
+                button: true,
+                label: tr('search'),
+                hint: searchQuery.isEmpty 
+                    ? 'Enter search terms first'
+                    : 'Search for apps',
+                excludeSemantics: true,
+                child: FilledButton(
+                  onPressed: searchQuery.isEmpty || doingSomething
+                      ? null
+                      : () {
+                          runSearch();
+                        },
+                  child: Text(tr('search')),
+                ),
               ),
       ],
     );

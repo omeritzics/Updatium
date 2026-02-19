@@ -294,30 +294,44 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: FilledButton.icon(
-                                  onPressed: importInProgress
-                                      ? null
-                                      : () {
-                                          runUpdatiumExport(pickOnly: true);
-                                        },
-                                  icon: const Icon(Icons.folder_open),
-                                  label: Text(
-                                    tr('pickExportDir'),
-                                    textAlign: TextAlign.center,
+                                child: Semantics(
+                                  button: true,
+                                  label: tr('pickExportDir'),
+                                  hint: 'Choose a directory to export your apps and settings',
+                                  excludeSemantics: true,
+                                  child: FilledButton.icon(
+                                    onPressed: importInProgress
+                                        ? null
+                                        : () {
+                                            runUpdatiumExport(pickOnly: true);
+                                          },
+                                    icon: const Icon(Icons.folder_open),
+                                    label: Text(
+                                      tr('pickExportDir'),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                 ),
                               ),
                               const SizedBox(width: 16),
                               Expanded(
-                                child: FilledButton.icon(
-                                  onPressed:
-                                      importInProgress || snapshot.data == null
-                                      ? null
-                                      : runUpdatiumExport,
-                                  icon: const Icon(Icons.upload_file),
-                                  label: Text(
-                                    tr('updatiumExport'),
-                                    textAlign: TextAlign.center,
+                                child: Semantics(
+                                  button: true,
+                                  label: tr('updatiumExport'),
+                                  hint: snapshot.data == null
+                                      ? 'Set export directory first'
+                                      : 'Export all your apps and settings to file',
+                                  excludeSemantics: true,
+                                  child: FilledButton.icon(
+                                    onPressed:
+                                        importInProgress || snapshot.data == null
+                                        ? null
+                                        : runUpdatiumExport,
+                                    icon: const Icon(Icons.upload_file),
+                                    label: Text(
+                                      tr('updatiumExport'),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -327,14 +341,20 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: FilledButton.icon(
-                                  onPressed: importInProgress
-                                      ? null
-                                      : runUpdatiumImport,
-                                  icon: const Icon(Icons.download),
-                                  label: Text(
-                                    tr('updatiumImport'),
-                                    textAlign: TextAlign.center,
+                                child: Semantics(
+                                  button: true,
+                                  label: tr('updatiumImport'),
+                                  hint: 'Import apps and settings from a backup file',
+                                  excludeSemantics: true,
+                                  child: FilledButton.icon(
+                                    onPressed: importInProgress
+                                        ? null
+                                        : runUpdatiumImport,
+                                    icon: const Icon(Icons.download),
+                                    label: Text(
+                                      tr('updatiumImport'),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -402,16 +422,28 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     Column(
                       children: [
                         SizedBox(height: 32),
-                        FilledButton.icon(
-                          onPressed: importInProgress ? null : urlListImport,
-                          icon: const Icon(Icons.list_alt),
-                          label: Text(tr('importFromURLList')),
+                        Semantics(
+                          button: true,
+                          label: tr('importFromURLList'),
+                          hint: 'Import multiple apps by entering their URLs in a list',
+                          excludeSemantics: true,
+                          child: FilledButton.icon(
+                            onPressed: importInProgress ? null : urlListImport,
+                            icon: const Icon(Icons.list_alt),
+                            label: Text(tr('importFromURLList')),
+                          ),
                         ),
                         const SizedBox(height: 8),
-                        FilledButton.icon(
-                          onPressed: importInProgress ? null : runUrlImport,
-                          icon: const Icon(Icons.link),
-                          label: Text(tr('importFromURLsInFile')),
+                        Semantics(
+                          button: true,
+                          label: tr('importFromURLsInFile'),
+                          hint: 'Import apps by reading URLs from a text file',
+                          excludeSemantics: true,
+                          child: FilledButton.icon(
+                            onPressed: importInProgress ? null : runUrlImport,
+                            icon: const Icon(Icons.link),
+                            label: Text(tr('importFromURLsInFile')),
+                          ),
                         ),
                       ],
                     ),
