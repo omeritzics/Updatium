@@ -572,52 +572,52 @@ class AppsPageState extends State<AppsPage> {
             action = const Icon(Icons.check_circle);
           } else if (!isInstalled) {
             action = Semantics(
-                      button: true,
-                      label: tr('install'),
-                      hint: appsProvider.areDownloadsRunning()
-                          ? 'Please wait, downloads in progress'
-                          : 'Install ${app.name} on your device',
-                      excludeSemantics: true,
-                      child: FilledButton.tonal(
-                        onPressed: appsProvider.areDownloadsRunning()
-                            ? null
-                            : () {
-                                appsProvider
-                                    .downloadAndInstallLatestApps([
-                                      app.id,
-                                    ], globalNavigatorKey.currentContext)
-                                    .catchError((e) {
-                                      showError(e, context);
-                                      return <String>[];
-                                    });
-                              },
-                        child: Text(tr('install')),
-                      ),
-                    );
+              button: true,
+              label: tr('install'),
+              hint: appsProvider.areDownloadsRunning()
+                  ? 'Please wait, downloads in progress'
+                  : 'Install ${app.name} on your device',
+              excludeSemantics: true,
+              child: FilledButton.tonal(
+                onPressed: appsProvider.areDownloadsRunning()
+                    ? null
+                    : () {
+                        appsProvider
+                            .downloadAndInstallLatestApps([
+                              app.id,
+                            ], globalNavigatorKey.currentContext)
+                            .catchError((e) {
+                              showError(e, context);
+                              return <String>[];
+                            });
+                      },
+                child: Text(tr('install')),
+              ),
+            );
           } else if (hasUpdateLocal) {
             action = Semantics(
-                      button: true,
-                      label: tr('update'),
-                      hint: appsProvider.areDownloadsRunning()
-                          ? 'Please wait, downloads in progress'
-                          : 'Update ${app.name} to version ${app.latestVersion}',
-                      excludeSemantics: true,
-                      child: FilledButton.tonal(
-                        onPressed: appsProvider.areDownloadsRunning()
-                            ? null
-                            : () {
-                                appsProvider
-                                    .downloadAndInstallLatestApps([
-                                      app.id,
-                                    ], globalNavigatorKey.currentContext)
-                                    .catchError((e) {
-                                      showError(e, context);
-                                      return <String>[];
-                                    });
-                              },
-                        child: Text(tr('update')),
-                      ),
-                    );
+              button: true,
+              label: tr('update'),
+              hint: appsProvider.areDownloadsRunning()
+                  ? 'Please wait, downloads in progress'
+                  : 'Update ${app.name} to version ${app.latestVersion}',
+              excludeSemantics: true,
+              child: FilledButton.tonal(
+                onPressed: appsProvider.areDownloadsRunning()
+                    ? null
+                    : () {
+                        appsProvider
+                            .downloadAndInstallLatestApps([
+                              app.id,
+                            ], globalNavigatorKey.currentContext)
+                            .catchError((e) {
+                              showError(e, context);
+                              return <String>[];
+                            });
+                      },
+                child: Text(tr('update')),
+              ),
+            );
           } else {
             action = Row(
               mainAxisSize: MainAxisSize.min,
