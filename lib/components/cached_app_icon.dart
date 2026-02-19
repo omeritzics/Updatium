@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 
-/// Widget that displays app icons with caching and loading states
+/// Widget that displays app icons with Material Expressive design
 class CachedAppIcon extends StatefulWidget {
   final App app;
   final double size;
@@ -37,9 +37,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
   late Animation<double> _shimmerAnimation;
   late AnimationController _scaleController;
   late Animation<double> _scaleAnimation;
-  late AnimationController _rotationController;
-  late Animation<double> _rotationAnimation;
-
   Uint8List? _iconData;
   bool _isLoading = false;
   bool _hasError = false;
@@ -52,53 +49,29 @@ class _CachedAppIconState extends State<CachedAppIcon>
   void initState() {
     super.initState();
 
-    // Shimmer animation for loading state
     _shimmerController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    _shimmerAnimation = Tween<double>(begin: -2.0, end: 2.0).animate(
+    _shimmerAnimation = Tween<double>(begin: -1.0, end: 1.0).animate(
       CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
     );
 
-    // Scale animation for interactions
     _scaleController = AnimationController(
       duration: const Duration(milliseconds: 150),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.9).animate(
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
       CurvedAnimation(parent: _scaleController, curve: Curves.easeOutCubic),
     );
 
-    // Rotation animation for loading/error states
-    _rotationController = AnimationController(
-      duration: const Duration(milliseconds: 600),
-      vsync: this,
-    );
-    _rotationAnimation = Tween<double>(begin: 0.0, end: 0.1).animate(
-      CurvedAnimation(parent: _rotationController, curve: Curves.easeInOut),
-    );
-
-    // Start loading the icon
     _loadIcon();
-  }
-
-  @override
-  void didUpdateWidget(CachedAppIcon oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    // Reload icon if app changed or remote URL changed
-    if (oldWidget.app.id != widget.app.id ||
-        oldWidget.app.remoteIconUrl != widget.app.remoteIconUrl) {
-      _loadIcon();
-    }
   }
 
   @override
   void dispose() {
     _shimmerController.dispose();
     _scaleController.dispose();
-    _rotationController.dispose();
     super.dispose();
   }
 
@@ -131,7 +104,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
   }
 
   Future<void> _loadIcon() async {
-    // Skip if already loading this same app
     if (_isLoading &&
         _lastAppId == widget.app.id &&
         _lastRemoteUrl == widget.app.remoteIconUrl) {
@@ -153,7 +125,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
     try {
       final appsProvider = Provider.of<AppsProvider>(context, listen: false);
 
-      // First, try to get the existing icon from AppsProvider
       final existingIcon = appsProvider.apps[widget.app.id]?.icon;
 
       if (existingIcon != null) {
@@ -167,7 +138,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
         return;
       }
 
-      // If no existing icon, try to get from cache or fetch
       final iconData = await appsProvider.getIcon(
         widget.app.id,
         widget.app.remoteIconUrl,
@@ -219,42 +189,32 @@ class _CachedAppIconState extends State<CachedAppIcon>
         onDoubleTap: widget.onDoubleTap,
         onLongPress: widget.onLongPress,
         child: AnimatedBuilder(
-          animation: Listenable.merge([_scaleController, _rotationController]),
+          animation: Listenable.merge([_scaleController]),
           builder: (context, child) {
             return Transform.scale(
               scale: _scaleAnimation.value,
-              child: Transform.rotate(
-                angle: _rotationAnimation.value,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 150),
-                  transform: Matrix4.identity()
-                    ..translate(0.0, _isHovered ? -4.0 : 0.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(widget.size * 0.2),
-                    boxShadow: _isHovered
-                        ? [
-                            BoxShadow(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primary.withOpacity(0.3),
-                              blurRadius: 20,
-                              offset: const Offset(0, 8),
-                            ),
-                          ]
-                        : [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                  ),
-                  child: SizedBox(
-                    width: widget.size,
-                    height: widget.size,
-                    child: iconWidget,
-                  ),
+              child: Container(
+                width: widget.size,
+                height: widget.size,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(widget.size * 0.125),
+                  boxShadow: _isHovered
+                      ? [
+                          BoxShadow(
+                            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                            blurRadius: 20,
+                            offset: const Offset(0, 8),
+                          ),
+                        ]
+                      : [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                 ),
+                child: iconWidget,
               ),
             );
           },
@@ -270,12 +230,11 @@ class _CachedAppIconState extends State<CachedAppIcon>
 
     return Stack(
       children: [
-        // Base placeholder with expressive design
         Container(
           width: widget.size,
           height: widget.size,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(widget.size * 0.2),
+            borderRadius: BorderRadius.circular(widget.size * 0.125),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -287,53 +246,55 @@ class _CachedAppIconState extends State<CachedAppIcon>
           ),
           child: Center(
             child: AnimatedBuilder(
-              animation: _rotationController,
+              animation: _shimmerController,
               builder: (context, child) {
                 return Transform.rotate(
-                  angle: _rotationAnimation.value * 2 * 3.14159,
+                  angle: _shimmerAnimation.value * 2 * 3.14159,
                   child: Icon(
                     Icons.apps,
                     size: widget.size * 0.5,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurfaceVariant.withOpacity(0.6),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.6),
                   ),
                 );
               },
             ),
           ),
         ),
-
-        // Expressive shimmer effect
-        if (widget.enableShimmer)
-          AnimatedBuilder(
-            animation: _shimmerAnimation,
-            builder: (context, child) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(widget.size * 0.2),
-                child: Transform.translate(
-                  offset: Offset(
-                    _shimmerAnimation.value * widget.size * 0.5,
-                    0,
+        if (widget.showInstalledIndicator)
+          Positioned.fill(
+            child: Consumer<AppsProvider>(
+              builder: (context, appsProvider, child) {
+                final isInstalled =
+                    appsProvider.apps[widget.app.id]?.installedInfo != null;
+                if (!isInstalled) return const SizedBox.shrink();
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(widget.size * 0.125),
+                    border: Border.all(color: Colors.green, width: 2.0),
                   ),
-                  child: Container(
-                    width: widget.size * 0.3,
-                    height: widget.size,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Colors.transparent,
-                          Colors.white.withOpacity(0.3),
-                          Colors.transparent,
-                        ],
-                      ),
-                    ),
+                );
+              },
+            ),
+          ),
+        if (widget.size > 40)
+          Positioned.fill(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(widget.size * 0.125),
+                onTap: _retryLoad,
+                child: Container(
+                  width: widget.size,
+                  height: widget.size,
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.refresh,
+                    size: widget.size * 0.3,
+                    color: Theme.of(context).colorScheme.error,
                   ),
                 ),
-              );
-            },
+              ),
+            ),
           ),
       ],
     );
@@ -342,7 +303,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
   Widget _buildErrorWidget() {
     return Stack(
       children: [
-        // Error placeholder
         Container(
           width: widget.size,
           height: widget.size,
@@ -371,8 +331,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
             ],
           ),
         ),
-
-        // Retry button for larger icons
         if (widget.size > 40)
           Positioned.fill(
             child: Material(
@@ -400,7 +358,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
   Widget _buildIconWidget() {
     return Stack(
       children: [
-        // Main icon
         ClipRRect(
           borderRadius: BorderRadius.circular(widget.size * 0.125),
           child: Image.memory(
@@ -424,8 +381,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
             },
           ),
         ),
-
-        // Installed indicator
         if (widget.showInstalledIndicator)
           Positioned.fill(
             child: Consumer<AppsProvider>(
@@ -433,7 +388,6 @@ class _CachedAppIconState extends State<CachedAppIcon>
                 final isInstalled =
                     appsProvider.apps[widget.app.id]?.installedInfo != null;
                 if (!isInstalled) return const SizedBox.shrink();
-
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(widget.size * 0.125),
