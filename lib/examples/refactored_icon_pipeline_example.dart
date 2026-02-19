@@ -237,7 +237,7 @@ class _RefactoredIconPipelineExampleState
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: FilledButton.tonal.icon(
+                child: FilledButton.tonalIcon(
                   onPressed: _prefetchStatus?.isRunning == true
                       ? null
                       : _startPrefetching,
@@ -375,7 +375,7 @@ class _RefactoredIconPipelineExampleState
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(
                           context,
-                        ).colorScheme.onSurface.withOpacity(0.7),
+                        ).colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -433,9 +433,11 @@ class _RefactoredIconPipelineExampleState
     await UnifiedIconService.instance.clearCache();
     _refreshCacheStats();
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Cache cleared')));
+    if (mounted) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Cache cleared')));
+    }
   }
 
   Future<void> _refreshCacheStats() async {

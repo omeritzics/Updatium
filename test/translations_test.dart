@@ -83,8 +83,8 @@ void main() {
 
         void checkPlaceholders(dynamic value, String keyPath) {
           if (value is String) {
-            final matches = placeholderPattern.allMatches(value);
-            for (final match in matches) {
+            final allMatches = placeholderPattern.allMatches(value);
+            for (final match in allMatches) {
               final placeholder = match.group(0)!;
               expect(placeholder, matches(RegExp(r'^\{[a-zA-Z0-9_]*\}$')),
                   reason: 'In $fileName at "$keyPath": placeholder $placeholder should use valid format');

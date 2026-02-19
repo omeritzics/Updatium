@@ -416,7 +416,7 @@ class EnhancedIconPrefetcher {
         app.bestIconUrl,
         forceRefresh: forceRefresh,
         maxSize: config?.maxSize,
-        preferredFormat: config?.preferredFormat,
+        preferredFormat: config?.preferredFormat ?? ImageFormat.auto,
       );
 
       final duration = DateTime.now().difference(startTime);

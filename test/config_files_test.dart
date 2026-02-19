@@ -387,10 +387,9 @@ void main() {
         if (!file.existsSync()) continue;
 
         final content = file.readAsStringSync();
-        final versionMatch = RegExp(r"version:\s*['\"]?(\d+\.\d+\.\d+)['"]?")
-            .firstMatch(content);
+        final versionMatch = RegExp('version:\\s*[\'"]?(\\d+\\.\\d+\\.\\d+)[\'"]?').firstMatch(content);
 
-        final version = versionMatch.group(1);
+        final version = versionMatch?.group(1);
         if (flutterVersion == null) {
           flutterVersion = version;
         } else {

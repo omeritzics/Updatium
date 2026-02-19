@@ -60,8 +60,8 @@ void main() {
 
         void checkPlaceholderNames(dynamic value, String keyPath) {
           if (value is String) {
-            final matches = placeholderPattern.allMatches(value);
-            for (final match in matches) {
+            final allMatches = placeholderPattern.allMatches(value);
+            for (final match in allMatches) {
               final placeholder = match.group(1)!;
 
               // Empty placeholders like {} are valid for positional args
@@ -319,7 +319,7 @@ void main() {
         final fileName = path.basename(file.path);
 
         // File paths with spaces should be quoted
-        final pathPattern = RegExp(r'[^"\']\s+[^\s:]+/[^\s:]+\s');
+        final pathPattern = RegExp('[^"\']\s+[^\s:]+/[^\s:]+\s');
         if (pathPattern.hasMatch(content)) {
           print('Note: $fileName may have unquoted paths with spaces (check for proper quoting)');
         }
@@ -420,7 +420,7 @@ void main() {
         final fileName = path.basename(file.path);
 
         // Should not contain hardcoded sensitive values
-        expect(content, isNot(matches(RegExp(r'password\s*:\s*["\'][^"\']{8,}["\']', caseSensitive: false))),
+        expect(content, isNot(matches(RegExp('password:\s*["\'][^"\']{8,}["\']', caseSensitive: false))),
             reason: '$fileName should not contain hardcoded passwords');
 
         // Secrets should use ${{ secrets.NAME }} syntax
