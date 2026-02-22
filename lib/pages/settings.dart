@@ -110,8 +110,7 @@ class _SettingsPageState extends State<SettingsPage> {
     initUpdateIntervalInterpolator();
     processIntervalSliderValue(settingsProvider.updateIntervalSliderVal);
 
-    // Initialize security provider
-    _initializeSecurityProvider();
+    // Initialization is handled in initState, not build
 
     var followSystemThemeExplanation = FutureBuilder(
       builder: (ctx, val) {
