@@ -213,13 +213,12 @@ class YARAScanner {
     });
   }
 
-  /// Scan a file for malware using YARA rules
-  Future<YARAScanResult> scanFile(String filePath) async {
-    try {
-      final file = File(filePath);
-      if (!await file.exists()) {
-        return YARAScanResult.error(filePath, 'File not found');
-      }
+  final fileBytes = await file.readAsBytes();
+  final matches = <YARAMatch>[];
+
+  for (final rule in _rules) {
+    final match = await _checkRule(rule, fileBytes);
+    if (match != null) {
 
       final fileBytes = await file.readAsBytes();
       final matches = <YARAMatch>[];
