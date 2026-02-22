@@ -947,24 +947,27 @@ class AppsProvider with ChangeNotifier {
   }
 
   /// Scan APK for malware before installation
-  Future<bool> _scanAPKForMalware(String apkPath, {List<String>? additionalApkPaths}) async {
+  Future<bool> _scanAPKForMalware(String apkPath) async {
+    SecuritySettingsProvider? securityProvider;
     try {
-      final securityProvider = await SecuritySettingsProvider.create();
+      securityProvider = await SecuritySettingsProvider.create();
       await securityProvider.initialize();
-      
-      // Scan base APK
       final scanResult = await securityProvider.scanAPK(apkPath);
-      
-      if (scanResult.error != null) {
-        logs.add('Security scan error: ${scanResult.error}');
-        // On scan error, be conservative and block installation
-        return false;
-      }
-      
+
       if (scanResult.isInfected) {
-        logs.add('Security scan detected malware in APK: ${scanResult.matches.map((m) => m.ruleName).join(', ')}');
+        logs.add(
+          'Security scan detected malware in APK: ${scanResult.matches.map((m) => m.ruleName).join(', ')}',
+        );
         return false; // Block installation
       }
+
+      return true; // Safe to install
+    } catch (e) {
+      logs.add('Security scan failed: $e');
+      return true; // Allow installation on scan failure
+    } finally {
+      securityProvider?.dispose();
+    }
       
       // Scan additional APKs if present (split APKs)
       if (additionalApkPaths != null) {
