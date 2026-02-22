@@ -37,6 +37,7 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/mass_app_sources/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/apps_provider.dart';
 
 class AppNames {
   late String author;
@@ -1329,6 +1330,11 @@ class SourceProvider {
   }) async {
     List<App> apps = [];
     Map<String, dynamic> errors = {};
+    
+    // Get existing apps to check for duplicates
+    final appsProvider = AppsProvider();
+    final existingUrls = appsProvider.getAppValues().map((e) => e.app.url).toList();
+    alreadyAddedUrls.addAll(existingUrls);
     for (var url in urls) {
       try {
         if (alreadyAddedUrls.contains(url)) {
