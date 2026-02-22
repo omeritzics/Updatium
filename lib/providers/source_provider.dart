@@ -1330,10 +1330,13 @@ class SourceProvider {
   }) async {
     List<App> apps = [];
     Map<String, dynamic> errors = {};
-    
+
     // Get existing apps to check for duplicates
     final appsProvider = AppsProvider();
-    final existingUrls = appsProvider.getAppValues().map((e) => e.app.url).toList();
+    final existingUrls = appsProvider
+        .getAppValues()
+        .map((e) => e.app.url)
+        .toList();
     alreadyAddedUrls.addAll(existingUrls);
     for (var url in urls) {
       try {
