@@ -965,34 +965,44 @@ class AppsProvider with ChangeNotifier {
     } catch (e) {
       logs.add('Security scan failed: $e');
       return true; // Allow installation on scan failure
-    } finally {
-      securityProvider?.dispose();
-    }
-      
-      // Scan additional APKs if present (split APKs)
-      if (additionalApkPaths != null) {
-        for (final additionalApkPath in additionalApkPaths) {
-          final additionalScanResult = await securityProvider.scanAPK(additionalApkPath);
-          
-          if (additionalScanResult.error != null) {
-            logs.add('Security scan error for additional APK: ${additionalScanResult.error}');
-            return false; // Block installation on error
-          }
-          
-          if (additionalScanResult.isInfected) {
-            logs.add('Security scan detected malware in additional APK: ${additionalScanResult.matches.map((m) => m.ruleName).join(', ')}');
-            return false; // Block installation
+    Future<bool> _scanAPKForMalware(String apkPath, {List<String>? additionalApkPaths}) async {
+      SecuritySettingsProvider? securityProvider;
+      try {
+        securityProvider = await SecuritySettingsProvider.create();
+        await securityProvider.initialize();
+        final scanResult = await securityProvider.scanAPK(apkPath);
+
+        if (scanResult.isInfected) {
+          logs.add(
+            'Security scan detected malware in APK: ${scanResult.matches.map((m) => m.ruleName).join(', ')}',
+          );
+          return false;
+        }
+
+        if (additionalApkPaths != null) {
+          for (final additionalApkPath in additionalApkPaths) {
+            final additionalScanResult = await securityProvider.scanAPK(additionalApkPath);
+
+            if (additionalScanResult.error != null) {
+              logs.add('Security scan error for additional APK: ${additionalScanResult.error}');
+              return false;
+            }
+
+            if (additionalScanResult.isInfected) {
+              logs.add('Security scan detected malware in additional APK: ${additionalScanResult.matches.map((m) => m.ruleName).join(', ')}');
+              return false;
+            }
           }
         }
+
+        return true;
+      } catch (e) {
+        logs.add('Security scan failed: $e');
+        return true;
+      } finally {
+        securityProvider?.dispose();
       }
-      
-      return true; // Safe to install
-    } catch (e) {
-      logs.add('Security scan failed: $e');
-      // On scan failure, be conservative and block installation
-      return false; // CRITICAL: Always block on exception
     }
-  }
 
   Future<bool> installApk(
     DownloadedApk file,
