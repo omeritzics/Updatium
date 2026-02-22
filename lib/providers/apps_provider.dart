@@ -43,6 +43,7 @@ import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_storage/shared_storage.dart' as saf;
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
+import 'package:updatium/security/security_settings_provider.dart';
 
 final pm = AndroidPackageManager();
 final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
@@ -945,6 +946,27 @@ class AppsProvider with ChangeNotifier {
     return somethingInstalled;
   }
 
+  /// Scan APK for malware before installation
+  Future<bool> _scanAPKForMalware(String apkPath) async {
+    try {
+      final securityProvider = await SecuritySettingsProvider.create();
+      await securityProvider.initialize();
+      final scanResult = await securityProvider.scanAPK(apkPath);
+      
+      if (scanResult.isInfected) {
+        logs.add('Security scan detected malware in APK: ${scanResult.matches.map((m) => m.ruleName).join(', ')}');
+        return false; // Block installation
+      }
+      
+      return true; // Safe to install
+    } catch (e) {
+      logs.add('Security scan failed: $e');
+      return true; // Allow installation on scan failure
+    } finally {
+      // Security provider will be disposed by caller if needed
+    }
+  }
+
   Future<bool> installApk(
     DownloadedApk file,
     BuildContext? firstTimeWithContext, {
@@ -981,6 +1003,12 @@ class AppsProvider with ChangeNotifier {
       }
     }
     PackageInfo? appInfo = await getInstalledInfo(apps[file.appId]!.app.id);
+    
+    // Security scan before installation
+    if (!(await _scanAPKForMalware(file.file.path))) {
+      throw UpdatiumError('Security scan detected malware. Installation blocked for safety.');
+    }
+    
     logs.add(
       'Installing "${newInfo.packageName}" version "${newInfo.versionName}" versionCode "${newInfo.versionCode}"${appInfo != null ? ' (from existing version "${appInfo.versionName}" versionCode "${appInfo.versionCode}")' : ''}',
     );
