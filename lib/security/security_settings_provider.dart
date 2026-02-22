@@ -34,8 +34,8 @@ class SecuritySettingsProvider {
   }
 
   /// Get the directory for YARA rules
-  String _getRulesDirectory() {
-    final appDir = Directory.systemTemp.parent;
+  Future<String> _getRulesDirectory() async {
+    final appDir = await getApplicationSupportDirectory();
     final rulesDir = Directory('${appDir.path}/yara_rules');
     return rulesDir.path;
   }
