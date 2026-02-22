@@ -105,10 +105,14 @@ class SecuritySettingsProvider {
       final fileName = path.basename(filePath);
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final quarantinedPath = '${quarantineDir.path}/$timestamp-$fileName';
-      
-      await originalFile.rename(quarantinedPath);
-      
-      // Save scan report
+
+      try {
+        await originalFile.rename(quarantinedPath);
+      } catch (_) {
+        await originalFile.copy(quarantinedPath);
+        await originalFile.delete();
+      }
+
       final reportPath = '${quarantineDir.path}/$timestamp-$fileName-report.json';
       final report = {
         'originalPath': filePath,
@@ -116,9 +120,8 @@ class SecuritySettingsProvider {
         'scanTime': result.scanTime.toIso8601String(),
         'matches': result.matches.map((m) => m.toJson()).toList(),
       };
-      
+
       await File(reportPath).writeAsString(jsonEncode(report));
-      
       print('File quarantined: $quarantinedPath');
     } catch (e) {
       print('Error quarantining file: $e');
