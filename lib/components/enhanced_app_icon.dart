@@ -65,7 +65,6 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
   String? _lastAppId;
   String? _lastRemoteUrl;
   bool _isHovered = false;
-  bool _isPressed = false;
   DateTime? _loadStartTime;
   Duration? _loadDuration;
 
@@ -97,24 +96,15 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
   }
 
   void _handleTapDown(TapDownDetails details) {
-    setState(() {
-      _isPressed = true;
-    });
     _scaleController.forward();
   }
 
   void _handleTapUp(TapUpDetails details) {
-    setState(() {
-      _isPressed = false;
-    });
     _scaleController.reverse();
     widget.onTap?.call();
   }
 
   void _handleTapCancel() {
-    setState(() {
-      _isPressed = false;
-    });
     _scaleController.reverse();
   }
 
@@ -214,14 +204,14 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                           BoxShadow(
                             color: Theme.of(
                               context,
-                            ).colorScheme.primary.withOpacity(0.3),
+                            ).colorScheme.primary.withValues(alpha: 0.3),
                             blurRadius: 20,
                             offset: const Offset(0, 8),
                           ),
                         ]
                       : [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -270,7 +260,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                     size: widget.size * 0.5,
                     color: Theme.of(
                       context,
-                    ).colorScheme.onSurfaceVariant.withOpacity(0.6),
+                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                   ),
                 );
               },
@@ -302,7 +292,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                 borderRadius:
                     widget.borderRadius ??
                     BorderRadius.circular(widget.size * 0.125),
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withValues(alpha: 0.5),
               ),
               child: Center(
                 child: Text(
@@ -451,7 +441,7 @@ class _EnhancedAppIconState extends State<EnhancedAppIcon>
                 borderRadius:
                     widget.borderRadius ??
                     BorderRadius.circular(widget.size * 0.125),
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withValues(alpha: 0.3),
               ),
               child: Center(
                 child: Text(

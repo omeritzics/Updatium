@@ -188,7 +188,9 @@ class AppsPageState extends State<AppsPage> {
       return appsProvider
           .checkUpdates()
           .catchError((e) {
-            showError(e is Map ? e['errors'] : e, context);
+            if (mounted) {
+              showError(e is Map ? e['errors'] : e, context);
+            }
             return <App>[];
           })
           .whenComplete(() {
@@ -486,35 +488,6 @@ class AppsPageState extends State<AppsPage> {
       ];
     }
 
-    getUpdateButton(int appIndex) {
-      // Legacy single-icon updater - kept for backward compatibility but not used
-      // by the new FilledButton approach.
-      return IconButton(
-        visualDensity: VisualDensity.compact,
-        color: Theme.of(context).colorScheme.primary,
-        tooltip:
-            listedApps[appIndex].app.additionalSettings['trackOnly'] == true
-            ? tr('markUpdated')
-            : tr('update'),
-        onPressed: appsProvider.areDownloadsRunning()
-            ? null
-            : () {
-                appsProvider
-                    .downloadAndInstallLatestApps([
-                      listedApps[appIndex].app.id,
-                    ], globalNavigatorKey.currentContext)
-                    .catchError((e) {
-                      showError(e, context);
-                      return <String>[];
-                    });
-              },
-        icon: Icon(
-          listedApps[appIndex].app.additionalSettings['trackOnly'] == true
-              ? Icons.check_circle
-              : Icons.install_mobile,
-        ),
-      );
-    }
 
     getAppIcon(int appIndex) {
       return CachedAppIconSimple(
@@ -537,26 +510,9 @@ class AppsPageState extends State<AppsPage> {
       );
     }
 
-    getVersionText(int appIndex) {
-      return listedApps[appIndex].app.installedVersion ?? tr('notInstalled');
-    }
 
-    getChangesButtonString(int appIndex, bool hasChangeLogFn) {
-      return listedApps[appIndex].app.releaseDate == null
-          ? hasChangeLogFn
-                ? tr('changes')
-                : ''
-          : DateFormat(
-              'yyyy-MM-dd',
-            ).format(listedApps[appIndex].app.releaseDate!.toLocal());
-    }
 
     getSingleAppHorizTile(int index) {
-      var showChangesFn = getChangeLogFn(context, listedApps[index].app);
-      var hasUpdate =
-          listedApps[index].app.installedVersion != null &&
-          listedApps[index].app.installedVersion !=
-              listedApps[index].app.latestVersion;
       // New trailing: show Install / Update button or Updated indicator
       Widget trailingRow = Builder(
         builder: (ctx) {
@@ -587,7 +543,9 @@ class AppsPageState extends State<AppsPage> {
                               app.id,
                             ], globalNavigatorKey.currentContext)
                             .catchError((e) {
-                              showError(e, context);
+                              if (mounted) {
+                                showError(e, context);
+                              }
                               return <String>[];
                             });
                       },
@@ -611,7 +569,9 @@ class AppsPageState extends State<AppsPage> {
                               app.id,
                             ], globalNavigatorKey.currentContext)
                             .catchError((e) {
-                              showError(e, context);
+                              if (mounted) {
+                                showError(e, context);
+                              }
                               return <String>[];
                             });
                       },
@@ -639,7 +599,7 @@ class AppsPageState extends State<AppsPage> {
 
       var transparent = Theme.of(
         context,
-      ).colorScheme.surface.withAlpha(0).value;
+      ).colorScheme.surface.withAlpha(0).toARGB32();
       List<double> stops = [
         ...listedApps[index].app.categories.asMap().entries.map(
           (e) =>
@@ -785,7 +745,7 @@ class AppsPageState extends State<AppsPage> {
               listedApps[index].app.latestVersion;
       var transparent = Theme.of(
         context,
-      ).colorScheme.surface.withAlpha(0).value;
+      ).colorScheme.surface.withAlpha(0).toARGB32();
       final categories = listedApps[index].app.categories;
       final stops = categoryStops(categories);
 
@@ -955,7 +915,9 @@ class AppsPageState extends State<AppsPage> {
                                               globalNavigatorKey.currentContext,
                                             )
                                             .catchError((e) {
-                                              showError(e, context);
+                                              if (mounted) {
+                                                showError(e, context);
+                                              }
                                               return <String>[];
                                             });
                                       },
@@ -974,7 +936,9 @@ class AppsPageState extends State<AppsPage> {
                                               globalNavigatorKey.currentContext,
                                             )
                                             .catchError((e) {
-                                              showError(e, context);
+                                              if (mounted) {
+                                                showError(e, context);
+                                              }
                                               return <String>[];
                                             });
                                       },
@@ -1239,11 +1203,13 @@ class AppsPageState extends State<AppsPage> {
                         globalNavigatorKey.currentContext,
                       )
                       .catchError((e) {
-                        showError(e, context);
+                        if (mounted) {
+                          showError(e, context);
+                        }
                         return <String>[];
                       })
                       .then((value) {
-                        if (value.isNotEmpty && shouldInstallUpdates) {
+                        if (value.isNotEmpty && shouldInstallUpdates && mounted) {
                           showMessage(tr('appsUpdated'), context);
                         }
                       });
@@ -1313,7 +1279,9 @@ class AppsPageState extends State<AppsPage> {
             );
           }
         } catch (err) {
-          showError(err, context);
+          if (mounted) {
+            showError(err, context);
+          }
         }
       };
     }

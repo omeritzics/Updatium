@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/pages/home.dart';
@@ -99,7 +100,7 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
   String taskId = task.taskId;
   bool isTimeout = task.timeout;
   if (isTimeout) {
-    print('BG update task timed out.');
+    debugPrint('BG update task timed out.');
     BackgroundFetch.finish(taskId);
     return;
   }
@@ -117,7 +118,7 @@ class MyTaskHandler extends TaskHandler {
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
-    print('onStart(starter: ${starter.name})');
+    debugPrint('onStart(starter: ${starter.name})');
     bgUpdateCheck('bg_check', null);
   }
 
@@ -128,7 +129,7 @@ class MyTaskHandler extends TaskHandler {
 
   @override
   Future<void> onDestroy(DateTime timestamp, bool isTimeout) async {
-    print('Foreground service onDestroy(isTimeout: $isTimeout)');
+    debugPrint('Foreground service onDestroy(isTimeout: $isTimeout)');
   }
 
   @override
@@ -215,6 +216,7 @@ class _UpdatiumState extends State<Updatium> {
 
   void initForegroundService() {
     // Initialize foreground service if not already initialized
+    // ignore: invalid_use_of_visible_for_testing_member
     if (!FlutterForegroundTask.isInitialized) {
       FlutterForegroundTask.init(
         androidNotificationOptions: AndroidNotificationOptions(
@@ -351,7 +353,7 @@ class _UpdatiumState extends State<Updatium> {
                 }
               })
               .catchError((err) {
-                print(err);
+                debugPrint(err);
               });
         }
       }
@@ -558,7 +560,7 @@ class _UpdatiumState extends State<Updatium> {
                   elevation: isDark ? 3 : 2,
                   shadowColor: isDark
                       ? Colors.black38
-                      : Colors.black.withOpacity(0.2),
+                      : Colors.black.withValues(alpha: 0.2),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 28,
                     vertical: 14,
@@ -722,7 +724,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Text Selection
               textSelectionTheme: TextSelectionThemeData(
-                selectionColor: scheme.primary.withOpacity(0.3),
+                selectionColor: scheme.primary.withValues(alpha: 0.3),
                 selectionHandleColor: scheme.primary,
                 cursorColor: scheme.primary,
               ),
