@@ -19,13 +19,20 @@ class SecuritySettingsProvider {
   late YARAConfig _config;
   late YARAScanner _scanner;
 
-  SecuritySettingsProvider(this._prefs) {
+  SecuritySettingsProvider(this._prefs, String rulesDirectory) {
     _config = YARAConfig(
-      rulesDirectory: _getRulesDirectory(),
+      rulesDirectory: rulesDirectory,
       updateInterval: Duration(hours: getUpdateInterval()),
       enableAutoUpdate: getAutoUpdateEnabled(),
     );
     _scanner = YARAScanner.getInstance(_config);
+  }
+
+  static Future<SecuritySettingsProvider> create() async {
+    final prefs = await SharedPreferences.getInstance();
+    final appDir = await getApplicationSupportDirectory();
+    final rulesDir = '${appDir.path}/yara_rules';
+    return SecuritySettingsProvider(prefs, rulesDir);
   }
 
   static Future<SecuritySettingsProvider> create() async {
