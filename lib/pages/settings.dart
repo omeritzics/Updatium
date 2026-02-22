@@ -819,7 +819,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           child: ElevatedButton.icon(
                             onPressed: () async {
                               try {
-                                await securityProvider.updateRules();
+                                await _securityProvider.updateRules();
                                 if (mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text(tr('rulesUpdatedSuccessfully'))),
