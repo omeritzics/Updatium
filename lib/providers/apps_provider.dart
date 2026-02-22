@@ -1655,6 +1655,9 @@ class AppsProvider with ChangeNotifier {
   }
 
   Future<void> loadApps({String? singleId}) async {
+    final stopwatch = Stopwatch()..start();
+    debugPrint('Starting loadApps()...');
+    
     while (loadingApps) {
       await Future.delayed(const Duration(microseconds: 1));
     }
@@ -1664,28 +1667,31 @@ class AppsProvider with ChangeNotifier {
     List<List<String>> errors = [];
     var installedAppsData = await getAllInstalledInfo();
     List<String> removedAppIds = [];
+    var appsDir = await getAppsDir();
+    var jsonFiles = appsDir // Parse Apps from JSON
+          .list()
+          .where((item) => 
+              item.path.toLowerCase().endsWith('.json') &&
+              (singleId == null ||
+                  item.path.split('/').last.toLowerCase() ==
+                      '${singleId.toLowerCase()}.json'))
+          .toList();
+    
     await Future.wait(
-      (await getAppsDir()) // Parse Apps from JSON
-          .listSync()
-          .map((item) async {
+      jsonFiles.map((item) async {
             App? app;
-            if (item.path.toLowerCase().endsWith('.json') &&
-                (singleId == null ||
-                    item.path.split('/').last.toLowerCase() ==
-                        '${singleId.toLowerCase()}.json')) {
-              try {
-                app = App.fromJson(
-                  jsonDecode(File(item.path).readAsStringSync()),
+            try {
+              app = App.fromJson(
+                jsonDecode(await File(item.path).readAsString()),
+              );
+            } catch (err) {
+              if (err is FormatException) {
+                logs.add(
+                  'Corrupt JSON when loading App (will be ignored): $e',
                 );
-              } catch (err) {
-                if (err is FormatException) {
-                  logs.add(
-                    'Corrupt JSON when loading App (will be ignored): $e',
-                  );
-                  item.renameSync('${item.path}.corrupt');
-                } else {
-                  rethrow;
-                }
+                await item.rename('${item.path}.corrupt');
+              } else {
+                rethrow;
               }
             }
             if (app != null) {
@@ -1768,6 +1774,9 @@ class AppsProvider with ChangeNotifier {
     }
     loadingApps = false;
     notifyListeners();
+    
+    stopwatch.stop();
+    debugPrint('loadApps() completed in ${stopwatch.elapsedMilliseconds}ms');
 
     // Start icon pre-fetching after apps are loaded
     _startIconPrefetching();
