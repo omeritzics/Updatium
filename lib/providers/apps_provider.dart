@@ -1657,7 +1657,7 @@ class AppsProvider with ChangeNotifier {
   Future<void> loadApps({String? singleId}) async {
     final stopwatch = Stopwatch()..start();
     debugPrint('Starting loadApps()...');
-
+    
     while (loadingApps) {
       await Future.delayed(const Duration(microseconds: 1));
     }
@@ -1668,93 +1668,95 @@ class AppsProvider with ChangeNotifier {
     var installedAppsData = await getAllInstalledInfo();
     List<String> removedAppIds = [];
     var appsDir = await getAppsDir();
-    var jsonFiles =
-        appsDir // Parse Apps from JSON
-            .list()
-            .where(
-              (item) =>
-                  item.path.toLowerCase().endsWith('.json') &&
-                  (singleId == null ||
-                      item.path.split('/').last.toLowerCase() ==
-                          '${singleId.toLowerCase()}.json'),
-            )
-            .toList();
-
+    var jsonFiles = appsDir // Parse Apps from JSON
+          .list()
+          .where((item) => 
+              item.path.toLowerCase().endsWith('.json') &&
+              (singleId == null ||
+                  item.path.split('/').last.toLowerCase() ==
+                      '${singleId.toLowerCase()}.json'))
+          .toList();
+    
     await Future.wait(
       jsonFiles.map((item) async {
-        App? app;
-        try {
-          app = App.fromJson(jsonDecode(await File(item.path).readAsString()));
-        } catch (err) {
-          if (err is FormatException) {
-            logs.add('Corrupt JSON when loading App (will be ignored): $e');
-            await item.rename('${item.path}.corrupt');
-          } else {
-            rethrow;
-          }
-        }
-        if (app != null) {
-          // Save the app to the in-memory list without grabbing any OS info first
-          apps.update(
-            app.id,
-            (value) => AppInMemory(
-              app!,
-              value.downloadProgress,
-              value.installedInfo,
-              value.icon,
-            ),
-            ifAbsent: () => AppInMemory(app!, null, null, null),
-          );
-          notifyListeners();
-          try {
-            // Try getting the app's source to ensure no invalid apps get loaded
-            // Handle removed overrideSource gracefully by clearing it if source doesn't exist
-            String? overrideSource = app.overrideSource;
-            if (overrideSource != null && !sp.sourceExists(overrideSource)) {
-              // Clear the removed overrideSource and update the app using lightweight method
-              app.overrideSource = null;
-              overrideSource = null;
-              await persistAppJsonOnly(app, updateMemory: true);
-            }
-            sp.getSource(app.url, overrideSource: overrideSource);
-            // If the app is installed, grab its OS data and reconcile install statuses
-            PackageInfo? installedInfo;
+            App? app;
             try {
-              installedInfo = installedAppsData.firstWhere(
-                (i) => i.packageName == app!.id,
+              app = App.fromJson(
+                jsonDecode(await File(item.path).readAsString()),
               );
-            } catch (e) {
-              // If the app isn't installed the above throws an error
-            }
-            // Reconcile differences between the installed and recorded install info
-            var moddedApp = getCorrectedInstallStatusAppIfPossible(
-              app,
-              installedInfo,
-            );
-            if (moddedApp != null) {
-              app = moddedApp;
-              // Note the app ID if it was uninstalled externally
-              if (moddedApp.installedVersion == null) {
-                removedAppIds.add(moddedApp.id);
+            } catch (err) {
+              if (err is FormatException) {
+                logs.add(
+                  'Corrupt JSON when loading App (will be ignored): $e',
+                );
+                await item.rename('${item.path}.corrupt');
+              } else {
+                rethrow;
               }
             }
-            // Update the app in memory with install info and corrections
-            apps.update(
-              app.id,
-              (value) => AppInMemory(
-                app!,
-                value.downloadProgress,
-                installedInfo,
-                value.icon,
-              ),
-              ifAbsent: () => AppInMemory(app!, null, installedInfo, null),
-            );
-            notifyListeners();
-          } catch (e) {
-            errors.add([app!.id, app.finalName, e.toString()]);
-          }
-        }
-      }),
+            if (app != null) {
+              // Save the app to the in-memory list without grabbing any OS info first
+              apps.update(
+                app.id,
+                (value) => AppInMemory(
+                  app!,
+                  value.downloadProgress,
+                  value.installedInfo,
+                  value.icon,
+                ),
+                ifAbsent: () => AppInMemory(app!, null, null, null),
+              );
+              notifyListeners();
+              try {
+                // Try getting the app's source to ensure no invalid apps get loaded
+                // Handle removed overrideSource gracefully by clearing it if source doesn't exist
+                String? overrideSource = app.overrideSource;
+                if (overrideSource != null &&
+                    !sp.sourceExists(overrideSource)) {
+                  // Clear the removed overrideSource and update the app using lightweight method
+                  app.overrideSource = null;
+                  overrideSource = null;
+                  await persistAppJsonOnly(app, updateMemory: true);
+                }
+                sp.getSource(app.url, overrideSource: overrideSource);
+                // If the app is installed, grab its OS data and reconcile install statuses
+                PackageInfo? installedInfo;
+                try {
+                  installedInfo = installedAppsData.firstWhere(
+                    (i) => i.packageName == app!.id,
+                  );
+                } catch (e) {
+                  // If the app isn't installed the above throws an error
+                }
+                // Reconcile differences between the installed and recorded install info
+                var moddedApp = getCorrectedInstallStatusAppIfPossible(
+                  app,
+                  installedInfo,
+                );
+                if (moddedApp != null) {
+                  app = moddedApp;
+                  // Note the app ID if it was uninstalled externally
+                  if (moddedApp.installedVersion == null) {
+                    removedAppIds.add(moddedApp.id);
+                  }
+                }
+                // Update the app in memory with install info and corrections
+                apps.update(
+                  app.id,
+                  (value) => AppInMemory(
+                    app!,
+                    value.downloadProgress,
+                    installedInfo,
+                    value.icon,
+                  ),
+                  ifAbsent: () => AppInMemory(app!, null, installedInfo, null),
+                );
+                notifyListeners();
+              } catch (e) {
+                errors.add([app!.id, app.finalName, e.toString()]);
+              }
+            }
+          }),
     );
     if (errors.isNotEmpty) {
       removeApps(errors.map((e) => e[0]).toList());
@@ -1772,7 +1774,7 @@ class AppsProvider with ChangeNotifier {
     }
     loadingApps = false;
     notifyListeners();
-
+    
     stopwatch.stop();
     debugPrint('loadApps() completed in ${stopwatch.elapsedMilliseconds}ms');
 
