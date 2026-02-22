@@ -488,7 +488,6 @@ class AppsPageState extends State<AppsPage> {
       ];
     }
 
-
     getAppIcon(int appIndex) {
       return CachedAppIconSimple(
         app: listedApps[appIndex].app,
@@ -509,8 +508,6 @@ class AppsPageState extends State<AppsPage> {
         },
       );
     }
-
-
 
     getSingleAppHorizTile(int index) {
       // New trailing: show Install / Update button or Updated indicator
@@ -1209,7 +1206,9 @@ class AppsPageState extends State<AppsPage> {
                         return <String>[];
                       })
                       .then((value) {
-                        if (value.isNotEmpty && shouldInstallUpdates && mounted) {
+                        if (value.isNotEmpty &&
+                            shouldInstallUpdates &&
+                            mounted) {
                           showMessage(tr('appsUpdated'), context);
                         }
                       });
