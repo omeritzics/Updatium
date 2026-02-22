@@ -95,8 +95,9 @@ class SecuritySettingsProvider {
     // Handle quarantine if enabled
     if (result.isInfected && getQuarantineInfected()) {
       await _quarantineFile(apkPath, result);
-    }
-
+        try {
+          final rulesDir = await _getRulesDirectory();
+          final quarantineDir = Directory('$rulesDir/quarantine');
     return result;
   }
 
