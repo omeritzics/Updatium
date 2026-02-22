@@ -11,7 +11,7 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/pages/apps.dart';
 import 'package:updatium/pages/security_disclaimer.dart';
-import 'package:updatium/pages/security_settings.dart';
+import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       Icons.add_circle,
       AddAppPage(key: GlobalKey<AddAppPageState>()),
     ),
-    NavigationPageItem(tr('settings'), Icons.settings, const SecuritySettingsPage()),
+    NavigationPageItem(tr('settings'), Icons.settings, const SettingsPage()),
   ];
 
   @override

@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:updatium/security/security_settings_provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -26,6 +27,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  late SecuritySettingsProvider _securityProvider;
   List<int> updateIntervalNodes = [
     15,
     30,
@@ -95,6 +97,11 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
+  Future<void> _initializeSecurityProvider() async {
+    _securityProvider = await SecuritySettingsProvider.create();
+    await _securityProvider.initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
@@ -102,6 +109,9 @@ class _SettingsPageState extends State<SettingsPage> {
     if (settingsProvider.prefs == null) settingsProvider.initializeSettings();
     initUpdateIntervalInterpolator();
     processIntervalSliderValue(settingsProvider.updateIntervalSliderVal);
+
+    // Initialize security provider
+    _initializeSecurityProvider();
 
     var followSystemThemeExplanation = FutureBuilder(
       builder: (ctx, val) {
@@ -751,6 +761,57 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                         ...sourceSpecificFields,
+                        height32,
+                        Text(
+                          tr('yaraMalwareScanner'),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        height16,
+                        Text(
+                          tr('yaraScannerDescription'),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        height16,
+                        SwitchListTile(
+                          title: Text(tr('enableAutoScan')),
+                          subtitle: Text(tr('enableAutoScanDescription')),
+                          value: _securityProvider.getAutoScanEnabled(),
+                          onChanged: (value) async {
+                            await _securityProvider.setAutoScanEnabled(value);
+                            setState(() {});
+                          },
+                        ),
+                        SwitchListTile(
+                          title: Text(tr('enableAutoUpdate')),
+                          subtitle: Text(tr('enableAutoUpdateDescription')),
+                          value: _securityProvider.getAutoUpdateEnabled(),
+                          onChanged: (value) async {
+                            await _securityProvider.setAutoUpdateEnabled(value);
+                            setState(() {});
+                          },
+                        ),
+                        ListTile(
+                          title: Text(tr('updateInterval')),
+                          subtitle: Text(tr('updateIntervalDescription')),
+                          trailing: DropdownButton<int>(
+                            value: _securityProvider.getUpdateInterval(),
+                            items: [1, 6, 12, 24, 48, 72].map((hours) {
+                              return DropdownMenuItem<int>(
+                                value: hours,
+                                child: Text('$hours ${tr('hours')}'),
+                              );
+                            }).toList(),
+                            onChanged: (value) async {
+                              if (value != null) {
+                                await _securityProvider.setUpdateInterval(value);
+                                setState(() {});
+                              }
+                            },
+                          ),
+                        ),
                         height32,
                         Text(
                           tr('appearance'),
