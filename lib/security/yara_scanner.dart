@@ -213,13 +213,10 @@ class YARAScanner {
     });
   }
 
-  final fileBytes = await file.readAsBytes();
-  final matches = <YARAMatch>[];
-
-  for (final rule in _rules) {
-    final match = await _checkRule(rule, fileBytes);
-    if (match != null) {
-
+  /// Scan a file for malware
+  Future<YARAScanResult> scanFile(String filePath) async {
+    try {
+      final file = File(filePath);
       final fileBytes = await file.readAsBytes();
       final matches = <YARAMatch>[];
 
