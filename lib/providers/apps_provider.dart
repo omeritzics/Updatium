@@ -947,23 +947,47 @@ class AppsProvider with ChangeNotifier {
   }
 
   /// Scan APK for malware before installation
-  Future<bool> _scanAPKForMalware(String apkPath) async {
+  Future<bool> _scanAPKForMalware(String apkPath, {List<String>? additionalApkPaths}) async {
     try {
       final securityProvider = await SecuritySettingsProvider.create();
       await securityProvider.initialize();
+      
+      // Scan base APK
       final scanResult = await securityProvider.scanAPK(apkPath);
+      
+      if (scanResult.error != null) {
+        logs.add('Security scan error: ${scanResult.error}');
+        // On scan error, be conservative and block installation
+        return false;
+      }
       
       if (scanResult.isInfected) {
         logs.add('Security scan detected malware in APK: ${scanResult.matches.map((m) => m.ruleName).join(', ')}');
         return false; // Block installation
       }
       
+      // Scan additional APKs if present (split APKs)
+      if (additionalApkPaths != null) {
+        for (final additionalApkPath in additionalApkPaths) {
+          final additionalScanResult = await securityProvider.scanAPK(additionalApkPath);
+          
+          if (additionalScanResult.error != null) {
+            logs.add('Security scan error for additional APK: ${additionalScanResult.error}');
+            return false; // Block installation on error
+          }
+          
+          if (additionalScanResult.isInfected) {
+            logs.add('Security scan detected malware in additional APK: ${additionalScanResult.matches.map((m) => m.ruleName).join(', ')}');
+            return false; // Block installation
+          }
+        }
+      }
+      
       return true; // Safe to install
     } catch (e) {
       logs.add('Security scan failed: $e');
-      return true; // Allow installation on scan failure
-    } finally {
-      // Security provider will be disposed by caller if needed
+      // On scan failure, be conservative and block installation
+      return false; // CRITICAL: Always block on exception
     }
   }
 
@@ -1005,7 +1029,7 @@ class AppsProvider with ChangeNotifier {
     PackageInfo? appInfo = await getInstalledInfo(apps[file.appId]!.app.id);
     
     // Security scan before installation
-    if (!(await _scanAPKForMalware(file.file.path))) {
+    if (!(await _scanAPKForMalware(file.file.path, additionalApkPaths: additionalAPKs.map((a) => a.file.path).toList()))) {
       throw UpdatiumError('Security scan detected malware. Installation blocked for safety.');
     }
     

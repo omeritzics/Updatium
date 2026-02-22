@@ -19,18 +19,18 @@ class SecuritySettingsProvider {
   late YARAConfig _config;
   late YARAScanner _scanner;
 
-  SecuritySettingsProvider._(this._prefs) {
+  SecuritySettingsProvider(this._prefs) {
     _config = YARAConfig(
       rulesDirectory: _getRulesDirectory(),
       updateInterval: Duration(hours: getUpdateInterval()),
       enableAutoUpdate: getAutoUpdateEnabled(),
     );
-    _scanner = YARAScanner(_config);
+    _scanner = YARAScanner.getInstance(_config);
   }
 
   static Future<SecuritySettingsProvider> create() async {
     final prefs = await SharedPreferences.getInstance();
-    return SecuritySettingsProvider._(prefs);
+    return SecuritySettingsProvider(prefs);
   }
 
   /// Get the directory for YARA rules
@@ -132,7 +132,8 @@ class SecuritySettingsProvider {
       await setLastUpdate(DateTime.now());
       await setRulesVersion('latest-${DateTime.now().millisecondsSinceEpoch}');
     } catch (e) {
-      print('Error updating rules: $e');
+      // Re-throw the exception so callers can handle it
+      throw Exception('Failed to update YARA rules: $e');
     }
   }
 
@@ -141,6 +142,6 @@ class SecuritySettingsProvider {
 
   /// Dispose resources
   void dispose() {
-    _scanner.dispose();
+    // Don't dispose singleton here, let it be managed globally
   }
 }

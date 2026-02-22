@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
-import 'dart:async';
 import 'package:path/path.dart' as path;
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
@@ -133,8 +133,16 @@ class YARAScanner {
   final YARAConfig config;
   final List<YARARule> _rules = [];
   Timer? _updateTimer;
+  static YARAScanner? _instance;
 
-  YARAScanner(this.config);
+  /// Get singleton instance
+  static YARAScanner getInstance(YARAConfig config) {
+    _instance ??= YARAScanner._(config);
+    return _instance!;
+  }
+
+  /// Private constructor for singleton
+  YARAScanner._(this.config);
 
   /// Initialize the scanner
   Future<void> initialize() async {
@@ -214,11 +222,10 @@ class YARAScanner {
       }
 
       final fileBytes = await file.readAsBytes();
-      final fileContent = utf8.decode(fileBytes);
       final matches = <YARAMatch>[];
 
       for (final rule in _rules) {
-        final match = await _checkRule(rule, fileContent, fileBytes);
+        final match = await _checkRule(rule, fileBytes);
         if (match != null) {
           matches.add(match);
         }
@@ -238,7 +245,6 @@ class YARAScanner {
   /// Check if a file matches a specific YARA rule
   Future<YARAMatch?> _checkRule(
     YARARule rule,
-    String fileContent,
     List<int> fileBytes,
   ) async {
     // Simple string matching (basic implementation)
@@ -258,13 +264,33 @@ class YARAScanner {
       }
     }
 
-    // Check if any strings match
+    // Check if any strings match in binary data
     for (final string in strings) {
       final stringPattern = RegExp(r'\$' + string + r'\s*=\s*{([^}]+)}');
       final stringMatch = stringPattern.firstMatch(rule.content);
       if (stringMatch != null) {
         final searchString = stringMatch.group(1)!.trim().replaceAll('"', '');
-        if (fileContent.contains(searchString)) {
+        
+        // Convert search string to bytes for binary comparison
+        List<int> searchBytes;
+        try {
+          searchBytes = utf8.encode(searchString);
+        } catch (e) {
+          // Handle hex strings like {6A 40 68 00 30 00 00}
+          final hexString = searchString.replaceAll(RegExp(r'[{} ]'), '');
+          searchBytes = [];
+          for (int i = 0; i < hexString.length; i += 2) {
+            if (i + 1 < hexString.length) {
+              final byte = int.tryParse(hexString.substring(i, i + 2), radix: 16);
+              if (byte != null) {
+                searchBytes.add(byte);
+              }
+            }
+          }
+        }
+
+        // Search for bytes in the file
+        if (_containsBytes(fileBytes, searchBytes)) {
           return YARAMatch(
             ruleName: rule.name,
             description: rule.description ?? 'No description available',
@@ -277,6 +303,24 @@ class YARAScanner {
     }
 
     return null;
+  }
+
+  /// Helper method to check if byte sequence contains another byte sequence
+  bool _containsBytes(List<int> data, List<int> pattern) {
+    if (pattern.isEmpty) return true;
+    if (data.length < pattern.length) return false;
+
+    for (int i = 0; i <= data.length - pattern.length; i++) {
+      bool match = true;
+      for (int j = 0; j < pattern.length; j++) {
+        if (data[i + j] != pattern[j]) {
+          match = false;
+          break;
+        }
+      }
+      if (match) return true;
+    }
+    return false;
   }
 
   /// Calculate threat level based on rule tags
@@ -313,5 +357,11 @@ class YARAScanner {
   /// Dispose of the scanner
   void dispose() {
     _updateTimer?.cancel();
+  }
+
+  /// Global dispose method to cleanup singleton
+  static void disposeGlobal() {
+    _instance?.dispose();
+    _instance = null;
   }
 }

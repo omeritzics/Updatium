@@ -812,6 +812,34 @@ class _SettingsPageState extends State<SettingsPage> {
                             },
                           ),
                         ),
+                        height16,
+                        // Update button with error handling
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            onPressed: () async {
+                              try {
+                                await securityProvider.updateRules();
+                                if (mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(tr('rulesUpdatedSuccessfully'))),
+                                  );
+                                }
+                              } catch (e) {
+                                if (mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(tr('rulesUpdateFailed')),
+                                      backgroundColor: Theme.of(context).colorScheme.error,
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                            icon: const Icon(Icons.download),
+                            label: Text(tr('updateNow')),
+                          ),
+                        ),
                         height32,
                         Text(
                           tr('appearance'),
