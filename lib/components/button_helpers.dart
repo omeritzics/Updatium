@@ -12,7 +12,8 @@ TextButton createAppTextButton({
   return TextButton(
     key: key,
     onPressed: enabled ? onPressed : null,
-    style: style ??
+    style:
+        style ??
         TextButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           shape: RoundedRectangleBorder(
@@ -35,7 +36,8 @@ TextButton createAppTextButtonWithIcon({
   return TextButton(
     key: key,
     onPressed: enabled ? onPressed : null,
-    style: style ??
+    style:
+        style ??
         TextButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           shape: RoundedRectangleBorder(

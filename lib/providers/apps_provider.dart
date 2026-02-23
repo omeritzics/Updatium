@@ -2511,7 +2511,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
         ],
       ),
       actions: [
-        createAppTextButton( 
+        createAppTextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },

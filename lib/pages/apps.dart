@@ -1304,13 +1304,13 @@ class AppsPageState extends State<AppsPage> {
               ),
             ),
             actions: [
-              createAppTextButton( 
+              createAppTextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(tr('no')),
               ),
-              createAppTextButton( 
+              createAppTextButton(
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   appsProvider.saveApps(
@@ -1359,7 +1359,7 @@ class AppsPageState extends State<AppsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  createAppTextButton( 
+                  createAppTextButton(
                     onPressed: pinSelectedApps,
                     child: Text(
                       selectedApps.where((element) => element.pinned).isEmpty
@@ -1369,7 +1369,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  createAppTextButton( 
+                  createAppTextButton(
                     onPressed: () {
                       String urls = '';
                       for (var a in selectedApps) {
@@ -1388,7 +1388,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  createAppTextButton( 
+                  createAppTextButton(
                     onPressed: selectedAppIds.isEmpty
                         ? null
                         : () {
@@ -1417,7 +1417,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  createAppTextButton( 
+                  createAppTextButton(
                     onPressed: () {
                       appsProvider
                           .downloadAppAssets(
@@ -1442,7 +1442,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  createAppTextButton( 
+                  createAppTextButton(
                     onPressed: appsProvider.areDownloadsRunning()
                         ? null
                         : showMassMarkDialog,
