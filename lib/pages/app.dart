@@ -440,13 +440,13 @@ class _AppPageState extends State<AppPage> {
           return AlertDialog(
             title: Text(tr('alreadyUpToDateQuestion')),
             actions: [
-              createcreateAppTextButton( 
+              createcreateAppTextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(tr('no')),
               ),
-              createcreateAppTextButton( 
+              createcreateAppTextButton(
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   var updatedApp = app?.app;
@@ -529,7 +529,7 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => createcreateAppTextButton( 
+    getInstallOrUpdateButton() => createcreateAppTextButton(
       onPressed:
           !updating &&
               (app?.app.installedVersion == null ||

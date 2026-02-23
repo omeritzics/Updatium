@@ -393,7 +393,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
               ],
             ),
             actions: [
-              createAppTextButton( 
+              createAppTextButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text('OK'),
               ),
