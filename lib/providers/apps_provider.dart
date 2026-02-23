@@ -947,7 +947,7 @@ class AppsProvider with ChangeNotifier {
   }
 
   /// Scan APK for malware before installation
-  Future<bool> _scanAPKForMalware(String apkPath) async {
+  Future<bool> _scanAPKForMalware(String apkPath, {List<String>? additionalApkPaths}) async {
     SecuritySettingsProvider? securityProvider;
     try {
       securityProvider = await SecuritySettingsProvider.create();
@@ -958,51 +958,33 @@ class AppsProvider with ChangeNotifier {
         logs.add(
           'Security scan detected malware in APK: ${scanResult.matches.map((m) => m.ruleName).join(', ')}',
         );
-        return false; // Block installation
+        return false;
       }
 
-      return true; // Safe to install
+      if (additionalApkPaths != null) {
+        for (final additionalApkPath in additionalApkPaths) {
+          final additionalScanResult = await securityProvider.scanAPK(additionalApkPath);
+
+          if (additionalScanResult.error != null) {
+            logs.add('Security scan error for additional APK: ${additionalScanResult.error}');
+            return false;
+          }
+
+          if (additionalScanResult.isInfected) {
+            logs.add('Security scan detected malware in additional APK: ${additionalScanResult.matches.map((m) => m.ruleName).join(', ')}');
+            return false;
+          }
+        }
+      }
+
+      return true;
     } catch (e) {
       logs.add('Security scan failed: $e');
       return true; // Allow installation on scan failure
-    Future<bool> _scanAPKForMalware(String apkPath, {List<String>? additionalApkPaths}) async {
-      SecuritySettingsProvider? securityProvider;
-      try {
-        securityProvider = await SecuritySettingsProvider.create();
-        await securityProvider.initialize();
-        final scanResult = await securityProvider.scanAPK(apkPath);
-
-        if (scanResult.isInfected) {
-          logs.add(
-            'Security scan detected malware in APK: ${scanResult.matches.map((m) => m.ruleName).join(', ')}',
-          );
-          return false;
-        }
-
-        if (additionalApkPaths != null) {
-          for (final additionalApkPath in additionalApkPaths) {
-            final additionalScanResult = await securityProvider.scanAPK(additionalApkPath);
-
-            if (additionalScanResult.error != null) {
-              logs.add('Security scan error for additional APK: ${additionalScanResult.error}');
-              return false;
-            }
-
-            if (additionalScanResult.isInfected) {
-              logs.add('Security scan detected malware in additional APK: ${additionalScanResult.matches.map((m) => m.ruleName).join(', ')}');
-              return false;
-            }
-          }
-        }
-
-        return true;
-      } catch (e) {
-        logs.add('Security scan failed: $e');
-        return true;
-      } finally {
-        securityProvider?.dispose();
-      }
+    } finally {
+      securityProvider?.dispose();
     }
+  }
 
   Future<bool> installApk(
     DownloadedApk file,

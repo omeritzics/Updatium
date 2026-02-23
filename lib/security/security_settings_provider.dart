@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'dart:convert';
 import 'package:updatium/security/yara_scanner.dart';
+import 'package:updatium/providers/logs_provider.dart';
 
 /// Security Settings Provider
 class SecuritySettingsProvider {
@@ -18,6 +19,7 @@ class SecuritySettingsProvider {
   final SharedPreferences _prefs;
   late YARAConfig _config;
   late YARAScanner _scanner;
+  final LogsProvider _logs = LogsProvider();
 
   SecuritySettingsProvider(this._prefs, String rulesDirectory) {
     _config = YARAConfig(
@@ -33,11 +35,6 @@ class SecuritySettingsProvider {
     final appDir = await getApplicationSupportDirectory();
     final rulesDir = '${appDir.path}/yara_rules';
     return SecuritySettingsProvider(prefs, rulesDir);
-  }
-
-  static Future<SecuritySettingsProvider> create() async {
-    final prefs = await SharedPreferences.getInstance();
-    return SecuritySettingsProvider(prefs);
   }
 
   /// Get the directory for YARA rules
@@ -95,16 +92,16 @@ class SecuritySettingsProvider {
     // Handle quarantine if enabled
     if (result.isInfected && getQuarantineInfected()) {
       await _quarantineFile(apkPath, result);
-        try {
-          final rulesDir = await _getRulesDirectory();
-          final quarantineDir = Directory('$rulesDir/quarantine');
+    }
+    
     return result;
   }
 
   /// Move infected file to quarantine
   Future<void> _quarantineFile(String filePath, YARAScanResult result) async {
     try {
-      final quarantineDir = Directory('${_getRulesDirectory()}/quarantine');
+      final rulesDir = await _getRulesDirectory();
+      final quarantineDir = Directory('$rulesDir/quarantine');
       if (!await quarantineDir.exists()) {
         await quarantineDir.create(recursive: true);
       }
@@ -130,9 +127,10 @@ class SecuritySettingsProvider {
       };
 
       await File(reportPath).writeAsString(jsonEncode(report));
-      print('File quarantined: $quarantinedPath');
+      _logs.add('File quarantined: $quarantinedPath');
     } catch (e) {
-      print('Error quarantining file: $e');
+      _logs.add('Error quarantining file: $e');
+      rethrow; // Re-throw to allow proper error handling
     }
   }
 
@@ -153,6 +151,13 @@ class SecuritySettingsProvider {
 
   /// Dispose resources
   void dispose() {
-    // Don't dispose singleton here, let it be managed globally
+    // Cancel auto-update timer to prevent memory leaks
+    // Note: We don't dispose the singleton here as it might be used by other instances
+    // Instead, callers should call YARAScanner.disposeInstance() when the app is shutting down
+  }
+
+  /// Dispose singleton instance (call when app is shutting down)
+  static void disposeSingleton() {
+    YARAScanner.disposeInstance();
   }
 }

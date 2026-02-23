@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:path/path.dart' as path;
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/logs_provider.dart';
 
 /// YARA Scanner Configuration
 class YARAConfig {
@@ -22,6 +24,19 @@ class YARAConfig {
       'https://raw.githubusercontent.com/Yara-Rules/rules/master/malware/MALW_YaraRule_Mobile.yar',
     ],
   });
+}
+
+/// YARA Rule Update Exception
+class YARARuleUpdateError extends UpdatiumError {
+  final List<String> failedSources;
+  final List<String> successfulSources;
+  final String details;
+  
+  YARARuleUpdateError({
+    required this.failedSources,
+    required this.successfulSources,
+    required this.details,
+  }) : super('Failed to update YARA rules from ${failedSources.length} sources: $details');
 }
 
 /// YARA Scan Result
@@ -130,23 +145,46 @@ class YARARule {
 
 /// Main YARA Scanner Class
 class YARAScanner {
-  final YARAConfig config;
+  YARAConfig config;
   final List<YARARule> _rules = [];
   Timer? _updateTimer;
+  final LogsProvider _logs = LogsProvider();
+
   static YARAScanner? _instance;
 
   /// Get singleton instance
   static YARAScanner getInstance(YARAConfig config) {
-    _instance ??= YARAScanner._(config);
+    if (_instance == null) {
+      _instance = YARAScanner._(config);
+    } else {
+      // Update config if needed (for timer changes)
+      _instance!._config = config;
+    }
     return _instance!;
+  }
+
+  /// Dispose singleton instance
+  static void disposeInstance() {
+    _instance?.dispose();
+    _instance = null;
   }
 
   /// Private constructor for singleton
   YARAScanner._(this.config);
 
+  /// Dispose resources and cancel timers
+  void dispose() {
+    _updateTimer?.cancel();
+    _updateTimer = null;
+  }
+
   /// Initialize the scanner
   Future<void> initialize() async {
     await _loadRules();
+    
+    // Cancel existing timer before starting new one
+    _updateTimer?.cancel();
+    
     if (config.enableAutoUpdate) {
       _startAutoUpdate();
     }
@@ -161,6 +199,8 @@ class YARAScanner {
       }
 
       _rules.clear();
+      int loadedCount = 0;
+      int errorCount = 0;
       
       await for (final entity in rulesDir.list()) {
         if (entity is File && entity.path.endsWith('.yar')) {
@@ -168,40 +208,77 @@ class YARAScanner {
             final content = await entity.readAsString();
             final rule = YARARule.fromString(content);
             _rules.add(rule);
+            loadedCount++;
           } catch (e) {
-            print('Error loading rule ${entity.path}: $e');
+            errorCount++;
+            // Log error without exposing sensitive file paths or rule content
+            _logs.add('Error loading YARA rule file: ${path.basename(entity.path)}');
           }
         }
       }
 
-      print('Loaded ${_rules.length} YARA rules');
+      _logs.add('YARA rules loaded: $loadedCount successful, $errorCount failed');
     } catch (e) {
-      print('Error loading YARA rules: $e');
+      _logs.add('Error loading YARA rules: ${e.toString()}');
     }
   }
 
   /// Update rules from remote sources
   Future<void> updateRules() async {
-    try {
-      for (final source in config.ruleSources) {
-        try {
-          final response = await http.get(Uri.parse(source));
-          if (response.statusCode == 200) {
-            final fileName = source.split('/').last;
-            final localPath = path.join(config.rulesDirectory, fileName);
-            
-            final file = File(localPath);
-            await file.writeAsString(response.body);
-            print('Updated rule: $fileName');
-          }
-        } catch (e) {
-          print('Error updating rule from $source: $e');
+    final List<String> failedSources = [];
+    final List<String> successfulSources = [];
+    final List<String> errorDetails = [];
+
+    for (final source in config.ruleSources) {
+      try {
+        final response = await http.get(Uri.parse(source));
+        if (response.statusCode == 200) {
+          final fileName = source.split('/').last;
+          final localPath = path.join(config.rulesDirectory, fileName);
+          
+          final file = File(localPath);
+          await file.writeAsString(response.body);
+          successfulSources.add(source);
+          // Log success without exposing full file paths
+          _logs.add('YARA rule updated: $fileName');
+        } else {
+          final error = 'HTTP ${response.statusCode}: ${response.reasonPhrase}';
+          failedSources.add(source);
+          errorDetails.add('$source: $error');
+          // Log error without exposing full URLs
+          _logs.add('YARA rule update failed: ${path.basename(source)} - $error');
         }
+      } catch (e) {
+        failedSources.add(source);
+        errorDetails.add('$source: $e');
+        // Log error without exposing full URLs or stack traces
+        _logs.add('YARA rule update failed: ${path.basename(source)} - ${e.toString()}');
       }
-      
-      await _loadRules();
-    } catch (e) {
-      print('Error updating YARA rules: $e');
+    }
+    
+    // Try to load the rules that were successfully updated
+    if (successfulSources.isNotEmpty) {
+      try {
+        await _loadRules();
+      } catch (e) {
+        // If loading fails, consider all updates as failed
+        failedSources.addAll(successfulSources);
+        successfulSources.clear();
+        errorDetails.add('Failed to load updated rules: $e');
+        _logs.add('YARA rules loading failed after update');
+      }
+    }
+    
+    // Log summary without exposing sensitive details
+    _logs.add('YARA rules update completed: ${successfulSources.length} successful, ${failedSources.length} failed');
+    
+    // If there were any failures, throw an exception with actionable context
+    if (failedSources.isNotEmpty) {
+      throw YARARuleUpdateError(
+        failedSources: failedSources,
+        successfulSources: successfulSources,
+        details: errorDetails.join('; '),
+      );
     }
   }
 

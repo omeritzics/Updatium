@@ -28,6 +28,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   late SecuritySettingsProvider _securityProvider;
+  bool _securityProviderInitialized = false;
   List<int> updateIntervalNodes = [
     15,
     30,
@@ -100,6 +101,15 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _initializeSecurityProvider() async {
     _securityProvider = await SecuritySettingsProvider.create();
     await _securityProvider.initialize();
+    setState(() {
+      _securityProviderInitialized = true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeSecurityProvider();
   }
 
   @override
@@ -777,38 +787,38 @@ class _SettingsPageState extends State<SettingsPage> {
                         SwitchListTile(
                           title: Text(tr('enableAutoScan')),
                           subtitle: Text(tr('enableAutoScanDescription')),
-                          value: _securityProvider.getAutoScanEnabled(),
-                          onChanged: (value) async {
+                          value: _securityProviderInitialized ? _securityProvider.getAutoScanEnabled() : false,
+                          onChanged: _securityProviderInitialized ? (value) async {
                             await _securityProvider.setAutoScanEnabled(value);
                             setState(() {});
-                          },
+                          } : null,
                         ),
                         SwitchListTile(
                           title: Text(tr('enableAutoUpdate')),
                           subtitle: Text(tr('enableAutoUpdateDescription')),
-                          value: _securityProvider.getAutoUpdateEnabled(),
-                          onChanged: (value) async {
+                          value: _securityProviderInitialized ? _securityProvider.getAutoUpdateEnabled() : false,
+                          onChanged: _securityProviderInitialized ? (value) async {
                             await _securityProvider.setAutoUpdateEnabled(value);
                             setState(() {});
-                          },
+                          } : null,
                         ),
                         ListTile(
                           title: Text(tr('updateInterval')),
                           subtitle: Text(tr('updateIntervalDescription')),
                           trailing: DropdownButton<int>(
-                            value: _securityProvider.getUpdateInterval(),
+                            value: _securityProviderInitialized ? _securityProvider.getUpdateInterval() : 1,
                             items: [1, 6, 12, 24, 48, 72].map((hours) {
                               return DropdownMenuItem<int>(
                                 value: hours,
                                 child: Text('$hours ${tr('hours')}'),
                               );
                             }).toList(),
-                            onChanged: (value) async {
+                            onChanged: _securityProviderInitialized ? (value) async {
                               if (value != null) {
                                 await _securityProvider.setUpdateInterval(value);
                                 setState(() {});
                               }
-                            },
+                            } : null,
                           ),
                         ),
                         height16,
@@ -816,7 +826,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton.icon(
-                            onPressed: () async {
+                            onPressed: _securityProviderInitialized ? () async {
                               try {
                                 await _securityProvider.updateRules();
                                 if (mounted) {
@@ -834,7 +844,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   );
                                 }
                               }
-                            },
+                            } : null,
                             icon: const Icon(Icons.download),
                             label: Text(tr('updateNow')),
                           ),
