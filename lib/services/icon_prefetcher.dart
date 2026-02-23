@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/services/unified_icon_service.dart';
+import 'package:updatium/services/icon_cache.dart';
 
 /// Background service for pre-fetching app icons
 class IconPrefetcher {
@@ -280,14 +280,13 @@ class IconPrefetcher {
         ),
       );
 
-      // Use UnifiedIconService to download and cache the icon
-      final result = await UnifiedIconService.instance.getIcon(
+      // Use IconCache to download and cache icon
+      final iconData = await IconCache.instance.getIcon(
         app.id,
         app.remoteIconUrl,
         forceRefresh: forceRefresh,
         fallbackIcon: null,
       );
-      final iconData = result.data;
 
       if (iconData != null) {
         LogsProvider().add(

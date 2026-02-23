@@ -28,7 +28,7 @@ import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
-import 'package:updatium/services/unified_icon_service.dart';
+import 'package:updatium/services/icon_cache.dart';
 import 'package:updatium/services/icon_prefetcher.dart';
 import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -564,8 +564,8 @@ class AppsProvider with ChangeNotifier {
         if (!iconsCacheDir.existsSync()) {
           iconsCacheDir.createSync();
         }
-        // Initialize UnifiedIconService with the icons directory
-        await UnifiedIconService.instance.initialize(cacheDir: iconsCacheDir);
+        // Initialize IconCache with the icons directory
+        await IconCache.instance.initialize(cacheDir: iconsCacheDir);
       } else {
         APKDir = Directory('${(await getAppStorageDir()).path}/apks');
         if (!APKDir.existsSync()) {
@@ -575,8 +575,8 @@ class AppsProvider with ChangeNotifier {
         if (!iconsCacheDir.existsSync()) {
           iconsCacheDir.createSync();
         }
-        // Initialize UnifiedIconService with the icons directory
-        await UnifiedIconService.instance.initialize(cacheDir: iconsCacheDir);
+        // Initialize IconCache with the icons directory
+        await IconCache.instance.initialize(cacheDir: iconsCacheDir);
       }
       if (!isBg) {
         // Load Apps into memory (in background processes, this is done later instead of in the constructor)
@@ -1819,15 +1819,14 @@ class AppsProvider with ChangeNotifier {
       final app = apps[appId]?.app;
       Uint8List? icon;
 
-      // Try to get icon from UnifiedIconService using remoteIconUrl first
+      // Try to get icon from IconCache using remoteIconUrl first
       if (app?.remoteIconUrl != null && app!.remoteIconUrl!.isNotEmpty) {
-        final result = await UnifiedIconService.instance.getIcon(
+        icon = await IconCache.instance.getIcon(
           app.id,
           app.remoteIconUrl,
           forceRefresh: ignoreCache,
           fallbackIcon: null,
         );
-        icon = result.data;
       }
 
       // If no icon from cache, try installed app icon
@@ -1854,7 +1853,7 @@ class AppsProvider with ChangeNotifier {
     }
   }
 
-  /// Get icon for an app using the UnifiedIconService
+  /// Get icon for an app using the IconCache service
   /// This is the main API for getting app icons with remote URL support
   Future<Uint8List?> getIcon(
     String appId,
@@ -1862,8 +1861,8 @@ class AppsProvider with ChangeNotifier {
     bool forceRefresh = false,
     Uint8List? fallbackIcon,
   }) async {
-    // First try UnifiedIconService with remote URL
-    final result = await UnifiedIconService.instance.getIcon(
+    // First try IconCache with remote URL
+    final icon = await IconCache.instance.getIcon(
       appId,
       remoteIconUrl,
       forceRefresh: forceRefresh,
@@ -1871,39 +1870,32 @@ class AppsProvider with ChangeNotifier {
     );
 
     // If no icon from cache and no fallback provided, try installed app icon
-    if (result.data == null && fallbackIcon == null) {
+    if (icon == null && fallbackIcon == null) {
       final installedIcon = await apps[appId]?.installedInfo?.applicationInfo
           ?.getAppIcon();
       if (installedIcon != null) {
         // Cache the installed icon for future use
-        await UnifiedIconService.instance.saveIcon(appId, installedIcon);
+        await IconCache.instance.saveIcon(appId, installedIcon);
         return installedIcon;
       }
     }
 
-    return result.data;
+    return icon;
   }
 
   /// Check if an icon is cached for the given app
   Future<bool> isIconCached(String appId, String? remoteIconUrl) async {
-    final result = await UnifiedIconService.instance.getIcon(
-      appId,
-      remoteIconUrl,
-    );
-    return result.data != null;
+    return await IconCache.instance.isIconCached(appId, remoteIconUrl);
   }
 
   /// Clear the icon cache
   Future<void> clearIconCache() async {
-    await UnifiedIconService.instance.clearCache(
-      clearMemory: true,
-      clearDisk: true,
-    );
+    await IconCache.instance.clearCache();
   }
 
   /// Get icon cache statistics
   Future<Map<String, dynamic>> getIconCacheStats() async {
-    return await UnifiedIconService.instance.getCacheStats();
+    return await IconCache.instance.getCacheStats();
   }
 
   /// Start icon pre-fetching manually
