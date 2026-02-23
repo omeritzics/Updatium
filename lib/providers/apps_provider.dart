@@ -2517,7 +2517,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
           },
           child: Text(tr('cancel')),
         ),
-        createcreateAppTextButton( 
+        createAppTextButton( 
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(fileUrl);
@@ -2559,13 +2559,13 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
         ),
       ),
       actions: [
-        createcreateAppTextButton( 
+        createAppTextButton( 
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        createcreateAppTextButton( 
+        createAppTextButton( 
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);

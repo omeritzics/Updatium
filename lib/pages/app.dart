@@ -37,6 +37,7 @@ class _AppPageState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
     var appsProvider = context.watch<AppsProvider>();
+    var settingsProvider = context.watch<SettingsProvider>();
     getUpdate(String id, {bool resetVersion = false}) async {
       try {
         setState(() {
@@ -87,11 +88,6 @@ class _AppPageState extends State<AppPage> {
     bool installedVersionIsEstimate = app?.app != null
         ? isVersionPseudo(app!.app)
         : false;
-
-    if (app != null && !_wasWebViewOpened) {
-      _wasWebViewOpened = true;
-      _webViewController.loadRequest(Uri.parse(app.app.url));
-    }
 
     getInfoColumn() {
       String versionLines = '';
@@ -440,13 +436,13 @@ class _AppPageState extends State<AppPage> {
           return AlertDialog(
             title: Text(tr('alreadyUpToDateQuestion')),
             actions: [
-              createcreateAppTextButton( 
+              createAppTextButton( 
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(tr('no')),
               ),
-              createcreateAppTextButton( 
+              createAppTextButton( 
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   var updatedApp = app?.app;
@@ -529,7 +525,7 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => createcreateAppTextButton( 
+    getInstallOrUpdateButton() => createAppTextButton( 
       onPressed:
           !updating &&
               (app?.app.installedVersion == null ||
