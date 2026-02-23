@@ -17,10 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:markdown/markdown.dart' as md;
 
 class AppPage extends StatefulWidget {
-  const AppPage({
-    super.key,
-    required this.appId,
-  });
+  const AppPage({super.key, required this.appId});
 
   final String appId;
 
@@ -436,7 +433,6 @@ class _AppPageState extends State<AppPage> {
       ],
     );
 
-
     showMarkUpdatedDialog() {
       return showDialog(
         context: context,
@@ -684,9 +680,7 @@ class _AppPageState extends State<AppPage> {
       body: RefreshIndicator(
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
-              child: Column(children: [getFullInfoColumn()]),
-            ),
+            SliverToBoxAdapter(child: Column(children: [getFullInfoColumn()])),
           ],
         ),
         onRefresh: () async {
