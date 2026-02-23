@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:updatium/components/app_button.dart';
-import 'package:updatium/components/cached_app_icon.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/providers/apps_provider.dart';
 
 /// Example demonstrating the updated App Catalogue UI with caching system
@@ -497,7 +496,7 @@ class AddAppDialog extends StatelessWidget {
       title: const Text('Add App'),
       content: const Text('Add App functionality would be implemented here.'),
       actions: [
-        AppTextButton(
+        createAppTextButton( 
           onPressed: () => Navigator.pop(context),
           child: const Text('Cancel'),
         ),

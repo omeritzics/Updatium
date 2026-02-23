@@ -19,7 +19,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/components/app_button.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:http/io_client.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/html.dart';
@@ -2511,13 +2511,13 @@ class _AppFilePickerState extends State<AppFilePicker> {
         ],
       ),
       actions: [
-        AppTextButton(
+        createAppTextButton( 
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        AppTextButton(
+        createcreateAppTextButton( 
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(fileUrl);
@@ -2559,18 +2559,18 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
         ),
       ),
       actions: [
-        AppTextButton(
+        createcreateAppTextButton( 
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        AppTextButton(
+        createcreateAppTextButton( 
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);
           },
-          child: Text(tr('continue')),
+          child: Text(tr('yes')),
         ),
       ],
     );

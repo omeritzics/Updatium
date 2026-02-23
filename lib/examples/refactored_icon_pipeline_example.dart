@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:updatium/components/app_button.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/enhanced_app_icon.dart';
 import 'package:updatium/models/enhanced_app.dart';
 import 'package:updatium/services/enhanced_icon_prefetcher.dart';
@@ -530,7 +530,7 @@ class _AppDetailsDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        AppTextButton(
+        createAppTextButton( 
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Close'),
         ),
@@ -669,7 +669,7 @@ class _PrefetchDetailsDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        AppTextButton(
+        createAppTextButton( 
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Close'),
         ),

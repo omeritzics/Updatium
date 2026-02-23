@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:updatium/components/app_button.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/services/icon_prefetcher.dart';
@@ -393,7 +393,7 @@ class _IconPrefetcherExampleState extends State<IconPrefetcherExample> {
               ],
             ),
             actions: [
-              AppTextButton(
+              createAppTextButton( 
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text('OK'),
               ),

@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:updatium/components/app_button.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -440,13 +440,13 @@ class _AppPageState extends State<AppPage> {
           return AlertDialog(
             title: Text(tr('alreadyUpToDateQuestion')),
             actions: [
-              AppTextButton(
+              createcreateAppTextButton( 
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(tr('no')),
               ),
-              AppTextButton(
+              createcreateAppTextButton( 
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   var updatedApp = app?.app;
@@ -529,7 +529,7 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => AppTextButton(
+    getInstallOrUpdateButton() => createcreateAppTextButton( 
       onPressed:
           !updating &&
               (app?.app.installedVersion == null ||
