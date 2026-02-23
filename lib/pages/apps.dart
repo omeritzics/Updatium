@@ -6,7 +6,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/button_helpers.dart';
-import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -1752,7 +1751,7 @@ class AppsPageState extends State<AppsPage> {
           height: 48.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6.0),
-            color: iconData == null 
+            color: iconData == null
                 ? Theme.of(context).colorScheme.surfaceContainerHighest
                 : null,
           ),
@@ -1768,7 +1767,9 @@ class AppsPageState extends State<AppsPage> {
                 : Icon(
                     Icons.apps,
                     size: 24.0,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                   ),
           ),
         );

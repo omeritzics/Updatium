@@ -389,11 +389,7 @@ class AppDetailsPage extends StatelessWidget {
         child: Column(
           children: [
             // Large app icon
-            CachedAppIcon(
-              app: app,
-              size: 120,
-              showInstalledIndicator: true,
-            ),
+            CachedAppIcon(app: app, size: 120, showInstalledIndicator: true),
             const SizedBox(height: 16),
 
             // App info

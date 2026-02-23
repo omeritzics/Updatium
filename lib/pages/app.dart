@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/button_helpers.dart';
-import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
@@ -695,7 +694,7 @@ class _AppPageState extends State<AppPage> {
           height: size,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(size * 0.125),
-            color: iconData == null 
+            color: iconData == null
                 ? Theme.of(context).colorScheme.surfaceContainerHighest
                 : null,
           ),
@@ -711,7 +710,9 @@ class _AppPageState extends State<AppPage> {
                 : Icon(
                     Icons.apps,
                     size: size * 0.5,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                   ),
           ),
         );
