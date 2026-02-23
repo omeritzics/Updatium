@@ -125,7 +125,6 @@
     "bgUpdateCheckInterval": "后台更新检查间隔",
     "neverManualOnly": "手动",
     "appearance": "外观",
-    "showWebInAppView": "应用详情页显示来源网站内容",
     "pinUpdates": "将待更新应用置顶",
     "updates": "更新",
     "sourceSpecific": "来源",

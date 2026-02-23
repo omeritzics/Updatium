@@ -126,7 +126,6 @@
     "bgUpdateCheckInterval": "Interval pemeriksaan pembaruan di latar belakang",
     "neverManualOnly": "Tidak pernah - manual saja",
     "appearance": "Tampilan",
-    "showWebInAppView": "Tampilkan halaman web sumber dalam tampilan aplikasi",
     "pinUpdates": "Sematkan pembaruan ke atas tampilan aplikasi",
     "updates": "Pembaruan",
     "sourceSpecific": "Sumber spesifik",

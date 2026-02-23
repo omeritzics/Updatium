@@ -125,7 +125,6 @@
     "bgUpdateCheckInterval": "Frequentie voor achtergrond-updatecontrole",
     "neverManualOnly": "Nooit - Alleen handmatig",
     "appearance": "Weergave",
-    "showWebInAppView": "Bron-webpagina weergeven in app-weergave",
     "pinUpdates": "Updates bovenaan plaatsen in de apps-weergave",
     "updates": "Bijwerken",
     "sourceSpecific": "Bron-specifiek",

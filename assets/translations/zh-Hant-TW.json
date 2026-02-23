@@ -125,7 +125,6 @@
     "bgUpdateCheckInterval": "背景更新檢查間隔",
     "neverManualOnly": "從不 - 僅手動",
     "appearance": "外觀",
-    "showWebInAppView": "在應用程式檢視中顯示來源網頁",
     "pinUpdates": "將更新釘選至應用程式檢視的頂端",
     "updates": "更新",
     "sourceSpecific": "特定來源",

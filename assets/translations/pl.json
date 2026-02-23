@@ -125,7 +125,6 @@
     "bgUpdateCheckInterval": "Częstotliwość sprawdzania aktualizacji w tle",
     "neverManualOnly": "Nigdy - tylko ręcznie",
     "appearance": "Wygląd",
-    "showWebInAppView": "Pokaż stronę źródłową w widoku aplikacji",
     "pinUpdates": "Przypnij aktualizacje na górze widoku aplikacji",
     "updates": "Aktualizacje",
     "sourceSpecific": "Zależnie od źródła",

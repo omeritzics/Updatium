@@ -126,7 +126,6 @@
     "bgUpdateCheckInterval": "Intervalle de recherche de mises à jour en arrière-plan",
     "neverManualOnly": "Jamais - Manuellement uniquement",
     "appearance": "Apparence",
-    "showWebInAppView": "Afficher la page Web source dans l'onglet 'Applications'",
     "pinUpdates": "Épingler les mises à jour en haut de l'onglet 'Applications'",
     "updates": "Mises à jour",
     "sourceSpecific": "Spécifique à la source",

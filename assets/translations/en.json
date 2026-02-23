@@ -126,7 +126,6 @@
     "bgUpdateCheckInterval": "Background update checking interval",
     "neverManualOnly": "Never - manual only",
     "appearance": "Appearance",
-    "showWebInAppView": "Show source webpage in app view",
     "pinUpdates": "Pin updates to top of apps view",
     "updates": "Updates",
     "sourceSpecific": "Source-specific",

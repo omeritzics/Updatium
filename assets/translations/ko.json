@@ -126,7 +126,6 @@
     "bgUpdateCheckInterval": "백그라운드 업데이트 확인 간격",
     "neverManualOnly": "절대 - 수동만",
     "appearance": "외관",
-    "showWebInAppView": "앱 보기에서 소스 웹페이지 표시",
     "pinUpdates": "앱 보기 상단에 업데이트 고정",
     "updates": "업데이트",
     "sourceSpecific": "소스별",

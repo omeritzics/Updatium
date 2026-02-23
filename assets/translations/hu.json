@@ -126,7 +126,6 @@
     "bgUpdateCheckInterval": "Időtartam a frissítések háttérellenőrzése között",
     "neverManualOnly": "Soha – csak kézi",
     "appearance": "Megjelenés",
-    "showWebInAppView": "Forrás megjelenítése az alkalmazásnézetben",
     "pinUpdates": "Frissítések kitűzése az alkalmazásnézet tetejére",
     "updates": "Frissítések",
     "sourceSpecific": "Forrásspecifikus",

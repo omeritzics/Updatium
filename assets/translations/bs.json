@@ -126,7 +126,6 @@
     "bgUpdateCheckInterval": "Interval provjere ažuriranja u pozadini",
     "neverManualOnly": "Nikada - samo ručno",
     "appearance": "Izgled",
-    "showWebInAppView": "Prikaži izvornu web stranicu u prikazu aplikacije",
     "pinUpdates": "Prikvačite ažuriranja na vrh prikaza aplikacija",
     "updates": "Nadogradnje",
     "sourceSpecific": "Specifično za izvor",

@@ -125,7 +125,6 @@
     "bgUpdateCheckInterval": "Kontrolinterval for baggrundsopdatering",
     "neverManualOnly": "Aldrig - Kun manuelt",
     "appearance": "Udseende",
-    "showWebInAppView": "Vis kildewebsiden i app-visning",
     "pinUpdates": "Fastgør opdateringer øverst i app-visning",
     "updates": "Opdateringer",
     "sourceSpecific": "Kildespecifik",

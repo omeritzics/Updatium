@@ -125,7 +125,6 @@
     "bgUpdateCheckInterval": "Interval kontroly aktualizace na pozadí",
     "neverManualOnly": "Nikdy – pouze ručně",
     "appearance": "Vzhled",
-    "showWebInAppView": "Zobrazit zdrojové webové stránky v zobrazení aplikace",
     "pinUpdates": "Připnout aplikace s aktualizacemi nahoru",
     "updates": "Aktualizace",
     "sourceSpecific": "Specifické pro zdroj",

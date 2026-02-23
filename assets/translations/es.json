@@ -126,7 +126,6 @@
     "bgUpdateCheckInterval": "Comprobar actualizaciones en segundo plano",
     "neverManualOnly": "Nunca, solo manual",
     "appearance": "Apariencia",
-    "showWebInAppView": "Mostrar vista de la web de origen",
     "pinUpdates": "Anclar actualizaciones al principio",
     "updates": "Actualizaciones",
     "sourceSpecific": "Fuente específica",

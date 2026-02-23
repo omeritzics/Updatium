@@ -125,7 +125,6 @@
     "bgUpdateCheckInterval": "Arka planda güncelleme denetleme sıklığı",
     "neverManualOnly": "Asla - yalnızca el ile",
     "appearance": "Görünüm",
-    "showWebInAppView": "Kaynak web sayfasını uygulama görünümünde göster",
     "pinUpdates": "Güncellemeleri uygulamalar görünümünün üstüne sabitle",
     "updates": "Güncellemeler",
     "sourceSpecific": "Kaynağa özgü",

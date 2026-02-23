@@ -125,7 +125,6 @@
     "bgUpdateCheckInterval": "Intervallo di controllo degli aggiornamenti in secondo piano",
     "neverManualOnly": "Mai - Solo manuale",
     "appearance": "Aspetto",
-    "showWebInAppView": "Mostra pagina web dell'app se selezionata",
     "pinUpdates": "Fissa aggiornamenti disponibili in alto",
     "updates": "Aggiornamenti",
     "sourceSpecific": "Specifiche per la fonte",

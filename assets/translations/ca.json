@@ -126,7 +126,6 @@
     "bgUpdateCheckInterval": "Comprova les actualitzacions en segon pla",
     "neverManualOnly": "Mai, només manual",
     "appearance": "Aparença",
-    "showWebInAppView": "Mostra el web d'origen en la vista de l'aplicació",
     "pinUpdates": "Ancora les actualitzacions al capdamunt de les aplicacions",
     "updates": "Actualitzacions",
     "sourceSpecific": "Font específica",

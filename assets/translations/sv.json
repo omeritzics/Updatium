@@ -125,7 +125,6 @@
     "bgUpdateCheckInterval": "Bakgrundsuppdateringskollfrekvens",
     "neverManualOnly": "Aldrig - Endast manuell",
     "appearance": "Utseende",
-    "showWebInAppView": "Visa källans hemsida i appvyn",
     "pinUpdates": "Fäst uppdateringar högst upp i appvyn",
     "updates": "Uppdateringar",
     "sourceSpecific": "Källspecifik",

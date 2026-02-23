@@ -126,7 +126,6 @@
     "bgUpdateCheckInterval": "バックグラウンドでのアップデート確認の間隔",
     "neverManualOnly": "手動のみ",
     "appearance": "外観",
-    "showWebInAppView": "アプリページにソースのWebページを表示する",
     "pinUpdates": "アップデートがあるアプリをトップに固定する",
     "updates": "アップデート",
     "sourceSpecific": "ソース別の設定",

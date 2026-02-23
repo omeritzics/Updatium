@@ -196,15 +196,6 @@ class SettingsProvider with ChangeNotifier {
     return true;
   }
 
-  bool get showAppWebpage {
-    return prefs?.getBool('showAppWebpage') ?? false;
-  }
-
-  set showAppWebpage(bool show) {
-    prefs?.setBool('showAppWebpage', show);
-    notifyListeners();
-  }
-
   bool get pinUpdates {
     return prefs?.getBool('pinUpdates') ?? true;
   }

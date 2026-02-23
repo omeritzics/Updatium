@@ -332,6 +332,39 @@ class UnifiedIconService {
     );
   }
 
+  /// Save icon data to cache (for installed app icons)
+  Future<void> saveIcon(String appId, Uint8List iconData) async {
+    try {
+      final cacheKey = 'app_$appId'; // Special key for installed apps
+      final cacheFile = File(path.join(_cacheDir.path, '$cacheKey.cache'));
+      
+      await cacheFile.writeAsBytes(iconData);
+      
+      // Add to memory cache
+      _addToMemoryCache(cacheKey, iconData);
+      
+      // Save metadata
+      final metadataFile = File('${cacheFile.path}.meta');
+      final metadata = {
+        'appId': appId,
+        'timestamp': DateTime.now().toIso8601String(),
+        'size': iconData.length,
+        'source': 'installed_app',
+      };
+      await metadataFile.writeAsString(jsonEncode(metadata));
+      
+      _emitEvent(
+        IconLoadingEvent(
+          type: IconEventType.loaded,
+          appId: appId,
+          source: IconSource.disk,
+        ),
+      );
+    } catch (e) {
+      LogsProvider().add('Error saving icon to cache: $e');
+    }
+  }
+
   /// Clear all caches
   Future<void> clearCache({
     bool clearMemory = true,
