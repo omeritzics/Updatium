@@ -339,12 +339,7 @@ class _AppPageState extends State<AppPage> {
             children: [
               GestureDetector(
                 onTap: () => pm.openApp(app.app.id),
-                child: CachedAppIcon(
-                  app: app!.app,
-                  size: small ? 70 : 150,
-                  enableShimmer: true,
-                  showInstalledIndicator: false,
-                ),
+                child: _buildSimpleIcon(app!.app, small ? 70 : 150),
               ),
             ],
           ),
@@ -686,6 +681,41 @@ class _AppPageState extends State<AppPage> {
         },
       ),
       bottomSheet: getBottomSheetMenu(),
+    );
+  }
+
+  Widget _buildSimpleIcon(App app, double size) {
+    return Consumer<AppsProvider>(
+      builder: (context, appsProvider, child) {
+        final iconData = appsProvider.apps[app.id]?.icon;
+        final isInstalled = appsProvider.apps[app.id]?.installedInfo != null;
+
+        return Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(size * 0.125),
+            color: iconData == null 
+                ? Theme.of(context).colorScheme.surfaceContainerHighest
+                : null,
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(size * 0.125),
+            child: iconData != null
+                ? Image.memory(
+                    iconData,
+                    width: size,
+                    height: size,
+                    fit: BoxFit.cover,
+                  )
+                : Icon(
+                    Icons.apps,
+                    size: size * 0.5,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                  ),
+          ),
+        );
+      },
     );
   }
 }

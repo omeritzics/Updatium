@@ -1814,23 +1814,25 @@ class AppsProvider with ChangeNotifier {
     });
   }
 
-  Future<void> updateAppIcon(String? appId, {bool ignoreCache = false}) async {
+  Future<void> updateAppIcon(String? appId) async {
     if (apps[appId]?.icon == null) {
       final app = apps[appId]?.app;
       Uint8List? icon;
 
-      // Try to get icon from IconCache using remoteIconUrl first
-      if (app?.remoteIconUrl != null && app!.remoteIconUrl!.isNotEmpty) {
-        icon = await IconCache.instance.getIcon(
-          app.id,
-          app.remoteIconUrl,
-          forceRefresh: ignoreCache,
-          fallbackIcon: null,
-        );
-      }
+      // Try installed app icon first
+      icon = await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
 
-      // If no icon from cache, try installed app icon
-      icon ??= await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
+      // If no installed icon, try remote URL
+      if (icon == null && app?.remoteIconUrl != null && app!.remoteIconUrl!.isNotEmpty) {
+        try {
+          final response = await http.get(Uri.parse(app.remoteIconUrl!));
+          if (response.statusCode == 200) {
+            icon = response.bodyBytes;
+          }
+        } catch (e) {
+          // Failed to download remote icon, continue with null
+        }
+      }
 
       if (icon != null) {
         apps.update(
@@ -1844,11 +1846,10 @@ class AppsProvider with ChangeNotifier {
           ifAbsent: () => AppInMemory(
             apps[appId]!.app,
             null,
-            apps[appId]?.installedInfo,
+            apps[appId]!.installedInfo,
             icon,
           ),
         );
-        notifyListeners();
       }
     }
   }

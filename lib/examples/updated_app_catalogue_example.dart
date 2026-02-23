@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:updatium/components/button_helpers.dart';
+import 'package:updatium/components/cached_app_icon.dart';
 import 'package:updatium/providers/apps_provider.dart';
 
 /// Example demonstrating the updated App Catalogue UI with caching system
@@ -392,7 +392,6 @@ class AppDetailsPage extends StatelessWidget {
             CachedAppIcon(
               app: app,
               size: 120,
-              enableShimmer: true,
               showInstalledIndicator: true,
             ),
             const SizedBox(height: 16),

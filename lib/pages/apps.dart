@@ -489,9 +489,7 @@ class AppsPageState extends State<AppsPage> {
     }
 
     getAppIcon(int appIndex) {
-      return CachedAppIconSimple(
-        app: listedApps[appIndex].app,
-        size: 48.0,
+      return GestureDetector(
         onTap: () {
           // Handle tap if needed
         },
@@ -506,6 +504,7 @@ class AppsPageState extends State<AppsPage> {
             ),
           );
         },
+        child: _buildSimpleGridIcon(listedApps[appIndex].app),
       );
     }
 
@@ -1739,6 +1738,41 @@ class AppsPageState extends State<AppsPage> {
       MaterialPageRoute(
         builder: (BuildContext context) => AppPage(appId: app.app.id),
       ),
+    );
+  }
+
+  Widget _buildSimpleGridIcon(App app) {
+    return Consumer<AppsProvider>(
+      builder: (context, appsProvider, child) {
+        final iconData = appsProvider.apps[app.id]?.icon;
+        final isInstalled = appsProvider.apps[app.id]?.installedInfo != null;
+
+        return Container(
+          width: 48.0,
+          height: 48.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6.0),
+            color: iconData == null 
+                ? Theme.of(context).colorScheme.surfaceContainerHighest
+                : null,
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(6.0),
+            child: iconData != null
+                ? Image.memory(
+                    iconData,
+                    width: 48.0,
+                    height: 48.0,
+                    fit: BoxFit.cover,
+                  )
+                : Icon(
+                    Icons.apps,
+                    size: 24.0,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                  ),
+          ),
+        );
+      },
     );
   }
 }
