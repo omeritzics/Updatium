@@ -29,7 +29,7 @@ if (keystorePropertiesExists) {
 
 android {
     namespace = "io.github.omeritzics.updatium"
-    compileSdk = 34
+    compileSdk = 36
     ndkVersion = "28.2.13676358"
 
     compileOptions {
