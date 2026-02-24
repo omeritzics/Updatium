@@ -13,8 +13,29 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v6
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+          
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -23,11 +44,15 @@ jobs:
           version: '3.38.9'  # Use specific stable version that meets requirements
           cache: true
 
-      - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '21'
+      # Running sync script to ensure no broken dependencies before building
+      - name: Run Environment Sync
+        run: |
+          if [ -f "scripts/fix_environment.sh" ]; then
+            chmod +x scripts/fix_environment.sh
+            ./scripts/fix_environment.sh
+          else
+            echo "Sync script not found, skipping..."
+          fi
 
       - name: Extract Version
         id: extract_version
@@ -78,7 +103,7 @@ jobs:
           fi
           echo "Keystore verification successful"
 
-      - name: Set App Name and Build APKs
+      - name: Build APKs
         run: |
           # Update app label in string resources for release builds
           sed -i 's/<string name="label">.*<\/string>/<string name="label">Updatium<\/string>/g' android/app/src/main/res/values/string.xml
