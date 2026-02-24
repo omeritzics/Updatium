@@ -137,7 +137,7 @@ class GitHub extends AppSource {
             MapEntry('none', tr('none')),
             MapEntry(
               'smartname-datefallback',
-              '${tr('smartname')} x ${tr('releaseDate')}',
+              'Smart + Date',
             ),
             MapEntry('name', tr('name')),
           ],
