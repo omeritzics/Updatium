@@ -220,7 +220,7 @@ class _RefactoredIconPipelineExampleState
                 child: DropdownButtonFormField<PrefetchStrategy>(
                   decoration: const InputDecoration(
                     labelText: 'Pre-fetch Strategy',
-                    border: OutlineInputBorder(),
+                    helperText: 'Optional',
                   ),
                   initialValue:
                       _prefetchStatus?.strategy ?? PrefetchStrategy.priority,

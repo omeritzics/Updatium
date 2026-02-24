@@ -483,26 +483,7 @@ class AddAppPageState extends State<AddAppPage> {
                 initialValue: pickedSourceOverride ?? '',
                 decoration: InputDecoration(
                   labelText: tr('overrideSource'),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28),
-                    borderSide: BorderSide.none,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: Theme.of(
-                    context,
-                  ).colorScheme.surface.withValues(alpha: 0.1),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
+                  helperText: tr('optional'),
                 ),
                 items: [
                   DropdownMenuItem(value: '', child: Text(tr('none'))),

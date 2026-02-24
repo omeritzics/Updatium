@@ -99,9 +99,9 @@ class _UpdatedAppCatalogueExampleState
         children: [
           TextField(
             decoration: const InputDecoration(
+              labelText: 'Search',
               hintText: 'Search apps...',
               prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(),
             ),
             onChanged: (value) {
               setState(() {

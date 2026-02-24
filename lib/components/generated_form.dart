@@ -329,8 +329,10 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   });
                 },
                 decoration: InputDecoration(
-                  helperText: formItem.label + (formItem.required ? ' *' : ''),
+                  labelText: formItem.label,
                   hintText: formItem.hint,
+                  helperText: formItem.required ? null : tr('optional'),
+                  suffixText: formItem.required ? ' *' : null,
                 ),
                 minLines: formItem.max <= 1 ? null : formItem.max,
                 maxLines: formItem.max <= 1 ? 1 : formItem.max,
@@ -377,7 +379,11 @@ class _GeneratedFormState extends State<GeneratedForm> {
             return Text(tr('dropdownNoOptsError'));
           }
           return DropdownButtonFormField(
-            decoration: InputDecoration(labelText: formItem.label),
+            decoration: InputDecoration(
+              labelText: formItem.label,
+              helperText: formItem.required ? null : tr('optional'),
+              suffixText: formItem.required ? ' *' : null,
+            ),
             initialValue: values[formItem.key],
             items: formItem.opts!.map((e2) {
               var enabled = formItem.disabledOptKeys?.contains(e2.key) != true;

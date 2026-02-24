@@ -33,7 +33,6 @@ class _IconCacheExampleState extends State<IconCacheExample> {
               controller: _appIdController,
               decoration: const InputDecoration(
                 labelText: 'App ID',
-                border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16),
@@ -41,7 +40,6 @@ class _IconCacheExampleState extends State<IconCacheExample> {
               controller: _urlController,
               decoration: const InputDecoration(
                 labelText: 'Remote Icon URL',
-                border: OutlineInputBorder(),
                 hintText: 'https://example.com/icon.png',
               ),
             ),

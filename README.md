@@ -5,6 +5,7 @@
 [![Translation Help Wanted](https://img.shields.io/badge/translation-help_wanted-blue)](https://github.com/omeritzics/Updatium/tree/main/assets/translations)
 
 Update your Android apps directly from the APK source. Forked from [Obtainium](https://github.com/ImranR98/Obtainium) due to the developer's problematic political views and his terrible behavior toward Jewish people who wanted to contribute to his app.
+
 Updatium helps you to install apps and update them directly from their release pages or APK sources, and to receive notifications when updates are available.
 
 ## Download
@@ -25,6 +26,19 @@ Updatium helps you to install apps and update them directly from their release p
 | <img src="https://icons.duckduckgo.com/ip3/sourcehut.org.ico" width="16"/> [SourceHut](https://git.sr.ht/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=rustore.ru" width="16"/> [RuStore](https://rustore.ru/) |  | |
 | | <img src="https://www.google.com/s2/favicons?sz=32&domain=apkcombo.com" width="16"/> [APKCombo](https://apkcombo.com/) | |
 | | <img src="https://icons.duckduckgo.com/ip3/apkmirror.com.ico" width="16"/> [APKMirror](https://apkmirror.com/) (Track-Only) | |
+
+### Improved Design
+Based on Material Design 3 Expressive guidelines.
+
+### Other Additional Features
+- Hide non-installed apps.
+- Better accessability for screen readers.
+- Grid View.
+- Every new language is welcome to Updatium.
+
+## Localization
+Updatium currently supports * languages. If you want to help translate Updatium to your language, please open a pull request on [here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
+Every language is welcome to Updatium, but we need your help to make it happen.
 
 ## Limitations
 - For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.
