@@ -250,9 +250,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     var sortDropdown = DropdownButtonFormField(
       isExpanded: true,
-      decoration: InputDecoration(
-        labelText: tr('appSortBy'),
-      ),
+      decoration: InputDecoration(labelText: tr('appSortBy')),
       initialValue: settingsProvider.sortColumn,
       items: [
         DropdownMenuItem(
@@ -281,9 +279,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     var orderDropdown = DropdownButtonFormField(
       isExpanded: true,
-      decoration: InputDecoration(
-        labelText: tr('appSortOrder'),
-      ),
+      decoration: InputDecoration(labelText: tr('appSortOrder')),
       initialValue: settingsProvider.sortOrder,
       items: [
         DropdownMenuItem(
@@ -303,9 +299,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
 
     var localeDropdown = DropdownButtonFormField(
-      decoration: InputDecoration(
-        labelText: tr('language'),
-      ),
+      decoration: InputDecoration(labelText: tr('language')),
       initialValue: settingsProvider.forcedLocale,
       items: [
         DropdownMenuItem(value: null, child: Text(tr('followSystem'))),
@@ -766,9 +760,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                         DropdownButtonFormField(
-                          decoration: InputDecoration(
-                            labelText: tr('theme'),
-                          ),
+                          decoration: InputDecoration(labelText: tr('theme')),
                           initialValue: settingsProvider.theme,
                           items: [
                             DropdownMenuItem(
