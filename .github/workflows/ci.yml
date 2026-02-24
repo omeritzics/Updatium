@@ -39,25 +39,87 @@ jobs:
           version: '3.38.9'  # Use specific stable version that meets requirements
           cache: true
 
-      - name: Prepare Build
+      - name: Decode Keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
-          flutter pub get
-          # Strip signing config to build debug APK safely without keystores
-          # Handle both .gradle and .gradle.kts files
-          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle || true
-          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle.kts || true
-          
+          echo "${KEYSTORE_BASE64}" | base64 -d > android/upload-keystore.jks
+          chmod 600 android/upload-keystore.jks
+          echo "Keystore decoded and permissions set"
+
+      - name: Create key.properties
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          echo 'storePassword="${KEYSTORE_PASSWORD}"' > android/key.properties
+          echo 'keyPassword="${KEY_PASSWORD}"' >> android/key.properties
+          echo 'keyAlias="${KEY_ALIAS}"' >> android/key.properties
+          echo 'storeFile=../upload-keystore.jks' >> android/key.properties
+          chmod 600 android/key.properties
+          echo "Created keystore properties file with restricted permissions"
+
+      - name: Verify Keystore
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          ls -la android/upload-keystore.jks
+          file android/upload-keystore.jks
+          if ! keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null; then
+            echo "ERROR: Keystore verification failed - aborting build"
+            exit 1
+          fi
+          echo "Keystore verification successful"
+
       - name: Build APK (Unique ID)
         run: |
           # Inject the short SHA into the Application ID to allow side-by-side testing
           # This replaces the existing applicationId with a unique one for this commit
-          sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle || true
+          sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle.kts || true
           
-          # Build the debug APK for the normal flavor
-          flutter build apk --debug --flavor normal
+          # Build the release APK for the normal flavor with proper signing
+          flutter build apk --release --flavor normal
           
           mkdir -p build/outputs/artifacts/
-          cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
+          cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
+
+      - name: Cleanup signing files
+        if: always()
+        run: |
+          echo "Starting cleanup of sensitive signing files..."
+          
+          # Cleanup keystore file
+          if [ -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" ]; then
+            rm -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" || echo "WARNING: Failed to delete keystore file"
+            if [ -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" ]; then
+              echo "ERROR: Keystore file still exists after cleanup attempt"
+            else
+              echo "Successfully deleted keystore file"
+            fi
+          else
+            echo "Keystore file not found, nothing to cleanup"
+          fi
+          
+          # Cleanup key.properties file
+          if [ -f "$GITHUB_WORKSPACE/android/key.properties" ]; then
+            rm -f "$GITHUB_WORKSPACE/android/key.properties" || echo "WARNING: Failed to delete key.properties file"
+            if [ -f "$GITHUB_WORKSPACE/android/key.properties" ]; then
+              echo "ERROR: key.properties file still exists after cleanup attempt"
+            else
+              echo "Successfully deleted key.properties file"
+            fi
+          else
+            echo "key.properties file not found, nothing to cleanup"
+          fi
+          
+          # Unset environment variables
+          unset KEYSTORE_PASSWORD || echo "WARNING: Failed to unset KEYSTORE_PASSWORD"
+          unset KEY_PASSWORD || echo "WARNING: Failed to unset KEY_PASSWORD"
+          unset KEY_ALIAS || echo "WARNING: Failed to unset KEY_ALIAS"
+          unset KEYSTORE_PASS || echo "WARNING: Failed to unset KEYSTORE_PASS"
+          
+          echo "Cleanup completed"
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v6
