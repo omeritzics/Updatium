@@ -34,14 +34,13 @@ Based on Material Design 3 Expressive guidelines.
 - Hide non-installed apps.
 - Better accessability for screen readers.
 - Grid View.
-- Every new language is welcome to Updatium.
 
 ### Localization
 Updatium currently supports 31 locales (including English). If you want to help translate Updatium to your language, please open a pull with the new translations added to [here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
 
 If you don't know how to make a pull request, and/or you don't have any experience with Git, you can open an issue [here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help you with adding your language.
 
-Every language is welcome to Updatium, but we need your help to make it happen.
+Every language is welcome to Updatium, but your help is needed to make it happen.
 
 ## Limitations
 - For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.
