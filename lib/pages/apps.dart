@@ -1609,23 +1609,6 @@ class AppsPageState extends State<AppsPage> {
                   : Icons.grid_view_rounded,
             ),
           ),
-          IconButton(
-            color: Theme.of(context).colorScheme.primary,
-            style: const ButtonStyle(visualDensity: VisualDensity.compact),
-            tooltip: isFilterOff
-                ? tr('filterApps')
-                : '${tr('filter')} - ${tr('remove')}',
-            onPressed: isFilterOff
-                ? showFilterDialog
-                : () {
-                    setState(() {
-                      filter = AppsFilter();
-                    });
-                  },
-            icon: Icon(
-              isFilterOff ? Icons.search_rounded : Icons.search_off_rounded,
-            ),
-          ),
           const SizedBox(width: 16),
           const VerticalDivider(),
           Expanded(
@@ -1697,6 +1680,30 @@ class AppsPageState extends State<AppsPage> {
                 pinned: true,
                 automaticallyImplyLeading: false,
                 expandedHeight: MediaQuery.of(context).size.height * 0.15,
+                actions: [
+                  Consumer<AppsProvider>(
+                    builder: (context, appsProvider, child) {
+                      var isFilterOff = filter.isIdenticalTo(neutralFilter, settingsProvider);
+                      return IconButton(
+                        color: Theme.of(context).colorScheme.primary,
+                        style: const ButtonStyle(visualDensity: VisualDensity.compact),
+                        tooltip: isFilterOff
+                            ? tr('filterApps')
+                            : '${tr('filter')} - ${tr('remove')}',
+                        onPressed: isFilterOff
+                            ? showFilterDialog
+                            : () {
+                                setState(() {
+                                  filter = AppsFilter();
+                                });
+                              },
+                        icon: Icon(
+                          isFilterOff ? Icons.search_rounded : Icons.search_off_rounded,
+                        ),
+                      );
+                    },
+                  ),
+                ],
                 flexibleSpace: FlexibleSpaceBar(
                   titlePadding: const EdgeInsets.symmetric(
                     horizontal: 24,
