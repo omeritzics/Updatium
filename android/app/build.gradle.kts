@@ -28,7 +28,7 @@ if (keystorePropertiesExists) {
 }
 
 android {
-    namespace = "com.omeritzics.updatium"
+    namespace = "io.github.omeritzics.updatium"
     compileSdk = 36
     ndkVersion = "28.2.13676358"
 
@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.omeritzics.updatium"
+        applicationId = "io.github.omeritzics.updatium"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 24
