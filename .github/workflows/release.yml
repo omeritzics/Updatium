@@ -105,21 +105,13 @@ jobs:
 
       - name: Build APKs
         run: |
-          # Update app label in string resources for release builds
-          sed -i 's/<string name="label">.*<\/string>/<string name="label">Updatium<\/string>/g' android/app/src/main/res/values/string.xml
-          echo "Updated app label to 'Updatium' in string resources"
-          
-          flutter pub get
-
-          # Building Normal release with dynamic version
           flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.extract_version.outputs.version }}" --build-number="${{ steps.extract_version.outputs.build_number }}"
-
           flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.extract_version.outputs.version }}" --build-number="${{ steps.extract_version.outputs.build_number }}"
 
       - name: Save APKs as Artifacts
         uses: actions/upload-artifact@v6
         with:
-          name: updatium-release-v${{ steps.extract_version.outputs.version }}-run${{ github.run_number }}
+          name: updatium-v${{ steps.extract_version.outputs.version }}-run${{ github.run_number }}
           path: build/app/outputs/flutter-apk/*.apk
 
       - name: Create Release
