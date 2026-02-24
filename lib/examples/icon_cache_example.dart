@@ -31,9 +31,7 @@ class _IconCacheExampleState extends State<IconCacheExample> {
           children: [
             TextField(
               controller: _appIdController,
-              decoration: const InputDecoration(
-                labelText: 'App ID',
-              ),
+              decoration: const InputDecoration(labelText: 'App ID'),
             ),
             const SizedBox(height: 16),
             TextField(
