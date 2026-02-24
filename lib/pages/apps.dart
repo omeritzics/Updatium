@@ -1594,6 +1594,21 @@ class AppsPageState extends State<AppsPage> {
       return Row(
         children: [
           getSelectAllButton(),
+          IconButton(
+            color: Theme.of(context).colorScheme.primary,
+            style: const ButtonStyle(visualDensity: VisualDensity.compact),
+            tooltip: settingsProvider.useGridView
+                ? tr('listView')
+                : tr('gridView'),
+            onPressed: () {
+              settingsProvider.useGridView = !settingsProvider.useGridView;
+            },
+            icon: Icon(
+              settingsProvider.useGridView
+                  ? Icons.view_list_rounded
+                  : Icons.grid_view_rounded,
+            ),
+          ),
           const SizedBox(width: 16),
           const VerticalDivider(),
           Expanded(
@@ -1668,29 +1683,15 @@ class AppsPageState extends State<AppsPage> {
                 actions: [
                   Consumer<AppsProvider>(
                     builder: (context, appsProvider, child) {
-                      return IconButton(
-                        color: Theme.of(context).colorScheme.primary,
-                        style: const ButtonStyle(visualDensity: VisualDensity.compact),
-                        tooltip: settingsProvider.useGridView
-                            ? tr('listView')
-                            : tr('gridView'),
-                        onPressed: () {
-                          settingsProvider.useGridView = !settingsProvider.useGridView;
-                        },
-                        icon: Icon(
-                          settingsProvider.useGridView
-                              ? Icons.view_list_rounded
-                              : Icons.grid_view_rounded,
-                        ),
+                      var isFilterOff = filter.isIdenticalTo(
+                        neutralFilter,
+                        settingsProvider,
                       );
-                    },
-                  ),
-                  Consumer<AppsProvider>(
-                    builder: (context, appsProvider, child) {
-                      var isFilterOff = filter.isIdenticalTo(neutralFilter, settingsProvider);
                       return IconButton(
                         color: Theme.of(context).colorScheme.primary,
-                        style: const ButtonStyle(visualDensity: VisualDensity.compact),
+                        style: const ButtonStyle(
+                          visualDensity: VisualDensity.compact,
+                        ),
                         tooltip: isFilterOff
                             ? tr('filterApps')
                             : '${tr('filter')} - ${tr('remove')}',
@@ -1702,7 +1703,9 @@ class AppsPageState extends State<AppsPage> {
                                 });
                               },
                         icon: Icon(
-                          isFilterOff ? Icons.search_rounded : Icons.search_off_rounded,
+                          isFilterOff
+                              ? Icons.search_rounded
+                              : Icons.search_off_rounded,
                         ),
                       );
                     },
