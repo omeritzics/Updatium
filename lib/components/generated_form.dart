@@ -72,6 +72,7 @@ class GeneratedFormTextField extends GeneratedFormItem {
 class GeneratedFormDropdown extends GeneratedFormItem {
   late List<MapEntry<String, String>>? opts;
   List<String>? disabledOptKeys;
+  late bool required;
 
   GeneratedFormDropdown(
     super.key,
@@ -80,6 +81,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
     super.belowWidgets,
     String super.defaultValue = '',
     this.disabledOptKeys,
+    this.required = true,
     List<String? Function(String? value)> super.additionalValidators = const [],
   });
 
@@ -99,6 +101,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
       disabledOptKeys: disabledOptKeys != null
           ? List.from(disabledOptKeys!)
           : null,
+      required: required,
       additionalValidators: List.from(additionalValidators),
     );
   }

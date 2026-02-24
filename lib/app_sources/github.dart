@@ -140,6 +140,7 @@ class GitHub extends AppSource {
           ],
           label: tr('sortMethod'),
           defaultValue: 'date',
+          required: false,
         ),
       ],
       [
