@@ -39,7 +39,7 @@ Based on Material Design 3 Expressive guidelines.
 ### Localization
 Updatium currently supports 31 locales (including English). If you want to help translate Updatium to your language, please open a pull with the new translations added to [here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
 
-If you don't know how to make a pull request, and/or you don't have any experience with Git, you can open an issue and I'd be happy to help you with adding your language.
+If you don't know how to make a pull request, and/or you don't have any experience with Git, you can open an issue [here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help you with adding your language.
 
 Every language is welcome to Updatium, but we need your help to make it happen.
 
