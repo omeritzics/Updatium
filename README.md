@@ -13,7 +13,7 @@ Updatium helps you to install apps and update them directly from their release p
 [![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
 
 ## Features
-Currently supported App sources:
+### Currently supported App sources:
 | Open Source (General) | Other (General) | Other (App-specific) |
 | :--- | :--- | :--- |
 | <img src="https://www.google.com/s2/favicons?sz=32&domain=github.com" width="16"/> [GitHub](https://github.com/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=apkpure.com" width="16"/> [APKPure](https://apkpure.net/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=telegram.org" width="16"/> [Telegram App](https://telegram.org/) |
