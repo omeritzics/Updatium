@@ -135,10 +135,7 @@ class GitHub extends AppSource {
             MapEntry('date', tr('releaseDate')),
             MapEntry('smartname', tr('smartname')),
             MapEntry('none', tr('none')),
-            MapEntry(
-              'smartname-datefallback',
-              'Smart + Date',
-            ),
+            MapEntry('smartname-datefallback', 'Smart + Date'),
             MapEntry('name', tr('name')),
           ],
           label: tr('sortMethod'),
