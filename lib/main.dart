@@ -253,7 +253,8 @@ class _UpdatiumState extends State<Updatium> {
         notificationTitle: tr('foregroundService'),
         notificationText: tr('fgServiceNotice'),
         notificationIcon: NotificationIcon(
-          metaDataName: 'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
+          metaDataName:
+              'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
         ),
         callback: startCallback,
       );
