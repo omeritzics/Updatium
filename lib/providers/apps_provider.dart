@@ -1824,7 +1824,9 @@ class AppsProvider with ChangeNotifier {
       icon = await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
 
       // If no installed icon, try remote URL
-      if (icon == null && app?.remoteIconUrl != null && app!.remoteIconUrl!.isNotEmpty) {
+      if (icon == null &&
+          app?.remoteIconUrl != null &&
+          app!.remoteIconUrl!.isNotEmpty) {
         try {
           final response = await http.get(Uri.parse(app.remoteIconUrl!));
           if (response.statusCode == 200) {
