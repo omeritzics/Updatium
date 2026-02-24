@@ -483,7 +483,6 @@ class AddAppPageState extends State<AddAppPage> {
                 initialValue: pickedSourceOverride ?? '',
                 decoration: InputDecoration(
                   labelText: tr('overrideSource'),
-                  helperText: tr('optional'),
                 ),
                 items: [
                   DropdownMenuItem(value: '', child: Text(tr('none'))),

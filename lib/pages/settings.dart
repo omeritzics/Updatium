@@ -252,7 +252,6 @@ class _SettingsPageState extends State<SettingsPage> {
       isExpanded: true,
       decoration: InputDecoration(
         labelText: tr('appSortBy'),
-        helperText: tr('optional'),
       ),
       initialValue: settingsProvider.sortColumn,
       items: [
@@ -284,7 +283,6 @@ class _SettingsPageState extends State<SettingsPage> {
       isExpanded: true,
       decoration: InputDecoration(
         labelText: tr('appSortOrder'),
-        helperText: tr('optional'),
       ),
       initialValue: settingsProvider.sortOrder,
       items: [
@@ -307,7 +305,6 @@ class _SettingsPageState extends State<SettingsPage> {
     var localeDropdown = DropdownButtonFormField(
       decoration: InputDecoration(
         labelText: tr('language'),
-        helperText: tr('optional'),
       ),
       initialValue: settingsProvider.forcedLocale,
       items: [
@@ -771,7 +768,6 @@ class _SettingsPageState extends State<SettingsPage> {
                         DropdownButtonFormField(
                           decoration: InputDecoration(
                             labelText: tr('theme'),
-                            helperText: tr('optional'),
                           ),
                           initialValue: settingsProvider.theme,
                           items: [

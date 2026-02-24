@@ -329,10 +329,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   });
                 },
                 decoration: InputDecoration(
-                  labelText: formItem.label,
+                  labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
                   hintText: formItem.hint,
-                  helperText: formItem.required ? null : tr('optional'),
-                  suffixText: formItem.required ? ' *' : null,
                 ),
                 minLines: formItem.max <= 1 ? null : formItem.max,
                 maxLines: formItem.max <= 1 ? 1 : formItem.max,
@@ -380,9 +378,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
           }
           return DropdownButtonFormField(
             decoration: InputDecoration(
-              labelText: formItem.label,
-              helperText: formItem.required ? null : tr('optional'),
-              suffixText: formItem.required ? ' *' : null,
+              labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
             ),
             initialValue: values[formItem.key],
             items: formItem.opts!.map((e2) {
