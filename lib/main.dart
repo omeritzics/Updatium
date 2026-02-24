@@ -604,7 +604,7 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive Input Fields
               inputDecorationTheme: InputDecorationTheme(
                 filled: true,
-                fillColor: scheme.surfaceContainerHighest,
+                fillColor: scheme.surface.withValues(alpha: 0.1),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
                   borderSide: BorderSide.none,
@@ -695,7 +695,7 @@ class _UpdatiumState extends State<Updatium> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 tileColor: scheme.surface,
-                selectedTileColor: scheme.surfaceContainerHighest,
+                selectedTileColor: scheme.surface.withValues(alpha: 0.2),
                 iconColor: scheme.onSurfaceVariant,
                 textColor: scheme.onSurface,
                 titleTextStyle: TextStyle(
@@ -741,7 +741,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Chip Theme
               chipTheme: ChipThemeData(
-                backgroundColor: scheme.surfaceContainerHighest,
+                backgroundColor: scheme.surface.withValues(alpha: 0.1),
                 selectedColor: scheme.secondaryContainer,
                 disabledColor: scheme.surface,
                 labelStyle: TextStyle(
@@ -784,8 +784,8 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive Progress Indicators
               progressIndicatorTheme: ProgressIndicatorThemeData(
                 color: scheme.primary,
-                linearTrackColor: scheme.surfaceContainerHighest,
-                circularTrackColor: scheme.surfaceContainerHighest,
+                linearTrackColor: scheme.surface.withValues(alpha: 0.2),
+                circularTrackColor: scheme.surface.withValues(alpha: 0.2),
               ),
             );
           }

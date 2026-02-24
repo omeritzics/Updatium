@@ -695,7 +695,7 @@ class _AppPageState extends State<AppPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(size * 0.125),
             color: iconData == null
-                ? Theme.of(context).colorScheme.surfaceContainerHighest
+                ? Theme.of(context).colorScheme.surface.withValues(alpha: 0.1)
                 : null,
           ),
           child: ClipRRect(

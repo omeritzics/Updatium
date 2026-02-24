@@ -660,7 +660,7 @@ class AppsPageState extends State<AppsPage> {
             tileColor: Theme.of(context).colorScheme.surface,
             selectedTileColor: Theme.of(
               context,
-            ).colorScheme.surfaceContainerHighest,
+            ).colorScheme.surface.withValues(alpha: 0.2),
             leading: SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
               width: MediaQuery.of(context).size.width * 0.1,
@@ -1752,7 +1752,7 @@ class AppsPageState extends State<AppsPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6.0),
             color: iconData == null
-                ? Theme.of(context).colorScheme.surfaceContainerHighest
+                ? Theme.of(context).colorScheme.surface.withValues(alpha: 0.1)
                 : null,
           ),
           child: ClipRRect(

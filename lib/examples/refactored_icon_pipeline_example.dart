@@ -211,7 +211,7 @@ class _RefactoredIconPipelineExampleState
   Widget _buildControlPanel() {
     return Container(
       padding: const EdgeInsets.all(16),
-      color: Theme.of(context).colorScheme.surfaceContainerHighest,
+      color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
       child: Column(
         children: [
           Row(

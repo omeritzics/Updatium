@@ -498,7 +498,7 @@ class AddAppPageState extends State<AddAppPage> {
                   filled: true,
                   fillColor: Theme.of(
                     context,
-                  ).colorScheme.surfaceContainerHighest,
+                  ).colorScheme.surface.withValues(alpha: 0.1),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 12,

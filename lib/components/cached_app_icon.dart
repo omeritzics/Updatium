@@ -231,7 +231,7 @@ class _CachedAppIconState extends State<CachedAppIcon>
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Theme.of(context).colorScheme.surfaceContainerHighest,
+                Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
                 Theme.of(context).colorScheme.surfaceContainer,
               ],
             ),
