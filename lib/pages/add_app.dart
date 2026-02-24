@@ -481,9 +481,7 @@ class AddAppPageState extends State<AddAppPage> {
             Expanded(
               child: DropdownButtonFormField<String>(
                 initialValue: pickedSourceOverride ?? '',
-                decoration: InputDecoration(
-                  labelText: tr('overrideSource'),
-                ),
+                decoration: InputDecoration(labelText: tr('overrideSource')),
                 items: [
                   DropdownMenuItem(value: '', child: Text(tr('none'))),
                   ...sourceProvider.sources

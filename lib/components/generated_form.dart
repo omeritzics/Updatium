@@ -329,7 +329,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   });
                 },
                 decoration: InputDecoration(
-                  labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
+                  labelText:
+                      '${formItem.label}${formItem.required ? ' *' : ''}',
                   hintText: formItem.hint,
                 ),
                 minLines: formItem.max <= 1 ? null : formItem.max,
