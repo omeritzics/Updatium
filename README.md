@@ -6,6 +6,12 @@
 
 Update your Android apps directly from the APK source. Forked from [Obtainium](https://github.com/ImranR98/Obtainium) due to the developer's problematic political views and his terrible behavior toward Jewish people who wanted to contribute to his app.
 
+## Download
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium)](https://github.com/omeritzics/Updatium/releases/latest)
+
+[![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
+
+## Features
 Updatium allows you to install and update apps directly from their releases pages or APK sources, and receive notifications when new releases are available.
 
 Currently supported App sources:
@@ -20,11 +26,6 @@ Currently supported App sources:
 | <img src="https://icons.duckduckgo.com/ip3/sourcehut.org.ico" width="16"/> [SourceHut](https://git.sr.ht/) | <img src="https://www.google.com/s2/favicons?sz=32&domain=rustore.ru" width="16"/> [RuStore](https://rustore.ru/) |  | |
 | | <img src="https://www.google.com/s2/favicons?sz=32&domain=apkcombo.com" width="16"/> [APKCombo](https://apkcombo.com/) | |
 | | <img src="https://icons.duckduckgo.com/ip3/apkmirror.com.ico" width="16"/> [APKMirror](https://apkmirror.com/) (Track-Only) | |
-
-## Download
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium)](https://github.com/omeritzics/Updatium/releases/latest)
-
-[![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
 
 ## Limitations
 - For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.
