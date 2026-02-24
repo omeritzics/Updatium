@@ -380,8 +380,8 @@ class _UpdatiumState extends State<Updatium> {
           if (lightDynamic != null &&
               darkDynamic != null &&
               settingsProvider.useMaterialYou) {
-            lightColorScheme = lightDynamic.harmonized();
-            darkColorScheme = darkDynamic.harmonized();
+            lightColorScheme = lightDynamic;
+            darkColorScheme = darkDynamic;
           } else {
             lightColorScheme = ColorScheme.fromSeed(
               seedColor: settingsProvider.themeColor,
@@ -394,9 +394,7 @@ class _UpdatiumState extends State<Updatium> {
 
           // Apply pure black surface for AMOLED black theme
           if (settingsProvider.useBlackTheme) {
-            darkColorScheme = darkColorScheme
-                .copyWith(surface: Colors.black)
-                .harmonized();
+            darkColorScheme = darkColorScheme.copyWith(surface: Colors.black);
           }
 
           if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
