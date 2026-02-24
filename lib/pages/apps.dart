@@ -1683,10 +1683,15 @@ class AppsPageState extends State<AppsPage> {
                 actions: [
                   Consumer<AppsProvider>(
                     builder: (context, appsProvider, child) {
-                      var isFilterOff = filter.isIdenticalTo(neutralFilter, settingsProvider);
+                      var isFilterOff = filter.isIdenticalTo(
+                        neutralFilter,
+                        settingsProvider,
+                      );
                       return IconButton(
                         color: Theme.of(context).colorScheme.primary,
-                        style: const ButtonStyle(visualDensity: VisualDensity.compact),
+                        style: const ButtonStyle(
+                          visualDensity: VisualDensity.compact,
+                        ),
                         tooltip: isFilterOff
                             ? tr('filterApps')
                             : '${tr('filter')} - ${tr('remove')}',
@@ -1698,7 +1703,9 @@ class AppsPageState extends State<AppsPage> {
                                 });
                               },
                         icon: Icon(
-                          isFilterOff ? Icons.search_rounded : Icons.search_off_rounded,
+                          isFilterOff
+                              ? Icons.search_rounded
+                              : Icons.search_off_rounded,
                         ),
                       );
                     },
