@@ -46,23 +46,33 @@ jobs:
           echo "beta=${{ github.event.inputs.beta }}" >> $GITHUB_OUTPUT
 
       - name: Decode Keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/upload-keystore.jks
+          echo "${KEYSTORE_BASE64}" | base64 -d > android/upload-keystore.jks
+          chmod 600 android/upload-keystore.jks
+          echo "Keystore decoded and permissions set"
 
       - name: Create key.properties
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "storeFile=../upload-keystore.jks" >> android/key.properties
+          echo 'storePassword="${KEYSTORE_PASSWORD}"' > android/key.properties
+          echo 'keyPassword="${KEY_PASSWORD}"' >> android/key.properties
+          echo 'keyAlias="${KEY_ALIAS}"' >> android/key.properties
+          echo 'storeFile=../upload-keystore.jks' >> android/key.properties
           chmod 600 android/key.properties
           echo "Created keystore properties file with restricted permissions"
 
       - name: Verify Keystore
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
-          if ! printf '%s\n' "${{ secrets.KEYSTORE_PASSWORD }}" | keytool -list -v -keystore android/upload-keystore.jks -storepass:stdin 2>/dev/null; then
+          if ! keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null; then
             echo "ERROR: Keystore verification failed - aborting build"
             exit 1
           fi
