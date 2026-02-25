@@ -30,7 +30,7 @@ class SettingsProvider with ChangeNotifier {
   // Not done in constructor as we want to be able to await it
   Future<void> initializeSettings() async {
     prefs = await SharedPreferences.getInstance();
-    defaultAppDir = (await getAppStorageDir()).path;
+    defaultAppDir = (await getApplicationDocumentsDirectory()).path;
     notifyListeners();
   }
 
@@ -64,7 +64,7 @@ class SettingsProvider with ChangeNotifier {
 
   Color get themeColor {
     int? colorCode = prefs?.getInt('themeColor');
-    return (colorCode != null) ? Color(colorCode) : updatiumThemeColor;
+    return (colorCode != null) ? Color.fromValue(colorCode) : updatiumThemeColor;
   }
 
   set themeColor(Color themeColor) {
@@ -281,7 +281,7 @@ class SettingsProvider with ChangeNotifier {
           .map((e) => e as App)
           .toList();
       if (changedApps.isNotEmpty) {
-        appsProvider.saveApps(changedApps);
+        saveApps(changedApps);
       }
     }
     prefs?.setString('categories', jsonEncode(cats));
@@ -293,7 +293,39 @@ class SettingsProvider with ChangeNotifier {
     var fl = flSegs != null && flSegs.isNotEmpty
         ? Locale(flSegs[0], flSegs.length > 1 ? flSegs[1] : null)
         : null;
-    var set = supportedLocales.where((element) => element.key == fl).isNotEmpty
+    var set = const [
+      Locale('en'),
+      Locale('zh'),
+      Locale('zh', 'Hant_TW'),
+      Locale('it'),
+      Locale('ja'),
+      Locale('he'),
+      Locale('hu'),
+      Locale('de'),
+      Locale('fa'),
+      Locale('fr'),
+      Locale('es'),
+      Locale('pl'),
+      Locale('ru'),
+      Locale('bs'),
+      Locale('pt'),
+      Locale('pt', 'BR'),
+      Locale('cs'),
+      Locale('sv'),
+      Locale('nl'),
+      Locale('vi'),
+      Locale('tr'),
+      Locale('uk'),
+      Locale('da'),
+      Locale('et'),
+      Locale('en', 'EO'),
+      Locale('in'),
+      Locale('ko'),
+      Locale('ca'),
+      Locale('ar'),
+      Locale('ml'),
+      Locale('gl'),
+    ].where((element) => element.languageCode == fl).isNotEmpty
         ? fl
         : null;
     return set;
@@ -302,8 +334,40 @@ class SettingsProvider with ChangeNotifier {
   set forcedLocale(Locale? fl) {
     if (fl == null) {
       prefs?.remove('forcedLocale');
-    } else if (supportedLocales
-        .where((element) => element.key == fl)
+    } else if (const [
+      Locale('en'),
+      Locale('zh'),
+      Locale('zh', 'Hant_TW'),
+      Locale('it'),
+      Locale('ja'),
+      Locale('he'),
+      Locale('hu'),
+      Locale('de'),
+      Locale('fa'),
+      Locale('fr'),
+      Locale('es'),
+      Locale('pl'),
+      Locale('ru'),
+      Locale('bs'),
+      Locale('pt'),
+      Locale('pt', 'BR'),
+      Locale('cs'),
+      Locale('sv'),
+      Locale('nl'),
+      Locale('vi'),
+      Locale('tr'),
+      Locale('uk'),
+      Locale('da'),
+      Locale('et'),
+      Locale('en', 'EO'),
+      Locale('in'),
+      Locale('ko'),
+      Locale('ca'),
+      Locale('ar'),
+      Locale('ml'),
+      Locale('gl'),
+    ]
+        .where((element) => element.languageCode == fl)
         .isNotEmpty) {
       prefs?.setString('forcedLocale', fl.toLanguageTag());
     }
