@@ -63,11 +63,6 @@ android {
             dimension = "default"
             applicationIdSuffix = ".fdroid"
         }
-        create("nightly") {
-            dimension = "default"
-            applicationIdSuffix = ".nightly"
-            versionNameSuffix = "-nightly"
-        }
     }
 
     signingConfigs {
