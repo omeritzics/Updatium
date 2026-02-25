@@ -665,11 +665,17 @@ class AppsPageState extends State<AppsPage> {
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
+              side: selectedAppIds.contains(listedApps[index].app.id)
+                  ? BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 2,
+                    )
+                  : BorderSide.none,
             ),
             tileColor: Theme.of(context).colorScheme.surface,
             selectedTileColor: Theme.of(
               context,
-            ).colorScheme.surface.withValues(alpha: 0.2),
+            ).colorScheme.primaryContainer.withOpacity(0.3),
             selected: selectedAppIds.contains(listedApps[index].app.id),
             leading: SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
@@ -811,7 +817,11 @@ class AppsPageState extends State<AppsPage> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).colorScheme.primaryContainer,
+                        color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.8),
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.primary,
+                          width: 2,
+                        ),
                       ),
                       child: Icon(
                         Icons.check_circle,
