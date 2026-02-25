@@ -796,7 +796,26 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         height8,
                         useMaterialThemeSwitch,
-                        if (!settingsProvider.useMaterialYou) colorPicker,
+                        if (!settingsProvider.useMaterialYou) 
+                          colorPicker
+                        else
+                          Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24),
+                              color: Theme.of(context).colorScheme.primaryContainer,
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.outline,
+                                width: 1,
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.palette,
+                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              size: 24,
+                            ),
+                          ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
