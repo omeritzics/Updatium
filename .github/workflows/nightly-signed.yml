@@ -76,10 +76,13 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
-          echo "storePassword=${KEYSTORE_PASSWORD}" > android/key.properties
-          echo "keyPassword=${KEY_PASSWORD}" >> android/key.properties
-          echo "keyAlias=${KEY_ALIAS}" >> android/key.properties
-          echo "storeFile=../upload-keystore.jks" >> android/key.properties
+          # Handle non-ASCII characters properly
+          cat << EOF > android/key.properties
+          storePassword=${KEYSTORE_PASSWORD}
+          keyPassword=${KEY_PASSWORD}
+          keyAlias=${KEY_ALIAS}
+          storeFile=../upload-keystore.jks
+          EOF
           chmod 600 android/key.properties
           echo "Created keystore properties file with restricted permissions"
 
@@ -106,7 +109,8 @@ jobs:
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
           echo "=== Keystore contents ==="
-          keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" || echo "Failed to list keystore contents"
+          # Use heredoc to handle non-ASCII characters properly
+          keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null || echo "Failed to list keystore contents"
           echo "=== End keystore contents ==="
           if ! keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null; then
             echo "ERROR: Keystore verification failed - aborting build"
