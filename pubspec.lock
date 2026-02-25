@@ -394,7 +394,7 @@ packages:
     source: hosted
     version: "9.2.0"
   flutter_keyboard_visibility:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_keyboard_visibility
       sha256: "98664be7be0e3ffca00de50f7f6a287ab62c763fc8c762e0a21584584a3ff4f8"
