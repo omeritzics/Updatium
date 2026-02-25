@@ -87,6 +87,7 @@ dependencies:
   flutter_typeahead: ^5.2.0
   battery_plus: ^7.0.0
   flutter_charset_detector: ^5.0.0
+  flutter_keyboard_visibility: ^6.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -156,6 +157,3 @@ flutter:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-dependency_overrides:
-  flutter_keyboard_visibility: ^6.1.0

@@ -38,15 +38,6 @@ jobs:
         with:
           channel: stable
           cache: true
-
-      - name: Run Environment Sync
-        run: |
-          if [ -f "scripts/fix_environment.sh" ]; then
-            chmod +x scripts/fix_environment.sh
-            ./scripts/fix_environment.sh
-          else
-            echo "Sync script not found, skipping..."
-          fi
     
       - name: Generate Build Number
         run: |

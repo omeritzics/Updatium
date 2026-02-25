@@ -45,16 +45,6 @@ jobs:
           version: '3.38.9'  # Use specific stable version that meets requirements
           cache: true
 
-      # Running sync script to ensure no broken dependencies before building
-      - name: Run Environment Sync
-        run: |
-          if [ -f "scripts/fix_environment.sh" ]; then
-            chmod +x scripts/fix_environment.sh
-            ./scripts/fix_environment.sh
-          else
-            echo "Sync script not found, skipping..."
-          fi
-
       - name: Generate Version
         id: version
         run: |
