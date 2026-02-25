@@ -426,7 +426,7 @@ class SettingsProvider with ChangeNotifier {
       // Check if directory is accessible using docman
       try {
         final docFileResult = await DocumentFile.fromUri(uri.toString());
-        final docFile = await docFileResult.get();
+        final docFile = await docFileResult?.get();
         if (docFile == null || !docFile.canRead || !docFile.canWrite) {
           uri = null;
           prefs?.remove('exportDir');

@@ -2307,13 +2307,13 @@ class AppsProvider with ChangeNotifier {
       // List and delete auto-export files using docman
       try {
         final docFileResult = await DocumentFile.fromUri(exportDir.toString());
-        final dirDocFile = await docFileResult.get();
+        final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
           final files = await dirDocFile.listDocuments();
-          final autoFiles = files
-              .where((f) => f.endsWith('-auto.json'))
-              .toList();
-
+          final autoFiles = files.where((f) => 
+            f.endsWith('-auto.json')
+          ).toList();
+          
           for (var fileName in autoFiles) {
             final fileToDelete = await dirDocFile.find(fileName);
             if (fileToDelete != null) {
@@ -2339,7 +2339,7 @@ class AppsProvider with ChangeNotifier {
       // Create export file using docman
       try {
         final docFileResult = await DocumentFile.fromUri(exportDir.toString());
-        final dirDocFile = await docFileResult.get();
+        final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
           final fileName =
               '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
