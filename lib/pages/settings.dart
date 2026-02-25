@@ -820,8 +820,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         height8,
                         useMaterialThemeSwitch,
                         height16,
-                        if (!settingsProvider.useMaterialYou)
-                          colorPicker,
+                        if (!settingsProvider.useMaterialYou) colorPicker,
                         height16,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
