@@ -819,7 +819,9 @@ class AppsPageState extends State<AppsPage> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.8),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primaryContainer.withOpacity(0.8),
                         border: Border.all(
                           color: Theme.of(context).colorScheme.primary,
                           width: 2,
