@@ -35,6 +35,14 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Consistent spacing constants
+    const height2 = SizedBox(height: 2);
+    const height8 = SizedBox(height: 8);
+    const height10 = SizedBox(height: 10);
+    const height24 = SizedBox(height: 24);
+    const height32 = SizedBox(height: 32);
+    const height85 = SizedBox(height: 85);
+
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
     getUpdate(String id, {bool resetVersion = false}) async {
@@ -130,7 +138,7 @@ class _AppPageState extends State<AppPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
             child: Column(
               children: [
-                const SizedBox(height: 24),
+                height24,
                 Text(
                   versionLines,
                   textAlign: TextAlign.start,
@@ -160,7 +168,7 @@ class _AppPageState extends State<AppPage> {
                         ),
                       )
                     : const SizedBox.shrink(),
-                const SizedBox(height: 32),
+                height32,
               ],
             ),
           ),
@@ -228,7 +236,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 32),
+                height32,
                 Text(
                   "${plural('certificateHash', app.certificateHashes.length)}"
                   "${app.hasMultipleSigners ? " (${tr('multipleSigners')})" : ""}",
@@ -264,7 +272,7 @@ class _AppPageState extends State<AppPage> {
               ],
             ),
 
-          const SizedBox(height: 32),
+          height32,
           CategoryEditorSelector(
             alignment: WrapAlignment.center,
             preselected: app?.app.categories != null
@@ -282,7 +290,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 24),
+                height24,
                 GestureDetector(
                   onLongPress: () {
                     Clipboard.setData(
@@ -336,9 +344,10 @@ class _AppPageState extends State<AppPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GestureDetector(
-                onTap: () => pm.openApp(app.app.id),
-                child: _buildSimpleIcon(app!.app, small ? 70 : 150),
+              Icon(
+                Icons.info_outline,
+                color: Theme.of(context).colorScheme.primary,
+                size: small ? 16 : 24,
               ),
             ],
           ),
@@ -419,7 +428,7 @@ class _AppPageState extends State<AppPage> {
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
-        const SizedBox(height: 85),
+        height85,
       ],
     );
 

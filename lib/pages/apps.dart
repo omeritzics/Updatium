@@ -62,7 +62,7 @@ void showChangeLogDialog(
                 )
               : const SizedBox.shrink(),
           changesUrl != null
-              ? const SizedBox(height: 16)
+              ? height16
               : const SizedBox.shrink(),
           appSource.changeLogIfAnyIsMarkDown
               ? ConstrainedBox(
@@ -175,6 +175,17 @@ class AppsPageState extends State<AppsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Consistent spacing constants
+    const height4 = SizedBox(height: 4);
+    const height8 = SizedBox(height: 8);
+    const height12 = SizedBox(height: 12);
+    const height16 = SizedBox(height: 16);
+    const height24 = SizedBox(height: 24);
+    const height32 = SizedBox(height: 32);
+    const width4 = SizedBox(width: 4);
+    const width6 = SizedBox(width: 6);
+    const width16 = SizedBox(width: 16);
+
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
     var listedApps = appsProvider.getAppValues().toList();
@@ -427,7 +438,7 @@ class AppsPageState extends State<AppsPage> {
                         context,
                       ).colorScheme.primary.withOpacity(0.6),
                     ),
-                    const SizedBox(height: 24),
+                    height24,
                     Text(
                       appsProvider.apps.isEmpty
                           ? appsProvider.loadingApps
@@ -578,7 +589,7 @@ class AppsPageState extends State<AppsPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(Icons.check_circle, color: Colors.green[600], size: 20),
-                const SizedBox(width: 6),
+                width6,
                 Text(tr('updated'), style: TextStyle(color: Colors.green[600])),
               ],
             );
@@ -839,7 +850,7 @@ class AppsPageState extends State<AppsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const SizedBox(height: 12),
+                    height12,
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.15,
                       width: MediaQuery.of(context).size.width * 0.15,
@@ -851,7 +862,7 @@ class AppsPageState extends State<AppsPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    height8,
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Flexible(
@@ -868,7 +879,7 @@ class AppsPageState extends State<AppsPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    height4,
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Flexible(
@@ -887,7 +898,7 @@ class AppsPageState extends State<AppsPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    height8,
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Flexible(
@@ -962,7 +973,7 @@ class AppsPageState extends State<AppsPage> {
                                   size:
                                       MediaQuery.of(context).size.width * 0.04,
                                 ),
-                                const SizedBox(width: 4),
+                                width4,
                                 Flexible(
                                   child: Text(
                                     tr('updated'),
@@ -976,7 +987,7 @@ class AppsPageState extends State<AppsPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    height12,
                   ],
                 ),
                 if (listedApps[index].downloadProgress != null)
@@ -1559,7 +1570,7 @@ class AppsPageState extends State<AppsPage> {
               ],
             ],
             additionalWidgets: [
-              const SizedBox(height: 16),
+              height16,
               CategoryEditorSelector(
                 preselected: filter.categoryFilter,
                 onSelected: (categories) {
@@ -1582,22 +1593,7 @@ class AppsPageState extends State<AppsPage> {
       return Row(
         children: [
           getSelectAllButton(),
-          IconButton(
-            color: Theme.of(context).colorScheme.primary,
-            style: const ButtonStyle(visualDensity: VisualDensity.compact),
-            tooltip: settingsProvider.useGridView
-                ? tr('listView')
-                : tr('gridView'),
-            onPressed: () {
-              settingsProvider.useGridView = !settingsProvider.useGridView;
-            },
-            icon: Icon(
-              settingsProvider.useGridView
-                  ? Icons.view_list_rounded
-                  : Icons.grid_view_rounded,
-            ),
-          ),
-          const SizedBox(width: 16),
+          width16,
           const VerticalDivider(),
           Expanded(
             child: Row(
@@ -1698,11 +1694,31 @@ class AppsPageState extends State<AppsPage> {
                       );
                     },
                   ),
+                  Consumer<SettingsProvider>(
+                    builder: (context, settingsProvider, child) {
+                      return IconButton(
+                        color: Theme.of(context).colorScheme.primary,
+                        style: const ButtonStyle(visualDensity: VisualDensity.compact),
+                        tooltip: settingsProvider.useGridView
+                            ? tr('listView')
+                            : tr('gridView'),
+                        onPressed: () {
+                          settingsProvider.useGridView = !settingsProvider.useGridView;
+                        },
+                        icon: Icon(
+                          settingsProvider.useGridView
+                              ? Icons.view_list_rounded
+                              : Icons.grid_view_rounded,
+                        ),
+                      );
+                    },
+                  ),
                 ],
                 flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 20,
+                  titlePadding: const EdgeInsets.only(
+                    left: 24,
+                    right: 80,
+                    bottom: 20,
                   ),
                   title: Text(
                     tr('appsString'),
