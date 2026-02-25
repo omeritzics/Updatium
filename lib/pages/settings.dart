@@ -418,6 +418,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
+                        height16,
                         //intervalDropdown,
                         height16,
                         if (showIntervalLabel)
@@ -752,6 +753,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
+                        height16,
                         DropdownButtonFormField(
                           decoration: InputDecoration(labelText: tr('theme')),
                           initialValue: settingsProvider.theme,

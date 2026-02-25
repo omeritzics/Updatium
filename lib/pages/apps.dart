@@ -902,7 +902,11 @@ class AppsPageState extends State<AppsPage> {
                                 app.additionalSettings['trackOnly'] == true;
 
                             if (isTrackOnly) {
-                              return const SizedBox.shrink();
+                              return Icon(
+                                Icons.check_circle,
+                                color: Colors.green[600],
+                                size: MediaQuery.of(context).size.width * 0.04,
+                              );
                             }
 
                             if (!isInstalled) {
