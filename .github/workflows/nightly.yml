@@ -136,7 +136,7 @@ jobs:
         with:
           tag_name: nightly
           name: "Updatium Nightly"
-          files: build/outputs/updatium-nightly.apk
+          files: build/outputs/updatium-nightly-signed.apk
           prerelease: true
           overwrite: true
         env:
