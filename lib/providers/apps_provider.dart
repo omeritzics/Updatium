@@ -56,29 +56,29 @@ bool get isAndroidX86 => _isAndroidX86;
 Future<bool> _detectAndroidX86() async {
   try {
     final deviceInfo = await DeviceInfoPlugin().androidInfo;
-    
+
     // Multiple detection methods for better reliability
     final productChecks = [
       deviceInfo.product.toLowerCase().contains('android-x86'),
       deviceInfo.product.toLowerCase().contains('waydroid'),
       deviceInfo.product.toLowerCase().contains('wayland'),
     ];
-    
+
     final modelChecks = [
       deviceInfo.model.toLowerCase().contains('android-x86'),
       deviceInfo.model.toLowerCase().contains('waydroid'),
       deviceInfo.model.toLowerCase().contains('wayland'),
     ];
-    
+
     final fingerprintChecks = [
       deviceInfo.fingerprint.toLowerCase().contains('android-x86'),
       deviceInfo.fingerprint.toLowerCase().contains('waydroid'),
       deviceInfo.fingerprint.toLowerCase().contains('wayland'),
     ];
-    
+
     return productChecks.any((check) => check) ||
-           modelChecks.any((check) => check) ||
-           fingerprintChecks.any((check) => check);
+        modelChecks.any((check) => check) ||
+        fingerprintChecks.any((check) => check);
   } catch (e) {
     return false;
   }
@@ -542,9 +542,10 @@ Future<File> downloadFile(
 Future<List<PackageInfo>> getAllInstalledInfo() async {
   // Detect android-x86 environment using comprehensive method
   _isAndroidX86 = await _detectAndroidX86();
-  
+
   try {
-    final packages = await pm.getInstalledPackages(flags: packageInfoFlags) ?? [];
+    final packages =
+        await pm.getInstalledPackages(flags: packageInfoFlags) ?? [];
     return packages;
   } catch (e) {
     // Fallback: try without flags
@@ -594,15 +595,16 @@ Future<Directory> getAppStorageDir() async =>
 class AppsProvider with ChangeNotifier {
   // In memory App state (should always be kept in sync with local storage versions)
   Map<String, AppInMemory> apps = {};
-  
+
   AppsProvider() {
     // Initialize android-x86 detection early
     _initializeAndroidX86Detection();
   }
-  
+
   Future<void> _initializeAndroidX86Detection() async {
     _isAndroidX86 = await _detectAndroidX86();
   }
+
   bool loadingApps = false;
   bool gettingUpdates = false;
   LogsProvider logs = LogsProvider();
@@ -1153,7 +1155,7 @@ class AppsProvider with ChangeNotifier {
             : 0];
     // get device supported architecture
     List<String> archs = (await DeviceInfoPlugin().androidInfo).supportedAbis;
-    
+
     // x86 environments: prefer x86_64 but allow fallback to x86
     if (_isAndroidX86) {
       if (urlsToSelectFrom.any((url) => url.key.contains('x86_64'))) {

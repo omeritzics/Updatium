@@ -537,20 +537,25 @@ Future<List<MapEntry<String, String>>> filterApksByArch(
 ) async {
   if (apkUrls.length > 1) {
     var abis = (await DeviceInfoPlugin().androidInfo).supportedAbis;
-    
+
     // Check if running in x86 environment and adjust architecture priority
-    final isX86Environment = abis.any((abi) => abi.contains('x86')) && 
-                               (await DeviceInfoPlugin().androidInfo).product.toLowerCase().contains('android-x86');
-    
+    final isX86Environment =
+        abis.any((abi) => abi.contains('x86')) &&
+        (await DeviceInfoPlugin().androidInfo).product.toLowerCase().contains(
+          'android-x86',
+        );
+
     // x86 environments: prioritize x86 architectures
     if (isX86Environment) {
-      if (apkUrls.any((element) => RegExp('.*x86_64.*').hasMatch(element.key))) {
+      if (apkUrls.any(
+        (element) => RegExp('.*x86_64.*').hasMatch(element.key),
+      )) {
         abis = ['x86_64', 'x86', 'arm64-v8a', 'armeabi-v7a'];
       } else {
         abis = ['x86', 'x86_64', 'arm64-v8a', 'armeabi-v7a'];
       }
     }
-    
+
     for (var abi in abis) {
       var urls2 = apkUrls
           .where((element) => RegExp('.*$abi.*').hasMatch(element.key))
