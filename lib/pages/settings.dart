@@ -796,7 +796,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         height8,
                         useMaterialThemeSwitch,
-                        if (!settingsProvider.useMaterialYou) 
+                        if (!settingsProvider.useMaterialYou)
                           colorPicker
                         else
                           Container(
@@ -804,7 +804,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             height: 48,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
-                              color: Theme.of(context).colorScheme.primaryContainer,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primaryContainer,
                               border: Border.all(
                                 color: Theme.of(context).colorScheme.outline,
                                 width: 1,
@@ -812,7 +814,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             child: Icon(
                               Icons.palette,
-                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onPrimaryContainer,
                               size: 24,
                             ),
                           ),
