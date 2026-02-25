@@ -664,7 +664,10 @@ class AppsPageState extends State<AppsPage> {
             leading: SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
               width: MediaQuery.of(context).size.width * 0.1,
-              child: getAppIcon(index),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: getAppIcon(index),
+              ),
             ),
             title: Text(
               listedApps[index].name,
@@ -839,9 +842,12 @@ class AppsPageState extends State<AppsPage> {
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.15,
                       width: MediaQuery.of(context).size.width * 0.15,
-                      child: FittedBox(
-                        fit: BoxFit.contain,
-                        child: getAppIcon(index),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: getAppIcon(index),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -992,7 +998,7 @@ class AppsPageState extends State<AppsPage> {
     }
 
     getCategoryCollapsibleTile(int index) {
-      var tiles = listedApps
+      var filteredEntries = listedApps
           .asMap()
           .entries
           .where(
@@ -1001,6 +1007,9 @@ class AppsPageState extends State<AppsPage> {
                 e.value.app.categories.isEmpty &&
                     listedCategories[index] == null,
           )
+          .toList();
+
+      var tiles = filteredEntries
           .map((e) => getSingleAppHorizTile(e.key))
           .toList();
 
@@ -1034,37 +1043,9 @@ class AppsPageState extends State<AppsPage> {
                           MediaQuery.of(context).size.width * 0.04,
                       mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
                     ),
-                    itemCount: listedApps
-                        .asMap()
-                        .entries
-                        .where(
-                          (e) =>
-                              e.value.app.categories.contains(
-                                listedCategories[index],
-                              ) ||
-                              e.value.app.categories.isEmpty &&
-                                  listedCategories[index] == null,
-                        )
-                        .length,
+                    itemCount: filteredEntries.length,
                     itemBuilder: (context, gridIndex) {
-                      // This is a placeholder for the pre-filtered list.
-                      // The filtering logic should be moved outside the GridView.builder.
-                      // For example:
-                      // final filteredItems = listedApps.asMap().entries.where(...).toList();
-                      // Then use `filteredItems` in both `itemCount` and `itemBuilder`.
-                      var filteredItems = listedApps
-                          .asMap()
-                          .entries
-                          .where(
-                            (e) =>
-                                e.value.app.categories.contains(
-                                  listedCategories[index],
-                                ) ||
-                                e.value.app.categories.isEmpty &&
-                                    listedCategories[index] == null,
-                          )
-                          .toList();
-                      return getSingleAppGridTile(filteredItems[gridIndex].key);
+                      return getSingleAppGridTile(filteredEntries[gridIndex].key);
                     },
                   ),
                 )
@@ -1757,45 +1738,88 @@ class AppsPageState extends State<AppsPage> {
   Widget _buildSimpleGridIcon(App app) {
     return Consumer<AppsProvider>(
       builder: (ctx, appsProvider, child) {
+        final appInMemory = appsProvider.apps[app.id];
+        
+        // If icon is already loaded, display it immediately
+        if (appInMemory?.icon != null) {
+          return Image.memory(
+            appInMemory!.icon!,
+            gaplessPlayback: true,
+            opacity: AlwaysStoppedAnimation(
+              appInMemory.installedInfo == null ? 0.6 : 1,
+            ),
+            errorBuilder: (context, error, stackTrace) {
+              return _buildFallbackIcon();
+            },
+          );
+        }
+        
+        // Load icon asynchronously if not available
         return FutureBuilder(
           future: appsProvider.updateAppIcon(app.id),
-          builder: (ctx, val) {
-            final appInMemory = appsProvider.apps[app.id];
-            return appInMemory?.icon != null
-                ? Image.memory(
-                    appInMemory!.icon!,
-                    gaplessPlayback: true,
-                    opacity: AlwaysStoppedAnimation(
-                      appInMemory.installedInfo == null ? 0.6 : 1,
-                    ),
-                  )
-                : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.rotationZ(0.31),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Image(
-                            image: const AssetImage(
-                              'assets/graphics/icon_small.png',
-                            ),
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white.withOpacity(0.4)
-                                : Colors.white.withOpacity(0.3),
-                            colorBlendMode: BlendMode.modulate,
-                            gaplessPlayback: true,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
+          builder: (ctx, snapshot) {
+            final updatedAppInMemory = appsProvider.apps[app.id];
+            
+            if (updatedAppInMemory?.icon != null) {
+              return Image.memory(
+                updatedAppInMemory!.icon!,
+                gaplessPlayback: true,
+                opacity: AlwaysStoppedAnimation(
+                  updatedAppInMemory.installedInfo == null ? 0.6 : 1,
+                ),
+                errorBuilder: (context, error, stackTrace) {
+                  return _buildFallbackIcon();
+                },
+              );
+            }
+            
+            // Show fallback while loading or if failed
+            return _buildFallbackIcon();
           },
         );
       },
+    );
+  }
+
+  Widget _buildFallbackIcon() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.rotationZ(0.31),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Image(
+              image: const AssetImage(
+                'assets/graphics/icon_small.png',
+              ),
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white.withOpacity(0.4)
+                  : Colors.white.withOpacity(0.3),
+              colorBlendMode: BlendMode.modulate,
+              gaplessPlayback: true,
+              errorBuilder: (context, error, stackTrace) {
+                // Final fallback - colored container
+                return Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    Icons.apps,
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
+                    size: 24,
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
