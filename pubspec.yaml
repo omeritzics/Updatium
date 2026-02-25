@@ -103,7 +103,6 @@ flutter_launcher_icons:
     nightly:
       android: "ic_launcher_nightly"
       image_path: "assets/graphics/icon_nightly.png"
-      app_name: "Updatium Nightly"
       
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
