@@ -24,7 +24,7 @@
     "color": "لون",
     "standard": "قياسي",
     "custom": "مخصّص",
-    "useMaterialYou": "استخدم Material You",
+    "useMaterialYou": "استخدم ألوان Material You",
     "githubStarredRepos": "مستودعات GitHub المفضلة",
     "uname": "اسم المستخدم",
     "wrongArgNum": "عدد وسائط غير صحيح",
@@ -48,7 +48,8 @@
     "trackOnlyInBrackets": "(للتعقب فقط)",
     "searchableInBrackets": "(قابل للبحث)",
     "appsString": "التطبيقات",
-    "noApps": "لا توجد تطبيقات",
+    "noApps": "مرحباً!",
+    "noAppsSubtext": "يمكنك إضافة أول تطبيق بالنقر على 'إضافة تطبيق' أدناه.",
     "noAppsForFilter": "لا توجد تطبيقات تطابق التصفية",
     "byX": "بواسطة {}",
     "percentProgress": "التقدم: {}%",
@@ -58,7 +59,7 @@
     "pseudoVersion": "إصدار وهمي",
     "selectAll": "تحديد الكل",
     "deselectX": "إلغاء تحديد {}",
-    "xWillBeRemovedButRemainInstalled": "سيتم إزالة {} من Obtainium لكنه سيظل مثبتًا على الجهاز.",
+    "xWillBeRemovedButRemainInstalled": "سيتم إزالة {} من Updatium لكنه سيظل مثبتًا على الجهاز.",
     "removeSelectedAppsQuestion": "إزالة التطبيقات المحددة؟",
     "removeSelectedApps": "أزل التطبيقات المحددة",
     "updateX": "حدِّث {}",
@@ -74,8 +75,8 @@
     "pinToTop": "تثبيت في الأعلى",
     "unpinFromTop": "إلغاء التثبيت من الأعلى",
     "resetInstallStatusForSelectedAppsQuestion": "إعادة تعيين حالة التثبيت للتطبيقات المحددة؟",
-    "installStatusOfXWillBeResetExplanation": "سيتم إعادة تعيين حالة التثبيت لأي تطبيقات محددة.\n\nقد يساعد هذا عندما يكون إصدار التطبيق المعروض في Obtainium غير صحيح بسبب فشل التحديثات أو مشاكل أخرى.",
-    "customLinkMessage": "هذه الروابط تعمل على الأجهزة التي بها Obtainium مثبتًا",
+    "installStatusOfXWillBeResetExplanation": "سيتم إعادة تعيين حالة التثبيت لأي تطبيقات محددة.\n\nقد يساعد هذا عندما يكون إصدار التطبيق المعروض في Updatium غير صحيح بسبب فشل التحديثات أو مشاكل أخرى.",
+    "customLinkMessage": "هذه الروابط تعمل على الأجهزة التي بها Updatium مثبتًا",
     "shareAppConfigLinks": "مشاركة تكوين التطبيق كرابط HTML",
     "shareSelectedAppURLs": "مشاركة روابط التطبيقات المحددة",
     "resetInstallStatus": "إعادة تعيين حالة التثبيت",
@@ -91,10 +92,10 @@
     "importExport": "استيراد/تصدير",
     "settings": "الإعدادات",
     "exportedTo": "تم التصدير إلى {}",
-    "obtainiumExport": "تصدير Obtainium",
+    "updatiumExport": "تصدير Updatium",
     "invalidInput": "إدخال غير صالح",
     "importedX": "تم استيراد {}",
-    "obtainiumImport": "استيراد Obtainium",
+    "updatiumImport": "استيراد Updatium",
     "importFromURLList": "استيراد من قائمة الروابط",
     "searchQuery": "استعلام البحث",
     "appURLList": "قائمة روابط التطبيقات",
@@ -102,7 +103,7 @@
     "searchX": "بحث {}",
     "noResults": "لا توجد نتائج",
     "importX": "استيراد {}",
-    "importedAppsIdDisclaimer": "قد تظهر التطبيقات المستوردة بشكل غير صحيح كـ \"غير مثبتة\".\nلإصلاح هذا، قم بإعادة تثبيتها عبر Obtainium.\nهذا لا يؤثر على بيانات التطبيق.\n\nينطبق فقط على طرق الاستيراد عبر الروابط أو الطرف الثالث.",
+    "importedAppsIdDisclaimer": "قد تظهر التطبيقات المستوردة بشكل غير صحيح كـ \"غير مثبتة\".\nلإصلاح هذا، قم بإعادة تثبيتها عبر Updatium.\nهذا لا يؤثر على بيانات التطبيق.\n\nينطبق فقط على طرق الاستيراد عبر الروابط أو الطرف الثالث.",
     "importErrors": "أخطاء الاستيراد",
     "importedXOfYApps": "استوردت {} من {} تطبيقات.",
     "followingURLsHadErrors": "حدثت أخطاء في الروابط التالية:",
@@ -125,7 +126,6 @@
     "bgUpdateCheckInterval": "فترة التحقق من التحديثات في الخلفية",
     "neverManualOnly": "أبدًا - يدوي فقط",
     "appearance": "المظهر",
-    "showWebInAppView": "عرض صفحة الويب المصدر في عرض التطبيق",
     "pinUpdates": "تدبيس التحديثات في أعلى قائمة التطبيقات",
     "updates": "التحديثات",
     "sourceSpecific": "خاص بالمصدر",
@@ -157,11 +157,11 @@
     "appsRemovedNotifDescription": "يخطر المستخدم بأنه تمت إزالة واحد أو أكثر من التطبيقات بسبب أخطاء أثناء تحميلها",
     "xWasRemovedDueToErrorY": "تمت إزالة {} بسبب هذا الخطأ: {}",
     "completeAppInstallation": "إكمال تثبيت التطبيق",
-    "obtainiumMustBeOpenToInstallApps": "يجب فتح Obtainium لتثبيت التطبيقات",
-    "completeAppInstallationNotifDescription": "يطلب من المستخدم العودة إلى Obtainium لإكمال تثبيت التطبيق",
+    "updatiumMustBeOpenToInstallApps": "يجب فتح Updatium لتثبيت التطبيقات",
+    "completeAppInstallationNotifDescription": "يطلب من المستخدم العودة إلى Updatium لإكمال تثبيت التطبيق",
     "checkingForUpdates": "جاري التحقق من التحديثات",
     "checkingForUpdatesNotifDescription": "إشعار مؤقت يظهر عند التحقق من التحديثات",
-    "pleaseAllowInstallPerm": "يرجى السماح لـ Obtainium بتثبيت التطبيقات",
+    "pleaseAllowInstallPerm": "يرجى السماح لـ Updatium بتثبيت التطبيقات",
     "trackOnly": "للتعقب فقط",
     "errorWithHttpStatusCode": "خطأ {}",
     "versionCorrectionDisabled": "تعطيل تصحيح الإصدار (يبدو أن الملحق لا يعمل)",
@@ -209,7 +209,7 @@
     "storagePermissionDenied": "رُفض إذن التخزين",
     "selectedCategorizeWarning": "سيؤدي هذا إلى استبدال أي إعدادات تصنيف موجودة للتطبيقات المحددة.",
     "filterAPKsByRegEx": "تصفية ملفات APK باستخدام تعبير نمطي",
-    "removeFromObtainium": "إزالة من Obtainium",
+    "removeFromUpdatium": "إزالة من Updatium",
     "uninstallFromDevice": "إلغاء التثبيت من الجهاز",
     "onlyWorksWithNonVersionDetectApps": "يعمل فقط مع التطبيقات التي تم تعطيل اكتشاف الإصدار لها.",
     "releaseDateAsVersion": "استخدام تاريخ الإصدار كسلسلة إصدار",
@@ -254,7 +254,7 @@
     "xWasPossiblyUpdatedToY": "{} قد تم تحديثه إلى {}.",
     "enableBackgroundUpdates": "تمكين التحديثات في الخلفية",
     "backgroundUpdateReqsExplanation": "قد لا تكون التحديثات في الخلفية ممكنة لجميع التطبيقات.",
-    "backgroundUpdateLimitsExplanation": "يمكن تحديد نجاح التثبيت في الخلفية فقط عند فتح Obtainium.",
+    "backgroundUpdateLimitsExplanation": "يمكن تحديد نجاح التثبيت في الخلفية فقط عند فتح Updatium.",
     "verifyLatestTag": "التحقق من علامة 'الأحدث'",
     "intermediateLinkRegex": "تصفية للوصول إلى رابط 'وسيط'",
     "filterByLinkText": "تصفية الروابط حسب نص الرابط",
@@ -341,72 +341,97 @@
     "GHReqPrefix": "نسخة \"sky22333/hubproxy\" لطلبات GitHub",
     "includeZips": "ضمّن ملفات ZIP",
     "zippedApkFilterRegEx": "تصفية ملفات APK داخل ZIP",
-    "googleVerificationWarningP1": "(جوجل) أعلن أنه، بدءاً من عام 2026/2027، كل التطبيقات على أجهزة (أندرويد) مصدقة ستطلب من المطور تقديم تفاصيل الهوية الشخصية مباشرة إلى (غوغل).\n\nوبما أن مطوري هذا التطبيق لا يوافقون على هذا الشرط، فإن Obtainium لن يعمل بعد ذلك الوقت على أجهزة أندرويدية معتمدة.",
+    "googleVerificationWarningP1": "(جوجل) أعلن أنه، بدءاً من عام 2026/2027، كل التطبيقات على أجهزة (أندرويد) مصدقة ستطلب من المطور تقديم تفاصيل الهوية الشخصية مباشرة إلى (غوغل).\n\nبعد ذلك، قد يتوقف Updatium عن العمل على أجهزة أندرويدية معتمدة.",
     "googleVerificationWarningP2": "Go to https://keepandroidopen.org/ for more information.",
     "googleVerificationWarningP3": "ونلاحظ أنه في الأجل القصير، قد يظل من الممكن تركيب عملية \" غير متوافقة \" من خلال عملية \" تدفق سريع \" وعد غوغل بتنفيذها بعد رد فعل واسع النطاق على إعلانهم، ولكنهم لم يفصلوا كيف سينجح ذلك حتى لا يتضح ما إذا كان سيحافظ حقا على حريات المستعملين بأي طريقة عملية.\n\nعلى أية حال، حركة (جوجل) خطوة هامة نحو نهاية الحوسبة المجانية ذات الأغراض العامة للأفراد\n\nوينبغي ألا يتأثر هذا النظام غير المصدق عليه، مثل غرافينيوس، طالما يسمح له باستمرار وجوده.",
     "multipleSigners": "عدد من الدول الموقعة",
     "removeAppQuestion": {
         "one": "إزالة التطبيق؟",
+        "two": "إزالة التطبيقين؟",
         "other": "إزالة التطبيقات؟"
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {} دقيقة",
+        "two": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {} دقيقتين",
         "other": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {} دقائق"
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "واجه التحقق من التحديثات في الخلفية {}، سيتم جدولة محاولة أخرى بعد {} دقيقة",
+        "two": "واجه التحقق من التحديثات في الخلفية {}، سيتم جدولة محاولة أخرى بعد {} دقيقتين",
         "other": "واجه التحقق من التحديثات في الخلفية {}، سيتم جدولة محاولة أخرى بعد {} دقائق"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "وجد التحقق من التحديثات في الخلفية {} تحديث - سيتم إخطار المستخدم إذا لزم الأمر",
+        "two": "وجد التحقق من التحديثات في الخلفية {} تحديثين - سيتم إخطار المستخدم إذا لزم الأمر",
         "other": "وجد التحقق من التحديثات في الخلفية {} تحديثات - سيتم إخطار المستخدم إذا لزم الأمر"
     },
     "apps": {
         "one": "{} تطبيق",
+        "two": "تطبيقان",
         "other": "{} تطبيقات"
     },
     "url": {
         "one": "{} رابط",
+        "two": "رابطان",
         "other": "{} روابط"
     },
     "minute": {
         "one": "{} دقيقة",
+        "two": "دقيقتان",
         "other": "{} دقائق"
     },
     "hour": {
         "one": "{} ساعة",
+        "two": "ساعتان",
         "other": "{} ساعات"
     },
     "day": {
         "one": "{} يوم",
+        "two": "يومان",
         "other": "{} أيام"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "مُسح {n} سجل (قبل = {before}, بعد = {after})",
+        "two": "مُسح {n} سجلان (قبل = {before}, بعد = {after})",
         "other": "مُسح {n} سجلات (قبل = {before}, بعد = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{} وتطبيق واحد آخر لديه تحديثات.",
+        "two": "{} وتطبيقان آخران لديهما تحديثات.",
         "other": "{} و{} تطبيقات أخرى لديها تحديثات."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{} وتطبيق واحد آخر حُدث.",
+        "two": "{} وتطبيقان آخران حُدثا.",
         "other": "{} و{} تطبيقات أخرى حُدثت."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "فشل تحديث {} وتطبيق واحد آخر.",
+        "two": "فشل تحديث {} وتطبيقان آخران.",
         "other": "فشل تحديث {} و{} تطبيقات أخرى."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{} وتطبيق واحد آخر قد حُدث.",
+        "two": "{} وتطبيقان آخران قد حُدثا.",
         "other": "{} و{} تطبيقات أخرى قد حُدثت."
     },
     "apk": {
         "one": "{} APK",
+        "two": "APKان",
         "other": "{} APKs"
     },
     "certificateHash": {
         "one": "بصمة الشهادة",
+        "two": "بصمتا الشهادة",
         "other": "بصمات الشهادة"
-    }
+    },
+    "securityDisclaimerTitle": "إخلاء مسؤولية الأمان والقانوني",
+    "license": "الرخصة",
+    "licenseText": "هذا التطبيق موزع تحت رخصة GPL v3.",
+    "disclaimer": "إخلاء المسؤولية",
+    "disclaimerText": "هذا التطبيق لا يوزع أو يستضيف أو يتحقق من أي من التطبيقات الخارجية. يتحمل المستخدم المسؤولية الكاملة عن سلامة وقانونية أي برنامج يتم تثبيته من خلال هذه الأداة.\n\nhttps://github.com/omeritzics/Updatium هو المكان الرسمي الوحيد لتنزيل Updatium - يُنصح بشدة بعدم تنزيله من أماكن أخرى حيث أن تنزيله من مصادر غير رسمية غير آمن.",
+    "privacy": "الخصوصية",
+    "privacyText": "هذا التطبيق يركز على الخصوصية ولا يجمع البيانات الشخصية.",
+    "acceptAndContinue": "موافق ومتابعة",
+    "decline": "رفض"
 }

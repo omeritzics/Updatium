@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
@@ -11,54 +12,25 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:markdown/markdown.dart' as md;
 
 class AppPage extends StatefulWidget {
-  const AppPage({
-    super.key,
-    required this.appId,
-    this.showOppositeOfPreferredView = false,
-  });
+  const AppPage({super.key, required this.appId});
 
   final String appId;
-  final bool showOppositeOfPreferredView;
 
   @override
   State<AppPage> createState() => _AppPageState();
 }
 
 class _AppPageState extends State<AppPage> {
-  late final WebViewController _webViewController;
-  bool _wasWebViewOpened = false;
   AppInMemory? prevApp;
   bool updating = false;
 
   @override
   void initState() {
     super.initState();
-    _webViewController = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onWebResourceError: (WebResourceError error) {
-            if (error.isForMainFrame == true) {
-              showError(
-                UpdatiumError(error.description, unexpected: true),
-                context,
-              );
-            }
-          },
-          onNavigationRequest: (NavigationRequest request) =>
-              !(request.url.startsWith("http://") ||
-                  request.url.startsWith("https://") ||
-                  request.url.startsWith("ftp://") ||
-                  request.url.startsWith("ftps://"))
-              ? NavigationDecision.prevent
-              : NavigationDecision.navigate,
-        ),
-      );
   }
 
   @override
@@ -71,13 +43,16 @@ class _AppPageState extends State<AppPage> {
     const height32 = SizedBox(height: 32);
     const height85 = SizedBox(height: 85);
 
+    // Consistent spacing constants
+    const height2 = SizedBox(height: 2);
+    const height8 = SizedBox(height: 8);
+    const height10 = SizedBox(height: 10);
+    const height24 = SizedBox(height: 24);
+    const height32 = SizedBox(height: 32);
+    const height85 = SizedBox(height: 85);
+
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
-    var showAppWebpageFinal =
-        (settingsProvider.showAppWebpage &&
-            !widget.showOppositeOfPreferredView) ||
-        (!settingsProvider.showAppWebpage &&
-            widget.showOppositeOfPreferredView);
     getUpdate(String id, {bool resetVersion = false}) async {
       try {
         setState(() {
@@ -128,11 +103,6 @@ class _AppPageState extends State<AppPage> {
     bool installedVersionIsEstimate = app?.app != null
         ? isVersionPseudo(app!.app)
         : false;
-
-    if (app != null && !_wasWebViewOpened) {
-      _wasWebViewOpened = true;
-      _webViewController.loadRequest(Uri.parse(app.app.url));
-    }
 
     getInfoColumn() {
       String versionLines = '';
@@ -192,6 +162,8 @@ class _AppPageState extends State<AppPage> {
                               ? tr('changes')
                               : app!.app.releaseDate!.toLocal().toString(),
                           textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.labelSmall!
                               .copyWith(
                                 decoration: changeLogFn != null
@@ -204,7 +176,7 @@ class _AppPageState extends State<AppPage> {
                         ),
                       )
                     : const SizedBox.shrink(),
-                const SizedBox(height: 40),
+                height32,
               ],
             ),
           ),
@@ -255,6 +227,8 @@ class _AppPageState extends State<AppPage> {
                         args: [lowerCaseIfEnglish(tr('releaseAsset'))],
                       ),
                       textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.labelSmall!.copyWith(
                         decoration: TextDecoration.underline,
                         fontStyle: FontStyle.italic,
@@ -270,7 +244,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 40),
+                height32,
                 Text(
                   "${plural('certificateHash', app.certificateHashes.length)}"
                   "${app.hasMultipleSigners ? " (${tr('multipleSigners')})" : ""}",
@@ -296,6 +270,8 @@ class _AppPageState extends State<AppPage> {
                           hash,
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 12),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     );
@@ -304,7 +280,7 @@ class _AppPageState extends State<AppPage> {
               ],
             ),
 
-          const SizedBox(height: 40),
+          height32,
           CategoryEditorSelector(
             alignment: WrapAlignment.center,
             preselected: app?.app.categories != null
@@ -372,28 +348,17 @@ class _AppPageState extends State<AppPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SizedBox(height: 0),
-        FutureBuilder(
-          future: appsProvider.updateAppIcon(app?.app.id, ignoreCache: true),
-          builder: (ctx, val) {
-            return app?.icon != null
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: app == null
-                            ? null
-                            : () => pm.openApp(app.app.id),
-                        child: Image.memory(
-                          app!.icon!,
-                          height: small ? 70 : 150,
-                          gaplessPlayback: true,
-                        ),
-                      ),
-                    ],
-                  )
-                : Container();
-          },
-        ),
+        if (app?.app != null)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.info_outline,
+                color: Theme.of(context).colorScheme.primary,
+                size: small ? 16 : 24,
+              ),
+            ],
+          ),
         SizedBox(height: small ? 10 : 24),
         Text(
           app?.name ?? tr('app'),
@@ -446,12 +411,17 @@ class _AppPageState extends State<AppPage> {
                     ? const EdgeInsetsDirectional.fromSTEB(12, 6, 12, 6)
                     : const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                 margin: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                child: Text(
-                  app?.app.url ?? '',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                    decoration: TextDecoration.underline,
-                    fontStyle: FontStyle.italic,
+                child: Tooltip(
+                  message: app?.app.url ?? '',
+                  child: Text(
+                    app?.app.url ?? '',
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      decoration: TextDecoration.underline,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
                 ),
               ),
@@ -461,20 +431,14 @@ class _AppPageState extends State<AppPage> {
         Text(
           app?.app.id ?? '',
           textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
         height85,
       ],
     );
-
-    getAppWebView() => app != null
-        ? WebViewWidget(
-            key: ObjectKey(_webViewController),
-            controller: _webViewController
-              ..setBackgroundColor(Theme.of(context).colorScheme.surface),
-          )
-        : Container();
 
     showMarkUpdatedDialog() {
       return showDialog(
@@ -483,13 +447,13 @@ class _AppPageState extends State<AppPage> {
           return AlertDialog(
             title: Text(tr('alreadyUpToDateQuestion')),
             actions: [
-              TextButton(
+              createAppTextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(tr('no')),
               ),
-              TextButton(
+              createAppTextButton(
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   var updatedApp = app?.app;
@@ -572,7 +536,7 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => TextButton(
+    getInstallOrUpdateButton() => createAppTextButton(
       onPressed:
           !updating &&
               (app?.app.installedVersion == null ||
@@ -614,10 +578,10 @@ class _AppPageState extends State<AppPage> {
 
     getBottomSheetMenu() => Padding(
       padding: EdgeInsets.fromLTRB(
-        0,
-        0,
-        0,
-        MediaQuery.of(context).padding.bottom,
+        16,
+        8,
+        16,
+        MediaQuery.of(context).padding.bottom + 16,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -646,31 +610,6 @@ class _AppPageState extends State<AppPage> {
                     },
                     icon: const Icon(Icons.settings),
                     tooltip: tr('settings'),
-                  ),
-                if (app != null && showAppWebpageFinal)
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext ctx) {
-                          return AlertDialog(
-                            scrollable: true,
-                            content: getFullInfoColumn(small: true),
-                            title: Text(app.name),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(tr('continue')),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    icon: const Icon(Icons.more_horiz),
-                    tooltip: tr('more'),
                   ),
                 if (app?.app.installedVersion != null &&
                     app?.app.installedVersion != app?.app.latestVersion &&
@@ -715,7 +654,7 @@ class _AppPageState extends State<AppPage> {
                               });
                         },
                   tooltip: tr('remove'),
-                  icon: const Icon(Icons.delete_outline),
+                  icon: const Icon(Icons.delete),
                 ),
               ],
             ),
@@ -743,18 +682,14 @@ class _AppPageState extends State<AppPage> {
     );
 
     return Scaffold(
-      appBar: showAppWebpageFinal ? AppBar() : appScreenAppBar(),
+      appBar: appScreenAppBar(),
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: RefreshIndicator(
-        child: showAppWebpageFinal
-            ? getAppWebView()
-            : CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Column(children: [getFullInfoColumn()]),
-                  ),
-                ],
-              ),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(child: Column(children: [getFullInfoColumn()])),
+          ],
+        ),
         onRefresh: () async {
           if (app != null) {
             getUpdate(app.app.id);
@@ -762,6 +697,43 @@ class _AppPageState extends State<AppPage> {
         },
       ),
       bottomSheet: getBottomSheetMenu(),
+    );
+  }
+
+  Widget _buildSimpleIcon(App app, double size) {
+    return Consumer<AppsProvider>(
+      builder: (context, appsProvider, child) {
+        final iconData = appsProvider.apps[app.id]?.icon;
+        final isInstalled = appsProvider.apps[app.id]?.installedInfo != null;
+
+        return Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(size * 0.125),
+            color: iconData == null
+                ? Theme.of(context).colorScheme.surface.withValues(alpha: 0.1)
+                : null,
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(size * 0.125),
+            child: iconData != null
+                ? Image.memory(
+                    iconData,
+                    width: size,
+                    height: size,
+                    fit: BoxFit.cover,
+                  )
+                : Icon(
+                    Icons.apps,
+                    size: size * 0.5,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                  ),
+          ),
+        );
+      },
     );
   }
 }

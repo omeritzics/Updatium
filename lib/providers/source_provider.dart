@@ -10,13 +10,12 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:html/dom.dart';
 import 'package:http/http.dart';
+import 'package:updatium/app_sources/apkcombo.dart';
 import 'package:updatium/app_sources/apkmirror.dart';
 import 'package:updatium/app_sources/apkpure.dart';
 import 'package:updatium/app_sources/aptoide.dart';
 import 'package:updatium/app_sources/codeberg.dart';
-import 'package:updatium/app_sources/coolapk.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
-import 'package:updatium/app_sources/farsroid.dart';
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
 import 'package:updatium/app_sources/github.dart';
@@ -25,10 +24,7 @@ import 'package:updatium/app_sources/huaweiappgallery.dart';
 import 'package:updatium/app_sources/izzyondroid.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/app_sources/jenkins.dart';
-import 'package:updatium/app_sources/liteapks.dart';
-import 'package:updatium/app_sources/moddroid.dart';
 import 'package:updatium/app_sources/neutroncode.dart';
-import 'package:updatium/app_sources/rockmods.dart';
 import 'package:updatium/app_sources/rustore.dart';
 import 'package:updatium/app_sources/sourceforge.dart';
 import 'package:updatium/app_sources/sourcehut.dart';
@@ -41,6 +37,7 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/mass_app_sources/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/apps_provider.dart';
 
 class AppNames {
   late String author;
@@ -55,6 +52,7 @@ class APKDetails {
   late AppNames names;
   late DateTime? releaseDate;
   late String? changeLog;
+  late String? remoteIconUrl;
   late List<MapEntry<String, String>> allAssetUrls;
 
   APKDetails(
@@ -63,6 +61,7 @@ class APKDetails {
     this.names, {
     this.releaseDate,
     this.changeLog,
+    this.remoteIconUrl,
     this.allAssetUrls = const [],
   });
 }
@@ -78,10 +77,19 @@ List<MapEntry<String, String>> assumed2DlistToStringMapList(
 // App JSON schema has changed multiple times over the many versions of Updatium
 // This function takes an App JSON and modifies it if needed to conform to the latest (current) version
 Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
-  var source = SourceProvider().getSource(
+  var sourceProvider = SourceProvider();
+
+  // Check if overrideSource points to a removed source and clear it if needed
+  if (json['overrideSource'] != null &&
+      !sourceProvider.sourceExists(json['overrideSource'])) {
+    json['overrideSource'] = null;
+  }
+
+  var source = sourceProvider.getSource(
     json['url'],
     overrideSource: json['overrideSource'],
   );
+
   var formItems = source.combinedAppSpecificSettingFormItems.reduce(
     (value, element) => [...value, ...element],
   );
@@ -326,6 +334,7 @@ class App {
   List<String> categories;
   late DateTime? releaseDate;
   late String? changeLog;
+  late String? remoteIconUrl;
   late String? overrideSource;
   bool allowIdChange = false;
   App(
@@ -343,6 +352,7 @@ class App {
     this.categories = const [],
     this.releaseDate,
     this.changeLog,
+    this.remoteIconUrl,
     this.overrideSource,
     this.allowIdChange = false,
     this.otherAssetUrls = const [],
@@ -385,6 +395,7 @@ class App {
     pinned,
     categories: categories,
     changeLog: changeLog,
+    remoteIconUrl: remoteIconUrl,
     releaseDate: releaseDate,
     overrideSource: overrideSource,
     allowIdChange: allowIdChange,
@@ -430,6 +441,9 @@ class App {
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['releaseDate']),
       changeLog: json['changeLog'] == null ? null : json['changeLog'] as String,
+      remoteIconUrl: json['remoteIconUrl'] == null
+          ? null
+          : json['remoteIconUrl'] as String,
       overrideSource: json['overrideSource'],
       allowIdChange: json['allowIdChange'] ?? false,
       otherAssetUrls: assumed2DlistToStringMapList(
@@ -454,6 +468,7 @@ class App {
     'categories': categories,
     'releaseDate': releaseDate?.microsecondsSinceEpoch,
     'changeLog': changeLog,
+    'remoteIconUrl': remoteIconUrl,
     'overrideSource': overrideSource,
     'allowIdChange': allowIdChange,
   };
@@ -1123,6 +1138,7 @@ class SourceProvider {
     FDroidRepo(),
     IzzyOnDroid(),
     SourceHut(),
+    APKCombo(),
     APKPure(),
     Aptoide(),
     Uptodown(),
@@ -1130,11 +1146,6 @@ class SourceProvider {
     Tencent(),
     VivoAppStore(),
     RuStore(),
-    Farsroid(),
-    CoolApk(),
-    RockMods(),
-    LiteAPKs(),
-    Moddroid(),
     Jenkins(),
     APKMirror(),
     TelegramApp(),
@@ -1145,6 +1156,12 @@ class SourceProvider {
 
   // Add more mass url source classes here so they are available via the service
   List<MassAppUrlSource> massUrlSources = [GitHubStars()];
+
+  // Helper method to check if a source exists without throwing an error
+  bool sourceExists(String? overrideSource) {
+    if (overrideSource == null) return true;
+    return sources.any((e) => e.runtimeType.toString() == overrideSource);
+  }
 
   AppSource getSource(String url, {String? overrideSource}) {
     url = preStandardizeUrl(url);
@@ -1289,6 +1306,7 @@ class SourceProvider {
       categories: currentApp?.categories ?? const [],
       releaseDate: apk.releaseDate,
       changeLog: apk.changeLog,
+      remoteIconUrl: apk.remoteIconUrl,
       overrideSource: sourceIsOverriden
           ? source.runtimeType.toString()
           : currentApp?.overrideSource,
@@ -1312,6 +1330,14 @@ class SourceProvider {
   }) async {
     List<App> apps = [];
     Map<String, dynamic> errors = {};
+
+    // Get existing apps to check for duplicates
+    final appsProvider = AppsProvider();
+    final existingUrls = appsProvider
+        .getAppValues()
+        .map((e) => e.app.url)
+        .toList();
+    alreadyAddedUrls.addAll(existingUrls);
     for (var url in urls) {
       try {
         if (alreadyAddedUrls.contains(url)) {

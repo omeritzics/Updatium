@@ -24,7 +24,7 @@
     "color": "Color",
     "standard": "Estàndard",
     "custom": "Personalitzat",
-    "useMaterialYou": "Usa 'Material You'",
+    "useMaterialYou": "Usar colors Material You",
     "githubStarredRepos": "Repositoris favorits de GitHub",
     "uname": "Nom d'usuari",
     "wrongArgNum": "Nombre d'arguments proveït invàlid",
@@ -48,7 +48,8 @@
     "trackOnlyInBrackets": "(només per a seguiment)",
     "searchableInBrackets": "(permet la cerca)",
     "appsString": "Aplicacions",
-    "noApps": "No hi ha aplicacions",
+    "noApps": "Benvingut!",
+    "noAppsSubtext": "Pots afegir la teva primera aplicació tocant 'Afegir aplicació' a sota.",
     "noAppsForFilter": "No hi ha aplicacions per filtrar",
     "byX": "Per: {}",
     "percentProgress": "Progrés: {} %",
@@ -125,7 +126,6 @@
     "bgUpdateCheckInterval": "Comprova les actualitzacions en segon pla",
     "neverManualOnly": "Mai, només manual",
     "appearance": "Aparença",
-    "showWebInAppView": "Mostra el web d'origen en la vista de l'aplicació",
     "pinUpdates": "Ancora les actualitzacions al capdamunt de les aplicacions",
     "updates": "Actualitzacions",
     "sourceSpecific": "Font específica",
@@ -341,7 +341,7 @@
     "GHReqPrefix": "exemple per a les peticions de GitHub",
     "includeZips": "Inclou fitxers ZIPName",
     "zippedApkFilterRegEx": "Filtre APKs dins ZIPName",
-    "googleVerificationWarningP1": "Google ha anunciat que, començant en 2026/2027, totes les aplicacions en dispositius d'Android \"que requereixen que el desenvolupador enviï els detalls personals directament a Google.\n\nDes que els desenvolupadors d'aquesta aplicació no estan d'acord amb aquest requisit, l' obtenció ja no funcionarà en els dispositius certificats d'Android.",
+    "googleVerificationWarningP1": "Google ha anunciat que, començant en 2026/2027, totes les aplicacions en dispositius d'Android \"certificats\" requeriran que el desenvolupador enviï els detalls personals directament a Google.\n\nDesprés d'això, Updatium pot deixar de funcionar en dispositius Android certificats.",
     "googleVerificationWarningP2": "Aneu a https://buitandoideopen.org/ per a més informació.",
     "googleVerificationWarningP3": "Tingueu en compte que en el terme curt, pot continuar sent possible instal· lar aplicacions \"inverificats\" (no compatible) mitjançant un procés de flux \"advince\" que Google ha promès implementar després d'una gran reacció al seu anunci, però no han detallat com funcionaria, de manera que és clar si es preservarà realment les llibertats dels usuaris de cap manera pràctica.\n\nEn qualsevol cas, el moviment de Google és un pas significatiu cap al final de la informàtica lliure i general deficient per als individus.\n\nEls SO no validats, com el GraphenOS, no haurien de ser afectats per això sempre que se'ls permeti continuar existint.",
     "multipleSigners": "Signadors múltiples",
@@ -408,5 +408,14 @@
     "certificateHash": {
         "one": "Suma de certificat",
         "other": "Resums del certificat"
-    }
+    },
+    "securityDisclaimerTitle": "Avís de Seguretat i Legal",
+    "license": "Llicència",
+    "licenseText": "Aquesta aplicació es distribueix sota la Llicència GPL v3.",
+    "disclaimer": "Avís",
+    "disclaimerText": "Aquesta aplicació no distribueix, allotja ni verifica cap de les aplicacions externes. L'usuari assumeix la plena responsabilitat per la seguretat i legalitat de qualsevol programari instal·lat a través d'aquesta eina.\n\nhttps://github.com/omeritzics/Updatium és l'únic lloc oficial per descarregar Updatium - es desaconsellable descarregar-lo d'altres llocs ja que la descàrrega des de fonts no oficials no és segura.",
+    "privacy": "Privacitat",
+    "privacyText": "Aquesta aplicació està centrada en la privacitat i no recull dades personals.",
+    "acceptAndContinue": "Acceptar i continuar",
+    "decline": "Rebutjar"
 }

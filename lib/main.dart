@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/pages/home.dart';
@@ -44,6 +45,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('tr'), 'Türkçe'),
   MapEntry(Locale('uk'), 'Українська'),
   MapEntry(Locale('da'), 'Dansk'),
+  MapEntry(Locale('et'), 'Eesti'),
   MapEntry(
     Locale('en', 'EO'),
     'Esperanto',
@@ -65,27 +67,32 @@ Future<void> loadTranslations() async {
   // See easy_localization/issues/210
   await EasyLocalizationController.initEasyLocation();
   var s = SettingsProvider();
-  await s.initializeSettings();
-  var forceLocale = s.forcedLocale;
-  final controller = EasyLocalizationController(
-    saveLocale: true,
-    forceLocale: forceLocale,
-    fallbackLocale: fallbackLocale,
-    supportedLocales: supportedLocales.map((e) => e.key).toList(),
-    assetLoader: const RootBundleAssetLoader(),
-    useOnlyLangCode: false,
-    useFallbackTranslations: true,
-    path: localeDir,
-    onLoadError: (FlutterError e) {
-      throw e;
-    },
-  );
-  await controller.loadTranslations();
-  Localization.load(
-    controller.locale,
-    translations: controller.translations,
-    fallbackTranslations: controller.fallbackTranslations,
-  );
+  try {
+    await s.initializeSettings();
+    var forceLocale = s.forcedLocale;
+    final controller = EasyLocalizationController(
+      saveLocale: true,
+      forceLocale: forceLocale,
+      fallbackLocale: fallbackLocale,
+      supportedLocales: supportedLocales.map((e) => e.key).toList(),
+      assetLoader: const RootBundleAssetLoader(),
+      useOnlyLangCode: false,
+      useFallbackTranslations: true,
+      path: localeDir,
+      onLoadError: (FlutterError e) {
+        throw e;
+      },
+    );
+    await controller.loadTranslations();
+    Localization.load(
+      controller.locale,
+      translations: controller.translations,
+      fallbackTranslations: controller.fallbackTranslations,
+    );
+  } finally {
+    // Clean up the temporary SettingsProvider instance
+    s.dispose();
+  }
 }
 
 @pragma('vm:entry-point')
@@ -93,7 +100,7 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
   String taskId = task.taskId;
   bool isTimeout = task.timeout;
   if (isTimeout) {
-    print('BG update task timed out.');
+    debugPrint('BG update task timed out.');
     BackgroundFetch.finish(taskId);
     return;
   }
@@ -111,7 +118,7 @@ class MyTaskHandler extends TaskHandler {
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
-    print('onStart(starter: ${starter.name})');
+    debugPrint('onStart(starter: ${starter.name})');
     bgUpdateCheck('bg_check', null);
   }
 
@@ -122,7 +129,7 @@ class MyTaskHandler extends TaskHandler {
 
   @override
   Future<void> onDestroy(DateTime timestamp, bool isTimeout) async {
-    print('Foreground service onDestroy(isTimeout: $isTimeout)');
+    debugPrint('Foreground service onDestroy(isTimeout: $isTimeout)');
   }
 
   @override
@@ -132,6 +139,7 @@ class MyTaskHandler extends TaskHandler {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
+    // Load Let's Encrypt certificate for network compatibility
     ByteData data = await PlatformAssetBundle().load(
       'assets/ca/lets-encrypt-r3.pem',
     );
@@ -142,15 +150,19 @@ void main() async {
     // Already added, do nothing (see #375)
   }
   await EasyLocalization.ensureInitialized();
+
+  // Enable edge-to-edge mode for Android 10+ (API 29)
   if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent),
     );
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
+
   final np = NotificationsProvider();
   await np.initialize();
   FlutterForegroundTask.initCommunicationPort();
+
   runApp(
     MultiProvider(
       providers: [
@@ -191,6 +203,7 @@ class _UpdatiumState extends State<Updatium> {
   }
 
   Future<void> requestNonOptionalPermissions() async {
+    // Handle notification and battery optimization permissions
     final NotificationPermission notificationPermission =
         await FlutterForegroundTask.checkNotificationPermission();
     if (notificationPermission != NotificationPermission.granted) {
@@ -202,6 +215,7 @@ class _UpdatiumState extends State<Updatium> {
   }
 
   void initForegroundService() {
+    // Initialize foreground service if not already initialized
     // ignore: invalid_use_of_visible_for_testing_member
     if (!FlutterForegroundTask.isInitialized) {
       FlutterForegroundTask.init(
@@ -239,7 +253,8 @@ class _UpdatiumState extends State<Updatium> {
         notificationTitle: tr('foregroundService'),
         notificationText: tr('fgServiceNotice'),
         notificationIcon: NotificationIcon(
-          metaDataName: 'com.omeritzics.updatium.service.NOTIFICATION_ICON',
+          metaDataName:
+              'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
         ),
         callback: startCallback,
       );
@@ -254,18 +269,13 @@ class _UpdatiumState extends State<Updatium> {
     return null;
   }
 
-  // void onReceiveForegroundServiceData(Object data) {
-  //   print('onReceiveTaskData: $data');
-  // }
-
   @override
   void dispose() {
-    // Remove a callback to receive data sent from the TaskHandler.
-    // FlutterForegroundTask.removeTaskDataCallback(onReceiveForegroundServiceData);
     super.dispose();
   }
 
   Future<void> initPlatformState() async {
+    // Configure background fetch tasks
     await BackgroundFetch.configure(
       BackgroundFetchConfig(
         minimumFetchInterval: 15,
@@ -296,6 +306,8 @@ class _UpdatiumState extends State<Updatium> {
     AppsProvider appsProvider = context.read<AppsProvider>();
     LogsProvider logs = context.read<LogsProvider>();
     NotificationsProvider notifs = context.read<NotificationsProvider>();
+
+    // Toggle between Foreground Service and Background Fetch
     if (settingsProvider.updateInterval == 0) {
       stopForegroundService();
       BackgroundFetch.stop();
@@ -308,13 +320,14 @@ class _UpdatiumState extends State<Updatium> {
         BackgroundFetch.start();
       }
     }
+
     if (settingsProvider.prefs == null) {
       settingsProvider.initializeSettings();
     } else {
       bool isFirstRun = settingsProvider.checkAndFlipFirstRun();
       if (isFirstRun) {
         logs.add('This is the first ever run of Updatium.');
-        // If this is the first run, add Updatium to the Apps list
+        // Auto-add Updatium to tracked apps list on first run
         if (!fdroid) {
           getInstalledInfo(updatiumId)
               .then((value) {
@@ -341,10 +354,12 @@ class _UpdatiumState extends State<Updatium> {
                 }
               })
               .catchError((err) {
-                print(err);
+                debugPrint(err);
               });
         }
       }
+
+      // Sync local and device locale if needed
       if (!supportedLocales.map((e) => e.key).contains(context.locale) ||
           (settingsProvider.forcedLocale == null &&
               context.deviceLocale != context.locale)) {
@@ -359,14 +374,15 @@ class _UpdatiumState extends State<Updatium> {
     return WithForegroundTask(
       child: DynamicColorBuilder(
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-          // Decide on a color/brightness scheme based on OS and user settings
           ColorScheme lightColorScheme;
           ColorScheme darkColorScheme;
+
+          // Configure ColorScheme (Material You vs Seed)
           if (lightDynamic != null &&
               darkDynamic != null &&
               settingsProvider.useMaterialYou) {
-            lightColorScheme = lightDynamic.harmonized();
-            darkColorScheme = darkDynamic.harmonized();
+            lightColorScheme = lightDynamic;
+            darkColorScheme = darkDynamic;
           } else {
             lightColorScheme = ColorScheme.fromSeed(
               seedColor: settingsProvider.themeColor,
@@ -377,14 +393,463 @@ class _UpdatiumState extends State<Updatium> {
             );
           }
 
-          // set the background and surface colors to pure black in the amoled theme
+          // Apply pure black surface for AMOLED black theme
           if (settingsProvider.useBlackTheme) {
-            darkColorScheme = darkColorScheme
-                .copyWith(surface: Colors.black)
-                .harmonized();
+            darkColorScheme = darkColorScheme.copyWith(
+              surface: Colors.black,
+              surfaceContainerHighest: Colors.black.withValues(alpha: 0.1),
+              surfaceContainerHigh: Colors.black.withValues(alpha: 0.08),
+              surfaceContainer: Colors.black.withValues(alpha: 0.05),
+              surfaceContainerLow: Colors.black.withValues(alpha: 0.02),
+              surfaceContainerLowest: Colors.black.withValues(alpha: 0.01),
+              surfaceDim: Colors.black,
+              surfaceBright: Colors.black.withValues(alpha: 0.05),
+              onSurface: Colors.white.withValues(alpha: 0.95),
+              onSurfaceVariant: Colors.white.withValues(alpha: 0.8),
+              outline: Colors.white.withValues(alpha: 0.2),
+              outlineVariant: Colors.white.withValues(alpha: 0.1),
+            );
           }
 
           if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
+
+          // Shared theme component generator with Material Design Expressive
+          ThemeData createTheme(ColorScheme scheme, bool isDark) {
+            return ThemeData(
+              useMaterial3: true,
+              colorScheme: scheme,
+              fontFamily: settingsProvider.useSystemFont
+                  ? 'SystemFont'
+                  : 'Inter',
+
+              // Expressive Typography
+              textTheme: TextTheme(
+                displayLarge: TextStyle(
+                  fontSize: 57,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: -0.25,
+                  height: 1.12,
+                  color: scheme.onSurface,
+                ),
+                displayMedium: TextStyle(
+                  fontSize: 45,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0,
+                  height: 1.16,
+                  color: scheme.onSurface,
+                ),
+                displaySmall: TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0,
+                  height: 1.22,
+                  color: scheme.onSurface,
+                ),
+                headlineLarge: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0,
+                  height: 1.25,
+                  color: scheme.onSurface,
+                ),
+                headlineMedium: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0,
+                  height: 1.29,
+                  color: scheme.onSurface,
+                ),
+                headlineSmall: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0,
+                  height: 1.33,
+                  color: scheme.onSurface,
+                ),
+                titleLarge: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0,
+                  height: 1.27,
+                  color: scheme.onSurface,
+                ),
+                titleMedium: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.15,
+                  height: 1.5,
+                  color: scheme.onSurface,
+                ),
+                titleSmall: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.1,
+                  height: 1.43,
+                  color: scheme.onSurface,
+                ),
+                bodyLarge: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.5,
+                  height: 1.5,
+                  color: scheme.onSurface,
+                ),
+                bodyMedium: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.25,
+                  height: 1.5,
+                  color: scheme.onSurface,
+                ),
+                bodySmall: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.4,
+                  height: 1.33,
+                  color: scheme.onSurface,
+                ),
+                labelLarge: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.1,
+                  height: 1.43,
+                  color: scheme.onSurface,
+                ),
+                labelMedium: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.5,
+                  height: 1.33,
+                  color: scheme.onSurface,
+                ),
+                labelSmall: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.5,
+                  height: 1.27,
+                  color: scheme.onSurface,
+                ),
+              ),
+
+              // Expressive Card Design
+              cardTheme: CardThemeData(
+                elevation: isDark ? 2 : 1,
+                clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                surfaceTintColor: scheme.surfaceTint,
+                shadowColor: isDark ? Colors.black26 : Colors.black12,
+              ),
+              // Expressive FilledButton with tonal styling
+              filledButtonTheme: FilledButtonThemeData(
+                style: FilledButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 28,
+                    vertical: 14,
+                  ),
+                  backgroundColor: isDark
+                      ? scheme.secondaryContainer
+                      : scheme.secondaryContainer,
+                  foregroundColor: isDark
+                      ? scheme.onSecondaryContainer
+                      : scheme.onSecondaryContainer,
+                  elevation: isDark ? 2 : 1,
+                  shadowColor: isDark ? Colors.black26 : Colors.black12,
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.1,
+                  ),
+                ),
+              ),
+
+              // Expressive ElevatedButton with subtle shadows
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  elevation: isDark ? 3 : 2,
+                  shadowColor: isDark
+                      ? Colors.black38
+                      : Colors.black.withValues(alpha: 0.2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 28,
+                    vertical: 14,
+                  ),
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.1,
+                  ),
+                ),
+              ),
+
+              // Expressive OutlinedButton
+              outlinedButtonTheme: OutlinedButtonThemeData(
+                style: OutlinedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  side: BorderSide(color: scheme.outline, width: 1.5),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 28,
+                    vertical: 14,
+                  ),
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.1,
+                  ),
+                ),
+              ),
+
+              // Expressive TextButton
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.1,
+                  ),
+                ),
+              ),
+              // Expressive Input Fields
+              inputDecorationTheme: InputDecorationTheme(
+                filled: true,
+                fillColor: scheme.surfaceContainerHighest,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(
+                    color: scheme.outline.withValues(alpha: 0.3),
+                    width: 1,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(
+                    color: scheme.outline.withValues(alpha: 0.3),
+                    width: 1,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: scheme.primary, width: 2),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: scheme.error, width: 2),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: scheme.error, width: 2),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
+                hintStyle: TextStyle(
+                  color: scheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w400,
+                ),
+                labelStyle: TextStyle(
+                  color: scheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w500,
+                ),
+                floatingLabelStyle: TextStyle(
+                  color: scheme.primary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+
+              // Expressive Dropdown Button Theme
+              dropdownMenuTheme: DropdownMenuThemeData(
+                inputDecorationTheme: InputDecorationTheme(
+                  filled: true,
+                  fillColor: scheme.surfaceContainerHighest,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(
+                      color: scheme.outline.withValues(alpha: 0.3),
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(
+                      color: scheme.outline.withValues(alpha: 0.3),
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: scheme.primary, width: 2),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
+                  hintStyle: TextStyle(
+                    color: scheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  labelStyle: TextStyle(
+                    color: scheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  floatingLabelStyle: TextStyle(
+                    color: scheme.primary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+
+              // Expressive Floating Action Button
+              floatingActionButtonTheme: FloatingActionButtonThemeData(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                elevation: isDark ? 6 : 8,
+                extendedPadding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
+                extendedTextStyle: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.5,
+                ),
+                foregroundColor: scheme.onPrimaryContainer,
+                backgroundColor: scheme.primaryContainer,
+                iconSize: 24,
+              ),
+
+              // Expressive App Bar
+              appBarTheme: AppBarTheme(
+                backgroundColor: scheme.surface,
+                foregroundColor: scheme.onSurface,
+                elevation: 0,
+                scrolledUnderElevation: 1,
+                shadowColor: isDark ? Colors.black26 : Colors.black12,
+                surfaceTintColor: scheme.surfaceTint,
+                centerTitle: true,
+                titleTextStyle: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: -0.5,
+                  height: 1.27,
+                ),
+                iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
+                actionsIconTheme: IconThemeData(
+                  color: scheme.onSurface,
+                  size: 24,
+                ),
+              ),
+
+              // Expressive List Tiles
+              listTileTheme: ListTileThemeData(
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                tileColor: scheme.surface,
+                selectedTileColor: scheme.surface.withValues(alpha: 0.2),
+                iconColor: scheme.onSurfaceVariant,
+                textColor: scheme.onSurface,
+                titleTextStyle: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.15,
+                ),
+                subtitleTextStyle: TextStyle(
+                  color: scheme.onSurfaceVariant,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.25,
+                ),
+              ),
+
+              // Expressive Page Transitions
+              pageTransitionsTheme: const PageTransitionsTheme(
+                builders: {
+                  TargetPlatform.android:
+                      PredictiveBackPageTransitionsBuilder(),
+                  TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                },
+              ),
+
+              // Expressive Text Selection
+              textSelectionTheme: TextSelectionThemeData(
+                selectionColor: scheme.primary.withValues(alpha: 0.3),
+                selectionHandleColor: scheme.primary,
+                cursorColor: scheme.primary,
+              ),
+
+              // Expressive Touch Feedback
+              splashFactory: InkRipple.splashFactory,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+
+              // Expressive Divider
+              dividerTheme: DividerThemeData(
+                color: scheme.outlineVariant,
+                thickness: 1,
+                space: 1,
+              ),
+
+              // Expressive Chip Theme
+              chipTheme: ChipThemeData(
+                backgroundColor: scheme.surface.withValues(alpha: 0.1),
+                selectedColor: scheme.secondaryContainer,
+                disabledColor: scheme.surface,
+                labelStyle: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+                secondaryLabelStyle: TextStyle(
+                  color: scheme.onSecondaryContainer,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+
+              // Expressive Bottom Navigation Bar
+              bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                backgroundColor: scheme.surface,
+                selectedItemColor: scheme.onSecondaryContainer,
+                unselectedItemColor: scheme.onSurfaceVariant,
+                selectedLabelStyle: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+                unselectedLabelStyle: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
+                type: BottomNavigationBarType.fixed,
+                elevation: isDark ? 3 : 8,
+                landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
+              ),
+
+              // Expressive Progress Indicators
+              progressIndicatorTheme: ProgressIndicatorThemeData(
+                color: scheme.primary,
+                linearTrackColor: scheme.surface.withValues(alpha: 0.2),
+                circularTrackColor: scheme.surface.withValues(alpha: 0.2),
+              ),
+            );
+          }
 
           return MaterialApp(
             title: 'Updatium',
@@ -393,24 +858,13 @@ class _UpdatiumState extends State<Updatium> {
             locale: context.locale,
             navigatorKey: globalNavigatorKey,
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: settingsProvider.theme == ThemeSettings.dark
-                  ? darkColorScheme
-                  : lightColorScheme,
-              fontFamily: settingsProvider.useSystemFont
-                  ? 'SystemFont'
-                  : 'Montserrat',
-            ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              colorScheme: settingsProvider.theme == ThemeSettings.light
-                  ? lightColorScheme
-                  : darkColorScheme,
-              fontFamily: settingsProvider.useSystemFont
-                  ? 'SystemFont'
-                  : 'Montserrat',
-            ),
+            theme: createTheme(lightColorScheme, false),
+            darkTheme: createTheme(darkColorScheme, true),
+            themeMode: settingsProvider.theme == ThemeSettings.dark
+                ? ThemeMode.dark
+                : (settingsProvider.theme == ThemeSettings.light
+                      ? ThemeMode.light
+                      : ThemeMode.system),
             home: Shortcuts(
               shortcuts: <LogicalKeySet, Intent>{
                 LogicalKeySet(LogicalKeyboardKey.select):

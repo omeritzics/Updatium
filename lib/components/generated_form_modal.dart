@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form.dart';
 
 class GeneratedFormModal extends StatefulWidget {
@@ -65,7 +66,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
         ],
       ),
       actions: [
-        TextButton(
+        createAppTextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
@@ -76,7 +77,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
           ),
         ),
         widget.singleNullReturnButton == null
-            ? TextButton(
+            ? createAppTextButton(
                 style: widget.primaryActionColor == null
                     ? null
                     : TextButton.styleFrom(

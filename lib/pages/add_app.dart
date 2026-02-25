@@ -1,7 +1,7 @@
+import 'package:animations/animations.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -279,21 +279,39 @@ class AddAppPageState extends State<AddAppPage> {
         ),
         const SizedBox(width: 16),
         gettingAppInfo
-            ? const CircularProgressIndicator()
-            : ElevatedButton(
-                onPressed:
-                    doingSomething ||
-                        pickedSource == null ||
-                        (pickedSource!
-                                .combinedAppSpecificSettingFormItems
-                                .isNotEmpty &&
-                            !additionalSettingsValid)
-                    ? null
-                    : () {
-                        HapticFeedback.selectionClick();
-                        addApp();
-                      },
-                child: Text(tr('add')),
+            ? Semantics(
+                label: tr('gettingAppInfo'),
+                child: const CircularProgressIndicator(),
+              )
+            : Semantics(
+                button: true,
+                label: tr('add'),
+                hint: doingSomething
+                    ? 'Please wait, operation in progress'
+                    : pickedSource == null
+                    ? 'Select a source first'
+                    : (pickedSource!
+                              .combinedAppSpecificSettingFormItems
+                              .isNotEmpty &&
+                          !additionalSettingsValid)
+                    ? 'Complete additional settings first'
+                    : 'Add this app to your collection',
+                excludeSemantics: true,
+                child: FilledButton(
+                  onPressed:
+                      doingSomething ||
+                          pickedSource == null ||
+                          (pickedSource!
+                                  .combinedAppSpecificSettingFormItems
+                                  .isNotEmpty &&
+                              !additionalSettingsValid)
+                      ? null
+                      : () {
+                          HapticFeedback.selectionClick();
+                          addApp();
+                        },
+                  child: Text(tr('add')),
+                ),
               ),
       ],
     );
@@ -451,65 +469,49 @@ class AddAppPageState extends State<AddAppPage> {
       }
     }
 
+    bool shouldShowSearchBar() =>
+        sourceProvider.sources.where((e) => e.canSearch).isNotEmpty &&
+        pickedSource == null &&
+        userInput.isEmpty;
+
     Widget getHTMLSourceOverrideDropdown() => Column(
       children: [
         Row(
           children: [
             Expanded(
-              child: GeneratedForm(
+              child: DropdownButtonFormField<String>(
+                initialValue: pickedSourceOverride ?? '',
+                decoration: InputDecoration(labelText: tr('overrideSource')),
                 items: [
-                  [
-                    GeneratedFormDropdown(
-                      'overrideSource',
-                      defaultValue: pickedSourceOverride ?? '',
-                      [
-                        MapEntry('', tr('none')),
-                        ...sourceProvider.sources
-                            .where(
-                              (s) =>
-                                  s.allowOverride ||
-                                  (pickedSource != null &&
-                                      pickedSource.runtimeType ==
-                                          s.runtimeType),
-                            )
-                            .map(
-                              (s) => MapEntry(s.runtimeType.toString(), s.name),
-                            ),
-                      ],
-                      label: tr('overrideSource'),
-                    ),
-                  ],
+                  DropdownMenuItem(value: '', child: Text(tr('none'))),
+                  ...sourceProvider.sources
+                      .where(
+                        (s) =>
+                            s.allowOverride ||
+                            (pickedSource != null &&
+                                pickedSource.runtimeType == s.runtimeType),
+                      )
+                      .map(
+                        (s) => DropdownMenuItem(
+                          value: s.runtimeType.toString(),
+                          child: Text(s.name),
+                        ),
+                      ),
                 ],
-                onValueChanges: (values, valid, isBuilding) {
-                  fn() {
-                    pickedSourceOverride =
-                        (values['overrideSource'] == null ||
-                            values['overrideSource'] == '')
+                onChanged: (value) {
+                  setState(() {
+                    pickedSourceOverride = (value == null || value == '')
                         ? null
-                        : values['overrideSource'];
-                  }
-
-                  if (!isBuilding) {
-                    setState(() {
-                      fn();
-                    });
-                  } else {
-                    fn();
-                  }
-                  changeUserInput(userInput, valid, isBuilding);
+                        : value;
+                  });
+                  changeUserInput(userInput, true, false);
                 },
               ),
             ),
           ],
         ),
-        const SizedBox(height: 16),
       ],
     );
-
-    bool shouldShowSearchBar() =>
-        sourceProvider.sources.where((e) => e.canSearch).isNotEmpty &&
-        pickedSource == null &&
-        userInput.isEmpty;
 
     Widget getSearchBarRow() => Row(
       children: [
@@ -535,14 +537,25 @@ class AddAppPageState extends State<AddAppPage> {
         ),
         const SizedBox(width: 16),
         searching
-            ? const CircularProgressIndicator()
-            : ElevatedButton(
-                onPressed: searchQuery.isEmpty || doingSomething
-                    ? null
-                    : () {
-                        runSearch();
-                      },
-                child: Text(tr('search')),
+            ? Semantics(
+                label: tr('searching'),
+                child: const CircularProgressIndicator(),
+              )
+            : Semantics(
+                button: true,
+                label: tr('search'),
+                hint: searchQuery.isEmpty
+                    ? 'Enter search terms first'
+                    : 'Search for apps',
+                excludeSemantics: true,
+                child: FilledButton(
+                  onPressed: searchQuery.isEmpty || doingSomething
+                      ? null
+                      : () {
+                          runSearch();
+                        },
+                  child: Text(tr('search')),
+                ),
               ),
       ],
     );
@@ -719,7 +732,22 @@ class AddAppPageState extends State<AddAppPage> {
       body: CustomScrollView(
         shrinkWrap: true,
         slivers: <Widget>[
-          CustomAppBar(title: tr('addApp')),
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: MediaQuery.of(context).size.height * 0.15,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 20,
+              ),
+              title: Text(
+                tr('addApp'),
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyMedium!.color,
+                ),
+              ),
+            ),
+          ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -749,6 +777,28 @@ class AddAppPageState extends State<AddAppPage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  const ImportExportPage(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                    return SharedAxisTransition(
+                      animation: animation,
+                      secondaryAnimation: secondaryAnimation,
+                      transitionType: SharedAxisTransitionType.vertical,
+                      child: child,
+                    );
+                  },
+            ),
+          );
+        },
+        icon: const Icon(Icons.import_export),
+        label: Text(tr('importExport')),
       ),
     );
   }

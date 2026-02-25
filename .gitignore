@@ -12,6 +12,7 @@
 .swiftpm/
 migrate_working_dir/
 .vscode/*
+.mockups/*
 !.vscode/launch.json
 
 # IntelliJ related
@@ -54,3 +55,4 @@ app.*.map.json
 TODO.txt
 data
 node_modules/
+.flutter

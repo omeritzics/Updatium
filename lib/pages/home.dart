@@ -5,11 +5,12 @@ import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/pages/apps.dart';
-import 'package:updatium/pages/import_export.dart';
+import 'package:updatium/pages/security_disclaimer.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -32,7 +33,7 @@ class NavigationPageItem {
   NavigationPageItem(this.title, this.icon, this.widget);
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<int> selectedIndexHistory = [];
   bool isReversing = false;
   int prevAppCount = -1;
@@ -40,6 +41,8 @@ class _HomePageState extends State<HomePage> {
   late AppLinks _appLinks;
   StreamSubscription<Uri>? _linkSubscription;
   bool isLinkActivity = false;
+  late List<AnimationController> _iconControllers;
+  late List<Animation<double>> _iconAnimations;
 
   List<NavigationPageItem> pages = [
     NavigationPageItem(
@@ -49,13 +52,8 @@ class _HomePageState extends State<HomePage> {
     ),
     NavigationPageItem(
       tr('addApp'),
-      Icons.add,
+      Icons.add_circle,
       AddAppPage(key: GlobalKey<AddAppPageState>()),
-    ),
-    NavigationPageItem(
-      tr('importExport'),
-      Icons.import_export,
-      const ImportExportPage(),
     ),
     NavigationPageItem(tr('settings'), Icons.settings, const SettingsPage()),
   ];
@@ -63,50 +61,45 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
+    // Initialize animation controllers for each nav item
+    _iconControllers = List.generate(
+      pages.length,
+      (index) => AnimationController(
+        duration: const Duration(milliseconds: 600),
+        vsync: this,
+      ),
+    );
+
+    _iconAnimations = _iconControllers
+        .map(
+          (controller) => Tween<double>(begin: 0, end: 1).animate(
+            CurvedAnimation(parent: controller, curve: Curves.easeInOut),
+          ),
+        )
+        .toList();
+
     initDeepLinks();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var sp = context.read<SettingsProvider>();
-      if (!sp.welcomeShown) {
-        await showDialog(
-          context: context,
-          builder: (BuildContext ctx) {
-            return AlertDialog(
-              title: Text(tr('welcome')),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 20,
-                children: [
-                  Text(tr('documentationLinksNote')),
-                  GestureDetector(
-                    onTap: () {
-                      launchUrlString(
-                        'https://github.com/omeritzics/Updatium/blob/main/README.md',
-                        mode: LaunchMode.externalApplication,
-                      );
-                    },
-                    child: Text(
-                      'https://github.com/omeritzics/Updatium/blob/main/README.md',
-                      style: const TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    sp.welcomeShown = true;
-                    Navigator.of(context).pop(null);
-                  },
-                  child: Text(tr('ok')),
-                ),
-              ],
-            );
-          },
+
+      // Check if security disclaimer has been accepted
+      final disclaimerAccepted =
+          await SecurityDisclaimerScreen.isDisclaimerAccepted();
+      if (!disclaimerAccepted) {
+        final accepted = await Navigator.of(context).push<bool>(
+          MaterialPageRoute(
+            builder: (context) => const SecurityDisclaimerScreen(),
+          ),
         );
+
+        // If user declined, exit the app
+        if (accepted != true) {
+          SystemNavigator.pop();
+          return;
+        }
       }
+
       if (!sp.googleVerificationWarningShown && DateTime.now().year == 2026) {
         await showDialog(
           context: context,
@@ -138,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               actions: [
-                TextButton(
+                createAppTextButton(
                   onPressed: () {
                     sp.googleVerificationWarningShown = true;
                     Navigator.of(context).pop(null);
@@ -222,6 +215,7 @@ class _HomePageState extends State<HomePage> {
                     items: const [],
                     additionalWidgets: [
                       ExpansionTile(
+                        leading: const Icon(Icons.info_outlined),
                         title: const Text('Raw JSON'),
                         children: [
                           Text(
@@ -354,20 +348,42 @@ class _HomePageState extends State<HomePage> {
               )
               .widget,
         ),
-        bottomNavigationBar: NavigationBar(
-          destinations: pages
-              .map(
-                (e) =>
-                    NavigationDestination(icon: Icon(e.icon), label: e.title),
-              )
-              .toList(),
-          onDestinationSelected: (int index) async {
-            HapticFeedback.selectionClick();
-            switchToPage(index);
-          },
-          selectedIndex: selectedIndexHistory.isEmpty
-              ? 0
-              : selectedIndexHistory.last,
+        bottomNavigationBar: Semantics(
+          label: 'Main navigation',
+          hint: 'Navigate between apps, add app, and settings',
+          child: NavigationBar(
+            selectedIndex: selectedIndexHistory.isEmpty
+                ? 0
+                : selectedIndexHistory.last,
+            animationDuration: const Duration(milliseconds: 300),
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            onDestinationSelected: (int index) async {
+              HapticFeedback.selectionClick();
+
+              // Trigger full-rotation animation
+              _iconControllers[index].forward().then((_) {
+                _iconControllers[index].reset();
+              });
+
+              switchToPage(index);
+            },
+            destinations: pages.asMap().entries.map((entry) {
+              int index = entry.key;
+              var page = entry.value;
+              return NavigationDestination(
+                icon: AnimatedBuilder(
+                  animation: _iconAnimations[index],
+                  builder: (context, child) {
+                    return Transform.rotate(
+                      angle: _iconAnimations[index].value * 2 * 3.14159,
+                      child: Icon(page.icon),
+                    );
+                  },
+                ),
+                label: page.title,
+              );
+            }).toList(),
+          ),
         ),
       ),
       onWillPop: () async {
@@ -397,5 +413,8 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     super.dispose();
     _linkSubscription?.cancel();
+    for (var controller in _iconControllers) {
+      controller.dispose();
+    }
   }
 }

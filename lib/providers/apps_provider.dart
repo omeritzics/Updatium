@@ -19,7 +19,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:http/io_client.dart';
+import 'package:http/http.dart' as http;
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
@@ -27,6 +29,8 @@ import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/services/icon_cache.dart';
+import 'package:updatium/services/icon_prefetcher.dart';
 import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -38,10 +42,11 @@ import 'package:http/http.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:shared_storage/shared_storage.dart' as saf;
+import 'package:docman/docman.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 
 final pm = AndroidPackageManager();
+final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
 
 class AppInMemory {
   late App app;
@@ -499,10 +504,7 @@ Future<File> downloadFile(
 }
 
 Future<List<PackageInfo>> getAllInstalledInfo() async {
-  return await pm.getInstalledPackages(
-        flags: PackageInfoFlags({PMFlag.getSigningCertificates}),
-      ) ??
-      [];
+  return await pm.getInstalledPackages(flags: packageInfoFlags) ?? [];
 }
 
 Future<PackageInfo?> getInstalledInfo(
@@ -511,7 +513,10 @@ Future<PackageInfo?> getInstalledInfo(
 }) async {
   if (packageName != null) {
     try {
-      return await pm.getPackageInfo(packageName: packageName);
+      return await pm.getPackageInfo(
+        packageName: packageName,
+        flags: packageInfoFlags,
+      );
     } catch (e) {
       if (printErr) {
         print(e); // OK
@@ -560,6 +565,8 @@ class AppsProvider with ChangeNotifier {
         if (!iconsCacheDir.existsSync()) {
           iconsCacheDir.createSync();
         }
+        // Initialize IconCache with the icons directory
+        await IconCache.instance.initialize(cacheDir: iconsCacheDir);
       } else {
         APKDir = Directory('${(await getAppStorageDir()).path}/apks');
         if (!APKDir.existsSync()) {
@@ -569,6 +576,8 @@ class AppsProvider with ChangeNotifier {
         if (!iconsCacheDir.existsSync()) {
           iconsCacheDir.createSync();
         }
+        // Initialize IconCache with the icons directory
+        await IconCache.instance.initialize(cacheDir: iconsCacheDir);
       }
       if (!isBg) {
         // Load Apps into memory (in background processes, this is done later instead of in the constructor)
@@ -844,7 +853,7 @@ class AppsProvider with ChangeNotifier {
       // If we did not install the app, silent install is not possible
       return false;
     }
-    if (osInfo.version.sdkInt < 31) {
+    if (osInfo.version.sdkInt < 36) {
       // The OS must also be new enough
       logs.add('Android SDK too old: ${osInfo.version.sdkInt}');
       return false;
@@ -1695,7 +1704,16 @@ class AppsProvider with ChangeNotifier {
               notifyListeners();
               try {
                 // Try getting the app's source to ensure no invalid apps get loaded
-                sp.getSource(app.url, overrideSource: app.overrideSource);
+                // Handle removed overrideSource gracefully by clearing it if source doesn't exist
+                String? overrideSource = app.overrideSource;
+                if (overrideSource != null &&
+                    !sp.sourceExists(overrideSource)) {
+                  // Clear the removed overrideSource and update the app using lightweight method
+                  app.overrideSource = null;
+                  overrideSource = null;
+                  await persistAppJsonOnly(app, updateMemory: true);
+                }
+                sp.getSource(app.url, overrideSource: overrideSource);
                 // If the app is installed, grab its OS data and reconcile install statuses
                 PackageInfo? installedInfo;
                 try {
@@ -1751,18 +1769,74 @@ class AppsProvider with ChangeNotifier {
     }
     loadingApps = false;
     notifyListeners();
+
+    // Start icon pre-fetching after apps are loaded
+    _startIconPrefetching();
   }
 
-  Future<void> updateAppIcon(String? appId, {bool ignoreCache = false}) async {
-    if (apps[appId]?.icon == null) {
-      var cachedIcon = File('${iconsCacheDir.path}/$appId.png');
-      var alreadyCached = cachedIcon.existsSync() && !ignoreCache;
-      var icon = alreadyCached
-          ? (await cachedIcon.readAsBytes())
-          : (await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon());
-      if (icon != null && !alreadyCached) {
-        cachedIcon.writeAsBytes(icon.toList());
+  /// Start icon pre-fetching in background after metadata sync
+  void _startIconPrefetching() {
+    // Run in background to avoid blocking UI
+    Future.microtask(() async {
+      try {
+        // Only start pre-fetching if there are apps with remote icon URLs
+        final appsWithRemoteIcons = apps.values
+            .where(
+              (appInMemory) =>
+                  appInMemory.app.remoteIconUrl != null &&
+                  appInMemory.app.remoteIconUrl!.isNotEmpty,
+            )
+            .length;
+
+        if (appsWithRemoteIcons > 0) {
+          LogsProvider().add(
+            'Starting background icon pre-fetching for $appsWithRemoteIcons apps',
+          );
+
+          // Start pre-fetching without awaiting to avoid blocking
+          unawaited(
+            IconPrefetcher.instance.startPrefetching(
+              apps: apps.values
+                  .where(
+                    (appInMemory) =>
+                        appInMemory.app.remoteIconUrl != null &&
+                        appInMemory.app.remoteIconUrl!.isNotEmpty,
+                  )
+                  .map((appInMemory) => appInMemory.app)
+                  .toList(),
+              topCount: 40, // Limit to top 40 apps to avoid overwhelming
+              forceRefresh: false,
+            ),
+          );
+        }
+      } catch (e) {
+        LogsProvider().add('Error starting icon pre-fetching: $e');
       }
+    });
+  }
+
+  Future<void> updateAppIcon(String? appId) async {
+    if (apps[appId]?.icon == null) {
+      final app = apps[appId]?.app;
+      Uint8List? icon;
+
+      // Try installed app icon first
+      icon = await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
+
+      // If no installed icon, try remote URL
+      if (icon == null &&
+          app?.remoteIconUrl != null &&
+          app!.remoteIconUrl!.isNotEmpty) {
+        try {
+          final response = await http.get(Uri.parse(app.remoteIconUrl!));
+          if (response.statusCode == 200) {
+            icon = response.bodyBytes;
+          }
+        } catch (e) {
+          // Failed to download remote icon, continue with null
+        }
+      }
+
       if (icon != null) {
         apps.update(
           apps[appId]!.app.id,
@@ -1775,13 +1849,99 @@ class AppsProvider with ChangeNotifier {
           ifAbsent: () => AppInMemory(
             apps[appId]!.app,
             null,
-            apps[appId]?.installedInfo,
+            apps[appId]!.installedInfo,
             icon,
           ),
         );
-        notifyListeners();
       }
     }
+  }
+
+  /// Get icon for an app using the IconCache service
+  /// This is the main API for getting app icons with remote URL support
+  Future<Uint8List?> getIcon(
+    String appId,
+    String? remoteIconUrl, {
+    bool forceRefresh = false,
+    Uint8List? fallbackIcon,
+  }) async {
+    // First try IconCache with remote URL
+    final icon = await IconCache.instance.getIcon(
+      appId,
+      remoteIconUrl,
+      forceRefresh: forceRefresh,
+      fallbackIcon: fallbackIcon,
+    );
+
+    // If no icon from cache and no fallback provided, try installed app icon
+    if (icon == null && fallbackIcon == null) {
+      final installedIcon = await apps[appId]?.installedInfo?.applicationInfo
+          ?.getAppIcon();
+      if (installedIcon != null) {
+        // Cache the installed icon for future use
+        await IconCache.instance.saveIcon(appId, installedIcon);
+        return installedIcon;
+      }
+    }
+
+    return icon;
+  }
+
+  /// Check if an icon is cached for the given app
+  Future<bool> isIconCached(String appId, String? remoteIconUrl) async {
+    return await IconCache.instance.isIconCached(appId, remoteIconUrl);
+  }
+
+  /// Clear the icon cache
+  Future<void> clearIconCache() async {
+    await IconCache.instance.clearCache();
+  }
+
+  /// Get icon cache statistics
+  Future<Map<String, dynamic>> getIconCacheStats() async {
+    return await IconCache.instance.getCacheStats();
+  }
+
+  /// Start icon pre-fetching manually
+  Future<void> startIconPrefetching({
+    int topCount = 40,
+    bool forceRefresh = false,
+  }) async {
+    await IconPrefetcher.instance.startPrefetching(
+      apps: apps.values.map((appInMemory) => appInMemory.app).toList(),
+      topCount: topCount,
+      forceRefresh: forceRefresh,
+    );
+  }
+
+  /// Get icon pre-fetching status
+  PrefetchStatus getIconPrefetchingStatus() {
+    return IconPrefetcher.instance.getStatus();
+  }
+
+  /// Pause icon pre-fetching
+  void pauseIconPrefetching() {
+    IconPrefetcher.instance.pause();
+  }
+
+  /// Resume icon pre-fetching
+  void resumeIconPrefetching() {
+    IconPrefetcher.instance.resume();
+  }
+
+  /// Stop icon pre-fetching
+  void stopIconPrefetching() {
+    IconPrefetcher.instance.stop();
+  }
+
+  /// Get icon pre-fetching progress stream
+  Stream<PrefetchProgress> getIconPrefetchingProgress() {
+    return IconPrefetcher.instance.progressStream;
+  }
+
+  /// Get icon pre-fetching result stream
+  Stream<PrefetchResult> getIconPrefetchingResults() {
+    return IconPrefetcher.instance.resultStream;
   }
 
   Future<void> saveApps(
@@ -1822,7 +1982,47 @@ class AppsProvider with ChangeNotifier {
       }),
     );
     notifyListeners();
-    export(isAuto: true);
+    // Export safely without blocking, handle errors gracefully
+    unawaited(
+      export(isAuto: true).catchError((e) {
+        // Log export errors but don't crash the app
+        // Export failures shouldn't prevent the main operation from completing
+      }),
+    );
+  }
+
+  /// Lightweight method for load-time corrections that avoids expensive operations
+  /// Only writes JSON file and updates in-memory map without:
+  /// - getInstalledInfo() calls
+  /// - icon/label retrieval
+  /// - auto-export triggers
+  Future<void> persistAppJsonOnly(App app, {bool updateMemory = true}) async {
+    if (!apps.containsKey(app.id)) {
+      return;
+    }
+
+    String filePath = '${(await getAppsDir()).path}/${app.id}.json';
+    File('$filePath.tmp').writeAsStringSync(jsonEncode(app.toJson()));
+    File('$filePath.tmp').renameSync(filePath);
+
+    if (updateMemory) {
+      try {
+        apps.update(
+          app.id,
+          (value) => AppInMemory(
+            app,
+            value.downloadProgress,
+            value.installedInfo,
+            value.icon,
+          ),
+          ifAbsent: () => AppInMemory(app, null, null, null),
+        );
+      } catch (e) {
+        if (e is! ArgumentError || e.name != 'key') {
+          rethrow;
+        }
+      }
+    }
   }
 
   Future<void> removeApps(List<String> appIds) async {
@@ -1847,7 +2047,13 @@ class AppsProvider with ChangeNotifier {
     );
     if (appIds.isNotEmpty) {
       notifyListeners();
-      export(isAuto: true);
+      // Export safely without blocking, handle errors gracefully
+      unawaited(
+        export(isAuto: true).catchError((e) {
+          // Log export errors but don't crash the app
+          // Export failures shouldn't prevent app removal from completing
+        }),
+      );
     }
   }
 
@@ -2098,14 +2304,22 @@ class AppsProvider with ChangeNotifier {
       if (exportDir == null) {
         return null;
       }
-      var files = await saf
-          .listFiles(exportDir, columns: [saf.DocumentFileColumn.id])
-          .where((f) => f.uri.pathSegments.last.endsWith('-auto.json'))
-          .toList();
-      if (files.isNotEmpty) {
-        for (var f in files) {
-          saf.delete(f.uri);
+      // List and delete auto-export files using docman
+      try {
+        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final dirDocFile = await docFileResult?.get();
+        if (dirDocFile != null) {
+          final files = await dirDocFile.listDocuments();
+          final autoFiles = files
+              .where((f) => f.name.endsWith('-auto.json'))
+              .toList();
+
+          for (var file in autoFiles) {
+            await file.delete();
+          }
         }
+      } catch (e) {
+        // Handle error silently or log if needed
       }
     }
     if (exportDir == null || pickOnly) {
@@ -2119,14 +2333,28 @@ class AppsProvider with ChangeNotifier {
     if (!pickOnly) {
       var encoder = const JsonEncoder.withIndent("    ");
       Map<String, dynamic> finalExport = generateExportJSON();
-      var result = await saf.createFile(
-        exportDir,
-        displayName:
-            '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
-        mimeType: 'application/json',
-        bytes: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
-      );
-      if (result == null) {
+      // Create export file using docman
+      try {
+        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final dirDocFile = await docFileResult?.get();
+        if (dirDocFile != null) {
+          final fileName =
+              '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
+
+          final result = await dirDocFile.createFile(
+            name: fileName,
+            bytes: Uint8List.fromList(
+              utf8.encode(encoder.convert(finalExport)),
+            ),
+          );
+
+          if (result == null) {
+            throw UpdatiumError(tr('unexpectedError'));
+          }
+        } else {
+          throw UpdatiumError(tr('unexpectedError'));
+        }
+      } catch (e) {
         throw UpdatiumError(tr('unexpectedError'));
       }
       returnPath = exportDir.pathSegments
@@ -2204,9 +2432,38 @@ class AppsProvider with ChangeNotifier {
         await saveApps([app], onlyIfExists: false);
       }
     }
-    List<List<String>> errors = errorsMap.keys
-        .map((e) => [e, errorsMap[e].toString()])
-        .toList();
+    List<List<String>> errors = errorsMap.keys.map((e) {
+      // Log detailed error internally for debugging
+      // Log error internally without sensitive URL components
+      final uri = Uri.tryParse(e);
+      final sanitizedUrl = uri != null
+          ? uri.replace(userInfo: '').toString()
+          : e;
+      debugPrint('Import error for $sanitizedUrl: ${errorsMap[e]}');
+
+      // Return user-friendly error message
+      String userMessage;
+      final errorDetail = errorsMap[e].toString();
+
+      // Categorize errors and provide user-friendly messages
+      if (errorDetail.contains('timeout') ||
+          errorDetail.contains('connection')) {
+        userMessage = tr('networkError');
+      } else if (errorDetail.contains('404') ||
+          errorDetail.contains('not found')) {
+        userMessage = tr('appNotFound');
+      } else if (errorDetail.contains('parse') ||
+          errorDetail.contains('format')) {
+        userMessage = tr('invalidUrlFormat');
+      } else if (errorDetail.contains('permission') ||
+          errorDetail.contains('access')) {
+        userMessage = tr('accessDenied');
+      } else {
+        userMessage = tr('importFailed');
+      }
+
+      return [e, userMessage];
+    }).toList();
     return errors;
   }
 }
@@ -2280,13 +2537,13 @@ class _AppFilePickerState extends State<AppFilePicker> {
         ],
       ),
       actions: [
-        TextButton(
+        createAppTextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        TextButton(
+        createAppTextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(fileUrl);
@@ -2328,18 +2585,18 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        createAppTextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        TextButton(
+        createAppTextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);
           },
-          child: Text(tr('continue')),
+          child: Text(tr('yes')),
         ),
       ],
     );

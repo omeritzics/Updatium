@@ -1,4 +1,5 @@
-name: Build and Release
+name: Build and Release Qama
+
 permissions:
   contents: write
 
@@ -13,74 +14,168 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+    steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
         with:
-          channel: stable
-          cache: true
+          tool-cache: true
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+          
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Setup Java
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
 
-      - name: Extract Version
-        id: extract_version
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          version: '3.38.9'  # Use specific stable version that meets requirements
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate Version
+        id: version
         run: |
-          # Extracting version from pubspec.yaml
-          VERSION=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | cut -d '+' -f 1)
+          # Generate version: YY.M.0 format (semantic versioning)
+          YEAR=$(date +'%y')
+          MONTH=$(date +'%-m')
+          VERSION="$YEAR.$MONTH.0"
+          
+          # Generate build number: YYMMDDHH format
+          BUILD_NUMBER=$(date +'%y%m%d%H')
+          
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
           echo "beta=${{ github.event.inputs.beta }}" >> $GITHUB_OUTPUT
 
       - name: Decode Keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > $GITHUB_WORKSPACE/upload-keystore.jks
+          echo "${KEYSTORE_BASE64}" | base64 -d > android/upload-keystore.jks
+          chmod 600 android/upload-keystore.jks
+          echo "Keystore decoded and permissions set"
 
       - name: Create key.properties
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "storeFile=$GITHUB_WORKSPACE/upload-keystore.jks" >> android/key.properties
+          # Handle non-ASCII characters properly
+          cat << EOF > android/key.properties
+          storePassword=${KEYSTORE_PASSWORD}
+          keyPassword=${KEY_PASSWORD}
+          keyAlias=${KEY_ALIAS}
+          storeFile=../upload-keystore.jks
+          EOF
+          chmod 600 android/key.properties
+          echo "Created keystore properties file with restricted permissions"
 
-      - name: Build APKs
+      - name: Verify key.properties
         run: |
-          flutter pub get
+          echo "=== key.properties content ==="
+          cat android/key.properties
+          echo "=== End of key.properties ==="
+          echo "Environment variables check:"
+          echo "KEYSTORE_PASSWORD length: ${{ secrets.KEYSTORE_PASSWORD != '' && secrets.KEYSTORE_PASSWORD != '0' }}"
+          echo "KEY_PASSWORD length: ${{ secrets.KEY_PASSWORD != '' && secrets.KEY_PASSWORD != '0' }}"
+          echo "KEY_ALIAS length: ${{ secrets.KEY_ALIAS != '' && secrets.KEY_ALIAS != '0' }}"
+          echo "KEYSTORE_PASSWORD is set: ${{ secrets.KEYSTORE_PASSWORD != '' }}"
+          echo "KEY_PASSWORD is set: ${{ secrets.KEY_PASSWORD != '' }}"
+          echo "KEY_ALIAS is set: ${{ secrets.KEY_ALIAS != '' }}"
+          echo "KEYSTORE_PASSWORD value: '${{ secrets.KEYSTORE_PASSWORD }}'"
+          echo "KEY_PASSWORD value: '${{ secrets.KEY_PASSWORD }}'"
+          echo "KEY_ALIAS value: '${{ secrets.KEY_ALIAS }}'"
 
-          # Building Normal release
-          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info
+      - name: Verify Keystore
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          ls -la android/upload-keystore.jks
+          file android/upload-keystore.jks
+          echo "=== Keystore contents ==="
+          # Use heredoc to handle non-ASCII characters properly
+          keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null || echo "Failed to list keystore contents"
+          echo "=== End keystore contents ==="
+          if ! keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null; then
+            echo "ERROR: Keystore verification failed - aborting build"
+            exit 1
+          fi
+          echo "Keystore verification successful"
 
-          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info
+      - name: Build APKs (Release Mode)
+        run: |
+          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
+          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
 
-      - name: Save APKs as Artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v6
         with:
-          name: release-apks
+          name: updatium-v${{ steps.version.outputs.version }}-run${{ github.run_number }}
           path: build/app/outputs/flutter-apk/*.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ steps.extract_version.outputs.tag }}
-          name: "Release ${{ steps.extract_version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "Updatium ${{ steps.version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
           prerelease: ${{ github.event.inputs.beta == true }}
           draft: true
           files: build/app/outputs/flutter-apk/*.apk
           generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cleanup signing files
         if: always()
         run: |
-          if [ -n "$GITHUB_WORKSPACE" ]; then
-            rm -f "$GITHUB_WORKSPACE/upload-keystore.jks" || true
-            rm -f "$GITHUB_WORKSPACE/android/key.properties" || true
-            unset KEYSTORE_PASSWORD || true
-            unset KEY_PASSWORD || true
-            unset KEY_ALIAS || true
+          echo "Starting cleanup of sensitive signing files..."
+          
+          # Cleanup keystore file
+          if [ -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" ]; then
+            rm -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" || echo "WARNING: Failed to delete keystore file"
+            if [ -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" ]; then
+              echo "ERROR: Keystore file still exists after cleanup attempt"
+            else
+              echo "Successfully deleted keystore file"
+            fi
+          else
+            echo "Keystore file not found, nothing to cleanup"
           fi
+          
+          # Cleanup key.properties file
+          if [ -f "$GITHUB_WORKSPACE/android/key.properties" ]; then
+            rm -f "$GITHUB_WORKSPACE/android/key.properties" || echo "WARNING: Failed to delete key.properties file"
+            if [ -f "$GITHUB_WORKSPACE/android/key.properties" ]; then
+              echo "ERROR: key.properties file still exists after cleanup attempt"
+            else
+              echo "Successfully deleted key.properties file"
+            fi
+          else
+            echo "key.properties file not found, nothing to cleanup"
+          fi
+          
+          # Unset environment variables
+          unset KEYSTORE_PASSWORD || echo "WARNING: Failed to unset KEYSTORE_PASSWORD"
+          unset KEY_PASSWORD || echo "WARNING: Failed to unset KEY_PASSWORD"
+          unset KEY_ALIAS || echo "WARNING: Failed to unset KEY_ALIAS"
+          unset KEYSTORE_PASS || echo "WARNING: Failed to unset KEYSTORE_PASS"
+          
+          echo "Cleanup completed"

@@ -24,7 +24,7 @@
     "color": "color",
     "standard": "Estándar",
     "custom": "A medida",
-    "useMaterialYou": "Aplicar 'Material You'",
+    "useMaterialYou": "Aplicar colores Material You",
     "githubStarredRepos": "repositorios favoritos en GitHub",
     "uname": "Nombre de usuario",
     "wrongArgNum": "Número de argumentos provistos inválido",
@@ -48,7 +48,8 @@
     "trackOnlyInBrackets": "(Solo para seguimiento)",
     "searchableInBrackets": "(permite búsqueda)",
     "appsString": "Aplicaciones",
-    "noApps": "Sin Aplicaciones",
+    "noApps": "¡Bienvenido!",
+    "noAppsSubtext": "Puedes agregar tu primera aplicación tocando 'Añadir aplicación' abajo.",
     "noAppsForFilter": "Sin aplicaciones para filtrar",
     "byX": "por: {}",
     "percentProgress": "Progreso: {} %",
@@ -125,7 +126,6 @@
     "bgUpdateCheckInterval": "Comprobar actualizaciones en segundo plano",
     "neverManualOnly": "Nunca, solo manual",
     "appearance": "Apariencia",
-    "showWebInAppView": "Mostrar vista de la web de origen",
     "pinUpdates": "Anclar actualizaciones al principio",
     "updates": "Actualizaciones",
     "sourceSpecific": "Fuente específica",
@@ -341,7 +341,7 @@
     "GHReqPrefix": "Instancia 'sky22333/hubproxy' para las\nsolicitudes de GitHub",
     "includeZips": "Incluir archivos ZIP",
     "zippedApkFilterRegEx": "Filtrar APKs dentro del ZIP",
-    "googleVerificationWarningP1": "Google ha anunciado que, a partir de 2026/2027, todas las aplicaciones en dispositivos Android \"certificados\" requerirán que el desarrollador envíe detalles de identidad personal directamente a Google.\n\nDado que los desarrolladores de esta aplicación no están de acuerdo con este requisito, Updatium ya no trabajará en dispositivos Android certificados después de ese tiempo.",
+    "googleVerificationWarningP1": "Google ha anunciado que, a partir de 2026/2027, todas las aplicaciones en dispositivos Android \"certificados\" requerirán que el desarrollador envíe detalles de identidad personal directamente a Google.\n\nDespués de eso, Updatium puede dejar de funcionar en dispositivos Android certificados.",
     "googleVerificationWarningP2": "Vaya a https://keepandroidopen.org/ para más información.",
     "googleVerificationWarningP3": "Tenga en cuenta que a corto plazo, puede seguir siendo posible instalar aplicaciones \"no verificadas\" (no compatibles) a través de un proceso de \"flujo avanzado\" que Google ha prometido implementar después de una reacción amplia a su anuncio, pero no han detallado cómo funcionaría así que no está claro si realmente preservará las libertades de los usuarios de cualquier manera práctica.\n\nEn cualquier caso, el movimiento de Google es un paso significativo hacia el final de la computación libre de uso general para los individuos.\n\nLos sistemas operativos no certificados, como GrapheneOS, no deberían ser afectados por esto mientras se les permita seguir existiendo.",
     "multipleSigners": "Múltiples firmas",
@@ -408,5 +408,14 @@
     "certificateHash": {
         "one": "Certificado Hash",
         "other": "Hashes certificado"
-    }
+    },
+    "securityDisclaimerTitle": "Aviso Legal y de Seguridad",
+    "license": "Licencia",
+    "licenseText": "Esta aplicación se distribuye bajo la Licencia GPL v3.",
+    "disclaimer": "Descargo de responsabilidad",
+    "disclaimerText": "Esta aplicación no distribuye, aloja ni verifica ninguna de las aplicaciones externas. El usuario asume toda la responsabilidad sobre la seguridad y legalidad de cualquier software instalado a través de esta herramienta.\n\nhttps://github.com/omeritzics/Updatium es el único lugar oficial para descargar Updatium - es muy desaconsejable descargarlo de otros lugares ya que las fuentes no oficiales pueden ser inseguras.",
+    "privacy": "Privacidad",
+    "privacyText": "Esta aplicación está centrada en la privacidad y no recopila datos personales.",
+    "acceptAndContinue": "Aceptar y continuar",
+    "decline": "Rechazar"
 }

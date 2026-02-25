@@ -1,10 +1,11 @@
+import 'package:animations/animations.dart';
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:updatium/components/custom_app_bar.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -49,6 +50,8 @@ void showChangeLogDialog(
                       decoration: TextDecoration.underline,
                       fontStyle: FontStyle.italic,
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   onTap: () {
                     launchUrlString(
@@ -62,33 +65,37 @@ void showChangeLogDialog(
               ? height16
               : const SizedBox.shrink(),
           appSource.changeLogIfAnyIsMarkDown
-              ? SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height - 350,
-                  child: Markdown(
-                    styleSheet: MarkdownStyleSheet(
-                      blockquoteDecoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
+              ? ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.5,
+                  ),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: Markdown(
+                      styleSheet: MarkdownStyleSheet(
+                        blockquoteDecoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                        ),
                       ),
-                    ),
-                    data: changeLog,
-                    onTapLink: (text, href, title) {
-                      if (href != null) {
-                        launchUrlString(
-                          href.startsWith('http://') ||
-                                  href.startsWith('https://')
-                              ? href
-                              : '${Uri.parse(app.url).origin}/$href',
-                          mode: LaunchMode.externalApplication,
-                        );
-                      }
-                    },
-                    extensionSet: md.ExtensionSet(
-                      md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                      [
-                        md.EmojiSyntax(),
-                        ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
-                      ],
+                      data: changeLog,
+                      onTapLink: (text, href, title) {
+                        if (href != null) {
+                          launchUrlString(
+                            href.startsWith('http://') ||
+                                    href.startsWith('https://')
+                                ? href
+                                : '${Uri.parse(app.url).origin}/$href',
+                            mode: LaunchMode.externalApplication,
+                          );
+                        }
+                      },
+                      extensionSet: md.ExtensionSet(
+                        md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                        [
+                          md.EmojiSyntax(),
+                          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
+                        ],
+                      ),
                     ),
                   ),
                 )
@@ -137,6 +144,7 @@ class AppsPageState extends State<AppsPage> {
   );
   Set<String> selectedAppIds = {};
   DateTime? refreshingSince;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
 
   // Cache gradient stops by category count to avoid recomputation
   final Map<int, List<double>> _stopsCache = {};
@@ -161,15 +169,23 @@ class AppsPageState extends State<AppsPage> {
     }
   }
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
-
   late final ScrollController scrollController = ScrollController();
 
   var sourceProvider = SourceProvider();
 
   @override
   Widget build(BuildContext context) {
+    // Consistent spacing constants
+    const height4 = SizedBox(height: 4);
+    const height8 = SizedBox(height: 8);
+    const height12 = SizedBox(height: 12);
+    const height16 = SizedBox(height: 16);
+    const height24 = SizedBox(height: 24);
+    const height32 = SizedBox(height: 32);
+    const width4 = SizedBox(width: 4);
+    const width6 = SizedBox(width: 6);
+    const width16 = SizedBox(width: 16);
+
     // Consistent spacing constants
     const height4 = SizedBox(height: 4);
     const height8 = SizedBox(height: 8);
@@ -193,7 +209,9 @@ class AppsPageState extends State<AppsPage> {
       return appsProvider
           .checkUpdates()
           .catchError((e) {
-            showError(e is Map ? e['errors'] : e, context);
+            if (mounted) {
+              showError(e is Map ? e['errors'] : e, context);
+            }
             return <App>[];
           })
           .whenComplete(() {
@@ -230,7 +248,8 @@ class AppsPageState extends State<AppsPage> {
         return false;
       }
       if (app.app.installedVersion == null &&
-          (settingsProvider.hideNonInstalled || !(filter.includeNonInstalled))) {
+          (settingsProvider.hideNonInstalled ||
+              !(filter.includeNonInstalled))) {
         return false;
       }
       if (filter.nameFilter.isNotEmpty || filter.authorFilter.isNotEmpty) {
@@ -416,15 +435,54 @@ class AppsPageState extends State<AppsPage> {
       return [
         if (listedApps.isEmpty)
           SliverFillRemaining(
+            hasScrollBody: false,
             child: Center(
-              child: Text(
-                appsProvider.apps.isEmpty
-                    ? appsProvider.loadingApps
-                          ? tr('pleaseWait')
-                          : tr('noApps')
-                    : tr('noAppsForFilter'),
-                style: Theme.of(context).textTheme.headlineMedium,
-                textAlign: TextAlign.center,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.widgets,
+                      size: 80,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.primary.withOpacity(0.6),
+                    ),
+                    height24,
+                    Text(
+                      appsProvider.apps.isEmpty
+                          ? appsProvider.loadingApps
+                                ? tr('pleaseWait')
+                                : tr('noApps')
+                          : tr('noAppsForFilter'),
+                      style: Theme.of(context).textTheme.headlineMedium,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          () {
+                            final subtext = tr('noAppsSubtext');
+                            // Hide subtext if translation key is not found (returns the key itself)
+                            return subtext == 'noAppsSubtext' ? '' : subtext;
+                          }(),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withOpacity(0.7),
+                              ),
+                          textAlign: TextAlign.center,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -451,75 +509,11 @@ class AppsPageState extends State<AppsPage> {
       ];
     }
 
-    getUpdateButton(int appIndex) {
-      // Legacy single-icon updater - kept for backward compatibility but not used
-      // by the new FilledButton approach.
-      return IconButton(
-        visualDensity: VisualDensity.compact,
-        color: Theme.of(context).colorScheme.primary,
-        tooltip: listedApps[appIndex].app.additionalSettings['trackOnly'] ==
-                true
-            ? tr('markUpdated')
-            : tr('update'),
-        onPressed: appsProvider.areDownloadsRunning()
-            ? null
-            : () {
-                appsProvider
-                    .downloadAndInstallLatestApps([
-                      listedApps[appIndex].app.id,
-                    ], globalNavigatorKey.currentContext)
-                    .catchError((e) {
-                      showError(e, context);
-                      return <String>[];
-                    });
-              },
-        icon: Icon(
-          listedApps[appIndex].app.additionalSettings['trackOnly'] == true
-              ? Icons.check_circle_outline
-              : Icons.install_mobile,
-        ),
-      );
-    }
-
     getAppIcon(int appIndex) {
       return GestureDetector(
-        child: FutureBuilder(
-          future: appsProvider.updateAppIcon(listedApps[appIndex].app.id),
-          builder: (ctx, val) {
-            return listedApps[appIndex].icon != null
-                ? Image.memory(
-                    listedApps[appIndex].icon!,
-                    gaplessPlayback: true,
-                    opacity: AlwaysStoppedAnimation(
-                      listedApps[appIndex].installedInfo == null ? 0.6 : 1,
-                    ),
-                  )
-                : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.rotationZ(0.31),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15),
-                          child: Image(
-                            image: const AssetImage(
-                              'assets/graphics/icon_small.png',
-                            ),
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white.withOpacity(0.4)
-                                : Colors.white.withOpacity(0.3),
-                            colorBlendMode: BlendMode.modulate,
-                            gaplessPlayback: true,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-          },
-        ),
+        onTap: () {
+          // Handle tap if needed
+        },
         onDoubleTap: () {
           pm.openApp(listedApps[appIndex].app.id);
         },
@@ -527,44 +521,24 @@ class AppsPageState extends State<AppsPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AppPage(
-                appId: listedApps[appIndex].app.id,
-                showOppositeOfPreferredView: true,
-              ),
+              builder: (context) => AppPage(appId: listedApps[appIndex].app.id),
             ),
           );
         },
+        child: _buildSimpleGridIcon(listedApps[appIndex].app),
       );
     }
 
-    getVersionText(int appIndex) {
-      return listedApps[appIndex].app.installedVersion ?? tr('notInstalled');
-    }
-
-    getChangesButtonString(int appIndex, bool hasChangeLogFn) {
-      return listedApps[appIndex].app.releaseDate == null
-          ? hasChangeLogFn
-                ? tr('changes')
-                : ''
-          : DateFormat(
-              'yyyy-MM-dd',
-            ).format(listedApps[appIndex].app.releaseDate!.toLocal());
-    }
-
     getSingleAppHorizTile(int index) {
-      var showChangesFn = getChangeLogFn(context, listedApps[index].app);
-      var hasUpdate =
-          listedApps[index].app.installedVersion != null &&
-          listedApps[index].app.installedVersion !=
-              listedApps[index].app.latestVersion;
       // New trailing: show Install / Update button or Updated indicator
-      Widget trailingRow = Builder(builder: (ctx) {
-        final ai = listedApps[index];
-        final app = ai.app;
-        final isInstalled = app.installedVersion != null;
-        final hasUpdateLocal = isInstalled &&
-            app.installedVersion != app.latestVersion;
-        final isTrackOnly = app.additionalSettings['trackOnly'] == true;
+      Widget trailingRow = Builder(
+        builder: (ctx) {
+          final ai = listedApps[index];
+          final app = ai.app;
+          final isInstalled = app.installedVersion != null;
+          final hasUpdateLocal =
+              isInstalled && app.installedVersion != app.latestVersion;
+          final isTrackOnly = app.additionalSettings['trackOnly'] == true;
 
         Widget action;
         if (isTrackOnly) {
@@ -629,16 +603,17 @@ class AppsPageState extends State<AppsPage> {
           );
         }
 
-        return SizedBox(
-          width: 120,
-          height: double.infinity,
-          child: Center(child: action),
-        );
-      });
+          return SizedBox(
+            width: 120,
+            height: double.infinity,
+            child: Center(child: action),
+          );
+        },
+      );
 
       var transparent = Theme.of(
         context,
-      ).colorScheme.surface.withAlpha(0).value;
+      ).colorScheme.surface.withAlpha(0).toARGB32();
       List<double> stops = [
         ...listedApps[index].app.categories.asMap().entries.map(
           (e) =>
@@ -666,77 +641,106 @@ class AppsPageState extends State<AppsPage> {
             ],
           ),
         ),
-        child: ListTile(
-          tileColor: listedApps[index].app.pinned
-              ? Colors.grey.withOpacity(0.1)
-              : Colors.transparent,
-          selectedTileColor: Theme.of(context).colorScheme.primary.withOpacity(
-            listedApps[index].app.pinned ? 0.2 : 0.1,
-          ),
-          selected: selectedAppIds
-              .map((e) => e)
-              .contains(listedApps[index].app.id),
-          onLongPress: () {
-            toggleAppSelected(listedApps[index].app);
-          },
-          leading: getAppIcon(index),
-          title: Text(
-            maxLines: 1,
-            listedApps[index].name,
-            style: TextStyle(
-              overflow: TextOverflow.ellipsis,
-              fontWeight: listedApps[index].app.pinned
-                  ? FontWeight.bold
-                  : FontWeight.normal,
-            ),
-          ),
-          subtitle: Text(
-            tr('byX', args: [listedApps[index].author]),
-            maxLines: 1,
-            style: TextStyle(
-              overflow: TextOverflow.ellipsis,
-              fontWeight: listedApps[index].app.pinned
-                  ? FontWeight.bold
-                  : FontWeight.normal,
-            ),
-          ),
-          trailing: listedApps[index].downloadProgress != null
-              ? SizedBox(
-                  child: Text(
-                    listedApps[index].downloadProgress! >= 0
-                        ? tr(
-                            'percentProgress',
-                            args: [
-                              listedApps[index].downloadProgress!
-                                  .toInt()
-                                  .toString(),
-                            ],
-                          )
-                        : tr('installing'),
-                    textAlign: (listedApps[index].downloadProgress! >= 0)
-                        ? TextAlign.start
-                        : TextAlign.end,
-                  ),
-                )
-              : trailingRow,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
           onTap: () {
             if (selectedAppIds.isNotEmpty) {
               toggleAppSelected(listedApps[index].app);
             } else {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) =>
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
                       AppPage(appId: listedApps[index].app.id),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                        return SharedAxisTransition(
+                          animation: animation,
+                          secondaryAnimation: secondaryAnimation,
+                          transitionType: SharedAxisTransitionType.horizontal,
+                          child: child,
+                        );
+                      },
                 ),
               );
             }
           },
+          onLongPress: () {
+            toggleAppSelected(listedApps[index].app);
+          },
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 8,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: selectedAppIds.contains(listedApps[index].app.id)
+                  ? BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 2,
+                    )
+                  : BorderSide.none,
+            ),
+            tileColor: Theme.of(context).colorScheme.surface,
+            selectedTileColor: Theme.of(
+              context,
+            ).colorScheme.primaryContainer.withOpacity(0.3),
+            selected: selectedAppIds.contains(listedApps[index].app.id),
+            leading: SizedBox(
+              height: MediaQuery.of(context).size.width * 0.1,
+              width: MediaQuery.of(context).size.width * 0.1,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: getAppIcon(index),
+              ),
+            ),
+            title: Text(
+              listedApps[index].name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: listedApps[index].app.pinned
+                    ? FontWeight.w600
+                    : FontWeight.w500,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            subtitle: Text(
+              tr('byX', args: [listedApps[index].author]),
+              maxLines: 1,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontWeight: listedApps[index].app.pinned
+                    ? FontWeight.w500
+                    : FontWeight.w400,
+              ),
+            ),
+            trailing: listedApps[index].downloadProgress != null
+                ? SizedBox(
+                    child: Text(
+                      listedApps[index].downloadProgress! >= 0
+                          ? tr(
+                              'percentProgress',
+                              args: [
+                                listedApps[index].downloadProgress!
+                                    .toInt()
+                                    .toString(),
+                              ],
+                            )
+                          : tr('installing'),
+                      textAlign: (listedApps[index].downloadProgress! >= 0)
+                          ? TextAlign.start
+                          : TextAlign.end,
+                    ),
+                  )
+                : trailingRow,
+          ),
         ),
       );
     }
 
-    List<double> _categoryStops(List<String> categories) {
+    List<double> categoryStops(List<String> categories) {
       final n = categories.length;
       final cached = _stopsCache[n];
       if (cached != null) return cached;
@@ -744,7 +748,9 @@ class AppsPageState extends State<AppsPage> {
       if (n > 1) {
         result = [
           ...List<double>.generate(
-              n, (i) => ((i / (n - 1)) - 0.0001).clamp(0.0, 1.0)),
+            n,
+            (i) => ((i / (n - 1)) - 0.0001).clamp(0.0, 1.0),
+          ),
           1.0,
         ];
       } else if (n == 1) {
@@ -763,38 +769,31 @@ class AppsPageState extends State<AppsPage> {
               listedApps[index].app.latestVersion;
       var transparent = Theme.of(
         context,
-      ).colorScheme.surface.withAlpha(0).value;
+      ).colorScheme.surface.withAlpha(0).toARGB32();
       final categories = listedApps[index].app.categories;
-      final stops = _categoryStops(categories);
+      final stops = categoryStops(categories);
 
-      return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(
-            stops: stops,
-            begin: const Alignment(-1, -1),
-            end: const Alignment(1, 1),
-            colors: [
-              ...listedApps[index].app.categories.map(
-                (e) => Color(
-                  settingsProvider.categories[e] ?? transparent,
-                ).withAlpha(40),
-              ),
-              Color(transparent),
-            ],
-          ),
-        ),
+      return Card.outlined(
+        margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
         child: InkWell(
-          borderRadius: BorderRadius.circular(12),
           onTap: () {
             if (selectedAppIds.isNotEmpty) {
               toggleAppSelected(listedApps[index].app);
             } else {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) =>
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
                       AppPage(appId: listedApps[index].app.id),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                        return SharedAxisTransition(
+                          animation: animation,
+                          secondaryAnimation: secondaryAnimation,
+                          transitionType: SharedAxisTransitionType.horizontal,
+                          child: child,
+                        );
+                      },
                 ),
               );
             }
@@ -893,53 +892,55 @@ class AppsPageState extends State<AppsPage> {
                           app.installedVersion != app.latestVersion;
                       final isTrackOnly = app.additionalSettings['trackOnly'] == true;
 
-                      if (isTrackOnly) {
-                        return const SizedBox.shrink();
-                      }
+                            if (isTrackOnly) {
+                              return Icon(
+                                Icons.check_circle,
+                                color: Colors.green[600],
+                                size: MediaQuery.of(context).size.width * 0.04,
+                              );
+                            }
 
-                      if (!isInstalled) {
-                        return FilledButton.tonal(
-                          onPressed: appsProvider.areDownloadsRunning()
-                              ? null
-                              : () {
-                                  appsProvider
-                                      .downloadAndInstallLatestApps([
-                                        app.id,
-                                      ],
-                                          globalNavigatorKey.currentContext)
-                                      .catchError((e) {
-                                    showError(e, context);
-                                    return <String>[];
-                                  });
-                                },
-                          style: const ButtonStyle(
-                            visualDensity: VisualDensity.compact,
-                          ),
-                          child: Text(tr('install')),
-                        );
-                      }
+                            if (!isInstalled) {
+                              return FilledButton.tonal(
+                                onPressed: appsProvider.areDownloadsRunning()
+                                    ? null
+                                    : () {
+                                        appsProvider
+                                            .downloadAndInstallLatestApps(
+                                              [app.id],
+                                              globalNavigatorKey.currentContext,
+                                            )
+                                            .catchError((e) {
+                                              if (mounted) {
+                                                showError(e, context);
+                                              }
+                                              return <String>[];
+                                            });
+                                      },
+                                child: Text(tr('install')),
+                              );
+                            }
 
-                      if (hasUpdateLocal) {
-                        return FilledButton.tonal(
-                          onPressed: appsProvider.areDownloadsRunning()
-                              ? null
-                              : () {
-                                  appsProvider
-                                      .downloadAndInstallLatestApps([
-                                        app.id,
-                                      ],
-                                          globalNavigatorKey.currentContext)
-                                      .catchError((e) {
-                                    showError(e, context);
-                                    return <String>[];
-                                  });
-                                },
-                          style: const ButtonStyle(
-                            visualDensity: VisualDensity.compact,
-                          ),
-                          child: Text(tr('update')),
-                        );
-                      }
+                            if (hasUpdateLocal) {
+                              return FilledButton.tonal(
+                                onPressed: appsProvider.areDownloadsRunning()
+                                    ? null
+                                    : () {
+                                        appsProvider
+                                            .downloadAndInstallLatestApps(
+                                              [app.id],
+                                              globalNavigatorKey.currentContext,
+                                            )
+                                            .catchError((e) {
+                                              if (mounted) {
+                                                showError(e, context);
+                                              }
+                                              return <String>[];
+                                            });
+                                      },
+                                child: Text(tr('update')),
+                              );
+                            }
 
                       return Row(
                         mainAxisSize: MainAxisSize.min,
@@ -984,7 +985,7 @@ class AppsPageState extends State<AppsPage> {
     }
 
     getCategoryCollapsibleTile(int index) {
-      var tiles = listedApps
+      var filteredEntries = listedApps
           .asMap()
           .entries
           .where(
@@ -993,6 +994,9 @@ class AppsPageState extends State<AppsPage> {
                 e.value.app.categories.isEmpty &&
                     listedCategories[index] == null,
           )
+          .toList();
+
+      var tiles = filteredEntries
           .map((e) => getSingleAppHorizTile(e.key))
           .toList();
 
@@ -1002,37 +1006,63 @@ class AppsPageState extends State<AppsPage> {
         title: Text(
           capFirstChar(listedCategories[index] ?? tr('noCategory')),
           style: const TextStyle(fontWeight: FontWeight.bold),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         controlAffinity: ListTileControlAffinity.leading,
         trailing: Text(tiles.length.toString()),
-        children: tiles,
+        children: [
+          settingsProvider.useGridView
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 16.0,
+                  ),
+                  child: GridView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent:
+                          MediaQuery.of(context).size.width * 0.5,
+                      childAspectRatio: 0.55,
+                      crossAxisSpacing:
+                          MediaQuery.of(context).size.width * 0.04,
+                      mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
+                    ),
+                    itemCount: filteredEntries.length,
+                    itemBuilder: (context, gridIndex) {
+                      return getSingleAppGridTile(
+                        listedApps.indexOf(filteredEntries[gridIndex].value),
+                      );
+                    },
+                  ),
+                )
+              : Column(children: tiles),
+        ],
       );
     }
 
     getSelectAllButton() {
       return selectedAppIds.isEmpty
-          ? TextButton.icon(
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
+          ? createAppTextButtonWithIcon(
               onPressed: () {
                 selectThese(listedApps.map((e) => e.app).toList());
               },
               icon: Icon(
-                Icons.select_all_outlined,
+                Icons.select_all,
                 color: Theme.of(context).colorScheme.primary,
               ),
               label: Text(listedApps.length.toString()),
             )
-          : TextButton.icon(
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
+          : createAppTextButtonWithIcon(
               onPressed: () {
                 selectedAppIds.isEmpty
                     ? selectThese(listedApps.map((e) => e.app).toList())
                     : clearSelected();
               },
               icon: Icon(
-                selectedAppIds.isEmpty
-                    ? Icons.select_all_outlined
-                    : Icons.deselect_outlined,
+                selectedAppIds.isEmpty ? Icons.select_all : Icons.deselect,
                 color: Theme.of(context).colorScheme.primary,
               ),
               label: Text(selectedAppIds.length.toString()),
@@ -1138,11 +1168,15 @@ class AppsPageState extends State<AppsPage> {
                         globalNavigatorKey.currentContext,
                       )
                       .catchError((e) {
-                        showError(e, context);
+                        if (mounted) {
+                          showError(e, context);
+                        }
                         return <String>[];
                       })
                       .then((value) {
-                        if (value.isNotEmpty && shouldInstallUpdates) {
+                        if (value.isNotEmpty &&
+                            shouldInstallUpdates &&
+                            mounted) {
                           showMessage(tr('appsUpdated'), context);
                         }
                       });
@@ -1212,7 +1246,9 @@ class AppsPageState extends State<AppsPage> {
             );
           }
         } catch (err) {
-          showError(err, context);
+          if (mounted) {
+            showError(err, context);
+          }
         }
       };
     }
@@ -1236,13 +1272,13 @@ class AppsPageState extends State<AppsPage> {
               ),
             ),
             actions: [
-              TextButton(
+              createAppTextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(tr('no')),
               ),
-              TextButton(
+              createAppTextButton(
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   appsProvider.saveApps(
@@ -1291,7 +1327,7 @@ class AppsPageState extends State<AppsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  TextButton(
+                  createAppTextButton(
                     onPressed: pinSelectedApps,
                     child: Text(
                       selectedApps.where((element) => element.pinned).isEmpty
@@ -1301,7 +1337,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  TextButton(
+                  createAppTextButton(
                     onPressed: () {
                       String urls = '';
                       for (var a in selectedApps) {
@@ -1320,7 +1356,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  TextButton(
+                  createAppTextButton(
                     onPressed: selectedAppIds.isEmpty
                         ? null
                         : () {
@@ -1349,7 +1385,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  TextButton(
+                  createAppTextButton(
                     onPressed: () {
                       appsProvider
                           .downloadAppAssets(
@@ -1374,7 +1410,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  TextButton(
+                  createAppTextButton(
                     onPressed: appsProvider.areDownloadsRunning()
                         ? null
                         : showMassMarkDialog,
@@ -1393,32 +1429,48 @@ class AppsPageState extends State<AppsPage> {
 
     getMainBottomButtons() {
       return [
-        IconButton(
-          visualDensity: VisualDensity.compact,
-          onPressed: getMassObtainFunction(),
-          tooltip: selectedAppIds.isEmpty
+        Semantics(
+          button: true,
+          label: selectedAppIds.isEmpty
               ? tr('installUpdateApps')
               : tr('installUpdateSelectedApps'),
-          icon: const Icon(Icons.file_download_outlined),
+          hint: selectedAppIds.isEmpty
+              ? 'Install or update all apps'
+              : 'Install or update ${selectedAppIds.length} selected apps',
+          child: IconButton(
+            visualDensity: VisualDensity.compact,
+            onPressed: getMassObtainFunction(),
+            tooltip: selectedAppIds.isEmpty
+                ? tr('installUpdateApps')
+                : tr('installUpdateSelectedApps'),
+            icon: const Icon(Icons.file_download),
+          ),
         ),
-        IconButton(
-          visualDensity: VisualDensity.compact,
-          onPressed: selectedAppIds.isEmpty
-              ? null
-              : () {
-                  appsProvider.removeAppsWithModal(
-                    context,
-                    selectedApps.toList(),
-                  );
-                },
-          tooltip: tr('removeSelectedApps'),
-          icon: const Icon(Icons.delete_outline_outlined),
+        Semantics(
+          button: true,
+          label: tr('removeSelectedApps'),
+          hint: selectedAppIds.isEmpty
+              ? 'No apps selected'
+              : 'Remove ${selectedAppIds.length} selected apps',
+          child: IconButton(
+            visualDensity: VisualDensity.compact,
+            onPressed: selectedAppIds.isEmpty
+                ? null
+                : () {
+                    appsProvider.removeAppsWithModal(
+                      context,
+                      selectedApps.toList(),
+                    );
+                  },
+            tooltip: tr('removeSelectedApps'),
+            icon: const Icon(Icons.delete),
+          ),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
           onPressed: selectedAppIds.isEmpty ? null : launchCategorizeDialog(),
           tooltip: tr('categorize'),
-          icon: const Icon(Icons.category_outlined),
+          icon: const Icon(Icons.category),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
@@ -1512,39 +1564,7 @@ class AppsPageState extends State<AppsPage> {
       return Row(
         children: [
           getSelectAllButton(),
-          IconButton(
-            color: Theme.of(context).colorScheme.primary,
-            style: const ButtonStyle(visualDensity: VisualDensity.compact),
-            tooltip: settingsProvider.useGridView
-                ? tr('listView')
-                : tr('gridView'),
-            onPressed: () {
-              settingsProvider.useGridView = !settingsProvider.useGridView;
-            },
-            icon: Icon(
-              settingsProvider.useGridView
-                  ? Icons.view_list_rounded
-                  : Icons.grid_view_rounded,
-            ),
-          ),
-          IconButton(
-            color: Theme.of(context).colorScheme.primary,
-            style: const ButtonStyle(visualDensity: VisualDensity.compact),
-            tooltip: isFilterOff
-                ? tr('filterApps')
-                : '${tr('filter')} - ${tr('remove')}',
-            onPressed: isFilterOff
-                ? showFilterDialog
-                : () {
-                    setState(() {
-                      filter = AppsFilter();
-                    });
-                  },
-            icon: Icon(
-              isFilterOff ? Icons.search_rounded : Icons.search_off_rounded,
-            ),
-          ),
-          const SizedBox(width: 10),
+          width16,
           const VerticalDivider(),
           Expanded(
             child: Row(
@@ -1575,10 +1595,10 @@ class AppsPageState extends State<AppsPage> {
         if (settingsProvider.useGridView) {
           return SliverGrid(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 150,
-              childAspectRatio: 0.8,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
+              maxCrossAxisExtent: 200,
+              childAspectRatio: 0.55,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
             ),
             delegate: SliverChildBuilderDelegate((
               BuildContext context,
@@ -1603,7 +1623,6 @@ class AppsPageState extends State<AppsPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: RefreshIndicator(
-        key: _refreshIndicatorKey,
         onRefresh: refresh,
         child: Scrollbar(
           interactive: true,
@@ -1612,7 +1631,77 @@ class AppsPageState extends State<AppsPage> {
             physics: const AlwaysScrollableScrollPhysics(),
             controller: scrollController,
             slivers: <Widget>[
-              CustomAppBar(title: tr('appsString')),
+              SliverAppBar(
+                pinned: true,
+                automaticallyImplyLeading: false,
+                expandedHeight: MediaQuery.of(context).size.height * 0.15,
+                actions: [
+                  Consumer<AppsProvider>(
+                    builder: (context, appsProvider, child) {
+                      var isFilterOff = filter.isIdenticalTo(
+                        neutralFilter,
+                        settingsProvider,
+                      );
+                      return IconButton(
+                        color: Theme.of(context).colorScheme.primary,
+                        style: const ButtonStyle(
+                          visualDensity: VisualDensity.compact,
+                        ),
+                        tooltip: isFilterOff
+                            ? tr('filterApps')
+                            : '${tr('filter')} - ${tr('remove')}',
+                        onPressed: isFilterOff
+                            ? showFilterDialog
+                            : () {
+                                setState(() {
+                                  filter = AppsFilter();
+                                });
+                              },
+                        icon: Icon(
+                          isFilterOff
+                              ? Icons.search_rounded
+                              : Icons.search_off_rounded,
+                        ),
+                      );
+                    },
+                  ),
+                  Consumer<SettingsProvider>(
+                    builder: (context, settingsProvider, child) {
+                      return IconButton(
+                        color: Theme.of(context).colorScheme.primary,
+                        style: const ButtonStyle(
+                          visualDensity: VisualDensity.compact,
+                        ),
+                        tooltip: settingsProvider.useGridView
+                            ? tr('listView')
+                            : tr('gridView'),
+                        onPressed: () {
+                          settingsProvider.useGridView =
+                              !settingsProvider.useGridView;
+                        },
+                        icon: Icon(
+                          settingsProvider.useGridView
+                              ? Icons.view_list_rounded
+                              : Icons.grid_view_rounded,
+                        ),
+                      );
+                    },
+                  ),
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                  titlePadding: const EdgeInsets.only(
+                    left: 24,
+                    right: 80,
+                    bottom: 20,
+                  ),
+                  title: Text(
+                    tr('appsString'),
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.bodyMedium!.color,
+                    ),
+                  ),
+                ),
+              ),
               ...getLoadingWidgets(),
               getDisplayedList(),
             ],
@@ -1640,6 +1729,96 @@ class AppsPageState extends State<AppsPage> {
       MaterialPageRoute(
         builder: (BuildContext context) => AppPage(appId: app.app.id),
       ),
+    );
+  }
+
+  Widget _buildSimpleGridIcon(App app) {
+    return Consumer<AppsProvider>(
+      builder: (ctx, appsProvider, child) {
+        final appInMemory = appsProvider.apps[app.id];
+
+        // If icon is already loaded, display it immediately
+        if (appInMemory?.icon != null) {
+          return Image.memory(
+            appInMemory!.icon!,
+            gaplessPlayback: true,
+            opacity: AlwaysStoppedAnimation(
+              appInMemory.installedInfo == null ? 0.6 : 1,
+            ),
+            errorBuilder: (context, error, stackTrace) {
+              return _buildFallbackIcon();
+            },
+          );
+        }
+
+        // Load icon asynchronously if not available
+        return FutureBuilder(
+          future: appsProvider.updateAppIcon(app.id),
+          builder: (ctx, snapshot) {
+            final updatedAppInMemory = appsProvider.apps[app.id];
+
+            if (updatedAppInMemory?.icon != null) {
+              return Image.memory(
+                updatedAppInMemory!.icon!,
+                gaplessPlayback: true,
+                opacity: AlwaysStoppedAnimation(
+                  updatedAppInMemory.installedInfo == null ? 0.6 : 1,
+                ),
+                errorBuilder: (context, error, stackTrace) {
+                  return _buildFallbackIcon();
+                },
+              );
+            }
+
+            // Show fallback while loading or if failed
+            return _buildFallbackIcon();
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildFallbackIcon() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.rotationZ(0.31),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Image(
+              image: const AssetImage('assets/graphics/icon_small.png'),
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white.withOpacity(0.4)
+                  : Colors.white.withOpacity(0.3),
+              colorBlendMode: BlendMode.modulate,
+              gaplessPlayback: true,
+              errorBuilder: (context, error, stackTrace) {
+                // Final fallback - colored container
+                return Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    Icons.apps,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withOpacity(0.6),
+                    size: 24,
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -4,6 +4,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -208,7 +209,7 @@ class NotificationsProvider {
   Future<void> initialize() async {
     isInitialized =
         await notifications.initialize(
-          const InitializationSettings(
+          settings: const InitializationSettings(
             android: AndroidInitializationSettings('ic_notification'),
           ),
           onDidReceiveNotificationResponse: (NotificationResponse response) {
@@ -235,11 +236,11 @@ class NotificationsProvider {
       var content = (payload ?? '\n\n').split('\n').sublist(1).join('\n');
       globalNavigatorKey.currentState?.push(
         PageRouteBuilder(
-          pageBuilder: (context, _, __) => AlertDialog(
+          pageBuilder: (context, _, _) => AlertDialog(
             title: Text(title),
             content: Text(content),
             actions: [
-              TextButton(
+              createAppTextButton(
                 onPressed: () {
                   Navigator.of(context).pop(null);
                   if (doublePop) {
@@ -259,7 +260,7 @@ class NotificationsProvider {
     if (!isInitialized) {
       await initialize();
     }
-    await notifications.cancel(id);
+    await notifications.cancel(id: id);
   }
 
   Future<void> notifyRaw(
@@ -282,10 +283,10 @@ class NotificationsProvider {
       await initialize();
     }
     await notifications.show(
-      id,
-      title,
-      message,
-      NotificationDetails(
+      id: id,
+      title: title,
+      body: message,
+      notificationDetails: NotificationDetails(
         android: AndroidNotificationDetails(
           channelCode,
           channelName,

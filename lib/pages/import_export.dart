@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/app_sources/fdroidrepo.dart';
-import 'package:updatium/components/custom_app_bar.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -31,17 +29,6 @@ class _ImportExportPageState extends State<ImportExportPage> {
     SourceProvider sourceProvider = SourceProvider();
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
-
-    var outlineButtonStyle = ButtonStyle(
-      shape: WidgetStateProperty.all(
-        StadiumBorder(
-          side: BorderSide(
-            width: 1,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-      ),
-    );
 
     urlListImport({String? initValue, bool overrideInitValid = false}) {
       showDialog<Map<String, dynamic>?>(
@@ -204,108 +191,6 @@ class _ImportExportPageState extends State<ImportExportPage> {
       });
     }
 
-    runSourceSearch(AppSource source) {
-      () async {
-            var values = await showDialog<Map<String, dynamic>?>(
-              context: context,
-              builder: (BuildContext ctx) {
-                return GeneratedFormModal(
-                  title: tr('searchX', args: [source.name]),
-                  items: [
-                    [
-                      GeneratedFormTextField(
-                        'searchQuery',
-                        label: tr('searchQuery'),
-                        required: source.name != FDroidRepo().name,
-                      ),
-                    ],
-                    ...source.searchQuerySettingFormItems.map((e) => [e]),
-                    [
-                      GeneratedFormTextField(
-                        'url',
-                        label: source.hosts.isNotEmpty
-                            ? tr('overrideSource')
-                            : plural('url', 1).substring(2),
-                        defaultValue: source.hosts.isNotEmpty
-                            ? source.hosts[0]
-                            : '',
-                        required: true,
-                      ),
-                    ],
-                  ],
-                );
-              },
-            );
-            if (values != null) {
-              setState(() {
-                importInProgress = true;
-              });
-              if (source.hosts.isEmpty || values['url'] != source.hosts[0]) {
-                source = sourceProvider.getSource(
-                  values['url'],
-                  overrideSource: source.runtimeType.toString(),
-                );
-              }
-              var urlsWithDescriptions = await source.search(
-                values['searchQuery'] as String,
-                querySettings: values,
-              );
-              if (urlsWithDescriptions.isNotEmpty) {
-                var selectedUrls =
-                    // ignore: use_build_context_synchronously
-                    await showDialog<List<String>?>(
-                      context: context,
-                      builder: (BuildContext ctx) {
-                        return SelectionModal(
-                          entries: urlsWithDescriptions,
-                          selectedByDefault: false,
-                        );
-                      },
-                    );
-                if (selectedUrls != null && selectedUrls.isNotEmpty) {
-                  var errors = await appsProvider.addAppsByURL(
-                    selectedUrls,
-                    sourceOverride: source,
-                  );
-                  if (errors.isEmpty) {
-                    // ignore: use_build_context_synchronously
-                    showMessage(
-                      tr(
-                        'importedX',
-                        args: [
-                          plural('apps', selectedUrls.length).toLowerCase(),
-                        ],
-                      ),
-                      context,
-                    );
-                  } else {
-                    // ignore: use_build_context_synchronously
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext ctx) {
-                        return ImportErrorDialog(
-                          urlsLength: selectedUrls.length,
-                          errors: errors,
-                        );
-                      },
-                    );
-                  }
-                }
-              } else {
-                throw UpdatiumError(tr('noResults'));
-              }
-            }
-          }()
-          .catchError((e) {
-            showError(e, context);
-          })
-          .whenComplete(() {
-            setState(() {
-              importInProgress = false;
-            });
-          });
-    }
-
     runMassSourceImport(MassAppUrlSource source) {
       () async {
             var values = await showDialog<Map<String, dynamic>?>(
@@ -379,7 +264,22 @@ class _ImportExportPageState extends State<ImportExportPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
-          CustomAppBar(title: tr('importExport')),
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: MediaQuery.of(context).size.height * 0.15,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 20,
+              ),
+              title: Text(
+                tr('importExport'),
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyMedium!.color,
+                ),
+              ),
+            ),
+          ),
           SliverFillRemaining(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -394,30 +294,46 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: TextButton(
-                                  style: outlineButtonStyle,
-                                  onPressed: importInProgress
-                                      ? null
-                                      : () {
-                                          runUpdatiumExport(pickOnly: true);
-                                        },
-                                  child: Text(
-                                    tr('pickExportDir'),
-                                    textAlign: TextAlign.center,
+                                child: Semantics(
+                                  button: true,
+                                  label: tr('pickExportDir'),
+                                  hint:
+                                      'Choose a directory to export your apps and settings',
+                                  excludeSemantics: true,
+                                  child: FilledButton.icon(
+                                    onPressed: importInProgress
+                                        ? null
+                                        : () {
+                                            runUpdatiumExport(pickOnly: true);
+                                          },
+                                    icon: const Icon(Icons.folder_open),
+                                    label: Text(
+                                      tr('pickExportDir'),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                 ),
                               ),
                               const SizedBox(width: 16),
                               Expanded(
-                                child: TextButton(
-                                  style: outlineButtonStyle,
-                                  onPressed:
-                                      importInProgress || snapshot.data == null
-                                      ? null
-                                      : runUpdatiumExport,
-                                  child: Text(
-                                    tr('updatiumExport'),
-                                    textAlign: TextAlign.center,
+                                child: Semantics(
+                                  button: true,
+                                  label: tr('updatiumExport'),
+                                  hint: snapshot.data == null
+                                      ? 'Set export directory first'
+                                      : 'Export all your apps and settings to file',
+                                  excludeSemantics: true,
+                                  child: FilledButton.icon(
+                                    onPressed:
+                                        importInProgress ||
+                                            snapshot.data == null
+                                        ? null
+                                        : runUpdatiumExport,
+                                    icon: const Icon(Icons.upload_file),
+                                    label: Text(
+                                      tr('updatiumExport'),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -427,14 +343,21 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Row(
                             children: [
                               Expanded(
-                                child: TextButton(
-                                  style: outlineButtonStyle,
-                                  onPressed: importInProgress
-                                      ? null
-                                      : runUpdatiumImport,
-                                  child: Text(
-                                    tr('updatiumImport'),
-                                    textAlign: TextAlign.center,
+                                child: Semantics(
+                                  button: true,
+                                  label: tr('updatiumImport'),
+                                  hint:
+                                      'Import apps and settings from a backup file',
+                                  excludeSemantics: true,
+                                  child: FilledButton.icon(
+                                    onPressed: importInProgress
+                                        ? null
+                                        : runUpdatiumImport,
+                                    icon: const Icon(Icons.download),
+                                    label: Text(
+                                      tr('updatiumImport'),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -502,65 +425,29 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     Column(
                       children: [
                         SizedBox(height: 32),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextButton(
-                                onPressed: importInProgress
-                                    ? null
-                                    : () async {
-                                        var searchSourceName =
-                                            await showDialog<List<String>?>(
-                                              context: context,
-                                              builder: (BuildContext ctx) {
-                                                return SelectionModal(
-                                                  title: tr(
-                                                    'selectX',
-                                                    args: [
-                                                      tr(
-                                                        'source',
-                                                      ).toLowerCase(),
-                                                    ],
-                                                  ),
-                                                  entries: sourceStrings,
-                                                  selectedByDefault: false,
-                                                  onlyOneSelectionAllowed: true,
-                                                  titlesAreLinks: false,
-                                                );
-                                              },
-                                            ) ??
-                                            [];
-                                        var searchSource = sourceProvider
-                                            .sources
-                                            .where(
-                                              (e) => searchSourceName.contains(
-                                                e.name,
-                                              ),
-                                            )
-                                            .toList();
-                                        if (searchSource.isNotEmpty) {
-                                          runSourceSearch(searchSource[0]);
-                                        }
-                                      },
-                                child: Text(
-                                  tr(
-                                    'searchX',
-                                    args: [lowerCaseIfEnglish(tr('source'))],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                        Semantics(
+                          button: true,
+                          label: tr('importFromURLList'),
+                          hint:
+                              'Import multiple apps by entering their URLs in a list',
+                          excludeSemantics: true,
+                          child: FilledButton.icon(
+                            onPressed: importInProgress ? null : urlListImport,
+                            icon: const Icon(Icons.list_alt),
+                            label: Text(tr('importFromURLList')),
+                          ),
                         ),
                         const SizedBox(height: 8),
-                        TextButton(
-                          onPressed: importInProgress ? null : urlListImport,
-                          child: Text(tr('importFromURLList')),
-                        ),
-                        const SizedBox(height: 8),
-                        TextButton(
-                          onPressed: importInProgress ? null : runUrlImport,
-                          child: Text(tr('importFromURLsInFile')),
+                        Semantics(
+                          button: true,
+                          label: tr('importFromURLsInFile'),
+                          hint: 'Import apps by reading URLs from a text file',
+                          excludeSemantics: true,
+                          child: FilledButton.icon(
+                            onPressed: importInProgress ? null : runUrlImport,
+                            icon: const Icon(Icons.link),
+                            label: Text(tr('importFromURLsInFile')),
+                          ),
                         ),
                       ],
                     ),
@@ -569,13 +456,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const SizedBox(height: 8),
-                        TextButton(
+                        FilledButton.icon(
                           onPressed: importInProgress
                               ? null
                               : () {
                                   runMassSourceImport(source);
                                 },
-                          child: Text(tr('importX', args: [source.name])),
+                          icon: const Icon(Icons.cloud_download),
+                          label: Text(tr('importX', args: [source.name])),
                         ),
                       ],
                     ),
@@ -584,7 +472,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   const Divider(height: 32),
                   Text(
                     tr('importedAppsIdDisclaimer'),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
                     style: const TextStyle(
                       fontStyle: FontStyle.italic,
                       fontSize: 12,
@@ -644,19 +532,33 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 16),
-                Text(e[0]),
-                Text(e[1], style: const TextStyle(fontStyle: FontStyle.italic)),
+                Text(
+                  e[0],
+                  style: Theme.of(context).textTheme.titleSmall,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  e[1],
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontStyle: FontStyle.italic,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             );
           }),
         ],
       ),
       actions: [
-        TextButton(
+        TextButton.icon(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text(tr('ok')),
+          icon: const Icon(Icons.close),
+          label: Text(tr('ok')),
         ),
       ],
     );
@@ -761,7 +663,7 @@ class _SelectionModalState extends State<SelectionModal> {
                   selectAll(deselect: true);
                 });
               },
-              child: Text(tr('deselectX', args: [''])),
+              child: Text(tr('deselectX', args: [tr('all')])),
             );
     }
 
@@ -828,6 +730,8 @@ class _SelectionModalState extends State<SelectionModal> {
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.start,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   if (widget.titlesAreLinks)
                     Text(
@@ -836,6 +740,8 @@ class _SelectionModalState extends State<SelectionModal> {
                         decoration: TextDecoration.underline,
                         fontSize: 12,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                 ],
               ),
@@ -851,6 +757,8 @@ class _SelectionModalState extends State<SelectionModal> {
                       fontStyle: FontStyle.italic,
                       fontSize: 12,
                     ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                   );
 
             var selectedEntries = entrySelections.entries

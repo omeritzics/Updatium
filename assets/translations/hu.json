@@ -24,7 +24,7 @@
     "color": "Szín",
     "standard": "Általános",
     "custom": "Egyéni",
-    "useMaterialYou": "Material You használata",
+    "useMaterialYou": "Material You színek használata",
     "githubStarredRepos": "Csillagozott GitHub-tárolók",
     "uname": "Felhasználónév",
     "wrongArgNum": "A megadott argumentumok száma nem megfelelő",
@@ -48,7 +48,8 @@
     "trackOnlyInBrackets": "(Csak nyomon követés)",
     "searchableInBrackets": "(Kereshető)",
     "appsString": "Alkalmazások",
-    "noApps": "Nincsenek alkalmazások",
+    "noApps": "Üdvözlünk!",
+    "noAppsSubtext": "Az első alkalmazás hozzáadásához koppintson alul a 'Hozzáadás' gombra.",
     "noAppsForFilter": "Nincsenek alkalmazások a szűrőhöz",
     "byX": "Fejlesztő: {}",
     "percentProgress": "Folyamat: {}%",
@@ -125,7 +126,6 @@
     "bgUpdateCheckInterval": "Időtartam a frissítések háttérellenőrzése között",
     "neverManualOnly": "Soha – csak kézi",
     "appearance": "Megjelenés",
-    "showWebInAppView": "Forrás megjelenítése az alkalmazásnézetben",
     "pinUpdates": "Frissítések kitűzése az alkalmazásnézet tetejére",
     "updates": "Frissítések",
     "sourceSpecific": "Forrásspecifikus",
@@ -341,10 +341,10 @@
     "GHReqPrefix": "„sky22333/hubproxy” példány a GitHub lekérdezéséhez",
     "includeZips": "ZIP-fájlok belefoglalása",
     "zippedApkFilterRegEx": "APK-fájlok szűrése a ZIP-fájlon belül",
-    "googleVerificationWarningP1": "A Google bejelentette, hogy 2026/2027-től kezdődően az összes alkalmazáshoz, amely „tanúsított” (certified) Android eszközökön fut, a fejlesztőknek a személyes azonosító adataikat közvetlenül a Google-nek kell majd benyújtaniuk.\n\nMivel az Updatium alkalmazás fejlesztői nem fogadják el ezt a követelményt, ezért az Updatium az említett időpont után már nem fog működni a tanúsított Android eszközökön.",
+    "googleVerificationWarningP1": "A Google bejelentette, hogy 2026/2027-től kezdődően az összes alkalmazáshoz, amely „tanúsított\" (certified) Android eszközökön fut, a fejlesztőknek a személyes azonosító adataikat közvetlenül a Google-nek kell majd benyújtaniuk.\n\nEzt követően, az Updatium esetleg nem fog működni a tanúsított Android eszközökön.",
     "googleVerificationWarningP2": "További információkért látogasson el a https://keepandroidopen.org/ weboldalra.",
     "googleVerificationWarningP3": "Fontos megjegyezni, hogy rövid távon még lehetséges lehet az „ellenőrizetlen” (nem megfelelő) alkalmazások telepítése egy „speciális folyamaton” keresztül, amelyre a Google ígéretet tett, hogy megvalósít a bejelentésüket követő széles körű felháborodás miatt. Azonban azt nem részletezték, hogy hogyan is működne ez, ezért nem világos, hogy ez gyakorlatilag megőrzi-e a felhasználók szabadsághoz való jogait.\n\nMindenesetre a Google lépése jelentős előrelépés a felhasználók számára elérhető szabad, általános célú alkalmazások megszűnése felé.\n\nA nem tanúsított operációs rendszereket, mint például a GrapheneOS, ez nem érinti mindaddig, amíg működhetnek.",
-    "multipleSigners": "Több jel",
+    "multipleSigners": "Többen is aláírták",
     "removeAppQuestion": {
         "one": "Biztosan eltávolítja az alkalmazást?",
         "other": "Biztosan eltávolítja az alkalmazásokat?"
@@ -406,7 +406,16 @@
         "other": "{} APK"
     },
     "certificateHash": {
-        "one": "Tanúsítvány hash",
-        "other": "Tanúsítványhamisítások"
-    }
+        "one": "Tanúsítványkivonat",
+        "other": "Tanúsítványkivonatok"
+    },
+    "securityDisclaimerTitle": "Biztonsági és Jogi Felelősségkorlátozás",
+    "license": "Licenc",
+    "licenseText": "Ez az alkalmazás a GPL v3 licenc alatt kerül terjesztésre.",
+    "disclaimer": "Felelősségkorlátozás",
+    "disclaimerText": "Ez az alkalmazás nem terjeszti, nem hosztolja és nem ellenőrzi a külső alkalmazások egyikét sem. A felhasználó viseli a teljes felelősséget az ezen eszközzel telepített bármely szoftver biztonságáért és jogszerűségéért.\n\nhttps://github.com/omeritzics/Updatium az Updatium letöltésének egyetlen hivatalos helye - erősen nem javasolt más helyekről letölteni, mivel a nem hivatalos forrásokból történő letöltés nem biztonságos.",
+    "privacy": "Adatvédelem",
+    "privacyText": "Ez az alkalmazás adatvédelem-központú és nem gyűjt személyes adatokat.",
+    "acceptAndContinue": "Elfogadás és folytatás",
+    "decline": "Elutasítás"
 }

@@ -1,6 +1,5 @@
 import java.io.FileInputStream
 import java.util.Properties
-import com.android.build.api.variant.FilterConfiguration.FilterType.*
 import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 
 plugins {
@@ -29,26 +28,26 @@ if (keystorePropertiesExists) {
 }
 
 android {
-    namespace = "com.omeritzics.updatium"
-    compileSdk = flutter.compileSdkVersion
+    namespace = "io.github.omeritzics.updatium"
+    compileSdk = 36
     ndkVersion = "28.2.13676358"
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+    kotlin {
+        jvmToolchain(21)
     }
 
     defaultConfig {
-        applicationId = "com.omeritzics.updatium"
+        applicationId = "io.github.omeritzics.updatium"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 24
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 26
+        targetSdk = 36
         versionCode = flutterVersionCode.toInt()
         versionName = flutterVersionName
     }
@@ -113,17 +112,6 @@ android {
     }
 }
 
-val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
-
-android.applicationVariants.configureEach {
-    val variant = this
-    variant.outputs.forEach { output ->
-        val abiVersionCode = abiCodes[output.filters.find { it.filterType == "ABI" }?.identifier]
-        if (abiVersionCode != null) {
-            (output as ApkVariantOutputImpl).versionCodeOverride = variant.versionCode * 10 + abiVersionCode
-        }
-    }
-}
 
 
 dependencies {

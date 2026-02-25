@@ -24,7 +24,7 @@
     "color": "Couleur",
     "standard": "Norme",
     "custom": "Personnalisé",
-    "useMaterialYou": "Utiliser Material You",
+    "useMaterialYou": "Utiliser les couleurs Material You",
     "githubStarredRepos": "dépôts étoilés GitHub",
     "uname": "Nom d'utilisateur",
     "wrongArgNum": "Nombre incorrect des arguments fournis",
@@ -48,7 +48,8 @@
     "trackOnlyInBrackets": "(Suivi uniquement)",
     "searchableInBrackets": "(Interrogeable)",
     "appsString": "Applis",
-    "noApps": "Aucune application",
+    "noApps": "Bienvenue !",
+    "noAppsSubtext": "Vous pouvez ajouter votre première application en appuyant sur 'Ajouter appli' ci-dessous.",
     "noAppsForFilter": "Aucune application correspondant au filtre",
     "byX": "Par {}",
     "percentProgress": "Progression : {}%",
@@ -125,7 +126,6 @@
     "bgUpdateCheckInterval": "Intervalle de recherche de mises à jour en arrière-plan",
     "neverManualOnly": "Jamais - Manuellement uniquement",
     "appearance": "Apparence",
-    "showWebInAppView": "Afficher la page Web source dans l'onglet 'Applications'",
     "pinUpdates": "Épingler les mises à jour en haut de l'onglet 'Applications'",
     "updates": "Mises à jour",
     "sourceSpecific": "Spécifique à la source",
@@ -341,7 +341,7 @@
     "GHReqPrefix": "instance 'sky22333/hubproxy' pour les requêtes GitHub",
     "includeZips": "Inclure les fichiers ZIP",
     "zippedApkFilterRegEx": "Filtrer les APK à l'intérieur du ZIP",
-    "googleVerificationWarningP1": "Google a annoncé que, à partir de 2026/2027, toutes les applications sur des appareils Android \"certifiés\" exigeront du développeur de soumettre des données personnelles d'identité directement à Google.\n\nPuisque les développeurs de cette application n'acceptent pas cette exigence, Obtention ne fonctionnera plus sur les appareils Android certifiés après ce temps.",
+    "googleVerificationWarningP1": "Google a annoncé que, à partir de 2026/2027, toutes les applications sur des appareils Android \"certifiés\" exigeront du développeur de soumettre des données personnelles d'identité directement à Google.\n\nAprès cela, Updatium peut cesser de fonctionner sur les appareils Android certifiés.",
     "googleVerificationWarningP2": "Consultez https://keepandroidopen.org/ pour plus d'informations.",
     "googleVerificationWarningP3": "Notez qu'à court terme, il peut continuer d'être possible d'installer des applications \"non vérifiées\" (non conformes) à travers un processus de \"flux avancé\" que Google a promis de mettre en œuvre après un grand retour à l'annonce, mais ils n'ont pas précisé comment cela fonctionnerait donc il n'est pas clair s'il préservera réellement les libertés des utilisateurs d'une manière pratique.\n\nEn tout cas, le mouvement de Google est un pas important vers la fin de l'informatique gratuite et à usage général pour les individus.\n\nLes OS non certifiés, comme GrapheneOS, ne devraient pas en être affectés tant qu'ils sont autorisés à continuer d'exister.",
     "multipleSigners": "Plusieurs signataires",
@@ -408,5 +408,14 @@
     "certificateHash": {
         "one": "Certificat Hash",
         "other": "Certificat Hashes"
-    }
+    },
+    "securityDisclaimerTitle": "Avis de Sécurité et Légal",
+    "license": "Licence",
+    "licenseText": "Cette application est distribuée sous la Licence GPL v3.",
+    "disclaimer": "Avertissement",
+    "disclaimerText": "Cette application ne distribue, n'héberge ni ne vérifie aucune des applications externes. L'utilisateur assume l'entière responsabilité de la sécurité et de la légalité de tout logiciel installé via cet outil.\n\nhttps://github.com/omeritzics/Updatium est le seul endroit officiel pour télécharger Updatium - il est fortement déconseillé de le télécharger ailleurs car le téléchargement depuis des sources non officielles est dangereux.",
+    "privacy": "Confidentialité",
+    "privacyText": "Cette application est axée sur la confidentialité et ne collecte pas de données personnelles.",
+    "acceptAndContinue": "Accepter et continuer",
+    "decline": "Refuser"
 }

@@ -24,7 +24,7 @@
     "color": "Kleur",
     "standard": "Standaard",
     "custom": "Aangepast",
-    "useMaterialYou": "Material You gebruiken",
+    "useMaterialYou": "Material You kleuren gebruiken",
     "githubStarredRepos": "GitHub-repo's met ster",
     "uname": "Gebruikersnaam",
     "wrongArgNum": "Incorrect aantal argumenten.",
@@ -125,7 +125,6 @@
     "bgUpdateCheckInterval": "Frequentie voor achtergrond-updatecontrole",
     "neverManualOnly": "Nooit - Alleen handmatig",
     "appearance": "Weergave",
-    "showWebInAppView": "Bron-webpagina weergeven in app-weergave",
     "pinUpdates": "Updates bovenaan plaatsen in de apps-weergave",
     "updates": "Bijwerken",
     "sourceSpecific": "Bron-specifiek",
@@ -341,7 +340,7 @@
     "GHReqPrefix": "'sky22333/hubproxy' instantie voor GitHub verzoeken",
     "includeZips": "ZIP-bestanden opnemen",
     "zippedApkFilterRegEx": "APK's filteren in ZIP",
-    "googleVerificationWarningP1": "Google heeft aangekondigd dat vanaf 2026/2027 alle apps op \"gecertificeerde\" Android-apparaten de ontwikkelaar nodig hebben om persoonlijke identiteitsgegevens rechtstreeks aan Google te verzenden.\n\nAangezien de ontwikkelaars van deze app niet akkoord gaan met deze eis, zal Progressionium niet meer werken op gecertificeerde Android-apparaten na die tijd.",
+    "googleVerificationWarningP1": "Google heeft aangekondigd dat vanaf 2026/2027 alle apps op \"gecertificeerde\" Android-apparaten de ontwikkelaar nodig hebben om persoonlijke identiteitsgegevens rechtstreeks aan Google te verzenden.\n\nDaarna kan Updatium stoppen met werken op gecertificeerde Android-apparaten.",
     "googleVerificationWarningP2": "Ga naar https://keepandroidopen.org/ voor meer informatie.",
     "googleVerificationWarningP3": "Merk op dat het op korte termijn mogelijk kan blijven om \"niet-geverifieerde\" (niet-conforme) apps te installeren via een \"geavanceerde flow\" proces dat Google heeft beloofd te implementeren na brede backlash naar hun aankondiging, maar ze hebben niet gedetailleerd hoe dit zou werken, dus het is onduidelijk of het echt zal behouden gebruikersvrijheden op enige praktische manier.\n\nIn ieder geval, Google's zet is een belangrijke stap naar het einde van vrije, algemene computer voor individuen.\n\nNiet-gecertificeerde besturingssystemen, zoals GrapheneOS, mogen hierdoor niet worden beïnvloed zolang ze mogen blijven bestaan.",
     "multipleSigners": "Meerdere Ondertekenaars",
@@ -408,5 +407,14 @@
     "certificateHash": {
         "one": "Certificaat Hash",
         "other": "Certificaat Hashes"
-    }
+    },
+    "securityDisclaimerTitle": "Veiligheids- en Juridische Vrijwaringsclausule",
+    "license": "Licentie",
+    "licenseText": "Deze applicatie wordt gedistribueerd onder de GPL v3 Licentie.",
+    "disclaimer": "Vrijwaringsclausule",
+    "disclaimerText": "Deze applicatie distribueert, host of verifieert geen van de externe applicaties. De gebruiker draagt de volledige verantwoordelijkheid voor de veiligheid en legaliteit van alle software die via deze tool wordt geïnstalleerd.\n\nhttps://github.com/omeritzics/Updatium is de enige officiële plek om Updatium te downloaden - het wordt sterk afgeraden om het ergens anders te downloaden omdat het downloaden van niet-officiële bronnen onveilig is.",
+    "privacy": "Privacy",
+    "privacyText": "Deze app is privacy-gericht en verzamelt geen persoonlijke gegevens.",
+    "acceptAndContinue": "Accepteren en doorgaan",
+    "decline": "Weigeren"
 }

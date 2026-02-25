@@ -24,7 +24,7 @@
     "color": "Farve",
     "standard": "Standard",
     "custom": "Brugerdefineret",
-    "useMaterialYou": "Brug Material You",
+    "useMaterialYou": "Brug Material You-farver",
     "githubStarredRepos": "Stjernemarkeret GitHub-repos",
     "uname": "Brugernavn",
     "wrongArgNum": "Forkert antal argumenter angivet",
@@ -125,7 +125,6 @@
     "bgUpdateCheckInterval": "Kontrolinterval for baggrundsopdatering",
     "neverManualOnly": "Aldrig - Kun manuelt",
     "appearance": "Udseende",
-    "showWebInAppView": "Vis kildewebsiden i app-visning",
     "pinUpdates": "Fastgør opdateringer øverst i app-visning",
     "updates": "Opdateringer",
     "sourceSpecific": "Kildespecifik",
@@ -341,7 +340,7 @@
     "GHReqPrefix": "'sky22333/hubproxy'-instans til GitHub-anmodninger",
     "includeZips": "Inkluder ZIP-filer",
     "zippedApkFilterRegEx": "Filtrer APK'er inde i ZIP",
-    "googleVerificationWarningP1": "Google har annonceret, at fra 2026 / 2027, alle apps på \"certificeret\" Android-enheder vil kræve, at udvikleren til at indsende personlige identitetsoplysninger direkte til Google.\n\nDa udviklerne af denne app ikke accepterer dette krav, Updatium vil ikke længere arbejde på certificerede Android-enheder efter dette tidspunkt.",
+    "googleVerificationWarningP1": "Google har annonceret, at fra 2026 / 2027, alle apps på \"certificeret\" Android-enheder vil kræve, at udvikleren til at indsende personlige identitetsoplysninger direkte til Google.\n\nEfter dette tidspunkt, kan Updatium holde op med at arbejde på certificerede Android-enheder.",
     "googleVerificationWarningP2": "Gå til https: / / keepandroidopen.org / for mere information.",
     "googleVerificationWarningP3": "Bemærk, at på kort sigt, kan det fortsætte med at være muligt at installere \"uverificerbare\" (ikke-overensstemmende) apps gennem en \"avanceret flow\" proces, som Google har lovet at gennemføre efter bred backlash til deres meddelelse, men de har ikke detaljeret, hvordan dette ville arbejde, så det er uklart, om det virkelig vil bevare brugernes friheder i praksis.\n\nUnder alle omstændigheder er Googles bevægelse et væsentligt skridt i retning af afslutningen af fri, generel-formål computing for enkeltpersoner.\n\nIkke-certificerede OS, som GrapheneOS, bør være upåvirket af dette, så længe de har lov til at fortsætte med at eksistere.",
     "multipleSigners": "Flere signere",
@@ -408,5 +407,14 @@
     "certificateHash": {
         "one": "Certifikathash",
         "other": "Certifikathash"
-    }
+    },
+    "securityDisclaimerTitle": "Sikkerheds- og Juridisk Ansvarsfraskrivelse",
+    "license": "Licens",
+    "licenseText": "Denne applikation distribueres under GPL v3-licensen.",
+    "disclaimer": "Ansvarsfraskrivelse",
+    "disclaimerText": "Denne applikation distribuerer, hoster eller verificerer ingen af de eksterne applikationer. Brugeren bærer det fulde ansvar for sikkerheden og lovligheden af enhver software installeret via dette værktøj.\n\nhttps://github.com/omeritzics/Updatium er det eneste officielle sted at downloade Updatium - det frarådes kraftigt at downloade det andre steder, da download fra uofficielle kilder ikke er sikkert.",
+    "privacy": "Privatliv",
+    "privacyText": "Denne app er privatlivsfokuseret og indsamler ikke personlige data.",
+    "acceptAndContinue": "Accepter og fortsæt",
+    "decline": "Afvis"
 }

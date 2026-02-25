@@ -72,6 +72,7 @@ class GeneratedFormTextField extends GeneratedFormItem {
 class GeneratedFormDropdown extends GeneratedFormItem {
   late List<MapEntry<String, String>>? opts;
   List<String>? disabledOptKeys;
+  late bool required;
 
   GeneratedFormDropdown(
     super.key,
@@ -80,6 +81,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
     super.belowWidgets,
     String super.defaultValue = '',
     this.disabledOptKeys,
+    this.required = true,
     List<String? Function(String? value)> super.additionalValidators = const [],
   });
 
@@ -99,6 +101,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
       disabledOptKeys: disabledOptKeys != null
           ? List.from(disabledOptKeys!)
           : null,
+      required: required,
       additionalValidators: List.from(additionalValidators),
     );
   }
@@ -329,7 +332,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   });
                 },
                 decoration: InputDecoration(
-                  helperText: formItem.label + (formItem.required ? ' *' : ''),
+                  labelText:
+                      '${formItem.label}${formItem.required ? ' *' : ''}',
                   hintText: formItem.hint,
                 ),
                 minLines: formItem.max <= 1 ? null : formItem.max,
@@ -350,7 +354,13 @@ class _GeneratedFormState extends State<GeneratedForm> {
               );
             },
             itemBuilder: (context, value) {
-              return ListTile(title: Text(value));
+              return ListTile(
+                title: Text(
+                  value,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              );
             },
             onSelected: (value) {
               ctrl.text = value;
@@ -371,8 +381,10 @@ class _GeneratedFormState extends State<GeneratedForm> {
             return Text(tr('dropdownNoOptsError'));
           }
           return DropdownButtonFormField(
-            decoration: InputDecoration(labelText: formItem.label),
-            value: values[formItem.key],
+            decoration: InputDecoration(
+              labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
+            ),
+            initialValue: values[formItem.key],
             items: formItem.opts!.map((e2) {
               var enabled = formItem.disabledOptKeys?.contains(e2.key) != true;
               return DropdownMenuItem(
@@ -761,7 +773,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                         label: Text(
                           '${(widget.items[r][e] as GeneratedFormSubForm).label} (${i + 1})',
                         ),
-                        icon: const Icon(Icons.delete_outline_rounded),
+                        icon: const Icon(Icons.delete),
                       ),
                     ],
                   ),
@@ -775,7 +787,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
               child: Row(
                 children: [
                   Expanded(
-                    child: ElevatedButton.icon(
+                    child: FilledButton.icon(
                       onPressed: () {
                         values[fieldKey].add(
                           getDefaultValuesFromFormItems(

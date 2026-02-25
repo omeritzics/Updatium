@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:updatium/components/custom_app_bar.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -178,27 +178,46 @@ class _SettingsPageState extends State<SettingsPage> {
     }
 
     var colorPicker = ListTile(
-      dense: true,
-      contentPadding: EdgeInsets.zero,
-      title: Text(tr('selectX', args: [tr('color').toLowerCase()])),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      tileColor: Theme.of(context).colorScheme.surface,
+      title: Text(
+        tr('selectX', args: [tr('color').toLowerCase()]),
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
       subtitle: Text(
         "${ColorTools.nameThatColor(settingsProvider.themeColor)} "
         "(${ColorTools.materialNameAndCode(settingsProvider.themeColor, colorSwatchNameMap: colorsNameMap)})",
       ),
-      trailing: ColorIndicator(
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        color: settingsProvider.themeColor,
-        onSelectFocus: false,
-        onSelect: () async {
-          final Color colorBeforeDialog = settingsProvider.themeColor;
-          if (!(await colorPickerDialog())) {
-            setState(() {
-              settingsProvider.themeColor = colorBeforeDialog;
-            });
-          }
-        },
+      trailing: Container(
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          color: settingsProvider.themeColor,
+          border: Border.all(
+            color: Theme.of(context).colorScheme.outline,
+            width: 1,
+          ),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(24),
+          onTap: () async {
+            final Color colorBeforeDialog = settingsProvider.themeColor;
+            if (!(await colorPickerDialog())) {
+              setState(() {
+                settingsProvider.themeColor = colorBeforeDialog;
+              });
+            }
+          },
+          child: Icon(
+            Icons.palette,
+            color: settingsProvider.themeColor.computeLuminance() > 0.5
+                ? Colors.black
+                : Colors.white,
+            size: 24,
+          ),
+        ),
       ),
     );
 
@@ -225,7 +244,7 @@ class _SettingsPageState extends State<SettingsPage> {
     var sortDropdown = DropdownButtonFormField(
       isExpanded: true,
       decoration: InputDecoration(labelText: tr('appSortBy')),
-      value: settingsProvider.sortColumn,
+      initialValue: settingsProvider.sortColumn,
       items: [
         DropdownMenuItem(
           value: SortColumnSettings.authorName,
@@ -254,7 +273,7 @@ class _SettingsPageState extends State<SettingsPage> {
     var orderDropdown = DropdownButtonFormField(
       isExpanded: true,
       decoration: InputDecoration(labelText: tr('appSortOrder')),
-      value: settingsProvider.sortOrder,
+      initialValue: settingsProvider.sortOrder,
       items: [
         DropdownMenuItem(
           value: SortOrderSettings.ascending,
@@ -274,7 +293,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     var localeDropdown = DropdownButtonFormField(
       decoration: InputDecoration(labelText: tr('language')),
-      value: settingsProvider.forcedLocale,
+      initialValue: settingsProvider.forcedLocale,
       items: [
         DropdownMenuItem(value: null, child: Text(tr('followSystem'))),
         ...supportedLocales.map(
@@ -291,28 +310,39 @@ class _SettingsPageState extends State<SettingsPage> {
       },
     );
 
-    var intervalSlider = Slider(
-      value: settingsProvider.updateIntervalSliderVal,
-      max: updateIntervalNodes.length.toDouble(),
-      divisions: updateIntervalNodes.length * 20,
-      label: updateIntervalLabel,
-      onChanged: (double value) {
-        setState(() {
-          settingsProvider.updateIntervalSliderVal = value;
-          processIntervalSliderValue(value);
-        });
-      },
-      onChangeStart: (double value) {
-        setState(() {
-          showIntervalLabel = false;
-        });
-      },
-      onChangeEnd: (double value) {
-        setState(() {
-          showIntervalLabel = true;
-          settingsProvider.updateInterval = updateInterval;
-        });
-      },
+    var intervalSlider = SliderTheme(
+      data: SliderTheme.of(context).copyWith(
+        trackHeight: 4,
+        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
+        overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
+        valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+        valueIndicatorTextStyle: Theme.of(context).textTheme.bodyMedium
+            ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+        showValueIndicator: ShowValueIndicator.onDrag,
+      ),
+      child: Slider(
+        value: settingsProvider.updateIntervalSliderVal,
+        max: updateIntervalNodes.length.toDouble(),
+        divisions: updateIntervalNodes.length * 20,
+        label: updateIntervalLabel,
+        onChanged: (double value) {
+          setState(() {
+            settingsProvider.updateIntervalSliderVal = value;
+            processIntervalSliderValue(value);
+          });
+        },
+        onChangeStart: (double value) {
+          setState(() {
+            showIntervalLabel = false;
+          });
+        },
+        onChangeEnd: (double value) {
+          setState(() {
+            showIntervalLabel = true;
+            settingsProvider.updateInterval = updateInterval;
+          });
+        },
+      ),
     );
 
     var sourceSpecificFields = sourceProvider.sources.map((e) {
@@ -356,7 +386,23 @@ class _SettingsPageState extends State<SettingsPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
-          CustomAppBar(title: tr('settings')),
+          SliverAppBar(
+            pinned: true,
+            automaticallyImplyLeading: false,
+            expandedHeight: MediaQuery.of(context).size.height * 0.15,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 20,
+              ),
+              title: Text(
+                tr('settings'),
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyMedium!.color,
+                ),
+              ),
+            ),
+          ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -372,6 +418,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
+                        height16,
                         //intervalDropdown,
                         height16,
                         if (showIntervalLabel)
@@ -706,9 +753,33 @@ class _SettingsPageState extends State<SettingsPage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
+                        height16,
                         DropdownButtonFormField(
-                          decoration: InputDecoration(labelText: tr('theme')),
-                          value: settingsProvider.theme,
+                          decoration: InputDecoration(
+                            labelText: tr('theme'),
+                            filled: true,
+                            fillColor: Theme.of(context).colorScheme.surface,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.outline,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.outline,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).colorScheme.primary,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                          initialValue: settingsProvider.theme,
                           items: [
                             DropdownMenuItem(
                               value: ThemeSettings.system,
@@ -748,7 +819,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         height8,
                         useMaterialThemeSwitch,
+                        height16,
                         if (!settingsProvider.useMaterialYou) colorPicker,
+                        height16,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -762,7 +835,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         localeDropdown,
                         FutureBuilder(
                           builder: (ctx, val) {
-                            return (val.data?.version.sdkInt ?? 0) >= 34
+                            return (val.data?.version.sdkInt ?? 0) >= 36
                                 ? Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -799,19 +872,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 : const SizedBox.shrink();
                           },
                           future: DeviceInfoPlugin().androidInfo,
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('showWebInAppView'))),
-                            Switch(
-                              value: settingsProvider.showAppWebpage,
-                              onChanged: (value) {
-                                settingsProvider.showAppWebpage = value;
-                              },
-                            ),
-                          ],
                         ),
                         height16,
                         Row(
@@ -978,7 +1038,12 @@ class _SettingsPageState extends State<SettingsPage> {
                           mode: LaunchMode.externalApplication,
                         );
                       },
-                      icon: const Icon(Icons.help_outline_rounded),
+                      icon: context.locale.languageCode == 'he'
+                          ? Transform(
+                              transform: Matrix4.identity(),
+                              child: const Icon(Icons.help),
+                            )
+                          : const Icon(Icons.help),
                       tooltip: tr('wiki'),
                     ),
                     IconButton(
@@ -996,7 +1061,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           }
                         });
                       },
-                      icon: const Icon(Icons.bug_report_outlined),
+                      icon: const Icon(Icons.bug_report),
                       tooltip: tr('appLogs'),
                     ),
                   ],
@@ -1046,7 +1111,7 @@ class _LogsDialogState extends State<LogsDialog> {
       content: Column(
         children: [
           DropdownButtonFormField(
-            value: days.first,
+            initialValue: days.first,
             items: days
                 .map(
                   (e) =>
@@ -1062,7 +1127,7 @@ class _LogsDialogState extends State<LogsDialog> {
         ],
       ),
       actions: [
-        TextButton(
+        createAppTextButton(
           onPressed: () async {
             var cont =
                 (await showDialog<Map<String, dynamic>?>(
@@ -1084,13 +1149,13 @@ class _LogsDialogState extends State<LogsDialog> {
           },
           child: Text(tr('remove')),
         ),
-        TextButton(
+        createAppTextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(tr('close')),
         ),
-        TextButton(
+        createAppTextButton(
           onPressed: () {
             Share.share(logString ?? '', subject: tr('appLogs'));
             Navigator.of(context).pop();
