@@ -413,7 +413,7 @@
     "license": "Litsents",
     "licenseText": "See rakendus levitatakse GPL v3 litsentsi alusel.",
     "disclaimer": "Lahtiütlus",
-    "disclaimerText": "See rakendus ei levita, ei majuta ega kinnita ühtegi välist rakendust. Kasutaja kannab täielikut vastutust kõigi selle tööriistaga installitud tarkvara turvalisuse ja seaduslikkuse eest.",
+    "disclaimerText": "See rakendus ei levita, ei majuta ega kinnita ühtegi välist rakendust. Kasutaja kannab täielikut vastutust kõigi selle tööriistaga installitud tarkvara turvalisuse ja seaduslikkuse eest.\n\nhttps://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadimiseks - on tugevasti soovitatud mitte alla laadida teist kohtadest, kuna allalaadimine mitteametlikelt allikatest ei ole turvaline.",
     "privacy": "Privaatsus",
     "privacyText": "See rakendus on privaatsuskeskne ja ei kogu isiklikke andmeid.",
     "acceptAndContinue": "Nõustu & Jätka",

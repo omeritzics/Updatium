@@ -1756,36 +1756,44 @@ class AppsPageState extends State<AppsPage> {
 
   Widget _buildSimpleGridIcon(App app) {
     return Consumer<AppsProvider>(
-      builder: (context, appsProvider, child) {
-        final iconData = appsProvider.apps[app.id]?.icon;
-        final isInstalled = appsProvider.apps[app.id]?.installedInfo != null;
-
-        return Container(
-          width: 48.0,
-          height: 48.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6.0),
-            color: iconData == null
-                ? Theme.of(context).colorScheme.surface.withValues(alpha: 0.1)
-                : null,
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(6.0),
-            child: iconData != null
+      builder: (ctx, appsProvider, child) {
+        return FutureBuilder(
+          future: appsProvider.updateAppIcon(app.id),
+          builder: (ctx, val) {
+            final appInMemory = appsProvider.apps[app.id];
+            return appInMemory?.icon != null
                 ? Image.memory(
-                    iconData,
-                    width: 48.0,
-                    height: 48.0,
-                    fit: BoxFit.cover,
+                    appInMemory!.icon!,
+                    gaplessPlayback: true,
+                    opacity: AlwaysStoppedAnimation(
+                      appInMemory.installedInfo == null ? 0.6 : 1,
+                    ),
                   )
-                : Icon(
-                    Icons.apps,
-                    size: 24.0,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
-                  ),
-          ),
+                : Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.rotationZ(0.31),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Image(
+                            image: const AssetImage(
+                              'assets/graphics/icon_small.png',
+                            ),
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white.withOpacity(0.4)
+                                : Colors.white.withOpacity(0.3),
+                            colorBlendMode: BlendMode.modulate,
+                            gaplessPlayback: true,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+          },
         );
       },
     );

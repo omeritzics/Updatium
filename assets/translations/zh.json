@@ -412,7 +412,7 @@
     "license": "许可证",
     "licenseText": "本应用程序采用 GPL v3 许可证分发。",
     "disclaimer": "免责声明",
-    "disclaimerText": "本应用程序不分发、托管或验证任何外部应用程序。用户对通过此工具安装的任何软件的安全性和合法性承担全部责任。",
+    "disclaimerText": "本应用程序不分发、托管或验证任何外部应用程序。用户对通过此工具安装的任何软件的安全性和合法性承担全部责任。\n\nhttps://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 - 强烈建议不要从其他地方下载，因为从非官方来源下载是不安全的。",
     "privacy": "隐私",
     "privacyText": "此应用注重隐私，不收集个人数据。",
     "acceptAndContinue": "接受并继续",

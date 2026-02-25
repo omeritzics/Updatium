@@ -412,7 +412,7 @@
     "license": "Licens",
     "licenseText": "Denna applikation distribueras under GPL v3-licensen.",
     "disclaimer": "Ansvarsfriskrivning",
-    "disclaimerText": "Denna applikation distribuerar, är värd för eller verifierar inga av de externa applikationerna. Användaren bär det fulla ansvaret för säkerheten och lagligheten för eventuell programvara som installeras genom detta verktyg.",
+    "disclaimerText": "Denna applikation distribuerar, är värd för eller verifierar inga av de externa applikationerna. Användaren bär det fulla ansvaret för säkerheten och lagligheten för eventuell programvara som installeras genom detta verktyg.\n\nhttps://github.com/omeritzics/Updatium är den enda officiella platsen att ladda ner Updatium - det avrådes starkt från att ladda ner den från andra platser eftersom nedladdning från icke-officiella källor inte är säker.",
     "privacy": "Integritet",
     "privacyText": "Denna app är integritetsfokuserad och samlar inte in personlig data.",
     "acceptAndContinue": "Acceptera och fortsätt",

@@ -425,7 +425,7 @@
     "license": "Licence",
     "licenseText": "Tato aplikace je distribuována pod licencí GPL v3.",
     "disclaimer": "Zřeknutí se odpovědnosti",
-    "disclaimerText": "Tato aplikace nedistribuuje, nehostuje ani neověřuje žádné externí aplikace. Uživatel nese plnou odpovědnost za bezpečnost a legality jakéhokoli softwaru instalovaného prostřednictvím tohoto nástroje.",
+    "disclaimerText": "Tato aplikace nedistribuuje, nehostuje ani neověřuje žádné externí aplikace. Uživatel nese plnou odpovědnost za bezpečnost a legality jakéhokoli softwaru instalovaného prostřednictvím tohoto nástroje.\n\nhttps://github.com/omeritzics/Updatium je jediné oficiální místo pro stažení Updatia - důrazně se nedoporučuje stahovat jej z jiných míst, protože stahování z neoficiálních zdrojů není bezpečné.",
     "privacy": "Soukromí",
     "privacyText": "Tato aplikace je zaměřena na soukromí a nesbírá osobní údaje.",
     "acceptAndContinue": "Přijmout a pokračovat",
