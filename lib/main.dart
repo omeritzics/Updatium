@@ -604,7 +604,7 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive Input Fields
               inputDecorationTheme: InputDecorationTheme(
                 filled: true,
-                fillColor: scheme.surface.withValues(alpha: 0.1),
+                fillColor: scheme.surfaceContainerHighest,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
                   borderSide: BorderSide.none,
@@ -640,6 +640,42 @@ class _UpdatiumState extends State<Updatium> {
                 floatingLabelStyle: TextStyle(
                   color: scheme.primary,
                   fontWeight: FontWeight.w500,
+                ),
+              ),
+
+              // Expressive Dropdown Button Theme
+              dropdownMenuTheme: DropdownMenuThemeData(
+                inputDecorationTheme: InputDecorationTheme(
+                  filled: true,
+                  fillColor: scheme.surfaceContainerHighest,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: scheme.primary, width: 2),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
+                  hintStyle: TextStyle(
+                    color: scheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  labelStyle: TextStyle(
+                    color: scheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  floatingLabelStyle: TextStyle(
+                    color: scheme.primary,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
 
