@@ -449,7 +449,9 @@ class SettingsProvider with ChangeNotifier {
     Uri? newOneWayDataSyncDir;
     if (!remove) {
       final pickedDir = await DocMan.pick.directory();
-      newOneWayDataSyncDir = pickedDir != null ? Uri.parse(pickedDir.uri) : null;
+      newOneWayDataSyncDir = pickedDir != null
+          ? Uri.parse(pickedDir.uri)
+          : null;
     }
     if (currentOneWayDataSyncDir?.path != newOneWayDataSyncDir?.path) {
       if (newOneWayDataSyncDir == null) {
