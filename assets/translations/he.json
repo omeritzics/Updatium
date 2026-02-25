@@ -307,13 +307,13 @@
     "requestHeader": "כותרת בקשה",
     "useLatestAssetDateAsReleaseDate": "Use latest asset upload as release date",
     "defaultPseudoVersioningMethod": "Default pseudo-versioning method",
-    "partialAPKHash": "Partial APK hash",
-    "APKLinkHash": "APK link hash",
+    "partialAPKHash": "גיבוב APK חלקי",
+    "APKLinkHash": "גיבוב קישור APK",
     "directAPKLink": "קישור ישיר לקובץ APK",
     "pseudoVersionInUse": "נעשה שימוש במעֵין־גרסה",
     "installed": "גרסה מותקנת",
     "latest": "גרסה עדכנית",
-    "invertRegEx": "Invert regular expression",
+    "invertRegEx": "היפוך ביטוי רגולרי",
     "note": "הערה",
     "selfHostedNote": "הרשימה הנפתחת \"{}\" מאפשרת למשוך קבצים מעותקים מותאמים אישית/באירוח עצמי של כל מקור שהוא.",
     "badDownload": "לא היה ניתן לפענח את קובץ ה־APK (בשל חוסר תאימות או הורדה חלקית)",
@@ -350,9 +350,9 @@
         "other": "להסיר את היישומים?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Too many requests (rate limited) - try again in {} minute",
-        "two": "Too many requests (rate limited) - try again in {} minutes",
-        "other": "Too many requests (rate limited) - try again in {} minutes"
+        "one": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד דקה",
+        "two": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד שתי דקות",
+        "other": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד {} דקות"
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "BG update checking encountered a {}, will schedule a retry check in {} minute",
@@ -405,12 +405,12 @@
         "other": "{} ועוד {} יישומים נוספים עודכנו."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Failed to update {} and 1 more app.",
-        "two": "Failed to update {} and 2 more apps.",
-        "other": "Failed to update {} and {} more apps."
+        "one": "נכשל העדכון של {} ועוד יישום אחד.",
+        "two": "נכשל העדכון של {} ועוד שני יישומים.",
+        "other": "נכשל העדכון של {} ועוד {} יישומים."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} and 1 more app may have been updated.",
+        "one": "{} ועוד יישום אחד עשויים להיות עודכנו.",
         "two": "{} and 2 more apps may have been updated.",
         "other": "{} and {} more apps may have been updated."
     },
