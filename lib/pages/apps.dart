@@ -661,6 +661,7 @@ class AppsPageState extends State<AppsPage> {
             selectedTileColor: Theme.of(
               context,
             ).colorScheme.surface.withValues(alpha: 0.2),
+            selected: selectedAppIds.contains(listedApps[index].app.id),
             leading: SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
               width: MediaQuery.of(context).size.width * 0.1,
