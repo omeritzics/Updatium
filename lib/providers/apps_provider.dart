@@ -2343,8 +2343,7 @@ class AppsProvider with ChangeNotifier {
 
           final result = await dirDocFile.createFile(
             name: fileName,
-            mimeType: 'application/json',
-            data: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
+            content: utf8.encode(encoder.convert(finalExport)),
           );
 
           if (result == null) {
