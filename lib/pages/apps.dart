@@ -61,9 +61,7 @@ void showChangeLogDialog(
                   },
                 )
               : const SizedBox.shrink(),
-          changesUrl != null
-              ? height16
-              : const SizedBox.shrink(),
+          changesUrl != null ? height16 : const SizedBox.shrink(),
           appSource.changeLogIfAnyIsMarkDown
               ? ConstrainedBox(
                   constraints: BoxConstraints(
@@ -540,68 +538,53 @@ class AppsPageState extends State<AppsPage> {
               isInstalled && app.installedVersion != app.latestVersion;
           final isTrackOnly = app.additionalSettings['trackOnly'] == true;
 
-        Widget action;
-        if (isTrackOnly) {
-          action = const Icon(Icons.check_circle_outline);
-        } else if (!isInstalled) {
-          action = FilledButton.tonal(
-            onPressed: appsProvider.areDownloadsRunning()
-                ? null
-                : () {
-                    appsProvider
-                        .downloadAndInstallLatestApps([
-                          app.id,
-                        ],
-                            globalNavigatorKey
-                                .currentContext)
-                        .catchError((e) {
-                      showError(e, context);
-                      return <String>[];
-                    });
-                  },
-            style: const ButtonStyle(
-              visualDensity: VisualDensity.compact,
-            ),
-            child: Text(tr('install')),
-          );
-        } else if (hasUpdateLocal) {
-          action = FilledButton.tonal(
-            onPressed: appsProvider.areDownloadsRunning()
-                ? null
-                : () {
-                    appsProvider
-                        .downloadAndInstallLatestApps([
-                          app.id,
-                        ],
-                            globalNavigatorKey
-                                .currentContext)
-                        .catchError((e) {
-                      showError(e, context);
-                      return <String>[];
-                    });
-                  },
-            style: const ButtonStyle(
-              visualDensity: VisualDensity.compact,
-            ),
-            child: Text(tr('update')),
-          );
-        } else {
-          action = Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.check_circle,
-                color: Colors.green[600],
-                size: 20,
-              ),
-              width6,
-              Text(
-                tr('updated'),
-                style: TextStyle(color: Colors.green[600]),
-              ),
-            ],
-          );
-        }
+          Widget action;
+          if (isTrackOnly) {
+            action = const Icon(Icons.check_circle_outline);
+          } else if (!isInstalled) {
+            action = FilledButton.tonal(
+              onPressed: appsProvider.areDownloadsRunning()
+                  ? null
+                  : () {
+                      appsProvider
+                          .downloadAndInstallLatestApps([
+                            app.id,
+                          ], globalNavigatorKey.currentContext)
+                          .catchError((e) {
+                            showError(e, context);
+                            return <String>[];
+                          });
+                    },
+              style: const ButtonStyle(visualDensity: VisualDensity.compact),
+              child: Text(tr('install')),
+            );
+          } else if (hasUpdateLocal) {
+            action = FilledButton.tonal(
+              onPressed: appsProvider.areDownloadsRunning()
+                  ? null
+                  : () {
+                      appsProvider
+                          .downloadAndInstallLatestApps([
+                            app.id,
+                          ], globalNavigatorKey.currentContext)
+                          .catchError((e) {
+                            showError(e, context);
+                            return <String>[];
+                          });
+                    },
+              style: const ButtonStyle(visualDensity: VisualDensity.compact),
+              child: Text(tr('update')),
+            );
+          } else {
+            action = Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.check_circle, color: Colors.green[600], size: 20),
+                width6,
+                Text(tr('updated'), style: TextStyle(color: Colors.green[600])),
+              ],
+            );
+          }
 
           return SizedBox(
             width: 120,
@@ -877,88 +860,92 @@ class AppsPageState extends State<AppsPage> {
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 11),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.copyWith(fontSize: 11),
                       ),
                     ),
                   ),
                   height8,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Builder(builder: (ctx) {
-                      final ai = listedApps[index];
-                      final app = ai.app;
-                      final isInstalled = app.installedVersion != null;
-                      final hasUpdateLocal = isInstalled &&
-                          app.installedVersion != app.latestVersion;
-                      final isTrackOnly = app.additionalSettings['trackOnly'] == true;
+                    child: Builder(
+                      builder: (ctx) {
+                        final ai = listedApps[index];
+                        final app = ai.app;
+                        final isInstalled = app.installedVersion != null;
+                        final hasUpdateLocal =
+                            isInstalled &&
+                            app.installedVersion != app.latestVersion;
+                        final isTrackOnly =
+                            app.additionalSettings['trackOnly'] == true;
 
-                            if (isTrackOnly) {
-                              return Icon(
-                                Icons.check_circle,
-                                color: Colors.green[600],
-                                size: MediaQuery.of(context).size.width * 0.04,
-                              );
-                            }
-
-                            if (!isInstalled) {
-                              return FilledButton.tonal(
-                                onPressed: appsProvider.areDownloadsRunning()
-                                    ? null
-                                    : () {
-                                        appsProvider
-                                            .downloadAndInstallLatestApps(
-                                              [app.id],
-                                              globalNavigatorKey.currentContext,
-                                            )
-                                            .catchError((e) {
-                                              if (mounted) {
-                                                showError(e, context);
-                                              }
-                                              return <String>[];
-                                            });
-                                      },
-                                child: Text(tr('install')),
-                              );
-                            }
-
-                            if (hasUpdateLocal) {
-                              return FilledButton.tonal(
-                                onPressed: appsProvider.areDownloadsRunning()
-                                    ? null
-                                    : () {
-                                        appsProvider
-                                            .downloadAndInstallLatestApps(
-                                              [app.id],
-                                              globalNavigatorKey.currentContext,
-                                            )
-                                            .catchError((e) {
-                                              if (mounted) {
-                                                showError(e, context);
-                                              }
-                                              return <String>[];
-                                            });
-                                      },
-                                child: Text(tr('update')),
-                              );
-                            }
-
-                      return Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
+                        if (isTrackOnly) {
+                          return Icon(
                             Icons.check_circle,
                             color: Colors.green[600],
-                            size: 18,
-                          ),
-                          width6,
-                          Text(
-                            tr('updated'),
-                            style: TextStyle(color: Colors.green[600]),
-                          ),
-                        ],
-                      );
-                    }),
+                            size: MediaQuery.of(context).size.width * 0.04,
+                          );
+                        }
+
+                        if (!isInstalled) {
+                          return FilledButton.tonal(
+                            onPressed: appsProvider.areDownloadsRunning()
+                                ? null
+                                : () {
+                                    appsProvider
+                                        .downloadAndInstallLatestApps([
+                                          app.id,
+                                        ], globalNavigatorKey.currentContext)
+                                        .catchError((e) {
+                                          if (mounted) {
+                                            showError(e, context);
+                                          }
+                                          return <String>[];
+                                        });
+                                  },
+                            child: Text(tr('install')),
+                          );
+                        }
+
+                        if (hasUpdateLocal) {
+                          return FilledButton.tonal(
+                            onPressed: appsProvider.areDownloadsRunning()
+                                ? null
+                                : () {
+                                    appsProvider
+                                        .downloadAndInstallLatestApps([
+                                          app.id,
+                                        ], globalNavigatorKey.currentContext)
+                                        .catchError((e) {
+                                          if (mounted) {
+                                            showError(e, context);
+                                          }
+                                          return <String>[];
+                                        });
+                                  },
+                            child: Text(tr('update')),
+                          );
+                        }
+
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.check_circle,
+                              color: Colors.green[600],
+                              size: 18,
+                            ),
+                            width6,
+                            Text(
+                              tr('updated'),
+                              style: TextStyle(color: Colors.green[600]),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
