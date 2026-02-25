@@ -61,9 +61,7 @@ void showChangeLogDialog(
                   },
                 )
               : const SizedBox.shrink(),
-          changesUrl != null
-              ? height16
-              : const SizedBox.shrink(),
+          changesUrl != null ? height16 : const SizedBox.shrink(),
           appSource.changeLogIfAnyIsMarkDown
               ? ConstrainedBox(
                   constraints: BoxConstraints(
@@ -1698,12 +1696,15 @@ class AppsPageState extends State<AppsPage> {
                     builder: (context, settingsProvider, child) {
                       return IconButton(
                         color: Theme.of(context).colorScheme.primary,
-                        style: const ButtonStyle(visualDensity: VisualDensity.compact),
+                        style: const ButtonStyle(
+                          visualDensity: VisualDensity.compact,
+                        ),
                         tooltip: settingsProvider.useGridView
                             ? tr('listView')
                             : tr('gridView'),
                         onPressed: () {
-                          settingsProvider.useGridView = !settingsProvider.useGridView;
+                          settingsProvider.useGridView =
+                              !settingsProvider.useGridView;
                         },
                         icon: Icon(
                           settingsProvider.useGridView
