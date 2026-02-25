@@ -398,6 +398,16 @@ class _UpdatiumState extends State<Updatium> {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
               surfaceContainerHighest: Colors.black.withValues(alpha: 0.1),
+              surfaceContainerHigh: Colors.black.withValues(alpha: 0.08),
+              surfaceContainer: Colors.black.withValues(alpha: 0.05),
+              surfaceContainerLow: Colors.black.withValues(alpha: 0.02),
+              surfaceContainerLowest: Colors.black.withValues(alpha: 0.01),
+              surfaceDim: Colors.black,
+              surfaceBright: Colors.black.withValues(alpha: 0.05),
+              onSurface: Colors.white.withValues(alpha: 0.95),
+              onSurfaceVariant: Colors.white.withValues(alpha: 0.8),
+              outline: Colors.white.withValues(alpha: 0.2),
+              outlineVariant: Colors.white.withValues(alpha: 0.1),
             );
           }
 
