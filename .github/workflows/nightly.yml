@@ -123,20 +123,20 @@ jobs:
           flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
           
           mkdir -p build/outputs/
-          cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/updatium-nightly-signed.apk
+          cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/updatium-nightly.apk
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v6
         with:
-          name: Updatium-Nightly-Signed-APK
-          path: build/outputs/updatium-nightly-signed.apk
+          name: Updatium-Nightly-APK
+          path: build/outputs/updatium-nightly.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: nightly-signed
-          name: "Updatium Nightly (Signed)"
-          files: build/outputs/updatium-nightly-signed.apk
+          tag_name: nightly
+          name: "Updatium Nightly"
+          files: build/outputs/updatium-nightly.apk
           prerelease: true
           overwrite: true
         env:
