@@ -1045,7 +1045,9 @@ class AppsPageState extends State<AppsPage> {
                     ),
                     itemCount: filteredEntries.length,
                     itemBuilder: (context, gridIndex) {
-                      return getSingleAppGridTile(filteredEntries[gridIndex].key);
+                      return getSingleAppGridTile(
+                        filteredEntries[gridIndex].key,
+                      );
                     },
                   ),
                 )
@@ -1739,7 +1741,7 @@ class AppsPageState extends State<AppsPage> {
     return Consumer<AppsProvider>(
       builder: (ctx, appsProvider, child) {
         final appInMemory = appsProvider.apps[app.id];
-        
+
         // If icon is already loaded, display it immediately
         if (appInMemory?.icon != null) {
           return Image.memory(
@@ -1753,13 +1755,13 @@ class AppsPageState extends State<AppsPage> {
             },
           );
         }
-        
+
         // Load icon asynchronously if not available
         return FutureBuilder(
           future: appsProvider.updateAppIcon(app.id),
           builder: (ctx, snapshot) {
             final updatedAppInMemory = appsProvider.apps[app.id];
-            
+
             if (updatedAppInMemory?.icon != null) {
               return Image.memory(
                 updatedAppInMemory!.icon!,
@@ -1772,7 +1774,7 @@ class AppsPageState extends State<AppsPage> {
                 },
               );
             }
-            
+
             // Show fallback while loading or if failed
             return _buildFallbackIcon();
           },
@@ -1792,9 +1794,7 @@ class AppsPageState extends State<AppsPage> {
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Image(
-              image: const AssetImage(
-                'assets/graphics/icon_small.png',
-              ),
+              image: const AssetImage('assets/graphics/icon_small.png'),
               color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white.withOpacity(0.4)
                   : Colors.white.withOpacity(0.3),
@@ -1806,12 +1806,16 @@ class AppsPageState extends State<AppsPage> {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     Icons.apps,
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withOpacity(0.6),
                     size: 24,
                   ),
                 );
