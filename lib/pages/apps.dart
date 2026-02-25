@@ -59,7 +59,7 @@ void showChangeLogDialog(
                 )
               : const SizedBox.shrink(),
           changesUrl != null
-              ? const SizedBox(height: 16)
+              ? height16
               : const SizedBox.shrink(),
           appSource.changeLogIfAnyIsMarkDown
               ? SizedBox(
@@ -170,6 +170,17 @@ class AppsPageState extends State<AppsPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Consistent spacing constants
+    const height4 = SizedBox(height: 4);
+    const height8 = SizedBox(height: 8);
+    const height12 = SizedBox(height: 12);
+    const height16 = SizedBox(height: 16);
+    const height24 = SizedBox(height: 24);
+    const height32 = SizedBox(height: 32);
+    const width4 = SizedBox(width: 4);
+    const width6 = SizedBox(width: 6);
+    const width16 = SizedBox(width: 16);
+
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
     var listedApps = appsProvider.getAppValues().toList();
@@ -609,7 +620,7 @@ class AppsPageState extends State<AppsPage> {
                 color: Colors.green[600],
                 size: 20,
               ),
-              const SizedBox(width: 6),
+              width6,
               Text(
                 tr('updated'),
                 style: TextStyle(color: Colors.green[600]),
@@ -833,7 +844,7 @@ class AppsPageState extends State<AppsPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 12),
+                  height12,
                   SizedBox(
                     height: 64,
                     width: 64,
@@ -842,7 +853,7 @@ class AppsPageState extends State<AppsPage> {
                       child: getAppIcon(index),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  height8,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Flexible(
@@ -871,7 +882,7 @@ class AppsPageState extends State<AppsPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  height8,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Builder(builder: (ctx) {
@@ -939,7 +950,7 @@ class AppsPageState extends State<AppsPage> {
                             color: Colors.green[600],
                             size: 18,
                           ),
-                          const SizedBox(width: 6),
+                          width6,
                           Text(
                             tr('updated'),
                             style: TextStyle(color: Colors.green[600]),
@@ -1478,7 +1489,7 @@ class AppsPageState extends State<AppsPage> {
               ],
             ],
             additionalWidgets: [
-              const SizedBox(height: 16),
+              height16,
               CategoryEditorSelector(
                 preselected: filter.categoryFilter,
                 onSelected: (categories) {

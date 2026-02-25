@@ -63,6 +63,14 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Consistent spacing constants
+    const height2 = SizedBox(height: 2);
+    const height8 = SizedBox(height: 8);
+    const height10 = SizedBox(height: 10);
+    const height24 = SizedBox(height: 24);
+    const height32 = SizedBox(height: 32);
+    const height85 = SizedBox(height: 85);
+
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
     var showAppWebpageFinal =
@@ -168,7 +176,7 @@ class _AppPageState extends State<AppPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
             child: Column(
               children: [
-                const SizedBox(height: 32),
+                height32,
                 Text(
                   versionLines,
                   textAlign: TextAlign.start,
@@ -314,7 +322,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 32),
+                height32,
                 GestureDetector(
                   onLongPress: () {
                     Clipboard.setData(
@@ -456,7 +464,7 @@ class _AppPageState extends State<AppPage> {
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
-        const SizedBox(height: 85),
+        height85,
       ],
     );
 
