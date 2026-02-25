@@ -146,7 +146,6 @@ class _AppPageState extends State<AppPage> {
                     context,
                   ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
                 ),
-                height8,
                 changeLogFn != null || app?.app.releaseDate != null
                     ? GestureDetector(
                         onTap: changeLogFn,
@@ -173,7 +172,6 @@ class _AppPageState extends State<AppPage> {
               ],
             ),
           ),
-          height16,
           Text(
             infoLines,
             textAlign: TextAlign.center,
@@ -248,17 +246,15 @@ class _AppPageState extends State<AppPage> {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: app.certificateHashes.map((hash) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2),
-                      child: GestureDetector(
-                        onLongPress: () {
-                          Clipboard.setData(ClipboardData(text: hash));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(tr('copiedToClipboard'))),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
+                    return GestureDetector(
+                      onLongPress: () {
+                        Clipboard.setData(ClipboardData(text: hash));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(tr('copiedToClipboard'))),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 25,
                           vertical: 0,
                         ),
@@ -289,9 +285,6 @@ class _AppPageState extends State<AppPage> {
               }
             },
           ),
-          if (app?.app.additionalSettings['about'] is String &&
-              app?.app.additionalSettings['about'].isNotEmpty)
-            height16,
           if (app?.app.additionalSettings['about'] is String &&
               app?.app.additionalSettings['about'].isNotEmpty)
             Column(
@@ -366,7 +359,6 @@ class _AppPageState extends State<AppPage> {
               ? Theme.of(context).textTheme.displaySmall
               : Theme.of(context).textTheme.displayLarge,
         ),
-        height8,
         Text(
           tr('byX', args: [app?.author ?? tr('unknown')]),
           textAlign: TextAlign.center,
