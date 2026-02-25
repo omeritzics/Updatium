@@ -1050,7 +1050,7 @@ class AppsPageState extends State<AppsPage> {
                     itemCount: filteredEntries.length,
                     itemBuilder: (context, gridIndex) {
                       return getSingleAppGridTile(
-                        filteredEntries[gridIndex].key,
+                        listedApps.indexOf(filteredEntries[gridIndex].value),
                       );
                     },
                   ),
