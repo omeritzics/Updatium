@@ -164,7 +164,7 @@
     "pleaseAllowInstallPerm": "נא לאפשר ל־Updatium להתקין יישומים",
     "trackOnly": "למעקב עדכונים בלבד",
     "errorWithHttpStatusCode": "שגיאה {}",
-    "versionCorrectionDisabled": "Version correction disabled (plugin doesn't seem to work)",
+    "versionCorrectionDisabled": " תיקון הגרסה מושבת (נראה שהתוסף לא עובד)",
     "unknown": "לא ידוע",
     "none": "ללא",
     "all": "הכול",

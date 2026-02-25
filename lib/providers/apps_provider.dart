@@ -48,6 +48,42 @@ import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 final pm = AndroidPackageManager();
 final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
 
+// android-x86 detection helper
+bool _isAndroidX86 = false;
+bool get isAndroidX86 => _isAndroidX86;
+
+// Comprehensive android-x86 detection
+Future<bool> _detectAndroidX86() async {
+  try {
+    final deviceInfo = await DeviceInfoPlugin().androidInfo;
+    
+    // Multiple detection methods for better reliability
+    final productChecks = [
+      deviceInfo.product.toLowerCase().contains('android-x86'),
+      deviceInfo.product.toLowerCase().contains('waydroid'),
+      deviceInfo.product.toLowerCase().contains('wayland'),
+    ];
+    
+    final modelChecks = [
+      deviceInfo.model.toLowerCase().contains('android-x86'),
+      deviceInfo.model.toLowerCase().contains('waydroid'),
+      deviceInfo.model.toLowerCase().contains('wayland'),
+    ];
+    
+    final fingerprintChecks = [
+      deviceInfo.fingerprint.toLowerCase().contains('android-x86'),
+      deviceInfo.fingerprint.toLowerCase().contains('waydroid'),
+      deviceInfo.fingerprint.toLowerCase().contains('wayland'),
+    ];
+    
+    return productChecks.any((check) => check) ||
+           modelChecks.any((check) => check) ||
+           fingerprintChecks.any((check) => check);
+  } catch (e) {
+    return false;
+  }
+}
+
 class AppInMemory {
   late App app;
   double? downloadProgress;
@@ -504,7 +540,23 @@ Future<File> downloadFile(
 }
 
 Future<List<PackageInfo>> getAllInstalledInfo() async {
-  return await pm.getInstalledPackages(flags: packageInfoFlags) ?? [];
+  // Detect android-x86 environment using comprehensive method
+  _isAndroidX86 = await _detectAndroidX86();
+  
+  try {
+    final packages = await pm.getInstalledPackages(flags: packageInfoFlags) ?? [];
+    return packages;
+  } catch (e) {
+    // Fallback: try without flags
+    if (_isAndroidX86) {
+      try {
+        return await pm.getInstalledPackages() ?? [];
+      } catch (e2) {
+        return [];
+      }
+    }
+    rethrow;
+  }
 }
 
 Future<PackageInfo?> getInstalledInfo(
@@ -518,7 +570,16 @@ Future<PackageInfo?> getInstalledInfo(
         flags: packageInfoFlags,
       );
     } catch (e) {
-      if (printErr) {
+      // Fallback: try without flags
+      if (_isAndroidX86) {
+        try {
+          return await pm.getPackageInfo(packageName: packageName);
+        } catch (e2) {
+          if (printErr) {
+            print('Package info fallback failed for $packageName');
+          }
+        }
+      } else if (printErr) {
         print(e); // OK
       }
     }
@@ -533,6 +594,15 @@ Future<Directory> getAppStorageDir() async =>
 class AppsProvider with ChangeNotifier {
   // In memory App state (should always be kept in sync with local storage versions)
   Map<String, AppInMemory> apps = {};
+  
+  AppsProvider() {
+    // Initialize android-x86 detection early
+    _initializeAndroidX86Detection();
+  }
+  
+  Future<void> _initializeAndroidX86Detection() async {
+    _isAndroidX86 = await _detectAndroidX86();
+  }
   bool loadingApps = false;
   bool gettingUpdates = false;
   LogsProvider logs = LogsProvider();
@@ -854,7 +924,10 @@ class AppsProvider with ChangeNotifier {
       return false;
     }
     if (osInfo.version.sdkInt < 36) {
-      // The OS must also be new enough
+      // The OS must also be new enough, but be more lenient with certain environments
+      if (_isAndroidX86) {
+        return true; // Allow installation regardless of reported SDK
+      }
       logs.add('Android SDK too old: ${osInfo.version.sdkInt}');
       return false;
     }
@@ -1080,6 +1153,15 @@ class AppsProvider with ChangeNotifier {
             : 0];
     // get device supported architecture
     List<String> archs = (await DeviceInfoPlugin().androidInfo).supportedAbis;
+    
+    // x86 environments: prefer x86_64 but allow fallback to x86
+    if (_isAndroidX86) {
+      if (urlsToSelectFrom.any((url) => url.key.contains('x86_64'))) {
+        archs = ['x86_64', 'x86'];
+      } else {
+        archs = ['x86', 'x86_64'];
+      }
+    }
 
     if ((urlsToSelectFrom.length > 1 || evenIfSingleChoice) &&
         context != null) {
