@@ -42,7 +42,7 @@ import 'package:http/http.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:shared_storage/shared_storage.dart' as saf;
+import 'package:docman/docman.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 
 final pm = AndroidPackageManager();
@@ -2304,14 +2304,25 @@ class AppsProvider with ChangeNotifier {
       if (exportDir == null) {
         return null;
       }
-      var files = await saf
-          .listFiles(exportDir, columns: [saf.DocumentFileColumn.id])
-          .where((f) => f.uri.pathSegments.last.endsWith('-auto.json'))
-          .toList();
-      if (files.isNotEmpty) {
-        for (var f in files) {
-          saf.delete(f.uri);
+      // List and delete auto-export files using docman
+      try {
+        final docFileResult = await DocumentFile.fromUri(exportDir!.toString());
+        final dirDocFile = await docFileResult.get();
+        if (dirDocFile != null) {
+          final files = await dirDocFile.listDocuments();
+          final autoFiles = files.where((f) => 
+            f.endsWith('-auto.json')
+          ).toList();
+          
+          for (var fileName in autoFiles) {
+            final fileToDelete = await dirDocFile.find(fileName);
+            if (fileToDelete != null) {
+              await fileToDelete.delete();
+            }
+          }
         }
+      } catch (e) {
+        // Handle error silently or log if needed
       }
     }
     if (exportDir == null || pickOnly) {
@@ -2325,14 +2336,26 @@ class AppsProvider with ChangeNotifier {
     if (!pickOnly) {
       var encoder = const JsonEncoder.withIndent("    ");
       Map<String, dynamic> finalExport = generateExportJSON();
-      var result = await saf.createFile(
-        exportDir,
-        displayName:
-            '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
-        mimeType: 'application/json',
-        bytes: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
-      );
-      if (result == null) {
+      // Create export file using docman
+      try {
+        final docFileResult = await DocumentFile.fromUri(exportDir!.toString());
+        final dirDocFile = await docFileResult.get();
+        if (dirDocFile != null) {
+          final fileName = '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
+          
+          final result = await dirDocFile.createFile(
+            fileName,
+            'application/json',
+            Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
+          );
+          
+          if (result == null) {
+            throw UpdatiumError(tr('unexpectedError'));
+          }
+        } else {
+          throw UpdatiumError(tr('unexpectedError'));
+        }
+      } catch (e) {
         throw UpdatiumError(tr('unexpectedError'));
       }
       returnPath = exportDir.pathSegments
