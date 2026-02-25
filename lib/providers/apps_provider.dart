@@ -2310,10 +2310,10 @@ class AppsProvider with ChangeNotifier {
         final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
           final files = await dirDocFile.listDocuments();
-          final autoFiles = files.where((f) => 
-            f.endsWith('-auto.json')
-          ).toList();
-          
+          final autoFiles = files
+              .where((f) => f.endsWith('-auto.json'))
+              .toList();
+
           for (var fileName in autoFiles) {
             final fileToDelete = await dirDocFile.find(fileName);
             if (fileToDelete != null) {
