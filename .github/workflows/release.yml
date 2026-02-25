@@ -1,4 +1,5 @@
 name: Build and Release Qama
+
 permissions:
   contents: write
 
@@ -54,10 +55,10 @@ jobs:
             echo "Sync script not found, skipping..."
           fi
 
-      - name: Extract Version
-        id: extract_version
+      - name: Generate Version
+        id: version
         run: |
-          # Generate version dynamically: YY.M.0 format (semantic versioning)
+          # Generate version: YY.M.0 format (semantic versioning)
           YEAR=$(date +'%y')
           MONTH=$(date +'%-m')
           VERSION="$YEAR.$MONTH.0"
@@ -103,27 +104,28 @@ jobs:
           fi
           echo "Keystore verification successful"
 
-      - name: Build APKs
+      - name: Build APKs (Release Mode)
         run: |
-          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.extract_version.outputs.version }}" --build-number="${{ steps.extract_version.outputs.build_number }}"
-          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.extract_version.outputs.version }}" --build-number="${{ steps.extract_version.outputs.build_number }}"
+          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
+          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
 
-      - name: Save APKs as Artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v6
         with:
-          name: updatium-v${{ steps.extract_version.outputs.version }}-run${{ github.run_number }}
+          name: updatium-v${{ steps.version.outputs.version }}-run${{ github.run_number }}
           path: build/app/outputs/flutter-apk/*.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ steps.extract_version.outputs.tag }}
-          name: "Updatium Qama ${{ steps.extract_version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "Updatium ${{ steps.version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
           prerelease: ${{ github.event.inputs.beta == true }}
           draft: true
           files: build/app/outputs/flutter-apk/*.apk
           generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cleanup signing files
         if: always()
