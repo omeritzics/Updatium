@@ -2343,7 +2343,9 @@ class AppsProvider with ChangeNotifier {
 
           final result = await dirDocFile.createFile(
             name: fileName,
-            bytes: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
+            bytes: Uint8List.fromList(
+              utf8.encode(encoder.convert(finalExport)),
+            ),
           );
 
           if (result == null) {
