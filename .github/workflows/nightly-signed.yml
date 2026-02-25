@@ -55,6 +55,9 @@ jobs:
             echo "Sync script not found, skipping..."
           fi
 
+      - name: Install dependencies
+        run: flutter pub get
+
       - name: Generate Version
         id: version
         run: |
