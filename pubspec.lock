@@ -23,8 +23,8 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "18231a8a2343747440b0bfe90f7d56ef7f586099"
-      url: "https://github.com/ImranR98/android_package_manager"
+      resolved-ref: "7ded6c164e86395520014f8a0ea9c7a3999ffa1d"
+      url: "https://github.com/omeritzics/android_package_manager"
     source: git
     version: "0.7.1"
   android_system_font:

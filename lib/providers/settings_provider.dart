@@ -448,7 +448,8 @@ class SettingsProvider with ChangeNotifier {
     var currentOneWayDataSyncDir = await getExportDir();
     Uri? newOneWayDataSyncDir;
     if (!remove) {
-      newOneWayDataSyncDir = await DocMan.pick.directory();
+      final pickedDir = await DocMan.pick.directory();
+      newOneWayDataSyncDir = pickedDir != null ? Uri.parse(pickedDir.uri) : null;
     }
     if (currentOneWayDataSyncDir?.path != newOneWayDataSyncDir?.path) {
       if (newOneWayDataSyncDir == null) {

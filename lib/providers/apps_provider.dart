@@ -2311,14 +2311,11 @@ class AppsProvider with ChangeNotifier {
         if (dirDocFile != null) {
           final files = await dirDocFile.listDocuments();
           final autoFiles = files
-              .where((f) => f.endsWith('-auto.json'))
+              .where((f) => f.name.endsWith('-auto.json'))
               .toList();
 
-          for (var fileName in autoFiles) {
-            final fileToDelete = await dirDocFile.find(fileName);
-            if (fileToDelete != null) {
-              await fileToDelete.delete();
-            }
+          for (var file in autoFiles) {
+            await file.delete();
           }
         }
       } catch (e) {
@@ -2345,9 +2342,9 @@ class AppsProvider with ChangeNotifier {
               '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
 
           final result = await dirDocFile.createFile(
-            fileName,
-            'application/json',
-            Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
+            name: fileName,
+            mimeType: 'application/json',
+            data: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
           );
 
           if (result == null) {
