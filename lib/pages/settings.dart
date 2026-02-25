@@ -815,7 +815,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         localeDropdown,
                         FutureBuilder(
                           builder: (ctx, val) {
-                            return (val.data?.version.sdkInt ?? 0) >= 34
+                            return (val.data?.version.sdkInt ?? 0) >= 36
                                 ? Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,

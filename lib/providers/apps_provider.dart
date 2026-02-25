@@ -853,7 +853,7 @@ class AppsProvider with ChangeNotifier {
       // If we did not install the app, silent install is not possible
       return false;
     }
-    if (osInfo.version.sdkInt < 31) {
+    if (osInfo.version.sdkInt < 36) {
       // The OS must also be new enough
       logs.add('Android SDK too old: ${osInfo.version.sdkInt}');
       return false;
