@@ -395,7 +395,10 @@ class _UpdatiumState extends State<Updatium> {
 
           // Apply pure black surface for AMOLED black theme
           if (settingsProvider.useBlackTheme) {
-            darkColorScheme = darkColorScheme.copyWith(surface: Colors.black);
+            darkColorScheme = darkColorScheme.copyWith(
+              surface: Colors.black,
+              surfaceContainerHighest: Colors.black.withValues(alpha: 0.1),
+            );
           }
 
           if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
@@ -607,11 +610,17 @@ class _UpdatiumState extends State<Updatium> {
                 fillColor: scheme.surfaceContainerHighest,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
+                  borderSide: BorderSide(
+                    color: scheme.outline.withValues(alpha: 0.3),
+                    width: 1,
+                  ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
+                  borderSide: BorderSide(
+                    color: scheme.outline.withValues(alpha: 0.3),
+                    width: 1,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -650,11 +659,17 @@ class _UpdatiumState extends State<Updatium> {
                   fillColor: scheme.surfaceContainerHighest,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
+                    borderSide: BorderSide(
+                      color: scheme.outline.withValues(alpha: 0.3),
+                      width: 1,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
+                    borderSide: BorderSide(
+                      color: scheme.outline.withValues(alpha: 0.3),
+                      width: 1,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),

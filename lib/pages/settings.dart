@@ -190,39 +190,32 @@ class _SettingsPageState extends State<SettingsPage> {
         "(${ColorTools.materialNameAndCode(settingsProvider.themeColor, colorSwatchNameMap: colorsNameMap)})",
       ),
       trailing: Container(
-        width: MediaQuery.of(context).size.width * 0.1,
-        height: MediaQuery.of(context).size.width * 0.1,
+        width: 48,
+        height: 48,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(
-            MediaQuery.of(context).size.width * 0.05,
-          ),
+          borderRadius: BorderRadius.circular(24),
           color: settingsProvider.themeColor,
           border: Border.all(
             color: Theme.of(context).colorScheme.outline,
             width: 1,
           ),
         ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(
-              MediaQuery.of(context).size.width * 0.05,
-            ),
-            onTap: () async {
-              final Color colorBeforeDialog = settingsProvider.themeColor;
-              if (!(await colorPickerDialog())) {
-                setState(() {
-                  settingsProvider.themeColor = colorBeforeDialog;
-                });
-              }
-            },
-            child: Icon(
-              Icons.palette,
-              color: settingsProvider.themeColor.computeLuminance() > 0.5
-                  ? Colors.black
-                  : Colors.white,
-              size: MediaQuery.of(context).size.width * 0.05,
-            ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(24),
+          onTap: () async {
+            final Color colorBeforeDialog = settingsProvider.themeColor;
+            if (!(await colorPickerDialog())) {
+              setState(() {
+                settingsProvider.themeColor = colorBeforeDialog;
+              });
+            }
+          },
+          child: Icon(
+            Icons.palette,
+            color: settingsProvider.themeColor.computeLuminance() > 0.5
+                ? Colors.black
+                : Colors.white,
+            size: 24,
           ),
         ),
       ),
