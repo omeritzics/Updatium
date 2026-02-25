@@ -2,7 +2,6 @@ import 'package:animations/animations.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:updatium/components/button_helpers.dart';
@@ -18,6 +17,7 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:updatium/generated/app_localizations.dart';
 import 'package:markdown/markdown.dart' as md;
 
 class AppsPage extends StatefulWidget {
@@ -38,7 +38,7 @@ void showChangeLogDialog(
     context: context,
     builder: (BuildContext context) {
       return GeneratedFormModal(
-        title: tr('changes'),
+        title: AppLocalizations.of(context)!\.changes,
         items: const [],
         message: app.latestVersion,
         additionalWidgets: [
@@ -101,7 +101,7 @@ void showChangeLogDialog(
                 )
               : Text(changeLog),
         ],
-        singleNullReturnButton: tr('ok'),
+        singleNullReturnButton: AppLocalizations.of(context)!\.ok,
       );
     },
   );
@@ -431,9 +431,9 @@ class AppsPageState extends State<AppsPage> {
                     Text(
                       appsProvider.apps.isEmpty
                           ? appsProvider.loadingApps
-                                ? tr('pleaseWait')
-                                : tr('noApps')
-                          : tr('noAppsForFilter'),
+                                ? AppLocalizations.of(context)!\.pleaseWait
+                                : AppLocalizations.of(context)!\.noApps
+                          : AppLocalizations.of(context)!\.noAppsForFilter,
                       style: Theme.of(context).textTheme.headlineMedium,
                       textAlign: TextAlign.center,
                       maxLines: 3,
@@ -444,7 +444,7 @@ class AppsPageState extends State<AppsPage> {
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
                           () {
-                            final subtext = tr('noAppsSubtext');
+                            final subtext = AppLocalizations.of(context)!\.noAppsSubtext;
                             // Hide subtext if translation key is not found (returns the key itself)
                             return subtext == 'noAppsSubtext' ? '' : subtext;
                           }(),
@@ -524,7 +524,7 @@ class AppsPageState extends State<AppsPage> {
           } else if (!isInstalled) {
             action = Semantics(
               button: true,
-              label: tr('install'),
+              label: AppLocalizations.of(context)!\.install,
               hint: appsProvider.areDownloadsRunning()
                   ? 'Please wait, downloads in progress'
                   : 'Install ${app.name} on your device',
@@ -544,13 +544,13 @@ class AppsPageState extends State<AppsPage> {
                               return <String>[];
                             });
                       },
-                child: Text(tr('install')),
+                child: Text(AppLocalizations.of(context)!\.install),
               ),
             );
           } else if (hasUpdateLocal) {
             action = Semantics(
               button: true,
-              label: tr('update'),
+              label: AppLocalizations.of(context)!\.update,
               hint: appsProvider.areDownloadsRunning()
                   ? 'Please wait, downloads in progress'
                   : 'Update ${app.name} to version ${app.latestVersion}',
@@ -570,7 +570,7 @@ class AppsPageState extends State<AppsPage> {
                               return <String>[];
                             });
                       },
-                child: Text(tr('update')),
+                child: Text(AppLocalizations.of(context)!\.update),
               ),
             );
           } else {
@@ -579,7 +579,7 @@ class AppsPageState extends State<AppsPage> {
               children: [
                 Icon(Icons.check_circle, color: Colors.green[600], size: 20),
                 const SizedBox(width: 6),
-                Text(tr('updated'), style: TextStyle(color: Colors.green[600])),
+                Text(AppLocalizations.of(context)!\.updated, style: TextStyle(color: Colors.green[600])),
               ],
             );
           }
@@ -699,7 +699,7 @@ class AppsPageState extends State<AppsPage> {
                                     .toString(),
                               ],
                             )
-                          : tr('installing'),
+                          : AppLocalizations.of(context)!\.installing,
                       textAlign: (listedApps[index].downloadProgress! >= 0)
                           ? TextAlign.start
                           : TextAlign.end,
@@ -916,7 +916,7 @@ class AppsPageState extends State<AppsPage> {
                                               return <String>[];
                                             });
                                       },
-                                child: Text(tr('install')),
+                                child: Text(AppLocalizations.of(context)!\.install),
                               );
                             }
 
@@ -937,7 +937,7 @@ class AppsPageState extends State<AppsPage> {
                                               return <String>[];
                                             });
                                       },
-                                child: Text(tr('update')),
+                                child: Text(AppLocalizations.of(context)!\.update),
                               );
                             }
 
@@ -954,7 +954,7 @@ class AppsPageState extends State<AppsPage> {
                                 const SizedBox(width: 4),
                                 Flexible(
                                   child: Text(
-                                    tr('updated'),
+                                    AppLocalizations.of(context)!\.updated,
                                     style: TextStyle(color: Colors.green[600]),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -1008,7 +1008,7 @@ class AppsPageState extends State<AppsPage> {
       return ExpansionTile(
         initiallyExpanded: true,
         title: Text(
-          capFirstChar(listedCategories[index] ?? tr('noCategory')),
+          capFirstChar(listedCategories[index] ?? AppLocalizations.of(context)!\.noCategory),
           style: const TextStyle(fontWeight: FontWeight.bold),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -1207,7 +1207,7 @@ class AppsPageState extends State<AppsPage> {
                         if (value.isNotEmpty &&
                             shouldInstallUpdates &&
                             mounted) {
-                          showMessage(tr('appsUpdated'), context);
+                          showMessage(AppLocalizations.of(context)!\.appsUpdated, context);
                         }
                       });
                 }
@@ -1238,10 +1238,10 @@ class AppsPageState extends State<AppsPage> {
                   context: context,
                   builder: (BuildContext ctx) {
                     return GeneratedFormModal(
-                      title: tr('categorize'),
+                      title: AppLocalizations.of(context)!\.categorize,
                       items: const [],
                       initValid: true,
-                      message: tr('selectedCategorizeWarning'),
+                      message: AppLocalizations.of(context)!\.selectedCategorizeWarning,
                     );
                   },
                 ) !=
@@ -1253,10 +1253,10 @@ class AppsPageState extends State<AppsPage> {
               context: context,
               builder: (BuildContext ctx) {
                 return GeneratedFormModal(
-                  title: tr('categorize'),
+                  title: AppLocalizations.of(context)!\.categorize,
                   items: const [],
                   initValid: true,
-                  singleNullReturnButton: tr('continue'),
+                  singleNullReturnButton: AppLocalizations.of(context)!\.continue,
                   additionalWidgets: [
                     CategoryEditorSelector(
                       preselected: !showPrompt ? preselected ?? {} : {},
@@ -1295,7 +1295,7 @@ class AppsPageState extends State<AppsPage> {
               ),
             ),
             content: Text(
-              tr('onlyWorksWithNonVersionDetectApps'),
+              AppLocalizations.of(context)!\.onlyWorksWithNonVersionDetectApps,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic,
@@ -1306,7 +1306,7 @@ class AppsPageState extends State<AppsPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text(tr('no')),
+                child: Text(AppLocalizations.of(context)!\.no),
               ),
               createAppTextButton(
                 onPressed: () {
@@ -1325,7 +1325,7 @@ class AppsPageState extends State<AppsPage> {
 
                   Navigator.of(context).pop();
                 },
-                child: Text(tr('yes')),
+                child: Text(AppLocalizations.of(context)!\.yes),
               ),
             ],
           );
@@ -1361,8 +1361,8 @@ class AppsPageState extends State<AppsPage> {
                     onPressed: pinSelectedApps,
                     child: Text(
                       selectedApps.where((element) => element.pinned).isEmpty
-                          ? tr('pinToTop')
-                          : tr('unpinFromTop'),
+                          ? AppLocalizations.of(context)!\.pinToTop
+                          : AppLocalizations.of(context)!\.unpinFromTop,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -1376,12 +1376,12 @@ class AppsPageState extends State<AppsPage> {
                       urls = urls.substring(0, urls.length - 1);
                       Share.share(
                         urls,
-                        subject: 'Updatium - ${tr('appsString')}',
+                        subject: 'Updatium - ${AppLocalizations.of(context)!\.appsString}',
                       );
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      tr('shareSelectedAppURLs'),
+                      AppLocalizations.of(context)!\.shareSelectedAppURLs,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -1398,7 +1398,7 @@ class AppsPageState extends State<AppsPage> {
                               ),
                             );
                             String fn =
-                                '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
+                                '${AppLocalizations.of(context)!\.updatiumExportHyphenatedLowercase}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
                             XFile f = XFile.fromData(
                               Uint8List.fromList(utf8.encode(exportJSON)),
                               mimeType: 'application/json',
@@ -1410,7 +1410,7 @@ class AppsPageState extends State<AppsPage> {
                             );
                           },
                     child: Text(
-                      '${tr('share')} - ${tr('updatiumExport')}',
+                      '${AppLocalizations.of(context)!\.share} - ${AppLocalizations.of(context)!\.updatiumExport}',
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -1434,7 +1434,7 @@ class AppsPageState extends State<AppsPage> {
                     child: Text(
                       tr(
                         'downloadX',
-                        args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+                        args: [lowerCaseIfEnglish(AppLocalizations.of(context)!\.releaseAsset)],
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -1445,7 +1445,7 @@ class AppsPageState extends State<AppsPage> {
                         ? null
                         : showMassMarkDialog,
                     child: Text(
-                      tr('markSelectedAppsUpdated'),
+                      AppLocalizations.of(context)!\.markSelectedAppsUpdated,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -1462,8 +1462,8 @@ class AppsPageState extends State<AppsPage> {
         Semantics(
           button: true,
           label: selectedAppIds.isEmpty
-              ? tr('installUpdateApps')
-              : tr('installUpdateSelectedApps'),
+              ? AppLocalizations.of(context)!\.installUpdateApps
+              : AppLocalizations.of(context)!\.installUpdateSelectedApps,
           hint: selectedAppIds.isEmpty
               ? 'Install or update all apps'
               : 'Install or update ${selectedAppIds.length} selected apps',
@@ -1471,14 +1471,14 @@ class AppsPageState extends State<AppsPage> {
             visualDensity: VisualDensity.compact,
             onPressed: getMassObtainFunction(),
             tooltip: selectedAppIds.isEmpty
-                ? tr('installUpdateApps')
-                : tr('installUpdateSelectedApps'),
+                ? AppLocalizations.of(context)!\.installUpdateApps
+                : AppLocalizations.of(context)!\.installUpdateSelectedApps,
             icon: const Icon(Icons.file_download),
           ),
         ),
         Semantics(
           button: true,
-          label: tr('removeSelectedApps'),
+          label: AppLocalizations.of(context)!\.removeSelectedApps,
           hint: selectedAppIds.isEmpty
               ? 'No apps selected'
               : 'Remove ${selectedAppIds.length} selected apps',
@@ -1492,20 +1492,20 @@ class AppsPageState extends State<AppsPage> {
                       selectedApps.toList(),
                     );
                   },
-            tooltip: tr('removeSelectedApps'),
+            tooltip: AppLocalizations.of(context)!\.removeSelectedApps,
             icon: const Icon(Icons.delete),
           ),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
           onPressed: selectedAppIds.isEmpty ? null : launchCategorizeDialog(),
-          tooltip: tr('categorize'),
+          tooltip: AppLocalizations.of(context)!\.categorize,
           icon: const Icon(Icons.category),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
           onPressed: selectedAppIds.isEmpty ? null : showMoreOptionsDialog,
-          tooltip: tr('more'),
+          tooltip: AppLocalizations.of(context)!\.more,
           icon: const Icon(Icons.more_horiz),
         ),
       ];
@@ -1518,18 +1518,18 @@ class AppsPageState extends State<AppsPage> {
           var vals = filter.toFormValuesMap();
           return GeneratedFormModal(
             initValid: true,
-            title: tr('filterApps'),
+            title: AppLocalizations.of(context)!\.filterApps,
             items: [
               [
                 GeneratedFormTextField(
                   'appName',
-                  label: tr('appName'),
+                  label: AppLocalizations.of(context)!\.appName,
                   required: false,
                   defaultValue: vals['appName'],
                 ),
                 GeneratedFormTextField(
                   'author',
-                  label: tr('author'),
+                  label: AppLocalizations.of(context)!\.author,
                   required: false,
                   defaultValue: vals['author'],
                 ),
@@ -1537,7 +1537,7 @@ class AppsPageState extends State<AppsPage> {
               [
                 GeneratedFormTextField(
                   'appId',
-                  label: tr('appId'),
+                  label: AppLocalizations.of(context)!\.appId,
                   required: false,
                   defaultValue: vals['appId'],
                 ),
@@ -1545,24 +1545,24 @@ class AppsPageState extends State<AppsPage> {
               [
                 GeneratedFormSwitch(
                   'upToDateApps',
-                  label: tr('upToDateApps'),
+                  label: AppLocalizations.of(context)!\.upToDateApps,
                   defaultValue: vals['upToDateApps'],
                 ),
               ],
               [
                 GeneratedFormSwitch(
                   'nonInstalledApps',
-                  label: tr('nonInstalledApps'),
+                  label: AppLocalizations.of(context)!\.nonInstalledApps,
                   defaultValue: vals['nonInstalledApps'],
                 ),
               ],
               [
                 GeneratedFormDropdown(
                   'sourceFilter',
-                  label: tr('appSource'),
+                  label: AppLocalizations.of(context)!\.appSource,
                   defaultValue: filter.sourceFilter,
                   [
-                    MapEntry('', tr('none')),
+                    MapEntry('', AppLocalizations.of(context)!\.none),
                     ...sourceProvider.sources.map(
                       (e) => MapEntry(e.runtimeType.toString(), e.name),
                     ),
@@ -1598,8 +1598,8 @@ class AppsPageState extends State<AppsPage> {
             color: Theme.of(context).colorScheme.primary,
             style: const ButtonStyle(visualDensity: VisualDensity.compact),
             tooltip: settingsProvider.useGridView
-                ? tr('listView')
-                : tr('gridView'),
+                ? AppLocalizations.of(context)!\.listView
+                : AppLocalizations.of(context)!\.gridView,
             onPressed: () {
               settingsProvider.useGridView = !settingsProvider.useGridView;
             },
@@ -1693,8 +1693,8 @@ class AppsPageState extends State<AppsPage> {
                           visualDensity: VisualDensity.compact,
                         ),
                         tooltip: isFilterOff
-                            ? tr('filterApps')
-                            : '${tr('filter')} - ${tr('remove')}',
+                            ? AppLocalizations.of(context)!\.filterApps
+                            : '${AppLocalizations.of(context)!\.filter} - ${AppLocalizations.of(context)!\.remove}',
                         onPressed: isFilterOff
                             ? showFilterDialog
                             : () {
@@ -1717,7 +1717,7 @@ class AppsPageState extends State<AppsPage> {
                     vertical: 20,
                   ),
                   title: Text(
-                    tr('appsString'),
+                    AppLocalizations.of(context)!\.appsString,
                     style: TextStyle(
                       color: Theme.of(context).textTheme.bodyMedium!.color,
                     ),

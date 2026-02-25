@@ -1,13 +1,13 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class FDroidRepo extends AppSource {
   FDroidRepo() {
-    name = tr('fdroidThirdPartyRepo');
+    name = AppLocalizations.of(context)!\.fdroidThirdPartyRepo;
     canSearch = true;
     includeAdditionalOptsInMainSearch = true;
     neverAutoSelect = true;
@@ -17,22 +17,22 @@ class FDroidRepo extends AppSource {
       [
         GeneratedFormTextField(
           'appIdOrName',
-          label: tr('appIdOrName'),
-          hint: tr('reposHaveMultipleApps'),
+          label: AppLocalizations.of(context)!\.appIdOrName,
+          hint: AppLocalizations.of(context)!\.reposHaveMultipleApps,
           required: true,
         ),
       ],
       [
         GeneratedFormSwitch(
           'pickHighestVersionCode',
-          label: tr('pickHighestVersionCode'),
+          label: AppLocalizations.of(context)!\.pickHighestVersionCode,
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'trySelectingSuggestedVersionCode',
-          label: tr('trySelectingSuggestedVersionCode'),
+          label: AppLocalizations.of(context)!\.trySelectingSuggestedVersionCode,
           defaultValue: true,
         ),
       ],
@@ -209,7 +209,7 @@ class FDroidRepo extends AppSource {
         }).toList();
       }
       if (foundApps.isEmpty) {
-        throw UpdatiumError(tr('appWithIdOrNameNotFound'));
+        throw UpdatiumError(AppLocalizations.of(context)!\.appWithIdOrNameNotFound);
       }
       var authorName = body.querySelector('repo')?.attributes['name'] ?? name;
       String appId = foundApps[0].attributes['id']!;

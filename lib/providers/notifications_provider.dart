@@ -1,7 +1,6 @@
 // Exposes functions that can be used to send notifications to the user
 // Contains a set of pre-defined UpdatiumNotification objects that should be used throughout the app
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:updatium/components/button_helpers.dart';
@@ -39,22 +38,18 @@ class UpdateNotification extends UpdatiumNotification {
   UpdateNotification(List<App> updates, {int? id})
     : super(
         id ?? 2,
-        tr('updatesAvailable'),
+        'Updates available',
         '',
         'UPDATES_AVAILABLE',
-        tr('updatesAvailableNotifChannel'),
-        tr('updatesAvailableNotifDescription'),
+        'Updates available notifications',
+        'Notifications about available updates',
         Importance.max,
       ) {
     message = updates.isEmpty
-        ? tr('noNewUpdates')
+        ? 'No new updates'
         : updates.length == 1
-        ? tr('xHasAnUpdate', args: [updates[0].finalName])
-        : plural(
-            'xAndNMoreUpdatesAvailable',
-            updates.length - 1,
-            args: [updates[0].finalName, (updates.length - 1).toString()],
-          );
+        ? '${updates[0].finalName} has an update'
+        : '${updates[0].finalName} and ${(updates.length - 1).toString()} more updates available';
   }
 }
 
@@ -62,23 +57,16 @@ class SilentUpdateNotification extends UpdatiumNotification {
   SilentUpdateNotification(List<App> updates, bool succeeded, {int? id})
     : super(
         id ?? 3,
-        succeeded ? tr('appsUpdated') : tr('appsNotUpdated'),
+        succeeded ? 'Apps updated' : 'Apps not updated',
         '',
         'APPS_UPDATED',
-        tr('appsUpdatedNotifChannel'),
-        tr('appsUpdatedNotifDescription'),
+        'Apps updated notifications',
+        'Notifications about app updates',
         Importance.defaultImportance,
       ) {
     message = updates.length == 1
-        ? tr(
-            succeeded ? 'xWasUpdatedToY' : 'xWasNotUpdatedToY',
-            args: [updates[0].finalName, updates[0].latestVersion],
-          )
-        : plural(
-            succeeded ? 'xAndNMoreUpdatesInstalled' : "xAndNMoreUpdatesFailed",
-            updates.length - 1,
-            args: [updates[0].finalName, (updates.length - 1).toString()],
-          );
+        ? succeeded ? '${updates[0].finalName} was updated to ${updates[0].latestVersion}' : '${updates[0].finalName} was not updated to ${updates[0].latestVersion}'
+        : succeeded ? '${updates[0].finalName} and ${(updates.length - 1).toString()} more updates installed' : '${updates[0].finalName} and ${(updates.length - 1).toString()} more updates failed';
   }
 }
 
@@ -86,23 +74,16 @@ class SilentUpdateAttemptNotification extends UpdatiumNotification {
   SilentUpdateAttemptNotification(List<App> updates, {int? id})
     : super(
         id ?? 3,
-        tr('appsPossiblyUpdated'),
+        'Apps possibly updated',
         '',
         'APPS_POSSIBLY_UPDATED',
-        tr('appsPossiblyUpdatedNotifChannel'),
-        tr('appsPossiblyUpdatedNotifDescription'),
+        'Apps possibly updated notifications',
+        'Notifications about possible app updates',
         Importance.defaultImportance,
       ) {
     message = updates.length == 1
-        ? tr(
-            'xWasPossiblyUpdatedToY',
-            args: [updates[0].finalName, updates[0].latestVersion],
-          )
-        : plural(
-            'xAndNMoreUpdatesPossiblyInstalled',
-            updates.length - 1,
-            args: [updates[0].finalName, (updates.length - 1).toString()],
-          );
+        ? '${updates[0].finalName} was possibly updated to ${updates[0].latestVersion}'
+        : '${updates[0].finalName} and ${(updates.length - 1).toString()} more updates possibly installed';
   }
 }
 
@@ -110,13 +91,13 @@ class ErrorCheckingUpdatesNotification extends UpdatiumNotification {
   ErrorCheckingUpdatesNotification(String error, {int? id})
     : super(
         id ?? 5,
-        tr('errorCheckingUpdates'),
+        'Error checking updates',
         error,
         'BG_UPDATE_CHECK_ERROR',
-        tr('errorCheckingUpdatesNotifChannel'),
-        tr('errorCheckingUpdatesNotifDescription'),
+        'Error checking updates notifications',
+        'Notifications about update check errors',
         Importance.high,
-        payload: "${tr('errorCheckingUpdates')}\n$error",
+        payload: "Error checking updates\n$error",
       );
 }
 
@@ -124,16 +105,16 @@ class AppsRemovedNotification extends UpdatiumNotification {
   AppsRemovedNotification(List<List<String>> namedReasons)
     : super(
         6,
-        tr('appsRemoved'),
+        'Apps removed',
         '',
         'APPS_REMOVED',
-        tr('appsRemovedNotifChannel'),
-        tr('appsRemovedNotifDescription'),
+        'Apps removed notifications',
+        'Notifications about removed apps',
         Importance.max,
       ) {
     message = '';
     for (var r in namedReasons) {
-      message += '${tr('xWasRemovedDueToErrorY', args: [r[0], r[1]])} \n';
+      message += '${r[0]} was removed due to error: ${r[1]} \n';
     }
     message = message.trim();
   }
@@ -143,11 +124,11 @@ class DownloadNotification extends UpdatiumNotification {
   DownloadNotification(String appName, int progPercent)
     : super(
         appName.hashCode,
-        tr('downloadingX', args: [appName]),
+        'Downloading $appName',
         '',
         'APP_DOWNLOADING',
-        tr('downloadingXNotifChannel', args: [tr('app')]),
-        tr('downloadNotifDescription'),
+        'Downloading apps',
+        'App download progress notifications',
         Importance.low,
         onlyAlertOnce: true,
         progPercent: progPercent,
@@ -158,22 +139,22 @@ class DownloadedNotification extends UpdatiumNotification {
   DownloadedNotification(String fileName, String downloadUrl)
     : super(
         downloadUrl.hashCode,
-        tr('downloadedX', args: [fileName]),
+        'Downloaded $fileName',
         '',
         'FILE_DOWNLOADED',
-        tr('downloadedXNotifChannel', args: [tr('app')]),
-        tr('downloadedX', args: [tr('app')]),
+        'Downloaded apps',
+        'Downloaded app',
         Importance.defaultImportance,
       );
 }
 
 final completeInstallationNotification = UpdatiumNotification(
   1,
-  tr('completeAppInstallation'),
-  tr('updatiumMustBeOpenToInstallApps'),
+  'Complete app installation',
+  'Updatium must be open to install apps',
   'COMPLETE_INSTALL',
-  tr('completeAppInstallationNotifChannel'),
-  tr('completeAppInstallationNotifDescription'),
+  'Complete app installation notifications',
+  'Notifications about completed app installations',
   Importance.max,
 );
 
@@ -181,11 +162,11 @@ class CheckingUpdatesNotification extends UpdatiumNotification {
   CheckingUpdatesNotification(String appName)
     : super(
         4,
-        tr('checkingForUpdates'),
+        'Checking for updates',
         appName,
         'BG_UPDATE_CHECK',
-        tr('checkingForUpdatesNotifChannel'),
-        tr('checkingForUpdatesNotifDescription'),
+        'Checking for updates notifications',
+        'Notifications about update checks',
         Importance.min,
       );
 }
@@ -247,7 +228,7 @@ class NotificationsProvider {
                     Navigator.of(context).pop(null);
                   }
                 },
-                child: Text(tr('ok')),
+                child: Text('OK'),
               ),
             ],
           ),

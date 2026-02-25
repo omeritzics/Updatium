@@ -1,5 +1,4 @@
 import 'package:animations/animations.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/components/generated_form.dart';
@@ -15,6 +14,7 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class AddAppPage extends StatefulWidget {
   const AddAppPage({super.key});
@@ -123,14 +123,14 @@ class AddAppPageState extends State<AddAppPage> {
               title: tr(
                 'xIsTrackOnly',
                 args: [
-                  pickedSource!.enforceTrackOnly ? tr('source') : tr('app'),
+                  pickedSource!.enforceTrackOnly ? AppLocalizations.of(context)!\.source : AppLocalizations.of(context)!\.app,
                 ],
               ),
               items: [
-                [GeneratedFormSwitch('hide', label: tr('dontShowAgain'))],
+                [GeneratedFormSwitch('hide', label: AppLocalizations.of(context)!\.dontShowAgain)],
               ],
               message:
-                  '${pickedSource!.enforceTrackOnly ? tr('appsFromSourceAreTrackOnly') : tr('youPickedTrackOnly')}\n\n${tr('trackOnlyAppDescription')}',
+                  '${pickedSource!.enforceTrackOnly ? AppLocalizations.of(context)!\.appsFromSourceAreTrackOnly : AppLocalizations.of(context)!\.youPickedTrackOnly}\n\n${AppLocalizations.of(context)!\.trackOnlyAppDescription}',
             );
           },
         );
@@ -152,9 +152,9 @@ class AddAppPageState extends State<AddAppPage> {
                 context: context,
                 builder: (BuildContext ctx) {
                   return GeneratedFormModal(
-                    title: tr('releaseDateAsVersion'),
+                    title: AppLocalizations.of(context)!\.releaseDateAsVersion,
                     items: const [],
-                    message: tr('releaseDateAsVersionExplanation'),
+                    message: AppLocalizations.of(context)!\.releaseDateAsVersionExplanation,
                   );
                 },
               ) ==
@@ -190,7 +190,7 @@ class AddAppPageState extends State<AddAppPage> {
               false,
             );
             if (apkUrl == null) {
-              throw UpdatiumError(tr('cancelled'));
+              throw UpdatiumError(AppLocalizations.of(context)!\.cancelled);
             }
             app.preferredApkIndex = app.apkUrls
                 .map((e) => e.value)
@@ -212,7 +212,7 @@ class AddAppPageState extends State<AddAppPage> {
             app.id = downloadedFile?.appId ?? downloadedDir!.appId;
           }
           if (appsProvider.apps.containsKey(app.id)) {
-            throw UpdatiumError(tr('appAlreadyAdded'));
+            throw UpdatiumError(AppLocalizations.of(context)!\.appAlreadyAdded);
           }
           if (app.additionalSettings['trackOnly'] == true ||
               app.additionalSettings['versionDetection'] != true) {
@@ -248,7 +248,7 @@ class AddAppPageState extends State<AddAppPage> {
               [
                 GeneratedFormTextField(
                   'appSourceURL',
-                  label: tr('appSourceURL'),
+                  label: AppLocalizations.of(context)!\.appSourceURL,
                   defaultValue: userInput,
                   additionalValidators: [
                     (value) {
@@ -264,7 +264,7 @@ class AddAppPageState extends State<AddAppPage> {
                             ? e
                             : e is UpdatiumError
                             ? e.toString()
-                            : tr('error');
+                            : AppLocalizations.of(context)!\.error;
                       }
                       return null;
                     },
@@ -280,12 +280,12 @@ class AddAppPageState extends State<AddAppPage> {
         const SizedBox(width: 16),
         gettingAppInfo
             ? Semantics(
-                label: tr('gettingAppInfo'),
+                label: AppLocalizations.of(context)!\.gettingAppInfo,
                 child: const CircularProgressIndicator(),
               )
             : Semantics(
                 button: true,
-                label: tr('add'),
+                label: AppLocalizations.of(context)!\.add,
                 hint: doingSomething
                     ? 'Please wait, operation in progress'
                     : pickedSource == null
@@ -310,7 +310,7 @@ class AddAppPageState extends State<AddAppPage> {
                           HapticFeedback.selectionClick();
                           addApp();
                         },
-                  child: Text(tr('add')),
+                  child: Text(AppLocalizations.of(context)!\.add),
                 ),
               ),
       ],
@@ -359,14 +359,14 @@ class AddAppPageState extends State<AddAppPage> {
                         context: context,
                         builder: (BuildContext ctx) {
                           return GeneratedFormModal(
-                            title: tr('searchX', args: [e.name]),
+                            title: "searchX"(e.name),
                             items: [
                               ...e.searchQuerySettingFormItems.map((e) => [e]),
                               [
                                 GeneratedFormTextField(
                                   'url',
                                   label: e.hosts.isNotEmpty
-                                      ? tr('overrideSource')
+                                      ? AppLocalizations.of(context)!\.overrideSource
                                       : plural('url', 1).substring(2),
                                   autoCompleteOptions: [
                                     ...(e.hosts.isNotEmpty ? [e.hosts[0]] : []),
@@ -434,7 +434,7 @@ class AddAppPageState extends State<AddAppPage> {
             si++;
           }
           if (res.isEmpty) {
-            throw UpdatiumError(tr('noResults'));
+            throw UpdatiumError(AppLocalizations.of(context)!\.noResults);
           }
           List<String>? selectedUrls = res.isEmpty
               ? []
@@ -481,9 +481,9 @@ class AddAppPageState extends State<AddAppPage> {
             Expanded(
               child: DropdownButtonFormField<String>(
                 initialValue: pickedSourceOverride ?? '',
-                decoration: InputDecoration(labelText: tr('overrideSource')),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!\.overrideSource),
                 items: [
-                  DropdownMenuItem(value: '', child: Text(tr('none'))),
+                  DropdownMenuItem(value: '', child: Text(AppLocalizations.of(context)!\.none)),
                   ...sourceProvider.sources
                       .where(
                         (s) =>
@@ -521,7 +521,7 @@ class AddAppPageState extends State<AddAppPage> {
               [
                 GeneratedFormTextField(
                   'searchSomeSources',
-                  label: tr('searchSomeSourcesLabel'),
+                  label: AppLocalizations.of(context)!\.searchSomeSourcesLabel,
                   required: false,
                 ),
               ],
@@ -538,12 +538,12 @@ class AddAppPageState extends State<AddAppPage> {
         const SizedBox(width: 16),
         searching
             ? Semantics(
-                label: tr('searching'),
+                label: AppLocalizations.of(context)!\.searching,
                 child: const CircularProgressIndicator(),
               )
             : Semantics(
                 button: true,
-                label: tr('search'),
+                label: AppLocalizations.of(context)!\.search,
                 hint: searchQuery.isEmpty
                     ? 'Enter search terms first'
                     : 'Search for apps',
@@ -554,7 +554,7 @@ class AddAppPageState extends State<AddAppPage> {
                       : () {
                           runSearch();
                         },
-                  child: Text(tr('search')),
+                  child: Text(AppLocalizations.of(context)!\.search),
                 ),
               ),
       ],
@@ -565,7 +565,7 @@ class AddAppPageState extends State<AddAppPage> {
       children: [
         const SizedBox(height: 16),
         Text(
-          tr('additionalOptsFor', args: [pickedSource?.name ?? tr('source')]),
+          "additionalOptsFor"(pickedSource?.name ?? AppLocalizations.of(context)!\.source),
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
@@ -609,7 +609,7 @@ class AddAppPageState extends State<AddAppPage> {
               [
                 GeneratedFormSwitch(
                   'inferAppIdIfOptional',
-                  label: tr('tryInferAppIdFromCode'),
+                  label: AppLocalizations.of(context)!\.tryInferAppIdFromCode,
                   defaultValue: inferAppIdIfOptional,
                 ),
               ],
@@ -631,7 +631,7 @@ class AddAppPageState extends State<AddAppPage> {
               [
                 GeneratedFormTextField(
                   'appId',
-                  label: '${tr('appId')} - ${tr('custom')}',
+                  label: '${AppLocalizations.of(context)!\.appId} - ${AppLocalizations.of(context)!\.custom}',
                   required: false,
                   additionalValidators: [
                     (value) {
@@ -642,7 +642,7 @@ class AddAppPageState extends State<AddAppPage> {
                         r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
                       ).hasMatch(value);
                       if (!isValid) {
-                        return tr('invalidInput');
+                        return AppLocalizations.of(context)!\.invalidInput;
                       }
                       return null;
                     },
@@ -674,8 +674,8 @@ class AddAppPageState extends State<AddAppPage> {
                 context: context,
                 builder: (context) {
                   return GeneratedFormModal(
-                    singleNullReturnButton: tr('ok'),
-                    title: tr('supportedSources'),
+                    singleNullReturnButton: AppLocalizations.of(context)!\.ok,
+                    title: AppLocalizations.of(context)!\.supportedSources,
                     items: const [],
                     additionalWidgets: [
                       ...sourceProvider.sources.map(
@@ -691,7 +691,7 @@ class AddAppPageState extends State<AddAppPage> {
                                   }
                                 : null,
                             child: Text(
-                              '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
+                              '${e.name}${e.enforceTrackOnly ? ' ${AppLocalizations.of(context)!\.trackOnlyInBrackets}' : ''}${e.canSearch ? ' ${AppLocalizations.of(context)!\.searchableInBrackets}' : ''}',
                               style: TextStyle(
                                 decoration: e.hosts.isNotEmpty
                                     ? TextDecoration.underline
@@ -703,18 +703,18 @@ class AddAppPageState extends State<AddAppPage> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        '${tr('note')}:',
+                        '${AppLocalizations.of(context)!\.note}:',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
-                      Text(tr('selfHostedNote', args: [tr('overrideSource')])),
+                      Text("selfHostedNote"(AppLocalizations.of(context)!\.overrideSource)),
                     ],
                   );
                 },
               );
             },
             child: Text(
-              tr('supportedSources'),
+              AppLocalizations.of(context)!\.supportedSources,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.underline,
@@ -741,7 +741,7 @@ class AddAppPageState extends State<AddAppPage> {
                 vertical: 20,
               ),
               title: Text(
-                tr('addApp'),
+                AppLocalizations.of(context)!\.addApp,
                 style: TextStyle(
                   color: Theme.of(context).textTheme.bodyMedium!.color,
                 ),
@@ -798,7 +798,7 @@ class AddAppPageState extends State<AddAppPage> {
           );
         },
         icon: const Icon(Icons.import_export),
-        label: Text(tr('importExport')),
+        label: Text(AppLocalizations.of(context)!\.importExport),
       ),
     );
   }

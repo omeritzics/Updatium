@@ -60,7 +60,6 @@ dependencies:
       ref: master
   share_plus: ^12.0.1
   sqflite: ^2.4.2
-  easy_localization: ^3.0.8
   android_intent_plus: ^6.0.0
   flutter_archive: ^6.0.4
   hsluv: ^1.1.3
@@ -88,6 +87,9 @@ dependencies:
   battery_plus: ^7.0.0
   flutter_charset_detector: ^5.0.0
   flutter_keyboard_visibility: ^6.0.0
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -107,6 +109,7 @@ flutter_launcher_icons:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 String ensureAbsoluteUrl(String ambiguousUrl, Uri referenceAbsoluteUrl) {
   try {
@@ -214,10 +214,10 @@ class HTML extends AppSource {
     return super.combinedAppSpecificSettingFormItems.map((r) {
       return r.map((e) {
         if (e.key == 'versionExtractionRegEx') {
-          e.label = tr('versionExtractionRegEx');
+          e.label = AppLocalizations.of(context)!\.versionExtractionRegEx;
         }
         if (e.key == 'matchGroupToUse') {
-          e.label = tr('matchGroupToUse');
+          e.label = AppLocalizations.of(context)!\.matchGroupToUse;
         }
         return e;
       }).toList();
@@ -228,7 +228,7 @@ class HTML extends AppSource {
     [
       GeneratedFormTextField(
         'customLinkFilterRegex',
-        label: tr('customLinkFilterRegex'),
+        label: AppLocalizations.of(context)!\.customLinkFilterRegex,
         hint: 'download/(.*/)?(android|apk|mobile)',
         required: false,
         additionalValidators: [
@@ -241,24 +241,24 @@ class HTML extends AppSource {
     [
       GeneratedFormSwitch(
         'versionExtractWholePage',
-        label: tr('versionExtractWholePage'),
+        label: AppLocalizations.of(context)!\.versionExtractWholePage,
       ),
     ],
   ];
   var commonFormItems = [
-    [GeneratedFormSwitch('filterByLinkText', label: tr('filterByLinkText'))],
+    [GeneratedFormSwitch('filterByLinkText', label: AppLocalizations.of(context)!\.filterByLinkText)],
     [
       GeneratedFormSwitch(
         'matchLinksOutsideATags',
-        label: tr('matchLinksOutsideATags'),
+        label: AppLocalizations.of(context)!\.matchLinksOutsideATags,
       ),
     ],
-    [GeneratedFormSwitch('skipSort', label: tr('skipSort'))],
-    [GeneratedFormSwitch('reverseSort', label: tr('takeFirstLink'))],
+    [GeneratedFormSwitch('skipSort', label: AppLocalizations.of(context)!\.skipSort)],
+    [GeneratedFormSwitch('reverseSort', label: AppLocalizations.of(context)!\.takeFirstLink)],
     [
       GeneratedFormSwitch(
         'sortByLastLinkSegment',
-        label: tr('sortByLastLinkSegment'),
+        label: AppLocalizations.of(context)!\.sortByLastLinkSegment,
       ),
     ],
   ];
@@ -266,7 +266,7 @@ class HTML extends AppSource {
     [
       GeneratedFormTextField(
         'customLinkFilterRegex',
-        label: tr('intermediateLinkRegex'),
+        label: AppLocalizations.of(context)!\.intermediateLinkRegex,
         hint: '([0-9]+.)*[0-9]+/\$',
         required: true,
         additionalValidators: [(value) => regExValidator(value)],
@@ -275,7 +275,7 @@ class HTML extends AppSource {
     [
       GeneratedFormSwitch(
         'autoLinkFilterByArch',
-        label: tr('autoLinkFilterByArch'),
+        label: AppLocalizations.of(context)!\.autoLinkFilterByArch,
         defaultValue: false,
       ),
     ],
@@ -286,7 +286,7 @@ class HTML extends AppSource {
         GeneratedFormSubForm('intermediateLink', [
           ...intermediateFormItems,
           ...commonFormItems,
-        ], label: tr('intermediateLink')),
+        ], label: AppLocalizations.of(context)!\.intermediateLink),
       ],
       finalStepFormitems[0],
       ...commonFormItems,
@@ -298,7 +298,7 @@ class HTML extends AppSource {
             [
               GeneratedFormTextField(
                 'requestHeader',
-                label: tr('requestHeader'),
+                label: AppLocalizations.of(context)!\.requestHeader,
                 required: false,
                 additionalValidators: [
                   (value) {
@@ -308,7 +308,7 @@ class HTML extends AppSource {
                             .where((e) => e.isNotEmpty)
                             .length <
                         2) {
-                      return tr('invalidInput');
+                      return AppLocalizations.of(context)!\.invalidInput;
                     }
                     return null;
                   },
@@ -316,7 +316,7 @@ class HTML extends AppSource {
               ),
             ],
           ],
-          label: tr('requestHeader'),
+          label: AppLocalizations.of(context)!\.requestHeader,
           defaultValue: [
             {
               'requestHeader':
@@ -329,11 +329,11 @@ class HTML extends AppSource {
         GeneratedFormDropdown(
           'defaultPseudoVersioningMethod',
           [
-            MapEntry('partialAPKHash', tr('partialAPKHash')),
-            MapEntry('APKLinkHash', tr('APKLinkHash')),
+            MapEntry('partialAPKHash', AppLocalizations.of(context)!\.partialAPKHash),
+            MapEntry('APKLinkHash', AppLocalizations.of(context)!\.APKLinkHash),
             MapEntry('ETag', 'ETag'),
           ],
-          label: tr('defaultPseudoVersioningMethod'),
+          label: AppLocalizations.of(context)!\.defaultPseudoVersioningMethod,
           defaultValue: 'partialAPKHash',
         ),
       ],
@@ -468,7 +468,7 @@ class HTML extends AppSource {
             : uri.origin;
         return MapEntry('${e.hashCode}-$fileName', e);
       }).toList(),
-      AppNames(uri.host, tr('app')),
+      AppNames(uri.host, AppLocalizations.of(context)!\.app),
     );
   }
 }

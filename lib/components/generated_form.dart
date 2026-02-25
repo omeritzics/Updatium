@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:hsluv/hsluv.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 abstract class GeneratedFormItem {
   late String key;
@@ -341,7 +341,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 validator: (value) {
                   if (formItem.required &&
                       (value == null || value.trim().isEmpty)) {
-                    return '${formItem.label} ${tr('requiredInBrackets')}';
+                    return '${formItem.label} ${AppLocalizations.of(context)!\.requiredInBrackets}';
                   }
                   for (var validator in formItem.additionalValidators) {
                     String? result = validator(value);
@@ -378,7 +378,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
           );
         } else if (formItem is GeneratedFormDropdown) {
           if (formItem.opts!.isEmpty) {
-            return Text(tr('dropdownNoOptsError'));
+            return Text(AppLocalizations.of(context)!\.dropdownNoOptsError);
           }
           return DropdownButtonFormField(
             decoration: InputDecoration(
@@ -463,7 +463,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 return GeneratedFormModal(
                   title: widget.items[r][e].label,
                   items: [
-                    [GeneratedFormTextField('label', label: tr('label'))],
+                    [GeneratedFormTextField('label', label: AppLocalizations.of(context)!\.label)],
                   ],
                 );
               },
@@ -621,7 +621,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             },
                             icon: const Icon(Icons.format_color_fill_rounded),
                             visualDensity: VisualDensity.compact,
-                            tooltip: tr('color'),
+                            tooltip: AppLocalizations.of(context)!\.color,
                           ),
                         )
                       : const SizedBox.shrink(),
@@ -672,7 +672,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             },
                             icon: const Icon(Icons.remove),
                             visualDensity: VisualDensity.compact,
-                            tooltip: tr('remove'),
+                            tooltip: AppLocalizations.of(context)!\.remove,
                           ),
                         )
                       : const SizedBox.shrink(),
@@ -696,7 +696,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             onPressed: onAddPressed,
                             icon: const Icon(Icons.add),
                             visualDensity: VisualDensity.compact,
-                            tooltip: tr('add'),
+                            tooltip: AppLocalizations.of(context)!\.add,
                           ),
                         ),
                 ],

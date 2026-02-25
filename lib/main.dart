@@ -14,11 +14,8 @@ import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
-import 'package:easy_localization/easy_localization.dart';
-// ignore: implementation_imports
-import 'package:easy_localization/src/easy_localization_controller.dart';
-// ignore: implementation_imports
-import 'package:easy_localization/src/localization.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:updatium/generated/app_localizations.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 
 List<MapEntry<Locale, String>> supportedLocales = const [
@@ -58,42 +55,10 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('gl'), 'Galego'),
 ];
 const fallbackLocale = Locale('en');
-const localeDir = 'assets/translations';
+const localeDir = 'lib/l10n';
 var fdroid = false;
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
-
-Future<void> loadTranslations() async {
-  // See easy_localization/issues/210
-  await EasyLocalizationController.initEasyLocation();
-  var s = SettingsProvider();
-  try {
-    await s.initializeSettings();
-    var forceLocale = s.forcedLocale;
-    final controller = EasyLocalizationController(
-      saveLocale: true,
-      forceLocale: forceLocale,
-      fallbackLocale: fallbackLocale,
-      supportedLocales: supportedLocales.map((e) => e.key).toList(),
-      assetLoader: const RootBundleAssetLoader(),
-      useOnlyLangCode: false,
-      useFallbackTranslations: true,
-      path: localeDir,
-      onLoadError: (FlutterError e) {
-        throw e;
-      },
-    );
-    await controller.loadTranslations();
-    Localization.load(
-      controller.locale,
-      translations: controller.translations,
-      fallbackTranslations: controller.fallbackTranslations,
-    );
-  } finally {
-    // Clean up the temporary SettingsProvider instance
-    s.dispose();
-  }
-}
 
 @pragma('vm:entry-point')
 void backgroundFetchHeadlessTask(HeadlessTask task) async {
@@ -149,7 +114,6 @@ void main() async {
   } catch (e) {
     // Already added, do nothing (see #375)
   }
-  await EasyLocalization.ensureInitialized();
 
   // Enable edge-to-edge mode for Android 10+ (API 29)
   if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
@@ -171,13 +135,7 @@ void main() async {
         Provider(create: (context) => np),
         Provider(create: (context) => LogsProvider()),
       ],
-      child: EasyLocalization(
-        supportedLocales: supportedLocales.map((e) => e.key).toList(),
-        path: localeDir,
-        fallbackLocale: fallbackLocale,
-        useOnlyLangCode: false,
-        child: const Updatium(),
-      ),
+      child: Updatium(),
     ),
   );
   BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
@@ -221,8 +179,8 @@ class _UpdatiumState extends State<Updatium> {
       FlutterForegroundTask.init(
         androidNotificationOptions: AndroidNotificationOptions(
           channelId: 'bg_update',
-          channelName: tr('foregroundService'),
-          channelDescription: tr('foregroundService'),
+          channelName: 'Foreground Service',
+          channelDescription: 'Foreground Service',
           onlyAlertOnce: true,
         ),
         iosNotificationOptions: const IOSNotificationOptions(
@@ -250,8 +208,8 @@ class _UpdatiumState extends State<Updatium> {
       return FlutterForegroundTask.startService(
         serviceTypes: [ForegroundServiceTypes.specialUse],
         serviceId: 666,
-        notificationTitle: tr('foregroundService'),
-        notificationText: tr('fgServiceNotice'),
+        notificationTitle: 'Foreground Service',
+        notificationText: 'Background update service is running',
         notificationIcon: NotificationIcon(
           metaDataName:
               'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
@@ -358,14 +316,6 @@ class _UpdatiumState extends State<Updatium> {
               });
         }
       }
-
-      // Sync local and device locale if needed
-      if (!supportedLocales.map((e) => e.key).contains(context.locale) ||
-          (settingsProvider.forcedLocale == null &&
-              context.deviceLocale != context.locale)) {
-        settingsProvider.resetLocaleSafe(context);
-      }
-    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       notifs.checkLaunchByNotif();
@@ -828,9 +778,46 @@ class _UpdatiumState extends State<Updatium> {
 
           return MaterialApp(
             title: 'Updatium',
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'),
+              Locale('zh'),
+              Locale('zh', 'Hant_TW'),
+              Locale('it'),
+              Locale('ja'),
+              Locale('he'),
+              Locale('hu'),
+              Locale('de'),
+              Locale('fa'),
+              Locale('fr'),
+              Locale('es'),
+              Locale('pl'),
+              Locale('ru'),
+              Locale('bs'),
+              Locale('pt'),
+              Locale('pt', 'BR'),
+              Locale('cs'),
+              Locale('sv'),
+              Locale('nl'),
+              Locale('vi'),
+              Locale('tr'),
+              Locale('uk'),
+              Locale('da'),
+              Locale('et'),
+              Locale('en', 'EO'),
+              Locale('in'),
+              Locale('ko'),
+              Locale('ca'),
+              Locale('ar'),
+              Locale('ml'),
+              Locale('gl'),
+            ],
+            locale: const Locale('en'),
             navigatorKey: globalNavigatorKey,
             debugShowCheckedModeBanner: false,
             theme: createTheme(lightColorScheme, false),

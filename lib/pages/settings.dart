@@ -1,5 +1,4 @@
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -42,7 +42,7 @@ class _SettingsPageState extends State<SettingsPage> {
   ];
   int updateInterval = 0;
   late SplineInterpolation updateIntervalInterpolator; // 🤓
-  String updateIntervalLabel = tr('neverManualOnly');
+  String updateIntervalLabel = AppLocalizations.of(context)!\.neverManualOnly;
   bool showIntervalLabel = true;
   final Map<ColorSwatch<Object>, String> colorsNameMap =
       <ColorSwatch<Object>, String>{
@@ -62,7 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void processIntervalSliderValue(double val) {
     if (val < 0.5) {
       updateInterval = 0;
-      updateIntervalLabel = tr('neverManualOnly');
+      updateIntervalLabel = AppLocalizations.of(context)!\.neverManualOnly;
       return;
     }
     int valInterpolated = 0;
@@ -107,7 +107,7 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (ctx, val) {
         return ((val.data?.version.sdkInt ?? 30) < 29)
             ? Text(
-                tr('followSystemThemeExplanation'),
+                AppLocalizations.of(context)!\.followSystemThemeExplanation,
                 style: Theme.of(context).textTheme.labelSmall,
               )
             : const SizedBox.shrink();
@@ -134,11 +134,11 @@ class _SettingsPageState extends State<SettingsPage> {
           ColorPickerType.wheel: true,
         },
         pickerTypeLabels: <ColorPickerType, String>{
-          ColorPickerType.custom: tr('standard'),
-          ColorPickerType.wheel: tr('custom'),
+          ColorPickerType.custom: AppLocalizations.of(context)!\.standard,
+          ColorPickerType.wheel: AppLocalizations.of(context)!\.custom,
         },
         title: Text(
-          tr('selectX', args: [tr('color').toLowerCase()]),
+          "selectX"(AppLocalizations.of(context)!\.color.toLowerCase()),
           style: Theme.of(context).textTheme.titleLarge,
         ),
         wheelDiameter: 192,
@@ -182,7 +182,7 @@ class _SettingsPageState extends State<SettingsPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       tileColor: Theme.of(context).colorScheme.surface,
       title: Text(
-        tr('selectX', args: [tr('color').toLowerCase()]),
+        "selectX"(AppLocalizations.of(context)!\.color.toLowerCase()),
         style: Theme.of(context).textTheme.titleMedium,
       ),
       subtitle: Text(
@@ -234,7 +234,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: Text(tr('useMaterialYou'))),
+                  Flexible(child: Text(AppLocalizations.of(context)!\.useMaterialYou)),
                   Switch(
                     value: settingsProvider.useMaterialYou,
                     onChanged: (value) {
@@ -250,24 +250,24 @@ class _SettingsPageState extends State<SettingsPage> {
 
     var sortDropdown = DropdownButtonFormField(
       isExpanded: true,
-      decoration: InputDecoration(labelText: tr('appSortBy')),
+      decoration: InputDecoration(labelText: AppLocalizations.of(context)!\.appSortBy),
       initialValue: settingsProvider.sortColumn,
       items: [
         DropdownMenuItem(
           value: SortColumnSettings.authorName,
-          child: Text(tr('authorName')),
+          child: Text(AppLocalizations.of(context)!\.authorName),
         ),
         DropdownMenuItem(
           value: SortColumnSettings.nameAuthor,
-          child: Text(tr('nameAuthor')),
+          child: Text(AppLocalizations.of(context)!\.nameAuthor),
         ),
         DropdownMenuItem(
           value: SortColumnSettings.added,
-          child: Text(tr('asAdded')),
+          child: Text(AppLocalizations.of(context)!\.asAdded),
         ),
         DropdownMenuItem(
           value: SortColumnSettings.releaseDate,
-          child: Text(tr('releaseDate')),
+          child: Text(AppLocalizations.of(context)!\.releaseDate),
         ),
       ],
       onChanged: (value) {
@@ -279,16 +279,16 @@ class _SettingsPageState extends State<SettingsPage> {
 
     var orderDropdown = DropdownButtonFormField(
       isExpanded: true,
-      decoration: InputDecoration(labelText: tr('appSortOrder')),
+      decoration: InputDecoration(labelText: AppLocalizations.of(context)!\.appSortOrder),
       initialValue: settingsProvider.sortOrder,
       items: [
         DropdownMenuItem(
           value: SortOrderSettings.ascending,
-          child: Text(tr('ascending')),
+          child: Text(AppLocalizations.of(context)!\.ascending),
         ),
         DropdownMenuItem(
           value: SortOrderSettings.descending,
-          child: Text(tr('descending')),
+          child: Text(AppLocalizations.of(context)!\.descending),
         ),
       ],
       onChanged: (value) {
@@ -299,10 +299,10 @@ class _SettingsPageState extends State<SettingsPage> {
     );
 
     var localeDropdown = DropdownButtonFormField(
-      decoration: InputDecoration(labelText: tr('language')),
+      decoration: InputDecoration(labelText: AppLocalizations.of(context)!\.language),
       initialValue: settingsProvider.forcedLocale,
       items: [
-        DropdownMenuItem(value: null, child: Text(tr('followSystem'))),
+        DropdownMenuItem(value: null, child: Text(AppLocalizations.of(context)!\.followSystem)),
         ...supportedLocales.map(
           (e) => DropdownMenuItem(value: e.key, child: Text(e.value)),
         ),
@@ -403,7 +403,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 vertical: 20,
               ),
               title: Text(
-                tr('settings'),
+                AppLocalizations.of(context)!\.settings,
                 style: TextStyle(
                   color: Theme.of(context).textTheme.bodyMedium!.color,
                 ),
@@ -419,7 +419,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          tr('updates'),
+                          AppLocalizations.of(context)!\.updates,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.primary,
@@ -430,7 +430,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         if (showIntervalLabel)
                           SizedBox(
                             child: Text(
-                              "${tr('bgUpdateCheckInterval')}: $updateIntervalLabel",
+                              "${AppLocalizations.of(context)!\.bgUpdateCheckInterval}: $updateIntervalLabel",
                             ),
                           )
                         else
@@ -472,7 +472,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         children: [
                                           Flexible(
                                             child: Text(
-                                              tr('enableBackgroundUpdates'),
+                                              AppLocalizations.of(context)!\.enableBackgroundUpdates,
                                             ),
                                           ),
                                           Switch(
@@ -488,13 +488,13 @@ class _SettingsPageState extends State<SettingsPage> {
                                       ),
                                       height8,
                                       Text(
-                                        tr('backgroundUpdateReqsExplanation'),
+                                        AppLocalizations.of(context)!\.backgroundUpdateReqsExplanation,
                                         style: Theme.of(
                                           context,
                                         ).textTheme.labelSmall,
                                       ),
                                       Text(
-                                        tr('backgroundUpdateLimitsExplanation'),
+                                        AppLocalizations.of(context)!\.backgroundUpdateLimitsExplanation,
                                         style: Theme.of(
                                           context,
                                         ).textTheme.labelSmall,
@@ -512,7 +512,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               children: [
                                                 Flexible(
                                                   child: Text(
-                                                    tr('bgUpdatesOnWiFiOnly'),
+                                                    AppLocalizations.of(context)!\.bgUpdatesOnWiFiOnly,
                                                   ),
                                                 ),
                                                 Switch(
@@ -562,7 +562,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(tr('checkOnStart'))),
+                            Flexible(child: Text(AppLocalizations.of(context)!\.checkOnStart)),
                             Switch(
                               value: settingsProvider.checkOnStart,
                               onChanged: (value) {
@@ -576,7 +576,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(tr('checkUpdateOnDetailPage')),
+                              child: Text(AppLocalizations.of(context)!\.checkUpdateOnDetailPage),
                             ),
                             Switch(
                               value: settingsProvider.checkUpdateOnDetailPage,
@@ -593,7 +593,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           children: [
                             Flexible(
                               child: Text(
-                                tr('onlyCheckInstalledOrTrackOnlyApps'),
+                                AppLocalizations.of(context)!\.onlyCheckInstalledOrTrackOnlyApps,
                               ),
                             ),
                             Switch(
@@ -612,7 +612,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(tr('removeOnExternalUninstall')),
+                              child: Text(AppLocalizations.of(context)!\.removeOnExternalUninstall),
                             ),
                             Switch(
                               value: settingsProvider.removeOnExternalUninstall,
@@ -627,7 +627,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(tr('parallelDownloads'))),
+                            Flexible(child: Text(AppLocalizations.of(context)!\.parallelDownloads)),
                             Switch(
                               value: settingsProvider.parallelDownloads,
                               onChanged: (value) {
@@ -646,7 +646,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    tr('beforeNewInstallsShareToAppVerifier'),
+                                    AppLocalizations.of(context)!\.beforeNewInstallsShareToAppVerifier,
                                   ),
                                   GestureDetector(
                                     onTap: () {
@@ -656,7 +656,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                       );
                                     },
                                     child: Text(
-                                      tr('about'),
+                                      AppLocalizations.of(context)!\.about,
                                       style: const TextStyle(
                                         decoration: TextDecoration.underline,
                                         fontSize: 12,
@@ -681,7 +681,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(tr('useShizuku'))),
+                            Flexible(child: Text(AppLocalizations.of(context)!\.useShizuku)),
                             Switch(
                               value: settingsProvider.useShizuku,
                               onChanged: (useShizuku) {
@@ -695,25 +695,25 @@ class _SettingsPageState extends State<SettingsPage> {
                                       case 'binder_not_found':
                                         showError(
                                           UpdatiumError(
-                                            tr('shizukuBinderNotFound'),
+                                            AppLocalizations.of(context)!\.shizukuBinderNotFound,
                                           ),
                                           context,
                                         );
                                       case 'old_shizuku':
                                         showError(
-                                          UpdatiumError(tr('shizukuOld')),
+                                          UpdatiumError(AppLocalizations.of(context)!\.shizukuOld),
                                           context,
                                         );
                                       case 'old_android_with_adb':
                                         showError(
                                           UpdatiumError(
-                                            tr('shizukuOldAndroidWithADB'),
+                                            AppLocalizations.of(context)!\.shizukuOldAndroidWithADB,
                                           ),
                                           context,
                                         );
                                       case 'denied':
                                         showError(
-                                          UpdatiumError(tr('cancelled')),
+                                          UpdatiumError(AppLocalizations.of(context)!\.cancelled),
                                           context,
                                         );
                                     }
@@ -730,7 +730,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(tr('shizukuPretendToBeGooglePlay')),
+                              child: Text(AppLocalizations.of(context)!\.shizukuPretendToBeGooglePlay),
                             ),
                             Switch(
                               value:
@@ -744,7 +744,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         height32,
                         Text(
-                          tr('sourceSpecific'),
+                          AppLocalizations.of(context)!\.sourceSpecific,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.primary,
@@ -753,27 +753,27 @@ class _SettingsPageState extends State<SettingsPage> {
                         ...sourceSpecificFields,
                         height32,
                         Text(
-                          tr('appearance'),
+                          AppLocalizations.of(context)!\.appearance,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         DropdownButtonFormField(
-                          decoration: InputDecoration(labelText: tr('theme')),
+                          decoration: InputDecoration(labelText: AppLocalizations.of(context)!\.theme),
                           initialValue: settingsProvider.theme,
                           items: [
                             DropdownMenuItem(
                               value: ThemeSettings.system,
-                              child: Text(tr('followSystem')),
+                              child: Text(AppLocalizations.of(context)!\.followSystem),
                             ),
                             DropdownMenuItem(
                               value: ThemeSettings.light,
-                              child: Text(tr('light')),
+                              child: Text(AppLocalizations.of(context)!\.light),
                             ),
                             DropdownMenuItem(
                               value: ThemeSettings.dark,
-                              child: Text(tr('dark')),
+                              child: Text(AppLocalizations.of(context)!\.dark),
                             ),
                           ],
                           onChanged: (value) {
@@ -790,7 +790,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Flexible(child: Text(tr('useBlackTheme'))),
+                              Flexible(child: Text(AppLocalizations.of(context)!\.useBlackTheme)),
                               Switch(
                                 value: settingsProvider.useBlackTheme,
                                 onChanged: (value) {
@@ -826,7 +826,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Flexible(
-                                            child: Text(tr('useSystemFont')),
+                                            child: Text(AppLocalizations.of(context)!\.useSystemFont),
                                           ),
                                           Switch(
                                             value:
@@ -857,7 +857,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(tr('pinUpdates'))),
+                            Flexible(child: Text(AppLocalizations.of(context)!\.pinUpdates)),
                             Switch(
                               value: settingsProvider.pinUpdates,
                               onChanged: (value) {
@@ -871,7 +871,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(tr('moveNonInstalledAppsToBottom')),
+                              child: Text(AppLocalizations.of(context)!\.moveNonInstalledAppsToBottom),
                             ),
                             Switch(
                               value: settingsProvider.buryNonInstalled,
@@ -885,7 +885,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(tr('hideNonInstalledApps'))),
+                            Flexible(child: Text(AppLocalizations.of(context)!\.hideNonInstalledApps)),
                             Switch(
                               value: settingsProvider.hideNonInstalled,
                               onChanged: (value) {
@@ -897,7 +897,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(tr('groupByCategory'))),
+                            Flexible(child: Text(AppLocalizations.of(context)!\.groupByCategory)),
                             Switch(
                               value: settingsProvider.groupByCategory,
                               onChanged: (value) {
@@ -911,7 +911,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(tr('dontShowTrackOnlyWarnings')),
+                              child: Text(AppLocalizations.of(context)!\.dontShowTrackOnlyWarnings),
                             ),
                             Switch(
                               value: settingsProvider.hideTrackOnlyWarning,
@@ -926,7 +926,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(tr('dontShowAPKOriginWarnings')),
+                              child: Text(AppLocalizations.of(context)!\.dontShowAPKOriginWarnings),
                             ),
                             Switch(
                               value: settingsProvider.hideAPKOriginWarning,
@@ -940,7 +940,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(tr('disablePageTransitions'))),
+                            Flexible(child: Text(AppLocalizations.of(context)!\.disablePageTransitions)),
                             Switch(
                               value: settingsProvider.disablePageTransitions,
                               onChanged: (value) {
@@ -953,7 +953,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(tr('reversePageTransitions'))),
+                            Flexible(child: Text(AppLocalizations.of(context)!\.reversePageTransitions)),
                             Switch(
                               value: settingsProvider.reversePageTransitions,
                               onChanged: settingsProvider.disablePageTransitions
@@ -969,7 +969,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(tr('highlightTouchTargets'))),
+                            Flexible(child: Text(AppLocalizations.of(context)!\.highlightTouchTargets)),
                             Switch(
                               value: settingsProvider.highlightTouchTargets,
                               onChanged: (value) {
@@ -980,7 +980,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         height32,
                         Text(
-                          tr('categories'),
+                          AppLocalizations.of(context)!\.categories,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.primary,
@@ -1009,7 +1009,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         );
                       },
                       icon: const Icon(Icons.code),
-                      tooltip: tr('appSource'),
+                      tooltip: AppLocalizations.of(context)!\.appSource,
                     ),
                     IconButton(
                       onPressed: () {
@@ -1024,13 +1024,13 @@ class _SettingsPageState extends State<SettingsPage> {
                               child: const Icon(Icons.help),
                             )
                           : const Icon(Icons.help),
-                      tooltip: tr('wiki'),
+                      tooltip: AppLocalizations.of(context)!\.wiki,
                     ),
                     IconButton(
                       onPressed: () {
                         context.read<LogsProvider>().get().then((logs) {
                           if (logs.isEmpty) {
-                            showMessage(UpdatiumError(tr('noLogs')), context);
+                            showMessage(UpdatiumError(AppLocalizations.of(context)!\.noLogs), context);
                           } else {
                             showDialog(
                               context: context,
@@ -1042,7 +1042,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         });
                       },
                       icon: const Icon(Icons.bug_report),
-                      tooltip: tr('appLogs'),
+                      tooltip: AppLocalizations.of(context)!\.appLogs,
                     ),
                   ],
                 ),
@@ -1076,7 +1076,7 @@ class _LogsDialogState extends State<LogsDialog> {
           .then((value) {
             setState(() {
               String l = value.map((e) => e.toString()).join('\n\n');
-              logString = l.isNotEmpty ? l : tr('noLogs');
+              logString = l.isNotEmpty ? l : AppLocalizations.of(context)!\.noLogs;
             });
           });
     }
@@ -1087,7 +1087,7 @@ class _LogsDialogState extends State<LogsDialog> {
 
     return AlertDialog(
       scrollable: true,
-      title: Text(tr('appLogs')),
+      title: Text(AppLocalizations.of(context)!\.appLogs),
       content: Column(
         children: [
           DropdownButtonFormField(
@@ -1114,10 +1114,10 @@ class _LogsDialogState extends State<LogsDialog> {
                   context: context,
                   builder: (BuildContext ctx) {
                     return GeneratedFormModal(
-                      title: tr('appLogs'),
+                      title: AppLocalizations.of(context)!\.appLogs,
                       items: const [],
                       initValid: true,
-                      message: tr('removeFromUpdatium'),
+                      message: AppLocalizations.of(context)!\.removeFromUpdatium,
                     );
                   },
                 )) !=
@@ -1127,20 +1127,20 @@ class _LogsDialogState extends State<LogsDialog> {
               Navigator.of(context).pop();
             }
           },
-          child: Text(tr('remove')),
+          child: Text(AppLocalizations.of(context)!\.remove),
         ),
         createAppTextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(tr('close')),
+          child: Text(AppLocalizations.of(context)!\.close),
         ),
         createAppTextButton(
           onPressed: () {
-            Share.share(logString ?? '', subject: tr('appLogs'));
+            Share.share(logString ?? '', subject: AppLocalizations.of(context)!\.appLogs);
             Navigator.of(context).pop();
           },
-          child: Text(tr('share')),
+          child: Text(AppLocalizations.of(context)!\.share),
         ),
       ],
     );
@@ -1187,13 +1187,13 @@ class _CategoryEditorSelectorState extends State<CategoryEditorSelector> {
         [
           GeneratedFormTagInput(
             'categories',
-            label: tr('categories'),
-            emptyMessage: tr('noCategories'),
+            label: AppLocalizations.of(context)!\.categories,
+            emptyMessage: AppLocalizations.of(context)!\.noCategories,
             defaultValue: storedValues,
             alignment: widget.alignment,
             deleteConfirmationMessage: MapEntry(
-              tr('deleteCategoriesQuestion'),
-              tr('categoryDeleteWarning'),
+              AppLocalizations.of(context)!\.deleteCategoriesQuestion,
+              AppLocalizations.of(context)!\.categoryDeleteWarning,
             ),
             singleSelect: widget.singleSelect,
             showLabelWhenNotEmpty: widget.showLabelWhenNotEmpty,

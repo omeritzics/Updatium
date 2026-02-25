@@ -8,8 +8,8 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class GitLab extends AppSource {
   GitLab({bool hostChanged = false}) {
@@ -21,7 +21,7 @@ class GitLab extends AppSource {
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
         'gitlab-creds',
-        label: tr('gitlabPATLabel'),
+        label: AppLocalizations.of(context)!\.gitlabPATLabel,
         password: true,
         required: false,
         belowWidgets: [
@@ -34,7 +34,7 @@ class GitLab extends AppSource {
               );
             },
             child: Text(
-              tr('about'),
+              AppLocalizations.of(context)!\.about,
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -50,7 +50,7 @@ class GitLab extends AppSource {
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: tr('fallbackToOlderReleases'),
+          label: AppLocalizations.of(context)!\.fallbackToOlderReleases,
           defaultValue: true,
         ),
       ],
@@ -102,7 +102,7 @@ class GitLab extends AppSource {
     for (var element in json) {
       results['https://${hosts[0]}/${element['path_with_namespace']}'] = [
         element['name_with_namespace'],
-        element['description'] ?? tr('noDescription'),
+        element['description'] ?? AppLocalizations.of(context)!\.noDescription,
       ];
     }
     return results;

@@ -1,14 +1,14 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class DirectAPKLink extends AppSource {
   HTML html = HTML();
 
   DirectAPKLink() {
-    name = tr('directAPKLink');
+    name = AppLocalizations.of(context)!\.directAPKLink;
     additionalSourceAppSpecificSettingFormItems = [
       ...html.additionalSourceAppSpecificSettingFormItems.where(
         (element) => element
@@ -19,10 +19,10 @@ class DirectAPKLink extends AppSource {
         GeneratedFormDropdown(
           'defaultPseudoVersioningMethod',
           [
-            MapEntry('partialAPKHash', tr('partialAPKHash')),
+            MapEntry('partialAPKHash', AppLocalizations.of(context)!\.partialAPKHash),
             MapEntry('ETag', 'ETag'),
           ],
-          label: tr('defaultPseudoVersioningMethod'),
+          label: AppLocalizations.of(context)!\.defaultPseudoVersioningMethod,
           defaultValue: 'partialAPKHash',
         ),
       ],

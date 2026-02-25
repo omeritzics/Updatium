@@ -16,7 +16,6 @@ import 'package:android_package_installer/android_package_installer.dart';
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/components/button_helpers.dart';
@@ -44,6 +43,7 @@ import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_storage/shared_storage.dart' as saf;
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 final pm = AndroidPackageManager();
 final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
@@ -272,7 +272,7 @@ Future<String> checkPartialDownloadHash(
   var client = IOClient(createHttpClient(allowInsecure));
   var response = await client.send(req);
   if (response.statusCode < 200 || response.statusCode > 299) {
-    throw UpdatiumError(response.reasonPhrase ?? tr('unexpectedError'));
+    throw UpdatiumError(response.reasonPhrase ?? AppLocalizations.of(context)!\.unexpectedError);
   }
   List<List<int>> bytes = await response.stream.take(bytesToGrab).toList();
   return hashListOfLists(bytes);
@@ -302,7 +302,7 @@ void deleteFile(File file) {
     file.deleteSync(recursive: true);
   } on PathAccessException catch (e) {
     throw UpdatiumError(
-      tr('fileDeletionError', args: [e.path ?? tr('unknown')]),
+      "fileDeletionError"(e.path ?? AppLocalizations.of(context)!\.unknown),
     );
   }
 }
@@ -961,7 +961,7 @@ class AppsProvider with ChangeNotifier {
         mimeType: 'application/vnd.android.package-archive',
       );
       Fluttertoast.showToast(
-        msg: tr('appVerifierInstructionToast'),
+        msg: AppLocalizations.of(context)!\.appVerifierInstructionToast,
         toastLength: Toast.LENGTH_LONG,
       );
       await Share.shareXFiles([f]);
@@ -978,7 +978,7 @@ class AppsProvider with ChangeNotifier {
       } catch (e) {
         //
       } finally {
-        throw UpdatiumError(tr('badDownload'));
+        throw UpdatiumError(AppLocalizations.of(context)!\.badDownload);
       }
     }
     PackageInfo? appInfo = await getInstalledInfo(apps[file.appId]!.app.id);
@@ -1150,7 +1150,7 @@ class AppsProvider with ChangeNotifier {
     // 2. That cannot be installed silently (IF no buildContext was given for interactive install)
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw UpdatiumError(tr('appNotFound'));
+        throw UpdatiumError(AppLocalizations.of(context)!\.appNotFound);
       }
       MapEntry<String, String>? apkUrl;
       var trackOnly = apps[id]!.app.additionalSettings['trackOnly'] == true;
@@ -1307,18 +1307,18 @@ class AppsProvider with ChangeNotifier {
         willBeSilent = await canInstallSilently(apps[id]!.app);
         if (!settingsProvider.useShizuku) {
           if (!(await settingsProvider.getInstallPermission(enforce: false))) {
-            throw UpdatiumError(tr('cancelled'));
+            throw UpdatiumError(AppLocalizations.of(context)!\.cancelled);
           }
         } else {
           switch ((await ShizukuApkInstaller.checkPermission())!) {
             case 'binder_not_found':
-              throw UpdatiumError(tr('shizukuBinderNotFound'));
+              throw UpdatiumError(AppLocalizations.of(context)!\.shizukuBinderNotFound);
             case 'old_shizuku':
-              throw UpdatiumError(tr('shizukuOld'));
+              throw UpdatiumError(AppLocalizations.of(context)!\.shizukuOld);
             case 'old_android_with_adb':
-              throw UpdatiumError(tr('shizukuOldAndroidWithADB'));
+              throw UpdatiumError(AppLocalizations.of(context)!\.shizukuOldAndroidWithADB);
             case 'denied':
-              throw UpdatiumError(tr('cancelled'));
+              throw UpdatiumError(AppLocalizations.of(context)!\.cancelled);
           }
         }
         if (!willBeSilent && context != null && !settingsProvider.useShizuku) {
@@ -1379,7 +1379,7 @@ class AppsProvider with ChangeNotifier {
     List<MapEntry<MapEntry<String, String>, App>> filesToDownload = [];
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw UpdatiumError(tr('appNotFound'));
+        throw UpdatiumError(AppLocalizations.of(context)!\.appNotFound);
       }
       MapEntry<String, String>? fileUrl;
       var refreshBeforeDownload =
@@ -2077,14 +2077,14 @@ class AppsProvider with ChangeNotifier {
                   [
                     GeneratedFormSwitch(
                       'rmAppEntry',
-                      label: tr('removeFromUpdatium'),
+                      label: AppLocalizations.of(context)!\.removeFromUpdatium,
                       defaultValue: true,
                     ),
                   ],
                   [
                     GeneratedFormSwitch(
                       'uninstallApp',
-                      label: tr('uninstallFromDevice'),
+                      label: AppLocalizations.of(context)!\.uninstallFromDevice,
                     ),
                   ],
                 ],
@@ -2328,12 +2328,12 @@ class AppsProvider with ChangeNotifier {
       var result = await saf.createFile(
         exportDir,
         displayName:
-            '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
+            '${AppLocalizations.of(context)!\.updatiumExportHyphenatedLowercase}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
         mimeType: 'application/json',
         bytes: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
       );
       if (result == null) {
-        throw UpdatiumError(tr('unexpectedError'));
+        throw UpdatiumError(AppLocalizations.of(context)!\.unexpectedError);
       }
       returnPath = exportDir.pathSegments
           .join('/')
@@ -2405,7 +2405,7 @@ class AppsProvider with ChangeNotifier {
     Map<String, dynamic> errorsMap = results[1];
     for (var app in pps) {
       if (apps.containsKey(app.id)) {
-        errorsMap.addAll({app.id: tr('appAlreadyAdded')});
+        errorsMap.addAll({app.id: AppLocalizations.of(context)!\.appAlreadyAdded});
       } else {
         await saveApps([app], onlyIfExists: false);
       }
@@ -2426,18 +2426,18 @@ class AppsProvider with ChangeNotifier {
       // Categorize errors and provide user-friendly messages
       if (errorDetail.contains('timeout') ||
           errorDetail.contains('connection')) {
-        userMessage = tr('networkError');
+        userMessage = AppLocalizations.of(context)!\.networkError;
       } else if (errorDetail.contains('404') ||
           errorDetail.contains('not found')) {
-        userMessage = tr('appNotFound');
+        userMessage = AppLocalizations.of(context)!\.appNotFound;
       } else if (errorDetail.contains('parse') ||
           errorDetail.contains('format')) {
-        userMessage = tr('invalidUrlFormat');
+        userMessage = AppLocalizations.of(context)!\.invalidUrlFormat;
       } else if (errorDetail.contains('permission') ||
           errorDetail.contains('access')) {
-        userMessage = tr('accessDenied');
+        userMessage = AppLocalizations.of(context)!\.accessDenied;
       } else {
-        userMessage = tr('importFailed');
+        userMessage = AppLocalizations.of(context)!\.importFailed;
       }
 
       return [e, userMessage];
@@ -2478,14 +2478,14 @@ class _AppFilePickerState extends State<AppFilePicker> {
       scrollable: true,
       title: Text(
         widget.pickAnyAsset
-            ? tr('selectX', args: [lowerCaseIfEnglish(tr('releaseAsset'))])
-            : tr('pickAnAPK'),
+            ? "selectX"(lowerCaseIfEnglish(AppLocalizations.of(context)!\.releaseAsset))
+            : AppLocalizations.of(context)!\.pickAnAPK,
       ),
       content: Column(
         children: [
           urlsToSelectFrom.length > 1
               ? Text(
-                  tr('appHasMoreThanOnePackage', args: [widget.app.finalName]),
+                  "appHasMoreThanOnePackage"(widget.app.finalName),
                 )
               : const SizedBox.shrink(),
           const SizedBox(height: 16),
@@ -2506,7 +2506,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
             Text(
               widget.archs!.length == 1
                   ? tr('deviceSupportsXArch', args: [widget.archs![0]])
-                  : tr('deviceSupportsFollowingArchs') +
+                  : AppLocalizations.of(context)!\.deviceSupportsFollowingArchs +
                         list2FriendlyString(
                           widget.archs!.map((e) => '\'$e\'').toList(),
                         ),
@@ -2519,14 +2519,14 @@ class _AppFilePickerState extends State<AppFilePicker> {
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text(tr('cancel')),
+          child: Text(AppLocalizations.of(context)!\.cancel),
         ),
         createAppTextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(fileUrl);
           },
-          child: Text(tr('continue')),
+          child: Text(AppLocalizations.of(context)!\.continue),
         ),
       ],
     );
@@ -2552,7 +2552,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text(tr('warning')),
+      title: Text(AppLocalizations.of(context)!\.warning),
       content: Text(
         tr(
           'sourceIsXButPackageFromYPrompt',
@@ -2567,14 +2567,14 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text(tr('cancel')),
+          child: Text(AppLocalizations.of(context)!\.cancel),
         ),
         createAppTextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);
           },
-          child: Text(tr('yes')),
+          child: Text(AppLocalizations.of(context)!\.yes),
         ),
       ],
     );

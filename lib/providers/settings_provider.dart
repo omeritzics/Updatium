@@ -2,13 +2,9 @@
 
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:updatium/app_sources/github.dart';
-import 'package:updatium/main.dart';
-import 'package:updatium/providers/apps_provider.dart';
-import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_storage/shared_storage.dart' as saf;
@@ -182,7 +178,7 @@ class SettingsProvider with ChangeNotifier {
     while (!(await Permission.requestInstallPackages.isGranted)) {
       // Explicit request as InstallPlugin request sometimes bugged
       Fluttertoast.showToast(
-        msg: tr('pleaseAllowInstallPerm'),
+        msg: 'Please allow install permission',
         toastLength: Toast.LENGTH_LONG,
       );
       if ((await Permission.requestInstallPackages.request()) ==
@@ -318,12 +314,8 @@ class SettingsProvider with ChangeNotifier {
       a.length == b.length && a.union(b).length == a.length;
 
   void resetLocaleSafe(BuildContext context) {
-    if (context.supportedLocales.contains(context.deviceLocale)) {
-      context.resetLocale();
-    } else {
-      context.setLocale(context.fallbackLocale!);
-      context.deleteSaveLocale();
-    }
+    // TODO: Implement proper locale reset logic with Flutter's official localization
+    debugPrint('Locale reset requested - not implemented yet');
   }
 
   bool get removeOnExternalUninstall {

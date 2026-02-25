@@ -416,14 +416,14 @@
         "other": "{} و{} تطبيقات أخرى قد حُدثت."
     },
     "apk": {
-        "one": "{} APK",
-        "two": "APKان",
-        "other": "{} APKs"
+        "one": "ملف APK",
+        "two": "ملفين APK",
+        "other": "{} ملفات APK"
     },
     "certificateHash": {
         "one": "بصمة الشهادة",
-        "two": "بصمتا الشهادة",
-        "other": "بصمات الشهادة"
+        "two": "بصمتين الشهادة",
+        "other": "{} بصمات الشهادة"
     },
     "securityDisclaimerTitle": "إخلاء مسؤولية الأمان والقانوني",
     "license": "الرخصة",

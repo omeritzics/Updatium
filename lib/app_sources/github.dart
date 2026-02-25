@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/html.dart';
@@ -11,6 +10,7 @@ import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class GitHub extends AppSource {
   GitHub({hostChanged = false}) {
@@ -23,7 +23,7 @@ class GitHub extends AppSource {
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
         'github-creds',
-        label: tr('githubPATLabel'),
+        label: AppLocalizations.of(context)!\.githubPATLabel,
         password: true,
         required: false,
         belowWidgets: [
@@ -36,7 +36,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              tr('about'),
+              AppLocalizations.of(context)!\.about,
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -48,7 +48,7 @@ class GitHub extends AppSource {
       ),
       GeneratedFormTextField(
         'GHReqPrefix',
-        label: tr('GHReqPrefix'),
+        label: AppLocalizations.of(context)!\.GHReqPrefix,
         hint: 'gh-proxy.org',
         required: false,
         additionalValidators: [
@@ -61,7 +61,7 @@ class GitHub extends AppSource {
                 Uri.parse('https://$value/api.github.com');
               }
             } catch (e) {
-              return tr('invalidInput');
+              return AppLocalizations.of(context)!\.invalidInput;
             }
             return null;
           },
@@ -76,7 +76,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              tr('about'),
+              AppLocalizations.of(context)!\.about,
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -92,21 +92,21 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'includePrereleases',
-          label: tr('includePrereleases'),
+          label: AppLocalizations.of(context)!\.includePrereleases,
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: tr('fallbackToOlderReleases'),
+          label: AppLocalizations.of(context)!\.fallbackToOlderReleases,
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormTextField(
           'filterReleaseTitlesByRegEx',
-          label: tr('filterReleaseTitlesByRegEx'),
+          label: AppLocalizations.of(context)!\.filterReleaseTitlesByRegEx,
           required: false,
           additionalValidators: [
             (value) {
@@ -118,7 +118,7 @@ class GitHub extends AppSource {
       [
         GeneratedFormTextField(
           'filterReleaseNotesByRegEx',
-          label: tr('filterReleaseNotesByRegEx'),
+          label: AppLocalizations.of(context)!\.filterReleaseNotesByRegEx,
           required: false,
           additionalValidators: [
             (value) {
@@ -127,18 +127,18 @@ class GitHub extends AppSource {
           ],
         ),
       ],
-      [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
+      [GeneratedFormSwitch('verifyLatestTag', label: AppLocalizations.of(context)!\.verifyLatestTag)],
       [
         GeneratedFormDropdown(
           'sortMethodChoice',
           [
-            MapEntry('date', tr('releaseDate')),
-            MapEntry('smartname', tr('smartname')),
-            MapEntry('none', tr('none')),
+            MapEntry('date', AppLocalizations.of(context)!\.releaseDate),
+            MapEntry('smartname', AppLocalizations.of(context)!\.smartname),
+            MapEntry('none', AppLocalizations.of(context)!\.none),
             MapEntry('smartname-datefallback', 'Smart + Date'),
-            MapEntry('name', tr('name')),
+            MapEntry('name', AppLocalizations.of(context)!\.name),
           ],
-          label: tr('sortMethod'),
+          label: AppLocalizations.of(context)!\.sortMethod,
           defaultValue: 'date',
           required: false,
         ),
@@ -146,14 +146,14 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'useLatestAssetDateAsReleaseDate',
-          label: tr('useLatestAssetDateAsReleaseDate'),
+          label: AppLocalizations.of(context)!\.useLatestAssetDateAsReleaseDate,
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'releaseTitleAsVersion',
-          label: tr('releaseTitleAsVersion'),
+          label: AppLocalizations.of(context)!\.releaseTitleAsVersion,
           defaultValue: false,
         ),
       ],
@@ -163,14 +163,14 @@ class GitHub extends AppSource {
     searchQuerySettingFormItems = [
       GeneratedFormTextField(
         'minStarCount',
-        label: tr('minStarCount'),
+        label: AppLocalizations.of(context)!\.minStarCount,
         defaultValue: '0',
         additionalValidators: [
           (value) {
             try {
               int.parse(value ?? '0');
             } catch (e) {
-              return tr('invalidInput');
+              return AppLocalizations.of(context)!\.invalidInput;
             }
             return null;
           },
@@ -308,7 +308,7 @@ class GitHub extends AppSource {
   @override
   Future<String?> getSourceNote() async {
     if (!hostChanged && (await getTokenIfAny({})) == null) {
-      return '${tr('githubSourceNote')} ${hostChanged ? tr('addInfoBelow') : tr('addInfoInSettings')}';
+      return '${AppLocalizations.of(context)!\.githubSourceNote} ${hostChanged ? AppLocalizations.of(context)!\.addInfoBelow : AppLocalizations.of(context)!\.addInfoInSettings}';
     }
     return null;
   }
@@ -710,7 +710,7 @@ class GitHub extends AppSource {
               ((e['archived'] == true ? '[ARCHIVED] ' : '') +
                   (e['description'] != null
                       ? e['description'] as String
-                      : tr('noDescription'))),
+                      : AppLocalizations.of(context)!\.noDescription)),
             ],
           });
         }

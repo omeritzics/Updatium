@@ -1,8 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class GeneratedFormModal extends StatefulWidget {
   const GeneratedFormModal({
@@ -72,7 +72,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
           },
           child: Text(
             widget.singleNullReturnButton == null
-                ? tr('cancel')
+                ? AppLocalizations.of(context)!\.cancel
                 : widget.singleNullReturnButton!,
           ),
         ),
@@ -91,7 +91,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
                           Navigator.of(context).pop(values);
                         }
                       },
-                child: Text(tr('continue')),
+                child: Text(AppLocalizations.of(context)!\.continue),
               )
             : const SizedBox.shrink(),
       ],

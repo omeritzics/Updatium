@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:android_package_installer/android_package_installer.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class UpdatiumError {
   late String message;
@@ -27,37 +27,37 @@ class RateLimitError extends UpdatiumError {
 
 class InvalidURLError extends UpdatiumError {
   InvalidURLError(String sourceName)
-    : super(tr('invalidURLForSource', args: [sourceName]));
+    : super("invalidURLForSource"(sourceName));
 }
 
 class CredsNeededError extends UpdatiumError {
   CredsNeededError(String sourceName)
-    : super(tr('requiresCredentialsInSettings', args: [sourceName]));
+    : super("requiresCredentialsInSettings"(sourceName));
 }
 
 class NoReleasesError extends UpdatiumError {
   NoReleasesError({String? note})
     : super(
-        '${tr('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
+        '${AppLocalizations.of(context)!\.noReleaseFound}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
       );
 }
 
 class NoAPKError extends UpdatiumError {
-  NoAPKError() : super(tr('noAPKFound'));
+  NoAPKError() : super(AppLocalizations.of(context)!\.noAPKFound);
 }
 
 class NoVersionError extends UpdatiumError {
-  NoVersionError() : super(tr('noVersionFound'));
+  NoVersionError() : super(AppLocalizations.of(context)!\.noVersionFound);
 }
 
 class UnsupportedURLError extends UpdatiumError {
-  UnsupportedURLError() : super(tr('urlMatchesNoSource'));
+  UnsupportedURLError() : super(AppLocalizations.of(context)!\.urlMatchesNoSource);
 }
 
 class DowngradeError extends UpdatiumError {
   DowngradeError(int currentVersionCode, int newVersionCode)
     : super(
-        '${tr('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
+        '${AppLocalizations.of(context)!\.cantInstallOlderVersion} (versionCode $currentVersionCode ➔ $newVersionCode)',
       );
 }
 
@@ -67,11 +67,11 @@ class InstallError extends UpdatiumError {
 }
 
 class IDChangedError extends UpdatiumError {
-  IDChangedError(String newId) : super('${tr('appIdMismatch')} - $newId');
+  IDChangedError(String newId) : super('${AppLocalizations.of(context)!\.appIdMismatch} - $newId');
 }
 
 class NotImplementedError extends UpdatiumError {
-  NotImplementedError() : super(tr('functionNotImplemented'));
+  NotImplementedError() : super(AppLocalizations.of(context)!\.functionNotImplemented);
 }
 
 class MultiAppMultiError extends UpdatiumError {
@@ -79,7 +79,7 @@ class MultiAppMultiError extends UpdatiumError {
   Map<String, List<String>> idsByErrorString = {};
   Map<String, String> appIdNames = {};
 
-  MultiAppMultiError() : super(tr('placeholder'), unexpected: true);
+  MultiAppMultiError() : super(AppLocalizations.of(context)!\.placeholder, unexpected: true);
 
   void add(String appId, dynamic error, {String? appName}) {
     if (error is SocketException) {
@@ -137,7 +137,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
               Clipboard.setData(ClipboardData(text: e.toString()));
               ScaffoldMessenger.of(
                 context,
-              ).showSnackBar(SnackBar(content: Text(tr('copiedToClipboard'))));
+              ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!\.copiedToClipboard)));
             },
             child: Text(e.toString()),
           ),
@@ -146,7 +146,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
-              child: Text(tr('ok')),
+              child: Text(AppLocalizations.of(context)!\.ok),
             ),
           ],
         );
@@ -162,7 +162,7 @@ void showError(dynamic e, BuildContext context) {
 String list2FriendlyString(List<String> list) {
   var isUsingEnglish = isEnglish();
   return list.length == 2
-      ? '${list[0]} ${tr('and')} ${list[1]}'
+      ? '${list[0]} ${AppLocalizations.of(context)!\.and} ${list[1]}'
       : list
             .asMap()
             .entries

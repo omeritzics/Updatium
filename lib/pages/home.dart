@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:animations/animations.dart';
 import 'package:app_links/app_links.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/components/button_helpers.dart';
@@ -17,6 +16,7 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -46,16 +46,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   List<NavigationPageItem> pages = [
     NavigationPageItem(
-      tr('appsString'),
+      AppLocalizations.of(context)!\.appsString,
       Icons.apps,
       AppsPage(key: GlobalKey<AppsPageState>()),
     ),
     NavigationPageItem(
-      tr('addApp'),
+      AppLocalizations.of(context)!\.addApp,
       Icons.add_circle,
       AddAppPage(key: GlobalKey<AddAppPageState>()),
     ),
-    NavigationPageItem(tr('settings'), Icons.settings, const SettingsPage()),
+    NavigationPageItem(AppLocalizations.of(context)!\.settings, Icons.settings, const SettingsPage()),
   ];
 
   @override
@@ -105,13 +105,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           context: context,
           builder: (BuildContext ctx) {
             return AlertDialog(
-              title: Text(tr('note')),
+              title: Text(AppLocalizations.of(context)!\.note),
               scrollable: true,
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 spacing: 20,
                 children: [
-                  Text(tr('googleVerificationWarningP1')),
+                  Text(AppLocalizations.of(context)!\.googleVerificationWarningP1),
                   GestureDetector(
                     onTap: () {
                       launchUrlString(
@@ -120,14 +120,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       );
                     },
                     child: Text(
-                      tr('googleVerificationWarningP2'),
+                      AppLocalizations.of(context)!\.googleVerificationWarningP2,
                       style: const TextStyle(
                         decoration: TextDecoration.underline,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Text(tr('googleVerificationWarningP3')),
+                  Text(AppLocalizations.of(context)!\.googleVerificationWarningP3),
                 ],
               ),
               actions: [
@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     sp.googleVerificationWarningShown = true;
                     Navigator.of(context).pop(null);
                   },
-                  child: Text(tr('ok')),
+                  child: Text(AppLocalizations.of(context)!\.ok),
                 ),
               ],
             );
@@ -208,7 +208,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     title: tr(
                       'importX',
                       args: [
-                        (action == 'app' ? tr('app') : tr('appsString'))
+                        (action == 'app' ? AppLocalizations.of(context)!\.app : AppLocalizations.of(context)!\.appsString)
                             .toLowerCase(),
                       ],
                     ),
@@ -246,7 +246,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             );
           }
         } else {
-          throw UpdatiumError(tr('unknown'));
+          throw UpdatiumError(AppLocalizations.of(context)!\.unknown);
         }
       } catch (e) {
         showError(e, context);
