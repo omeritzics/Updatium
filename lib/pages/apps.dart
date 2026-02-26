@@ -714,7 +714,7 @@ class AppsPageState extends State<AppsPage> {
       );
     }
 
-    List<double> categoryStops(List<String> categories) {
+    List<double> _categoryStops(List<String> categories) {
       final n = categories.length;
       final cached = _stopsCache[n];
       if (cached != null) return cached;
