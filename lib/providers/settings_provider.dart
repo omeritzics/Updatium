@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shared_storage/shared_storage.dart' as saf;
+import 'package:docman/docman.dart';
 
 String updatiumTempId = 'omeritzics_updatium_${GitHub().hosts[0]}';
 String updatiumId = 'io.github.omeritzics.updatium';
@@ -479,8 +479,16 @@ class SettingsProvider with ChangeNotifier {
     var uriString = prefs?.getString('exportDir');
     if (uriString != null) {
       Uri? uri = Uri.parse(uriString);
-      if (!(await saf.canRead(uri) ?? false) ||
-          !(await saf.canWrite(uri) ?? false)) {
+      // Check if directory is accessible using docman
+      try {
+        final docFileResult = await DocumentFile.fromUri(uri.toString());
+        final docFile = await docFileResult?.get();
+        if (docFile == null || !docFile.canRead || !docFile.canWrite) {
+          uri = null;
+          prefs?.remove('exportDir');
+          notifyListeners();
+        }
+      } catch (e) {
         uri = null;
         prefs?.remove('exportDir');
         notifyListeners();
@@ -492,11 +500,14 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> pickExportDir({bool remove = false}) async {
-    var existingSAFPerms = (await saf.persistedUriPermissions()) ?? [];
+    var existingSAFPerms = await DocMan.perms.list();
     var currentOneWayDataSyncDir = await getExportDir();
     Uri? newOneWayDataSyncDir;
     if (!remove) {
-      newOneWayDataSyncDir = (await saf.openDocumentTree());
+      final pickedDir = await DocMan.pick.directory();
+      newOneWayDataSyncDir = pickedDir != null
+          ? Uri.parse(pickedDir.uri)
+          : null;
     }
     if (currentOneWayDataSyncDir?.path != newOneWayDataSyncDir?.path) {
       if (newOneWayDataSyncDir == null) {
@@ -507,7 +518,7 @@ class SettingsProvider with ChangeNotifier {
       notifyListeners();
     }
     for (var e in existingSAFPerms) {
-      await saf.releasePersistableUriPermission(e.uri);
+      await DocMan.perms.release(e.uri);
     }
   }
 

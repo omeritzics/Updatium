@@ -13,6 +13,7 @@ import 'package:updatium/generated/app_localizations.dart';
 
 class GitLab extends AppSource {
   GitLab({bool hostChanged = false}) {
+    name = 'GitLab';
     hosts = ['gitlab.com'];
     canSearch = true;
     showReleaseDateAsVersionToggle = true;

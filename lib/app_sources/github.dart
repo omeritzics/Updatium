@@ -14,6 +14,7 @@ import 'package:updatium/generated/app_localizations.dart';
 
 class GitHub extends AppSource {
   GitHub({hostChanged = false}) {
+    name = 'GitHub';
     hosts = ['github.com'];
     appIdInferIsOptional = true;
     showReleaseDateAsVersionToggle = true;

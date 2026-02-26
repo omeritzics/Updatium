@@ -345,7 +345,20 @@ class _UpdatiumState extends State<Updatium> {
 
           // Apply pure black surface for AMOLED black theme
           if (settingsProvider.useBlackTheme) {
-            darkColorScheme = darkColorScheme.copyWith(surface: Colors.black);
+            darkColorScheme = darkColorScheme.copyWith(
+              surface: Colors.black,
+              surfaceContainerHighest: Colors.white.withValues(alpha: 0.12),
+              surfaceContainerHigh: Colors.white.withValues(alpha: 0.09),
+              surfaceContainer: Colors.white.withValues(alpha: 0.06),
+              surfaceContainerLow: Colors.white.withValues(alpha: 0.04),
+              surfaceContainerLowest: Colors.white.withValues(alpha: 0.02),
+              surfaceDim: Colors.black,
+              surfaceBright: Colors.white.withValues(alpha: 0.05),
+              onSurface: Colors.white.withValues(alpha: 0.95),
+              onSurfaceVariant: Colors.white.withValues(alpha: 0.7),
+              outline: Colors.white.withValues(alpha: 0.25),
+              outlineVariant: Colors.white.withValues(alpha: 0.12),
+            );
           }
 
           if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
@@ -554,33 +567,39 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive Input Fields
               inputDecorationTheme: InputDecorationTheme(
                 filled: true,
-                fillColor: scheme.surfaceContainerHighest,
+                fillColor: scheme.surfaceContainerLow,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    color: scheme.outline.withValues(alpha: 0.2),
+                    width: 1,
+                  ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    color: scheme.outline.withValues(alpha: 0.2),
+                    width: 1,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(color: scheme.primary, width: 2),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(color: scheme.error, width: 2),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(color: scheme.error, width: 2),
                 ),
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 16,
+                  horizontal: 24,
+                  vertical: 18,
                 ),
                 hintStyle: TextStyle(
-                  color: scheme.onSurfaceVariant,
+                  color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
                   fontWeight: FontWeight.w400,
                 ),
                 labelStyle: TextStyle(
@@ -589,7 +608,7 @@ class _UpdatiumState extends State<Updatium> {
                 ),
                 floatingLabelStyle: TextStyle(
                   color: scheme.primary,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
 
@@ -597,25 +616,31 @@ class _UpdatiumState extends State<Updatium> {
               dropdownMenuTheme: DropdownMenuThemeData(
                 inputDecorationTheme: InputDecorationTheme(
                   filled: true,
-                  fillColor: scheme.surfaceContainerHighest,
+                  fillColor: scheme.surfaceContainerLow,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: scheme.outline.withValues(alpha: 0.2),
+                      width: 1,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: scheme.outline.withValues(alpha: 0.2),
+                      width: 1,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(20),
                     borderSide: BorderSide(color: scheme.primary, width: 2),
                   ),
                   contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
+                    horizontal: 24,
+                    vertical: 18,
                   ),
                   hintStyle: TextStyle(
-                    color: scheme.onSurfaceVariant,
+                    color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
                     fontWeight: FontWeight.w400,
                   ),
                   labelStyle: TextStyle(
@@ -624,7 +649,7 @@ class _UpdatiumState extends State<Updatium> {
                   ),
                   floatingLabelStyle: TextStyle(
                     color: scheme.primary,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),

@@ -41,7 +41,7 @@ import 'package:http/http.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:shared_storage/shared_storage.dart' as saf;
+import 'package:docman/docman.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:updatium/generated/app_localizations.dart';
 
@@ -1838,12 +1838,13 @@ class AppsProvider with ChangeNotifier {
       }
 
       if (icon != null) {
+        final currentAppInMemory = apps[appId];
         apps.update(
           apps[appId]!.app.id,
           (value) => AppInMemory(
             apps[appId]!.app,
-            value.downloadProgress,
-            value.installedInfo,
+            currentAppInMemory?.downloadProgress,
+            currentAppInMemory?.installedInfo,
             icon,
           ),
           ifAbsent: () => AppInMemory(
@@ -2070,21 +2071,21 @@ class AppsProvider with ChangeNotifier {
       builder: (BuildContext ctx) {
         return GeneratedFormModal(
           primaryActionColor: Theme.of(context).colorScheme.error,
-          title: plural('removeAppQuestion', apps.length),
+          title: AppLocalizations.of(context)!.removeAppQuestion(apps.length),
           items: !showUninstallOption
               ? []
               : [
                   [
                     GeneratedFormSwitch(
                       'rmAppEntry',
-                      label: AppLocalizations.of(context)!\.removeFromUpdatium,
+                      label: AppLocalizations.of(context)!.removeFromUpdatium,
                       defaultValue: true,
                     ),
                   ],
                   [
                     GeneratedFormSwitch(
                       'uninstallApp',
-                      label: AppLocalizations.of(context)!\.uninstallFromDevice,
+                      label: AppLocalizations.of(context)!.uninstallFromDevice,
                     ),
                   ],
                 ],
@@ -2304,14 +2305,22 @@ class AppsProvider with ChangeNotifier {
       if (exportDir == null) {
         return null;
       }
-      var files = await saf
-          .listFiles(exportDir, columns: [saf.DocumentFileColumn.id])
-          .where((f) => f.uri.pathSegments.last.endsWith('-auto.json'))
-          .toList();
-      if (files.isNotEmpty) {
-        for (var f in files) {
-          saf.delete(f.uri);
+      // List and delete auto-export files using docman
+      try {
+        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final dirDocFile = await docFileResult?.get();
+        if (dirDocFile != null) {
+          final files = await dirDocFile.listDocuments();
+          final autoFiles = files
+              .where((f) => f.name.endsWith('-auto.json'))
+              .toList();
+
+          for (var file in autoFiles) {
+            await file.delete();
+          }
         }
+      } catch (e) {
+        // Handle error silently or log if needed
       }
     }
     if (exportDir == null || pickOnly) {
@@ -2328,12 +2337,38 @@ class AppsProvider with ChangeNotifier {
       var result = await saf.createFile(
         exportDir,
         displayName:
-            '${AppLocalizations.of(context)!\.updatiumExportHyphenatedLowercase}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
+            '${AppLocalizations.of(globalNavigatorKey.currentContext!)!.updatiumExportHyphenatedLowercase}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
         mimeType: 'application/json',
         bytes: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
       );
       if (result == null) {
-        throw UpdatiumError(AppLocalizations.of(context)!\.unexpectedError);
+        throw UpdatiumError(AppLocalizations.of(globalNavigatorKey.currentContext!)!.unexpectedError);
+      }
+    } else {
+      // Create export file using docman
+      try {
+        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final dirDocFile = await docFileResult?.get();
+        if (dirDocFile != null) {
+          final fileName =
+              '${AppLocalizations.of(globalNavigatorKey.currentContext!)!.updatiumExportHyphenatedLowercase}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
+
+          final result = await dirDocFile.createFile(
+            name: fileName,
+            bytes: Uint8List.fromList(
+              utf8.encode(encoder.convert(finalExport)),
+            ),
+          );
+
+          if (result == null) {
+            throw UpdatiumError(AppLocalizations.of(globalNavigatorKey.currentContext!)!.unexpectedError);
+          }
+        } else {
+          throw UpdatiumError(AppLocalizations.of(globalNavigatorKey.currentContext!)!.unexpectedError);
+        }
+      } catch (e) {
+        throw UpdatiumError(AppLocalizations.of(globalNavigatorKey.currentContext!)!.unexpectedError);
+      }
       }
       returnPath = exportDir.pathSegments
           .join('/')
@@ -2405,7 +2440,7 @@ class AppsProvider with ChangeNotifier {
     Map<String, dynamic> errorsMap = results[1];
     for (var app in pps) {
       if (apps.containsKey(app.id)) {
-        errorsMap.addAll({app.id: AppLocalizations.of(context)!\.appAlreadyAdded});
+        errorsMap.addAll({app.id: AppLocalizations.of(context)!.appAlreadyAdded});
       } else {
         await saveApps([app], onlyIfExists: false);
       }
@@ -2426,18 +2461,18 @@ class AppsProvider with ChangeNotifier {
       // Categorize errors and provide user-friendly messages
       if (errorDetail.contains('timeout') ||
           errorDetail.contains('connection')) {
-        userMessage = AppLocalizations.of(context)!\.networkError;
+        userMessage = AppLocalizations.of(context)!.networkError;
       } else if (errorDetail.contains('404') ||
           errorDetail.contains('not found')) {
-        userMessage = AppLocalizations.of(context)!\.appNotFound;
+        userMessage = AppLocalizations.of(context)!.appNotFound;
       } else if (errorDetail.contains('parse') ||
           errorDetail.contains('format')) {
-        userMessage = AppLocalizations.of(context)!\.invalidUrlFormat;
+        userMessage = AppLocalizations.of(context)!.invalidUrlFormat;
       } else if (errorDetail.contains('permission') ||
           errorDetail.contains('access')) {
-        userMessage = AppLocalizations.of(context)!\.accessDenied;
+        userMessage = AppLocalizations.of(context)!.accessDenied;
       } else {
-        userMessage = AppLocalizations.of(context)!\.importFailed;
+        userMessage = AppLocalizations.of(context)!.importFailed;
       }
 
       return [e, userMessage];
@@ -2478,14 +2513,17 @@ class _AppFilePickerState extends State<AppFilePicker> {
       scrollable: true,
       title: Text(
         widget.pickAnyAsset
-            ? "selectX"(lowerCaseIfEnglish(AppLocalizations.of(context)!\.releaseAsset))
-            : AppLocalizations.of(context)!\.pickAnAPK,
+            ? AppLocalizations.of(context)!.selectX(
+                lowerCaseIfEnglish(AppLocalizations.of(context)!.releaseAsset),
+              )
+            : AppLocalizations.of(context)!.pickAnAPK,
       ),
       content: Column(
         children: [
           urlsToSelectFrom.length > 1
               ? Text(
-                  "appHasMoreThanOnePackage"(widget.app.finalName),
+                  AppLocalizations.of(context)!
+                      .appHasMoreThanOnePackage(widget.app.finalName),
                 )
               : const SizedBox.shrink(),
           const SizedBox(height: 16),
@@ -2505,8 +2543,9 @@ class _AppFilePickerState extends State<AppFilePicker> {
           if (widget.archs != null)
             Text(
               widget.archs!.length == 1
-                  ? tr('deviceSupportsXArch', args: [widget.archs![0]])
-                  : AppLocalizations.of(context)!\.deviceSupportsFollowingArchs +
+                  ? AppLocalizations.of(context)!
+                      .deviceSupportsXArch(widget.archs![0])
+                  : AppLocalizations.of(context)!.deviceSupportsFollowingArchs +
                         list2FriendlyString(
                           widget.archs!.map((e) => '\'$e\'').toList(),
                         ),
@@ -2519,14 +2558,14 @@ class _AppFilePickerState extends State<AppFilePicker> {
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text(AppLocalizations.of(context)!\.cancel),
+          child: Text(AppLocalizations.of(context)!.cancel),
         ),
         createAppTextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(fileUrl);
           },
-          child: Text(AppLocalizations.of(context)!\.continue),
+          child: Text(AppLocalizations.of(context)!.continue),
         ),
       ],
     );
@@ -2554,12 +2593,9 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
       scrollable: true,
       title: Text(AppLocalizations.of(context)!\.warning),
       content: Text(
-        tr(
-          'sourceIsXButPackageFromYPrompt',
-          args: [
-            Uri.parse(widget.sourceUrl).host,
-            Uri.parse(widget.apkUrl).host,
-          ],
+        AppLocalizations.of(context)!.sourceIsXButPackageFromYPrompt(
+          Uri.parse(widget.sourceUrl).host,
+          Uri.parse(widget.apkUrl).host,
         ),
       ),
       actions: [
@@ -2574,7 +2610,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);
           },
-          child: Text(AppLocalizations.of(context)!\.yes),
+          child: Text(AppLocalizations.of(context)!.yes),
         ),
       ],
     );
@@ -2600,8 +2636,10 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
   // ignore: avoid_print
   print('BG task started $taskId: ${params.toString()}');
   WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-  await loadTranslations();
+  SettingsProvider settingsProvider = SettingsProvider();
+  await settingsProvider.initializeSettings();
+  Locale locale = settingsProvider.forcedLocale ?? const Locale('en');
+  AppLocalizations l10n = await AppLocalizations.delegate.load(locale);
 
   LogsProvider logs = LogsProvider();
   NotificationsProvider notificationsProvider = NotificationsProvider();
@@ -2716,7 +2754,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
     MultiAppMultiError toThrow =
         MultiAppMultiError(); // All errors that will not lead to a retry, just a notification
     CheckingUpdatesNotification notif = CheckingUpdatesNotification(
-      plural('apps', toCheck.length),
+      l10n.apps(toCheck.length),
     ); // The notif. to show while checking
 
     try {

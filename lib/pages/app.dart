@@ -35,6 +35,14 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Consistent spacing constants
+    const height2 = SizedBox(height: 2);
+    const height8 = SizedBox(height: 8);
+    const height10 = SizedBox(height: 10);
+    const height24 = SizedBox(height: 24);
+    const height32 = SizedBox(height: 32);
+    const height85 = SizedBox(height: 85);
+
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
     getUpdate(String id, {bool resetVersion = false}) async {
@@ -130,7 +138,7 @@ class _AppPageState extends State<AppPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
             child: Column(
               children: [
-                const SizedBox(height: 24),
+                height32,
                 Text(
                   versionLines,
                   textAlign: TextAlign.start,
@@ -160,7 +168,7 @@ class _AppPageState extends State<AppPage> {
                         ),
                       )
                     : const SizedBox.shrink(),
-                const SizedBox(height: 32),
+                height32,
               ],
             ),
           ),
@@ -228,7 +236,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 32),
+                height32,
                 Text(
                   "${plural('certificateHash', app.certificateHashes.length)}"
                   "${app.hasMultipleSigners ? " (${AppLocalizations.of(context)!\.multipleSigners})" : ""}",
@@ -264,7 +272,7 @@ class _AppPageState extends State<AppPage> {
               ],
             ),
 
-          const SizedBox(height: 32),
+          height32,
           CategoryEditorSelector(
             alignment: WrapAlignment.center,
             preselected: app?.app.categories != null
@@ -282,7 +290,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 24),
+                height32,
                 GestureDetector(
                   onLongPress: () {
                     Clipboard.setData(
@@ -336,9 +344,10 @@ class _AppPageState extends State<AppPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GestureDetector(
-                onTap: () => pm.openApp(app.app.id),
-                child: _buildSimpleIcon(app!.app, small ? 70 : 150),
+              Icon(
+                Icons.info_outline,
+                color: Theme.of(context).colorScheme.primary,
+                size: small ? 16 : 24,
               ),
             ],
           ),
@@ -347,15 +356,15 @@ class _AppPageState extends State<AppPage> {
           app?.name ?? AppLocalizations.of(context)!\.app,
           textAlign: TextAlign.center,
           style: small
-              ? Theme.of(context).textTheme.displaySmall
-              : Theme.of(context).textTheme.displayLarge,
+              ? Theme.of(context).textTheme.titleLarge
+              : Theme.of(context).textTheme.headlineMedium,
         ),
         Text(
           "byX"(app?.author ?? AppLocalizations.of(context)!\.unknown),
           textAlign: TextAlign.center,
           style: small
-              ? Theme.of(context).textTheme.headlineSmall
-              : Theme.of(context).textTheme.headlineMedium,
+              ? Theme.of(context).textTheme.titleMedium
+              : Theme.of(context).textTheme.titleLarge,
         ),
         SizedBox(height: settingsProvider.highlightTouchTargets ? 2 : 8),
         GestureDetector(
@@ -399,7 +408,7 @@ class _AppPageState extends State<AppPage> {
                   child: Text(
                     app?.app.url ?? '',
                     textAlign: TextAlign.center,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       decoration: TextDecoration.underline,
@@ -419,7 +428,7 @@ class _AppPageState extends State<AppPage> {
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
-        const SizedBox(height: 85),
+        height85,
       ],
     );
 
@@ -686,37 +695,93 @@ class _AppPageState extends State<AppPage> {
   Widget _buildSimpleIcon(App app, double size) {
     return Consumer<AppsProvider>(
       builder: (context, appsProvider, child) {
-        final iconData = appsProvider.apps[app.id]?.icon;
-        final isInstalled = appsProvider.apps[app.id]?.installedInfo != null;
+        final appInMemory = appsProvider.apps[app.id];
 
-        return Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(size * 0.125),
-            color: iconData == null
-                ? Theme.of(context).colorScheme.surface.withValues(alpha: 0.1)
-                : null,
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(size * 0.125),
-            child: iconData != null
-                ? Image.memory(
-                    iconData,
+        // If icon is already loaded, display it immediately
+        if (appInMemory?.icon != null) {
+          return Container(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(size * 0.125),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(size * 0.125),
+              child: Image.memory(
+                appInMemory!.icon!,
+                width: size,
+                height: size,
+                fit: BoxFit.cover,
+                gaplessPlayback: true,
+                opacity: AlwaysStoppedAnimation(
+                  appInMemory.installedInfo == null ? 0.6 : 1,
+                ),
+                errorBuilder: (context, error, stackTrace) {
+                  return _buildFallbackIcon(size);
+                },
+              ),
+            ),
+          );
+        }
+
+        // Load icon asynchronously if not available
+        return FutureBuilder(
+          future: appsProvider.updateAppIcon(app.id),
+          builder: (context, snapshot) {
+            final updatedAppInMemory = appsProvider.apps[app.id];
+
+            if (updatedAppInMemory?.icon != null) {
+              return Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(size * 0.125),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(size * 0.125),
+                  child: Image.memory(
+                    updatedAppInMemory!.icon!,
                     width: size,
                     height: size,
                     fit: BoxFit.cover,
-                  )
-                : Icon(
-                    Icons.apps,
-                    size: size * 0.5,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                    gaplessPlayback: true,
+                    opacity: AlwaysStoppedAnimation(
+                      updatedAppInMemory.installedInfo == null ? 0.6 : 1,
+                    ),
+                    errorBuilder: (context, error, stackTrace) {
+                      return _buildFallbackIcon(size);
+                    },
                   ),
-          ),
+                ),
+              );
+            }
+
+            // Show fallback while loading or if failed
+            return _buildFallbackIcon(size);
+          },
         );
       },
+    );
+  }
+
+  Widget _buildFallbackIcon(double size) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size * 0.125),
+        color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(size * 0.125),
+        child: Icon(
+          Icons.apps,
+          size: size * 0.5,
+          color: Theme.of(
+            context,
+          ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+        ),
+      ),
     );
   }
 }
