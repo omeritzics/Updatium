@@ -1838,12 +1838,13 @@ class AppsProvider with ChangeNotifier {
       }
 
       if (icon != null) {
+        final currentAppInMemory = apps[appId];
         apps.update(
           apps[appId]!.app.id,
           (value) => AppInMemory(
             apps[appId]!.app,
-            value.downloadProgress,
-            value.installedInfo,
+            currentAppInMemory?.downloadProgress,
+            currentAppInMemory?.installedInfo,
             icon,
           ),
           ifAbsent: () => AppInMemory(
