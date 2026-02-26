@@ -61,7 +61,9 @@ void showChangeLogDialog(
                   },
                 )
               : const SizedBox.shrink(),
-          changesUrl != null ? const SizedBox(height: 16) : const SizedBox.shrink(),
+          changesUrl != null
+              ? const SizedBox(height: 16)
+              : const SizedBox.shrink(),
           appSource.changeLogIfAnyIsMarkDown
               ? ConstrainedBox(
                   constraints: BoxConstraints(
