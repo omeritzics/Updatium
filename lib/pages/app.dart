@@ -356,15 +356,15 @@ class _AppPageState extends State<AppPage> {
           app?.name ?? tr('app'),
           textAlign: TextAlign.center,
           style: small
-              ? Theme.of(context).textTheme.displaySmall
-              : Theme.of(context).textTheme.displayLarge,
+              ? Theme.of(context).textTheme.titleLarge
+              : Theme.of(context).textTheme.headlineMedium,
         ),
         Text(
           tr('byX', args: [app?.author ?? tr('unknown')]),
           textAlign: TextAlign.center,
           style: small
-              ? Theme.of(context).textTheme.headlineSmall
-              : Theme.of(context).textTheme.headlineMedium,
+              ? Theme.of(context).textTheme.titleMedium
+              : Theme.of(context).textTheme.titleLarge,
         ),
         SizedBox(height: settingsProvider.highlightTouchTargets ? 2 : 8),
         GestureDetector(
@@ -408,7 +408,7 @@ class _AppPageState extends State<AppPage> {
                   child: Text(
                     app?.app.url ?? '',
                     textAlign: TextAlign.center,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       decoration: TextDecoration.underline,
