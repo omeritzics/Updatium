@@ -736,7 +736,6 @@ class AppsPageState extends State<AppsPage> {
       return result;
     }
 
-    
     getCategoryCollapsibleTile(int index) {
       var filteredEntries = listedApps
           .asMap()
@@ -764,9 +763,7 @@ class AppsPageState extends State<AppsPage> {
         ),
         controlAffinity: ListTileControlAffinity.leading,
         trailing: Text(tiles.length.toString()),
-        children: [
-          Column(children: tiles),
-        ],
+        children: [Column(children: tiles)],
       );
     }
 
