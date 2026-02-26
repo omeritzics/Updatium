@@ -43,14 +43,6 @@ class _AppPageState extends State<AppPage> {
     const height32 = SizedBox(height: 32);
     const height85 = SizedBox(height: 85);
 
-    // Consistent spacing constants
-    const height2 = SizedBox(height: 2);
-    const height8 = SizedBox(height: 8);
-    const height10 = SizedBox(height: 10);
-    const height24 = SizedBox(height: 24);
-    const height32 = SizedBox(height: 32);
-    const height85 = SizedBox(height: 85);
-
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
     getUpdate(String id, {bool resetVersion = false}) async {

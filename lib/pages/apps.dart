@@ -184,17 +184,6 @@ class AppsPageState extends State<AppsPage> {
     const width6 = SizedBox(width: 6);
     const width16 = SizedBox(width: 16);
 
-    // Consistent spacing constants
-    const height4 = SizedBox(height: 4);
-    const height8 = SizedBox(height: 8);
-    const height12 = SizedBox(height: 12);
-    const height16 = SizedBox(height: 16);
-    const height24 = SizedBox(height: 24);
-    const height32 = SizedBox(height: 32);
-    const width4 = SizedBox(width: 4);
-    const width6 = SizedBox(width: 6);
-    const width16 = SizedBox(width: 16);
-
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
     var listedApps = appsProvider.getAppValues().toList();
