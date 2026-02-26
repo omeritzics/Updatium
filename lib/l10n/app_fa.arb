@@ -1,0 +1,778 @@
+{
+  "@@locale": "fa",
+  "invalidURLForSource": "آدرس اینترنتی برنامه {p0} معتبر نیست",
+  "@invalidURLForSource": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "noReleaseFound": "نسخه مناسبی پیدا نشد",
+  "noVersionFound": "نمی توان نسخه منتشر شده را تعیین کرد",
+  "urlMatchesNoSource": "آدرس اینترنتی با منبع شناخته شده مطابقت ندارد",
+  "cantInstallOlderVersion": "نمی توان نسخه قدیمی یک برنامه را نصب کرد",
+  "appIdMismatch": "شناسه بسته دانلود شده با شناسه برنامه موجود مطابقت ندارد",
+  "functionNotImplemented": "این کلاس این تابع را پیاده سازی نکرده است",
+  "placeholder": "نگهدارنده مکان",
+  "someErrors": "برخی از خطاها رخ داده است",
+  "unexpectedError": "خطای غیرمنتظره",
+  "ok": "باشه",
+  "and": "و",
+  "githubPATLabel": "توکن دسترسی شخصی گیت هاب(محدودیت نرخ را افزایش میدهد)",
+  "includePrereleases": "شامل نسخه های اولیه",
+  "fallbackToOlderReleases": "بازگشت به نسخه های قدیمی تر",
+  "filterReleaseTitlesByRegEx": "عناوین انتشار را با بیان منظم فیلتر کنید",
+  "invalidRegEx": "عبارت منظم نامعتبر است",
+  "noDescription": "بدون توضیحات",
+  "cancel": "لغو",
+  "continue": "ادامه دهید",
+  "requiredInBrackets": "(ضروری)",
+  "dropdownNoOptsError": "خطا: کشویی باید حداقل یک گزینه داشته باشد",
+  "color": "رنگ",
+  "standard": "استاندارد",
+  "custom": "سفارشی",
+  "useMaterialYou": "استفاده از رنگ‌های Material You",
+  "githubStarredRepos": "مخازن ستاره دار گیتهاب",
+  "uname": "نام کاربری",
+  "wrongArgNum": "تعداد آرگومان های ارائه شده اشتباه است",
+  "xIsTrackOnly": "{p0} فقط ردیابی",
+  "@xIsTrackOnly": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "source": "منبع",
+  "app": "برنامه",
+  "appsFromSourceAreTrackOnly": "برنامه‌های این منبع «فقط ردیابی» هستند",
+  "youPickedTrackOnly": "شما گزینه ی «فقط ردیابی» را انتخاب کرده اید",
+  "trackOnlyAppDescription": "برنامه برای به روز رسانی ها ردیابی می شود، اما Updatium قادر به دانلود یا نصب آن نخواهد بود.",
+  "cancelled": "لغو شد",
+  "appAlreadyAdded": "برنامه قبلاً اضافه شده است",
+  "alreadyUpToDateQuestion": "برنامه از قبل به روز شده است؟",
+  "addApp": "افزودن برنامه",
+  "appSourceURL": "آدرس اینترنتی منبع برنامه",
+  "error": "خطا",
+  "add": "اضافه کردن",
+  "searchSomeSourcesLabel": "جستجو (فقط برخی منابع)",
+  "search": "جستجو کردن",
+  "additionalOptsFor": "گزینه های اضافی برای {p0}",
+  "@additionalOptsFor": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "supportedSources": "منابع پشتیبانی شده",
+  "trackOnlyInBrackets": "«فقط ردیابی»",
+  "searchableInBrackets": "(قابل جستجو)",
+  "appsString": "برنامه ها",
+  "noApps": "برنامه ای وجود ندارد",
+  "noAppsForFilter": "برنامه ای برای فیلتر کردن وجود ندارد",
+  "byX": "توسط {p0}",
+  "@byX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "percentProgress": "پیش رفتن: {p0}%",
+  "@percentProgress": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "pleaseWait": "لطفا صبر کنید",
+  "updateAvailable": "بروزرسانی در دسترس",
+  "notInstalled": "نصب نشده",
+  "pseudoVersion": "نسخه شبه",
+  "selectAll": "انتخاب همه",
+  "deselectX": "لغو انتخاب {p0}",
+  "@deselectX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "xWillBeRemovedButRemainInstalled": "{p0} از Updatium حذف می‌شود اما روی دستگاه نصب می‌ماند.",
+  "@xWillBeRemovedButRemainInstalled": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "removeSelectedAppsQuestion": "برنامه های انتخابی حذف شود؟",
+  "removeSelectedApps": "حذف برنامه های انتخاب شده",
+  "updateX": "به روز رسانی {p0}",
+  "@updateX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installX": "نصب {p0}",
+  "@installX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "markXTrackOnlyAsUpdated": "علامت {p0}\n(فقط ردیابی)\nبروز شده",
+  "@markXTrackOnlyAsUpdated": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "changeX": "تغییر دادن {p0}",
+  "@changeX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installUpdateApps": "نصب/به‌روزرسانی برنامه‌ها",
+  "installUpdateSelectedApps": "برنامه‌های انتخابی را نصب/به‌روزرسانی کنید",
+  "markXSelectedAppsAsUpdated": "{p0} برنامه های انتخابی را به عنوان به روز علامت گذاری کنید؟",
+  "@markXSelectedAppsAsUpdated": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "no": "خیر",
+  "yes": "بله",
+  "markSelectedAppsUpdated": "برنامه های انتخاب شده را به عنوان به روز علامت گذاری کنید",
+  "pinToTop": "پین به بالا",
+  "unpinFromTop": "برداشتن پین از بالا",
+  "resetInstallStatusForSelectedAppsQuestion": "وضعیت نصب برنامه‌های انتخابی بازنشانی شود؟",
+  "installStatusOfXWillBeResetExplanation": "وضعیت نصب برنامه‌های انتخاب‌شده بازنشانی می‌شود.\n\nاگر نسخه برنامه نشان‌داده‌شده در Updatium به دلیل به‌روزرسانی‌های ناموفق یا مشکلات دیگر نادرست باشد، می‌تواند کمک کند.",
+  "customLinkMessage": "این پیوندها بر روی دستگاه هایی با Updatium نصب شده کار می کنند",
+  "shareAppConfigLinks": "اشتراک گذاری پیکربندی برنامه به عنوان پیوند HTML",
+  "shareSelectedAppURLs": "اشتراک گذاری آدرس اینترنتی برنامه های انتخاب شده",
+  "resetInstallStatus": "بازنشانی وضعیت نصب",
+  "more": "بیشتر",
+  "removeOutdatedFilter": "فیلتر برنامه قدیمی را حذف کنید",
+  "showOutdatedOnly": "فقط برنامه های قدیمی را نشان دهید",
+  "filter": "فیلتر",
+  "filterApps": "فیلتر کردن برنامه ها",
+  "appName": "نام برنامه",
+  "author": "سازنده",
+  "upToDateApps": "برنامه های به روز",
+  "nonInstalledApps": "برنامه های نصب نشده",
+  "importExport": "وارد کردن/صادر کردن",
+  "settings": "تنظیمات",
+  "exportedTo": "صادر کردن به{p0}",
+  "@exportedTo": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatiumExport": "صادر کردن Updatium",
+  "invalidInput": "ورودی نامعتبر",
+  "importedX": "وارد شده {p0}",
+  "@importedX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatiumImport": "وارد کردن Updatium",
+  "importFromURLList": "وارد کردن از فهرست آدرس اینترنتی",
+  "searchQuery": "جستجوی سوال",
+  "appURLList": "فهرست آدرس اینترنتی برنامه",
+  "line": "خط",
+  "searchX": "جستجو {p0}",
+  "@searchX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "noResults": "نتیجه ای پیدا نشد",
+  "importX": " وارد کردن {p0}",
+  "@importX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "importedAppsIdDisclaimer": "ممکن است برنامه‌های وارد شده به اشتباه به‌عنوان \"نصب نشده\" نشان داده شوند.\nبرای رفع این مشکل، آنها را دوباره از طریق Updatium نصب کنید.\nاین نباید روی داده‌های برنامه تأثیر بگذارد.\n\nفقط بر روی آدرس اینترنتی و روش‌های درون ریزی شخص ثالث تأثیر می‌گذارد.",
+  "importErrors": "خطاهای وارد کردن",
+  "importedXOfYApps": "{p0} از {p1} برنامه وارد شد.",
+  "@importedXOfYApps": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "followingURLsHadErrors": "آدرس های اینترنتی زیر دارای خطا بودند:",
+  "selectURL": "آدرس اینترنتی انتخاب شده",
+  "selectURLs": "آدرس های اینترنتی انتخاب شده",
+  "pick": "انتخاب",
+  "theme": "تم",
+  "dark": "تاریک",
+  "light": "روشن",
+  "followSystem": "هماهنگ با سیستم",
+  "followSystemThemeExplanation": "دنبال کردن تم سیستم فقط با استفاده از برنامه های شخص ثالث امکان پذیر است",
+  "useBlackTheme": "استفاده از تم تیره سیاه خالص",
+  "appSortBy": "مرتب سازی برنامه بر اساس",
+  "authorName": "سازنده/اسم",
+  "nameAuthor": "اسم/سازنده",
+  "asAdded": "همانطور که اضافه شد",
+  "appSortOrder": "ترتیب مرتب سازی برنامه",
+  "ascending": "صعودی",
+  "descending": "نزولی",
+  "bgUpdateCheckInterval": "فاصله بررسی به‌روزرسانی در پس‌زمینه",
+  "neverManualOnly": "هرگز - فقط دستی",
+  "appearance": "ظاهر",
+  "pinUpdates": "به‌روزرسانی‌ها را به نمای بالای برنامه‌ها پین کنید",
+  "updates": "به روز رسانی ها",
+  "sourceSpecific": "منبع خاص",
+  "appSource": "منبع برنامه",
+  "noLogs": "بدون گزارش",
+  "appLogs": "گزارش های برنامه",
+  "close": "بستن",
+  "share": "اشتراک گذاری",
+  "appNotFound": "برنامه پیدا نشد",
+  "updatiumExportHyphenatedLowercase": "صادر کردن-updatium",
+  "pickAnAPK": "یک APK انتخاب کنید",
+  "appHasMoreThanOnePackage": "{p0} بیش از یک بسته دارد:",
+  "@appHasMoreThanOnePackage": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "deviceSupportsXArch": "دستگاه شما از معماری پردازنده {p0} پشتیبانی میکند",
+  "@deviceSupportsXArch": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "deviceSupportsFollowingArchs": "دستگاه شما از معماری های پردازنده زیر پشتیبانی می کند:",
+  "warning": "اخطار",
+  "sourceIsXButPackageFromYPrompt": "منبع برنامه \"{p0}\" است اما بسته انتشار از \"{p1}\" آمده است. ادامه هید؟",
+  "@sourceIsXButPackageFromYPrompt": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatesAvailable": "بروزرسانی در دسترس ",
+  "updatesAvailableNotifDescription": "به کاربر اطلاع می دهد که به روز رسانی برای یک یا چند برنامه ردیابی شده توسط Updatium در دسترس است",
+  "noNewUpdates": "به روز رسانی جدیدی وجود ندارد.",
+  "xHasAnUpdate": "{p0} یک به روز رسانی دارد.",
+  "@xHasAnUpdate": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "appsUpdated": "برنامه ها به روز شدند",
+  "appsNotUpdated": "به روز رسانی برنامه ها ناموفق بود",
+  "appsUpdatedNotifDescription": "به کاربر اطلاع می دهد که به روز رسانی یک یا چند برنامه در پس زمینه اعمال شده است",
+  "xWasUpdatedToY": "{p0} به {p1} به روز شد.",
+  "@xWasUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "xWasNotUpdatedToY": "به روز رسانی {p0} به {p1} انجام نشد.",
+  "@xWasNotUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "errorCheckingUpdates": "خطا در بررسی به‌روزرسانی‌ها",
+  "errorCheckingUpdatesNotifDescription": "اعلانی که وقتی بررسی به‌روزرسانی پس‌زمینه ناموفق است نشان می‌دهد",
+  "appsRemoved": "برنامه ها حذف شدند",
+  "appsRemovedNotifDescription": "به کاربر اطلاع می دهد که یک یا چند برنامه به دلیل خطا در هنگام بارگیری حذف شده است",
+  "xWasRemovedDueToErrorY": "{p0} به دلیل این خطا حذف شد: {p1}",
+  "@xWasRemovedDueToErrorY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "completeAppInstallation": "نصب کامل برنامه",
+  "updatiumMustBeOpenToInstallApps": "Updatium باید برای نصب برنامه ها باز باشد",
+  "completeAppInstallationNotifDescription": "از کاربر می‌خواهد برای پایان نصب برنامه به Updatium برگردد",
+  "checkingForUpdates": "بررسی به‌روزرسانی‌ها",
+  "checkingForUpdatesNotifDescription": "اعلان گذرا که هنگام بررسی به روز رسانی ظاهر می شود",
+  "pleaseAllowInstallPerm": "لطفاً به Updatium اجازه دهید برنامه‌ها را نصب کند",
+  "trackOnly": "فقط ردیابی",
+  "errorWithHttpStatusCode": "خطا {p0}",
+  "@errorWithHttpStatusCode": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "versionCorrectionDisabled": "تصحیح نسخه غیرفعال شد (به نظر می رسد افزونه کار نمی کند)",
+  "unknown": "ناشناخته",
+  "none": "هیچ",
+  "all": "همه چیز",
+  "never": "هرگز",
+  "latestVersionX": "آخرین نسخه: {p0}",
+  "@latestVersionX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installedVersionX": "نسخه نصب شده: {p0}",
+  "@installedVersionX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "lastUpdateCheckX": "بررسی آخرین به‌روزرسانی: {p0}",
+  "@lastUpdateCheckX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "remove": "حذف",
+  "yesMarkUpdated": "بله، علامت گذاری به عنوان به روز شده",
+  "fdroid": "F-Droid Official",
+  "appIdOrName": "شناسه یا نام برنامه",
+  "appId": "شناسه برنامه",
+  "appWithIdOrNameNotFound": "هیچ برنامه ای با آن شناسه یا نام یافت نشد",
+  "reposHaveMultipleApps": "مخازن ممکن است شامل چندین برنامه باشد",
+  "fdroidThirdPartyRepo": "مخازن شخص ثالث F-Droid",
+  "install": "نصب",
+  "markInstalled": "علامت گذاری به عنوان نصب شده",
+  "update": "به روز رسانی",
+  "updated": "به‌روز شده",
+  "markUpdated": "علامت گذاری به روز شد",
+  "additionalOptions": "گزینه های اضافی",
+  "disableVersionDetection": "غیرفعال کردن تشخیص نسخه",
+  "noVersionDetectionExplanation": "این گزینه فقط باید برای برنامه هایی استفاده شود که تشخیص نسخه به درستی کار نمی کند.",
+  "downloadingX": "در حال دانلود {p0}",
+  "@downloadingX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "downloadX": "دانلود {p0}",
+  "@downloadX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "downloadedX": "دانلود شده {p0}",
+  "@downloadedX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "releaseAsset": "انتشار دارایی",
+  "downloadNotifDescription": "کاربر را از پیشرفت دانلود یک برنامه مطلع می کند",
+  "noAPKFound": "APK پیدا نشد فایل",
+  "noVersionDetection": "بدون تشخیص نسخه",
+  "categorize": "دسته بندی کردن",
+  "categories": "دسته بندی ها",
+  "category": "دسته بندی",
+  "noCategory": "بدون دسته بندی",
+  "noCategories": "بدون دسته بندی ها",
+  "deleteCategoriesQuestion": "دسته بندی ها حذف شوند؟",
+  "categoryDeleteWarning": "همه برنامه‌ها در دسته‌های حذف شده روی دسته‌بندی نشده تنظیم می‌شوند.",
+  "addCategory": "اضافه کردن دسته",
+  "label": "برچسب",
+  "language": "زبان",
+  "copiedToClipboard": "در کلیپ بورد کپی شد",
+  "storagePermissionDenied": "مجوز ذخیره سازی رد شد",
+  "selectedCategorizeWarning": "این جایگزین تنظیمات دسته بندی موجود برای برنامه های انتخابی می شود.",
+  "filterAPKsByRegEx": "فایل‌های APK را با نظم فیلتر کنید",
+  "removeFromUpdatium": "از Updatium حذف کنید",
+  "uninstallFromDevice": "حذف نصب از دستگاه",
+  "onlyWorksWithNonVersionDetectApps": "فقط برای برنامه‌هایی کار می‌کند که تشخیص نسخه غیرفعال است.",
+  "releaseDateAsVersion": "از تاریخ انتشار به عنوان نسخه استفاده کنید",
+  "releaseTitleAsVersion": "از عنوان انتشار به عنوان رشته نسخه استفاده کنید",
+  "releaseDateAsVersionExplanation": "این گزینه فقط باید برای برنامه هایی استفاده شود که تشخیص نسخه به درستی کار نمی کند، اما تاریخ انتشار در دسترس است.",
+  "changes": "تغییرات",
+  "releaseDate": "تاریخ انتشار",
+  "importFromURLsInFile": "وارد کردن از آدرس های اینترنتی موجود در فایل (مانند OPML)",
+  "versionDetectionExplanation": "تطبیق رشته نسخه با نسخه شناسایی شده از سیستم عامل",
+  "versionDetection": "تشخیص نسخه",
+  "standardVersionDetection": "تشخیص نسخه استاندارد",
+  "groupByCategory": "دسته‌بندی بر اساس گروه",
+  "listView": "نمای لیست",
+  "gridView": "نمای شبکه",
+  "autoApkFilterByArch": "تلاش برای فیلتر کردن APK ها بر اساس معماری CPU در صورت امکان",
+  "autoLinkFilterByArch": "تلاش برای فیلتر کردن لینک ها توسط معماری CPU در صورت امکان",
+  "overrideSource": "نادیده گرفتن منبع",
+  "dontShowAgain": "دوباره این را نشان نده",
+  "dontShowTrackOnlyWarnings": "هشدار 'فقط ردیابی' را نشان ندهید",
+  "dontShowAPKOriginWarnings": "هشدارهای منبع APK را نشان ندهید",
+  "moveNonInstalledAppsToBottom": "برنامه های نصب نشده را به نمای پایین برنامه ها منتقل کنید",
+  "hideNonInstalledApps": "پنهان کردن برنامه‌های نصب‌نشده",
+  "gitlabPATLabel": "رمز دسترسی شخصی GitLab",
+  "about": "درباره",
+  "requiresCredentialsInSettings": "{p0}: این به اعتبارنامه های اضافی نیاز دارد (در تنظیمات)",
+  "@requiresCredentialsInSettings": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "checkOnStart": "بررسی در شروع",
+  "tryInferAppIdFromCode": "شناسه برنامه را از کد منبع استنباط کنید",
+  "removeOnExternalUninstall": "حذف خودکار برنامه های حذف نصب شده خارجی",
+  "pickHighestVersionCode": "انتخاب خودکار بالاترین کد نسخه APK",
+  "checkUpdateOnDetailPage": "برای باز کردن صفحه جزئیات برنامه، به‌روزرسانی‌ها را بررسی کنید",
+  "disablePageTransitions": "غیرفعال کردن انیمیشن های انتقال صفحه",
+  "reversePageTransitions": "انیمیشن های انتقال معکوس صفحه",
+  "minStarCount": "حداقل تعداد ستاره",
+  "addInfoBelow": "این اطلاعات را در زیر اضافه کنید",
+  "addInfoInSettings": "این اطلاعات را در تنظیمات اضافه کنید.",
+  "githubSourceNote": "با استفاده از کلید API می توان از محدودیت نرخ GitHub جلوگیری کرد.",
+  "sortByLastLinkSegment": "فقط بر اساس آخرین بخش پیوند مرتب کنید",
+  "filterReleaseNotesByRegEx": "یادداشت های انتشار را با بیان منظم فیلتر کنید",
+  "customLinkFilterRegex": "فیلتر پیوند سفارشی بر اساس عبارت منظم (پیش‌فرض '.apk$')",
+  "appsPossiblyUpdated": "به‌روزرسانی برنامه انجام شد",
+  "appsPossiblyUpdatedNotifDescription": "به کاربر اطلاع می‌دهد که به‌روزرسانی‌های یک یا چند برنامه به طور بالقوه در پس‌زمینه اعمال شده است",
+  "xWasPossiblyUpdatedToY": "ممکن است {p0} به {p1} به روز شده باشد.",
+  "@xWasPossiblyUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "enableBackgroundUpdates": "به روز رسانی پس زمینه را فعال کنید",
+  "backgroundUpdateReqsExplanation": "به روز رسانی پس زمینه ممکن است برای همه برنامه ها امکان پذیر نباشد.",
+  "backgroundUpdateLimitsExplanation": "موفقیت نصب پس‌زمینه تنها زمانی مشخص می‌شود که Updatium باز شود.",
+  "verifyLatestTag": "برچسب \"آخرین\" را تأیید کنید",
+  "intermediateLinkRegex": "برای بازدید از پیوند «میانگین» فیلتر کنید",
+  "filterByLinkText": "لینک ها را بر اساس متن پیوند فیلتر کنید",
+  "matchLinksOutsideATags": "لینک های خارج از تگ های <a>",
+  "intermediateLinkNotFound": "لینک میانی پیدا نشد",
+  "intermediateLink": "پیوند میانی",
+  "exemptFromBackgroundUpdates": "معاف از به‌روزرسانی‌های پس‌زمینه (در صورت فعال بودن)",
+  "bgUpdatesOnWiFiOnly": "به‌روزرسانی‌های پس‌زمینه را در صورت عدم اتصال به Wi-Fi غیرفعال کنید",
+  "bgUpdatesWhileChargingOnly": "به‌روزرسانی‌های پس‌زمینه را هنگام شارژ نشدن غیرفعال کنید",
+  "autoSelectHighestVersionCode": "انتخاب خودکار بالاترین نسخه کد APK",
+  "versionExtractionRegEx": "نسخه استخراج RegEx",
+  "trimVersionString": "برش رشته نسخه با RegEx",
+  "matchGroupToUseForX": "مطابقت دادن گروه برای استفاده برای \"{p0}\"",
+  "@matchGroupToUseForX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "matchGroupToUse": "گروه مورد استفاده را مطابقت دهید",
+  "highlightTouchTargets": "اهداف لمسی کمتر واضح را برجسته کنید",
+  "pickExportDir": "فهرست صادر کردن را انتخاب کنید",
+  "autoExportOnChanges": "صادر کردن خودکار تغییرات",
+  "includeSettings": "شامل تنظیمات",
+  "filterVersionsByRegEx": "فیلتر کردن نسخه ها با RegEx",
+  "trySelectingSuggestedVersionCode": "نسخه پیشنهادی APK نسخه کد را انتخاب کنید",
+  "dontSortReleasesList": "حفظ سفارش انتشار از API",
+  "reverseSort": "مرتب سازی معکوس",
+  "takeFirstLink": "لینک اول را بگیرید",
+  "skipSort": "از مرتب سازی صرف نظر کنید",
+  "debugMenu": "منوی اشکال زدایی",
+  "bgTaskStarted": "کار پس زمینه شروع شد - لاگ های مربوط را بررسی کنید.",
+  "runBgCheckNow": "اکنون به‌روزرسانی پس‌زمینه را بررسی کنید",
+  "versionExtractWholePage": "نسخه Extraction Regex را در کل صفحه اعمال کنید",
+  "installing": "در حال نصب",
+  "skipUpdateNotifications": "رد شدن از اعلان های به روز رسانی",
+  "updatesAvailableNotifChannel": "بروزرسانی در دسترس ",
+  "appsUpdatedNotifChannel": "برنامه ها به روز شدند",
+  "appsPossiblyUpdatedNotifChannel": "به‌روزرسانی برنامه انجام شد",
+  "errorCheckingUpdatesNotifChannel": "خطا در بررسی به‌روزرسانی‌ها",
+  "appsRemovedNotifChannel": "برنامه ها حذف شدند",
+  "downloadingXNotifChannel": "در حال دانلود {p0}",
+  "@downloadingXNotifChannel": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "completeAppInstallationNotifChannel": "نصب کامل برنامه",
+  "checkingForUpdatesNotifChannel": "بررسی به‌روزرسانی‌ها",
+  "onlyCheckInstalledOrTrackOnlyApps": "فقط برنامه های نصب شده و فقط ردیابی را برای به روز رسانی بررسی کنید",
+  "supportFixedAPKURL": "پشتیبانی از URL های APK ثابت",
+  "selectX": "انتخاب کنید {p0}",
+  "@selectX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "parallelDownloads": "اجازه دانلود موازی",
+  "useShizuku": "برای نصب از Shizuku یا Sui استفاده کنید",
+  "shizukuBinderNotFound": "Shizuku در حال اجرا نیست",
+  "shizukuOld": "نسخه قدیمی Shizuku (<11) - آن را به روز کنید",
+  "shizukuOldAndroidWithADB": "Shizuku در Android < 8.1 با ADB اجرا می شود - اندروید را به روز کنید یا به جای آن از Sui استفاده کنید",
+  "shizukuPretendToBeGooglePlay": "Google Play را به عنوان منبع نصب تنظیم کنید (در صورت استفاده از Shizuku)",
+  "useSystemFont": "استفاده از فونت سیستم",
+  "useVersionCodeAsOSVersion": "استفاده کد نسخه برنامه به جای نسخه شناسایی شده توسط سیستم عامل استفاده کنید",
+  "requestHeader": "درخواست سطر بالایی",
+  "useLatestAssetDateAsReleaseDate": "استفاده از آخرین بارگذاری دارایی به عنوان تاریخ انتشار",
+  "defaultPseudoVersioningMethod": "روش پیش فرض شبه نسخه",
+  "partialAPKHash": "هش جزئی APK",
+  "apkLinkHash": "هش پیوند APK",
+  "directAPKLink": "لینک مستقیم APK",
+  "pseudoVersionInUse": "یک نسخه شبه در حال استفاده است",
+  "installed": "نصب شده است",
+  "latest": "آخرین",
+  "invertRegEx": "معکوس کردن عبارت منظم",
+  "note": "یادداشت",
+  "selfHostedNote": "از منوی کرکره ای \"{p0}\" می توان برای دسترسی به نمونه های خود میزبانی/سفارشی از هر منبعی استفاده کرد.",
+  "@selfHostedNote": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "badDownload": "APK قابل تجزیه نیست (دانلود ناسازگار یا جزئی)",
+  "beforeNewInstallsShareToAppVerifier": "اشتراک‌گذاری برنامه‌های جدید با AppVerifier (در صورت وجود)",
+  "appVerifierInstructionToast": "در AppVerifier به اشتراک بگذارید، سپس پس از آماده شدن به اینجا برگردید.",
+  "wiki": "راهنما/ویکی",
+  "allowInsecure": "درخواست های HTTP ناامن را مجاز کنید",
+  "stayOneVersionBehind": "یک نسخه از آخرین نسخه پشت سر بگذارید",
+  "useFirstApkOfVersion": "اولین بار از چندین APK",
+  "refreshBeforeDownload": "قبل از دانلود، جزئیات برنامه را بازخوانی کنید",
+  "tencentAppStore": "Tencent App Store",
+  "coolApk": "CoolApk",
+  "vivoAppStore": "vivo App Store (CN)",
+  "name": "نام",
+  "smartname": "Name (Smart)",
+  "sortMethod": "Sort Method",
+  "welcome": "خوش آمدید خوش آمدید",
+  "documentationLinksNote": "صفحه GitHub به دست آمده در زیر شامل پیوندهایی با ویدیوها، مقالات، بحث ها و سایر منابع است که به شما کمک می کند تا چگونگی استفاده از برنامه را درک کنید.",
+  "batteryOptimizationNote": "Note that background downloads may work more reliably if you disable OS battery optimizations for Updatium.",
+  "fileDeletionError": "شکست برای حذف فایل (سعی کنید آن را به صورت دستی حذف کنید سپس دوباره امتحان کنید): “{p0}”",
+  "@fileDeletionError": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "foregroundService": "خدمات Foreground",
+  "foregroundServiceExplanation": "استفاده از یک سرویس پیش زمینه برای بررسی به روز رسانی (قابل اعتماد تر، مصرف انرژی بیشتر)",
+  "fgServiceNotice": "این اعلان برای بررسی به روز رسانی پس زمینه مورد نیاز است (می تواند در تنظیمات OS پنهان شود)",
+  "excludeSecrets": "رازهای پنهان",
+  "ghReqPrefix": "مثال “sky22333/hubproxy”",
+  "includeZips": "فایل های ZIP",
+  "zippedApkFilterRegEx": "فیلتر APK در داخل Zip",
+  "googleVerificationWarningP1": "گوگل اعلام کرده است که از سال 2026/2027، تمام برنامه های موجود در دستگاه های اندرویدی معتبر نیاز به توسعه دهنده دارند تا جزئیات هویت شخصی را مستقیماً به گوگل ارسال کنند.\n\nپس از آن، Updatium ممکن است در دستگاه های اندرویدی گواهی شده کار نکند.",
+  "googleVerificationWarningP2": "به https://Keepandroidopen.org یا برای اطلاعات بیشتر بروید.",
+  "googleVerificationWarningP3": "توجه داشته باشید که در کوتاه مدت، ممکن است همچنان برای نصب برنامه های \"unverified\" (غیر سازگار) از طریق یک فرایند \"advanced Flow\" که گوگل وعده داده است پس از واکنش گسترده به اعلام خود اجرا کند، اما آنها جزئیات چگونگی کار این را به طوری که مشخص نیست که آیا آن واقعا حفظ آزادی های کاربر در هر روش عملی.\n\nدر هر صورت، حرکت گوگل یک گام مهم به سمت پایان محاسبات رایگان و عمومی برای افراد است.\n\nسیستم عامل های غیر گواهی شده، مانند گرافنموس، باید تا زمانی که اجازه دارند به وجود خود ادامه دهند، تحت تاثیر قرار گیرند.",
+  "multipleSigners": "ثبت نام های متعدد",
+  "removeAppQuestion": "{count, plural, one{برنامه حذف شود؟} other{برنامه ها حذف شوند؟}}",
+  "@removeAppQuestion": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "tooManyRequestsTryAgainInMinutes": "{count, plural, one{درخواست‌های بسیار زیاد (نرخ محدود) - {count} دقیقه دیگر دوباره امتحان کنید} other{درخواست های بسیار زیاد (نرخ محدود) - بعد از {count} دقیقه دوباره امتحان کنید}}",
+  "@tooManyRequestsTryAgainInMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "bgUpdateGotErrorRetryInMinutes": "{count, plural, one{بررسی به‌روزرسانی BG با یک {count} مواجه شد، یک بررسی مجدد را در {count} دقیقه برنامه‌ریزی می‌کند} other{بررسی به‌روزرسانی BG با {count} مواجه شد، یک بررسی مجدد را در {count} دقیقه برنامه‌ریزی می‌کند}}",
+  "@bgUpdateGotErrorRetryInMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "bgCheckFoundUpdatesWillNotifyIfNeeded": "{count, plural, one{بررسی به‌روزرسانی BG پیدا شد {count} به‌روزرسانی - در صورت نیاز به کاربر اطلاع می‌دهد} other{بررسی به‌روزرسانی BG {count} به‌روزرسانی‌های یافت شده - در صورت نیاز به کاربر اطلاع می‌دهد}}",
+  "@bgCheckFoundUpdatesWillNotifyIfNeeded": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "apps": "{count, plural, one{برنامه {count}} other{{count} برنامه ها}}",
+  "@apps": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "url": "{count, plural, one{{count} آدرس اینترنتی} other{{count} آدرس های اینترنتی}}",
+  "@url": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "minute": "{count, plural, one{{count} دقیقه} other{{count} دقیقه}}",
+  "@minute": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "hour": "{count, plural, one{{count} ساعت} other{{count} ساعت}}",
+  "@hour": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "day": "{count, plural, one{{count} روز} other{{count} روز}}",
+  "@day": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "clearedNLogsBeforeXAfterY": "{count, plural, one{گزارش {n} پاک شد (قبل از = {before}، بعد = {after})} other{{n} گزارش پاک شد (قبل از = {before}، بعد = {after})}}",
+  "@clearedNLogsBeforeXAfterY": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      },
+      "n": {
+        "type": "Object"
+      },
+      "before": {
+        "type": "Object"
+      },
+      "after": {
+        "type": "Object"
+      }
+    }
+  },
+  "xAndNMoreUpdatesAvailable": "{count, plural, one{{count} و 1 برنامه دیگر به‌روزرسانی دارند.} other{{count} و {count} برنامه دیگر به روز رسانی دارند.}}",
+  "@xAndNMoreUpdatesAvailable": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesInstalled": "{count, plural, one{{count} و 1 برنامه دیگر به روز شدند.} other{{count} و {count} برنامه دیگر به روز شدند.}}",
+  "@xAndNMoreUpdatesInstalled": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesFailed": "{count, plural, one{{count} و 1 برنامه دیگر به روز نشد.} other{{count} و {count} برنامه دیگر به روز نشد.}}",
+  "@xAndNMoreUpdatesFailed": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesPossiblyInstalled": "{count, plural, one{{count} و 1 برنامه دیگر ممکن است به روز شده باشند.} other{ممکن است {count} و {count} برنامه های دیگر به روز شده باشند.}}",
+  "@xAndNMoreUpdatesPossiblyInstalled": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "apk": "{count, plural, one{{count} APK} other{{count} APKs}}",
+  "@apk": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "certificateHash": "{count, plural, one{گواهی Hash} other{گواهی Hashes}}",
+  "@certificateHash": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "securityDisclaimerTitle": "سلب مسئولیت امنیتی و حقوقی",
+  "license": "مجوز",
+  "licenseText": "این برنامه تحت مجوز GPL v3 توزیع شده است.",
+  "disclaimer": "سلب مسئولیت",
+  "disclaimerText": "این برنامه هیچ یک از برنامه‌های خارجی را توزیع، میزبانی یا تأیید نمی‌کند. کاربر مسئولیت کامل امنیت و قانونی بودن هر نرم‌افزاری که از طریق این ابزار نصب می‌شود را بر عهده دارد.\n\nhttps://github.com/omeritzics/Updatium تنها مکان رسمی برای دانلود Updatium است - به شدت توصیه می‌شود آن را از جاهای دیگر دانلود نکنید زیرا دانلود از منابع غیررسمی ناامن است.",
+  "privacy": "حریم خصوصی",
+  "privacyText": "این برنامه متمرکز بر حریم خصوصی است و داده‌های شخصی جمع‌آوری نمی‌کند.",
+  "acceptAndContinue": "پذیرش و ادامه",
+  "decline": "رد کردن"
+}

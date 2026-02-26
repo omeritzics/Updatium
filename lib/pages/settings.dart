@@ -445,9 +445,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         children: [
                                           Flexible(
                                             child: Text(
-                                              tr(
-                                                'foregroundServiceExplanation',
-                                              ),
+                                              AppLocalizations.of(context)!.foregroundServiceExplanation,
                                             ),
                                           ),
                                           Switch(
@@ -528,9 +526,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               children: [
                                                 Flexible(
                                                   child: Text(
-                                                    tr(
-                                                      'bgUpdatesWhileChargingOnly',
-                                                    ),
+                                                    AppLocalizations.of(context)!.bgUpdatesWhileChargingOnly,
                                                   ),
                                                 ),
                                                 Switch(

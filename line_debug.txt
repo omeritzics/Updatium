@@ -1,0 +1,2 @@
+              label: AppLocalizations.of(context)!\.install,
+

@@ -111,24 +111,20 @@ class _AppPageState extends State<AppPage> {
       if (!upToDate) {
         versionLines += '\n${app?.app.latestVersion} ${AppLocalizations.of(context)!\.latest}';
       }
-      String infoLines = tr(
-        'lastUpdateCheckX',
-        args: [
-          app?.app.lastUpdateCheck == null
-              ? AppLocalizations.of(context)!\.never
-              : '${app?.app.lastUpdateCheck?.toLocal()}',
-        ],
+      String infoLines = AppLocalizations.of(context)!.lastUpdateCheckX(
+        app?.app.lastUpdateCheck == null
+            ? AppLocalizations.of(context)!.never
+            : '${app?.app.lastUpdateCheck?.toLocal()}',
       );
       if (trackOnly) {
-        infoLines = '${"xIsTrackOnly"(AppLocalizations.of(context)!\.app)}\n$infoLines';
+        infoLines =
+            '${AppLocalizations.of(context)!.xIsTrackOnly(AppLocalizations.of(context)!.app)}\n$infoLines';
       }
       if (installedVersionIsEstimate) {
         infoLines = '${AppLocalizations.of(context)!\.pseudoVersionInUse}\n$infoLines';
       }
-      if ((app?.app.apkUrls.length ?? 0) > 0) {
         infoLines =
-            '$infoLines\n${app?.app.apkUrls.length == 1 ? app?.app.apkUrls[0].key : plural('apk', app?.app.apkUrls.length ?? 0)}';
-      }
+            '$infoLines\n${app?.app.apkUrls.length == 1 ? app?.app.apkUrls[0].key : AppLocalizations.of(context)!.apk(app?.app.apkUrls.length ?? 0)}';
       var changeLogFn = app != null ? getChangeLogFn(context, app.app) : null;
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -214,9 +210,10 @@ class _AppPageState extends State<AppPage> {
                         : const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 2),
                     margin: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
                     child: Text(
-                      tr(
-                        'downloadX',
-                        args: [lowerCaseIfEnglish(AppLocalizations.of(context)!\.releaseAsset)],
+                      AppLocalizations.of(context)!.downloadX(
+                        lowerCaseIfEnglish(
+                          AppLocalizations.of(context)!.releaseAsset,
+                        ),
                       ),
                       textAlign: TextAlign.center,
                       maxLines: 2,
@@ -238,8 +235,8 @@ class _AppPageState extends State<AppPage> {
               children: [
                 height32,
                 Text(
-                  "${plural('certificateHash', app.certificateHashes.length)}"
-                  "${app.hasMultipleSigners ? " (${AppLocalizations.of(context)!\.multipleSigners})" : ""}",
+                  "${AppLocalizations.of(context)!.certificateHash(app.certificateHashes.length)}"
+                  "${app.hasMultipleSigners ? " (${AppLocalizations.of(context)!.multipleSigners})" : ""}",
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 12),
                 ),
@@ -360,7 +357,8 @@ class _AppPageState extends State<AppPage> {
               : Theme.of(context).textTheme.headlineMedium,
         ),
         Text(
-          "byX"(app?.author ?? AppLocalizations.of(context)!\.unknown),
+          AppLocalizations.of(context)!
+              .byX(app?.author ?? AppLocalizations.of(context)!.unknown),
           textAlign: TextAlign.center,
           style: small
               ? Theme.of(context).textTheme.titleMedium

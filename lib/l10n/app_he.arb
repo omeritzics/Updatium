@@ -1,0 +1,770 @@
+{
+  "@@locale": "he",
+  "invalidURLForSource": "אין זו כתובת יישום תקנית של {p0}",
+  "@invalidURLForSource": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "noReleaseFound": "לא נמצאה מהדורה מתאימה",
+  "noVersionFound": "לא היה ניתן להסיק את מספר הגרסה",
+  "urlMatchesNoSource": "הכתובת אינה מתאימה למקור ידוע",
+  "cantInstallOlderVersion": "לא ניתן להתקין גרסה ישנה יותר של יישום",
+  "appIdMismatch": "מזהה החבילה שהורדה אינו זהה למזהה היישום הנוכחי",
+  "functionNotImplemented": "פונקציה זו עדיין אינה מיושמת במחלקה זו",
+  "placeholder": "ממלא מקום",
+  "someErrors": "אירעו מספר שגיאות",
+  "unexpectedError": "שגיאה לא צפויה",
+  "ok": "אישור",
+  "and": "וגם",
+  "githubPATLabel": "אסימון גישה אישי אל GitHub (מרחיב את מגבלת השימוש)",
+  "includePrereleases": "לכלול גרסאות קדם־שחרור",
+  "fallbackToOlderReleases": "נסיגה לגרסאות ישנות יותר",
+  "filterReleaseTitlesByRegEx": "סינון כותרות מהדורות לפי ביטוי רגולרי",
+  "invalidRegEx": "ביטוי רגולרי לא תקני",
+  "noDescription": "אין תיאור",
+  "cancel": "ביטול",
+  "continue": "המשך",
+  "requiredInBrackets": "(חובה)",
+  "dropdownNoOptsError": "שגיאה: על תפריטים נפתחים להציג לפחות אפשרות אחת",
+  "color": "צבע",
+  "standard": "סטנדרטי",
+  "custom": "מותאם אישית",
+  "useMaterialYou": "שימוש בצבעי Material You",
+  "githubStarredRepos": "מאגרי GitHub מסומנים בכוכב",
+  "uname": "שם משתמש",
+  "wrongArgNum": "סופק מספר ארגומנטים שגוי",
+  "xIsTrackOnly": "המקור {p0} מיועד למעקב עדכונים בלבד",
+  "@xIsTrackOnly": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "source": "מקור",
+  "app": "יישום",
+  "appsFromSourceAreTrackOnly": "יישומים ממקור זה ניתנים למעקב עדכונים בלבד.",
+  "youPickedTrackOnly": "בחרת באפשרות ‚מעקב עדכונים בלבד’.",
+  "trackOnlyAppDescription": "יתבצע מעקב אחר עדכונים ליישום זה, אבל היישום Updatium לא יוכל להוריד או להתקין אותו.",
+  "cancelled": "בוטל",
+  "appAlreadyAdded": "היישום כבר נוסף",
+  "alreadyUpToDateQuestion": "היישום כבר מעודכן?",
+  "addApp": "הוספת יישום",
+  "appSourceURL": "כתובת המקור היישום",
+  "error": "שגיאה",
+  "add": "הוספה",
+  "searchSomeSourcesLabel": "חיפוש (מספר מקורות בלבד)",
+  "search": "חיפוש",
+  "additionalOptsFor": "אפשרויות נוספות עבור {p0}",
+  "@additionalOptsFor": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "supportedSources": "מקורות נתמכים",
+  "trackOnlyInBrackets": "(למעקב עדכונים בלבד)",
+  "searchableInBrackets": "(ניתן לחיפוש)",
+  "appsString": "יישומים",
+  "noApps": "ברוך בואך!",
+  "noAppsSubtext": "אפשר להוסיף את היישום הראשון בעזרת לחיצה על ‚הוספת יישום’ למטה.",
+  "noAppsForFilter": "אין יישומים לסינון",
+  "byX": "מאת {p0}",
+  "@byX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "percentProgress": "התקדמות: {p0}%",
+  "@percentProgress": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "pleaseWait": "נא להמתין",
+  "updateAvailable": "עדכון זמין",
+  "notInstalled": "לא מותקן",
+  "pseudoVersion": "מעֵין־גרסה",
+  "selectAll": "לבחור הכול",
+  "deselectX": "ביטול הבחירה של {p0}",
+  "@deselectX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "xWillBeRemovedButRemainInstalled": "היישום {p0} יוסר מ־Updatium אך יישאר מותקן במכשיר.",
+  "@xWillBeRemovedButRemainInstalled": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "removeSelectedAppsQuestion": "להסיר את היישומים שנבחרו?",
+  "removeSelectedApps": "הסרת היישומים שנבחרו",
+  "updateX": "עדכון {p0}",
+  "@updateX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installX": "התקנת {p0}",
+  "@installX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "markXTrackOnlyAsUpdated": "סימון {p0}\n(למעקב עדכונים בלבד)\nכמעודכן",
+  "@markXTrackOnlyAsUpdated": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "changeX": "שינוי {p0}",
+  "@changeX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installUpdateApps": "התקנת/עדכון יישומים",
+  "installUpdateSelectedApps": "התקנת/עדכון היישומים שנבחרו",
+  "markXSelectedAppsAsUpdated": "לסמן את {p0} היישומים שנבחרו כמעודכנים?",
+  "@markXSelectedAppsAsUpdated": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "no": "לא",
+  "yes": "כן",
+  "markSelectedAppsUpdated": "סימון היישומים שנבחרו כמעודכנים",
+  "pinToTop": "הצמדה לחלק העליון",
+  "unpinFromTop": "ביטול הצמדה לחלק העליון",
+  "resetInstallStatusForSelectedAppsQuestion": "לאפס את מצב ההתקנה ליישומים שנבחרו?",
+  "installStatusOfXWillBeResetExplanation": "The install status of any selected apps will be reset.\n\nThis can help when the app version shown in Updatium is incorrect due to failed updates or other issues.",
+  "customLinkMessage": "הקישורים האלה עובדים במכשירים שבהם מותקן היישום Updatium",
+  "shareAppConfigLinks": "שיתוף תצורת היישום בתור קישור HTML",
+  "shareSelectedAppURLs": "שיתוף כתובות היישומים שנבחרו",
+  "resetInstallStatus": "איפוס מצב התקנה",
+  "more": "עוד",
+  "removeOutdatedFilter": "סינון להסרת יישומים שאינם מעודכנים",
+  "showOutdatedOnly": "הצגת יישומים לא מעודכנים בלבד",
+  "filter": "סינון",
+  "filterApps": "סינון יישומים",
+  "appName": "שם היישום",
+  "author": "מפתח/ת",
+  "upToDateApps": "יישומים מעודכנים",
+  "nonInstalledApps": "יישומים לא מותקנים",
+  "importExport": "ייבוא/ייצוא",
+  "settings": "הגדרות",
+  "exportedTo": "בוצע ייצוא אל {p0}",
+  "@exportedTo": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatiumExport": "ייצוא מ־Updatium",
+  "invalidInput": "קלט לא תקני",
+  "importedX": "בוצא ייבוא של {p0}",
+  "@importedX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatiumImport": "ייבוא ל־Updatium",
+  "importFromURLList": "ייבוא מרשימת כתובות",
+  "searchQuery": "מילת חיפוש",
+  "appURLList": "רשימת כתובות יישומים",
+  "line": "שורה",
+  "searchX": "חיפוש {p0}",
+  "@searchX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "noResults": "אין תוצאות",
+  "importX": "ייבוא {p0}",
+  "@importX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "importedAppsIdDisclaimer": "יישומים מיובאים עלולים להופיע בטעות בתור יישומים „לא מותקנים”.\nבשביל לתקן זאת, יש להתקין אותם פעם נוספת דרך Updatium.\nנתוני היישום לא אמורים להיות מושפעים מכך.\n\nהערה זו תקפה רק לגבי כתובות ושיטות ייבוא מצד שלישי.",
+  "importErrors": "ייבוא שגיאות",
+  "importedXOfYApps": "יובאו {p0} מתוך {p1} יישומים.",
+  "@importedXOfYApps": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "followingURLsHadErrors": "הכתובות הבאות נתקלו בשגיאות:",
+  "selectURL": "בחירת כתובת",
+  "selectURLs": "בחירת כתובות",
+  "pick": "בחירה",
+  "theme": "ערכת נושא",
+  "dark": "כהה",
+  "light": "בהירה",
+  "followSystem": "כמו המערכת",
+  "followSystemThemeExplanation": "שימוש בערכת נושא כמו המערכת אפשרי רק בזכות יישומי צד־שלישי",
+  "useBlackTheme": "שימוש בצבע שחור מוחלט לערכת הנושא הכהה",
+  "appSortBy": "מיון יישומים לפי",
+  "authorName": "מפתחים/שם",
+  "nameAuthor": "שם/מפתחים",
+  "asAdded": "כפי שנוספו",
+  "appSortOrder": "סדר מיון היישומים",
+  "ascending": "עולה",
+  "descending": "יורד",
+  "bgUpdateCheckInterval": "מרווח זמן לבדיקת עדכונים ברקע",
+  "neverManualOnly": "אף פעם - באופן ידני בלבד",
+  "appearance": "מראה",
+  "pinUpdates": "הצמדת עדכונים לחלק העליון של רשימת היישומים",
+  "updates": "עדכונים",
+  "sourceSpecific": "לפי מקור",
+  "appSource": "מקור היישום",
+  "noLogs": "אין יומנים",
+  "appLogs": "יומני יישום",
+  "close": "סגירה",
+  "share": "שיתוף",
+  "appNotFound": "היישום לא נמצא",
+  "updatiumExportHyphenatedLowercase": "updatium-export",
+  "pickAnAPK": "נא לבחור קובץ APK",
+  "appHasMoreThanOnePackage": "ליישום {p0} יש יותר מחבילה אחת:",
+  "@appHasMoreThanOnePackage": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "deviceSupportsXArch": "המכשיר שלך תומך בארכיטקטורת המעבד {p0}.",
+  "@deviceSupportsXArch": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "deviceSupportsFollowingArchs": "המכשיר שלך תומך בארכיטקטורות המעבד הבאות:",
+  "warning": "אזהרה",
+  "sourceIsXButPackageFromYPrompt": "The app source is '{p0}' but the release package comes from '{p1}'. Continue?",
+  "@sourceIsXButPackageFromYPrompt": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatesAvailable": "עדכונים זמינים",
+  "updatesAvailableNotifDescription": "Notifies the user that updates are available for one or more apps tracked by Updatium",
+  "noNewUpdates": "אין עדכונים חדשים.",
+  "xHasAnUpdate": "יש עדכון ליישום {p0}.",
+  "@xHasAnUpdate": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "appsUpdated": "היישומים עודכנו",
+  "appsNotUpdated": "עדכון היישומים נכשל",
+  "appsUpdatedNotifDescription": "Notifies the user that updates to one or more apps were applied in the background",
+  "xWasUpdatedToY": "{p0} עודכן לגרסה {p1}.",
+  "@xWasUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "xWasNotUpdatedToY": "נכשל העדכון של {p0} לגרסה {p1}.",
+  "@xWasNotUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "errorCheckingUpdates": "שגיאה בעת  בדיקת עדכונים",
+  "errorCheckingUpdatesNotifDescription": "התראה שמופיעה כאשר נכשלת בדיקת העדכונים ברקע",
+  "appsRemoved": "Apps removed",
+  "appsRemovedNotifDescription": "Notifies the user that one or more apps were removed due to errors while loading them",
+  "xWasRemovedDueToErrorY": "היישום {p0} הוסר בשל שגיאה זו: {p1}",
+  "@xWasRemovedDueToErrorY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "completeAppInstallation": "השלמת התקנת היישום",
+  "updatiumMustBeOpenToInstallApps": "על Updatium להיות פתוח לצורך התקנת יישומים",
+  "completeAppInstallationNotifDescription": "Asks the user to return to Updatium to finish installing an app",
+  "checkingForUpdates": "מתבצעת בדיקת עדכונים",
+  "checkingForUpdatesNotifDescription": "Transient notification that appears when checking for updates",
+  "pleaseAllowInstallPerm": "נא לאפשר ל־Updatium להתקין יישומים",
+  "trackOnly": "למעקב עדכונים בלבד",
+  "errorWithHttpStatusCode": "שגיאה {p0}",
+  "@errorWithHttpStatusCode": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "versionCorrectionDisabled": " תיקון הגרסה מושבת (נראה שהתוסף לא עובד)",
+  "unknown": "לא ידוע",
+  "none": "ללא",
+  "all": "הכול",
+  "never": "אף פעם",
+  "latestVersionX": "גרסה עדכנית: {p0}",
+  "@latestVersionX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installedVersionX": "גרסה מותקנת: {p0}",
+  "@installedVersionX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "lastUpdateCheckX": "בדיקת העדכונים האחרונה: {p0}",
+  "@lastUpdateCheckX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "remove": "הסרה",
+  "yesMarkUpdated": "כן, לסמן כמעודכן",
+  "fdroid": "מאגר F-Droid הרשמי",
+  "appIdOrName": "מזהה או שם של יישום",
+  "appId": "מזהה יישום",
+  "appWithIdOrNameNotFound": "לא נמצא יישום עם שם או מזהה זה",
+  "reposHaveMultipleApps": "מאגרים עשויים להכיל יישומים מרובים",
+  "fdroidThirdPartyRepo": "מאגר צד שלישי של F-Droid",
+  "install": "התקנה",
+  "markInstalled": "סימון כמותקן",
+  "update": "עדכון",
+  "updated": "מעודכן",
+  "markUpdated": "סימון כמעודכן",
+  "additionalOptions": "אפשרויות נוספות",
+  "disableVersionDetection": "השבתת זיהוי גרסה",
+  "noVersionDetectionExplanation": "This option should only be used for apps where version detection does not work correctly.",
+  "downloadingX": "מתבצעת הורדת {p0}",
+  "@downloadingX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "downloadX": "הורדת {p0}",
+  "@downloadX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "downloadedX": "בוצעה הורדת {p0}",
+  "@downloadedX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "releaseAsset": "משאב גרסה",
+  "downloadNotifDescription": "Notifies the user of the progress in downloading an app",
+  "noAPKFound": "לא נמצא קובץ APK",
+  "noVersionDetection": "ללא זיהוי גרסה",
+  "categorize": "שיוך לקטגוריה",
+  "categories": "קטגוריות",
+  "category": "קטגוריה",
+  "noCategory": "ללא קטגוריה",
+  "noCategories": "אין קטגוריות",
+  "deleteCategoriesQuestion": "למחוק את הקטגוריות?",
+  "categoryDeleteWarning": "יבוטל השיוך לקטגוריות מכל היישומים שבקטגוריות שנמחקו.",
+  "addCategory": "הוספת קטגוריה",
+  "label": "תווית",
+  "language": "שפה",
+  "copiedToClipboard": "הועתק ללוח",
+  "storagePermissionDenied": "הגישה לאחסון נדחתה",
+  "selectedCategorizeWarning": "This will replace any existing category settings for the selected apps.",
+  "filterAPKsByRegEx": "סינון קובצי APK לפי ביטוי רגולרי",
+  "removeFromUpdatium": "הסרה מ־Updatium",
+  "uninstallFromDevice": "הסרה מהמכשיר",
+  "onlyWorksWithNonVersionDetectApps": "עובד רק עבור יישומים שזיהוי הגרסה מושבת אצלם.",
+  "releaseDateAsVersion": "שימוש בתאריך פרסום המהדורה בתור מחרוזת הגרסה",
+  "releaseTitleAsVersion": "שימוש בכותרת המהדורה בתור מחרוזת הגרסה",
+  "releaseDateAsVersionExplanation": "This option should only be used for apps where version detection does not work correctly, but a release date is available.",
+  "changes": "שינויים",
+  "releaseDate": "תאריך שחרור גרסה",
+  "importFromURLsInFile": "ייבוא כתובות מקובץ (כגון OPML)",
+  "versionDetectionExplanation": "Reconcile version string with version detected from OS",
+  "versionDetection": "זיהוי גרסה",
+  "standardVersionDetection": "זיהוי גרסה סטנדרטי",
+  "groupByCategory": "קיבוץ לפי קטגוריה",
+  "listView": "תצוגת רשימה",
+  "gridView": "תצוגת רשת",
+  "autoApkFilterByArch": "Attempt to filter APKs by CPU architecture if possible",
+  "autoLinkFilterByArch": "Attempt to filter links by CPU architecture if possible",
+  "overrideSource": "דריסת המקור",
+  "dontShowAgain": "לא להציג זאת שוב",
+  "dontShowTrackOnlyWarnings": "לא להציג אזהרות מסוג ‚למעקב עדכונים בלבד’",
+  "dontShowAPKOriginWarnings": "לא להציג אזהרות לגבי מקור קובץ ה־APK",
+  "moveNonInstalledAppsToBottom": "העברת יישומים שאינם מותקנים לתחתית תצוגת היישומים",
+  "hideNonInstalledApps": "הסתרת יישומים שאינם מותקנים",
+  "gitlabPATLabel": "אסימון גישה אישי אל GitLab",
+  "about": "על אודות",
+  "requiresCredentialsInSettings": "ל־{p0} נחוצים פרטי זיהוי נוספים (בהגדרות)",
+  "@requiresCredentialsInSettings": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "checkOnStart": "בדיקת עדכונים בעת הפעלת היישום",
+  "tryInferAppIdFromCode": "Try inferring app ID from source code",
+  "removeOnExternalUninstall": "להסיר אוטומטית מהרשימה יישומים שהוסרו מחוץ ליישום",
+  "pickHighestVersionCode": "בחירה אוטומטית של קובץ ה־APK עם קוד הגרסה הגבוה ביותר",
+  "checkUpdateOnDetailPage": "בדיקת עדכונים בעת פתיחת עמוד פרטי יישום",
+  "disablePageTransitions": "השבתת הנפשות מעבר בין עמודים",
+  "reversePageTransitions": "היפוך הנפשות מעבר בין עמודים",
+  "minStarCount": "מספר כוכבים מינימלי",
+  "addInfoBelow": "יש להוסיף מידע זה למטה.",
+  "addInfoInSettings": "יש להוסיף מידע זה בהגדרות.",
+  "githubSourceNote": "GitHub rate limiting can be avoided using an API key.",
+  "sortByLastLinkSegment": "Sort by only the last segment of the link",
+  "filterReleaseNotesByRegEx": "Filter release notes by regular expression",
+  "customLinkFilterRegex": "Custom APK link filter by regular expression (default '.apk$')",
+  "appsPossiblyUpdated": "בוצעו ניסיונות לעדכון יישומים",
+  "appsPossiblyUpdatedNotifDescription": "Notifies the user that updates to one or more apps were potentially applied in the background",
+  "xWasPossiblyUpdatedToY": "ייתכן כי היישום {p0} עודכן לגרסה {p1}.",
+  "@xWasPossiblyUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "enableBackgroundUpdates": "הפעלת עדכונים ברקע",
+  "backgroundUpdateReqsExplanation": "עדכוני הרקע עשויים שלא לעבוד לחלק מהיישומים.",
+  "backgroundUpdateLimitsExplanation": "The success of a background install can only be determined when Updatium is opened.",
+  "verifyLatestTag": "אימות התגית ‚latest’ (גרסה עדכנית)",
+  "intermediateLinkRegex": "Filter for an 'intermediate' link to visit",
+  "filterByLinkText": "סינון קישורים לפי טקסט קישור",
+  "matchLinksOutsideATags": "Match links outside <a> tags",
+  "intermediateLinkNotFound": "לא נמצא קישור ביניים",
+  "intermediateLink": "קישור ביניים",
+  "exemptFromBackgroundUpdates": "הוצאה מהעדכונים ברקע (אם מופעלים)",
+  "bgUpdatesOnWiFiOnly": "השבתת עדכוני רקע כאשר המכשיר אינו מחובר לרשת אלחוטית (Wi-Fi)",
+  "bgUpdatesWhileChargingOnly": "השבתת עדכוני רקע כאשר המכשיר אינו בהטענה",
+  "autoSelectHighestVersionCode": "Auto-select highest versionCode APK",
+  "versionExtractionRegEx": "Version string extraction RegEx",
+  "trimVersionString": "Trim version string with RegEx",
+  "matchGroupToUseForX": "Match group to use for \"{p0}\"",
+  "@matchGroupToUseForX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "matchGroupToUse": "Match group to use for version string extraction RegEx",
+  "highlightTouchTargets": "Highlight less obvious touch targets",
+  "pickExportDir": "בחירת תיקייה לייצוא",
+  "autoExportOnChanges": "ייצוא אוטומטי בעת ביצוע שינויים",
+  "includeSettings": "לכלול הגדרות",
+  "filterVersionsByRegEx": "Filter versions by regular expression",
+  "trySelectingSuggestedVersionCode": "Try selecting suggested versionCode APK",
+  "dontSortReleasesList": "Retain release order from API",
+  "reverseSort": "היפוך סדר",
+  "takeFirstLink": "בחירת הקישור הראשון",
+  "skipSort": "Skip sorting",
+  "debugMenu": "תפריט ניפוי שגיאות",
+  "bgTaskStarted": "המשימה ברקע החלה - נא לעיין ביומן.",
+  "runBgCheckNow": "הרצת בדיקת עדכונים ברקע כעת",
+  "versionExtractWholePage": "Apply version string extraction Regex to entire page",
+  "installing": "מתבצעת התקנה",
+  "skipUpdateNotifications": "דילוג על התראות בנוגע לעדכונים",
+  "updatesAvailableNotifChannel": "עדכונים זמינים",
+  "appsUpdatedNotifChannel": "היישומים עודכנו",
+  "appsPossiblyUpdatedNotifChannel": "App updates attempted",
+  "errorCheckingUpdatesNotifChannel": "שגיאה בעת בדיקת עדכונים",
+  "appsRemovedNotifChannel": "היישומים הוסרו",
+  "downloadingXNotifChannel": "מתבצעת הורדת {p0}",
+  "@downloadingXNotifChannel": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "completeAppInstallationNotifChannel": "השלמת התקנת היישום",
+  "checkingForUpdatesNotifChannel": "מתבצעת בדיקת עדכונים",
+  "onlyCheckInstalledOrTrackOnlyApps": "Only check installed and track-only apps for updates",
+  "supportFixedAPKURL": "תמיכה בכתובות קבועות של קובצי APK",
+  "selectX": "בחירת {p0}",
+  "@selectX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "parallelDownloads": "לאפשר מספר הורדות במקביל",
+  "useShizuku": "שימוש ב־Shizuku או Sui להתקנה",
+  "shizukuBinderNotFound": "שירות Shizuku אינו פעיל",
+  "shizukuOld": "גרסה ישנה של Shizuku (<11) - נא לעדכן",
+  "shizukuOldAndroidWithADB": "Shizuku running on Android < 8.1 with ADB - update Android or use Sui instead",
+  "shizukuPretendToBeGooglePlay": "הגדרת Google Play כמקור ההתקנה (אם נעשה שימוש ב־Shizuku)",
+  "useSystemFont": "שימוש בגופן המערכת",
+  "useVersionCodeAsOSVersion": "Use app versionCode as OS-detected version",
+  "requestHeader": "כותרת בקשה",
+  "useLatestAssetDateAsReleaseDate": "Use latest asset upload as release date",
+  "defaultPseudoVersioningMethod": "Default pseudo-versioning method",
+  "partialAPKHash": "גיבוב APK חלקי",
+  "apkLinkHash": "גיבוב קישור APK",
+  "directAPKLink": "קישור ישיר לקובץ APK",
+  "pseudoVersionInUse": "נעשה שימוש במעֵין־גרסה",
+  "installed": "גרסה מותקנת",
+  "latest": "גרסה עדכנית",
+  "invertRegEx": "היפוך ביטוי רגולרי",
+  "note": "הערה",
+  "selfHostedNote": "הרשימה הנפתחת \"{p0}\" מאפשרת למשוך קבצים מעותקים מותאמים אישית/באירוח עצמי של כל מקור שהוא.",
+  "@selfHostedNote": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "badDownload": "לא היה ניתן לפענח את קובץ ה־APK (בשל חוסר תאימות או הורדה חלקית)",
+  "beforeNewInstallsShareToAppVerifier": "שיתוף היישומים חדשים עם AppVerifier (אם זמין)",
+  "appVerifierInstructionToast": "שיתוף עם AppVerifier, ואז חזרה לכאן כשהיישום מוכן.",
+  "wiki": "עזרה/ויקי",
+  "allowInsecure": "לאפשר בקשות חיבור לא מאובטחות מסוג HTTP",
+  "stayOneVersionBehind": "להישאר גרסה אחת מאחור",
+  "useFirstApkOfVersion": "בחירה אוטומטית של הראשון מתוך קובצי APK מרובים",
+  "refreshBeforeDownload": "רענון פרטי היישום לפני ההורדה",
+  "tencentAppStore": "‏Tencent App Store",
+  "coolApk": "‏CoolApk",
+  "vivoAppStore": "‏vivo App Store (סין)",
+  "name": "שם",
+  "smartname": "שם (שיטה חכמה)",
+  "sortMethod": "שיטת מיון",
+  "welcome": "ברוך בואך",
+  "documentationLinksNote": "The Updatium GitHub page linked below contains links to videos, articles, discussions, and other resources that will help you understand how to use the app.",
+  "batteryOptimizationNote": "Note that background downloads may work more reliably if you switch to the \"foreground service\" in the Updatium settings and/or disable battery optimization for Updatium in your OS settings.",
+  "fileDeletionError": "מחיקת הקובץ נכשלה (כדאי לנסות למחוק אותו ידנית ואז לנסות שוב): \"{p0}\"",
+  "@fileDeletionError": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "foregroundService": "שירות העדכון החזיתי של Updatium",
+  "foregroundServiceExplanation": "Use a foreground service for update checking (more reliable, consumes more power)",
+  "fgServiceNotice": "This notification is required for background update checking (it can be hidden in the OS settings)",
+  "excludeSecrets": "החרגת פרטים סודיים",
+  "ghReqPrefix": "'sky22333/hubproxy' instance for GitHub requests",
+  "includeZips": "לכלול קובצי ZIP",
+  "zippedApkFilterRegEx": "סינון קובצי APK בתוך קובץ ZIP",
+  "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.\n\nAfter then, Updatium may stop working on certified Android devices.",
+  "googleVerificationWarningP2": "Go to https://keepandroidopen.org/ for more information.",
+  "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\n\nIn any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.\n\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
+  "removeAppQuestion": "{count, plural, one{להסיר את היישום?} other{להסיר את היישומים?}}",
+  "@removeAppQuestion": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "tooManyRequestsTryAgainInMinutes": "{count, plural, one{יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד דקה} other{יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד {count} דקות}}",
+  "@tooManyRequestsTryAgainInMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "bgUpdateGotErrorRetryInMinutes": "{count, plural, one{BG update checking encountered a {count}, will schedule a retry check in {count} minute} other{BG update checking encountered a {count}, will schedule a retry check in {count} minutes}}",
+  "@bgUpdateGotErrorRetryInMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "bgCheckFoundUpdatesWillNotifyIfNeeded": "{count, plural, one{BG update checking found {count} update - will notify user if needed} other{BG update checking found {count} updates - will notify user if needed}}",
+  "@bgCheckFoundUpdatesWillNotifyIfNeeded": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "apps": "{count, plural, one{יישום אחד} other{{count} יישומים}}",
+  "@apps": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "url": "{count, plural, one{כתובת אחת} other{{count} כתובות}}",
+  "@url": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "minute": "{count, plural, one{דקה אחת} other{{count} דקות}}",
+  "@minute": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "hour": "{count, plural, one{שעה אחת} other{{count} שעות}}",
+  "@hour": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "day": "{count, plural, one{יום אחד} other{{count} ימים}}",
+  "@day": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "clearedNLogsBeforeXAfterY": "{count, plural, one{Cleared {n} log (before = {before}, after = {after})} other{Cleared {n} logs (before = {before}, after = {after})}}",
+  "@clearedNLogsBeforeXAfterY": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      },
+      "n": {
+        "type": "Object"
+      },
+      "before": {
+        "type": "Object"
+      },
+      "after": {
+        "type": "Object"
+      }
+    }
+  },
+  "xAndNMoreUpdatesAvailable": "{count, plural, one{{count} and 1 more app have updates.} other{{count} and {count} more apps have updates.}}",
+  "@xAndNMoreUpdatesAvailable": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesInstalled": "{count, plural, one{היישום {count} ועוד יישום נוסף עודכנו.} other{{count} ועוד {count} יישומים נוספים עודכנו.}}",
+  "@xAndNMoreUpdatesInstalled": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesFailed": "{count, plural, one{נכשל העדכון של {count} ועוד יישום אחד.} other{נכשל העדכון של {count} ועוד {count} יישומים.}}",
+  "@xAndNMoreUpdatesFailed": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesPossiblyInstalled": "{count, plural, one{{count} ועוד יישום אחד עשויים להיות עודכנו.} other{{count} and {count} more apps may have been updated.}}",
+  "@xAndNMoreUpdatesPossiblyInstalled": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "apk": "{count, plural, one{קובץ APK אחד} other{{count} קובצי APK}}",
+  "@apk": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "securityDisclaimerTitle": "כתב ויתור בנוגע לאבטחה ונושאים משפטיים",
+  "license": "רישיון",
+  "licenseText": "יישום זה מופץ תחת רישיון GPL v3.",
+  "disclaimer": "כתב ויתור",
+  "disclaimerText": "יישום זה אינו מפיץ, מארח או מאמת יישומים חיצוניים כלשהם. המשתמש נושא באחריות המלאה לביטחון וחוקיות כל תוכנה המותקנת באמצעות כלי זה.\n\nhttps://github.com/omeritzics/Updatium הוא המקום הרשמי היחיד להוריד את Updatium - מומלץ מאוד לא להוריד אותו ממקומות אחרים מכיוון שההורדה ממקורות לא רשמיים אינה בטוחה.",
+  "privacy": "פרטיות",
+  "privacyText": "יישום זה ממוקד פרטיות ואינו אוסף נתונים אישיים.",
+  "acceptAndContinue": "קבלה והמשך",
+  "decline": "סירוב"
+}

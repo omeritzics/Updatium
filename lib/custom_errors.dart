@@ -8,6 +8,8 @@ import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/generated/app_localizations.dart';
+import 'package:updatium/main.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 class UpdatiumError {
   late String message;
@@ -22,56 +24,80 @@ class UpdatiumError {
 class RateLimitError extends UpdatiumError {
   late int remainingMinutes;
   RateLimitError(this.remainingMinutes)
-    : super(plural('tooManyRequestsTryAgainInMinutes', remainingMinutes));
+      : super(
+          AppLocalizations.of(globalNavigatorKey.currentContext!)!
+              .tooManyRequestsTryAgainInMinutes(remainingMinutes),
+        );
 }
 
 class InvalidURLError extends UpdatiumError {
   InvalidURLError(String sourceName)
-    : super("invalidURLForSource"(sourceName));
+      : super(
+          AppLocalizations.of(globalNavigatorKey.currentContext!)!
+              .invalidURLForSource(sourceName),
+        );
 }
 
 class CredsNeededError extends UpdatiumError {
   CredsNeededError(String sourceName)
-    : super("requiresCredentialsInSettings"(sourceName));
+      : super(
+          AppLocalizations.of(globalNavigatorKey.currentContext!)!
+              .requiresCredentialsInSettings(sourceName),
+        );
 }
 
 class NoReleasesError extends UpdatiumError {
   NoReleasesError({String? note})
-    : super(
-        '${AppLocalizations.of(context)!\.noReleaseFound}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
-      );
+      : super(
+          '${AppLocalizations.of(globalNavigatorKey.currentContext!)!.noReleaseFound}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
+        );
 }
 
 class NoAPKError extends UpdatiumError {
-  NoAPKError() : super(AppLocalizations.of(context)!\.noAPKFound);
+  NoAPKError()
+      : super(AppLocalizations.of(globalNavigatorKey.currentContext!)!.noAPKFound);
 }
 
 class NoVersionError extends UpdatiumError {
-  NoVersionError() : super(AppLocalizations.of(context)!\.noVersionFound);
+  NoVersionError()
+      : super(
+          AppLocalizations.of(globalNavigatorKey.currentContext!)!.noVersionFound,
+        );
 }
 
 class UnsupportedURLError extends UpdatiumError {
-  UnsupportedURLError() : super(AppLocalizations.of(context)!\.urlMatchesNoSource);
+  UnsupportedURLError()
+      : super(
+          AppLocalizations.of(globalNavigatorKey.currentContext!)!
+              .urlMatchesNoSource,
+        );
 }
 
 class DowngradeError extends UpdatiumError {
   DowngradeError(int currentVersionCode, int newVersionCode)
-    : super(
-        '${AppLocalizations.of(context)!\.cantInstallOlderVersion} (versionCode $currentVersionCode ➔ $newVersionCode)',
-      );
+      : super(
+          '${AppLocalizations.of(globalNavigatorKey.currentContext!)!.cantInstallOlderVersion} (versionCode $currentVersionCode ➔ $newVersionCode)',
+        );
 }
 
 class InstallError extends UpdatiumError {
   InstallError(int code)
-    : super(PackageInstallerStatus.byCode(code).name.substring(7));
+      : super(PackageInstallerStatus.byCode(code).name.substring(7));
 }
 
 class IDChangedError extends UpdatiumError {
-  IDChangedError(String newId) : super('${AppLocalizations.of(context)!\.appIdMismatch} - $newId');
+  IDChangedError(String newId)
+      : super(
+          '${AppLocalizations.of(globalNavigatorKey.currentContext!)!.appIdMismatch} - $newId',
+        );
 }
 
 class NotImplementedError extends UpdatiumError {
-  NotImplementedError() : super(AppLocalizations.of(context)!\.functionNotImplemented);
+  NotImplementedError()
+      : super(
+          AppLocalizations.of(globalNavigatorKey.currentContext!)!
+              .functionNotImplemented,
+        );
 }
 
 class MultiAppMultiError extends UpdatiumError {
@@ -79,7 +105,11 @@ class MultiAppMultiError extends UpdatiumError {
   Map<String, List<String>> idsByErrorString = {};
   Map<String, String> appIdNames = {};
 
-  MultiAppMultiError() : super(AppLocalizations.of(context)!\.placeholder, unexpected: true);
+  MultiAppMultiError()
+      : super(
+          AppLocalizations.of(globalNavigatorKey.currentContext!)!.placeholder,
+          unexpected: true,
+        );
 
   void add(String appId, dynamic error, {String? appName}) {
     if (error is SocketException) {
@@ -129,8 +159,12 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
           scrollable: true,
           title: Text(
             e is MultiAppMultiError
-                ? tr(isError ? 'someErrors' : 'updates')
-                : tr(isError ? 'unexpectedError' : 'unknown'),
+                ? (isError
+                    ? AppLocalizations.of(context)!.someErrors
+                    : AppLocalizations.of(context)!.updates)
+                : (isError
+                    ? AppLocalizations.of(context)!.unexpectedError
+                    : AppLocalizations.of(context)!.unknown),
           ),
           content: GestureDetector(
             onLongPress: () {
@@ -146,7 +180,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
-              child: Text(AppLocalizations.of(context)!\.ok),
+              child: Text(AppLocalizations.of(context)!.ok),
             ),
           ],
         );
@@ -162,7 +196,7 @@ void showError(dynamic e, BuildContext context) {
 String list2FriendlyString(List<String> list) {
   var isUsingEnglish = isEnglish();
   return list.length == 2
-      ? '${list[0]} ${AppLocalizations.of(context)!\.and} ${list[1]}'
+      ? '${list[0]} ${AppLocalizations.of(globalNavigatorKey.currentContext!)!.and} ${list[1]}'
       : list
             .asMap()
             .entries

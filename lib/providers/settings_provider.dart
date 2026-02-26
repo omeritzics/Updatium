@@ -291,7 +291,12 @@ class SettingsProvider with ChangeNotifier {
   Locale? get forcedLocale {
     var flSegs = prefs?.getString('forcedLocale')?.split('-');
     var fl = flSegs != null && flSegs.isNotEmpty
-        ? Locale(flSegs[0], flSegs.length > 1 ? flSegs[1] : null)
+        ? Locale(
+            flSegs[0],
+            flSegs.length > 2
+                ? flSegs[2]
+                : (flSegs.length > 1 ? flSegs[1] : null),
+          )
         : null;
     var set = const [
       Locale('en'),
@@ -325,7 +330,7 @@ class SettingsProvider with ChangeNotifier {
       Locale('ar'),
       Locale('ml'),
       Locale('gl'),
-    ].where((element) => element.languageCode == fl).isNotEmpty
+    ].where((element) => element == fl).isNotEmpty
         ? fl
         : null;
     return set;
@@ -367,7 +372,7 @@ class SettingsProvider with ChangeNotifier {
       Locale('ml'),
       Locale('gl'),
     ]
-        .where((element) => element.languageCode == fl)
+        .where((element) => element == fl)
         .isNotEmpty) {
       prefs?.setString('forcedLocale', fl.toLanguageTag());
     }

@@ -1,0 +1,1 @@
+/home/omeritzics/Dev-Projects/Updatium/.flutter/bin/flutter

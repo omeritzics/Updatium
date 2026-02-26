@@ -120,11 +120,10 @@ class AddAppPageState extends State<AddAppPage> {
           builder: (BuildContext ctx) {
             return GeneratedFormModal(
               initValid: true,
-              title: tr(
-                'xIsTrackOnly',
-                args: [
-                  pickedSource!.enforceTrackOnly ? AppLocalizations.of(context)!\.source : AppLocalizations.of(context)!\.app,
-                ],
+              title: AppLocalizations.of(context)!.xIsTrackOnly(
+                pickedSource!.enforceTrackOnly
+                    ? AppLocalizations.of(context)!.source
+                    : AppLocalizations.of(context)!.app,
               ),
               items: [
                 [GeneratedFormSwitch('hide', label: AppLocalizations.of(context)!\.dontShowAgain)],
@@ -330,9 +329,8 @@ class AddAppPageState extends State<AddAppPage> {
               context: context,
               builder: (BuildContext ctx) {
                 return SelectionModal(
-                  title: tr(
-                    'selectX',
-                    args: [plural('source', 2).toLowerCase()],
+                  title: AppLocalizations.of(context)!.selectX(
+                    AppLocalizations.of(context)!.source(2).toLowerCase(),
                   ),
                   entries: sourceStrings,
                   selectedByDefault: true,
@@ -359,7 +357,7 @@ class AddAppPageState extends State<AddAppPage> {
                         context: context,
                         builder: (BuildContext ctx) {
                           return GeneratedFormModal(
-                            title: "searchX"(e.name),
+                            title: AppLocalizations.of(context)!.searchX(e.name),
                             items: [
                               ...e.searchQuerySettingFormItems.map((e) => [e]),
                               [
@@ -707,7 +705,7 @@ class AddAppPageState extends State<AddAppPage> {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
-                      Text("selfHostedNote"(AppLocalizations.of(context)!\.overrideSource)),
+                      Text(AppLocalizations.of(context)!.selfHostedNote(AppLocalizations.of(context)!.overrideSource)),
                     ],
                   );
                 },

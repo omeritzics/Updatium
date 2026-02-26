@@ -75,9 +75,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
               .then((errors) {
                 if (errors.isEmpty) {
                   showMessage(
-                    tr(
-                      'importedX',
-                      args: [plural('apps', urls.length).toLowerCase()],
+                    AppLocalizations.of(context)!.importedX(
+                      AppLocalizations.of(context)!.apps(urls.length).toLowerCase(),
                     ),
                     context,
                   );
@@ -115,7 +114,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           )
           .then((String? result) {
             if (result != null) {
-              showMessage("exportedTo"(result), context);
+              showMessage(AppLocalizations.of(context)!.exportedTo(result), context);
             }
           })
           .catchError((e) {
@@ -149,7 +148,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 });
                 appsProvider.addMissingCategories(settingsProvider);
                 showMessage(
-                  '${"importedX"(plural('apps', value.key.length).toLowerCase())}${value.value ? ' + ${AppLocalizations.of(context)!\.settings.toLowerCase()}' : ''}',
+                  '${AppLocalizations.of(context)!.importedX(AppLocalizations.of(context)!.apps(value.key.length).toLowerCase())}${value.value ? ' + ${AppLocalizations.of(context)!.settings.toLowerCase()}' : ''}',
                   context,
                 );
               });
@@ -224,9 +223,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 if (errors.isEmpty) {
                   // ignore: use_build_context_synchronously
                   showMessage(
-                    tr(
-                      'importedX',
-                      args: [plural('apps', selectedUrls.length).toLowerCase()],
+                    AppLocalizations.of(context)!.importedX(
+                      AppLocalizations.of(context)!.apps(selectedUrls.length).toLowerCase(),
                     ),
                     context,
                   );
@@ -463,7 +461,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   runMassSourceImport(source);
                                 },
                           icon: const Icon(Icons.cloud_download),
-                          label: Text("importX"(source.name)),
+                          label: Text(AppLocalizations.of(context)!.importX(source.name)),
                         ),
                       ],
                     ),
@@ -513,12 +511,9 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            tr(
-              'importedXOfYApps',
-              args: [
-                (widget.urlsLength - widget.errors.length).toString(),
-                widget.urlsLength.toString(),
-              ],
+            AppLocalizations.of(context)!.importedXOfYApps(
+              (widget.urlsLength - widget.errors.length).toString(),
+              widget.urlsLength.toString(),
             ),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
@@ -663,7 +658,7 @@ class _SelectionModalState extends State<SelectionModal> {
                   selectAll(deselect: true);
                 });
               },
-              child: Text("deselectX"(AppLocalizations.of(context)!\.all)),
+              child: Text(AppLocalizations.of(context)!.deselectX(AppLocalizations.of(context)!.all)),
             );
     }
 

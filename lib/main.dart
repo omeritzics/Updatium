@@ -842,7 +842,7 @@ class _UpdatiumState extends State<Updatium> {
               Locale('ml'),
               Locale('gl'),
             ],
-            locale: const Locale('en'),
+            locale: settingsProvider.forcedLocale,
             navigatorKey: globalNavigatorKey,
             debugShowCheckedModeBanner: false,
             theme: createTheme(lightColorScheme, false),

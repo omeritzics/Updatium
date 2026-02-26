@@ -1,0 +1,778 @@
+{
+  "@@locale": "uk",
+  "invalidURLForSource": "Неправильна URL-адреса для джерела застосунку {p0}",
+  "@invalidURLForSource": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "noReleaseFound": "Не вдалося знайти відповідне видання",
+  "noVersionFound": "Не вдалося визначити версію видання",
+  "urlMatchesNoSource": "URL не відповідає відомому джерелу",
+  "cantInstallOlderVersion": "Не можна встановити старішу версію застосунку",
+  "appIdMismatch": "Ідентифікатор пакета, завантажений, не відповідає ідентифікатору існуючого застосунку",
+  "functionNotImplemented": "Цей клас не реалізував цю функцію",
+  "placeholder": "Заповнювач",
+  "someErrors": "Виникла деяка помилка",
+  "unexpectedError": "Неочікувана помилка",
+  "ok": "Добре",
+  "and": "та",
+  "githubPATLabel": "Персональний ключ доступу GitHub (збільшує обмеження на швидкість)",
+  "includePrereleases": "Включити попередні видання",
+  "fallbackToOlderReleases": "Повернутися до старіших видань",
+  "filterReleaseTitlesByRegEx": "Фільтрувати заголовки видань за допомогою регулярного виразу",
+  "invalidRegEx": "Неприпустимий регулярний вираз",
+  "noDescription": "Немає опису",
+  "cancel": "Скасувати",
+  "continue": "Продовжити",
+  "requiredInBrackets": "(Обов'язково)",
+  "dropdownNoOptsError": "ПОМИЛКА: В ВИПАДАЮЧОМУ СПИСКУ МАЄ БУТИ ХОЧА Б ОДИН ЕЛЕМЕНТ",
+  "color": "Колір",
+  "standard": "Стандартний",
+  "custom": "Нестандартний",
+  "useMaterialYou": "Використовуйте кольори Material You",
+  "githubStarredRepos": "Відзначені репозиторії GitHub",
+  "uname": "Ім'я користувача",
+  "wrongArgNum": "Надано неправильну кількість аргументів",
+  "xIsTrackOnly": "{p0} - тільки відстежування",
+  "@xIsTrackOnly": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "source": "Джерело",
+  "app": "застосунок",
+  "appsFromSourceAreTrackOnly": "Застосунки з цього джерела є лише для відстежування.",
+  "youPickedTrackOnly": "Ви вибрали опцію лише для відстежування.",
+  "trackOnlyAppDescription": "Застосунок буде відстежуватися для оновлень, але Updatium не зможе його завантажити або встановити.",
+  "cancelled": "Скасовано",
+  "appAlreadyAdded": "Застосунок вже додано",
+  "alreadyUpToDateQuestion": "Застосунок вже оновлено?",
+  "addApp": "Додати",
+  "appSourceURL": "URL-адреса джерела застосунку",
+  "error": "Помилка",
+  "add": "Додати",
+  "searchSomeSourcesLabel": "Пошук (Лише деякі джерела)",
+  "search": "Пошук",
+  "additionalOptsFor": "Додаткові опції для {p0}",
+  "@additionalOptsFor": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "supportedSources": "Підтримувані джерела",
+  "trackOnlyInBrackets": "(Тільки для відстеження)",
+  "searchableInBrackets": "(Можливий пошук)",
+  "appsString": "Застосунки",
+  "noApps": "Застосунків немає",
+  "noAppsForFilter": "Застосунків для фільтрації немає",
+  "byX": "Від {p0}",
+  "@byX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "percentProgress": "Прогрес: {p0}%",
+  "@percentProgress": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "pleaseWait": "Будь ласка, зачекайте",
+  "updateAvailable": "Доступно оновлення",
+  "notInstalled": "Не встановлено",
+  "pseudoVersion": "псевдо-версія",
+  "selectAll": "Вибрати все",
+  "deselectX": "Скасувати вибір {p0}",
+  "@deselectX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "xWillBeRemovedButRemainInstalled": "{p0} буде видалено з Updatium, але залишиться встановленим на пристрої.",
+  "@xWillBeRemovedButRemainInstalled": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "removeSelectedAppsQuestion": "Видалити вибрані застосунки?",
+  "removeSelectedApps": "Видалити вибрані застосунки",
+  "updateX": "Оновити {p0}",
+  "@updateX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installX": "Встановити {p0}",
+  "@installX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "markXTrackOnlyAsUpdated": "Позначити {p0}\n(Тільки відстежування)\nяк оновлено",
+  "@markXTrackOnlyAsUpdated": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "changeX": "Змінити {p0}",
+  "@changeX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installUpdateApps": "Встановити/Оновити застосунки",
+  "installUpdateSelectedApps": "Встановити/Оновити вибрані застосунки",
+  "markXSelectedAppsAsUpdated": "Позначити {p0} вибрані застосунки як оновлені?",
+  "@markXSelectedAppsAsUpdated": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "no": "Ні",
+  "yes": "Так",
+  "markSelectedAppsUpdated": "Позначити вибрані застосунки як оновлені",
+  "pinToTop": "Закріпити угорі",
+  "unpinFromTop": "Відкріпити зверху",
+  "resetInstallStatusForSelectedAppsQuestion": "Скинути статус встановлення для вибраних застосунків?",
+  "installStatusOfXWillBeResetExplanation": "Статус встановлення будь-яких вибраних застосунків буде скинутий.\n\nЦе може допомогти, коли версія застосунку, відображена в Updatium, є неправильною через невдалі оновлення або інші проблеми.",
+  "customLinkMessage": "Ці посилання працюють на пристроях з встановленим Updatium",
+  "shareAppConfigLinks": "Поділитися посиланнями на конфігурацію Застосунку як HTML",
+  "shareSelectedAppURLs": "Поділитися вибраними URL-адресами застосунків",
+  "resetInstallStatus": "Скинути статус встановлення",
+  "more": "Більше",
+  "removeOutdatedFilter": "Видалити фільтр застарілих застосунків",
+  "showOutdatedOnly": "Показати лише застарілі застосунки",
+  "filter": "Фільтр",
+  "filterApps": "Фільтрувати застосунки",
+  "appName": "Назва застосунку",
+  "author": "Автор",
+  "upToDateApps": "Актуальні застосунки",
+  "nonInstalledApps": "Невстановлені застосунки",
+  "importExport": "Імпорт/Експорт",
+  "settings": "Налаштування",
+  "exportedTo": "Експортовано в {p0}",
+  "@exportedTo": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatiumExport": "Експорт з Updatium",
+  "invalidInput": "Недійсний ввід",
+  "importedX": "Імпортовано {p0}",
+  "@importedX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatiumImport": "Імпорт в Updatium",
+  "importFromURLList": "Імпорт зі списку URL-адрес",
+  "searchQuery": "Пошуковий запит",
+  "appURLList": "Список URL-адрес застосунків",
+  "line": "Лінія",
+  "searchX": "Пошук {p0}",
+  "@searchX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "noResults": "Результати відсутні",
+  "importX": "Імпорт {p0}",
+  "@importX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "importedAppsIdDisclaimer": "Імпортовані застосунки можуть неправильно відображатися як \"Не встановлені\".\nДля виправлення цього перевстановіть їх через Updatium.\nЦе не повинно вплинути на дані застосунків.\n\nПов'язано лише з URL-адресами та імпортом від третіх сторін.",
+  "importErrors": "Помилки імпорту",
+  "importedXOfYApps": "Імпортовано {p0} з {p1} застосунків.",
+  "@importedXOfYApps": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "followingURLsHadErrors": "Помилки в наступних URL-адресах:",
+  "selectURL": "Вибрати URL",
+  "selectURLs": "Вибрати URL-адреси",
+  "pick": "Вибрати",
+  "theme": "Тема",
+  "dark": "Темна",
+  "light": "Світла",
+  "followSystem": "Дотримуватися системи",
+  "followSystemThemeExplanation": "Зміна теми системи можлива лише за допомогою сторонніх додатків",
+  "useBlackTheme": "Використовувати чорну тему (Amoled)",
+  "appSortBy": "Сортувати застосунки за",
+  "authorName": "Автор/Назва",
+  "nameAuthor": "Назва/Автор",
+  "asAdded": "За додаванням",
+  "appSortOrder": "Порядок сортування застосунків",
+  "ascending": "За зростанням",
+  "descending": "За спаданням",
+  "bgUpdateCheckInterval": "Інтервал перевірки оновлень у фоновому режимі",
+  "neverManualOnly": "Ніколи - Тільки вручну",
+  "appearance": "Вигляд",
+  "pinUpdates": "Закріпити оновлення у верхній частині вигляду застосунків",
+  "updates": "Оновлення",
+  "sourceSpecific": "Певне джерело",
+  "appSource": "Джерело застосунку",
+  "noLogs": "Немає логів",
+  "appLogs": "Лог застосунку",
+  "close": "Закрити",
+  "share": "Поділитися",
+  "appNotFound": "Застосунок не знайдено",
+  "updatiumExportHyphenatedLowercase": "експорт з Updatium",
+  "pickAnAPK": "Вибрати APK",
+  "appHasMoreThanOnePackage": "{p0} має більше одного пакету:",
+  "@appHasMoreThanOnePackage": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "deviceSupportsXArch": "Ваш пристрій підтримує архітектуру процесора {p0}.",
+  "@deviceSupportsXArch": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "deviceSupportsFollowingArchs": "Ваш пристрій підтримує наступні архітектури процесора:",
+  "warning": "Попередження",
+  "sourceIsXButPackageFromYPrompt": "Джерело застосунку - '{p0}' але пакет випуску походить з '{p1}'. Продовжити?",
+  "@sourceIsXButPackageFromYPrompt": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatesAvailable": "Доступні оновлення",
+  "updatesAvailableNotifDescription": "Повідомляє користувача, що доступні оновлення для одного чи декількох застосунків, які відстежує Updatium",
+  "noNewUpdates": "Немає нових оновлень.",
+  "xHasAnUpdate": "{p0} має оновлення.",
+  "@xHasAnUpdate": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "appsUpdated": "Застосунки оновлено",
+  "appsNotUpdated": "Не вдалося оновити програми",
+  "appsUpdatedNotifDescription": "Повідомляє користувача, що оновлення одного чи декількох застосунків було застосовано в фоновому режимі",
+  "xWasUpdatedToY": "{p0} було оновлено до {p1}.",
+  "@xWasUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "xWasNotUpdatedToY": "Не вдалося оновити {p0} на {p1}.",
+  "@xWasNotUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "errorCheckingUpdates": "Помилка перевірки оновлень",
+  "errorCheckingUpdatesNotifDescription": "Повідомлення, яке з'являється, коли перевірка оновлень в фоновому режимі завершується невдачею",
+  "appsRemoved": "Застосунки видалено",
+  "appsRemovedNotifDescription": "Повідомляє користувача, що один чи декілька застосунків були видалені через помилки при завантаженні",
+  "xWasRemovedDueToErrorY": "{p0} було видалено через цю помилку: {p1}",
+  "@xWasRemovedDueToErrorY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "completeAppInstallation": "Завершення установки застосунку",
+  "updatiumMustBeOpenToInstallApps": "Для встановлення застосунків Updatium має бути відкритий",
+  "completeAppInstallationNotifDescription": "Прохання користувача повернутися до Updatium для завершення установки застосунку",
+  "checkingForUpdates": "Перевірка оновлень",
+  "checkingForUpdatesNotifDescription": "Тимчасове повідомлення, яке з'являється при перевірці оновлень",
+  "pleaseAllowInstallPerm": "Будь ласка, дозвольте Updatium встановлювати застосунки",
+  "trackOnly": "Тільки відстеження",
+  "errorWithHttpStatusCode": "Помилка {p0} HTTP-коду",
+  "@errorWithHttpStatusCode": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "versionCorrectionDisabled": "Виправлення версії вимкнено (здається, плагін не працює)",
+  "unknown": "Невідомо",
+  "none": "Нічого",
+  "all": "Усе.",
+  "never": "Ніколи",
+  "latestVersionX": "Остання версія: {p0}",
+  "@latestVersionX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installedVersionX": "Встановлено: {p0}",
+  "@installedVersionX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "lastUpdateCheckX": "Остання перевірка оновлень: {p0}",
+  "@lastUpdateCheckX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "remove": "Видалити",
+  "yesMarkUpdated": "Так, позначити як оновлене",
+  "fdroid": "F-Droid Офіційний",
+  "appIdOrName": "Ідентифікатор або назва застосунку",
+  "appId": "Ідентифікатор застосунку",
+  "appWithIdOrNameNotFound": "Застосунок з таким ідентифікатором або назвою не знайдено",
+  "reposHaveMultipleApps": "Сховища можуть містити кілька застосунків",
+  "fdroidThirdPartyRepo": "F-Droid Стороннє сховище",
+  "install": "Встановити",
+  "markInstalled": "Позначити як встановлене",
+  "update": "Оновити",
+  "updated": "Оновлено",
+  "markUpdated": "Позначити як оновлене",
+  "additionalOptions": "Додаткові опції",
+  "disableVersionDetection": "Вимкнути визначення версії",
+  "noVersionDetectionExplanation": "Цю опцію слід використовувати лише для застосунків, де визначення версії працює неправильно.",
+  "downloadingX": "Завантаження {p0}",
+  "@downloadingX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "downloadX": "Завантажити {p0}",
+  "@downloadX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "downloadedX": "Завантажено {p0}",
+  "@downloadedX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "releaseAsset": "Звільнити актив",
+  "downloadNotifDescription": "Повідомляє користувача про прогрес завантаження застосунку",
+  "noAPKFound": "APK не знайдено",
+  "noVersionDetection": "Визначення версії відключено",
+  "categorize": "Категоризувати",
+  "categories": "Категорії",
+  "category": "Категорія",
+  "noCategory": "Без категорії",
+  "noCategories": "Немає категорій",
+  "deleteCategoriesQuestion": "Видалити категорії?",
+  "categoryDeleteWarning": "Усі застосунки у видалених категоріях будуть переведені у некатегоризовані.",
+  "addCategory": "Додати категорію",
+  "label": "Мітка",
+  "language": "Мова",
+  "copiedToClipboard": "Скопійовано в буфер обміну",
+  "storagePermissionDenied": "Відмовлено у дозволі на доступ до сховища",
+  "selectedCategorizeWarning": "Це замінить будь-які існуючі налаштування категорій для вибраних застосунків.",
+  "filterAPKsByRegEx": "Фільтрувати APK за регулярним виразом",
+  "removeFromUpdatium": "Видалити з Updatium",
+  "uninstallFromDevice": "Видалити з пристрою",
+  "onlyWorksWithNonVersionDetectApps": "Працює лише з застосунками з вимкненим визначенням версії.",
+  "releaseDateAsVersion": "Використовувати дату випуску як рядок версії",
+  "releaseTitleAsVersion": "Використовувати назву випуску як рядок версії",
+  "releaseDateAsVersionExplanation": "Цю опцію слід використовувати лише для застосунків, де визначення версії працює неправильно, але є дата випуску.",
+  "changes": "Зміни",
+  "releaseDate": "Дата випуску",
+  "importFromURLsInFile": "Імпорт з URL-адрес у файлі (наприклад, OPML)",
+  "versionDetectionExplanation": "Порівняти рядок версії з версією, визначеною операційною системою",
+  "versionDetection": "Визначення версії",
+  "standardVersionDetection": "Стандартне визначення версії",
+  "groupByCategory": "Групувати за категоріями",
+  "listView": "Вигляд списку",
+  "gridView": "Вигляд сітки",
+  "autoApkFilterByArch": "Спробувати фільтрувати APK за архітектурою ЦП, якщо можливо",
+  "autoLinkFilterByArch": "Спробуйте відфільтрувати посилання за архітектурою процесора, якщо це можливо",
+  "overrideSource": "Перевизначити джерело",
+  "dontShowAgain": "Не показувати це знову",
+  "dontShowTrackOnlyWarnings": "Не показувати попередження про 'Тільки відстеження'",
+  "dontShowAPKOriginWarnings": "Не показувати попередження про походження APK",
+  "moveNonInstalledAppsToBottom": "Перемістити невстановлені застосунки вниз у перегляді застосунців",
+  "hideNonInstalledApps": "Приховати невстановлені застосунки",
+  "gitlabPATLabel": "Особистий токен GitLab (Увімкнення пошуку та краще виявлення APK)",
+  "about": "Про програму",
+  "requiresCredentialsInSettings": "{p0} потребує додаткових облікових даних (у налаштуваннях)",
+  "@requiresCredentialsInSettings": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "checkOnStart": "Перевірити наявність оновлень при запуску",
+  "tryInferAppIdFromCode": "Спробувати вивести ідентифікатор застосунку з вихідного коду",
+  "removeOnExternalUninstall": "Автоматично видаляти застосунки, які було видалено зовнішнім чином",
+  "pickHighestVersionCode": "Автоматично вибрати APK з найвищим кодом версії",
+  "checkUpdateOnDetailPage": "Перевіряти наявність оновлень при відкритті сторінки деталей застосунку",
+  "disablePageTransitions": "Вимкнути анімації переходів між сторінками",
+  "reversePageTransitions": "Зворотні анімації переходів між сторінками",
+  "minStarCount": "Мінімальна кількість зірок",
+  "addInfoBelow": "Додати цю інформацію нижче.",
+  "addInfoInSettings": "Додати цю інформацію у налаштуваннях.",
+  "githubSourceNote": "Лімітування швидкості GitHub можна уникнути, використовуючи ключ API.",
+  "sortByLastLinkSegment": "Сортувати лише за останнім сегментом посилання",
+  "filterReleaseNotesByRegEx": "Фільтрувати примітки до релізу за регулярним виразом",
+  "customLinkFilterRegex": "Фільтр кастомного посилання на APK за регулярним виразом (за замовчуванням '.apk$')",
+  "appsPossiblyUpdated": "Спроб оновлення застосунків",
+  "appsPossiblyUpdatedNotifDescription": "Повідомляє користувача, що оновлення одного або декількох застосунків можливо були застосовані в фоновому режимі",
+  "xWasPossiblyUpdatedToY": "{p0} можливо було оновлено до {p1}.",
+  "@xWasPossiblyUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "enableBackgroundUpdates": "Увімкнути оновлення в фоновому режимі",
+  "backgroundUpdateReqsExplanation": "Оновлення в фоновому режимі може бути неможливим для всіх застосунків.",
+  "backgroundUpdateLimitsExplanation": "Успіх фонової установки може бути визначений лише після відкриття Updatium.",
+  "verifyLatestTag": "Перевірити тег 'latest'",
+  "intermediateLinkRegex": "Фільтр для 'Проміжного' Посилання для Відвідування",
+  "filterByLinkText": "Фільтрувати посилання за текстом посилання",
+  "matchLinksOutsideATags": "Зіставлення посилань поза тегами <a>",
+  "intermediateLinkNotFound": "Проміжне посилання не знайдено",
+  "intermediateLink": "Проміжне посилання",
+  "exemptFromBackgroundUpdates": "Виключено з фонових оновлень (якщо ввімкнено)",
+  "bgUpdatesOnWiFiOnly": "Вимкнути фонові оновлення поза Wi-Fi",
+  "bgUpdatesWhileChargingOnly": "Вимкнути фонові оновлення, коли не заряджається",
+  "autoSelectHighestVersionCode": "Автоматичний вибір APK з найвищим кодом версії",
+  "versionExtractionRegEx": "Регулярний вираз для вилучення рядка версії",
+  "trimVersionString": "Обрізати рядок версії за допомогою RegEx",
+  "matchGroupToUseForX": "Група збігів для \"{p0}\"",
+  "@matchGroupToUseForX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "matchGroupToUse": "Група співпадінь для використання в регулярному виразі вилучення версії",
+  "highlightTouchTargets": "Підсвічувати менш очевидні області дотику",
+  "pickExportDir": "Вибрати каталог експорту",
+  "autoExportOnChanges": "Автоматичний експорт при змінах",
+  "includeSettings": "Включити налаштування",
+  "filterVersionsByRegEx": "Фільтрувати версії за регулярним виразом",
+  "trySelectingSuggestedVersionCode": "Спробуйте вибрати запропонований код версії APK",
+  "dontSortReleasesList": "Зберігати порядок випуску з API",
+  "reverseSort": "Зворотне сортування",
+  "takeFirstLink": "Вибрати перше посилання",
+  "skipSort": "Пропустити сортування",
+  "debugMenu": "Меню налагодження",
+  "bgTaskStarted": "Запущено фонове завдання - перевірте журнали.",
+  "runBgCheckNow": "Запустити перевірку оновлень в фоновому режимі зараз",
+  "versionExtractWholePage": "Застосувати регулярний вираз вилучення версії до всієї сторінки",
+  "installing": "Встановлення",
+  "skipUpdateNotifications": "Пропустити сповіщення про оновлення",
+  "updatesAvailableNotifChannel": "Доступні оновлення",
+  "appsUpdatedNotifChannel": "Застосунки оновлені",
+  "appsPossiblyUpdatedNotifChannel": "Спроба оновлення застосунків",
+  "errorCheckingUpdatesNotifChannel": "Помилка перевірки оновлень",
+  "appsRemovedNotifChannel": "Застосунки видалені",
+  "downloadingXNotifChannel": "Завантаження {p0}",
+  "@downloadingXNotifChannel": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "completeAppInstallationNotifChannel": "Завершення встановлення застосунку",
+  "checkingForUpdatesNotifChannel": "Перевірка оновлень",
+  "onlyCheckInstalledOrTrackOnlyApps": "Перевіряти лише встановлені та застосунки, які відстежуються для оновлень",
+  "supportFixedAPKURL": "Підтримка фіксованих посилань на APK",
+  "selectX": "Вибрати {p0}",
+  "@selectX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "parallelDownloads": "Дозволити паралельні завантаження",
+  "useShizuku": "Використовуйте Shizuku або Sui для встановлення",
+  "shizukuBinderNotFound": "Сумісний сервіс Shizuku не було знайдено",
+  "shizukuOld": "Стара версія Shizuku (<11) - оновіть її",
+  "shizukuOldAndroidWithADB": "Shizuku працює на Android < 8.1 з ADB - оновіть Android або використовуйте Sui замість нього",
+  "shizukuPretendToBeGooglePlay": "Виберіть Google Play як джерело встановлення (якщо використовується Shizuku)",
+  "useSystemFont": "Використовувати системний шрифт",
+  "useVersionCodeAsOSVersion": "Використовувати код версії застосунку як версію, визначену операційною системою",
+  "requestHeader": "Заголовок запиту",
+  "useLatestAssetDateAsReleaseDate": "Використовувати останню дату завантаження ресурсу як дату випуску",
+  "defaultPseudoVersioningMethod": "Метод за замовчуванням псевдо-версіонування",
+  "partialAPKHash": "Хеш часткового APK",
+  "apkLinkHash": "Хеш посилання на APK",
+  "directAPKLink": "Пряме посилання на APK",
+  "pseudoVersionInUse": "Використовується псевдо-версія",
+  "installed": "Встановлено",
+  "latest": "Остання",
+  "invertRegEx": "Інвертувати регулярний вираз",
+  "note": "Примітка",
+  "selfHostedNote": "Випадаючий список \"{p0}\" може використовуватися для доступу до власних/призначених для самостійного використання екземплярів будь-якого джерела.",
+  "@selfHostedNote": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "badDownload": "APK не вдалося розпарсити (несумісний або часткове завантаження)",
+  "beforeNewInstallsShareToAppVerifier": "Діліться новими додатками з AppVerifier (якщо доступно)",
+  "appVerifierInstructionToast": "Надішліть на AppVerifier, а потім поверніться сюди, коли будете готові.",
+  "wiki": "Довідка/Вікі",
+  "allowInsecure": "Дозволити незахищені HTTP-запити",
+  "stayOneVersionBehind": "Залишайтеся на одну версію актуальнішою",
+  "useFirstApkOfVersion": "Автоматичний вибір першого з декількох APK",
+  "refreshBeforeDownload": "Оновіть інформацію про програму перед завантаженням",
+  "tencentAppStore": "Tencent App Store",
+  "coolApk": "CoolApk",
+  "vivoAppStore": "vivo App Store (CN)",
+  "name": "Ім'я",
+  "smartname": "Ім'я (Smart)",
+  "sortMethod": "Метод сортування",
+  "welcome": "Ласкаво просимо.",
+  "documentationLinksNote": "Сторінка Updatium на GitHub, посилання на яку наведено нижче, містить посилання на відео, статті, дискусії та інші ресурси, які допоможуть вам зрозуміти, як користуватися додатком.",
+  "batteryOptimizationNote": "Зауважте, що фонові завантаження можуть працювати надійніше, якщо ви вимкнете оптимізацію батареї ОС для Updatium.",
+  "fileDeletionError": "Не вдалося видалити файл (спробуйте видалити його вручну, а потім спробуйте ще раз): \"{p0}\"",
+  "@fileDeletionError": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "foregroundService": "Обслуговування переднього плану Updatium",
+  "foregroundServiceExplanation": "Використовуйте службу переднього плану для перевірки оновлень (надійніша, споживає більше енергії)",
+  "fgServiceNotice": "Це сповіщення необхідне для фонової перевірки оновлень (його можна приховати в налаштуваннях ОС)",
+  "excludeSecrets": "Виключити секрети",
+  "ghReqPrefix": "екземпляр 'sky22333/hubproxy' для запитів на GitHub",
+  "includeZips": "Додайте ZIP-файли",
+  "zippedApkFilterRegEx": "Фільтруйте APK-файли всередині ZIP",
+  "googleVerificationWarningP1": "Google оголосила, що, починаючи з 2026/2027, всі додатки на \"сертифікованих\" пристроях Android будуть вимагати розробника, щоб подати особисті дані в Інтернеті безпосередньо на Google.\n\nПісля цього, Updatium може припинити працювати на сертифікованих пристроях Android.",
+  "googleVerificationWarningP2": "Перейти на https://keepandroidopen.org/ для отримання додаткової інформації.",
+  "googleVerificationWarningP3": "Зауважте, що в короткостроковому терміні вона може продовжувати бути можливою для установки \"необґрунтованих\" (некомпліантних) додатків через процес \"додатковий потік\", який Google обіцяє реалізувати після широкої задньої вії до їх оголошення, але вони не докладно, як це буде працювати так, що це не зрозуміло, чи це буде дійсно зберігати свобод користувачів будь-яким практичним способом.\n\nУ будь-якому випадку, переміщення Google є важливим кроком до кінця безкоштовного, універсального обчислення для фізичних осіб.\n\nНесертифіковані ОС, як GrapheneOS, повинні бути неоцінені цими протягом тривалого часу, щоб вони могли продовжити існування.",
+  "multipleSigners": "Кілька підписників",
+  "removeAppQuestion": "{count, plural, one{Видалити застосунок?} other{Видалити застосунки?}}",
+  "@removeAppQuestion": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "tooManyRequestsTryAgainInMinutes": "{count, plural, one{Забагато запитів (обмеження швидкості) - повторіть спробу через {count} хвилину} other{Забагато запитів (обмеження швидкості) - повторіть спробу через {count} хвилин}}",
+  "@tooManyRequestsTryAgainInMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "bgUpdateGotErrorRetryInMinutes": "{count, plural, one{Помилка перевірки оновлень у фоновому режимі - спробую знову через {count} хвилину} other{Помилка перевірки оновлень у фоновому режимі - спробую знову через {count} хвилин}}",
+  "@bgUpdateGotErrorRetryInMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "bgCheckFoundUpdatesWillNotifyIfNeeded": "{count, plural, one{Фонова перевірка оновлень знайшла {count} оновлення - сповістити користувача, якщо це необхідно} other{Фонова перевірка оновлень знайшла {count} оновлень - сповістити користувача, якщо це необхідно}}",
+  "@bgCheckFoundUpdatesWillNotifyIfNeeded": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "apps": "{count, plural, one{{count} застосунок} other{{count} застосунки}}",
+  "@apps": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "url": "{count, plural, one{{count} URL-адреса} other{{count} URL-адреси}}",
+  "@url": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "minute": "{count, plural, one{{count} хвилина} other{{count} хвилин}}",
+  "@minute": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "hour": "{count, plural, one{{count} година} other{{count} годин}}",
+  "@hour": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "day": "{count, plural, one{{count} день} other{{count} днів}}",
+  "@day": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "clearedNLogsBeforeXAfterY": "{count, plural, one{Очищено {n} журнал (до = {before}, після = {after})} other{Очищено {n} журналів (до = {before}, після = {after})}}",
+  "@clearedNLogsBeforeXAfterY": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      },
+      "n": {
+        "type": "Object"
+      },
+      "before": {
+        "type": "Object"
+      },
+      "after": {
+        "type": "Object"
+      }
+    }
+  },
+  "xAndNMoreUpdatesAvailable": "{count, plural, one{{count} та ще 1 застосунок мають оновлення.} other{{count} та ще {count} застосунки мають оновлення.}}",
+  "@xAndNMoreUpdatesAvailable": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesInstalled": "{count, plural, one{{count} та ще 1 застосунок було оновлено.} other{{count} та ще {count} застосунків було оновлено.}}",
+  "@xAndNMoreUpdatesInstalled": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesFailed": "{count, plural, one{Не вдалося оновити {count} та ще 1 програму.} other{Не вдалося оновити {count} і {count} та інші програми.}}",
+  "@xAndNMoreUpdatesFailed": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesPossiblyInstalled": "{count, plural, one{{count} та ще 1 застосунок можливо було оновлено.} other{{count} та ще {count} застосунків можливо було оновлено.}}",
+  "@xAndNMoreUpdatesPossiblyInstalled": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "apk": "{count, plural, one{{count} APK} other{{count} APK-файли}}",
+  "@apk": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "certificateHash": "{count, plural, one{Сертифікат Hash} other{Сертифікат Hashes}}",
+  "@certificateHash": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "securityDisclaimerTitle": "Відмова від відповідальності щодо безпеки та правових питань",
+  "license": "Ліцензія",
+  "licenseText": "Цей додаток розповсюджується під ліцензією GPL v3.",
+  "disclaimer": "Відмова від відповідальності",
+  "disclaimerText": "Цей додаток не розповсюджує, не розміщує та не перевіряє жодні зовнішні додатки. Користувач несе повну відповідальність за безпеку та законність будь-якого програмного забезпечення, встановленого через цей інструмент.\n\nhttps://github.com/omeritzics/Updatium - це єдине офіційне місце для завантаження Updatium - наполегливо не рекомендується завантажувати його з інших місць, оскільки завантаження з неофіційних джерел небезпечне.",
+  "privacy": "Конфіденційність",
+  "privacyText": "Цей додаток орієнтований на конфіденційність і не збирає особисті дані.",
+  "acceptAndContinue": "Прийняти та продовжити",
+  "decline": "Відхилити"
+}

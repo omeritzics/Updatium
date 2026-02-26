@@ -1,0 +1,779 @@
+{
+  "@@locale": "bs",
+  "invalidURLForSource": "Nije važeći URL aplikacije {p0}",
+  "@invalidURLForSource": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "noReleaseFound": "Nije moguće pronaći odgovarajuće izdanje",
+  "noVersionFound": "Nije moguće odrediti verziju izdanja",
+  "urlMatchesNoSource": "URL se ne podudara s poznatim izvorom",
+  "cantInstallOlderVersion": "Nije moguće instalirati stariju verziju aplikacije",
+  "appIdMismatch": "ID preuzetog paketa se ne podudara s postojećim ID-om aplikacije",
+  "functionNotImplemented": "Ova klasa nije implementirala ovu funkciju",
+  "placeholder": "Rezervirano mjesto",
+  "someErrors": "Došlo je do nekih grešaka",
+  "unexpectedError": "Neočekivana greška",
+  "ok": "Dobro",
+  "and": "i",
+  "githubPATLabel": "GitHub token za lični pristup (eng. PAT, povećava ograničenje stope)",
+  "includePrereleases": "Uključi preliminarna izdanja",
+  "fallbackToOlderReleases": "Povratak na starija izdanja",
+  "filterReleaseTitlesByRegEx": "Filtrirajte naslove izdanja prema regularnom izrazu",
+  "invalidRegEx": "Nevažeći regularni izraz",
+  "noDescription": "Bez opisa",
+  "cancel": "Otkaži",
+  "continue": "Nastavite",
+  "requiredInBrackets": "(obavezno)",
+  "dropdownNoOptsError": "GREŠKA: PADAJUĆI MENI MORA IMATI NAJMANJE JEDNU OPCIJU",
+  "color": "Boja",
+  "standard": "Standard",
+  "custom": "Custom",
+  "useMaterialYou": "Koristi Material You boje",
+  "githubStarredRepos": "GitHub repo-i sa zvjezdicom",
+  "uname": "Korisničko ime",
+  "wrongArgNum": "Naveden je pogrešan broj argumenata",
+  "xIsTrackOnly": "{p0} je samo za praćenje",
+  "@xIsTrackOnly": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "source": "Izvor",
+  "app": "Aplikacija. ",
+  "appsFromSourceAreTrackOnly": "Aplikacije iz ovog izvora su 'Samo za praćenje'.",
+  "youPickedTrackOnly": "Odabrali ste opciju „Samo za praćenje”.",
+  "trackOnlyAppDescription": "Aplikacija će se pratiti radi ažuriranja, ali Updatium neće moći da je preuzme ili instalira.",
+  "cancelled": "Otkazano",
+  "appAlreadyAdded": "Aplikacija je već dodana",
+  "alreadyUpToDateQuestion": "Aplikacija je već ažurirana?",
+  "addApp": "Dodaj aplikaciju",
+  "appSourceURL": "Izvorni URL aplikacije",
+  "error": "Greška",
+  "add": "Dodaj",
+  "searchSomeSourcesLabel": "Pretraživanje (samo neki izvori)",
+  "search": "Pretraživanje",
+  "additionalOptsFor": "Dodatne opcije za {p0}",
+  "@additionalOptsFor": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "supportedSources": "Podržani izvori",
+  "trackOnlyInBrackets": "(Samo za praćenje)",
+  "searchableInBrackets": "(Može se pretraživati)",
+  "appsString": "Aplikacije",
+  "noApps": "Dobrodošli!",
+  "noAppsSubtext": "Možete dodati svoju prvu aplikaciju dodirivanjem 'Dodaj aplikaciju' ispod.",
+  "noAppsForFilter": "Nema aplikacija za filter",
+  "byX": "Autor {p0}",
+  "@byX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "percentProgress": "Napredak: {p0}%",
+  "@percentProgress": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "pleaseWait": "Molimo sačekajte",
+  "updateAvailable": "Ažuriranje dostupno",
+  "notInstalled": "Nije instalirano",
+  "pseudoVersion": "pseudo-verzija",
+  "selectAll": "Označi sve",
+  "deselectX": "Poništi odabir {p0}",
+  "@deselectX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "xWillBeRemovedButRemainInstalled": "{p0} će biti uklonjen iz Updatiuma, ali će ostati instaliran na uređaju.",
+  "@xWillBeRemovedButRemainInstalled": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "removeSelectedAppsQuestion": "Želite li ukloniti odabrane aplikacije?",
+  "removeSelectedApps": "Ukloni odabrane aplikacije",
+  "updateX": "Nadogradi {p0}",
+  "@updateX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installX": "Instaliraj {p0}",
+  "@installX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "markXTrackOnlyAsUpdated": "Označi {p0}\n(samo za praćenje)\nkao ažurirano",
+  "@markXTrackOnlyAsUpdated": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "changeX": "Promjena {p0}",
+  "@changeX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installUpdateApps": "Instalirajte/ažurirajte aplikacije",
+  "installUpdateSelectedApps": "Instalirajte/ažurirajte odabrane aplikacije",
+  "markXSelectedAppsAsUpdated": "Označite {p0} odabrane aplikacije kao ažurirane?",
+  "@markXSelectedAppsAsUpdated": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "no": "Ne",
+  "yes": "Da",
+  "markSelectedAppsUpdated": "Označi odabrane aplikacije kao ažurirane",
+  "pinToTop": "Prikvači na vrh",
+  "unpinFromTop": "Otkvači sa vrha",
+  "resetInstallStatusForSelectedAppsQuestion": "Resetujte status instalacije za odabrane aplikacije?",
+  "installStatusOfXWillBeResetExplanation": "Status instalacije bilo koje odabrane aplikacije će se resetovati.\n\nTo može pomoći kada je verzija aplikacije prikazana u Updatiumu netačna zbog neuspjelih ažuriranja ili drugih problema.",
+  "customLinkMessage": "Ove veze rade na uređajima s instaliranim Updatiumom",
+  "shareAppConfigLinks": "Podijelite konfiguraciju aplikacije kao HTML vezu",
+  "shareSelectedAppURLs": "Podijeli odabrane URL-ove aplikacija",
+  "resetInstallStatus": "Resetujte status instalacije",
+  "more": "Više",
+  "removeOutdatedFilter": "Uklonite zastarjeli filter aplikacija",
+  "showOutdatedOnly": "Prikaži samo zastarjele aplikacije",
+  "filter": "Filtriranje",
+  "filterApps": "Filtriraj aplikacije",
+  "appName": "Naziv aplikacije",
+  "author": "Autor",
+  "upToDateApps": "Ažurirane aplikacije",
+  "nonInstalledApps": "Neinstalirane aplikacije",
+  "importExport": "Uvoz/izvoz",
+  "settings": "Postavke",
+  "exportedTo": "Izvezeno u {p0}",
+  "@exportedTo": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatiumExport": "Updatium izvoz",
+  "invalidInput": "Neispravan unos.",
+  "importedX": "Uvezeno {p0}",
+  "@importedX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatiumImport": "Updatium uvoz",
+  "importFromURLList": "Uvoz iz URL liste",
+  "searchQuery": "Pretraga za: ",
+  "appURLList": "Lista URL adresa aplikacija",
+  "line": "Linija",
+  "searchX": "Pretraživanje {p0}",
+  "@searchX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "noResults": "Nema rezultata",
+  "importX": "Uvoz {p0}",
+  "@importX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "importedAppsIdDisclaimer": "Uvezene aplikacije mogu se pogrešno prikazati kao „Nije instalirano”.\nDa biste to riješili, ponovo ih instalirajte putem aplikacije Updatium.\nTo ne bi trebalo uticati na podatke aplikacije.\n\nUtječe samo na URL i metode uvoza treće strane.",
+  "importErrors": "Uvezi greške",
+  "importedXOfYApps": "{p0} od {p1} aplikacija uvezeno.",
+  "@importedXOfYApps": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "followingURLsHadErrors": "Sljedeći URL-ovi su imali greške:",
+  "selectURL": "Odaberite URL",
+  "selectURLs": "Odaberite URL-ove",
+  "pick": "Odaberi",
+  "theme": "Tema",
+  "dark": "Tamna",
+  "light": "Svijetla",
+  "followSystem": "Pratite sistem",
+  "followSystemThemeExplanation": "Praćenje sistemske teme je moguće jedino koristeći aplikacije treće strane",
+  "useBlackTheme": "Koristite čisto crnu tamnu temu",
+  "appSortBy": "Aplikacije sortirane po",
+  "authorName": "Autor/Ime",
+  "nameAuthor": "Ime/Autor",
+  "asAdded": "Kao što je dodano",
+  "appSortOrder": "Redoslijed sortiranja aplikacija",
+  "ascending": "Uzlazno",
+  "descending": "Silazno",
+  "bgUpdateCheckInterval": "Interval provjere ažuriranja u pozadini",
+  "neverManualOnly": "Nikada - samo ručno",
+  "appearance": "Izgled",
+  "pinUpdates": "Prikvačite ažuriranja na vrh prikaza aplikacija",
+  "updates": "Nadogradnje",
+  "sourceSpecific": "Specifično za izvor",
+  "appSource": "Izvor aplikacije",
+  "noLogs": "Nema evidencije",
+  "appLogs": "Evidencije aplikacija",
+  "close": "Zatvori",
+  "share": "Podijeli",
+  "appNotFound": "Aplikacija nije pronađena",
+  "updatiumExportHyphenatedLowercase": "updatium-izvoz",
+  "pickAnAPK": "Odaberite APK",
+  "appHasMoreThanOnePackage": "{p0} ima više od jednog paketa:",
+  "@appHasMoreThanOnePackage": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "deviceSupportsXArch": "Vaš uređaj podržava {p0} arhitekturu procesora.",
+  "@deviceSupportsXArch": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "deviceSupportsFollowingArchs": "Vaš uređaj podržava sljedeće arhitekture procesora:",
+  "warning": "Upozorenje",
+  "sourceIsXButPackageFromYPrompt": "Izvor aplikacije je '{p0}', ali paket za izdavanje dolazi iz '{p1}'. Želite li nastaviti?",
+  "@sourceIsXButPackageFromYPrompt": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "updatesAvailable": "Dostupna ažuriranja",
+  "updatesAvailableNotifDescription": "Obavještava korisnika da su ažuriranja dostupna za jednu ili više aplikacija koje prati Updatium",
+  "noNewUpdates": "Nema novih ažuriranja.",
+  "xHasAnUpdate": "{p0} ima ažuriranje.",
+  "@xHasAnUpdate": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "appsUpdated": "Aplikacije su ažurirane",
+  "appsNotUpdated": "Neuspješno ažuriranje aplikacija",
+  "appsUpdatedNotifDescription": "Obavještava korisnika da su u pozadini primijenjena ažuriranja na jednu ili više aplikacija",
+  "xWasUpdatedToY": "{p0} je ažuriran na {p1}.",
+  "@xWasUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "xWasNotUpdatedToY": "Neuspješno ažuriranje {p0} na {p1}.",
+  "@xWasNotUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "errorCheckingUpdates": "Greška pri provjeri ažuriranja",
+  "errorCheckingUpdatesNotifDescription": "Obavijest koja se prikazuje kada provjera sigurnosnog ažuriranja ne uspije",
+  "appsRemoved": "Aplikacije su uklonjene",
+  "appsRemovedNotifDescription": "Obavještava korisnika da je jedna ili više aplikacija uklonjeno zbog grešaka prilikom učitavanja",
+  "xWasRemovedDueToErrorY": "{p0} je uklonjen zbog ove greške: {p1}",
+  "@xWasRemovedDueToErrorY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "completeAppInstallation": "Dovršite instalaciju aplikacije",
+  "updatiumMustBeOpenToInstallApps": "Updatium mora biti otvoren za instalaciju aplikacija",
+  "completeAppInstallationNotifDescription": "Traži od korisnika da se vrati u Updatium kako bi dovršio instalaciju aplikacije",
+  "checkingForUpdates": "Tražim moguće nadogradnje",
+  "checkingForUpdatesNotifDescription": "Privremeno obavještenje koje se pojavljuje prilikom provjere ažuriranja",
+  "pleaseAllowInstallPerm": "Dozvolite Updatiumu da instalira aplikacije",
+  "trackOnly": "Samo za praćenje",
+  "errorWithHttpStatusCode": "Greška {p0}",
+  "@errorWithHttpStatusCode": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "versionCorrectionDisabled": "Ispravka verzije je onemogućena (izgleda da plugin ne radi)",
+  "unknown": "Nepoznato",
+  "none": "Ništa",
+  "all": "All",
+  "never": "Nikad",
+  "latestVersionX": "Najnovija verzija: {p0}",
+  "@latestVersionX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "installedVersionX": "Instalirana verzija: {p0}",
+  "@installedVersionX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "lastUpdateCheckX": "Posljednja provjera ažuriranja: {p0}",
+  "@lastUpdateCheckX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "remove": "Izbriši",
+  "yesMarkUpdated": "Da, označi kao ažurirano",
+  "fdroid": "Službeni F-Droid",
+  "appIdOrName": "ID ili ime aplikacije",
+  "appId": "ID aplikacije",
+  "appWithIdOrNameNotFound": "Nije pronađena aplikacija s tim ID-om ili imenom",
+  "reposHaveMultipleApps": "Repo-i mogu sadržavati više aplikacija",
+  "fdroidThirdPartyRepo": "F-Droid Repo treće strane",
+  "install": "Instaliraj",
+  "markInstalled": "Označi kao instalirano",
+  "update": "Nadogradi",
+  "updated": "Ažurirano",
+  "markUpdated": "Označi kao ažurirano",
+  "additionalOptions": "Dodatne opcije",
+  "disableVersionDetection": "Onemogući detekciju verzije",
+  "noVersionDetectionExplanation": "Ova opcija bi se trebala koristiti samo za aplikacije gdje detekcija verzije ne radi ispravno.",
+  "downloadingX": "Preuzimanje {p0}",
+  "@downloadingX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "downloadX": "Preuzeti {p0}",
+  "@downloadX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "downloadedX": "Preuzeto {p0}",
+  "@downloadedX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "releaseAsset": "Fajlovi verzije",
+  "downloadNotifDescription": "Obavještava korisnika o napretku u preuzimanju aplikacije",
+  "noAPKFound": "APK nije pronađen",
+  "noVersionDetection": "Nema detekcije verzije",
+  "categorize": "Kategoriziraj",
+  "categories": "Kategorije",
+  "category": "Kategorija",
+  "noCategory": "Nema kategorije",
+  "noCategories": "Nema kategorija",
+  "deleteCategoriesQuestion": "Želite li izbrisati kategorije?",
+  "categoryDeleteWarning": "Sve aplikacije u izbrisanim kategorijama će biti postavljene kao nekategorisane.",
+  "addCategory": "Dodaj kategoriju",
+  "label": "Oznaka",
+  "language": "Jezik",
+  "copiedToClipboard": "Podaci kopirani u međuspremnik",
+  "storagePermissionDenied": "Dozvola za pohranu je odbijena",
+  "selectedCategorizeWarning": "Ovo će zamijeniti sve postojeće postavke kategorije za odabrane aplikacije.",
+  "filterAPKsByRegEx": "Filtrirajte APK-ove prema regularnom izrazu",
+  "removeFromUpdatium": "Ukloni iz Updatiuma",
+  "uninstallFromDevice": "Deinstaliraj s uređaja",
+  "onlyWorksWithNonVersionDetectApps": "Radi samo za aplikacije s onemogućenom detekcijom verzije.",
+  "releaseDateAsVersion": "Koristi datum izdanja kao verziju",
+  "releaseTitleAsVersion": "Use release title as version string",
+  "releaseDateAsVersionExplanation": "Ova opcija bi se trebala koristiti samo za aplikacije gdje detekcija verzije ne radi ispravno, ali je datum izdavanja dostupan.",
+  "changes": "Promjene",
+  "releaseDate": "Datum izdavanja",
+  "importFromURLsInFile": "Uvoz iz URL-ova u datoteci (kao što je OPML)",
+  "versionDetectionExplanation": "Pomiri niz verzije sa verzijom otkrivenom iz OS-a",
+  "versionDetection": "Otkrivanje verzije",
+  "standardVersionDetection": "Detekcija standardne verzije",
+  "groupByCategory": "Grupiši po kategoriji",
+  "listView": "Prikaz liste",
+  "gridView": "Prikaz mreže",
+  "autoApkFilterByArch": "Pokušajte filtrirati APK-ove po arhitekturi procesora ako je moguće",
+  "autoLinkFilterByArch": "Attempt to filter links by CPU architecture if possible",
+  "overrideSource": "Premosti izvor",
+  "dontShowAgain": "Ne prikazuj ovo ponovo",
+  "dontShowTrackOnlyWarnings": "Ne prikazuj upozorenja „Samo za  praćenje”",
+  "dontShowAPKOriginWarnings": "Ne prikazuj upozorenja o porijeklu APK-a",
+  "moveNonInstalledAppsToBottom": "Premjesti neinstalirane aplikacije na dno prikaza aplikacija",
+  "hideNonInstalledApps": "Sakrij neinstalirane aplikacije",
+  "gitlabPATLabel": "GitLab token za lični pristup",
+  "about": "O nama",
+  "requiresCredentialsInSettings": "{p0}: Za ovo su potrebni dodatni akreditivi (u Postavkama)",
+  "@requiresCredentialsInSettings": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "checkOnStart": "Provjerite ima li novosti pri pokretanju",
+  "tryInferAppIdFromCode": "Pokušati otkriti ID aplikacije iz izvornog koda",
+  "removeOnExternalUninstall": "Automatski ukloni eksterno deinstalirane aplikacije",
+  "pickHighestVersionCode": "Automatski odaberite najviši kôd verzije APK-a",
+  "checkUpdateOnDetailPage": "Provjerite ima li novosti pri otvaranju stranice s detaljima aplikacije",
+  "disablePageTransitions": "Ugasite animaciju prijelaza stranice",
+  "reversePageTransitions": "Reverzne animacije prijelaza stranice",
+  "minStarCount": "Najmanji broj zvjezdica",
+  "addInfoBelow": "Dodajte ove informacije ispod.",
+  "addInfoInSettings": "Dodajte ove informacije u Postavkama.",
+  "githubSourceNote": "GitHub ograničavanje se može izbjeći korišćenjem tokena za lični pristup.",
+  "sortByLastLinkSegment": "Sortiraj samo po zadnjem segmentu veze",
+  "filterReleaseNotesByRegEx": "Filtirajte promjene u izdanju po regularnom izrazu",
+  "customLinkFilterRegex": "Prilagođeni APK link filtrira se po regularnom izrazu (Zadano '.apk$')",
+  "appsPossiblyUpdated": "Pokušano ažuriranje aplikacija",
+  "appsPossiblyUpdatedNotifDescription": "Obavještava korisnika da je ažuriranje jedne ili više aplikacija potencijalno izvršeno u pozadini",
+  "xWasPossiblyUpdatedToY": "{p0} aplikacija bi trebala biti ažurirana na {p1}.",
+  "@xWasPossiblyUpdatedToY": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      },
+      "p1": {
+        "type": "Object"
+      }
+    }
+  },
+  "enableBackgroundUpdates": "Dozvolite ažuriranja u pozadini",
+  "backgroundUpdateReqsExplanation": "Ažuriranja u pozadini možda neće raditi za sve aplikacije.",
+  "backgroundUpdateLimitsExplanation": "Uspjeh ažuriranja u pozadini se može provjeriti tek kada otvorite Updatium.",
+  "verifyLatestTag": "Provjerite 'posljednu' ('latest') oznaku",
+  "intermediateLinkRegex": "Filter za 'srednju' vezu za posjetu",
+  "filterByLinkText": "Filtriraj linkove prema tekstu linka",
+  "matchLinksOutsideATags": "Poklopiti linkove van <a> tag-a",
+  "intermediateLinkNotFound": "Intermediate veza nije nađena",
+  "intermediateLink": "Intermediate veza",
+  "exemptFromBackgroundUpdates": "Izuzmi iz ažuriranja u pozadini (ako su uključeni)",
+  "bgUpdatesOnWiFiOnly": "Isključite ažuriranje u pozadini kada niste na Wi-Fi-ju",
+  "bgUpdatesWhileChargingOnly": "Isključi pozadinska ažuriranja kada uređaj nije na punjaču",
+  "autoSelectHighestVersionCode": "Automatski izaberite najveću (verziju) versionCode APK-a",
+  "versionExtractionRegEx": "RegEx ekstrakcija verzije",
+  "trimVersionString": "Skrati string verzije pomoću RegEx-a",
+  "matchGroupToUseForX": "Podjesite grupu za upotebu za \"{p0}\"",
+  "@matchGroupToUseForX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "matchGroupToUse": "Podjesite grupu za upotebu",
+  "highlightTouchTargets": "Istaknite manje vidljive touch mete",
+  "pickExportDir": "Izaberite datoteku za izvoz",
+  "autoExportOnChanges": "Automatski izvezite pri promjenama",
+  "includeSettings": "Uključi postavke",
+  "filterVersionsByRegEx": "Filtrirajte verzije po regulatnom izrazu",
+  "trySelectingSuggestedVersionCode": "Probajte izabrati preloženu (verziju) versionCode APK-a",
+  "dontSortReleasesList": "Zadrži redosled izdanja iz API-a",
+  "reverseSort": "Obrni redosled",
+  "takeFirstLink": "Uzmi prvi link",
+  "skipSort": "Preskoči sortiranje",
+  "debugMenu": "Meni za otkrivanje grešaka",
+  "bgTaskStarted": "Rad u pozadini pokrenut - provjerite log-ove.",
+  "runBgCheckNow": "Pokrenite pozadinsku provjeru ažuriranja sad",
+  "versionExtractWholePage": "Primjenite Regex ekstrakciju verzije na cijelu stranicu",
+  "installing": "Instaliranje",
+  "skipUpdateNotifications": "Ne prikazujte obavještenja ažuriranja",
+  "updatesAvailableNotifChannel": "Dostupna ažuriranja",
+  "appsUpdatedNotifChannel": "Aplikacije su ažurirane",
+  "appsPossiblyUpdatedNotifChannel": "Pokušano ažuriranje aplikacija",
+  "errorCheckingUpdatesNotifChannel": "Greška pri provjeri ažuriranja",
+  "appsRemovedNotifChannel": "Aplikacije su uklonjene",
+  "downloadingXNotifChannel": "Preuzimanje {p0}",
+  "@downloadingXNotifChannel": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "completeAppInstallationNotifChannel": "Dovršite instalaciju aplikacije",
+  "checkingForUpdatesNotifChannel": "Tražim moguće nadogradnje",
+  "onlyCheckInstalledOrTrackOnlyApps": "Isključivo provjerite ažuriranje za instalirane i aplikacije 'samo za praćenje'",
+  "supportFixedAPKURL": "Podržite fiksne APK URL-ove",
+  "selectX": "Izaberite {p0}",
+  "@selectX": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "parallelDownloads": "Dozvoli paralelna preuzimanja",
+  "useShizuku": "Koristi Shizuku ili Sui za instaliranje",
+  "shizukuBinderNotFound": "Shizuku nije pokrenut",
+  "shizukuOld": "Stara Shizuku verzija (<11) - ažurirajte je",
+  "shizukuOldAndroidWithADB": "Shizuku pokrenut na Android-u < 8.1 pomoću ADB-a - ažurirajte Android ili koristite Sui",
+  "shizukuPretendToBeGooglePlay": "Postavi Google Play kao izvor instalacije (samo ako je Shizuku u upotrebi)",
+  "useSystemFont": "Koristite sistemski font",
+  "useVersionCodeAsOSVersion": "Koristite kod verzije aplikacije kao verziju koju je otkrio OS",
+  "requestHeader": "Zaglavlje zahtjeva",
+  "useLatestAssetDateAsReleaseDate": "Koristite najnovije otpremanje materijala kao datum izdavanja",
+  "defaultPseudoVersioningMethod": "Zadana metoda pseudo-verzija",
+  "partialAPKHash": "Djelomični APK Hash",
+  "apkLinkHash": "APK Link Hash",
+  "directAPKLink": "Direktna APK veza",
+  "pseudoVersionInUse": "Pseudo-verzija je u upotrebi",
+  "installed": "Instalirano",
+  "latest": "Najnoviji",
+  "invertRegEx": "Obrni regularni izraz",
+  "note": "Zabelješke",
+  "selfHostedNote": "\"{p0}\" padajući meni se može koristiti da dosegnete vlastite/prilagođene instance bilo kojeg izvora.",
+  "@selfHostedNote": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "badDownload": "APK ne može biti raščlanjen (nekomaptibilno ili delimično preuzimanje)",
+  "beforeNewInstallsShareToAppVerifier": "Dijeli nove aplikacije sa AppVerifier-om (ako je dostupno)",
+  "appVerifierInstructionToast": "Dijeli sa AppVerifier-om, zatim se vratite kada ste spremni.",
+  "wiki": "Pomoć/Wiki",
+  "allowInsecure": "Dozvoli nesigurne HTTP zahtjeve",
+  "stayOneVersionBehind": "Ostani na verziji koja prethodi posljednjoj",
+  "useFirstApkOfVersion": "Automatski izaberi prvi ako postoji više APK-ova",
+  "refreshBeforeDownload": "Osvježi detalje aplikacije prije preuzimanja",
+  "tencentAppStore": "Tencent prodavnica aplikacija",
+  "coolApk": "CoolApk",
+  "vivoAppStore": "vivo prodavnica aplikacija (Kina)",
+  "name": "Ime",
+  "smartname": "Ime (Smart)",
+  "sortMethod": "Metoda sortiranja",
+  "welcome": "Dobrodošli",
+  "documentationLinksNote": "Stranica Updatium-a na GitHub-u na linku u nastavku sadrži linkove na videozapise, članke, rasprave i druge resurse koji će vam pomoći da shvatite kako koristiti aplikaciju.",
+  "batteryOptimizationNote": "Imajte na umu da pozadinska preuzimanja rade bolje ako se aplikacija izuzme iz optimizacije baterije.",
+  "fileDeletionError": "Neuspješno brisanje datoteke (probajte je ručno obrisati, pa pokušajte ponovo): \"{p0}\"",
+  "@fileDeletionError": {
+    "placeholders": {
+      "p0": {
+        "type": "Object"
+      }
+    }
+  },
+  "foregroundService": "Updatium servis u prednjem planu",
+  "foregroundServiceExplanation": "Koristi servis u prednjem planu za provjeru ažuriranja (bolji rad, troši više energije)",
+  "fgServiceNotice": "Ovo obavještenje je obavezno radi provjera ažuriranja u pozadini (može se prikriti u postavkama sistema)",
+  "excludeSecrets": "Izuzmi secrets",
+  "ghReqPrefix": "'sky22333/hubproxy' istanca za GitHub zahtjeve",
+  "includeZips": "Uključi i ZIP datoteke",
+  "zippedApkFilterRegEx": "Filtriraj APK-ove unutar ZIP datoteka",
+  "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.\n\nAfter then, Updatium may stop working on certified Android devices.",
+  "googleVerificationWarningP2": "Go to https://keepandroidopen.org/ for more information.",
+  "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\n\nIn any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.\n\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
+  "multipleSigners": "Multiple Signers",
+  "removeAppQuestion": "{count, plural, one{Želite li ukloniti aplikaciju?} other{Želite li ukloniti aplikacije?}}",
+  "@removeAppQuestion": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "tooManyRequestsTryAgainInMinutes": "{count, plural, one{Previše zahtjeva (ograničena broj zahteva) - pokušajte ponovo za {count} minutu} other{Previše zahtjeva (ograničena cijena) - pokušajte ponovo za {count} min.}}",
+  "@tooManyRequestsTryAgainInMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "bgUpdateGotErrorRetryInMinutes": "{count, plural, one{Provjera ažuriranja u pozadini naišla je na {count}, zakazuje se ponovni pokušaj za {count} minutu} other{Provjera ažuriranja u pozadini naišla je na {count}, zakazuje se ponovni pokušaj za {count} min.}}",
+  "@bgUpdateGotErrorRetryInMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "bgCheckFoundUpdatesWillNotifyIfNeeded": "{count, plural, one{Provjera ažuriranja u pozadini je pronašla {count} ažuriranje - korisnik će biti obavješten ako je to potrebno} other{Provjera ažuriranja u pozadini je pronašla {count} ažuriranja - korisnik će biti obavješten ako je to potrebno}}",
+  "@bgCheckFoundUpdatesWillNotifyIfNeeded": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "apps": "{count, plural, one{{count} aplikacija} other{{count} aplikacije}}",
+  "@apps": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "url": "{count, plural, one{{count} URL} other{{count} URL-ovi}}",
+  "@url": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "minute": "{count, plural, one{{count} minuta} other{min.}}",
+  "@minute": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "hour": "{count, plural, one{{count} sat} other{{count} sat/i}}",
+  "@hour": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "day": "{count, plural, one{{count} dan} other{{count} dana}}",
+  "@day": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "clearedNLogsBeforeXAfterY": "{count, plural, one{Izbrisan {n} log (prije = {before}, nakon = {after})} other{Izbrisano {n} log-ova (prije = {before}, nakon = {after})}}",
+  "@clearedNLogsBeforeXAfterY": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      },
+      "n": {
+        "type": "Object"
+      },
+      "before": {
+        "type": "Object"
+      },
+      "after": {
+        "type": "Object"
+      }
+    }
+  },
+  "xAndNMoreUpdatesAvailable": "{count, plural, one{{count} i još 1 aplikacija ima ažuriranja.} other{{count} i još {count} aplikacija imaju ažuriranja.}}",
+  "@xAndNMoreUpdatesAvailable": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesInstalled": "{count, plural, one{{count} i još 1 aplikacija je ažurirana.} other{{count} i još {count} aplikacija je ažurirano.}}",
+  "@xAndNMoreUpdatesInstalled": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesFailed": "{count, plural, one{Failed to update {count} and 1 more app.} other{Failed to update {count} and {count} more apps.}}",
+  "@xAndNMoreUpdatesFailed": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "xAndNMoreUpdatesPossiblyInstalled": "{count, plural, one{{count} i još jedna aplikacija je vjerovatno ažurirana.} other{{count} i još {count} aplikacija su vjerovatno ažurirane.}}",
+  "@xAndNMoreUpdatesPossiblyInstalled": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "apk": "{count, plural, one{{count} APK} other{{count} APK-a}}",
+  "@apk": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "certificateHash": "{count, plural, one{Certificate Hash} other{Certificate Hashes}}",
+  "@certificateHash": {
+    "placeholders": {
+      "count": {
+        "type": "num"
+      }
+    }
+  },
+  "securityDisclaimerTitle": "Bezbednosno i Pravno Odricanje Odgovornosti",
+  "license": "Licenca",
+  "licenseText": "Ova aplikacija se distribuira pod GPL v3 licencom.",
+  "disclaimer": "Odgovornost",
+  "disclaimerText": "Ova aplikacija ne distribuira, ne hostuje niti verifikuje nijednu od eksternih aplikacija. Korisnik snosi punu odgovornost za bezbednost i zakonitost bilo kog softvera instaliranog putem ovog alata.\n\nhttps://github.com/omeritzics/Updatium je jedino zvanično mjesto za preuzimanje Updatiuma - strogo se preporučuje da se ne preuzima s drugih mjesta jer je preuzimanje iz nezvaničnih izvora nesigurno.",
+  "privacy": "Privatnost",
+  "privacyText": "Ova aplikacija je fokusirana na privatnost i ne prikuplja lične podatke.",
+  "acceptAndContinue": "Prihvatam i Nastavim",
+  "decline": "Odbij"
+}

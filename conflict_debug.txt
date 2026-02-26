@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+            action = Semantics(
+              button: true,
+              label: AppLocalizations.of(context)!.install,
+              hint: appsProvider.areDownloadsRunning()
