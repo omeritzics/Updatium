@@ -777,7 +777,9 @@ class _AppPageState extends State<AppPage> {
         child: Icon(
           Icons.apps,
           size: size * 0.5,
-          color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+          color: Theme.of(
+            context,
+          ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
         ),
       ),
     );
