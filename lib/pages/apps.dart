@@ -736,6 +736,233 @@ class AppsPageState extends State<AppsPage> {
       return result;
     }
 
+    Widget getSingleAppGridTile(int index) {
+      var hasUpdate =
+          listedApps[index].app.installedVersion != null &&
+          listedApps[index].app.installedVersion !=
+              listedApps[index].app.latestVersion;
+      var transparent = Theme.of(
+        context,
+      ).colorScheme.surface.withAlpha(0).value;
+      final categories = listedApps[index].app.categories;
+      final stops = _categoryStops(categories);
+
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          gradient: LinearGradient(
+            stops: stops,
+            begin: const Alignment(-1, -1),
+            end: const Alignment(1, 1),
+            colors: [
+              ...listedApps[index].app.categories.map(
+                (e) => Color(
+                  settingsProvider.categories[e] ?? transparent,
+                ).withAlpha(40),
+              ),
+              Color(transparent),
+            ],
+          ),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () {
+            if (selectedAppIds.isNotEmpty) {
+              toggleAppSelected(listedApps[index].app);
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      AppPage(appId: listedApps[index].app.id),
+                ),
+              );
+            }
+          },
+          onLongPress: () {
+            toggleAppSelected(listedApps[index].app);
+          },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              if (selectedAppIds.contains(listedApps[index].app.id))
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.primary.withOpacity(0.2),
+                    ),
+                  ),
+                ),
+              if (listedApps[index].app.pinned)
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.push_pin,
+                      size: 16,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
+              if (hasUpdate)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.circle,
+                      size: 10,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 64,
+                    width: 64,
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: getAppIcon(index),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Flexible(
+                      child: Text(
+                        listedApps[index].name,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Flexible(
+                      child: Text(
+                        listedApps[index].author,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 11),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Builder(builder: (ctx) {
+                      final ai = listedApps[index];
+                      final app = ai.app;
+                      final isInstalled = app.installedVersion != null;
+                      final hasUpdateLocal = isInstalled &&
+                          app.installedVersion != app.latestVersion;
+                      final isTrackOnly = app.additionalSettings['trackOnly'] == true;
+
+                      if (isTrackOnly) {
+                        return const SizedBox.shrink();
+                      }
+
+                      if (!isInstalled) {
+                        return FilledButton.tonal(
+                          onPressed: appsProvider.areDownloadsRunning()
+                              ? null
+                              : () {
+                                  appsProvider
+                                      .downloadAndInstallLatestApps([
+                                        app.id,
+                                      ],
+                                          globalNavigatorKey.currentContext)
+                                      .catchError((e) {
+                                    showError(e, context);
+                                    return <String>[];
+                                  });
+                                },
+                          style: const ButtonStyle(
+                            visualDensity: VisualDensity.compact,
+                          ),
+                          child: Text(tr('install')),
+                        );
+                      }
+
+                      if (hasUpdateLocal) {
+                        return FilledButton.tonal(
+                          onPressed: appsProvider.areDownloadsRunning()
+                              ? null
+                              : () {
+                                  appsProvider
+                                      .downloadAndInstallLatestApps([
+                                        app.id,
+                                      ],
+                                          globalNavigatorKey.currentContext)
+                                      .catchError((e) {
+                                    showError(e, context);
+                                    return <String>[];
+                                  });
+                                },
+                          style: const ButtonStyle(
+                            visualDensity: VisualDensity.compact,
+                          ),
+                          child: Text(tr('update')),
+                        );
+                      }
+
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.check_circle,
+                            color: Colors.green[600],
+                            size: 18,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            tr('updated'),
+                            style: TextStyle(color: Colors.green[600]),
+                          ),
+                        ],
+                      );
+                    }),
+                  ),
+                ],
+              ),
+              if (listedApps[index].downloadProgress != null)
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.black45,
+                    ),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        value: listedApps[index].downloadProgress! >= 0
+                            ? listedApps[index].downloadProgress! / 100
+                            : null,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
+    }
+
     
     getCategoryCollapsibleTile(int index) {
       var filteredEntries = listedApps
@@ -765,7 +992,33 @@ class AppsPageState extends State<AppsPage> {
         controlAffinity: ListTileControlAffinity.leading,
         trailing: Text(tiles.length.toString()),
         children: [
-          Column(children: tiles),
+          settingsProvider.useGridView
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 16.0,
+                  ),
+                  child: GridView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent:
+                          MediaQuery.of(context).size.width * 0.5,
+                      childAspectRatio: 0.55,
+                      crossAxisSpacing:
+                          MediaQuery.of(context).size.width * 0.04,
+                      mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
+                    ),
+                    itemCount: filteredEntries.length,
+                    itemBuilder: (context, gridIndex) {
+                      return getSingleAppGridTile(
+                        listedApps.indexOf(filteredEntries[gridIndex].value),
+                      );
+                    },
+                  ),
+                )
+              : Column(children: tiles),
         ],
       );
     }
@@ -1319,14 +1572,31 @@ class AppsPageState extends State<AppsPage> {
         );
       } else {
         // Flat View
-        return SliverList(
-          delegate: SliverChildBuilderDelegate((
-            BuildContext context,
-            int index,
-          ) {
-            return getSingleAppHorizTile(index);
-          }, childCount: listedApps.length),
-        );
+        if (settingsProvider.useGridView) {
+          return SliverGrid(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 150,
+              childAspectRatio: 0.8,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+            ),
+            delegate: SliverChildBuilderDelegate((
+              BuildContext context,
+              int index,
+            ) {
+              return getSingleAppGridTile(index);
+            }, childCount: listedApps.length),
+          );
+        } else {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate((
+              BuildContext context,
+              int index,
+            ) {
+              return getSingleAppHorizTile(index);
+            }, childCount: listedApps.length),
+          );
+        }
       }
     }
 
@@ -1371,6 +1641,25 @@ class AppsPageState extends State<AppsPage> {
                           isFilterOff
                               ? Icons.search_rounded
                               : Icons.search_off_rounded,
+                        ),
+                      );
+                    },
+                  ),
+                  Consumer<SettingsProvider>(
+                    builder: (context, settingsProvider, child) {
+                      return IconButton(
+                        color: Theme.of(context).colorScheme.primary,
+                        style: const ButtonStyle(visualDensity: VisualDensity.compact),
+                        tooltip: settingsProvider.useGridView
+                            ? tr('listView')
+                            : tr('gridView'),
+                        onPressed: () {
+                          settingsProvider.useGridView = !settingsProvider.useGridView;
+                        },
+                        icon: Icon(
+                          settingsProvider.useGridView
+                              ? Icons.view_list_rounded
+                              : Icons.grid_view_rounded,
                         ),
                       );
                     },
