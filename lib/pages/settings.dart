@@ -755,9 +755,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         height16,
                         DropdownButtonFormField(
-                          decoration: InputDecoration(
-                            labelText: tr('theme'),
-                          ),
+                          decoration: InputDecoration(labelText: tr('theme')),
                           initialValue: settingsProvider.theme,
                           items: [
                             DropdownMenuItem(

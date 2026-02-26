@@ -714,7 +714,7 @@ class AppsPageState extends State<AppsPage> {
       );
     }
 
-    List<double> _categoryStops(List<String> categories) {
+    List<double> categoryStops(List<String> categories) {
       final n = categories.length;
       final cached = _stopsCache[n];
       if (cached != null) return cached;
@@ -745,7 +745,7 @@ class AppsPageState extends State<AppsPage> {
         context,
       ).colorScheme.surface.withAlpha(0).value;
       final categories = listedApps[index].app.categories;
-      final stops = _categoryStops(categories);
+      final stops = categoryStops(categories);
 
       return Container(
         decoration: BoxDecoration(
