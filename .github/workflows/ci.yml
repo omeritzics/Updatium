@@ -47,6 +47,18 @@ jobs:
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle || true
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle.kts || true
           
+      - name: Auto-fix linting issues
+        run: dart fix --apply
+
+      - name: Format code
+        run: dart format .
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: auto-fix linting and formatting issues"
+          branch: ${{ github.ref_name }}
+          
       - name: Build APK (Unique ID)
         run: |
           # Inject the short SHA into the Application ID to allow side-by-side testing
