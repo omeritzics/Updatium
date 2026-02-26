@@ -36,11 +36,3 @@ jobs:
         with:
           commit_message: "style: auto-fix linting and formatting issues"
           branch: ${{ github.ref_name }}
-
-jobs:
-  go:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Validate Fastlane Supply Metadata
-        uses: ashutoshgngwr/validate-fastlane-supply-metadata@v2
