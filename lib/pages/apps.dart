@@ -963,17 +963,14 @@ class AppsPageState extends State<AppsPage> {
       );
     }
 
-    
     getCategoryCollapsibleTile(int index) {
       var filteredEntries = listedApps
           .asMap()
           .entries
-          .where(
-            (e) =>
-                e.value.app.categories.contains(listedCategories[index]) ||
-                e.value.app.categories.isEmpty &&
-                    listedCategories[index] == null,
-          )
+          .where((e) =>
+              e.value.app.categories.contains(listedCategories[index]) ||
+              e.value.app.categories.isEmpty &&
+                  listedCategories[index] == null)
           .toList();
 
       var tiles = filteredEntries
@@ -992,33 +989,7 @@ class AppsPageState extends State<AppsPage> {
         controlAffinity: ListTileControlAffinity.leading,
         trailing: Text(tiles.length.toString()),
         children: [
-          settingsProvider.useGridView
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 16.0,
-                  ),
-                  child: GridView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent:
-                          MediaQuery.of(context).size.width * 0.5,
-                      childAspectRatio: 0.55,
-                      crossAxisSpacing:
-                          MediaQuery.of(context).size.width * 0.04,
-                      mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
-                    ),
-                    itemCount: filteredEntries.length,
-                    itemBuilder: (context, gridIndex) {
-                      return getSingleAppGridTile(
-                        listedApps.indexOf(filteredEntries[gridIndex].value),
-                      );
-                    },
-                  ),
-                )
-              : Column(children: tiles),
+          Column(children: tiles),
         ],
       );
     }
