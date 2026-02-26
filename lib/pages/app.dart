@@ -695,37 +695,91 @@ class _AppPageState extends State<AppPage> {
   Widget _buildSimpleIcon(App app, double size) {
     return Consumer<AppsProvider>(
       builder: (context, appsProvider, child) {
-        final iconData = appsProvider.apps[app.id]?.icon;
-        final isInstalled = appsProvider.apps[app.id]?.installedInfo != null;
+        final appInMemory = appsProvider.apps[app.id];
 
-        return Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(size * 0.125),
-            color: iconData == null
-                ? Theme.of(context).colorScheme.surface.withValues(alpha: 0.1)
-                : null,
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(size * 0.125),
-            child: iconData != null
-                ? Image.memory(
-                    iconData,
+        // If icon is already loaded, display it immediately
+        if (appInMemory?.icon != null) {
+          return Container(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(size * 0.125),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(size * 0.125),
+              child: Image.memory(
+                appInMemory!.icon!,
+                width: size,
+                height: size,
+                fit: BoxFit.cover,
+                gaplessPlayback: true,
+                opacity: AlwaysStoppedAnimation(
+                  appInMemory.installedInfo == null ? 0.6 : 1,
+                ),
+                errorBuilder: (context, error, stackTrace) {
+                  return _buildFallbackIcon(size);
+                },
+              ),
+            ),
+          );
+        }
+
+        // Load icon asynchronously if not available
+        return FutureBuilder(
+          future: appsProvider.updateAppIcon(app.id),
+          builder: (context, snapshot) {
+            final updatedAppInMemory = appsProvider.apps[app.id];
+
+            if (updatedAppInMemory?.icon != null) {
+              return Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(size * 0.125),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(size * 0.125),
+                  child: Image.memory(
+                    updatedAppInMemory!.icon!,
                     width: size,
                     height: size,
                     fit: BoxFit.cover,
-                  )
-                : Icon(
-                    Icons.apps,
-                    size: size * 0.5,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                    gaplessPlayback: true,
+                    opacity: AlwaysStoppedAnimation(
+                      updatedAppInMemory.installedInfo == null ? 0.6 : 1,
+                    ),
+                    errorBuilder: (context, error, stackTrace) {
+                      return _buildFallbackIcon(size);
+                    },
                   ),
-          ),
+                ),
+              );
+            }
+
+            // Show fallback while loading or if failed
+            return _buildFallbackIcon(size);
+          },
         );
       },
+    );
+  }
+
+  Widget _buildFallbackIcon(double size) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size * 0.125),
+        color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(size * 0.125),
+        child: Icon(
+          Icons.apps,
+          size: size * 0.5,
+          color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+        ),
+      ),
     );
   }
 }
