@@ -143,6 +143,6 @@ def convert_json_to_arb(source_dir, target_dir):
 
 if __name__ == "__main__":
     convert_json_to_arb(
-        "/home/omeritzics/Dev-Projects/Updatium/assets/translations",
-        "/home/omeritzics/Dev-Projects/Updatium/lib/l10n"
+        "assets/translations",
+        "lib/l10n"
     )
