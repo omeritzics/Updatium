@@ -1,1 +1,0 @@
-bash: /home/omeritzics/מסמכים/Projects/flutter/bin/flutter: No such file or directory
