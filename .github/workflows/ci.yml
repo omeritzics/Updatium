@@ -87,7 +87,7 @@ jobs:
     
     steps:
       - name: Auto-Reject PR on Build Failure
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { data: reviews } = await github.rest.pulls.listReviews({
@@ -126,7 +126,7 @@ jobs:
     
     steps:
       - name: Auto-Approve PR on Build Success
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { data: reviews } = await github.rest.pulls.listReviews({
