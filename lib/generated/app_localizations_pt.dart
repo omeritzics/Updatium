@@ -1245,45 +1245,45 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String xAndNMoreUpdatesAvailable(num count) {
+  String xAndNMoreUpdatesAvailable(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count e $count outras aplicações possuem atualizações.',
-      one: '$count e uma outra aplicação possui atualizações.',
+      other: '$p0 e mais $count outras aplicações possuem atualizações.',
+      one: '$p0 e mais 1 outra aplicação possui atualizações.',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesInstalled(num count) {
+  String xAndNMoreUpdatesInstalled(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count e $count outras aplicações foram atualizadas.',
-      one: '$count e uma outra aplicação foram atualizadas.',
+      other: '$p0 e mais $count outras aplicações foram atualizadas.',
+      one: '$p0 e mais 1 outra aplicação foi atualizada.',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesFailed(num count) {
+  String xAndNMoreUpdatesFailed(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Falha ao atualizar $count e $count outras aplicações.',
-      one: 'Falha ao atualizar $count e mais 1 aplicação.',
+      other: 'Falha ao atualizar $p0 e mais $count outras aplicações.',
+      one: 'Falha ao atualizar $p0 e mais 1 outra aplicação.',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesPossiblyInstalled(num count) {
+  String xAndNMoreUpdatesPossiblyInstalled(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count e $count outras aplicações podem ter sido atualizadas.',
-      one: '$count e uma outra aplicação podem ter sido atualizadas.',
+      other: '$p0 e mais $count outras aplicações podem ter sido atualizadas.',
+      one: '$p0 e mais 1 outra aplicação pode ter sido atualizada.',
     );
     return '$_temp0';
   }
