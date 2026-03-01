@@ -1245,12 +1245,12 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String xAndNMoreUpdatesAvailable(num count) {
+  String xAndNMoreUpdatesAvailable(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '“$count”和另外 $count 个应用可以更新了。',
-      one: '“$count”和另外 1 个应用可以更新了。',
+      other: '“$p0”和另外 $count 个应用可以更新了。',
+      one: '“$p0”和另外 1 个应用可以更新了。',
     );
     return '$_temp0';
   }
