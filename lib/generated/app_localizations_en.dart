@@ -1161,8 +1161,8 @@ class AppLocalizationsEn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'BG update checking encountered a $count, will schedule a retry check in $count minutes',
-      one: 'BG update checking encountered a $count, will schedule a retry check in $count minute',
+      other: 'BG update checking encountered an error; will schedule a retry check in $count minutes',
+      one: 'BG update checking encountered an error; will schedule a retry check in $count minute',
     );
     return '$_temp0';
   }
