@@ -125,12 +125,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
     runUpdatiumImport() {
       HapticFeedback.selectionClick();
+      setState(() {
+        importInProgress = true;
+      });
       FilePicker.platform
           .pickFiles()
           .then((result) {
-            setState(() {
-              importInProgress = true;
-            });
             if (result != null) {
               String data = File(result.files.single.path!).readAsStringSync();
               try {
@@ -168,6 +168,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
     }
 
     runUrlImport() {
+      setState(() {
+        importInProgress = true;
+      });
       FilePicker.platform.pickFiles().then((result) {
         if (result != null) {
           urlListImport(
@@ -188,6 +191,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 .join('\n'),
           );
         }
+      }).catchError((e) {
+        showError(e, context);
+      }).whenComplete(() {
+        setState(() {
+          importInProgress = false;
+        });
       });
     }
 
