@@ -2479,10 +2479,10 @@ class AppLocalizationsEnEo extends AppLocalizationsEn {
 
   @override
   String bgUpdateGotErrorRetryInMinutes(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
       locale: localeName,
-      other: 'La serĉo de fonaj ĝisdatigoj renkontis al $count, nova programota provo en $count minutoj',
+      other: 'La serĉo de fonaj ĝisdatigoj renkontis eraron; nova provo estos programita post $count minutoj',
+      one: 'La serĉo de fonaj ĝisdatigoj renkontis eraron; nova provo estos programita post $count minuto',
+    );
       one: 'La serĉo de fonaj ĝisdatigoj renkontis al $count, nova programota provo en $count minuto',
     );
     return '$_temp0';
