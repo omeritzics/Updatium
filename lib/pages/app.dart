@@ -614,7 +614,7 @@ class _AppPageState extends State<AppPage> {
                     tooltip: tr('additionalOptions'),
                     icon: const Icon(Icons.edit),
                   ),
-                                if (app?.app.installedVersion != null &&
+                if (app?.app.installedVersion != null &&
                     app?.app.installedVersion != app?.app.latestVersion &&
                     !isVersionDetectionStandard &&
                     !trackOnly)
