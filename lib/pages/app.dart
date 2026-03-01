@@ -614,15 +614,7 @@ class _AppPageState extends State<AppPage> {
                     tooltip: tr('additionalOptions'),
                     icon: const Icon(Icons.edit),
                   ),
-                if (app != null && app.installedInfo != null)
-                  IconButton(
-                    onPressed: () {
-                      appsProvider.openAppSettings(app.app.id);
-                    },
-                    icon: const Icon(Icons.settings),
-                    tooltip: tr('settings'),
-                  ),
-                if (app?.app.installedVersion != null &&
+                                if (app?.app.installedVersion != null &&
                     app?.app.installedVersion != app?.app.latestVersion &&
                     !isVersionDetectionStandard &&
                     !trackOnly)
