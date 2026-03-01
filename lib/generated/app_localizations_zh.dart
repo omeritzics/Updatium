@@ -2417,7 +2417,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String fileDeletionError(Object p0) {
-    return '刪除文件失敗( 嘗試手動刪除, 然後再次嘗試 ) : “ _% ”';
+    return '刪除檔案失敗（請嘗試手動刪除後再試一次）：「$p0」';
   }
 
   @override
