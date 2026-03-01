@@ -138,7 +138,7 @@ jobs:
           cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/updatium-nightly.apk
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Updatium-Nightly-APK
           path: build/outputs/updatium-nightly.apk

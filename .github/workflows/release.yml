@@ -138,7 +138,7 @@ jobs:
           flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: updatium-v${{ steps.version.outputs.version }}-run${{ github.run_number }}
           path: build/app/outputs/flutter-apk/*.apk
