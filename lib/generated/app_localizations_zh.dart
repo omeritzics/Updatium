@@ -1161,8 +1161,8 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '后台更新检查遇到了“$count”问题，将于 $count 分钟后重试',
-      one: '后台更新检查遇到了“$count”问题，将于 $count 分钟后重试',
+      other: '后台更新检查遇到问题，将于 $count 分钟后重试',
+      one: '后台更新检查遇到问题，将于 $count 分钟后重试',
     );
     return '$_temp0';
   }
