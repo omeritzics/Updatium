@@ -1161,8 +1161,8 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'A verificação de atualizações em segundo plano encontrou um $count, agendada uma nova verificação em $count minutos',
-      one: 'A verificação de atualizações em segundo plano encontrou um $count, agendada uma nova verificação em $count minuto',
+      other: 'A verificação de atualizações em segundo plano encontrou um erro; uma nova verificação será agendada em $count minutos',
+      one: 'A verificação de atualizações em segundo plano encontrou um erro; uma nova verificação será agendada em $count minuto',
     );
     return '$_temp0';
   }
