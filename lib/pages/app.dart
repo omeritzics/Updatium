@@ -199,14 +199,17 @@ class _AppPageState extends State<AppPage> {
                       borderRadius: BorderRadius.circular(12),
                       color: settingsProvider.highlightTouchTargets
                           ? () {
-                              bool usePureBlack = settingsProvider.useBlackTheme && 
-                                                 Theme.of(context).brightness == Brightness.dark;
+                              bool usePureBlack =
+                                  settingsProvider.useBlackTheme &&
+                                  Theme.of(context).brightness ==
+                                      Brightness.dark;
                               if (usePureBlack) {
                                 return Colors.white.withValues(alpha: 0.16);
                               }
-                              return (Theme.of(context).brightness == Brightness.light
-                                        ? Theme.of(context).primaryColor
-                                        : Theme.of(context).primaryColorLight)
+                              return (Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? Theme.of(context).primaryColor
+                                      : Theme.of(context).primaryColorLight)
                                   .withAlpha(
                                     Theme.of(context).brightness ==
                                             Brightness.light
@@ -397,14 +400,16 @@ class _AppPageState extends State<AppPage> {
                   borderRadius: BorderRadius.circular(12),
                   color: settingsProvider.highlightTouchTargets
                       ? () {
-                          bool usePureBlack = settingsProvider.useBlackTheme && 
-                                             Theme.of(context).brightness == Brightness.dark;
+                          bool usePureBlack =
+                              settingsProvider.useBlackTheme &&
+                              Theme.of(context).brightness == Brightness.dark;
                           if (usePureBlack) {
                             return Colors.white.withValues(alpha: 0.16);
                           }
-                          return (Theme.of(context).brightness == Brightness.light
-                                    ? Theme.of(context).primaryColor
-                                    : Theme.of(context).primaryColorLight)
+                          return (Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).primaryColorLight)
                               .withAlpha(
                                 Theme.of(context).brightness == Brightness.light
                                     ? 20
@@ -780,15 +785,16 @@ class _AppPageState extends State<AppPage> {
 
   Widget _buildFallbackIcon(double size) {
     var settingsProvider = context.read<SettingsProvider>();
-    bool usePureBlack = settingsProvider.useBlackTheme && 
-                       Theme.of(context).brightness == Brightness.dark;
-    
+    bool usePureBlack =
+        settingsProvider.useBlackTheme &&
+        Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(size * 0.125),
-        color: usePureBlack 
+        color: usePureBlack
             ? Colors.black.withValues(alpha: 0.2)
             : Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
       ),
@@ -799,7 +805,9 @@ class _AppPageState extends State<AppPage> {
           size: size * 0.5,
           color: usePureBlack
               ? Colors.white.withValues(alpha: 0.6)
-              : Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+              : Theme.of(
+                  context,
+                ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
         ),
       ),
     );
