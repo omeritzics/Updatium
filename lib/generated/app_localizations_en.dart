@@ -1245,44 +1245,46 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String xAndNMoreUpdatesAvailable(num count) {
+  String xAndNMoreUpdatesAvailable(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count and $count more apps have updates.',
-      one: '$count and 1 more app have updates.',
+      other: '$p0 and $count more apps have updates.',
+      one: '$p0 and 1 more app have updates.',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesInstalled(num count) {
+  String xAndNMoreUpdatesInstalled(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count and $count more apps were updated.',
-      one: '$count and 1 more app was updated.',
+      other: '$p0 and $count more apps were updated.',
+      one: '$p0 and 1 more app was updated.',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesFailed(num count) {
+  String xAndNMoreUpdatesFailed(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Failed to update $count and $count more apps.',
-      one: 'Failed to update $count and 1 more app.',
+      other: 'Failed to update $p0 and $count more apps.',
+      one: 'Failed to update $p0 and 1 more app.',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesPossiblyInstalled(num count) {
+  String xAndNMoreUpdatesPossiblyInstalled(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count and $count more apps may have been updated.',
+      other: '$p0 and $count more apps may have been updated.',
+      one: '$p0 and 1 more app may have been updated.',
+    );
       one: '$count and 1 more app may have been updated.',
     );
     return '$_temp0';
