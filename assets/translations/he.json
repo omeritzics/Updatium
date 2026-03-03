@@ -38,7 +38,7 @@
     "appAlreadyAdded": "היישום כבר נוסף",
     "alreadyUpToDateQuestion": "היישום כבר מעודכן?",
     "addApp": "הוספת יישום",
-    "appSourceURL": "כתובת המקור היישום",
+    "appSourceURL": "כתובת המקור של היישום",
     "error": "שגיאה",
     "add": "הוספה",
     "searchSomeSourcesLabel": "חיפוש (מספר מקורות בלבד)",
@@ -153,7 +153,7 @@
     "xWasNotUpdatedToY": "נכשל העדכון של {} לגרסה {}.",
     "errorCheckingUpdates": "שגיאה בעת  בדיקת עדכונים",
     "errorCheckingUpdatesNotifDescription": "התראה שמופיעה כאשר נכשלת בדיקת העדכונים ברקע",
-    "appsRemoved": "Apps removed",
+    "appsRemoved": "הוסרו יישומים",
     "appsRemovedNotifDescription": "Notifies the user that one or more apps were removed due to errors while loading them",
     "xWasRemovedDueToErrorY": "היישום {} הוסר בשל שגיאה זו: {}",
     "completeAppInstallation": "השלמת התקנת היישום",
@@ -273,7 +273,7 @@
     "pickExportDir": "בחירת תיקייה לייצוא",
     "autoExportOnChanges": "ייצוא אוטומטי בעת ביצוע שינויים",
     "includeSettings": "לכלול הגדרות",
-    "filterVersionsByRegEx": "Filter versions by regular expression",
+    "filterVersionsByRegEx": "סינון גרסאות לפי ביטוי רגולרי",
     "trySelectingSuggestedVersionCode": "Try selecting suggested versionCode APK",
     "dontSortReleasesList": "Retain release order from API",
     "reverseSort": "היפוך סדר",
@@ -287,7 +287,7 @@
     "skipUpdateNotifications": "דילוג על התראות בנוגע לעדכונים",
     "updatesAvailableNotifChannel": "עדכונים זמינים",
     "appsUpdatedNotifChannel": "היישומים עודכנו",
-    "appsPossiblyUpdatedNotifChannel": "App updates attempted",
+    "appsPossiblyUpdatedNotifChannel": "בוצעו ניסיונות לעדכון",
     "errorCheckingUpdatesNotifChannel": "שגיאה בעת בדיקת עדכונים",
     "appsRemovedNotifChannel": "היישומים הוסרו",
     "downloadingXNotifChannel": "מתבצעת הורדת {}",
@@ -331,7 +331,6 @@
     "smartname": "שם (שיטה חכמה)",
     "sortMethod": "שיטת מיון",
     "welcome": "ברוך בואך",
-    "documentationLinksNote": "The Updatium GitHub page linked below contains links to videos, articles, discussions, and other resources that will help you understand how to use the app.",
     "batteryOptimizationNote": "Note that background downloads may work more reliably if you switch to the \"foreground service\" in the Updatium settings and/or disable battery optimization for Updatium in your OS settings.",
     "fileDeletionError": "מחיקת הקובץ נכשלה (כדאי לנסות למחוק אותו ידנית ואז לנסות שוב): \"{}\"",
     "foregroundService": "שירות העדכון החזיתי של Updatium",
@@ -395,9 +394,9 @@
         "other": "Cleared {n} logs (before = {before}, after = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} and 1 more app have updates.",
-        "two": "{} and 2 more apps have updates.",
-        "other": "{} and {} more apps have updates."
+        "one": "ליישום {} ולעוד יישום יש עדכונים.",
+        "two": "ליישום {} ולעוד שני יישומים יש עדכונים.",
+        "other": "ליישום {} ולעוד {} יישומים יש עדכונים."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "היישום {} ועוד יישום נוסף עודכנו.",

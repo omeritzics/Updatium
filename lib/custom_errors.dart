@@ -176,7 +176,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
             child: Text(e.toString()),
           ),
           actions: [
-            createAppTextButton(
+            AppTextButton(
               onPressed: () {
                 Navigator.of(context).pop(null);
               },

@@ -194,15 +194,25 @@ class _AppPageState extends State<AppPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: settingsProvider.highlightTouchTargets
-                          ? (Theme.of(context).brightness == Brightness.light
-                                    ? Theme.of(context).primaryColor
-                                    : Theme.of(context).primaryColorLight)
-                                .withAlpha(
+                          ? () {
+                              bool usePureBlack =
+                                  settingsProvider.useBlackTheme &&
                                   Theme.of(context).brightness ==
+                                      Brightness.dark;
+                              if (usePureBlack) {
+                                return Colors.white.withValues(alpha: 0.16);
+                              }
+                              return (Theme.of(context).brightness ==
                                           Brightness.light
-                                      ? 20
-                                      : 40,
-                                )
+                                      ? Theme.of(context).primaryColor
+                                      : Theme.of(context).primaryColorLight)
+                                  .withAlpha(
+                                    Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? 20
+                                        : 40,
+                                  );
+                            }()
                           : null,
                     ),
                     padding: settingsProvider.highlightTouchTargets
@@ -387,14 +397,23 @@ class _AppPageState extends State<AppPage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: settingsProvider.highlightTouchTargets
-                      ? (Theme.of(context).brightness == Brightness.light
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).primaryColorLight)
-                            .withAlpha(
-                              Theme.of(context).brightness == Brightness.light
-                                  ? 20
-                                  : 40,
-                            )
+                      ? () {
+                          bool usePureBlack =
+                              settingsProvider.useBlackTheme &&
+                              Theme.of(context).brightness == Brightness.dark;
+                          if (usePureBlack) {
+                            return Colors.white.withValues(alpha: 0.16);
+                          }
+                          return (Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).primaryColorLight)
+                              .withAlpha(
+                                Theme.of(context).brightness == Brightness.light
+                                    ? 20
+                                    : 40,
+                              );
+                        }()
                       : null,
                 ),
                 padding: settingsProvider.highlightTouchTargets
@@ -437,13 +456,13 @@ class _AppPageState extends State<AppPage> {
           return AlertDialog(
             title: Text(AppLocalizations.of(context)!\.alreadyUpToDateQuestion),
             actions: [
-              createAppTextButton(
+              AppTextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(AppLocalizations.of(context)!\.no),
               ),
-              createAppTextButton(
+              AppTextButton(
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   var updatedApp = app?.app;
@@ -526,7 +545,7 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => createAppTextButton(
+    getInstallOrUpdateButton() => AppTextButton(
       onPressed:
           !updating &&
               (app?.app.installedVersion == null ||
@@ -763,21 +782,30 @@ class _AppPageState extends State<AppPage> {
   }
 
   Widget _buildFallbackIcon(double size) {
+    var settingsProvider = context.read<SettingsProvider>();
+    bool usePureBlack =
+        settingsProvider.useBlackTheme &&
+        Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(size * 0.125),
-        color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
+        color: usePureBlack
+            ? Colors.black.withValues(alpha: 0.2)
+            : Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(size * 0.125),
         child: Icon(
           Icons.apps,
           size: size * 0.5,
-          color: Theme.of(
-            context,
-          ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+          color: usePureBlack
+              ? Colors.white.withValues(alpha: 0.6)
+              : Theme.of(
+                  context,
+                ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
         ),
       ),
     );

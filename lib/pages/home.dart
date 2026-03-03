@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ],
               ),
               actions: [
-                createAppTextButton(
+                AppTextButton(
                   onPressed: () {
                     sp.googleVerificationWarningShown = true;
                     Navigator.of(context).pop(null);

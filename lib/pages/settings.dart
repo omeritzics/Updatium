@@ -1100,7 +1100,7 @@ class _LogsDialogState extends State<LogsDialog> {
         ],
       ),
       actions: [
-        createAppTextButton(
+        AppTextButton(
           onPressed: () async {
             var cont =
                 (await showDialog<Map<String, dynamic>?>(
@@ -1122,13 +1122,13 @@ class _LogsDialogState extends State<LogsDialog> {
           },
           child: Text(AppLocalizations.of(context)!\.remove),
         ),
-        createAppTextButton(
+        AppTextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(AppLocalizations.of(context)!\.close),
         ),
-        createAppTextButton(
+        AppTextButton(
           onPressed: () {
             Share.share(logString ?? '', subject: AppLocalizations.of(context)!\.appLogs);
             Navigator.of(context).pop();
