@@ -36,7 +36,7 @@ extract_used_keys() {
     echo "🔍 Extracting translation keys from Dart files..."
     
     # Create a script to extract translation keys from Dart files
-    cat > extract_keys.js << 'EOF'
+    cat << 'EOF' > extract_keys.js
     const fs = require('fs');
     const path = require('path');
     
@@ -101,7 +101,7 @@ extract_used_keys() {
     const libDir = path.join(process.cwd(), '..', 'lib');
     const dartFiles = findDartFiles(libDir);
     
-    console.log(`Found ${dartFiles.length} Dart files`);
+    console.log(\`Found \${dartFiles.length} Dart files\`);
     
     const allKeys = new Set();
     
@@ -115,13 +115,13 @@ extract_used_keys() {
     // Save to file
     fs.writeFileSync('used_keys.txt', sortedKeys.join('\n'));
     
-    console.log(`Extracted ${sortedKeys.length} unique translation keys`);
+    console.log(\`Extracted \${sortedKeys.length} unique translation keys\`);
     console.log('Keys saved to used_keys.txt');
     
     // Output for shell script
-    console.log(`used_keys=${sortedKeys.join(',')}`);
-    console.log(`used_keys_count=${sortedKeys.length}`);
-    EOF
+    console.log(\`used_keys=\${sortedKeys.join(',')}\`);
+    console.log(\`used_keys_count=\${sortedKeys.length}\`);
+EOF
     
     # Run the extraction script
     node extract_keys.js
