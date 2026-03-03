@@ -310,7 +310,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       'Choose a directory to export your apps and settings',
                                   excludeSemantics: true,
                                   child: FilledButton.icon(
-                                    onPressed: importInProgress
+                                    onPressed: importInProgress ||
+                                        appsProvider.exportInProgress
                                         ? null
                                         : () {
                                             runUpdatiumExport(pickOnly: true);
@@ -335,6 +336,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   child: FilledButton.icon(
                                     onPressed:
                                         importInProgress ||
+                                        appsProvider.exportInProgress ||
                                             snapshot.data == null
                                         ? null
                                         : runUpdatiumExport,
@@ -422,7 +424,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       );
                     },
                   ),
-                  if (importInProgress)
+                  if (importInProgress || appsProvider.exportInProgress)
                     const Column(
                       children: [
                         SizedBox(height: 14),

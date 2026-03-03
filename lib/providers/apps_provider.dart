@@ -535,6 +535,7 @@ class AppsProvider with ChangeNotifier {
   Map<String, AppInMemory> apps = {};
   bool loadingApps = false;
   bool gettingUpdates = false;
+  bool exportInProgress = false;
   LogsProvider logs = LogsProvider();
 
   // Variables to keep track of the app foreground status (installs can't run in the background)
@@ -543,7 +544,6 @@ class AppsProvider with ChangeNotifier {
   late StreamSubscription<FGBGType>? foregroundSubscription;
   late Directory APKDir;
   late Directory iconsCacheDir;
-  late SettingsProvider settingsProvider = SettingsProvider();
 
   Iterable<AppInMemory> getAppValues() => apps.values.map((a) => a.deepCopy());
 
@@ -2296,8 +2296,13 @@ class AppsProvider with ChangeNotifier {
     isAuto = false,
     SettingsProvider? sp,
   }) async {
+    if (exportInProgress && !isAuto) {
+      throw UpdatiumError(tr('exportAlreadyInProgress'));
+    }
+    
     SettingsProvider settingsProvider = sp ?? this.settingsProvider;
     var exportDir = await settingsProvider.getExportDir();
+    
     if (isAuto) {
       if (settingsProvider.autoExportOnChanges != true) {
         return null;
@@ -2321,8 +2326,10 @@ class AppsProvider with ChangeNotifier {
         }
       } catch (e) {
         // Handle error silently or log if needed
+        debugPrint('Error cleaning auto-export files: $e');
       }
     }
+    
     if (exportDir == null || pickOnly) {
       await settingsProvider.pickExportDir();
       exportDir = await settingsProvider.getExportDir();
@@ -2330,12 +2337,16 @@ class AppsProvider with ChangeNotifier {
     if (exportDir == null) {
       return null;
     }
+    
     String? returnPath;
     if (!pickOnly) {
-      var encoder = const JsonEncoder.withIndent("    ");
-      Map<String, dynamic> finalExport = generateExportJSON();
-      // Create export file using docman
+      exportInProgress = true;
+      notifyListeners();
+      
       try {
+        var encoder = const JsonEncoder.withIndent("    ");
+        Map<String, dynamic> finalExport = generateExportJSON();
+        // Create export file using docman
         final docFileResult = await DocumentFile.fromUri(exportDir.toString());
         final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
@@ -2350,14 +2361,22 @@ class AppsProvider with ChangeNotifier {
           );
 
           if (result == null) {
-            throw UpdatiumError(tr('unexpectedError'));
+            throw UpdatiumError(tr('failedToCreateExportFile'));
           }
         } else {
-          throw UpdatiumError(tr('unexpectedError'));
+          throw UpdatiumError(tr('exportDirNotAccessible'));
         }
       } catch (e) {
-        throw UpdatiumError(tr('unexpectedError'));
+        if (e is UpdatiumError) {
+          rethrow;
+        }
+        debugPrint('Export error: $e');
+        throw UpdatiumError('${tr('failedToExport')}: ${e.toString()}');
+      } finally {
+        exportInProgress = false;
+        notifyListeners();
       }
+      
       returnPath = exportDir.pathSegments
           .join('/')
           .replaceFirst('tree/primary:', '/');
@@ -2538,13 +2557,13 @@ class _AppFilePickerState extends State<AppFilePicker> {
         ],
       ),
       actions: [
-        createAppTextButton(
+        AppTextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        createAppTextButton(
+        AppTextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(fileUrl);
@@ -2586,13 +2605,13 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
         ),
       ),
       actions: [
-        createAppTextButton(
+        AppTextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        createAppTextButton(
+        AppTextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);

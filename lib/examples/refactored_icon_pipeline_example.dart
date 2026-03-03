@@ -529,7 +529,7 @@ class _AppDetailsDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        createAppTextButton(
+        appTextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Close'),
         ),
@@ -668,7 +668,7 @@ class _PrefetchDetailsDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        createAppTextButton(
+        appTextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Close'),
         ),

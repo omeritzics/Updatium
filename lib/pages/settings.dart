@@ -1104,7 +1104,7 @@ class _LogsDialogState extends State<LogsDialog> {
         ],
       ),
       actions: [
-        createAppTextButton(
+        AppTextButton(
           onPressed: () async {
             var cont =
                 (await showDialog<Map<String, dynamic>?>(
@@ -1126,13 +1126,13 @@ class _LogsDialogState extends State<LogsDialog> {
           },
           child: Text(tr('remove')),
         ),
-        createAppTextButton(
+        AppTextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(tr('close')),
         ),
-        createAppTextButton(
+        AppTextButton(
           onPressed: () {
             Share.share(logString ?? '', subject: tr('appLogs'));
             Navigator.of(context).pop();
