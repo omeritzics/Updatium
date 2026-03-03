@@ -4,23 +4,34 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   build_artifact:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      pull-requests: write
 
     steps:
-      - name: Free Disk Space
+      - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
           tool-cache: true
           android: false
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Commit SHA
         id: vars
@@ -39,9 +50,11 @@ jobs:
           version: '3.38.9'  # Use specific stable version that meets requirements
           cache: true
 
-      - name: Prepare Build
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Strip signing config
         run: |
-          flutter pub get
           # Strip signing config to build debug APK safely without keystores
           # Handle both .gradle and .gradle.kts files
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle || true
@@ -53,11 +66,24 @@ jobs:
       - name: Format code
         run: dart format .
 
+      - name: Check for changes
+        id: changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "🔧 Found formatting/linting changes"
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+            echo "✅ No formatting/linting changes needed"
+          fi
+
       - name: Commit and Push changes
+        if: steps.changes.outputs.changes == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "style: auto-fix linting and formatting issues"
+          commit_message: "style: auto-fix linting and formatting issues [ci skip]"
           branch: ${{ github.ref_name }}
+          file_pattern: '*.dart'
           
       - name: Build APK (Unique ID)
         run: |
@@ -84,6 +110,7 @@ jobs:
     if: failure() && github.event_name == 'pull_request'
     permissions:
       pull-requests: write
+      contents: read
     
     steps:
       - name: Auto-Reject PR on Build Failure
@@ -123,6 +150,7 @@ jobs:
     if: success() && github.event_name == 'pull_request'
     permissions:
       pull-requests: write
+      contents: read
     
     steps:
       - name: Auto-Approve PR on Build Success

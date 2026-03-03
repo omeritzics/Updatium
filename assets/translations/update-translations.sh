@@ -20,6 +20,7 @@ show_help() {
     echo "  -u, --update         Update missing keys with English fallbacks"
     echo "  -t, --translate      Auto-translate missing keys (requires LIBRETRANSLATE_API_KEY)"
     echo "  -v, --validate       Validate JSON format and consistency"
+    echo "  -r, --remove-unused  Detect and remove unused translation keys"
     echo "  -h, --help           Show this help message"
     echo ""
     echo "Examples:"
@@ -27,6 +28,191 @@ show_help() {
     echo "  $0 --update          # Add missing keys with English fallbacks"
     echo "  $0 --translate       # Auto-translate missing keys"
     echo "  $0 --validate        # Validate all translation files"
+    echo "  $0 --remove-unused   # Remove unused translation keys"
+}
+
+# Function to extract used translation keys from Dart files
+extract_used_keys() {
+    echo "🔍 Extracting translation keys from Dart files..."
+    
+    # Create a script to extract translation keys from Dart files
+    cat > extract_keys.js << 'EOF'
+    const fs = require('fs');
+    const path = require('path');
+    
+    // Function to extract translation keys from a single file
+    function extractKeysFromFile(filePath) {
+      const content = fs.readFileSync(filePath, 'utf8');
+      const keys = new Set();
+      
+      // Match patterns like:
+      // - tr('key')
+      // - tr('key', args: [...])
+      // - AppLocalizations.of(context)!.key
+      // - AppLocalizations.of(context)!.key(args: [...])
+      // - tr('x', args: [plural('key', ...)])
+      // - AppLocalizations.of(context)!.x(plural('key', ...))
+      
+      const patterns = [
+        /tr\(\s*['"`]([^'"`]+)['"`]/g,
+        /tr\(\s*['"`]([^'"`]+)['"`]\s*,/g,
+        /AppLocalizations\.of\(context\)\!\.([a-zA-Z_][a-zA-Z0-9_]*)/g,
+        /plural\(\s*['"`]([^'"`]+)['"`]/g,
+        /AppLocalizations\.of\(context\)\!\.([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g,
+      ];
+      
+      patterns.forEach(pattern => {
+        let match;
+        while ((match = pattern.exec(content)) !== null) {
+          const key = match[1];
+          if (key && !key.includes(' ') && key.length > 0) {
+            keys.add(key);
+          }
+        }
+      });
+      
+      return Array.from(keys);
+    }
+    
+    // Function to recursively find all Dart files
+    function findDartFiles(dir) {
+      const files = [];
+      
+      function traverse(currentDir) {
+        const items = fs.readdirSync(currentDir);
+        
+        for (const item of items) {
+          const fullPath = path.join(currentDir, item);
+          const stat = fs.statSync(fullPath);
+          
+          if (stat.isDirectory() && !item.startsWith('.') && item !== 'build') {
+            traverse(fullPath);
+          } else if (stat.isFile() && item.endsWith('.dart')) {
+            files.push(fullPath);
+          }
+        }
+      }
+      
+      traverse(dir);
+      return files;
+    }
+    
+    // Main execution
+    const libDir = path.join(process.cwd(), '..', 'lib');
+    const dartFiles = findDartFiles(libDir);
+    
+    console.log(`Found ${dartFiles.length} Dart files`);
+    
+    const allKeys = new Set();
+    
+    dartFiles.forEach(file => {
+      const keys = extractKeysFromFile(file);
+      keys.forEach(key => allKeys.add(key));
+    });
+    
+    const sortedKeys = Array.from(allKeys).sort();
+    
+    // Save to file
+    fs.writeFileSync('used_keys.txt', sortedKeys.join('\n'));
+    
+    console.log(`Extracted ${sortedKeys.length} unique translation keys`);
+    console.log('Keys saved to used_keys.txt');
+    
+    // Output for shell script
+    console.log(`used_keys=${sortedKeys.join(',')}`);
+    console.log(`used_keys_count=${sortedKeys.length}`);
+    EOF
+    
+    # Run the extraction script
+    node extract_keys.js
+    
+    echo "🔍 Found $(cat used_keys.txt | wc -l) translation keys used in code"
+}
+
+# Function to check for unused keys
+check_unused() {
+    echo "🔍 Checking for unused translation keys..."
+    
+    # Extract used keys first
+    extract_used_keys
+    
+    template_file="en.json"
+    template_keys=$(jq -r 'keys[]' "$template_file" | sort)
+    
+    # Get used keys
+    IFS=',' read -ra USED_KEYS <<< "$(grep 'used_keys=' extract_keys.js | cut -d'=' -f2)"
+    
+    unused_keys=0
+    unused_list=""
+    
+    echo "Checking each template key against used keys..."
+    
+    for key in $template_keys; do
+        if [[ ! " ${USED_KEYS[@]} " =~ " ${key} " ]]; then
+            echo "❌ Unused key: $key"
+            unused_keys=$((unused_keys + 1))
+            unused_list="$unused_list $key"
+        else
+            echo "✅ Used key: $key"
+        fi
+    done
+    
+    if [ $unused_keys -gt 0 ]; then
+        echo ""
+        echo "⚠️ Found $unused_keys unused translation keys"
+        echo "Unused keys:$unused_list"
+        return 1
+    else
+        echo ""
+        echo "✅ All translation keys are in use"
+        return 0
+    fi
+}
+
+# Function to remove unused keys
+remove_unused() {
+    echo "🗑️ Removing unused translation keys..."
+    
+    # Check for unused keys first
+    if ! check_unused; then
+        template_file="en.json"
+        
+        # Create backup
+        cp "$template_file" "${template_file}.backup"
+        
+        # Get unused keys
+        IFS=' ' read -ra UNUSED_KEYS <<< "$unused_list"
+        
+        echo "Removing ${#UNUSED_KEYS[@]} unused keys from all translation files..."
+        
+        for file in *.json; do
+            if [ "$file" != "package.json" ] && [ "$file" != "used_keys.txt" ]; then
+                echo "Processing $file..."
+                
+                # Create a new JSON without unused keys
+                jq --arg keys "$(printf '%s\n' "${UNUSED_KEYS[@]}" | jq -R . | jq -s .)" '
+                  reduce . as $in ($ARGS.positional[]; select($in | has($in)) | del($in[$in]))
+                ' "$file" > "${file}.tmp"
+                
+                # Replace original file
+                mv "${file}.tmp" "$file"
+                
+                echo "✅ Updated $file"
+            fi
+        done
+        
+        echo ""
+        echo "🗑️ Unused keys have been removed"
+        echo "📁 Backups created with .backup extension"
+        echo ""
+        echo "⚠️ Please test the app to ensure no functionality is broken"
+        echo "   If any keys were removed in error, restore from the .backup files"
+    else
+        echo "✅ No unused keys to remove"
+    fi
+    
+    # Clean up temporary files
+    rm -f extract_keys.js used_keys.txt
 }
 
 # Function to check for missing keys
@@ -241,6 +427,9 @@ case "${1:-}" in
         ;;
     -v|--validate)
         validate_translations
+        ;;
+    -r|--remove-unused)
+        remove_unused
         ;;
     "")
         # Default behavior: check and update if needed

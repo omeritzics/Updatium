@@ -25,8 +25,10 @@ The project includes an automated GitHub Actions workflow (`.github/workflows/tr
 1. **Detects Missing Keys**: Automatically scans all translation files for missing keys compared to the English template
 2. **Adds Missing Keys**: Automatically adds missing keys with English fallback translations
 3. **Optional Auto-Translation**: Can auto-translate missing strings using LibreTranslate
-4. **Creates Pull Requests**: Automatically creates PRs with translation updates
-5. **Validates Format**: Ensures all JSON files are valid and consistent
+4. **Detects Unused Keys**: Analyzes Dart code to find translation keys that are no longer used
+5. **Removes Unused Keys**: Automatically removes unused translation keys (optional)
+6. **Creates Pull Requests**: Automatically creates PRs with translation updates
+7. **Validates Format**: Ensures all JSON files are valid and consistent
 
 ### Triggers
 
@@ -69,6 +71,7 @@ export LIBRETRANSLATE_API_KEY=your_api_key
 | `-u, --update` | Update missing keys with English fallbacks |
 | `-t, --translate` | Auto-translate missing keys |
 | `-v, --validate` | Validate JSON format and consistency |
+| `-r, --remove-unused` | Detect and remove unused translation keys |
 
 ### Default Behavior
 
@@ -118,7 +121,92 @@ After running the update script:
 3. **Test the app** to ensure translations work correctly
 4. **Commit the changes**
 
-## 🔧 Advanced Configuration
+## �️ Removing Unused Translation Keys
+
+### Automatic Detection
+
+The system can automatically detect translation keys that are no longer used in the codebase:
+
+```bash
+# Check for unused keys
+./update-translations.sh --remove-unused
+
+# This will:
+# 1. Analyze all Dart files for translation key usage
+# 2. Compare with keys in translation files
+# 3. Show which keys are unused
+# 4. Prompt to remove unused keys
+# 5. Create backups before removal
+```
+
+### GitHub Actions
+
+To remove unused keys via GitHub Actions:
+
+1. Go to **Actions** tab in your GitHub repository
+2. Select **Translation Management** workflow
+3. Click **Run workflow**
+4. Enable **"Remove unused translation strings"** option
+5. Click **Run workflow**
+
+The workflow will:
+- 🔍 Analyze all Dart files for translation key usage
+- 🗑️ Create a PR with unused keys removed
+- 📁 Create backups of original files
+- 📋 Provide detailed statistics
+
+### Supported Patterns
+
+The system detects translation keys used in these patterns:
+
+```dart
+// Direct translation calls
+tr('keyName')
+tr('keyName', args: [...])
+
+// AppLocalizations access
+AppLocalizations.of(context)!.keyName
+AppLocalizations.of(context)!.keyName(args: [...])
+
+// Plural forms
+plural('keyName', count)
+tr('x', args: [plural('keyName', count)])
+
+// Method calls with translation keys
+AppLocalizations.of(context)!.x(plural('keyName', count))
+```
+
+### Safety Features
+
+#### 📁 Automatic Backups
+- Creates `.backup` files before removing keys
+- Easy restoration if keys are removed in error
+
+#### ⚠️ Review Process
+- PR includes list of all removed keys
+- Manual review required before merging
+- Testing recommended before deployment
+
+#### 🔍 Smart Detection
+- Ignores dynamic key usage (string concatenation)
+- Handles multiple usage patterns
+- Comprehensive Dart file analysis
+
+### Manual Recovery
+
+If keys were removed in error:
+
+```bash
+# Restore from backup
+cp en.json.backup en.json
+cp he.json.backup he.json
+# ... for all affected files
+
+# Or manually add back specific keys
+jq '. + {"removedKey": "Translation"}' lang.json > temp.json && mv temp.json lang.json
+```
+
+## �🔧 Advanced Configuration
 
 ### Auto-Translation Exclusions
 
