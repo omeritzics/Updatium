@@ -2564,45 +2564,45 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
   }
 
   @override
-  String xAndNMoreUpdatesAvailable(num count) {
+  String xAndNMoreUpdatesAvailable(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count 和另外 $count 個應用程式有更新。',
-      one: '$count 和另外 1 個應用程式有更新。',
+      other: '“$p0”和另外 $count 個應用程式有更新。',
+      one: '“$p0”和另外 1 個應用程式有更新。',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesInstalled(num count) {
+  String xAndNMoreUpdatesInstalled(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count 和另外 $count 個應用程式已更新。',
-      one: '$count 和另外 1 個應用程式已更新。',
+      other: '“$p0”和另外 $count 個應用程式已更新。',
+      one: '“$p0”和另外 1 個應用程式已更新。',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesFailed(num count) {
+  String xAndNMoreUpdatesFailed(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '更新 $count 和另外 $count 個應用程式失敗。',
-      one: '更新 $count 和另外 1 個應用程式失敗。',
+      other: '“$p0”和另外 $count 個應用程式更新失敗。',
+      one: '“$p0”和另外 1 個應用程式更新失敗。',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesPossiblyInstalled(num count) {
+  String xAndNMoreUpdatesPossiblyInstalled(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count 和另外 $count 個應用程式可能已更新。',
-      one: '$count 和另外 1 個應用程式可能已更新。',
+      other: '已嘗試更新“$p0”和另外 $count 個應用程式。',
+      one: '已嘗試更新“$p0”和另外 1 個應用程式。',
     );
     return '$_temp0';
   }
