@@ -2348,22 +2348,43 @@ class AppsProvider with ChangeNotifier {
         var encoder = const JsonEncoder.withIndent("    ");
         Map<String, dynamic> finalExport = generateExportJSON();
         // Create export file using docman
+        if (exportDir.toString().isEmpty) {
+          throw UpdatiumError('Export directory URI is empty');
+        }
         final docFileResult = await DocumentFile.fromUri(exportDir.toString());
         final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
           final fileName =
               '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
 
-          final result = await dirDocFile.createFile(
+          try {
+        final result = await dirDocFile.createFile(
+          name: fileName,
+          bytes: Uint8List.fromList(
+            utf8.encode(encoder.convert(finalExport)),
+          ),
+          mimeType: 'application/json',
+        );
+
+        if (result == null) {
+          throw UpdatiumError(tr('failedToCreateExportFile'));
+        }
+      } catch (e) {
+        // Fallback: try without MIME type if explicit MIME fails
+        try {
+          final fallbackResult = await dirDocFile.createFile(
             name: fileName,
             bytes: Uint8List.fromList(
               utf8.encode(encoder.convert(finalExport)),
             ),
           );
-
-          if (result == null) {
+          if (fallbackResult == null) {
             throw UpdatiumError(tr('failedToCreateExportFile'));
           }
+        } catch (fallbackError) {
+          throw UpdatiumError('${tr('failedToExport')}: MIME type error - ${fallbackError.toString()}');
+        }
+      }
         } else {
           throw UpdatiumError(tr('exportDirNotAccessible'));
         }
