@@ -454,18 +454,14 @@ class _GeneratedFormState extends State<GeneratedForm> {
             ],
           );
         } else if (widget.items[r][e] is GeneratedFormTagInput) {
-          onAddPressed() {
-            showDialog<Map<String, dynamic>?>(
+          onAddPressed() async {
+            var value = await showGeneratedFormModal(
               context: context,
-              builder: (BuildContext ctx) {
-                return GeneratedFormModal(
-                  title: widget.items[r][e].label,
-                  items: [
-                    [GeneratedFormTextField('label', label: tr('label'))],
-                  ],
-                );
-              },
-            ).then((value) {
+              title: widget.items[r][e].label,
+              items: [
+                [GeneratedFormTextField('label', label: tr('label'))],
+              ],
+            );
               String? label = value?['label'];
               if (label != null) {
                 setState(() {
@@ -650,20 +646,15 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                     (widget.items[r][e]
                                             as GeneratedFormTagInput)
                                         .deleteConfirmationMessage!;
-                                showDialog<Map<String, dynamic>?>(
+                                var value = await showGeneratedFormModal(
                                   context: context,
-                                  builder: (BuildContext ctx) {
-                                    return GeneratedFormModal(
-                                      title: message.key,
-                                      message: message.value,
-                                      items: const [],
-                                    );
-                                  },
-                                ).then((value) {
-                                  if (value != null) {
-                                    fn();
-                                  }
-                                });
+                                  title: message.key,
+                                  message: message.value,
+                                  items: const [],
+                                );
+                                if (value != null) {
+                                  fn();
+                                }
                               } else {
                                 fn();
                               }

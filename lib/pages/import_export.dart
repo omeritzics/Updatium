@@ -30,14 +30,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
 
-    urlListImport({String? initValue, bool overrideInitValid = false}) {
-      showDialog<Map<String, dynamic>?>(
+    urlListImport({String? initValue, bool overrideInitValid = false}) async {
+      var values = await showGeneratedFormModal(
         context: context,
-        builder: (BuildContext ctx) {
-          return GeneratedFormModal(
-            initValid: overrideInitValid,
-            title: tr('importFromURLList'),
-            items: [
+        initValid: overrideInitValid,
+        title: tr('importFromURLList'),
+        items: [
               [
                 GeneratedFormTextField(
                   'appURLList',
@@ -206,19 +204,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
           });
     }
 
-    runMassSourceImport(MassAppUrlSource source) {
-      () async {
-            var values = await showDialog<Map<String, dynamic>?>(
-              context: context,
-              builder: (BuildContext ctx) {
-                return GeneratedFormModal(
-                  title: tr('importX', args: [source.name]),
-                  items: source.requiredArgs
-                      .map((e) => [GeneratedFormTextField(e, label: e)])
-                      .toList(),
-                );
-              },
-            );
+    runMassSourceImport(MassAppUrlSource source) async {
+      var values = await showGeneratedFormModal(
+        context: context,
+        title: tr('importX', args: [source.name]),
+        items: source.requiredArgs
+            .map((e) => [GeneratedFormTextField(e, label: e)])
+                .toList(),
+      );
             if (values != null) {
               setState(() {
                 importInProgress = true;

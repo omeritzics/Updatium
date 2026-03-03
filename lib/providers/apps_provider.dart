@@ -2067,32 +2067,28 @@ class AppsProvider with ChangeNotifier {
               a.additionalSettings['trackOnly'] != true,
         )
         .isNotEmpty;
-    var values = await showDialog(
+    var values = await showGeneratedFormModal(
       context: context,
-      builder: (BuildContext ctx) {
-        return GeneratedFormModal(
-          primaryActionColor: Theme.of(context).colorScheme.error,
-          title: plural('removeAppQuestion', apps.length),
-          items: !showUninstallOption
-              ? []
-              : [
-                  [
-                    GeneratedFormSwitch(
-                      'rmAppEntry',
-                      label: tr('removeFromUpdatium'),
-                      defaultValue: true,
-                    ),
-                  ],
-                  [
-                    GeneratedFormSwitch(
-                      'uninstallApp',
-                      label: tr('uninstallFromDevice'),
-                    ),
-                  ],
-                ],
-          initValid: true,
-        );
-      },
+      primaryActionColor: Theme.of(context).colorScheme.error,
+      title: plural('removeAppQuestion', apps.length),
+      items: !showUninstallOption
+          ? []
+          : [
+              [
+                GeneratedFormSwitch(
+                  'rmAppEntry',
+                  label: tr('removeFromUpdatium'),
+                  defaultValue: true,
+                ),
+              ],
+              [
+                GeneratedFormSwitch(
+                  'uninstallApp',
+                  label: tr('uninstallFromDevice'),
+                ),
+              ],
+            ],
+      initValid: true,
     );
     if (values != null) {
       bool uninstall = values['uninstallApp'] == true && showUninstallOption;

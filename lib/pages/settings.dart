@@ -1167,18 +1167,13 @@ class _LogsDialogState extends State<LogsDialog> {
         AppTextButton(
           onPressed: () async {
             var cont =
-                (await showDialog<Map<String, dynamic>?>(
+                (await showGeneratedFormModal(
                   context: context,
-                  builder: (BuildContext ctx) {
-                    return GeneratedFormModal(
-                      title: tr('appLogs'),
-                      items: const [],
-                      initValid: true,
-                      message: tr('removeFromUpdatium'),
-                    );
-                  },
-                )) !=
-                null;
+                  title: tr('appLogs'),
+                  items: const [],
+                  initValid: true,
+                  message: tr('removeFromUpdatium'),
+                )) != null;
             if (cont) {
               logsProvider.clear();
               Navigator.of(context).pop();
