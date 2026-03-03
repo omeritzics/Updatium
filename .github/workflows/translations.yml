@@ -288,7 +288,7 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         fetch-depth: 0  # Fetch full history for proper PR creation
@@ -488,7 +488,7 @@ jobs:
           
     - name: Comment on PR (if auto-translated)
       if: steps.detect.outputs.missing_keys > 0 && github.event.inputs.auto_translate == 'true'
-      uses: actions/github-script@v7
+      uses: actions/github-script@v8
       with:
         script: |
           const comment = `## 🤖 Auto-Translation Notice
@@ -518,7 +518,7 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       
     - name: Validate JSON format
       run: |

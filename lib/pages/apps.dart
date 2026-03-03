@@ -1547,11 +1547,11 @@ class AppsPageState extends State<AppsPage> {
           // Responsive grid configuration
           final screenWidth = MediaQuery.of(context).size.width;
           final screenHeight = MediaQuery.of(context).size.height;
-          
+
           // Calculate optimal cross axis extent based on screen width
           double maxCrossAxisExtent;
           double childAspectRatio;
-          
+
           if (screenWidth < 360) {
             // Very small screens (e.g., small phones)
             maxCrossAxisExtent = 120;
@@ -1573,7 +1573,7 @@ class AppsPageState extends State<AppsPage> {
             maxCrossAxisExtent = 200;
             childAspectRatio = 0.85;
           }
-          
+
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: maxCrossAxisExtent,

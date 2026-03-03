@@ -2300,10 +2300,10 @@ class AppsProvider with ChangeNotifier {
     if (exportInProgress && !isAuto) {
       throw UpdatiumError(tr('exportAlreadyInProgress'));
     }
-    
+
     SettingsProvider settingsProvider = sp ?? this.settingsProvider;
     var exportDir = await settingsProvider.getExportDir();
-    
+
     if (isAuto) {
       if (settingsProvider.autoExportOnChanges != true) {
         return null;
@@ -2330,7 +2330,7 @@ class AppsProvider with ChangeNotifier {
         debugPrint('Error cleaning auto-export files: $e');
       }
     }
-    
+
     if (exportDir == null || pickOnly) {
       await settingsProvider.pickExportDir();
       exportDir = await settingsProvider.getExportDir();
@@ -2338,12 +2338,12 @@ class AppsProvider with ChangeNotifier {
     if (exportDir == null) {
       return null;
     }
-    
+
     String? returnPath;
     if (!pickOnly) {
       exportInProgress = true;
       notifyListeners();
-      
+
       try {
         var encoder = const JsonEncoder.withIndent("    ");
         Map<String, dynamic> finalExport = generateExportJSON();
@@ -2377,7 +2377,7 @@ class AppsProvider with ChangeNotifier {
         exportInProgress = false;
         notifyListeners();
       }
-      
+
       returnPath = exportDir.pathSegments
           .join('/')
           .replaceFirst('tree/primary:', '/');
