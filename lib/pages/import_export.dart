@@ -316,8 +316,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       'Choose a directory to export your apps and settings',
                                   excludeSemantics: true,
                                   child: FilledButton.icon(
-                                    onPressed: importInProgress ||
-                                        appsProvider.exportInProgress
+                                    onPressed:
+                                        importInProgress ||
+                                            appsProvider.exportInProgress
                                         ? null
                                         : () {
                                             runUpdatiumExport(pickOnly: true);
@@ -342,7 +343,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   child: FilledButton.icon(
                                     onPressed:
                                         importInProgress ||
-                                        appsProvider.exportInProgress ||
+                                            appsProvider.exportInProgress ||
                                             snapshot.data == null
                                         ? null
                                         : runUpdatiumExport,
