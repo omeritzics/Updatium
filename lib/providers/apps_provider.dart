@@ -2349,7 +2349,7 @@ class AppsProvider with ChangeNotifier {
         Map<String, dynamic> finalExport = generateExportJSON();
         // Create export file using docman
         if (exportDir.toString().isEmpty) {
-          throw UpdatiumError('Export directory URI is empty');
+          throw UpdatiumError(tr('exportDirUriEmpty'));
         }
         final docFileResult = await DocumentFile.fromUri(exportDir.toString());
         final dirDocFile = await docFileResult?.get();
