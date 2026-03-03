@@ -2417,9 +2417,9 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-    // Lookup logic when language+script+country codes are specified.
-  switch (locale.toString()) {
-    case 'zh_Hant_TW': return AppLocalizationsZhHantTw();
+  // Lookup logic when language+script+country codes are specified.
+  if (locale.languageCode == 'zh' && locale.scriptCode == 'Hant' && locale.countryCode == 'TW') {
+    return AppLocalizationsZhHantTw();
   }
 
   // Lookup logic when language+country codes are specified.
