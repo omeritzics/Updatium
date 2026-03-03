@@ -61,7 +61,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               ],
             ],
           );
-        },
+        ),
       ).then((values) {
         if (values != null) {
           var urls = (values['appURLList'] as String).split('\n');
@@ -252,7 +252,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 }
               }
             }
-          }()
+          })
           .catchError((e) {
             showError(e, context);
           })
