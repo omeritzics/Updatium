@@ -544,6 +544,7 @@ class AppsProvider with ChangeNotifier {
   late StreamSubscription<FGBGType>? foregroundSubscription;
   late Directory APKDir;
   late Directory iconsCacheDir;
+  late SettingsProvider settingsProvider = SettingsProvider();
 
   Iterable<AppInMemory> getAppValues() => apps.values.map((a) => a.deepCopy());
 
