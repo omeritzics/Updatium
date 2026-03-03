@@ -162,7 +162,7 @@ For auto-translation in GitHub Actions, add this secret:
 2. **Consistent Naming**: Follow existing naming conventions
 3. **Placeholders**: Use `{}` for dynamic content (e.g., "Downloaded {} apps")
 4. **Context**: Add comments for complex translations if needed
-4. **Testing**: Always test translations in the app
+5. **Testing**: Always test translations in the app
 
 ### Key Naming Conventions
 
