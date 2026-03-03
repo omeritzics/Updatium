@@ -980,7 +980,7 @@ class AppsProvider with ChangeNotifier {
       return true;
     } catch (e) {
       logs.add('Security scan failed: $e');
-      return true; // Allow installation on scan failure
+      return false; // Block installation on scan failure
     } finally {
       securityProvider?.dispose();
     }
