@@ -4,23 +4,34 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   build_artifact:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      pull-requests: write
 
     steps:
-      - name: Free Disk Space
+      - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
           tool-cache: true
           android: false
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Commit SHA
         id: vars
@@ -39,9 +50,11 @@ jobs:
           version: '3.38.9'  # Use specific stable version that meets requirements
           cache: true
 
-      - name: Prepare Build
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Strip signing config
         run: |
-          flutter pub get
           # Strip signing config to build debug APK safely without keystores
           # Handle both .gradle and .gradle.kts files
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle || true
@@ -53,11 +66,24 @@ jobs:
       - name: Format code
         run: dart format .
 
+      - name: Check for changes
+        id: changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "🔧 Found formatting/linting changes"
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+            echo "✅ No formatting/linting changes needed"
+          fi
+
       - name: Commit and Push changes
+        if: steps.changes.outputs.changes == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "style: auto-fix linting and formatting issues"
+          commit_message: "style: auto-fix linting and formatting issues [ci skip]"
           branch: ${{ github.ref_name }}
+          file_pattern: '*.dart'
           
       - name: Build APK (Unique ID)
         run: |
@@ -72,7 +98,7 @@ jobs:
           cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
 
       - name: Upload Build Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Updatium-Commit-${{ steps.vars.outputs.sha_short }}
           path: build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
@@ -81,15 +107,19 @@ jobs:
   auto_reject_on_failure:
     runs-on: ubuntu-latest
     needs: build_artifact
-    if: failure() && github.event_name == 'pull_request'
+    if: failure() && github.event_name == 'pull_request' && needs.build_artifact.result == 'failure'
     permissions:
       pull-requests: write
+      contents: read
     
     steps:
       - name: Auto-Reject PR on Build Failure
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
+            // Wait a moment to ensure build is completely finished
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            
             const { data: reviews } = await github.rest.pulls.listReviews({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -103,7 +133,11 @@ jobs:
                 (review.state === 'CHANGES_REQUESTED' || review.state === 'APPROVED')
             );
             
-            if (!existingReview) {
+            // Double-check that the build actually failed by checking job status
+            const buildStatus = '${{ needs.build_artifact.result }}';
+            console.log(`Build artifact result: ${buildStatus}`);
+            
+            if (!existingReview && buildStatus === 'failure') {
               await github.rest.pulls.createReview({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -114,21 +148,25 @@ jobs:
               
               console.log(`Auto-rejected PR #${context.issue.number} due to build failure`);
             } else {
-              console.log(`PR #${context.issue.number} already has a review from CI`);
+              console.log(`PR #${context.issue.number} already has a review from CI or build did not fail (status: ${buildStatus})`);
             }
 
   auto_approve_on_success:
     runs-on: ubuntu-latest
     needs: build_artifact
-    if: success() && github.event_name == 'pull_request'
+    if: success() && github.event_name == 'pull_request' && needs.build_artifact.result == 'success'
     permissions:
       pull-requests: write
+      contents: read
     
     steps:
       - name: Auto-Approve PR on Build Success
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
+            // Wait a moment to ensure build is completely finished
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            
             const { data: reviews } = await github.rest.pulls.listReviews({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -141,6 +179,10 @@ jobs:
                 review.user.login === 'github-actions[bot]' &&
                 review.state === 'CHANGES_REQUESTED'
             );
+
+            // Double-check that build actually succeeded
+            const buildStatus = '${{ needs.build_artifact.result }}';
+            console.log(`Build artifact result: ${buildStatus}`);
 
             for (const review of ciReviews) {
               await github.rest.pulls.dismissReview({
@@ -155,5 +197,5 @@ jobs:
             if (ciReviews.length > 0) {
               console.log(`Dismissed ${ciReviews.length} CI rejection reviews for PR #${context.issue.number}`);
             } else {
-              console.log(`No CI rejection reviews found for PR #${context.issue.number}`);
+              console.log(`No CI rejection reviews found for PR #${context.issue.number} (status: ${buildStatus})`);
             }

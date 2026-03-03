@@ -274,73 +274,149 @@ class _SettingsPageState extends State<SettingsPage> {
       future: DeviceInfoPlugin().androidInfo,
     );
 
-    var sortDropdown = DropdownButtonFormField(
-      isExpanded: true,
-      decoration: InputDecoration(labelText: tr('appSortBy')),
-      initialValue: settingsProvider.sortColumn,
-      items: [
-        DropdownMenuItem(
-          value: SortColumnSettings.authorName,
+    var sortDropdown = MenuAnchor(
+      builder: (context, controller, child) {
+        String selectedValue;
+        switch (settingsProvider.sortColumn) {
+          case SortColumnSettings.authorName:
+            selectedValue = tr('authorName');
+            break;
+          case SortColumnSettings.nameAuthor:
+            selectedValue = tr('nameAuthor');
+            break;
+          case SortColumnSettings.added:
+            selectedValue = tr('asAdded');
+            break;
+          case SortColumnSettings.releaseDate:
+            selectedValue = tr('releaseDate');
+            break;
+        }
+
+        return TextField(
+          controller: TextEditingController(text: selectedValue),
+          readOnly: true,
+          decoration: InputDecoration(
+            labelText: tr('appSortBy'),
+            filled: true,
+            suffixIcon: const Icon(Icons.arrow_drop_down),
+          ),
+          onTap: () {
+            if (controller.isOpen) {
+              controller.close();
+            } else {
+              controller.open();
+            }
+          },
+        );
+      },
+      menuChildren: [
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.authorName,
           child: Text(tr('authorName')),
         ),
-        DropdownMenuItem(
-          value: SortColumnSettings.nameAuthor,
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.nameAuthor,
           child: Text(tr('nameAuthor')),
         ),
-        DropdownMenuItem(
-          value: SortColumnSettings.added,
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.added,
           child: Text(tr('asAdded')),
         ),
-        DropdownMenuItem(
-          value: SortColumnSettings.releaseDate,
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.releaseDate,
           child: Text(tr('releaseDate')),
         ),
       ],
-      onChanged: (value) {
-        if (value != null) {
-          settingsProvider.sortColumn = value;
-        }
-      },
     );
 
-    var orderDropdown = DropdownButtonFormField(
-      isExpanded: true,
-      decoration: InputDecoration(labelText: tr('appSortOrder')),
-      initialValue: settingsProvider.sortOrder,
-      items: [
-        DropdownMenuItem(
-          value: SortOrderSettings.ascending,
+    var orderDropdown = MenuAnchor(
+      builder: (context, controller, child) {
+        String selectedValue =
+            settingsProvider.sortOrder == SortOrderSettings.ascending
+            ? tr('ascending')
+            : tr('descending');
+
+        return TextField(
+          controller: TextEditingController(text: selectedValue),
+          readOnly: true,
+          decoration: InputDecoration(
+            labelText: tr('appSortOrder'),
+            filled: true,
+            suffixIcon: const Icon(Icons.arrow_drop_down),
+          ),
+          onTap: () {
+            if (controller.isOpen) {
+              controller.close();
+            } else {
+              controller.open();
+            }
+          },
+        );
+      },
+      menuChildren: [
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortOrder = SortOrderSettings.ascending,
           child: Text(tr('ascending')),
         ),
-        DropdownMenuItem(
-          value: SortOrderSettings.descending,
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortOrder = SortOrderSettings.descending,
           child: Text(tr('descending')),
         ),
       ],
-      onChanged: (value) {
-        if (value != null) {
-          settingsProvider.sortOrder = value;
-        }
-      },
     );
 
-    var localeDropdown = DropdownButtonFormField(
-      decoration: InputDecoration(labelText: tr('language')),
-      initialValue: settingsProvider.forcedLocale,
-      items: [
-        DropdownMenuItem(value: null, child: Text(tr('followSystem'))),
+    var localeDropdown = MenuAnchor(
+      builder: (context, controller, child) {
+        String selectedValue = settingsProvider.forcedLocale == null
+            ? tr('followSystem')
+            : supportedLocales
+                  .firstWhere(
+                    (e) => e.key == settingsProvider.forcedLocale,
+                    orElse: () => supportedLocales.first,
+                  )
+                  .value;
+
+        return TextField(
+          controller: TextEditingController(text: selectedValue),
+          readOnly: true,
+          decoration: InputDecoration(
+            labelText: tr('language'),
+            filled: true,
+            suffixIcon: const Icon(Icons.arrow_drop_down),
+          ),
+          onTap: () {
+            if (controller.isOpen) {
+              controller.close();
+            } else {
+              controller.open();
+            }
+          },
+        );
+      },
+      menuChildren: [
+        MenuItemButton(
+          onPressed: () {
+            settingsProvider.forcedLocale = null;
+            settingsProvider.resetLocaleSafe(context);
+          },
+          child: Text(tr('followSystem')),
+        ),
         ...supportedLocales.map(
-          (e) => DropdownMenuItem(value: e.key, child: Text(e.value)),
+          (e) => MenuItemButton(
+            onPressed: () {
+              settingsProvider.forcedLocale = e.key;
+              context.setLocale(e.key);
+            },
+            child: Text(e.value),
+          ),
         ),
       ],
-      onChanged: (value) {
-        settingsProvider.forcedLocale = value;
-        if (value != null) {
-          context.setLocale(value);
-        } else {
-          settingsProvider.resetLocaleSafe(context);
-        }
-      },
     );
 
     var intervalSlider = SliderTheme(
@@ -791,28 +867,57 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                         height16,
-                        DropdownButtonFormField(
-                          decoration: InputDecoration(labelText: tr('theme')),
-                          initialValue: settingsProvider.theme,
-                          items: [
-                            DropdownMenuItem(
-                              value: ThemeSettings.system,
+                        MenuAnchor(
+                          builder: (context, controller, child) {
+                            String selectedValue;
+                            switch (settingsProvider.theme) {
+                              case ThemeSettings.system:
+                                selectedValue = tr('followSystem');
+                                break;
+                              case ThemeSettings.light:
+                                selectedValue = tr('light');
+                                break;
+                              case ThemeSettings.dark:
+                                selectedValue = tr('dark');
+                                break;
+                            }
+
+                            return TextField(
+                              controller: TextEditingController(
+                                text: selectedValue,
+                              ),
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: tr('theme'),
+                                filled: true,
+                                suffixIcon: const Icon(Icons.arrow_drop_down),
+                              ),
+                              onTap: () {
+                                if (controller.isOpen) {
+                                  controller.close();
+                                } else {
+                                  controller.open();
+                                }
+                              },
+                            );
+                          },
+                          menuChildren: [
+                            MenuItemButton(
+                              onPressed: () =>
+                                  settingsProvider.theme = ThemeSettings.system,
                               child: Text(tr('followSystem')),
                             ),
-                            DropdownMenuItem(
-                              value: ThemeSettings.light,
+                            MenuItemButton(
+                              onPressed: () =>
+                                  settingsProvider.theme = ThemeSettings.light,
                               child: Text(tr('light')),
                             ),
-                            DropdownMenuItem(
-                              value: ThemeSettings.dark,
+                            MenuItemButton(
+                              onPressed: () =>
+                                  settingsProvider.theme = ThemeSettings.dark,
                               child: Text(tr('dark')),
                             ),
                           ],
-                          onChanged: (value) {
-                            if (value != null) {
-                              settingsProvider.theme = value;
-                            }
-                          },
                         ),
                         height8,
                         if (settingsProvider.theme == ThemeSettings.system)
@@ -1100,6 +1205,7 @@ class LogsDialog extends StatefulWidget {
 class _LogsDialogState extends State<LogsDialog> {
   String? logString;
   List<int> days = [7, 5, 4, 3, 2, 1];
+  int selectedDays = 7;
 
   @override
   Widget build(BuildContext context) {
@@ -1124,24 +1230,45 @@ class _LogsDialogState extends State<LogsDialog> {
       title: Text(tr('appLogs')),
       content: Column(
         children: [
-          DropdownButtonFormField(
-            initialValue: days.first,
-            items: days
-                .map(
-                  (e) =>
-                      DropdownMenuItem(value: e, child: Text(plural('day', e))),
-                )
-                .toList(),
-            onChanged: (d) {
-              filterLogs(d ?? 7);
+          MenuAnchor(
+            builder: (context, controller, child) {
+              return TextField(
+                controller: TextEditingController(
+                  text: plural('day', selectedDays),
+                ),
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText: tr('filterDays'),
+                  filled: true,
+                  suffixIcon: const Icon(Icons.arrow_drop_down),
+                ),
+                onTap: () {
+                  if (controller.isOpen) {
+                    controller.close();
+                  } else {
+                    controller.open();
+                  }
+                },
+              );
             },
+            menuChildren: days.map((day) {
+              return MenuItemButton(
+                onPressed: () {
+                  setState(() {
+                    selectedDays = day;
+                  });
+                  filterLogs(day);
+                },
+                child: Text(plural('day', day)),
+              );
+            }).toList(),
           ),
           const SizedBox(height: 32),
           Text(logString ?? ''),
         ],
       ),
       actions: [
-        createAppTextButton(
+        AppTextButton(
           onPressed: () async {
             var cont =
                 (await showDialog<Map<String, dynamic>?>(
@@ -1163,13 +1290,13 @@ class _LogsDialogState extends State<LogsDialog> {
           },
           child: Text(tr('remove')),
         ),
-        createAppTextButton(
+        AppTextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(tr('close')),
         ),
-        createAppTextButton(
+        AppTextButton(
           onPressed: () {
             Share.share(logString ?? '', subject: tr('appLogs'));
             Navigator.of(context).pop();

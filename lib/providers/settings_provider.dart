@@ -428,11 +428,13 @@ class SettingsProvider with ChangeNotifier {
         final docFileResult = await DocumentFile.fromUri(uri.toString());
         final docFile = await docFileResult?.get();
         if (docFile == null || !docFile.canRead || !docFile.canWrite) {
+          debugPrint('Export directory not accessible: ${uri.toString()}');
           uri = null;
           prefs?.remove('exportDir');
           notifyListeners();
         }
       } catch (e) {
+        debugPrint('Error validating export directory: $e');
         uri = null;
         prefs?.remove('exportDir');
         notifyListeners();

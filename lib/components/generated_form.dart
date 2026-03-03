@@ -331,7 +331,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                     someValueChanged();
                   });
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(filled: true).copyWith(
                   labelText:
                       '${formItem.label}${formItem.required ? ' *' : ''}',
                   hintText: formItem.hint,
@@ -380,28 +380,50 @@ class _GeneratedFormState extends State<GeneratedForm> {
           if (formItem.opts!.isEmpty) {
             return Text(tr('dropdownNoOptsError'));
           }
-          return DropdownButtonFormField(
-            decoration: InputDecoration(
-              labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
-            ),
-            initialValue: values[formItem.key],
-            items: formItem.opts!.map((e2) {
+          return MenuAnchor(
+            builder: (context, controller, child) {
+              final selectedValue =
+                  values[formItem.key] ?? formItem.opts!.first.key;
+              final selectedOption = formItem.opts!.firstWhere(
+                (e) => e.key == selectedValue,
+                orElse: () => formItem.opts!.first,
+              );
+
+              return TextField(
+                controller: TextEditingController(text: selectedOption.value),
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText:
+                      '${formItem.label}${formItem.required ? ' *' : ''}',
+                  filled: true,
+                  suffixIcon: const Icon(Icons.arrow_drop_down),
+                ),
+                onTap: () {
+                  if (controller.isOpen) {
+                    controller.close();
+                  } else {
+                    controller.open();
+                  }
+                },
+              );
+            },
+            menuChildren: formItem.opts!.map((e2) {
               var enabled = formItem.disabledOptKeys?.contains(e2.key) != true;
-              return DropdownMenuItem(
-                value: e2.key,
-                enabled: enabled,
+              return MenuItemButton(
+                onPressed: enabled
+                    ? () {
+                        setState(() {
+                          values[formItem.key] = e2.key;
+                          someValueChanged();
+                        });
+                      }
+                    : null,
                 child: Opacity(
                   opacity: enabled ? 1 : 0.5,
                   child: Text(e2.value),
                 ),
               );
             }).toList(),
-            onChanged: (value) {
-              setState(() {
-                values[formItem.key] = value ?? formItem.opts!.first.key;
-                someValueChanged();
-              });
-            },
           );
         } else if (formItem is GeneratedFormSubForm) {
           values[formItem.key] = [];

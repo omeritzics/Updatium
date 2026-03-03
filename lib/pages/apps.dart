@@ -996,7 +996,7 @@ class AppsPageState extends State<AppsPage> {
 
     getSelectAllButton() {
       return selectedAppIds.isEmpty
-          ? createAppTextButtonWithIcon(
+          ? AppTextButtonWithIcon(
               onPressed: () {
                 selectThese(listedApps.map((e) => e.app).toList());
               },
@@ -1006,7 +1006,7 @@ class AppsPageState extends State<AppsPage> {
               ),
               label: Text(listedApps.length.toString()),
             )
-          : createAppTextButtonWithIcon(
+          : AppTextButtonWithIcon(
               onPressed: () {
                 selectedAppIds.isEmpty
                     ? selectThese(listedApps.map((e) => e.app).toList())
@@ -1223,13 +1223,13 @@ class AppsPageState extends State<AppsPage> {
               ),
             ),
             actions: [
-              createAppTextButton(
+              AppTextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(tr('no')),
               ),
-              createAppTextButton(
+              AppTextButton(
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   appsProvider.saveApps(
@@ -1278,7 +1278,7 @@ class AppsPageState extends State<AppsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  createAppTextButton(
+                  AppTextButton(
                     onPressed: pinSelectedApps,
                     child: Text(
                       selectedApps.where((element) => element.pinned).isEmpty
@@ -1288,7 +1288,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  createAppTextButton(
+                  AppTextButton(
                     onPressed: () {
                       String urls = '';
                       for (var a in selectedApps) {
@@ -1307,7 +1307,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  createAppTextButton(
+                  AppTextButton(
                     onPressed: selectedAppIds.isEmpty
                         ? null
                         : () {
@@ -1336,7 +1336,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  createAppTextButton(
+                  AppTextButton(
                     onPressed: () {
                       appsProvider
                           .downloadAppAssets(
@@ -1361,7 +1361,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  createAppTextButton(
+                  AppTextButton(
                     onPressed: appsProvider.areDownloadsRunning()
                         ? null
                         : showMassMarkDialog,
@@ -1544,10 +1544,40 @@ class AppsPageState extends State<AppsPage> {
       } else {
         // Flat View
         if (settingsProvider.useGridView) {
+          // Responsive grid configuration
+          final screenWidth = MediaQuery.of(context).size.width;
+          final screenHeight = MediaQuery.of(context).size.height;
+
+          // Calculate optimal cross axis extent based on screen width
+          double maxCrossAxisExtent;
+          double childAspectRatio;
+
+          if (screenWidth < 360) {
+            // Very small screens (e.g., small phones)
+            maxCrossAxisExtent = 120;
+            childAspectRatio = 1.1;
+          } else if (screenWidth < 480) {
+            // Small screens (e.g., phones)
+            maxCrossAxisExtent = 140;
+            childAspectRatio = 1.0;
+          } else if (screenWidth < 768) {
+            // Medium screens (e.g., large phones, small tablets)
+            maxCrossAxisExtent = 160;
+            childAspectRatio = 0.95;
+          } else if (screenWidth < 1024) {
+            // Large screens (e.g., tablets)
+            maxCrossAxisExtent = 180;
+            childAspectRatio = 0.9;
+          } else {
+            // Very large screens (e.g., desktops, large tablets)
+            maxCrossAxisExtent = 200;
+            childAspectRatio = 0.85;
+          }
+
           return SliverGrid(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 150,
-              childAspectRatio: 0.8,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: maxCrossAxisExtent,
+              childAspectRatio: childAspectRatio,
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
             ),
