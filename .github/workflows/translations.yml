@@ -234,7 +234,7 @@ jobs:
         
     - name: Create Pull Request for unused keys removal
       if: steps.detect_unused.outputs.unused_keys > 0
-      uses: peter-evans/create-pull-request@v5
+      uses: peter-evans/create-pull-request@v8
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         commit-message: "🗑️ Remove unused translation keys"
@@ -453,7 +453,7 @@ jobs:
         
     - name: Create Pull Request
       if: steps.detect.outputs.missing_keys > 0
-      uses: peter-evans/create-pull-request@v5
+      uses: peter-evans/create-pull-request@v8
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         commit-message: "🌐 Add missing translation keys"
