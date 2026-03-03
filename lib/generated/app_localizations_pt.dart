@@ -2557,8 +2557,8 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Limpou $n registros (antes = $before, depois = $after)',
-      one: 'Limpou $n registros (before = $before, after = $after)',
+      other: 'Limpou $count registros (antes = $before, depois = $after)',
+      one: 'Limpou $count registro (antes = $before, depois = $after)',
     );
     return '$_temp0';
   }
