@@ -240,7 +240,7 @@ class NotificationsProvider {
             title: Text(title),
             content: Text(content),
             actions: [
-              createAppTextButton(
+              AppTextButton(
                 onPressed: () {
                   Navigator.of(context).pop(null);
                   if (doublePop) {

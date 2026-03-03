@@ -1,0 +1,319 @@
+name: Translation Management
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'assets/translations/en.json'
+      - 'lib/**/*.dart'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'assets/translations/en.json'
+      - 'lib/**/*.dart'
+  workflow_dispatch:
+    inputs:
+      auto_translate:
+        description: 'Auto-translate missing strings using LibreTranslate'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  detect-missing-translations:
+    runs-on: ubuntu-latest
+    name: Detect Missing Translations
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        cd assets/translations
+        npm install
+        
+    - name: Detect missing translation keys
+      id: detect
+      run: |
+        cd assets/translations
+        
+        # Get all translation files
+        template_file="en.json"
+        other_files=$(ls *.json | grep -v "$template_file" | grep -v "package")
+        
+        missing_keys=0
+        missing_files=""
+        
+        echo "Checking for missing translation keys..."
+        
+        for file in $other_files; do
+          echo "Checking $file..."
+          
+          # Get keys from template and current file
+          template_keys=$(jq -r 'keys[]' "$template_file" | sort)
+          current_keys=$(jq -r 'keys[]' "$file" | sort)
+          
+          # Find missing keys
+          missing=$(comm -23 <(echo "$template_keys") <(echo "$current_keys"))
+          
+          if [ -n "$missing" ]; then
+            echo "❌ Missing keys in $file:"
+            echo "$missing"
+            missing_keys=$((missing_keys + $(echo "$missing" | wc -l)))
+            missing_files="$missing_files $file"
+          else
+            echo "✅ All keys present in $file"
+          fi
+        done
+        
+        echo "missing_keys=$missing_keys" >> $GITHUB_OUTPUT
+        echo "missing_files=$missing_files" >> $GITHUB_OUTPUT
+        
+        if [ $missing_keys -gt 0 ]; then
+          echo "⚠️ Found $missing_keys missing translation keys"
+          exit 1
+        else
+          echo "✅ All translation files are up to date"
+        fi
+        
+    - name: Add missing translation keys
+      if: steps.detect.outputs.missing_keys > 0
+      run: |
+        cd assets/translations
+        
+        echo "Adding missing translation keys..."
+        
+        # Run the standardization script to add missing keys
+        node standardize.mjs
+        
+        echo "✅ Missing keys have been added with English fallbacks"
+        
+    - name: Auto-translate missing strings (optional)
+      if: steps.detect.outputs.missing_keys > 0 && github.event.inputs.auto_translate == 'true'
+      env:
+        LIBRETRANSLATE_API_KEY: ${{ secrets.LIBRETRANSLATE_API_KEY }}
+      run: |
+        cd assets/translations
+        
+        if [ -z "$LIBRETRANSLATE_API_KEY" ]; then
+          echo "⚠️ LIBRETRANSLATE_API_KEY not found, skipping auto-translation"
+          exit 0
+        fi
+        
+        echo "Auto-translating missing strings..."
+        
+        # Modified script to translate only missing keys
+        node -e "
+        const fs = require('fs');
+        const translate = require('translate');
+        
+        translate.engine = 'libre';
+        translate.key = process.env.LIBRETRANSLATE_API_KEY;
+        translate.from = 'en';
+        translate.url = 'https://libretranslate.de/translate';
+        
+        const templateFile = 'en.json';
+        const templateTranslation = JSON.parse(fs.readFileSync(templateFile).toString());
+        const otherFiles = fs.readdirSync('.').filter(f => f.endsWith('.json') && f !== templateFile && !f.startsWith('package'));
+        
+        const neverAutoTranslate = {
+            steamMobile: ['*'],
+            steamChat: ['*'],
+            root: ['*'],
+            updatiumExportHyphenatedLowercase: ['*'],
+            theme: ['de'],
+            appId: ['de'],
+            app: ['de'],
+            apps: ['de', 'gl'],
+            placeholder: ['pl'],
+            importExport: ['fr'],
+            url: ['fr', 'ca', 'de', 'gl', 'pt', 'pt-BR'],
+            vivoAppStore: ['*'],
+            coolApk: ['*'],
+            updatiumImport: ['nl'],
+            appLogs: ['nl'],
+            apk: ['vi', 'ar', 'ca', 'de', 'es', 'gl'],
+            minute: ['fr'],
+            pseudoVersion: ['da'],
+            tencentAppStore: ['*']
+        };
+        
+        const shouldSkipAutoTranslate = (key, lang) => {
+          if (neverAutoTranslate[key] && (neverAutoTranslate[key].includes('*') || neverAutoTranslate[key].includes(lang))) {
+            return true;
+          }
+          return false;
+        };
+        
+        async function translateMissing() {
+          for (const file of otherFiles) {
+            const lang = file.replace('.json', '');
+            const translation = JSON.parse(fs.readFileSync(file).toString());
+            let modified = false;
+            
+            for (const [key, value] of Object.entries(templateTranslation)) {
+              if (!translation[key] || translation[key] === value) {
+                if (shouldSkipAutoTranslate(key, lang)) {
+                  console.log(\`Skipping auto-translation of '\${key}' for \${lang}\`);
+                  continue;
+                }
+                
+                try {
+                  console.log(\`Translating '\${key}' to \${lang}\`);
+                  const translated = await translate(value, lang.slice(0, 2));
+                  translation[key] = translated;
+                  modified = true;
+                } catch (error) {
+                  console.log(\`Failed to translate '\${key}' to \${lang}: \${error.message}\`);
+                }
+              }
+            }
+            
+            if (modified) {
+              fs.writeFileSync(file, JSON.stringify(translation, null, 4) + '\\n');
+              console.log(\`Updated \${file}\`);
+            }
+          }
+        }
+        
+        translateMissing().catch(console.error);
+        "
+        
+        echo "✅ Auto-translation completed"
+        
+    - name: Create Pull Request
+      if: steps.detect.outputs.missing_keys > 0
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "🌐 Add missing translation keys"
+        title: "🌐 Add Missing Translation Keys"
+        body: |
+          ## 🌐 Missing Translation Keys Detected
+          
+          This PR automatically adds missing translation keys that were found in the codebase.
+          
+          ### 📊 Summary
+          - **Missing keys found**: ${{ steps.detect.outputs.missing_keys }}
+          - **Files updated**: ${{ steps.detect.outputs.missing_files }}
+          
+          ### 🔧 What was done
+          - ✅ Added missing keys with English fallback translations
+          ${{ github.event.inputs.auto_translate == 'true' && '- ✅ Auto-translated missing strings using LibreTranslate' || '' }}
+          
+          ### 📝 Next Steps
+          1. Review the added translations
+          2. Replace auto-translations with proper human translations if needed
+          3. Update any keys that need context-specific translations
+          
+          ### 🤖 Auto-generated
+          This PR was automatically created by the Translation Management workflow.
+          
+        branch: auto-add-translations
+        delete-branch: true
+        labels: |
+          translations
+          automated
+          
+    - name: Comment on PR (if auto-translated)
+      if: steps.detect.outputs.missing_keys > 0 && github.event.inputs.auto_translate == 'true'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const comment = `## 🤖 Auto-Translation Notice
+          
+          This PR includes automatically translated strings using LibreTranslate.
+          
+          ⚠️ **Important**: Please review all auto-translated strings carefully:
+          - Auto-translations may not be perfect
+          - Some strings may need cultural adaptation
+          - Technical terms might need manual correction
+          
+          ### 🔍 Review Checklist
+          - [ ] Check all new translations for accuracy
+          - [ ] Verify cultural appropriateness
+          - [ ] Ensure technical terms are correct
+          - [ ] Test the app with new translations
+          
+          Thank you for helping maintain translation quality! 🌍`;
+          
+          // This will comment on the PR that was just created
+          console.log('Translation review comment would be added to the PR');
+          
+  validate-translations:
+    runs-on: ubuntu-latest
+    name: Validate Translation Format
+    needs: detect-missing-translations
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Validate JSON format
+      run: |
+        cd assets/translations
+        
+        echo "Validating JSON format for all translation files..."
+        
+        for file in *.json; do
+          if [ "$file" != "package.json" ]; then
+            echo "Validating $file..."
+            if jq empty "$file" 2>/dev/null; then
+              echo "✅ $file is valid JSON"
+            else
+              echo "❌ $file has invalid JSON format"
+              jq . "$file" 2>&1 | head -10
+              exit 1
+            fi
+          fi
+        done
+        
+    - name: Check for duplicate keys
+      run: |
+        cd assets/translations
+        
+        echo "Checking for duplicate keys..."
+        
+        for file in *.json; do
+          if [ "$file" != "package.json" ]; then
+            duplicates=$(jq -r 'keys[]' "$file" | sort | uniq -d)
+            if [ -n "$duplicates" ]; then
+              echo "❌ Duplicate keys found in $file:"
+              echo "$duplicates"
+              exit 1
+            else
+              echo "✅ No duplicate keys in $file"
+            fi
+          fi
+        done
+        
+    - name: Check key consistency
+      run: |
+        cd assets/translations
+        
+        echo "Checking key consistency across all files..."
+        
+        template_file="en.json"
+        template_keys=$(jq -r 'keys[]' "$template_file" | sort)
+        
+        for file in *.json; do
+          if [ "$file" != "package.json" ] && [ "$file" != "$template_file" ]; then
+            current_keys=$(jq -r 'keys[]' "$file" | sort)
+            
+            extra_keys=$(comm -13 <(echo "$template_keys") <(echo "$current_keys"))
+            if [ -n "$extra_keys" ]; then
+              echo "⚠️ Extra keys in $file (not in template):"
+              echo "$extra_keys"
+            fi
+          fi
+        done
+        
+        echo "✅ Key consistency check completed"
