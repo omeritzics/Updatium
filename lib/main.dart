@@ -842,10 +842,8 @@ class _UpdatiumState extends State<Updatium> {
               ),
 
               // Expressive Progress Indicators
-              progressIndicatorTheme: ProgressIndicatorThemeData(
-                color: scheme.primary,
-                linearTrackColor: scheme.surface.withValues(alpha: 0.2),
-                circularTrackColor: scheme.surface.withValues(alpha: 0.2),
+              progressIndicatorTheme: const ProgressIndicatorThemeData(
+                year2023: false,
               ),
             );
           }
