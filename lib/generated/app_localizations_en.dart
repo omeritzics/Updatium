@@ -1285,8 +1285,6 @@ class AppLocalizationsEn extends AppLocalizations {
       other: '$p0 and $count more apps may have been updated.',
       one: '$p0 and 1 more app may have been updated.',
     );
-      one: '$count and 1 more app may have been updated.',
-    );
     return '$_temp0';
   }
 
