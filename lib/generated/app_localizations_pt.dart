@@ -2480,8 +2480,8 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'A busca de atualizações em segundo plano encontrou um $count, será agendado uma nova tentativa em $count minutos',
-      one: 'A busca de atualizações em segundo plano encontrou um $count, será agendado uma nova tentativa em $count minuto',
+      other: 'A busca de atualizações em segundo plano encontrou um erro; uma nova tentativa será agendada em $count minutos',
+      one: 'A busca de atualizações em segundo plano encontrou um erro; uma nova tentativa será agendada em $count minuto',
     );
     return '$_temp0';
   }
