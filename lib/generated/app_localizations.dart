@@ -2265,8 +2265,8 @@ abstract class AppLocalizations {
   /// No description provided for @bgUpdateGotErrorRetryInMinutes.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, one{BG update checking encountered a {count}, will schedule a retry check in {count} minute} other{BG update checking encountered a {count}, will schedule a retry check in {count} minutes}}'**
-  String bgUpdateGotErrorRetryInMinutes(num count);
+  /// **'{count, plural, one{BG update checking encountered {p0}; will schedule a retry check in {count} minute} other{BG update checking encountered {p0}; will schedule a retry check in {count} minutes}}'**
+  String bgUpdateGotErrorRetryInMinutes(Object p0, num count);
 
   /// No description provided for @bgCheckFoundUpdatesWillNotifyIfNeeded.
   ///
