@@ -17,7 +17,6 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:updatium/security/security_settings_provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -27,8 +26,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  late SecuritySettingsProvider _securityProvider;
-  bool _securityProviderInitialized = false;
   List<int> updateIntervalNodes = [
     15,
     30,
@@ -138,8 +135,6 @@ class _SettingsPageState extends State<SettingsPage> {
     if (settingsProvider.prefs == null) settingsProvider.initializeSettings();
     initUpdateIntervalInterpolator();
     processIntervalSliderValue(settingsProvider.updateIntervalSliderVal);
-
-    // Initialization is handled in initState, not build
 
     var followSystemThemeExplanation = FutureBuilder(
       builder: (ctx, val) {
@@ -853,85 +848,6 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                         ...sourceSpecificFields,
-                        height32,
-                        Text(
-                          tr('yaraMalwareScanner'),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        height16,
-                        Text(
-                          tr('yaraScannerDescription'),
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        height16,
-                        SwitchListTile(
-                          title: Text(tr('enableAutoScan')),
-                          subtitle: Text(tr('enableAutoScanDescription')),
-                          value: _securityProviderInitialized ? _securityProvider.getAutoScanEnabled() : false,
-                          onChanged: _securityProviderInitialized ? (value) async {
-                            await _securityProvider.setAutoScanEnabled(value);
-                            setState(() {});
-                          } : null,
-                        ),
-                        SwitchListTile(
-                          title: Text(tr('enableAutoUpdate')),
-                          subtitle: Text(tr('enableAutoUpdateDescription')),
-                          value: _securityProviderInitialized ? _securityProvider.getAutoUpdateEnabled() : false,
-                          onChanged: _securityProviderInitialized ? (value) async {
-                            await _securityProvider.setAutoUpdateEnabled(value);
-                            setState(() {});
-                          } : null,
-                        ),
-                        ListTile(
-                          title: Text(tr('updateInterval')),
-                          subtitle: Text(tr('updateIntervalDescription')),
-                          trailing: DropdownButton<int>(
-                            value: _securityProviderInitialized ? _securityProvider.getUpdateInterval() : 1,
-                            items: [1, 6, 12, 24, 48, 72].map((hours) {
-                              return DropdownMenuItem<int>(
-                                value: hours,
-                                child: Text('$hours ${tr('hours')}'),
-                              );
-                            }).toList(),
-                            onChanged: _securityProviderInitialized ? (value) async {
-                              if (value != null) {
-                                await _securityProvider.setUpdateInterval(value);
-                                setState(() {});
-                              }
-                            } : null,
-                          ),
-                        ),
-                        height16,
-                        // Update button with error handling
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton.icon(
-                            onPressed: _securityProviderInitialized ? () async {
-                              try {
-                                await _securityProvider.updateRules();
-                                if (mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(tr('rulesUpdatedSuccessfully'))),
-                                  );
-                                }
-                              } catch (e) {
-                                if (mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(tr('rulesUpdateFailed')),
-                                      backgroundColor: Theme.of(context).colorScheme.error,
-                                    ),
-                                  );
-                                }
-                              }
-                            } : null,
-                            icon: const Icon(Icons.download),
-                            label: Text(tr('updateNow')),
-                          ),
-                        ),
                         height32,
                         Text(
                           tr('appearance'),
