@@ -2,7 +2,6 @@ name: Translation Management
 
 on:
   push:
-    branches: [ main, develop ]
     paths:
       - 'assets/translations/en.json'
       - 'lib/**/*.dart'
@@ -38,15 +37,15 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         fetch-depth: 0
         
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: '18'
+        node-version: '24'
         
     - name: Install dependencies
       run: |
@@ -294,9 +293,9 @@ jobs:
         fetch-depth: 0  # Fetch full history for proper PR creation
         
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        node-version: '18'
+        node-version: '24'
         
     - name: Install dependencies
       run: |

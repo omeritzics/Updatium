@@ -258,7 +258,7 @@ class _SettingsPageState extends State<SettingsPage> {
             selectedValue = tr('releaseDate');
             break;
         }
-        
+
         return TextField(
           controller: TextEditingController(text: selectedValue),
           readOnly: true,
@@ -278,19 +278,23 @@ class _SettingsPageState extends State<SettingsPage> {
       },
       menuChildren: [
         MenuItemButton(
-          onPressed: () => settingsProvider.sortColumn = SortColumnSettings.authorName,
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.authorName,
           child: Text(tr('authorName')),
         ),
         MenuItemButton(
-          onPressed: () => settingsProvider.sortColumn = SortColumnSettings.nameAuthor,
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.nameAuthor,
           child: Text(tr('nameAuthor')),
         ),
         MenuItemButton(
-          onPressed: () => settingsProvider.sortColumn = SortColumnSettings.added,
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.added,
           child: Text(tr('asAdded')),
         ),
         MenuItemButton(
-          onPressed: () => settingsProvider.sortColumn = SortColumnSettings.releaseDate,
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.releaseDate,
           child: Text(tr('releaseDate')),
         ),
       ],
@@ -298,10 +302,11 @@ class _SettingsPageState extends State<SettingsPage> {
 
     var orderDropdown = MenuAnchor(
       builder: (context, controller, child) {
-        String selectedValue = settingsProvider.sortOrder == SortOrderSettings.ascending
+        String selectedValue =
+            settingsProvider.sortOrder == SortOrderSettings.ascending
             ? tr('ascending')
             : tr('descending');
-        
+
         return TextField(
           controller: TextEditingController(text: selectedValue),
           readOnly: true,
@@ -321,11 +326,13 @@ class _SettingsPageState extends State<SettingsPage> {
       },
       menuChildren: [
         MenuItemButton(
-          onPressed: () => settingsProvider.sortOrder = SortOrderSettings.ascending,
+          onPressed: () =>
+              settingsProvider.sortOrder = SortOrderSettings.ascending,
           child: Text(tr('ascending')),
         ),
         MenuItemButton(
-          onPressed: () => settingsProvider.sortOrder = SortOrderSettings.descending,
+          onPressed: () =>
+              settingsProvider.sortOrder = SortOrderSettings.descending,
           child: Text(tr('descending')),
         ),
       ],
@@ -335,9 +342,13 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (context, controller, child) {
         String selectedValue = settingsProvider.forcedLocale == null
             ? tr('followSystem')
-            : supportedLocales.firstWhere((e) => e.key == settingsProvider.forcedLocale,
-                orElse: () => supportedLocales.first).value;
-        
+            : supportedLocales
+                  .firstWhere(
+                    (e) => e.key == settingsProvider.forcedLocale,
+                    orElse: () => supportedLocales.first,
+                  )
+                  .value;
+
         return TextField(
           controller: TextEditingController(text: selectedValue),
           readOnly: true,
@@ -823,9 +834,11 @@ class _SettingsPageState extends State<SettingsPage> {
                                 selectedValue = tr('dark');
                                 break;
                             }
-                            
+
                             return TextField(
-                              controller: TextEditingController(text: selectedValue),
+                              controller: TextEditingController(
+                                text: selectedValue,
+                              ),
                               readOnly: true,
                               decoration: InputDecoration(
                                 labelText: tr('theme'),
@@ -843,15 +856,18 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                           menuChildren: [
                             MenuItemButton(
-                              onPressed: () => settingsProvider.theme = ThemeSettings.system,
+                              onPressed: () =>
+                                  settingsProvider.theme = ThemeSettings.system,
                               child: Text(tr('followSystem')),
                             ),
                             MenuItemButton(
-                              onPressed: () => settingsProvider.theme = ThemeSettings.light,
+                              onPressed: () =>
+                                  settingsProvider.theme = ThemeSettings.light,
                               child: Text(tr('light')),
                             ),
                             MenuItemButton(
-                              onPressed: () => settingsProvider.theme = ThemeSettings.dark,
+                              onPressed: () =>
+                                  settingsProvider.theme = ThemeSettings.dark,
                               child: Text(tr('dark')),
                             ),
                           ],
@@ -1170,7 +1186,9 @@ class _LogsDialogState extends State<LogsDialog> {
           MenuAnchor(
             builder: (context, controller, child) {
               return TextField(
-                controller: TextEditingController(text: plural('day', selectedDays)),
+                controller: TextEditingController(
+                  text: plural('day', selectedDays),
+                ),
                 readOnly: true,
                 decoration: InputDecoration(
                   labelText: tr('filterDays'),
