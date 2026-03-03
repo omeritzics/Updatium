@@ -18,8 +18,270 @@ on:
         required: false
         default: 'false'
         type: boolean
+      remove_unused:
+        description: 'Remove unused translation strings'
+        required: false
+        default: 'false'
+        type: boolean
+
+# Set permissions for the workflow
+permissions:
+  contents: write          # Allow reading and writing to repository contents
+  pull-requests: write     # Allow creating and updating pull requests
+  checks: read            # Allow reading check statuses (for PR creation)
 
 jobs:
+  detect-unused-strings:
+    runs-on: ubuntu-latest
+    name: Detect Unused Translation Strings
+    if: github.event.inputs.remove_unused == 'true'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        cd assets/translations
+        npm install
+        
+    - name: Extract used translation keys from Dart files
+      id: extract
+      run: |
+        echo "Extracting translation keys from Dart files..."
+        
+        # Create a script to extract translation keys from Dart files
+        cat > extract_keys.js << 'EOF'
+        const fs = require('fs');
+        const path = require('path');
+        
+        // Function to extract translation keys from a single file
+        function extractKeysFromFile(filePath) {
+          const content = fs.readFileSync(filePath, 'utf8');
+          const keys = new Set();
+          
+          // Match patterns like:
+          // - tr('key')
+          // - tr('key', args: [...])
+          // - AppLocalizations.of(context)!.key
+          // - AppLocalizations.of(context)!.key(args: [...])
+          // - tr('x', args: [plural('key', ...)])
+          // - AppLocalizations.of(context)!.x(plural('key', ...))
+          
+          const patterns = [
+            /tr\(\s*['"`]([^'"`]+)['"`]/g,
+            /tr\(\s*['"`]([^'"`]+)['"`]\s*,/g,
+            /AppLocalizations\.of\(context\)\!\.([a-zA-Z_][a-zA-Z0-9_]*)/g,
+            /plural\(\s*['"`]([^'"`]+)['"`]/g,
+            /AppLocalizations\.of\(context\)\!\.([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g,
+          ];
+          
+          patterns.forEach(pattern => {
+            let match;
+            while ((match = pattern.exec(content)) !== null) {
+              const key = match[1];
+              if (key && !key.includes(' ') && key.length > 0) {
+                keys.add(key);
+              }
+            }
+          });
+          
+          return Array.from(keys);
+        }
+        
+        // Function to recursively find all Dart files
+        function findDartFiles(dir) {
+          const files = [];
+          
+          function traverse(currentDir) {
+            const items = fs.readdirSync(currentDir);
+            
+            for (const item of items) {
+              const fullPath = path.join(currentDir, item);
+              const stat = fs.statSync(fullPath);
+              
+              if (stat.isDirectory() && !item.startsWith('.') && item !== 'build') {
+                traverse(fullPath);
+              } else if (stat.isFile() && item.endsWith('.dart')) {
+                files.push(fullPath);
+              }
+            }
+          }
+          
+          traverse(dir);
+          return files;
+        }
+        
+        // Main execution
+        const libDir = path.join(process.cwd(), 'lib');
+        const dartFiles = findDartFiles(libDir);
+        
+        console.log(`Found ${dartFiles.length} Dart files`);
+        
+        const allKeys = new Set();
+        
+        dartFiles.forEach(file => {
+          const keys = extractKeysFromFile(file);
+          keys.forEach(key => allKeys.add(key));
+        });
+        
+        const sortedKeys = Array.from(allKeys).sort();
+        
+        // Save to file
+        fs.writeFileSync('used_keys.txt', sortedKeys.join('\n'));
+        
+        console.log(`Extracted ${sortedKeys.length} unique translation keys`);
+        console.log('Keys saved to used_keys.txt');
+        
+        // Output for GitHub Actions
+        console.log(`used_keys=${sortedKeys.join(',')}`);
+        console.log(`used_keys_count=${sortedKeys.length}`);
+        EOF
+        
+        # Run the extraction script
+        cd assets/translations
+        node ../extract_keys.js
+        
+        # Capture output for GitHub Actions
+        used_keys=$(cat used_keys.txt | tr '\n' ',')
+        used_keys_count=$(wc -l < used_keys.txt)
+        
+        echo "used_keys=$used_keys" >> $GITHUB_OUTPUT
+        echo "used_keys_count=$used_keys_count" >> $GITHUB_OUTPUT
+        
+        echo "🔍 Found $used_keys_count translation keys used in code"
+        
+    - name: Detect unused translation keys
+      id: detect_unused
+      run: |
+        cd assets/translations
+        
+        echo "Detecting unused translation keys..."
+        
+        template_file="en.json"
+        template_keys=$(jq -r 'keys[]' "$template_file" | sort)
+        
+        # Get used keys from previous step
+        IFS=',' read -ra USED_KEYS <<< "${{ steps.extract.outputs.used_keys }}"
+        
+        unused_keys=0
+        unused_list=""
+        
+        echo "Checking each template key against used keys..."
+        
+        for key in $template_keys; do
+          if [[ ! " ${USED_KEYS[@]} " =~ " ${key} " ]]; then
+            echo "❌ Unused key: $key"
+            unused_keys=$((unused_keys + 1))
+            unused_list="$unused_list $key"
+          else
+            echo "✅ Used key: $key"
+          fi
+        done
+        
+        echo "unused_keys=$unused_keys" >> $GITHUB_OUTPUT
+        echo "unused_list=$unused_list" >> $GITHUB_OUTPUT
+        
+        if [ $unused_keys -gt 0 ]; then
+          echo "⚠️ Found $unused_keys unused translation keys"
+          echo "Unused keys:$unused_list"
+        else
+          echo "✅ All translation keys are in use"
+        fi
+        
+    - name: Remove unused translation keys
+      if: steps.detect_unused.outputs.unused_keys > 0
+      run: |
+        cd assets/translations
+        
+        echo "🗑️ Removing unused translation keys..."
+        
+        template_file="en.json"
+        
+        # Create backup
+        cp "$template_file" "${template_file}.backup"
+        
+        # Get unused keys
+        IFS=' ' read -ra UNUSED_KEYS <<< "${{ steps.detect_unused.outputs.unused_list }}"
+        
+        echo "Removing ${#UNUSED_KEYS[@]} unused keys from all translation files..."
+        
+        for file in *.json; do
+          if [ "$file" != "package.json" ] && [ "$file" != "used_keys.txt" ]; then
+            echo "Processing $file..."
+            
+            # Create a new JSON without unused keys
+            jq --arg keys "$(printf '%s\n' "${UNUSED_KEYS[@]}" | jq -R . | jq -s .)" '
+              reduce . as $in ($ARGS.positional[]; select($in | has($in)) | del($in[$in]))
+            ' "$file" > "${file}.tmp"
+            
+            # Replace original file
+            mv "${file}.tmp" "$file"
+            
+            echo "✅ Updated $file"
+          fi
+        done
+        
+        echo "🗑️ Unused keys have been removed"
+        echo "📁 Backups created with .backup extension"
+        
+    - name: Create Pull Request for unused keys removal
+      if: steps.detect_unused.outputs.unused_keys > 0
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: "🗑️ Remove unused translation keys"
+        title: "🗑️ Remove Unused Translation Keys"
+        body: |
+          ## 🗑️ Unused Translation Keys Removal
+          
+          This PR automatically removes unused translation keys that were found in the codebase.
+          
+          ### 📊 Summary
+          - **Unused keys found**: ${{ steps.detect_unused.outputs.unused_keys }}
+          - **Keys in use**: ${{ steps.extract.outputs.used_keys_count }}
+          - **Files updated**: All translation files
+          
+          ### 🔧 What was done
+          - ✅ Analyzed all Dart files for translation key usage
+          - ✅ Identified ${{ steps.detect_unused.outputs.unused_keys }} unused keys
+          - ✅ Removed unused keys from all translation files
+          - ✅ Created backups of original files
+          
+          ### 🗑️ Removed Keys
+          ```
+          ${{ steps.detect_unused.outputs.unused_list }}
+          ```
+          
+          ### 📝 Next Steps
+          1. Review the removed keys to ensure they're truly unused
+          2. Check if any keys are used dynamically (e.g., via string concatenation)
+          3. Test the app to ensure no functionality is broken
+          4. Remove backup files if everything works correctly
+          
+          ### ⚠️ Important
+          If any keys were removed in error, you can:
+          - Restore from the `.backup` files
+          - Manually add back any needed keys
+          
+          ### 🤖 Auto-generated
+          This PR was automatically created by the Translation Management workflow.
+          
+        branch: remove-unused-translations
+        delete-branch: true
+        labels: |
+          translations
+          cleanup
+          automated
+          
   detect-missing-translations:
     runs-on: ubuntu-latest
     name: Detect Missing Translations
@@ -29,6 +291,7 @@ jobs:
       uses: actions/checkout@v6
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0  # Fetch full history for proper PR creation
         
     - name: Setup Node.js
       uses: actions/setup-node@v4
