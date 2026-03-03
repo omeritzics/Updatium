@@ -1,0 +1,28 @@
+name: Resize Image Display
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  format-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Issue Body
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const body = context.payload.issue.body;
+            if (!body) return;
+
+            const mdImageRegex = /!\[(.*?)\]\((.*?)\)/g;
+            
+            const newBody = body.replace(mdImageRegex, '<img src="$2" alt="$1" width="720">');
+
+            if (body !== newBody) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: newBody
+              });
+            }
