@@ -451,16 +451,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appNotFound => 'Aplicação não encontrada';
 
   @override
-  String get networkError => 'Network connection failed';
+  String get networkError => 'Falha na conexão de rede';
 
   @override
-  String get invalidUrlFormat => 'Invalid URL format';
+  String get invalidUrlFormat => 'Formato de URL inválido';
 
   @override
-  String get accessDenied => 'Access denied';
+  String get accessDenied => 'Acesso negado';
 
   @override
-  String get importFailed => 'Import failed';
+  String get importFailed => 'Falha na importação';
 
   @override
   String get updatiumExportHyphenatedLowercase => 'exportação de updatium';
