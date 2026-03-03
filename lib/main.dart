@@ -614,33 +614,39 @@ class _UpdatiumState extends State<Updatium> {
                   ),
                 ),
               ),
-              // Material 3 Filled Text Fields
+              // Expressive Input Fields
               inputDecorationTheme: InputDecorationTheme(
                 filled: true,
-                fillColor: scheme.surfaceContainerHighest,
+                fillColor: scheme.surfaceContainerLow,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    color: scheme.outline.withValues(alpha: 0.2),
+                    width: 1,
+                  ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    color: scheme.outline.withValues(alpha: 0.2),
+                    width: 1,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(color: scheme.primary, width: 2),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(color: scheme.error, width: 2),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(color: scheme.error, width: 2),
                 ),
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
+                  horizontal: 24,
+                  vertical: 18,
                 ),
                 hintStyle: TextStyle(
                   color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
@@ -648,45 +654,40 @@ class _UpdatiumState extends State<Updatium> {
                 ),
                 labelStyle: TextStyle(
                   color: scheme.onSurfaceVariant,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                 ),
                 floatingLabelStyle: TextStyle(
                   color: scheme.primary,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
 
-              // Material 3 Menu Theme
+              // Expressive Dropdown Button Theme
               dropdownMenuTheme: DropdownMenuThemeData(
-                menuStyle: MenuStyle(
-                  backgroundColor: WidgetStateProperty.all(scheme.surfaceContainer),
-                  surfaceTintColor: WidgetStateProperty.all(scheme.surfaceTint),
-                  elevation: WidgetStateProperty.all(3),
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  padding: WidgetStateProperty.all(EdgeInsets.zero),
-                ),
                 inputDecorationTheme: InputDecorationTheme(
                   filled: true,
-                  fillColor: scheme.surfaceContainerHighest,
+                  fillColor: scheme.surfaceContainerLow,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: scheme.outline.withValues(alpha: 0.2),
+                      width: 1,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: scheme.outline.withValues(alpha: 0.2),
+                      width: 1,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(20),
                     borderSide: BorderSide(color: scheme.primary, width: 2),
                   ),
                   contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
+                    horizontal: 24,
+                    vertical: 18,
                   ),
                   hintStyle: TextStyle(
                     color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
@@ -694,31 +695,31 @@ class _UpdatiumState extends State<Updatium> {
                   ),
                   labelStyle: TextStyle(
                     color: scheme.onSurfaceVariant,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                   ),
                   floatingLabelStyle: TextStyle(
                     color: scheme.primary,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
 
-              // Material 3 Extended Floating Action Button
+              // Expressive Floating Action Button
               floatingActionButtonTheme: FloatingActionButtonThemeData(
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 elevation: isDark ? 6 : 8,
                 extendedPadding: const EdgeInsets.symmetric(
-                  horizontal: 24,
+                  horizontal: 20,
                   vertical: 16,
                 ),
                 extendedTextStyle: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.5,
                 ),
-                foregroundColor: scheme.onPrimary,
-                backgroundColor: scheme.primary,
+                foregroundColor: scheme.onPrimaryContainer,
+                backgroundColor: scheme.primaryContainer,
                 iconSize: 24,
               ),
 
@@ -843,7 +844,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Progress Indicators
               progressIndicatorTheme: const ProgressIndicatorThemeData(
-                useMaterial3Year2023: false,
+                year2023: false,
               ),
             );
           }
