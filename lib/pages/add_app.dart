@@ -479,53 +479,30 @@ class AddAppPageState extends State<AddAppPage> {
         Row(
           children: [
             Expanded(
-              child: MenuAnchor(
-                builder: (context, controller, child) {
-                  final selectedSource = sourceProvider.sources
-                      .where(
-                        (s) =>
-                            s.allowOverride ||
-                            (pickedSource != null &&
-                                pickedSource.runtimeType == s.runtimeType),
-                      )
-                      .firstWhere(
-                        (s) =>
-                            s.runtimeType.toString() ==
-                            (pickedSourceOverride ?? ''),
-                        orElse: () => sourceProvider.sources.first,
-                      );
-
-                  return TextField(
-                    controller: TextEditingController(
-                      text:
-                          pickedSourceOverride == null ||
-                              pickedSourceOverride == ''
-                          ? tr('none')
-                          : selectedSource.name,
-                    ),
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      labelText: tr('overrideSource'),
-                      filled: true,
-                      suffixIcon: const Icon(Icons.arrow_drop_down),
-                    ),
-                    onTap: () {
-                      if (controller.isOpen) {
-                        controller.close();
-                      } else {
-                        controller.open();
-                      }
-                    },
-                  );
-                },
-                menuChildren: [
-                  MenuItemButton(
-                    onPressed: () {
-                      setState(() {
-                        pickedSourceOverride = null;
-                      });
-                      changeUserInput(userInput, true, false);
-                    },
+              child: DropdownButtonFormField<String>(
+                value: pickedSourceOverride == null || pickedSourceOverride == ''
+                    ? tr('none')
+                    : sourceProvider.sources
+                        .where(
+                          (s) =>
+                              s.allowOverride ||
+                              (pickedSource != null &&
+                                  pickedSource.runtimeType == s.runtimeType),
+                        )
+                        .firstWhere(
+                          (s) =>
+                              s.runtimeType.toString() ==
+                              (pickedSourceOverride ?? ''),
+                          orElse: () => sourceProvider.sources.first,
+                        )
+                        .name,
+                decoration: InputDecoration(
+                  labelText: tr('overrideSource'),
+                  filled: true,
+                ),
+                items: [
+                  DropdownMenuItem(
+                    value: tr('none'),
                     child: Text(tr('none')),
                   ),
                   ...sourceProvider.sources
@@ -536,17 +513,26 @@ class AddAppPageState extends State<AddAppPage> {
                                 pickedSource.runtimeType == s.runtimeType),
                       )
                       .map(
-                        (s) => MenuItemButton(
-                          onPressed: () {
-                            setState(() {
-                              pickedSourceOverride = s.runtimeType.toString();
-                            });
-                            changeUserInput(userInput, true, false);
-                          },
+                        (s) => DropdownMenuItem(
+                          value: s.name,
                           child: Text(s.name),
                         ),
                       ),
                 ],
+                onChanged: (value) {
+                  if (value == tr('none')) {
+                    setState(() {
+                      pickedSourceOverride = null;
+                    });
+                  } else {
+                    final selectedSource = sourceProvider.sources
+                        .firstWhere((s) => s.name == value);
+                    setState(() {
+                      pickedSourceOverride = selectedSource.runtimeType.toString();
+                    });
+                  }
+                  changeUserInput(userInput, true, false);
+                },
               ),
             ),
           ],

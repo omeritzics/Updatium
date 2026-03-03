@@ -396,9 +396,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       ),
                                     ],
                                     [
-                                      GeneratedFormDropdown(
-                                        'exportSettings',
-                                        [
+                                      FormDropdown(
+                                        key: 'exportSettings',
+                                        options: [
                                           MapEntry('0', tr('none')),
                                           MapEntry('1', tr('excludeSecrets')),
                                           MapEntry('2', tr('all')),
@@ -407,6 +407,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                         defaultValue: settingsProvider
                                             .exportSettings
                                             .toString(),
+                                        onChanged: (value) {
+                                          // Handle the change - this will need to be integrated with the form system
+                                        },
                                       ),
                                     ],
                                   ],

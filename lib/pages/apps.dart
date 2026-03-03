@@ -1478,16 +1478,19 @@ class AppsPageState extends State<AppsPage> {
                 ),
               ],
               [
-                GeneratedFormDropdown(
-                  'sourceFilter',
-                  label: tr('appSource'),
-                  defaultValue: filter.sourceFilter,
-                  [
+                FormDropdown(
+                  key: 'sourceFilter',
+                  options: [
                     MapEntry('', tr('none')),
                     ...sourceProvider.sources.map(
                       (e) => MapEntry(e.runtimeType.toString(), e.name),
                     ),
                   ],
+                  label: tr('appSource'),
+                  defaultValue: filter.sourceFilter,
+                  onChanged: (value) {
+                    filter.sourceFilter = value;
+                  },
                 ),
               ],
             ],
