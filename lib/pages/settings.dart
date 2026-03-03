@@ -274,149 +274,118 @@ class _SettingsPageState extends State<SettingsPage> {
       future: DeviceInfoPlugin().androidInfo,
     );
 
-    var sortDropdown = MenuAnchor(
-      builder: (context, controller, child) {
-        String selectedValue;
-        switch (settingsProvider.sortColumn) {
-          case SortColumnSettings.authorName:
-            selectedValue = tr('authorName');
-            break;
-          case SortColumnSettings.nameAuthor:
-            selectedValue = tr('nameAuthor');
-            break;
-          case SortColumnSettings.added:
-            selectedValue = tr('asAdded');
-            break;
-          case SortColumnSettings.releaseDate:
-            selectedValue = tr('releaseDate');
-            break;
-        }
-
-        return TextField(
-          controller: TextEditingController(text: selectedValue),
-          readOnly: true,
-          decoration: InputDecoration(
-            labelText: tr('appSortBy'),
-            filled: true,
-            suffixIcon: const Icon(Icons.arrow_drop_down),
-          ),
-          onTap: () {
-            if (controller.isOpen) {
-              controller.close();
-            } else {
-              controller.open();
-            }
-          },
-        );
+    var sortDropdown = DropdownButtonFormField<String>(
+      value: switch (settingsProvider.sortColumn) {
+        SortColumnSettings.authorName => tr('authorName'),
+        SortColumnSettings.nameAuthor => tr('nameAuthor'),
+        SortColumnSettings.added => tr('asAdded'),
+        SortColumnSettings.releaseDate => tr('releaseDate'),
       },
-      menuChildren: [
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortColumn = SortColumnSettings.authorName,
+      decoration: InputDecoration(
+        labelText: tr('appSortBy'),
+        filled: true,
+      ),
+      items: [
+        DropdownMenuItem(
+          value: tr('authorName'),
           child: Text(tr('authorName')),
         ),
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortColumn = SortColumnSettings.nameAuthor,
+        DropdownMenuItem(
+          value: tr('nameAuthor'),
           child: Text(tr('nameAuthor')),
         ),
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortColumn = SortColumnSettings.added,
+        DropdownMenuItem(
+          value: tr('asAdded'),
           child: Text(tr('asAdded')),
         ),
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortColumn = SortColumnSettings.releaseDate,
+        DropdownMenuItem(
+          value: tr('releaseDate'),
           child: Text(tr('releaseDate')),
         ),
       ],
+      onChanged: (value) {
+        switch (value) {
+          case tr('authorName'):
+            settingsProvider.sortColumn = SortColumnSettings.authorName;
+            break;
+          case tr('nameAuthor'):
+            settingsProvider.sortColumn = SortColumnSettings.nameAuthor;
+            break;
+          case tr('asAdded'):
+            settingsProvider.sortColumn = SortColumnSettings.added;
+            break;
+          case tr('releaseDate'):
+            settingsProvider.sortColumn = SortColumnSettings.releaseDate;
+            break;
+        }
+      },
     );
 
-    var orderDropdown = MenuAnchor(
-      builder: (context, controller, child) {
-        String selectedValue =
-            settingsProvider.sortOrder == SortOrderSettings.ascending
-            ? tr('ascending')
-            : tr('descending');
-
-        return TextField(
-          controller: TextEditingController(text: selectedValue),
-          readOnly: true,
-          decoration: InputDecoration(
-            labelText: tr('appSortOrder'),
-            filled: true,
-            suffixIcon: const Icon(Icons.arrow_drop_down),
-          ),
-          onTap: () {
-            if (controller.isOpen) {
-              controller.close();
-            } else {
-              controller.open();
-            }
-          },
-        );
-      },
-      menuChildren: [
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortOrder = SortOrderSettings.ascending,
+    var orderDropdown = DropdownButtonFormField<String>(
+      value: settingsProvider.sortOrder == SortOrderSettings.ascending
+          ? tr('ascending')
+          : tr('descending'),
+      decoration: InputDecoration(
+        labelText: tr('appSortOrder'),
+        filled: true,
+      ),
+      items: [
+        DropdownMenuItem(
+          value: tr('ascending'),
           child: Text(tr('ascending')),
         ),
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortOrder = SortOrderSettings.descending,
+        DropdownMenuItem(
+          value: tr('descending'),
           child: Text(tr('descending')),
         ),
       ],
+      onChanged: (value) {
+        if (value == tr('ascending')) {
+          settingsProvider.sortOrder = SortOrderSettings.ascending;
+        } else if (value == tr('descending')) {
+          settingsProvider.sortOrder = SortOrderSettings.descending;
+        }
+      },
     );
 
-    var localeDropdown = MenuAnchor(
-      builder: (context, controller, child) {
-        String selectedValue = settingsProvider.forcedLocale == null
-            ? tr('followSystem')
-            : supportedLocales
-                  .firstWhere(
-                    (e) => e.key == settingsProvider.forcedLocale,
-                    orElse: () => supportedLocales.first,
-                  )
-                  .value;
-
-        return TextField(
-          controller: TextEditingController(text: selectedValue),
-          readOnly: true,
-          decoration: InputDecoration(
-            labelText: tr('language'),
-            filled: true,
-            suffixIcon: const Icon(Icons.arrow_drop_down),
-          ),
-          onTap: () {
-            if (controller.isOpen) {
-              controller.close();
-            } else {
-              controller.open();
-            }
-          },
-        );
-      },
-      menuChildren: [
-        MenuItemButton(
-          onPressed: () {
-            settingsProvider.forcedLocale = null;
-            settingsProvider.resetLocaleSafe(context);
-          },
+    var localeDropdown = DropdownButtonFormField<String>(
+      value: settingsProvider.forcedLocale == null
+          ? tr('followSystem')
+          : supportedLocales
+                .firstWhere(
+                  (e) => e.key == settingsProvider.forcedLocale,
+                  orElse: () => supportedLocales.first,
+                )
+                .value,
+      decoration: InputDecoration(
+        labelText: tr('language'),
+        filled: true,
+      ),
+      items: [
+        DropdownMenuItem(
+          value: tr('followSystem'),
           child: Text(tr('followSystem')),
         ),
         ...supportedLocales.map(
-          (e) => MenuItemButton(
-            onPressed: () {
-              settingsProvider.forcedLocale = e.key;
-              context.setLocale(e.key);
-            },
+          (e) => DropdownMenuItem(
+            value: e.value,
             child: Text(e.value),
           ),
         ),
       ],
+      onChanged: (value) {
+        if (value == tr('followSystem')) {
+          settingsProvider.forcedLocale = null;
+          settingsProvider.resetLocaleSafe(context);
+        } else {
+          final selectedLocale = supportedLocales.firstWhere(
+            (e) => e.value == value,
+            orElse: () => supportedLocales.first,
+          );
+          settingsProvider.forcedLocale = selectedLocale.key;
+          context.setLocale(selectedLocale.key);
+        }
+      },
     );
 
     var intervalSlider = Slider(
@@ -857,57 +826,43 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                         height16,
-                        MenuAnchor(
-                          builder: (context, controller, child) {
-                            String selectedValue;
-                            switch (settingsProvider.theme) {
-                              case ThemeSettings.system:
-                                selectedValue = tr('followSystem');
-                                break;
-                              case ThemeSettings.light:
-                                selectedValue = tr('light');
-                                break;
-                              case ThemeSettings.dark:
-                                selectedValue = tr('dark');
-                                break;
-                            }
-
-                            return TextField(
-                              controller: TextEditingController(
-                                text: selectedValue,
-                              ),
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                labelText: tr('theme'),
-                                filled: true,
-                                suffixIcon: const Icon(Icons.arrow_drop_down),
-                              ),
-                              onTap: () {
-                                if (controller.isOpen) {
-                                  controller.close();
-                                } else {
-                                  controller.open();
-                                }
-                              },
-                            );
+                        DropdownButtonFormField<String>(
+                          value: switch (settingsProvider.theme) {
+                            ThemeSettings.system => tr('followSystem'),
+                            ThemeSettings.light => tr('light'),
+                            ThemeSettings.dark => tr('dark'),
                           },
-                          menuChildren: [
-                            MenuItemButton(
-                              onPressed: () =>
-                                  settingsProvider.theme = ThemeSettings.system,
+                          decoration: InputDecoration(
+                            labelText: tr('theme'),
+                            filled: true,
+                          ),
+                          items: [
+                            DropdownMenuItem(
+                              value: tr('followSystem'),
                               child: Text(tr('followSystem')),
                             ),
-                            MenuItemButton(
-                              onPressed: () =>
-                                  settingsProvider.theme = ThemeSettings.light,
+                            DropdownMenuItem(
+                              value: tr('light'),
                               child: Text(tr('light')),
                             ),
-                            MenuItemButton(
-                              onPressed: () =>
-                                  settingsProvider.theme = ThemeSettings.dark,
+                            DropdownMenuItem(
+                              value: tr('dark'),
                               child: Text(tr('dark')),
                             ),
                           ],
+                          onChanged: (value) {
+                            switch (value) {
+                              case tr('followSystem'):
+                                settingsProvider.theme = ThemeSettings.system;
+                                break;
+                              case tr('light'):
+                                settingsProvider.theme = ThemeSettings.light;
+                                break;
+                              case tr('dark'):
+                                settingsProvider.theme = ThemeSettings.dark;
+                                break;
+                            }
+                          },
                         ),
                         height8,
                         if (settingsProvider.theme == ThemeSettings.system)
@@ -1220,38 +1175,26 @@ class _LogsDialogState extends State<LogsDialog> {
       title: Text(tr('appLogs')),
       content: Column(
         children: [
-          MenuAnchor(
-            builder: (context, controller, child) {
-              return TextField(
-                controller: TextEditingController(
-                  text: plural('day', selectedDays),
-                ),
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText: tr('filterDays'),
-                  filled: true,
-                  suffixIcon: const Icon(Icons.arrow_drop_down),
-                ),
-                onTap: () {
-                  if (controller.isOpen) {
-                    controller.close();
-                  } else {
-                    controller.open();
-                  }
-                },
-              );
-            },
-            menuChildren: days.map((day) {
-              return MenuItemButton(
-                onPressed: () {
-                  setState(() {
-                    selectedDays = day;
-                  });
-                  filterLogs(day);
-                },
+          DropdownButtonFormField<int>(
+            value: selectedDays,
+            decoration: InputDecoration(
+              labelText: tr('filterDays'),
+              filled: true,
+            ),
+            items: days.map((day) {
+              return DropdownMenuItem<int>(
+                value: day,
                 child: Text(plural('day', day)),
               );
             }).toList(),
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  selectedDays = value;
+                });
+                filterLogs(value);
+              }
+            },
           ),
           const SizedBox(height: 32),
           Text(logString ?? ''),
@@ -1261,18 +1204,13 @@ class _LogsDialogState extends State<LogsDialog> {
         AppTextButton(
           onPressed: () async {
             var cont =
-                (await showDialog<Map<String, dynamic>?>(
+                (await showGeneratedFormModal(
                   context: context,
-                  builder: (BuildContext ctx) {
-                    return GeneratedFormModal(
-                      title: tr('appLogs'),
-                      items: const [],
-                      initValid: true,
-                      message: tr('removeFromUpdatium'),
-                    );
-                  },
-                )) !=
-                null;
+                  title: tr('appLogs'),
+                  items: const [],
+                  initValid: true,
+                  message: tr('removeFromUpdatium'),
+                )) != null;
             if (cont) {
               logsProvider.clear();
               Navigator.of(context).pop();

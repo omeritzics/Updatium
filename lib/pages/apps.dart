@@ -33,21 +33,19 @@ void showChangeLogDialog(
   String? changesUrl,
   AppSource appSource,
   String changeLog,
-) {
-  showDialog(
+) async {
+  await showGeneratedFormModal(
     context: context,
-    builder: (BuildContext context) {
-      return GeneratedFormModal(
-        title: tr('changes'),
-        items: const [],
-        message: app.latestVersion,
-        additionalWidgets: [
-          changesUrl != null
-              ? GestureDetector(
-                  child: Text(
-                    changesUrl,
-                    style: const TextStyle(
-                      decoration: TextDecoration.underline,
+    title: tr('changes'),
+    items: const [],
+    message: app.latestVersion,
+    additionalWidgets: [
+      changesUrl != null
+          ? GestureDetector(
+              child: Text(
+                changesUrl,
+                style: const TextStyle(
+                  decoration: TextDecoration.underline,
                       fontStyle: FontStyle.italic,
                     ),
                     maxLines: 2,
@@ -103,8 +101,6 @@ void showChangeLogDialog(
         ],
         singleNullReturnButton: tr('ok'),
       );
-    },
-  );
 }
 
 Null Function()? getChangeLogFn(BuildContext context, App app) {
@@ -714,255 +710,6 @@ class AppsPageState extends State<AppsPage> {
       );
     }
 
-    List<double> categoryStops(List<String> categories) {
-      final n = categories.length;
-      final cached = _stopsCache[n];
-      if (cached != null) return cached;
-      List<double> result;
-      if (n > 1) {
-        result = [
-          ...List<double>.generate(
-            n,
-            (i) => ((i / (n - 1)) - 0.0001).clamp(0.0, 1.0),
-          ),
-          1.0,
-        ];
-      } else if (n == 1) {
-        result = const [0.9999, 1.0];
-      } else {
-        result = const [1.0];
-      }
-      _stopsCache[n] = result;
-      return result;
-    }
-
-    Widget getSingleAppGridTile(int index) {
-      var hasUpdate =
-          listedApps[index].app.installedVersion != null &&
-          listedApps[index].app.installedVersion !=
-              listedApps[index].app.latestVersion;
-      var transparent = Theme.of(
-        context,
-      ).colorScheme.surface.withAlpha(0).value;
-      final categories = listedApps[index].app.categories;
-      final stops = categoryStops(categories);
-
-      return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(
-            stops: stops,
-            begin: const Alignment(-1, -1),
-            end: const Alignment(1, 1),
-            colors: [
-              ...listedApps[index].app.categories.map(
-                (e) => Color(
-                  settingsProvider.categories[e] ?? transparent,
-                ).withAlpha(40),
-              ),
-              Color(transparent),
-            ],
-          ),
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            if (selectedAppIds.isNotEmpty) {
-              toggleAppSelected(listedApps[index].app);
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      AppPage(appId: listedApps[index].app.id),
-                ),
-              );
-            }
-          },
-          onLongPress: () {
-            toggleAppSelected(listedApps[index].app);
-          },
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              if (selectedAppIds.contains(listedApps[index].app.id))
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.primary.withOpacity(0.2),
-                    ),
-                  ),
-                ),
-              if (listedApps[index].app.pinned)
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.push_pin,
-                      size: 16,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ),
-              if (hasUpdate)
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.circle,
-                      size: 10,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    height: 64,
-                    width: 64,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: getAppIcon(index),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      listedApps[index].name,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      listedApps[index].author,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(fontSize: 11),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Builder(
-                      builder: (ctx) {
-                        final ai = listedApps[index];
-                        final app = ai.app;
-                        final isInstalled = app.installedVersion != null;
-                        final hasUpdateLocal =
-                            isInstalled &&
-                            app.installedVersion != app.latestVersion;
-                        final isTrackOnly =
-                            app.additionalSettings['trackOnly'] == true;
-
-                        if (isTrackOnly) {
-                          return const SizedBox.shrink();
-                        }
-
-                        if (!isInstalled) {
-                          return FilledButton.tonal(
-                            onPressed: appsProvider.areDownloadsRunning()
-                                ? null
-                                : () {
-                                    appsProvider
-                                        .downloadAndInstallLatestApps([
-                                          app.id,
-                                        ], globalNavigatorKey.currentContext)
-                                        .catchError((e) {
-                                          showError(e, context);
-                                          return <String>[];
-                                        });
-                                  },
-                            style: const ButtonStyle(
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            child: Text(tr('install')),
-                          );
-                        }
-
-                        if (hasUpdateLocal) {
-                          return FilledButton.tonal(
-                            onPressed: appsProvider.areDownloadsRunning()
-                                ? null
-                                : () {
-                                    appsProvider
-                                        .downloadAndInstallLatestApps([
-                                          app.id,
-                                        ], globalNavigatorKey.currentContext)
-                                        .catchError((e) {
-                                          showError(e, context);
-                                          return <String>[];
-                                        });
-                                  },
-                            style: const ButtonStyle(
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            child: Text(tr('update')),
-                          );
-                        }
-
-                        return Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.check_circle,
-                              color: Colors.green[600],
-                              size: 18,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              tr('updated'),
-                              style: TextStyle(color: Colors.green[600]),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              if (listedApps[index].downloadProgress != null)
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.black45,
-                    ),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        value: listedApps[index].downloadProgress! >= 0
-                            ? listedApps[index].downloadProgress! / 100
-                            : null,
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      );
-    }
-
     getCategoryCollapsibleTile(int index) {
       var filteredEntries = listedApps
           .asMap()
@@ -1086,7 +833,8 @@ class AppsPageState extends State<AppsPage> {
                       existingUpdateIdsAllOrSelected.length +
                       newInstallIdsAllOrSelected.length +
                       trackOnlyUpdateIdsAllOrSelected.length;
-                  return GeneratedFormModal(
+                  return await showGeneratedFormModal(
+                    context: context,
                     title: tr(
                       'changeX',
                       args: [plural('apps', totalApps).toLowerCase()],
@@ -1155,45 +903,35 @@ class AppsPageState extends State<AppsPage> {
           var cont = true;
           if (showPrompt) {
             cont =
-                await showDialog<Map<String, dynamic>?>(
+                await showGeneratedFormModal(
                   context: context,
-                  builder: (BuildContext ctx) {
-                    return GeneratedFormModal(
-                      title: tr('categorize'),
-                      items: const [],
-                      initValid: true,
-                      message: tr('selectedCategorizeWarning'),
-                    );
-                  },
-                ) !=
-                null;
-          }
-          if (cont) {
-            // ignore: use_build_context_synchronously
-            await showDialog<Map<String, dynamic>?>(
-              context: context,
-              builder: (BuildContext ctx) {
-                return GeneratedFormModal(
                   title: tr('categorize'),
                   items: const [],
                   initValid: true,
-                  singleNullReturnButton: tr('continue'),
-                  additionalWidgets: [
-                    CategoryEditorSelector(
-                      preselected: !showPrompt ? preselected ?? {} : {},
-                      showLabelWhenNotEmpty: false,
-                      onSelected: (categories) {
-                        appsProvider.saveApps(
-                          selectedApps.map((e) {
-                            e.categories = categories;
-                            return e;
-                          }).toList(),
-                        );
-                      },
-                    ),
-                  ],
-                );
-              },
+                  message: tr('selectedCategorizeWarning'),
+                ) != null;
+          }
+          if (cont) {
+            // ignore: use_build_context_synchronously
+            await showGeneratedFormModal(
+              context: context,
+              title: tr('categorize'),
+              items: const [],
+              initValid: true,
+              additionalWidgets: [
+                CategoryEditorSelector(
+                  preselected: !showPrompt ? preselected ?? {} : {},
+                  showLabelWhenNotEmpty: false,
+                  onSelected: (categories) {
+                    appsProvider.saveApps(
+                      selectedApps.map((e) {
+                        e.categories = categories;
+                        return e;
+                      }).toList(),
+                    );
+                  },
+                ),
+              ],
             );
           }
         } catch (err) {
@@ -1437,7 +1175,8 @@ class AppsPageState extends State<AppsPage> {
         context: context,
         builder: (BuildContext ctx) {
           var vals = filter.toFormValuesMap();
-          return GeneratedFormModal(
+          return await showGeneratedFormModal(
+            context: context,
             initValid: true,
             title: tr('filterApps'),
             items: [
@@ -1478,16 +1217,19 @@ class AppsPageState extends State<AppsPage> {
                 ),
               ],
               [
-                GeneratedFormDropdown(
-                  'sourceFilter',
-                  label: tr('appSource'),
-                  defaultValue: filter.sourceFilter,
-                  [
+                FormDropdown(
+                  key: 'sourceFilter',
+                  options: [
                     MapEntry('', tr('none')),
                     ...sourceProvider.sources.map(
                       (e) => MapEntry(e.runtimeType.toString(), e.name),
                     ),
                   ],
+                  label: tr('appSource'),
+                  defaultValue: filter.sourceFilter,
+                  onChanged: (value) {
+                    filter.sourceFilter = value;
+                  },
                 ),
               ],
             ],

@@ -201,34 +201,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           }
         } else if (action == 'app' || action == 'apps') {
           var dataStr = Uri.decodeComponent(data);
-          if (await showDialog(
+          if (await showGeneratedFormModal(
                 context: context,
-                builder: (BuildContext ctx) {
-                  return GeneratedFormModal(
-                    title: tr(
-                      'importX',
-                      args: [
-                        (action == 'app' ? tr('app') : tr('appsString'))
-                            .toLowerCase(),
-                      ],
-                    ),
-                    items: const [],
-                    additionalWidgets: [
-                      ExpansionTile(
-                        leading: const Icon(Icons.info_outlined),
-                        title: const Text('Raw JSON'),
-                        children: [
-                          Text(
-                            dataStr,
-                            style: const TextStyle(fontFamily: 'monospace'),
-                          ),
-                        ],
+                title: tr(
+                  'importX',
+                  args: [
+                    (action == 'app' ? tr('app') : tr('appsString'))
+                        .toLowerCase(),
+                  ],
+                ),
+                items: const [],
+                additionalWidgets: [
+                  ExpansionTile(
+                    leading: const Icon(Icons.info_outlined),
+                    title: const Text('Raw JSON'),
+                    children: [
+                      Text(
+                        dataStr,
+                        style: const TextStyle(fontFamily: 'monospace'),
                       ),
                     ],
-                  );
-                },
-              ) !=
-              null) {
+                  ),
+                ],
+              ) != null) {
             // ignore: use_build_context_synchronously
             var appsProvider = context.read<AppsProvider>();
             var result = await appsProvider.import(

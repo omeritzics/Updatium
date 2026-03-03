@@ -69,40 +69,65 @@ class GeneratedFormTextField extends GeneratedFormItem {
   }
 }
 
-class GeneratedFormDropdown extends GeneratedFormItem {
-  late List<MapEntry<String, String>>? opts;
-  List<String>? disabledOptKeys;
-  late bool required;
 
-  GeneratedFormDropdown(
+class FormDropdown extends StatelessWidget {
+  final String key;
+  final List<MapEntry<String, String>> options;
+  final String? label;
+  final String? defaultValue;
+  final List<String>? disabledOptKeys;
+  final bool required;
+  final Function(String?) onChanged;
+
+  const FormDropdown({
     super.key,
-    this.opts, {
-    super.label,
-    super.belowWidgets,
-    String super.defaultValue = '',
+    required this.key,
+    required this.options,
+    this.label,
+    this.defaultValue,
     this.disabledOptKeys,
     this.required = true,
-    List<String? Function(String? value)> super.additionalValidators = const [],
+    required this.onChanged,
   });
 
   @override
-  String ensureType(val) {
-    return val.toString();
-  }
+  Widget build(BuildContext context) {
+    if (options.isEmpty) {
+      return Text('No options available');
+    }
 
-  @override
-  GeneratedFormDropdown clone() {
-    return GeneratedFormDropdown(
-      key,
-      opts?.map((e) => MapEntry(e.key, e.value)).toList(),
-      label: label,
-      belowWidgets: belowWidgets,
-      defaultValue: defaultValue,
-      disabledOptKeys: disabledOptKeys != null
-          ? List.from(disabledOptKeys!)
-          : null,
-      required: required,
-      additionalValidators: List.from(additionalValidators),
+    final selectedValue = defaultValue ?? options.first.key;
+    final selectedOption = options.firstWhere(
+      (e) => e.key == selectedValue,
+      orElse: () => options.first,
+    );
+
+    return DropdownButtonFormField<String>(
+      value: selectedOption.value,
+      decoration: InputDecoration(
+        labelText: '${label ?? ''}${required ? " *" : ""}',
+        filled: true,
+      ),
+      items: options.map((e2) {
+        final enabled = disabledOptKeys?.contains(e2.key) != true;
+        return DropdownMenuItem<String>(
+          value: e2.value,
+          enabled: enabled,
+          child: Opacity(
+            opacity: enabled ? 1 : 0.5,
+            child: Text(e2.value),
+          ),
+        );
+      }).toList(),
+      onChanged: (value) {
+        if (value != null) {
+          final selectedOption = options.firstWhere(
+            (e) => e.value == value,
+            orElse: () => options.first,
+          );
+          onChanged(selectedOption.key);
+        }
+      },
     );
   }
 }
@@ -376,55 +401,6 @@ class _GeneratedFormState extends State<GeneratedForm> {
             },
             hideOnEmpty: true,
           );
-        } else if (formItem is GeneratedFormDropdown) {
-          if (formItem.opts!.isEmpty) {
-            return Text(tr('dropdownNoOptsError'));
-          }
-          return MenuAnchor(
-            builder: (context, controller, child) {
-              final selectedValue =
-                  values[formItem.key] ?? formItem.opts!.first.key;
-              final selectedOption = formItem.opts!.firstWhere(
-                (e) => e.key == selectedValue,
-                orElse: () => formItem.opts!.first,
-              );
-
-              return TextField(
-                controller: TextEditingController(text: selectedOption.value),
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText:
-                      '${formItem.label}${formItem.required ? ' *' : ''}',
-                  filled: true,
-                  suffixIcon: const Icon(Icons.arrow_drop_down),
-                ),
-                onTap: () {
-                  if (controller.isOpen) {
-                    controller.close();
-                  } else {
-                    controller.open();
-                  }
-                },
-              );
-            },
-            menuChildren: formItem.opts!.map((e2) {
-              var enabled = formItem.disabledOptKeys?.contains(e2.key) != true;
-              return MenuItemButton(
-                onPressed: enabled
-                    ? () {
-                        setState(() {
-                          values[formItem.key] = e2.key;
-                          someValueChanged();
-                        });
-                      }
-                    : null,
-                child: Opacity(
-                  opacity: enabled ? 1 : 0.5,
-                  child: Text(e2.value),
-                ),
-              );
-            }).toList(),
-          );
         } else if (formItem is GeneratedFormSubForm) {
           values[formItem.key] = [];
           for (Map<String, dynamic> v
@@ -478,18 +454,14 @@ class _GeneratedFormState extends State<GeneratedForm> {
             ],
           );
         } else if (widget.items[r][e] is GeneratedFormTagInput) {
-          onAddPressed() {
-            showDialog<Map<String, dynamic>?>(
+          onAddPressed() async {
+            var value = await showGeneratedFormModal(
               context: context,
-              builder: (BuildContext ctx) {
-                return GeneratedFormModal(
-                  title: widget.items[r][e].label,
-                  items: [
-                    [GeneratedFormTextField('label', label: tr('label'))],
-                  ],
-                );
-              },
-            ).then((value) {
+              title: widget.items[r][e].label,
+              items: [
+                [GeneratedFormTextField('label', label: tr('label'))],
+              ],
+            );
               String? label = value?['label'];
               if (label != null) {
                 setState(() {
@@ -674,20 +646,15 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                     (widget.items[r][e]
                                             as GeneratedFormTagInput)
                                         .deleteConfirmationMessage!;
-                                showDialog<Map<String, dynamic>?>(
+                                var value = await showGeneratedFormModal(
                                   context: context,
-                                  builder: (BuildContext ctx) {
-                                    return GeneratedFormModal(
-                                      title: message.key,
-                                      message: message.value,
-                                      items: const [],
-                                    );
-                                  },
-                                ).then((value) {
-                                  if (value != null) {
-                                    fn();
-                                  }
-                                });
+                                  title: message.key,
+                                  message: message.value,
+                                  items: const [],
+                                );
+                                if (value != null) {
+                                  fn();
+                                }
                               } else {
                                 fn();
                               }

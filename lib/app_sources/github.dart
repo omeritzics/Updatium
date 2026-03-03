@@ -130,9 +130,9 @@ class GitHub extends AppSource {
       ],
       [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
       [
-        GeneratedFormDropdown(
-          'sortMethodChoice',
-          [
+        FormDropdown(
+          key: 'sortMethodChoice',
+          options: [
             MapEntry('date', tr('releaseDate')),
             MapEntry('smartname', tr('smartname')),
             MapEntry('none', tr('none')),
@@ -142,6 +142,9 @@ class GitHub extends AppSource {
           label: tr('sortMethod'),
           defaultValue: 'date',
           required: false,
+          onChanged: (value) {
+            // Handle the change - this will need to be integrated with the form system
+          },
         ),
       ],
       [

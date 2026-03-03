@@ -326,15 +326,18 @@ class HTML extends AppSource {
         ),
       ],
       [
-        GeneratedFormDropdown(
-          'defaultPseudoVersioningMethod',
-          [
+        FormDropdown(
+          key: 'defaultPseudoVersioningMethod',
+          options: [
             MapEntry('partialAPKHash', tr('partialAPKHash')),
             MapEntry('APKLinkHash', tr('APKLinkHash')),
             MapEntry('ETag', 'ETag'),
           ],
           label: tr('defaultPseudoVersioningMethod'),
           defaultValue: 'partialAPKHash',
+          onChanged: (value) {
+            // Handle the change - this will need to be integrated with the form system
+          },
         ),
       ],
     ];

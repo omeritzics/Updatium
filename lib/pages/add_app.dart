@@ -115,24 +115,20 @@ class AddAppPageState extends State<AddAppPage> {
       if (useTrackOnly &&
           (!settingsProvider.hideTrackOnlyWarning || ignoreHideSetting)) {
         // ignore: use_build_context_synchronously
-        var values = await showDialog(
+        var values = await showGeneratedFormModal(
           context: context,
-          builder: (BuildContext ctx) {
-            return GeneratedFormModal(
-              initValid: true,
-              title: tr(
-                'xIsTrackOnly',
-                args: [
-                  pickedSource!.enforceTrackOnly ? tr('source') : tr('app'),
-                ],
-              ),
-              items: [
-                [GeneratedFormSwitch('hide', label: tr('dontShowAgain'))],
-              ],
-              message:
-                  '${pickedSource!.enforceTrackOnly ? tr('appsFromSourceAreTrackOnly') : tr('youPickedTrackOnly')}\n\n${tr('trackOnlyAppDescription')}',
-            );
-          },
+          initValid: true,
+          title: tr(
+            'xIsTrackOnly',
+            args: [
+              pickedSource!.enforceTrackOnly ? tr('source') : tr('app'),
+            ],
+          ),
+          items: [
+            [GeneratedFormSwitch('hide', label: tr('dontShowAgain'))],
+          ],
+          message:
+              '${pickedSource!.enforceTrackOnly ? tr('appsFromSourceAreTrackOnly') : tr('youPickedTrackOnly')}\n\n${tr('trackOnlyAppDescription')}',
         );
         if (values != null) {
           settingsProvider.hideTrackOnlyWarning = values['hide'] == true;
@@ -148,17 +144,13 @@ class AddAppPageState extends State<AddAppPage> {
     ) async {
       return (!(additionalSettings['releaseDateAsVersion'] == true &&
           // ignore: use_build_context_synchronously
-          await showDialog(
-                context: context,
-                builder: (BuildContext ctx) {
-                  return GeneratedFormModal(
-                    title: tr('releaseDateAsVersion'),
-                    items: const [],
-                    message: tr('releaseDateAsVersionExplanation'),
-                  );
-                },
-              ) ==
-              null));
+          await showGeneratedFormModal(
+            context: context,
+            title: tr('releaseDateAsVersion'),
+            items: const [],
+            message: tr('releaseDateAsVersionExplanation'),
+            singleNullReturnButton: tr('ok'),
+          ) != null));
     }
 
     addApp({bool resetUserInputAfter = false}) async {
@@ -355,47 +347,43 @@ class AddAppPageState extends State<AddAppPage> {
                   try {
                     Map<String, dynamic>? querySettings = {};
                     if (e.includeAdditionalOptsInMainSearch) {
-                      querySettings = await showDialog<Map<String, dynamic>?>(
+                      querySettings = await showGeneratedFormModal(
                         context: context,
-                        builder: (BuildContext ctx) {
-                          return GeneratedFormModal(
-                            title: tr('searchX', args: [e.name]),
-                            items: [
-                              ...e.searchQuerySettingFormItems.map((e) => [e]),
-                              [
-                                GeneratedFormTextField(
-                                  'url',
-                                  label: e.hosts.isNotEmpty
-                                      ? tr('overrideSource')
-                                      : plural('url', 1).substring(2),
-                                  autoCompleteOptions: [
-                                    ...(e.hosts.isNotEmpty ? [e.hosts[0]] : []),
-                                    ...appsProvider.apps.values
-                                        .where(
-                                          (a) =>
-                                              sourceProvider
-                                                  .getSource(
-                                                    a.app.url,
-                                                    overrideSource:
-                                                        a.app.overrideSource,
-                                                  )
-                                                  .runtimeType ==
-                                              e.runtimeType,
-                                        )
-                                        .map((a) {
-                                          var uri = Uri.parse(a.app.url);
-                                          return '${uri.origin}${uri.path}';
-                                        }),
-                                  ],
-                                  defaultValue: e.hosts.isNotEmpty
-                                      ? e.hosts[0]
-                                      : '',
-                                  required: true,
-                                ),
+                        title: tr('searchX', args: [e.name]),
+                        items: [
+                          ...e.searchQuerySettingFormItems.map((e) => [e]),
+                          [
+                            GeneratedFormTextField(
+                              'url',
+                              label: e.hosts.isNotEmpty
+                                  ? tr('overrideSource')
+                                  : plural('url', 1).substring(2),
+                              autoCompleteOptions: [
+                                ...(e.hosts.isNotEmpty ? [e.hosts[0]] : []),
+                                ...appsProvider.apps.values
+                                    .where(
+                                      (a) =>
+                                          sourceProvider
+                                              .getSource(
+                                                a.app.url,
+                                                overrideSource:
+                                                    a.app.overrideSource,
+                                              )
+                                              .runtimeType ==
+                                          e.runtimeType,
+                                    )
+                                    .map((a) {
+                                      var uri = Uri.parse(a.app.url);
+                                      return '${uri.origin}${uri.path}';
+                                    }),
                               ],
-                            ],
-                          );
-                        },
+                              defaultValue: e.hosts.isNotEmpty
+                                  ? e.hosts[0]
+                                  : '',
+                              required: true,
+                            ),
+                          ],
+                        ],
                       );
                     }
                     return MapEntry(
@@ -479,53 +467,30 @@ class AddAppPageState extends State<AddAppPage> {
         Row(
           children: [
             Expanded(
-              child: MenuAnchor(
-                builder: (context, controller, child) {
-                  final selectedSource = sourceProvider.sources
-                      .where(
-                        (s) =>
-                            s.allowOverride ||
-                            (pickedSource != null &&
-                                pickedSource.runtimeType == s.runtimeType),
-                      )
-                      .firstWhere(
-                        (s) =>
-                            s.runtimeType.toString() ==
-                            (pickedSourceOverride ?? ''),
-                        orElse: () => sourceProvider.sources.first,
-                      );
-
-                  return TextField(
-                    controller: TextEditingController(
-                      text:
-                          pickedSourceOverride == null ||
-                              pickedSourceOverride == ''
-                          ? tr('none')
-                          : selectedSource.name,
-                    ),
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      labelText: tr('overrideSource'),
-                      filled: true,
-                      suffixIcon: const Icon(Icons.arrow_drop_down),
-                    ),
-                    onTap: () {
-                      if (controller.isOpen) {
-                        controller.close();
-                      } else {
-                        controller.open();
-                      }
-                    },
-                  );
-                },
-                menuChildren: [
-                  MenuItemButton(
-                    onPressed: () {
-                      setState(() {
-                        pickedSourceOverride = null;
-                      });
-                      changeUserInput(userInput, true, false);
-                    },
+              child: DropdownButtonFormField<String>(
+                value: pickedSourceOverride == null || pickedSourceOverride == ''
+                    ? tr('none')
+                    : sourceProvider.sources
+                        .where(
+                          (s) =>
+                              s.allowOverride ||
+                              (pickedSource != null &&
+                                  pickedSource.runtimeType == s.runtimeType),
+                        )
+                        .firstWhere(
+                          (s) =>
+                              s.runtimeType.toString() ==
+                              (pickedSourceOverride ?? ''),
+                          orElse: () => sourceProvider.sources.first,
+                        )
+                        .name,
+                decoration: InputDecoration(
+                  labelText: tr('overrideSource'),
+                  filled: true,
+                ),
+                items: [
+                  DropdownMenuItem(
+                    value: tr('none'),
                     child: Text(tr('none')),
                   ),
                   ...sourceProvider.sources
@@ -536,17 +501,26 @@ class AddAppPageState extends State<AddAppPage> {
                                 pickedSource.runtimeType == s.runtimeType),
                       )
                       .map(
-                        (s) => MenuItemButton(
-                          onPressed: () {
-                            setState(() {
-                              pickedSourceOverride = s.runtimeType.toString();
-                            });
-                            changeUserInput(userInput, true, false);
-                          },
+                        (s) => DropdownMenuItem(
+                          value: s.name,
                           child: Text(s.name),
                         ),
                       ),
                 ],
+                onChanged: (value) {
+                  if (value == tr('none')) {
+                    setState(() {
+                      pickedSourceOverride = null;
+                    });
+                  } else {
+                    final selectedSource = sourceProvider.sources
+                        .firstWhere((s) => s.name == value);
+                    setState(() {
+                      pickedSourceOverride = selectedSource.runtimeType.toString();
+                    });
+                  }
+                  changeUserInput(userInput, true, false);
+                },
               ),
             ),
           ],
@@ -710,48 +684,15 @@ class AddAppPageState extends State<AddAppPage> {
         spacing: 12,
         children: [
           GestureDetector(
-            onTap: () {
-              showDialog(
+            onTap: () async {
+              await showGeneratedFormModal(
                 context: context,
-                builder: (context) {
-                  return GeneratedFormModal(
-                    singleNullReturnButton: tr('ok'),
-                    title: tr('supportedSources'),
-                    items: const [],
-                    additionalWidgets: [
-                      ...sourceProvider.sources.map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: GestureDetector(
-                            onTap: e.hosts.isNotEmpty
-                                ? () {
-                                    launchUrlString(
-                                      'https://${e.hosts[0]}',
-                                      mode: LaunchMode.externalApplication,
-                                    );
-                                  }
-                                : null,
-                            child: Text(
-                              '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
-                              style: TextStyle(
-                                decoration: e.hosts.isNotEmpty
-                                    ? TextDecoration.underline
-                                    : TextDecoration.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        '${tr('note')}:',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(tr('selfHostedNote', args: [tr('overrideSource')])),
-                    ],
-                  );
-                },
+                singleNullReturnButton: tr('ok'),
+                title: tr('supportedSources'),
+                items: const [],
+                message: sourceProvider.sources
+                    .map((e) => e.name)
+                    .join('\n'),
               );
             },
             child: Text(

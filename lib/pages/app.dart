@@ -483,26 +483,22 @@ class _AppPageState extends State<AppPage> {
     }
 
     showAdditionalOptionsDialog() async {
-      return await showDialog<Map<String, dynamic>?>(
-        context: context,
-        builder: (BuildContext ctx) {
-          var items = (source?.combinedAppSpecificSettingFormItems ?? []).map((
-            row,
-          ) {
-            row = row.map((e) {
-              if (app?.app.additionalSettings[e.key] != null) {
-                e.defaultValue = app?.app.additionalSettings[e.key];
-              }
-              return e;
-            }).toList();
-            return row;
-          }).toList();
+      var items = (source?.combinedAppSpecificSettingFormItems ?? []).map((
+        row,
+      ) {
+        row = row.map((e) {
+          if (app?.app.additionalSettings[e.key] != null) {
+            e.defaultValue = app?.app.additionalSettings[e.key];
+          }
+          return e;
+        }).toList();
+        return row;
+      }).toList();
 
-          return GeneratedFormModal(
-            title: tr('additionalOptions'),
-            items: items,
-          );
-        },
+      return await showGeneratedFormModal(
+        context: context,
+        title: tr('additionalOptions'),
+        items: items,
       );
     }
 
