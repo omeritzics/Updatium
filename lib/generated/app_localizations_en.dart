@@ -2565,47 +2565,47 @@ class AppLocalizationsEnEo extends AppLocalizationsEn {
 
   @override
   String xAndNMoreUpdatesAvailable(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count kaj $count aliaj apoj havas ĝisdatigojn.',
-      one: '$count kaj 1 alia apo havas ĝisdatigojn.',
-    );
-    return '$_temp0';
-  }
+    @override
+    String xAndNMoreUpdatesAvailable(Object p0, num count) {
+      String _temp0 = intl.Intl.pluralLogic(
+        count,
+        locale: localeName,
+        other: '$p0 kaj $count aliaj apoj havas ĝisdatigojn.',
+        one: '$p0 kaj 1 alia apo havas ĝisdatigojn.',
+      );
+      return '$_temp0';
+    }
 
-  @override
-  String xAndNMoreUpdatesInstalled(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count kaj $count aliaj apoj ĝisdatiĝis.',
-      one: '$count kaj 1 alia apo ĝisdatiĝis.',
-    );
-    return '$_temp0';
-  }
+    @override
+    String xAndNMoreUpdatesInstalled(Object p0, num count) {
+      String _temp0 = intl.Intl.pluralLogic(
+        count,
+        locale: localeName,
+        other: '$p0 kaj $count aliaj apoj ĝisdatiĝis.',
+        one: '$p0 kaj 1 alia apo ĝisdatiĝis.',
+      );
+      return '$_temp0';
+    }
 
-  @override
-  String xAndNMoreUpdatesFailed(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: 'Ne eblas ĝisdatigi $count et $count aliajn apojn.',
-      one: 'Ne eblas ĝisdatigi $count kaj 1 alian apon.',
-    );
-    return '$_temp0';
-  }
+    @override
+    String xAndNMoreUpdatesFailed(Object p0, num count) {
+      String _temp0 = intl.Intl.pluralLogic(
+        count,
+        locale: localeName,
+        other: 'Ne eblas ĝisdatigi $p0 et $count aliajn apojn.',
+        one: 'Ne eblas ĝisdatigi $p0 kaj 1 alian apon.',
+      );
+      return '$_temp0';
+    }
 
-  @override
-  String xAndNMoreUpdatesPossiblyInstalled(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count kaj $count aliaj apoj eble ĝisdatiĝis.',
-      one: '$count kaj 1 alia apo eble ĝisdatiĝis.',
-    );
-    return '$_temp0';
-  }
+    @override
+    String xAndNMoreUpdatesPossiblyInstalled(Object p0, num count) {
+      String _temp0 = intl.Intl.pluralLogic(
+        count,
+        locale: localeName,
+        other: '$p0 kaj $count aliaj apoj eble ĝisdatiĝis.',
+        one: '$p0 kaj 1 alia apo eble ĝisdatiĝis.',
+      );
 
   @override
   String apk(num count) {
