@@ -1238,8 +1238,8 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Foram limpos $n logs (antes = $before, depois = $after)',
-      one: 'Foi limpo $n log (antes = $before, depois = $after)',
+      other: 'Foram limpos $count logs (antes = $before, depois = $after)',
+      one: 'Foi limpo $count log (antes = $before, depois = $after)',
     );
     return '$_temp0';
   }
