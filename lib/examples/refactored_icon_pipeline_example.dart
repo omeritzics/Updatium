@@ -668,7 +668,7 @@ class _PrefetchDetailsDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        appTextButton(
+        AppTextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Close'),
         ),
