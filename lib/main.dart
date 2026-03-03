@@ -843,7 +843,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Progress Indicators
               progressIndicatorTheme: const ProgressIndicatorThemeData(
-                year2023: false,
+                useMaterial3Year2023: false,
               ),
             );
           }
