@@ -2480,8 +2480,8 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '背景更新檢查遇到 $count，將在 $count 分鐘後重新檢查',
-      one: '背景更新檢查遇到 $count，將在 $count 分鐘後重新檢查',
+      other: '背景更新檢查遇到問題，將在 $count 分鐘後重新檢查',
+      one: '背景更新檢查遇到問題，將在 $count 分鐘後重新檢查',
     );
     return '$_temp0';
   }
