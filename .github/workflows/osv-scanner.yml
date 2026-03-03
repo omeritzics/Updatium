@@ -11,6 +11,13 @@
 
 name: OSV-Scanner
 
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+  issues: write
+  statuses: write
+
 on:
   pull_request:
     branches: [ "main" ]

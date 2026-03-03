@@ -12,8 +12,11 @@ jobs:
   build_artifact:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pull-requests: write
+      checks: write
+      issues: write
+      statuses: write
 
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -110,7 +113,10 @@ jobs:
     if: failure() && github.event_name == 'pull_request' && needs.build_artifact.result == 'failure'
     permissions:
       pull-requests: write
-      contents: read
+      contents: write
+      checks: write
+      issues: write
+      statuses: write
     
     steps:
       - name: Auto-Reject PR on Build Failure
@@ -157,7 +163,10 @@ jobs:
     if: success() && github.event_name == 'pull_request' && needs.build_artifact.result == 'success'
     permissions:
       pull-requests: write
-      contents: read
+      contents: write
+      checks: write
+      issues: write
+      statuses: write
     
     steps:
       - name: Auto-Approve PR on Build Success

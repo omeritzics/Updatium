@@ -1,5 +1,12 @@
 name: Translation Management
 
+permissions:
+  contents: write
+  pull-requests: write
+  checks: write
+  issues: write
+  statuses: write
+
 on:
   push:
     paths:

@@ -2,6 +2,10 @@ name: Build and Release Qama
 
 permissions:
   contents: write
+  pull-requests: write
+  checks: write
+  issues: write
+  statuses: write
 
 on:
   workflow_dispatch:
