@@ -1855,7 +1855,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String xWasRemovedDueToErrorY(Object p0, Object p1) {
-    return '$p0 for removido devido ao erro: $p1';
+    return '$p0 foi removido devido ao erro: $p1';
   }
 
   @override
