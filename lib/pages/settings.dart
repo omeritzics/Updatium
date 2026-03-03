@@ -95,6 +95,39 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
+  void _showAboutDialog(BuildContext context) {
+    showAboutDialog(
+      context: context,
+      applicationName: 'Updatium',
+      applicationVersion: '26.2',
+      applicationIcon: const Icon(Icons.apps, size: 48),
+      children: [
+        Text(tr('updateYourAndroidAppsDirectlyFromTheAPKSource')),
+        const SizedBox(height: 16),
+        Text('© 2026 Omer I.S. (@omeritzics)'),
+        const SizedBox(height: 16),
+        TextButton(
+          onPressed: () {
+            launchUrlString(
+              'https://github.com/omeritzics/Updatium',
+              mode: LaunchMode.externalApplication,
+            );
+          },
+          child: Text(tr('appSource')),
+        ),
+        TextButton(
+          onPressed: () {
+            launchUrlString(
+              'https://github.com/omeritzics/Updatium/wiki',
+              mode: LaunchMode.externalApplication,
+            );
+          },
+          child: Text(tr('wiki')),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
@@ -460,6 +493,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showAboutDialog(context),
+        child: const Icon(Icons.info),
+      ),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
