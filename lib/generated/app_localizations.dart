@@ -2314,25 +2314,25 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{count, plural, one{{count} and 1 more app have updates.} other{{count} and {count} more apps have updates.}}'**
-  String xAndNMoreUpdatesAvailable(num count);
+  String xAndNMoreUpdatesAvailable(Object p0, num count);
 
   /// No description provided for @xAndNMoreUpdatesInstalled.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, one{{count} and 1 more app was updated.} other{{count} and {count} more apps were updated.}}'**
-  String xAndNMoreUpdatesInstalled(num count);
+  /// **'{count, plural, one{{p0} and 1 more app was updated.} other{{p0} and {count} more apps were updated.}}'**
+  String xAndNMoreUpdatesInstalled(Object p0, num count);
 
   /// No description provided for @xAndNMoreUpdatesFailed.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, one{Failed to update {count} and 1 more app.} other{Failed to update {count} and {count} more apps.}}'**
-  String xAndNMoreUpdatesFailed(num count);
+  /// **'{count, plural, one{Failed to update {p0} and 1 more app.} other{Failed to update {p0} and {count} more apps.}}'**
+  String xAndNMoreUpdatesFailed(Object p0, num count);
 
   /// No description provided for @xAndNMoreUpdatesPossiblyInstalled.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, one{{count} and 1 more app may have been updated.} other{{count} and {count} more apps may have been updated.}}'**
-  String xAndNMoreUpdatesPossiblyInstalled(num count);
+  /// **'{count, plural, one{{p0} and 1 more app may have been updated.} other{{p0} and {count} more apps may have been updated.}}'**
+  String xAndNMoreUpdatesPossiblyInstalled(Object p0, num count);
 
   /// No description provided for @apk.
   ///
