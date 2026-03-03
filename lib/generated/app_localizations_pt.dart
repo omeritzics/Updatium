@@ -2564,45 +2564,45 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   }
 
   @override
-  String xAndNMoreUpdatesAvailable(num count) {
+  String xAndNMoreUpdatesAvailable(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count e mais $count apps têm atualizações.',
-      one: '$count e mais 1 app têm atualizações.',
+      other: '$p0 e mais $count apps têm atualizações.',
+      one: '$p0 e mais 1 app têm atualizações.',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesInstalled(num count) {
+  String xAndNMoreUpdatesInstalled(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count e mais $count apps foram atualizados.',
-      one: '$count e mais 1 app foram atualizados.',
+      other: '$p0 e mais $count apps foram atualizados.',
+      one: '$p0 e mais 1 app foi atualizado.',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesFailed(num count) {
+  String xAndNMoreUpdatesFailed(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Falha ao atualizar $count e mais $count apps.',
-      one: 'Falha ao atualizar $count e mais 1 app.',
+      other: 'Falha ao atualizar $p0 e mais $count apps.',
+      one: 'Falha ao atualizar $p0 e mais 1 app.',
     );
     return '$_temp0';
   }
 
   @override
-  String xAndNMoreUpdatesPossiblyInstalled(num count) {
+  String xAndNMoreUpdatesPossiblyInstalled(Object p0, num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count e mais $count apps podem ter sido atualizados.',
-      one: '$count e mais 1 app podem ter sido atualizados.',
+      other: '$p0 e mais $count apps podem ter sido atualizados.',
+      one: '$p0 e mais 1 app pode ter sido atualizado.',
     );
     return '$_temp0';
   }
