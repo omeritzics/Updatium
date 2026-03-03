@@ -19,8 +19,9 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/components/app_button.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:http/io_client.dart';
+import 'package:http/http.dart' as http;
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
@@ -41,7 +42,7 @@ import 'package:http/http.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:shared_storage/shared_storage.dart' as saf;
+import 'package:docman/docman.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:updatium/security/security_settings_provider.dart';
 
@@ -535,6 +536,7 @@ class AppsProvider with ChangeNotifier {
   Map<String, AppInMemory> apps = {};
   bool loadingApps = false;
   bool gettingUpdates = false;
+  bool exportInProgress = false;
   LogsProvider logs = LogsProvider();
 
   // Variables to keep track of the app foreground status (installs can't run in the background)
@@ -853,7 +855,7 @@ class AppsProvider with ChangeNotifier {
       // If we did not install the app, silent install is not possible
       return false;
     }
-    if (osInfo.version.sdkInt < 31) {
+    if (osInfo.version.sdkInt < 36) {
       // The OS must also be new enough
       logs.add('Android SDK too old: ${osInfo.version.sdkInt}');
       return false;
@@ -1861,41 +1863,45 @@ class AppsProvider with ChangeNotifier {
     });
   }
 
-  Future<void> updateAppIcon(String? appId, {bool ignoreCache = false}) async {
+  Future<void> updateAppIcon(String? appId) async {
     if (apps[appId]?.icon == null) {
       final app = apps[appId]?.app;
       Uint8List? icon;
 
-      // Try to get icon from IconCache using remoteIconUrl first
-      if (app?.remoteIconUrl != null && app!.remoteIconUrl!.isNotEmpty) {
-        icon = await IconCache.instance.getIcon(
-          app.id,
-          app.remoteIconUrl,
-          forceRefresh: ignoreCache,
-          fallbackIcon: null,
-        );
+      // Try installed app icon first
+      icon = await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
+
+      // If no installed icon, try remote URL
+      if (icon == null &&
+          app?.remoteIconUrl != null &&
+          app!.remoteIconUrl!.isNotEmpty) {
+        try {
+          final response = await http.get(Uri.parse(app.remoteIconUrl!));
+          if (response.statusCode == 200) {
+            icon = response.bodyBytes;
+          }
+        } catch (e) {
+          // Failed to download remote icon, continue with null
+        }
       }
 
-      // If no icon from cache, try installed app icon
-      icon ??= await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
-
       if (icon != null) {
+        final currentAppInMemory = apps[appId];
         apps.update(
           apps[appId]!.app.id,
           (value) => AppInMemory(
             apps[appId]!.app,
-            value.downloadProgress,
-            value.installedInfo,
+            currentAppInMemory?.downloadProgress,
+            currentAppInMemory?.installedInfo,
             icon,
           ),
           ifAbsent: () => AppInMemory(
             apps[appId]!.app,
             null,
-            apps[appId]?.installedInfo,
+            apps[appId]!.installedInfo,
             icon,
           ),
         );
-        notifyListeners();
       }
     }
   }
@@ -2338,8 +2344,13 @@ class AppsProvider with ChangeNotifier {
     isAuto = false,
     SettingsProvider? sp,
   }) async {
+    if (exportInProgress && !isAuto) {
+      throw UpdatiumError(tr('exportAlreadyInProgress'));
+    }
+
     SettingsProvider settingsProvider = sp ?? this.settingsProvider;
     var exportDir = await settingsProvider.getExportDir();
+
     if (isAuto) {
       if (settingsProvider.autoExportOnChanges != true) {
         return null;
@@ -2347,16 +2358,26 @@ class AppsProvider with ChangeNotifier {
       if (exportDir == null) {
         return null;
       }
-      var files = await saf
-          .listFiles(exportDir, columns: [saf.DocumentFileColumn.id])
-          .where((f) => f.uri.pathSegments.last.endsWith('-auto.json'))
-          .toList();
-      if (files.isNotEmpty) {
-        for (var f in files) {
-          saf.delete(f.uri);
+      // List and delete auto-export files using docman
+      try {
+        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final dirDocFile = await docFileResult?.get();
+        if (dirDocFile != null) {
+          final files = await dirDocFile.listDocuments();
+          final autoFiles = files
+              .where((f) => f.name.endsWith('-auto.json'))
+              .toList();
+
+          for (var file in autoFiles) {
+            await file.delete();
+          }
         }
+      } catch (e) {
+        // Handle error silently or log if needed
+        debugPrint('Error cleaning auto-export files: $e');
       }
     }
+
     if (exportDir == null || pickOnly) {
       await settingsProvider.pickExportDir();
       exportDir = await settingsProvider.getExportDir();
@@ -2364,20 +2385,46 @@ class AppsProvider with ChangeNotifier {
     if (exportDir == null) {
       return null;
     }
+
     String? returnPath;
     if (!pickOnly) {
-      var encoder = const JsonEncoder.withIndent("    ");
-      Map<String, dynamic> finalExport = generateExportJSON();
-      var result = await saf.createFile(
-        exportDir,
-        displayName:
-            '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
-        mimeType: 'application/json',
-        bytes: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
-      );
-      if (result == null) {
-        throw UpdatiumError(tr('unexpectedError'));
+      exportInProgress = true;
+      notifyListeners();
+
+      try {
+        var encoder = const JsonEncoder.withIndent("    ");
+        Map<String, dynamic> finalExport = generateExportJSON();
+        // Create export file using docman
+        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final dirDocFile = await docFileResult?.get();
+        if (dirDocFile != null) {
+          final fileName =
+              '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
+
+          final result = await dirDocFile.createFile(
+            name: fileName,
+            bytes: Uint8List.fromList(
+              utf8.encode(encoder.convert(finalExport)),
+            ),
+          );
+
+          if (result == null) {
+            throw UpdatiumError(tr('failedToCreateExportFile'));
+          }
+        } else {
+          throw UpdatiumError(tr('exportDirNotAccessible'));
+        }
+      } catch (e) {
+        if (e is UpdatiumError) {
+          rethrow;
+        }
+        debugPrint('Export error: $e');
+        throw UpdatiumError('${tr('failedToExport')}: ${e.toString()}');
+      } finally {
+        exportInProgress = false;
+        notifyListeners();
       }
+
       returnPath = exportDir.pathSegments
           .join('/')
           .replaceFirst('tree/primary:', '/');
@@ -2617,7 +2664,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);
           },
-          child: Text(tr('continue')),
+          child: Text(tr('yes')),
         ),
       ],
     );

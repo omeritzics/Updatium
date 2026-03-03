@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:updatium/components/app_button.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -98,18 +98,37 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  Future<void> _initializeSecurityProvider() async {
-    _securityProvider = await SecuritySettingsProvider.create();
-    await _securityProvider.initialize();
-    setState(() {
-      _securityProviderInitialized = true;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeSecurityProvider();
+  void _showAboutDialog(BuildContext context) {
+    showAboutDialog(
+      context: context,
+      applicationName: 'Updatium',
+      applicationVersion: '26.2',
+      applicationIcon: const Icon(Icons.apps, size: 48),
+      children: [
+        Text(tr('updateYourAndroidAppsDirectlyFromTheAPKSource')),
+        const SizedBox(height: 16),
+        Text('© 2026 Omer I.S. (@omeritzics)'),
+        const SizedBox(height: 16),
+        TextButton(
+          onPressed: () {
+            launchUrlString(
+              'https://github.com/omeritzics/Updatium',
+              mode: LaunchMode.externalApplication,
+            );
+          },
+          child: Text(tr('appSource')),
+        ),
+        TextButton(
+          onPressed: () {
+            launchUrlString(
+              'https://github.com/omeritzics/Updatium/wiki',
+              mode: LaunchMode.externalApplication,
+            );
+          },
+          child: Text(tr('wiki')),
+        ),
+      ],
+    );
   }
 
   @override
@@ -209,39 +228,32 @@ class _SettingsPageState extends State<SettingsPage> {
         "(${ColorTools.materialNameAndCode(settingsProvider.themeColor, colorSwatchNameMap: colorsNameMap)})",
       ),
       trailing: Container(
-        width: MediaQuery.of(context).size.width * 0.1,
-        height: MediaQuery.of(context).size.width * 0.1,
+        width: 48,
+        height: 48,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(
-            MediaQuery.of(context).size.width * 0.05,
-          ),
+          borderRadius: BorderRadius.circular(24),
           color: settingsProvider.themeColor,
           border: Border.all(
             color: Theme.of(context).colorScheme.outline,
             width: 1,
           ),
         ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(
-              MediaQuery.of(context).size.width * 0.05,
-            ),
-            onTap: () async {
-              final Color colorBeforeDialog = settingsProvider.themeColor;
-              if (!(await colorPickerDialog())) {
-                setState(() {
-                  settingsProvider.themeColor = colorBeforeDialog;
-                });
-              }
-            },
-            child: Icon(
-              Icons.palette,
-              color: settingsProvider.themeColor.computeLuminance() > 0.5
-                  ? Colors.black
-                  : Colors.white,
-              size: MediaQuery.of(context).size.width * 0.05,
-            ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(24),
+          onTap: () async {
+            final Color colorBeforeDialog = settingsProvider.themeColor;
+            if (!(await colorPickerDialog())) {
+              setState(() {
+                settingsProvider.themeColor = colorBeforeDialog;
+              });
+            }
+          },
+          child: Icon(
+            Icons.palette,
+            color: settingsProvider.themeColor.computeLuminance() > 0.5
+                ? Colors.black
+                : Colors.white,
+            size: 24,
           ),
         ),
       ),
@@ -267,108 +279,174 @@ class _SettingsPageState extends State<SettingsPage> {
       future: DeviceInfoPlugin().androidInfo,
     );
 
-    var sortDropdown = DropdownButtonFormField(
-      isExpanded: true,
-      decoration: InputDecoration(labelText: tr('appSortBy')),
-      initialValue: settingsProvider.sortColumn,
-      items: [
-        DropdownMenuItem(
-          value: SortColumnSettings.authorName,
+    var sortDropdown = MenuAnchor(
+      builder: (context, controller, child) {
+        String selectedValue;
+        switch (settingsProvider.sortColumn) {
+          case SortColumnSettings.authorName:
+            selectedValue = tr('authorName');
+            break;
+          case SortColumnSettings.nameAuthor:
+            selectedValue = tr('nameAuthor');
+            break;
+          case SortColumnSettings.added:
+            selectedValue = tr('asAdded');
+            break;
+          case SortColumnSettings.releaseDate:
+            selectedValue = tr('releaseDate');
+            break;
+        }
+
+        return TextField(
+          controller: TextEditingController(text: selectedValue),
+          readOnly: true,
+          decoration: InputDecoration(
+            labelText: tr('appSortBy'),
+            filled: true,
+            suffixIcon: const Icon(Icons.arrow_drop_down),
+          ),
+          onTap: () {
+            if (controller.isOpen) {
+              controller.close();
+            } else {
+              controller.open();
+            }
+          },
+        );
+      },
+      menuChildren: [
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.authorName,
           child: Text(tr('authorName')),
         ),
-        DropdownMenuItem(
-          value: SortColumnSettings.nameAuthor,
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.nameAuthor,
           child: Text(tr('nameAuthor')),
         ),
-        DropdownMenuItem(
-          value: SortColumnSettings.added,
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.added,
           child: Text(tr('asAdded')),
         ),
-        DropdownMenuItem(
-          value: SortColumnSettings.releaseDate,
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortColumn = SortColumnSettings.releaseDate,
           child: Text(tr('releaseDate')),
         ),
       ],
-      onChanged: (value) {
-        if (value != null) {
-          settingsProvider.sortColumn = value;
-        }
-      },
     );
 
-    var orderDropdown = DropdownButtonFormField(
-      isExpanded: true,
-      decoration: InputDecoration(labelText: tr('appSortOrder')),
-      initialValue: settingsProvider.sortOrder,
-      items: [
-        DropdownMenuItem(
-          value: SortOrderSettings.ascending,
+    var orderDropdown = MenuAnchor(
+      builder: (context, controller, child) {
+        String selectedValue =
+            settingsProvider.sortOrder == SortOrderSettings.ascending
+            ? tr('ascending')
+            : tr('descending');
+
+        return TextField(
+          controller: TextEditingController(text: selectedValue),
+          readOnly: true,
+          decoration: InputDecoration(
+            labelText: tr('appSortOrder'),
+            filled: true,
+            suffixIcon: const Icon(Icons.arrow_drop_down),
+          ),
+          onTap: () {
+            if (controller.isOpen) {
+              controller.close();
+            } else {
+              controller.open();
+            }
+          },
+        );
+      },
+      menuChildren: [
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortOrder = SortOrderSettings.ascending,
           child: Text(tr('ascending')),
         ),
-        DropdownMenuItem(
-          value: SortOrderSettings.descending,
+        MenuItemButton(
+          onPressed: () =>
+              settingsProvider.sortOrder = SortOrderSettings.descending,
           child: Text(tr('descending')),
         ),
       ],
-      onChanged: (value) {
-        if (value != null) {
-          settingsProvider.sortOrder = value;
-        }
-      },
     );
 
-    var localeDropdown = DropdownButtonFormField(
-      decoration: InputDecoration(labelText: tr('language')),
-      initialValue: settingsProvider.forcedLocale,
-      items: [
-        DropdownMenuItem(value: null, child: Text(tr('followSystem'))),
+    var localeDropdown = MenuAnchor(
+      builder: (context, controller, child) {
+        String selectedValue = settingsProvider.forcedLocale == null
+            ? tr('followSystem')
+            : supportedLocales
+                  .firstWhere(
+                    (e) => e.key == settingsProvider.forcedLocale,
+                    orElse: () => supportedLocales.first,
+                  )
+                  .value;
+
+        return TextField(
+          controller: TextEditingController(text: selectedValue),
+          readOnly: true,
+          decoration: InputDecoration(
+            labelText: tr('language'),
+            filled: true,
+            suffixIcon: const Icon(Icons.arrow_drop_down),
+          ),
+          onTap: () {
+            if (controller.isOpen) {
+              controller.close();
+            } else {
+              controller.open();
+            }
+          },
+        );
+      },
+      menuChildren: [
+        MenuItemButton(
+          onPressed: () {
+            settingsProvider.forcedLocale = null;
+            settingsProvider.resetLocaleSafe(context);
+          },
+          child: Text(tr('followSystem')),
+        ),
         ...supportedLocales.map(
-          (e) => DropdownMenuItem(value: e.key, child: Text(e.value)),
+          (e) => MenuItemButton(
+            onPressed: () {
+              settingsProvider.forcedLocale = e.key;
+              context.setLocale(e.key);
+            },
+            child: Text(e.value),
+          ),
         ),
       ],
-      onChanged: (value) {
-        settingsProvider.forcedLocale = value;
-        if (value != null) {
-          context.setLocale(value);
-        } else {
-          settingsProvider.resetLocaleSafe(context);
-        }
-      },
     );
 
-    var intervalSlider = SliderTheme(
-      data: SliderTheme.of(context).copyWith(
-        trackHeight: 4,
-        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
-        overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
-        valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-        valueIndicatorTextStyle: Theme.of(context).textTheme.bodyMedium
-            ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-        showValueIndicator: ShowValueIndicator.onDrag,
-      ),
-      child: Slider(
-        value: settingsProvider.updateIntervalSliderVal,
-        max: updateIntervalNodes.length.toDouble(),
-        divisions: updateIntervalNodes.length * 20,
-        label: updateIntervalLabel,
-        onChanged: (double value) {
-          setState(() {
-            settingsProvider.updateIntervalSliderVal = value;
-            processIntervalSliderValue(value);
-          });
-        },
-        onChangeStart: (double value) {
-          setState(() {
-            showIntervalLabel = false;
-          });
-        },
-        onChangeEnd: (double value) {
-          setState(() {
-            showIntervalLabel = true;
-            settingsProvider.updateInterval = updateInterval;
-          });
-        },
-      ),
+    var intervalSlider = Slider(
+      year2023: false,
+      value: settingsProvider.updateIntervalSliderVal,
+      max: updateIntervalNodes.length.toDouble(),
+      divisions: updateIntervalNodes.length * 20,
+      label: updateIntervalLabel,
+      onChanged: (double value) {
+        setState(() {
+          settingsProvider.updateIntervalSliderVal = value;
+          processIntervalSliderValue(value);
+        });
+      },
+      onChangeStart: (double value) {
+        setState(() {
+          showIntervalLabel = false;
+        });
+      },
+      onChangeEnd: (double value) {
+        setState(() {
+          showIntervalLabel = true;
+          settingsProvider.updateInterval = updateInterval;
+        });
+      },
     );
 
     var sourceSpecificFields = sourceProvider.sources.map((e) {
@@ -410,6 +488,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showAboutDialog(context),
+        child: const Icon(Icons.info),
+      ),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -444,6 +526,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
+                        height16,
                         //intervalDropdown,
                         height16,
                         if (showIntervalLabel)
@@ -857,28 +940,58 @@ class _SettingsPageState extends State<SettingsPage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        DropdownButtonFormField(
-                          decoration: InputDecoration(labelText: tr('theme')),
-                          initialValue: settingsProvider.theme,
-                          items: [
-                            DropdownMenuItem(
-                              value: ThemeSettings.system,
+                        height16,
+                        MenuAnchor(
+                          builder: (context, controller, child) {
+                            String selectedValue;
+                            switch (settingsProvider.theme) {
+                              case ThemeSettings.system:
+                                selectedValue = tr('followSystem');
+                                break;
+                              case ThemeSettings.light:
+                                selectedValue = tr('light');
+                                break;
+                              case ThemeSettings.dark:
+                                selectedValue = tr('dark');
+                                break;
+                            }
+
+                            return TextField(
+                              controller: TextEditingController(
+                                text: selectedValue,
+                              ),
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: tr('theme'),
+                                filled: true,
+                                suffixIcon: const Icon(Icons.arrow_drop_down),
+                              ),
+                              onTap: () {
+                                if (controller.isOpen) {
+                                  controller.close();
+                                } else {
+                                  controller.open();
+                                }
+                              },
+                            );
+                          },
+                          menuChildren: [
+                            MenuItemButton(
+                              onPressed: () =>
+                                  settingsProvider.theme = ThemeSettings.system,
                               child: Text(tr('followSystem')),
                             ),
-                            DropdownMenuItem(
-                              value: ThemeSettings.light,
+                            MenuItemButton(
+                              onPressed: () =>
+                                  settingsProvider.theme = ThemeSettings.light,
                               child: Text(tr('light')),
                             ),
-                            DropdownMenuItem(
-                              value: ThemeSettings.dark,
+                            MenuItemButton(
+                              onPressed: () =>
+                                  settingsProvider.theme = ThemeSettings.dark,
                               child: Text(tr('dark')),
                             ),
                           ],
-                          onChanged: (value) {
-                            if (value != null) {
-                              settingsProvider.theme = value;
-                            }
-                          },
                         ),
                         height8,
                         if (settingsProvider.theme == ThemeSettings.system)
@@ -899,7 +1012,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         height8,
                         useMaterialThemeSwitch,
+                        height16,
                         if (!settingsProvider.useMaterialYou) colorPicker,
+                        height16,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -913,7 +1028,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         localeDropdown,
                         FutureBuilder(
                           builder: (ctx, val) {
-                            return (val.data?.version.sdkInt ?? 0) >= 34
+                            return (val.data?.version.sdkInt ?? 0) >= 36
                                 ? Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -950,19 +1065,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 : const SizedBox.shrink();
                           },
                           future: DeviceInfoPlugin().androidInfo,
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('showWebInAppView'))),
-                            Switch(
-                              value: settingsProvider.showAppWebpage,
-                              onChanged: (value) {
-                                settingsProvider.showAppWebpage = value;
-                              },
-                            ),
-                          ],
                         ),
                         height16,
                         Row(
@@ -1177,6 +1279,7 @@ class LogsDialog extends StatefulWidget {
 class _LogsDialogState extends State<LogsDialog> {
   String? logString;
   List<int> days = [7, 5, 4, 3, 2, 1];
+  int selectedDays = 7;
 
   @override
   Widget build(BuildContext context) {
@@ -1201,17 +1304,38 @@ class _LogsDialogState extends State<LogsDialog> {
       title: Text(tr('appLogs')),
       content: Column(
         children: [
-          DropdownButtonFormField(
-            initialValue: days.first,
-            items: days
-                .map(
-                  (e) =>
-                      DropdownMenuItem(value: e, child: Text(plural('day', e))),
-                )
-                .toList(),
-            onChanged: (d) {
-              filterLogs(d ?? 7);
+          MenuAnchor(
+            builder: (context, controller, child) {
+              return TextField(
+                controller: TextEditingController(
+                  text: plural('day', selectedDays),
+                ),
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText: tr('filterDays'),
+                  filled: true,
+                  suffixIcon: const Icon(Icons.arrow_drop_down),
+                ),
+                onTap: () {
+                  if (controller.isOpen) {
+                    controller.close();
+                  } else {
+                    controller.open();
+                  }
+                },
+              );
             },
+            menuChildren: days.map((day) {
+              return MenuItemButton(
+                onPressed: () {
+                  setState(() {
+                    selectedDays = day;
+                  });
+                  filterLogs(day);
+                },
+                child: Text(plural('day', day)),
+              );
+            }).toList(),
           ),
           const SizedBox(height: 32),
           Text(logString ?? ''),

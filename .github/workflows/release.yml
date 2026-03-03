@@ -1,4 +1,5 @@
 name: Build and Release Qama
+
 permissions:
   contents: write
 
@@ -13,8 +14,29 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v6
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: false
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+          
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -23,16 +45,25 @@ jobs:
           version: '3.38.9'  # Use specific stable version that meets requirements
           cache: true
 
-      - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Auto-fix linting issues
+        run: dart fix --apply
 
-      - name: Extract Version
-        id: extract_version
+      - name: Format code
+        run: dart format .
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "style: auto-fix linting and formatting issues"
+          branch: ${{ github.ref_name }}
+          
+      - name: Generate Version
+        id: version
         run: |
-          # Generate version dynamically: YY.M.0 format (semantic versioning)
+          # Generate version: YY.M.0 format (semantic versioning)
           YEAR=$(date +'%y')
           MONTH=$(date +'%-m')
           VERSION="$YEAR.$MONTH.0"
@@ -46,57 +77,83 @@ jobs:
           echo "beta=${{ github.event.inputs.beta }}" >> $GITHUB_OUTPUT
 
       - name: Decode Keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/upload-keystore.jks
+          echo "${KEYSTORE_BASE64}" | base64 -d > android/upload-keystore.jks
+          chmod 600 android/upload-keystore.jks
+          echo "Keystore decoded and permissions set"
 
       - name: Create key.properties
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: |
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "storeFile=../upload-keystore.jks" >> android/key.properties
+          # Handle non-ASCII characters properly
+          cat << EOF > android/key.properties
+          storePassword=${KEYSTORE_PASSWORD}
+          keyPassword=${KEY_PASSWORD}
+          keyAlias=${KEY_ALIAS}
+          storeFile=../upload-keystore.jks
+          EOF
           chmod 600 android/key.properties
           echo "Created keystore properties file with restricted permissions"
 
+      - name: Verify key.properties
+        run: |
+          echo "=== key.properties content ==="
+          cat android/key.properties
+          echo "=== End of key.properties ==="
+          echo "Environment variables check:"
+          echo "KEYSTORE_PASSWORD length: ${{ secrets.KEYSTORE_PASSWORD != '' && secrets.KEYSTORE_PASSWORD != '0' }}"
+          echo "KEY_PASSWORD length: ${{ secrets.KEY_PASSWORD != '' && secrets.KEY_PASSWORD != '0' }}"
+          echo "KEY_ALIAS length: ${{ secrets.KEY_ALIAS != '' && secrets.KEY_ALIAS != '0' }}"
+          echo "KEYSTORE_PASSWORD is set: ${{ secrets.KEYSTORE_PASSWORD != '' }}"
+          echo "KEY_PASSWORD is set: ${{ secrets.KEY_PASSWORD != '' }}"
+          echo "KEY_ALIAS is set: ${{ secrets.KEY_ALIAS != '' }}"
+          echo "KEYSTORE_PASSWORD value: '${{ secrets.KEYSTORE_PASSWORD }}'"
+          echo "KEY_PASSWORD value: '${{ secrets.KEY_PASSWORD }}'"
+          echo "KEY_ALIAS value: '${{ secrets.KEY_ALIAS }}'"
+
       - name: Verify Keystore
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
-          if ! printf '%s\n' "${{ secrets.KEYSTORE_PASSWORD }}" | keytool -list -v -keystore android/upload-keystore.jks -storepass:stdin 2>/dev/null; then
+          echo "=== Keystore contents ==="
+          # Use heredoc to handle non-ASCII characters properly
+          keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null || echo "Failed to list keystore contents"
+          echo "=== End keystore contents ==="
+          if ! keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null; then
             echo "ERROR: Keystore verification failed - aborting build"
             exit 1
           fi
           echo "Keystore verification successful"
 
-      - name: Set App Name and Build APKs
+      - name: Build APKs (Release Mode)
         run: |
-          # Update app label in string resources for release builds
-          sed -i 's/<string name="label">.*<\/string>/<string name="label">Updatium<\/string>/g' android/app/src/main/res/values/string.xml
-          echo "Updated app label to 'Updatium' in string resources"
-          
-          flutter pub get
+          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
+          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
 
-          # Building Normal release with dynamic version
-          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.extract_version.outputs.version }}" --build-number="${{ steps.extract_version.outputs.build_number }}"
-
-          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.extract_version.outputs.version }}" --build-number="${{ steps.extract_version.outputs.build_number }}"
-
-      - name: Save APKs as Artifacts
-        uses: actions/upload-artifact@v6
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v7
         with:
-          name: updatium-release-v${{ steps.extract_version.outputs.version }}-run${{ github.run_number }}
+          name: updatium-v${{ steps.version.outputs.version }}-run${{ github.run_number }}
           path: build/app/outputs/flutter-apk/*.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ steps.extract_version.outputs.tag }}
-          name: "Updatium Qama ${{ steps.extract_version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "Updatium ${{ steps.version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
           prerelease: ${{ github.event.inputs.beta == true }}
           draft: true
           files: build/app/outputs/flutter-apk/*.apk
           generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cleanup signing files
         if: always()

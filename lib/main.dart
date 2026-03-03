@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/pages/home.dart';
@@ -99,7 +100,7 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
   String taskId = task.taskId;
   bool isTimeout = task.timeout;
   if (isTimeout) {
-    print('BG update task timed out.');
+    debugPrint('BG update task timed out.');
     BackgroundFetch.finish(taskId);
     return;
   }
@@ -117,7 +118,7 @@ class MyTaskHandler extends TaskHandler {
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
-    print('onStart(starter: ${starter.name})');
+    debugPrint('onStart(starter: ${starter.name})');
     bgUpdateCheck('bg_check', null);
   }
 
@@ -128,7 +129,7 @@ class MyTaskHandler extends TaskHandler {
 
   @override
   Future<void> onDestroy(DateTime timestamp, bool isTimeout) async {
-    print('Foreground service onDestroy(isTimeout: $isTimeout)');
+    debugPrint('Foreground service onDestroy(isTimeout: $isTimeout)');
   }
 
   @override
@@ -215,6 +216,7 @@ class _UpdatiumState extends State<Updatium> {
 
   void initForegroundService() {
     // Initialize foreground service if not already initialized
+    // ignore: invalid_use_of_visible_for_testing_member
     if (!FlutterForegroundTask.isInitialized) {
       FlutterForegroundTask.init(
         androidNotificationOptions: AndroidNotificationOptions(
@@ -251,7 +253,8 @@ class _UpdatiumState extends State<Updatium> {
         notificationTitle: tr('foregroundService'),
         notificationText: tr('fgServiceNotice'),
         notificationIcon: NotificationIcon(
-          metaDataName: 'com.omeritzics.updatium.service.NOTIFICATION_ICON',
+          metaDataName:
+              'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
         ),
         callback: startCallback,
       );
@@ -351,7 +354,7 @@ class _UpdatiumState extends State<Updatium> {
                 }
               })
               .catchError((err) {
-                print(err);
+                debugPrint(err);
               });
         }
       }
@@ -378,8 +381,8 @@ class _UpdatiumState extends State<Updatium> {
           if (lightDynamic != null &&
               darkDynamic != null &&
               settingsProvider.useMaterialYou) {
-            lightColorScheme = lightDynamic.harmonized();
-            darkColorScheme = darkDynamic.harmonized();
+            lightColorScheme = lightDynamic;
+            darkColorScheme = darkDynamic;
           } else {
             lightColorScheme = ColorScheme.fromSeed(
               seedColor: settingsProvider.themeColor,
@@ -392,9 +395,20 @@ class _UpdatiumState extends State<Updatium> {
 
           // Apply pure black surface for AMOLED black theme
           if (settingsProvider.useBlackTheme) {
-            darkColorScheme = darkColorScheme
-                .copyWith(surface: Colors.black)
-                .harmonized();
+            darkColorScheme = darkColorScheme.copyWith(
+              surface: Colors.black,
+              surfaceContainerHighest: Colors.white.withValues(alpha: 0.12),
+              surfaceContainerHigh: Colors.white.withValues(alpha: 0.09),
+              surfaceContainer: Colors.white.withValues(alpha: 0.06),
+              surfaceContainerLow: Colors.white.withValues(alpha: 0.04),
+              surfaceContainerLowest: Colors.white.withValues(alpha: 0.02),
+              surfaceDim: Colors.black,
+              surfaceBright: Colors.white.withValues(alpha: 0.05),
+              onSurface: Colors.white.withValues(alpha: 0.95),
+              onSurfaceVariant: Colors.white.withValues(alpha: 0.7),
+              outline: Colors.white.withValues(alpha: 0.25),
+              outlineVariant: Colors.white.withValues(alpha: 0.12),
+            );
           }
 
           if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
@@ -558,7 +572,7 @@ class _UpdatiumState extends State<Updatium> {
                   elevation: isDark ? 3 : 2,
                   shadowColor: isDark
                       ? Colors.black38
-                      : Colors.black.withOpacity(0.2),
+                      : Colors.black.withValues(alpha: 0.2),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 28,
                     vertical: 14,
@@ -603,33 +617,39 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive Input Fields
               inputDecorationTheme: InputDecorationTheme(
                 filled: true,
-                fillColor: scheme.surfaceContainerHighest,
+                fillColor: scheme.surfaceContainerLow,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    color: scheme.outline.withValues(alpha: 0.2),
+                    width: 1,
+                  ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    color: scheme.outline.withValues(alpha: 0.2),
+                    width: 1,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(color: scheme.primary, width: 2),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(color: scheme.error, width: 2),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(color: scheme.error, width: 2),
                 ),
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 16,
+                  horizontal: 24,
+                  vertical: 18,
                 ),
                 hintStyle: TextStyle(
-                  color: scheme.onSurfaceVariant,
+                  color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
                   fontWeight: FontWeight.w400,
                 ),
                 labelStyle: TextStyle(
@@ -638,7 +658,49 @@ class _UpdatiumState extends State<Updatium> {
                 ),
                 floatingLabelStyle: TextStyle(
                   color: scheme.primary,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+
+              // Expressive Dropdown Button Theme
+              dropdownMenuTheme: DropdownMenuThemeData(
+                inputDecorationTheme: InputDecorationTheme(
+                  filled: true,
+                  fillColor: scheme.surfaceContainerLow,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: scheme.outline.withValues(alpha: 0.2),
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: scheme.outline.withValues(alpha: 0.2),
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(color: scheme.primary, width: 2),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 18,
+                  ),
+                  hintStyle: TextStyle(
+                    color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
+                    fontWeight: FontWeight.w400,
+                  ),
+                  labelStyle: TextStyle(
+                    color: scheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  floatingLabelStyle: TextStyle(
+                    color: scheme.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
 
@@ -694,7 +756,7 @@ class _UpdatiumState extends State<Updatium> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 tileColor: scheme.surface,
-                selectedTileColor: scheme.surfaceContainerHighest,
+                selectedTileColor: scheme.surface.withValues(alpha: 0.2),
                 iconColor: scheme.onSurfaceVariant,
                 textColor: scheme.onSurface,
                 titleTextStyle: TextStyle(
@@ -722,7 +784,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Text Selection
               textSelectionTheme: TextSelectionThemeData(
-                selectionColor: scheme.primary.withOpacity(0.3),
+                selectionColor: scheme.primary.withValues(alpha: 0.3),
                 selectionHandleColor: scheme.primary,
                 cursorColor: scheme.primary,
               ),
@@ -740,7 +802,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Chip Theme
               chipTheme: ChipThemeData(
-                backgroundColor: scheme.surfaceContainerHighest,
+                backgroundColor: scheme.surface.withValues(alpha: 0.1),
                 selectedColor: scheme.secondaryContainer,
                 disabledColor: scheme.surface,
                 labelStyle: TextStyle(
@@ -781,10 +843,8 @@ class _UpdatiumState extends State<Updatium> {
               ),
 
               // Expressive Progress Indicators
-              progressIndicatorTheme: ProgressIndicatorThemeData(
-                color: scheme.primary,
-                linearTrackColor: scheme.surfaceContainerHighest,
-                circularTrackColor: scheme.surfaceContainerHighest,
+              progressIndicatorTheme: const ProgressIndicatorThemeData(
+                year2023: false,
               ),
             );
           }

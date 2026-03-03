@@ -280,7 +280,7 @@ class IconPrefetcher {
         ),
       );
 
-      // Use IconCache to download and cache the icon
+      // Use IconCache to download and cache icon
       final iconData = await IconCache.instance.getIcon(
         app.id,
         app.remoteIconUrl,

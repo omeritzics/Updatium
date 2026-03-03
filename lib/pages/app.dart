@@ -2,8 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:updatium/components/app_button.dart';
-import 'package:updatium/components/cached_app_icon.dart';
+import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
@@ -13,65 +12,39 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:markdown/markdown.dart' as md;
 
 class AppPage extends StatefulWidget {
-  const AppPage({
-    super.key,
-    required this.appId,
-    this.showOppositeOfPreferredView = false,
-  });
+  const AppPage({super.key, required this.appId});
 
   final String appId;
-  final bool showOppositeOfPreferredView;
 
   @override
   State<AppPage> createState() => _AppPageState();
 }
 
 class _AppPageState extends State<AppPage> {
-  late final WebViewController _webViewController;
-  bool _wasWebViewOpened = false;
   AppInMemory? prevApp;
   bool updating = false;
 
   @override
   void initState() {
     super.initState();
-    _webViewController = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onWebResourceError: (WebResourceError error) {
-            if (error.isForMainFrame == true) {
-              showError(
-                UpdatiumError(error.description, unexpected: true),
-                context,
-              );
-            }
-          },
-          onNavigationRequest: (NavigationRequest request) =>
-              !(request.url.startsWith("http://") ||
-                  request.url.startsWith("https://") ||
-                  request.url.startsWith("ftp://") ||
-                  request.url.startsWith("ftps://"))
-              ? NavigationDecision.prevent
-              : NavigationDecision.navigate,
-        ),
-      );
   }
 
   @override
   Widget build(BuildContext context) {
+    // Consistent spacing constants
+    const height2 = SizedBox(height: 2);
+    const height8 = SizedBox(height: 8);
+    const height10 = SizedBox(height: 10);
+    const height24 = SizedBox(height: 24);
+    const height32 = SizedBox(height: 32);
+    const height85 = SizedBox(height: 85);
+
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
-    var showAppWebpageFinal =
-        (settingsProvider.showAppWebpage &&
-            !widget.showOppositeOfPreferredView) ||
-        (!settingsProvider.showAppWebpage &&
-            widget.showOppositeOfPreferredView);
     getUpdate(String id, {bool resetVersion = false}) async {
       try {
         setState(() {
@@ -123,11 +96,6 @@ class _AppPageState extends State<AppPage> {
         ? isVersionPseudo(app!.app)
         : false;
 
-    if (app != null && !_wasWebViewOpened) {
-      _wasWebViewOpened = true;
-      _webViewController.loadRequest(Uri.parse(app.app.url));
-    }
-
     getInfoColumn() {
       String versionLines = '';
       bool installed = app?.app.installedVersion != null;
@@ -170,7 +138,7 @@ class _AppPageState extends State<AppPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
             child: Column(
               children: [
-                const SizedBox(height: 24),
+                height32,
                 Text(
                   versionLines,
                   textAlign: TextAlign.start,
@@ -200,7 +168,7 @@ class _AppPageState extends State<AppPage> {
                         ),
                       )
                     : const SizedBox.shrink(),
-                const SizedBox(height: 32),
+                height32,
               ],
             ),
           ),
@@ -230,15 +198,25 @@ class _AppPageState extends State<AppPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: settingsProvider.highlightTouchTargets
-                          ? (Theme.of(context).brightness == Brightness.light
-                                    ? Theme.of(context).primaryColor
-                                    : Theme.of(context).primaryColorLight)
-                                .withAlpha(
+                          ? () {
+                              bool usePureBlack =
+                                  settingsProvider.useBlackTheme &&
                                   Theme.of(context).brightness ==
+                                      Brightness.dark;
+                              if (usePureBlack) {
+                                return Colors.white.withValues(alpha: 0.16);
+                              }
+                              return (Theme.of(context).brightness ==
                                           Brightness.light
-                                      ? 20
-                                      : 40,
-                                )
+                                      ? Theme.of(context).primaryColor
+                                      : Theme.of(context).primaryColorLight)
+                                  .withAlpha(
+                                    Theme.of(context).brightness ==
+                                            Brightness.light
+                                        ? 20
+                                        : 40,
+                                  );
+                            }()
                           : null,
                     ),
                     padding: settingsProvider.highlightTouchTargets
@@ -268,7 +246,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 32),
+                height32,
                 Text(
                   "${plural('certificateHash', app.certificateHashes.length)}"
                   "${app.hasMultipleSigners ? " (${tr('multipleSigners')})" : ""}",
@@ -304,7 +282,7 @@ class _AppPageState extends State<AppPage> {
               ],
             ),
 
-          const SizedBox(height: 32),
+          height32,
           CategoryEditorSelector(
             alignment: WrapAlignment.center,
             preselected: app?.app.categories != null
@@ -322,7 +300,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: 24),
+                height32,
                 GestureDetector(
                   onLongPress: () {
                     Clipboard.setData(
@@ -376,14 +354,10 @@ class _AppPageState extends State<AppPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GestureDetector(
-                onTap: () => pm.openApp(app.app.id),
-                child: CachedAppIcon(
-                  app: app!.app,
-                  size: small ? 70 : 150,
-                  enableShimmer: true,
-                  showInstalledIndicator: false,
-                ),
+              Icon(
+                Icons.info_outline,
+                color: Theme.of(context).colorScheme.primary,
+                size: small ? 16 : 24,
               ),
             ],
           ),
@@ -392,15 +366,15 @@ class _AppPageState extends State<AppPage> {
           app?.name ?? tr('app'),
           textAlign: TextAlign.center,
           style: small
-              ? Theme.of(context).textTheme.displaySmall
-              : Theme.of(context).textTheme.displayLarge,
+              ? Theme.of(context).textTheme.titleLarge
+              : Theme.of(context).textTheme.headlineMedium,
         ),
         Text(
           tr('byX', args: [app?.author ?? tr('unknown')]),
           textAlign: TextAlign.center,
           style: small
-              ? Theme.of(context).textTheme.headlineSmall
-              : Theme.of(context).textTheme.headlineMedium,
+              ? Theme.of(context).textTheme.titleMedium
+              : Theme.of(context).textTheme.titleLarge,
         ),
         SizedBox(height: settingsProvider.highlightTouchTargets ? 2 : 8),
         GestureDetector(
@@ -425,14 +399,23 @@ class _AppPageState extends State<AppPage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: settingsProvider.highlightTouchTargets
-                      ? (Theme.of(context).brightness == Brightness.light
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).primaryColorLight)
-                            .withAlpha(
-                              Theme.of(context).brightness == Brightness.light
-                                  ? 20
-                                  : 40,
-                            )
+                      ? () {
+                          bool usePureBlack =
+                              settingsProvider.useBlackTheme &&
+                              Theme.of(context).brightness == Brightness.dark;
+                          if (usePureBlack) {
+                            return Colors.white.withValues(alpha: 0.16);
+                          }
+                          return (Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Theme.of(context).primaryColor
+                                  : Theme.of(context).primaryColorLight)
+                              .withAlpha(
+                                Theme.of(context).brightness == Brightness.light
+                                    ? 20
+                                    : 40,
+                              );
+                        }()
                       : null,
                 ),
                 padding: settingsProvider.highlightTouchTargets
@@ -444,7 +427,7 @@ class _AppPageState extends State<AppPage> {
                   child: Text(
                     app?.app.url ?? '',
                     textAlign: TextAlign.center,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       decoration: TextDecoration.underline,
@@ -464,17 +447,9 @@ class _AppPageState extends State<AppPage> {
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
-        const SizedBox(height: 85),
+        height85,
       ],
     );
-
-    getAppWebView() => app != null
-        ? WebViewWidget(
-            key: ObjectKey(_webViewController),
-            controller: _webViewController
-              ..setBackgroundColor(Theme.of(context).colorScheme.surface),
-          )
-        : Container();
 
     showMarkUpdatedDialog() {
       return showDialog(
@@ -639,39 +614,6 @@ class _AppPageState extends State<AppPage> {
                     tooltip: tr('additionalOptions'),
                     icon: const Icon(Icons.edit),
                   ),
-                if (app != null && app.installedInfo != null)
-                  IconButton(
-                    onPressed: () {
-                      appsProvider.openAppSettings(app.app.id);
-                    },
-                    icon: const Icon(Icons.settings),
-                    tooltip: tr('settings'),
-                  ),
-                if (app != null && showAppWebpageFinal)
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext ctx) {
-                          return AlertDialog(
-                            scrollable: true,
-                            content: getFullInfoColumn(small: true),
-                            title: Text(app.name),
-                            actions: [
-                              AppTextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(tr('continue')),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    icon: const Icon(Icons.more_horiz),
-                    tooltip: tr('more'),
-                  ),
                 if (app?.app.installedVersion != null &&
                     app?.app.installedVersion != app?.app.latestVersion &&
                     !isVersionDetectionStandard &&
@@ -743,18 +685,14 @@ class _AppPageState extends State<AppPage> {
     );
 
     return Scaffold(
-      appBar: showAppWebpageFinal ? AppBar() : appScreenAppBar(),
+      appBar: appScreenAppBar(),
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: RefreshIndicator(
-        child: showAppWebpageFinal
-            ? getAppWebView()
-            : CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Column(children: [getFullInfoColumn()]),
-                  ),
-                ],
-              ),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(child: Column(children: [getFullInfoColumn()])),
+          ],
+        ),
         onRefresh: () async {
           if (app != null) {
             getUpdate(app.app.id);
@@ -762,6 +700,108 @@ class _AppPageState extends State<AppPage> {
         },
       ),
       bottomSheet: getBottomSheetMenu(),
+    );
+  }
+
+  Widget _buildSimpleIcon(App app, double size) {
+    return Consumer<AppsProvider>(
+      builder: (context, appsProvider, child) {
+        final appInMemory = appsProvider.apps[app.id];
+
+        // If icon is already loaded, display it immediately
+        if (appInMemory?.icon != null) {
+          return Container(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(size * 0.125),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(size * 0.125),
+              child: Image.memory(
+                appInMemory!.icon!,
+                width: size,
+                height: size,
+                fit: BoxFit.cover,
+                gaplessPlayback: true,
+                opacity: AlwaysStoppedAnimation(
+                  appInMemory.installedInfo == null ? 0.6 : 1,
+                ),
+                errorBuilder: (context, error, stackTrace) {
+                  return _buildFallbackIcon(size);
+                },
+              ),
+            ),
+          );
+        }
+
+        // Load icon asynchronously if not available
+        return FutureBuilder(
+          future: appsProvider.updateAppIcon(app.id),
+          builder: (context, snapshot) {
+            final updatedAppInMemory = appsProvider.apps[app.id];
+
+            if (updatedAppInMemory?.icon != null) {
+              return Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(size * 0.125),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(size * 0.125),
+                  child: Image.memory(
+                    updatedAppInMemory!.icon!,
+                    width: size,
+                    height: size,
+                    fit: BoxFit.cover,
+                    gaplessPlayback: true,
+                    opacity: AlwaysStoppedAnimation(
+                      updatedAppInMemory.installedInfo == null ? 0.6 : 1,
+                    ),
+                    errorBuilder: (context, error, stackTrace) {
+                      return _buildFallbackIcon(size);
+                    },
+                  ),
+                ),
+              );
+            }
+
+            // Show fallback while loading or if failed
+            return _buildFallbackIcon(size);
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildFallbackIcon(double size) {
+    var settingsProvider = context.read<SettingsProvider>();
+    bool usePureBlack =
+        settingsProvider.useBlackTheme &&
+        Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size * 0.125),
+        color: usePureBlack
+            ? Colors.black.withValues(alpha: 0.2)
+            : Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(size * 0.125),
+        child: Icon(
+          Icons.apps,
+          size: size * 0.5,
+          color: usePureBlack
+              ? Colors.white.withValues(alpha: 0.6)
+              : Theme.of(
+                  context,
+                ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+        ),
+      ),
     );
   }
 }

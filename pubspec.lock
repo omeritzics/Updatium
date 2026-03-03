@@ -23,8 +23,8 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "18231a8a2343747440b0bfe90f7d56ef7f586099"
-      url: "https://github.com/ImranR98/android_package_manager"
+      resolved-ref: "7ded6c164e86395520014f8a0ea9c7a3999ffa1d"
+      url: "https://github.com/omeritzics/android_package_manager"
     source: git
     version: "0.7.1"
   android_system_font:
@@ -236,6 +236,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.3"
+  docman:
+    dependency: "direct main"
+    description:
+      name: docman
+      sha256: ae25239f40a01617afc3180b55e4909ec383a0777b06a4fd487d53e9916e3e49
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   dynamic_color:
     dependency: "direct main"
     description:
@@ -600,6 +608,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.20.2"
+  keyboard_detection:
+    dependency: "direct main"
+    description:
+      name: keyboard_detection
+      sha256: e25924923c9f94dbdb705eac5f3149ac4ec7503ec99a7476a13c86baa4174bdb
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.1"
   leak_tracker:
     dependency: transitive
     description:
@@ -960,15 +976,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
-  shared_storage:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: master
-      resolved-ref: "012e22791138958e089f6c1a8d6c4c6943a9f253"
-      url: "https://github.com/AlexBacich/shared-storage"
-    source: git
-    version: "0.7.0"
   shizuku_apk_installer:
     dependency: "direct main"
     description:
@@ -1171,10 +1178,10 @@ packages:
     dependency: transitive
     description:
       name: uuid
-      sha256: a11b666489b1954e01d992f3d601b1804a33937b5a8fe677bd26b8a9f96f96e8
+      sha256: "1fef9e8e11e2991bb773070d4656b7bd5d850967a2456cfc83cf47925ba79489"
       url: "https://pub.dev"
     source: hosted
-    version: "4.5.2"
+    version: "4.5.3"
   vector_math:
     dependency: transitive
     description:
@@ -1199,38 +1206,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
-  webview_flutter:
-    dependency: "direct main"
-    description:
-      name: webview_flutter
-      sha256: a3da219916aba44947d3a5478b1927876a09781174b5a2b67fa5be0555154bf9
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.13.1"
-  webview_flutter_android:
-    dependency: transitive
-    description:
-      name: webview_flutter_android
-      sha256: eeeb3fcd5f0ff9f8446c9f4bbc18a99b809e40297528a3395597d03aafb9f510
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.10.11"
-  webview_flutter_platform_interface:
-    dependency: transitive
-    description:
-      name: webview_flutter_platform_interface
-      sha256: "63d26ee3aca7256a83ccb576a50272edd7cfc80573a4305caa98985feb493ee0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.14.0"
-  webview_flutter_wkwebview:
-    dependency: transitive
-    description:
-      name: webview_flutter_wkwebview
-      sha256: "0412b657a2828fb301e73509909e6ec02b77cd2b441ae9f77125d482b3ddf0e7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.23.6"
   win32:
     dependency: transitive
     description:

@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.omeritzics.updatium">
+    package="io.github.omeritzics.updatium">
     <application
         android:label="@string/label"
         android:name="${applicationName}"
@@ -49,10 +49,12 @@
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"
+                tools:replace="android:resource" />
         </provider>
         <provider
             android:name="rikka.shizuku.ShizukuProvider"
@@ -66,7 +68,7 @@
             android:foregroundServiceType="specialUse"
             android:exported="false" />
         <meta-data
-            android:name="com.omeritzics.updatium.service.NOTIFICATION_ICON"
+            android:name="io.github.omeritzics.updatium.service.NOTIFICATION_ICON"
             android:resource="@drawable/ic_notification" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

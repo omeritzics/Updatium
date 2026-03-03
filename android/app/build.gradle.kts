@@ -28,26 +28,26 @@ if (keystorePropertiesExists) {
 }
 
 android {
-    namespace = "com.omeritzics.updatium"
-    compileSdk = flutter.compileSdkVersion
+    namespace = "io.github.omeritzics.updatium"
+    compileSdk = 36
     ndkVersion = "28.2.13676358"
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(21)
     }
 
     defaultConfig {
-        applicationId = "com.omeritzics.updatium"
+        applicationId = "io.github.omeritzics.updatium"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 24
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 26
+        targetSdk = 36
         versionCode = flutterVersionCode.toInt()
         versionName = flutterVersionName
     }

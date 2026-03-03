@@ -479,33 +479,55 @@ class AddAppPageState extends State<AddAppPage> {
         Row(
           children: [
             Expanded(
-              child: DropdownButtonFormField<String>(
-                initialValue: pickedSourceOverride ?? '',
-                decoration: InputDecoration(
-                  labelText: tr('overrideSource'),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28),
-                    borderSide: BorderSide.none,
+              child: MenuAnchor(
+                builder: (context, controller, child) {
+                  final selectedSource = sourceProvider.sources
+                      .where(
+                        (s) =>
+                            s.allowOverride ||
+                            (pickedSource != null &&
+                                pickedSource.runtimeType == s.runtimeType),
+                      )
+                      .firstWhere(
+                        (s) =>
+                            s.runtimeType.toString() ==
+                            (pickedSourceOverride ?? ''),
+                        orElse: () => sourceProvider.sources.first,
+                      );
+
+                  return TextField(
+                    controller: TextEditingController(
+                      text:
+                          pickedSourceOverride == null ||
+                              pickedSourceOverride == ''
+                          ? tr('none')
+                          : selectedSource.name,
+                    ),
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      labelText: tr('overrideSource'),
+                      filled: true,
+                      suffixIcon: const Icon(Icons.arrow_drop_down),
+                    ),
+                    onTap: () {
+                      if (controller.isOpen) {
+                        controller.close();
+                      } else {
+                        controller.open();
+                      }
+                    },
+                  );
+                },
+                menuChildren: [
+                  MenuItemButton(
+                    onPressed: () {
+                      setState(() {
+                        pickedSourceOverride = null;
+                      });
+                      changeUserInput(userInput, true, false);
+                    },
+                    child: Text(tr('none')),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: Theme.of(
-                    context,
-                  ).colorScheme.surfaceContainerHighest,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                ),
-                items: [
-                  DropdownMenuItem(value: '', child: Text(tr('none'))),
                   ...sourceProvider.sources
                       .where(
                         (s) =>
@@ -514,20 +536,17 @@ class AddAppPageState extends State<AddAppPage> {
                                 pickedSource.runtimeType == s.runtimeType),
                       )
                       .map(
-                        (s) => DropdownMenuItem(
-                          value: s.runtimeType.toString(),
+                        (s) => MenuItemButton(
+                          onPressed: () {
+                            setState(() {
+                              pickedSourceOverride = s.runtimeType.toString();
+                            });
+                            changeUserInput(userInput, true, false);
+                          },
                           child: Text(s.name),
                         ),
                       ),
                 ],
-                onChanged: (value) {
-                  setState(() {
-                    pickedSourceOverride = (value == null || value == '')
-                        ? null
-                        : value;
-                  });
-                  changeUserInput(userInput, true, false);
-                },
               ),
             ),
           ],

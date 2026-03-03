@@ -125,12 +125,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
     runUpdatiumImport() {
       HapticFeedback.selectionClick();
+      setState(() {
+        importInProgress = true;
+      });
       FilePicker.platform
           .pickFiles()
           .then((result) {
-            setState(() {
-              importInProgress = true;
-            });
             if (result != null) {
               String data = File(result.files.single.path!).readAsStringSync();
               try {
@@ -168,27 +168,42 @@ class _ImportExportPageState extends State<ImportExportPage> {
     }
 
     runUrlImport() {
-      FilePicker.platform.pickFiles().then((result) {
-        if (result != null) {
-          urlListImport(
-            overrideInitValid: true,
-            initValue: RegExp('https?://[^"]+')
-                .allMatches(File(result.files.single.path!).readAsStringSync())
-                .map((e) => e.input.substring(e.start, e.end))
-                .toSet()
-                .toList()
-                .where((url) {
-                  try {
-                    sourceProvider.getSource(url);
-                    return true;
-                  } catch (e) {
-                    return false;
-                  }
-                })
-                .join('\n'),
-          );
-        }
+      setState(() {
+        importInProgress = true;
       });
+      FilePicker.platform
+          .pickFiles()
+          .then((result) {
+            if (result != null) {
+              urlListImport(
+                overrideInitValid: true,
+                initValue: RegExp('https?://[^"]+')
+                    .allMatches(
+                      File(result.files.single.path!).readAsStringSync(),
+                    )
+                    .map((e) => e.input.substring(e.start, e.end))
+                    .toSet()
+                    .toList()
+                    .where((url) {
+                      try {
+                        sourceProvider.getSource(url);
+                        return true;
+                      } catch (e) {
+                        return false;
+                      }
+                    })
+                    .join('\n'),
+              );
+            }
+          })
+          .catchError((e) {
+            showError(e, context);
+          })
+          .whenComplete(() {
+            setState(() {
+              importInProgress = false;
+            });
+          });
     }
 
     runMassSourceImport(MassAppUrlSource source) {
@@ -301,7 +316,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       'Choose a directory to export your apps and settings',
                                   excludeSemantics: true,
                                   child: FilledButton.icon(
-                                    onPressed: importInProgress
+                                    onPressed:
+                                        importInProgress ||
+                                            appsProvider.exportInProgress
                                         ? null
                                         : () {
                                             runUpdatiumExport(pickOnly: true);
@@ -326,6 +343,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   child: FilledButton.icon(
                                     onPressed:
                                         importInProgress ||
+                                            appsProvider.exportInProgress ||
                                             snapshot.data == null
                                         ? null
                                         : runUpdatiumExport,
@@ -413,7 +431,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       );
                     },
                   ),
-                  if (importInProgress)
+                  if (importInProgress || appsProvider.exportInProgress)
                     const Column(
                       children: [
                         SizedBox(height: 14),

@@ -14,6 +14,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class GitHub extends AppSource {
   GitHub({hostChanged = false}) {
+    name = 'GitHub';
     hosts = ['github.com'];
     appIdInferIsOptional = true;
     showReleaseDateAsVersionToggle = true;
@@ -135,14 +136,12 @@ class GitHub extends AppSource {
             MapEntry('date', tr('releaseDate')),
             MapEntry('smartname', tr('smartname')),
             MapEntry('none', tr('none')),
-            MapEntry(
-              'smartname-datefallback',
-              '${tr('smartname')} x ${tr('releaseDate')}',
-            ),
+            MapEntry('smartname-datefallback', 'Smart + Date'),
             MapEntry('name', tr('name')),
           ],
           label: tr('sortMethod'),
           defaultValue: 'date',
+          required: false,
         ),
       ],
       [
