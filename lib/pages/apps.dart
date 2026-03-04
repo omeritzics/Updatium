@@ -482,13 +482,15 @@ class AppsPageState extends State<AppsPage> {
                               (element) =>
                                   !(element.app.lastUpdateCheck?.isBefore(
                                         refreshingSince!,
-                                      ) ??
-                                      true),
-                            )
+                                  ))),
                             .length /
-                        (appsProvider.apps.isNotEmpty
-                            ? appsProvider.apps.length
-                            : 1),
+                        appsProvider
+                            .getAppValues()
+                            .length,
+              minHeight: 4,
+              borderRadius: BorderRadius.circular(2),
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+              valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
             ),
           ),
       ];
@@ -632,7 +634,9 @@ class AppsPageState extends State<AppsPage> {
                         return SharedAxisTransition(
                           animation: animation,
                           secondaryAnimation: secondaryAnimation,
-                          transitionType: SharedAxisTransitionType.horizontal,
+                          transitionType: Directionality.of(context) == TextDirection.rtl 
+                              ? SharedAxisTransitionType.horizontalReversed
+                              : SharedAxisTransitionType.horizontal,
                           child: child,
                         );
                       },
@@ -835,12 +839,15 @@ class AppsPageState extends State<AppsPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
                       listedApps[index].name,
-                      textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: listedApps[index].app.pinned
+                          ? FontWeight.w600
+                          : FontWeight.w500,
+                        color: selectedAppIds.contains(listedApps[index].app.id)
+                          ? Theme.of(context).colorScheme.onPrimary
+                          : Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -848,23 +855,17 @@ class AppsPageState extends State<AppsPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
-                      listedApps[index].author,
-                      textAlign: TextAlign.center,
+                      tr('byX', args: [listedApps[index].author]),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(fontSize: 11),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Builder(
-                      builder: (ctx) {
-                        final ai = listedApps[index];
-                        final app = ai.app;
-                        final isInstalled = app.installedVersion != null;
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: selectedAppIds.contains(listedApps[index].app.id)
+                          ? Theme.of(context).colorScheme.onPrimaryContainer
+                          : Theme.of(context).colorScheme.onSurfaceVariant,
+                        fontWeight: listedApps[index].app.pinned
+                          ? FontWeight.w500
+                          : FontWeight.w400,
+                      ),
                         final hasUpdateLocal =
                             isInstalled &&
                             app.installedVersion != app.latestVersion;
@@ -950,6 +951,10 @@ class AppsPageState extends State<AppsPage> {
                         value: listedApps[index].downloadProgress! >= 0
                             ? listedApps[index].downloadProgress! / 100
                             : null,
+                        minHeight: 24,
+                        strokeWidth: 4,
+                        backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                        valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
                       ),
                     ),
                   ),
@@ -1575,8 +1580,8 @@ class AppsPageState extends State<AppsPage> {
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: maxCrossAxisExtent,
               childAspectRatio: childAspectRatio,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
             ),
             delegate: SliverChildBuilderDelegate((
               BuildContext context,
@@ -1608,6 +1613,7 @@ class AppsPageState extends State<AppsPage> {
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             controller: scrollController,
+            padding: const EdgeInsets.all(16),
             slivers: <Widget>[
               SliverAppBar(
                 pinned: true,

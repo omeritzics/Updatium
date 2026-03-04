@@ -31,6 +31,16 @@ class _AppPageState extends State<AppPage> {
   @override
   void initState() {
     super.initState();
+    // Ensure app is loaded and icon fetching is triggered
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        final appsProvider = context.read<AppsProvider>();
+        // Ensure the app is loaded before trying to fetch icon
+        if (appsProvider.apps[widget.appId] == null) {
+          appsProvider.loadApp(widget.appId);
+        }
+      }
+    });
   }
 
   @override
@@ -672,6 +682,10 @@ class _AppPageState extends State<AppPage> {
                 value: app!.downloadProgress! >= 0
                     ? app.downloadProgress! / 100
                     : null,
+                minHeight: 4,
+                borderRadius: BorderRadius.circular(2),
+                backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
               ),
             ),
         ],

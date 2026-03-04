@@ -281,7 +281,12 @@ class AddAppPageState extends State<AddAppPage> {
         gettingAppInfo
             ? Semantics(
                 label: tr('gettingAppInfo'),
-                child: const CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  minHeight: 24,
+                  strokeWidth: 4,
+                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
+                ),
               )
             : Semantics(
                 button: true,
@@ -580,7 +585,12 @@ class AddAppPageState extends State<AddAppPage> {
         searching
             ? Semantics(
                 label: tr('searching'),
-                child: const CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  minHeight: 24,
+                  strokeWidth: 4,
+                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
+                ),
               )
             : Semantics(
                 button: true,

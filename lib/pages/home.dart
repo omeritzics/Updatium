@@ -338,7 +338,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 return SharedAxisTransition(
                   animation: animation,
                   secondaryAnimation: secondaryAnimation,
-                  transitionType: SharedAxisTransitionType.horizontal,
+                  transitionType: Directionality.of(context) == TextDirection.rtl 
+                      ? SharedAxisTransitionType.horizontalReversed
+                      : SharedAxisTransitionType.horizontal,
                   child: child,
                 );
               },
@@ -374,8 +376,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 icon: AnimatedBuilder(
                   animation: _iconAnimations[index],
                   builder: (context, child) {
+                    final isRTL = Directionality.of(context) == TextDirection.rtl;
                     return Transform.rotate(
-                      angle: _iconAnimations[index].value * 2 * 3.14159,
+                      angle: _iconAnimations[index].value * 2 * 3.14159 * (isRTL ? -1 : 1),
                       child: Icon(page.icon),
                     );
                   },
