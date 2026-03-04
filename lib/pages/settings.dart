@@ -401,6 +401,10 @@ class _SettingsPageState extends State<SettingsPage> {
         max: updateIntervalNodes.length.toDouble(),
         divisions: updateIntervalNodes.length * 20,
         label: updateIntervalLabel,
+        thumbColor: Theme.of(context).colorScheme.primary,
+        activeColor: Theme.of(context).colorScheme.primary,
+        inactiveColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+        overlayColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
         onChanged: (double value) {
           setState(() {
             settingsProvider.updateIntervalSliderVal = value;
@@ -1164,6 +1168,40 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  (route) => false,
+                );
+              },
+              tooltip: tr('home'),
+            ),
+            IconButton(
+              icon: const Icon(Icons.apps),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const AppsPage()),
+                  (route) => false,
+                );
+              },
+              tooltip: tr('apps'),
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                // Already on settings page
+              },
+              tooltip: tr('settings'),
+            ),
+          ],
+        ),
       ),
     );
   }
