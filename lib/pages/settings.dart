@@ -404,7 +404,9 @@ class _SettingsPageState extends State<SettingsPage> {
         thumbColor: Theme.of(context).colorScheme.primary,
         activeColor: Theme.of(context).colorScheme.primary,
         inactiveColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-        overlayColor: WidgetStateProperty.all(Theme.of(context).colorScheme.primary.withValues(alpha: 0.2)),
+        overlayColor: WidgetStateProperty.all(
+          Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+        ),
         onChanged: (double value) {
           setState(() {
             settingsProvider.updateIntervalSliderVal = value;
