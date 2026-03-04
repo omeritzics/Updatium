@@ -44,7 +44,7 @@ Every language is welcome to Updatium, but your help is needed to make it happen
 
 ## Screenshots
 
-| <img src="./assets/screenshots/1.apps.png" alt="Apps Page" /> | <img src="./assets/screenshots/2.dark_theme.png" alt="Dark Theme" />           | <img src="./assets/screenshots/3.material_you.png" alt="Material You" />    |
+| <img src="./assets/screenshots/1.apps.png" alt="Apps Page" /> | <img src="./assets/screenshots/2.dark_theme.png" alt="Dark Theme" />           | <img src="./assets/screenshots/3.theming.png" alt="Material You" />    |
 | ------------------------------------------------------ | ----------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | <img src="./assets/screenshots/4.app.png" alt="App Page" />   | <img src="./assets/screenshots/5.app_opts.png" alt="App Options" /> | <img src="./assets/screenshots/6.import_export.png" alt="Import/Export" /> |
 
