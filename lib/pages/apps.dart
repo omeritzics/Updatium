@@ -599,9 +599,9 @@ class AppsPageState extends State<AppsPage> {
       if (stops.length == 2) {
         stops[0] = 0.9999;
       }
-      
+
       bool isSelected = selectedAppIds.contains(listedApps[index].app.id);
-      
+
       return Card.filled(
         margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
         shape: RoundedRectangleBorder(
@@ -674,7 +674,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  
+
                   // App info
                   Expanded(
                     child: Column(
@@ -685,28 +685,32 @@ class AppsPageState extends State<AppsPage> {
                           listedApps[index].name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: listedApps[index].app.pinned
-                                ? FontWeight.w600
-                                : FontWeight.w500,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(
+                                fontWeight: listedApps[index].app.pinned
+                                    ? FontWeight.w600
+                                    : FontWeight.w500,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           tr('byX', args: [listedApps[index].author]),
                           maxLines: 1,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
-                            fontWeight: listedApps[index].app.pinned
-                                ? FontWeight.w500
-                                : FontWeight.w400,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
+                                fontWeight: listedApps[index].app.pinned
+                                    ? FontWeight.w500
+                                    : FontWeight.w400,
+                              ),
                         ),
                       ],
                     ),
                   ),
-                  
+
                   // Trailing content
                   listedApps[index].downloadProgress != null
                       ? SizedBox(
@@ -721,7 +725,8 @@ class AppsPageState extends State<AppsPage> {
                                     ],
                                   )
                                 : tr('installing'),
-                            textAlign: (listedApps[index].downloadProgress! >= 0)
+                            textAlign:
+                                (listedApps[index].downloadProgress! >= 0)
                                 ? TextAlign.start
                                 : TextAlign.end,
                           ),
@@ -1712,9 +1717,7 @@ class AppsPageState extends State<AppsPage> {
       ),
       bottomNavigationBar: appsProvider.apps.isEmpty
           ? null
-          : BottomAppBar(
-              child: getFilterButtonsRow(),
-            ),
+          : BottomAppBar(child: getFilterButtonsRow()),
     );
   }
 
