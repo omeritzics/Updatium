@@ -617,9 +617,7 @@ class _UpdatiumState extends State<Updatium> {
               // Material 3 Filled Text Fields
               inputDecorationTheme: InputDecorationTheme(
                 filled: true,
-                fillColor: scheme.surfaceContainerHighest.withValues(
-                  alpha: 0.8,
-                ),
+                fillColor: scheme.surfaceContainer,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                   borderSide: BorderSide.none,
@@ -850,8 +848,26 @@ class _UpdatiumState extends State<Updatium> {
                 year2023: false,
               ),
 
-              // Material Design 3 2024 Slider Theme
-              sliderTheme: const SliderThemeData(year2023: false),
+              // Material Design 3 2024 Expressive Centered Slider Theme
+              sliderTheme: SliderThemeData(
+                year2023: false,
+                trackHeight: 8,
+                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
+                overlayShape: const RoundSliderOverlayShape(overlayRadius: 28),
+                valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+                valueIndicatorTextStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.25,
+                  height: 1.5,
+                ).copyWith(color: scheme.onPrimary),
+                showValueIndicator: ShowValueIndicator.onDrag,
+                activeTrackColor: scheme.primary,
+                inactiveTrackColor: scheme.surfaceContainerHighest,
+                thumbColor: scheme.primary,
+                overlayColor: scheme.primary.withValues(alpha: 0.2),
+                valueIndicatorColor: scheme.primary,
+              ),
 
               // Material Design 3 Switch Theme
               switchTheme: SwitchThemeData(
