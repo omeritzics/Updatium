@@ -1710,9 +1710,11 @@ class AppsPageState extends State<AppsPage> {
           ),
         ),
       ),
-      persistentFooterButtons: appsProvider.apps.isEmpty
+      bottomNavigationBar: appsProvider.apps.isEmpty
           ? null
-          : [getFilterButtonsRow()],
+          : BottomAppBar(
+              child: getFilterButtonsRow(),
+            ),
     );
   }
 
