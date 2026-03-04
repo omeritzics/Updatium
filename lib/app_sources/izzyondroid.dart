@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -11,6 +12,7 @@ class IzzyOnDroid extends AppSource {
     additionalSourceAppSpecificSettingFormItems =
         fd.additionalSourceAppSpecificSettingFormItems;
     allowSubDomains = true;
+    name = tr('izzyOnDroid');
   }
 
   @override

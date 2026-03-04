@@ -5,7 +5,7 @@ import 'package:updatium/providers/source_provider.dart';
 class Codeberg extends AppSource {
   GitHub gh = GitHub(hostChanged: true);
   Codeberg() {
-    name = 'Forgejo (Codeberg)';
+    name = tr('codeberg');
     hosts = ['codeberg.org'];
 
     additionalSourceAppSpecificSettingFormItems =
