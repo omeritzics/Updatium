@@ -843,16 +843,34 @@ class _UpdatiumState extends State<Updatium> {
                 landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
               ),
 
-              // Expressive Progress Indicators
-              progressIndicatorTheme: ProgressIndicatorThemeData(
-                color: scheme.primary,
-                linearTrackColor: scheme.surface.withValues(alpha: 0.2),
-                circularTrackColor: scheme.surface.withValues(alpha: 0.2),
+              // Material Design 3 2024 Progress Indicators
+              progressIndicatorTheme: const ProgressIndicatorThemeData(
+                year2023: false,
               ),
 
               // Material Design 3 2024 Slider Theme
               sliderTheme: const SliderThemeData(
                 year2023: false,
+              ),
+
+              // Material Design 3 Switch Theme
+              switchTheme: SwitchThemeData(
+                thumbColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return scheme.primary;
+                  }
+                  return scheme.outline;
+                }),
+                trackColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return scheme.primary.withValues(alpha: 0.5);
+                  }
+                  return scheme.surfaceContainerHighest;
+                }),
+                trackOutlineColor: WidgetStateProperty.resolveWith((states) {
+                  return Colors.transparent;
+                }),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
             );
           }
