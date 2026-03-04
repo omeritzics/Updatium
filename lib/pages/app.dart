@@ -705,103 +705,91 @@ class _AppPageState extends State<AppPage> {
 
   Widget _buildSimpleIcon(App app, double size) {
     return Consumer<AppsProvider>(
-      builder: (context, appsProvider, child) {
+      builder: (ctx, appsProvider, child) {
         final appInMemory = appsProvider.apps[app.id];
 
         // If icon is already loaded, display it immediately
         if (appInMemory?.icon != null) {
-          return Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(size * 0.125),
+          return Image.memory(
+            appInMemory!.icon!,
+            gaplessPlayback: true,
+            opacity: AlwaysStoppedAnimation(
+              appInMemory.installedInfo == null ? 0.6 : 1,
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(size * 0.125),
-              child: Image.memory(
-                appInMemory!.icon!,
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
-                gaplessPlayback: true,
-                opacity: AlwaysStoppedAnimation(
-                  appInMemory.installedInfo == null ? 0.6 : 1,
-                ),
-                errorBuilder: (context, error, stackTrace) {
-                  return _buildFallbackIcon(size);
-                },
-              ),
-            ),
+            errorBuilder: (context, error, stackTrace) {
+              return _buildFallbackIcon();
+            },
           );
         }
 
         // Load icon asynchronously if not available
         return FutureBuilder(
           future: appsProvider.updateAppIcon(app.id),
-          builder: (context, snapshot) {
+          builder: (ctx, snapshot) {
             final updatedAppInMemory = appsProvider.apps[app.id];
 
             if (updatedAppInMemory?.icon != null) {
-              return Container(
-                width: size,
-                height: size,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(size * 0.125),
+              return Image.memory(
+                updatedAppInMemory!.icon!,
+                gaplessPlayback: true,
+                opacity: AlwaysStoppedAnimation(
+                  updatedAppInMemory.installedInfo == null ? 0.6 : 1,
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(size * 0.125),
-                  child: Image.memory(
-                    updatedAppInMemory!.icon!,
-                    width: size,
-                    height: size,
-                    fit: BoxFit.cover,
-                    gaplessPlayback: true,
-                    opacity: AlwaysStoppedAnimation(
-                      updatedAppInMemory.installedInfo == null ? 0.6 : 1,
-                    ),
-                    errorBuilder: (context, error, stackTrace) {
-                      return _buildFallbackIcon(size);
-                    },
-                  ),
-                ),
+                errorBuilder: (context, error, stackTrace) {
+                  return _buildFallbackIcon();
+                },
               );
             }
 
             // Show fallback while loading or if failed
-            return _buildFallbackIcon(size);
+            return _buildFallbackIcon();
           },
         );
       },
     );
   }
 
-  Widget _buildFallbackIcon(double size) {
-    var settingsProvider = context.read<SettingsProvider>();
-    bool usePureBlack =
-        settingsProvider.useBlackTheme &&
-        Theme.of(context).brightness == Brightness.dark;
-
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(size * 0.125),
-        color: usePureBlack
-            ? Colors.black.withValues(alpha: 0.2)
-            : Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(size * 0.125),
-        child: Icon(
-          Icons.apps,
-          size: size * 0.5,
-          color: usePureBlack
-              ? Colors.white.withValues(alpha: 0.6)
-              : Theme.of(
-                  context,
-                ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+  Widget _buildFallbackIcon() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.rotationZ(0.31),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Image(
+              image: const AssetImage('assets/graphics/icon_small.png'),
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white.withOpacity(0.4)
+                  : Colors.white.withOpacity(0.4),
+              colorBlendMode: BlendMode.modulate,
+              gaplessPlayback: true,
+              errorBuilder: (context, error, stackTrace) {
+                // Final fallback - colored container
+                return Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    Icons.apps,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withOpacity(0.6),
+                    size: 24,
+                  ),
+                );
+              },
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }

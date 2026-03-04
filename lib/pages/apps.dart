@@ -659,7 +659,7 @@ class AppsPageState extends State<AppsPage> {
             tileColor: Theme.of(context).colorScheme.surface,
             selectedTileColor: Theme.of(
               context,
-            ).colorScheme.primaryContainer.withOpacity(0.3),
+            ).colorScheme.primaryContainer.withOpacity(0.4),
             selected: selectedAppIds.contains(listedApps[index].app.id),
             leading: SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
@@ -1773,7 +1773,7 @@ class AppsPageState extends State<AppsPage> {
               image: const AssetImage('assets/graphics/icon_small.png'),
               color: Theme.of(context).brightness == Brightness.dark
                   ? Colors.white.withOpacity(0.4)
-                  : Colors.white.withOpacity(0.3),
+                  : Colors.white.withOpacity(0.4),
               colorBlendMode: BlendMode.modulate,
               gaplessPlayback: true,
               errorBuilder: (context, error, stackTrace) {
@@ -1784,7 +1784,7 @@ class AppsPageState extends State<AppsPage> {
                   decoration: BoxDecoration(
                     color: Theme.of(
                       context,
-                    ).colorScheme.primary.withOpacity(0.1),
+                    ).colorScheme.primary.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(

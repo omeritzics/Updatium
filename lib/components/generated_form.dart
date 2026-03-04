@@ -419,7 +419,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                       }
                     : null,
                 child: Opacity(
-                  opacity: enabled ? 1 : 0.5,
+                  opacity: enabled ? 1 : 0.6,
                   child: Text(e2.value),
                 ),
               );
