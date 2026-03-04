@@ -855,8 +855,12 @@ class _UpdatiumState extends State<Updatium> {
                 thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
                 overlayShape: const RoundSliderOverlayShape(overlayRadius: 28),
                 valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-                valueIndicatorTextStyle: Theme.of(context).textTheme.bodyMedium
-                    ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                valueIndicatorTextStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.25,
+                  height: 1.5,
+                ).copyWith(color: scheme.onPrimary),
                 showValueIndicator: ShowValueIndicator.onDrag,
                 activeTrackColor: scheme.primary,
                 inactiveTrackColor: scheme.surfaceContainerHighest,
