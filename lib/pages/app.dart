@@ -211,7 +211,8 @@ class _AppPageState extends State<AppPage> {
                                       ? Theme.of(context).primaryColor
                                       : Theme.of(context).primaryColorLight)
                                   .withValues(
-                                    alpha: Theme.of(context).brightness ==
+                                    alpha:
+                                        Theme.of(context).brightness ==
                                             Brightness.light
                                         ? 0.08
                                         : 0.16,
@@ -411,7 +412,9 @@ class _AppPageState extends State<AppPage> {
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).primaryColorLight)
                               .withValues(
-                                alpha: Theme.of(context).brightness == Brightness.light
+                                alpha:
+                                    Theme.of(context).brightness ==
+                                        Brightness.light
                                     ? 0.08
                                     : 0.16,
                               );
