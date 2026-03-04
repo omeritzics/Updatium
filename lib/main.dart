@@ -846,14 +846,14 @@ class _UpdatiumState extends State<Updatium> {
               // Material Design 3 2024 Progress Indicators
               progressIndicatorTheme: ProgressIndicatorThemeData(
                 year2023: false,
-                circularTrackColor: MaterialStateProperty.resolveWith((states) {
-                  if (states.contains(MaterialState.selected)) {
+                circularTrackColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.selected)) {
                     return scheme.primary;
                   }
                   return scheme.surfaceContainerHighest;
                 }),
-                linearTrackColor: MaterialStateProperty.resolveWith((states) {
-                  if (states.contains(MaterialState.selected)) {
+                linearTrackColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.selected)) {
                     return scheme.primary;
                   }
                   return scheme.surfaceContainerHighest;

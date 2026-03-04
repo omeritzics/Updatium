@@ -874,10 +874,10 @@ class AppsPageState extends State<AppsPage> {
           ),
         );
       },
-    );
+    )
   }
 
-  getCategoryCollapsibleTile(int index) {
+  ExpansionTile getCategoryCollapsibleTile(int index) {
       var filteredEntries = listedApps
           .asMap()
           .entries
@@ -908,7 +908,7 @@ class AppsPageState extends State<AppsPage> {
       );
     }
 
-    getSelectAllButton() {
+    AppTextButtonWithIcon getSelectAllButton() {
       return selectedAppIds.isEmpty
           ? AppTextButtonWithIcon(
               onPressed: () {
@@ -934,7 +934,7 @@ class AppsPageState extends State<AppsPage> {
             );
     }
 
-    getMassObtainFunction() {
+    Null Function()? getMassObtainFunction() {
       return appsProvider.areDownloadsRunning() ||
               (existingUpdateIdsAllOrSelected.isEmpty &&
                   newInstallIdsAllOrSelected.isEmpty &&
@@ -1050,7 +1050,7 @@ class AppsPageState extends State<AppsPage> {
             };
     }
 
-    launchCategorizeDialog() {
+    Future<Null> Function() launchCategorizeDialog() {
       return () async {
         try {
           Set<String>? preselected;
@@ -1118,7 +1118,7 @@ class AppsPageState extends State<AppsPage> {
       };
     }
 
-    showMassMarkDialog() {
+    Future<dynamic> showMassMarkDialog() {
       return showDialog(
         context: context,
         builder: (BuildContext ctx) {
@@ -1170,7 +1170,7 @@ class AppsPageState extends State<AppsPage> {
       });
     }
 
-    pinSelectedApps() {
+    void pinSelectedApps() {
       var pinStatus = selectedApps.where((element) => element.pinned).isEmpty;
       appsProvider.saveApps(
         selectedApps.map((e) {
@@ -1181,7 +1181,7 @@ class AppsPageState extends State<AppsPage> {
       Navigator.of(context).pop();
     }
 
-    showMoreOptionsDialog() {
+    Future<dynamic> showMoreOptionsDialog() {
       return showDialog(
         context: context,
         builder: (BuildContext ctx) {
@@ -1292,7 +1292,7 @@ class AppsPageState extends State<AppsPage> {
       );
     }
 
-    getMainBottomButtons() {
+    List<Widget> getMainBottomButtons() {
       return [
         Semantics(
           button: true,
@@ -1346,7 +1346,7 @@ class AppsPageState extends State<AppsPage> {
       ];
     }
 
-    showFilterDialog() async {
+    Future<void> showFilterDialog() async {
       var values = await showDialog<Map<String, dynamic>?>(
         context: context,
         builder: (BuildContext ctx) {
@@ -1424,7 +1424,7 @@ class AppsPageState extends State<AppsPage> {
       }
     }
 
-    getFilterButtonsRow() {
+    Row getFilterButtonsRow() {
       var isFilterOff = filter.isIdenticalTo(neutralFilter, settingsProvider);
       return Row(
         children: [
@@ -1516,8 +1516,8 @@ class AppsPageState extends State<AppsPage> {
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: RefreshIndicator(
+      backgroundColor = Theme.of(context).colorScheme.surface,
+      body = RefreshIndicator(
         onRefresh: refresh,
         child: Scrollbar(
           interactive: true,
@@ -1604,7 +1604,7 @@ class AppsPageState extends State<AppsPage> {
           ),
         ),
       ),
-      bottomNavigationBar: appsProvider.apps.isEmpty
+      bottomNavigationBar = appsProvider.apps.isEmpty
           ? null
           : BottomAppBar(child: getFilterButtonsRow()),
     );
