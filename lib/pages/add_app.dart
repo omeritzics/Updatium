@@ -281,12 +281,7 @@ class AddAppPageState extends State<AddAppPage> {
         gettingAppInfo
             ? Semantics(
                 label: tr('gettingAppInfo'),
-                child: CircularProgressIndicator(
-                  minHeight: 24,
-                  strokeWidth: 4,
-                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
-                ),
+                child: const CircularProgressIndicator(),
               )
             : Semantics(
                 button: true,
