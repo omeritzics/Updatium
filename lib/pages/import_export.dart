@@ -435,7 +435,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     const Column(
                       children: [
                         SizedBox(height: 14),
-                        LinearProgressIndicator(),
+                        LinearProgressIndicator(
+                          minHeight: 4,
+                          borderRadius: BorderRadius.circular(2),
+                          backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                          valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
+                        ),
                         SizedBox(height: 14),
                       ],
                     )

@@ -5,7 +5,7 @@ import 'package:updatium/providers/source_provider.dart';
 
 class HuaweiAppGallery extends AppSource {
   HuaweiAppGallery() {
-    name = 'Huawei AppGallery';
+    name = tr('huaweiAppGallery');
     hosts = ['appgallery.huawei.com', 'appgallery.cloud.huawei.com'];
     versionDetectionDisallowed = true;
     showReleaseDateAsVersionToggle = true;

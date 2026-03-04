@@ -10,7 +10,7 @@ import 'package:updatium/providers/source_provider.dart';
 class RuStore extends AppSource {
   RuStore() {
     hosts = ['rustore.ru'];
-    name = 'RuStore';
+    name = tr('rustore');
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
   }

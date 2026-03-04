@@ -1180,10 +1180,7 @@ class _SettingsPageState extends State<SettingsPage> {
             IconButton(
               icon: const Icon(Icons.home),
               onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                  (route) => false,
-                );
+                Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
               },
               tooltip: tr('home'),
             ),
@@ -1191,7 +1188,7 @@ class _SettingsPageState extends State<SettingsPage> {
               icon: const Icon(Icons.apps),
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => AppsPage()),
+                  MaterialPageRoute(builder: (context) => const AppsPage()),
                   (route) => false,
                 );
               },

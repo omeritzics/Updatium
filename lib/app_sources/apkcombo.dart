@@ -8,6 +8,7 @@ class APKCombo extends AppSource {
   APKCombo() {
     hosts = ['apkcombo.com'];
     showReleaseDateAsVersionToggle = true;
+    name = tr('apkCombo');
   }
 
   @override

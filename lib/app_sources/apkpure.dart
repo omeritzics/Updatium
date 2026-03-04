@@ -21,6 +21,7 @@ class APKPure extends AppSource {
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
+    name = tr('apkPure');
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormSwitch(

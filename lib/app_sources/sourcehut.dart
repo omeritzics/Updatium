@@ -10,6 +10,7 @@ class SourceHut extends AppSource {
   SourceHut() {
     hosts = ['git.sr.ht'];
     showReleaseDateAsVersionToggle = true;
+    name = tr('sourcehut');
 
     additionalSourceAppSpecificSettingFormItems = [
       [

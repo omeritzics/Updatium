@@ -844,8 +844,23 @@ class _UpdatiumState extends State<Updatium> {
               ),
 
               // Material Design 3 2024 Progress Indicators
-              progressIndicatorTheme: const ProgressIndicatorThemeData(
+              progressIndicatorTheme: ProgressIndicatorThemeData(
                 year2023: false,
+                circularTrackColor: MaterialStateProperty.resolveWith((states) {
+                  if (states.contains(MaterialState.selected)) {
+                    return scheme.primary;
+                  }
+                  return scheme.surfaceContainerHighest;
+                }),
+                linearTrackColor: MaterialStateProperty.resolveWith((states) {
+                  if (states.contains(MaterialState.selected)) {
+                    return scheme.primary;
+                  }
+                  return scheme.surfaceContainerHighest;
+                }),
+                linearMinHeight: 4,
+                circularMinHeight: 24,
+                strokeAlign: StrokeAlign.center,
               ),
 
               // Material Design 3 2024 Expressive Centered Slider Theme

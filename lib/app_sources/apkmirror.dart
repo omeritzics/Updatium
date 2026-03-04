@@ -14,6 +14,7 @@ class APKMirror extends AppSource {
     hosts = ['apkmirror.com'];
     enforceTrackOnly = true;
     showReleaseDateAsVersionToggle = true;
+    name = tr('apkMirror');
 
     additionalSourceAppSpecificSettingFormItems = [
       [

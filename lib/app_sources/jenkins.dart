@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart';
@@ -9,6 +10,7 @@ class Jenkins extends AppSource {
     versionDetectionDisallowed = true;
     neverAutoSelect = true;
     showReleaseDateAsVersionToggle = true;
+    name = tr('jenkins');
   }
 
   String trimJobUrl(String url) {

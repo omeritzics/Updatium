@@ -4,97 +4,78 @@ import 'package:flutter/services.dart';
 import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form.dart';
 
-class GeneratedFormModal extends StatefulWidget {
-  const GeneratedFormModal({
-    super.key,
-    required this.title,
-    required this.items,
-    this.initValid = false,
-    this.message = '',
-    this.additionalWidgets = const [],
-    this.singleNullReturnButton,
-    this.primaryActionColor,
-  });
-
-  final String title;
-  final String message;
-  final List<List<GeneratedFormItem>> items;
-  final bool initValid;
-  final List<Widget> additionalWidgets;
-  final String? singleNullReturnButton;
-  final Color? primaryActionColor;
-
-  @override
-  State<GeneratedFormModal> createState() => _GeneratedFormModalState();
-}
-
-class _GeneratedFormModalState extends State<GeneratedFormModal> {
+/// Shows a modal dialog with a form using standard M3 AlertDialog
+Future<Map<String, dynamic>?> showGeneratedFormModal({
+  required BuildContext context,
+  required String title,
+  required List<List<GeneratedFormItem>> items,
+  bool initValid = false,
+  String message = '',
+  List<Widget> additionalWidgets = const [],
+  String? singleNullReturnButton,
+  Color? primaryActionColor,
+}) async {
   Map<String, dynamic> values = {};
-  bool valid = false;
+  bool valid = initValid || items.isEmpty;
 
-  @override
-  void initState() {
-    super.initState();
-    valid = widget.initValid || widget.items.isEmpty;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      scrollable: true,
-      title: Text(widget.title),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (widget.message.isNotEmpty) Text(widget.message),
-          if (widget.message.isNotEmpty) const SizedBox(height: 16),
-          GeneratedForm(
-            items: widget.items,
-            onValueChanges: (values, valid, isBuilding) {
-              if (isBuilding) {
-                this.values = values;
-                this.valid = valid;
-              } else {
-                setState(() {
-                  this.values = values;
-                  this.valid = valid;
-                });
-              }
+  return await showDialog<Map<String, dynamic>?>(
+    context: context,
+    builder: (context) => StatefulBuilder(
+      builder: (context, setState) => AlertDialog(
+        scrollable: true,
+        title: Text(title),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (message.isNotEmpty) Text(message),
+            if (message.isNotEmpty) const SizedBox(height: 16),
+            GeneratedForm(
+              items: items,
+              onValueChanges: (newValues, newValid, isBuilding) {
+                if (isBuilding) {
+                  values = newValues;
+                  valid = newValid;
+                } else {
+                  setState(() {
+                    values = newValues;
+                    valid = newValid;
+                  });
+                }
+              },
+            ),
+            if (additionalWidgets.isNotEmpty) ...additionalWidgets,
+          ],
+        ),
+        actions: [
+          AppTextButton(
+            onPressed: () {
+              Navigator.of(context).pop(null);
             },
+            child: Text(
+              singleNullReturnButton == null
+                  ? tr('cancel')
+                  : singleNullReturnButton!,
+            ),
           ),
-          if (widget.additionalWidgets.isNotEmpty) ...widget.additionalWidgets,
+          if (singleNullReturnButton == null)
+            AppTextButton(
+              style: primaryActionColor == null
+                  ? null
+                  : TextButton.styleFrom(
+                      foregroundColor: primaryActionColor,
+                    ),
+              onPressed: !valid
+                  ? null
+                  : () {
+                      if (valid) {
+                        HapticFeedback.selectionClick();
+                        Navigator.of(context).pop(values);
+                      }
+                    },
+              child: Text(tr('continue')),
+            ),
         ],
       ),
-      actions: [
-        AppTextButton(
-          onPressed: () {
-            Navigator.of(context).pop(null);
-          },
-          child: Text(
-            widget.singleNullReturnButton == null
-                ? tr('cancel')
-                : widget.singleNullReturnButton!,
-          ),
-        ),
-        widget.singleNullReturnButton == null
-            ? AppTextButton(
-                style: widget.primaryActionColor == null
-                    ? null
-                    : TextButton.styleFrom(
-                        foregroundColor: widget.primaryActionColor,
-                      ),
-                onPressed: !valid
-                    ? null
-                    : () {
-                        if (valid) {
-                          HapticFeedback.selectionClick();
-                          Navigator.of(context).pop(values);
-                        }
-                      },
-                child: Text(tr('continue')),
-              )
-            : const SizedBox.shrink(),
-      ],
-    );
-  }
+    ),
+  );
 }
