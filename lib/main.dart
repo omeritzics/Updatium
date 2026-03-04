@@ -659,7 +659,9 @@ class _UpdatiumState extends State<Updatium> {
               // Material 3 Menu Theme
               dropdownMenuTheme: DropdownMenuThemeData(
                 menuStyle: MenuStyle(
-                  backgroundColor: WidgetStateProperty.all(scheme.surfaceContainer),
+                  backgroundColor: WidgetStateProperty.all(
+                    scheme.surfaceContainer,
+                  ),
                   surfaceTintColor: WidgetStateProperty.all(scheme.surfaceTint),
                   elevation: WidgetStateProperty.all(3),
                   shape: WidgetStateProperty.all(

@@ -489,13 +489,17 @@ class AddAppPageState extends State<AddAppPage> {
                                 pickedSource.runtimeType == s.runtimeType),
                       )
                       .firstWhere(
-                        (s) => s.runtimeType.toString() == (pickedSourceOverride ?? ''),
+                        (s) =>
+                            s.runtimeType.toString() ==
+                            (pickedSourceOverride ?? ''),
                         orElse: () => sourceProvider.sources.first,
                       );
-                  
+
                   return TextField(
                     controller: TextEditingController(
-                      text: pickedSourceOverride == null || pickedSourceOverride == ''
+                      text:
+                          pickedSourceOverride == null ||
+                              pickedSourceOverride == ''
                           ? tr('none')
                           : selectedSource.name,
                     ),
