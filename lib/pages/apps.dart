@@ -436,7 +436,7 @@ class AppsPageState extends State<AppsPage> {
                       size: 80,
                       color: Theme.of(
                         context,
-                      ).colorScheme.primary.withOpacity(0.6),
+                      ).colorScheme.primary,
                     ),
                     height24,
                     Text(
@@ -463,7 +463,7 @@ class AppsPageState extends State<AppsPage> {
                               ?.copyWith(
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.onSurface.withOpacity(0.7),
+                                ).colorScheme.onSurface,
                               ),
                           textAlign: TextAlign.center,
                           maxLines: 5,
@@ -664,7 +664,7 @@ class AppsPageState extends State<AppsPage> {
             tileColor: Theme.of(context).colorScheme.surface,
             selectedTileColor: Theme.of(
               context,
-            ).colorScheme.primaryContainer.withOpacity(0.4),
+            ).colorScheme.primaryContainer,
             selected: selectedAppIds.contains(listedApps[index].app.id),
             leading: SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
@@ -797,7 +797,7 @@ class AppsPageState extends State<AppsPage> {
                       borderRadius: BorderRadius.circular(12),
                       color: Theme.of(
                         context,
-                      ).colorScheme.primary.withOpacity(0.2),
+                      ).colorScheme.primary,
                     ),
                   ),
                 ),
@@ -1777,8 +1777,8 @@ class AppsPageState extends State<AppsPage> {
             child: Image(
               image: const AssetImage('assets/graphics/icon_small.png'),
               color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white.withOpacity(0.4)
-                  : Colors.white.withOpacity(0.4),
+                  ? Colors.white
+                  : Colors.white,
               colorBlendMode: BlendMode.modulate,
               gaplessPlayback: true,
               errorBuilder: (context, error, stackTrace) {
@@ -1789,14 +1789,14 @@ class AppsPageState extends State<AppsPage> {
                   decoration: BoxDecoration(
                     color: Theme.of(
                       context,
-                    ).colorScheme.primary.withOpacity(0.2),
+                    ).colorScheme.primary,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     Icons.apps,
                     color: Theme.of(
                       context,
-                    ).colorScheme.primary.withOpacity(0.6),
+                    ).colorScheme.onPrimary,
                     size: 24,
                   ),
                 );
