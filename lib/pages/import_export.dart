@@ -436,11 +436,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       children: [
                         SizedBox(height: 14),
                         LinearProgressIndicator(
-                minHeight: 4,
-                borderRadius: BorderRadius.circular(2),
-                backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-                valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
-              ),
+                          minHeight: 4,
+                          borderRadius: BorderRadius.circular(2),
+                          backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                          valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
+                        ),
                         SizedBox(height: 14),
                       ],
                     )
