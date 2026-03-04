@@ -805,15 +805,18 @@ class _SettingsPageState extends State<SettingsPage> {
                                 style: TextStyle(
                                   color: settingsProvider.useShizuku
                                       ? null
-                                      : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                                      : Theme.of(context).colorScheme.onSurface
+                                            .withValues(alpha: 0.6),
                                 ),
                               ),
                             ),
                             Switch(
-                              value: settingsProvider.shizukuPretendToBeGooglePlay,
+                              value:
+                                  settingsProvider.shizukuPretendToBeGooglePlay,
                               onChanged: settingsProvider.useShizuku
                                   ? (value) {
-                                      settingsProvider.shizukuPretendToBeGooglePlay =
+                                      settingsProvider
+                                              .shizukuPretendToBeGooglePlay =
                                           value;
                                     }
                                   : null,

@@ -1691,9 +1691,7 @@ class AppsPageState extends State<AppsPage> {
       ),
       bottomNavigationBar: appsProvider.apps.isEmpty
           ? null
-          : BottomAppBar(
-              child: getFilterButtonsRow(),
-            ),
+          : BottomAppBar(child: getFilterButtonsRow()),
     );
   }
 
