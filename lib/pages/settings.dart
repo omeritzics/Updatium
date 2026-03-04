@@ -1177,7 +1177,7 @@ class _SettingsPageState extends State<SettingsPage> {
               icon: const Icon(Icons.home),
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => HomePage()),
+                  MaterialPageRoute(builder: (context) => const HomePage()),
                   (route) => false,
                 );
               },
@@ -1187,7 +1187,7 @@ class _SettingsPageState extends State<SettingsPage> {
               icon: const Icon(Icons.apps),
               onPressed: () {
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => AppsPage()),
+                  MaterialPageRoute(builder: (context) => const AppsPage()),
                   (route) => false,
                 );
               },
