@@ -371,77 +371,62 @@
     "multipleSigners": "Multiple Signers",
     "removeAppQuestion": {
         "one": "להסיר את היישום?",
-        "two": "להסיר את שני היישומים?",
         "other": "להסיר את היישומים?"
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד דקה",
-        "two": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד שתי דקות",
         "other": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד {} דקות"
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "BG update checking encountered a {}, will schedule a retry check in {} minute",
-        "two": "BG update checking encountered a {}, will schedule a retry check in {} minutes",
         "other": "BG update checking encountered a {}, will schedule a retry check in {} minutes"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "BG update checking found {} update - will notify user if needed",
-        "two": "BG update checking found {} updates - will notify user if needed",
         "other": "BG update checking found {} updates - will notify user if needed"
     },
     "apps": {
         "one": "יישום אחד",
-        "two": "שני יישומים",
         "other": "{} יישומים"
     },
     "url": {
         "one": "כתובת אחת",
-        "two": "שתי כתובות",
         "other": "{} כתובות"
     },
     "minute": {
         "one": "דקה אחת",
-        "two": "שתי דקות",
         "other": "{} דקות"
     },
     "hour": {
         "one": "שעה אחת",
-        "two": "שעתיים",
         "other": "{} שעות"
     },
     "day": {
         "one": "יום אחד",
-        "two": "יומיים",
         "other": "{} ימים"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Cleared {n} log (before = {before}, after = {after})",
-        "two": "Cleared {n} logs (before = {before}, after = {after})",
         "other": "Cleared {n} logs (before = {before}, after = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "ליישום {} ולעוד יישום יש עדכונים.",
-        "two": "ליישום {} ולעוד שני יישומים יש עדכונים.",
         "other": "ליישום {} ולעוד {} יישומים יש עדכונים."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "היישום {} ועוד יישום נוסף עודכנו.",
-        "two": "{} ועוד שני יישומים נוספים עודכנו.",
         "other": "{} ועוד {} יישומים נוספים עודכנו."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "נכשל העדכון של {} ועוד יישום אחד.",
-        "two": "נכשל העדכון של {} ועוד שני יישומים.",
         "other": "נכשל העדכון של {} ועוד {} יישומים."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{} ועוד יישום אחד עשויים להיות עודכנו.",
-        "two": "{} and 2 more apps may have been updated.",
         "other": "{} and {} more apps may have been updated."
     },
     "apk": {
         "one": "קובץ APK אחד",
-        "two": "שני קובצי APK",
         "other": "{} קובצי APK"
     },
     "certificateHash": {
