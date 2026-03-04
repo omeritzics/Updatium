@@ -2358,38 +2358,41 @@ class AppsProvider with ChangeNotifier {
               '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
 
           try {
-        final result = await dirDocFile.createFile(
-          name: fileName,
-          bytes: Uint8List.fromList(
-            utf8.encode(encoder.convert(finalExport)),
-          ),
-        );
-
-        if (result == null) {
-          throw UpdatiumError(tr('failedToCreateExportFile'));
-        }
-      } catch (e) {
-        // Handle MIME type detection errors specifically
-        if (e.toString().contains('mime type') || e.toString().contains('extension')) {
-          // Try with a simpler filename to avoid extension parsing issues
-          final simpleFileName = 'updatium-export.json';
-          try {
-            final fallbackResult = await dirDocFile.createFile(
-              name: simpleFileName,
+            final result = await dirDocFile.createFile(
+              name: fileName,
               bytes: Uint8List.fromList(
                 utf8.encode(encoder.convert(finalExport)),
               ),
             );
-            if (fallbackResult == null) {
+
+            if (result == null) {
               throw UpdatiumError(tr('failedToCreateExportFile'));
             }
-          } catch (fallbackError) {
-            throw UpdatiumError('${tr('failedToExport')}: MIME type detection error - ${fallbackError.toString()}');
+          } catch (e) {
+            // Handle MIME type detection errors specifically
+            if (e.toString().contains('mime type') ||
+                e.toString().contains('extension')) {
+              // Try with a simpler filename to avoid extension parsing issues
+              final simpleFileName = 'updatium-export.json';
+              try {
+                final fallbackResult = await dirDocFile.createFile(
+                  name: simpleFileName,
+                  bytes: Uint8List.fromList(
+                    utf8.encode(encoder.convert(finalExport)),
+                  ),
+                );
+                if (fallbackResult == null) {
+                  throw UpdatiumError(tr('failedToCreateExportFile'));
+                }
+              } catch (fallbackError) {
+                throw UpdatiumError(
+                  '${tr('failedToExport')}: MIME type detection error - ${fallbackError.toString()}',
+                );
+              }
+            } else {
+              throw UpdatiumError('${tr('failedToExport')}: ${e.toString()}');
+            }
           }
-        } else {
-          throw UpdatiumError('${tr('failedToExport')}: ${e.toString()}');
-        }
-      }
         } else {
           throw UpdatiumError(tr('exportDirNotAccessible'));
         }
