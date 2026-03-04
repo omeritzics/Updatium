@@ -501,7 +501,12 @@ class AppsPageState extends State<AppsPage> {
     getAppIcon(int appIndex) {
       return GestureDetector(
         onTap: () {
-          // Handle tap if needed
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AppPage(appId: listedApps[appIndex].app.id),
+            ),
+          );
         },
         onDoubleTap: () {
           pm.openApp(listedApps[appIndex].app.id);
@@ -1555,23 +1560,23 @@ class AppsPageState extends State<AppsPage> {
           if (screenWidth < 360) {
             // Very small screens (e.g., small phones)
             maxCrossAxisExtent = 120;
-            childAspectRatio = 1.1;
+            childAspectRatio = 0.85;
           } else if (screenWidth < 480) {
             // Small screens (e.g., phones)
             maxCrossAxisExtent = 140;
-            childAspectRatio = 1.0;
+            childAspectRatio = 0.8;
           } else if (screenWidth < 768) {
             // Medium screens (e.g., large phones, small tablets)
             maxCrossAxisExtent = 160;
-            childAspectRatio = 0.95;
+            childAspectRatio = 0.75;
           } else if (screenWidth < 1024) {
             // Large screens (e.g., tablets)
             maxCrossAxisExtent = 180;
-            childAspectRatio = 0.9;
+            childAspectRatio = 0.7;
           } else {
             // Very large screens (e.g., desktops, large tablets)
             maxCrossAxisExtent = 200;
-            childAspectRatio = 0.85;
+            childAspectRatio = 0.65;
           }
 
           return SliverGrid(
