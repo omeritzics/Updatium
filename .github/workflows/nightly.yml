@@ -49,10 +49,12 @@ jobs:
         run: flutter pub get
         
       - name: Auto-fix linting issues
-        run: dart fix --apply
+        run: |
+          dart fix --apply || echo "Linting fix failed, continuing..."
 
       - name: Format code
-        run: dart format .
+        run: |
+          dart format . || echo "Formatting failed, continuing..."
 
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v7
