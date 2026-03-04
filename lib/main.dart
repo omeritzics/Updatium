@@ -849,6 +849,11 @@ class _UpdatiumState extends State<Updatium> {
                 linearTrackColor: scheme.surface.withValues(alpha: 0.2),
                 circularTrackColor: scheme.surface.withValues(alpha: 0.2),
               ),
+
+              // Material Design 3 2024 Slider Theme
+              sliderTheme: const SliderThemeData(
+                year2023: false,
+              ),
             );
           }
 
