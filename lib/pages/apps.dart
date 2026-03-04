@@ -436,7 +436,7 @@ class AppsPageState extends State<AppsPage> {
                       size: 80,
                       color: Theme.of(
                         context,
-                      ).colorScheme.primary.withOpacity(0.6),
+                      ).colorScheme.primary,
                     ),
                     height24,
                     Text(
@@ -463,7 +463,7 @@ class AppsPageState extends State<AppsPage> {
                               ?.copyWith(
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.onSurface.withOpacity(0.7),
+                                ).colorScheme.onSurface,
                               ),
                           textAlign: TextAlign.center,
                           maxLines: 5,
@@ -501,7 +501,12 @@ class AppsPageState extends State<AppsPage> {
     getAppIcon(int appIndex) {
       return GestureDetector(
         onTap: () {
-          // Handle tap if needed
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AppPage(appId: listedApps[appIndex].app.id),
+            ),
+          );
         },
         onDoubleTap: () {
           pm.openApp(listedApps[appIndex].app.id);
@@ -659,7 +664,7 @@ class AppsPageState extends State<AppsPage> {
             tileColor: Theme.of(context).colorScheme.surface,
             selectedTileColor: Theme.of(
               context,
-            ).colorScheme.primaryContainer.withOpacity(0.3),
+            ).colorScheme.primaryContainer,
             selected: selectedAppIds.contains(listedApps[index].app.id),
             leading: SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
@@ -792,7 +797,7 @@ class AppsPageState extends State<AppsPage> {
                       borderRadius: BorderRadius.circular(12),
                       color: Theme.of(
                         context,
-                      ).colorScheme.primary.withOpacity(0.2),
+                      ).colorScheme.primary,
                     ),
                   ),
                 ),
@@ -1555,23 +1560,23 @@ class AppsPageState extends State<AppsPage> {
           if (screenWidth < 360) {
             // Very small screens (e.g., small phones)
             maxCrossAxisExtent = 120;
-            childAspectRatio = 1.1;
+            childAspectRatio = 0.85;
           } else if (screenWidth < 480) {
             // Small screens (e.g., phones)
             maxCrossAxisExtent = 140;
-            childAspectRatio = 1.0;
+            childAspectRatio = 0.8;
           } else if (screenWidth < 768) {
             // Medium screens (e.g., large phones, small tablets)
             maxCrossAxisExtent = 160;
-            childAspectRatio = 0.95;
+            childAspectRatio = 0.75;
           } else if (screenWidth < 1024) {
             // Large screens (e.g., tablets)
             maxCrossAxisExtent = 180;
-            childAspectRatio = 0.9;
+            childAspectRatio = 0.7;
           } else {
             // Very large screens (e.g., desktops, large tablets)
             maxCrossAxisExtent = 200;
-            childAspectRatio = 0.85;
+            childAspectRatio = 0.65;
           }
 
           return SliverGrid(
@@ -1772,8 +1777,8 @@ class AppsPageState extends State<AppsPage> {
             child: Image(
               image: const AssetImage('assets/graphics/icon_small.png'),
               color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white.withOpacity(0.4)
-                  : Colors.white.withOpacity(0.3),
+                  ? Colors.white
+                  : Colors.white,
               colorBlendMode: BlendMode.modulate,
               gaplessPlayback: true,
               errorBuilder: (context, error, stackTrace) {
@@ -1784,14 +1789,14 @@ class AppsPageState extends State<AppsPage> {
                   decoration: BoxDecoration(
                     color: Theme.of(
                       context,
-                    ).colorScheme.primary.withOpacity(0.1),
+                    ).colorScheme.primary,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     Icons.apps,
                     color: Theme.of(
                       context,
-                    ).colorScheme.primary.withOpacity(0.6),
+                    ).colorScheme.onPrimary,
                     size: 24,
                   ),
                 );
