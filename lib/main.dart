@@ -617,7 +617,7 @@ class _UpdatiumState extends State<Updatium> {
               // Material 3 Filled Text Fields
               inputDecorationTheme: InputDecorationTheme(
                 filled: true,
-                fillColor: scheme.surfaceContainerHighest.withValues(alpha: 0.8),
+                fillColor: scheme.surfaceContainer,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                   borderSide: BorderSide.none,
