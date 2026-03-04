@@ -852,6 +852,7 @@ class _UpdatiumState extends State<Updatium> {
               sliderTheme: SliderThemeData(
                 year2023: false,
                 trackHeight: 8,
+                trackShape: const RoundedRectSliderTrackShape(),
                 thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
                 overlayShape: const RoundSliderOverlayShape(overlayRadius: 28),
                 valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
