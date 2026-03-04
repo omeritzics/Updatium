@@ -434,9 +434,7 @@ class AppsPageState extends State<AppsPage> {
                     Icon(
                       Icons.widgets,
                       size: 80,
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                     height24,
                     Text(
@@ -461,9 +459,7 @@ class AppsPageState extends State<AppsPage> {
                           }(),
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurface,
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                           textAlign: TextAlign.center,
                           maxLines: 5,
@@ -662,9 +658,7 @@ class AppsPageState extends State<AppsPage> {
                   : BorderSide.none,
             ),
             tileColor: Theme.of(context).colorScheme.surface,
-            selectedTileColor: Theme.of(
-              context,
-            ).colorScheme.primaryContainer,
+            selectedTileColor: Theme.of(context).colorScheme.primaryContainer,
             selected: selectedAppIds.contains(listedApps[index].app.id),
             leading: SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
@@ -795,9 +789,7 @@ class AppsPageState extends State<AppsPage> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),
@@ -1787,16 +1779,12 @@ class AppsPageState extends State<AppsPage> {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     Icons.apps,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onPrimary,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     size: 24,
                   ),
                 );
