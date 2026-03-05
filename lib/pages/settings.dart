@@ -1287,8 +1287,7 @@ class _LogsDialogState extends State<LogsDialog> {
                 (await showDialog<Map<String, dynamic>?>(
                   context: context,
                   builder: (BuildContext ctx) {
-                    return showGeneratedFormModal(
-                      context: context,
+                    return GeneratedFormModal(
                       title: tr('appLogs'),
                       items: const [],
                       initValid: true,

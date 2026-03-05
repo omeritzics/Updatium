@@ -33,8 +33,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       showDialog<Map<String, dynamic>?>(
         context: context,
         builder: (BuildContext ctx) {
-          return showGeneratedFormModal(
-            context: context,
+          return GeneratedFormModal(
             initValid: overrideInitValid,
             title: tr('importFromURLList'),
             items: [
@@ -211,8 +210,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
             var values = await showDialog<Map<String, dynamic>?>(
               context: context,
               builder: (BuildContext ctx) {
-                return showGeneratedFormModal(
-                  context: context,
+                return GeneratedFormModal(
                   title: tr('importX', args: [source.name]),
                   items: source.requiredArgs
                       .map((e) => [GeneratedFormTextField(e, label: e)])

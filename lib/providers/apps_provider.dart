@@ -2069,8 +2069,7 @@ class AppsProvider with ChangeNotifier {
     var values = await showDialog(
       context: context,
       builder: (BuildContext ctx) {
-        return showGeneratedFormModal(
-          context: context,
+        return GeneratedFormModal(
           primaryActionColor: Theme.of(context).colorScheme.error,
           title: plural('removeAppQuestion', apps.length),
           items: !showUninstallOption

@@ -36,7 +36,7 @@ class _AppPageState extends State<AppPage> {
         final appsProvider = context.read<AppsProvider>();
         // Ensure the app is loaded before trying to fetch icon
         if (appsProvider.apps[widget.appId] == null) {
-          appsProvider.loadApps(singleId: widget.appId);
+          appsProvider.loadApp(widget.appId);
         }
       }
     });
@@ -510,8 +510,7 @@ class _AppPageState extends State<AppPage> {
             return row;
           }).toList();
 
-          return showGeneratedFormModal(
-            context: context,
+          return GeneratedFormModal(
             title: tr('additionalOptions'),
             items: items,
           );

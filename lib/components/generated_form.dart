@@ -478,8 +478,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
             showDialog<Map<String, dynamic>?>(
               context: context,
               builder: (BuildContext ctx) {
-                return showGeneratedFormModal(
-                  context: context,
+                return GeneratedFormModal(
                   title: widget.items[r][e].label,
                   items: [
                     [GeneratedFormTextField('label', label: tr('label'))],
@@ -674,8 +673,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 showDialog<Map<String, dynamic>?>(
                                   context: context,
                                   builder: (BuildContext ctx) {
-                                    return showGeneratedFormModal(
-                                      context: context,
+                                    return GeneratedFormModal(
                                       title: message.key,
                                       message: message.value,
                                       items: const [],
