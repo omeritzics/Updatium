@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'dart:math' as math;
 import 'package:animations/animations.dart';
 import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -204,7 +205,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           if (await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
-                  return GeneratedFormModal(
+                  return showGeneratedFormModal(
+                    context: context,
                     title: tr(
                       'importX',
                       args: [
@@ -339,7 +341,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   animation: animation,
                   secondaryAnimation: secondaryAnimation,
                   transitionType: Directionality.of(context) == TextDirection.rtl 
-                      ? SharedAxisTransitionType.horizontalReversed
+                      ? SharedAxisTransitionType.horizontalReverse
                       : SharedAxisTransitionType.horizontal,
                   child: child,
                 );
@@ -378,7 +380,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   builder: (context, child) {
                     final isRTL = Directionality.of(context) == TextDirection.rtl;
                     return Transform.rotate(
-                      angle: _iconAnimations[index].value * 2 * pi * (isRTL ? -1 : 1),
+                      angle: _iconAnimations[index].value * 2 * math.pi * (isRTL ? -1 : 1),
                       child: Icon(page.icon),
                     );
                   },

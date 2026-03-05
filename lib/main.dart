@@ -859,7 +859,6 @@ class _UpdatiumState extends State<Updatium> {
                   return scheme.surfaceContainerHighest;
                 }),
                 linearMinHeight: 4,
-                circularMinHeight: 24,
                 strokeAlign: StrokeAlign.center,
               ),
 

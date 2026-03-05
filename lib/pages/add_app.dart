@@ -118,7 +118,8 @@ class AddAppPageState extends State<AddAppPage> {
         var values = await showDialog(
           context: context,
           builder: (BuildContext ctx) {
-            return GeneratedFormModal(
+            return showGeneratedFormModal(
+              context: context,
               initValid: true,
               title: tr(
                 'xIsTrackOnly',
@@ -151,7 +152,8 @@ class AddAppPageState extends State<AddAppPage> {
           await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
-                  return GeneratedFormModal(
+                  return showGeneratedFormModal(
+                    context: context,
                     title: tr('releaseDateAsVersion'),
                     items: const [],
                     message: tr('releaseDateAsVersionExplanation'),
@@ -358,7 +360,8 @@ class AddAppPageState extends State<AddAppPage> {
                       querySettings = await showDialog<Map<String, dynamic>?>(
                         context: context,
                         builder: (BuildContext ctx) {
-                          return GeneratedFormModal(
+                          return showGeneratedFormModal(
+                            context: context,
                             title: tr('searchX', args: [e.name]),
                             items: [
                               ...e.searchQuerySettingFormItems.map((e) => [e]),
@@ -581,7 +584,6 @@ class AddAppPageState extends State<AddAppPage> {
             ? Semantics(
                 label: tr('searching'),
                 child: CircularProgressIndicator(
-                  minHeight: 24,
                   strokeWidth: 4,
                   backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
                   valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
@@ -719,7 +721,8 @@ class AddAppPageState extends State<AddAppPage> {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return GeneratedFormModal(
+                  return showGeneratedFormModal(
+                    context: context,
                     singleNullReturnButton: tr('ok'),
                     title: tr('supportedSources'),
                     items: const [],
