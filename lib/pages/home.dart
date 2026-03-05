@@ -378,7 +378,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 icon: AnimatedBuilder(
                   animation: _iconAnimations[index],
                   builder: (context, child) {
-                    final isRTL = Directionality.of(context) == TextDirection.rtl;
+                    final isRTL =
+                        Directionality.of(context) == TextDirection.rtl;
                     return Transform.rotate(
                       angle: _iconAnimations[index].value * 2 * math.pi * (isRTL ? -1 : 1),
                       child: Icon(page.icon),

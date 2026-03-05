@@ -51,19 +51,13 @@ Future<Map<String, dynamic>?> showGeneratedFormModal({
             onPressed: () {
               Navigator.of(context).pop(null);
             },
-            child: Text(
-              singleNullReturnButton == null
-                  ? tr('cancel')
-                  : singleNullReturnButton!,
-            ),
+            child: Text(singleNullReturnButton ?? tr('cancel')),
           ),
           if (singleNullReturnButton == null)
             AppTextButton(
               style: primaryActionColor == null
                   ? null
-                  : TextButton.styleFrom(
-                      foregroundColor: primaryActionColor,
-                    ),
+                  : TextButton.styleFrom(foregroundColor: primaryActionColor),
               onPressed: !valid
                   ? null
                   : () {
