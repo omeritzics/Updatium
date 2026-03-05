@@ -86,7 +86,7 @@
     "filter": "סינון",
     "filterApps": "סינון יישומים",
     "appName": "שם היישום",
-    "author": "מפתח/ת",
+    "author": "מפתחים",
     "upToDateApps": "יישומים מעודכנים",
     "nonInstalledApps": "יישומים לא מותקנים",
     "importExport": "ייבוא/ייצוא",
@@ -355,7 +355,7 @@
     "smartname": "שם (שיטה חכמה)",
     "sortMethod": "שיטת מיון",
     "welcome": "ברוך בואך",
-    "documentationLinksNote": "The Updatium GitHub page linked below contains links to videos, articles, discussions, and other resources that will help you understand how to use the app.",
+    "documentationLinksNote": "עמוד ה־GitHub של Updatium אליו יש קישור למטה מכיל קישורים לסרטונים, מאמרים, שיחות ומשאבים אחרים שיעזרו לך להבין איך משתמשים ביישום.",
     "batteryOptimizationNote": "Note that background downloads may work more reliably if you switch to the \"foreground service\" in the Updatium settings and/or disable battery optimization for Updatium in your OS settings.",
     "fileDeletionError": "מחיקת הקובץ נכשלה (כדאי לנסות למחוק אותו ידנית ואז לנסות שוב): \"{}\"",
     "foregroundService": "שירות העדכון החזיתי של Updatium",
@@ -368,7 +368,7 @@
     "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.\n\nAfter then, Updatium may stop working on certified Android devices.",
     "googleVerificationWarningP2": "Go to https://keepandroidopen.org/ for more information.",
     "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\n\nIn any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.\n\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
-    "multipleSigners": "Multiple Signers",
+    "multipleSigners": "חותמים מרובים",
     "removeAppQuestion": {
         "one": "להסיר את היישום?",
         "other": "להסיר את היישומים?"
