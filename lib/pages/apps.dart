@@ -501,7 +501,22 @@ class AppsPageState extends State<AppsPage> {
     getAppIcon(int appIndex) {
       return GestureDetector(
         onTap: () {
-          // Handle tap if needed
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  AppPage(appId: listedApps[appIndex].app.id),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return SharedAxisTransition(
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  transitionType: SharedAxisTransitionType.horizontal,
+                  child: child,
+                );
+              },
+            ),
+          );
         },
         onDoubleTap: () {
           pm.openApp(listedApps[appIndex].app.id);
