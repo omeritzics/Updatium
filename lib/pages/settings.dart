@@ -1096,64 +1096,58 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                const Divider(height: 32),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        launchUrlString(
-                          settingsProvider.sourceUrl,
-                          mode: LaunchMode.externalApplication,
-                        );
-                      },
-                      icon: const Icon(Icons.code),
-                      tooltip: tr('appSource'),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        launchUrlString(
-                          'https://github.com/omeritzics/Updatium/wiki',
-                          mode: LaunchMode.externalApplication,
-                        );
-                      },
-                      icon: context.locale.languageCode == 'he'
-                          ? Transform(
-                              transform: Matrix4.identity(),
-                              child: const Icon(Icons.help),
-                            )
-                          : const Icon(Icons.help),
-                      tooltip: tr('wiki'),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        context.read<LogsProvider>().get().then((logs) {
-                          if (logs.isEmpty) {
-                            showMessage(UpdatiumError(tr('noLogs')), context);
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext ctx) {
-                                return const LogsDialog();
-                              },
-                            );
-                          }
-                        });
-                      },
-                      icon: const Icon(Icons.bug_report),
-                      tooltip: tr('appLogs'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-              ],
-            ),
-          ),
         ],
       ),
+      persistentFooterButtons: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              onPressed: () {
+                launchUrlString(
+                  settingsProvider.sourceUrl,
+                  mode: LaunchMode.externalApplication,
+                );
+              },
+              icon: const Icon(Icons.code),
+              tooltip: tr('appSource'),
+            ),
+            IconButton(
+              onPressed: () {
+                launchUrlString(
+                  'https://github.com/omeritzics/Updatium/wiki',
+                  mode: LaunchMode.externalApplication,
+                );
+              },
+              icon: context.locale.languageCode == 'he'
+                  ? Transform(
+                      transform: Matrix4.identity(),
+                      child: const Icon(Icons.help),
+                    )
+                  : const Icon(Icons.help),
+              tooltip: tr('wiki'),
+            ),
+            IconButton(
+              onPressed: () {
+                context.read<LogsProvider>().get().then((logs) {
+                  if (logs.isEmpty) {
+                    showMessage(UpdatiumError(tr('noLogs')), context);
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext ctx) {
+                        return const LogsDialog();
+                      },
+                    );
+                  }
+                });
+              },
+              icon: const Icon(Icons.bug_report),
+              tooltip: tr('appLogs'),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
