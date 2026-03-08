@@ -800,15 +800,26 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(tr('shizukuPretendToBeGooglePlay')),
+                              child: Text(
+                                tr('shizukuPretendToBeGooglePlay'),
+                                style: TextStyle(
+                                  color: settingsProvider.useShizuku
+                                      ? null
+                                      : Theme.of(context).colorScheme.onSurface
+                                            .withValues(alpha: 0.6),
+                                ),
+                              ),
                             ),
                             Switch(
                               value:
                                   settingsProvider.shizukuPretendToBeGooglePlay,
-                              onChanged: (value) {
-                                settingsProvider.shizukuPretendToBeGooglePlay =
-                                    value;
-                              },
+                              onChanged: settingsProvider.useShizuku
+                                  ? (value) {
+                                      settingsProvider
+                                              .shizukuPretendToBeGooglePlay =
+                                          value;
+                                    }
+                                  : null,
                             ),
                           ],
                         ),

@@ -617,7 +617,7 @@ class _UpdatiumState extends State<Updatium> {
               // Material 3 Filled Text Fields
               inputDecorationTheme: InputDecorationTheme(
                 filled: true,
-                fillColor: scheme.surfaceContainerHighest,
+                fillColor: scheme.surfaceContainer,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                   borderSide: BorderSide.none,
@@ -843,11 +843,50 @@ class _UpdatiumState extends State<Updatium> {
                 landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
               ),
 
-              // Expressive Progress Indicators
-              progressIndicatorTheme: ProgressIndicatorThemeData(
-                color: scheme.primary,
-                linearTrackColor: scheme.surface.withValues(alpha: 0.2),
-                circularTrackColor: scheme.surface.withValues(alpha: 0.2),
+              // Material Design 3 2024 Progress Indicators
+              progressIndicatorTheme: const ProgressIndicatorThemeData(
+                year2023: false,
+              ),
+
+              // Material Design 3 2024 Expressive Centered Slider Theme
+              sliderTheme: SliderThemeData(
+                year2023: false,
+                trackHeight: 8,
+                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
+                overlayShape: const RoundSliderOverlayShape(overlayRadius: 28),
+                valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+                valueIndicatorTextStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.25,
+                  height: 1.5,
+                ).copyWith(color: scheme.onPrimary),
+                showValueIndicator: ShowValueIndicator.onDrag,
+                activeTrackColor: scheme.primary,
+                inactiveTrackColor: scheme.surfaceContainerHighest,
+                thumbColor: scheme.primary,
+                overlayColor: scheme.primary.withValues(alpha: 0.2),
+                valueIndicatorColor: scheme.primary,
+              ),
+
+              // Material Design 3 Switch Theme
+              switchTheme: SwitchThemeData(
+                thumbColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return scheme.primary;
+                  }
+                  return scheme.outline;
+                }),
+                trackColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return scheme.primary.withValues(alpha: 0.5);
+                  }
+                  return scheme.surfaceContainerHighest;
+                }),
+                trackOutlineColor: WidgetStateProperty.resolveWith((states) {
+                  return Colors.transparent;
+                }),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
             );
           }
