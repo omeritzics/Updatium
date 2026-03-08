@@ -955,24 +955,21 @@ class AppsPageState extends State<AppsPage> {
                           );
                         }
 
-                        return Chip(
-                          avatar: Icon(
-                            Icons.check_circle,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 14,
-                          ),
-                          label: Text(
-                            tr('updated'),
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 10,
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.check_circle,
+                              color: Colors.green[600],
+                              size: 18,
                             ),
-                          ),
-                          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                          side: BorderSide(
-                            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                            width: 1,
-                          ),
+                            const SizedBox(width: 6),
+                            Text(
+                              tr('updated'),
+                              style: TextStyle(color: Colors.green[600]),
+                            ),
+                          ],
                         );
                       },
                     ),
