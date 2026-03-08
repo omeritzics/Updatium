@@ -2,6 +2,7 @@ name: Translation Management
 
 on:
   push:
+    branches: [ main, develop ]
     paths:
       - 'assets/translations/en.json'
       - 'lib/**/*.dart'

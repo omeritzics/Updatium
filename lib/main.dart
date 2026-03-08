@@ -614,39 +614,33 @@ class _UpdatiumState extends State<Updatium> {
                   ),
                 ),
               ),
-              // Expressive Input Fields
+              // Material 3 Filled Text Fields
               inputDecorationTheme: InputDecorationTheme(
                 filled: true,
-                fillColor: scheme.surfaceContainerLow,
+                fillColor: scheme.surfaceContainer,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(
-                    color: scheme.outline.withValues(alpha: 0.2),
-                    width: 1,
-                  ),
+                  borderRadius: BorderRadius.circular(4),
+                  borderSide: BorderSide.none,
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(
-                    color: scheme.outline.withValues(alpha: 0.2),
-                    width: 1,
-                  ),
+                  borderRadius: BorderRadius.circular(4),
+                  borderSide: BorderSide.none,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(4),
                   borderSide: BorderSide(color: scheme.primary, width: 2),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(4),
                   borderSide: BorderSide(color: scheme.error, width: 2),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(4),
                   borderSide: BorderSide(color: scheme.error, width: 2),
                 ),
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 18,
+                  horizontal: 16,
+                  vertical: 16,
                 ),
                 hintStyle: TextStyle(
                   color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
@@ -654,7 +648,7 @@ class _UpdatiumState extends State<Updatium> {
                 ),
                 labelStyle: TextStyle(
                   color: scheme.onSurfaceVariant,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w400,
                 ),
                 floatingLabelStyle: TextStyle(
                   color: scheme.primary,
@@ -704,22 +698,71 @@ class _UpdatiumState extends State<Updatium> {
                 ),
               ),
 
-              // Expressive Floating Action Button
+              // Material 3 Menu Theme
+              dropdownMenuTheme: DropdownMenuThemeData(
+                menuStyle: MenuStyle(
+                  backgroundColor: WidgetStateProperty.all(
+                    scheme.surfaceContainer,
+                  ),
+                  surfaceTintColor: WidgetStateProperty.all(scheme.surfaceTint),
+                  elevation: WidgetStateProperty.all(3),
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  padding: WidgetStateProperty.all(EdgeInsets.zero),
+                ),
+                inputDecorationTheme: InputDecorationTheme(
+                  filled: true,
+                  fillColor: scheme.surfaceContainerHighest,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(color: scheme.primary, width: 2),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                  hintStyle: TextStyle(
+                    color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
+                    fontWeight: FontWeight.w400,
+                  ),
+                  labelStyle: TextStyle(
+                    color: scheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  floatingLabelStyle: TextStyle(
+                    color: scheme.primary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+
+              // Material 3 Extended Floating Action Button
               floatingActionButtonTheme: FloatingActionButtonThemeData(
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
                 ),
                 elevation: isDark ? 6 : 8,
                 extendedPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
+                  horizontal: 24,
                   vertical: 16,
                 ),
                 extendedTextStyle: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.5,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.1,
                 ),
-                foregroundColor: scheme.onPrimaryContainer,
-                backgroundColor: scheme.primaryContainer,
+                foregroundColor: scheme.onPrimary,
+                backgroundColor: scheme.primary,
                 iconSize: 24,
               ),
 
@@ -842,9 +885,50 @@ class _UpdatiumState extends State<Updatium> {
                 landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
               ),
 
-              // Expressive Progress Indicators
+              // Material Design 3 2024 Progress Indicators
               progressIndicatorTheme: const ProgressIndicatorThemeData(
                 year2023: false,
+              ),
+
+              // Material Design 3 2024 Expressive Centered Slider Theme
+              sliderTheme: SliderThemeData(
+                year2023: false,
+                trackHeight: 8,
+                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
+                overlayShape: const RoundSliderOverlayShape(overlayRadius: 28),
+                valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+                valueIndicatorTextStyle: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.25,
+                  height: 1.5,
+                ).copyWith(color: scheme.onPrimary),
+                showValueIndicator: ShowValueIndicator.onDrag,
+                activeTrackColor: scheme.primary,
+                inactiveTrackColor: scheme.surfaceContainerHighest,
+                thumbColor: scheme.primary,
+                overlayColor: scheme.primary.withValues(alpha: 0.2),
+                valueIndicatorColor: scheme.primary,
+              ),
+
+              // Material Design 3 Switch Theme
+              switchTheme: SwitchThemeData(
+                thumbColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return scheme.primary;
+                  }
+                  return scheme.outline;
+                }),
+                trackColor: WidgetStateProperty.resolveWith((states) {
+                  if (states.contains(WidgetState.selected)) {
+                    return scheme.primary.withValues(alpha: 0.5);
+                  }
+                  return scheme.surfaceContainerHighest;
+                }),
+                trackOutlineColor: WidgetStateProperty.resolveWith((states) {
+                  return Colors.transparent;
+                }),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
             );
           }
