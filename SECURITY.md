@@ -2,17 +2,10 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| Qama v26.1   | :white_check_mark: |
+Only the latest version and the latest Nightly build are supported.
 
 ## Reporting a Vulnerability
 
 Use this section to tell people how to report a vulnerability.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Please report any security vulnerabilities as a normal issue. When reporting, make sure you describe the vulnerability in a general way, without providing too many details that could help an attacker exploit it.
