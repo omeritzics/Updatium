@@ -60,31 +60,6 @@ jobs:
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle || true
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle.kts || true
           
-      - name: Auto-fix linting issues
-        run: dart fix --apply
-
-      - name: Format code
-        run: dart format .
-
-      - name: Check for changes
-        id: changes
-        run: |
-          if [[ -n $(git status --porcelain) ]]; then
-            echo "changes=true" >> $GITHUB_OUTPUT
-            echo "🔧 Found formatting/linting changes"
-          else
-            echo "changes=false" >> $GITHUB_OUTPUT
-            echo "✅ No formatting/linting changes needed"
-          fi
-
-      - name: Commit and Push changes
-        if: steps.changes.outputs.changes == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          commit_message: "style: auto-fix linting and formatting issues [ci skip]"
-          branch: ${{ github.head_ref }}
-          file_pattern: '*.dart'
-          
       - name: Build APK (Unique ID)
         run: |
           # Inject the short SHA into the Application ID to allow side-by-side testing
