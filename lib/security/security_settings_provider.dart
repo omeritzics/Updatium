@@ -142,7 +142,7 @@ class SecuritySettingsProvider {
       await setRulesVersion('latest-${DateTime.now().millisecondsSinceEpoch}');
     } catch (e) {
       // Re-throw the exception so callers can handle it
-      throw Exception('Failed to update YARA rules: $e');
+      rethrow;
     }
   }
 
