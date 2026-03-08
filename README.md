@@ -13,6 +13,8 @@ Updatium helps you to install apps and update them directly from their release p
 
 [![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
 
+Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware.
+
 ## Features
 ### Currently supported App sources:
 | Open Source (General) | Other (General) | Other (App-specific) |
