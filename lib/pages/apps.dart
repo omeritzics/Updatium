@@ -62,7 +62,7 @@ void showChangeLogDialog(
                 )
               : const SizedBox.shrink(),
           changesUrl != null
-              ? const SizedBox(height: 16)
+              ? height16
               : const SizedBox.shrink(),
           appSource.changeLogIfAnyIsMarkDown
               ? ConstrainedBox(
@@ -175,16 +175,25 @@ class AppsPageState extends State<AppsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Consistent spacing constants
+    // M3 Expressive spacing constants (based on 4dp baseline grid)
     const height4 = SizedBox(height: 4);
     const height8 = SizedBox(height: 8);
     const height12 = SizedBox(height: 12);
     const height16 = SizedBox(height: 16);
+    const height20 = SizedBox(height: 20);
     const height24 = SizedBox(height: 24);
+    const height28 = SizedBox(height: 28);
     const height32 = SizedBox(height: 32);
+    const height40 = SizedBox(height: 40);
+    const height48 = SizedBox(height: 48);
+    const height56 = SizedBox(height: 56);
+    const height64 = SizedBox(height: 64);
     const width4 = SizedBox(width: 4);
-    const width6 = SizedBox(width: 6);
+    const width8 = SizedBox(width: 8);
+    const width12 = SizedBox(width: 12);
     const width16 = SizedBox(width: 16);
+    const width20 = SizedBox(width: 20);
+    const width24 = SizedBox(width: 24);
 
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
@@ -427,7 +436,7 @@ class AppsPageState extends State<AppsPage> {
             hasScrollBody: false,
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -452,7 +461,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                     if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
+                        padding: const EdgeInsets.only(top: 12),
                         child: Text(
                           () {
                             final subtext = tr('noAppsSubtext');
@@ -582,13 +591,24 @@ class AppsPageState extends State<AppsPage> {
               child: Text(tr('update')),
             );
           } else {
-            action = Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.check_circle, color: Colors.green[600], size: 20),
-                width6,
-                Text(tr('updated'), style: TextStyle(color: Colors.green[600])),
-              ],
+            action = Chip(
+              avatar: Icon(
+                Icons.check_circle,
+                color: Theme.of(context).colorScheme.primary,
+                size: 16,
+              ),
+              label: Text(
+                tr('updated'),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontSize: 12,
+                ),
+              ),
+              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+              side: BorderSide(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                width: 1,
+              ),
             );
           }
 
@@ -659,8 +679,8 @@ class AppsPageState extends State<AppsPage> {
           },
           child: ListTile(
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 8,
+              horizontal: 24,
+              vertical: 12,
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
@@ -815,7 +835,7 @@ class AppsPageState extends State<AppsPage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(12),
                     child: Icon(
                       Icons.push_pin,
                       size: 16,
@@ -827,7 +847,7 @@ class AppsPageState extends State<AppsPage> {
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(12),
                     child: Icon(
                       Icons.circle,
                       size: 10,
@@ -839,7 +859,7 @@ class AppsPageState extends State<AppsPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 12),
+                  height12,
                   SizedBox(
                     height: 64,
                     width: 64,
@@ -848,9 +868,9 @@ class AppsPageState extends State<AppsPage> {
                       child: getAppIcon(index),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  height8,
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
                       listedApps[index].name,
                       textAlign: TextAlign.center,
@@ -862,9 +882,9 @@ class AppsPageState extends State<AppsPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 4),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
                       listedApps[index].author,
                       textAlign: TextAlign.center,
@@ -875,9 +895,9 @@ class AppsPageState extends State<AppsPage> {
                       ).textTheme.bodySmall?.copyWith(fontSize: 11),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  height8,
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Builder(
                       builder: (ctx) {
                         final ai = listedApps[index];
@@ -935,21 +955,24 @@ class AppsPageState extends State<AppsPage> {
                           );
                         }
 
-                        return Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.check_circle,
-                              color: Colors.green[600],
-                              size: 18,
+                        return Chip(
+                          avatar: Icon(
+                            Icons.check_circle,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 14,
+                          ),
+                          label: Text(
+                            tr('updated'),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 10,
                             ),
-                            const SizedBox(width: 6),
-                            Text(
-                              tr('updated'),
-                              style: TextStyle(color: Colors.green[600]),
-                            ),
-                          ],
+                          ),
+                          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                          side: BorderSide(
+                            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                            width: 1,
+                          ),
                         );
                       },
                     ),
@@ -1686,9 +1709,9 @@ class AppsPageState extends State<AppsPage> {
                 ],
                 flexibleSpace: FlexibleSpaceBar(
                   titlePadding: const EdgeInsets.only(
-                    left: 24,
-                    right: 80,
-                    bottom: 20,
+                    left: 28,
+                    right: 88,
+                    bottom: 24,
                   ),
                   title: Text(
                     tr('appsString'),
