@@ -882,9 +882,11 @@ class _SettingsPageState extends State<SettingsPage> {
                           title: Text(tr('enableAutoScan')),
                           subtitle: Text(tr('enableAutoScanDescription')),
                           value: _securityProviderInitialized ? _securityProvider.getAutoScanEnabled() : false,
-                          onChanged: _securityProviderInitialized ? (value) async {
+onChanged: _securityProviderInitialized ? (value) async {
                             await _securityProvider.setAutoScanEnabled(value);
-                            setState(() {});
+                            if (mounted) {
+                              setState(() {});
+                            }
                           } : null,
                         ),
                         SwitchListTile(
