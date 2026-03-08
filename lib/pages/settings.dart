@@ -1111,50 +1111,74 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       persistentFooterButtons: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            IconButton(
-              onPressed: () {
-                launchUrlString(
-                  settingsProvider.sourceUrl,
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-              icon: const Icon(Icons.code),
-              tooltip: tr('appSource'),
-            ),
-            IconButton(
-              onPressed: () {
-                launchUrlString(
-                  'https://github.com/omeritzics/Updatium/wiki',
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-              icon: context.locale.languageCode == 'he'
-                  ? Transform(
-                      transform: Matrix4.identity(),
-                      child: const Icon(Icons.help),
-                    )
-                  : const Icon(Icons.help),
-              tooltip: tr('wiki'),
-            ),
-            IconButton(
-              onPressed: () {
-                context.read<LogsProvider>().get().then((logs) {
-                  if (logs.isEmpty) {
-                    showMessage(UpdatiumError(tr('noLogs')), context);
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext ctx) {
-                        return const LogsDialog();
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Semantics(
+                    button: true,
+                    label: tr('appSource'),
+                    hint: 'Open app source repository',
+                    child: IconButton(
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () {
+                        launchUrlString(
+                          settingsProvider.sourceUrl,
+                          mode: LaunchMode.externalApplication,
+                        );
                       },
-                    );
-                  }
-                });
-              },
-              icon: const Icon(Icons.bug_report),
-              tooltip: tr('appLogs'),
+                      tooltip: tr('appSource'),
+                      icon: const Icon(Icons.code),
+                    ),
+                  ),
+                  Semantics(
+                    button: true,
+                    label: tr('wiki'),
+                    hint: 'Open Updatium wiki documentation',
+                    child: IconButton(
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () {
+                        launchUrlString(
+                          'https://github.com/omeritzics/Updatium/wiki',
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      tooltip: tr('wiki'),
+                      icon: context.locale.languageCode == 'he'
+                          ? Transform(
+                              transform: Matrix4.identity(),
+                              child: const Icon(Icons.help),
+                            )
+                          : const Icon(Icons.help),
+                    ),
+                  ),
+                  Semantics(
+                    button: true,
+                    label: tr('appLogs'),
+                    hint: 'View application logs',
+                    child: IconButton(
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () {
+                        context.read<LogsProvider>().get().then((logs) {
+                          if (logs.isEmpty) {
+                            showMessage(UpdatiumError(tr('noLogs')), context);
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext ctx) {
+                                return const LogsDialog();
+                              },
+                            );
+                          }
+                        });
+                      },
+                      tooltip: tr('appLogs'),
+                      icon: const Icon(Icons.bug_report),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
