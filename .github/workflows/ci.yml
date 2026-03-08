@@ -82,7 +82,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "style: auto-fix linting and formatting issues [ci skip]"
-          branch: ${{ github.ref_name }}
+          branch: ${{ github.head_ref }}
           file_pattern: '*.dart'
           
       - name: Build APK (Unique ID)

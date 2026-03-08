@@ -58,7 +58,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "style: auto-fix linting and formatting issues"
-          branch: ${{ github.ref_name }}
+          branch: ${{ github.head_ref }}
           
       - name: Generate Version
         id: version
