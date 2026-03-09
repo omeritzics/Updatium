@@ -84,10 +84,18 @@ class SecuritySettingsProvider {
   /// Scan an APK file
   Future<YARAScanResult> scanAPK(String apkPath) async {
     if (!getAutoScanEnabled()) {
-      return YARAScanResult.error(apkPath, 'Auto-scan is disabled');
+      return YARAScanResult(
+        isInfected: false,
+        matches: const [],
+        filePath: apkPath,
+        scanTime: DateTime.now(),
+      );
     }
 
     final result = await _scanner.scanFile(apkPath);
+    if (result.error != null) {
+      throw StateError(result.error!);
+    }
     
     // Handle quarantine if enabled
     if (result.isInfected && getQuarantineInfected()) {
