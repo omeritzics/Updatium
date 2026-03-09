@@ -231,7 +231,10 @@ class YARAScanner {
 
     for (final source in config.ruleSources) {
       try {
-        final response = await http.get(Uri.parse(source));
+        final response = await http.get(Uri.parse(source)).timeout(
+          const Duration(seconds: 30),
+          onTimeout: () => throw TimeoutException('Request timed out'),
+        );
         if (response.statusCode == 200) {
           final fileName = source.split('/').last;
           final localPath = path.join(config.rulesDirectory, fileName);
