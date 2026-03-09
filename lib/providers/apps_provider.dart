@@ -1027,6 +1027,18 @@ class AppsProvider with ChangeNotifier {
     
     // Security scan before installation
     if (!(await _scanAPKForMalware(file.file.path, additionalApkPaths: additionalAPKs.map((a) => a.file.path).toList()))) {
+      try {
+        if (file.file.existsSync()) {
+          deleteFile(file.file);
+        }
+        for (final apk in additionalAPKs) {
+          if (apk.file.existsSync()) {
+            deleteFile(apk.file);
+          }
+        }
+      } catch (_) {
+        // Best-effort cleanup; preserve the security failure below.
+      }
       throw UpdatiumError('Security scan detected malware. Installation blocked for safety.');
     }
     
