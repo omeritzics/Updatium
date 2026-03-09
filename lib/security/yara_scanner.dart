@@ -158,7 +158,7 @@ class YARAScanner {
       _instance = YARAScanner._(config);
     } else {
       // Update config if needed (for timer changes)
-      _instance!._config = config;
+      _instance!.config = config;
     }
     return _instance!;
   }
