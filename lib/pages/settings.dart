@@ -18,6 +18,11 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+// Spacing constants
+const height8 = SizedBox(height: 8);
+const height16 = SizedBox(height: 16);
+const height32 = SizedBox(height: 32);
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -386,39 +391,29 @@ class _SettingsPageState extends State<SettingsPage> {
       ],
     );
 
-    var intervalSlider = SliderTheme(
-      data: SliderTheme.of(context).copyWith(
-        trackHeight: 4,
-        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
-        overlayShape: const RoundSliderOverlayShape(overlayRadius: 24),
-        valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-        valueIndicatorTextStyle: Theme.of(context).textTheme.bodyMedium
-            ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-        showValueIndicator: ShowValueIndicator.onDrag,
-      ),
-      child: Slider(
-        value: settingsProvider.updateIntervalSliderVal,
-        max: updateIntervalNodes.length.toDouble(),
-        divisions: updateIntervalNodes.length * 20,
-        label: updateIntervalLabel,
-        onChanged: (double value) {
-          setState(() {
-            settingsProvider.updateIntervalSliderVal = value;
-            processIntervalSliderValue(value);
-          });
-        },
-        onChangeStart: (double value) {
-          setState(() {
-            showIntervalLabel = false;
-          });
-        },
-        onChangeEnd: (double value) {
-          setState(() {
-            showIntervalLabel = true;
-            settingsProvider.updateInterval = updateInterval;
-          });
-        },
-      ),
+    var intervalSlider = Slider(
+      year2023: false,
+      value: settingsProvider.updateIntervalSliderVal,
+      max: updateIntervalNodes.length.toDouble(),
+      divisions: updateIntervalNodes.length * 20,
+      label: updateIntervalLabel,
+      onChanged: (double value) {
+        setState(() {
+          settingsProvider.updateIntervalSliderVal = value;
+          processIntervalSliderValue(value);
+        });
+      },
+      onChangeStart: (double value) {
+        setState(() {
+          showIntervalLabel = false;
+        });
+      },
+      onChangeEnd: (double value) {
+        setState(() {
+          showIntervalLabel = true;
+          settingsProvider.updateInterval = updateInterval;
+        });
+      },
     );
 
     var sourceSpecificFields = sourceProvider.sources.map((e) {
@@ -451,12 +446,6 @@ class _SettingsPageState extends State<SettingsPage> {
         return Container();
       }
     });
-
-    const height8 = SizedBox(height: 8);
-
-    const height16 = SizedBox(height: 16);
-
-    const height32 = SizedBox(height: 32);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -1119,7 +1108,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   Semantics(
                     button: true,
                     label: tr('appSource'),
-                    hint: 'Open app source repository',
+                    hint: tr('appSourceHint'),
                     child: IconButton(
                       visualDensity: VisualDensity.compact,
                       onPressed: () {
@@ -1135,7 +1124,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   Semantics(
                     button: true,
                     label: tr('wiki'),
-                    hint: 'Open Updatium wiki documentation',
+                    hint: tr('wikiHint'),
                     child: IconButton(
                       visualDensity: VisualDensity.compact,
                       onPressed: () {
@@ -1156,7 +1145,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   Semantics(
                     button: true,
                     label: tr('appLogs'),
-                    hint: 'View application logs',
+                    hint: tr('appLogsHint'),
                     child: IconButton(
                       visualDensity: VisualDensity.compact,
                       onPressed: () {
