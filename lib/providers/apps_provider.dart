@@ -424,7 +424,7 @@ Future<File> downloadFile(
       : null;
   int rangeStart = targetFileLength ?? 0;
   IOSink? sink;
-  req = Request('GET', Uri.parse(url));
+  req = http.Request('GET', Uri.parse(url));
   req.headers.addAll(reqHeaders);
   if (rangeFeatureEnabled && fullContentLength != null && rangeStart > 0) {
     reqHeaders.addAll({'range': 'bytes=$rangeStart-${fullContentLength - 1}'});
