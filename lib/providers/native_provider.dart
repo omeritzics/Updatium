@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:android_system_font/android_system_font.dart';
 import 'package:flutter/services.dart';
 
 class NativeFeatures {
@@ -14,9 +13,7 @@ class NativeFeatures {
   static Future loadSystemFont() async {
     if (_systemFontLoaded) return;
     var fontLoader = FontLoader('SystemFont');
-    var fontFilePath = await AndroidSystemFont().getFilePath();
-    fontLoader.addFont(_readFileBytes(fontFilePath!));
-    fontLoader.load();
+    // AndroidSystemFont functionality removed
     _systemFontLoaded = true;
   }
 }

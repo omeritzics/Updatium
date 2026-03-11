@@ -19,8 +19,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 26.3.0+26020419
 
 environment:
-  sdk: ^3.10.0
-  flutter: ">=3.38.0"
+  sdk: ^3.3.0
+  flutter: ">=3.19.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -35,66 +35,46 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8 #Not needed for now, since Updatium doens't support iOS yet.
-  path_provider: ^2.1.5
+  path_provider: ^2.0.15
   flutter_fgbg: ^0.7.1
-  flutter_local_notifications: 21.0.0
+  flutter_local_notifications: 17.0.0
   provider: ^6.1.5+1
-  http: ^1.6.0
+  http: ^1.1.0
   dynamic_color: ^1.8.1
-  material_color_utilities: ^0.13.0
+  material_color_utilities: ^0.8.0
   html: ^0.15.6
-  shared_preferences: ^2.5.4
-  url_launcher: ^6.3.2
+  shared_preferences: ^2.2.0
+  url_launcher: ^6.2.0
   path: ^1.9.0
-  permission_handler: ^12.0.1
-  fluttertoast: ^9.0.0
-  crypto: ^3.0.6
-  device_info_plus: ^12.3.0
-  file_picker: ^10.3.10
-  animations: ^2.1.1
-  android_package_installer:
-    git:
-      url: https://github.com/playbott/android_package_installer
-      ref: main
-  android_package_manager: # TODO: Replace with another alternative
-    git:
-      url: https://github.com/omeritzics/android_package_manager
-      ref: master
-  share_plus: ^12.0.1
-  sqflite: ^2.4.2
+  permission_handler: ^11.0.0
+  fluttertoast: ^8.2.0
+  crypto: ^3.0.3
+  device_info_plus: ^10.0.0
+  file_picker: ^8.0.0
+  animations: ^2.0.4
+  share_plus: ^7.0.0
+  sqflite: ^2.3.0
   easy_localization: ^3.0.8
   android_intent_plus: ^6.0.0
   flutter_archive: ^6.0.4
   hsluv: ^1.1.3
   connectivity_plus: ^7.0.0
-  docman: ^1.2.0
-  bcrypt: ^1.2.0
-  app_links: ^7.0.0
-  background_fetch: ^1.5.0
-  equations: ^6.0.0
-  flex_color_picker: ^3.8.0
-  android_system_font:
-    git:
-      url: https://github.com/re7gog/android_system_font
-      ref: master
-  shizuku_apk_installer:
-    git:
-      url: https://github.com/wilver06w/shizuku_apk_installer
-      ref: master
+  equations: ^5.0.0
+  flex_color_picker: ^3.4.0
   markdown: ^7.3.0
   flutter_typeahead: ^5.2.0
-  battery_plus: ^7.0.0
+  battery_plus: ^6.0.0
   flutter_charset_detector: ^5.0.0
   keyboard_detection: ^0.8.1
+  package_info_plus: ^4.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^6.0.0
-  flutter_foreground_task: ^9.2.0
-  flutter_markdown_plus: ^1.0.7
+  flutter_lints: ^4.0.0
+  flutter_foreground_task: ^8.0.0
 flutter_launcher_icons:
   android: "ic_launcher"
   image_path: "assets/graphics/icon.png"

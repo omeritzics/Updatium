@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:animations/animations.dart';
-import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +37,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool isReversing = false;
   int prevAppCount = -1;
   bool prevIsLoading = true;
-  late AppLinks _appLinks;
   StreamSubscription<Uri>? _linkSubscription;
   bool isLinkActivity = false;
   late List<AnimationController> _iconControllers;
@@ -147,7 +145,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<void> initDeepLinks() async {
-    _appLinks = AppLinks();
+    // AppLinks functionality removed
 
     goToAddApp(String data) async {
       switchToPage(1);
@@ -254,20 +252,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
 
     // Check initial link if app was in cold state (terminated)
-    final appLink = await _appLinks.getInitialLink();
+    // AppLinks functionality removed
     var initLinked = false;
-    if (appLink != null) {
-      await interpretLink(appLink);
-      initLinked = true;
-    }
     // Handle link when app is in warm state (front or background)
-    _linkSubscription = _appLinks.uriLinkStream.listen((uri) async {
-      if (!initLinked) {
-        await interpretLink(uri);
-      } else {
-        initLinked = false;
-      }
-    });
+    // AppLinks functionality removed
   }
 
   void setIsReversing(int targetIndex) {

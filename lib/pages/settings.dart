@@ -16,7 +16,6 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:updatium/security/security_settings_provider.dart';
 
@@ -831,38 +830,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               value: settingsProvider.useShizuku,
                               onChanged: (useShizuku) {
                                 if (useShizuku) {
-                                  ShizukuApkInstaller.checkPermission().then((
-                                    resCode,
-                                  ) {
-                                    settingsProvider.useShizuku = resCode!
-                                        .startsWith('granted');
-                                    switch (resCode) {
-                                      case 'binder_not_found':
-                                        showError(
-                                          UpdatiumError(
-                                            tr('shizukuBinderNotFound'),
-                                          ),
-                                          context,
-                                        );
-                                      case 'old_shizuku':
-                                        showError(
-                                          UpdatiumError(tr('shizukuOld')),
-                                          context,
-                                        );
-                                      case 'old_android_with_adb':
-                                        showError(
-                                          UpdatiumError(
-                                            tr('shizukuOldAndroidWithADB'),
-                                          ),
-                                          context,
-                                        );
-                                      case 'denied':
-                                        showError(
-                                          UpdatiumError(tr('cancelled')),
-                                          context,
-                                        );
-                                    }
-                                  });
+                                  // ShizukuApkInstaller functionality removed
+                                  settingsProvider.useShizuku = false;
                                 } else {
                                   settingsProvider.useShizuku = false;
                                 }

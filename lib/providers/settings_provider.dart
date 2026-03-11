@@ -11,7 +11,6 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:docman/docman.dart';
 
 String updatiumTempId = 'omeritzics_updatium_${GitHub().hosts[0]}';
 String updatiumId = 'io.github.omeritzics.updatium';
@@ -423,22 +422,7 @@ class SettingsProvider with ChangeNotifier {
     var uriString = prefs?.getString('exportDir');
     if (uriString != null) {
       Uri? uri = Uri.parse(uriString);
-      // Check if directory is accessible using docman
-      try {
-        final docFileResult = await DocumentFile.fromUri(uri.toString());
-        final docFile = await docFileResult?.get();
-        if (docFile == null || !docFile.canRead || !docFile.canWrite) {
-          debugPrint('Export directory not accessible: ${uri.toString()}');
-          uri = null;
-          prefs?.remove('exportDir');
-          notifyListeners();
-        }
-      } catch (e) {
-        debugPrint('Error validating export directory: $e');
-        uri = null;
-        prefs?.remove('exportDir');
-        notifyListeners();
-      }
+      // DocMan functionality removed - just return the URI
       return uri;
     } else {
       return null;
@@ -446,26 +430,12 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> pickExportDir({bool remove = false}) async {
-    var existingSAFPerms = await DocMan.perms.list();
+    // DocMan functionality removed
     var currentOneWayDataSyncDir = await getExportDir();
-    Uri? newOneWayDataSyncDir;
     if (!remove) {
-      final pickedDir = await DocMan.pick.directory();
-      newOneWayDataSyncDir = pickedDir != null
-          ? Uri.parse(pickedDir.uri)
-          : null;
+      // SAF picker functionality removed
     }
-    if (currentOneWayDataSyncDir?.path != newOneWayDataSyncDir?.path) {
-      if (newOneWayDataSyncDir == null) {
-        prefs?.remove('exportDir');
-      } else {
-        prefs?.setString('exportDir', newOneWayDataSyncDir.toString());
-      }
-      notifyListeners();
-    }
-    for (var e in existingSAFPerms) {
-      await DocMan.perms.release(e.uri);
-    }
+    // DocMan permission release functionality removed
   }
 
   bool get autoExportOnChanges {

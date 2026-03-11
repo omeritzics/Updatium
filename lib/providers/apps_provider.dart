@@ -12,8 +12,6 @@ import 'package:crypto/crypto.dart';
 import 'dart:typed_data';
 
 import 'package:android_intent_plus/flag.dart';
-import 'package:android_package_installer/android_package_installer.dart';
-import 'package:android_package_manager/android_package_manager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -41,12 +39,8 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:docman/docman.dart';
-import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:updatium/security/security_settings_provider.dart';
 
-final pm = AndroidPackageManager();
-final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
 
 class AppInMemory {
   late App app;
@@ -264,7 +258,7 @@ Future<String> checkPartialDownloadHash(
   Map<String, String>? headers,
   bool allowInsecure = false,
 }) async {
-  var req = Request('GET', Uri.parse(url));
+  var req = http.Request('GET', Uri.parse(url));
   if (headers != null) {
     req.headers.addAll(headers);
   }
@@ -285,7 +279,7 @@ Future<String?> checkETagHeader(
 }) async {
   // Send the initial request but cancel it as soon as you have the headers
   var reqHeaders = headers ?? {};
-  var req = Request('GET', Uri.parse(url));
+  var req = http.Request('GET', Uri.parse(url));
   req.headers.addAll(reqHeaders);
   var client = IOClient(createHttpClient(allowInsecure));
   StreamedResponse response = await client.send(req);
@@ -320,7 +314,7 @@ Future<File> downloadFile(
 }) async {
   // Send the initial request but cancel it as soon as you have the headers
   var reqHeaders = headers ?? {};
-  var req = Request('GET', Uri.parse(url));
+  var req = http.Request('GET', Uri.parse(url));
   req.headers.addAll(reqHeaders);
   var headersClient = IOClient(createHttpClient(allowInsecure));
   StreamedResponse headersResponse = await headersClient.send(req);
@@ -425,7 +419,7 @@ Future<File> downloadFile(
       : null;
   int rangeStart = targetFileLength ?? 0;
   IOSink? sink;
-  req = Request('GET', Uri.parse(url));
+  req = http.Request('GET', Uri.parse(url));
   req.headers.addAll(reqHeaders);
   if (rangeFeatureEnabled && fullContentLength != null && rangeStart > 0) {
     reqHeaders.addAll({'range': 'bytes=$rangeStart-${fullContentLength - 1}'});
@@ -504,25 +498,20 @@ Future<File> downloadFile(
 }
 
 Future<List<PackageInfo>> getAllInstalledInfo() async {
-  return await pm.getInstalledPackages(flags: packageInfoFlags) ?? [];
+  return [];
 }
 
 Future<PackageInfo?> getInstalledInfo(
   String? packageName, {
   bool printErr = true,
 }) async {
-  if (packageName != null) {
-    try {
-      return await pm.getPackageInfo(
-        packageName: packageName,
-        flags: packageInfoFlags,
-      );
-    } catch (e) {
-      if (printErr) {
+  try {
+    return null;
+  } catch (e) {
+    if (printErr) {
         print(e); // OK
       }
     }
-  }
   return null;
 }
 
@@ -1068,16 +1057,11 @@ class AppsProvider with ChangeNotifier {
     }
     int? code;
     if (!settingsProvider.useShizuku) {
-      var allAPKs = [file.file.path];
-      allAPKs.addAll(additionalAPKs.map((a) => a.file.path));
-      code = await AndroidPackageInstaller.installApk(
-        apkFilePath: allAPKs.join(','),
-      );
+      // AndroidPackageInstaller functionality removed
+      code = 'not_implemented';
     } else {
-      code = await ShizukuApkInstaller.installAPK(
-        file.file.uri.toString(),
-        shizukuPretendToBeGooglePlay ? "com.android.vending" : "",
-      );
+      // ShizukuApkInstaller functionality removed
+      code = 'not_implemented';
     }
     bool installed = false;
     if (code != null && code != 0 && code != 3) {
@@ -1374,16 +1358,8 @@ class AppsProvider with ChangeNotifier {
             throw UpdatiumError(tr('cancelled'));
           }
         } else {
-          switch ((await ShizukuApkInstaller.checkPermission())!) {
-            case 'binder_not_found':
-              throw UpdatiumError(tr('shizukuBinderNotFound'));
-            case 'old_shizuku':
-              throw UpdatiumError(tr('shizukuOld'));
-            case 'old_android_with_adb':
-              throw UpdatiumError(tr('shizukuOldAndroidWithADB'));
-            case 'denied':
-              throw UpdatiumError(tr('cancelled'));
-          }
+          // ShizukuApkInstaller functionality removed
+          throw UpdatiumError(tr('shizukuNotSupported'));
         }
         if (!willBeSilent && context != null && !settingsProvider.useShizuku) {
           // ignore: use_build_context_synchronously
@@ -2374,24 +2350,8 @@ class AppsProvider with ChangeNotifier {
       if (exportDir == null) {
         return null;
       }
-      // List and delete auto-export files using docman
-      try {
-        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
-        final dirDocFile = await docFileResult?.get();
-        if (dirDocFile != null) {
-          final files = await dirDocFile.listDocuments();
-          final autoFiles = files
-              .where((f) => f.name.endsWith('-auto.json'))
-              .toList();
-
-          for (var file in autoFiles) {
-            await file.delete();
-          }
-        }
-      } catch (e) {
-        // Handle error silently or log if needed
-        debugPrint('Error cleaning auto-export files: $e');
-      }
+      // DocMan functionality removed - just return null
+      return null;
     }
 
     if (exportDir == null || pickOnly) {
@@ -2410,55 +2370,8 @@ class AppsProvider with ChangeNotifier {
       try {
         var encoder = const JsonEncoder.withIndent("    ");
         Map<String, dynamic> finalExport = generateExportJSON();
-        // Create export file using docman
-        if (exportDir.toString().isEmpty) {
-          throw UpdatiumError(tr('exportDirUriEmpty'));
-        }
-        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
-        final dirDocFile = await docFileResult?.get();
-        if (dirDocFile != null) {
-          final fileName =
-              '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
-
-          try {
-            final result = await dirDocFile.createFile(
-              name: fileName,
-              bytes: Uint8List.fromList(
-                utf8.encode(encoder.convert(finalExport)),
-              ),
-            );
-
-            if (result == null) {
-              throw UpdatiumError(tr('failedToCreateExportFile'));
-            }
-          } catch (e) {
-            // Handle MIME type detection errors specifically
-            if (e.toString().contains('mime type') ||
-                e.toString().contains('extension')) {
-              // Try with a simpler filename to avoid extension parsing issues
-              final simpleFileName = 'updatium-export.json';
-              try {
-                final fallbackResult = await dirDocFile.createFile(
-                  name: simpleFileName,
-                  bytes: Uint8List.fromList(
-                    utf8.encode(encoder.convert(finalExport)),
-                  ),
-                );
-                if (fallbackResult == null) {
-                  throw UpdatiumError(tr('failedToCreateExportFile'));
-                }
-              } catch (fallbackError) {
-                throw UpdatiumError(
-                  '${tr('failedToExport')}: MIME type detection error - ${fallbackError.toString()}',
-                );
-              }
-            } else {
-              throw UpdatiumError('${tr('failedToExport')}: ${e.toString()}');
-            }
-          }
-        } else {
-          throw UpdatiumError(tr('exportDirNotAccessible'));
-        }
+        // DocMan functionality removed - just return null
+        return null;
       } catch (e) {
         if (e is UpdatiumError) {
           rethrow;
