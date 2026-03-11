@@ -157,7 +157,11 @@ class AppsPageState extends State<AppsPage> {
   }
 
   // Helper function to get category color with preserved transparency
-  Color getCategoryColor(String category, int alpha, SettingsProvider settingsProvider) {
+  Color getCategoryColor(
+    String category,
+    int alpha,
+    SettingsProvider settingsProvider,
+  ) {
     final categoryColorValue = settingsProvider.categories[category];
     if (categoryColorValue != null) {
       return Color(categoryColorValue).withAlpha(alpha);
@@ -461,11 +465,9 @@ class AppsPageState extends State<AppsPage> {
                       Icons.widgets,
                       size: 80,
                       color: preserveTransparency(
-                      Theme.of(
-                        context,
-                      ).colorScheme.primary,
-                      0.6,
-                    ),
+                        Theme.of(context).colorScheme.primary,
+                        0.6,
+                      ),
                     ),
                     height24,
                     Text(
@@ -491,9 +493,7 @@ class AppsPageState extends State<AppsPage> {
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(
                                 color: preserveTransparency(
-                                  Theme.of(
-                                    context,
-                                  ).colorScheme.onSurface,
+                                  Theme.of(context).colorScheme.onSurface,
                                   0.7,
                                 ),
                               ),
@@ -540,13 +540,13 @@ class AppsPageState extends State<AppsPage> {
                   AppPage(appId: listedApps[appIndex].app.id),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
-                return SharedAxisTransition(
-                  animation: animation,
-                  secondaryAnimation: secondaryAnimation,
-                  transitionType: SharedAxisTransitionType.horizontal,
-                  child: child,
-                );
-              },
+                    return SharedAxisTransition(
+                      animation: animation,
+                      secondaryAnimation: secondaryAnimation,
+                      transitionType: SharedAxisTransitionType.horizontal,
+                      child: child,
+                    );
+                  },
             ),
           );
         },
@@ -717,9 +717,7 @@ class AppsPageState extends State<AppsPage> {
             ),
             tileColor: Theme.of(context).colorScheme.surface,
             selectedTileColor: preserveTransparency(
-              Theme.of(
-                context,
-              ).colorScheme.primaryContainer,
+              Theme.of(context).colorScheme.primaryContainer,
               0.3,
             ),
             selected: selectedAppIds.contains(listedApps[index].app.id),
@@ -851,11 +849,9 @@ class AppsPageState extends State<AppsPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: preserveTransparency(
-                      Theme.of(
-                        context,
-                      ).colorScheme.primary,
-                      0.2,
-                    ),
+                        Theme.of(context).colorScheme.primary,
+                        0.2,
+                      ),
                     ),
                   ),
                 ),
@@ -996,7 +992,9 @@ class AppsPageState extends State<AppsPage> {
                               fontSize: 10,
                             ),
                           ),
-                          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                          backgroundColor: Theme.of(
+                            context,
+                          ).colorScheme.primaryContainer,
                           side: BorderSide(
                             color: preserveTransparency(
                               Theme.of(context).colorScheme.primary,
@@ -1852,9 +1850,7 @@ class AppsPageState extends State<AppsPage> {
                   height: 48,
                   decoration: BoxDecoration(
                     color: preserveTransparency(
-                      Theme.of(
-                        context,
-                      ).colorScheme.primary,
+                      Theme.of(context).colorScheme.primary,
                       0.1,
                     ),
                     borderRadius: BorderRadius.circular(12),
@@ -1862,9 +1858,7 @@ class AppsPageState extends State<AppsPage> {
                   child: Icon(
                     Icons.apps,
                     color: preserveTransparency(
-                      Theme.of(
-                        context,
-                      ).colorScheme.primary,
+                      Theme.of(context).colorScheme.primary,
                       0.6,
                     ),
                     size: 24,
