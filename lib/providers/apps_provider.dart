@@ -201,7 +201,7 @@ Future<File> downloadFileWithRetry(
       logs: logs,
     );
   } catch (e) {
-    if (retries > 0 && e is ClientException) {
+    if (retries > 0 && e is http.ClientException) {
       await Future.delayed(const Duration(seconds: 5));
       return await downloadFileWithRetry(
         url,
@@ -263,7 +263,7 @@ Future<String> checkPartialDownloadHash(
   Map<String, String>? headers,
   bool allowInsecure = false,
 }) async {
-  var req = Request('GET', Uri.parse(url));
+  var req = http.Request('GET', Uri.parse(url));
   if (headers != null) {
     req.headers.addAll(headers);
   }
@@ -284,10 +284,10 @@ Future<String?> checkETagHeader(
 }) async {
   // Send the initial request but cancel it as soon as you have the headers
   var reqHeaders = headers ?? {};
-  var req = Request('GET', Uri.parse(url));
+  var req = http.Request('GET', Uri.parse(url));
   req.headers.addAll(reqHeaders);
   var client = IOClient(createHttpClient(allowInsecure));
-  StreamedResponse response = await client.send(req);
+  http.StreamedResponse response = await client.send(req);
   var resHeaders = response.headers;
   client.close();
   return resHeaders[HttpHeaders.etagHeader]
@@ -319,10 +319,10 @@ Future<File> downloadFile(
 }) async {
   // Send the initial request but cancel it as soon as you have the headers
   var reqHeaders = headers ?? {};
-  var req = Request('GET', Uri.parse(url));
+  var req = http.Request('GET', Uri.parse(url));
   req.headers.addAll(reqHeaders);
   var headersClient = IOClient(createHttpClient(allowInsecure));
-  StreamedResponse headersResponse = await headersClient.send(req);
+  http.StreamedResponse headersResponse = await headersClient.send(req);
   var resHeaders = headersResponse.headers;
 
   // Use the headers to decide what the file extension is, and
@@ -2812,7 +2812,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
             // Next task interval is based on the error with the longest retry time
             int minRetryIntervalForThisApp = err is RateLimitError
                 ? (err.remainingMinutes * 60)
-                : e is ClientException
+                : e is http.ClientException
                 ? (15 * 60)
                 : (toCheckApp.value + 1);
             if (minRetryIntervalForThisApp > maxRetryWaitSeconds) {
