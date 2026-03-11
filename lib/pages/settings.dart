@@ -164,6 +164,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _initializeSecurityProvider() async {
     try {
       _securityProvider = await SecuritySettingsProvider.create();
+      await _securityProvider.initialize();
       if (mounted) {
         setState(() {
           _securityProviderInitialized = true;
