@@ -394,6 +394,7 @@ class _UpdatiumState extends State<Updatium> {
           }
 
           // Apply pure black surface for AMOLED black theme
+          // Apply semi-transparent surface colors for AMOLED black theme
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
@@ -531,7 +532,7 @@ class _UpdatiumState extends State<Updatium> {
                 ),
               ),
 
-              // Expressive Card Design
+              // Expressive Card Design - preserve M3 Expressive transparency
               cardTheme: CardThemeData(
                 elevation: isDark ? 2 : 1,
                 clipBehavior: Clip.antiAlias,
@@ -542,7 +543,7 @@ class _UpdatiumState extends State<Updatium> {
                 surfaceTintColor: scheme.surfaceTint,
                 shadowColor: isDark ? Colors.black26 : Colors.black12,
               ),
-              // Expressive FilledButton with tonal styling
+              // Expressive FilledButton with tonal styling - preserve M3 Expressive transparency
               filledButtonTheme: FilledButtonThemeData(
                 style: FilledButton.styleFrom(
                   shape: const StadiumBorder(),
@@ -565,7 +566,7 @@ class _UpdatiumState extends State<Updatium> {
                 ),
               ),
 
-              // Expressive ElevatedButton with subtle shadows
+              // Expressive ElevatedButton with subtle shadows - preserve M3 Expressive transparency
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
@@ -801,7 +802,7 @@ class _UpdatiumState extends State<Updatium> {
                 space: 1,
               ),
 
-              // Expressive Chip Theme
+              // Expressive Chip Theme - preserve M3 Expressive transparency
               chipTheme: ChipThemeData(
                 backgroundColor: scheme.surface.withValues(alpha: 0.1),
                 selectedColor: scheme.secondaryContainer,
@@ -848,7 +849,7 @@ class _UpdatiumState extends State<Updatium> {
                 year2023: false,
               ),
 
-              // Material Design 3 2024 Expressive Centered Slider Theme
+              // Material Design 3 2024 Expressive Centered Slider Theme - preserve M3 Expressive transparency
               sliderTheme: SliderThemeData(
                 year2023: false,
                 trackHeight: 8,
@@ -869,7 +870,7 @@ class _UpdatiumState extends State<Updatium> {
                 valueIndicatorColor: scheme.primary,
               ),
 
-              // Material Design 3 Switch Theme
+              // Material Design 3 Switch Theme - preserve M3 Expressive transparency
               switchTheme: SwitchThemeData(
                 thumbColor: WidgetStateProperty.resolveWith((states) {
                   if (states.contains(WidgetState.selected)) {
