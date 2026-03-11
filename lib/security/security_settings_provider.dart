@@ -51,11 +51,29 @@ class SecuritySettingsProvider {
 
   // Auto Update Settings
   bool getAutoUpdateEnabled() => _prefs.getBool(_keyAutoUpdate) ?? true;
-  Future<void> setAutoUpdateEnabled(bool enabled) => _prefs.setBool(_keyAutoUpdate, enabled);
+  Future<void> setAutoUpdateEnabled(bool enabled) async {
+    await _prefs.setBool(_keyAutoUpdate, enabled);
+    // Update in-memory config and reapply to scanner
+    _config = YARAConfig(
+      rulesDirectory: _config.rulesDirectory,
+      updateInterval: _config.updateInterval,
+      enableAutoUpdate: enabled,
+    );
+    _scanner = YARAScanner.getInstance(_config);
+  }
 
   // Update Interval Settings
   int getUpdateInterval() => _prefs.getInt(_keyUpdateInterval) ?? 24; // hours
-  Future<void> setUpdateInterval(int hours) => _prefs.setInt(_keyUpdateInterval, hours);
+  Future<void> setUpdateInterval(int hours) async {
+    await _prefs.setInt(_keyUpdateInterval, hours);
+    // Update in-memory config and reapply to scanner
+    _config = YARAConfig(
+      rulesDirectory: _config.rulesDirectory,
+      updateInterval: Duration(hours: hours),
+      enableAutoUpdate: _config.enableAutoUpdate,
+    );
+    _scanner = YARAScanner.getInstance(_config);
+  }
 
   // Threat Level Filter
   int getThreatLevelFilter() => _prefs.getInt(_keyThreatLevel) ?? 1;

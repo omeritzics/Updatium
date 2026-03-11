@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
@@ -103,16 +104,27 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  void _showAboutDialog(BuildContext context) {
-    showAboutDialog(
-      context: context,
-      applicationName: 'Updatium',
-      applicationVersion: '26.2',
-      applicationIcon: const Icon(Icons.apps, size: 48),
-      children: [
-        Text(tr('updateYourAndroidAppsDirectlyFromTheAPKSource')),
-        const SizedBox(height: 16),
-        Text('© 2026 Omer I.S. (@omeritzics)'),
+  Future<void> _showAboutDialog(BuildContext context) async {
+    String applicationVersion = '26.2'; // fallback
+    try {
+      final packageInfo = await PackageInfo.fromPlatform();
+      applicationVersion = packageInfo.buildNumber.isNotEmpty 
+          ? '${packageInfo.version}+${packageInfo.buildNumber}'
+          : packageInfo.version;
+    } catch (e) {
+      // Keep fallback version if PackageInfo fails
+    }
+    
+    if (context.mounted) {
+      showAboutDialog(
+        context: context,
+        applicationName: 'Updatium',
+        applicationVersion: applicationVersion,
+        applicationIcon: const Icon(Icons.apps, size: 48),
+        children: [
+          Text(tr('updateYourAndroidAppsDirectlyFromTheAPKSource')),
+          const SizedBox(height: 16),
+          Text('© 2026 Omer I.S. (@omeritzics)'),
         const SizedBox(height: 16),
         TextButton(
           onPressed: () {
@@ -133,7 +145,8 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Text(tr('wiki')),
         ),
       ],
-    );
+      );
+    }
   }
 
   @override
@@ -518,7 +531,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAboutDialog(context),
+        onPressed: () async => _showAboutDialog(context),
         child: const Icon(Icons.info),
       ),
       body: CustomScrollView(

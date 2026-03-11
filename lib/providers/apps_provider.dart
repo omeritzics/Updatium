@@ -955,6 +955,11 @@ class AppsProvider with ChangeNotifier {
       await securityProvider.initialize();
       final scanResult = await securityProvider.scanAPK(apkPath);
 
+      if (scanResult.error != null) {
+        logs.add('Security scan error for primary APK: ${scanResult.error}');
+        return false;
+      }
+
       if (scanResult.isInfected) {
         logs.add(
           'Security scan detected malware in APK: ${scanResult.matches.map((m) => m.ruleName).join(', ')}',
@@ -1038,7 +1043,7 @@ class AppsProvider with ChangeNotifier {
       } catch (_) {
         // Best-effort cleanup; preserve the security failure below.
       }
-      throw UpdatiumError('Security scan detected malware. Installation blocked for safety.');
+      throw UpdatiumError(tr('Security scan detected malware. Installation blocked for safety.'));
     }
     
     logs.add(
