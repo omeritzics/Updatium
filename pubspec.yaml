@@ -73,7 +73,6 @@ dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
   flutter_foreground_task: ^8.0.0
 flutter_launcher_icons:
   android: "ic_launcher"
@@ -132,5 +131,3 @@ flutter:
         - asset: assets/fonts/Inter-Variable.ttf
           
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
