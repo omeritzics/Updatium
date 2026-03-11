@@ -162,8 +162,8 @@ class AppsPageState extends State<AppsPage> {
     if (categoryColorValue != null) {
       return Color(categoryColorValue).withAlpha(alpha);
     }
-    // Fallback to transparent
-    return Colors.transparent.withAlpha(alpha);
+    // Fallback to truly transparent color
+    return Color.fromARGB(0, 0, 0, 0);
   }
 
   bool clearSelected() {
