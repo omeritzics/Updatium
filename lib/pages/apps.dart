@@ -149,6 +149,23 @@ class AppsPageState extends State<AppsPage> {
   // Cache gradient stops by category count to avoid recomputation
   final Map<int, List<double>> _stopsCache = {};
 
+  // Helper function to preserve transparency regardless of theme overrides
+  Color preserveTransparency(Color baseColor, double alpha) {
+    // Always apply the requested transparency, ensuring it takes priority
+    // over any theme-based color overrides
+    return baseColor.withOpacity(alpha);
+  }
+
+  // Helper function to get category color with preserved transparency
+  Color getCategoryColor(String category, int alpha, SettingsProvider settingsProvider) {
+    final categoryColorValue = settingsProvider.categories[category];
+    if (categoryColorValue != null) {
+      return Color(categoryColorValue).withAlpha(alpha);
+    }
+    // Fallback to transparent
+    return Colors.transparent.withAlpha(alpha);
+  }
+
   bool clearSelected() {
     if (selectedAppIds.isNotEmpty) {
       setState(() {
@@ -443,9 +460,12 @@ class AppsPageState extends State<AppsPage> {
                     Icon(
                       Icons.widgets,
                       size: 80,
-                      color: Theme.of(
+                      color: preserveTransparency(
+                      Theme.of(
                         context,
-                      ).colorScheme.primary.withOpacity(0.6),
+                      ).colorScheme.primary,
+                      0.6,
+                    ),
                     ),
                     height24,
                     Text(
@@ -470,9 +490,12 @@ class AppsPageState extends State<AppsPage> {
                           }(),
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurface.withOpacity(0.7),
+                                color: preserveTransparency(
+                                  Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
+                                  0.7,
+                                ),
                               ),
                           textAlign: TextAlign.center,
                           maxLines: 5,
@@ -606,7 +629,10 @@ class AppsPageState extends State<AppsPage> {
               ),
               backgroundColor: Theme.of(context).colorScheme.primaryContainer,
               side: BorderSide(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                color: preserveTransparency(
+                  Theme.of(context).colorScheme.primary,
+                  0.3,
+                ),
                 width: 1,
               ),
             );
@@ -642,11 +668,9 @@ class AppsPageState extends State<AppsPage> {
             end: const Alignment(-0.97, 0),
             colors: [
               ...listedApps[index].app.categories.map(
-                (e) => Color(
-                  settingsProvider.categories[e] ?? transparent,
-                ).withAlpha(255),
+                (e) => getCategoryColor(e, 255, settingsProvider),
               ),
-              Color(transparent),
+              Colors.transparent,
             ],
           ),
         ),
@@ -692,9 +716,12 @@ class AppsPageState extends State<AppsPage> {
                   : BorderSide.none,
             ),
             tileColor: Theme.of(context).colorScheme.surface,
-            selectedTileColor: Theme.of(
-              context,
-            ).colorScheme.primaryContainer.withOpacity(0.3),
+            selectedTileColor: preserveTransparency(
+              Theme.of(
+                context,
+              ).colorScheme.primaryContainer,
+              0.3,
+            ),
             selected: selectedAppIds.contains(listedApps[index].app.id),
             leading: SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
@@ -791,11 +818,9 @@ class AppsPageState extends State<AppsPage> {
             end: const Alignment(1, 1),
             colors: [
               ...listedApps[index].app.categories.map(
-                (e) => Color(
-                  settingsProvider.categories[e] ?? transparent,
-                ).withAlpha(40),
+                (e) => getCategoryColor(e, 40, settingsProvider),
               ),
-              Color(transparent),
+              Colors.transparent,
             ],
           ),
         ),
@@ -825,9 +850,12 @@ class AppsPageState extends State<AppsPage> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Theme.of(
+                      color: preserveTransparency(
+                      Theme.of(
                         context,
-                      ).colorScheme.primary.withOpacity(0.2),
+                      ).colorScheme.primary,
+                      0.2,
+                    ),
                     ),
                   ),
                 ),
@@ -955,21 +983,27 @@ class AppsPageState extends State<AppsPage> {
                           );
                         }
 
-                        return Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.check_circle,
-                              color: Colors.green[600],
-                              size: 18,
+                        return Chip(
+                          avatar: Icon(
+                            Icons.check_circle,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 14,
+                          ),
+                          label: Text(
+                            tr('updated'),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 10,
                             ),
-                            const SizedBox(width: 6),
-                            Text(
-                              tr('updated'),
-                              style: TextStyle(color: Colors.green[600]),
+                          ),
+                          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                          side: BorderSide(
+                            color: preserveTransparency(
+                              Theme.of(context).colorScheme.primary,
+                              0.3,
                             ),
-                          ],
+                            width: 1,
+                          ),
                         );
                       },
                     ),
@@ -1807,8 +1841,8 @@ class AppsPageState extends State<AppsPage> {
             child: Image(
               image: const AssetImage('assets/graphics/icon_small.png'),
               color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white.withOpacity(0.4)
-                  : Colors.white.withOpacity(0.3),
+                  ? preserveTransparency(Colors.white, 0.4)
+                  : preserveTransparency(Colors.white, 0.3),
               colorBlendMode: BlendMode.modulate,
               gaplessPlayback: true,
               errorBuilder: (context, error, stackTrace) {
@@ -1817,16 +1851,22 @@ class AppsPageState extends State<AppsPage> {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary.withOpacity(0.1),
+                    color: preserveTransparency(
+                      Theme.of(
+                        context,
+                      ).colorScheme.primary,
+                      0.1,
+                    ),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     Icons.apps,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.primary.withOpacity(0.6),
+                    color: preserveTransparency(
+                      Theme.of(
+                        context,
+                      ).colorScheme.primary,
+                      0.6,
+                    ),
                     size: 24,
                   ),
                 );
