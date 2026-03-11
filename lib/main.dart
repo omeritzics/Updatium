@@ -394,7 +394,7 @@ class _UpdatiumState extends State<Updatium> {
           }
 
           // Apply pure black surface for AMOLED black theme
-          // Preserve transparency by not overriding alpha values
+          // Apply semi-transparent surface colors for AMOLED black theme
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
