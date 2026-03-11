@@ -38,7 +38,6 @@ import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:http/http.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';

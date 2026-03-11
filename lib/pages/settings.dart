@@ -19,6 +19,11 @@ import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:updatium/security/security_settings_provider.dart';
 
+// Spacing constants
+const height8 = SizedBox(height: 8);
+const height16 = SizedBox(height: 16);
+const height32 = SizedBox(height: 32);
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -479,12 +484,6 @@ class _SettingsPageState extends State<SettingsPage> {
         return Container();
       }
     });
-
-    const height8 = SizedBox(height: 8);
-
-    const height16 = SizedBox(height: 16);
-
-    const height32 = SizedBox(height: 32);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -1220,39 +1219,58 @@ onChanged: _securityProviderInitialized ? (value) async {
                     ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                const Divider(height: 32),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
+        ],
+      ),
+      persistentFooterButtons: [
+        Row(
+          children: [
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Semantics(
+                    button: true,
+                    label: tr('appSource'),
+                    hint: tr('appSourceHint'),
+                    child: IconButton(
+                      visualDensity: VisualDensity.compact,
                       onPressed: () {
                         launchUrlString(
                           settingsProvider.sourceUrl,
                           mode: LaunchMode.externalApplication,
                         );
                       },
-                      icon: const Icon(Icons.code),
                       tooltip: tr('appSource'),
+                      icon: const Icon(Icons.code),
                     ),
-                    IconButton(
+                  ),
+                  Semantics(
+                    button: true,
+                    label: tr('wiki'),
+                    hint: tr('wikiHint'),
+                    child: IconButton(
+                      visualDensity: VisualDensity.compact,
                       onPressed: () {
                         launchUrlString(
                           'https://github.com/omeritzics/Updatium/wiki',
                           mode: LaunchMode.externalApplication,
                         );
                       },
+                      tooltip: tr('wiki'),
                       icon: context.locale.languageCode == 'he'
                           ? Transform(
                               transform: Matrix4.identity(),
                               child: const Icon(Icons.help),
                             )
                           : const Icon(Icons.help),
-                      tooltip: tr('wiki'),
                     ),
-                    IconButton(
+                  ),
+                  Semantics(
+                    button: true,
+                    label: tr('appLogs'),
+                    hint: tr('appLogsHint'),
+                    child: IconButton(
+                      visualDensity: VisualDensity.compact,
                       onPressed: () {
                         context.read<LogsProvider>().get().then((logs) {
                           if (logs.isEmpty) {
@@ -1267,17 +1285,16 @@ onChanged: _securityProviderInitialized ? (value) async {
                           }
                         });
                       },
-                      icon: const Icon(Icons.bug_report),
                       tooltip: tr('appLogs'),
+                      icon: const Icon(Icons.bug_report),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-              ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      ],
     );
   }
 }
