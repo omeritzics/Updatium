@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as path;
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
@@ -288,8 +289,31 @@ class YARAScanner {
   /// Start automatic rule updates
   void _startAutoUpdate() {
     _updateTimer?.cancel();
-    _updateTimer = Timer.periodic(config.updateInterval, (_) {
-      updateRules();
+    _updateTimer = Timer.periodic(config.updateInterval, (_) async {
+      try {
+        await updateRules();
+      } catch (e, stackTrace) {
+        // Log the error to prevent unhandled async exceptions
+        await _logs.add(
+          'Auto update failed: ${e.toString()}',
+          level: LogLevels.error,
+          context: 'YARAScanner._startAutoUpdate',
+        );
+        
+        // Also log structured information for security auditing
+        await _logs.addStructured(
+          operation: 'auto_update_rules',
+          component: 'YARAScanner',
+          errorCode: e.toString(),
+          level: LogLevels.error,
+        );
+        
+        // Optionally print in debug mode for immediate visibility
+        if (kDebugMode) {
+          print('YARA auto update error: $e');
+          print('Stack trace: $stackTrace');
+        }
+      }
     });
   }
 
@@ -428,11 +452,6 @@ class YARAScanner {
         'error': 'Failed to calculate hashes: $e',
       };
     }
-  }
-
-  /// Dispose of the scanner
-  void dispose() {
-    _updateTimer?.cancel();
   }
 
   /// Global dispose method to cleanup singleton

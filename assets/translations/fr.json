@@ -44,7 +44,6 @@
     "appsFromSourceAreTrackOnly": "Les applications de cette source sont en 'Suivi uniquement'.",
     "youPickedTrackOnly": "Vous avez sélectionné l'option 'Suivi uniquement'.",
     "trackOnlyAppDescription": "L'application sera suivie pour les mises à jour, mais Updatium ne pourra pas la télécharger ou l'installer.",
-    "trackOnlyAppDescription": "L'application sera suivie pour les mises à jour, mais Updatium ne pourra pas la télécharger ou l'installer.",
     "cancelled": "Annulé",
     "appAlreadyAdded": "Application déjà ajoutée",
     "alreadyUpToDateQuestion": "L'application est déjà à jour?",

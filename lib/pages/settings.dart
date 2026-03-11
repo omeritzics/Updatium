@@ -137,6 +137,36 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _initializeSecurityProvider();
+  }
+
+  @override
+  void dispose() {
+    // Clean up resources if needed
+    super.dispose();
+  }
+
+  Future<void> _initializeSecurityProvider() async {
+    try {
+      _securityProvider = await SecuritySettingsProvider.create();
+      if (mounted) {
+        setState(() {
+          _securityProviderInitialized = true;
+        });
+      }
+    } catch (e) {
+      // Handle initialization error
+      if (mounted) {
+        setState(() {
+          _securityProviderInitialized = false;
+        });
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
     SourceProvider sourceProvider = SourceProvider();
