@@ -1,9 +1,9 @@
 {
   "@@locale": "zh",
-  "invalidURLForSource": "无效的 {appType} URL",
+  "invalidURLForSource": "无效的 {arg1} URL",
   "@invalidURLForSource": {
     "placeholders": {
-      "appType": {
+      "arg1": {
         "type": "String"
       }
     }
@@ -26,7 +26,6 @@
   "invalidRegEx": "无效的正则表达式",
   "noDescription": "无描述",
   "cancel": "取消",
-  "continueAction": "继续",
   "requiredInBrackets": "（必填）",
   "dropdownNoOptsError": "错误：下拉菜单必须包含至少一个选项",
   "color": "配色",
@@ -36,32 +35,32 @@
   "githubStarredRepos": "已星标的 GitHub 仓库",
   "uname": "用户名",
   "wrongArgNum": "参数数量错误",
-  "xIsTrackOnly": "{appName} 仅追踪",
+  "xIsTrackOnly": "“{arg1}”为“仅追踪”模式",
   "@xIsTrackOnly": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
   "source": "来源",
   "app": "应用",
-  "appsFromSourceAreTrackOnly": "来自此来源的应用为'仅追踪'。",
-  "youPickedTrackOnly": "您已选择'仅追踪'选项。",
-  "trackOnlyAppDescription": "应用将被追踪更新，但 Updatium 将无法下载或安装它。",
+  "appsFromSourceAreTrackOnly": "此来源的应用为“仅追踪”模式。",
+  "youPickedTrackOnly": "您选择了“仅追踪”。",
+  "trackOnlyAppDescription": "该应用的更新会被追踪，但 Updatium 无法下载或安装它。",
   "cancelled": "已取消",
-  "appAlreadyAdded": "应用已添加",
-  "alreadyUpToDateQuestion": "应用已是最新？",
+  "appAlreadyAdded": "此应用已经添加",
+  "alreadyUpToDateQuestion": "应用是否已经为最新版本？",
   "addApp": "添加应用",
-  "appSourceURL": "应用来源 URL",
+  "appSourceURL": "来源 URL",
   "error": "错误",
   "add": "添加",
-  "searchSomeSourcesLabel": "搜索（仅限部分来源）",
+  "searchSomeSourcesLabel": "搜索（仅支持部分来源）",
   "search": "搜索",
-  "additionalOptsFor": "{appName} 的附加选项",
+  "additionalOptsFor": "{arg1} 的更多选项",
   "@additionalOptsFor": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
@@ -69,87 +68,87 @@
   "supportedSources": "支持的来源",
   "trackOnlyInBrackets": "（仅追踪）",
   "searchableInBrackets": "（可搜索）",
-  "appsString": "应用",
-  "noApps": "欢迎！",
-  "noAppsSubtext": "您可以点击下方的'添加应用'来添加您的第一个应用。",
-  "noAppsForFilter": "没有符合筛选条件的应用",
-  "byX": "作者：{author}",
+  "appsString": "应用列表",
+  "noApps": "无应用",
+  "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
+  "noAppsForFilter": "没有符合条件的应用",
+  "byX": "开发者：{arg1}",
   "@byX": {
     "placeholders": {
-      "author": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "percentProgress": "进度：{progress}%",
+  "percentProgress": "进度：{arg1}%",
   "@percentProgress": {
     "placeholders": {
-      "progress": {
+      "arg1": {
         "type": "String"
       }
     }
   },
   "pleaseWait": "请稍候",
-  "updateAvailable": "有可用更新",
+  "updateAvailable": "更新可用",
   "notInstalled": "未安装",
-  "pseudoVersion": "伪版本",
+  "pseudoVersion": "虚拟版本号",
   "selectAll": "全选",
-  "deselectX": "取消选择 {count}",
+  "deselectX": "取消选择 {arg1}",
   "@deselectX": {
     "placeholders": {
-      "count": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "xWillBeRemovedButRemainInstalled": "{appName} 将从 Updatium 中移除但仍保留在设备上。",
+  "xWillBeRemovedButRemainInstalled": "“{arg1}”将从 Updatium 中删除，但仍安装在您的设备中。",
   "@xWillBeRemovedButRemainInstalled": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "removeSelectedAppsQuestion": "移除选中的应用？",
-  "removeSelectedApps": "移除选中的应用",
-  "updateX": "更新 {appName}",
+  "removeSelectedAppsQuestion": "是否删除选中的应用？",
+  "removeSelectedApps": "删除选中的应用",
+  "updateX": "更新 {arg1}",
   "@updateX": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "installX": "安装 {appName}",
+  "installX": "安装 {arg1}",
   "@installX": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "markXTrackOnlyAsUpdated": "将 {appName}\n（仅追踪）\n标记为已更新",
+  "markXTrackOnlyAsUpdated": "将“{arg1}”\n（仅追踪）\n标记为已更新",
   "@markXTrackOnlyAsUpdated": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "changeX": "更改 {appName}",
+  "changeX": "更改 {arg1}",
   "@changeX": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
   "installUpdateApps": "安装/更新应用",
   "installUpdateSelectedApps": "安装/更新选中的应用",
-  "markXSelectedAppsAsUpdated": "将 {count} 个选中的应用标记为已更新？",
+  "markXSelectedAppsAsUpdated": "是否将选中的 {arg1} 个应用标记为已更新？",
   "@markXSelectedAppsAsUpdated": {
     "placeholders": {
-      "count": {
+      "arg1": {
         "type": "String"
       }
     }
@@ -157,83 +156,83 @@
   "no": "否",
   "yes": "是",
   "markSelectedAppsUpdated": "将选中的应用标记为已更新",
-  "pinToTop": "固定到顶部",
-  "unpinFromTop": "从顶部取消固定",
-  "resetInstallStatusForSelectedAppsQuestion": "重置选中应用的安装状态？",
-  "installStatusOfXWillBeResetExplanation": "任何选中应用的安装状态将被重置。\n\n当 Updatium 中显示的应用版本因更新失败或其他问题而不正确时，这可以帮助解决。",
-  "customLinkMessage": "这些链接在安装了 Updatium 的设备上有效",
-  "shareAppConfigLinks": "以 HTML 链接形式分享应用配置",
-  "shareSelectedAppURLs": "分享选中的应用 URL",
+  "pinToTop": "置顶",
+  "unpinFromTop": "取消置顶",
+  "resetInstallStatusForSelectedAppsQuestion": "是否重置选中应用的安装状态？",
+  "installStatusOfXWillBeResetExplanation": "选中应用的安装状态将会被重置。\n\n当更新安装失败或其他问题导致 Updatium 中的应用版本显示错误时，可以尝试通过此方法解决。",
+  "customLinkMessage": "分享链接仅适用于已安装 Updatium 的设备",
+  "shareAppConfigLinks": "通过链接分享应用配置",
+  "shareSelectedAppURLs": "分享选中应用的 URL",
   "resetInstallStatus": "重置安装状态",
   "more": "更多",
-  "removeOutdatedFilter": "移除过期应用筛选",
-  "showOutdatedOnly": "仅显示过期应用",
+  "removeOutdatedFilter": "删除失效的应用筛选",
+  "showOutdatedOnly": "只显示待更新应用",
   "filter": "筛选",
   "filterApps": "筛选应用",
   "appName": "应用名称",
   "author": "作者",
-  "upToDateApps": "最新应用",
-  "nonInstalledApps": "未安装应用",
+  "upToDateApps": "无需更新的应用",
+  "nonInstalledApps": "未安装的应用",
   "importExport": "导入/导出",
   "settings": "设置",
-  "exportedTo": "已导出到 {location}",
+  "exportedTo": "已导出至 {arg1}",
   "@exportedTo": {
     "placeholders": {
-      "location": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "updatiumExport": "Updatium 导出",
-  "failedToExport": "导出失败",
-  "exportAlreadyInProgress": "导出已在进行中",
-  "failedToCreateExportFile": "创建导出文件失败",
-  "exportDirNotAccessible": "导出目录不可访问",
-  "invalidInput": "无效输入",
-  "importedX": "已导入 {count}",
+  "updatiumExport": "导出 Updatium",
+  "failedToExport": "Failed to export",
+  "exportAlreadyInProgress": "Export already in progress",
+  "failedToCreateExportFile": "Failed to create export file",
+  "exportDirNotAccessible": "Export directory is not accessible",
+  "invalidInput": "无效的输入",
+  "importedX": "已导入 {arg1}",
   "@importedX": {
     "placeholders": {
-      "count": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "updatiumImport": "Updatium 导入",
+  "updatiumImport": "导入 Updatium",
   "importFromURLList": "从 URL 列表导入",
   "searchQuery": "搜索查询",
   "appURLList": "应用 URL 列表",
   "line": "行",
-  "searchX": "搜索 {query}",
+  "searchX": "搜索{arg1}",
   "@searchX": {
     "placeholders": {
-      "query": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "noResults": "未找到结果",
-  "importX": "导入 {count}",
+  "noResults": "无结果",
+  "importX": "导入{arg1}",
   "@importX": {
     "placeholders": {
-      "count": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "importedAppsIdDisclaimer": "导入的应用可能错误显示为'未安装'。\n要解决此问题，请通过 Updatium 重新安装它们。\n这不应影响应用数据。\n\n仅影响 URL 和第三方导入方法。",
+  "importedAppsIdDisclaimer": "导入的应用可能会错误地显示为“未安装”状态。\n请通过 Updatium 重新安装这些应用来解决此问题。",
   "importErrors": "导入错误",
-  "importedXOfYApps": "已导入 {imported} 个应用，共 {total} 个。",
+  "importedXOfYApps": "已导入 {arg1} 中的 {arg2} 个应用。",
   "@importedXOfYApps": {
     "placeholders": {
-      "imported": {
+      "arg1": {
         "type": "String"
       },
-      "total": {
+      "arg2": {
         "type": "String"
       }
     }
   },
-  "followingURLsHadErrors": "以下 URL 有错误：",
+  "followingURLsHadErrors": "下列 URL 存在错误：",
   "selectURL": "选择 URL",
   "selectURLs": "选择 URL",
   "pick": "选择",
@@ -241,182 +240,165 @@
   "dark": "深色",
   "light": "浅色",
   "followSystem": "跟随系统",
-  "followSystemThemeExplanation": "跟随系统主题只能通过第三方应用实现",
-  "useBlackTheme": "使用纯黑色深色主题",
-  "appSortBy": "应用排序方式",
-  "authorName": "作者/名称",
-  "nameAuthor": "名称/作者",
-  "asAdded": "按添加顺序",
-  "appSortOrder": "应用排序顺序",
+  "followSystemThemeExplanation": "跟随系统主题仅在使用第三方应用时有效",
+  "useBlackTheme": "使用纯黑深色主题",
+  "appSortBy": "排序依据",
+  "authorName": "作者 / 应用名称",
+  "nameAuthor": "应用名称 / 作者",
+  "asAdded": "添加次序",
+  "appSortOrder": "顺序",
   "ascending": "升序",
   "descending": "降序",
   "bgUpdateCheckInterval": "后台更新检查间隔",
-  "neverManualOnly": "从不 - 仅手动",
+  "neverManualOnly": "手动",
   "appearance": "外观",
-  "pinUpdates": "将更新固定到应用视图顶部",
+  "pinUpdates": "将待更新应用置顶",
   "updates": "更新",
-  "sourceSpecific": "来源特定",
-  "appSource": "应用来源",
-  "appSourceHint": "打开应用来源仓库",
+  "sourceSpecific": "来源",
+  "appSource": "源代码",
   "noLogs": "无日志",
-  "appLogs": "应用日志",
-  "appLogsHint": "查看应用日志",
+  "appLogs": "日志",
   "close": "关闭",
   "share": "分享",
   "appNotFound": "未找到应用",
-  "networkError": "网络连接失败",
-  "invalidUrlFormat": "无效的 URL 格式",
-  "accessDenied": "访问被拒绝",
-  "importFailed": "导入失败",
+  "networkError": "Network connection failed",
+  "invalidUrlFormat": "Invalid URL format",
+  "accessDenied": "Access denied",
+  "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "updatium-export",
-  "pickAnAPK": "选择 APK",
-  "appHasMoreThanOnePackage": "{appName} 有多个包：",
+  "pickAnAPK": "选择一个 APK 文件",
+  "appHasMoreThanOnePackage": "“{arg1}”有多个架构可用：",
   "@appHasMoreThanOnePackage": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "deviceSupportsXArch": "您的设备支持 {arch} CPU 架构。",
+  "deviceSupportsXArch": "您的设备支持 {arg1} 架构。",
   "@deviceSupportsXArch": {
     "placeholders": {
-      "arch": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "deviceSupportsFollowingArchs": "您的设备支持以下 CPU 架构：",
+  "deviceSupportsFollowingArchs": "您的设备支持下列架构：",
   "warning": "警告",
-  "sourceIsXButPackageFromYPrompt": "应用来源是 '{source}' 但发布包来自 '{package}'。继续？",
+  "sourceIsXButPackageFromYPrompt": "此应用的来源是“{arg1}”，但 APK 文件来自“{arg2}”。是否继续？",
   "@sourceIsXButPackageFromYPrompt": {
     "placeholders": {
-      "source": {
+      "arg1": {
         "type": "String"
       },
-      "package": {
+      "arg2": {
         "type": "String"
       }
     }
   },
-  "updatesAvailable": "有可用更新",
-  "updatesAvailableNotifDescription": "通知用户 Updatium 跟踪的一个或多个应用有可用更新",
-  "noNewUpdates": "没有新更新。",
-  "xHasAnUpdate": "{appName} 有更新。",
+  "updatesAvailable": "更新可用",
+  "updatesAvailableNotifDescription": "Updatium 追踪的应用有更新时发送通知",
+  "noNewUpdates": "全部应用已是最新。",
+  "xHasAnUpdate": "“{arg1}”可以更新了。",
   "@xHasAnUpdate": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
   "appsUpdated": "应用已更新",
   "appsNotUpdated": "更新应用失败",
-  "appsUpdatedNotifDescription": "通知用户一个或多个应用的更新已在后台应用",
-  "xWasUpdatedToY": "{appName} 已更新到 {version}。",
+  "appsUpdatedNotifDescription": "当应用在后台安装更新时发送通知",
+  "xWasUpdatedToY": "“{arg1}”已更新至 {arg2}。",
   "@xWasUpdatedToY": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       },
-      "version": {
+      "arg2": {
         "type": "String"
       }
     }
   },
-  "xWasNotUpdatedToY": "更新 {appName} 到 {version} 失败。",
+  "xWasNotUpdatedToY": "未能将 {arg1} 更新为 {arg2}。",
   "@xWasNotUpdatedToY": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       },
-      "version": {
+      "arg2": {
         "type": "String"
       }
     }
   },
-  "errorCheckingUpdates": "检查更新时出错",
-  "errorCheckingUpdatesNotifDescription": "后台更新检查失败时显示的通知",
-  "appsRemoved": "应用已移除",
-  "appsRemovedNotifDescription": "通知用户一个或多个应用因加载时出错而被移除",
-  "xWasRemovedDueToErrorY": "{appName} 因此错误被移除：{error}",
+  "errorCheckingUpdates": "检查更新出错",
+  "errorCheckingUpdatesNotifDescription": "当后台检查更新失败时显示的通知",
+  "appsRemoved": "应用已删除",
+  "appsRemovedNotifDescription": "当应用因加载出错而被删除时发送通知",
+  "xWasRemovedDueToErrorY": "“{arg1}”由于以下错误被删除：{arg2}",
   "@xWasRemovedDueToErrorY": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       },
-      "error": {
+      "arg2": {
         "type": "String"
       }
     }
   },
   "completeAppInstallation": "完成应用安装",
-  "updatiumMustBeOpenToInstallApps": "Updatium 必须打开才能安装应用",
-  "completeAppInstallationNotifDescription": "要求用户返回 Updatium 完成应用安装",
+  "updatiumMustBeOpenToInstallApps": "必须开启 Updatium 才能安装应用",
+  "completeAppInstallationNotifDescription": "提示返回 Updatium 以完成应用安装",
   "checkingForUpdates": "正在检查更新",
-  "checkingForUpdatesNotifDescription": "检查更新时显示的临时通知",
-  "pleaseAllowInstallPerm": "请允许 Updatium 安装应用",
+  "checkingForUpdatesNotifDescription": "检查更新时短暂显示的通知",
+  "pleaseAllowInstallPerm": "请授予 Updatium 安装应用的权限",
   "trackOnly": "仅追踪",
-  "errorWithHttpStatusCode": "错误 {statusCode}",
+  "errorWithHttpStatusCode": "{arg1} 错误",
   "@errorWithHttpStatusCode": {
     "placeholders": {
-      "statusCode": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "versionCorrectionDisabled": "版本更正已禁用（插件似乎不工作）",
+  "versionCorrectionDisabled": "禁用版本号更正（插件似乎未起作用）",
   "unknown": "未知",
   "none": "无",
   "all": "全部",
-  "never": "从不",
-  "latestVersionX": "最新：{version}",
+  "never": "从未",
+  "latestVersionX": "最新版本：{arg1}",
   "@latestVersionX": {
     "placeholders": {
-      "version": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "installedVersionX": "已安装：{version}",
+  "installedVersionX": "当前版本：{arg1}",
   "@installedVersionX": {
     "placeholders": {
-      "version": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "lastUpdateCheckX": "上次更新检查：{time}",
+  "lastUpdateCheckX": "上次更新检查：{arg1}",
   "@lastUpdateCheckX": {
     "placeholders": {
-      "time": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "remove": "移除",
+  "remove": "删除",
   "yesMarkUpdated": "是，标记为已更新",
-  "fdroid": "F-Droid 官方",
+  "fdroid": "F-Droid 官方存储库",
   "appIdOrName": "应用 ID 或名称",
   "appId": "应用 ID",
-  "appWithIdOrNameNotFound": "未找到具有该 ID 或名称的应用",
-  "reposHaveMultipleApps": "仓库可能包含多个应用",
-  "fdroidThirdPartyRepo": "F-Droid 第三方仓库",
-  "gitlab": "GitLab",
-  "codeberg": "Codeberg",
-  "izzyondroid": "IzzyOnDroid",
-  "sourcehut": "SourceHut",
-  "apkcombo": "APKCombo",
-  "apkpure": "APKPure",
-  "aptoide": "Aptoide",
-  "uptodown": "Uptodown",
-  "huaweiappgallery": "华为应用市场",
-  "rustore": "RuStore",
-  "jenkins": "Jenkins",
-  "apkmirror": "APKMirror",
-  "telegramapp": "Telegram App",
-  "neutroncode": "NeutronCode",
-  "html": "HTML",
+  "appWithIdOrNameNotFound": "未找到符合此 ID 或名称的应用",
+  "reposHaveMultipleApps": "存储库中可能包含多个应用",
+  "fdroidThirdPartyRepo": "F-Droid 第三方存储库",
   "install": "安装",
   "markInstalled": "标记为已安装",
   "update": "更新",
@@ -424,455 +406,252 @@
   "markUpdated": "标记为已更新",
   "additionalOptions": "附加选项",
   "disableVersionDetection": "禁用版本检测",
-  "noVersionDetectionExplanation": "此选项仅应用于版本检测无法正常工作的应用。",
-  "downloadingX": "正在下载 {appName}",
+  "noVersionDetectionExplanation": "此选项应该仅用于无法进行版本检测的应用。",
+  "downloadingX": "正在下载 {arg1}",
   "@downloadingX": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "downloadX": "下载 {appName}",
+  "downloadX": "下载 {arg1}",
   "@downloadX": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "downloadedX": "已下载 {appName}",
+  "downloadedX": "已下载 {arg1}",
   "@downloadedX": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "releaseAsset": "发布资源",
-  "downloadNotifDescription": "通知用户下载应用的进度",
-  "noAPKFound": "未找到 APK",
-  "noVersionDetection": "无版本检测",
-  "categorize": "分类",
-  "categories": "分类",
-  "category": "分类",
-  "noCategory": "无分类",
-  "noCategories": "无分类",
-  "deleteCategoriesQuestion": "删除分类？",
-  "categoryDeleteWarning": "已删除分类中的所有应用将被设置为未分类。",
-  "addCategory": "添加分类",
+  "releaseAsset": "发行文件",
+  "downloadNotifDescription": "提示应用的下载进度",
+  "noAPKFound": "未找到 APK 文件",
+  "noVersionDetection": "禁用版本检测",
+  "categorize": "归类",
+  "categories": "类别",
+  "category": "类别",
+  "noCategory": "无类别",
+  "noCategories": "无类别",
+  "deleteCategoriesQuestion": "是否删除选中的类别？",
+  "categoryDeleteWarning": "被删除类别下的应用将恢复为未分类状态。",
+  "addCategory": "添加类别",
   "label": "标签",
   "language": "语言",
-  "copiedToClipboard": "已复制到剪贴板",
-  "storagePermissionDenied": "存储权限被拒绝",
-  "selectedCategorizeWarning": "这将替换选中应用的任何现有分类设置。",
-  "filterAPKsByRegEx": "用正则表达式筛选 APK",
-  "removeFromUpdatium": "从 Updatium 移除",
-  "uninstallFromDevice": "从设备卸载",
+  "copiedToClipboard": "已复制至剪贴板",
+  "storagePermissionDenied": "已拒绝授予存储权限",
+  "selectedCategorizeWarning": "这将覆盖选中应用当前的类别设置。",
+  "filterAPKsByRegEx": "筛选 APK 文件的正则表达式",
+  "removeFromUpdatium": "从 Updatium 中删除",
+  "uninstallFromDevice": "从设备中卸载",
   "onlyWorksWithNonVersionDetectApps": "仅适用于禁用版本检测的应用。",
-  "releaseDateAsVersion": "使用发布日期作为版本字符串",
-  "releaseTitleAsVersion": "使用发布标题作为版本字符串",
-  "releaseDateAsVersionExplanation": "此选项仅应用于版本检测无法正常工作但有发布日期可用的应用。",
-  "changes": "更改",
-  "releaseDate": "发布日期",
+  "releaseDateAsVersion": "将发行日期作为版本号",
+  "releaseTitleAsVersion": "将发行标题作为版本字符串",
+  "releaseDateAsVersionExplanation": "此选项应该仅用于无法进行版本检测但能够获取发行日期的应用。",
+  "changes": "更新日志",
+  "releaseDate": "发行日期",
   "importFromURLsInFile": "从文件中的 URL 导入（如 OPML）",
-  "versionDetectionExplanation": "将版本字符串与操作系统检测到的版本协调",
+  "versionDetectionExplanation": "使发行版本号与应用定义的版本号一致",
   "versionDetection": "版本检测",
-  "standardVersionDetection": "标准版本检测",
-  "groupByCategory": "按分类分组",
+  "standardVersionDetection": "常规版本检测",
+  "groupByCategory": "按类别分组",
   "listView": "列表视图",
   "gridView": "网格视图",
-  "autoApkFilterByArch": "如果可能，尝试按 CPU 架构筛选 APK",
-  "autoLinkFilterByArch": "如果可能，尝试按 CPU 架构筛选链接",
+  "autoApkFilterByArch": "如果可能，尝试按 CPU 架构筛选 APK 文件",
+  "autoLinkFilterByArch": "尽可能按设备支持的 CPU 架构筛选链接",
   "overrideSource": "覆盖来源",
   "dontShowAgain": "不再显示",
-  "dontShowTrackOnlyWarnings": "不显示'仅追踪'警告",
-  "dontShowAPKOriginWarnings": "不显示 APK 来源警告",
-  "moveNonInstalledAppsToBottom": "将未安装应用移至应用视图底部",
-  "hideNonInstalledApps": "隐藏未安装应用",
+  "dontShowTrackOnlyWarnings": "忽略“仅追踪”模式警告",
+  "dontShowAPKOriginWarnings": "忽略 APK 文件来源警告",
+  "moveNonInstalledAppsToBottom": "将未安装应用置底",
+  "hideNonInstalledApps": "隐藏未安装的应用",
   "gitlabPATLabel": "GitLab 个人访问令牌",
-  "about": "关于",
-  "requiresCredentialsInSettings": "{source} 需要额外凭据（在设置中）",
+  "about": "相关文档",
+  "requiresCredentialsInSettings": "{arg1}：此功能需要额外的凭据（在“设置”中添加）",
   "@requiresCredentialsInSettings": {
     "placeholders": {
-      "source": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "checkOnStart": "启动时检查更新",
+  "checkOnStart": "启动时进行一次检查",
   "safeMode": "安全模式",
   "safeModeDescription": "隐藏添加应用页面并显示导入/导出",
-  "safeModeAddAppDisabled": "安全模式下禁用添加应用",
+  "safeModeAddAppDisabled": "添加应用在安全模式下已禁用",
   "tryInferAppIdFromCode": "尝试从源代码推断应用 ID",
-  "removeOnExternalUninstall": "自动移除外部卸载的应用",
-  "pickHighestVersionCode": "自动选择最高版本代码的 APK",
-  "checkUpdateOnDetailPage": "打开应用详情页面时检查更新",
-  "disablePageTransitions": "禁用页面过渡动画",
-  "reversePageTransitions": "反转页面过渡动画",
-  "minStarCount": "最小星数",
-  "addInfoBelow": "在下方添加此信息。",
-  "addInfoInSettings": "在设置中添加此信息。",
-  "githubSourceNote": "可以使用 API 密钥避免 GitHub 速率限制。",
-  "sortByLastLinkSegment": "仅按链接的最后一段排序",
-  "filterReleaseNotesByRegEx": "用正则表达式筛选发布说明",
-  "customLinkFilterRegex": "自定义 APK 链接筛选正则表达式（默认 '.apk$'）",
-  "appsPossiblyUpdated": "应用更新尝试",
-  "appsPossiblyUpdatedNotifDescription": "通知用户一个或多个应用的更新可能已在后台应用",
-  "xWasPossiblyUpdatedToY": "{appName} 可能已更新到 {version}。",
+  "removeOnExternalUninstall": "自动删除列表中已卸载的应用",
+  "pickHighestVersionCode": "自动选取内部版本号最高的 APK 文件",
+  "checkUpdateOnDetailPage": "打开应用详情页时进行检查",
+  "disablePageTransitions": "禁用页面过渡动画效果",
+  "reversePageTransitions": "反转页面过渡动画效果",
+  "minStarCount": "最小星标数",
+  "addInfoBelow": "在下方添加此凭据。",
+  "addInfoInSettings": "在“设置”中添加此凭据。",
+  "githubSourceNote": "使用访问令牌可避免触发 GitHub 的 API 请求限制。",
+  "sortByLastLinkSegment": "仅根据链接的末尾部分进行筛选",
+  "filterReleaseNotesByRegEx": "筛选发行说明的正则表达式",
+  "customLinkFilterRegex": "筛选自定义来源的 APK 文件链接\n（正则表达式，默认匹配模式为“.apk$”）",
+  "appsPossiblyUpdated": "已尝试更新应用",
+  "appsPossiblyUpdatedNotifDescription": "当应用已尝试在后台更新时发送通知",
+  "xWasPossiblyUpdatedToY": "已尝试将“{arg1}”更新至 {arg2}。",
   "@xWasPossiblyUpdatedToY": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       },
-      "version": {
+      "arg2": {
         "type": "String"
       }
     }
   },
-  "enableBackgroundUpdates": "启用后台更新",
-  "backgroundUpdateReqsExplanation": "后台更新可能不适用于所有应用。",
-  "backgroundUpdateLimitsExplanation": "后台安装的成功只能在打开 Updatium 时确定。",
-  "verifyLatestTag": "验证'latest'标签",
-  "intermediateLinkRegex": "筛选要访问的'中间'链接",
-  "filterByLinkText": "按链接文本筛选链接",
+  "enableBackgroundUpdates": "启用全局后台更新",
+  "backgroundUpdateReqsExplanation": "后台更新未必适用于所有的应用。",
+  "backgroundUpdateLimitsExplanation": "只有在开启 Updatium 时才能确认是否安装成功。",
+  "verifyLatestTag": "验证“Latest”标签",
+  "intermediateLinkRegex": "筛选中转链接的正则表达式",
+  "filterByLinkText": "根据链接文本进行筛选",
   "matchLinksOutsideATags": "匹配 <a> 标签外的链接",
-  "intermediateLinkNotFound": "未找到中间链接",
-  "intermediateLink": "中间链接",
-  "exemptFromBackgroundUpdates": "免于后台更新（如果启用）",
-  "bgUpdatesOnWiFiOnly": "不在 Wi-Fi 时禁用后台更新",
-  "bgUpdatesWhileChargingOnly": "不在充电时禁用后台更新",
-  "autoSelectHighestVersionCode": "自动选择最高版本代码的 APK",
-  "versionExtractionRegEx": "版本字符串提取正则表达式",
-  "trimVersionString": "用正则表达式修剪版本字符串",
-  "matchGroupToUseForX": "用于\"{regexName}\"的匹配组",
+  "intermediateLinkNotFound": "未找到中转链接",
+  "intermediateLink": "中转链接",
+  "exemptFromBackgroundUpdates": "禁用后台更新（仅此应用生效，即使已启用全局后台更新）",
+  "bgUpdatesOnWiFiOnly": "未连接 Wi-Fi 时禁用后台更新",
+  "bgUpdatesWhileChargingOnly": "未充电时禁用后台更新",
+  "autoSelectHighestVersionCode": "自动选择内部版本号最高的 APK 文件",
+  "versionExtractionRegEx": "提取版本号的正则表达式",
+  "trimVersionString": "修剪版本字符串的正则表达式",
+  "matchGroupToUseForX": "“{arg1}”中引用的捕获组",
   "@matchGroupToUseForX": {
     "placeholders": {
-      "regexName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "matchGroupToUse": "用于版本字符串提取正则表达式的匹配组",
-  "highlightTouchTargets": "突出显示不太明显的触摸目标",
-  "pickExportDir": "选择导出目录",
-  "autoExportOnChanges": "更改时自动导出",
-  "includeSettings": "包含设置",
-  "filterVersionsByRegEx": "用正则表达式筛选版本",
-  "trySelectingSuggestedVersionCode": "尝试选择建议的版本代码 APK",
-  "dontSortReleasesList": "保留 API 中的发布顺序",
-  "reverseSort": "反向排序",
-  "takeFirstLink": "取第一个链接",
-  "skipSort": "跳过排序",
-  "debugMenu": "调试菜单",
-  "bgTaskStarted": "后台任务已启动 - 检查日志。",
-  "runBgCheckNow": "立即运行后台更新检查",
-  "versionExtractWholePage": "将版本字符串提取正则表达式应用于整个页面",
+  "matchGroupToUse": "“提取版本字符串的正则表达式”中引用的捕获组",
+  "highlightTouchTargets": "突出展示不明显的可交互区域",
+  "pickExportDir": "选择导出文件夹",
+  "autoExportOnChanges": "数据变更时自动导出",
+  "includeSettings": "同时导出应用设置",
+  "filterVersionsByRegEx": "筛选版本号的正则表达式",
+  "trySelectingSuggestedVersionCode": "尝试选择推荐版本的 APK 文件",
+  "dontSortReleasesList": "保持来自 API 的发行顺序",
+  "reverseSort": "反转排序",
+  "takeFirstLink": "选取第一个链接",
+  "skipSort": "不进行排序",
+  "debugMenu": "调试选项",
+  "bgTaskStarted": "后台任务已启动 - 详见日志",
+  "runBgCheckNow": "立即进行后台更新检查",
+  "versionExtractWholePage": "将版本号提取规则应用于完整页面",
   "installing": "正在安装",
-  "skipUpdateNotifications": "跳过更新通知",
-  "updatesAvailableNotifChannel": "有可用更新",
+  "skipUpdateNotifications": "忽略更新通知",
+  "updatesAvailableNotifChannel": "更新可用",
   "appsUpdatedNotifChannel": "应用已更新",
-  "appsPossiblyUpdatedNotifChannel": "应用更新尝试",
-  "errorCheckingUpdatesNotifChannel": "检查更新时出错",
-  "appsRemovedNotifChannel": "应用已移除",
-  "downloadingXNotifChannel": "正在下载 {appName}",
+  "appsPossiblyUpdatedNotifChannel": "已尝试更新应用",
+  "errorCheckingUpdatesNotifChannel": "检查更新出错",
+  "appsRemovedNotifChannel": "应用已删除",
+  "downloadingXNotifChannel": "正在下载“{arg1}”",
   "@downloadingXNotifChannel": {
     "placeholders": {
-      "appName": {
+      "arg1": {
         "type": "String"
       }
     }
   },
   "completeAppInstallationNotifChannel": "完成应用安装",
   "checkingForUpdatesNotifChannel": "正在检查更新",
-  "onlyCheckInstalledOrTrackOnlyApps": "仅检查已安装和仅追踪应用的更新",
-  "supportFixedAPKURL": "支持固定 APK URL",
-  "selectX": "选择 {count}",
+  "onlyCheckInstalledOrTrackOnlyApps": "只检查已安装和“仅追踪”的应用",
+  "supportFixedAPKURL": "支持固定的 APK 文件链接",
+  "selectX": "选择{arg1}",
   "@selectX": {
     "placeholders": {
-      "count": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "parallelDownloads": "允许并行下载",
+  "parallelDownloads": "启用并行下载",
   "useShizuku": "使用 Shizuku 或 Sui 安装",
-  "shizukuBinderNotFound": "Shizuku 服务未运行",
-  "shizukuOld": "旧版 Shizuku (<11) - 请更新",
-  "shizukuOldAndroidWithADB": "Shizuku 在 Android < 8.1 上与 ADB 一起运行 - 请更新 Android 或改用 Sui",
-  "shizukuPretendToBeGooglePlay": "将 Google Play 设置为安装来源（如果使用 Shizuku）",
+  "shizukuBinderNotFound": "未发现兼容的 Shizuku 服务",
+  "shizukuOld": "Shizuku 版本过低（<11）- 请更新",
+  "shizukuOldAndroidWithADB": "正在低版本 Android（<8.1）系统中以 ADB 模式运行 Shizuku - 请更新 Android 系统版本或使用 Sui 代替",
+  "shizukuPretendToBeGooglePlay": "将安装来源伪装为 Google Play（需要使用 Shizuku）",
   "useSystemFont": "使用系统字体",
-  "useVersionCodeAsOSVersion": "使用应用版本代码作为操作系统检测到的版本",
-  "requestHeader": "请求头",
-  "useLatestAssetDateAsReleaseDate": "使用最新资源上传作为发布日期",
-  "defaultPseudoVersioningMethod": "默认伪版本方法",
-  "partialAPKHash": "部分 APK 哈希",
-  "APKLinkHash": "APK 链接哈希",
-  "directAPKLink": "直接 APK 链接",
-  "pseudoVersionInUse": "正在使用伪版本",
-  "installed": "已安装",
-  "latest": "最新",
-  "invertRegEx": "反转正则表达式",
-  "note": "注意",
-  "selfHostedNote": "可以使用\"{dropdown}\"下拉菜单来访问任何来源的自托管/自定义实例。",
+  "useVersionCodeAsOSVersion": "使用内部版本号代替应用定义的版本号",
+  "requestHeader": "请求标头",
+  "useLatestAssetDateAsReleaseDate": "使用最新文件上传时间作为发行日期",
+  "defaultPseudoVersioningMethod": "默认虚拟版本方案",
+  "partialAPKHash": "APK 文件散列值片段",
+  "directAPKLink": "APK 文件直链",
+  "pseudoVersionInUse": "正在使用虚拟版本号",
+  "installed": "当前版本",
+  "latest": "最新版本",
+  "invertRegEx": "反转匹配",
+  "note": "备注",
+  "selfHostedNote": "可以通过“{arg1}”下拉菜单来指向任意来源的自托管/自定义实例。",
   "@selfHostedNote": {
     "placeholders": {
-      "dropdown": {
+      "arg1": {
         "type": "String"
       }
     }
   },
-  "badDownload": "无法解析 APK（不兼容或部分下载）",
-  "beforeNewInstallsShareToAppVerifier": "将新应用分享给 AppVerifier（如果可用）",
-  "appVerifierInstructionToast": "分享给 AppVerifier，准备好后返回这里。",
-  "wiki": "帮助/维基",
-  "wikiHint": "打开 Updatium 维基文档",
+  "badDownload": "无法解析 APK 文件（不兼容或文件不完整）",
+  "beforeNewInstallsShareToAppVerifier": "通过 AppVerifier 校验新应用（如果可用）",
+  "appVerifierInstructionToast": "分享至 AppVerifier，完成后返回此处。",
+  "wiki": "帮助/Wiki",
   "allowInsecure": "允许不安全的 HTTP 请求",
-  "stayOneVersionBehind": "保持落后最新版本一个版本",
-  "useFirstApkOfVersion": "自动选择多个 APK 中的第一个",
+  "stayOneVersionBehind": "始终延后一个版本进行更新",
+  "useFirstApkOfVersion": "存在多个 APK 文件时自动选择第一个",
   "refreshBeforeDownload": "下载前刷新应用详情",
-  "tencentAppStore": "腾讯应用商店",
+  "tencentAppStore": "腾讯应用宝",
   "coolApk": "酷安",
-  "vivoAppStore": "vivo 应用商店（中国）",
-  "name": "名称",
-  "smartname": "名称（智能）",
+  "vivoAppStore": "（中国）vivo应用商店",
+  "name": "发行名称",
+  "smartname": "发行名称（智能）",
   "sortMethod": "排序方法",
   "welcome": "欢迎",
-  "documentationLinksNote": "下面链接的 Updatium GitHub 页面包含视频、文章、讨论和其他资源的链接，这些资源将帮助您了解如何使用该应用。",
-  "batteryOptimizationNote": "请注意，如果您在 Updatium 设置中切换到\"前台服务\"和/或在操作系统设置中禁用 Updatium 的电池优化，后台下载可能会更可靠地工作。",
-  "fileDeletionError": "删除文件失败（请尝试手动删除然后重试）：\"{filename}\"",
+  "documentationLinksNote": "下方链接的 GitHub 页面中包含关于 Updatium 的视频、文章、讨论及其他资源，可帮助您了解本应用的使用方法。",
+  "batteryOptimizationNote": "请注意，在设置中切换为“前台服务”，并/或关闭操作系统对 Updatium 的电池优化，可能会让后台下载更稳定。",
+  "fileDeletionError": "删除文件失败（请手动删除后再次尝试）：\"{arg1}\"",
   "@fileDeletionError": {
     "placeholders": {
-      "filename": {
+      "arg1": {
         "type": "String"
       }
     }
   },
   "foregroundService": "Updatium 前台服务",
-  "foregroundServiceExplanation": "使用前台服务进行更新检查（更可靠，消耗更多电量）",
-  "fgServiceNotice": "此通知是后台更新检查所必需的（可以在操作系统设置中隐藏）",
-  "excludeSecrets": "排除机密信息",
-  "GHReqPrefix": "GitHub 请求的'sky22333/hubproxy'实例",
+  "foregroundServiceExplanation": "使用前台服务检查更新（更稳定，但也更耗电）",
+  "fgServiceNotice": "后台检查更新时需要此通知（可在操作系统设置中隐藏）",
+  "excludeSecrets": "排除机密",
   "includeZips": "包含 ZIP 文件",
-  "zippedApkFilterRegEx": "筛选 ZIP 中的 APK",
-  "googleVerificationWarningP1": "谷歌已宣布，从 2026/2027 年开始，\"认证\"Android 设备上的所有应用都需要开发者直接向谷歌提交个人身份详细信息。\n\n此后，Updatium 可能停止在认证 Android 设备上工作。",
-  "googleVerificationWarningP2": "请访问 https://keepandroidopen.org/ 获取更多信息。",
-  "googleVerificationWarningP3": "请注意，短期内，谷歌承诺在广泛反对其宣布后实施\"高级流程\"后，可能继续可以通过\"高级流程\"过程安装\"未验证\"（不合规）应用，但他们没有详细说明这将如何工作，因此不清楚它是否真正保留用户自由度。\n\n无论如何，谷歌的举动是结束个人自由通用计算的重要一步。\n\n非认证操作系统，如 GrapheneOS，只要它们被允许继续存在，应该不受影响。",
-  "multipleSigners": "多个签名者",
-  "removeAppQuestion": "移除应用？",
-  "@removeAppQuestion": {
-    "plural": {
-      "one": "移除应用？",
-      "other": "移除应用？"
-    }
-  },
-  "tooManyRequestsTryAgainInMinutes": "请求过多（速率限制）- {count} 分钟后重试",
-  "@tooManyRequestsTryAgainInMinutes": {
-    "plural": {
-      "one": "请求过多（速率限制）- {count} 分钟后重试",
-      "other": "请求过多（速率限制）- {count} 分钟后重试"
-    },
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "bgUpdateGotErrorRetryInMinutes": "后台更新检查遇到 {error}，将安排在 {count} 分钟后重试检查",
-  "@bgUpdateGotErrorRetryInMinutes": {
-    "plural": {
-      "one": "后台更新检查遇到 {error}，将安排在 {count} 分钟后重试检查",
-      "other": "后台更新检查遇到 {error}，将安排在 {count} 分钟后重试检查"
-    },
-    "placeholders": {
-      "error": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "bgCheckFoundUpdatesWillNotifyIfNeeded": "后台更新检查找到 {count} 个更新 - 如需要将通知用户",
-  "@bgCheckFoundUpdatesWillNotifyIfNeeded": {
-    "plural": {
-      "one": "后台更新检查找到 {count} 个更新 - 如需要将通知用户",
-      "other": "后台更新检查找到 {count} 个更新 - 如需要将通知用户"
-    },
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "apps": "{count} 个应用",
-  "@apps": {
-    "plural": {
-      "one": "{count} 个应用",
-      "other": "{count} 个应用"
-    },
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "url": "{count} 个 URL",
-  "@url": {
-    "plural": {
-      "one": "{count} 个 URL",
-      "other": "{count} 个 URL"
-    },
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "minute": "{count} 分钟",
-  "@minute": {
-    "plural": {
-      "one": "{count} 分钟",
-      "other": "{count} 分钟"
-    },
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "hour": "{count} 小时",
-  "@hour": {
-    "plural": {
-      "one": "{count} 小时",
-      "other": "{count} 小时"
-    },
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "day": "{count} 天",
-  "@day": {
-    "plural": {
-      "one": "{count} 天",
-      "other": "{count} 天"
-    },
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "clearedNLogsBeforeXAfterY": "清除了 {n} 条日志（之前 = {before}，之后 = {after}）",
-  "@clearedNLogsBeforeXAfterY": {
-    "plural": {
-      "one": "清除了 {n} 条日志（之前 = {before}，之后 = {after}）",
-      "other": "清除了 {n} 条日志（之前 = {before}，之后 = {after}）"
-    },
-    "placeholders": {
-      "n": {
-        "type": "int"
-      },
-      "before": {
-        "type": "int"
-      },
-      "after": {
-        "type": "int"
-      }
-    }
-  },
-  "xAndNMoreUpdatesAvailable": "{appName} 和 {count} 个更多应用有更新。",
-  "@xAndNMoreUpdatesAvailable": {
-    "plural": {
-      "one": "{appName} 和 1 个更多应用有更新。",
-      "other": "{appName} 和 {count} 个更多应用有更新。"
-    },
-    "placeholders": {
-      "appName": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "xAndNMoreUpdatesInstalled": "{appName} 和 {count} 个更多应用已更新。",
-  "@xAndNMoreUpdatesInstalled": {
-    "plural": {
-      "one": "{appName} 和 1 个更多应用已更新。",
-      "other": "{appName} 和 {count} 个更多应用已更新。"
-    },
-    "placeholders": {
-      "appName": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "xAndNMoreUpdatesFailed": "更新 {appName} 和 {count} 个更多应用失败。",
-  "@xAndNMoreUpdatesFailed": {
-    "plural": {
-      "one": "更新 {appName} 和 1 个更多应用失败。",
-      "other": "更新 {appName} 和 {count} 个更多应用失败。"
-    },
-    "placeholders": {
-      "appName": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "xAndNMoreUpdatesPossiblyInstalled": "{appName} 和 {count} 个更多应用可能已更新。",
-  "@xAndNMoreUpdatesPossiblyInstalled": {
-    "plural": {
-      "one": "{appName} 和 1 个更多应用可能已更新。",
-      "other": "{appName} 和 {count} 个更多应用可能已更新。"
-    },
-    "placeholders": {
-      "appName": {
-        "type": "String"
-      },
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "apk": "{count} 个 APK",
-  "@apk": {
-    "plural": {
-      "one": "{count} 个 APK",
-      "other": "{count} 个 APK"
-    },
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "certificateHash": "证书哈希",
-  "@certificateHash": {
-    "plural": {
-      "one": "证书哈希",
-      "other": "证书哈希"
-    }
-  },
+  "zippedApkFilterRegEx": "过滤 ZIP 内的 APK",
+  "googleVerificationWarningP1": "Google宣布,从2026/2027年开始,所有在\"认证\"Android设备上的应用程序都将要求开发者直接向Google提交个人身份细节.\n\n之后,Updatium可能会停止在认证的Android设备上工作.",
+  "googleVerificationWarningP2": "详情请访问https://keepandroidopen.org/.",
+  "googleVerificationWarningP3": "请注意,在短期内,通过谷歌承诺在广泛反对其公告后实施的\"高级流程\"程序,可能继续安装\"未经验证\"(不符合要求)的应用软件,但他们没有详细说明这将如何运作,因此不清楚它是否会以任何实际方式真正维护用户自由.\n\n无论如何，谷歌的这一举动是朝向个人自由、通用计算结束的重要一步.\n\n未经认证的OS,如GrapheneOS,只要允许继续存在,就不应受到影响.",
+  "multipleSigners": "多个签名人",
   "securityDisclaimerTitle": "安全与法律免责声明",
   "license": "许可证",
-  "licenseText": "此应用程序在 GPL v3 许可证下分发。",
+  "licenseText": "本应用程序采用 GPL v3 许可证分发。",
   "disclaimer": "免责声明",
-  "disclaimerText": "此应用程序不分发、托管或验证任何外部应用程序。用户对通过此工具安装的任何软件的安全性和合法性承担全部责任。\n\nhttps://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 - 强烈建议不要从其他地方下载，因为非官方来源不安全。",
+  "disclaimerText": "本应用程序不分发、托管或验证任何外部应用程序。用户对通过此工具安装的任何软件的安全性和合法性承担全部责任。\n\nhttps://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 - 强烈建议不要从其他地方下载，因为从非官方来源下载是不安全的。",
   "privacy": "隐私",
   "privacyText": "此应用注重隐私，不收集个人数据。",
   "acceptAndContinue": "接受并继续",
   "decline": "拒绝",
-  "githubStarPromptTitle": "喜欢 Updatium 吗？",
-  "githubStarPromptContent": "Updatium 是一个志愿的、开源的社区项目，我在我的空闲时间开发。如果您想支持这个项目，请考虑在 GitHub 上给它加星，以帮助我们触达更多用户和贡献者。您不会再收到关于此的提醒。提前感谢！：）",
-  "githubStarPromptStar": "加星",
-  "githubStarPromptDontShowAgain": "不再显示"
+  "githubStarPromptTitle": "喜欢使用 Updatium 吗？",
+  "githubStarPromptContent": "Updatium 是一个志愿性的开源社区项目，我在业余时间开发。如果您想支持这个项目，请考虑在 GitHub 上为它加星标，以帮助更多用户和贡献者了解我们。您不会再收到关于此的提醒。提前感谢！:)",
+  "githubStarPromptStar": "加星标",
+  "githubStarPromptDontShowAgain": "不再显示",
+  "aPKLinkHash": "APK 文件链接散列值",
+  "gHReqPrefix": "用于 GitHub 请求的 \"sky22333/hubproxy \"实例",
+  "continueAction": "继续"
 }

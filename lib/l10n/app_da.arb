@@ -1,0 +1,657 @@
+{
+  "@@locale": "da",
+  "invalidURLForSource": "Ikke et gyldigt {arg1} app-URL",
+  "@invalidURLForSource": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "noReleaseFound": "Kunne ikke finde en passende udgivelse",
+  "noVersionFound": "Kunne ikke afgøre udgivelsesversion",
+  "urlMatchesNoSource": "URL'en matcher ikke en kendt kilde",
+  "cantInstallOlderVersion": "Kan ikke installere en ældre version af en app",
+  "appIdMismatch": "Hentet pakke-ID matcher ikke eksisterende app-ID",
+  "functionNotImplemented": "Denne klasse har ikke implementeret denne funktion",
+  "placeholder": "Pladsholder",
+  "someErrors": "Nogle fejl opstod",
+  "unexpectedError": "Uventet fejl",
+  "ok": "Okay",
+  "and": "og",
+  "githubPATLabel": "GitHub Personlig Adgangstoken (øger hastighedsgrænse)",
+  "includePrereleases": "Inkluder forudgivelser",
+  "fallbackToOlderReleases": "Fallback til ældre udgivelser",
+  "filterReleaseTitlesByRegEx": "Filtrer udgivelsestitler efter regulært udtryk",
+  "invalidRegEx": "Ugyldigt regulært udtryk",
+  "noDescription": "Ingen beskrivelse",
+  "cancel": "Annuller",
+  "requiredInBrackets": "(Påkrævet)",
+  "dropdownNoOptsError": "FEJL: RULLEMENU SKAL HAVE MINDST ÉT TILVALG",
+  "color": "Farve",
+  "standard": "Standard",
+  "custom": "Brugerdefineret",
+  "useMaterialYou": "Brug Material You-farver",
+  "githubStarredRepos": "Stjernemarkeret GitHub-repos",
+  "uname": "Brugernavn",
+  "wrongArgNum": "Forkert antal argumenter angivet",
+  "xIsTrackOnly": "{arg1} er 'Følg Kun'",
+  "@xIsTrackOnly": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "source": "Kilde",
+  "app": "App",
+  "appsFromSourceAreTrackOnly": "Apps fra denne kilde er 'Følg Kun'.",
+  "youPickedTrackOnly": "Du har valgt 'Følg Kun'-indstillingen.",
+  "trackOnlyAppDescription": "Appen tjekkes for opdateringer, men Updatium kan ikke hente eller installere den.",
+  "cancelled": "Annulleret",
+  "appAlreadyAdded": "Appen er allerede tilføjet",
+  "alreadyUpToDateQuestion": "Er appen allerede opdateret?",
+  "addApp": "Tilføj app",
+  "appSourceURL": "URL til app-kilde",
+  "error": "Fejl",
+  "add": "Tilføj",
+  "searchSomeSourcesLabel": "Søg (kun visse kilder)",
+  "search": "Søg",
+  "additionalOptsFor": "Flere indstillinger for {arg1}",
+  "@additionalOptsFor": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "supportedSources": "Understøttede kilder",
+  "trackOnlyInBrackets": "(Følg Kun)",
+  "searchableInBrackets": "(Kan Søges)",
+  "appsString": "Apps",
+  "noApps": "Ingen apps",
+  "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
+  "noAppsForFilter": "Ingen apps til filter",
+  "byX": "Af {arg1}",
+  "@byX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "percentProgress": "Hentning: {arg1}%",
+  "@percentProgress": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseWait": "Vent venligst",
+  "updateAvailable": "Opdatering tilgængelig",
+  "notInstalled": "Ikke installeret",
+  "pseudoVersion": "pseudo-version",
+  "selectAll": "Vælg alle",
+  "deselectX": "Fravælg {arg1}",
+  "@deselectX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "xWillBeRemovedButRemainInstalled": "{arg1} fjernes fra Updatium, men forbliver installeret på enheden.",
+  "@xWillBeRemovedButRemainInstalled": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "removeSelectedAppsQuestion": "Fjern valgte apps?",
+  "removeSelectedApps": "Fjern valgte apps",
+  "updateX": "Opdater {arg1}",
+  "@updateX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "installX": "Installer {arg1}",
+  "@installX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "markXTrackOnlyAsUpdated": "Markér {arg1}\n(Følg Kun)\nsom opdateret",
+  "@markXTrackOnlyAsUpdated": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "changeX": "Skift {arg1}",
+  "@changeX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "installUpdateApps": "Installer/Opdater apps",
+  "installUpdateSelectedApps": "Installer/Opdater valgte apps",
+  "markXSelectedAppsAsUpdated": "Markér {arg1} valgte apps som opdateret?",
+  "@markXSelectedAppsAsUpdated": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "no": "Nej",
+  "yes": "Ja",
+  "markSelectedAppsUpdated": "Markér valgte apps som opdateret",
+  "pinToTop": "Fastgør til toppen",
+  "unpinFromTop": "Frigør fra toppen",
+  "resetInstallStatusForSelectedAppsQuestion": "Nulstil installationsstatus for valgte apps?",
+  "installStatusOfXWillBeResetExplanation": "Installationsstatus for alle valgte apps nulstilles.\n\nDette kan hjælpe, når en forkert app-version vises i Updatium grundet mislykkede opdateringer eller andre problemer.",
+  "customLinkMessage": "Disse links virker på enheder med Updatium installeret",
+  "shareAppConfigLinks": "Del app-konfiguration som HTML-link",
+  "shareSelectedAppURLs": "Del valgte app-URL'er",
+  "resetInstallStatus": "Nulstil installationsstatus",
+  "more": "Mere",
+  "removeOutdatedFilter": "Fjern forældet app-filter",
+  "showOutdatedOnly": "Vis kun forældede apps",
+  "filter": "Filtrer",
+  "filterApps": "Filtrer Apps",
+  "appName": "Appnavn",
+  "author": "Udvikler",
+  "upToDateApps": "Opdaterede apps",
+  "nonInstalledApps": "Ikke-installerede apps",
+  "importExport": "Import/Eksport",
+  "settings": "Indstillinger",
+  "exportedTo": "Eksportér til {arg1}",
+  "@exportedTo": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "updatiumExport": "Updatium-eksport",
+  "failedToExport": "Failed to export",
+  "exportAlreadyInProgress": "Export already in progress",
+  "failedToCreateExportFile": "Failed to create export file",
+  "exportDirNotAccessible": "Export directory is not accessible",
+  "invalidInput": "Ugyldigt input",
+  "importedX": "Importerede {arg1}",
+  "@importedX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "updatiumImport": "Updatium-import",
+  "importFromURLList": "Importér fra URL-liste",
+  "searchQuery": "Søgning",
+  "appURLList": "Liste over app-URL'er",
+  "line": "Linje",
+  "searchX": "Søg {arg1}",
+  "@searchX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "noResults": "Ingen resultater fundet",
+  "importX": "Importér {arg1}",
+  "@importX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "importedAppsIdDisclaimer": "Importerede apps vises muligvis forkert som \"Ikke installeret\".\nFor at løse dette, geninstaller dem via Updatium.\nDette bør ikke påvirke app-data.\n\nPåvirker kun URL- og tredjepartsimportmetoder.",
+  "importErrors": "Importfejl",
+  "importedXOfYApps": "{arg1} af {arg2} app importeret.",
+  "@importedXOfYApps": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "followingURLsHadErrors": "Følgende URL'er havde fejl:",
+  "selectURL": "Vælg URL",
+  "selectURLs": "Vælg URL'er",
+  "pick": "Vælg",
+  "theme": "Tema",
+  "dark": "Mørk",
+  "light": "Lys",
+  "followSystem": "Følg system",
+  "followSystemThemeExplanation": "Det er kun muligt at følge systemtemaet ved brug af tredjepartsapplikationer",
+  "useBlackTheme": "Brug rent sort mørkt tema",
+  "appSortBy": "Sortér apps efter:",
+  "authorName": "Udvikler/Navn",
+  "nameAuthor": "Navn/Udvikler",
+  "asAdded": "Som tilføjet",
+  "appSortOrder": "Sorteringsrækkefølge for apps",
+  "ascending": "Stigende",
+  "descending": "Faldende",
+  "bgUpdateCheckInterval": "Kontrolinterval for baggrundsopdatering",
+  "neverManualOnly": "Aldrig - Kun manuelt",
+  "appearance": "Udseende",
+  "pinUpdates": "Fastgør opdateringer øverst i app-visning",
+  "updates": "Opdateringer",
+  "sourceSpecific": "Kildespecifik",
+  "appSource": "App-kilde",
+  "noLogs": "Ingen logs",
+  "appLogs": "App-logs",
+  "close": "Luk",
+  "share": "Del",
+  "appNotFound": "App ikke fundet",
+  "networkError": "Network connection failed",
+  "invalidUrlFormat": "Invalid URL format",
+  "accessDenied": "Access denied",
+  "importFailed": "Import failed",
+  "updatiumExportHyphenatedLowercase": "updatium-eksport",
+  "pickAnAPK": "Vælg en APK",
+  "appHasMoreThanOnePackage": "{arg1} har mere end én pakke:",
+  "@appHasMoreThanOnePackage": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceSupportsXArch": "Din enhed understøtter CPU-arkitekturen {arg1}.",
+  "@deviceSupportsXArch": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceSupportsFollowingArchs": "Din enhed understøtter følgende CPU-arkitekturer:",
+  "warning": "Advarsel",
+  "sourceIsXButPackageFromYPrompt": "App-kilden er '{arg1}', men udgivelsespakken kommer fra '{arg2}'. Fortsæt?",
+  "@sourceIsXButPackageFromYPrompt": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "updatesAvailable": "Opdateringer tilgængelige",
+  "updatesAvailableNotifDescription": "Underretter brugeren om tilgængelige opdateringer for en eller flere apps, som Updatium følger",
+  "noNewUpdates": "Ingen nye opdateringer.",
+  "xHasAnUpdate": "{arg1} har en opdatering.",
+  "@xHasAnUpdate": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "appsUpdated": "Apps opdateret",
+  "appsNotUpdated": "Kunne ikke opdatere applikationerne",
+  "appsUpdatedNotifDescription": "Underretter brugeren om, at opdateringer til en eller flere apps blev udført i baggrunden",
+  "xWasUpdatedToY": "{arg1} blev opdateret til {arg2}.",
+  "@xWasUpdatedToY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "xWasNotUpdatedToY": "Kunne ikke opdatere {arg1} til {arg2}.",
+  "@xWasNotUpdatedToY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "errorCheckingUpdates": "Fejl ved tjek for opdateringer",
+  "errorCheckingUpdatesNotifDescription": "En meddelelse, der vises, opdateringstjek i baggrunden mislykkes",
+  "appsRemoved": "Apps fjernet",
+  "appsRemovedNotifDescription": "Underretter brugeren om, at en eller flere apps blev fjernet grundet fejl under indlæsning af dem",
+  "xWasRemovedDueToErrorY": "{arg1} blev fjernet grundet denne fejl: {arg2}",
+  "@xWasRemovedDueToErrorY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "completeAppInstallation": "Færdiggør app-installation",
+  "updatiumMustBeOpenToInstallApps": "Updatium skal være åben for at installere apps",
+  "completeAppInstallationNotifDescription": "Beder brugeren om at gå tilbage til Updatium for at færdiggøre installation af en app",
+  "checkingForUpdates": "Tjekker for opdateringer",
+  "checkingForUpdatesNotifDescription": "Kortvarig meddelelse ved tjek for opdateringer",
+  "pleaseAllowInstallPerm": "Tillad venligst Updatium at installere apps",
+  "trackOnly": "Følg Kun",
+  "errorWithHttpStatusCode": "Fejl {arg1}",
+  "@errorWithHttpStatusCode": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "versionCorrectionDisabled": "Versionskorrektion deaktiveret (plugin ser ikke ud til at virke)",
+  "unknown": "Ukendt",
+  "none": "Ingen",
+  "all": "Alle",
+  "never": "Aldrig",
+  "latestVersionX": "Seneste: {arg1}",
+  "@latestVersionX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "installedVersionX": "Installeret: {arg1}",
+  "@installedVersionX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "lastUpdateCheckX": "Sidste opdateringstjek: {arg1}",
+  "@lastUpdateCheckX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "remove": "Fjern",
+  "yesMarkUpdated": "Ja, markér som opdateret",
+  "fdroid": "F-Droid Officiel",
+  "appIdOrName": "App-ID eller -navn",
+  "appId": "App-ID",
+  "appWithIdOrNameNotFound": "Ingen app med det ID eller navn blev fundet",
+  "reposHaveMultipleApps": "Repos kan indeholde flere apps",
+  "fdroidThirdPartyRepo": "F-Droid Tredjeparts-repo",
+  "install": "Installer",
+  "markInstalled": "Markér som installeret",
+  "update": "Opdater",
+  "updated": "Opdateret",
+  "markUpdated": "Markér som opdateret",
+  "additionalOptions": "Flere indstillinger",
+  "disableVersionDetection": "Deaktivér versionsregistrering",
+  "noVersionDetectionExplanation": "Denne indstilling bør kun bruges til apps, hvor versionsregistrering ikke virker korrekt.",
+  "downloadingX": "Henter {arg1}",
+  "@downloadingX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadX": "Hent {arg1}",
+  "@downloadX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadedX": "Hentede {arg1}",
+  "@downloadedX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "releaseAsset": "Udgivelsesressource",
+  "downloadNotifDescription": "Underretter brugeren om status på hentning af en app",
+  "noAPKFound": "Ingen APK fundet",
+  "noVersionDetection": "Ingen versionsregistrering",
+  "categorize": "Kategoriser",
+  "categories": "Kategorier",
+  "category": "Kategori",
+  "noCategory": "Ingen kategori",
+  "noCategories": "Ingen kategorier",
+  "deleteCategoriesQuestion": "Slet kategorier?",
+  "categoryDeleteWarning": "Alle apps i slettede kategorier indstilles til ukategoriseret.",
+  "addCategory": "Tilføj kategori",
+  "label": "Etiket",
+  "language": "Sprog",
+  "copiedToClipboard": "Kopieret til udklipsholder",
+  "storagePermissionDenied": "Lagringstilladelse nægtet",
+  "selectedCategorizeWarning": "Dette erstatter alle eksisterende kategoriindstillinger for de valgte apps.",
+  "filterAPKsByRegEx": "Filtrer APK'er efter regulært udtryk",
+  "removeFromUpdatium": "Fjern fra Updatium",
+  "uninstallFromDevice": "Afinstaller fra enhed",
+  "onlyWorksWithNonVersionDetectApps": "Virker kun for apps med versionsregistrering deaktiveret.",
+  "releaseDateAsVersion": "Brug udgivelsesdato som versionsstreng",
+  "releaseTitleAsVersion": "Brug udgivelsestitel som versionsstreng",
+  "releaseDateAsVersionExplanation": "Denne indstilling bør kun bruges til apps, hvor versionsregistrering ikke virker korrekt, men hvor en udgivelsesdato er tilgængelig.",
+  "changes": "Ændringer",
+  "releaseDate": "Udgivelsesdato",
+  "importFromURLsInFile": "Importér fra URL'er i fil (som OPML)",
+  "versionDetectionExplanation": "Afstem versionsstreng med versionen registreret fra OS",
+  "versionDetection": "Versionsregistrering",
+  "standardVersionDetection": "Standard versionsregistrering",
+  "groupByCategory": "Gruppér efter kategori",
+  "listView": "Listevisning",
+  "gridView": "Gittervisning",
+  "autoApkFilterByArch": "Forsøg at filtrere APK'er efter CPU-arkitektur, hvis muligt",
+  "autoLinkFilterByArch": "Forsøg at filtrere links efter CPU-arkitektur, hvis det er muligt",
+  "overrideSource": "Tilsidesæt kilde",
+  "dontShowAgain": "Vis ikke igen",
+  "dontShowTrackOnlyWarnings": "Vis ikke 'Følg Kun'-advarsler",
+  "dontShowAPKOriginWarnings": "Vis ikke advarsler om APK-oprindelse",
+  "moveNonInstalledAppsToBottom": "Flyt ikke-installerede apps nederst i app-visning",
+  "hideNonInstalledApps": "Skjul ikke-installerede apps",
+  "gitlabPATLabel": "GitLab Personlig Adgangstoken",
+  "about": "Om",
+  "requiresCredentialsInSettings": "{arg1} kræver yderligere legitimation (i Indstillinger)",
+  "@requiresCredentialsInSettings": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "checkOnStart": "Tjek for opdateringer ved opstart",
+  "safeMode": "Sikker tilstand",
+  "safeModeDescription": "Skjul Tilføj app-side og vis Import/Eksport i stedet",
+  "safeModeAddAppDisabled": "Tilføj app er deaktiveret i sikker tilstand",
+  "tryInferAppIdFromCode": "Forsøg at udlede app-ID fra kildekode",
+  "removeOnExternalUninstall": "Fjern automatisk eksternt afinstallerede apps",
+  "pickHighestVersionCode": "Auto-vælg højeste versionKode af APK",
+  "checkUpdateOnDetailPage": "Tjek for opdateringer ved åbning af appens detaljeside",
+  "disablePageTransitions": "Deaktivér sideovergangsanimationer",
+  "reversePageTransitions": "Omvendte sideovergangsanimationer",
+  "minStarCount": "Minimum antal stjerner",
+  "addInfoBelow": "Tilføj denne info nedenfor.",
+  "addInfoInSettings": "Tilføj denne info i Indstillinger.",
+  "githubSourceNote": "GitHub's hastighedsbegrænsning kan undgås med en API-nøgle.",
+  "sortByLastLinkSegment": "Sortér kun efter det sidste segment af linket",
+  "filterReleaseNotesByRegEx": "Filtrer udgivelsesnoter efter regulært udtryk",
+  "customLinkFilterRegex": "Brugerdefineret APK-linkfilter efter regulært udtryk (standard '.apk$')",
+  "appsPossiblyUpdated": "App-opdateringer forsøgt",
+  "appsPossiblyUpdatedNotifDescription": "Underretter brugeren om, at opdateringer til en eller flere apps muligvis blev udført i baggrunden",
+  "xWasPossiblyUpdatedToY": "{arg1} er muligvis blevet opdateret til {arg2}.",
+  "@xWasPossiblyUpdatedToY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "enableBackgroundUpdates": "Aktivér baggrundsopdateringer",
+  "backgroundUpdateReqsExplanation": "Baggrundsopdateringer er måske ikke mulige for alle apps.",
+  "backgroundUpdateLimitsExplanation": "En vellykket baggrundsinstallation kan kun afgøres, når Updatium åbnes.",
+  "verifyLatestTag": "Verificer 'seneste'-tagget",
+  "intermediateLinkRegex": "Filtrer efter et 'mellemliggende' link at besøge",
+  "filterByLinkText": "Filtrer links efter linktekst",
+  "matchLinksOutsideATags": "Match links uden for <a>-tags",
+  "intermediateLinkNotFound": "Mellemliggende link ikke fundet",
+  "intermediateLink": "Mellemliggende link",
+  "exemptFromBackgroundUpdates": "Undtag fra baggrundsopdateringer (hvis aktiveret)",
+  "bgUpdatesOnWiFiOnly": "Deaktiver baggrundsopdateringer, når du ikke er på Wi-Fi",
+  "bgUpdatesWhileChargingOnly": "Deaktiver baggrundsopdateringer, når du ikke oplader",
+  "autoSelectHighestVersionCode": "Auto-vælg højeste versionKode af APK",
+  "versionExtractionRegEx": "RegEx for versionsstrengsudtrækning",
+  "trimVersionString": "Trim versionsstreng med RegEx",
+  "matchGroupToUseForX": "Match-gruppe til brug for \"{arg1}\"",
+  "@matchGroupToUseForX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "matchGroupToUse": "RegEx-matchgruppe til brug for versionsstrengsudtrækning",
+  "highlightTouchTargets": "Fremhæv mindre åbenlyse berøringsmål",
+  "pickExportDir": "Vælg eksportmappe",
+  "autoExportOnChanges": "Auto-eksportér ved ændringer",
+  "includeSettings": "Inkluder indstillinger",
+  "filterVersionsByRegEx": "Filtrer versioner efter regulært udtryk",
+  "trySelectingSuggestedVersionCode": "Forsøg at vælge den foreslåede versionKode af APK",
+  "dontSortReleasesList": "Behold udgivelsesrækkefølge fra API",
+  "reverseSort": "Omvendt sortering",
+  "takeFirstLink": "Tag første link",
+  "skipSort": "Spring sortering over",
+  "debugMenu": "Fejlfindingsmenu",
+  "bgTaskStarted": "Baggrundsopgave startet - tjek logfiler.",
+  "runBgCheckNow": "Kør baggrundsopdateringstjek nu",
+  "versionExtractWholePage": "Anvend RegEx til versionsstrengsudtrækning på hele siden",
+  "installing": "Installerer",
+  "skipUpdateNotifications": "Spring opdateringsmeddelelser over",
+  "updatesAvailableNotifChannel": "Opdateringer tilgængelige",
+  "appsUpdatedNotifChannel": "Apps opdateret",
+  "appsPossiblyUpdatedNotifChannel": "App-opdateringer forsøgt",
+  "errorCheckingUpdatesNotifChannel": "Fejl ved opdateringstjek",
+  "appsRemovedNotifChannel": "Apps fjernet",
+  "downloadingXNotifChannel": "Henter {arg1}",
+  "@downloadingXNotifChannel": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "completeAppInstallationNotifChannel": "Færdiggør app-installation",
+  "checkingForUpdatesNotifChannel": "Tjekker for opdateringer",
+  "onlyCheckInstalledOrTrackOnlyApps": "Tjek kun installerede og 'Følg Kun'-apps for opdateringer",
+  "supportFixedAPKURL": "Understøt fikserede APK-URL'er",
+  "selectX": "Vælg {arg1}",
+  "@selectX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "parallelDownloads": "Tillad samtidige overførsler",
+  "useShizuku": "Brug Shizuku eller Sui til at installere",
+  "shizukuBinderNotFound": "Shizuku-tjeneste kører ikke",
+  "shizukuOld": "Forældet Shizuku-version (<11). Opdater den",
+  "shizukuOldAndroidWithADB": "Shizuku kører på Android <8.1 med ADB. Opdater Android eller brug Sui i stedet",
+  "shizukuPretendToBeGooglePlay": "Indstil Google Play som installationskilde (hvis Shizuku bruges)",
+  "useSystemFont": "Brug systemskrifttype",
+  "useVersionCodeAsOSVersion": "Brug app-versionKode som OS-registreret version",
+  "requestHeader": "Anmodningsheader",
+  "useLatestAssetDateAsReleaseDate": "Brug seneste ressourceupload som udgivelsesdato",
+  "defaultPseudoVersioningMethod": "Standard pseudo-versioneringsmetode",
+  "partialAPKHash": "Delvis APK-hash",
+  "directAPKLink": "Direkte APK-link",
+  "pseudoVersionInUse": "En pseudo-version er i brug",
+  "installed": "Installeret",
+  "latest": "Seneste",
+  "invertRegEx": "Inverter regulært udtryk",
+  "note": "Bemærk",
+  "selfHostedNote": "Rullemenuen \"{arg1}\" kan bruges til at nå selvhostede/brugerdefinerede instanser af enhver kilde.",
+  "@selfHostedNote": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "badDownload": "APK'en kunne ikke analyseres (inkompatibel eller delvis hentning)",
+  "beforeNewInstallsShareToAppVerifier": "Del nye apps med AppVerifier (hvis tilgængelig)",
+  "appVerifierInstructionToast": "Del til AppVerifier, og vend tilbage, når du er klar.",
+  "wiki": "Hjælp/Wiki",
+  "allowInsecure": "Tillad usikre HTTP-anmodninger",
+  "stayOneVersionBehind": "Forbliv én version bagud den seneste",
+  "useFirstApkOfVersion": "Vælg automatisk den første af flere APK'er",
+  "refreshBeforeDownload": "Opdater app-detaljer før download",
+  "tencentAppStore": "Tencent App Store",
+  "coolApk": "CoolApk",
+  "vivoAppStore": "vivo App Store (CN)",
+  "name": "Navn",
+  "smartname": "Navn (Smart)",
+  "sortMethod": "Sorteringsmetode",
+  "welcome": "Velkommen",
+  "documentationLinksNote": "Updatiums GitHub-side, som der linkes til nedenfor, indeholder links til videoer, artikler, diskussioner og andre ressourcer, som kan hjælpe dig med at forstå, hvordan du bruger appen.",
+  "batteryOptimizationNote": "Bemærk, at baggrundsdownloads kan fungere mere pålideligt, hvis du deaktiverer OS-batterioptimering for Updatium.",
+  "fileDeletionError": "Kunne ikke slette filen (prøv at slette den manuelt og prøv igen): \"{arg1}\"",
+  "@fileDeletionError": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "foregroundService": "Updatium forgrundstjeneste",
+  "foregroundServiceExplanation": "Brug en forgrundstjeneste til opdateringskontrol (mere pålidelig, bruger mere strøm)",
+  "fgServiceNotice": "Denne meddelelse er nødvendig for baggrundsopdateringskontrol (den kan skjules i OS-indstillingerne).",
+  "excludeSecrets": "Udeluk hemmeligheder",
+  "includeZips": "Inkluder ZIP-filer",
+  "zippedApkFilterRegEx": "Filtrer APK'er inde i ZIP",
+  "googleVerificationWarningP1": "Google har annonceret, at fra 2026 / 2027, alle apps på \"certificeret\" Android-enheder vil kræve, at udvikleren til at indsende personlige identitetsoplysninger direkte til Google.\n\nEfter dette tidspunkt, kan Updatium holde op med at arbejde på certificerede Android-enheder.",
+  "googleVerificationWarningP2": "Gå til https: / / keepandroidopen.org / for mere information.",
+  "googleVerificationWarningP3": "Bemærk, at på kort sigt, kan det fortsætte med at være muligt at installere \"uverificerbare\" (ikke-overensstemmende) apps gennem en \"avanceret flow\" proces, som Google har lovet at gennemføre efter bred backlash til deres meddelelse, men de har ikke detaljeret, hvordan dette ville arbejde, så det er uklart, om det virkelig vil bevare brugernes friheder i praksis.\n\nUnder alle omstændigheder er Googles bevægelse et væsentligt skridt i retning af afslutningen af fri, generel-formål computing for enkeltpersoner.\n\nIkke-certificerede OS, som GrapheneOS, bør være upåvirket af dette, så længe de har lov til at fortsætte med at eksistere.",
+  "multipleSigners": "Flere signere",
+  "securityDisclaimerTitle": "Sikkerheds- og Juridisk Ansvarsfraskrivelse",
+  "license": "Licens",
+  "licenseText": "Denne applikation distribueres under GPL v3-licensen.",
+  "disclaimer": "Ansvarsfraskrivelse",
+  "disclaimerText": "Denne applikation distribuerer, hoster eller verificerer ingen af de eksterne applikationer. Brugeren bærer det fulde ansvar for sikkerheden og lovligheden af enhver software installeret via dette værktøj.\n\nhttps://github.com/omeritzics/Updatium er det eneste officielle sted at downloade Updatium - det frarådes kraftigt at downloade det andre steder, da download fra uofficielle kilder ikke er sikkert.",
+  "privacy": "Privatliv",
+  "privacyText": "Denne app er privatlivsfokuseret og indsamler ikke personlige data.",
+  "acceptAndContinue": "Accepter og fortsæt",
+  "decline": "Afvis",
+  "githubStarPromptTitle": "Enjoying Updatium?",
+  "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+  "githubStarPromptStar": "Star",
+  "githubStarPromptDontShowAgain": "Don't show again",
+  "aPKLinkHash": "Hash for APK-link",
+  "gHReqPrefix": "'sky22333/hubproxy'-instans til GitHub-anmodninger",
+  "continueAction": "Fortsæt"
+}

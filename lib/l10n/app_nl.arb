@@ -1,0 +1,650 @@
+{
+  "@@locale": "nl",
+  "invalidURLForSource": "Ongeldige app-URL voor {arg1}",
+  "@invalidURLForSource": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "noReleaseFound": "Geen geschikte release gevonden",
+  "noVersionFound": "Geen versie kunnen bepalen",
+  "urlMatchesNoSource": "URL komt niet overeen met bekende bron",
+  "cantInstallOlderVersion": "Kan geen oudere versie van de app installeren",
+  "appIdMismatch": "Gedownload pakket-ID komt niet overeen met de bestaande app-ID",
+  "functionNotImplemented": "Deze klasse heeft deze functie niet geïmplementeerd.",
+  "placeholder": "Dummy",
+  "someErrors": "Er zijn enkele fouten opgetreden",
+  "unexpectedError": "Onverwachte fout",
+  "ok": "Oké",
+  "and": "en",
+  "githubPATLabel": "GitHub Personal Access Token\n(Verhoogt limiet aantal verzoeken)",
+  "includePrereleases": "Inclusief pre-releases",
+  "fallbackToOlderReleases": "Terugvallen op oudere releases",
+  "filterReleaseTitlesByRegEx": "Release-titels filteren met reguliere expressies.",
+  "invalidRegEx": "Ongeldige reguliere expressie",
+  "noDescription": "Geen omschrijving",
+  "cancel": "Annuleren",
+  "requiredInBrackets": "(Verplicht)",
+  "dropdownNoOptsError": "FOUTMELDING: UITKLAPMENU MOET TENMINSTE EEN OPT HEBBEN",
+  "color": "Kleur",
+  "standard": "Standaard",
+  "custom": "Aangepast",
+  "useMaterialYou": "Material You kleuren gebruiken",
+  "githubStarredRepos": "GitHub-repo's met ster",
+  "uname": "Gebruikersnaam",
+  "wrongArgNum": "Incorrect aantal argumenten.",
+  "xIsTrackOnly": "{arg1} is 'Alleen volgen'",
+  "@xIsTrackOnly": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "source": "Bron",
+  "app": "App",
+  "appsFromSourceAreTrackOnly": "Apps van deze bron zijn 'Alleen volgen'.",
+  "youPickedTrackOnly": "De optie 'Alleen volgen' is geselecteerd.",
+  "trackOnlyAppDescription": "De app zal worden gevolgd voor updates, maar Updatium zal niet in staat zijn om deze te downloaden of te installeren.",
+  "cancelled": "Geannuleerd",
+  "appAlreadyAdded": "App reeds toegevoegd",
+  "alreadyUpToDateQuestion": "App al bijgewerkt?",
+  "addApp": "App toevoegen",
+  "appSourceURL": "App-bron URL",
+  "error": "Foutmelding",
+  "add": "Toevoegen",
+  "searchSomeSourcesLabel": "Zoeken (sommige bronnen)",
+  "search": "Zoeken",
+  "additionalOptsFor": "Aanvullende opties voor {arg1}",
+  "@additionalOptsFor": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "supportedSources": "Ondersteunde bronnen",
+  "trackOnlyInBrackets": "(Alleen volgen)",
+  "searchableInBrackets": "(Doorzoekbaar)",
+  "appsString": "Apps",
+  "noApps": "Geen Apps",
+  "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
+  "noAppsForFilter": "Geen Apps voor filter",
+  "byX": "Door {arg1}",
+  "@byX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "percentProgress": "Voortgang: {arg1}%",
+  "@percentProgress": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseWait": "Even geduld",
+  "updateAvailable": "Update beschikbaar",
+  "notInstalled": "Niet geinstalleerd",
+  "pseudoVersion": "pseudo-versie",
+  "selectAll": "Alles selecteren",
+  "deselectX": "Selectie opheffen {arg1}",
+  "@deselectX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "xWillBeRemovedButRemainInstalled": "{arg1} zal worden gewist uit Updatium, maar blijft geïnstalleerd op het apparaat.",
+  "@xWillBeRemovedButRemainInstalled": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "removeSelectedAppsQuestion": "Geselecteerde apps verwijderen?",
+  "removeSelectedApps": "Geselecteerde apps verwijderen",
+  "updateX": "{arg1} bijwerken",
+  "@updateX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "installX": "{arg1} installeren",
+  "@installX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "markXTrackOnlyAsUpdated": "{arg1}\n(Alleen volgen)\nmarkeren als bijgewerkt",
+  "@markXTrackOnlyAsUpdated": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "changeX": "{arg1} wijzigen",
+  "@changeX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "installUpdateApps": "Apps installeren/bijwerken",
+  "installUpdateSelectedApps": "Geselecteerde apps installeren/bijwerken",
+  "markXSelectedAppsAsUpdated": "{arg1} geselecteerde apps markeren als bijgewerkt?",
+  "@markXSelectedAppsAsUpdated": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "no": "Nee",
+  "yes": "Ja",
+  "markSelectedAppsUpdated": "Geselecteerde apps markeren als bijgewerkt",
+  "pinToTop": "Bovenaan plaatsen",
+  "unpinFromTop": "Bovenaan wegnemen",
+  "resetInstallStatusForSelectedAppsQuestion": "Installatiestatus herstellen voor geselecteerde apps?",
+  "installStatusOfXWillBeResetExplanation": "De installatiestatus van alle geselecteerde apps zal worden hersteld.\n\nDit kan helpen wanneer de versie van de app die in Updatium wordt weergegeven onjuist is vanwege mislukte updates of andere problemen.",
+  "customLinkMessage": "Deze koppelingen werken op apparaten waarop Updatium is geïnstalleerd",
+  "shareAppConfigLinks": "App-configuratie delen als HTML-link",
+  "shareSelectedAppURLs": "Geselecteerde app-URL's delen",
+  "resetInstallStatus": "Installatiestatus herstellen",
+  "more": "Meer",
+  "removeOutdatedFilter": "Verouderde apps-filter verwijderen",
+  "showOutdatedOnly": "Alleen verouderde apps weergeven",
+  "filter": "Filteren",
+  "filterApps": "Apps filteren",
+  "appName": "App-naam",
+  "author": "Auteur",
+  "upToDateApps": "Bijgewerkte apps",
+  "nonInstalledApps": "Niet-geïnstalleerde apps",
+  "importExport": "Importeren/exporteren",
+  "settings": "Instellingen",
+  "exportedTo": "Geëxporteerd naar {arg1}",
+  "@exportedTo": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "updatiumExport": "Uitvoer van verkrijgmiddelen",
+  "failedToExport": "Failed to export",
+  "exportAlreadyInProgress": "Export already in progress",
+  "failedToCreateExportFile": "Failed to create export file",
+  "exportDirNotAccessible": "Export directory is not accessible",
+  "invalidInput": "Ongeldige invoer",
+  "importedX": "{arg1} geïmporteerd",
+  "@importedX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "updatiumImport": "Updatium import",
+  "importFromURLList": "Importeren van URL-lijsten",
+  "searchQuery": "Zoekopdracht",
+  "appURLList": "App URL-lijst",
+  "line": "Regel",
+  "searchX": "{arg1} zoeken",
+  "@searchX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "noResults": "Geen resultaten gevonden",
+  "importX": "{arg1} importeren",
+  "@importX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "importedAppsIdDisclaimer": "Geïmporteerde apps kunnen mogelijk onjuist worden weergegeven als \"Niet geïnstalleerd\".\nOm dit op te lossen, installeer deze opnieuw via Updatium.\nDit zou geen invloed moeten hebben op app-gegevens.\n\nDit heeft alleen invloed op URL- en importmethoden van derden.",
+  "importErrors": "Fouten bij het importeren",
+  "importedXOfYApps": "{arg1} van {arg2} apps geïmporteerd.",
+  "@importedXOfYApps": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "followingURLsHadErrors": "De volgende URL's bevatten fouten:",
+  "selectURL": "URL selecteren",
+  "selectURLs": "URL's selecteren",
+  "pick": "Kiezen",
+  "theme": "Thema",
+  "dark": "Donker",
+  "light": "Licht",
+  "followSystem": "Systeem volgen",
+  "followSystemThemeExplanation": "Het volgen van het systeemthema is alleen mogelijk met applicaties van derden",
+  "useBlackTheme": "Zwart thema gebruiken",
+  "appSortBy": "Sortering",
+  "authorName": "Auteur/Naam",
+  "nameAuthor": "Naam/Auteur",
+  "asAdded": "Datum toegevoegd",
+  "appSortOrder": "Volgorde",
+  "ascending": "Oplopend",
+  "descending": "Aflopend",
+  "bgUpdateCheckInterval": "Frequentie voor achtergrond-updatecontrole",
+  "neverManualOnly": "Nooit - Alleen handmatig",
+  "appearance": "Weergave",
+  "pinUpdates": "Updates bovenaan plaatsen in de apps-weergave",
+  "updates": "Bijwerken",
+  "sourceSpecific": "Bron-specifiek",
+  "appSource": "App-bron",
+  "noLogs": "Geen logs",
+  "appLogs": "App logs",
+  "close": "Sluiten",
+  "share": "Delen",
+  "appNotFound": "App niet gevonden",
+  "networkError": "Network connection failed",
+  "invalidUrlFormat": "Invalid URL format",
+  "accessDenied": "Access denied",
+  "importFailed": "Import failed",
+  "updatiumExportHyphenatedLowercase": "updatium-export",
+  "pickAnAPK": "Kies een APK",
+  "appHasMoreThanOnePackage": "{arg1} biedt verschillende pakketten:",
+  "@appHasMoreThanOnePackage": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceSupportsXArch": "Dit apparaat ondersteunt de {arg1} CPU-architectuur.",
+  "@deviceSupportsXArch": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceSupportsFollowingArchs": "Dit apparaat ondersteunt de volgende CPU-architecturen:",
+  "warning": "Waarschuwing",
+  "sourceIsXButPackageFromYPrompt": "De app-bron is '{arg1}' maar het release-pakket komt van '{arg2}'. Doorgaan?",
+  "@sourceIsXButPackageFromYPrompt": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "updatesAvailable": "Updates beschikbaar",
+  "updatesAvailableNotifDescription": "Stelt de gebruiker op de hoogte dat er updates beschikbaar zijn voor een of meer apps die worden bijgehouden door Updatium.",
+  "noNewUpdates": "Geen nieuwe updates.",
+  "xHasAnUpdate": "{arg1} heeft een update.",
+  "@xHasAnUpdate": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "appsUpdated": "Apps bijgewerkt",
+  "appsNotUpdated": "Applicaties konden niet worden bijgewerkt",
+  "appsUpdatedNotifDescription": "Stelt de gebruiker op de hoogte dat updates voor één of meer apps in de achtergrond zijn toegepast.",
+  "xWasUpdatedToY": "{arg1} is bijgewerkt naar {arg2}.",
+  "@xWasUpdatedToY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "xWasNotUpdatedToY": "Het bijwerken van {arg1} naar {arg2} is mislukt.",
+  "@xWasNotUpdatedToY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "errorCheckingUpdates": "Fout bij het controleren op updates",
+  "errorCheckingUpdatesNotifDescription": "Een melding die verschijnt wanneer de achtergrondcontrole op updates mislukt",
+  "appsRemoved": "Apps verwijderd",
+  "appsRemovedNotifDescription": "Stelt de gebruiker op de hoogte dat een of meer apps zijn verwijderd vanwege fouten tijdens het laden",
+  "xWasRemovedDueToErrorY": "{arg1} is verwijderd vanwege de fout: {arg2}",
+  "@xWasRemovedDueToErrorY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "completeAppInstallation": "App-installatie voltooien",
+  "updatiumMustBeOpenToInstallApps": "Updatium moet geopend zijn om apps te installeren",
+  "completeAppInstallationNotifDescription": "Vraagt de gebruiker om terug te keren naar Updatium om de installatie van een app af te ronden",
+  "checkingForUpdates": "Controleren op updates",
+  "checkingForUpdatesNotifDescription": "Tijdelijke melding die verschijnt tijdens het controleren op updates",
+  "pleaseAllowInstallPerm": "Toestaan dat Updatium apps installeert",
+  "trackOnly": "'Alleen volgen'",
+  "errorWithHttpStatusCode": "Foutmelding {arg1}",
+  "@errorWithHttpStatusCode": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "versionCorrectionDisabled": "Versiecorrectie uitgeschakeld (de plug-in lijkt niet te werken)",
+  "unknown": "Onbekend",
+  "none": "Geen",
+  "all": "Alle",
+  "never": "Nooit",
+  "latestVersionX": "Laatste versie: {arg1}",
+  "@latestVersionX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "installedVersionX": "Geïnstalleerde versie: {arg1}",
+  "@installedVersionX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "lastUpdateCheckX": "Laatste updatecontrole: {arg1}",
+  "@lastUpdateCheckX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "remove": "Verwijderen",
+  "yesMarkUpdated": "Ja, markeren als bijgewerkt",
+  "fdroid": "F-Droid (Officieel)",
+  "appIdOrName": "App-ID of naam",
+  "appId": "App-ID",
+  "appWithIdOrNameNotFound": "Er is geen app gevonden met dat ID of die naam",
+  "reposHaveMultipleApps": "Repositories kunnen meerdere apps bevatten",
+  "fdroidThirdPartyRepo": "F-Droid Repository voor derden",
+  "install": "Installeren",
+  "markInstalled": "Als geïnstalleerd markeren",
+  "update": "Bijwerken",
+  "updated": "Bijgewerkt",
+  "markUpdated": "Als bijgewerkt markeren",
+  "additionalOptions": "Aanvullende opties",
+  "disableVersionDetection": "Versieherkenning uitschakelen",
+  "noVersionDetectionExplanation": "Deze optie moet alleen worden gebruikt voor apps waar versieherkenning niet correct werkt.",
+  "downloadingX": "{arg1} downloaden",
+  "@downloadingX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadX": "Downloaden",
+  "downloadedX": "{arg1} gedownload",
+  "@downloadedX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "releaseAsset": "Release Activa",
+  "downloadNotifDescription": "Stelt de gebruiker op de hoogte van de voortgang bij het downloaden van een app",
+  "noAPKFound": "Geen APK gevonden",
+  "noVersionDetection": "Geen versieherkenning",
+  "categorize": "Categoriseren",
+  "categories": "Categorieën",
+  "category": "Categorie",
+  "noCategory": "Geen categorie",
+  "noCategories": "Geen categorieën",
+  "deleteCategoriesQuestion": "Categorieën verwijderen?",
+  "categoryDeleteWarning": "Alle apps in verwijderde categorieën worden teruggezet naar 'ongecategoriseerd'.",
+  "addCategory": "Categorie toevoegen",
+  "label": "Label",
+  "language": "Taal",
+  "copiedToClipboard": "Gekopieerd naar klembord",
+  "storagePermissionDenied": "Toegang tot opslag geweigerd",
+  "selectedCategorizeWarning": "Dit zal eventuele bestaande categorie-instellingen voor de geselecteerde apps vervangen.",
+  "filterAPKsByRegEx": "APK's flteren met reguliere expressie",
+  "removeFromUpdatium": "Uit Updatium verwijderen",
+  "uninstallFromDevice": "Van apparaat verwijderen",
+  "onlyWorksWithNonVersionDetectApps": "Werkt alleen voor apps waarbij versieherkenning is uitgeschakeld.",
+  "releaseDateAsVersion": "Releasedatum als versie gebruiken",
+  "releaseTitleAsVersion": "Gebruik releasetitel als versiestring",
+  "releaseDateAsVersionExplanation": "Deze optie moet alleen worden gebruikt voor apps waar versieherkenning niet correct werkt, maar waar wel een releasedatum beschikbaar is.",
+  "changes": "Aanpassingen",
+  "releaseDate": "Releasedatum",
+  "importFromURLsInFile": "Importeren vanaf URL's in een bestand (zoals OPML)",
+  "versionDetectionExplanation": "Versiereeks afstemmen met versie gedetecteerd door besturingssysteem",
+  "versionDetection": "Versieherkenning",
+  "standardVersionDetection": "Standaard versieherkenning",
+  "groupByCategory": "Groeperen op categorie",
+  "listView": "Lijstweergave",
+  "gridView": "Rasterweergave",
+  "autoApkFilterByArch": "Probeer APK's te filteren op CPU-architectuur, indien mogelijk",
+  "autoLinkFilterByArch": "Probeer links zo mogelijk te filteren op CPU-architectuur",
+  "overrideSource": "Bron overschrijven",
+  "dontShowAgain": "Laat dit niet meer zien",
+  "dontShowTrackOnlyWarnings": "Geen waarschuwingen weergeven voor 'Alleen volgen'",
+  "dontShowAPKOriginWarnings": "Geen waarschuwingen weergeven voor APK-herkomst",
+  "moveNonInstalledAppsToBottom": "Niet-geïnstalleerde apps onderaan de apps-lijst plaatsen",
+  "hideNonInstalledApps": "Verberg niet-geïnstalleerde apps",
+  "gitlabPATLabel": "GitLab persoonlijk toegangskenmerk",
+  "about": "Over",
+  "requiresCredentialsInSettings": "{arg1} vereist aanvullende referenties (in Instellingen)",
+  "@requiresCredentialsInSettings": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "checkOnStart": "Bij opstarten op updates controleren",
+  "safeMode": "Veilige modus",
+  "safeModeDescription": "Verberg App toevoegen-pagina en toon Importeer/Exporteer in plaats daarvan",
+  "safeModeAddAppDisabled": "App toevoegen is uitgeschakeld in veilige modus",
+  "tryInferAppIdFromCode": "Probeer de app-ID af te leiden uit de broncode",
+  "removeOnExternalUninstall": "Extern verwijderde apps automatisch verwijderen",
+  "pickHighestVersionCode": "De APK met de hoogste versiecode automatisch selecteren",
+  "checkUpdateOnDetailPage": "Controleren op updates bij het openen van een app-detailpagina",
+  "disablePageTransitions": "Overgangsanimaties tussen pagina's uitschakelen",
+  "reversePageTransitions": "Overgangsanimaties tussen pagina's herstellen",
+  "minStarCount": "Minimum Github Stars",
+  "addInfoBelow": "Deze informatie hieronder toevoegen.",
+  "addInfoInSettings": "Deze informatie toevoegen in de instellingen.",
+  "githubSourceNote": "Beperkingen van GitHub kunnen worden vermeden door het gebruik van een API-sleutel.",
+  "sortByLastLinkSegment": "Alleen sorteren op het laatste segment van de link",
+  "filterReleaseNotesByRegEx": "Release-opmerkingen fiteren met een reguliere expressie.",
+  "customLinkFilterRegex": "Aangepaste APK-links filteren met een reguliere expressie (Standaard '.apk$').",
+  "appsPossiblyUpdated": "Pogingen tot app-updates",
+  "appsPossiblyUpdatedNotifDescription": "Stelt de gebruiker op de hoogte dat updates voor één of meer apps mogelijk in de achtergrond zijn toegepast",
+  "xWasPossiblyUpdatedToY": "{arg1} kan bijgewerkt zijn naar {arg2}.",
+  "@xWasPossiblyUpdatedToY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "enableBackgroundUpdates": "Achtergrond-updates inschakelen",
+  "backgroundUpdateReqsExplanation": "Achtergrond-updates zijn niet voor alle apps mogelijk.",
+  "backgroundUpdateLimitsExplanation": "Het succes van een installatie in de achtergrond kan alleen worden bepaald wanneer Updatium is geopend.",
+  "verifyLatestTag": "Het label 'Laatste' verifiëren",
+  "intermediateLinkRegex": "Filteren op een 'Intermediaire' link om te bezoeken",
+  "filterByLinkText": "Links filteren op linktekst",
+  "matchLinksOutsideATags": "Koppelingen buiten <a>-tags matchen",
+  "intermediateLinkNotFound": "Intermediaire link niet gevonden",
+  "intermediateLink": "Intermediaire link",
+  "exemptFromBackgroundUpdates": "Vrijgesteld van achtergrond-updates (indien ingeschakeld)",
+  "bgUpdatesOnWiFiOnly": "Achtergrond-updates uitschakelen wanneer niet verbonden met Wi-Fi",
+  "bgUpdatesWhileChargingOnly": "Achtergrondupdates uitschakelen als er niet wordt opgeladen",
+  "autoSelectHighestVersionCode": "De APK met de hoogste versiecode automatisch selecteren",
+  "versionExtractionRegEx": "Reguliere expressie voor versie-extractie",
+  "trimVersionString": "Versie string trimmen met RegEx",
+  "matchGroupToUseForX": "Overeenkomende groep te gebruiken voor \"{arg1}\"",
+  "@matchGroupToUseForX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "matchGroupToUse": "Overeenkomende groep om te gebruiken voor de reguliere expressie voor versie-extractie",
+  "highlightTouchTargets": "Minder voor de hand liggende aanraakdoelen markeren.",
+  "pickExportDir": "Kies de exportmap",
+  "autoExportOnChanges": "Bij wijzigingen automatisch exporteren",
+  "includeSettings": "Instellingen opnemen",
+  "filterVersionsByRegEx": "Versies met een reguliere expressie filteren",
+  "trySelectingSuggestedVersionCode": "Probeer de voorgestelde versiecode APK te selecteren",
+  "dontSortReleasesList": "Volgorde van releases behouden vanuit de API",
+  "reverseSort": "Omgekeerde sortering",
+  "takeFirstLink": "Neem de eerste link",
+  "skipSort": "Sortering overslaan",
+  "debugMenu": "Debug-menu",
+  "bgTaskStarted": "Achtergrondtaak gestart - controleer de logs.",
+  "runBgCheckNow": "Nu een achtergrond-updatecontrole uitvoeren",
+  "versionExtractWholePage": "De reguliere expressie voor versie-extractie toepassen op de hele pagina",
+  "installing": "Installeren",
+  "skipUpdateNotifications": "Updatemeldingen overslaan",
+  "updatesAvailableNotifChannel": "Updates beschikbaar",
+  "appsUpdatedNotifChannel": "Apps bijgewerkt",
+  "appsPossiblyUpdatedNotifChannel": "Pogingen tot app-updates",
+  "errorCheckingUpdatesNotifChannel": "Foutcontrole bij het zoeken naar updates",
+  "appsRemovedNotifChannel": "Apps verwijderd",
+  "downloadingXNotifChannel": "{arg1} downloaden",
+  "@downloadingXNotifChannel": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "completeAppInstallationNotifChannel": "App-installatie voltooien",
+  "checkingForUpdatesNotifChannel": "Controleren op updates",
+  "onlyCheckInstalledOrTrackOnlyApps": "Alleen geïnstalleerde apps en 'Alleen volgen' controleren op updates",
+  "supportFixedAPKURL": "Vaste APK-URL's ondersteunen",
+  "selectX": "{arg1} selecteren",
+  "@selectX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "parallelDownloads": "Parallelle downloads toestaan",
+  "useShizuku": "Shizuku of Sui gebruiken om te installeren",
+  "shizukuBinderNotFound": "Shizuku is niet actief",
+  "shizukuOld": "Verouderde Shizuku-versie (<11) - bijwerken",
+  "shizukuOldAndroidWithADB": "Shizuku draait op Android < 8.1 met ADB - update Android of gebruik in plaats daarvan Sui",
+  "shizukuPretendToBeGooglePlay": "Google Play instellen als installatiebron (bij Shizuku)",
+  "useSystemFont": "Systeemlettertype gebruiken",
+  "useVersionCodeAsOSVersion": "App versiecode gebruiken als door OS gedetecteerde versie",
+  "requestHeader": "Verzoekkoptekst",
+  "useLatestAssetDateAsReleaseDate": "Laatste upload als releasedatum gebruiken",
+  "defaultPseudoVersioningMethod": "Standaard pseudo-versiebeheermethode",
+  "partialAPKHash": "Gedeeltelijke APK-hash",
+  "directAPKLink": "Directe APK-link",
+  "pseudoVersionInUse": "Er is een pseudo-versie in gebruik",
+  "installed": "Geïnstalleerd",
+  "latest": "Laatste",
+  "invertRegEx": "Reguliere expressie omkeren",
+  "note": "Opmerking",
+  "selfHostedNote": "De \"{arg1}\" dropdown kan gebruikt worden om zelf gehoste/aangepaste instanties van elke bron te bereiken.",
+  "@selfHostedNote": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "badDownload": "De APK kon niet worden verwerkt (incompatibele of gedeeltelijke download)",
+  "beforeNewInstallsShareToAppVerifier": "Nieuwe Apps delen met AppVerifier (indien beschikbaar)",
+  "appVerifierInstructionToast": "Deel het met AppVerifier en keer daarna hier terug.",
+  "wiki": "Help/wiki",
+  "allowInsecure": "Onveilige HTTP-verzoeken toestaan",
+  "stayOneVersionBehind": "Blijf een versie achter op de nieuwste",
+  "useFirstApkOfVersion": "Automatisch de eerste van meerdere APK's selecteren",
+  "refreshBeforeDownload": "Vernieuw app details voor download",
+  "tencentAppStore": "Tencent App Store",
+  "coolApk": "CoolApk",
+  "vivoAppStore": "vivo App Store (CN)",
+  "name": "Naam",
+  "smartname": "Naam (Slim)",
+  "sortMethod": "Sorteermethode",
+  "welcome": "Welkom",
+  "documentationLinksNote": "De GitHub pagina van Updatium waarnaar hieronder wordt gelinkt bevat links naar video's, artikelen, discussies en andere bronnen die je zullen helpen begrijpen hoe je de app kunt gebruiken.",
+  "batteryOptimizationNote": "Merk op dat downloads op de achtergrond mogelijk betrouwbaarder werken als je de batterijoptimalisatie van het besturingssysteem voor Updatium uitschakelt.",
+  "fileDeletionError": "Bestand is niet verwijderd (probeer het handmatig te verwijderen en probeer het opnieuw): \"{arg1}\"",
+  "@fileDeletionError": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "foregroundService": "Verkrijgbare voorgronddienst",
+  "foregroundServiceExplanation": "Gebruik een voorgronddienst voor het controleren van updates (betrouwbaarder, verbruikt meer stroom)",
+  "fgServiceNotice": "Deze melding is nodig voor het controleren van updates op de achtergrond (kan worden verborgen in de OS-instellingen)",
+  "excludeSecrets": "Geheimen uitsluiten",
+  "includeZips": "ZIP-bestanden opnemen",
+  "zippedApkFilterRegEx": "APK's filteren in ZIP",
+  "googleVerificationWarningP1": "Google heeft aangekondigd dat vanaf 2026/2027 alle apps op \"gecertificeerde\" Android-apparaten de ontwikkelaar nodig hebben om persoonlijke identiteitsgegevens rechtstreeks aan Google te verzenden.\n\nDaarna kan Updatium stoppen met werken op gecertificeerde Android-apparaten.",
+  "googleVerificationWarningP2": "Ga naar https://keepandroidopen.org/ voor meer informatie.",
+  "googleVerificationWarningP3": "Merk op dat het op korte termijn mogelijk kan blijven om \"niet-geverifieerde\" (niet-conforme) apps te installeren via een \"geavanceerde flow\" proces dat Google heeft beloofd te implementeren na brede backlash naar hun aankondiging, maar ze hebben niet gedetailleerd hoe dit zou werken, dus het is onduidelijk of het echt zal behouden gebruikersvrijheden op enige praktische manier.\n\nIn ieder geval, Google's zet is een belangrijke stap naar het einde van vrije, algemene computer voor individuen.\n\nNiet-gecertificeerde besturingssystemen, zoals GrapheneOS, mogen hierdoor niet worden beïnvloed zolang ze mogen blijven bestaan.",
+  "multipleSigners": "Meerdere Ondertekenaars",
+  "securityDisclaimerTitle": "Veiligheids- en Juridische Vrijwaringsclausule",
+  "license": "Licentie",
+  "licenseText": "Deze applicatie wordt gedistribueerd onder de GPL v3 Licentie.",
+  "disclaimer": "Vrijwaringsclausule",
+  "disclaimerText": "Deze applicatie distribueert, host of verifieert geen van de externe applicaties. De gebruiker draagt de volledige verantwoordelijkheid voor de veiligheid en legaliteit van alle software die via deze tool wordt geïnstalleerd.\n\nhttps://github.com/omeritzics/Updatium is de enige officiële plek om Updatium te downloaden - het wordt sterk afgeraden om het ergens anders te downloaden omdat het downloaden van niet-officiële bronnen onveilig is.",
+  "privacy": "Privacy",
+  "privacyText": "Deze app is privacy-gericht en verzamelt geen persoonlijke gegevens.",
+  "acceptAndContinue": "Accepteren en doorgaan",
+  "decline": "Weigeren",
+  "githubStarPromptTitle": "Enjoying Updatium?",
+  "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+  "githubStarPromptStar": "Star",
+  "githubStarPromptDontShowAgain": "Don't show again",
+  "aPKLinkHash": "APK-link-hash",
+  "gHReqPrefix": "'sky22333/hubproxy' instantie voor GitHub verzoeken",
+  "continueAction": "Doorgaan"
+}

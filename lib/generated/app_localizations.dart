@@ -1,7 +1,3 @@
-/// Generated localization file for Updatium.
-///
-/// This file is generated automatically. Do not edit manually.
-
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -9,7 +5,33 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_ar.dart';
+import 'app_localizations_bs.dart';
+import 'app_localizations_ca.dart';
+import 'app_localizations_cs.dart';
+import 'app_localizations_da.dart';
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_et.dart';
+import 'app_localizations_fa.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_gl.dart';
+import 'app_localizations_he.dart';
+import 'app_localizations_hu.dart';
+import 'app_localizations_id.dart';
+import 'app_localizations_it.dart';
+import 'app_localizations_ja.dart';
+import 'app_localizations_ko.dart';
+import 'app_localizations_ml.dart';
+import 'app_localizations_nl.dart';
+import 'app_localizations_pl.dart';
+import 'app_localizations_pt.dart';
+import 'app_localizations_ru.dart';
+import 'app_localizations_sv.dart';
+import 'app_localizations_tr.dart';
+import 'app_localizations_uk.dart';
+import 'app_localizations_vi.dart';
 import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
@@ -71,8 +93,8 @@ abstract class AppLocalizations {
 
   final String localeName;
 
-  static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  static AppLocalizations? of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
   static const LocalizationsDelegate<AppLocalizations> delegate =
@@ -98,15 +120,48 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
+    Locale('bs'),
+    Locale('ca'),
+    Locale('cs'),
+    Locale('da'),
+    Locale('de'),
     Locale('en'),
+    Locale('en', 'EO'),
+    Locale('es'),
+    Locale('et'),
+    Locale('fa'),
+    Locale('fr'),
+    Locale('gl'),
+    Locale('he'),
+    Locale('hu'),
+    Locale('id'),
+    Locale('it'),
+    Locale('ja'),
+    Locale('ko'),
+    Locale('ml'),
+    Locale('nl'),
+    Locale('pl'),
+    Locale('pt'),
+    Locale('pt', 'BR'),
+    Locale('ru'),
+    Locale('sv'),
+    Locale('tr'),
+    Locale('uk'),
+    Locale('vi'),
     Locale('zh'),
+    Locale.fromSubtags(
+      languageCode: 'zh',
+      countryCode: 'TW',
+      scriptCode: 'Hant',
+    ),
   ];
 
   /// No description provided for @invalidURLForSource.
   ///
   /// In en, this message translates to:
-  /// **'Not a valid {appType} app URL'**
-  String invalidURLForSource(String appType);
+  /// **'Not a valid {arg1} app URL'**
+  String invalidURLForSource(String arg1);
 
   /// No description provided for @noReleaseFound.
   ///
@@ -216,12 +271,6 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
-  /// No description provided for @continueAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue'**
-  String get continueAction;
-
   /// No description provided for @requiredInBrackets.
   ///
   /// In en, this message translates to:
@@ -279,8 +328,8 @@ abstract class AppLocalizations {
   /// No description provided for @xIsTrackOnly.
   ///
   /// In en, this message translates to:
-  /// **'{appName} is track-only'**
-  String xIsTrackOnly(String appName);
+  /// **'{arg1} is track-only'**
+  String xIsTrackOnly(String arg1);
 
   /// No description provided for @source.
   ///
@@ -369,8 +418,8 @@ abstract class AppLocalizations {
   /// No description provided for @additionalOptsFor.
   ///
   /// In en, this message translates to:
-  /// **'Additional options for {appName}'**
-  String additionalOptsFor(String appName);
+  /// **'Additional options for {arg1}'**
+  String additionalOptsFor(String arg1);
 
   /// No description provided for @supportedSources.
   ///
@@ -417,14 +466,14 @@ abstract class AppLocalizations {
   /// No description provided for @byX.
   ///
   /// In en, this message translates to:
-  /// **'By {author}'**
-  String byX(String author);
+  /// **'By {arg1}'**
+  String byX(String arg1);
 
   /// No description provided for @percentProgress.
   ///
   /// In en, this message translates to:
-  /// **'Progress: {progress}%'**
-  String percentProgress(String progress);
+  /// **'Progress: {arg1}%'**
+  String percentProgress(String arg1);
 
   /// No description provided for @pleaseWait.
   ///
@@ -459,14 +508,14 @@ abstract class AppLocalizations {
   /// No description provided for @deselectX.
   ///
   /// In en, this message translates to:
-  /// **'Deselect {count}'**
-  String deselectX(String count);
+  /// **'Deselect {arg1}'**
+  String deselectX(String arg1);
 
   /// No description provided for @xWillBeRemovedButRemainInstalled.
   ///
   /// In en, this message translates to:
-  /// **'{appName} will be removed from Updatium but remain installed on device.'**
-  String xWillBeRemovedButRemainInstalled(String appName);
+  /// **'{arg1} will be removed from Updatium but remain installed on device.'**
+  String xWillBeRemovedButRemainInstalled(String arg1);
 
   /// No description provided for @removeSelectedAppsQuestion.
   ///
@@ -483,26 +532,26 @@ abstract class AppLocalizations {
   /// No description provided for @updateX.
   ///
   /// In en, this message translates to:
-  /// **'Update {appName}'**
-  String updateX(String appName);
+  /// **'Update {arg1}'**
+  String updateX(String arg1);
 
   /// No description provided for @installX.
   ///
   /// In en, this message translates to:
-  /// **'Install {appName}'**
-  String installX(String appName);
+  /// **'Install {arg1}'**
+  String installX(String arg1);
 
   /// No description provided for @markXTrackOnlyAsUpdated.
   ///
   /// In en, this message translates to:
-  /// **'Mark {appName}\n(track-only)\nas updated'**
-  String markXTrackOnlyAsUpdated(String appName);
+  /// **'Mark {arg1}\n(track-only)\nas updated'**
+  String markXTrackOnlyAsUpdated(String arg1);
 
   /// No description provided for @changeX.
   ///
   /// In en, this message translates to:
-  /// **'Change {appName}'**
-  String changeX(String appName);
+  /// **'Change {arg1}'**
+  String changeX(String arg1);
 
   /// No description provided for @installUpdateApps.
   ///
@@ -519,8 +568,8 @@ abstract class AppLocalizations {
   /// No description provided for @markXSelectedAppsAsUpdated.
   ///
   /// In en, this message translates to:
-  /// **'Mark {count} selected apps as updated?'**
-  String markXSelectedAppsAsUpdated(String count);
+  /// **'Mark {arg1} selected apps as updated?'**
+  String markXSelectedAppsAsUpdated(String arg1);
 
   /// No description provided for @no.
   ///
@@ -657,8 +706,8 @@ abstract class AppLocalizations {
   /// No description provided for @exportedTo.
   ///
   /// In en, this message translates to:
-  /// **'Exported to {location}'**
-  String exportedTo(String location);
+  /// **'Exported to {arg1}'**
+  String exportedTo(String arg1);
 
   /// No description provided for @updatiumExport.
   ///
@@ -699,8 +748,8 @@ abstract class AppLocalizations {
   /// No description provided for @importedX.
   ///
   /// In en, this message translates to:
-  /// **'Imported {count}'**
-  String importedX(String count);
+  /// **'Imported {arg1}'**
+  String importedX(String arg1);
 
   /// No description provided for @updatiumImport.
   ///
@@ -735,8 +784,8 @@ abstract class AppLocalizations {
   /// No description provided for @searchX.
   ///
   /// In en, this message translates to:
-  /// **'Search {query}'**
-  String searchX(String query);
+  /// **'Search {arg1}'**
+  String searchX(String arg1);
 
   /// No description provided for @noResults.
   ///
@@ -747,8 +796,8 @@ abstract class AppLocalizations {
   /// No description provided for @importX.
   ///
   /// In en, this message translates to:
-  /// **'Import {count}'**
-  String importX(String count);
+  /// **'Import {arg1}'**
+  String importX(String arg1);
 
   /// No description provided for @importedAppsIdDisclaimer.
   ///
@@ -765,8 +814,8 @@ abstract class AppLocalizations {
   /// No description provided for @importedXOfYApps.
   ///
   /// In en, this message translates to:
-  /// **'{imported} of {total} apps imported.'**
-  String importedXOfYApps(String imported, String total);
+  /// **'{arg1} of {arg2} apps imported.'**
+  String importedXOfYApps(String arg1, String arg2);
 
   /// No description provided for @followingURLsHadErrors.
   ///
@@ -993,14 +1042,14 @@ abstract class AppLocalizations {
   /// No description provided for @appHasMoreThanOnePackage.
   ///
   /// In en, this message translates to:
-  /// **'{appName} has more than one package:'**
-  String appHasMoreThanOnePackage(String appName);
+  /// **'{arg1} has more than one package:'**
+  String appHasMoreThanOnePackage(String arg1);
 
   /// No description provided for @deviceSupportsXArch.
   ///
   /// In en, this message translates to:
-  /// **'Your device supports the {arch} CPU architecture.'**
-  String deviceSupportsXArch(String arch);
+  /// **'Your device supports the {arg1} CPU architecture.'**
+  String deviceSupportsXArch(String arg1);
 
   /// No description provided for @deviceSupportsFollowingArchs.
   ///
@@ -1017,8 +1066,8 @@ abstract class AppLocalizations {
   /// No description provided for @sourceIsXButPackageFromYPrompt.
   ///
   /// In en, this message translates to:
-  /// **'The app source is \'{source}\' but the release package comes from \'{package}\'. Continue?'**
-  String sourceIsXButPackageFromYPrompt(String source, String package);
+  /// **'The app source is \'{arg1}\' but the release package comes from \'{arg2}\'. Continue?'**
+  String sourceIsXButPackageFromYPrompt(String arg1, String arg2);
 
   /// No description provided for @updatesAvailable.
   ///
@@ -1041,8 +1090,8 @@ abstract class AppLocalizations {
   /// No description provided for @xHasAnUpdate.
   ///
   /// In en, this message translates to:
-  /// **'{appName} has an update.'**
-  String xHasAnUpdate(String appName);
+  /// **'{arg1} has an update.'**
+  String xHasAnUpdate(String arg1);
 
   /// No description provided for @appsUpdated.
   ///
@@ -1065,14 +1114,14 @@ abstract class AppLocalizations {
   /// No description provided for @xWasUpdatedToY.
   ///
   /// In en, this message translates to:
-  /// **'{appName} was updated to {version}.'**
-  String xWasUpdatedToY(String appName, String version);
+  /// **'{arg1} was updated to {arg2}.'**
+  String xWasUpdatedToY(String arg1, String arg2);
 
   /// No description provided for @xWasNotUpdatedToY.
   ///
   /// In en, this message translates to:
-  /// **'Failed to update {appName} to {version}.'**
-  String xWasNotUpdatedToY(String appName, String version);
+  /// **'Failed to update {arg1} to {arg2}.'**
+  String xWasNotUpdatedToY(String arg1, String arg2);
 
   /// No description provided for @errorCheckingUpdates.
   ///
@@ -1101,8 +1150,8 @@ abstract class AppLocalizations {
   /// No description provided for @xWasRemovedDueToErrorY.
   ///
   /// In en, this message translates to:
-  /// **'{appName} was removed due to this error: {error}'**
-  String xWasRemovedDueToErrorY(String appName, String error);
+  /// **'{arg1} was removed due to this error: {arg2}'**
+  String xWasRemovedDueToErrorY(String arg1, String arg2);
 
   /// No description provided for @completeAppInstallation.
   ///
@@ -1149,8 +1198,8 @@ abstract class AppLocalizations {
   /// No description provided for @errorWithHttpStatusCode.
   ///
   /// In en, this message translates to:
-  /// **'Error {statusCode}'**
-  String errorWithHttpStatusCode(String statusCode);
+  /// **'Error {arg1}'**
+  String errorWithHttpStatusCode(String arg1);
 
   /// No description provided for @versionCorrectionDisabled.
   ///
@@ -1185,20 +1234,20 @@ abstract class AppLocalizations {
   /// No description provided for @latestVersionX.
   ///
   /// In en, this message translates to:
-  /// **'Latest: {version}'**
-  String latestVersionX(String version);
+  /// **'Latest: {arg1}'**
+  String latestVersionX(String arg1);
 
   /// No description provided for @installedVersionX.
   ///
   /// In en, this message translates to:
-  /// **'Installed: {version}'**
-  String installedVersionX(String version);
+  /// **'Installed: {arg1}'**
+  String installedVersionX(String arg1);
 
   /// No description provided for @lastUpdateCheckX.
   ///
   /// In en, this message translates to:
-  /// **'Last update check: {time}'**
-  String lastUpdateCheckX(String time);
+  /// **'Last update check: {arg1}'**
+  String lastUpdateCheckX(String arg1);
 
   /// No description provided for @remove.
   ///
@@ -1389,20 +1438,20 @@ abstract class AppLocalizations {
   /// No description provided for @downloadingX.
   ///
   /// In en, this message translates to:
-  /// **'Downloading {appName}'**
-  String downloadingX(String appName);
+  /// **'Downloading {arg1}'**
+  String downloadingX(String arg1);
 
   /// No description provided for @downloadX.
   ///
   /// In en, this message translates to:
-  /// **'Download {appName}'**
-  String downloadX(String appName);
+  /// **'Download {arg1}'**
+  String downloadX(String arg1);
 
   /// No description provided for @downloadedX.
   ///
   /// In en, this message translates to:
-  /// **'Downloaded {appName}'**
-  String downloadedX(String appName);
+  /// **'Downloaded {arg1}'**
+  String downloadedX(String arg1);
 
   /// No description provided for @releaseAsset.
   ///
@@ -1665,8 +1714,8 @@ abstract class AppLocalizations {
   /// No description provided for @requiresCredentialsInSettings.
   ///
   /// In en, this message translates to:
-  /// **'{source} needs additional credentials (in Settings)'**
-  String requiresCredentialsInSettings(String source);
+  /// **'{arg1} needs additional credentials (in Settings)'**
+  String requiresCredentialsInSettings(String arg1);
 
   /// No description provided for @checkOnStart.
   ///
@@ -1785,8 +1834,8 @@ abstract class AppLocalizations {
   /// No description provided for @xWasPossiblyUpdatedToY.
   ///
   /// In en, this message translates to:
-  /// **'{appName} may have been updated to {version}.'**
-  String xWasPossiblyUpdatedToY(String appName, String version);
+  /// **'{arg1} may have been updated to {arg2}.'**
+  String xWasPossiblyUpdatedToY(String arg1, String arg2);
 
   /// No description provided for @enableBackgroundUpdates.
   ///
@@ -1881,8 +1930,8 @@ abstract class AppLocalizations {
   /// No description provided for @matchGroupToUseForX.
   ///
   /// In en, this message translates to:
-  /// **'Match group to use for \"{regexName}\"'**
-  String matchGroupToUseForX(String regexName);
+  /// **'Match group to use for \"{arg1}\"'**
+  String matchGroupToUseForX(String arg1);
 
   /// No description provided for @matchGroupToUse.
   ///
@@ -2019,8 +2068,8 @@ abstract class AppLocalizations {
   /// No description provided for @downloadingXNotifChannel.
   ///
   /// In en, this message translates to:
-  /// **'Downloading {appName}'**
-  String downloadingXNotifChannel(String appName);
+  /// **'Downloading {arg1}'**
+  String downloadingXNotifChannel(String arg1);
 
   /// No description provided for @completeAppInstallationNotifChannel.
   ///
@@ -2049,8 +2098,8 @@ abstract class AppLocalizations {
   /// No description provided for @selectX.
   ///
   /// In en, this message translates to:
-  /// **'Select {count}'**
-  String selectX(String count);
+  /// **'Select {arg1}'**
+  String selectX(String arg1);
 
   /// No description provided for @parallelDownloads.
   ///
@@ -2124,12 +2173,6 @@ abstract class AppLocalizations {
   /// **'Partial APK hash'**
   String get partialAPKHash;
 
-  /// No description provided for @apkLinkHash.
-  ///
-  /// In en, this message translates to:
-  /// **'APK link hash'**
-  String get apkLinkHash;
-
   /// No description provided for @directAPKLink.
   ///
   /// In en, this message translates to:
@@ -2169,8 +2212,8 @@ abstract class AppLocalizations {
   /// No description provided for @selfHostedNote.
   ///
   /// In en, this message translates to:
-  /// **'The \"{dropdown}\" dropdown can be used to reach self-hosted/custom instances of any source.'**
-  String selfHostedNote(String dropdown);
+  /// **'The \"{arg1}\" dropdown can be used to reach self-hosted/custom instances of any source.'**
+  String selfHostedNote(String arg1);
 
   /// No description provided for @badDownload.
   ///
@@ -2283,8 +2326,8 @@ abstract class AppLocalizations {
   /// No description provided for @fileDeletionError.
   ///
   /// In en, this message translates to:
-  /// **'Failed to delete file (try deleting it manually then try again): \"{filename}\"'**
-  String fileDeletionError(String filename);
+  /// **'Failed to delete file (try deleting it manually then try again): \"{arg1}\"'**
+  String fileDeletionError(String arg1);
 
   /// No description provided for @foregroundService.
   ///
@@ -2309,12 +2352,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Exclude secrets'**
   String get excludeSecrets;
-
-  /// No description provided for @ghReqPrefix.
-  ///
-  /// In en, this message translates to:
-  /// **'\'sky22333/hubproxy\' instance for GitHub requests'**
-  String get ghReqPrefix;
 
   /// No description provided for @includeZips.
   ///
@@ -2351,102 +2388,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Multiple Signers'**
   String get multipleSigners;
-
-  /// No description provided for @removeAppQuestion.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove app?'**
-  String get removeAppQuestion;
-
-  /// No description provided for @tooManyRequestsTryAgainInMinutes.
-  ///
-  /// In en, this message translates to:
-  /// **'Too many requests (rate limited) - try again in {count} minute'**
-  String tooManyRequestsTryAgainInMinutes(int count);
-
-  /// No description provided for @bgUpdateGotErrorRetryInMinutes.
-  ///
-  /// In en, this message translates to:
-  /// **'BG update checking encountered a {error}, will schedule a retry check in {count} minute'**
-  String bgUpdateGotErrorRetryInMinutes(String error, int count);
-
-  /// No description provided for @bgCheckFoundUpdatesWillNotifyIfNeeded.
-  ///
-  /// In en, this message translates to:
-  /// **'BG update checking found {count} update - will notify user if needed'**
-  String bgCheckFoundUpdatesWillNotifyIfNeeded(int count);
-
-  /// No description provided for @apps.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} Apps'**
-  String apps(int count);
-
-  /// No description provided for @url.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} URLs'**
-  String url(int count);
-
-  /// No description provided for @minute.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} minutes'**
-  String minute(int count);
-
-  /// No description provided for @hour.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} hours'**
-  String hour(int count);
-
-  /// No description provided for @day.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} days'**
-  String day(int count);
-
-  /// No description provided for @clearedNLogsBeforeXAfterY.
-  ///
-  /// In en, this message translates to:
-  /// **'Cleared {n} logs (before = {before}, after = {after})'**
-  String clearedNLogsBeforeXAfterY(int n, int before, int after);
-
-  /// No description provided for @xAndNMoreUpdatesAvailable.
-  ///
-  /// In en, this message translates to:
-  /// **'{appName} and {count} more apps have updates.'**
-  String xAndNMoreUpdatesAvailable(String appName, int count);
-
-  /// No description provided for @xAndNMoreUpdatesInstalled.
-  ///
-  /// In en, this message translates to:
-  /// **'{appName} and {count} more apps were updated.'**
-  String xAndNMoreUpdatesInstalled(String appName, int count);
-
-  /// No description provided for @xAndNMoreUpdatesFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to update {appName} and {count} more apps.'**
-  String xAndNMoreUpdatesFailed(String appName, int count);
-
-  /// No description provided for @xAndNMoreUpdatesPossiblyInstalled.
-  ///
-  /// In en, this message translates to:
-  /// **'{appName} and {count} more apps may have been updated.'**
-  String xAndNMoreUpdatesPossiblyInstalled(String appName, int count);
-
-  /// No description provided for @apk.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} APKs'**
-  String apk(int count);
-
-  /// No description provided for @certificateHash.
-  ///
-  /// In en, this message translates to:
-  /// **'Certificate Hashes'**
-  String get certificateHash;
 
   /// No description provided for @securityDisclaimerTitle.
   ///
@@ -2525,6 +2466,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Don\'t show again'**
   String get githubStarPromptDontShowAgain;
+
+  /// No description provided for @aPKLinkHash.
+  ///
+  /// In en, this message translates to:
+  /// **'APK link hash'**
+  String get aPKLinkHash;
+
+  /// No description provided for @gHReqPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'\'sky22333/hubproxy\' instance for GitHub requests'**
+  String get gHReqPrefix;
+
+  /// No description provided for @continueAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueAction;
+
+  /// No description provided for @apps.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Apps'**
+  String apps(int count);
+
+  /// No description provided for @apk.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} APKs'**
+  String apk(int count);
+
+  /// No description provided for @minute.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} minutes'**
+  String minute(int count);
 }
 
 class _AppLocalizationsDelegate
@@ -2537,18 +2514,124 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'bs',
+    'ca',
+    'cs',
+    'da',
+    'de',
+    'en',
+    'es',
+    'et',
+    'fa',
+    'fr',
+    'gl',
+    'he',
+    'hu',
+    'id',
+    'it',
+    'ja',
+    'ko',
+    'ml',
+    'nl',
+    'pl',
+    'pt',
+    'ru',
+    'sv',
+    'tr',
+    'uk',
+    'vi',
+    'zh',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-  // Lookup logic when only language code is specified.
+  // Lookup logic when language+script+country codes are specified.
+  switch (locale.toString()) {
+    case 'zh_Hant_TW':
+      return AppLocalizationsZhHantTw();
+  }
+
+  // Lookup logic when language+country codes are specified.
   switch (locale.languageCode) {
     case 'en':
+      {
+        switch (locale.countryCode) {
+          case 'EO':
+            return AppLocalizationsEnEo();
+        }
+        break;
+      }
+    case 'pt':
+      {
+        switch (locale.countryCode) {
+          case 'BR':
+            return AppLocalizationsPtBr();
+        }
+        break;
+      }
+  }
+
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'ar':
+      return AppLocalizationsAr();
+    case 'bs':
+      return AppLocalizationsBs();
+    case 'ca':
+      return AppLocalizationsCa();
+    case 'cs':
+      return AppLocalizationsCs();
+    case 'da':
+      return AppLocalizationsDa();
+    case 'de':
+      return AppLocalizationsDe();
+    case 'en':
       return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'et':
+      return AppLocalizationsEt();
+    case 'fa':
+      return AppLocalizationsFa();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'gl':
+      return AppLocalizationsGl();
+    case 'he':
+      return AppLocalizationsHe();
+    case 'hu':
+      return AppLocalizationsHu();
+    case 'id':
+      return AppLocalizationsId();
+    case 'it':
+      return AppLocalizationsIt();
+    case 'ja':
+      return AppLocalizationsJa();
+    case 'ko':
+      return AppLocalizationsKo();
+    case 'ml':
+      return AppLocalizationsMl();
+    case 'nl':
+      return AppLocalizationsNl();
+    case 'pl':
+      return AppLocalizationsPl();
+    case 'pt':
+      return AppLocalizationsPt();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'sv':
+      return AppLocalizationsSv();
+    case 'tr':
+      return AppLocalizationsTr();
+    case 'uk':
+      return AppLocalizationsUk();
+    case 'vi':
+      return AppLocalizationsVi();
     case 'zh':
       return AppLocalizationsZh();
   }

@@ -1,0 +1,657 @@
+{
+  "@@locale": "sv",
+  "invalidURLForSource": "Inte giltig {arg1} App-URL",
+  "@invalidURLForSource": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "noReleaseFound": "Kunde inte hitta en lämplig releaseversion",
+  "noVersionFound": "Kunde inte bestämma releaseversion",
+  "urlMatchesNoSource": "URL matchar inte känd källa",
+  "cantInstallOlderVersion": "Kan inte installera en äldre version av en app",
+  "appIdMismatch": "Nerladdat paket-ID matchar inte nuvarande App-ID",
+  "functionNotImplemented": "Den här klassen har inte implementerat den här funktionen",
+  "placeholder": "Platshållare",
+  "someErrors": "Några fel uppstod",
+  "unexpectedError": "Oväntat fel",
+  "ok": "Okej",
+  "and": "och",
+  "githubPATLabel": "GitHub Personal Access Token (ökar hastighetsgräns)",
+  "includePrereleases": "Inkludera förreleaser",
+  "fallbackToOlderReleases": "Fall tillbaka till äldre releaser",
+  "filterReleaseTitlesByRegEx": "Filtrera utgivningstitlar efter reguljärt uttryck",
+  "invalidRegEx": "Ogiltigt reguljärt uttryck",
+  "noDescription": "Ingen beskrivning",
+  "cancel": "Avbryt",
+  "requiredInBrackets": "(Kräver)",
+  "dropdownNoOptsError": "FEL: DROPDOWN MÅSTE HA MINST ETT OPT",
+  "color": "Färg",
+  "standard": "Standard",
+  "custom": "Anpassad",
+  "useMaterialYou": "Använd Material You-färger",
+  "githubStarredRepos": "GitHub Stjärnmärkta Förråd",
+  "uname": "Användarnamn",
+  "wrongArgNum": "Fel antal argument har angetts",
+  "xIsTrackOnly": "{arg1} är 'Följ-Endast'",
+  "@xIsTrackOnly": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "source": "Källa",
+  "app": "App",
+  "appsFromSourceAreTrackOnly": "Apparna från denna källa är 'Följ-Endast'.",
+  "youPickedTrackOnly": "Du har markerat 'Följ-Endast'-alternativet",
+  "trackOnlyAppDescription": "Appen kommer följas för uppdateringar men Updatium kommer inte ladda ner eller installera den.",
+  "cancelled": "Avbruten",
+  "appAlreadyAdded": "App redan tillagd",
+  "alreadyUpToDateQuestion": "App redan uppdaterad?",
+  "addApp": "Lägg till App",
+  "appSourceURL": "URL till Appkälla",
+  "error": "Fel",
+  "add": "Lägg till",
+  "searchSomeSourcesLabel": "Sök (Bara några källor)",
+  "search": "Sök",
+  "additionalOptsFor": "Ytterligare Alternativ för {arg1}",
+  "@additionalOptsFor": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "supportedSources": "Stödda Källor",
+  "trackOnlyInBrackets": "(Följ-Endast)",
+  "searchableInBrackets": "(Sökbar)",
+  "appsString": "Appar",
+  "noApps": "Inga Appar",
+  "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
+  "noAppsForFilter": "Inga Appar för Filter",
+  "byX": "Av {arg1}",
+  "@byX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "percentProgress": "Framsteg: {arg1}%",
+  "@percentProgress": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseWait": "Vänta",
+  "updateAvailable": "Uppdatering Tillgänglig",
+  "notInstalled": "Inte Installerad",
+  "pseudoVersion": "pseudoversion",
+  "selectAll": "Välj Alla",
+  "deselectX": "Avmarkera {arg1}",
+  "@deselectX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "xWillBeRemovedButRemainInstalled": "{arg1} kommer tas bort från Updatium men kommer vara fortsatt installerad på enheten.",
+  "@xWillBeRemovedButRemainInstalled": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "removeSelectedAppsQuestion": "Ta bort markerade Appar?",
+  "removeSelectedApps": "Ta bort markerade Appar",
+  "updateX": "Uppdatera {arg1}",
+  "@updateX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "installX": "Installera {arg1}",
+  "@installX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "markXTrackOnlyAsUpdated": "Märk {arg1}\n(Följ-Endast)\nsom Uppdaterad",
+  "@markXTrackOnlyAsUpdated": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "changeX": "Byt {arg1}",
+  "@changeX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "installUpdateApps": "Installera/Uppdatera Appar",
+  "installUpdateSelectedApps": "Installera/Uppdatera Markerade Appar",
+  "markXSelectedAppsAsUpdated": "Märk {arg1} markerade Appar som Uppdaterade?",
+  "@markXSelectedAppsAsUpdated": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "no": "Nej",
+  "yes": "Ja",
+  "markSelectedAppsUpdated": "Märk Valda Appar som Uppdaterade",
+  "pinToTop": "Nåla fast högst upp",
+  "unpinFromTop": "Avnåla",
+  "resetInstallStatusForSelectedAppsQuestion": "Återställ Installationsstatus för valda Appar?",
+  "installStatusOfXWillBeResetExplanation": "Installationsstatusen för de markerade apparna kommer återställas.\n\n Detta kan hjälpa när appversionen visad i Obtanium är fel på grund av misslyckade uppdateringar eller andra orsaker.",
+  "customLinkMessage": "Dessa länkar fungerar på enheter med Updatium installerat",
+  "shareAppConfigLinks": "Dela appkonfiguration som HTML-länk",
+  "shareSelectedAppURLs": "Dela Valda Appars URL:er",
+  "resetInstallStatus": "Återställ Installationstatus",
+  "more": "Mer",
+  "removeOutdatedFilter": "Ta bort Utgånga App-filtret",
+  "showOutdatedOnly": "Visa Endast Utgånga Appar",
+  "filter": "Filtrera",
+  "filterApps": "Filtrera Appar",
+  "appName": "Appnamn",
+  "author": "Utvecklare",
+  "upToDateApps": "Uppdaterade Appar",
+  "nonInstalledApps": "Icke-Installerade Appar",
+  "importExport": "Importera/Exportera",
+  "settings": "Inställningar",
+  "exportedTo": "Exporterad till {arg1}",
+  "@exportedTo": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "updatiumExport": "Updatiumexport",
+  "failedToExport": "Failed to export",
+  "exportAlreadyInProgress": "Export already in progress",
+  "failedToCreateExportFile": "Failed to create export file",
+  "exportDirNotAccessible": "Export directory is not accessible",
+  "invalidInput": "Ogiltig inmatning",
+  "importedX": "Importerad {arg1}",
+  "@importedX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "updatiumImport": "Updatium Import",
+  "importFromURLList": "Importera från URL-lista",
+  "searchQuery": "Sökförfrågan",
+  "appURLList": "App URL-lista",
+  "line": "Linje",
+  "searchX": "Sök {arg1}",
+  "@searchX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "noResults": "Inga resultat",
+  "importX": "Importera {arg1}",
+  "@importX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "importedAppsIdDisclaimer": "Importerade Appar kan felaktigt visas som \"Inte Installerad\".\nFör att fixa detta återinstallera dem genom Updatium.\nDetta skall inte påverka appdata.\n\n Påverkar endast URL:en och tredjepartsimportermetoder.",
+  "importErrors": "Importfel",
+  "importedXOfYApps": "{arg1} av {arg2} Appar importerade.",
+  "@importedXOfYApps": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "followingURLsHadErrors": "Följande URL:er hade fel:",
+  "selectURL": "Välj URL",
+  "selectURLs": "Välj URL:er",
+  "pick": "Välj",
+  "theme": "Tema",
+  "dark": "Mörkt",
+  "light": "Ljust",
+  "followSystem": "Följ System",
+  "followSystemThemeExplanation": "Följande systemtema är endast möjligt med hjälp av tredjepartsapplikationer",
+  "useBlackTheme": "Använd svart tema",
+  "appSortBy": "Sortera Appar via",
+  "authorName": "Utvecklare/Namn",
+  "nameAuthor": "Namn/Utvecklare",
+  "asAdded": "Som tillagd",
+  "appSortOrder": "Appsorteringsordning",
+  "ascending": "Stigande",
+  "descending": "Fallande",
+  "bgUpdateCheckInterval": "Bakgrundsuppdateringskollfrekvens",
+  "neverManualOnly": "Aldrig - Endast manuell",
+  "appearance": "Utseende",
+  "pinUpdates": "Fäst uppdateringar högst upp i appvyn",
+  "updates": "Uppdateringar",
+  "sourceSpecific": "Källspecifik",
+  "appSource": "Appkälla",
+  "noLogs": "Inga Loggar",
+  "appLogs": "Apploggar",
+  "close": "Stäng",
+  "share": "Dela",
+  "appNotFound": "App ej funnen",
+  "networkError": "Network connection failed",
+  "invalidUrlFormat": "Invalid URL format",
+  "accessDenied": "Access denied",
+  "importFailed": "Import failed",
+  "updatiumExportHyphenatedLowercase": "updatium-export",
+  "pickAnAPK": "Välj en APK",
+  "appHasMoreThanOnePackage": "{arg1} har fler än ett paket:",
+  "@appHasMoreThanOnePackage": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceSupportsXArch": "Din enhet stödjer {arg1} CPU-arkiktektur.",
+  "@deviceSupportsXArch": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceSupportsFollowingArchs": "YDin enhet stödjer följande CPU-arkitekturer:",
+  "warning": "Varning",
+  "sourceIsXButPackageFromYPrompt": "Appens källa är '{arg1}' men releasepaketet kommer från '{arg2}'. Vill du fortsätta?",
+  "@sourceIsXButPackageFromYPrompt": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "updatesAvailable": "Uppdateringar Tillgängliga",
+  "updatesAvailableNotifDescription": "Aviserar användaren att det finns uppdateringar tillgängaliga för en eller fler Appar som följs av Updatium",
+  "noNewUpdates": "Inga nya uppdateringar.",
+  "xHasAnUpdate": "{arg1} har en uppdatering.",
+  "@xHasAnUpdate": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "appsUpdated": "Appar Uppdaterade",
+  "appsNotUpdated": "Misslyckades med att uppdatera applikationer",
+  "appsUpdatedNotifDescription": "Meddelar användaren att uppdateringar av en eller flera appar har tillämpats i bakgrunden",
+  "xWasUpdatedToY": "{arg1} uppdaterades till {arg2}.",
+  "@xWasUpdatedToY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "xWasNotUpdatedToY": "Det gick inte att uppdatera {arg1} till {arg2}.",
+  "@xWasNotUpdatedToY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "errorCheckingUpdates": "Fel vid uppdateringskoll",
+  "errorCheckingUpdatesNotifDescription": "En aviserings som visar när bakgrundsuppdateringarkollar misslyckas",
+  "appsRemoved": "Appar borttagna",
+  "appsRemovedNotifDescription": "Aviserar användaren när en eller fler Appar togs bort på grund av fel när de laddades",
+  "xWasRemovedDueToErrorY": "{arg1} togs bort på grund av detta felet: {arg2}",
+  "@xWasRemovedDueToErrorY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "completeAppInstallation": "Gör klar appinstallation",
+  "updatiumMustBeOpenToInstallApps": "Updatium måste vara öppet för att installera Appar",
+  "completeAppInstallationNotifDescription": "Frågar användaren att återvända till Obtaiunium när appinstallation är klar",
+  "checkingForUpdates": "Kollar efter Uppdateringar",
+  "checkingForUpdatesNotifDescription": "Övergående meddelande som visas när du söker efter uppdateringar",
+  "pleaseAllowInstallPerm": "Tillåt Obtanium att installera Appar",
+  "trackOnly": "Följ-Endast",
+  "errorWithHttpStatusCode": "Fel {arg1}",
+  "@errorWithHttpStatusCode": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "versionCorrectionDisabled": "Versionskorrigering inaktiverat (plugin verkar inte fungera)",
+  "unknown": "Okänd",
+  "none": "Ingen",
+  "all": "Alla",
+  "never": "Aldrig",
+  "latestVersionX": "Senaste Version: {arg1}",
+  "@latestVersionX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "installedVersionX": "Installerad Version: {arg1}",
+  "@installedVersionX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "lastUpdateCheckX": "Senaste uppdateringskoll: {arg1}",
+  "@lastUpdateCheckX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "remove": "Ta bort",
+  "yesMarkUpdated": "Ja, Märk som Uppdaterad",
+  "fdroid": "F-Droid Officiell",
+  "appIdOrName": "App-ID eller Namn",
+  "appId": "App-ID",
+  "appWithIdOrNameNotFound": "Ingen App funnen med det namnet eller ID",
+  "reposHaveMultipleApps": "Förråd kan innehålla flera ApparR",
+  "fdroidThirdPartyRepo": "F-Droid Tredjeparts Förråd",
+  "install": "Installera",
+  "markInstalled": "Märk Installerad",
+  "update": "Uppdatera",
+  "updated": "Uppdaterad",
+  "markUpdated": "Märk Uppdaterad",
+  "additionalOptions": "Ytterligare Alternativ",
+  "disableVersionDetection": "Inaktivera versionsdetektering",
+  "noVersionDetectionExplanation": "Det här alternativet bör endast användas för appar där versionsidentifiering inte fungerar korrekt.",
+  "downloadingX": "Laddar ner {arg1}",
+  "@downloadingX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadX": "Ladda ner {arg1}",
+  "@downloadX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadedX": "Nedladdad {arg1}",
+  "@downloadedX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "releaseAsset": "Frigör tillgång",
+  "downloadNotifDescription": "Meddelar användaren om framstegen med att ladda ner en app",
+  "noAPKFound": "Ingen APK funnen",
+  "noVersionDetection": "Ingen versiondetektering",
+  "categorize": "Kategorisera",
+  "categories": "Kategorier",
+  "category": "Kategori",
+  "noCategory": "Ingen Kategori",
+  "noCategories": "Inga Kategorier",
+  "deleteCategoriesQuestion": "Ta Bort Kategorier?",
+  "categoryDeleteWarning": "Alla Appar i de borttagna kategorierna kommer att märkas som okategoriserade.",
+  "addCategory": "Lägg till Kategori",
+  "label": "Märka",
+  "language": "Språk",
+  "copiedToClipboard": "Kopierat till Urklipp",
+  "storagePermissionDenied": "Lagringsbehörighet nekad",
+  "selectedCategorizeWarning": "Detta kommer att ersätta alla befintliga kategoriinställningar för de valda apparna.",
+  "filterAPKsByRegEx": "Filtrera APK-filer efter reguljärt uttryck",
+  "removeFromUpdatium": "Ta bort från Updatium",
+  "uninstallFromDevice": "Avinstallera från Enheten",
+  "onlyWorksWithNonVersionDetectApps": "Fungerar bara för Appar med versionsdetektering inaktiverat..",
+  "releaseDateAsVersion": "Använd releasedatum som version",
+  "releaseTitleAsVersion": "Använd release-titel som versionssträng",
+  "releaseDateAsVersionExplanation": "Det här alternativet bör endast användas för appar där versionsidentifiering inte fungerar korrekt, men ett releasedatum är tillgängligt.",
+  "changes": "Ändringar",
+  "releaseDate": "Releasedatum",
+  "importFromURLsInFile": "Importera från URL:er i fil (som OPML)",
+  "versionDetectionExplanation": "Sammanställ versionssträng med version upptäckt från OS",
+  "versionDetection": "Versionsdetektering",
+  "standardVersionDetection": "Standardversionsdetektering",
+  "groupByCategory": "Gruppera via Kategori",
+  "listView": "Listvy",
+  "gridView": "Rutnätsvy",
+  "autoApkFilterByArch": "Försök att filtrera APK-filer efter CPU-arkitektur om möjligt",
+  "autoLinkFilterByArch": "Försök att filtrera länkar efter CPU-arkitektur om möjligt",
+  "overrideSource": "Överskrid Källa",
+  "dontShowAgain": "Visa inte detta igen",
+  "dontShowTrackOnlyWarnings": "Visa inte 'Följ-Endast' varningar",
+  "dontShowAPKOriginWarnings": "Visa inte APK-ursprung varningar",
+  "moveNonInstalledAppsToBottom": "Flytta icke-installerade appar till botten av appvyn",
+  "hideNonInstalledApps": "Dölj icke-installerade appar",
+  "gitlabPATLabel": "Personligt åtkomsttoken för GitLab",
+  "about": "Om",
+  "requiresCredentialsInSettings": "{arg1}: This needs additional credentials (in Settings)",
+  "@requiresCredentialsInSettings": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "checkOnStart": "Kolla efter uppdateringar vid start",
+  "safeMode": "Säkert läge",
+  "safeModeDescription": "Dölj Lägg till app-sida och visa Importera/Exportera istället",
+  "safeModeAddAppDisabled": "Lägg till app är inaktiverat i säkert läge",
+  "tryInferAppIdFromCode": "Försök härleda app-id från källkoden",
+  "removeOnExternalUninstall": "Ta bort externt avinstallerade appar automatiskt",
+  "pickHighestVersionCode": "Välj automatiskt högsta versionskod APK",
+  "checkUpdateOnDetailPage": "Sök efter uppdateringar om att öppna en app-detaljsida",
+  "disablePageTransitions": "Inaktivera sidövergångsanimationer",
+  "reversePageTransitions": "Animeringar för omvänd sidövergång",
+  "minStarCount": "Minsta antal stjärnmarkeringar",
+  "addInfoBelow": "Lägg till denna information nedanför.",
+  "addInfoInSettings": "Lägg till denna information i Inställningar.",
+  "githubSourceNote": "GitHub-hastighetsbegränsning kan undvikas med en API-nyckel.",
+  "sortByLastLinkSegment": "Sortera endast efter det sista segmentet av länken",
+  "filterReleaseNotesByRegEx": "Filtrera versionskommentarer efter reguljärt uttryck",
+  "customLinkFilterRegex": "Anpassad APK-länkfiltrera efter reguljärt uttryck (standard '.apk$')",
+  "appsPossiblyUpdated": "Appuppdateringar försökte",
+  "appsPossiblyUpdatedNotifDescription": "Meddelar användaren om att uppdateringar av en eller flera appar potentiellt har tillämpats i bakgrunden",
+  "xWasPossiblyUpdatedToY": "{arg1} kan ha uppdaterats till {arg2}.",
+  "@xWasPossiblyUpdatedToY": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      },
+      "arg2": {
+        "type": "String"
+      }
+    }
+  },
+  "enableBackgroundUpdates": "Aktivera Bakgrundsuppdateringar",
+  "backgroundUpdateReqsExplanation": "Bakgrundsuppdateringar är inte möjligt för alla appar.",
+  "backgroundUpdateLimitsExplanation": "Framgången för en bakgrundsinstallation kan bara avgöras när Updatium öppnas.",
+  "verifyLatestTag": "Verifiera 'senaste'-taggen",
+  "intermediateLinkRegex": "Filtrera för en \"mellanliggande\" länk att besöka",
+  "filterByLinkText": "Filtrera länkar efter länktext",
+  "matchLinksOutsideATags": "Matcha länkar utanför <a>-taggar",
+  "intermediateLinkNotFound": "Mellanlänk hittades inte",
+  "intermediateLink": "Mellanlänk",
+  "exemptFromBackgroundUpdates": "Undta från bakgrundsuppdateringar (om aktiverad)",
+  "bgUpdatesOnWiFiOnly": "Inaktivera Bakgrundsuppdateringar utan Wi-Fi",
+  "bgUpdatesWhileChargingOnly": "Inaktivera bakgrundsuppdateringar när du inte laddar",
+  "autoSelectHighestVersionCode": "Välj automatiskt högsta versionskod APK",
+  "versionExtractionRegEx": "Version Extraction RegEx",
+  "trimVersionString": "Trimma versionssträng med RegEx",
+  "matchGroupToUseForX": "Matchningsgrupp att använda för \"{arg1}\"",
+  "@matchGroupToUseForX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "matchGroupToUse": "Match Group to Use",
+  "highlightTouchTargets": "Markera mindre uppenbara beröringsobjekt",
+  "pickExportDir": "Välj Exportsökväg",
+  "autoExportOnChanges": "Automatisk export vid ändringar",
+  "includeSettings": "Inkludera inställningar",
+  "filterVersionsByRegEx": "Filtrera versioner efter reguljärt uttryck",
+  "trySelectingSuggestedVersionCode": "Försök att välja föreslagen versionCode APK",
+  "dontSortReleasesList": "Behåll släpporder från API",
+  "reverseSort": "Omvänd sortering",
+  "takeFirstLink": "Ta första länken",
+  "skipSort": "Hoppa över sortering",
+  "debugMenu": "Felsökningsmeny",
+  "bgTaskStarted": "Bakgrundsuppgift startat - kontrollera loggar.",
+  "runBgCheckNow": "Kör Bakgrundsuppdateringskoll Nu",
+  "versionExtractWholePage": "Tillämpa Regex för versionssträngextraktion på hela sidan",
+  "installing": "Installerar",
+  "skipUpdateNotifications": "Hoppa över uppdateringsmeddelanden",
+  "updatesAvailableNotifChannel": "Uppdateringar tillgängliga",
+  "appsUpdatedNotifChannel": "Appar uppdaterade",
+  "appsPossiblyUpdatedNotifChannel": "Appuppdateringar försökte",
+  "errorCheckingUpdatesNotifChannel": "Fel vid sökning efter uppdateringar",
+  "appsRemovedNotifChannel": "Appar borttagna",
+  "downloadingXNotifChannel": "Laddar ner {arg1}",
+  "@downloadingXNotifChannel": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "completeAppInstallationNotifChannel": "Fullständig appinstallation",
+  "checkingForUpdatesNotifChannel": "Kollar efter uppdateringar",
+  "onlyCheckInstalledOrTrackOnlyApps": "Kontrollera bara installerade appar och endast spårbara appar för uppdateringar",
+  "supportFixedAPKURL": "Stöd fasta APK-webbadresser",
+  "selectX": "Välj {arg1}",
+  "@selectX": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "parallelDownloads": "Tillåt parallella nedladdningar",
+  "useShizuku": "Använd Shizuku eller Sui för att installera",
+  "shizukuBinderNotFound": "Shizuku is not running",
+  "shizukuOld": "Gammal Shizuku-version (<11) - uppdatera den",
+  "shizukuOldAndroidWithADB": "Shizuku körs på Android < 8.1 med ADB - uppdatera Android eller använd Sui istället",
+  "shizukuPretendToBeGooglePlay": "Ange Google Play som installationskälla (om Shizuku används)",
+  "useSystemFont": "Använd systemteckensnittet",
+  "useVersionCodeAsOSVersion": "Använd appversionskoden som OS-upptäckt version",
+  "requestHeader": "Rubrik för begäran",
+  "useLatestAssetDateAsReleaseDate": "Använd senaste tillgångsuppladdning som releasedatum",
+  "defaultPseudoVersioningMethod": "Standard pseudoversionsmetod",
+  "partialAPKHash": "Delvis APK-hash",
+  "directAPKLink": "Direkt APK-länk",
+  "pseudoVersionInUse": "En pseudoversion används",
+  "installed": "Installerad",
+  "latest": "Senast",
+  "invertRegEx": "Invertera reguljärt uttryck",
+  "note": "Anmärkning",
+  "selfHostedNote": "Rullgardinsmenyn \"{arg1}\" kan användas för att nå självhostade/anpassade instanser av valfri källa.",
+  "@selfHostedNote": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "badDownload": "APK kunde inte analyseras (inkompatibel eller partiell nedladdning)",
+  "beforeNewInstallsShareToAppVerifier": "Dela nya appar med AppVerifier (om tillgängligt)",
+  "appVerifierInstructionToast": "Dela till AppVerifier och återvänd sedan hit när du är klar.",
+  "wiki": "Hjälp/Wiki",
+  "allowInsecure": "Tillåt osäkra HTTP-förfrågningar",
+  "stayOneVersionBehind": "Håll dig en version bakom den senaste",
+  "useFirstApkOfVersion": "Välj automatiskt den första av flera APK:er",
+  "refreshBeforeDownload": "Uppdatera appdetaljerna före nedladdning",
+  "tencentAppStore": "Tencent App Store",
+  "coolApk": "CoolApk",
+  "vivoAppStore": "vivo App Store (CN)",
+  "name": "Namn",
+  "smartname": "Namn (Smart)",
+  "sortMethod": "Sorteringsmetod",
+  "welcome": "Välkommen",
+  "documentationLinksNote": "Updatium GitHub-sidan som länkas nedan innehåller länkar till videor, artiklar, diskussioner och andra resurser som hjälper dig att förstå hur du använder appen.",
+  "batteryOptimizationNote": "Observera att nedladdningar i bakgrunden kan fungera mer tillförlitligt om du inaktiverar OS-batterioptimeringar för Updatium.",
+  "fileDeletionError": "Misslyckades med att radera filen (försök radera den manuellt och försök sedan igen): \"{arg1}\"",
+  "@fileDeletionError": {
+    "placeholders": {
+      "arg1": {
+        "type": "String"
+      }
+    }
+  },
+  "foregroundService": "Updatium förgrundstjänst",
+  "foregroundServiceExplanation": "Använd en förgrundstjänst för uppdateringskontroll (mer tillförlitlig, förbrukar mer ström)",
+  "fgServiceNotice": "Detta meddelande krävs för bakgrundsuppdateringskontroll (det kan döljas i OS-inställningarna)",
+  "excludeSecrets": "Utesluta hemligheter",
+  "includeZips": "Inkludera ZIP-filer",
+  "zippedApkFilterRegEx": "Filtrera APK:er inuti ZIP",
+  "googleVerificationWarningP1": "Google har meddelat att alla appar på \"certifierade\" Android-enheter kommer att kräva att utvecklaren skickar personuppgifter direkt till Google.\n\nEfter det kan Updatium sluta fungera på certifierade Android-enheter.",
+  "googleVerificationWarningP2": "Gå till https://keepandroidopen.org/ för mer information.",
+  "googleVerificationWarningP3": "Observera att på kort sikt kan det fortsätta att vara möjligt att installera \"overifierade\" (icke-kompatibla) appar genom en \"avancerad flöde\" -process som Google har lovat att genomföra efter bred backlash till deras tillkännagivande, men de har inte detaljerat hur detta skulle fungera så det är oklart om det verkligen kommer att bevara användarfrihet på något praktiskt sätt.\n\nGoogles flytt är ett viktigt steg mot slutet av gratis, allmänt ändamål datorer för individer.\n\nIcke-certifierade operativsystem, som GrapheneOS, bör inte påverkas av detta så länge de får fortsätta att existera.",
+  "multipleSigners": "Flera signers",
+  "securityDisclaimerTitle": "Säkerhets- och Juridiskt Ansvarsfriskrivning",
+  "license": "Licens",
+  "licenseText": "Denna applikation distribueras under GPL v3-licensen.",
+  "disclaimer": "Ansvarsfriskrivning",
+  "disclaimerText": "Denna applikation distribuerar, är värd för eller verifierar inga av de externa applikationerna. Användaren bär det fulla ansvaret för säkerheten och lagligheten för eventuell programvara som installeras genom detta verktyg.\n\nhttps://github.com/omeritzics/Updatium är den enda officiella platsen att ladda ner Updatium - det avrådes starkt från att ladda ner den från andra platser eftersom nedladdning från icke-officiella källor inte är säker.",
+  "privacy": "Integritet",
+  "privacyText": "Denna app är integritetsfokuserad och samlar inte in personlig data.",
+  "acceptAndContinue": "Acceptera och fortsätt",
+  "decline": "Avvisa",
+  "githubStarPromptTitle": "Enjoying Updatium?",
+  "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+  "githubStarPromptStar": "Star",
+  "githubStarPromptDontShowAgain": "Don't show again",
+  "aPKLinkHash": "APK-länk Hash",
+  "gHReqPrefix": "Instansen \"sky22333/hubproxy\" för GitHub-förfrågningar",
+  "continueAction": "Fortsätt"
+}

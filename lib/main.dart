@@ -25,6 +25,7 @@ List<Locale> supportedLocales = const [
   Locale('it'),
   Locale('ja'),
   Locale('he'),
+  Locale('ar'),
   Locale('hu'),
   Locale('de'),
   Locale('fa'),
@@ -44,11 +45,10 @@ List<Locale> supportedLocales = const [
   Locale('da'),
   Locale('et'),
   Locale('en', 'EO'),
-  Locale('in'),
+  Locale('id'),
   Locale('ko'),
-  Locale('ca'),
-  Locale('ar'),
   Locale('ml'),
+  Locale('ca'),
   Locale('gl'),
 ];
 const fallbackLocale = Locale('en');
