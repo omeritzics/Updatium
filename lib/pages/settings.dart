@@ -621,6 +621,30 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(tr('safeMode')),
+                                  Text(
+                                    tr('safeModeDescription'),
+                                    style: Theme.of(context).textTheme.labelSmall,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Switch(
+                              value: settingsProvider.safeMode,
+                              onChanged: (value) {
+                                settingsProvider.safeMode = value;
+                              },
+                            ),
+                          ],
+                        ),
+                        height16,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Flexible(child: Text(tr('checkOnStart'))),
                             Switch(
                               value: settingsProvider.checkOnStart,
