@@ -181,7 +181,7 @@ class SettingsProvider with ChangeNotifier {
     while (!(await Permission.requestInstallPackages.isGranted)) {
       // Explicit request as InstallPlugin request sometimes bugged
       Fluttertoast.showToast(
-        msg: AppLocalizations.of(context)!.pleaseAllowInstallPerm,
+        msg: Please allow install permission,
         toastLength: Toast.LENGTH_LONG,
       );
       if ((await Permission.requestInstallPackages.request()) ==

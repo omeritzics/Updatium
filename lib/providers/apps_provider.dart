@@ -271,7 +271,7 @@ Future<String> checkPartialDownloadHash(
   var client = IOClient(createHttpClient(allowInsecure));
   var response = await client.send(req);
   if (response.statusCode < 200 || response.statusCode > 299) {
-    throw UpdatiumError(response.reasonPhrase ?? AppLocalizations.of(context)!.unexpectedError);
+    throw UpdatiumError(response.reasonPhrase ?? Unexpected error);
   }
   List<List<int>> bytes = await response.stream.take(bytesToGrab).toList();
   return hashListOfLists(bytes);
@@ -301,7 +301,7 @@ void deleteFile(File file) {
     file.deleteSync(recursive: true);
   } on PathAccessException catch (e) {
     throw UpdatiumError(
-      AppLocalizations.of(context)!.fileDeletionError(e.path ?? AppLocalizations.of(context)!.unknown),
+      File deletion error(e.path ?? Unknown),
     );
   }
 }
@@ -961,7 +961,7 @@ class AppsProvider with ChangeNotifier {
         mimeType: 'application/vnd.android.package-archive',
       );
       Fluttertoast.showToast(
-        msg: AppLocalizations.of(context)!.appVerifierInstructionToast,
+        msg: App verification instruction,
         toastLength: Toast.LENGTH_LONG,
       );
       await Share.shareXFiles([f]);
@@ -978,7 +978,7 @@ class AppsProvider with ChangeNotifier {
       } catch (e) {
         //
       } finally {
-        throw UpdatiumError(AppLocalizations.of(context)!.badDownload);
+        throw UpdatiumError(Bad download);
       }
     }
     PackageInfo? appInfo = await getInstalledInfo(apps[file.appId]!.app.id);
@@ -1150,7 +1150,7 @@ class AppsProvider with ChangeNotifier {
     // 2. That cannot be installed silently (IF no buildContext was given for interactive install)
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw UpdatiumError(AppLocalizations.of(context)!.appNotFound);
+        throw UpdatiumError(App not found);
       }
       MapEntry<String, String>? apkUrl;
       var trackOnly = apps[id]!.app.additionalSettings['trackOnly'] == true;
@@ -1307,18 +1307,18 @@ class AppsProvider with ChangeNotifier {
         willBeSilent = await canInstallSilently(apps[id]!.app);
         if (!settingsProvider.useShizuku) {
           if (!(await settingsProvider.getInstallPermission(enforce: false))) {
-            throw UpdatiumError(AppLocalizations.of(context)!.cancelled);
+            throw UpdatiumError(Cancelled);
           }
         } else {
           switch ((await ShizukuApkInstaller().checkPermission())!) {
             case 'binder_not_found':
-              throw UpdatiumError(AppLocalizations.of(context)!.shizukuBinderNotFound);
+              throw UpdatiumError(Shizuku binder not found);
             case 'old_shizuku':
-              throw UpdatiumError(AppLocalizations.of(context)!.shizukuOld);
+              throw UpdatiumError(Shizuku version too old);
             case 'old_android_with_adb':
-              throw UpdatiumError(AppLocalizations.of(context)!.shizukuOldAndroidWithADB);
+              throw UpdatiumError(Shizuku version too oldAndroidWithADB);
             case 'denied':
-              throw UpdatiumError(AppLocalizations.of(context)!.cancelled);
+              throw UpdatiumError(Cancelled);
           }
         }
         if (!willBeSilent && context != null && !settingsProvider.useShizuku) {
@@ -1379,7 +1379,7 @@ class AppsProvider with ChangeNotifier {
     List<MapEntry<MapEntry<String, String>, App>> filesToDownload = [];
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw UpdatiumError(AppLocalizations.of(context)!.appNotFound);
+        throw UpdatiumError(App not found);
       }
       MapEntry<String, String>? fileUrl;
       var refreshBeforeDownload =
@@ -2297,7 +2297,7 @@ class AppsProvider with ChangeNotifier {
     SettingsProvider? sp,
   }) async {
     if (exportInProgress && !isAuto) {
-      throw UpdatiumError(AppLocalizations.of(context)!.exportAlreadyInProgress);
+      throw UpdatiumError(Export already in progress);
     }
 
     SettingsProvider settingsProvider = sp ?? this.settingsProvider;
@@ -2348,13 +2348,13 @@ class AppsProvider with ChangeNotifier {
         Map<String, dynamic> finalExport = generateExportJSON();
         // Create export file using docman
         if (exportDir.toString().isEmpty) {
-          throw UpdatiumError(AppLocalizations.of(context)!.exportDirUriEmpty);
+          throw UpdatiumError(Export directory URI empty);
         }
         final docFileResult = await DocumentFile.fromUri(exportDir.toString());
         final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
           final fileName =
-              '${AppLocalizations.of(context)!.updatiumExportHyphenatedLowercase}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
+              '${updatium-export}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
 
           try {
             final result = await dirDocFile.createFile(
@@ -2365,7 +2365,7 @@ class AppsProvider with ChangeNotifier {
             );
 
             if (result == null) {
-              throw UpdatiumError(AppLocalizations.of(context)!.failedToCreateExportFile);
+              throw UpdatiumError(Failed to create export file);
             }
           } catch (e) {
             // Handle MIME type detection errors specifically
@@ -2381,26 +2381,26 @@ class AppsProvider with ChangeNotifier {
                   ),
                 );
                 if (fallbackResult == null) {
-                  throw UpdatiumError(AppLocalizations.of(context)!.failedToCreateExportFile);
+                  throw UpdatiumError(Failed to create export file);
                 }
               } catch (fallbackError) {
                 throw UpdatiumError(
-                  '${AppLocalizations.of(context)!.failedToExport}: MIME type detection error - ${fallbackError.toString()}',
+                  '${Failed to export}: MIME type detection error - ${fallbackError.toString()}',
                 );
               }
             } else {
-              throw UpdatiumError('${AppLocalizations.of(context)!.failedToExport}: ${e.toString()}');
+              throw UpdatiumError('${Failed to export}: ${e.toString()}');
             }
           }
         } else {
-          throw UpdatiumError(AppLocalizations.of(context)!.exportDirNotAccessible);
+          throw UpdatiumError(Export directory not accessible);
         }
       } catch (e) {
         if (e is UpdatiumError) {
           rethrow;
         }
         debugPrint('Export error: $e');
-        throw UpdatiumError('${AppLocalizations.of(context)!.failedToExport}: ${e.toString()}');
+        throw UpdatiumError('${Failed to export}: ${e.toString()}');
       } finally {
         exportInProgress = false;
         notifyListeners();
@@ -2476,7 +2476,7 @@ class AppsProvider with ChangeNotifier {
     Map<String, dynamic> errorsMap = results[1];
     for (var app in pps) {
       if (apps.containsKey(app.id)) {
-        errorsMap.addAll({app.id: AppLocalizations.of(context)!.appAlreadyAdded});
+        errorsMap.addAll({app.id: App already added});
       } else {
         await saveApps([app], onlyIfExists: false);
       }
@@ -2497,18 +2497,18 @@ class AppsProvider with ChangeNotifier {
       // Categorize errors and provide user-friendly messages
       if (errorDetail.contains('timeout') ||
           errorDetail.contains('connection')) {
-        userMessage = AppLocalizations.of(context)!.networkError;
+        userMessage = Network error;
       } else if (errorDetail.contains('404') ||
           errorDetail.contains('not found')) {
-        userMessage = AppLocalizations.of(context)!.appNotFound;
+        userMessage = App not found;
       } else if (errorDetail.contains('parse') ||
           errorDetail.contains('format')) {
-        userMessage = AppLocalizations.of(context)!.invalidUrlFormat;
+        userMessage = Invalid URL format;
       } else if (errorDetail.contains('permission') ||
           errorDetail.contains('access')) {
-        userMessage = AppLocalizations.of(context)!.accessDenied;
+        userMessage = Access denied;
       } else {
-        userMessage = AppLocalizations.of(context)!.importFailed;
+        userMessage = Import failed;
       }
 
       return [e, userMessage];
@@ -2549,14 +2549,14 @@ class _AppFilePickerState extends State<AppFilePicker> {
       scrollable: true,
       title: Text(
         widget.pickAnyAsset
-            ? AppLocalizations.of(context)!.selectX(lowerCaseIfEnglish(AppLocalizations.of(context)!.releaseAsset))
-            : AppLocalizations.of(context)!.pickAnAPK,
+            ? Select {arg1}(lowerCaseIfEnglish(release asset))
+            : Pick an APK,
       ),
       content: Column(
         children: [
           urlsToSelectFrom.length > 1
               ? Text(
-                  AppLocalizations.of(context)!.appHasMoreThanOnePackage(widget.app.finalName),
+                  App has more than one package(widget.app.finalName),
                 )
               : const SizedBox.shrink(),
           const SizedBox(height: 16),
@@ -2576,8 +2576,8 @@ class _AppFilePickerState extends State<AppFilePicker> {
           if (widget.archs != null)
             Text(
               widget.archs!.length == 1
-                  ? AppLocalizations.of(context)!.deviceSupportsXArch(args: [widget.archs![0]])
-                  : AppLocalizations.of(context)!.deviceSupportsFollowingArchs +
+                  ? Device supports {arg1} architecture(args: [widget.archs![0]])
+                  : Device supports following architectures +
                         list2FriendlyString(
                           widget.archs!.map((e) => '\'$e\'').toList(),
                         ),
@@ -2590,14 +2590,14 @@ class _AppFilePickerState extends State<AppFilePicker> {
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text(AppLocalizations.of(context)!.cancel),
+          child: Text(Cancel),
         ),
         AppTextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(fileUrl);
           },
-          child: Text(AppLocalizations.of(context)!.continueAction),
+          child: Text(Continue),
         ),
       ],
     );
@@ -2623,7 +2623,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text(AppLocalizations.of(context)!.warning),
+      title: Text(Warning),
       content: Text(
         'Source is ${Uri.parse(widget.sourceUrl).host} but package is from ${Uri.parse(widget.apkUrl).host}. Continue anyway?',
       ),
@@ -2632,14 +2632,14 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text(AppLocalizations.of(context)!.cancel),
+          child: Text(Cancel),
         ),
         AppTextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);
           },
-          child: Text(AppLocalizations.of(context)!.yes),
+          child: Text(Yes),
         ),
       ],
     );
