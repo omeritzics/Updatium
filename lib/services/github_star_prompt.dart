@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:updatium/generated/l10n.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 /// Service to handle the one-time GitHub star prompt dialog
 class GitHubStarPrompt {

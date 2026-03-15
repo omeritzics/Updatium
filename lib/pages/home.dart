@@ -229,13 +229,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 context: context,
                 builder: (BuildContext ctx) {
                   return GeneratedFormModal(
-                    title: tr(
-                      'importX',
-                      args: [
-                        (action == 'app' ? AppLocalizations.of(context)!.app : AppLocalizations.of(context)!.appsString)
-                            .toLowerCase(),
-                      ],
-                    ),
+                    title: 'Import ${action == 'app' ? 'App' : 'Apps'}',
                     items: const [],
                     additionalWidgets: [
                       ExpansionTile(
@@ -262,10 +256,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             );
             // ignore: use_build_context_synchronously
             showMessage(
-              tr(
-                'importedX',
-                args: [plural('apps', result.key.length).toLowerCase()],
-              ),
+              'Imported ${result.key.length} apps',
               context,
             );
           }

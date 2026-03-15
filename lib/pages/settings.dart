@@ -510,9 +510,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         children: [
                                           Flexible(
                                             child: Text(
-                                              tr(
-                                                'foregroundServiceExplanation',
-                                              ),
+                                              'Use a foreground service for update checking (more reliable, consumes more power)',
                                             ),
                                           ),
                                           Switch(
@@ -593,9 +591,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               children: [
                                                 Flexible(
                                                   child: Text(
-                                                    tr(
-                                                      'bgUpdatesWhileChargingOnly',
-                                                    ),
+                                                    'Background updates while charging only',
                                                   ),
                                                 ),
                                                 Switch(

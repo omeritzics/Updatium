@@ -2625,13 +2625,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
       scrollable: true,
       title: Text(AppLocalizations.of(context)!.warning),
       content: Text(
-        tr(
-          'sourceIsXButPackageFromYPrompt',
-          args: [
-            Uri.parse(widget.sourceUrl).host,
-            Uri.parse(widget.apkUrl).host,
-          ],
-        ),
+        'Source is ${Uri.parse(widget.sourceUrl).host} but package is from ${Uri.parse(widget.apkUrl).host}. Continue anyway?',
       ),
       actions: [
         AppTextButton(

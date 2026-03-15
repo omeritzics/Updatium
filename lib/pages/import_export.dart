@@ -75,10 +75,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               .then((errors) {
                 if (errors.isEmpty) {
                   showMessage(
-                    tr(
-                      'importedX',
-                      args: [plural('apps', urls.length).toLowerCase()],
-                    ),
+                    'Imported ${urls.length} apps',
                     context,
                   );
                 } else {
@@ -239,10 +236,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 if (errors.isEmpty) {
                   // ignore: use_build_context_synchronously
                   showMessage(
-                    tr(
-                      'importedX',
-                      args: [plural('apps', selectedUrls.length).toLowerCase()],
-                    ),
+                    'Imported ${selectedUrls.length} apps',
                     context,
                   );
                 } else {
@@ -531,13 +525,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            tr(
-              'importedXOfYApps',
-              args: [
-                (widget.urlsLength - widget.errors.length).toString(),
-                widget.urlsLength.toString(),
-              ],
-            ),
+            'Imported ${(widget.urlsLength - widget.errors.length)} of ${widget.urlsLength} apps',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 16),
@@ -881,12 +869,7 @@ class _SelectionModalState extends State<SelectionModal> {
           child: Text(
             widget.onlyOneSelectionAllowed
                 ? AppLocalizations.of(context)!.pick
-                : tr(
-                    'selectX',
-                    args: [
-                      entrySelections.values.where((b) => b).length.toString(),
-                    ],
-                  ),
+                : 'Select ${entrySelections.values.where((b) => b).length} items',
           ),
         ),
       ],
