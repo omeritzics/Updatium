@@ -723,7 +723,7 @@ class AddAppPageState extends State<AddAppPage> {
                                   }
                                 : null,
                             child: Text(
-                              '${e.name}${e.enforceTrackOnly ? ' ${AppLocalizations.of(context)!.trackOnlyInBrackets}' : ''}${e.canSearch ? ' ${AppLocalizations.of(context)!.searchableInBrackets}' : ''}',
+                              '${e.name}${e.enforceTrackOnly ? ' (track-only)' : ''}${e.canSearch ? ' (searchable)' : ''}',
                               style: TextStyle(
                                 decoration: e.hosts.isNotEmpty
                                     ? TextDecoration.underline
@@ -735,18 +735,18 @@ class AddAppPageState extends State<AddAppPage> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        '${AppLocalizations.of(context)!.note}:',
+                        'Note:',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
-                      Text(AppLocalizations.of(context)!.selfHostedNote(AppLocalizations.of(context)!.overrideSource)),
+                      Text('Some sources can be self-hosted. You can override the source URL to use a self-hosted instance.'),
                     ],
                   );
                 },
               );
             },
             child: Text(
-              AppLocalizations.of(context)!.supportedSources,
+              'Supported sources',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.underline,
@@ -773,7 +773,7 @@ class AddAppPageState extends State<AddAppPage> {
                 vertical: 20,
               ),
               title: Text(
-                AppLocalizations.of(context)!.addApp,
+                'Add App',
                 style: TextStyle(
                   color: Theme.of(context).textTheme.bodyMedium!.color,
                 ),
@@ -830,7 +830,7 @@ class AddAppPageState extends State<AddAppPage> {
           );
         },
         icon: const Icon(Icons.import_export),
-        label: Text(AppLocalizations.of(context)!.importExport),
+        label: Text('Import/Export'),
       ),
     );
   }

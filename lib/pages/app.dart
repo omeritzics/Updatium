@@ -13,7 +13,6 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:provider/provider.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:updatium/generated/l10n.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key, required this.appId});
@@ -96,35 +95,31 @@ class _AppPageState extends State<AppPage> {
         ? isVersionPseudo(app!.app)
         : false;
 
-    getInfoColumn() {
+    Widget getInfoColumn() {
       String versionLines = '';
       bool installed = app?.app.installedVersion != null;
       bool upToDate = app?.app.installedVersion == app?.app.latestVersion;
       if (installed) {
-        versionLines = '${app?.app.installedVersion} ${AppLocalizations.of(context)!.installed}';
+        versionLines = '${app?.app.installedVersion} (installed)';
         if (upToDate) {
-          versionLines += '/${AppLocalizations.of(context)!.latest}';
+          versionLines += '/latest';
         }
       } else {
-        versionLines = AppLocalizations.of(context)!.notInstalled;
+        versionLines = 'Not installed';
       }
       if (!upToDate) {
-        versionLines += '\n${app?.app.latestVersion} ${AppLocalizations.of(context)!.latest}';
+        versionLines += '\n${app?.app.latestVersion} (latest)';
       }
-      String infoLines = AppLocalizations.of(context)!.lastUpdateCheckX(
-        app?.app.lastUpdateCheck == null
-            ? AppLocalizations.of(context)!.never
-            : '${app?.app.lastUpdateCheck?.toLocal()}',
-      );
+      String infoLines = 'Last update check: ${app?.app.lastUpdateCheck == null ? 'Never' : '${app?.app.lastUpdateCheck?.toLocal()}'}';
       if (trackOnly) {
-        infoLines = '${AppLocalizations.of(context)!.xIsTrackOnly(AppLocalizations.of(context)!.app)}\n$infoLines';
+        infoLines = 'App is track-only\n$infoLines';
       }
       if (installedVersionIsEstimate) {
-        infoLines = '${AppLocalizations.of(context)!.pseudoVersionInUse}\n$infoLines';
+        infoLines = 'Pseudo-version in use\n$infoLines';
       }
       if ((app?.app.apkUrls.length ?? 0) > 0) {
         infoLines =
-            '$infoLines\n${app?.app.apkUrls.length == 1 ? app?.app.apkUrls[0].key : AppLocalizations.of(context)!.apk(app?.app.apkUrls.length ?? 0)}';
+            '$infoLines\n${app?.app.apkUrls.length == 1 ? app?.app.apkUrls[0].key : '${app?.app.apkUrls.length} APK(s)'}';
       }
       var changeLogFn = app != null ? getChangeLogFn(context, app.app) : null;
       return Column(
@@ -148,7 +143,7 @@ class _AppPageState extends State<AppPage> {
                         onTap: changeLogFn,
                         child: Text(
                           app?.app.releaseDate == null
-                              ? AppLocalizations.of(context)!.changes
+                              ? 'Changes'
                               : app!.app.releaseDate!.toLocal().toString(),
                           textAlign: TextAlign.center,
                           maxLines: 2,
@@ -221,9 +216,7 @@ class _AppPageState extends State<AppPage> {
                         : const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 2),
                     margin: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
                     child: Text(
-                      AppLocalizations.of(context)!.downloadX(
-                        lowerCaseIfEnglish(AppLocalizations.of(context)!.releaseAsset),
-                      ),
+                      'Download ${lowerCaseIfEnglish('release asset')}',
                       textAlign: TextAlign.center,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -240,23 +233,12 @@ class _AppPageState extends State<AppPage> {
           /* Certificate Hashes */
           if (app != null && app.certificateHashes.isNotEmpty)
             Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                height32,
-                Text(
-                  "${AppLocalizations.of(context)!.certificateHash(app.certificateHashes.length)}"
-                  "${app.hasMultipleSigners ? " (${AppLocalizations.of(context)!.multipleSigners})" : ""}",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 12),
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: app.certificateHashes.map((hash) {
                     return GestureDetector(
                       onLongPress: () {
                         Clipboard.setData(ClipboardData(text: hash));
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(AppLocalizations.of(context)!.copiedToClipboard)),
+                          SnackBar(content: Text('Copied to clipboard')),
                         );
                       },
                       child: Padding(
@@ -305,7 +287,7 @@ class _AppPageState extends State<AppPage> {
                       ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(AppLocalizations.of(context)!.copiedToClipboard)),
+                      SnackBar(content: Text('Copied to clipboard')),
                     );
                   },
                   child: Markdown(
@@ -359,14 +341,14 @@ class _AppPageState extends State<AppPage> {
           ),
         SizedBox(height: small ? 10 : 24),
         Text(
-          app?.name ?? AppLocalizations.of(context)!.app,
+          app?.name ?? 'App',
           textAlign: TextAlign.center,
           style: small
               ? Theme.of(context).textTheme.titleLarge
               : Theme.of(context).textTheme.headlineMedium,
         ),
         Text(
-          AppLocalizations.of(context)!.byX(app?.author ?? AppLocalizations.of(context)!.unknown),
+          'by ${app?.author ?? 'Unknown'}',
           textAlign: TextAlign.center,
           style: small
               ? Theme.of(context).textTheme.titleMedium
@@ -386,7 +368,7 @@ class _AppPageState extends State<AppPage> {
             Clipboard.setData(ClipboardData(text: app?.app.url ?? ''));
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.copiedToClipboard)));
+            ).showSnackBar(SnackBar(content: Text('Copied to clipboard'))));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -452,13 +434,13 @@ class _AppPageState extends State<AppPage> {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            title: Text(AppLocalizations.of(context)!.alreadyUpToDateQuestion),
+            title: Text('App is already up to date. Mark as updated anyway?'),
             actions: [
               AppTextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text(AppLocalizations.of(context)!.no),
+                child: Text('No'),
               ),
               AppTextButton(
                 onPressed: () {
@@ -470,7 +452,7 @@ class _AppPageState extends State<AppPage> {
                   }
                   Navigator.of(context).pop();
                 },
-                child: Text(AppLocalizations.of(context)!.yesMarkUpdated),
+                child: Text('Yes, mark as updated'),
               ),
             ],
           );
@@ -495,7 +477,7 @@ class _AppPageState extends State<AppPage> {
           }).toList();
 
           return GeneratedFormModal(
-            title: AppLocalizations.of(context)!.additionalOptions,
+            title: 'Additional options',
             items: items,
           );
         },
@@ -509,7 +491,7 @@ class _AppPageState extends State<AppPage> {
         if (source?.enforceTrackOnly == true) {
           app.app.additionalSettings['trackOnly'] = true;
           // ignore: use_build_context_synchronously
-          showMessage(AppLocalizations.of(context)!.appsFromSourceAreTrackOnly, context);
+          showMessage('Apps from this source are track-only', context);
         }
         var versionDetectionEnabled =
             app.app.additionalSettings['versionDetection'] == true &&
@@ -552,8 +534,8 @@ class _AppPageState extends State<AppPage> {
           ? () async {
               try {
                 var successMessage = app?.app.installedVersion == null
-                    ? AppLocalizations.of(context)!.installed
-                    : AppLocalizations.of(context)!.appsUpdated;
+                    ? 'Installed'
+                    : 'Apps updated';
                 HapticFeedback.heavyImpact();
                 var res = await appsProvider.downloadAndInstallLatestApps(
                   app?.app.id != null ? [app!.app.id] : [],
@@ -575,11 +557,11 @@ class _AppPageState extends State<AppPage> {
       child: Text(
         app?.app.installedVersion == null
             ? !trackOnly
-                  ? AppLocalizations.of(context)!.install
-                  : AppLocalizations.of(context)!.markInstalled
+                  ? 'Install'
+                  : 'Mark as installed'
             : !trackOnly
-            ? AppLocalizations.of(context)!.update
-            : AppLocalizations.of(context)!.markUpdated,
+            ? 'Update'
+            : 'Mark as updated',
       ),
     );
 
@@ -607,7 +589,7 @@ class _AppPageState extends State<AppPage> {
                             var values = await showAdditionalOptionsDialog();
                             handleAdditionalOptionChanges(values);
                           },
-                    tooltip: AppLocalizations.of(context)!.additionalOptions,
+                    tooltip: 'Additional options',
                     icon: const Icon(Icons.edit),
                   ),
                 if (app?.app.installedVersion != null &&
@@ -618,7 +600,7 @@ class _AppPageState extends State<AppPage> {
                     onPressed: app?.downloadProgress != null || updating
                         ? null
                         : showMarkUpdatedDialog,
-                    tooltip: AppLocalizations.of(context)!.markUpdated,
+                    tooltip: 'Mark as updated',
                     icon: const Icon(Icons.done),
                   ),
                 if ((!isVersionDetectionStandard || trackOnly) &&
@@ -632,7 +614,7 @@ class _AppPageState extends State<AppPage> {
                             appsProvider.saveApps([app.app]);
                           },
                     icon: const Icon(Icons.restore_rounded),
-                    tooltip: AppLocalizations.of(context)!.resetInstallStatus,
+                    tooltip: 'Reset install status',
                   ),
                 const SizedBox(width: 16.0),
                 Expanded(child: getInstallOrUpdateButton()),
@@ -652,7 +634,7 @@ class _AppPageState extends State<AppPage> {
                                 }
                               });
                         },
-                  tooltip: AppLocalizations.of(context)!.remove,
+                  tooltip: 'Remove',
                   icon: const Icon(Icons.delete),
                 ),
               ],
