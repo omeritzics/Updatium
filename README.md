@@ -4,7 +4,7 @@
 [![Nightly Build](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml/badge.svg)](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
 [![Translation Help Wanted](https://img.shields.io/badge/translation-help_wanted-blue)](https://github.com/omeritzics/Updatium/tree/main/assets/translations)
 
-Update your Android apps directly from the APK source. Forked from [Obtainium](https://github.com/ImranR98/Obtainium) due to the developer's problematic political views and his terrible behavior toward Jewish people who wanted to contribute to his app.
+Update your Android apps directly from the APK source. Forked from [Obtainium](https://github.com/ImranR98/Obtainium) due to the developer's problematic political views and his terrible behavior toward Jewish people who wanted to contribute to his app, aiming to provide a professional, inclusive, and community-driven alternative.
 
 Updatium helps you to install apps and update them directly from their release pages or APK sources, and to receive notifications when updates are available.
 
