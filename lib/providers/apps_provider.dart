@@ -635,7 +635,7 @@ class AppsProvider with ChangeNotifier {
     notificationsProvider? notificationsProvider,
     bool useExisting = true,
   }) async {
-    var notifId = Downloadnotification(app.finalName, 0).id;
+    var notifId = DownloadNotification(app.finalName, 0).id;
     if (_apps[app.id] != null) {
       _apps[app.id]!.downloadProgress = 0;
       notifyListeners();
@@ -660,7 +660,7 @@ class AppsProvider with ChangeNotifier {
         app.url,
         additionalSettingsPlusSourceConfig,
       );
-      var notif = Downloadnotification(app.finalName, 100);
+      var notif = DownloadNotification(app.finalName, 100);
       notificationsProvider?.cancel(notif.id);
       int? prevProg;
       var fileNameNoExt = '${app.id}-${downloadUrl.hashCode}';
@@ -684,7 +684,7 @@ class AppsProvider with ChangeNotifier {
             _apps[app.id]!.downloadProgress = progress;
             notifyListeners();
           }
-          notif = Downloadnotification(app.finalName, prog ?? 100);
+          notif = DownloadNotification(app.finalName, prog ?? 100);
           if (prog != null && prevProg != prog) {
             notificationsProvider?.notify(notif);
           }
@@ -699,7 +699,7 @@ class AppsProvider with ChangeNotifier {
       if (_apps[app.id] != null) {
         _apps[app.id]!.downloadProgress = -1;
         notifyListeners();
-        notif = Downloadnotification(app.finalName, -1);
+        notif = DownloadNotification(app.finalName, -1);
         notificationsProvider?.notify(notif);
       }
       PackageInfo? newInfo;
@@ -1445,7 +1445,7 @@ class AppsProvider with ChangeNotifier {
           true,
           (double? progress) {
             notificationsProvider.notify(
-              Downloadnotification(fileUrl.key, progress?.ceil() ?? 0),
+              DownloadNotification(fileUrl.key, progress?.ceil() ?? 0),
             );
           },
           downloadPath,
@@ -1461,12 +1461,12 @@ class AppsProvider with ChangeNotifier {
           logs: logs,
         );
         notificationsProvider.notify(
-          Downloadednotification(fileUrl.key, fileUrl.value),
+          DownloadedNotification(fileUrl.key, fileUrl.value),
         );
       } catch (e) {
         errors.add(fileUrl.key, e);
       } finally {
-        notificationsProvider.cancel(Downloadnotification(fileUrl.key, 0).id);
+        notificationsProvider.cancel(DownloadNotification(fileUrl.key, 0).id);
       }
     }
 
@@ -1512,7 +1512,7 @@ class AppsProvider with ChangeNotifier {
         app.app.additionalSettings['useVersionCodeAsOSVersion'] == true
         ? app.installedInfo?.versionCode.toString()
         : app.installedInfo?.versionName;
-    bool isHTMLWith"No"VersionDetection =
+    bool isHTMLWithNoVersionDetection =
         (source.runtimeType == HTML().runtimeType &&
         (app.app.additionalSettings['versionExtractionRegEx'] as String?)
                 ?.isNotEmpty !=
@@ -1520,7 +1520,7 @@ class AppsProvider with ChangeNotifier {
     bool isDirectAPKLink = source.runtimeType == DirectAPKLink().runtimeType;
     return app.app.additionalSettings['trackOnly'] != true &&
         app.app.additionalSettings['releaseDateAsVersion'] != true &&
-        !isHTMLWith"No"VersionDetection &&
+        !isHTMLWithNoVersionDetection &&
         !isDirectAPKLink &&
         realInstalledVersion != null &&
         app.app.installedVersion != null &&
@@ -1759,8 +1759,8 @@ class AppsProvider with ChangeNotifier {
     );
     if (errors.isNotEmpty) {
       removeApps(errors.map((e) => e[0]).toList());
-      notificationsProvider().notify(
-        AppsRemovednotification(errors.map((e) => [e[1], e[2]]).toList()),
+      context.read<NotificationsProvider>().notify(
+        AppsRemovedNotification(errors.map((e) => [e[1], e[2]]).toList()),
       );
     }
     // Delete externally uninstalled Apps if needed
@@ -2101,10 +2101,10 @@ class AppsProvider with ChangeNotifier {
       bool uninstall = values['uninstallApp'] == true && showUninstallOption;
       bool remove = values['rmAppEntry'] == true || !showUninstallOption;
       if (uninstall) {
-        for (var i = 0; i < apps.length; i++) {
-          if (_apps[i].installedVersion != null) {
-            uninstallApp(_apps[i].id);
-            _apps[i].installedVersion = null;
+        for (var app in apps) {
+          if (_apps[app.id]?.installedVersion != null) {
+            uninstallApp(app.id);
+            _apps[app.id]!.installedVersion = null;
           }
         }
         await saveApps(apps, attemptToCorrectInstallStatus: false);
@@ -2553,14 +2553,14 @@ class _AppFilePickerState extends State<AppFilePicker> {
       scrollable: true,
       title: Text(
         widget.pickAnyAsset
-            ? "Select {arg1}"(lowerCaseIfEnglish("release asset"))
+            ? 'Select ${lowerCaseIfEnglish("release asset")}'
             : "Pick an APK",
       ),
       content: Column(
         children: [
           urlsToSelectFrom.length > 1
               ? Text(
-                  "App has more than one package"(widget.app.finalName),
+                  'App has more than one package: ${widget.app.finalName}',
                 )
               : const SizedBox.shrink(),
           const SizedBox(height: 16),
@@ -2580,7 +2580,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
           if (widget.archs != null)
             Text(
               widget.archs!.length == 1
-                  ? "Device supports {arg1} architecture"(args: [widget.archs![0]])
+                  ? 'Device supports ${widget.archs![0]} architecture'
                   : "Device supports following architectures" +
                         list2FriendlyString(
                           widget.archs!.map((e) => '\'$e\'').toList(),
