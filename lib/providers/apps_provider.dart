@@ -1032,7 +1032,7 @@ class AppsProvider with ChangeNotifier {
       } catch (_) {
         // Best-effort cleanup; preserve the security failure below.
       }
-      throw UpdatiumError(tr('Security scan detected malware. Installation blocked for safety.'));
+      throw UpdatiumError(tr('securityScanBlocked'));
     }
     
     logs.add(
