@@ -47,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
   ];
   int updateInterval = 0;
   late SplineInterpolation updateIntervalInterpolator; // 🤓
-  String updateIntervalLabel = AppLocalizations.of(context)!.neverManualOnly;
+  String updateIntervalLabel = 'Never - manual only';
   bool showIntervalLabel = true;
   final Map<ColorSwatch<Object>, String> colorsNameMap =
       <ColorSwatch<Object>, String>{
@@ -78,25 +78,25 @@ class _SettingsPageState extends State<SettingsPage> {
     }
     if (valInterpolated < 60) {
       updateInterval = valInterpolated;
-      updateIntervalLabel = plural('minute', valInterpolated);
+      updateIntervalLabel = '$valInterpolated minutes';
     } else if (valInterpolated < 8 * 60) {
       int valRounded = (valInterpolated / 15).floor() * 15;
       updateInterval = valRounded;
-      updateIntervalLabel = plural('hour', valRounded ~/ 60);
+      updateIntervalLabel = '${valRounded ~/ 60} hours';
       int mins = valRounded % 60;
-      if (mins != 0) updateIntervalLabel += " ${plural('minute', mins)}";
+      if (mins != 0) updateIntervalLabel += " ${mins} minutes";
     } else if (valInterpolated < 24 * 60) {
       int valRounded = (valInterpolated / 30).floor() * 30;
       updateInterval = valRounded;
-      updateIntervalLabel = plural('hour', valRounded / 60);
+      updateIntervalLabel = '${(valRounded / 60).round()} hours';
     } else if (valInterpolated < 7 * 24 * 60) {
       int valRounded = (valInterpolated / (12 * 60)).floor() * 12 * 60;
       updateInterval = valRounded;
-      updateIntervalLabel = plural('day', valRounded / (24 * 60));
+      updateIntervalLabel = '${(valRounded / (24 * 60)).round()} days';
     } else {
       int valRounded = (valInterpolated / (24 * 60)).floor() * 24 * 60;
       updateInterval = valRounded;
-      updateIntervalLabel = plural('day', valRounded ~/ (24 * 60));
+      updateIntervalLabel = '${valRounded ~/ (24 * 60)} days';
     }
   }
 
@@ -349,10 +349,10 @@ class _SettingsPageState extends State<SettingsPage> {
             ? AppLocalizations.of(context)!.followSystem
             : supportedLocales
                   .firstWhere(
-                    (e) => e.key == settingsProvider.forcedLocale,
+                    (e) => e.languageCode == settingsProvider.forcedLocale,
                     orElse: () => supportedLocales.first,
                   )
-                  .value;
+                  .languageCode;
 
         return TextField(
           controller: TextEditingController(text: selectedValue),
@@ -382,10 +382,10 @@ class _SettingsPageState extends State<SettingsPage> {
         ...supportedLocales.map(
           (e) => MenuItemButton(
             onPressed: () {
-              settingsProvider.forcedLocale = e.key;
-              context.setLocale(e.key);
+              settingsProvider.forcedLocale = Locale(e.languageCode);
+              // context.setLocale(e.languageCode); // Removed - not available in Flutter localization
             },
-            child: Text(e.value),
+            child: Text(e.languageCode),
           ),
         ),
       ],
@@ -1156,7 +1156,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         );
                       },
                       tooltip: AppLocalizations.of(context)!.wiki,
-                      icon: context.locale.languageCode == 'he'
+                      icon: Localizations.localeOf(context).languageCode == 'he'
                           ? Transform(
                               transform: Matrix4.identity(),
                               child: const Icon(Icons.help),
@@ -1237,11 +1237,11 @@ class _LogsDialogState extends State<LogsDialog> {
             builder: (context, controller, child) {
               return TextField(
                 controller: TextEditingController(
-                  text: plural('day', selectedDays),
+                  text: '$selectedDays days',
                 ),
                 readOnly: true,
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.filterDays,
+                  labelText: 'Filter days',
                   filled: true,
                   suffixIcon: const Icon(Icons.arrow_drop_down),
                 ),
@@ -1262,7 +1262,7 @@ class _LogsDialogState extends State<LogsDialog> {
                   });
                   filterLogs(day);
                 },
-                child: Text(plural('day', day)),
+                child: Text('$day days'),
               );
             }).toList(),
           ),
