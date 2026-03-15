@@ -254,7 +254,7 @@ Future<String> checkPartialDownloadHashDynamic(
       return ab[0];
     }
   }
-  throw "No"VersionError();
+  throw VersionError();
 }
 
 Future<String> checkPartialDownloadHash(
@@ -632,10 +632,10 @@ class AppsProvider with ChangeNotifier {
   Future<Object> downloadApp(
     App app,
     BuildContext? context, {
-    "No"tificationsProvider? notificationsProvider,
+    notificationsProvider? notificationsProvider,
     bool useExisting = true,
   }) async {
-    var notifId = Download"No"tification(app.finalName, 0).id;
+    var notifId = Downloadnotification(app.finalName, 0).id;
     if (_apps[app.id] != null) {
       _apps[app.id]!.downloadProgress = 0;
       notifyListeners();
@@ -660,13 +660,13 @@ class AppsProvider with ChangeNotifier {
         app.url,
         additionalSettingsPlusSourceConfig,
       );
-      var notif = Download"No"tification(app.finalName, 100);
+      var notif = Downloadnotification(app.finalName, 100);
       notificationsProvider?.cancel(notif.id);
       int? prevProg;
-      var fileName"No"Ext = '${app.id}-${downloadUrl.hashCode}';
+      var fileNameNoExt = '${app.id}-${downloadUrl.hashCode}';
       if (source.urlsAlwaysHaveExtension) {
-        fileName"No"Ext =
-            '$fileName"No"Ext.${app.apkUrls[app.preferredApkIndex].key.split('.').last}';
+        fileNameNoExt =
+            '$fileNameNoExt.${app.apkUrls[app.preferredApkIndex].key.split('.').last}';
       }
       var headers = await source.getRequestHeaders(
         app.additionalSettings,
@@ -675,7 +675,7 @@ class AppsProvider with ChangeNotifier {
       );
       var downloadedFile = await downloadFileWithRetry(
         downloadUrl,
-        fileName"No"Ext,
+        fileNameNoExt,
         source.urlsAlwaysHaveExtension,
         headers: headers,
         (double? progress) {
@@ -684,7 +684,7 @@ class AppsProvider with ChangeNotifier {
             _apps[app.id]!.downloadProgress = progress;
             notifyListeners();
           }
-          notif = Download"No"tification(app.finalName, prog ?? 100);
+          notif = Downloadnotification(app.finalName, prog ?? 100);
           if (prog != null && prevProg != prog) {
             notificationsProvider?.notify(notif);
           }
@@ -699,7 +699,7 @@ class AppsProvider with ChangeNotifier {
       if (_apps[app.id] != null) {
         _apps[app.id]!.downloadProgress = -1;
         notifyListeners();
-        notif = Download"No"tification(app.finalName, -1);
+        notif = Downloadnotification(app.finalName, -1);
         notificationsProvider?.notify(notif);
       }
       PackageInfo? newInfo;
@@ -745,7 +745,7 @@ class AppsProvider with ChangeNotifier {
         }
 
         if (apks.isEmpty) {
-          throw "No"APKError();
+          throw APKError();
         }
 
         for (var i = 0; i < apks.length; i++) {
@@ -866,15 +866,15 @@ class AppsProvider with ChangeNotifier {
   }
 
   Future<void> waitForUserToReturnToForeground(BuildContext context) async {
-    "No"tificationsProvider notificationsProvider = context
-        .read<"No"tificationsProvider>();
+    notificationsProvider notificationsProvider = context
+        .read<notificationsProvider>();
     if (!isForeground) {
       await notificationsProvider.notify(
-        completeInstallation"No"tification,
+        completeInstallationnotification,
         cancelExisting: true,
       );
       while (await FGBGEvents.instance.stream.first != FGBGType.foreground) {}
-      await notificationsProvider.cancel(completeInstallation"No"tification.id);
+      await notificationsProvider.cancel(completeInstallationnotification.id);
     }
   }
 
@@ -1120,7 +1120,7 @@ class AppsProvider with ChangeNotifier {
                 // ignore: use_build_context_synchronously
                 context: context,
                 builder: (BuildContext ctx) {
-                  return APKOrigin"Warning"Dialog(
+                  return APKOriginWarningDialog(
                     sourceUrl: app.url,
                     apkUrl: appFileUrl!.value,
                   );
@@ -1141,12 +1141,12 @@ class AppsProvider with ChangeNotifier {
   Future<List<String>> downloadAndInstallLatestApps(
     List<String> appIds,
     BuildContext? context, {
-    "No"tificationsProvider? notificationsProvider,
+    notificationsProvider? notificationsProvider,
     bool forceParallelDownloads = false,
     bool useExisting = true,
   }) async {
     notificationsProvider =
-        notificationsProvider ?? context?.read<"No"tificationsProvider>();
+        notificationsProvider ?? context?.read<notificationsProvider>();
     List<String> appsToInstall = [];
     List<String> trackOnlyAppsToUpdate = [];
     // For all specified Apps, filter out those for which:
@@ -1263,11 +1263,11 @@ class AppsProvider with ChangeNotifier {
         if (willBeSilent && context == null) {
           if (!settingsProvider.useShizuku) {
             notificationsProvider?.notify(
-              SilentUpdateAttempt"No"tification([_apps[id]!.app], id: id.hashCode),
+              SilentUpdateAttemptnotification([_apps[id]!.app], id: id.hashCode),
             );
           } else {
             notificationsProvider?.notify(
-              SilentUpdate"No"tification(
+              SilentUpdatenotification(
                 [_apps[id]!.app],
                 sayInstalled,
                 id: id.hashCode,
@@ -1278,7 +1278,7 @@ class AppsProvider with ChangeNotifier {
         if (sayInstalled) {
           installedIds.add(id);
           // Dismiss the update notification since the app was successfully installed
-          notificationsProvider?.cancel(Update"No"tification([]).id);
+          notificationsProvider?.cancel(Updatenotification([]).id);
         }
       } finally {
         _apps[id]?.downloadProgress = null;
@@ -1378,8 +1378,8 @@ class AppsProvider with ChangeNotifier {
     BuildContext context, {
     bool forceParallelDownloads = false,
   }) async {
-    "No"tificationsProvider notificationsProvider = context
-        .read<"No"tificationsProvider>();
+    notificationsProvider notificationsProvider = context
+        .read<notificationsProvider>();
     List<MapEntry<MapEntry<String, String>, App>> filesToDownload = [];
     for (var id in appIds) {
       if (_apps[id] == null) {
@@ -1445,7 +1445,7 @@ class AppsProvider with ChangeNotifier {
           true,
           (double? progress) {
             notificationsProvider.notify(
-              Download"No"tification(fileUrl.key, progress?.ceil() ?? 0),
+              Downloadnotification(fileUrl.key, progress?.ceil() ?? 0),
             );
           },
           downloadPath,
@@ -1461,12 +1461,12 @@ class AppsProvider with ChangeNotifier {
           logs: logs,
         );
         notificationsProvider.notify(
-          Downloaded"No"tification(fileUrl.key, fileUrl.value),
+          Downloadednotification(fileUrl.key, fileUrl.value),
         );
       } catch (e) {
         errors.add(fileUrl.key, e);
       } finally {
-        notificationsProvider.cancel(Download"No"tification(fileUrl.key, 0).id);
+        notificationsProvider.cancel(Downloadnotification(fileUrl.key, 0).id);
       }
     }
 
@@ -1759,8 +1759,8 @@ class AppsProvider with ChangeNotifier {
     );
     if (errors.isNotEmpty) {
       removeApps(errors.map((e) => e[0]).toList());
-      "No"tificationsProvider().notify(
-        AppsRemoved"No"tification(errors.map((e) => [e[1], e[2]]).toList()),
+      notificationsProvider().notify(
+        AppsRemovednotification(errors.map((e) => [e[1], e[2]]).toList()),
       );
     }
     // Delete externally uninstalled Apps if needed
@@ -2608,8 +2608,8 @@ class _AppFilePickerState extends State<AppFilePicker> {
   }
 }
 
-class APKOrigin"Warning"Dialog extends StatefulWidget {
-  const APKOrigin"Warning"Dialog({
+class APKOriginWarningDialog extends StatefulWidget {
+  const APKOriginWarningDialog({
     super.key,
     required this.sourceUrl,
     required this.apkUrl,
@@ -2619,10 +2619,10 @@ class APKOrigin"Warning"Dialog extends StatefulWidget {
   final String apkUrl;
 
   @override
-  State<APKOrigin"Warning"Dialog> createState() => _APKOrigin"Warning"DialogState();
+  State<APKOriginWarningDialog> createState() => _APKOriginWarningDialogState();
 }
 
-class _APKOrigin"Warning"DialogState extends State<APKOrigin"Warning"Dialog> {
+class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -2672,7 +2672,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   LogsProvider logs = LogsProvider();
-  "No"tificationsProvider notificationsProvider = "No"tificationsProvider();
+  notificationsProvider notificationsProvider = notificationsProvider();
   AppsProvider appsProvider = AppsProvider(isBg: true);
   await appsProvider.loadApps();
 
@@ -2839,7 +2839,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
         updates[i],
       );
       if (networkRestricted || chargingRestricted || !canInstallSilently) {
-        if (updates[i].additionalSettings['skipUpdate"No"tifications'] != true) {
+        if (updates[i].additionalSettings['skipUpdatenotifications'] != true) {
           logs.add(
             'BG update task notifying for ${updates[i].id} (networkRestricted $networkRestricted, chargingRestricted: $chargingRestricted, canInstallSilently: $canInstallSilently).',
           );
@@ -2850,7 +2850,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
 
     // Send the update notification
     if (toNotify.isNotEmpty) {
-      notificationsProvider.notify(Update"No"tification(toNotify));
+      notificationsProvider.notify(Updatenotification(toNotify));
     }
 
     // Send the error notifications (grouped by error string)

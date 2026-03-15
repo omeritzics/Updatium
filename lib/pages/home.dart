@@ -34,7 +34,7 @@ class NavigationPageItem {
   NavigationPageItem(this.title, this.icon, this.widget);
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   List<int> selectedIndexHistory = [];
   bool isReversing = false;
   int prevAppCount = -1;
@@ -44,8 +44,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool isLinkActivity = false;
 
   @override
-  void activate() {
-    super.activate();
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override
@@ -53,15 +58,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.dispose();
     _linkSubscription?.cancel();
     _appLinks.dispose();
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<bool>('isReversing', isReversing));
-    properties.add(DiagnosticsProperty<int>('prevAppCount', prevAppCount));
-    properties.add(DiagnosticsProperty<bool>('prevIsLoading', prevIsLoading));
-    properties.add(DiagnosticsProperty<bool>('isLinkActivity', isLinkActivity));
   }
   late List<AnimationController> _iconControllers;
   late List<Animation<double>> _iconAnimations;
