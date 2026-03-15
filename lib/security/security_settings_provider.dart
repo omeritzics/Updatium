@@ -60,6 +60,8 @@ class SecuritySettingsProvider {
       enableAutoUpdate: enabled,
     );
     _scanner = YARAScanner.getInstance(_config);
+    // Reinitialize scanner to apply new timer settings
+    await _scanner.initialize();
   }
 
   // Update Interval Settings
@@ -73,6 +75,8 @@ class SecuritySettingsProvider {
       enableAutoUpdate: _config.enableAutoUpdate,
     );
     _scanner = YARAScanner.getInstance(_config);
+    // Reinitialize scanner to apply new timer settings
+    await _scanner.initialize();
   }
 
   // Threat Level Filter
@@ -116,12 +120,25 @@ class SecuritySettingsProvider {
       throw StateError(result.error!);
     }
     
-    // Handle quarantine if enabled
-    if (result.isInfected && getQuarantineInfected()) {
-      await _quarantineFile(apkPath, result);
+    // Apply threat level filter
+    final threshold = getThreatLevelFilter();
+    final filteredMatches = result.matches.where((match) => match.threatLevel >= threshold).toList();
+    
+    // Create filtered result for decision making and reporting
+    final filteredResult = YARAScanResult(
+      isInfected: filteredMatches.isNotEmpty,
+      matches: filteredMatches,
+      filePath: result.filePath,
+      scanTime: result.scanTime,
+      error: result.error,
+    );
+    
+    // Handle quarantine if enabled and filtered matches exist
+    if (filteredResult.isInfected && getQuarantineInfected()) {
+      await _quarantineFile(apkPath, filteredResult);
     }
     
-    return result;
+    return filteredResult;
   }
 
   /// Move infected file to quarantine

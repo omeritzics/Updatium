@@ -40,6 +40,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:updatium/security/security_settings_provider.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 
 class AppInMemory {
@@ -498,21 +499,63 @@ Future<File> downloadFile(
 }
 
 Future<List<PackageInfo>> getAllInstalledInfo() async {
-  return [];
+  try {
+    // Use platform channel to get all installed apps
+    const platform = MethodChannel('updatium/package_manager');
+    final List<dynamic> installedApps = await platform.invokeMethod('getInstalledApps');
+    
+    List<PackageInfo> packageInfoList = [];
+    for (var appData in installedApps) {
+      try {
+        // Create PackageInfo objects from the platform data
+        final packageInfo = PackageInfo(
+          appName: appData['appName'] ?? '',
+          packageName: appData['packageName'] ?? '',
+          version: appData['version'] ?? '',
+          buildNumber: appData['buildNumber'] ?? '',
+        );
+        packageInfoList.add(packageInfo);
+      } catch (e) {
+        // Skip individual app errors but continue processing others
+        print('Error parsing app data: $e'); // OK
+      }
+    }
+    return packageInfoList;
+  } catch (e) {
+    print('Error getting installed apps: $e'); // OK
+    return [];
+  }
 }
 
 Future<PackageInfo?> getInstalledInfo(
   String? packageName, {
   bool printErr = true,
 }) async {
-  try {
+  if (packageName == null || packageName.isEmpty) {
     return null;
+  }
+  
+  try {
+    // Use platform channel to get specific app info
+    const platform = MethodChannel('updatium/package_manager');
+    final Map<String, dynamic>? appData = await platform.invokeMethod('getAppInfo', {'packageName': packageName});
+    
+    if (appData == null) {
+      return null;
+    }
+    
+    return PackageInfo(
+      appName: appData['appName'] ?? '',
+      packageName: appData['packageName'] ?? '',
+      version: appData['version'] ?? '',
+      buildNumber: appData['buildNumber'] ?? '',
+    );
   } catch (e) {
     if (printErr) {
-        print(e); // OK
-      }
+      print(e); // OK
     }
-  return null;
+    return null;
+  }
 }
 
 Future<Directory> getAppStorageDir() async =>

@@ -114,15 +114,74 @@ class YARARule {
   });
 
   factory YARARule.fromString(String ruleContent) {
+    // For backward compatibility, if the content contains multiple rules,
+    // return the first one
+    final rules = YARARule.parseMultiple(ruleContent);
+    return rules.isNotEmpty ? rules.first : YARARule(
+      name: 'unknown',
+      content: ruleContent,
+    );
+  }
+
+  /// Parse multiple YARA rules from a file content
+  /// Returns a list of YARARule instances, one for each rule block found
+  static List<YARARule> parseMultiple(String fileContent) {
+    final rules = <YARARule>[];
+    final lines = fileContent.split('\n');
+    
+    int currentRuleStart = -1;
+    String? currentRuleName;
+    final currentRuleLines = <String>[];
+    
+    for (int i = 0; i < lines.length; i++) {
+      final line = lines[i];
+      final trimmedLine = line.trim();
+      
+      // Detect rule block start
+      if (trimmedLine.startsWith('rule ')) {
+        // If we were building a previous rule, finalize it first
+        if (currentRuleStart != -1 && currentRuleName != null) {
+          final ruleContent = currentRuleLines.join('\n');
+          rules.add(_parseSingleRule(ruleContent, currentRuleName));
+        }
+        
+        // Start new rule
+        currentRuleStart = i;
+        currentRuleName = trimmedLine.substring(5).trim().split(' ').first;
+        currentRuleLines.clear();
+        currentRuleLines.add(line);
+      } else if (currentRuleStart != -1) {
+        // We're inside a rule block
+        currentRuleLines.add(line);
+        
+        // Check if this might be the end of a rule (next rule start or end of file)
+        if (i == lines.length - 1) {
+          // End of file - finalize the last rule
+          final ruleContent = currentRuleLines.join('\n');
+          rules.add(_parseSingleRule(ruleContent, currentRuleName!));
+        }
+      }
+    }
+    
+    // Handle case where file has no explicit rule blocks (single rule without "rule " prefix)
+    if (rules.isEmpty && fileContent.trim().isNotEmpty) {
+      rules.add(_parseSingleRule(fileContent, null));
+    }
+    
+    return rules;
+  }
+  
+  /// Parse a single rule block with its content
+  static YARARule _parseSingleRule(String ruleContent, String? fallbackName) {
     final lines = ruleContent.split('\n');
-    String? ruleName;
+    String? ruleName = fallbackName;
     String? author;
     String? description;
     final tags = <String>[];
 
     for (final line in lines) {
       final trimmedLine = line.trim();
-      if (trimmedLine.startsWith('rule ')) {
+      if (trimmedLine.startsWith('rule ') && ruleName == null) {
         ruleName = trimmedLine.substring(5).trim().split(' ').first;
       } else if (trimmedLine.startsWith('author = ')) {
         author = trimmedLine.substring(9).trim().replaceAll('"', '');
@@ -183,6 +242,19 @@ class YARAScanner {
   Future<void> initialize() async {
     await _loadRules();
     
+    // Check if any rules were actually loaded
+    if (_rules.isEmpty) {
+      // Trigger immediate update for fresh installs
+      try {
+        await updateRules();
+        // Reload rules after update
+        await _loadRules();
+      } catch (e) {
+        // Log error but continue with initialization
+        _logs.add('Initial rule update failed: ${e.toString()}');
+      }
+    }
+    
     // Cancel existing timer before starting new one
     _updateTimer?.cancel();
     
@@ -207,9 +279,9 @@ class YARAScanner {
         if (entity is File && entity.path.endsWith('.yar')) {
           try {
             final content = await entity.readAsString();
-            final rule = YARARule.fromString(content);
-            _rules.add(rule);
-            loadedCount++;
+            final rules = YARARule.parseMultiple(content);
+            _rules.addAll(rules);
+            loadedCount += rules.length;
           } catch (e) {
             errorCount++;
             // Log error without exposing sensitive file paths or rule content
@@ -357,48 +429,76 @@ class YARAScanner {
       if (trimmedLine.startsWith('condition:')) {
         // condition = trimmedLine.substring(10).trim(); // Not used in basic implementation
       } else if (trimmedLine.contains('\$') && trimmedLine.contains(' = ')) {
-        final stringMatch = RegExp(r'\$(\w+)\s*=\s*{([^}]+)}').firstMatch(trimmedLine);
-        if (stringMatch != null && stringMatch.group(1) != null) {
-          strings.add(stringMatch.group(1)!);
+        // Extract quoted strings: $name = "text"
+        final quotedMatch = RegExp(r'\$(\w+)\s*=\s*["\']([^"\']+)["\']').firstMatch(trimmedLine);
+        if (quotedMatch != null && quotedMatch.group(1) != null) {
+          strings.add(quotedMatch.group(1)!);
+          continue;
+        }
+        
+        // Extract hex sequences: $name = {6A 40} or $name = 6A 40 68
+        final hexMatch = RegExp(r'\$(\w+)\s*=\s*(?:{([^}]+)}|([0-9A-Fa-f\s]+))').firstMatch(trimmedLine);
+        if (hexMatch != null && hexMatch.group(1) != null) {
+          strings.add(hexMatch.group(1)!);
         }
       }
     }
 
     // Check if any strings match in binary data
     for (final string in strings) {
-      final stringPattern = RegExp(r'\$' + string + r'\s*=\s*{([^}]+)}');
-      final stringMatch = stringPattern.firstMatch(rule.content);
-      if (stringMatch != null) {
-        final searchString = stringMatch.group(1)!.trim().replaceAll('"', '');
+      // Try quoted string pattern first
+      String? searchString;
+      List<int> searchBytes;
+      
+      final quotedPattern = RegExp(r'\$' + string + r'\s*=\s*["\']([^"\']+)["\']');
+      final quotedMatch = quotedPattern.firstMatch(rule.content);
+      
+      if (quotedMatch != null) {
+        // Case 1: Quoted strings - strip quotes and use utf8.encode
+        searchString = quotedMatch.group(1)!;
+        searchBytes = utf8.encode(searchString);
+      } else {
+        // Try hex patterns (both braced and unbraced)
+        final hexPattern = RegExp(r'\$' + string + r'\s*=\s*(?:{([^}]+)}|([0-9A-Fa-f\s]+))');
+        final hexMatch = hexPattern.firstMatch(rule.content);
         
-        // Convert search string to bytes for binary comparison
-        List<int> searchBytes;
-        try {
-          searchBytes = utf8.encode(searchString);
-        } catch (e) {
-          // Handle hex strings like {6A 40 68 00 30 00 00}
-          final hexString = searchString.replaceAll(RegExp(r'[{} ]'), '');
+        if (hexMatch != null) {
+          // Case 2: Hex sequences - parse hex pairs into bytes
+          final hexContent = hexMatch.group(1) ?? hexMatch.group(2)!;
+          final cleanHex = hexContent.replaceAll(RegExp(r'\s+'), '');
           searchBytes = [];
-          for (int i = 0; i < hexString.length; i += 2) {
-            if (i + 1 < hexString.length) {
-              final byte = int.tryParse(hexString.substring(i, i + 2), radix: 16);
+          
+          for (int i = 0; i < cleanHex.length; i += 2) {
+            if (i + 1 < cleanHex.length) {
+              final byte = int.tryParse(cleanHex.substring(i, i + 2), radix: 16);
               if (byte != null) {
                 searchBytes.add(byte);
               }
             }
           }
+        } else {
+          // Case 3: Default text - try to find any remaining pattern and use utf8.encode
+          final defaultPattern = RegExp(r'\$' + string + r'\s*=\s*([^\n]+)');
+          final defaultMatch = defaultPattern.firstMatch(rule.content);
+          
+          if (defaultMatch != null) {
+            searchString = defaultMatch.group(1)!.trim().replaceAll(RegExp(r'^["\']|["\']$'), '');
+            searchBytes = utf8.encode(searchString);
+          } else {
+            continue; // Skip if no pattern found
+          }
         }
+      }
 
-        // Search for bytes in the file
-        if (_containsBytes(fileBytes, searchBytes)) {
-          return YARAMatch(
-            ruleName: rule.name,
-            description: rule.description ?? 'No description available',
-            author: rule.author,
-            tags: rule.tags,
-            threatLevel: _calculateThreatLevel(rule.tags),
-          );
-        }
+      // Search for bytes in the file
+      if (_containsBytes(fileBytes, searchBytes)) {
+        return YARAMatch(
+          ruleName: rule.name,
+          description: rule.description ?? 'No description available',
+          author: rule.author,
+          tags: rule.tags,
+          threatLevel: _calculateThreatLevel(rule.tags),
+        );
       }
     }
 

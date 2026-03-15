@@ -1,4 +1,0 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Flutter Android Embedding v2 -->
-    <meta-data android:name="flutterEmbedding" android:value="2" />
-</manifest>

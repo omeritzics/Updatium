@@ -918,7 +918,7 @@ onChanged: _securityProviderInitialized ? (value) async {
                             items: [1, 6, 12, 24, 48, 72].map((hours) {
                               return DropdownMenuItem<int>(
                                 value: hours,
-                                child: Text('$hours ${tr('hours')}'),
+                                child: Text('$hours ${hours == 1 ? tr('hour') : tr('hours')}'),
                               );
                             }).toList(),
                             onChanged: _securityProviderInitialized ? (value) async {
