@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool isLinkActivity = false;
   late List<AnimationController> _iconControllers;
   late List<Animation<double>> _iconAnimations;
+  bool _iconsInitialized = false;
 
   List<NavigationPageItem> getPages(SettingsProvider settingsProvider) {
     return [
@@ -66,29 +67,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
-    // Initialize animation controllers for each nav item
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final settingsProvider = context.read<SettingsProvider>();
-      final pagesList = getPages(settingsProvider);
-      _iconControllers = List.generate(
-        pagesList.length,
-        (index) => AnimationController(
-          duration: const Duration(milliseconds: 600),
-          vsync: this,
-        ),
-      );
-
-      _iconAnimations = _iconControllers
-          .map(
-            (controller) => Tween<double>(begin: 0, end: 1).animate(
-              CurvedAnimation(parent: controller, curve: Curves.easeInOut),
-            ),
-          )
-          .toList();
-      setState(() {}); // Rebuild after initialization
-    });
-
     initDeepLinks();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var sp = context.read<SettingsProvider>();
@@ -154,6 +132,34 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         );
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    
+    if (!_iconsInitialized) {
+      final settingsProvider = context.read<SettingsProvider>();
+      final pagesList = getPages(settingsProvider);
+      _iconControllers = List.generate(
+        pagesList.length,
+        (index) => AnimationController(
+          duration: const Duration(milliseconds: 600),
+          vsync: this,
+        ),
+      );
+
+      _iconAnimations = _iconControllers
+          .map(
+            (controller) => Tween<double>(begin: 0, end: 1).animate(
+              CurvedAnimation(parent: controller, curve: Curves.easeInOut),
+            ),
+          )
+          .toList();
+      
+      _iconsInitialized = true;
+      setState(() {}); // Rebuild after initialization
+    }
   }
 
   Future<void> initDeepLinks() async {
@@ -383,9 +389,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               HapticFeedback.selectionClick();
 
               // Trigger full-rotation animation
-              _iconControllers[index].forward().then((_) {
-                _iconControllers[index].reset();
-              });
+              if (_iconsInitialized && index < _iconControllers.length) {
+                _iconControllers[index].forward().then((_) {
+                  _iconControllers[index].reset();
+                });
+              }
 
               switchToPage(index);
             },
@@ -393,15 +401,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               int index = entry.key;
               var page = entry.value;
               return NavigationDestination(
-                icon: AnimatedBuilder(
-                  animation: _iconAnimations[index],
-                  builder: (context, child) {
-                    return Transform.rotate(
-                      angle: _iconAnimations[index].value * 2 * 3.14159,
-                      child: Icon(page.icon),
-                    );
-                  },
-                ),
+                icon: _iconsInitialized && index < _iconAnimations.length
+                    ? AnimatedBuilder(
+                        animation: _iconAnimations[index],
+                        builder: (context, child) {
+                          return Transform.rotate(
+                            angle: _iconAnimations[index].value * 2 * 3.14159,
+                            child: Icon(page.icon),
+                          );
+                        },
+                      )
+                    : Icon(page.icon),
                 label: page.title,
               );
             }).toList(),
