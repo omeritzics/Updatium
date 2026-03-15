@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:updatium/providers/logs_provider.dart';
-import 'package:updatium/generated/l10n.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class SecurityDisclaimerScreen extends StatefulWidget {
   static const String _disclaimerAcceptedKey = 'security_disclaimer_accepted';
