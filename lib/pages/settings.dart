@@ -774,12 +774,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ShizukuApkInstaller().checkPermission().then((
                                     resCode,
                                   ) {
-                                    settingsProvider.useShizuku =
-                                        resCode.startsWith('granted');
+                                    settingsProvider.useShizuku = resCode
+                                        .startsWith('granted');
                                     switch (resCode) {
                                       case 'services_not_found':
                                         showError(
-                                          UpdatiumError(tr('shizukuBinderNotFound')),
+                                          UpdatiumError(
+                                            tr('shizukuBinderNotFound'),
+                                          ),
                                           context,
                                         );
                                       case 'old_shizuku':
@@ -789,7 +791,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                         );
                                       case 'old_android_with_adb':
                                         showError(
-                                          UpdatiumError(tr('shizukuOldAndroidWithADB')),
+                                          UpdatiumError(
+                                            tr('shizukuOldAndroidWithADB'),
+                                          ),
                                           context,
                                         );
                                       case 'denied':
@@ -941,28 +945,31 @@ class _SettingsPageState extends State<SettingsPage> {
                           builder: (ctx, val) {
                             return (val.data?.version.sdkInt ?? 0) >= 36
                                 ? Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       height16,
                                       Row(
                                         mainAxisAlignment:
-MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Flexible(
                                             child: Text(tr('useSystemFont')),
                                           ),
                                           Switch(
                                             value:
-settingsProvider.useSystemFont,
+                                                settingsProvider.useSystemFont,
                                             onChanged: (useSystemFont) {
                                               if (useSystemFont) {
                                                 NativeFeatures.loadSystemFont()
                                                     .then((val) {
-                                                  settingsProvider.useSystemFont = true;
-                                                });
+                                                      settingsProvider
+                                                              .useSystemFont =
+                                                          true;
+                                                    });
                                               } else {
                                                 settingsProvider.useSystemFont =
-false;
+                                                    false;
                                               }
                                             },
                                           ),
