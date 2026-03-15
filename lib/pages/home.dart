@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       NavigationPageItem(
         settingsProvider.safeMode ? tr('importExport') : tr('addApp'),
         settingsProvider.safeMode ? Icons.import_export : Icons.add_circle,
-        settingsProvider.safeMode 
+        settingsProvider.safeMode
             ? const ImportExportPage()
             : AddAppPage(key: GlobalKey<AddAppPageState>()),
       ),
@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    
+
     if (!_iconsInitialized) {
       final settingsProvider = context.read<SettingsProvider>();
       final pagesList = getPages(settingsProvider);
@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           )
           .toList();
-      
+
       _iconsInitialized = true;
       setState(() {}); // Rebuild after initialization
     }
@@ -333,7 +333,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     AppsProvider appsProvider = context.watch<AppsProvider>();
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
-    
+
     final pages = getPages(settingsProvider);
 
     if (!prevIsLoading &&
@@ -378,7 +378,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
         bottomNavigationBar: Semantics(
           label: 'Main navigation',
-          hint: 'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
+          hint:
+              'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
           child: NavigationBar(
             selectedIndex: selectedIndexHistory.isEmpty
                 ? 0
@@ -436,11 +437,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           return false;
         }
         final settingsProvider = context.read<SettingsProvider>();
-      final pages = getPages(settingsProvider);
-      return !((pages[0].widget.key as GlobalKey<AppsPageState>)
-              .currentState
-              ?.clearSelected() ??
-          false);
+        final pages = getPages(settingsProvider);
+        return !((pages[0].widget.key as GlobalKey<AppsPageState>).currentState
+                ?.clearSelected() ??
+            false);
       },
     );
   }

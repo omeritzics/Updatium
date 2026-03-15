@@ -628,7 +628,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                   Text(tr('safeMode')),
                                   Text(
                                     tr('safeModeDescription'),
-                                    style: Theme.of(context).textTheme.labelSmall,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.labelSmall,
                                   ),
                                 ],
                               ),
