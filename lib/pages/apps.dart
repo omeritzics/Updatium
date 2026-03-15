@@ -18,7 +18,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:updatium/generated/l10n.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class AppsPage extends StatefulWidget {
   const AppsPage({super.key});

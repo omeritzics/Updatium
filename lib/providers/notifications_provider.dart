@@ -7,7 +7,7 @@ import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/generated/l10n.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class UpdatiumNotification {
   late int id;
@@ -65,11 +65,12 @@ class SilentUpdateNotification extends UpdatiumNotification {
         'Apps updated notification description',
         Importance.defaultImportance,
       ) {
-    message = updates.length == 1
-        ? '${updates[0].finalName} was updated to ${updates[0].latestVersion}'
-        : '${updates[0].finalName} was not updated to ${updates[0].latestVersion}'
-        : succeeded
-            ? '${updates[0].finalName} and ${updates.length - 1} more apps were updated.'
+    message = succeeded
+        ? updates.length == 1
+            ? '${updates[0].finalName} was updated to ${updates[0].latestVersion}'
+            : '${updates[0].finalName} and ${updates.length - 1} more apps were updated.'
+        : updates.length == 1
+            ? '${updates[0].finalName} was not updated to ${updates[0].latestVersion}'
             : 'Failed to update ${updates[0].finalName} and ${updates.length - 1} more apps.'
   }
 }

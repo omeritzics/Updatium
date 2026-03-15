@@ -42,7 +42,7 @@ import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:docman/docman.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
-import 'package:updatium/generated/l10n.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 final pm = AndroidPackageManager();
 final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
@@ -2071,7 +2071,7 @@ class AppsProvider with ChangeNotifier {
       builder: (BuildContext ctx) {
         return GeneratedFormModal(
           primaryActionColor: Theme.of(context).colorScheme.error,
-          title: plural('removeAppQuestion', apps.length),
+          title: apps.length removeAppQuestions,
           items: !showUninstallOption
               ? []
               : [
@@ -2664,9 +2664,8 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
 Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
   // ignore: avoid_print
   print('BG task started $taskId: ${params.toString()}');
+  // Initialize Flutter bindings
   WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-  await loadTranslations();
 
   LogsProvider logs = LogsProvider();
   NotificationsProvider notificationsProvider = NotificationsProvider();
@@ -2781,7 +2780,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
     MultiAppMultiError toThrow =
         MultiAppMultiError(); // All errors that will not lead to a retry, just a notification
     CheckingUpdatesNotification notif = CheckingUpdatesNotification(
-      plural('apps', toCheck.length),
+      toCheck.length appss,
     ); // The notif. to show while checking
 
     try {

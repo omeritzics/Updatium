@@ -12,7 +12,7 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:updatium/generated/l10n.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 class ImportExportPage extends StatefulWidget {
   const ImportExportPage({super.key});
@@ -146,7 +146,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 });
                 appsProvider.addMissingCategories(settingsProvider);
                 showMessage(
-                  '${AppLocalizations.of(context)!.importedX(plural('apps', value.key.length).toLowerCase())}${value.value ? ' + ${AppLocalizations.of(context)!.settings.toLowerCase()}' : ''}',
+                  '${AppLocalizations.of(context)!.importedX(value.key.length appss.toLowerCase())}${value.value ? ' + ${AppLocalizations.of(context)!.settings.toLowerCase()}' : ''}',
                   context,
                 );
               });

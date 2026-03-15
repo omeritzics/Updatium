@@ -10,7 +10,7 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:updatium/generated/l10n.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 String updatiumTempId = 'omeritzics_updatium_${GitHub().hosts[0]}';
 String updatiumId = 'io.github.omeritzics.updatium';
@@ -296,7 +296,7 @@ class SettingsProvider with ChangeNotifier {
     var fl = flSegs != null && flSegs.isNotEmpty
         ? Locale(flSegs[0], flSegs.length > 1 ? flSegs[1] : null)
         : null;
-    var set = supportedLocales.where((element) => element.key == fl).isNotEmpty
+    var set = supportedLocales.where((element) => element.languageCode == fl?.languageCode).isNotEmpty
         ? fl
         : null;
     return set;
@@ -306,7 +306,7 @@ class SettingsProvider with ChangeNotifier {
     if (fl == null) {
       prefs?.remove('forcedLocale');
     } else if (supportedLocales
-        .where((element) => element.key == fl)
+        .where((element) => element.languageCode == fl?.languageCode)
         .isNotEmpty) {
       prefs?.setString('forcedLocale', fl.toLanguageTag());
     }
@@ -317,12 +317,8 @@ class SettingsProvider with ChangeNotifier {
       a.length == b.length && a.union(b).length == a.length;
 
   void resetLocaleSafe(BuildContext context) {
-    if (context.supportedLocales.contains(context.deviceLocale)) {
-      context.resetLocale();
-    } else {
-      context.setLocale(context.fallbackLocale!);
-      context.deleteSaveLocale();
-    }
+    // Flutter's gen-l10n handles locale automatically
+    // These methods are not needed in Flutter's localization system
   }
 
   bool get removeOnExternalUninstall {
