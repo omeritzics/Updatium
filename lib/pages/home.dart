@@ -50,14 +50,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       NavigationPageItem(
         tr('appsString'),
         Icons.apps,
-        AppsPage(key: GlobalKey<AppsPageState>()),
+        AppsPage(key: _appsPageKey),
       ),
       NavigationPageItem(
         settingsProvider.safeMode ? tr('importExport') : tr('addApp'),
         settingsProvider.safeMode ? Icons.import_export : Icons.add_circle,
         settingsProvider.safeMode 
             ? const ImportExportPage()
-            : AddAppPage(key: GlobalKey<AddAppPageState>()),
+            : AddAppPage(key: _addAppPageKey),
       ),
       NavigationPageItem(tr('settings'), Icons.settings, const SettingsPage()),
     ];
