@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/generated/l10n.dart';
 
 class SecurityDisclaimerScreen extends StatefulWidget {
   static const String _disclaimerAcceptedKey = 'security_disclaimer_accepted';
@@ -73,7 +73,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
 
                     // Title
                     Text(
-                      tr('securityDisclaimerTitle'),
+                      AppLocalizations.of(context)!.securityDisclaimerTitle,
                       style: Theme.of(context).textTheme.headlineMedium
                           ?.copyWith(
                             fontWeight: FontWeight.bold,
@@ -97,8 +97,8 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           _buildDisclaimerItem(
                             context,
                             Icons.gavel,
-                            tr('license'),
-                            tr('licenseText'),
+                            AppLocalizations.of(context)!.license,
+                            AppLocalizations.of(context)!.licenseText,
                           ),
 
                           const SizedBox(height: 16),
@@ -106,8 +106,8 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           _buildDisclaimerItem(
                             context,
                             Icons.warning_amber,
-                            tr('disclaimer'),
-                            tr('disclaimerText'),
+                            AppLocalizations.of(context)!.disclaimer,
+                            AppLocalizations.of(context)!.disclaimerText,
                           ),
 
                           const SizedBox(height: 16),
@@ -115,8 +115,8 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           _buildDisclaimerItem(
                             context,
                             Icons.privacy_tip,
-                            tr('privacy'),
-                            tr('privacyText'),
+                            AppLocalizations.of(context)!.privacy,
+                            AppLocalizations.of(context)!.privacyText,
                           ),
                         ],
                       ),
@@ -152,7 +152,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           shape: const StadiumBorder(),
                         ),
                         child: Text(
-                          tr('acceptAndContinue'),
+                          AppLocalizations.of(context)!.acceptAndContinue,
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -176,7 +176,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           shape: const StadiumBorder(),
                         ),
                         child: Text(
-                          tr('decline'),
+                          AppLocalizations.of(context)!.decline,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,

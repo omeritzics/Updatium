@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:updatium/pages/home.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -14,87 +15,48 @@ import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
-import 'package:easy_localization/easy_localization.dart';
-// ignore: implementation_imports
-import 'package:easy_localization/src/easy_localization_controller.dart';
-// ignore: implementation_imports
-import 'package:easy_localization/src/localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
+import 'package:updatium/generated/l10n.dart';
 
-List<MapEntry<Locale, String>> supportedLocales = const [
-  MapEntry(Locale('en'), 'English'),
-  MapEntry(Locale('zh'), '简体中文'),
-  MapEntry(Locale('zh', 'Hant_TW'), '臺灣話'),
-  MapEntry(Locale('it'), 'Italiano'),
-  MapEntry(Locale('ja'), '日本語'),
-  MapEntry(Locale('he'), 'עברית'),
-  MapEntry(Locale('hu'), 'Magyar'),
-  MapEntry(Locale('de'), 'Deutsch'),
-  MapEntry(Locale('fa'), 'فارسی'),
-  MapEntry(Locale('fr'), 'Français'),
-  MapEntry(Locale('es'), 'Español'),
-  MapEntry(Locale('pl'), 'Polski'),
-  MapEntry(Locale('ru'), 'Русский'),
-  MapEntry(Locale('bs'), 'Bosanski'),
-  MapEntry(Locale('pt'), 'Português'),
-  MapEntry(Locale('pt', 'BR'), 'Brasileiro'),
-  MapEntry(Locale('cs'), 'Česky'),
-  MapEntry(Locale('sv'), 'Svenska'),
-  MapEntry(Locale('nl'), 'Nederlands'),
-  MapEntry(Locale('vi'), 'Tiếng Việt'),
-  MapEntry(Locale('tr'), 'Türkçe'),
-  MapEntry(Locale('uk'), 'Українська'),
-  MapEntry(Locale('da'), 'Dansk'),
-  MapEntry(Locale('et'), 'Eesti'),
-  MapEntry(
-    Locale('en', 'EO'),
-    'Esperanto',
-  ), // https://github.com/aissat/easy_localization/issues/220#issuecomment-846035493
-  MapEntry(Locale('in'), 'Bahasa Indonesia'),
-  MapEntry(Locale('ko'), '한국어'),
-  MapEntry(Locale('ca'), 'Català'),
-  MapEntry(Locale('ar'), 'العربية'),
-  MapEntry(Locale('ml'), 'മലയാളം'),
-  MapEntry(Locale('gl'), 'Galego'),
+List<Locale> supportedLocales = const [
+  Locale('en'),
+  Locale('zh'),
+  Locale('zh', 'Hant_TW'),
+  Locale('it'),
+  Locale('ja'),
+  Locale('he'),
+  Locale('hu'),
+  Locale('de'),
+  Locale('fa'),
+  Locale('fr'),
+  Locale('es'),
+  Locale('pl'),
+  Locale('ru'),
+  Locale('bs'),
+  Locale('pt'),
+  Locale('pt', 'BR'),
+  Locale('cs'),
+  Locale('sv'),
+  Locale('nl'),
+  Locale('vi'),
+  Locale('tr'),
+  Locale('uk'),
+  Locale('da'),
+  Locale('et'),
+  Locale('en', 'EO'),
+  Locale('in'),
+  Locale('ko'),
+  Locale('ca'),
+  Locale('ar'),
+  Locale('ml'),
+  Locale('gl'),
 ];
 const fallbackLocale = Locale('en');
-const localeDir = 'assets/translations';
 var fdroid = false;
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 
-Future<void> loadTranslations() async {
-  // See easy_localization/issues/210
-  await EasyLocalizationController.initEasyLocation();
-  var s = SettingsProvider();
-  try {
-    await s.initializeSettings();
-    var forceLocale = s.forcedLocale;
-    final controller = EasyLocalizationController(
-      saveLocale: true,
-      forceLocale: forceLocale,
-      fallbackLocale: fallbackLocale,
-      supportedLocales: supportedLocales.map((e) => e.key).toList(),
-      assetLoader: const RootBundleAssetLoader(),
-      useOnlyLangCode: false,
-      useFallbackTranslations: true,
-      path: localeDir,
-      onLoadError: (FlutterError e) {
-        throw e;
-      },
-    );
-    await controller.loadTranslations();
-    Localization.load(
-      controller.locale,
-      translations: controller.translations,
-      fallbackTranslations: controller.fallbackTranslations,
-    );
-  } finally {
-    // Clean up the temporary SettingsProvider instance
-    s.dispose();
-  }
-}
 
 @pragma('vm:entry-point')
 void backgroundFetchHeadlessTask(HeadlessTask task) async {
@@ -150,7 +112,6 @@ void main() async {
   } catch (e) {
     // Already added, do nothing (see #375)
   }
-  await EasyLocalization.ensureInitialized();
 
   // Enable edge-to-edge mode for Android 10+ (API 29)
   if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
@@ -172,13 +133,7 @@ void main() async {
         Provider(create: (context) => np),
         Provider(create: (context) => LogsProvider()),
       ],
-      child: EasyLocalization(
-        supportedLocales: supportedLocales.map((e) => e.key).toList(),
-        path: localeDir,
-        fallbackLocale: fallbackLocale,
-        useOnlyLangCode: false,
-        child: const Updatium(),
-      ),
+      child: const Updatium(),
     ),
   );
   BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
@@ -222,8 +177,8 @@ class _UpdatiumState extends State<Updatium> {
       FlutterForegroundTask.init(
         androidNotificationOptions: AndroidNotificationOptions(
           channelId: 'bg_update',
-          channelName: tr('foregroundService'),
-          channelDescription: tr('foregroundService'),
+          channelName: AppLocalizations.of(context)!.foregroundService,
+          channelDescription: AppLocalizations.of(context)!.foregroundService,
           onlyAlertOnce: true,
         ),
         iosNotificationOptions: const IOSNotificationOptions(
@@ -251,8 +206,8 @@ class _UpdatiumState extends State<Updatium> {
       return FlutterForegroundTask.startService(
         serviceTypes: [ForegroundServiceTypes.specialUse],
         serviceId: 666,
-        notificationTitle: tr('foregroundService'),
-        notificationText: tr('fgServiceNotice'),
+        notificationTitle: AppLocalizations.of(context)!.foregroundService,
+        notificationText: AppLocalizations.of(context)!.fgServiceNotice,
         notificationIcon: NotificationIcon(
           metaDataName:
               'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
@@ -361,9 +316,10 @@ class _UpdatiumState extends State<Updatium> {
       }
 
       // Sync local and device locale if needed
-      if (!supportedLocales.map((e) => e.key).contains(context.locale) ||
+      final currentLocale = Localizations.localeOf(context);
+      if (!supportedLocales.contains(currentLocale) ||
           (settingsProvider.forcedLocale == null &&
-              context.deviceLocale != context.locale)) {
+              Localizations.localeOf(context) != currentLocale)) {
         settingsProvider.resetLocaleSafe(context);
       }
     }
@@ -896,9 +852,14 @@ class _UpdatiumState extends State<Updatium> {
 
           return MaterialApp(
             title: 'Updatium',
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: supportedLocales,
+            locale: settingsProvider.forcedLocale ?? fallbackLocale,
             navigatorKey: globalNavigatorKey,
             debugShowCheckedModeBanner: false,
             theme: createTheme(lightColorScheme, false),

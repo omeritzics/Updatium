@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
@@ -8,18 +7,19 @@ import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/generated/l10n.dart';
 
 class FDroid extends AppSource {
   FDroid() {
     hosts = ['f-droid.org'];
-    name = tr('fdroid');
+    name = AppLocalizations.of(context)!.fdroid;
     naiveStandardVersionDetection = true;
     canSearch = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(
           'filterVersionsByRegEx',
-          label: tr('filterVersionsByRegEx'),
+          label: AppLocalizations.of(context)!.filterVersionsByRegEx,
           required: false,
           additionalValidators: [
             (value) {
@@ -31,14 +31,14 @@ class FDroid extends AppSource {
       [
         GeneratedFormSwitch(
           'trySelectingSuggestedVersionCode',
-          label: tr('trySelectingSuggestedVersionCode'),
+          label: AppLocalizations.of(context)!.trySelectingSuggestedVersionCode,
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
-          label: tr('autoSelectHighestVersionCode'),
+          label: AppLocalizations.of(context)!.autoSelectHighestVersionCode,
         ),
       ],
     ];
@@ -170,7 +170,7 @@ class FDroid extends AppSource {
           urlsWithDescriptions[url] = [
             e.querySelector('.package-name')?.text.trim() ?? '',
             e.querySelector('.package-summary')?.text.trim() ??
-                tr('noDescription'),
+                AppLocalizations.of(context)!.noDescription,
           ];
         }
       });

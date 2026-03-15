@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:updatium/app_sources/github.dart';
@@ -11,6 +10,7 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:updatium/generated/l10n.dart';
 
 String updatiumTempId = 'omeritzics_updatium_${GitHub().hosts[0]}';
 String updatiumId = 'io.github.omeritzics.updatium';
@@ -181,7 +181,7 @@ class SettingsProvider with ChangeNotifier {
     while (!(await Permission.requestInstallPackages.isGranted)) {
       // Explicit request as InstallPlugin request sometimes bugged
       Fluttertoast.showToast(
-        msg: tr('pleaseAllowInstallPerm'),
+        msg: AppLocalizations.of(context)!.pleaseAllowInstallPerm,
         toastLength: Toast.LENGTH_LONG,
       );
       if ((await Permission.requestInstallPackages.request()) ==

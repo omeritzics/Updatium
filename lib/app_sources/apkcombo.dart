@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';

@@ -1,13 +1,13 @@
 // Exposes functions that can be used to send notifications to the user
 // Contains a set of pre-defined UpdatiumNotification objects that should be used throughout the app
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/generated/l10n.dart';
 
 class UpdatiumNotification {
   late int id;
@@ -39,22 +39,20 @@ class UpdateNotification extends UpdatiumNotification {
   UpdateNotification(List<App> updates, {int? id})
     : super(
         id ?? 2,
-        tr('updatesAvailable'),
+        AppLocalizations.of(context)!.updatesAvailable,
         '',
         'UPDATES_AVAILABLE',
-        tr('updatesAvailableNotifChannel'),
-        tr('updatesAvailableNotifDescription'),
+        AppLocalizations.of(context)!.updatesAvailableNotifChannel,
+        AppLocalizations.of(context)!.updatesAvailableNotifDescription,
         Importance.max,
       ) {
     message = updates.isEmpty
-        ? tr('noNewUpdates')
+        ? AppLocalizations.of(context)!.noNewUpdates
         : updates.length == 1
-        ? tr('xHasAnUpdate', args: [updates[0].finalName])
-        : plural(
-            'xAndNMoreUpdatesAvailable',
-            updates.length - 1,
-            args: [updates[0].finalName, (updates.length - 1).toString()],
-          );
+        ? AppLocalizations.of(context)!.xHasAnUpdate(args: [updates[0].finalName])
+        : AppLocalizations.of(context)!.xAndNMoreUpdatesAvailable(
+            updates[0].finalName, updates.length - 1,
+          )
   }
 }
 
@@ -62,23 +60,27 @@ class SilentUpdateNotification extends UpdatiumNotification {
   SilentUpdateNotification(List<App> updates, bool succeeded, {int? id})
     : super(
         id ?? 3,
-        succeeded ? tr('appsUpdated') : tr('appsNotUpdated'),
+        succeeded ? AppLocalizations.of(context)!.appsUpdated : AppLocalizations.of(context)!.appsNotUpdated,
         '',
         'APPS_UPDATED',
-        tr('appsUpdatedNotifChannel'),
-        tr('appsUpdatedNotifDescription'),
+        AppLocalizations.of(context)!.appsUpdatedNotifChannel,
+        AppLocalizations.of(context)!.appsUpdatedNotifDescription,
         Importance.defaultImportance,
       ) {
     message = updates.length == 1
-        ? tr(
-            succeeded ? 'xWasUpdatedToY' : 'xWasNotUpdatedToY',
-            args: [updates[0].finalName, updates[0].latestVersion],
+        ? AppLocalizations.of(globalNavigatorKey.currentContext!)!.xWasUpdatedToY(
+            updates[0].finalName, updates[0].latestVersion,
           )
-        : plural(
-            succeeded ? 'xAndNMoreUpdatesInstalled' : "xAndNMoreUpdatesFailed",
-            updates.length - 1,
-            args: [updates[0].finalName, (updates.length - 1).toString()],
-          );
+        : AppLocalizations.of(globalNavigatorKey.currentContext!)!.xWasNotUpdatedToY(
+            updates[0].finalName, updates[0].latestVersion,
+          )
+        : succeeded
+            ? AppLocalizations.of(globalNavigatorKey.currentContext!)!.xAndNMoreUpdatesInstalled(
+                updates[0].finalName, updates.length - 1,
+              )
+            : AppLocalizations.of(globalNavigatorKey.currentContext!)!.xAndNMoreUpdatesFailed(
+                updates[0].finalName, updates.length - 1,
+              )
   }
 }
 
@@ -86,23 +88,20 @@ class SilentUpdateAttemptNotification extends UpdatiumNotification {
   SilentUpdateAttemptNotification(List<App> updates, {int? id})
     : super(
         id ?? 3,
-        tr('appsPossiblyUpdated'),
+        AppLocalizations.of(context)!.appsPossiblyUpdated,
         '',
         'APPS_POSSIBLY_UPDATED',
-        tr('appsPossiblyUpdatedNotifChannel'),
-        tr('appsPossiblyUpdatedNotifDescription'),
+        AppLocalizations.of(context)!.appsPossiblyUpdatedNotifChannel,
+        AppLocalizations.of(context)!.appsPossiblyUpdatedNotifDescription,
         Importance.defaultImportance,
       ) {
     message = updates.length == 1
-        ? tr(
-            'xWasPossiblyUpdatedToY',
-            args: [updates[0].finalName, updates[0].latestVersion],
+        ? AppLocalizations.of(globalNavigatorKey.currentContext!)!.xWasPossiblyUpdatedToY(
+            updates[0].finalName, updates[0].latestVersion,
           )
-        : plural(
-            'xAndNMoreUpdatesPossiblyInstalled',
-            updates.length - 1,
-            args: [updates[0].finalName, (updates.length - 1).toString()],
-          );
+        : AppLocalizations.of(globalNavigatorKey.currentContext!)!.xAndNMoreUpdatesPossiblyInstalled(
+            updates[0].finalName, updates.length - 1,
+          )
   }
 }
 
@@ -110,13 +109,13 @@ class ErrorCheckingUpdatesNotification extends UpdatiumNotification {
   ErrorCheckingUpdatesNotification(String error, {int? id})
     : super(
         id ?? 5,
-        tr('errorCheckingUpdates'),
+        AppLocalizations.of(context)!.errorCheckingUpdates,
         error,
         'BG_UPDATE_CHECK_ERROR',
-        tr('errorCheckingUpdatesNotifChannel'),
-        tr('errorCheckingUpdatesNotifDescription'),
+        AppLocalizations.of(context)!.errorCheckingUpdatesNotifChannel,
+        AppLocalizations.of(context)!.errorCheckingUpdatesNotifDescription,
         Importance.high,
-        payload: "${tr('errorCheckingUpdates')}\n$error",
+        payload: "${AppLocalizations.of(context)!.errorCheckingUpdates}\n$error",
       );
 }
 
@@ -124,16 +123,16 @@ class AppsRemovedNotification extends UpdatiumNotification {
   AppsRemovedNotification(List<List<String>> namedReasons)
     : super(
         6,
-        tr('appsRemoved'),
+        AppLocalizations.of(context)!.appsRemoved,
         '',
         'APPS_REMOVED',
-        tr('appsRemovedNotifChannel'),
-        tr('appsRemovedNotifDescription'),
+        AppLocalizations.of(context)!.appsRemovedNotifChannel,
+        AppLocalizations.of(context)!.appsRemovedNotifDescription,
         Importance.max,
       ) {
     message = '';
     for (var r in namedReasons) {
-      message += '${tr('xWasRemovedDueToErrorY', args: [r[0], r[1]])} \n';
+      message += '${AppLocalizations.of(context)!.xWasRemovedDueToErrorY(args: [r[0], r[1]])} \n';
     }
     message = message.trim();
   }
@@ -143,11 +142,11 @@ class DownloadNotification extends UpdatiumNotification {
   DownloadNotification(String appName, int progPercent)
     : super(
         appName.hashCode,
-        tr('downloadingX', args: [appName]),
+        AppLocalizations.of(context)!.downloadingX(appName),
         '',
         'APP_DOWNLOADING',
-        tr('downloadingXNotifChannel', args: [tr('app')]),
-        tr('downloadNotifDescription'),
+        AppLocalizations.of(context)!.downloadingXNotifChannel(AppLocalizations.of(context)!.app),
+        AppLocalizations.of(context)!.downloadNotifDescription,
         Importance.low,
         onlyAlertOnce: true,
         progPercent: progPercent,
@@ -158,22 +157,22 @@ class DownloadedNotification extends UpdatiumNotification {
   DownloadedNotification(String fileName, String downloadUrl)
     : super(
         downloadUrl.hashCode,
-        tr('downloadedX', args: [fileName]),
+        AppLocalizations.of(context)!.downloadedX(fileName),
         '',
         'FILE_DOWNLOADED',
-        tr('downloadedXNotifChannel', args: [tr('app')]),
-        tr('downloadedX', args: [tr('app')]),
+        AppLocalizations.of(context)!.downloadedXNotifChannel(AppLocalizations.of(context)!.app),
+        AppLocalizations.of(context)!.downloadedX(AppLocalizations.of(context)!.app),
         Importance.defaultImportance,
       );
 }
 
 final completeInstallationNotification = UpdatiumNotification(
   1,
-  tr('completeAppInstallation'),
-  tr('updatiumMustBeOpenToInstallApps'),
+  AppLocalizations.of(context)!.completeAppInstallation,
+  AppLocalizations.of(context)!.updatiumMustBeOpenToInstallApps,
   'COMPLETE_INSTALL',
-  tr('completeAppInstallationNotifChannel'),
-  tr('completeAppInstallationNotifDescription'),
+  AppLocalizations.of(context)!.completeAppInstallationNotifChannel,
+  AppLocalizations.of(context)!.completeAppInstallationNotifDescription,
   Importance.max,
 );
 
@@ -181,11 +180,11 @@ class CheckingUpdatesNotification extends UpdatiumNotification {
   CheckingUpdatesNotification(String appName)
     : super(
         4,
-        tr('checkingForUpdates'),
+        AppLocalizations.of(context)!.checkingForUpdates,
         appName,
         'BG_UPDATE_CHECK',
-        tr('checkingForUpdatesNotifChannel'),
-        tr('checkingForUpdatesNotifDescription'),
+        AppLocalizations.of(context)!.checkingForUpdatesNotifChannel,
+        AppLocalizations.of(context)!.checkingForUpdatesNotifDescription,
         Importance.min,
       );
 }
@@ -247,7 +246,7 @@ class NotificationsProvider {
                     Navigator.of(context).pop(null);
                   }
                 },
-                child: Text(tr('ok')),
+                child: Text(AppLocalizations.of(context)!.ok),
               ),
             ],
           ),

@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_charset_detector/flutter_charset_detector.dart';
 import 'package:http/http.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/generated/l10n.dart';
 
 class RuStore extends AppSource {
   RuStore() {
@@ -66,7 +66,7 @@ class RuStore extends AppSource {
       throw NoReleasesError();
     }
 
-    String appName = appDetails['appName'] ?? tr('app');
+    String appName = appDetails['appName'] ?? AppLocalizations.of(context)!.app;
     String author = appDetails['companyName'] ?? name;
     String? dateStr = appDetails['appVerUpdatedAt'];
     String? version = appDetails['versionName'];

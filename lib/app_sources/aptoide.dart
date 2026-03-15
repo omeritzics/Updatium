@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/generated/l10n.dart';
 
 class Aptoide extends AppSource {
   Aptoide() {
@@ -68,7 +68,7 @@ class Aptoide extends AppSource {
     Map<String, dynamic> additionalSettings,
   ) async {
     var appDetails = await getAppDetailsJSON(standardUrl, additionalSettings);
-    String appName = appDetails['name'] ?? tr('app');
+    String appName = appDetails['name'] ?? AppLocalizations.of(context)!.app;
     String author = appDetails['developer']?['name'] ?? name;
     String? dateStr = appDetails['updated'];
     String? version = appDetails['file']?['vername'];

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/components/generated_form.dart';
@@ -13,6 +12,7 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:updatium/generated/l10n.dart';
 
 class ImportExportPage extends StatefulWidget {
   const ImportExportPage({super.key});
@@ -36,13 +36,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
         builder: (BuildContext ctx) {
           return GeneratedFormModal(
             initValid: overrideInitValid,
-            title: tr('importFromURLList'),
+            title: AppLocalizations.of(context)!.importFromURLList,
             items: [
               [
                 GeneratedFormTextField(
                   'appURLList',
                   defaultValue: initValue ?? '',
-                  label: tr('appURLList'),
+                  label: AppLocalizations.of(context)!.appURLList,
                   max: 7,
                   additionalValidators: [
                     (dynamic value) {
@@ -52,7 +52,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           try {
                             sourceProvider.getSource(lines[i]);
                           } catch (e) {
-                            return '${tr('line')} ${i + 1}: $e';
+                            return '${AppLocalizations.of(context)!.line} ${i + 1}: $e';
                           }
                         }
                       }
@@ -115,7 +115,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           )
           .then((String? result) {
             if (result != null) {
-              showMessage(tr('exportedTo', args: [result]), context);
+              showMessage(AppLocalizations.of(context)!.exportedTo(result), context);
             }
           })
           .catchError((e) {
@@ -136,7 +136,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               try {
                 jsonDecode(data);
               } catch (e) {
-                throw UpdatiumError(tr('invalidInput'));
+                throw UpdatiumError(AppLocalizations.of(context)!.invalidInput);
               }
               appsProvider.import(data).then((value) {
                 var cats = settingsProvider.categories;
@@ -149,7 +149,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 });
                 appsProvider.addMissingCategories(settingsProvider);
                 showMessage(
-                  '${tr('importedX', args: [plural('apps', value.key.length).toLowerCase()])}${value.value ? ' + ${tr('settings').toLowerCase()}' : ''}',
+                  '${AppLocalizations.of(context)!.importedX(plural('apps', value.key.length).toLowerCase())}${value.value ? ' + ${AppLocalizations.of(context)!.settings.toLowerCase()}' : ''}',
                   context,
                 );
               });
@@ -212,7 +212,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               context: context,
               builder: (BuildContext ctx) {
                 return GeneratedFormModal(
-                  title: tr('importX', args: [source.name]),
+                  title: AppLocalizations.of(context)!.importX(source.name),
                   items: source.requiredArgs
                       .map((e) => [GeneratedFormTextField(e, label: e)])
                       .toList(),
@@ -288,7 +288,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 vertical: 20,
               ),
               title: Text(
-                tr('importExport'),
+                AppLocalizations.of(context)!.importExport,
                 style: TextStyle(
                   color: Theme.of(context).textTheme.bodyMedium!.color,
                 ),
@@ -311,7 +311,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               Expanded(
                                 child: Semantics(
                                   button: true,
-                                  label: tr('pickExportDir'),
+                                  label: AppLocalizations.of(context)!.pickExportDir,
                                   hint:
                                       'Choose a directory to export your apps and settings',
                                   excludeSemantics: true,
@@ -325,7 +325,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           },
                                     icon: const Icon(Icons.folder_open),
                                     label: Text(
-                                      tr('pickExportDir'),
+                                      AppLocalizations.of(context)!.pickExportDir,
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -335,7 +335,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               Expanded(
                                 child: Semantics(
                                   button: true,
-                                  label: tr('updatiumExport'),
+                                  label: AppLocalizations.of(context)!.updatiumExport,
                                   hint: snapshot.data == null
                                       ? 'Set export directory first'
                                       : 'Export all your apps and settings to file',
@@ -349,7 +349,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                         : runUpdatiumExport,
                                     icon: const Icon(Icons.upload_file),
                                     label: Text(
-                                      tr('updatiumExport'),
+                                      AppLocalizations.of(context)!.updatiumExport,
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -363,7 +363,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               Expanded(
                                 child: Semantics(
                                   button: true,
-                                  label: tr('updatiumImport'),
+                                  label: AppLocalizations.of(context)!.updatiumImport,
                                   hint:
                                       'Import apps and settings from a backup file',
                                   excludeSemantics: true,
@@ -373,7 +373,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                         : runUpdatiumImport,
                                     icon: const Icon(Icons.download),
                                     label: Text(
-                                      tr('updatiumImport'),
+                                      AppLocalizations.of(context)!.updatiumImport,
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -390,7 +390,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                     [
                                       GeneratedFormSwitch(
                                         'autoExportOnChanges',
-                                        label: tr('autoExportOnChanges'),
+                                        label: AppLocalizations.of(context)!.autoExportOnChanges,
                                         defaultValue: settingsProvider
                                             .autoExportOnChanges,
                                       ),
@@ -399,11 +399,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       GeneratedFormDropdown(
                                         'exportSettings',
                                         [
-                                          MapEntry('0', tr('none')),
-                                          MapEntry('1', tr('excludeSecrets')),
-                                          MapEntry('2', tr('all')),
+                                          MapEntry('0', AppLocalizations.of(context)!.none),
+                                          MapEntry('1', AppLocalizations.of(context)!.excludeSecrets),
+                                          MapEntry('2', AppLocalizations.of(context)!.all),
                                         ],
-                                        label: tr('includeSettings'),
+                                        label: AppLocalizations.of(context)!.includeSettings,
                                         defaultValue: settingsProvider
                                             .exportSettings
                                             .toString(),
@@ -445,26 +445,26 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         SizedBox(height: 32),
                         Semantics(
                           button: true,
-                          label: tr('importFromURLList'),
+                          label: AppLocalizations.of(context)!.importFromURLList,
                           hint:
                               'Import multiple apps by entering their URLs in a list',
                           excludeSemantics: true,
                           child: FilledButton.icon(
                             onPressed: importInProgress ? null : urlListImport,
                             icon: const Icon(Icons.list_alt),
-                            label: Text(tr('importFromURLList')),
+                            label: Text(AppLocalizations.of(context)!.importFromURLList),
                           ),
                         ),
                         const SizedBox(height: 8),
                         Semantics(
                           button: true,
-                          label: tr('importFromURLsInFile'),
+                          label: AppLocalizations.of(context)!.importFromURLsInFile,
                           hint: 'Import apps by reading URLs from a text file',
                           excludeSemantics: true,
                           child: FilledButton.icon(
                             onPressed: importInProgress ? null : runUrlImport,
                             icon: const Icon(Icons.link),
-                            label: Text(tr('importFromURLsInFile')),
+                            label: Text(AppLocalizations.of(context)!.importFromURLsInFile),
                           ),
                         ),
                       ],
@@ -481,7 +481,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   runMassSourceImport(source);
                                 },
                           icon: const Icon(Icons.cloud_download),
-                          label: Text(tr('importX', args: [source.name])),
+                          label: Text(AppLocalizations.of(context)!.importX(source.name)),
                         ),
                       ],
                     ),
@@ -489,7 +489,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   const Spacer(),
                   const Divider(height: 32),
                   Text(
-                    tr('importedAppsIdDisclaimer'),
+                    AppLocalizations.of(context)!.importedAppsIdDisclaimer,
                     textAlign: TextAlign.start,
                     style: const TextStyle(
                       fontStyle: FontStyle.italic,
@@ -526,7 +526,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text(tr('importErrors')),
+      title: Text(AppLocalizations.of(context)!.importErrors),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -542,7 +542,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
           ),
           const SizedBox(height: 16),
           Text(
-            tr('followingURLsHadErrors'),
+            AppLocalizations.of(context)!.followingURLsHadErrors,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           ...widget.errors.map((e) {
@@ -576,7 +576,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
             Navigator.of(context).pop(null);
           },
           icon: const Icon(Icons.close),
-          label: Text(tr('ok')),
+          label: Text(AppLocalizations.of(context)!.ok),
         ),
       ],
     );
@@ -672,7 +672,7 @@ class _SelectionModalState extends State<SelectionModal> {
                   selectAll();
                 });
               },
-              child: Text(tr('selectAll')),
+              child: Text(AppLocalizations.of(context)!.selectAll),
             )
           : TextButton(
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
@@ -681,13 +681,13 @@ class _SelectionModalState extends State<SelectionModal> {
                   selectAll(deselect: true);
                 });
               },
-              child: Text(tr('deselectX', args: [tr('all')])),
+              child: Text(AppLocalizations.of(context)!.deselectX(AppLocalizations.of(context)!.all)),
             );
     }
 
     return AlertDialog(
       scrollable: true,
-      title: Text(widget.title ?? tr('pick')),
+      title: Text(widget.title ?? AppLocalizations.of(context)!.pick),
       content: Column(
         children: [
           GeneratedForm(
@@ -695,7 +695,7 @@ class _SelectionModalState extends State<SelectionModal> {
               [
                 GeneratedFormTextField(
                   'filter',
-                  label: tr('filter'),
+                  label: AppLocalizations.of(context)!.filter,
                   required: false,
                   additionalValidators: [
                     (value) {
@@ -865,7 +865,7 @@ class _SelectionModalState extends State<SelectionModal> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(tr('cancel')),
+          child: Text(AppLocalizations.of(context)!.cancel),
         ),
         TextButton(
           onPressed: entrySelections.values.where((b) => b).isEmpty
@@ -880,7 +880,7 @@ class _SelectionModalState extends State<SelectionModal> {
                 },
           child: Text(
             widget.onlyOneSelectionAllowed
-                ? tr('pick')
+                ? AppLocalizations.of(context)!.pick
                 : tr(
                     'selectX',
                     args: [
