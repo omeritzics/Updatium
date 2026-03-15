@@ -15,9 +15,9 @@ void main() {
       // Create a mock widget tree for context
       final testWidget = MaterialApp(home: Container());
       await tester.pumpWidget(testWidget);
-      
+
       await GitHubStarPrompt.initializeAndCheck(tester.context);
-      
+
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.containsKey('first_launch_date'), isTrue);
     });
@@ -26,14 +26,17 @@ void main() {
       // Set a first launch date 3 days ago
       final prefs = await SharedPreferences.getInstance();
       final threeDaysAgo = DateTime.now().subtract(const Duration(days: 3));
-      await prefs.setInt('first_launch_date', threeDaysAgo.millisecondsSinceEpoch);
-      
+      await prefs.setInt(
+        'first_launch_date',
+        threeDaysAgo.millisecondsSinceEpoch,
+      );
+
       final testWidget = MaterialApp(home: Container());
       await tester.pumpWidget(testWidget);
-      
+
       await GitHubStarPrompt.initializeAndCheck(tester.context);
       await tester.pump();
-      
+
       // Dialog should not appear
       expect(find.byType(AlertDialog), findsNothing);
     });
@@ -42,27 +45,30 @@ void main() {
       // Set first launch date 8 days ago
       final prefs = await SharedPreferences.getInstance();
       final eightDaysAgo = DateTime.now().subtract(const Duration(days: 8));
-      await prefs.setInt('first_launch_date', eightDaysAgo.millisecondsSinceEpoch);
-      
+      await prefs.setInt(
+        'first_launch_date',
+        eightDaysAgo.millisecondsSinceEpoch,
+      );
+
       final testWidget = MaterialApp(home: Container());
       await tester.pumpWidget(testWidget);
-      
+
       await GitHubStarPrompt.initializeAndCheck(tester.context);
       await tester.pumpAndSettle();
-      
+
       // Dialog should appear
       expect(find.byType(AlertDialog), findsOneWidget);
       expect(find.text('githubStarPromptTitle'.tr()), findsOneWidget);
-      
+
       // Tap "Don't show again" button
       final dontShowButton = find.text('githubStarPromptDontShowAgain'.tr());
       expect(dontShowButton, findsOneWidget);
       await tester.tap(dontShowButton);
       await tester.pumpAndSettle();
-      
+
       // Dialog should be dismissed
       expect(find.byType(AlertDialog), findsNothing);
-      
+
       // Prompt should be marked as shown
       expect(prefs.getBool('has_shown_star_prompt'), isTrue);
     });
@@ -70,12 +76,15 @@ void main() {
     test('should reset correctly', () async {
       // Set some values
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('first_launch_date', DateTime.now().millisecondsSinceEpoch);
+      await prefs.setInt(
+        'first_launch_date',
+        DateTime.now().millisecondsSinceEpoch,
+      );
       await prefs.setBool('has_shown_star_prompt', true);
-      
+
       // Reset
       await GitHubStarPrompt.reset();
-      
+
       // Values should be cleared
       expect(prefs.containsKey('first_launch_date'), isFalse);
       expect(prefs.containsKey('has_shown_star_prompt'), isFalse);

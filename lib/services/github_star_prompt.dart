@@ -13,17 +13,22 @@ class GitHubStarPrompt {
   /// Initialize the star prompt service and show dialog if conditions are met
   static Future<void> initializeAndCheck(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
-    
+
     // Set first launch date if not already set
     if (!prefs.containsKey(_firstLaunchDateKey)) {
-      await prefs.setInt(_firstLaunchDateKey, DateTime.now().millisecondsSinceEpoch);
+      await prefs.setInt(
+        _firstLaunchDateKey,
+        DateTime.now().millisecondsSinceEpoch,
+      );
     }
 
     // Check if prompt should be shown
     if (prefs.getBool(_hasShownStarPromptKey) != true) {
       final firstLaunchDate = prefs.getInt(_firstLaunchDateKey);
       if (firstLaunchDate != null) {
-        final firstLaunch = DateTime.fromMillisecondsSinceEpoch(firstLaunchDate);
+        final firstLaunch = DateTime.fromMillisecondsSinceEpoch(
+          firstLaunchDate,
+        );
         final now = DateTime.now();
         final daysSinceFirstLaunch = now.difference(firstLaunch).inDays;
 
