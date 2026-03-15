@@ -146,7 +146,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 });
                 appsProvider.addMissingCategories(settingsProvider);
                 showMessage(
-                  '${AppLocalizations.of(context)!.importedX(value.key.length appss.toLowerCase())}${value.value ? ' + ${AppLocalizations.of(context)!.settings.toLowerCase()}' : ''}',
+                  '${AppLocalizations.of(context)!.importedX('${value.key.length} apps'.toLowerCase())}${value.value ? ' + ${AppLocalizations.of(context)!.settings.toLowerCase()}' : ''}',
                   context,
                 );
               });

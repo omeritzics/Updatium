@@ -128,12 +128,7 @@ create table if not exists $logTable (
     );
     if (res > 0) {
       add(
-        plural(
-          'clearedNLogsBeforeXAfterY',
-          res,
-          namedArgs: {'before': before.toString(), 'after': after.toString()},
-          name: 'n',
-        ),
+        'Cleared $res logs before $before after $after',
       );
     }
     return res;

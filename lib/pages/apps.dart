@@ -741,7 +741,7 @@ class AppsPageState extends State<AppsPage> {
               ),
             ),
             subtitle: Text(
-              AppLocalizations.of(context)!.byX(args: [listedApps[index].author]),
+              AppLocalizations.of(context)!.byX(listedApps[index].author),
               maxLines: 1,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -1098,7 +1098,7 @@ class AppsPageState extends State<AppsPage> {
                   GeneratedFormSwitch(
                     'updates',
                     label: AppLocalizations.of(context)!.updateX(
-                        AppLocalizations.of(context)!.apps(applicableUpdateIdsAllOrSelected.length)
+                        AppLocalizations.of(context)!.apps(existingUpdateIdsAllOrSelected.length)
                           .toLowerCase(),
                       ),
                     defaultValue: true,
