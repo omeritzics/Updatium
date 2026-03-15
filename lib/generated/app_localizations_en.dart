@@ -2,8 +2,11 @@
 ///
 /// This file is generated automatically. Do not edit manually.
 
-
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
 
 /// The translations for English (`en`).
 class AppLocalizationsEn extends AppLocalizations {
@@ -24,13 +27,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get urlMatchesNoSource => 'URL does not match a known source';
 
   @override
-  String get cantInstallOlderVersion => 'Cannot install an older version of an app';
+  String get cantInstallOlderVersion =>
+      'Cannot install an older version of an app';
 
   @override
-  String get appIdMismatch => 'Downloaded package ID does not match existing app ID';
+  String get appIdMismatch =>
+      'Downloaded package ID does not match existing app ID';
 
   @override
-  String get functionNotImplemented => 'This class has not implemented this function';
+  String get functionNotImplemented =>
+      'This class has not implemented this function';
 
   @override
   String get placeholder => 'Placeholder';
@@ -48,7 +54,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get and => 'and';
 
   @override
-  String get githubPATLabel => 'GitHub personal access token (increases rate limit)';
+  String get githubPATLabel =>
+      'GitHub personal access token (increases rate limit)';
 
   @override
   String get includePrereleases => 'Include prereleases';
@@ -57,7 +64,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fallbackToOlderReleases => 'Fallback to older releases';
 
   @override
-  String get filterReleaseTitlesByRegEx => 'Filter release titles by regular expression';
+  String get filterReleaseTitlesByRegEx =>
+      'Filter release titles by regular expression';
 
   @override
   String get invalidRegEx => 'Invalid regular expression';
@@ -69,13 +77,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
-  String get continue => 'Continue';
+  String get continueAction => 'Continue';
 
   @override
   String get requiredInBrackets => '(required)';
 
   @override
-  String get dropdownNoOptsError => 'ERROR: DROPDOWN MUST HAVE AT LEAST ONE OPT';
+  String get dropdownNoOptsError =>
+      'ERROR: DROPDOWN MUST HAVE AT LEAST ONE OPT';
 
   @override
   String get color => 'Color';
@@ -110,13 +119,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get app => 'App';
 
   @override
-  String get appsFromSourceAreTrackOnly => 'Apps from this source are \'track-only\'.';
+  String get appsFromSourceAreTrackOnly =>
+      'Apps from this source are \'track-only\'.';
 
   @override
-  String get youPickedTrackOnly => 'You have selected the \'track-only\' option.';
+  String get youPickedTrackOnly =>
+      'You have selected the \'track-only\' option.';
 
   @override
-  String get trackOnlyAppDescription => 'The app will be tracked for updates, but Updatium will not be able to download or install it.';
+  String get trackOnlyAppDescription =>
+      'The app will be tracked for updates, but Updatium will not be able to download or install it.';
 
   @override
   String get cancelled => 'Cancelled';
@@ -166,7 +178,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noApps => 'Welcome!';
 
   @override
-  String get noAppsSubtext => 'You can add your first app by tapping on \'Add App\' below.';
+  String get noAppsSubtext =>
+      'You can add your first app by tapping on \'Add App\' below.';
 
   @override
   String get noAppsForFilter => 'No apps for filter';
@@ -259,13 +272,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unpinFromTop => 'Unpin from top';
 
   @override
-  String get resetInstallStatusForSelectedAppsQuestion => 'Reset install status for selected apps?';
+  String get resetInstallStatusForSelectedAppsQuestion =>
+      'Reset install status for selected apps?';
 
   @override
-  String get installStatusOfXWillBeResetExplanation => 'The install status of any selected apps will be reset.\n\nThis can help when the app version shown in Updatium is incorrect due to failed updates or other issues.';
+  String get installStatusOfXWillBeResetExplanation =>
+      'The install status of any selected apps will be reset.\n\nThis can help when the app version shown in Updatium is incorrect due to failed updates or other issues.';
 
   @override
-  String get customLinkMessage => 'These links work on devices with Updatium installed';
+  String get customLinkMessage =>
+      'These links work on devices with Updatium installed';
 
   @override
   String get shareAppConfigLinks => 'Share app configuration as HTML link';
@@ -366,7 +382,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get importedAppsIdDisclaimer => 'Imported apps may incorrectly show as \"not installed\".\nTo fix this, re-install them through Updatium.\nThis should not affect app data.\n\nOnly affects URL and third-party import methods.';
+  String get importedAppsIdDisclaimer =>
+      'Imported apps may incorrectly show as \"not installed\".\nTo fix this, re-install them through Updatium.\nThis should not affect app data.\n\nOnly affects URL and third-party import methods.';
 
   @override
   String get importErrors => 'Import errors';
@@ -401,7 +418,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get followSystem => 'Follow system';
 
   @override
-  String get followSystemThemeExplanation => 'Following system theme is possible only by using third-party applications';
+  String get followSystemThemeExplanation =>
+      'Following system theme is possible only by using third-party applications';
 
   @override
   String get useBlackTheme => 'Use pure black dark theme';
@@ -498,7 +516,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get deviceSupportsFollowingArchs => 'Your device supports the following CPU architectures:';
+  String get deviceSupportsFollowingArchs =>
+      'Your device supports the following CPU architectures:';
 
   @override
   String get warning => 'Warning';
@@ -512,7 +531,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updatesAvailable => 'Updates available';
 
   @override
-  String get updatesAvailableNotifDescription => 'Notifies the user that updates are available for one or more apps tracked by Updatium';
+  String get updatesAvailableNotifDescription =>
+      'Notifies the user that updates are available for one or more apps tracked by Updatium';
 
   @override
   String get noNewUpdates => 'No new updates.';
@@ -529,7 +549,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appsNotUpdated => 'Failed to update applications';
 
   @override
-  String get appsUpdatedNotifDescription => 'Notifies the user that updates to one or more apps were applied in the background';
+  String get appsUpdatedNotifDescription =>
+      'Notifies the user that updates to one or more apps were applied in the background';
 
   @override
   String xWasUpdatedToY(String appName, String version) {
@@ -545,13 +566,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorCheckingUpdates => 'Error checking for updates';
 
   @override
-  String get errorCheckingUpdatesNotifDescription => 'A notification that shows when background update checking fails';
+  String get errorCheckingUpdatesNotifDescription =>
+      'A notification that shows when background update checking fails';
 
   @override
   String get appsRemoved => 'Apps removed';
 
   @override
-  String get appsRemovedNotifDescription => 'Notifies the user that one or more apps were removed due to errors while loading them';
+  String get appsRemovedNotifDescription =>
+      'Notifies the user that one or more apps were removed due to errors while loading them';
 
   @override
   String xWasRemovedDueToErrorY(String appName, String error) {
@@ -562,16 +585,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get completeAppInstallation => 'Complete app installation';
 
   @override
-  String get updatiumMustBeOpenToInstallApps => 'Updatium must be open to install apps';
+  String get updatiumMustBeOpenToInstallApps =>
+      'Updatium must be open to install apps';
 
   @override
-  String get completeAppInstallationNotifDescription => 'Asks the user to return to Updatium to finish installing an app';
+  String get completeAppInstallationNotifDescription =>
+      'Asks the user to return to Updatium to finish installing an app';
 
   @override
   String get checkingForUpdates => 'Checking for updates';
 
   @override
-  String get checkingForUpdatesNotifDescription => 'Transient notification that appears when checking for updates';
+  String get checkingForUpdatesNotifDescription =>
+      'Transient notification that appears when checking for updates';
 
   @override
   String get pleaseAllowInstallPerm => 'Please allow Updatium to install apps';
@@ -585,7 +611,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get versionCorrectionDisabled => 'Version correction disabled (plugin doesn\'t seem to work)';
+  String get versionCorrectionDisabled =>
+      'Version correction disabled (plugin doesn\'t seem to work)';
 
   @override
   String get unknown => 'Unknown';
@@ -705,7 +732,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get disableVersionDetection => 'Disable version detection';
 
   @override
-  String get noVersionDetectionExplanation => 'This option should only be used for apps where version detection does not work correctly.';
+  String get noVersionDetectionExplanation =>
+      'This option should only be used for apps where version detection does not work correctly.';
 
   @override
   String downloadingX(String appName) {
@@ -726,7 +754,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get releaseAsset => 'Release asset';
 
   @override
-  String get downloadNotifDescription => 'Notifies the user of the progress in downloading an app';
+  String get downloadNotifDescription =>
+      'Notifies the user of the progress in downloading an app';
 
   @override
   String get noAPKFound => 'No APK found';
@@ -753,7 +782,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteCategoriesQuestion => 'Delete categories?';
 
   @override
-  String get categoryDeleteWarning => 'All apps in deleted categories will be set to uncategorized.';
+  String get categoryDeleteWarning =>
+      'All apps in deleted categories will be set to uncategorized.';
 
   @override
   String get addCategory => 'Add category';
@@ -771,7 +801,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get storagePermissionDenied => 'Storage permission denied';
 
   @override
-  String get selectedCategorizeWarning => 'This will replace any existing category settings for the selected apps.';
+  String get selectedCategorizeWarning =>
+      'This will replace any existing category settings for the selected apps.';
 
   @override
   String get filterAPKsByRegEx => 'Filter APKs by regular expression';
@@ -783,7 +814,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uninstallFromDevice => 'Uninstall from device';
 
   @override
-  String get onlyWorksWithNonVersionDetectApps => 'Only works for apps with version detection disabled.';
+  String get onlyWorksWithNonVersionDetectApps =>
+      'Only works for apps with version detection disabled.';
 
   @override
   String get releaseDateAsVersion => 'Use release date as version string';
@@ -792,7 +824,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get releaseTitleAsVersion => 'Use release title as version string';
 
   @override
-  String get releaseDateAsVersionExplanation => 'This option should only be used for apps where version detection does not work correctly, but a release date is available.';
+  String get releaseDateAsVersionExplanation =>
+      'This option should only be used for apps where version detection does not work correctly, but a release date is available.';
 
   @override
   String get changes => 'Changes';
@@ -804,7 +837,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get importFromURLsInFile => 'Import from URLs in file (like OPML)';
 
   @override
-  String get versionDetectionExplanation => 'Reconcile version string with version detected from OS';
+  String get versionDetectionExplanation =>
+      'Reconcile version string with version detected from OS';
 
   @override
   String get versionDetection => 'Version detection';
@@ -822,10 +856,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gridView => 'Grid view';
 
   @override
-  String get autoApkFilterByArch => 'Attempt to filter APKs by CPU architecture if possible';
+  String get autoApkFilterByArch =>
+      'Attempt to filter APKs by CPU architecture if possible';
 
   @override
-  String get autoLinkFilterByArch => 'Attempt to filter links by CPU architecture if possible';
+  String get autoLinkFilterByArch =>
+      'Attempt to filter links by CPU architecture if possible';
 
   @override
   String get overrideSource => 'Override source';
@@ -840,7 +876,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dontShowAPKOriginWarnings => 'Don\'t show APK origin warnings';
 
   @override
-  String get moveNonInstalledAppsToBottom => 'Move non-installed apps to bottom of apps view';
+  String get moveNonInstalledAppsToBottom =>
+      'Move non-installed apps to bottom of apps view';
 
   @override
   String get hideNonInstalledApps => 'Hide non-installed apps';
@@ -863,7 +900,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get safeMode => 'Safe Mode';
 
   @override
-  String get safeModeDescription => 'Hide Add App page and show Import/Export instead';
+  String get safeModeDescription =>
+      'Hide Add App page and show Import/Export instead';
 
   @override
   String get safeModeAddAppDisabled => 'Add App is disabled in Safe Mode';
@@ -872,13 +910,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tryInferAppIdFromCode => 'Try inferring app ID from source code';
 
   @override
-  String get removeOnExternalUninstall => 'Automatically remove externally uninstalled apps';
+  String get removeOnExternalUninstall =>
+      'Automatically remove externally uninstalled apps';
 
   @override
   String get pickHighestVersionCode => 'Auto-select highest version code APK';
 
   @override
-  String get checkUpdateOnDetailPage => 'Check for updates on opening an app detail page';
+  String get checkUpdateOnDetailPage =>
+      'Check for updates on opening an app detail page';
 
   @override
   String get disablePageTransitions => 'Disable page transition animations';
@@ -896,22 +936,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addInfoInSettings => 'Add this info in the Settings.';
 
   @override
-  String get githubSourceNote => 'GitHub rate limiting can be avoided using an API key.';
+  String get githubSourceNote =>
+      'GitHub rate limiting can be avoided using an API key.';
 
   @override
-  String get sortByLastLinkSegment => 'Sort by only the last segment of the link';
+  String get sortByLastLinkSegment =>
+      'Sort by only the last segment of the link';
 
   @override
-  String get filterReleaseNotesByRegEx => 'Filter release notes by regular expression';
+  String get filterReleaseNotesByRegEx =>
+      'Filter release notes by regular expression';
 
   @override
-  String get customLinkFilterRegex => 'Custom APK link filter by regular expression (default \'.apk\$\')';
+  String get customLinkFilterRegex =>
+      'Custom APK link filter by regular expression (default \'.apk\$\')';
 
   @override
   String get appsPossiblyUpdated => 'App updates attempted';
 
   @override
-  String get appsPossiblyUpdatedNotifDescription => 'Notifies the user that updates to one or more apps were potentially applied in the background';
+  String get appsPossiblyUpdatedNotifDescription =>
+      'Notifies the user that updates to one or more apps were potentially applied in the background';
 
   @override
   String xWasPossiblyUpdatedToY(String appName, String version) {
@@ -922,16 +967,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enableBackgroundUpdates => 'Enable background updates';
 
   @override
-  String get backgroundUpdateReqsExplanation => 'Background updates may not be possible for all apps.';
+  String get backgroundUpdateReqsExplanation =>
+      'Background updates may not be possible for all apps.';
 
   @override
-  String get backgroundUpdateLimitsExplanation => 'The success of a background install can only be determined when Updatium is opened.';
+  String get backgroundUpdateLimitsExplanation =>
+      'The success of a background install can only be determined when Updatium is opened.';
 
   @override
   String get verifyLatestTag => 'Verify the \'latest\' tag';
 
   @override
-  String get intermediateLinkRegex => 'Filter for an \'intermediate\' link to visit';
+  String get intermediateLinkRegex =>
+      'Filter for an \'intermediate\' link to visit';
 
   @override
   String get filterByLinkText => 'Filter links by link text';
@@ -946,16 +994,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get intermediateLink => 'Intermediate link';
 
   @override
-  String get exemptFromBackgroundUpdates => 'Exempt from background updates (if enabled)';
+  String get exemptFromBackgroundUpdates =>
+      'Exempt from background updates (if enabled)';
 
   @override
-  String get bgUpdatesOnWiFiOnly => 'Disable background updates when not on Wi-Fi';
+  String get bgUpdatesOnWiFiOnly =>
+      'Disable background updates when not on Wi-Fi';
 
   @override
-  String get bgUpdatesWhileChargingOnly => 'Disable background updates when not charging';
+  String get bgUpdatesWhileChargingOnly =>
+      'Disable background updates when not charging';
 
   @override
-  String get autoSelectHighestVersionCode => 'Auto-select highest versionCode APK';
+  String get autoSelectHighestVersionCode =>
+      'Auto-select highest versionCode APK';
 
   @override
   String get versionExtractionRegEx => 'Version string extraction RegEx';
@@ -969,7 +1021,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get matchGroupToUse => 'Match group to use for version string extraction RegEx';
+  String get matchGroupToUse =>
+      'Match group to use for version string extraction RegEx';
 
   @override
   String get highlightTouchTargets => 'Highlight less obvious touch targets';
@@ -987,7 +1040,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get filterVersionsByRegEx => 'Filter versions by regular expression';
 
   @override
-  String get trySelectingSuggestedVersionCode => 'Try selecting suggested versionCode APK';
+  String get trySelectingSuggestedVersionCode =>
+      'Try selecting suggested versionCode APK';
 
   @override
   String get dontSortReleasesList => 'Retain release order from API';
@@ -1011,7 +1065,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get runBgCheckNow => 'Run background update check now';
 
   @override
-  String get versionExtractWholePage => 'Apply version string extraction Regex to entire page';
+  String get versionExtractWholePage =>
+      'Apply version string extraction Regex to entire page';
 
   @override
   String get installing => 'Installing';
@@ -1046,7 +1101,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkingForUpdatesNotifChannel => 'Checking for updates';
 
   @override
-  String get onlyCheckInstalledOrTrackOnlyApps => 'Only check installed and track-only apps for updates';
+  String get onlyCheckInstalledOrTrackOnlyApps =>
+      'Only check installed and track-only apps for updates';
 
   @override
   String get supportFixedAPKURL => 'Support fixed APK URLs';
@@ -1069,25 +1125,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shizukuOld => 'Old Shizuku version (<11) - update it';
 
   @override
-  String get shizukuOldAndroidWithADB => 'Shizuku running on Android < 8.1 with ADB - update Android or use Sui instead';
+  String get shizukuOldAndroidWithADB =>
+      'Shizuku running on Android < 8.1 with ADB - update Android or use Sui instead';
 
   @override
-  String get shizukuPretendToBeGooglePlay => 'Set Google Play as the installation source (if Shizuku is used)';
+  String get shizukuPretendToBeGooglePlay =>
+      'Set Google Play as the installation source (if Shizuku is used)';
 
   @override
   String get useSystemFont => 'Use the system font';
 
   @override
-  String get useVersionCodeAsOSVersion => 'Use app versionCode as OS-detected version';
+  String get useVersionCodeAsOSVersion =>
+      'Use app versionCode as OS-detected version';
 
   @override
   String get requestHeader => 'Request header';
 
   @override
-  String get useLatestAssetDateAsReleaseDate => 'Use latest asset upload as release date';
+  String get useLatestAssetDateAsReleaseDate =>
+      'Use latest asset upload as release date';
 
   @override
-  String get defaultPseudoVersioningMethod => 'Default pseudo-versioning method';
+  String get defaultPseudoVersioningMethod =>
+      'Default pseudo-versioning method';
 
   @override
   String get partialAPKHash => 'Partial APK hash';
@@ -1119,13 +1180,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get badDownload => 'The APK could not be parsed (incompatible or partial download)';
+  String get badDownload =>
+      'The APK could not be parsed (incompatible or partial download)';
 
   @override
-  String get beforeNewInstallsShareToAppVerifier => 'Share new apps with AppVerifier (if available)';
+  String get beforeNewInstallsShareToAppVerifier =>
+      'Share new apps with AppVerifier (if available)';
 
   @override
-  String get appVerifierInstructionToast => 'Share to AppVerifier, then return here when ready.';
+  String get appVerifierInstructionToast =>
+      'Share to AppVerifier, then return here when ready.';
 
   @override
   String get wiki => 'Help/wiki';
@@ -1167,10 +1231,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcome => 'Welcome';
 
   @override
-  String get documentationLinksNote => 'The Updatium GitHub page linked below contains links to videos, articles, discussions, and other resources that will help you understand how to use the app.';
+  String get documentationLinksNote =>
+      'The Updatium GitHub page linked below contains links to videos, articles, discussions, and other resources that will help you understand how to use the app.';
 
   @override
-  String get batteryOptimizationNote => 'Note that background downloads may work more reliably if you switch to the \"foreground service\" in the Updatium settings and/or disable battery optimization for Updatium in your OS settings.';
+  String get batteryOptimizationNote =>
+      'Note that background downloads may work more reliably if you switch to the \"foreground service\" in the Updatium settings and/or disable battery optimization for Updatium in your OS settings.';
 
   @override
   String fileDeletionError(String filename) {
@@ -1181,16 +1247,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get foregroundService => 'Updatium foreground service';
 
   @override
-  String get foregroundServiceExplanation => 'Use a foreground service for update checking (more reliable, consumes more power)';
+  String get foregroundServiceExplanation =>
+      'Use a foreground service for update checking (more reliable, consumes more power)';
 
   @override
-  String get fgServiceNotice => 'This notification is required for background update checking (it can be hidden in the OS settings)';
+  String get fgServiceNotice =>
+      'This notification is required for background update checking (it can be hidden in the OS settings)';
 
   @override
   String get excludeSecrets => 'Exclude secrets';
 
   @override
-  String get ghReqPrefix => '\'sky22333/hubproxy\' instance for GitHub requests';
+  String get ghReqPrefix =>
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
   String get includeZips => 'Include ZIP files';
@@ -1199,13 +1268,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zippedApkFilterRegEx => 'Filter APKs inside ZIP';
 
   @override
-  String get googleVerificationWarningP1 => 'Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.\n\nAfter then, Updatium may stop working on certified Android devices.';
+  String get googleVerificationWarningP1 =>
+      'Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.\n\nAfter then, Updatium may stop working on certified Android devices.';
 
   @override
-  String get googleVerificationWarningP2 => 'Go to https://keepandroidopen.org/ for more information.';
+  String get googleVerificationWarningP2 =>
+      'Go to https://keepandroidopen.org/ for more information.';
 
   @override
-  String get googleVerificationWarningP3 => 'Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\n\nIn any case, Google\'s move is a significant step towards the end of free, general-purpose computing for individuals.\n\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.';
+  String get googleVerificationWarningP3 =>
+      'Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\n\nIn any case, Google\'s move is a significant step towards the end of free, general-purpose computing for individuals.\n\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.';
 
   @override
   String get multipleSigners => 'Multiple Signers';
@@ -1293,19 +1365,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get license => 'License';
 
   @override
-  String get licenseText => 'This application is distributed under the GPL v3 License.';
+  String get licenseText =>
+      'This application is distributed under the GPL v3 License.';
 
   @override
   String get disclaimer => 'Disclaimer';
 
   @override
-  String get disclaimerText => 'This application does not distribute, host, or verify any of the external applications. The user bears full responsibility for the safety and legality of any software installed through this tool.\n\nhttps://github.com/omeritzics/Updatium is the only official place to download Updatium - it is highly discouraged to download it elsewhere as unofficial sources are unsafe.';
+  String get disclaimerText =>
+      'This application does not distribute, host, or verify any of the external applications. The user bears full responsibility for the safety and legality of any software installed through this tool.\n\nhttps://github.com/omeritzics/Updatium is the only official place to download Updatium - it is highly discouraged to download it elsewhere as unofficial sources are unsafe.';
 
   @override
   String get privacy => 'Privacy';
 
   @override
-  String get privacyText => 'This app is privacy-focused and does not collect personal data.';
+  String get privacyText =>
+      'This app is privacy-focused and does not collect personal data.';
 
   @override
   String get acceptAndContinue => 'Accept & Continue';
@@ -1317,7 +1392,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get githubStarPromptTitle => 'Enjoying Updatium?';
 
   @override
-  String get githubStarPromptContent => 'Updatium is a voluntary, open-source community project developed in my free time. If you\'d like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won\'t be nudged about this again. Thank you in advance! :)';
+  String get githubStarPromptContent =>
+      'Updatium is a voluntary, open-source community project developed in my free time. If you\'d like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won\'t be nudged about this again. Thank you in advance! :)';
 
   @override
   String get githubStarPromptStar => 'Star';

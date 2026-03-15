@@ -2597,7 +2597,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(fileUrl);
           },
-          child: Text(AppLocalizations.of(context)!.continue),
+          child: Text(AppLocalizations.of(context)!.continueAction),
         ),
       ],
     );

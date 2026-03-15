@@ -1227,7 +1227,7 @@ class AppsPageState extends State<AppsPage> {
                   title: AppLocalizations.of(context)!.categorize,
                   items: const [],
                   initValid: true,
-                  singleNullReturnButton: AppLocalizations.of(context)!.continue,
+                  singleNullReturnButton: AppLocalizations.of(context)!.continueAction,
                   additionalWidgets: [
                     CategoryEditorSelector(
                       preselected: !showPrompt ? preselected ?? {} : {},

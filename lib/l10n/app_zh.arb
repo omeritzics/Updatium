@@ -26,7 +26,7 @@
   "invalidRegEx": "无效的正则表达式",
   "noDescription": "无描述",
   "cancel": "取消",
-  "continue": "继续",
+  "continueAction": "继续",
   "requiredInBrackets": "（必填）",
   "dropdownNoOptsError": "错误：下拉菜单必须包含至少一个选项",
   "color": "配色",

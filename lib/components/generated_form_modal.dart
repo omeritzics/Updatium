@@ -91,7 +91,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
                           Navigator.of(context).pop(values);
                         }
                       },
-                child: Text(AppLocalizations.of(context)!.continue),
+                child: Text(AppLocalizations.of(context)!.continueAction),
               )
             : const SizedBox.shrink(),
       ],

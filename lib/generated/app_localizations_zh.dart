@@ -2,8 +2,11 @@
 ///
 /// This file is generated automatically. Do not edit manually.
 
-
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
 
 /// The translations for Chinese (`zh`).
 class AppLocalizationsZh extends AppLocalizations {
@@ -69,7 +72,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get cancel => '取消';
 
   @override
-  String get continue => '继续';
+  String get continueAction => '继续';
 
   @override
   String get requiredInBrackets => '（必填）';
@@ -262,7 +265,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get resetInstallStatusForSelectedAppsQuestion => '重置选中应用的安装状态？';
 
   @override
-  String get installStatusOfXWillBeResetExplanation => '任何选中应用的安装状态将被重置。\n\n当 Updatium 中显示的应用版本因更新失败或其他问题而不正确时，这可以帮助解决。';
+  String get installStatusOfXWillBeResetExplanation =>
+      '任何选中应用的安装状态将被重置。\n\n当 Updatium 中显示的应用版本因更新失败或其他问题而不正确时，这可以帮助解决。';
 
   @override
   String get customLinkMessage => '这些链接在安装了 Updatium 的设备上有效';
@@ -366,7 +370,8 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get importedAppsIdDisclaimer => '导入的应用可能错误显示为\'未安装\'。\n要解决此问题，请通过 Updatium 重新安装它们。\n这不应影响应用数据。\n\n仅影响 URL 和第三方导入方法。';
+  String get importedAppsIdDisclaimer =>
+      '导入的应用可能错误显示为\'未安装\'。\n要解决此问题，请通过 Updatium 重新安装它们。\n这不应影响应用数据。\n\n仅影响 URL 和第三方导入方法。';
 
   @override
   String get importErrors => '导入错误';
@@ -512,7 +517,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get updatesAvailable => '有可用更新';
 
   @override
-  String get updatesAvailableNotifDescription => '通知用户 Updatium 跟踪的一个或多个应用有可用更新';
+  String get updatesAvailableNotifDescription =>
+      '通知用户 Updatium 跟踪的一个或多个应用有可用更新';
 
   @override
   String get noNewUpdates => '没有新更新。';
@@ -565,7 +571,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get updatiumMustBeOpenToInstallApps => 'Updatium 必须打开才能安装应用';
 
   @override
-  String get completeAppInstallationNotifDescription => '要求用户返回 Updatium 完成应用安装';
+  String get completeAppInstallationNotifDescription =>
+      '要求用户返回 Updatium 完成应用安装';
 
   @override
   String get checkingForUpdates => '正在检查更新';
@@ -1069,10 +1076,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get shizukuOld => '旧版 Shizuku (<11) - 请更新';
 
   @override
-  String get shizukuOldAndroidWithADB => 'Shizuku 在 Android < 8.1 上与 ADB 一起运行 - 请更新 Android 或改用 Sui';
+  String get shizukuOldAndroidWithADB =>
+      'Shizuku 在 Android < 8.1 上与 ADB 一起运行 - 请更新 Android 或改用 Sui';
 
   @override
-  String get shizukuPretendToBeGooglePlay => '将 Google Play 设置为安装来源（如果使用 Shizuku）';
+  String get shizukuPretendToBeGooglePlay =>
+      '将 Google Play 设置为安装来源（如果使用 Shizuku）';
 
   @override
   String get useSystemFont => '使用系统字体';
@@ -1167,10 +1176,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get welcome => '欢迎';
 
   @override
-  String get documentationLinksNote => '下面链接的 Updatium GitHub 页面包含视频、文章、讨论和其他资源的链接，这些资源将帮助您了解如何使用该应用。';
+  String get documentationLinksNote =>
+      '下面链接的 Updatium GitHub 页面包含视频、文章、讨论和其他资源的链接，这些资源将帮助您了解如何使用该应用。';
 
   @override
-  String get batteryOptimizationNote => '请注意，如果您在 Updatium 设置中切换到\"前台服务\"和/或在操作系统设置中禁用 Updatium 的电池优化，后台下载可能会更可靠地工作。';
+  String get batteryOptimizationNote =>
+      '请注意，如果您在 Updatium 设置中切换到\"前台服务\"和/或在操作系统设置中禁用 Updatium 的电池优化，后台下载可能会更可靠地工作。';
 
   @override
   String fileDeletionError(String filename) {
@@ -1190,7 +1201,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get excludeSecrets => '排除机密信息';
 
   @override
-  String get ghReqPrefix => '\'sky22333/hubproxy\' instance for GitHub requests';
+  String get ghReqPrefix =>
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
   String get includeZips => '包含 ZIP 文件';
@@ -1199,13 +1211,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get zippedApkFilterRegEx => '筛选 ZIP 中的 APK';
 
   @override
-  String get googleVerificationWarningP1 => '谷歌已宣布，从 2026/2027 年开始，\"认证\"Android 设备上的所有应用都需要开发者直接向谷歌提交个人身份详细信息。\n\n此后，Updatium 可能停止在认证 Android 设备上工作。';
+  String get googleVerificationWarningP1 =>
+      '谷歌已宣布，从 2026/2027 年开始，\"认证\"Android 设备上的所有应用都需要开发者直接向谷歌提交个人身份详细信息。\n\n此后，Updatium 可能停止在认证 Android 设备上工作。';
 
   @override
-  String get googleVerificationWarningP2 => '请访问 https://keepandroidopen.org/ 获取更多信息。';
+  String get googleVerificationWarningP2 =>
+      '请访问 https://keepandroidopen.org/ 获取更多信息。';
 
   @override
-  String get googleVerificationWarningP3 => '请注意，短期内，谷歌承诺在广泛反对其宣布后实施\"高级流程\"后，可能继续可以通过\"高级流程\"过程安装\"未验证\"（不合规）应用，但他们没有详细说明这将如何工作，因此不清楚它是否真正保留用户自由度。\n\n无论如何，谷歌的举动是结束个人自由通用计算的重要一步。\n\n非认证操作系统，如 GrapheneOS，只要它们被允许继续存在，应该不受影响。';
+  String get googleVerificationWarningP3 =>
+      '请注意，短期内，谷歌承诺在广泛反对其宣布后实施\"高级流程\"后，可能继续可以通过\"高级流程\"过程安装\"未验证\"（不合规）应用，但他们没有详细说明这将如何工作，因此不清楚它是否真正保留用户自由度。\n\n无论如何，谷歌的举动是结束个人自由通用计算的重要一步。\n\n非认证操作系统，如 GrapheneOS，只要它们被允许继续存在，应该不受影响。';
 
   @override
   String get multipleSigners => '多个签名者';
@@ -1299,7 +1314,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get disclaimer => '免责声明';
 
   @override
-  String get disclaimerText => '此应用程序不分发、托管或验证任何外部应用程序。用户对通过此工具安装的任何软件的安全性和合法性承担全部责任。\n\nhttps://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 - 强烈建议不要从其他地方下载，因为非官方来源不安全。';
+  String get disclaimerText =>
+      '此应用程序不分发、托管或验证任何外部应用程序。用户对通过此工具安装的任何软件的安全性和合法性承担全部责任。\n\nhttps://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 - 强烈建议不要从其他地方下载，因为非官方来源不安全。';
 
   @override
   String get privacy => '隐私';
@@ -1317,7 +1333,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get githubStarPromptTitle => '喜欢 Updatium 吗？';
 
   @override
-  String get githubStarPromptContent => 'Updatium 是一个志愿的、开源的社区项目，我在我的空闲时间开发。如果您想支持这个项目，请考虑在 GitHub 上给它加星，以帮助我们触达更多用户和贡献者。您不会再收到关于此的提醒。提前感谢！：）';
+  String get githubStarPromptContent =>
+      'Updatium 是一个志愿的、开源的社区项目，我在我的空闲时间开发。如果您想支持这个项目，请考虑在 GitHub 上给它加星，以帮助我们触达更多用户和贡献者。您不会再收到关于此的提醒。提前感谢！：）';
 
   @override
   String get githubStarPromptStar => '加星';
