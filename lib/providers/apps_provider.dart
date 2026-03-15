@@ -2672,7 +2672,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   LogsProvider logs = LogsProvider();
-  notificationsProvider notificationsProvider = notificationsProvider();
+  NotificationsProvider notificationsProvider = NotificationsProvider();
   AppsProvider appsProvider = AppsProvider(isBg: true);
   await appsProvider.loadApps();
 
@@ -2850,7 +2850,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
 
     // Send the update notification
     if (toNotify.isNotEmpty) {
-      notificationsProvider.notify(Updatenotification(toNotify));
+      notificationsProvider.notify(UpdateNotification(toNotify));
     }
 
     // Send the error notifications (grouped by error string)

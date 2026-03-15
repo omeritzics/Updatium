@@ -50,7 +50,7 @@ class UpdateNotification extends UpdatiumNotification {
         ? 'No new updates'
         : updates.length == 1
         ? '${updates[0].finalName} has an update'
-        : '${updates[0].finalName} and ${updates.length - 1} more apps have updates.'
+        : '${updates[0].finalName} and ${updates.length - 1} more apps have updates.';
   }
 }
 
@@ -71,7 +71,7 @@ class SilentUpdateNotification extends UpdatiumNotification {
             : '${updates[0].finalName} and ${updates.length - 1} more apps were updated.'
         : updates.length == 1
             ? '${updates[0].finalName} was not updated to ${updates[0].latestVersion}'
-            : 'Failed to update ${updates[0].finalName} and ${updates.length - 1} more apps.'
+            : 'Failed to update ${updates[0].finalName} and ${updates.length - 1} more apps.';
   }
 }
 
@@ -88,7 +88,7 @@ class SilentUpdateAttemptNotification extends UpdatiumNotification {
       ) {
     message = updates.length == 1
         ? '${updates[0].finalName} was possibly updated to ${updates[0].latestVersion}'
-        : '${updates[0].finalName} and ${updates.length - 1} more apps may have been updated.'
+        : '${updates[0].finalName} and ${updates.length - 1} more apps may have been updated.';
   }
 }
 
