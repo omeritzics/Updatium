@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:updatium/generated/l10n.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 // Spacing constants
 const height8 = SizedBox(height: 8);

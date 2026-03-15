@@ -244,7 +244,7 @@ class _AppPageState extends State<AppPage> {
               children: [
                 height32,
                 Text(
-                  "${AppLocalizations.of(context)!.certificateHash(app.certificateHashes.length)}"
+                  "${AppLocalizations.of(context)!.aPKLinkHash}: ${app.certificateHashes.length}"
                   "${app.hasMultipleSigners ? " (${AppLocalizations.of(context)!.multipleSigners})" : ""}",
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 12),
