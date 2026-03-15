@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 /// Service to handle the one-time GitHub star prompt dialog
 class GitHubStarPrompt {
@@ -43,17 +44,15 @@ class GitHubStarPrompt {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Enjoying Updatium?'),
-          content: const Text(
-            'Updatium is a voluntary, open-source community project developed in my free time. If you\'d like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won\'t be nudged about this again. Thank you in advance! :)',
-          ),
+          title: Text('githubStarPromptTitle'.tr()),
+          content: Text('githubStarPromptContent'.tr()),
           actions: [
             TextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 await _markPromptAsShown();
               },
-              child: const Text('Don\'t show again'),
+              child: Text('githubStarPromptDontShowAgain'.tr()),
             ),
             FilledButton(
               onPressed: () async {
@@ -61,7 +60,7 @@ class GitHubStarPrompt {
                 await _launchGitHub();
                 await _markPromptAsShown();
               },
-              child: const Text('Star'),
+              child: Text('githubStarPromptStar'.tr()),
             ),
           ],
         );

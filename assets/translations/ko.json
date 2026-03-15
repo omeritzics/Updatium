@@ -428,5 +428,9 @@
     "privacy": "개인정보 보호",
     "privacyText": "이 앱은 개인정보 보호를 중심으로 하며 개인 데이터를 수집하지 않습니다.",
     "acceptAndContinue": "동의하고 계속",
-    "decline": "거부"
+    "decline": "거부",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

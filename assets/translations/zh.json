@@ -428,5 +428,9 @@
     "privacy": "隐私",
     "privacyText": "此应用注重隐私，不收集个人数据。",
     "acceptAndContinue": "接受并继续",
-    "decline": "拒绝"
+    "decline": "拒绝",
+    "githubStarPromptTitle": "喜欢使用 Updatium 吗？",
+    "githubStarPromptContent": "Updatium 是一个志愿性的开源社区项目，我在业余时间开发。如果您想支持这个项目，请考虑在 GitHub 上为它加星标，以帮助更多用户和贡献者了解我们。您不会再收到关于此的提醒。提前感谢！:)",
+    "githubStarPromptStar": "加星标",
+    "githubStarPromptDontShowAgain": "不再显示"
 }

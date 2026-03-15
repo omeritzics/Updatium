@@ -774,8 +774,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ShizukuApkInstaller().checkPermission().then((
                                     resCode,
                                   ) {
-                                    settingsProvider.useShizuku = resCode
-                                        .startsWith('granted');
+                                    settingsProvider.useShizuku =
+                                        resCode?.startsWith('granted') ?? false;
                                     switch (resCode) {
                                       case 'services_not_found':
                                         showError(

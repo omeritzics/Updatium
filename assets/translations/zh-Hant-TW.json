@@ -428,5 +428,9 @@
     "privacy": "隱私",
     "privacyText": "此應用程式注重隱私，不收集個人資料。",
     "acceptAndContinue": "接受並繼續",
-    "decline": "拒絕"
+    "decline": "拒絕",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

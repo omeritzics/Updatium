@@ -1010,7 +1010,7 @@ class AppsProvider with ChangeNotifier {
         apkFilePath: allAPKs.join(','),
       );
     } else {
-      code = await ShizukuApkInstaller.installAPK(
+      code = await ShizukuApkInstaller().installAPK(
         file.file.uri.toString(),
         shizukuPretendToBeGooglePlay ? "com.android.vending" : "",
       );
@@ -1310,7 +1310,7 @@ class AppsProvider with ChangeNotifier {
             throw UpdatiumError(tr('cancelled'));
           }
         } else {
-          switch ((await ShizukuApkInstaller.checkPermission())!) {
+          switch ((await ShizukuApkInstaller().checkPermission())!) {
             case 'binder_not_found':
               throw UpdatiumError(tr('shizukuBinderNotFound'));
             case 'old_shizuku':

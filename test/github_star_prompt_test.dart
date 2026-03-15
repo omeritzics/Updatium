@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:updatium/services/github_star_prompt.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 void main() {
   group('GitHubStarPrompt Tests', () {
@@ -51,10 +52,10 @@ void main() {
       
       // Dialog should appear
       expect(find.byType(AlertDialog), findsOneWidget);
-      expect(find.text('Enjoying Updatium?'), findsOneWidget);
+      expect(find.text('githubStarPromptTitle'.tr()), findsOneWidget);
       
       // Tap "Don't show again" button
-      final dontShowButton = find.text('Don\'t show again');
+      final dontShowButton = find.text('githubStarPromptDontShowAgain'.tr());
       expect(dontShowButton, findsOneWidget);
       await tester.tap(dontShowButton);
       await tester.pumpAndSettle();

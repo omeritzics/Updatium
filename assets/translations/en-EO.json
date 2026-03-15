@@ -428,5 +428,9 @@
     "privacy": "Privateco",
     "privacyText": "Ĉi tiu aplikaĵo fokusiĝas pri privateco kaj ne kolektas personajn datumojn.",
     "acceptAndContinue": "Akcepti kaj Daŭrigi",
-    "decline": "Rifuzi"
+    "decline": "Rifuzi",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }
