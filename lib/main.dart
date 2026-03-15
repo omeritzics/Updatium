@@ -20,6 +20,7 @@ import 'package:easy_localization/src/easy_localization_controller.dart';
 // ignore: implementation_imports
 import 'package:easy_localization/src/localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
+import 'package:updatium/services/github_star_prompt.dart';
 
 List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('en'), 'English'),
@@ -369,6 +370,7 @@ class _UpdatiumState extends State<Updatium> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       notifs.checkLaunchByNotif();
+      GitHubStarPrompt.initializeAndCheck(context);
     });
 
     return WithForegroundTask(
