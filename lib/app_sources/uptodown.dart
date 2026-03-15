@@ -1,7 +1,7 @@
+import 'package:intl/intl.dart';
 import 'package:html/parser.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/generated/l10n.dart';
 
 DateTime? parseDateTimeMMMddCommayyyy(String? dateString) {
   DateTime? releaseDate;
@@ -110,7 +110,7 @@ class Uptodown extends AppSource {
     if (appId == null) {
       throw NoReleasesError();
     }
-    String appName = appDetails['name'] ?? AppLocalizations.of(context)!.app;
+    String appName = appDetails['name'] ?? 'App';
     String author = appDetails['author'] ?? name;
     String? dateStr = appDetails['dateStr'];
     DateTime? relDate;

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:updatium/generated/l10n.dart';
 
 abstract class GeneratedFormItem {
   late String key;
@@ -341,7 +340,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 validator: (value) {
                   if (formItem.required &&
                       (value == null || value.trim().isEmpty)) {
-                    return '${formItem.label} ${AppLocalizations.of(context)!.requiredInBrackets}';
+                    return '${formItem.label} (required)';
                   }
                   for (var validator in formItem.additionalValidators) {
                     String? result = validator(value);
@@ -378,7 +377,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
           );
         } else if (formItem is GeneratedFormDropdown) {
           if (formItem.opts!.isEmpty) {
-            return Text(AppLocalizations.of(context)!.dropdownNoOptsError);
+            return Text('ERROR: DROPDOWN MUST HAVE AT LEAST ONE OPT');
           }
           return MenuAnchor(
             builder: (context, controller, child) {
@@ -485,7 +484,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 return GeneratedFormModal(
                   title: widget.items[r][e].label,
                   items: [
-                    [GeneratedFormTextField('label', label: AppLocalizations.of(context)!.label)],
+                    [GeneratedFormTextField('label', label: 'Label')],
                   ],
                 );
               },
@@ -643,7 +642,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             },
                             icon: const Icon(Icons.format_color_fill_rounded),
                             visualDensity: VisualDensity.compact,
-                            tooltip: AppLocalizations.of(context)!.color,
+                            tooltip: 'Color',
                           ),
                         )
                       : const SizedBox.shrink(),
@@ -694,7 +693,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             },
                             icon: const Icon(Icons.remove),
                             visualDensity: VisualDensity.compact,
-                            tooltip: AppLocalizations.of(context)!.remove,
+                            tooltip: 'Remove',
                           ),
                         )
                       : const SizedBox.shrink(),
@@ -718,7 +717,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             onPressed: onAddPressed,
                             icon: const Icon(Icons.add),
                             visualDensity: VisualDensity.compact,
-                            tooltip: AppLocalizations.of(context)!.add,
+                            tooltip: 'Add',
                           ),
                         ),
                 ],

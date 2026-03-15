@@ -2,14 +2,13 @@ import 'dart:convert';
 
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/generated/l10n.dart';
 
 class VivoAppStore extends AppSource {
   static const appDetailUrl =
       'https://h5coml.vivo.com.cn/h5coml/appdetail_h5/browser_v2/index.html?appId=';
 
   VivoAppStore() {
-    name = AppLocalizations.of(context)!.vivoAppStore;
+    name = 'Vivo App Store';
     hosts = ['h5.appstore.vivo.com.cn', 'h5coml.vivo.com.cn'];
     naiveStandardVersionDetection = true;
     canSearch = true;

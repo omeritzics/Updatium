@@ -17,7 +17,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
-import 'package:updatium/generated/l10n.dart';
 
 List<Locale> supportedLocales = const [
   Locale('en'),
@@ -177,8 +176,8 @@ class _UpdatiumState extends State<Updatium> {
       FlutterForegroundTask.init(
         androidNotificationOptions: AndroidNotificationOptions(
           channelId: 'bg_update',
-          channelName: AppLocalizations.of(context)!.foregroundService,
-          channelDescription: AppLocalizations.of(context)!.foregroundService,
+          channelName: 'Background update service',
+          channelDescription: 'Background update service',
           onlyAlertOnce: true,
         ),
         iosNotificationOptions: const IOSNotificationOptions(
@@ -206,8 +205,8 @@ class _UpdatiumState extends State<Updatium> {
       return FlutterForegroundTask.startService(
         serviceTypes: [ForegroundServiceTypes.specialUse],
         serviceId: 666,
-        notificationTitle: AppLocalizations.of(context)!.foregroundService,
-        notificationText: AppLocalizations.of(context)!.fgServiceNotice,
+        notificationTitle: 'Background update service',
+        notificationText: 'Updatium is checking for app updates in the background',
         notificationIcon: NotificationIcon(
           metaDataName:
               'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
@@ -853,7 +852,7 @@ class _UpdatiumState extends State<Updatium> {
           return MaterialApp(
             title: 'Updatium',
             localizationsDelegates: const [
-              AppLocalizations.delegate,
+              // AppLocalizations.delegate removed
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,

@@ -7,7 +7,6 @@ import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:updatium/generated/l10n.dart';
 
 class UpdatiumError {
   late String message;
@@ -22,42 +21,42 @@ class UpdatiumError {
 class RateLimitError extends UpdatiumError {
   late int remainingMinutes;
   RateLimitError(this.remainingMinutes)
-    : super(plural('tooManyRequestsTryAgainInMinutes', remainingMinutes));
+    : super('Too many requests (rate limited) - try again in ${remainingMinutes} minute${remainingMinutes == 1 ? '' : 's'}');
 }
 
 class InvalidURLError extends UpdatiumError {
   InvalidURLError(String sourceName)
-    : super(AppLocalizations.of(context)!.invalidURLForSource(sourceName));
+    : super('Not a valid $sourceName app URL');
 }
 
 class CredsNeededError extends UpdatiumError {
   CredsNeededError(String sourceName)
-    : super(AppLocalizations.of(context)!.requiresCredentialsInSettings(sourceName));
+    : super('$sourceName requires credentials in settings');
 }
 
 class NoReleasesError extends UpdatiumError {
   NoReleasesError({String? note})
     : super(
-        '${AppLocalizations.of(context)!.noReleaseFound}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
+        'Could not find a suitable release${note?.isNotEmpty == true ? '\n\n$note' : ''}',
       );
 }
 
 class NoAPKError extends UpdatiumError {
-  NoAPKError() : super(AppLocalizations.of(context)!.noAPKFound);
+  NoAPKError() : super('No APK found');
 }
 
 class NoVersionError extends UpdatiumError {
-  NoVersionError() : super(AppLocalizations.of(context)!.noVersionFound);
+  NoVersionError() : super('Could not determine release version');
 }
 
 class UnsupportedURLError extends UpdatiumError {
-  UnsupportedURLError() : super(AppLocalizations.of(context)!.urlMatchesNoSource);
+  UnsupportedURLError() : super('URL does not match a known source');
 }
 
 class DowngradeError extends UpdatiumError {
   DowngradeError(int currentVersionCode, int newVersionCode)
     : super(
-        '${AppLocalizations.of(context)!.cantInstallOlderVersion} (versionCode $currentVersionCode ➔ $newVersionCode)',
+        'Cannot install an older version of an app (versionCode $currentVersionCode ➔ $newVersionCode)',
       );
 }
 
@@ -67,11 +66,11 @@ class InstallError extends UpdatiumError {
 }
 
 class IDChangedError extends UpdatiumError {
-  IDChangedError(String newId) : super('${AppLocalizations.of(context)!.appIdMismatch} - $newId');
+  IDChangedError(String newId) : super('Downloaded package ID does not match existing app ID - $newId');
 }
 
 class NotImplementedError extends UpdatiumError {
-  NotImplementedError() : super(AppLocalizations.of(context)!.functionNotImplemented);
+  NotImplementedError() : super('This class has not implemented this function');
 }
 
 class MultiAppMultiError extends UpdatiumError {
@@ -79,7 +78,7 @@ class MultiAppMultiError extends UpdatiumError {
   Map<String, List<String>> idsByErrorString = {};
   Map<String, String> appIdNames = {};
 
-  MultiAppMultiError() : super(AppLocalizations.of(context)!.placeholder, unexpected: true);
+  MultiAppMultiError() : super('Placeholder', unexpected: true);
 
   void add(String appId, dynamic error, {String? appName}) {
     if (error is SocketException) {
@@ -130,18 +129,18 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
           title: Text(
             e is MultiAppMultiError
                 ? isError 
-                    ? AppLocalizations.of(navigatorKey.currentContext!)!.someErrors
-                    : AppLocalizations.of(navigatorKey.currentContext!)!.updates
+                    ? 'Some errors'
+                    : 'Updates'
                 : isError
-                    ? AppLocalizations.of(navigatorKey.currentContext!)!.unexpectedError
-                    : AppLocalizations.of(navigatorKey.currentContext!)!.unknown
+                    ? 'Unexpected error'
+                    : 'Unknown'
           ),
           content: GestureDetector(
             onLongPress: () {
               Clipboard.setData(ClipboardData(text: e.toString()));
               ScaffoldMessenger.of(
                 context,
-              ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.copiedToClipboard)));
+              ).showSnackBar(SnackBar(content: Text('Copied to clipboard')));
             },
             child: Text(e.toString()),
           ),
@@ -150,7 +149,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
-              child: Text(AppLocalizations.of(context)!.ok),
+              child: Text('OK'),
             ),
           ],
         );
@@ -166,7 +165,7 @@ void showError(dynamic e, BuildContext context) {
 String list2FriendlyString(List<String> list) {
   var isUsingEnglish = isEnglish();
   return list.length == 2
-      ? '${list[0]} ${AppLocalizations.of(context)!.and} ${list[1]}'
+      ? '${list[0]} and ${list[1]}'
       : list
             .asMap()
             .entries

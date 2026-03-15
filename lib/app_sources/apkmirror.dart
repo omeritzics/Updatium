@@ -7,7 +7,6 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/generated/l10n.dart';
 
 class APKMirror extends AppSource {
   APKMirror() {
@@ -19,14 +18,14 @@ class APKMirror extends AppSource {
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: AppLocalizations.of(context)!.fallbackToOlderReleases,
+          label: 'Fallback to older releases',
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormTextField(
           'filterReleaseTitlesByRegEx',
-          label: AppLocalizations.of(context)!.filterReleaseTitlesByRegEx,
+          label: 'Filter release titles by regular expression',
           required: false,
           additionalValidators: [
             (value) {

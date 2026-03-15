@@ -4,7 +4,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/generated/l10n.dart';
 
 extension Unique<E, Id> on List<E> {
   List<E> unique([Id Function(E element)? id, bool inplace = true]) {
@@ -25,21 +24,21 @@ class APKPure extends AppSource {
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: AppLocalizations.of(context)!.fallbackToOlderReleases,
+          label: 'Fallback to older releases',
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormSwitch(
           'stayOneVersionBehind',
-          label: AppLocalizations.of(context)!.stayOneVersionBehind,
+          label: 'Stay one version behind',
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'useFirstApkOfVersion',
-          label: AppLocalizations.of(context)!.useFirstApkOfVersion,
+          label: 'Use first APK of version',
           defaultValue: true,
         ),
       ],

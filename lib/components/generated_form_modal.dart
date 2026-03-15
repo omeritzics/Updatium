@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/generated/l10n.dart';
 
 class GeneratedFormModal extends StatefulWidget {
   const GeneratedFormModal({
@@ -72,7 +71,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
           },
           child: Text(
             widget.singleNullReturnButton == null
-                ? AppLocalizations.of(context)!.cancel
+                ? 'Cancel'
                 : widget.singleNullReturnButton!,
           ),
         ),
@@ -91,7 +90,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
                           Navigator.of(context).pop(values);
                         }
                       },
-                child: Text(AppLocalizations.of(context)!.continueAction),
+                child: Text('Continue'),
               )
             : const SizedBox.shrink(),
       ],

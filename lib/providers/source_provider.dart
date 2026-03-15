@@ -420,7 +420,7 @@ class App {
       json['installedVersion'] == null
           ? null
           : json['installedVersion'] as String,
-      (json['latestVersion'] ?? AppLocalizations.of(context)!.unknown) as String,
+      (json['latestVersion'] ?? 'Unknown') as String,
       assumed2DlistToStringMapList(
         jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
       ),
@@ -500,7 +500,7 @@ String preStandardizeUrl(String url) {
   return url;
 }
 
-String noAPKFound = AppLocalizations.of(context)!.noAPKFound;
+String noAPKFound = 'No APK found';
 
 List<String> getLinksFromParsedHTML(
   Document dom,
@@ -760,11 +760,11 @@ abstract class AppSource {
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
-    [GeneratedFormSwitch('trackOnly', label: AppLocalizations.of(context)!.trackOnly)],
+    [GeneratedFormSwitch('trackOnly', label: 'Track only')],
     [
       GeneratedFormTextField(
         'versionExtractionRegEx',
-        label: AppLocalizations.of(context)!.trimVersionString,
+        label: 'Trim version string',
         required: false,
         additionalValidators: [(value) => regExValidator(value)],
       ),
@@ -772,7 +772,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'matchGroupToUse',
-        label: AppLocalizations.of(context)!.matchGroupToUseForX(AppLocalizations.of(context)!.trimVersionString),
+        label: 'Match group to use for Trim version string',
         required: false,
         hint: '\$0',
       ),
@@ -780,21 +780,21 @@ abstract class AppSource {
     [
       GeneratedFormSwitch(
         'versionDetection',
-        label: AppLocalizations.of(context)!.versionDetectionExplanation,
+        label: 'Version detection explanation',
         defaultValue: true,
       ),
     ],
     [
       GeneratedFormSwitch(
         'useVersionCodeAsOSVersion',
-        label: AppLocalizations.of(context)!.useVersionCodeAsOSVersion,
+        label: 'Use version code as OS version',
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormTextField(
         'apkFilterRegEx',
-        label: AppLocalizations.of(context)!.filterAPKsByRegEx,
+        label: 'Filter APKs by regular expression',
         required: false,
         additionalValidators: [
           (value) {
@@ -806,50 +806,50 @@ abstract class AppSource {
     [
       GeneratedFormSwitch(
         'invertAPKFilter',
-        label: '${AppLocalizations.of(context)!.invertRegEx} (${AppLocalizations.of(context)!.filterAPKsByRegEx})',
+        label: 'Invert regular expression (Filter APKs by regular expression)',
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'autoApkFilterByArch',
-        label: AppLocalizations.of(context)!.autoApkFilterByArch,
+        label: 'Auto APK filter by architecture',
         defaultValue: true,
       ),
     ],
-    [GeneratedFormTextField('appName', label: AppLocalizations.of(context)!.appName, required: false)],
-    [GeneratedFormTextField('appAuthor', label: AppLocalizations.of(context)!.author, required: false)],
+    [GeneratedFormTextField('appName', label: 'App name', required: false)],
+    [GeneratedFormTextField('appAuthor', label: 'Author', required: false)],
     [
       GeneratedFormSwitch(
         'shizukuPretendToBeGooglePlay',
-        label: AppLocalizations.of(context)!.shizukuPretendToBeGooglePlay,
+        label: 'Shizuku pretend to be Google Play',
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'allowInsecure',
-        label: AppLocalizations.of(context)!.allowInsecure,
+        label: 'Allow insecure',
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'exemptFromBackgroundUpdates',
-        label: AppLocalizations.of(context)!.exemptFromBackgroundUpdates,
+        label: 'Exempt from background updates',
       ),
     ],
     [
       GeneratedFormSwitch(
         'skipUpdateNotifications',
-        label: AppLocalizations.of(context)!.skipUpdateNotifications,
+        label: 'Skip update notifications',
       ),
     ],
-    [GeneratedFormTextField('about', label: AppLocalizations.of(context)!.about, required: false)],
+    [GeneratedFormTextField('about', label: 'About', required: false)],
     [
       GeneratedFormSwitch(
         'refreshBeforeDownload',
-        label: AppLocalizations.of(context)!.refreshBeforeDownload,
+        label: 'Refresh before download',
       ),
     ],
   ];
@@ -881,8 +881,7 @@ abstract class AppSource {
               [
                 GeneratedFormSwitch(
                   'releaseDateAsVersion',
-                  label:
-                      '${AppLocalizations.of(context)!.releaseDateAsVersion} (${AppLocalizations.of(context)!.pseudoVersion})',
+                  label: 'Release date as version (Pseudo version)',
                   defaultValue: false,
                 ),
               ],
@@ -905,14 +904,14 @@ abstract class AppSource {
         [
           GeneratedFormSwitch(
             'includeZips',
-            label: AppLocalizations.of(context)!.includeZips,
+            label: 'Include ZIPs',
             defaultValue: false,
           ),
         ],
         [
           GeneratedFormTextField(
             'zippedApkFilterRegEx',
-            label: AppLocalizations.of(context)!.zippedApkFilterRegEx,
+            label: 'Filter APKs inside ZIP',
             required: false,
             additionalValidators: [
               (value) {
@@ -1010,7 +1009,7 @@ UpdatiumError getUpdatiumHttpError(Response res) {
             res.reasonPhrase != null &&
             res.reasonPhrase!.isNotEmpty)
         ? res.reasonPhrase!
-        : AppLocalizations.of(context)!.errorWithHttpStatusCode(res.statusCode.toString()),
+        : 'Error with HTTP status code ${res.statusCode.toString()}',
   );
 }
 
@@ -1027,21 +1026,21 @@ String? regExValidator(String? value) {
   try {
     RegExp(value);
   } catch (e) {
-    return AppLocalizations.of(context)!.invalidRegEx;
+    return 'Invalid regular expression';
   }
   return null;
 }
 
 String? intValidator(String? value, {bool positive = false}) {
   if (value == null) {
-    return AppLocalizations.of(context)!.invalidInput;
+    return 'Invalid input';
   }
   var num = int.tryParse(value);
   if (num == null) {
-    return AppLocalizations.of(context)!.invalidInput;
+    return 'Invalid input';
   }
   if (positive && num <= 0) {
-    return AppLocalizations.of(context)!.invalidInput;
+    return 'Invalid input';
   }
   return null;
 }
@@ -1120,7 +1119,7 @@ List<MapEntry<String, String>> filterApks(
   return apkUrls;
 }
 
-bool isEnglish() => AppLocalizations.of(context)!.and == 'and'; // Quick hack, find a better way
+bool isEnglish() => true; // Quick hack, find a better way
 String lowerCaseIfEnglish(String str) => isEnglish() ? str.toLowerCase() : str;
 
 bool isVersionPseudo(App app) =>
@@ -1341,7 +1340,7 @@ class SourceProvider {
     for (var url in urls) {
       try {
         if (alreadyAddedUrls.contains(url)) {
-          throw UpdatiumError(AppLocalizations.of(context)!.appAlreadyAdded);
+          throw UpdatiumError('App already added');
         }
         var source = sourceOverride ?? getSource(url);
         apps.add(

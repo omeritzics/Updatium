@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/generated/l10n.dart';
 
 class Tencent extends AppSource {
   Tencent() {
-    name = AppLocalizations.of(context)!.tencentAppStore;
+    name = 'Tencent App Store';
     hosts = ['sj.qq.com'];
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;

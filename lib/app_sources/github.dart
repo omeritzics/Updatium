@@ -10,7 +10,6 @@ import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:updatium/generated/l10n.dart';
 
 class GitHub extends AppSource {
   GitHub({hostChanged = false}) {
@@ -24,7 +23,7 @@ class GitHub extends AppSource {
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
         'github-creds',
-        label: AppLocalizations.of(context)!.githubPATLabel,
+        label: 'GitHub personal access token (increases rate limit)',
         password: true,
         required: false,
         belowWidgets: [
@@ -37,7 +36,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              AppLocalizations.of(context)!.about,
+              'About',
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -49,7 +48,7 @@ class GitHub extends AppSource {
       ),
       GeneratedFormTextField(
         'GHReqPrefix',
-        label: AppLocalizations.of(context)!.ghReqPrefix,
+        label: 'GitHub request prefix',
         hint: 'gh-proxy.org',
         required: false,
         additionalValidators: [
@@ -62,7 +61,7 @@ class GitHub extends AppSource {
                 Uri.parse('https://$value/api.github.com');
               }
             } catch (e) {
-              return AppLocalizations.of(context)!.invalidInput;
+              return 'Invalid input';
             }
             return null;
           },
@@ -77,7 +76,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              AppLocalizations.of(context)!.about,
+              'About',
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -93,21 +92,21 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'includePrereleases',
-          label: AppLocalizations.of(context)!.includePrereleases,
+          label: 'Include prereleases',
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: AppLocalizations.of(context)!.fallbackToOlderReleases,
+          label: 'Fallback to older releases',
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormTextField(
           'filterReleaseTitlesByRegEx',
-          label: AppLocalizations.of(context)!.filterReleaseTitlesByRegEx,
+          label: 'Filter release titles by regular expression',
           required: false,
           additionalValidators: [
             (value) {
@@ -119,7 +118,7 @@ class GitHub extends AppSource {
       [
         GeneratedFormTextField(
           'filterReleaseNotesByRegEx',
-          label: AppLocalizations.of(context)!.filterReleaseNotesByRegEx,
+          label: 'Filter release notes by regular expression',
           required: false,
           additionalValidators: [
             (value) {
@@ -128,18 +127,18 @@ class GitHub extends AppSource {
           ],
         ),
       ],
-      [GeneratedFormSwitch('verifyLatestTag', label: AppLocalizations.of(context)!.verifyLatestTag)],
+      [GeneratedFormSwitch('verifyLatestTag', label: 'Verify latest tag')],
       [
         GeneratedFormDropdown(
           'sortMethodChoice',
           [
-            MapEntry('date', AppLocalizations.of(context)!.releaseDate),
-            MapEntry('smartname', AppLocalizations.of(context)!.smartname),
-            MapEntry('none', AppLocalizations.of(context)!.none),
+            MapEntry('date', 'Release date'),
+            MapEntry('smartname', 'Smart name'),
+            MapEntry('none', 'None'),
             MapEntry('smartname-datefallback', 'Smart + Date'),
-            MapEntry('name', AppLocalizations.of(context)!.name),
+            MapEntry('name', 'Name'),
           ],
-          label: AppLocalizations.of(context)!.sortMethod,
+          label: 'Sort method',
           defaultValue: 'date',
           required: false,
         ),
@@ -147,14 +146,14 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'useLatestAssetDateAsReleaseDate',
-          label: AppLocalizations.of(context)!.useLatestAssetDateAsReleaseDate,
+          label: 'Use latest asset date as release date',
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'releaseTitleAsVersion',
-          label: AppLocalizations.of(context)!.releaseTitleAsVersion,
+          label: 'Release title as version',
           defaultValue: false,
         ),
       ],
@@ -164,14 +163,14 @@ class GitHub extends AppSource {
     searchQuerySettingFormItems = [
       GeneratedFormTextField(
         'minStarCount',
-        label: AppLocalizations.of(context)!.minStarCount,
+        label: 'Minimum star count',
         defaultValue: '0',
         additionalValidators: [
           (value) {
             try {
               int.parse(value ?? '0');
             } catch (e) {
-              return AppLocalizations.of(context)!.invalidInput;
+              return 'Invalid input';
             }
             return null;
           },
@@ -309,7 +308,7 @@ class GitHub extends AppSource {
   @override
   Future<String?> getSourceNote() async {
     if (!hostChanged && (await getTokenIfAny({})) == null) {
-      return '${AppLocalizations.of(context)!.githubSourceNote} ${hostChanged ? AppLocalizations.of(context)!.addInfoBelow : AppLocalizations.of(context)!.addInfoInSettings}';
+      return 'Add info in settings';
     }
     return null;
   }
@@ -711,7 +710,7 @@ class GitHub extends AppSource {
               ((e['archived'] == true ? '[ARCHIVED] ' : '') +
                   (e['description'] != null
                       ? e['description'] as String
-                      : AppLocalizations.of(context)!.noDescription)),
+                      : 'No description')),
             ],
           });
         }

@@ -2,12 +2,11 @@ import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/generated/l10n.dart';
 
 class TelegramApp extends AppSource {
   TelegramApp() {
     hosts = ['telegram.org'];
-    name = 'Telegram ${AppLocalizations.of(context)!.app}';
+    name = 'Telegram App';
   }
 
   @override

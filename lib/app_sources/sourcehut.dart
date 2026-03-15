@@ -1,10 +1,10 @@
+import 'package:intl/intl.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/generated/l10n.dart';
 
 class SourceHut extends AppSource {
   SourceHut() {
@@ -15,7 +15,7 @@ class SourceHut extends AppSource {
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: AppLocalizations.of(context)!.fallbackToOlderReleases,
+          label: 'Fallback to older releases',
           defaultValue: true,
         ),
       ],

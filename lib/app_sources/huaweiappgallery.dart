@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:http/http.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';

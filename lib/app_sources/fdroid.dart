@@ -7,19 +7,18 @@ import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/generated/l10n.dart';
 
 class FDroid extends AppSource {
   FDroid() {
     hosts = ['f-droid.org'];
-    name = AppLocalizations.of(context)!.fdroid;
+    name = 'F-Droid';
     naiveStandardVersionDetection = true;
     canSearch = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(
           'filterVersionsByRegEx',
-          label: AppLocalizations.of(context)!.filterVersionsByRegEx,
+          label: 'Filter versions by regular expression',
           required: false,
           additionalValidators: [
             (value) {
@@ -31,14 +30,14 @@ class FDroid extends AppSource {
       [
         GeneratedFormSwitch(
           'trySelectingSuggestedVersionCode',
-          label: AppLocalizations.of(context)!.trySelectingSuggestedVersionCode,
+          label: 'Try selecting suggested version code',
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
-          label: AppLocalizations.of(context)!.autoSelectHighestVersionCode,
+          label: 'Auto select highest version code',
         ),
       ],
     ];
@@ -170,7 +169,7 @@ class FDroid extends AppSource {
           urlsWithDescriptions[url] = [
             e.querySelector('.package-name')?.text.trim() ?? '',
             e.querySelector('.package-summary')?.text.trim() ??
-                AppLocalizations.of(context)!.noDescription,
+                'No description',
           ];
         }
       });

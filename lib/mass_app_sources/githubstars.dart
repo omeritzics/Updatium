@@ -4,14 +4,13 @@ import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/generated/l10n.dart';
 
 class GitHubStars implements MassAppUrlSource {
   @override
-  late String name = AppLocalizations.of(context)!.githubStarredRepos;
+  late String name = 'GitHub starred repositories';
 
   @override
-  late List<String> requiredArgs = [AppLocalizations.of(context)!.uname];
+  late List<String> requiredArgs = ['Username'];
 
   Future<Map<String, List<String>>> getOnePageOfUserStarredUrlsWithDescriptions(
     String username,
@@ -31,7 +30,7 @@ class GitHubStars implements MassAppUrlSource {
             e['full_name'] as String,
             e['description'] != null
                 ? e['description'] as String
-                : AppLocalizations.of(context)!.noDescription,
+                : 'No description',
           ],
         });
       }
@@ -48,7 +47,7 @@ class GitHubStars implements MassAppUrlSource {
     List<String> args,
   ) async {
     if (args.length != requiredArgs.length) {
-      throw UpdatiumError(AppLocalizations.of(context)!.wrongArgNum);
+      throw UpdatiumError('Wrong number of arguments provided');
     }
     Map<String, List<String>> urlsWithDescriptions = {};
     var page = 1;

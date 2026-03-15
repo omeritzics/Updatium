@@ -49,15 +49,15 @@ class GitHubStarPrompt {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.githubStarPromptTitle),
-          content: Text(AppLocalizations.of(context)!.githubStarPromptContent),
+          title: Text('Enjoying Updatium?'),
+          content: Text('Updatium is a voluntary, open-source community project developed in my free time. If you\'d like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won\'t be nudged about this again. Thank you in advance! :)'),
           actions: [
             TextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 await _markPromptAsShown();
               },
-              child: Text(AppLocalizations.of(context)!.githubStarPromptDontShowAgain),
+              child: Text('Don\'t show again'),
             ),
             FilledButton(
               onPressed: () async {
@@ -65,7 +65,7 @@ class GitHubStarPrompt {
                 await _launchGitHub();
                 await _markPromptAsShown();
               },
-              child: Text(AppLocalizations.of(context)!.githubStarPromptStar),
+              child: Text('Star on GitHub'),
             ),
           ],
         );

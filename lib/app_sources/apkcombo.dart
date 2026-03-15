@@ -1,4 +1,5 @@
 import 'package:html/parser.dart' show parse;
+import 'package:intl/intl.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';

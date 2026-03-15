@@ -2,30 +2,17 @@ import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/generated/l10n.dart';
 
 class DirectAPKLink extends AppSource {
   HTML html = HTML();
 
   DirectAPKLink() {
-    name = AppLocalizations.of(context)!.directAPKLink;
     additionalSourceAppSpecificSettingFormItems = [
       ...html.additionalSourceAppSpecificSettingFormItems.where(
         (element) => element
             .where((element) => element.key == 'requestHeader')
             .isNotEmpty,
       ),
-      [
-        GeneratedFormDropdown(
-          'defaultPseudoVersioningMethod',
-          [
-            MapEntry('partialAPKHash', AppLocalizations.of(context)!.partialAPKHash),
-            MapEntry('ETag', 'ETag'),
-          ],
-          label: AppLocalizations.of(context)!.defaultPseudoVersioningMethod,
-          defaultValue: 'partialAPKHash',
-        ),
-      ],
     ];
     excludeCommonSettingKeys = [
       'versionExtractionRegEx',
@@ -36,6 +23,29 @@ class DirectAPKLink extends AppSource {
       'autoApkFilterByArch',
     ];
   }
+
+  @override
+  String get name => 'Direct APK Link';
+
+  @override
+  List<List<GeneratedFormItem>> get additionalSourceAppSpecificSettingFormItems => [
+    ...html.additionalSourceAppSpecificSettingFormItems.where(
+      (element) => element
+          .where((element) => element.key == 'requestHeader')
+          .isNotEmpty,
+    ),
+    [
+      GeneratedFormDropdown(
+        'defaultPseudoVersioningMethod',
+        [
+          MapEntry('partialAPKHash', 'Partial APK Hash'),
+          MapEntry('ETag', 'ETag'),
+        ],
+        label: 'Default pseudo-versioning method',
+        defaultValue: 'partialAPKHash',
+      ),
+    ],
+  ];
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
