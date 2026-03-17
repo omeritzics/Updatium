@@ -130,6 +130,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => AppsProvider()),
         ChangeNotifierProvider(create: (context) => SettingsProvider()),
+        Provider(create: (context) => SourceProvider()),
         Provider(create: (context) => np),
         Provider(create: (context) => LogsProvider()),
       ],

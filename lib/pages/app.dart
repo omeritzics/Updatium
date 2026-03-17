@@ -202,10 +202,10 @@ class _AppPageState extends State<AppPage> {
           );
 
         String infoLines = AppLocalizations.of(context)!.lastUpdateCheckX(
-        app?.app.lastUpdateCheck == null
-            ? AppLocalizations.of(context)!.never
-            : '${app?.app.lastUpdateCheck?.toLocal()}',
-      );
+          app?.app.lastUpdateCheck == null
+              ? AppLocalizations.of(context)!.never
+              : '${app?.app.lastUpdateCheck?.toLocal()}',
+        );
       if (trackOnly) {
         infoLines = '${AppLocalizations.of(context)!.xIsTrackOnly(AppLocalizations.of(context)!.app)}\n$infoLines';
       }
