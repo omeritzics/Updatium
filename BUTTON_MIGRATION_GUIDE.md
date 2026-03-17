@@ -8,7 +8,6 @@ This document outlines the migration from custom TextButton helper functions to 
 ### 1. Updated `lib/components/button_helpers.dart`
 - **Added**: `AppTextButton` widget class that wraps Flutter's `TextButton`
 - **Added**: `AppTextButtonWithIcon` widget class that uses Flutter's `TextButton.icon`
-- **Deprecated**: `appTextButton()` and `appTextButtonWithIcon()` helper functions (kept for backward compatibility)
 
 ### 2. Updated Files
 - `lib/components/generated_form_modal.dart` - Migrated to `AppTextButton`
