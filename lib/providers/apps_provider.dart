@@ -1115,7 +1115,7 @@ class AppsProvider with ChangeNotifier {
           'placeholder',
         ].contains(getHost(appFileUrl.value)) &&
         context != null) {
-      if (!(settingsProvider.hideAPKOrigin) &&
+      if (!(settingsProvider.hideAPKOriginWarning) &&
           await showDialog(
                 // ignore: use_build_context_synchronously
                 context: context,
@@ -1141,7 +1141,7 @@ class AppsProvider with ChangeNotifier {
   Future<List<String>> downloadAndInstallLatestApps(
     List<String> appIds,
     BuildContext? context, {
-    notificationsProvider? notificationsProvider,
+    NotificationsProvider? notificationsProvider,
     bool forceParallelDownloads = false,
     bool useExisting = true,
   }) async {
