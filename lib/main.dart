@@ -314,6 +314,7 @@ class _UpdatiumState extends State<Updatium> {
               });
         }
       }
+      }
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         notifs.checkLaunchByNotif();
