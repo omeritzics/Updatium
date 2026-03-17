@@ -1346,6 +1346,6 @@ class AppLocalizationsEo extends AppLocalizations {
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return '$count minutoj';
   }
 }

@@ -204,7 +204,6 @@ void main() {
           if (value is String) {
             // Should use \n for newlines, not actual newlines in most cases
             final actualNewlines = '\n'.allMatches(value).length;
-            final escapedNewlines = r'\n'.allMatches(value).length;
 
             // If there are actual newlines, they should be intentional
             if (actualNewlines > 3) {

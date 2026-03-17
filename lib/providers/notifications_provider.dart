@@ -7,7 +7,6 @@ import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/generated/app_localizations.dart';
 
 class UpdatiumNotification {
   late int id;

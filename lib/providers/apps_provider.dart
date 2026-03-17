@@ -26,7 +26,6 @@ import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
-import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/services/icon_cache.dart';
 import 'package:updatium/services/icon_prefetcher.dart';

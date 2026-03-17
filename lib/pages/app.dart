@@ -35,21 +35,47 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Consistent spacing constants
-    const height2 = SizedBox(height: 2);
-    const height8 = SizedBox(height: 8);
-    const height10 = SizedBox(height: 10);
-    const height24 = SizedBox(height: 24);
-    const height32 = SizedBox(height: 32);
-    const height85 = SizedBox(height: 85);
+    return Consumer3<SettingsProvider, AppsProvider, SourceProvider>(
+      builder: (context, settingsProvider, appsProvider, sourceProvider) {
+        // Consistent spacing constants
+        const height85 = SizedBox(height: 85);
 
-    var appsProvider = context.watch<AppsProvider>();
-    var settingsProvider = context.watch<SettingsProvider>();
-    getUpdate(String id, {bool resetVersion = false}) async {
-      try {
-        setState(() {
-          updating = true;
-        });
+        bool areDownloadsRunning = appsProvider.areDownloadsRunning();
+
+        var sourceProvider = SourceProvider();
+        AppInMemory? app = appsProvider.apps[widget.appId]?.deepCopy();
+        var source = app != null
+            ? sourceProvider.getSource(
+                app.app.url,
+                overrideSource: app.app.overrideSource,
+              )
+            : null;
+        if (!areDownloadsRunning &&
+            prevApp == null &&
+            app != null &&
+            settingsProvider.checkUpdateOnDetailPage) {
+          prevApp = app;
+        }
+        var trackOnly = app?.app.additionalSettings['trackOnly'] == true;
+
+        bool isVersionDetectionStandard =
+            app?.app.additionalSettings['versionDetection'] == true;
+
+        bool installedVersionIsEstimate = app?.app != null
+            ? isVersionPseudo(app!.app)
+            : false;
+
+        getInfoColumn() {
+          String versionLines = '';
+          bool installed = app?.app.installedVersion != null;
+          bool upToDate = app?.app.installedVersion == app?.app.latestVersion;
+          if (installed) {
+            versionLines = '${app?.app.installedVersion} ${AppLocalizations.of(context)!.installed}';
+            if (upToDate) {
+              versionLines += '/${AppLocalizations.of(context)!.latest}';
+            }
+          } else {
+            versionLines = AppLocalizations.of(context)!.notInstalled;
         await appsProvider.checkUpdate(id);
         if (resetVersion) {
           appsProvider.apps[id]?.app.additionalSettings['versionDetection'] =
@@ -350,11 +376,7 @@ class _AppPageState extends State<AppPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.info_outline,
-                color: Theme.of(context).colorScheme.primary,
-                size: small ? 16 : 24,
-              ),
+              _buildSimpleIcon(app!, small ? 16 : 24),
             ],
           ),
         SizedBox(height: small ? 10 : 24),
@@ -695,81 +717,8 @@ class _AppPageState extends State<AppPage> {
           }
         },
       ),
-      bottomSheet: getBottomSheetMenu(),
+      bottomSheet: getBottomSheetMenu()
     );
-  }
-
-  Widget _buildSimpleIcon(App app, double size) {
-    return Consumer<AppsProvider>(
-      builder: (context, appsProvider, child) {
-        final appInMemory = appsProvider.apps[app.id];
-
-        // If icon is already loaded, display it immediately
-        if (appInMemory?.icon != null) {
-          return Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(size * 0.125),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(size * 0.125),
-              child: Image.memory(
-                appInMemory!.icon!,
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
-                gaplessPlayback: true,
-                opacity: AlwaysStoppedAnimation(
-                  appInMemory.installedInfo == null ? 0.6 : 1,
-                ),
-                errorBuilder: (context, error, stackTrace) {
-                  return _buildFallbackIcon(size);
-                },
-              ),
-            ),
-          );
-        }
-
-        // Load icon asynchronously if not available
-        return FutureBuilder(
-          future: appsProvider.updateAppIcon(app.id),
-          builder: (context, snapshot) {
-            final updatedAppInMemory = appsProvider.apps[app.id];
-
-            if (updatedAppInMemory?.icon != null) {
-              return Container(
-                width: size,
-                height: size,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(size * 0.125),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(size * 0.125),
-                  child: Image.memory(
-                    updatedAppInMemory!.icon!,
-                    width: size,
-                    height: size,
-                    fit: BoxFit.cover,
-                    gaplessPlayback: true,
-                    opacity: AlwaysStoppedAnimation(
-                      updatedAppInMemory.installedInfo == null ? 0.6 : 1,
-                    ),
-                    errorBuilder: (context, error, stackTrace) {
-                      return _buildFallbackIcon(size);
-                    },
-                  ),
-                ),
-              );
-            }
-
-            // Show fallback while loading or if failed
-            return _buildFallbackIcon(size);
-          },
-        );
-      },
-    );
-  }
 
   Widget _buildFallbackIcon(double size) {
     var settingsProvider = context.read<SettingsProvider>();

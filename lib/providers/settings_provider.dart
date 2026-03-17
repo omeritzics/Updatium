@@ -10,7 +10,6 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:updatium/generated/app_localizations.dart';
 
 String updatiumTempId = 'omeritzics_updatium_${GitHub().hosts[0]}';
 String updatiumId = 'io.github.omeritzics.updatium';
@@ -426,8 +425,6 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> pickExportDir({bool remove = false}) async {
-    // DocMan functionality removed
-    var currentOneWayDataSyncDir = await getExportDir();
     if (!remove) {
       // SAF picker functionality removed
     }

@@ -653,5 +653,17 @@
   "githubStarPromptDontShowAgain": "Don't show again",
   "aPKLinkHash": "Haketo de la APKa ligilo",
   "gHReqPrefix": "'sky22333/hubproxy' instance for GitHub requests",
-  "continueAction": "Daŭrigi"
+  "continueAction": "Daŭrigi",
+  "minute": "{count} minutoj",
+  "@minute": {
+    "plural": {
+      "one": "{count} minuto",
+      "other": "{count} minutoj"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
