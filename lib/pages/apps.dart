@@ -200,6 +200,8 @@ class AppsPageState extends State<AppsPage> {
     const height8 = SizedBox(height: 8);
     const height12 = SizedBox(height: 12);
     const height16 = SizedBox(height: 16);
+    const height24 = SizedBox(height: 24);
+    const width16 = SizedBox(width: 16);
 
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();

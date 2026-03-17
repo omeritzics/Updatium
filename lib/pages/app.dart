@@ -33,10 +33,36 @@ class _AppPageState extends State<AppPage> {
     super.initState();
   }
 
+  getUpdate(String id, {bool resetVersion = false}) async {
+    try {
+      setState(() {
+        updating = true;
+      });
+      final appsProvider = context.read<AppsProvider>();
+      await appsProvider.checkUpdate(id);
+      if (resetVersion) {
+        appsProvider.apps[id]?.app.additionalSettings['versionDetection'] =
+            true;
+        if (appsProvider.apps[id]?.app.installedVersion != null) {
+          appsProvider.apps[id]?.app.installedVersion =
+              appsProvider.apps[id]?.app.latestVersion;
+        }
+        appsProvider.saveApps([appsProvider.apps[id]!.app]);
+      }
+    } catch (err) {
+      // ignore: use_build_context_synchronously
+      showError(err, context);
+    } finally {
+      setState(() {
+        updating = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer3<SettingsProvider, AppsProvider, SourceProvider>(
-      builder: (context, settingsProvider, appsProvider, sourceProvider) {
+      builder: (context, settingsProvider, appsProvider, sourceProvider, child) {
         // Consistent spacing constants
         const height85 = SizedBox(height: 85);
 
@@ -65,7 +91,7 @@ class _AppPageState extends State<AppPage> {
             ? isVersionPseudo(app!.app)
             : false;
 
-        getInfoColumn() {
+        getInfoColumn({bool small = false}) {
           String versionLines = '';
           bool installed = app?.app.installedVersion != null;
           bool upToDate = app?.app.installedVersion == app?.app.latestVersion;
@@ -76,68 +102,16 @@ class _AppPageState extends State<AppPage> {
             }
           } else {
             versionLines = AppLocalizations.of(context)!.notInstalled;
-        await appsProvider.checkUpdate(id);
-        if (resetVersion) {
-          appsProvider.apps[id]?.app.additionalSettings['versionDetection'] =
-              true;
-          if (appsProvider.apps[id]?.app.installedVersion != null) {
-            appsProvider.apps[id]?.app.installedVersion =
-                appsProvider.apps[id]?.app.latestVersion;
           }
-          appsProvider.saveApps([appsProvider.apps[id]!.app]);
-        }
-      } catch (err) {
-        // ignore: use_build_context_synchronously
-        showError(err, context);
-      } finally {
-        setState(() {
-          updating = false;
-        });
-      }
-    }
+          return Text(
+            versionLines,
+            textAlign: TextAlign.center,
+            style: small
+                ? Theme.of(context).textTheme.bodySmall
+                : Theme.of(context).textTheme.bodyMedium,
+          );
 
-    bool areDownloadsRunning = appsProvider.areDownloadsRunning();
-
-    var sourceProvider = SourceProvider();
-    AppInMemory? app = appsProvider.apps[widget.appId]?.deepCopy();
-    var source = app != null
-        ? sourceProvider.getSource(
-            app.app.url,
-            overrideSource: app.app.overrideSource,
-          )
-        : null;
-    if (!areDownloadsRunning &&
-        prevApp == null &&
-        app != null &&
-        settingsProvider.checkUpdateOnDetailPage) {
-      prevApp = app;
-      getUpdate(app.app.id);
-    }
-    var trackOnly = app?.app.additionalSettings['trackOnly'] == true;
-
-    bool isVersionDetectionStandard =
-        app?.app.additionalSettings['versionDetection'] == true;
-
-    bool installedVersionIsEstimate = app?.app != null
-        ? isVersionPseudo(app!.app)
-        : false;
-
-    getInfoColumn() {
-      String versionLines = '';
-      bool installed = app?.app.installedVersion != null;
-      bool upToDate = app?.app.installedVersion == app?.app.latestVersion;
-      if (installed) {
-        versionLines = '${app?.app.installedVersion} ${AppLocalizations.of(context)!.installed}';
-        if (upToDate) {
-          versionLines += '/${AppLocalizations.of(context)!.latest}';
-        }
-      } else {
-        versionLines = AppLocalizations.of(context)!.notInstalled;
-      }
-      if (!upToDate) {
-        versionLines += '\n${app?.app.latestVersion} ${AppLocalizations.of(context)!.latest}';
-      }
-      String infoLines = AppLocalizations.of(context)!.lastUpdateCheckX(
+        String infoLines = AppLocalizations.of(context)!.lastUpdateCheckX(
         app?.app.lastUpdateCheck == null
             ? AppLocalizations.of(context)!.never
             : '${app?.app.lastUpdateCheck?.toLocal()}',
@@ -719,6 +693,65 @@ class _AppPageState extends State<AppPage> {
       ),
       bottomSheet: getBottomSheetMenu()
     );
+      },
+    );
+  }
+
+  Widget _buildSimpleIcon(AppInMemory app, double size) {
+    return Consumer<AppsProvider>(
+      builder: (context, appsProvider, child) {
+        final appInMemory = appsProvider.apps[app.app.id];
+
+        // If icon is already loaded, display it immediately
+        if (appInMemory?.icon != null) {
+          return Container(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(size * 0.125),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(size * 0.125),
+              child: Image.memory(
+                appInMemory!.icon!,
+                width: size,
+                height: size,
+              ),
+            ),
+          );
+        }
+
+        // Load icon asynchronously if not available
+        return FutureBuilder(
+          future: appsProvider.updateAppIcon(app.app.id),
+          builder: (context, snapshot) {
+            final updatedAppInMemory = appsProvider.apps[app.app.id];
+
+            if (updatedAppInMemory?.icon != null) {
+              return Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(size * 0.125),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(size * 0.125),
+                  child: Image.memory(
+                    updatedAppInMemory!.icon!,
+                    width: size,
+                    height: size,
+                  ),
+                ),
+              );
+            }
+
+            // Show fallback while loading or if failed
+            return _buildFallbackIcon(size);
+          },
+        );
+      },
+    );
+  }
 
   Widget _buildFallbackIcon(double size) {
     var settingsProvider = context.read<SettingsProvider>();
