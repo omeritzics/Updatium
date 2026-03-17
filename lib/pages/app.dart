@@ -59,10 +59,100 @@ class _AppPageState extends State<AppPage> {
     }
   }
 
+  Widget _buildSimpleIcon(AppInMemory app, double size) {
+    return Consumer<AppsProvider>(
+      builder: (context, appsProvider, child) {
+        final appInMemory = appsProvider.apps[app.app.id];
+
+        // If icon is already loaded, display it immediately
+        if (appInMemory?.icon != null) {
+          return Container(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(size * 0.125),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(size * 0.125),
+              child: Image.memory(
+                appInMemory!.icon!,
+                width: size,
+                height: size,
+              ),
+            ),
+          );
+        }
+
+        // Load icon asynchronously if not available
+        return FutureBuilder(
+          future: appsProvider.updateAppIcon(app.app.id),
+          builder: (context, snapshot) {
+            final updatedAppInMemory = appsProvider.apps[app.app.id];
+
+            if (updatedAppInMemory?.icon != null) {
+              return Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(size * 0.125),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(size * 0.125),
+                  child: Image.memory(
+                    updatedAppInMemory!.icon!,
+                    width: size,
+                    height: size,
+                  ),
+                ),
+              );
+            }
+
+            // Show fallback while loading or if failed
+            return _buildFallbackIcon(size);
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildFallbackIcon(double size) {
+    var settingsProvider = context.read<SettingsProvider>();
+    bool usePureBlack =
+        settingsProvider.useBlackTheme &&
+        Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size * 0.125),
+        color: usePureBlack
+            ? Colors.black.withValues(alpha: 0.2)
+            : Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(size * 0.125),
+        child: Icon(
+          Icons.apps,
+          size: size * 0.5,
+          color: usePureBlack
+              ? Colors.white.withValues(alpha: 0.6)
+              : Theme.of(
+                  context,
+                ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer3<SettingsProvider, AppsProvider, SourceProvider>(
-      builder: (context, settingsProvider, appsProvider, sourceProvider, child) {
+    return Consumer<SettingsProvider>(
+      builder: (context, settingsProvider, child) {
+        return Consumer<AppsProvider>(
+          builder: (context, appsProvider, child) {
+            return Consumer<SourceProvider>(
+              builder: (context, sourceProvider, child) {
         // Consistent spacing constants
         const height85 = SizedBox(height: 85);
 
@@ -693,93 +783,11 @@ class _AppPageState extends State<AppPage> {
       ),
       bottomSheet: getBottomSheetMenu()
     );
-      },
-    );
-  }
-
-  Widget _buildSimpleIcon(AppInMemory app, double size) {
-    return Consumer<AppsProvider>(
-      builder: (context, appsProvider, child) {
-        final appInMemory = appsProvider.apps[app.app.id];
-
-        // If icon is already loaded, display it immediately
-        if (appInMemory?.icon != null) {
-          return Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(size * 0.125),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(size * 0.125),
-              child: Image.memory(
-                appInMemory!.icon!,
-                width: size,
-                height: size,
-              ),
-            ),
-          );
-        }
-
-        // Load icon asynchronously if not available
-        return FutureBuilder(
-          future: appsProvider.updateAppIcon(app.app.id),
-          builder: (context, snapshot) {
-            final updatedAppInMemory = appsProvider.apps[app.app.id];
-
-            if (updatedAppInMemory?.icon != null) {
-              return Container(
-                width: size,
-                height: size,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(size * 0.125),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(size * 0.125),
-                  child: Image.memory(
-                    updatedAppInMemory!.icon!,
-                    width: size,
-                    height: size,
-                  ),
-                ),
-              );
-            }
-
-            // Show fallback while loading or if failed
-            return _buildFallbackIcon(size);
+              },
+            );
           },
         );
       },
-    );
-  }
-
-  Widget _buildFallbackIcon(double size) {
-    var settingsProvider = context.read<SettingsProvider>();
-    bool usePureBlack =
-        settingsProvider.useBlackTheme &&
-        Theme.of(context).brightness == Brightness.dark;
-
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(size * 0.125),
-        color: usePureBlack
-            ? Colors.black.withValues(alpha: 0.2)
-            : Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(size * 0.125),
-        child: Icon(
-          Icons.apps,
-          size: size * 0.5,
-          color: usePureBlack
-              ? Colors.white.withValues(alpha: 0.6)
-              : Theme.of(
-                  context,
-                ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
-        ),
-      ),
     );
   }
 }
