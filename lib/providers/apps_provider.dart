@@ -254,7 +254,7 @@ Future<String> checkPartialDownloadHashDynamic(
       return ab[0];
     }
   }
-  throw VersionError();
+  throw UnimplementedError('Version comparison failed');
 }
 
 Future<String> checkPartialDownloadHash(
@@ -301,7 +301,7 @@ void deleteFile(File file) {
     file.deleteSync(recursive: true);
   } on PathAccessException catch (e) {
     throw UpdatiumError(
-      "File deletion error"(e.path ?? "Unknown"),
+      "File deletion error: ${e.path ?? "Unknown"}",
     );
   }
 }
@@ -632,7 +632,7 @@ class AppsProvider with ChangeNotifier {
   Future<Object> downloadApp(
     App app,
     BuildContext? context, {
-    notificationsProvider? notificationsProvider,
+    NotificationsProvider? notificationsProvider,
     bool useExisting = true,
   }) async {
     var notifId = DownloadNotification(app.finalName, 0).id;
@@ -745,7 +745,7 @@ class AppsProvider with ChangeNotifier {
         }
 
         if (apks.isEmpty) {
-          throw APKError();
+          throw NoAPKError();
         }
 
         for (var i = 0; i < apks.length; i++) {
@@ -866,15 +866,15 @@ class AppsProvider with ChangeNotifier {
   }
 
   Future<void> waitForUserToReturnToForeground(BuildContext context) async {
-    notificationsProvider notificationsProvider = context
-        .read<notificationsProvider>();
+    NotificationsProvider notificationsProvider = context
+        .read<NotificationsProvider>();
     if (!isForeground) {
       await notificationsProvider.notify(
-        completeInstallationnotification,
+        completeInstallationNotification,
         cancelExisting: true,
       );
       while (await FGBGEvents.instance.stream.first != FGBGType.foreground) {}
-      await notificationsProvider.cancel(completeInstallationnotification.id);
+      await notificationsProvider.cancel(completeInstallationNotification.id);
     }
   }
 
@@ -1115,7 +1115,7 @@ class AppsProvider with ChangeNotifier {
           'placeholder',
         ].contains(getHost(appFileUrl.value)) &&
         context != null) {
-      if (!(settingsProvider.hideAPKOrigin"Warning") &&
+      if (!(settingsProvider.hideAPKOrigin) &&
           await showDialog(
                 // ignore: use_build_context_synchronously
                 context: context,
@@ -1146,7 +1146,7 @@ class AppsProvider with ChangeNotifier {
     bool useExisting = true,
   }) async {
     notificationsProvider =
-        notificationsProvider ?? context?.read<notificationsProvider>();
+        notificationsProvider ?? context?.read<NotificationsProvider>();
     List<String> appsToInstall = [];
     List<String> trackOnlyAppsToUpdate = [];
     // For all specified Apps, filter out those for which:
@@ -1263,11 +1263,11 @@ class AppsProvider with ChangeNotifier {
         if (willBeSilent && context == null) {
           if (!settingsProvider.useShizuku) {
             notificationsProvider?.notify(
-              SilentUpdateAttemptnotification([_apps[id]!.app], id: id.hashCode),
+              SilentUpdateAttemptNotification([_apps[id]!.app], id: id.hashCode),
             );
           } else {
             notificationsProvider?.notify(
-              SilentUpdatenotification(
+              SilentUpdateNotification(
                 [_apps[id]!.app],
                 sayInstalled,
                 id: id.hashCode,
@@ -1278,7 +1278,7 @@ class AppsProvider with ChangeNotifier {
         if (sayInstalled) {
           installedIds.add(id);
           // Dismiss the update notification since the app was successfully installed
-          notificationsProvider?.cancel(Updatenotification([]).id);
+          notificationsProvider?.cancel(UpdateNotification([]).id);
         }
       } finally {
         _apps[id]?.downloadProgress = null;
@@ -1311,7 +1311,7 @@ class AppsProvider with ChangeNotifier {
         willBeSilent = await canInstallSilently(_apps[id]!.app);
         if (!settingsProvider.useShizuku) {
           if (!(await settingsProvider.getInstallPermission(enforce: false))) {
-            throw UpdatiumError(""Cancel"led");
+            throw UpdatiumError("Cancelled");
           }
         } else {
           switch ((await ShizukuApkInstaller().checkPermission())!) {
@@ -1320,9 +1320,9 @@ class AppsProvider with ChangeNotifier {
             case 'old_shizuku':
               throw UpdatiumError("Shizuku version too old");
             case 'old_android_with_adb':
-              throw UpdatiumError("Shizuku version too old"AndroidWithADB);
+              throw UpdatiumError("Shizuku version too old - Android with ADB");
             case 'denied':
-              throw UpdatiumError(""Cancel"led");
+              throw UpdatiumError("Cancelled");
           }
         }
         if (!willBeSilent && context != null && !settingsProvider.useShizuku) {
@@ -1378,8 +1378,8 @@ class AppsProvider with ChangeNotifier {
     BuildContext context, {
     bool forceParallelDownloads = false,
   }) async {
-    notificationsProvider notificationsProvider = context
-        .read<notificationsProvider>();
+    NotificationsProvider notificationsProvider = context
+        .read<NotificationsProvider>();
     List<MapEntry<MapEntry<String, String>, App>> filesToDownload = [];
     for (var id in appIds) {
       if (_apps[id] == null) {
@@ -1759,9 +1759,8 @@ class AppsProvider with ChangeNotifier {
     );
     if (errors.isNotEmpty) {
       removeApps(errors.map((e) => e[0]).toList());
-      context.read<NotificationsProvider>().notify(
-        AppsRemovedNotification(errors.map((e) => [e[1], e[2]]).toList()),
-      );
+      // Note: Cannot send notification here without context
+      // This would need to be handled by the calling code
     }
     // Delete externally uninstalled Apps if needed
     if (removedAppIds.isNotEmpty) {
@@ -2102,9 +2101,9 @@ class AppsProvider with ChangeNotifier {
       bool remove = values['rmAppEntry'] == true || !showUninstallOption;
       if (uninstall) {
         for (var app in apps) {
-          if (_apps[app.id]?.installedVersion != null) {
+          if (_apps[app.id]?.app.installedVersion != null) {
             uninstallApp(app.id);
-            _apps[app.id]!.installedVersion = null;
+            _apps[app.id]!.app.installedVersion = null;
           }
         }
         await saveApps(apps, attemptToCorrectInstallStatus: false);

@@ -34,7 +34,7 @@ class NavigationPageItem {
   NavigationPageItem(this.title, this.icon, this.widget);
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<int> selectedIndexHistory = [];
   bool isReversing = false;
   int prevAppCount = -1;
@@ -46,19 +46,74 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    initDeepLinks();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      var sp = context.read<SettingsProvider>();
+
+      // Check if security disclaimer has been accepted
+      final disclaimerAccepted =
+          await SecurityDisclaimerScreen.isDisclaimerAccepted();
+      if (!disclaimerAccepted) {
+        final accepted = await Navigator.of(context).push<bool>(
+          MaterialPageRoute(
+            builder: (context) => const SecurityDisclaimerScreen(),
+          ),
+        );
+
+        // If user declined, exit the app
+        if (accepted != true) {
+          SystemNavigator.pop();
+          return;
+        }
+      }
+
+      if (!sp.googleVerificationWarningShown && DateTime.now().year == 2026) {
+        await showDialog(
+          context: context,
+          builder: (BuildContext ctx) {
+            return AlertDialog(
+              title: Text(AppLocalizations.of(context)!.note),
+              scrollable: true,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 20,
+                children: [
+                  Text(AppLocalizations.of(context)!.googleVerificationWarningP1),
+                  GestureDetector(
+                    onTap: () {
+                      launchUrlString(
+                        'https://keepandroidopen.org/',
+                        mode: LaunchMode.externalApplication,
+                      );
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.googleVerificationWarningP2,
+                      style: const TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Text(AppLocalizations.of(context)!.googleVerificationWarningP3),
+                ],
+              ),
+              actions: [
+                AppTextButton(
+                  onPressed: () {
+                    sp.googleVerificationWarningShown = true;
+                    Navigator.of(context).pop(null);
+                  },
+                  child: Text(AppLocalizations.of(context)!.ok),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _linkSubscription?.cancel();
-    _appLinks.dispose();
-  }
   late List<AnimationController> _iconControllers;
   late List<Animation<double>> _iconAnimations;
   bool _iconsInitialized = false;
