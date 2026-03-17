@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:updatium/services/github_star_prompt.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/generated/app_localizations.dart';
 
 void main() {
   group('GitHubStarPrompt Tests', () {
@@ -11,18 +11,19 @@ void main() {
       SharedPreferences.setMockInitialValues({});
     });
 
-    test('should set first launch date on first initialization', () async {
+    testWidgets('should set first launch date on first initialization', (tester) async {
       // Create a mock widget tree for context
       final testWidget = MaterialApp(home: Container());
       await tester.pumpWidget(testWidget);
 
-      await GitHubStarPrompt.initializeAndCheck(tester.context);
+      final context = tester.element(find.byType(Container));
+      await GitHubStarPrompt.initializeAndCheck(context);
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.containsKey('first_launch_date'), isTrue);
     });
 
-    test('should not show prompt before 7 days', () async {
+    testWidgets('should not show prompt before 7 days', (tester) async {
       // Set a first launch date 3 days ago
       final prefs = await SharedPreferences.getInstance();
       final threeDaysAgo = DateTime.now().subtract(const Duration(days: 3));
@@ -34,14 +35,15 @@ void main() {
       final testWidget = MaterialApp(home: Container());
       await tester.pumpWidget(testWidget);
 
-      await GitHubStarPrompt.initializeAndCheck(tester.context);
+      final context = tester.element(find.byType(Container));
+      await GitHubStarPrompt.initializeAndCheck(context);
       await tester.pump();
 
       // Dialog should not appear
       expect(find.byType(AlertDialog), findsNothing);
     });
 
-    test('should mark prompt as shown when user dismisses', () async {
+    testWidgets('should mark prompt as shown when user dismisses', (tester) async {
       // Set first launch date 8 days ago
       final prefs = await SharedPreferences.getInstance();
       final eightDaysAgo = DateTime.now().subtract(const Duration(days: 8));
@@ -53,15 +55,16 @@ void main() {
       final testWidget = MaterialApp(home: Container());
       await tester.pumpWidget(testWidget);
 
-      await GitHubStarPrompt.initializeAndCheck(tester.context);
+      final context = tester.element(find.byType(Container));
+      await GitHubStarPrompt.initializeAndCheck(context);
       await tester.pumpAndSettle();
 
       // Dialog should appear
       expect(find.byType(AlertDialog), findsOneWidget);
-      expect(find.text('githubStarPromptTitle'.tr()), findsOneWidget);
+      expect(find.text(AppLocalizations.of(context)!.githubStarPromptTitle), findsOneWidget);
 
       // Tap "Don't show again" button
-      final dontShowButton = find.text('githubStarPromptDontShowAgain'.tr());
+      final dontShowButton = find.text(AppLocalizations.of(context)!.githubStarPromptDontShowAgain);
       expect(dontShowButton, findsOneWidget);
       await tester.tap(dontShowButton);
       await tester.pumpAndSettle();
@@ -73,7 +76,7 @@ void main() {
       expect(prefs.getBool('has_shown_star_prompt'), isTrue);
     });
 
-    test('should reset correctly', () async {
+    testWidgets('should reset correctly', (tester) async {
       // Set some values
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt(
