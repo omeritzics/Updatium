@@ -12,6 +12,7 @@ import 'app_localizations_cs.dart';
 import 'app_localizations_da.dart';
 import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_eo.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_et.dart';
 import 'app_localizations_fa.dart';
@@ -127,7 +128,7 @@ abstract class AppLocalizations {
     Locale('da'),
     Locale('de'),
     Locale('en'),
-    Locale('en', 'EO'),
+    Locale('eo'),
     Locale('es'),
     Locale('et'),
     Locale('fa'),
@@ -2522,6 +2523,7 @@ class _AppLocalizationsDelegate
     'da',
     'de',
     'en',
+    'eo',
     'es',
     'et',
     'fa',
@@ -2558,14 +2560,6 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
 
   // Lookup logic when language+country codes are specified.
   switch (locale.languageCode) {
-    case 'en':
-      {
-        switch (locale.countryCode) {
-          case 'EO':
-            return AppLocalizationsEnEo();
-        }
-        break;
-      }
     case 'pt':
       {
         switch (locale.countryCode) {
@@ -2592,6 +2586,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'eo':
+      return AppLocalizationsEo();
     case 'es':
       return AppLocalizationsEs();
     case 'et':

@@ -72,6 +72,50 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var sp = context.read<SettingsProvider>();
 
+      // Sync local and device locale if needed
+      if (sp.prefs != null) {
+        final currentLocale = Localizations.localeOf(context);
+        List<Locale> supportedLocales = const [
+          Locale('en'),
+          Locale('zh'),
+          Locale('zh', 'Hant_TW'),
+          Locale('it'),
+          Locale('ja'),
+          Locale('he'),
+          Locale('ar'),
+          Locale('hu'),
+          Locale('de'),
+          Locale('fa'),
+          Locale('fr'),
+          Locale('es'),
+          Locale('pl'),
+          Locale('ru'),
+          Locale('bs'),
+          Locale('pt'),
+          Locale('pt', 'BR'),
+          Locale('cs'),
+          Locale('sv'),
+          Locale('nl'),
+          Locale('vi'),
+          Locale('tr'),
+          Locale('uk'),
+          Locale('da'),
+          Locale('et'),
+          Locale('eo'),
+          Locale('id'),
+          Locale('ko'),
+          Locale('ml'),
+          Locale('ca'),
+          Locale('gl'),
+        ];
+        
+        if (!supportedLocales.contains(currentLocale) ||
+            (sp.forcedLocale == null &&
+                Localizations.localeOf(context) != currentLocale)) {
+          sp.resetLocaleSafe(context);
+        }
+      }
+
       // Check if security disclaimer has been accepted
       final disclaimerAccepted =
           await SecurityDisclaimerScreen.isDisclaimerAccepted();

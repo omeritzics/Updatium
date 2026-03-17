@@ -45,7 +45,7 @@ List<Locale> supportedLocales = const [
   Locale('uk'),
   Locale('da'),
   Locale('et'),
-  Locale('en', 'EO'),
+  Locale('eo'),
   Locale('id'),
   Locale('ko'),
   Locale('ml'),
@@ -315,19 +315,10 @@ class _UpdatiumState extends State<Updatium> {
         }
       }
 
-      // Sync local and device locale if needed
-      final currentLocale = Localizations.localeOf(context);
-      if (!supportedLocales.contains(currentLocale) ||
-          (settingsProvider.forcedLocale == null &&
-              Localizations.localeOf(context) != currentLocale)) {
-        settingsProvider.resetLocaleSafe(context);
-      }
-    }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      notifs.checkLaunchByNotif();
-      GitHubStarPrompt.initializeAndCheck(context);
-    });
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifs.checkLaunchByNotif();
+        GitHubStarPrompt.initializeAndCheck(context);
+      });
 
     return WithForegroundTask(
       child: DynamicColorBuilder(
