@@ -34,7 +34,7 @@ class GeneratedFormTextField extends GeneratedFormItem {
 
   GeneratedFormTextField(
     super.key, {
-    super.label,
+    String super.label = 'Input',
     super.belowWidgets,
     String super.defaultValue = '',
     List<String? Function(String? value)> super.additionalValidators = const [],
@@ -76,7 +76,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
   GeneratedFormDropdown(
     super.key,
     this.opts, {
-    super.label,
+    String super.label = 'Input',
     super.belowWidgets,
     String super.defaultValue = '',
     this.disabledOptKeys,
@@ -111,7 +111,7 @@ class GeneratedFormSwitch extends GeneratedFormItem {
 
   GeneratedFormSwitch(
     super.key, {
-    super.label,
+    String super.label = 'Input',
     super.belowWidgets,
     bool super.defaultValue = false,
     bool disabled = false,
@@ -144,7 +144,7 @@ class GeneratedFormTagInput extends GeneratedFormItem {
   late bool showLabelWhenNotEmpty;
   GeneratedFormTagInput(
     super.key, {
-    super.label,
+    String super.label = 'Input',
     super.belowWidgets,
     Map<String, MapEntry<int, bool>> super.defaultValue = const {},
     List<String? Function(Map<String, MapEntry<int, bool>> value)>
@@ -216,7 +216,7 @@ class GeneratedFormSubForm extends GeneratedFormItem {
   GeneratedFormSubForm(
     super.key,
     this.items, {
-    super.label,
+    String super.label = 'Input',
     super.belowWidgets,
     super.defaultValue = const [],
   });
