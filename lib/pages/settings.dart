@@ -2,6 +2,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:updatium/components/button_helpers.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
@@ -17,6 +18,49 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:updatium/generated/app_localizations.dart';
+
+// Helper function to get full language names
+String getLanguageName(Locale locale) {
+  final Map<String, String> languageNames = {
+    'ar': 'العربية',
+    'bs': 'Bosanski',
+    'ca': 'Català',
+    'cs': 'Čeština',
+    'da': 'Dansk',
+    'de': 'Deutsch',
+    'en': 'English',
+    'es': 'Español',
+    'et': 'Eesti',
+    'fa': 'فارسی',
+    'fr': 'Français',
+    'gl': 'Galego',
+    'he': 'עברית',
+    'hu': 'Magyar',
+    'id': 'Bahasa Indonesia',
+    'it': 'Italiano',
+    'ja': '日本語',
+    'ko': '한국어',
+    'ml': 'മലയാളം',
+    'nl': 'Nederlands',
+    'eo': 'Esperanto',
+    'pl': 'Polski',
+    'pt': 'Português',
+    'pt_BR': 'Português (Brasil)',
+    'ru': 'Русский',
+    'sv': 'Svenska',
+    'tr': 'Türkçe',
+    'uk': 'Українська',
+    'vi': 'Tiếng Việt',
+    'zh': '中文',
+    'zh_Hant_TW': '中文 (繁體)',
+  };
+  
+  final key = locale.countryCode != null 
+      ? '${locale.languageCode}_${locale.countryCode}'
+      : locale.languageCode;
+  
+  return languageNames[key] ?? locale.languageCode.toUpperCase();
+}
 
 // Spacing constants
 const height8 = SizedBox(height: 8);
@@ -347,12 +391,13 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (context, controller, child) {
         String selectedValue = settingsProvider.forcedLocale == null
             ? AppLocalizations.of(context)!.followSystem
-            : supportedLocales
+            : getLanguageName(
+                supportedLocales
                   .firstWhere(
-                    (e) => e.languageCode == settingsProvider.forcedLocale,
+                    (e) => e.languageCode == settingsProvider.forcedLocale?.languageCode,
                     orElse: () => supportedLocales.first,
                   )
-                  .languageCode;
+                );
 
         return TextField(
           controller: TextEditingController(text: selectedValue),
@@ -382,10 +427,10 @@ class _SettingsPageState extends State<SettingsPage> {
         ...supportedLocales.map(
           (e) => MenuItemButton(
             onPressed: () {
-              settingsProvider.forcedLocale = Locale(e.languageCode);
+              settingsProvider.forcedLocale = Locale(e.languageCode, e.countryCode);
               // context.setLocale(e.languageCode); // Removed - not available in Flutter localization
             },
-            child: Text(e.languageCode),
+            child: Text(getLanguageName(e)),
           ),
         ),
       ],

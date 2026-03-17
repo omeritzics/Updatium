@@ -75,7 +75,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               .then((errors) {
                 if (errors.isEmpty) {
                   showMessage(
-                    'Imported ${urls.length} apps',
+                    AppLocalizations.of(context)!.importedXOfYApps('${urls.length}', '${urls.length}'),
                     context,
                   );
                 } else {
@@ -236,7 +236,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 if (errors.isEmpty) {
                   // ignore: use_build_context_synchronously
                   showMessage(
-                    'Imported ${selectedUrls.length} apps',
+                    AppLocalizations.of(context)!.importedXOfYApps('${selectedUrls.length}', '${selectedUrls.length}'),
                     context,
                   );
                 } else {
@@ -307,7 +307,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   button: true,
                                   label: AppLocalizations.of(context)!.pickExportDir,
                                   hint:
-                                      'Choose a directory to export your apps and settings',
+                                      AppLocalizations.of(context)!.pickExportDir,
                                   excludeSemantics: true,
                                   child: FilledButton.icon(
                                     onPressed:
@@ -331,8 +331,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   button: true,
                                   label: AppLocalizations.of(context)!.updatiumExport,
                                   hint: snapshot.data == null
-                                      ? 'Set export directory first'
-                                      : 'Export all your apps and settings to file',
+                                      ? AppLocalizations.of(context)!.pickExportDir
+                                      : AppLocalizations.of(context)!.updatiumExport,
                                   excludeSemantics: true,
                                   child: FilledButton.icon(
                                     onPressed:
@@ -359,7 +359,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   button: true,
                                   label: AppLocalizations.of(context)!.updatiumImport,
                                   hint:
-                                      'Import apps and settings from a backup file',
+                                      AppLocalizations.of(context)!.updatiumImport,
                                   excludeSemantics: true,
                                   child: FilledButton.icon(
                                     onPressed: importInProgress
@@ -441,7 +441,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           button: true,
                           label: AppLocalizations.of(context)!.importFromURLList,
                           hint:
-                              'Import multiple apps by entering their URLs in a list',
+                              AppLocalizations.of(context)!.importFromURLList,
                           excludeSemantics: true,
                           child: FilledButton.icon(
                             onPressed: importInProgress ? null : urlListImport,
@@ -453,7 +453,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         Semantics(
                           button: true,
                           label: AppLocalizations.of(context)!.importFromURLsInFile,
-                          hint: 'Import apps by reading URLs from a text file',
+                          hint: AppLocalizations.of(context)!.importFromURLsInFile,
                           excludeSemantics: true,
                           child: FilledButton.icon(
                             onPressed: importInProgress ? null : runUrlImport,
@@ -525,7 +525,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Imported ${(widget.urlsLength - widget.errors.length)} of ${widget.urlsLength} apps',
+            AppLocalizations.of(context)!.importedXOfYApps('${widget.urlsLength - widget.errors.length}', '${widget.urlsLength}'),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 16),
@@ -869,7 +869,7 @@ class _SelectionModalState extends State<SelectionModal> {
           child: Text(
             widget.onlyOneSelectionAllowed
                 ? AppLocalizations.of(context)!.pick
-                : 'Select ${entrySelections.values.where((b) => b).length} items',
+                : AppLocalizations.of(context)!.pick,
           ),
         ),
       ],
