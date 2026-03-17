@@ -1430,7 +1430,7 @@ class AppsPageState extends State<AppsPage> {
           button: true,
           label: AppLocalizations.of(context)!.removeSelectedApps,
           hint: selectedAppIds.isEmpty
-              ? AppLocalizations.of(context)!.noApps,
+              ? AppLocalizations.of(context)!.noAppsForFilter
               : '${AppLocalizations.of(context)!.removeSelectedApps}',
           child: IconButton(
             visualDensity: VisualDensity.compact,
