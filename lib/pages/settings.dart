@@ -555,7 +555,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         children: [
                                           Flexible(
                                             child: Text(
-                                              'Use a foreground service for update checking (more reliable, consumes more power)',
+                                              AppLocalizations.of(context)!.foregroundServiceExplanation,
                                             ),
                                           ),
                                           Switch(
@@ -636,7 +636,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               children: [
                                                 Flexible(
                                                   child: Text(
-                                                    'Background updates while charging only',
+                                                    AppLocalizations.of(context)!.bgUpdatesWhileChargingOnly,
                                                   ),
                                                 ),
                                                 Switch(
@@ -1286,7 +1286,7 @@ class _LogsDialogState extends State<LogsDialog> {
                 ),
                 readOnly: true,
                 decoration: InputDecoration(
-                  labelText: 'Filter days',
+                  labelText: AppLocalizations.of(context)!.filter,
                   filled: true,
                   suffixIcon: const Icon(Icons.arrow_drop_down),
                 ),

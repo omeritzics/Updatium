@@ -274,12 +274,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 context: context,
                 builder: (BuildContext ctx) {
                   return GeneratedFormModal(
-                    title: 'Import ${action == 'app' ? 'App' : 'Apps'}',
+                    title: AppLocalizations.of(context)!.importX(action == 'app' ? AppLocalizations.of(context)!.app : AppLocalizations.of(context)!.appsString),
                     items: const [],
                     additionalWidgets: [
                       ExpansionTile(
                         leading: const Icon(Icons.info_outlined),
-                        title: const Text('Raw JSON'),
+                        title: Text('JSON'),
                         children: [
                           Text(
                             dataStr,
@@ -301,7 +301,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             );
             // ignore: use_build_context_synchronously
             showMessage(
-              'Imported ${result.key.length} apps',
+              AppLocalizations.of(context)!.importedXOfYApps('${result.key.length}', '${result.key.length}'),
               context,
             );
           }
@@ -413,9 +413,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               .widget,
         ),
         bottomNavigationBar: Semantics(
-          label: 'Main navigation',
+          label: 'Navigation',
           hint:
-              'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
+              'Navigate between ${AppLocalizations.of(context)!.appsString.toLowerCase()}, ${settingsProvider.safeMode ? "import/export" : "add app"}, and ${AppLocalizations.of(context)!.settings.toLowerCase()}',
           child: NavigationBar(
             selectedIndex: selectedIndexHistory.isEmpty
                 ? 0

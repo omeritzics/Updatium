@@ -1415,8 +1415,8 @@ class AppsPageState extends State<AppsPage> {
               ? AppLocalizations.of(context)!.installUpdateApps
               : AppLocalizations.of(context)!.installUpdateSelectedApps,
           hint: selectedAppIds.isEmpty
-              ? 'Install or update all apps'
-              : 'Install or update ${selectedAppIds.length} selected apps',
+              ? AppLocalizations.of(context)!.installUpdateApps
+              : '${AppLocalizations.of(context)!.installUpdateSelectedApps}',
           child: IconButton(
             visualDensity: VisualDensity.compact,
             onPressed: getMassObtainFunction(),
@@ -1430,8 +1430,8 @@ class AppsPageState extends State<AppsPage> {
           button: true,
           label: AppLocalizations.of(context)!.removeSelectedApps,
           hint: selectedAppIds.isEmpty
-              ? 'No apps selected'
-              : 'Remove ${selectedAppIds.length} selected apps',
+              ? AppLocalizations.of(context)!.noApps,
+              : '${AppLocalizations.of(context)!.removeSelectedApps}',
           child: IconButton(
             visualDensity: VisualDensity.compact,
             onPressed: selectedAppIds.isEmpty
