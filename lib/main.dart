@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:updatium/generated/app_localizations.dart';
 import 'package:updatium/pages/home.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -852,7 +853,7 @@ class _UpdatiumState extends State<Updatium> {
           return MaterialApp(
             title: 'Updatium',
             localizationsDelegates: const [
-              // AppLocalizations.delegate removed
+              AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
