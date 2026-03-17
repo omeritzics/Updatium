@@ -1582,24 +1582,24 @@ class AppsPageState extends State<AppsPage> {
 
           if (screenWidth < 360) {
             // Very small screens (e.g., small phones)
-            maxCrossAxisExtent = 120;
-            childAspectRatio = 1.1;
-          } else if (screenWidth < 480) {
-            // Small screens (e.g., phones)
             maxCrossAxisExtent = 140;
             childAspectRatio = 1.0;
-          } else if (screenWidth < 768) {
-            // Medium screens (e.g., large phones, small tablets)
+          } else if (screenWidth < 480) {
+            // Small screens (e.g., phones)
             maxCrossAxisExtent = 160;
             childAspectRatio = 0.95;
-          } else if (screenWidth < 1024) {
-            // Large screens (e.g., tablets)
+          } else if (screenWidth < 768) {
+            // Medium screens (e.g., large phones, small tablets)
             maxCrossAxisExtent = 180;
             childAspectRatio = 0.9;
-          } else {
-            // Very large screens (e.g., desktops, large tablets)
+          } else if (screenWidth < 1024) {
+            // Large screens (e.g., tablets)
             maxCrossAxisExtent = 200;
             childAspectRatio = 0.85;
+          } else {
+            // Very large screens (e.g., desktops, large tablets)
+            maxCrossAxisExtent = 220;
+            childAspectRatio = 0.8;
           }
 
           return SliverGrid(
