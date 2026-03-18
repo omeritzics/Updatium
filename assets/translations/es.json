@@ -28,7 +28,7 @@
     "githubStarredRepos": "repositorios favoritos en GitHub",
     "uname": "Nombre de usuario",
     "wrongArgNum": "Número de argumentos provistos inválido",
-    "yaraMalwareScanner": "Escaneo Automático de Malware (Reglos Estilo YARA)",
+    "yaraMalwareScanner": "Escaneo Automático de Malware (Reglas Estilo YARA)",
     "yaraScannerDescription": "Detección básica de malware usando reglas de coincidencia de cadenas estilo YARA para protección contra amenazas conocidas. Esta implementación proporciona capacidades fundamentales de coincidencia de patrones. La responsabilidad del uso seguro de la aplicación recae finalmente en el usuario.",
     "securitySettings": "Configuración de Seguridad",
     "enableAutoScan": "Activar Escaneo Automático",
