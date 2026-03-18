@@ -1,6 +1,5 @@
 {
   "@@locale": "cs",
-
   "invalidURLForSource": "Žádná platná adresa URL aplikace {}",
   "noReleaseFound": "Nebyla nalezena odpovídající verze",
   "noVersionFound": "Nelze určit verzi vydání",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "Odstranit vybrané aplikace",
   "updateX": "Aktualizovat {}",
   "installX": "Instalovat {}",
-  "markXTrackOnlyAsUpdated": "Označit aplikaci {}
-(pouze sledování)
-jako aktualizovanou",
+  "markXTrackOnlyAsUpdated": "Označit aplikaci {}\\n(pouze sledování)\\njako aktualizovanou",
   "changeX": "Změnit {}",
   "installUpdateApps": "Instalovat/aktualizovat aplikace",
   "installUpdateSelectedApps": "Instalovat/aktualizovat vybrané aplikace",
@@ -79,9 +76,7 @@ jako aktualizovanou",
   "pinToTop": "Připnout nahoru",
   "unpinFromTop": "Odepnout shora",
   "resetInstallStatusForSelectedAppsQuestion": "Obnovit stav instalace vybraných aplikací?",
-  "installStatusOfXWillBeResetExplanation": "Stav instalace vybraných aplikací bude resetován.
-
-To může být užitečné, pokud je verze aplikace zobrazená v aplikaci Updatium nesprávná z důvodu neúspěšných aktualizací nebo jiných problémů.",
+  "installStatusOfXWillBeResetExplanation": "Stav instalace vybraných aplikací bude resetován.\\n\\nTo může být užitečné, pokud je verze aplikace zobrazená v aplikaci Updatium nesprávná z důvodu neúspěšných aktualizací nebo jiných problémů.",
   "customLinkMessage": "Tyto odkazy fungují na zařízeních s nainstalovaným Updatium",
   "shareAppConfigLinks": "Sdílet konfiguraci aplikace jako odkaz HTML",
   "shareSelectedAppURLs": "Sdílet adresy URL vybraných aplikací",
@@ -113,11 +108,7 @@ To může být užitečné, pokud je verze aplikace zobrazená v aplikaci Updati
   "searchX": "Vyhledávání {}",
   "noResults": "Nebyly nalezeny žádné výsledky",
   "importX": "Importovat {}",
-  "importedAppsIdDisclaimer": "Importované aplikace mohou být nesprávně zobrazeny jako „nenainstalované“.
-Chcete-li to opravit, nainstalujte je znovu prostřednictvím aplikace Updatium.
-Nemá vliv na data aplikací.
-
-Ovlivňuje pouze způsoby importu URL a třetích stran.",
+  "importedAppsIdDisclaimer": "Importované aplikace mohou být nesprávně zobrazeny jako „nenainstalované“.\\nChcete-li to opravit, nainstalujte je znovu prostřednictvím aplikace Updatium.\\nNemá vliv na data aplikací.\\n\\nOvlivňuje pouze způsoby importu URL a třetích stran.",
   "importErrors": "Chyba importu",
   "importedXOfYApps": "Importováno {} z {} aplikací.",
   "followingURLsHadErrors": "U následujících adres došlo k chybám:",
@@ -362,23 +353,15 @@ Ovlivňuje pouze způsoby importu URL a třetích stran.",
   "GHReqPrefix": "instance 'sky22333/hubproxy' pro požadavky GitHubu",
   "includeZips": "Zahrnout soubory ZIP",
   "zippedApkFilterRegEx": "Filtrování souborů APK uvnitř ZIP",
-  "googleVerificationWarningP1": "Společnost Google oznámila, že počínaje rokem 2026 / 2027 budou všechny aplikace na \"certifikovaných\" zařízeních pro Android vyžadovat, aby vývojář předložil osobní údaje o identitě přímo společnosti Google.
-
-Po této době, Updatium může přestat pracovat na certifikovaných Android zařízeních.",
+  "googleVerificationWarningP1": "Společnost Google oznámila, že počínaje rokem 2026 / 2027 budou všechny aplikace na \\\"certifikovaných\\\" zařízeních pro Android vyžadovat, aby vývojář předložil osobní údaje o identitě přímo společnosti Google.\\n\\nPo této době, Updatium může přestat pracovat na certifikovaných Android zařízeních.",
   "googleVerificationWarningP2": "Další informace získáte na adrese https: / / keepandroidopen.org.",
-  "googleVerificationWarningP3": "Všimněte si, že v krátkodobém horizontu může být i nadále možné instalovat \"neověřené\" (nevyhovující) aplikace prostřednictvím procesu \"pokročilého toku\", který Google slíbil implementovat po širokém odporu k jejich oznámení, ale neupřesnili, jak by to mělo fungovat, takže není jasné, zda bude skutečně zachovávat uživatelskou svobodu jakýmkoli praktickým způsobem.
-
-V každém případě je krok společnosti Google významným krokem ke konci volného, všeobecného výpočetní techniky pro jednotlivce.
-
-Necertifikované Osy, jako je GrapheneOS, by tím neměly být ovlivněny, pokud budou nadále existovat.",
+  "googleVerificationWarningP3": "Všimněte si, že v krátkodobém horizontu může být i nadále možné instalovat \\\"neověřené\\\" (nevyhovující) aplikace prostřednictvím procesu \\\"pokročilého toku\\\", který Google slíbil implementovat po širokém odporu k jejich oznámení, ale neupřesnili, jak by to mělo fungovat, takže není jasné, zda bude skutečně zachovávat uživatelskou svobodu jakýmkoli praktickým způsobem.\\n\\nV každém případě je krok společnosti Google významným krokem ke konci volného, všeobecného výpočetní techniky pro jednotlivce.\\n\\nNecertifikované Osy, jako je GrapheneOS, by tím neměly být ovlivněny, pokud budou nadále existovat.",
   "multipleSigners": "Několik signers",
   "securityDisclaimerTitle": "Bezpečnostní a Právní Zřeknutí se Odpovědnosti",
   "license": "Licence",
   "licenseText": "Tato aplikace je distribuována pod licencí GPL v3.",
   "disclaimer": "Zřeknutí se odpovědnosti",
-  "disclaimerText": "Tato aplikace nedistribuuje, nehostuje ani neověřuje žádné externí aplikace. Uživatel nese plnou odpovědnost za bezpečnost a legality jakéhokoli softwaru instalovaného prostřednictvím tohoto nástroje.
-
-https://github.com/omeritzics/Updatium je jediné oficiální místo pro stažení Updatia - důrazně se nedoporučuje stahovat jej z jiných míst, protože stahování z neoficiálních zdrojů není bezpečné.",
+  "disclaimerText": "Tato aplikace nedistribuuje, nehostuje ani neověřuje žádné externí aplikace. Uživatel nese plnou odpovědnost za bezpečnost a legality jakéhokoli softwaru instalovaného prostřednictvím tohoto nástroje.\\n\\nhttps://github.com/omeritzics/Updatium je jediné oficiální místo pro stažení Updatia - důrazně se nedoporučuje stahovat jej z jiných míst, protože stahování z neoficiálních zdrojů není bezpečné.",
   "privacy": "Soukromí",
   "privacyText": "Tato aplikace je zaměřena na soukromí a nesbírá osobní údaje.",
   "acceptAndContinue": "Přijmout a pokračovat",
@@ -387,13 +370,12 @@ https://github.com/omeritzics/Updatium je jediné oficiální místo pro stažen
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "Aplikace",
   "@apps": {
     "plural": {
       "one": "{} aplikace",
       "few": "{} aplikace",
-      "other": "{} aplikací",
+      "other": "{} aplikací"
     },
     "placeholders": {
       "count": {
@@ -401,12 +383,11 @@ https://github.com/omeritzics/Updatium je jediné oficiální místo pro stažen
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "{} APK",
-      "other": "{} APK",
+      "other": "{} APK"
     },
     "placeholders": {
       "count": {
@@ -414,13 +395,12 @@ https://github.com/omeritzics/Updatium je jediné oficiální místo pro stažen
       }
     }
   },
-
   "minute": "{} minut",
   "@minute": {
     "plural": {
       "one": "{} minuta",
       "few": "{} minuty",
-      "other": "{} minut",
+      "other": "{} minut"
     },
     "placeholders": {
       "count": {
@@ -428,13 +408,12 @@ https://github.com/omeritzics/Updatium je jediné oficiální místo pro stažen
       }
     }
   },
-
   "hour": "{} hodin",
   "@hour": {
     "plural": {
       "one": "{} hodina",
       "few": "{} hodiny",
-      "other": "{} hodin",
+      "other": "{} hodin"
     },
     "placeholders": {
       "count": {
@@ -442,13 +421,12 @@ https://github.com/omeritzics/Updatium je jediné oficiální místo pro stažen
       }
     }
   },
-
   "day": "{} dní",
   "@day": {
     "plural": {
       "one": "{} den",
       "few": "{} dny",
-      "other": "{} dní",
+      "other": "{} dní"
     },
     "placeholders": {
       "count": {

@@ -1,6 +1,5 @@
 {
   "@@locale": "et",
-
   "invalidURLForSource": "Pole kehtiv {} äpi URL",
   "noReleaseFound": "Sobivat väljaannet ei leitud",
   "noVersionFound": "Ei suutnud tuvastada väljaande versiooni",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "Eemalda valitud äpid",
   "updateX": "Uuenda {}",
   "installX": "Installi {}",
-  "markXTrackOnlyAsUpdated": "Märgi {}
-(ainult jälgimine)
-uuendatuks",
+  "markXTrackOnlyAsUpdated": "Märgi {}\\n(ainult jälgimine)\\nuuendatuks",
   "changeX": "Muuda {}",
   "installUpdateApps": "Installi/uuenda äpid",
   "installUpdateSelectedApps": "Installi/uuenda valitud äpid",
@@ -79,9 +76,7 @@ uuendatuks",
   "pinToTop": "Kinnita üles",
   "unpinFromTop": "Eemalda kinnitus ülevalt",
   "resetInstallStatusForSelectedAppsQuestion": "Lähtesta valitud äpide installimise olek?",
-  "installStatusOfXWillBeResetExplanation": "Kõikide valitud äpide installimise olek lähtestatakse.
-
-See võib aidata, kui Updatiumis näidatav äpi versioon on vale nurkunud uuenduste või muude probleemide tõttu.",
+  "installStatusOfXWillBeResetExplanation": "Kõikide valitud äpide installimise olek lähtestatakse.\\n\\nSee võib aidata, kui Updatiumis näidatav äpi versioon on vale nurkunud uuenduste või muude probleemide tõttu.",
   "customLinkMessage": "Need lingid töötavad seadmetel, kuhu on installitud Updatium",
   "shareAppConfigLinks": "Jaga äpi konfiguratsiooni HTML-lingina",
   "shareSelectedAppURLs": "Jaga valitud äpide URL-e",
@@ -113,11 +108,7 @@ See võib aidata, kui Updatiumis näidatav äpi versioon on vale nurkunud uuendu
   "searchX": "Otsi {}",
   "noResults": "Tulemusi ei leitud",
   "importX": "Impordi {}",
-  "importedAppsIdDisclaimer": "Imporditud äpid võivad valesti näidata kui \"pole installitud\".
-Selle parandamiseks installige need uuesti Updatiumi kaudu.
-See ei tohiks mõjutada äpi andmeid.
-
-Mõjutab ainult URL- ja kolmanda osapoole importimeetodeid.",
+  "importedAppsIdDisclaimer": "Imporditud äpid võivad valesti näidata kui \\\"pole installitud\\\".\\nSelle parandamiseks installige need uuesti Updatiumi kaudu.\\nSee ei tohiks mõjutada äpi andmeid.\\n\\nMõjutab ainult URL- ja kolmanda osapoole importimeetodeid.",
   "importErrors": "Importimisvead",
   "importedXOfYApps": "{} / {} äpi imporditud.",
   "followingURLsHadErrors": "Järgmistel URL-idel olid vead:",
@@ -288,7 +279,7 @@ Mõjutab ainult URL- ja kolmanda osapoole importimeetodeid.",
   "autoSelectHighestVersionCode": "Automaatselt vali kõrgeima versioonikoodiga APK",
   "versionExtractionRegEx": "Versiooni stringi eraldamise RegEx",
   "trimVersionString": "Kärbi versiooni stringi RegEx-iga",
-  "matchGroupToUseForX": "Kasutatav vaste grupp \"{}\" jaoks",
+  "matchGroupToUseForX": "Kasutatav vaste grupp \\\"{}\\\" jaoks",
   "matchGroupToUse": "Kasutatav vaste grupp versiooni stringi eraldamise RegEx-ile",
   "highlightTouchTargets": "Tõsta vähem ilmsed puutepunktid esile",
   "pickExportDir": "Vali ekspordi kataloog",
@@ -336,7 +327,7 @@ Mõjutab ainult URL- ja kolmanda osapoole importimeetodeid.",
   "latest": "Viimane",
   "invertRegEx": "Pööra regulaaravaldis ümber",
   "note": "Märkus",
-  "selfHostedNote": "\"{}\" rippmenüüd saab kasutada iseseisvate/kohandatud allikate instantsidele juurdepääsuks.",
+  "selfHostedNote": "\\\"{}\\\" rippmenüüd saab kasutada iseseisvate/kohandatud allikate instantsidele juurdepääsuks.",
   "badDownload": "APK-d ei suudetud parsida (ühildumatu või osaline allalaadimine)",
   "beforeNewInstallsShareToAppVerifier": "Jaga uusi äppe AppVerifier-iga (kui saadaval)",
   "appVerifierInstructionToast": "Jaga AppVerifier-iga, naaske siia, kui olete valmis.",
@@ -353,8 +344,8 @@ Mõjutab ainult URL- ja kolmanda osapoole importimeetodeid.",
   "sortMethod": "Sortimismeetod",
   "welcome": "Tere tulemast",
   "documentationLinksNote": "Allpool lingitud Updatiumi GitHub leht sisaldab linke videotele, artiklitele, aruteludele ja muudele ressurssidele, mis aitavad teil mõista, kuidas rakendust kasutada.",
-  "batteryOptimizationNote": "Pange tähele, et taustalised allalaadimised võivad töötada usaldusväärsemalt, kui lülitate Updatiumi seadetes üle \"taustateenusele\" ja/või keelate Updatiumile oma operatsioonisüsteemi seadetes aku optimeerimine.",
-  "fileDeletionError": "Faili kustutamine ebaõnnestus (proovige kustutada käsitsi ja proovige uuesti): \"{}\"",
+  "batteryOptimizationNote": "Pange tähele, et taustalised allalaadimised võivad töötada usaldusväärsemalt, kui lülitate Updatiumi seadetes üle \\\"taustateenusele\\\" ja/või keelate Updatiumile oma operatsioonisüsteemi seadetes aku optimeerimine.",
+  "fileDeletionError": "Faili kustutamine ebaõnnestus (proovige kustutada käsitsi ja proovige uuesti): \\\"{}\\\"",
   "foregroundService": "Updatiumi taustateenus",
   "foregroundServiceExplanation": "Kasuta taustateenust uuenduste kontrollimiseks (usaldusväärsem, tarbib rohkem energiat)",
   "fgServiceNotice": "See teavitus on vajalik taustauuenduste kontrollimiseks (seda saab peita operatsioonisüsteemi seadetes)",
@@ -362,23 +353,15 @@ Mõjutab ainult URL- ja kolmanda osapoole importimeetodeid.",
   "GHReqPrefix": "'sky22333/hubproxy' instants GitHub päringute jaoks",
   "includeZips": "Kaasa ZIP failid",
   "zippedApkFilterRegEx": "Filtreeri APK-sid ZIP-i sees",
-  "googleVerificationWarningP1": "Google on teatanud, et alates 2026./2027. aastast vajavad kõik \"sertifitseeritud\" Androidi seadmed, et arendaja esitaks isiklikud identiteediandmed otse Google'le.
-
-Pärast seda võib Updatium lõpetada töötamise sertifitseeritud Androidi seadmetel.",
+  "googleVerificationWarningP1": "Google on teatanud, et alates 2026./2027. aastast vajavad kõik \\\"sertifitseeritud\\\" Androidi seadmed, et arendaja esitaks isiklikud identiteediandmed otse Google'le.\\n\\nPärast seda võib Updatium lõpetada töötamise sertifitseeritud Androidi seadmetel.",
   "googleVerificationWarningP2": "Lisateabe saamiseks minge aadressile https://keepandroidopen.org/.",
-  "googleVerificationWarningP3": "Pange tähele, et lühikesel tähtajal võib olla võimalik installida \"kinnitamata\" (mittesobivad) äpid \"täiustatud protsessi\" kaudu, mille Google on lubanud implementeerida pärast laia vastukaja oma teadaandele, kuid nad ei ole üksikasjaliselt kirjeldanud, kuidas see töötab, mistõttu on selge, kas see tõesti säilitab kasutajate vabadused praktilises mõttes.
-
-Igatahes, Google'i samm on oluline samm vaba üldotstarbelise arvutamise lõpule füüsiliste isikute jaoks.
-
-Mitte-sertifitseeritud operatsioonisüsteemid, nagu GrapheneOS, peaksid jääda mõjutamata niikaua kui neil on lubatud olemas olla.",
+  "googleVerificationWarningP3": "Pange tähele, et lühikesel tähtajal võib olla võimalik installida \\\"kinnitamata\\\" (mittesobivad) äpid \\\"täiustatud protsessi\\\" kaudu, mille Google on lubanud implementeerida pärast laia vastukaja oma teadaandele, kuid nad ei ole üksikasjaliselt kirjeldanud, kuidas see töötab, mistõttu on selge, kas see tõesti säilitab kasutajate vabadused praktilises mõttes.\\n\\nIgatahes, Google'i samm on oluline samm vaba üldotstarbelise arvutamise lõpule füüsiliste isikute jaoks.\\n\\nMitte-sertifitseeritud operatsioonisüsteemid, nagu GrapheneOS, peaksid jääda mõjutamata niikaua kui neil on lubatud olemas olla.",
   "multipleSigners": "Mitu allkirjastajat",
   "securityDisclaimerTitle": "Turvalisuse ja juriidiline lahtiütlus",
   "license": "Litsents",
   "licenseText": "See rakendus levitatakse GPL v3 litsentsi alusel.",
   "disclaimer": "Lahtiütlus",
-  "disclaimerText": "See rakendus ei levita, ei majuta ega kinnita ühtegi välist rakendust. Kasutaja kannab täielikut vastutust kõigi selle tööriistaga installitud tarkvara turvalisuse ja seaduslikkuse eest.
-
-https://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadimiseks - on tugevasti soovitatud mitte alla laadida teist kohtadest, kuna allalaadimine mitteametlikelt allikatest ei ole turvaline.",
+  "disclaimerText": "See rakendus ei levita, ei majuta ega kinnita ühtegi välist rakendust. Kasutaja kannab täielikut vastutust kõigi selle tööriistaga installitud tarkvara turvalisuse ja seaduslikkuse eest.\\n\\nhttps://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadimiseks - on tugevasti soovitatud mitte alla laadida teist kohtadest, kuna allalaadimine mitteametlikelt allikatest ei ole turvaline.",
   "privacy": "Privaatsus",
   "privacyText": "See rakendus on privaatsuskeskne ja ei kogu isiklikke andmeid.",
   "acceptAndContinue": "Nõustu & Jätka",
@@ -387,12 +370,11 @@ https://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadi
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "Äpid",
   "@apps": {
     "plural": {
       "one": "{} Äpp",
-      "other": "{} Äppi",
+      "other": "{} Äppi"
     },
     "placeholders": {
       "count": {
@@ -400,12 +382,11 @@ https://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadi
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "{} APK",
-      "other": "{} APK-d",
+      "other": "{} APK-d"
     },
     "placeholders": {
       "count": {
@@ -413,12 +394,11 @@ https://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadi
       }
     }
   },
-
   "minute": "{} minutit",
   "@minute": {
     "plural": {
       "one": "{} minut",
-      "other": "{} minutit",
+      "other": "{} minutit"
     },
     "placeholders": {
       "count": {
@@ -426,12 +406,11 @@ https://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadi
       }
     }
   },
-
   "hour": "{} tundi",
   "@hour": {
     "plural": {
       "one": "{} tund",
-      "other": "{} tundi",
+      "other": "{} tundi"
     },
     "placeholders": {
       "count": {
@@ -439,12 +418,11 @@ https://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadi
       }
     }
   },
-
   "day": "{} päeva",
   "@day": {
     "plural": {
       "one": "{} päev",
-      "other": "{} päeva",
+      "other": "{} päeva"
     },
     "placeholders": {
       "count": {

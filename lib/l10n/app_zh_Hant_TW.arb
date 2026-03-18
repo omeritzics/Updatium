@@ -1,6 +1,5 @@
 {
   "@@locale": "zh-Hant-TW",
-
   "invalidURLForSource": "不是有效的 {} 應用程式 URL",
   "noReleaseFound": "找不到合適的版本",
   "noVersionFound": "無法確定版本",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "移除選取的應用程式",
   "updateX": "更新 {}",
   "installX": "安裝 {}",
-  "markXTrackOnlyAsUpdated": "標記 {}
-（僅追蹤）
-為已更新",
+  "markXTrackOnlyAsUpdated": "標記 {}\\n（僅追蹤）\\n為已更新",
   "changeX": "更改 {}",
   "installUpdateApps": "安裝/更新應用程式",
   "installUpdateSelectedApps": "安裝/更新選取的應用程式",
@@ -79,9 +76,7 @@
   "pinToTop": "釘選到頂端",
   "unpinFromTop": "取消釘選",
   "resetInstallStatusForSelectedAppsQuestion": "重設選取應用程式的安裝狀態？",
-  "installStatusOfXWillBeResetExplanation": "任何選取應用程式的安裝狀態將被重設。
-
-這可以在由於更新失敗或其他問題導致 Updatium 顯示的應用程式版本不正確時有所幫助。",
+  "installStatusOfXWillBeResetExplanation": "任何選取應用程式的安裝狀態將被重設。\\n\\n這可以在由於更新失敗或其他問題導致 Updatium 顯示的應用程式版本不正確時有所幫助。",
   "customLinkMessage": "這些連結適用於已安裝 Updatium 的裝置",
   "shareAppConfigLinks": "分享應用程式設定為 HTML 連結",
   "shareSelectedAppURLs": "分享選取的應用程式 URL",
@@ -113,11 +108,7 @@
   "searchX": "搜尋 {}",
   "noResults": "沒有找到結果",
   "importX": "匯入 {}",
-  "importedAppsIdDisclaimer": "匯入的應用程式可能會錯誤地顯示為「未安裝」。
-要修正此問題，請透過 Updatium 重新安裝它們。
-這不應該影響應用程式資料。
-
-僅影響 URL 和第三方匯入方法。",
+  "importedAppsIdDisclaimer": "匯入的應用程式可能會錯誤地顯示為「未安裝」。\\n要修正此問題，請透過 Updatium 重新安裝它們。\\n這不應該影響應用程式資料。\\n\\n僅影響 URL 和第三方匯入方法。",
   "importErrors": "匯入錯誤",
   "importedXOfYApps": "已匯入 {} 個中的 {} 個應用程式。",
   "followingURLsHadErrors": "以下 URL 有錯誤：",
@@ -362,23 +353,15 @@
   "GHReqPrefix": "GitHub 請求的 'sky22333/hubproxy' 實例",
   "includeZips": "包含 ZIP 文件",
   "zippedApkFilterRegEx": "在 ZIP 內過濾 APK",
-  "googleVerificationWarningP1": "Google 已宣布，自 2026／2027 年起，所有在「通過認證（certified）」的 Android 裝置上執行的應用程式，都必須由開發者直接向 Google 提交個人身分資訊。
-
-之後，Updatium 可能會停止在通過認證的 Android 裝置上運作。",
+  "googleVerificationWarningP1": "Google 已宣布，自 2026／2027 年起，所有在「通過認證（certified）」的 Android 裝置上執行的應用程式，都必須由開發者直接向 Google 提交個人身分資訊。\\n\\n之後，Updatium 可能會停止在通過認證的 Android 裝置上運作。",
   "googleVerificationWarningP2": "如需更多資訊，請前往 https://keepandroidopen.org/.",
-  "googleVerificationWarningP3": "請注意，從短期來看，Google 表示在其公告引發廣泛反彈後，可能仍可透過其承諾實作的「進階流程（advanced flow）」來安裝「未經驗證」（不符合規範）的應用程式；然而，Google 尚未說明此流程的具體運作方式，因此無法確定它是否能在實務上真正維護使用者的自由。
-
-無論如何，Google 的這項作法，都是朝向終結個人自由、通用運算的一大步。
-
-只要仍被允許持續存在，像 GrapheneOS 這類未通過認證的作業系統，理論上不會受到此政策影響。",
+  "googleVerificationWarningP3": "請注意，從短期來看，Google 表示在其公告引發廣泛反彈後，可能仍可透過其承諾實作的「進階流程（advanced flow）」來安裝「未經驗證」（不符合規範）的應用程式；然而，Google 尚未說明此流程的具體運作方式，因此無法確定它是否能在實務上真正維護使用者的自由。\\n\\n無論如何，Google 的這項作法，都是朝向終結個人自由、通用運算的一大步。\\n\\n只要仍被允許持續存在，像 GrapheneOS 這類未通過認證的作業系統，理論上不會受到此政策影響。",
   "multipleSigners": "多重簽署者",
   "securityDisclaimerTitle": "安全與法律免責聲明",
   "license": "授權",
   "licenseText": "此應用程式採用 GPL v3 授權條款分發。",
   "disclaimer": "免責聲明",
-  "disclaimerText": "此應用程式不分發、託管或驗證任何外部應用程式。使用者對透過此工具安裝的任何軟體的安全性和合法性承擔全部責任。
-
-https://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 - 強烈建議不要從其他地方下載，因為從非官方來源下載是不安全的。",
+  "disclaimerText": "此應用程式不分發、託管或驗證任何外部應用程式。使用者對透過此工具安裝的任何軟體的安全性和合法性承擔全部責任。\\n\\nhttps://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 - 強烈建議不要從其他地方下載，因為從非官方來源下載是不安全的。",
   "privacy": "隱私",
   "privacyText": "此應用程式注重隱私，不收集個人資料。",
   "acceptAndContinue": "接受並繼續",
@@ -387,11 +370,10 @@ https://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "應用程式",
   "@apps": {
     "plural": {
-      "other": "{} 個應用程式",
+      "other": "{} 個應用程式"
     },
     "placeholders": {
       "count": {
@@ -399,11 +381,10 @@ https://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
-      "other": "{} 個 APK",
+      "other": "{} 個 APK"
     },
     "placeholders": {
       "count": {
@@ -411,11 +392,10 @@ https://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 
       }
     }
   },
-
   "minute": "{} 分鐘",
   "@minute": {
     "plural": {
-      "other": "{} 分鐘",
+      "other": "{} 分鐘"
     },
     "placeholders": {
       "count": {
@@ -423,11 +403,10 @@ https://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 
       }
     }
   },
-
   "hour": "{} 小時",
   "@hour": {
     "plural": {
-      "other": "{} 小時",
+      "other": "{} 小時"
     },
     "placeholders": {
       "count": {
@@ -435,11 +414,10 @@ https://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 
       }
     }
   },
-
   "day": "{} 天",
   "@day": {
     "plural": {
-      "other": "{} 天",
+      "other": "{} 天"
     },
     "placeholders": {
       "count": {

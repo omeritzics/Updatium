@@ -1,6 +1,5 @@
 {
   "@@locale": "ca",
-
   "invalidURLForSource": "L'URL de l'aplicació {} no es vàlid",
   "noReleaseFound": "No s'ha pogut trobar una versió adequada",
   "noVersionFound": "No s'ha pogut determinar la versió",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "Elimina les aplicacions seleccionades",
   "updateX": "Actualitza {}",
   "installX": "Instal·la {}",
-  "markXTrackOnlyAsUpdated": "Marca {}
-(només per a seguiment)
-com a actualitzada",
+  "markXTrackOnlyAsUpdated": "Marca {}\\n(només per a seguiment)\\ncom a actualitzada",
   "changeX": "Canvia {}",
   "installUpdateApps": "Instal·la/actualitza les aplicacions",
   "installUpdateSelectedApps": "Instal·la/actualitza les aplicacions seleccionades",
@@ -79,9 +76,7 @@ com a actualitzada",
   "pinToTop": "Ancora-la al capdamunt",
   "unpinFromTop": "Desancora-la del capdamunt",
   "resetInstallStatusForSelectedAppsQuestion": "Restableixo l'estat d'instal·lació per a les aplicacions seleccionades?",
-  "installStatusOfXWillBeResetExplanation": "Es restablirà l'estat d'instal·lació de les aplicacions seleccionades.
-
-Açò pot ser útil quan la versió de l'aplicació mostrada per Updatium és incorrecta a conseqüència d'una actualització no reeixida o d'algun altre problema.",
+  "installStatusOfXWillBeResetExplanation": "Es restablirà l'estat d'instal·lació de les aplicacions seleccionades.\\n\\nAçò pot ser útil quan la versió de l'aplicació mostrada per Updatium és incorrecta a conseqüència d'una actualització no reeixida o d'algun altre problema.",
   "customLinkMessage": "Aquests enllaços funcionen en dispositius amb Updatium instal·lat",
   "shareAppConfigLinks": "Comparteix la configuració de l'aplicació com a enllaç HTML",
   "shareSelectedAppURLs": "Comparteix els URL de les aplicacions seleccionades",
@@ -113,11 +108,7 @@ Açò pot ser útil quan la versió de l'aplicació mostrada per Updatium és in
   "searchX": "Cerca {}",
   "noResults": "No hi ha resultats",
   "importX": "Importa des de {}",
-  "importedAppsIdDisclaimer": "Les aplicacions importades podrien mostrar-se incorrectament com a «No instal·lada».
-Per solventar-ho reinstal·la-les a través d'Updatium.
-Això no hauria d'afectar les dades de les aplicacions.
-
-Només afecta els URL i els mètodes d'importació de tercers.",
+  "importedAppsIdDisclaimer": "Les aplicacions importades podrien mostrar-se incorrectament com a «No instal·lada».\\nPer solventar-ho reinstal·la-les a través d'Updatium.\\nAixò no hauria d'afectar les dades de les aplicacions.\\n\\nNomés afecta els URL i els mètodes d'importació de tercers.",
   "importErrors": "Errors d'importació",
   "importedXOfYApps": "{} de {} aplicacions importades.",
   "followingURLsHadErrors": "Els següents URLs han tingut problemes:",
@@ -288,7 +279,7 @@ Només afecta els URL i els mètodes d'importació de tercers.",
   "autoSelectHighestVersionCode": "Selecciona de forma automàtica la versió més recent de l'APK",
   "versionExtractionRegEx": "Extracció de la cadena de la versió amb una expressió regular",
   "trimVersionString": "Retalla la cadena de la versió amb una expressió regular",
-  "matchGroupToUseForX": "Grup de coincidència a usar per a \"{}\"",
+  "matchGroupToUseForX": "Grup de coincidència a usar per a \\\"{}\\\"",
   "matchGroupToUse": "Grup de coincidència a usar per a l'extracció de la cadena de la versió amb una expressió regular",
   "highlightTouchTargets": "Ressalta els elements de selecció menys obvis",
   "pickExportDir": "Selecciona el directori d'exportació",
@@ -354,7 +345,7 @@ Només afecta els URL i els mètodes d'importació de tercers.",
   "welcome": "Benvinguda",
   "documentationLinksNote": "La pàgina GitHub d'Updatium enllaçada a sota conté enllaços a vídeos, articles, debats i altres recursos que t'ajudaran a entendre com usar l'aplicació.",
   "batteryOptimizationNote": "Tingues present que les descàrregues en segon pla funcionaran millor si inhabilites l'optimització de bateria per a Updatium.",
-  "fileDeletionError": "No s'ha pogut suprimir el fitxer (intenta suprimir-lo manualment i torna-ho a provar): \"{}\"",
+  "fileDeletionError": "No s'ha pogut suprimir el fitxer (intenta suprimir-lo manualment i torna-ho a provar): \\\"{}\\\"",
   "foregroundService": "Servei d'Updatium en primer pla",
   "foregroundServiceExplanation": "Usa el servei d'Updatium en primer pla per comprovar les actualitzacions (és més fiable però consumeix més bateria)",
   "fgServiceNotice": "Aquesta notificació és necessària per comprovar les actualitzacions en segon pla (la pots ocultar als paràmetres del Sistema Operatiu)",
@@ -362,23 +353,15 @@ Només afecta els URL i els mètodes d'importació de tercers.",
   "GHReqPrefix": "exemple per a les peticions de GitHub",
   "includeZips": "Inclou fitxers ZIPName",
   "zippedApkFilterRegEx": "Filtre APKs dins ZIPName",
-  "googleVerificationWarningP1": "Google ha anunciat que, començant en 2026/2027, totes les aplicacions en dispositius d'Android \"certificats\" requeriran que el desenvolupador enviï els detalls personals directament a Google.
-
-Després d'això, Updatium pot deixar de funcionar en dispositius Android certificats.",
+  "googleVerificationWarningP1": "Google ha anunciat que, començant en 2026/2027, totes les aplicacions en dispositius d'Android \\\"certificats\\\" requeriran que el desenvolupador enviï els detalls personals directament a Google.\\n\\nDesprés d'això, Updatium pot deixar de funcionar en dispositius Android certificats.",
   "googleVerificationWarningP2": "Aneu a https://buitandoideopen.org/ per a més informació.",
-  "googleVerificationWarningP3": "Tingueu en compte que en el terme curt, pot continuar sent possible instal· lar aplicacions \"inverificats\" (no compatible) mitjançant un procés de flux \"advince\" que Google ha promès implementar després d'una gran reacció al seu anunci, però no han detallat com funcionaria, de manera que és clar si es preservarà realment les llibertats dels usuaris de cap manera pràctica.
-
-En qualsevol cas, el moviment de Google és un pas significatiu cap al final de la informàtica lliure i general deficient per als individus.
-
-Els SO no validats, com el GraphenOS, no haurien de ser afectats per això sempre que se'ls permeti continuar existint.",
+  "googleVerificationWarningP3": "Tingueu en compte que en el terme curt, pot continuar sent possible instal· lar aplicacions \\\"inverificats\\\" (no compatible) mitjançant un procés de flux \\\"advince\\\" que Google ha promès implementar després d'una gran reacció al seu anunci, però no han detallat com funcionaria, de manera que és clar si es preservarà realment les llibertats dels usuaris de cap manera pràctica.\\n\\nEn qualsevol cas, el moviment de Google és un pas significatiu cap al final de la informàtica lliure i general deficient per als individus.\\n\\nEls SO no validats, com el GraphenOS, no haurien de ser afectats per això sempre que se'ls permeti continuar existint.",
   "multipleSigners": "Signadors múltiples",
   "securityDisclaimerTitle": "Avís de Seguretat i Legal",
   "license": "Llicència",
   "licenseText": "Aquesta aplicació es distribueix sota la Llicència GPL v3.",
   "disclaimer": "Avís",
-  "disclaimerText": "Aquesta aplicació no distribueix, allotja ni verifica cap de les aplicacions externes. L'usuari assumeix la plena responsabilitat per la seguretat i legalitat de qualsevol programari instal·lat a través d'aquesta eina.
-
-https://github.com/omeritzics/Updatium és l'únic lloc oficial per descarregar Updatium - es desaconsellable descarregar-lo d'altres llocs ja que la descàrrega des de fonts no oficials no és segura.",
+  "disclaimerText": "Aquesta aplicació no distribueix, allotja ni verifica cap de les aplicacions externes. L'usuari assumeix la plena responsabilitat per la seguretat i legalitat de qualsevol programari instal·lat a través d'aquesta eina.\\n\\nhttps://github.com/omeritzics/Updatium és l'únic lloc oficial per descarregar Updatium - es desaconsellable descarregar-lo d'altres llocs ja que la descàrrega des de fonts no oficials no és segura.",
   "privacy": "Privacitat",
   "privacyText": "Aquesta aplicació està centrada en la privacitat i no recull dades personals.",
   "acceptAndContinue": "Acceptar i continuar",
@@ -387,12 +370,11 @@ https://github.com/omeritzics/Updatium és l'únic lloc oficial per descarregar 
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "Aplicacions",
   "@apps": {
     "plural": {
       "one": "{} Aplicació",
-      "other": "{} Aplicacions",
+      "other": "{} Aplicacions"
     },
     "placeholders": {
       "count": {
@@ -400,12 +382,11 @@ https://github.com/omeritzics/Updatium és l'únic lloc oficial per descarregar 
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "{} APK",
-      "other": "{} APKs",
+      "other": "{} APKs"
     },
     "placeholders": {
       "count": {
@@ -413,12 +394,11 @@ https://github.com/omeritzics/Updatium és l'únic lloc oficial per descarregar 
       }
     }
   },
-
   "minute": "{} minuts",
   "@minute": {
     "plural": {
       "one": "{} minut",
-      "other": "{} minuts",
+      "other": "{} minuts"
     },
     "placeholders": {
       "count": {
@@ -426,12 +406,11 @@ https://github.com/omeritzics/Updatium és l'únic lloc oficial per descarregar 
       }
     }
   },
-
   "hour": "{} hores",
   "@hour": {
     "plural": {
       "one": "{} hora",
-      "other": "{} hores",
+      "other": "{} hores"
     },
     "placeholders": {
       "count": {
@@ -439,12 +418,11 @@ https://github.com/omeritzics/Updatium és l'únic lloc oficial per descarregar 
       }
     }
   },
-
   "day": "{} dies",
   "@day": {
     "plural": {
       "one": "{} dia",
-      "other": "{} dies",
+      "other": "{} dies"
     },
     "placeholders": {
       "count": {

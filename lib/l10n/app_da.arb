@@ -1,6 +1,5 @@
 {
   "@@locale": "da",
-
   "invalidURLForSource": "Ikke et gyldigt {} app-URL",
   "noReleaseFound": "Kunne ikke finde en passende udgivelse",
   "noVersionFound": "Kunne ikke afgøre udgivelsesversion",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "Fjern valgte apps",
   "updateX": "Opdater {}",
   "installX": "Installer {}",
-  "markXTrackOnlyAsUpdated": "Markér {}
-(Følg Kun)
-som opdateret",
+  "markXTrackOnlyAsUpdated": "Markér {}\\n(Følg Kun)\\nsom opdateret",
   "changeX": "Skift {}",
   "installUpdateApps": "Installer/Opdater apps",
   "installUpdateSelectedApps": "Installer/Opdater valgte apps",
@@ -79,9 +76,7 @@ som opdateret",
   "pinToTop": "Fastgør til toppen",
   "unpinFromTop": "Frigør fra toppen",
   "resetInstallStatusForSelectedAppsQuestion": "Nulstil installationsstatus for valgte apps?",
-  "installStatusOfXWillBeResetExplanation": "Installationsstatus for alle valgte apps nulstilles.
-
-Dette kan hjælpe, når en forkert app-version vises i Updatium grundet mislykkede opdateringer eller andre problemer.",
+  "installStatusOfXWillBeResetExplanation": "Installationsstatus for alle valgte apps nulstilles.\\n\\nDette kan hjælpe, når en forkert app-version vises i Updatium grundet mislykkede opdateringer eller andre problemer.",
   "customLinkMessage": "Disse links virker på enheder med Updatium installeret",
   "shareAppConfigLinks": "Del app-konfiguration som HTML-link",
   "shareSelectedAppURLs": "Del valgte app-URL'er",
@@ -113,11 +108,7 @@ Dette kan hjælpe, når en forkert app-version vises i Updatium grundet mislykke
   "searchX": "Søg {}",
   "noResults": "Ingen resultater fundet",
   "importX": "Importér {}",
-  "importedAppsIdDisclaimer": "Importerede apps vises muligvis forkert som \"Ikke installeret\".
-For at løse dette, geninstaller dem via Updatium.
-Dette bør ikke påvirke app-data.
-
-Påvirker kun URL- og tredjepartsimportmetoder.",
+  "importedAppsIdDisclaimer": "Importerede apps vises muligvis forkert som \\\"Ikke installeret\\\".\\nFor at løse dette, geninstaller dem via Updatium.\\nDette bør ikke påvirke app-data.\\n\\nPåvirker kun URL- og tredjepartsimportmetoder.",
   "importErrors": "Importfejl",
   "importedXOfYApps": "{} af {} app importeret.",
   "followingURLsHadErrors": "Følgende URL'er havde fejl:",
@@ -288,7 +279,7 @@ Påvirker kun URL- og tredjepartsimportmetoder.",
   "autoSelectHighestVersionCode": "Auto-vælg højeste versionKode af APK",
   "versionExtractionRegEx": "RegEx for versionsstrengsudtrækning",
   "trimVersionString": "Trim versionsstreng med RegEx",
-  "matchGroupToUseForX": "Match-gruppe til brug for \"{}\"",
+  "matchGroupToUseForX": "Match-gruppe til brug for \\\"{}\\\"",
   "matchGroupToUse": "RegEx-matchgruppe til brug for versionsstrengsudtrækning",
   "highlightTouchTargets": "Fremhæv mindre åbenlyse berøringsmål",
   "pickExportDir": "Vælg eksportmappe",
@@ -336,7 +327,7 @@ Påvirker kun URL- og tredjepartsimportmetoder.",
   "latest": "Seneste",
   "invertRegEx": "Inverter regulært udtryk",
   "note": "Bemærk",
-  "selfHostedNote": "Rullemenuen \"{}\" kan bruges til at nå selvhostede/brugerdefinerede instanser af enhver kilde.",
+  "selfHostedNote": "Rullemenuen \\\"{}\\\" kan bruges til at nå selvhostede/brugerdefinerede instanser af enhver kilde.",
   "badDownload": "APK'en kunne ikke analyseres (inkompatibel eller delvis hentning)",
   "beforeNewInstallsShareToAppVerifier": "Del nye apps med AppVerifier (hvis tilgængelig)",
   "appVerifierInstructionToast": "Del til AppVerifier, og vend tilbage, når du er klar.",
@@ -354,7 +345,7 @@ Påvirker kun URL- og tredjepartsimportmetoder.",
   "welcome": "Velkommen",
   "documentationLinksNote": "Updatiums GitHub-side, som der linkes til nedenfor, indeholder links til videoer, artikler, diskussioner og andre ressourcer, som kan hjælpe dig med at forstå, hvordan du bruger appen.",
   "batteryOptimizationNote": "Bemærk, at baggrundsdownloads kan fungere mere pålideligt, hvis du deaktiverer OS-batterioptimering for Updatium.",
-  "fileDeletionError": "Kunne ikke slette filen (prøv at slette den manuelt og prøv igen): \"{}\"",
+  "fileDeletionError": "Kunne ikke slette filen (prøv at slette den manuelt og prøv igen): \\\"{}\\\"",
   "foregroundService": "Updatium forgrundstjeneste",
   "foregroundServiceExplanation": "Brug en forgrundstjeneste til opdateringskontrol (mere pålidelig, bruger mere strøm)",
   "fgServiceNotice": "Denne meddelelse er nødvendig for baggrundsopdateringskontrol (den kan skjules i OS-indstillingerne).",
@@ -362,23 +353,15 @@ Påvirker kun URL- og tredjepartsimportmetoder.",
   "GHReqPrefix": "'sky22333/hubproxy'-instans til GitHub-anmodninger",
   "includeZips": "Inkluder ZIP-filer",
   "zippedApkFilterRegEx": "Filtrer APK'er inde i ZIP",
-  "googleVerificationWarningP1": "Google har annonceret, at fra 2026 / 2027, alle apps på \"certificeret\" Android-enheder vil kræve, at udvikleren til at indsende personlige identitetsoplysninger direkte til Google.
-
-Efter dette tidspunkt, kan Updatium holde op med at arbejde på certificerede Android-enheder.",
+  "googleVerificationWarningP1": "Google har annonceret, at fra 2026 / 2027, alle apps på \\\"certificeret\\\" Android-enheder vil kræve, at udvikleren til at indsende personlige identitetsoplysninger direkte til Google.\\n\\nEfter dette tidspunkt, kan Updatium holde op med at arbejde på certificerede Android-enheder.",
   "googleVerificationWarningP2": "Gå til https: / / keepandroidopen.org / for mere information.",
-  "googleVerificationWarningP3": "Bemærk, at på kort sigt, kan det fortsætte med at være muligt at installere \"uverificerbare\" (ikke-overensstemmende) apps gennem en \"avanceret flow\" proces, som Google har lovet at gennemføre efter bred backlash til deres meddelelse, men de har ikke detaljeret, hvordan dette ville arbejde, så det er uklart, om det virkelig vil bevare brugernes friheder i praksis.
-
-Under alle omstændigheder er Googles bevægelse et væsentligt skridt i retning af afslutningen af fri, generel-formål computing for enkeltpersoner.
-
-Ikke-certificerede OS, som GrapheneOS, bør være upåvirket af dette, så længe de har lov til at fortsætte med at eksistere.",
+  "googleVerificationWarningP3": "Bemærk, at på kort sigt, kan det fortsætte med at være muligt at installere \\\"uverificerbare\\\" (ikke-overensstemmende) apps gennem en \\\"avanceret flow\\\" proces, som Google har lovet at gennemføre efter bred backlash til deres meddelelse, men de har ikke detaljeret, hvordan dette ville arbejde, så det er uklart, om det virkelig vil bevare brugernes friheder i praksis.\\n\\nUnder alle omstændigheder er Googles bevægelse et væsentligt skridt i retning af afslutningen af fri, generel-formål computing for enkeltpersoner.\\n\\nIkke-certificerede OS, som GrapheneOS, bør være upåvirket af dette, så længe de har lov til at fortsætte med at eksistere.",
   "multipleSigners": "Flere signere",
   "securityDisclaimerTitle": "Sikkerheds- og Juridisk Ansvarsfraskrivelse",
   "license": "Licens",
   "licenseText": "Denne applikation distribueres under GPL v3-licensen.",
   "disclaimer": "Ansvarsfraskrivelse",
-  "disclaimerText": "Denne applikation distribuerer, hoster eller verificerer ingen af de eksterne applikationer. Brugeren bærer det fulde ansvar for sikkerheden og lovligheden af enhver software installeret via dette værktøj.
-
-https://github.com/omeritzics/Updatium er det eneste officielle sted at downloade Updatium - det frarådes kraftigt at downloade det andre steder, da download fra uofficielle kilder ikke er sikkert.",
+  "disclaimerText": "Denne applikation distribuerer, hoster eller verificerer ingen af de eksterne applikationer. Brugeren bærer det fulde ansvar for sikkerheden og lovligheden af enhver software installeret via dette værktøj.\\n\\nhttps://github.com/omeritzics/Updatium er det eneste officielle sted at downloade Updatium - det frarådes kraftigt at downloade det andre steder, da download fra uofficielle kilder ikke er sikkert.",
   "privacy": "Privatliv",
   "privacyText": "Denne app er privatlivsfokuseret og indsamler ikke personlige data.",
   "acceptAndContinue": "Accepter og fortsæt",
@@ -387,12 +370,11 @@ https://github.com/omeritzics/Updatium er det eneste officielle sted at download
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "Apps",
   "@apps": {
     "plural": {
       "one": "{} App",
-      "other": "{} Apps",
+      "other": "{} Apps"
     },
     "placeholders": {
       "count": {
@@ -400,12 +382,11 @@ https://github.com/omeritzics/Updatium er det eneste officielle sted at download
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "{} APK",
-      "other": "{} APK'er",
+      "other": "{} APK'er"
     },
     "placeholders": {
       "count": {
@@ -413,12 +394,11 @@ https://github.com/omeritzics/Updatium er det eneste officielle sted at download
       }
     }
   },
-
   "minute": "{} minutter",
   "@minute": {
     "plural": {
       "one": "{} minut",
-      "other": "{} minutter",
+      "other": "{} minutter"
     },
     "placeholders": {
       "count": {
@@ -426,12 +406,11 @@ https://github.com/omeritzics/Updatium er det eneste officielle sted at download
       }
     }
   },
-
   "hour": "{} timer",
   "@hour": {
     "plural": {
       "one": "{} time",
-      "other": "{} timer",
+      "other": "{} timer"
     },
     "placeholders": {
       "count": {
@@ -439,12 +418,11 @@ https://github.com/omeritzics/Updatium er det eneste officielle sted at download
       }
     }
   },
-
   "day": "{} dage",
   "@day": {
     "plural": {
       "one": "{} dag",
-      "other": "{} dage",
+      "other": "{} dage"
     },
     "placeholders": {
       "count": {

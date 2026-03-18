@@ -1,6 +1,5 @@
 {
   "@@locale": "tr",
-
   "invalidURLForSource": "Geçerli bir {} uygulama URL'si değil",
   "noReleaseFound": "Uygun bir sürüm bulunamadı",
   "noVersionFound": "Sürüm bulunamadı",
@@ -77,9 +76,7 @@
   "pinToTop": "Üstte Tut",
   "unpinFromTop": "Üstten Kaldır",
   "resetInstallStatusForSelectedAppsQuestion": "Seçilen Uygulamaların Yükleme Durumunu Sıfırlamak İstiyor musunuz?",
-  "installStatusOfXWillBeResetExplanation": "Seçilen Uygulamaların yükleme durumu sıfırlanacak.
-
-Bu, Updatium'da gösterilen uygulama sürümünün başarısız güncellemeler veya diğer sorunlar nedeniyle yanlış olması durumunda yardımcı olabilir.",
+  "installStatusOfXWillBeResetExplanation": "Seçilen Uygulamaların yükleme durumu sıfırlanacak.\\n\\nBu, Updatium'da gösterilen uygulama sürümünün başarısız güncellemeler veya diğer sorunlar nedeniyle yanlış olması durumunda yardımcı olabilir.",
   "customLinkMessage": "Bu bağlantılar Updatium'un kurulu olduğu cihazlarda çalışır",
   "shareAppConfigLinks": "Uygulama yapılandırmasını HTML bağlantısı olarak paylaş",
   "shareSelectedAppURLs": "Seçili uygulamaların URL'lerini paylaş",
@@ -111,11 +108,7 @@ Bu, Updatium'da gösterilen uygulama sürümünün başarısız güncellemeler v
   "searchX": "{}'yi Ara",
   "noResults": "Sonuç Bulunamadı",
   "importX": "{} İçe Aktar",
-  "importedAppsIdDisclaimer": "İçe Aktarılan Uygulamalar yanlışlıkla \"Yüklenmedi\" olarak gösterilebilir.
-Bunu düzeltmek için bunları Updatium üzerinden yeniden yükleyin.
-Bu, yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.
-
-Yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.",
+  "importedAppsIdDisclaimer": "İçe Aktarılan Uygulamalar yanlışlıkla \\\"Yüklenmedi\\\" olarak gösterilebilir.\\nBunu düzeltmek için bunları Updatium üzerinden yeniden yükleyin.\\nBu, yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.\\n\\nYalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.",
   "importErrors": "İçe Aktarma Hataları",
   "importedXOfYApps": "{}'den {} Uygulama İçe Aktarıldı.",
   "followingURLsHadErrors": "Aşağıdaki URL'lerde hatalar oluştu:",
@@ -286,7 +279,7 @@ Yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.",
   "autoSelectHighestVersionCode": "En yüksek versionCode olan APK'yı otomatik seç",
   "versionExtractionRegEx": "Sürüm dizesi bulmak için RegEx",
   "trimVersionString": "Sürüm dizesini RegEx ile kırp",
-  "matchGroupToUseForX": "\"{}\" için kullanılacak grubu eşleştir",
+  "matchGroupToUseForX": "\\\"{}\\\" için kullanılacak grubu eşleştir",
   "matchGroupToUse": "Sürüm dizesi bulma RegEx'i için kullanılacak grubu eşleştir",
   "highlightTouchTargets": "Az belirgin olan dokunma hedeflerini vurgula",
   "pickExportDir": "Dışa aktarma klasörü seç",
@@ -334,7 +327,7 @@ Yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.",
   "latest": "En son",
   "invertRegEx": "Düzenli ifadeyi ters çevir",
   "note": "Not",
-  "selfHostedNote": "\"{}\" açılır menüsü, herhangi bir kaynağın bireysel (self-hosted) veya özel örneklerine ulaşmak için kullanılabilir.",
+  "selfHostedNote": "\\\"{}\\\" açılır menüsü, herhangi bir kaynağın bireysel (self-hosted) veya özel örneklerine ulaşmak için kullanılabilir.",
   "badDownload": "APK ayrıştırılamadı (uyumsuz veya kısmi indirme)",
   "beforeNewInstallsShareToAppVerifier": "Yeni Uygulamaları AppVerifier ile paylaşın (varsa)",
   "appVerifierInstructionToast": "AppVerifier ile paylaşın, hazır olduğunuzda buraya dönün.",
@@ -351,8 +344,8 @@ Yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.",
   "sortMethod": "Sıralama yöntemi",
   "welcome": "Hoş geldiniz",
   "documentationLinksNote": "Aşağıda bağlantısı verilen Updatium GitHub sayfası, uygulamayı nasıl kullanacağınızı anlamanıza yardımcı olacak videolara, makalelere, tartışmalara ve diğer kaynaklara bağlantılar içerir.",
-  "batteryOptimizationNote": "Updatium ayarlarında \"ön plan hizmeti\"ne geçerseniz ve/veya Updatium için işletim sistemi pil optimizasyonlarını devre dışı bırakırsanız arka planda indirmelerin daha güvenilir şekilde çalışabileceğini unutmayın.",
-  "fileDeletionError": "Dosya silinemedi (elle silmeyi deneyin ve sonra tekrar deneyin): \"{}\"",
+  "batteryOptimizationNote": "Updatium ayarlarında \\\"ön plan hizmeti\\\"ne geçerseniz ve/veya Updatium için işletim sistemi pil optimizasyonlarını devre dışı bırakırsanız arka planda indirmelerin daha güvenilir şekilde çalışabileceğini unutmayın.",
+  "fileDeletionError": "Dosya silinemedi (elle silmeyi deneyin ve sonra tekrar deneyin): \\\"{}\\\"",
   "foregroundService": "Updatium ön plan hizmeti",
   "foregroundServiceExplanation": "Güncelleme denetimi için bir ön plan hizmeti kullanın (daha güvenilir, daha fazla güç tüketir)",
   "fgServiceNotice": "Bu bildirim arka planda güncelleme kontrolü için gereklidir (işletim sistemi ayarlarından gizlenebilir)",
@@ -360,23 +353,15 @@ Yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.",
   "GHReqPrefix": "GitHub istekleri için 'sky22333/hubproxy' örneği",
   "includeZips": "ZIP dosyalarını dahil et",
   "zippedApkFilterRegEx": "ZIP içindeki APK'ları filtrele",
-  "googleVerificationWarningP1": "Google, 2026/2027'den itibaren \"sertifikalı\" Android cihazlardaki bütün uygulamaların, geliştiricinin kişisel kimlik bilgilerini doğrudan Google'a göndermesini gerektireceğini duyurdu.
-
-Bu tarihten sonra, Updatium sertifikalı Android cihazlarda çalışmayı durabilir.",
+  "googleVerificationWarningP1": "Google, 2026/2027'den itibaren \\\"sertifikalı\\\" Android cihazlardaki bütün uygulamaların, geliştiricinin kişisel kimlik bilgilerini doğrudan Google'a göndermesini gerektireceğini duyurdu.\\n\\nBu tarihten sonra, Updatium sertifikalı Android cihazlarda çalışmayı durabilir.",
   "googleVerificationWarningP2": "Daha fazla bilgi için https://keepandroidopen.org/ adresine gidin.",
-  "googleVerificationWarningP3": "Kısa vadede, Google'ın duyurudan sonra aldığı geniş tepkilerin ardından yapacağına söz verdiği \"gelişmiş akış\" işlemi ile \"doğrulanmamış\" (şartı yerine getirmeyen) uygulamaları yüklemek mümkün olabilir; ancak nasıl çalışacağını detaylandırmadıkları için bunun kullanıcı özgürlüğünü pratik anlamda gerçekten koruyup koruyamayacağı belirsizdir.
-
-Her halükârda Google'ın bu hamlesi; bireyler için ücretsiz, genel amaçlı bilişim hizmetlerinin sonuna doğru atılmış önemli bir adımdır.
-
-Var olmalarına müsaade edildiği sürece, GrapheneOS gibi sertifikasız işletim sistemleri bundan etkilenmemelidir.",
+  "googleVerificationWarningP3": "Kısa vadede, Google'ın duyurudan sonra aldığı geniş tepkilerin ardından yapacağına söz verdiği \\\"gelişmiş akış\\\" işlemi ile \\\"doğrulanmamış\\\" (şartı yerine getirmeyen) uygulamaları yüklemek mümkün olabilir; ancak nasıl çalışacağını detaylandırmadıkları için bunun kullanıcı özgürlüğünü pratik anlamda gerçekten koruyup koruyamayacağı belirsizdir.\\n\\nHer halükârda Google'ın bu hamlesi; bireyler için ücretsiz, genel amaçlı bilişim hizmetlerinin sonuna doğru atılmış önemli bir adımdır.\\n\\nVar olmalarına müsaade edildiği sürece, GrapheneOS gibi sertifikasız işletim sistemleri bundan etkilenmemelidir.",
   "multipleSigners": "Birden fazla imzacı",
   "securityDisclaimerTitle": "Güvenlik ve Yasal Sorumluluk Reddi",
   "license": "Lisans",
   "licenseText": "Bu uygulama GPL v3 Lisansı altında dağıtılmaktadır.",
   "disclaimer": "Sorumluluk Reddi",
-  "disclaimerText": "Bu uygulama harici uygulamaları dağıtmaz, barındırmaz veya doğrulamaz. Kullanıcı, bu araç üzerinden yüklenen herhangi bir yazılımın güvenliği ve yasallığından tamamen sorumludur.
-
-https://github.com/omeritzics/Updatium Updatium'u indirmek için tek resmi yerdir - resmi olmayan kaynaklardan indirmek güvenli olmadığından başka yerlerden indirmek şiddetle tavsiye edilmez.",
+  "disclaimerText": "Bu uygulama harici uygulamaları dağıtmaz, barındırmaz veya doğrulamaz. Kullanıcı, bu araç üzerinden yüklenen herhangi bir yazılımın güvenliği ve yasallığından tamamen sorumludur.\\n\\nhttps://github.com/omeritzics/Updatium Updatium'u indirmek için tek resmi yerdir - resmi olmayan kaynaklardan indirmek güvenli olmadığından başka yerlerden indirmek şiddetle tavsiye edilmez.",
   "privacy": "Gizlilik",
   "privacyText": "Bu uygulama gizlilik odaklıdır ve kişisel veri toplamaz.",
   "acceptAndContinue": "Kabul Et ve Devam Et",
@@ -385,12 +370,11 @@ https://github.com/omeritzics/Updatium Updatium'u indirmek için tek resmi yerdi
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "Uygulamalar",
   "@apps": {
     "plural": {
       "one": "{} Uygulama",
-      "other": "{} Uygulama",
+      "other": "{} Uygulama"
     },
     "placeholders": {
       "count": {
@@ -398,12 +382,11 @@ https://github.com/omeritzics/Updatium Updatium'u indirmek için tek resmi yerdi
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "{} APK",
-      "other": "{} APK'lar",
+      "other": "{} APK'lar"
     },
     "placeholders": {
       "count": {
@@ -411,12 +394,11 @@ https://github.com/omeritzics/Updatium Updatium'u indirmek için tek resmi yerdi
       }
     }
   },
-
   "minute": "{} dakika",
   "@minute": {
     "plural": {
       "one": "{} dakika",
-      "other": "{} dakika",
+      "other": "{} dakika"
     },
     "placeholders": {
       "count": {
@@ -424,12 +406,11 @@ https://github.com/omeritzics/Updatium Updatium'u indirmek için tek resmi yerdi
       }
     }
   },
-
   "hour": "{} saat",
   "@hour": {
     "plural": {
       "one": "{} saat",
-      "other": "{} saat",
+      "other": "{} saat"
     },
     "placeholders": {
       "count": {
@@ -437,12 +418,11 @@ https://github.com/omeritzics/Updatium Updatium'u indirmek için tek resmi yerdi
       }
     }
   },
-
   "day": "{} gün",
   "@day": {
     "plural": {
       "one": "{} gün",
-      "other": "{} gün",
+      "other": "{} gün"
     },
     "placeholders": {
       "count": {

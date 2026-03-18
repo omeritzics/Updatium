@@ -1,6 +1,5 @@
 {
   "@@locale": "zh",
-
   "invalidURLForSource": "无效的 {} URL",
   "noReleaseFound": "找不到合适的发行版",
   "noVersionFound": "无法确定发行版本号",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "删除选中的应用",
   "updateX": "更新 {}",
   "installX": "安装 {}",
-  "markXTrackOnlyAsUpdated": "将“{}”
-（仅追踪）
-标记为已更新",
+  "markXTrackOnlyAsUpdated": "将“{}”\\n（仅追踪）\\n标记为已更新",
   "changeX": "更改 {}",
   "installUpdateApps": "安装/更新应用",
   "installUpdateSelectedApps": "安装/更新选中的应用",
@@ -79,9 +76,7 @@
   "pinToTop": "置顶",
   "unpinFromTop": "取消置顶",
   "resetInstallStatusForSelectedAppsQuestion": "是否重置选中应用的安装状态？",
-  "installStatusOfXWillBeResetExplanation": "选中应用的安装状态将会被重置。
-
-当更新安装失败或其他问题导致 Updatium 中的应用版本显示错误时，可以尝试通过此方法解决。",
+  "installStatusOfXWillBeResetExplanation": "选中应用的安装状态将会被重置。\\n\\n当更新安装失败或其他问题导致 Updatium 中的应用版本显示错误时，可以尝试通过此方法解决。",
   "customLinkMessage": "分享链接仅适用于已安装 Updatium 的设备",
   "shareAppConfigLinks": "通过链接分享应用配置",
   "shareSelectedAppURLs": "分享选中应用的 URL",
@@ -113,8 +108,7 @@
   "searchX": "搜索{}",
   "noResults": "无结果",
   "importX": "导入{}",
-  "importedAppsIdDisclaimer": "导入的应用可能会错误地显示为“未安装”状态。
-请通过 Updatium 重新安装这些应用来解决此问题。",
+  "importedAppsIdDisclaimer": "导入的应用可能会错误地显示为“未安装”状态。\\n请通过 Updatium 重新安装这些应用来解决此问题。",
   "importErrors": "导入错误",
   "importedXOfYApps": "已导入 {} 中的 {} 个应用。",
   "followingURLsHadErrors": "下列 URL 存在错误：",
@@ -266,8 +260,7 @@
   "githubSourceNote": "使用访问令牌可避免触发 GitHub 的 API 请求限制。",
   "sortByLastLinkSegment": "仅根据链接的末尾部分进行筛选",
   "filterReleaseNotesByRegEx": "筛选发行说明的正则表达式",
-  "customLinkFilterRegex": "筛选自定义来源的 APK 文件链接
-（正则表达式，默认匹配模式为“.apk$”）",
+  "customLinkFilterRegex": "筛选自定义来源的 APK 文件链接\\n（正则表达式，默认匹配模式为“.apk$”）",
   "appsPossiblyUpdated": "已尝试更新应用",
   "appsPossiblyUpdatedNotifDescription": "当应用已尝试在后台更新时发送通知",
   "xWasPossiblyUpdatedToY": "已尝试将“{}”更新至 {}。",
@@ -352,31 +345,23 @@
   "welcome": "欢迎",
   "documentationLinksNote": "下方链接的 GitHub 页面中包含关于 Updatium 的视频、文章、讨论及其他资源，可帮助您了解本应用的使用方法。",
   "batteryOptimizationNote": "请注意，在设置中切换为“前台服务”，并/或关闭操作系统对 Updatium 的电池优化，可能会让后台下载更稳定。",
-  "fileDeletionError": "删除文件失败（请手动删除后再次尝试）：\"{}\"",
+  "fileDeletionError": "删除文件失败（请手动删除后再次尝试）：\\\"{}\\\"",
   "foregroundService": "Updatium 前台服务",
   "foregroundServiceExplanation": "使用前台服务检查更新（更稳定，但也更耗电）",
   "fgServiceNotice": "后台检查更新时需要此通知（可在操作系统设置中隐藏）",
   "excludeSecrets": "排除机密",
-  "GHReqPrefix": "用于 GitHub 请求的 \"sky22333/hubproxy \"实例",
+  "GHReqPrefix": "用于 GitHub 请求的 \\\"sky22333/hubproxy \\\"实例",
   "includeZips": "包含 ZIP 文件",
   "zippedApkFilterRegEx": "过滤 ZIP 内的 APK",
-  "googleVerificationWarningP1": "Google宣布,从2026/2027年开始,所有在\"认证\"Android设备上的应用程序都将要求开发者直接向Google提交个人身份细节.
-
-之后,Updatium可能会停止在认证的Android设备上工作.",
+  "googleVerificationWarningP1": "Google宣布,从2026/2027年开始,所有在\\\"认证\\\"Android设备上的应用程序都将要求开发者直接向Google提交个人身份细节.\\n\\n之后,Updatium可能会停止在认证的Android设备上工作.",
   "googleVerificationWarningP2": "详情请访问https://keepandroidopen.org/.",
-  "googleVerificationWarningP3": "请注意,在短期内,通过谷歌承诺在广泛反对其公告后实施的\"高级流程\"程序,可能继续安装\"未经验证\"(不符合要求)的应用软件,但他们没有详细说明这将如何运作,因此不清楚它是否会以任何实际方式真正维护用户自由.
-
-无论如何，谷歌的这一举动是朝向个人自由、通用计算结束的重要一步.
-
-未经认证的OS,如GrapheneOS,只要允许继续存在,就不应受到影响.",
+  "googleVerificationWarningP3": "请注意,在短期内,通过谷歌承诺在广泛反对其公告后实施的\\\"高级流程\\\"程序,可能继续安装\\\"未经验证\\\"(不符合要求)的应用软件,但他们没有详细说明这将如何运作,因此不清楚它是否会以任何实际方式真正维护用户自由.\\n\\n无论如何，谷歌的这一举动是朝向个人自由、通用计算结束的重要一步.\\n\\n未经认证的OS,如GrapheneOS,只要允许继续存在,就不应受到影响.",
   "multipleSigners": "多个签名人",
   "securityDisclaimerTitle": "安全与法律免责声明",
   "license": "许可证",
   "licenseText": "本应用程序采用 GPL v3 许可证分发。",
   "disclaimer": "免责声明",
-  "disclaimerText": "本应用程序不分发、托管或验证任何外部应用程序。用户对通过此工具安装的任何软件的安全性和合法性承担全部责任。
-
-https://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 - 强烈建议不要从其他地方下载，因为从非官方来源下载是不安全的。",
+  "disclaimerText": "本应用程序不分发、托管或验证任何外部应用程序。用户对通过此工具安装的任何软件的安全性和合法性承担全部责任。\\n\\nhttps://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 - 强烈建议不要从其他地方下载，因为从非官方来源下载是不安全的。",
   "privacy": "隐私",
   "privacyText": "此应用注重隐私，不收集个人数据。",
   "acceptAndContinue": "接受并继续",
@@ -385,11 +370,10 @@ https://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 
   "githubStarPromptContent": "Updatium 是一个志愿性的开源社区项目，我在业余时间开发。如果您想支持这个项目，请考虑在 GitHub 上为它加星标，以帮助更多用户和贡献者了解我们。您不会再收到关于此的提醒。提前感谢！:)",
   "githubStarPromptStar": "加星标",
   "githubStarPromptDontShowAgain": "不再显示",
-
   "apps": "应用列表",
   "@apps": {
     "plural": {
-      "other": "{} 个应用",
+      "other": "{} 个应用"
     },
     "placeholders": {
       "count": {
@@ -397,11 +381,10 @@ https://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
-      "other": "{} 个 APK 文件",
+      "other": "{} 个 APK 文件"
     },
     "placeholders": {
       "count": {
@@ -409,11 +392,10 @@ https://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 
       }
     }
   },
-
   "minute": "{} 分钟",
   "@minute": {
     "plural": {
-      "other": "{} 分钟",
+      "other": "{} 分钟"
     },
     "placeholders": {
       "count": {
@@ -421,11 +403,10 @@ https://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 
       }
     }
   },
-
   "hour": "{} 小时",
   "@hour": {
     "plural": {
-      "other": "{} 小时",
+      "other": "{} 小时"
     },
     "placeholders": {
       "count": {
@@ -433,11 +414,10 @@ https://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 
       }
     }
   },
-
   "day": "{} 天",
   "@day": {
     "plural": {
-      "other": "{} 天",
+      "other": "{} 天"
     },
     "placeholders": {
       "count": {

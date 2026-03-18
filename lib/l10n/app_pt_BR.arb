@@ -1,6 +1,5 @@
 {
   "@@locale": "pt-BR",
-
   "invalidURLForSource": "Não é uma URL de app válida de {}",
   "noReleaseFound": "Não foi possível encontrar um lançamento adequado",
   "noVersionFound": "Não foi possível determinar a versão do lançamento",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "Remover apps selecionados",
   "updateX": "Atualizar {}",
   "installX": "Instalar {}",
-  "markXTrackOnlyAsUpdated": "Marcar {}
-(somente rastreamento)
-como atualizado",
+  "markXTrackOnlyAsUpdated": "Marcar {}\\n(somente rastreamento)\\ncomo atualizado",
   "changeX": "Alterar {}",
   "installUpdateApps": "Instalar/atualizar apps",
   "installUpdateSelectedApps": "Instalar/atualizar apps selecionados",
@@ -79,9 +76,7 @@ como atualizado",
   "pinToTop": "Fixar ao topo",
   "unpinFromTop": "Desfixar do topo",
   "resetInstallStatusForSelectedAppsQuestion": "Redefinir o estado de instalação dos apps selecionados?",
-  "installStatusOfXWillBeResetExplanation": "Os estados de instalação dos apps selecionados serão redefinidos.
-
-Isso pode ajudar quando a versão exibida no Updatium está incorreta devido a atualizações malsucedidas ou outros problemas.",
+  "installStatusOfXWillBeResetExplanation": "Os estados de instalação dos apps selecionados serão redefinidos.\\n\\nIsso pode ajudar quando a versão exibida no Updatium está incorreta devido a atualizações malsucedidas ou outros problemas.",
   "customLinkMessage": "Esses links funcionarão em dispositivos com o Updatium instalado",
   "shareAppConfigLinks": "Compartilhar configuração do app como um link HTML",
   "shareSelectedAppURLs": "Compartilhar as URLs dos apps selecionados",
@@ -113,11 +108,7 @@ Isso pode ajudar quando a versão exibida no Updatium está incorreta devido a a
   "searchX": "Pesquisar {}",
   "noResults": "Nenhum resultado encontrado",
   "importX": "Importar {}",
-  "importedAppsIdDisclaimer": "Os apps importados podem ser exibidos incorretamente como se não estivessem instalados.
-Para resolver isso, reinstale eles pelo Updatium.
-Isso não afetará os dados dos apps.
-
-Isso somente afeta a URL e os métodos de importação de terceiros.",
+  "importedAppsIdDisclaimer": "Os apps importados podem ser exibidos incorretamente como se não estivessem instalados.\\nPara resolver isso, reinstale eles pelo Updatium.\\nIsso não afetará os dados dos apps.\\n\\nIsso somente afeta a URL e os métodos de importação de terceiros.",
   "importErrors": "Erros de importação",
   "importedXOfYApps": "{} de {} foram importados.",
   "followingURLsHadErrors": "As seguintes URLs tiveram erros:",
@@ -246,7 +237,7 @@ Isso somente afeta a URL e os métodos de importação de terceiros.",
   "autoLinkFilterByArch": "Tentar filtrar links pela arquitetura da CPU quando possível",
   "overrideSource": "Sobrescrever fonte",
   "dontShowAgain": "Não mostrar isso novamente",
-  "dontShowTrackOnlyWarnings": "Não mostrar alertas de \"somente rastreamento\"",
+  "dontShowTrackOnlyWarnings": "Não mostrar alertas de \\\"somente rastreamento\\\"",
   "dontShowAPKOriginWarnings": "Não mostrar alertas de origem dos APKs",
   "moveNonInstalledAppsToBottom": "Mover apps não instalados ao final da tela de apps",
   "hideNonInstalledApps": "Ocultar apps não instalados",
@@ -288,7 +279,7 @@ Isso somente afeta a URL e os métodos de importação de terceiros.",
   "autoSelectHighestVersionCode": "Selecionar automaticamente APK com o código de versão mais alto",
   "versionExtractionRegEx": "ExReg de extração do número da versão",
   "trimVersionString": "Cortar número da versal com ExReg",
-  "matchGroupToUseForX": "Corresponder grupo para o uso em \"{}\"",
+  "matchGroupToUseForX": "Corresponder grupo para o uso em \\\"{}\\\"",
   "matchGroupToUse": "Corresponder grupo para o uso para a extração do número da versão por ExReg",
   "highlightTouchTargets": "Acentuar alvos de toque menos óbvios",
   "pickExportDir": "Selecionar pasta de exportação",
@@ -336,7 +327,7 @@ Isso somente afeta a URL e os métodos de importação de terceiros.",
   "latest": "Mais recente",
   "invertRegEx": "Inverter expressão regular",
   "note": "Observação",
-  "selfHostedNote": "O menu de opções \"{}\" pode ser usado para alcançar instâncias hospedadas-por-você/personalizadas de qualquer fonte.",
+  "selfHostedNote": "O menu de opções \\\"{}\\\" pode ser usado para alcançar instâncias hospedadas-por-você/personalizadas de qualquer fonte.",
   "badDownload": "O APK não pode ser interpretado (incompatível ou baixado parcialmente)",
   "beforeNewInstallsShareToAppVerifier": "Compartilhar apps novos com o AppVerifier (se disponível)",
   "appVerifierInstructionToast": "Compartilhe com o AppVerifier, e volte aqui ao estar pronto.",
@@ -354,31 +345,23 @@ Isso somente afeta a URL e os métodos de importação de terceiros.",
   "welcome": "Boas vindas",
   "documentationLinksNote": "A página do Updatium no GitHub visível abaixo contém links de vídeos, artigos, discussões, e outros recursos que podem te ajudar ao usar o app.",
   "batteryOptimizationNote": "Observe que os downloads em segundo plano podem funcionar de forma mais confiável se você desativar as otimizações de bateria do sistema operacional para o Updatium.",
-  "fileDeletionError": "Falha ao excluir o arquivo (tente excluí-lo manualmente e tente novamente): \"{}\"",
+  "fileDeletionError": "Falha ao excluir o arquivo (tente excluí-lo manualmente e tente novamente): \\\"{}\\\"",
   "foregroundService": "Serviço de primeiro plano do Updatium",
   "foregroundServiceExplanation": "Usar um serviço em primeiro plano para verificação de atualizações (mais confiável, consome mais energia)",
   "fgServiceNotice": "Essa notificação é necessária para a verificação de atualizações em segundo plano (ela pode ser ocultada nas configurações do sistema operacional)",
   "excludeSecrets": "Excluir segredos",
-  "GHReqPrefix": "Instância \"sky22333/hubproxy\" para solicitações do GitHub",
+  "GHReqPrefix": "Instância \\\"sky22333/hubproxy\\\" para solicitações do GitHub",
   "includeZips": "Incluir arquivos ZIP",
   "zippedApkFilterRegEx": "Filtrar APKs dentro do ZIP",
-  "googleVerificationWarningP1": "O Google anunciou que, a partir de 2026/2027, todos os aplicativos em dispositivos Android \"certificados\" exigirão que o desenvolvedor envie detalhes de identidade pessoal diretamente ao Google.
-
-Depois disso, Updatium pode parar de funcionar em dispositivos Android certificados.",
+  "googleVerificationWarningP1": "O Google anunciou que, a partir de 2026/2027, todos os aplicativos em dispositivos Android \\\"certificados\\\" exigirão que o desenvolvedor envie detalhes de identidade pessoal diretamente ao Google.\\n\\nDepois disso, Updatium pode parar de funcionar em dispositivos Android certificados.",
   "googleVerificationWarningP2": "Vá para https://keepandroidopen.org/ para mais informações.",
-  "googleVerificationWarningP3": "Note que, a curto prazo, pode continuar a ser possível instalar aplicativos \"não verificados\" (não conformes) através de um processo de \"fluxo avançado\" que o Google prometeu implementar após uma ampla retrocesso ao seu anúncio, mas eles não detalharam como isso funcionaria então não é claro se ele realmente preservará as liberdades de usuário de alguma forma prática.
-
-Em qualquer caso, o movimento do Google é um passo significativo para o fim da computação gratuita, de propósito geral para os indivíduos.
-
-OS não certificados, como o GrapheneOS, não devem ser afetados por isso enquanto forem autorizados a continuar a existir.",
+  "googleVerificationWarningP3": "Note que, a curto prazo, pode continuar a ser possível instalar aplicativos \\\"não verificados\\\" (não conformes) através de um processo de \\\"fluxo avançado\\\" que o Google prometeu implementar após uma ampla retrocesso ao seu anúncio, mas eles não detalharam como isso funcionaria então não é claro se ele realmente preservará as liberdades de usuário de alguma forma prática.\\n\\nEm qualquer caso, o movimento do Google é um passo significativo para o fim da computação gratuita, de propósito geral para os indivíduos.\\n\\nOS não certificados, como o GrapheneOS, não devem ser afetados por isso enquanto forem autorizados a continuar a existir.",
   "multipleSigners": "Assinantes Múltiplos",
   "securityDisclaimerTitle": "Aviso de Segurança e Legal",
   "license": "Licença",
   "licenseText": "Este aplicativo é distribuído sob a Licença GPL v3.",
   "disclaimer": "Isenção de responsabilidade",
-  "disclaimerText": "Este aplicativo não distribui, hospeda ou verifica nenhum dos aplicativos externos. O usuário assume a responsabilidade total pela segurança e legalidade de qualquer software instalado através desta ferramenta.
-
-https://github.com/omeritzics/Updatium é o único lugar oficial para baixar Updatium - é altamente desaconselhável baixá-lo de outros lugares pois o download de fontes não oficiais não é seguro.",
+  "disclaimerText": "Este aplicativo não distribui, hospeda ou verifica nenhum dos aplicativos externos. O usuário assume a responsabilidade total pela segurança e legalidade de qualquer software instalado através desta ferramenta.\\n\\nhttps://github.com/omeritzics/Updatium é o único lugar oficial para baixar Updatium - é altamente desaconselhável baixá-lo de outros lugares pois o download de fontes não oficiais não é seguro.",
   "privacy": "Privacidade",
   "privacyText": "Este aplicativo é focado em privacidade e não coleta dados pessoais.",
   "acceptAndContinue": "Aceitar e continuar",
@@ -387,12 +370,11 @@ https://github.com/omeritzics/Updatium é o único lugar oficial para baixar Upd
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "Aplicativos",
   "@apps": {
     "plural": {
       "one": "{} app",
-      "other": "{} apps",
+      "other": "{} apps"
     },
     "placeholders": {
       "count": {
@@ -400,12 +382,11 @@ https://github.com/omeritzics/Updatium é o único lugar oficial para baixar Upd
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "{} APK",
-      "other": "{} APKs",
+      "other": "{} APKs"
     },
     "placeholders": {
       "count": {
@@ -413,12 +394,11 @@ https://github.com/omeritzics/Updatium é o único lugar oficial para baixar Upd
       }
     }
   },
-
   "minute": "{} minutos",
   "@minute": {
     "plural": {
       "one": "{} minuto",
-      "other": "{} minutos",
+      "other": "{} minutos"
     },
     "placeholders": {
       "count": {
@@ -426,12 +406,11 @@ https://github.com/omeritzics/Updatium é o único lugar oficial para baixar Upd
       }
     }
   },
-
   "hour": "{} horas",
   "@hour": {
     "plural": {
       "one": "{} hora",
-      "other": "{} horas",
+      "other": "{} horas"
     },
     "placeholders": {
       "count": {
@@ -439,12 +418,11 @@ https://github.com/omeritzics/Updatium é o único lugar oficial para baixar Upd
       }
     }
   },
-
   "day": "{} dias",
   "@day": {
     "plural": {
       "one": "{} dia",
-      "other": "{} dias",
+      "other": "{} dias"
     },
     "placeholders": {
       "count": {

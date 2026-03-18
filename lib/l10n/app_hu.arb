@@ -1,6 +1,5 @@
 {
   "@@locale": "hu",
-
   "invalidURLForSource": "Érvénytelen a(z) {} alkalmazás webcíme",
   "noReleaseFound": "Nem található megfelelő kiadás",
   "noVersionFound": "Nem sikerült meghatározni a kiadás verzióját",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "Kiválasztott alkalmazások eltávolítása",
   "updateX": "{} frissítése",
   "installX": "{} telepítése",
-  "markXTrackOnlyAsUpdated": "Megjelölés: {}
-(Csak nyomon követés)
-Frissítettként",
+  "markXTrackOnlyAsUpdated": "Megjelölés: {}\\n(Csak nyomon követés)\\nFrissítettként",
   "changeX": "{}-változás",
   "installUpdateApps": "Alkalmazások telepítése/frissítése",
   "installUpdateSelectedApps": "Kiválasztott alkalmazások telepítése/frissítése",
@@ -79,9 +76,7 @@ Frissítettként",
   "pinToTop": "Kitűzés felülre",
   "unpinFromTop": "Kitűzés megszüntetése",
   "resetInstallStatusForSelectedAppsQuestion": "Biztosan visszaállítja a kiválasztott alkalmazások telepítési állapotát?",
-  "installStatusOfXWillBeResetExplanation": "A kiválasztott alkalmazások telepítési állapota visszaáll.
-
-Ez akkor segíthet, ha az Updatiumban megjelenített alkalmazás-verzió hibás, a frissítések vagy egyéb problémák miatt.",
+  "installStatusOfXWillBeResetExplanation": "A kiválasztott alkalmazások telepítési állapota visszaáll.\\n\\nEz akkor segíthet, ha az Updatiumban megjelenített alkalmazás-verzió hibás, a frissítések vagy egyéb problémák miatt.",
   "customLinkMessage": "Ezek a hivatkozások a telepített Updatiummal rendelkező eszközökön működnek",
   "shareAppConfigLinks": "Alkalmazás-konfiguráció megosztása HTML-hivatkozásként",
   "shareSelectedAppURLs": "Kiválasztott alkalmazás hivatkozásának megosztása",
@@ -113,11 +108,7 @@ Ez akkor segíthet, ha az Updatiumban megjelenített alkalmazás-verzió hibás,
   "searchX": "{} keresése",
   "noResults": "Nincs találat",
   "importX": "{} importálása",
-  "importedAppsIdDisclaimer": "Előfordulhat, hogy az importált alkalmazások helytelenül „Nincs telepítve” jelzéssel jelennek meg.
-A probléma megoldásához telepítse újra őket az Updatiumon keresztül.
-Ez nem érinti az alkalmazásadatokat.
-
-Csak a webcímekre és a harmadik féltől származó importálási módszerekre vonatkozik.",
+  "importedAppsIdDisclaimer": "Előfordulhat, hogy az importált alkalmazások helytelenül „Nincs telepítve” jelzéssel jelennek meg.\\nA probléma megoldásához telepítse újra őket az Updatiumon keresztül.\\nEz nem érinti az alkalmazásadatokat.\\n\\nCsak a webcímekre és a harmadik féltől származó importálási módszerekre vonatkozik.",
   "importErrors": "Importálási hibák",
   "importedXOfYApps": "{}/{} alkalmazás importálva.",
   "followingURLsHadErrors": "A következő webcímek hibákat tartalmaztak:",
@@ -354,7 +345,7 @@ Csak a webcímekre és a harmadik féltől származó importálási módszerekre
   "welcome": "Üdvözöljük!",
   "documentationLinksNote": "Az alábbi hivatkozás az Updatium GitHub oldalára vezet, amely további videók, cikkek, beszélgetések és egyéb források hivatkozásait tartalmazza, amelyek segítenek megérteni az alkalmazás használatát.",
   "batteryOptimizationNote": "Megjegyzés: A háttérfrissítések megbízhatóbban működhetnek, ha kikapcsolja a rendszer akkumulátor-optimalizálását az Updatium számára.",
-  "fileDeletionError": "Nem sikerült törölni a fájlt (próbálja meg kézzel törölni, majd próbálja meg újra): \"{}\"",
+  "fileDeletionError": "Nem sikerült törölni a fájlt (próbálja meg kézzel törölni, majd próbálja meg újra): \\\"{}\\\"",
   "foregroundService": "Updatium előtér-szolgáltatás",
   "foregroundServiceExplanation": "Előtér-szolgáltatás használata a frissítések ellenőrzéséhez (megbízhatóbb, de több energiát fogyaszt)",
   "fgServiceNotice": "Ez az értesítés a háttérben történő frissítésellenőrzéshez szükséges (a rendszer beállításaiban elrejthető).",
@@ -362,23 +353,15 @@ Csak a webcímekre és a harmadik féltől származó importálási módszerekre
   "GHReqPrefix": "„sky22333/hubproxy” példány a GitHub lekérdezéséhez",
   "includeZips": "ZIP-fájlok belefoglalása",
   "zippedApkFilterRegEx": "APK-fájlok szűrése a ZIP-fájlon belül",
-  "googleVerificationWarningP1": "A Google bejelentette, hogy 2026/2027-től kezdődően az összes alkalmazáshoz, amely „tanúsított\" (certified) Android eszközökön fut, a fejlesztőknek a személyes azonosító adataikat közvetlenül a Google-nek kell majd benyújtaniuk.
-
-Ezt követően, az Updatium esetleg nem fog működni a tanúsított Android eszközökön.",
+  "googleVerificationWarningP1": "A Google bejelentette, hogy 2026/2027-től kezdődően az összes alkalmazáshoz, amely „tanúsított\\\" (certified) Android eszközökön fut, a fejlesztőknek a személyes azonosító adataikat közvetlenül a Google-nek kell majd benyújtaniuk.\\n\\nEzt követően, az Updatium esetleg nem fog működni a tanúsított Android eszközökön.",
   "googleVerificationWarningP2": "További információkért látogasson el a https://keepandroidopen.org/ weboldalra.",
-  "googleVerificationWarningP3": "Fontos megjegyezni, hogy rövid távon még lehetséges lehet az „ellenőrizetlen” (nem megfelelő) alkalmazások telepítése egy „speciális folyamaton” keresztül, amelyre a Google ígéretet tett, hogy megvalósít a bejelentésüket követő széles körű felháborodás miatt. Azonban azt nem részletezték, hogy hogyan is működne ez, ezért nem világos, hogy ez gyakorlatilag megőrzi-e a felhasználók szabadsághoz való jogait.
-
-Mindenesetre a Google lépése jelentős előrelépés a felhasználók számára elérhető szabad, általános célú alkalmazások megszűnése felé.
-
-A nem tanúsított operációs rendszereket, mint például a GrapheneOS, ez nem érinti mindaddig, amíg működhetnek.",
+  "googleVerificationWarningP3": "Fontos megjegyezni, hogy rövid távon még lehetséges lehet az „ellenőrizetlen” (nem megfelelő) alkalmazások telepítése egy „speciális folyamaton” keresztül, amelyre a Google ígéretet tett, hogy megvalósít a bejelentésüket követő széles körű felháborodás miatt. Azonban azt nem részletezték, hogy hogyan is működne ez, ezért nem világos, hogy ez gyakorlatilag megőrzi-e a felhasználók szabadsághoz való jogait.\\n\\nMindenesetre a Google lépése jelentős előrelépés a felhasználók számára elérhető szabad, általános célú alkalmazások megszűnése felé.\\n\\nA nem tanúsított operációs rendszereket, mint például a GrapheneOS, ez nem érinti mindaddig, amíg működhetnek.",
   "multipleSigners": "Többen is aláírták",
   "securityDisclaimerTitle": "Biztonsági és Jogi Felelősségkorlátozás",
   "license": "Licenc",
   "licenseText": "Ez az alkalmazás a GPL v3 licenc alatt kerül terjesztésre.",
   "disclaimer": "Felelősségkorlátozás",
-  "disclaimerText": "Ez az alkalmazás nem terjeszti, nem hosztolja és nem ellenőrzi a külső alkalmazások egyikét sem. A felhasználó viseli a teljes felelősséget az ezen eszközzel telepített bármely szoftver biztonságáért és jogszerűségéért.
-
-https://github.com/omeritzics/Updatium az Updatium letöltésének egyetlen hivatalos helye - erősen nem javasolt más helyekről letölteni, mivel a nem hivatalos forrásokból történő letöltés nem biztonságos.",
+  "disclaimerText": "Ez az alkalmazás nem terjeszti, nem hosztolja és nem ellenőrzi a külső alkalmazások egyikét sem. A felhasználó viseli a teljes felelősséget az ezen eszközzel telepített bármely szoftver biztonságáért és jogszerűségéért.\\n\\nhttps://github.com/omeritzics/Updatium az Updatium letöltésének egyetlen hivatalos helye - erősen nem javasolt más helyekről letölteni, mivel a nem hivatalos forrásokból történő letöltés nem biztonságos.",
   "privacy": "Adatvédelem",
   "privacyText": "Ez az alkalmazás adatvédelem-központú és nem gyűjt személyes adatokat.",
   "acceptAndContinue": "Elfogadás és folytatás",
@@ -387,12 +370,11 @@ https://github.com/omeritzics/Updatium az Updatium letöltésének egyetlen hiva
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "Alkalmazások",
   "@apps": {
     "plural": {
       "one": "{} alkalmazás",
-      "other": "{} alkalmazás",
+      "other": "{} alkalmazás"
     },
     "placeholders": {
       "count": {
@@ -400,12 +382,11 @@ https://github.com/omeritzics/Updatium az Updatium letöltésének egyetlen hiva
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "{} APK",
-      "other": "{} APK",
+      "other": "{} APK"
     },
     "placeholders": {
       "count": {
@@ -413,12 +394,11 @@ https://github.com/omeritzics/Updatium az Updatium letöltésének egyetlen hiva
       }
     }
   },
-
   "minute": "{} perc",
   "@minute": {
     "plural": {
       "one": "{} perc",
-      "other": "{} perc",
+      "other": "{} perc"
     },
     "placeholders": {
       "count": {
@@ -426,12 +406,11 @@ https://github.com/omeritzics/Updatium az Updatium letöltésének egyetlen hiva
       }
     }
   },
-
   "hour": "{} óra",
   "@hour": {
     "plural": {
       "one": "{} óra",
-      "other": "{} óra",
+      "other": "{} óra"
     },
     "placeholders": {
       "count": {
@@ -439,12 +418,11 @@ https://github.com/omeritzics/Updatium az Updatium letöltésének egyetlen hiva
       }
     }
   },
-
   "day": "{} nap",
   "@day": {
     "plural": {
       "one": "{} nap",
-      "other": "{} nap",
+      "other": "{} nap"
     },
     "placeholders": {
       "count": {

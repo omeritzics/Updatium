@@ -1,6 +1,5 @@
 {
   "@@locale": "ja",
-
   "invalidURLForSource": "{}は有効なソースURLではありません",
   "noReleaseFound": "適切なリリースが見つかりませんでした",
   "noVersionFound": "リリースバージョンを特定できませんでした",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "選択したアプリを削除する",
   "updateX": "{} をアップデートする",
   "installX": "{} をインストールする",
-  "markXTrackOnlyAsUpdated": "{}
-(追跡のみ)
-をアップデート済みとしてマークする",
+  "markXTrackOnlyAsUpdated": "{}\\n(追跡のみ)\\nをアップデート済みとしてマークする",
   "changeX": "{} を変更する",
   "installUpdateApps": "アプリのインストール/アップデート",
   "installUpdateSelectedApps": "選択したアプリのインストール/アップデート",
@@ -79,9 +76,7 @@
   "pinToTop": "トップに固定",
   "unpinFromTop": "トップから固定解除",
   "resetInstallStatusForSelectedAppsQuestion": "選択したアプリのインストール状態をリセットしますか？",
-  "installStatusOfXWillBeResetExplanation": "選択したアプリのインストール状態がリセットされます。
-
-アップデートに失敗した場合など、Updatiumに表示されるアプリのバージョンが正しくない場合に役立ちます。",
+  "installStatusOfXWillBeResetExplanation": "選択したアプリのインストール状態がリセットされます。\\n\\nアップデートに失敗した場合など、Updatiumに表示されるアプリのバージョンが正しくない場合に役立ちます。",
   "customLinkMessage": "これらのリンクはUpdatiumがインストールされたデバイスで動作します",
   "shareAppConfigLinks": "アプリの設定をHTMLリンクとして共有する",
   "shareSelectedAppURLs": "選択したアプリのURLを共有する",
@@ -113,11 +108,7 @@
   "searchX": "{} で検索",
   "noResults": "結果は見つかりませんでした",
   "importX": "{} をインポート",
-  "importedAppsIdDisclaimer": "インポートしたアプリが「未インストール」と表示されることがあります。
-この問題を解決するには、Updatiumから再インストールしてください。
-アプリのデータには影響しません。
-
-URLとサードパーティのインポートメソッドにのみ影響します。",
+  "importedAppsIdDisclaimer": "インポートしたアプリが「未インストール」と表示されることがあります。\\nこの問題を解決するには、Updatiumから再インストールしてください。\\nアプリのデータには影響しません。\\n\\nURLとサードパーティのインポートメソッドにのみ影響します。",
   "importErrors": "インポートエラー",
   "importedXOfYApps": "{} / {} アプリをインポートしました",
   "followingURLsHadErrors": "以下のURLでエラーが発生しました:",
@@ -288,7 +279,7 @@ URLとサードパーティのインポートメソッドにのみ影響しま�
   "autoSelectHighestVersionCode": "最も高いバージョンコードのAPKを自動で選択する",
   "versionExtractionRegEx": "バージョン抽出の正規表現",
   "trimVersionString": "正規表現でバージョン文字列をトリムする",
-  "matchGroupToUseForX": "\"{}\"に使用するマッチしたグループ",
+  "matchGroupToUseForX": "\\\"{}\\\"に使用するマッチしたグループ",
   "matchGroupToUse": "バージョン抽出に使用するマッチしたグループ",
   "highlightTouchTargets": "目立たないタップ可能な対象をハイライトする",
   "pickExportDir": "エクスポートディレクトリを選択",
@@ -336,7 +327,7 @@ URLとサードパーティのインポートメソッドにのみ影響しま�
   "latest": "最新",
   "invertRegEx": "正規表現を反転",
   "note": "注",
-  "selfHostedNote": "ドロップダウン\"{}\"を使用すると、あらゆるソースのセルフホスト/カスタムインスタンスにアクセスできます。",
+  "selfHostedNote": "ドロップダウン\\\"{}\\\"を使用すると、あらゆるソースのセルフホスト/カスタムインスタンスにアクセスできます。",
   "badDownload": "APK を解析できませんでした（互換性がないか、部分的にダウンロードされています）。",
   "beforeNewInstallsShareToAppVerifier": "AppVerifierで新しいアプリを共有する（利用可能な場合）",
   "appVerifierInstructionToast": "AppVerifierに共有し、準備ができたらここに戻ってください。",
@@ -354,7 +345,7 @@ URLとサードパーティのインポートメソッドにのみ影響しま�
   "welcome": "ようこそ",
   "documentationLinksNote": "以下のリンクにあるUpdatium GitHubページには、ビデオ、記事、ディスカッション、その他のリソースへのリンクがあり、アプリの使い方を理解するのに役立ちます。",
   "batteryOptimizationNote": "Updatiumの設定で「フォアグラウンドサービス」に切り替えるか、OSの設定でバッテリー最適化を無効にすると、バックグラウンドダウンロードがより確実に動作するようになります。",
-  "fileDeletionError": "ファイルの削除に失敗しました（手動で削除してから再試行してください）：\"{}\"",
+  "fileDeletionError": "ファイルの削除に失敗しました（手動で削除してから再試行してください）：\\\"{}\\\"",
   "foregroundService": "Updatium フォアグラウンドサービス",
   "foregroundServiceExplanation": "アップデート確認にフォアグラウンドサービスを使用する（より信頼性が高いが、より電力を消費する）",
   "fgServiceNotice": "この通知は、バックグラウンドでアップデートを確認するために必要です（OSの設定で非表示にできます）。",
@@ -362,23 +353,15 @@ URLとサードパーティのインポートメソッドにのみ影響しま�
   "GHReqPrefix": "GitHub リクエスト用の 'sky22333/hubproxy' インスタンス",
   "includeZips": "ZIPファイルを含む",
   "zippedApkFilterRegEx": "ZIP内のAPKをフィルタリングする",
-  "googleVerificationWarningP1": "Googleは、2026年から2027年以降、「認定」Androidデバイス上のすべてのアプリにおいて、開発者が個人情報をGoogleに直接提出することを義務付けると発表しました。
-
-その後、Updatiumは認定Androidデバイスで動作しなくなる可能性があります。",
+  "googleVerificationWarningP1": "Googleは、2026年から2027年以降、「認定」Androidデバイス上のすべてのアプリにおいて、開発者が個人情報をGoogleに直接提出することを義務付けると発表しました。\\n\\nその後、Updatiumは認定Androidデバイスで動作しなくなる可能性があります。",
   "googleVerificationWarningP2": "詳細については、https://keepandroidopen.org/ をご覧ください。",
-  "googleVerificationWarningP3": "なお、短期的には、Googleが発表後に広範な反発を受けて実装を約束した「高度なフロー」プロセスを通じて、「未検証」（非準拠）のアプリをインストールし続けることが可能になるかもしれません。しかし、その具体的な仕組みは明らかにされておらず、ユーザーの自由が実質的に保たれるかどうかは不明です。
-
-いずれにせよ、Googleのこの動きは、個人向けの自由な汎用コンピューティングの終焉に向けた大きな一歩です。
-
-GrapheneOSのような非認定OSは、その存在が許される限り、この影響を受けないはずです。",
+  "googleVerificationWarningP3": "なお、短期的には、Googleが発表後に広範な反発を受けて実装を約束した「高度なフロー」プロセスを通じて、「未検証」（非準拠）のアプリをインストールし続けることが可能になるかもしれません。しかし、その具体的な仕組みは明らかにされておらず、ユーザーの自由が実質的に保たれるかどうかは不明です。\\n\\nいずれにせよ、Googleのこの動きは、個人向けの自由な汎用コンピューティングの終焉に向けた大きな一歩です。\\n\\nGrapheneOSのような非認定OSは、その存在が許される限り、この影響を受けないはずです。",
   "multipleSigners": "複数の署名者",
   "securityDisclaimerTitle": "セキュリティおよび法的免責事項",
   "license": "ライセンス",
   "licenseText": "このアプリケーションはGPL v3ライセンスの下で配布されています。",
   "disclaimer": "免責事項",
-  "disclaimerText": "このアプリケーションは外部アプリケーションを配布、ホスト、または検証しません。ユーザーはこのツールを通じてインストールされたソフトウェアの安全性と合法性について全責任を負います。
-
-https://github.com/omeritzics/Updatium はUpdatiumをダウンロードする唯一の公式場所です - 非公式のソースからダウンロードすることは安全ではないため、他の場所からダウンロードすることは強くお勧めしません。",
+  "disclaimerText": "このアプリケーションは外部アプリケーションを配布、ホスト、または検証しません。ユーザーはこのツールを通じてインストールされたソフトウェアの安全性と合法性について全責任を負います。\\n\\nhttps://github.com/omeritzics/Updatium はUpdatiumをダウンロードする唯一の公式場所です - 非公式のソースからダウンロードすることは安全ではないため、他の場所からダウンロードすることは強くお勧めしません。",
   "privacy": "プライバシー",
   "privacyText": "このアプリはプライバシー重視で、個人データを収集しません。",
   "acceptAndContinue": "同意して続行",
@@ -387,11 +370,10 @@ https://github.com/omeritzics/Updatium はUpdatiumをダウンロードする唯
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "アプリ",
   "@apps": {
     "plural": {
-      "other": "{} 個のアプリ",
+      "other": "{} 個のアプリ"
     },
     "placeholders": {
       "count": {
@@ -399,11 +381,10 @@ https://github.com/omeritzics/Updatium はUpdatiumをダウンロードする唯
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
-      "other": "{} APK",
+      "other": "{} APK"
     },
     "placeholders": {
       "count": {
@@ -411,11 +392,10 @@ https://github.com/omeritzics/Updatium はUpdatiumをダウンロードする唯
       }
     }
   },
-
   "minute": "{} 分",
   "@minute": {
     "plural": {
-      "other": "{} 分",
+      "other": "{} 分"
     },
     "placeholders": {
       "count": {
@@ -423,11 +403,10 @@ https://github.com/omeritzics/Updatium はUpdatiumをダウンロードする唯
       }
     }
   },
-
   "hour": "{} 時間",
   "@hour": {
     "plural": {
-      "other": "{} 時間",
+      "other": "{} 時間"
     },
     "placeholders": {
       "count": {
@@ -435,11 +414,10 @@ https://github.com/omeritzics/Updatium はUpdatiumをダウンロードする唯
       }
     }
   },
-
   "day": "{} 日",
   "@day": {
     "plural": {
-      "other": "{} 日",
+      "other": "{} 日"
     },
     "placeholders": {
       "count": {

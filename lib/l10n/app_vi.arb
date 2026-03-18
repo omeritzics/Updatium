@@ -1,6 +1,5 @@
 {
   "@@locale": "vi",
-
   "invalidURLForSource": "URL ứng dụng {} không hợp lệ",
   "noReleaseFound": "Không thể tìm thấy bản phát hành phù hợp",
   "noVersionFound": "Không thể xác định phiên bản phát hành",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "Xóa ứng dụng đã chọn",
   "updateX": "Cập nhật {}",
   "installX": "Cài đặt {}",
-  "markXTrackOnlyAsUpdated": "Đánh dấu {}
-(Chỉ theo dõi)
-như là đã cập nhật",
+  "markXTrackOnlyAsUpdated": "Đánh dấu {}\\n(Chỉ theo dõi)\\nnhư là đã cập nhật",
   "changeX": "Thay đổi {}",
   "installUpdateApps": "Cài đặt/Cập nhật ứng dụng",
   "installUpdateSelectedApps": "Cài đặt/Cập nhật ứng dụng đã chọn",
@@ -79,9 +76,7 @@ như là đã cập nhật",
   "pinToTop": "Ghim đầu trang",
   "unpinFromTop": "Bỏ ghim khỏi đầu trang",
   "resetInstallStatusForSelectedAppsQuestion": "Đặt lại trạng thái cài đặt cho ứng dụng đã chọn?",
-  "installStatusOfXWillBeResetExplanation": "Trạng thái cài đặt của mọi Ứng dụng đã chọn sẽ được đặt lại.
-
-Điều này có thể hữu ích khi phiên bản Ứng dụng hiển thị trong Updatium không chính xác do cập nhật không thành công hoặc các sự cố khác.",
+  "installStatusOfXWillBeResetExplanation": "Trạng thái cài đặt của mọi Ứng dụng đã chọn sẽ được đặt lại.\\n\\nĐiều này có thể hữu ích khi phiên bản Ứng dụng hiển thị trong Updatium không chính xác do cập nhật không thành công hoặc các sự cố khác.",
   "customLinkMessage": "Các liên kết này hoạt động trên các thiết bị có cài đặt Updatium",
   "shareAppConfigLinks": "Chia sẻ cấu hình ứng dụng dưới dạng liên kết HTML",
   "shareSelectedAppURLs": "Chia sẻ URL ứng dụng đã chọn",
@@ -113,11 +108,7 @@ như là đã cập nhật",
   "searchX": "Tìm kiếm {}",
   "noResults": "Không có kết quả nào được tìm thấy",
   "importX": "Nhập {}",
-  "importedAppsIdDisclaimer": "Ứng dụng đã nhập có thể hiển thị không chính xác là \"Chưa được cài đặt\".
-Để khắc phục sự cố này, hãy cài đặt lại chúng thông qua Updatium.
-Điều này sẽ không ảnh hưởng đến dữ liệu Ứng dụng.
-
-Chỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba.",
+  "importedAppsIdDisclaimer": "Ứng dụng đã nhập có thể hiển thị không chính xác là \\\"Chưa được cài đặt\\\".\\nĐể khắc phục sự cố này, hãy cài đặt lại chúng thông qua Updatium.\\nĐiều này sẽ không ảnh hưởng đến dữ liệu Ứng dụng.\\n\\nChỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba.",
   "importErrors": "Lỗi nhập",
   "importedXOfYApps": "{} trong số {} Ứng dụng đã được nhập.",
   "followingURLsHadErrors": "Các URL sau có lỗi:",
@@ -288,7 +279,7 @@ Chỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba."
   "autoSelectHighestVersionCode": "Tự động chọn APK mã phiên bản cao nhất",
   "versionExtractionRegEx": "Trích xuất phiên bản RegEx",
   "trimVersionString": "Cắt chuỗi phiên bản bằng RegEx",
-  "matchGroupToUseForX": "Nhóm khớp được dùng cho \"{}\"",
+  "matchGroupToUseForX": "Nhóm khớp được dùng cho \\\"{}\\\"",
   "matchGroupToUse": "Nhóm đối sánh để sử dụng cho Regex trích xuất phiên bản",
   "highlightTouchTargets": "Đánh dấu các mục tiêu cảm ứng ít rõ ràng hơn",
   "pickExportDir": "Chọn thư mục xuất",
@@ -336,7 +327,7 @@ Chỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba."
   "latest": "Mới nhất",
   "invertRegEx": "Đảo ngược biểu thức chính quy",
   "note": "Ghi chú",
-  "selfHostedNote": "Trình đơn thả xuống \"{}\" có thể được dùng để tiếp cận các phiên bản tự lưu trữ/tùy chỉnh của bất kỳ nguồn nào.",
+  "selfHostedNote": "Trình đơn thả xuống \\\"{}\\\" có thể được dùng để tiếp cận các phiên bản tự lưu trữ/tùy chỉnh của bất kỳ nguồn nào.",
   "badDownload": "Không thể phân tích cú pháp APK (tải xuống một phần hoặc không tương thích)",
   "beforeNewInstallsShareToAppVerifier": "Chia sẻ ứng dụng mới với AppVerifier (nếu có)",
   "appVerifierInstructionToast": "Chia sẻ lên AppVerifier, sau đó quay lại đây khi sẵn sàng.",
@@ -354,7 +345,7 @@ Chỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba."
   "welcome": "Chào mừng",
   "documentationLinksNote": "Trang GitHub của Updatium được liên kết bên dưới chứa các liên kết đến video, bài viết, thảo luận và các tài nguyên khác sẽ giúp bạn hiểu cách sử dụng ứng dụng.",
   "batteryOptimizationNote": "Lưu ý: tải xuống nền có thể hoạt động ổn định hơn nếu bạn tắt tối ưu pin của hệ điều hành cho Updatium.",
-  "fileDeletionError": "Không thể xóa tệp (hãy thử xóa tệp thủ công rồi thử lại): \"{}\"",
+  "fileDeletionError": "Không thể xóa tệp (hãy thử xóa tệp thủ công rồi thử lại): \\\"{}\\\"",
   "foregroundService": "Dịch vụ nền Updatium",
   "foregroundServiceExplanation": "Sử dụng dịch vụ nền trước để kiểm tra cập nhật (đáng tin cậy hơn, tiêu tốn nhiều pin hơn)",
   "fgServiceNotice": "Thông báo này là bắt buộc để kiểm tra cập nhật nền (có thể ẩn trong cài đặt hệ điều hành).",
@@ -362,23 +353,15 @@ Chỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba."
   "GHReqPrefix": "Thực thể 'sky22333/hubproxy' cho các yêu cầu GitHub",
   "includeZips": "Bao gồm các tệp ZIP",
   "zippedApkFilterRegEx": "Lọc các tệp APK bên trong tệp ZIP",
-  "googleVerificationWarningP1": "Google đã thông báo rằng, bắt đầu từ năm 2026/2027, tất cả các ứng dụng trên các thiết bị Android được chứng nhận sẽ yêu cầu nhà phát triển gửi thông tin cá nhân trực tiếp đến Google.
-
-Sau đó, Updatium có thể ngừng hoạt động trên các thiết bị Android được chứng nhận.",
+  "googleVerificationWarningP1": "Google đã thông báo rằng, bắt đầu từ năm 2026/2027, tất cả các ứng dụng trên các thiết bị Android được chứng nhận sẽ yêu cầu nhà phát triển gửi thông tin cá nhân trực tiếp đến Google.\\n\\nSau đó, Updatium có thể ngừng hoạt động trên các thiết bị Android được chứng nhận.",
   "googleVerificationWarningP2": "Truy cập https://keepandroidopen.org/ để biết thêm thông tin.",
-  "googleVerificationWarningP3": "Ghi chú rằng trong ngắn hạn, nó có thể tiếp tục có thể được tiếp tục để cài đặt các ứng dụng \"không xác định\" thông qua một quá trình \"vô hạn dòng chảy\" mà Google đã hứa sẽ thực hiện sau một hồi quy rộng cho thông báo của họ, nhưng họ không có chi tiết làm thế nào điều này sẽ hoạt động như thế nào vì vậy nó không rõ ràng nó sẽ thực sự bảo tồn tự do cho người dùng theo bất kỳ cách thực tế nào.
-
-Trong bất kỳ trường hợp nào, sự di chuyển của Google là một bước tiến đáng kể tới sự kết thúc của máy tính tự do, mục đích chung cho cá nhân.
-
-Các hệ điều hành không được ghi nhận, giống như GreneOS, nên không bị ảnh hưởng bởi điều này miễn là chúng được cho phép tiếp tục tồn tại.",
+  "googleVerificationWarningP3": "Ghi chú rằng trong ngắn hạn, nó có thể tiếp tục có thể được tiếp tục để cài đặt các ứng dụng \\\"không xác định\\\" thông qua một quá trình \\\"vô hạn dòng chảy\\\" mà Google đã hứa sẽ thực hiện sau một hồi quy rộng cho thông báo của họ, nhưng họ không có chi tiết làm thế nào điều này sẽ hoạt động như thế nào vì vậy nó không rõ ràng nó sẽ thực sự bảo tồn tự do cho người dùng theo bất kỳ cách thực tế nào.\\n\\nTrong bất kỳ trường hợp nào, sự di chuyển của Google là một bước tiến đáng kể tới sự kết thúc của máy tính tự do, mục đích chung cho cá nhân.\\n\\nCác hệ điều hành không được ghi nhận, giống như GreneOS, nên không bị ảnh hưởng bởi điều này miễn là chúng được cho phép tiếp tục tồn tại.",
   "multipleSigners": "Nhiều người ký",
   "securityDisclaimerTitle": "Tuyên bố Từ chối Trách nhiệm Bảo mật và Pháp lý",
   "license": "Giấy phép",
   "licenseText": "Ứng dụng này được phân phối theo Giấy phép GPL v3.",
   "disclaimer": "Tuyên bố từ chối trách nhiệm",
-  "disclaimerText": "Ứng dụng này không phân phối, lưu trữ hoặc xác minh bất kỳ ứng dụng bên ngoài nào. Người dùng mang toàn bộ trách nhiệm về sự an toàn và tính hợp pháp của bất kỳ phần mềm nào được cài đặt thông qua công cụ này.
-
-https://github.com/omeritzics/Updatium là nơi chính thức duy nhất để tải xuống Updatium - rất không khuyến khích tải xuống từ nơi khác vì việc tải xuống từ các nguồn không chính thức không an toàn.",
+  "disclaimerText": "Ứng dụng này không phân phối, lưu trữ hoặc xác minh bất kỳ ứng dụng bên ngoài nào. Người dùng mang toàn bộ trách nhiệm về sự an toàn và tính hợp pháp của bất kỳ phần mềm nào được cài đặt thông qua công cụ này.\\n\\nhttps://github.com/omeritzics/Updatium là nơi chính thức duy nhất để tải xuống Updatium - rất không khuyến khích tải xuống từ nơi khác vì việc tải xuống từ các nguồn không chính thức không an toàn.",
   "privacy": "Quyền riêng tư",
   "privacyText": "Ứng dụng này tập trung vào quyền riêng tư và không thu thập dữ liệu cá nhân.",
   "acceptAndContinue": "Chấp nhận và tiếp tục",
@@ -387,12 +370,11 @@ https://github.com/omeritzics/Updatium là nơi chính thức duy nhất để t
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "Ứng dụng",
   "@apps": {
     "plural": {
       "one": "{} Ứng dụng",
-      "other": "{} Ứng dụng",
+      "other": "{} Ứng dụng"
     },
     "placeholders": {
       "count": {
@@ -400,12 +382,11 @@ https://github.com/omeritzics/Updatium là nơi chính thức duy nhất để t
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "{} APK",
-      "other": "{} APKs",
+      "other": "{} APKs"
     },
     "placeholders": {
       "count": {
@@ -413,12 +394,11 @@ https://github.com/omeritzics/Updatium là nơi chính thức duy nhất để t
       }
     }
   },
-
   "minute": "{} phút",
   "@minute": {
     "plural": {
       "one": "{} phút",
-      "other": "{} phút",
+      "other": "{} phút"
     },
     "placeholders": {
       "count": {
@@ -426,12 +406,11 @@ https://github.com/omeritzics/Updatium là nơi chính thức duy nhất để t
       }
     }
   },
-
   "hour": "{} giờ",
   "@hour": {
     "plural": {
       "one": "{} giờ",
-      "other": "{} giờ",
+      "other": "{} giờ"
     },
     "placeholders": {
       "count": {
@@ -439,12 +418,11 @@ https://github.com/omeritzics/Updatium là nơi chính thức duy nhất để t
       }
     }
   },
-
   "day": "{} ngày",
   "@day": {
     "plural": {
       "one": "{} ngày",
-      "other": "{} ngày",
+      "other": "{} ngày"
     },
     "placeholders": {
       "count": {

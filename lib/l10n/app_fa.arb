@@ -1,6 +1,5 @@
 {
   "@@locale": "fa",
-
   "invalidURLForSource": "آدرس اینترنتی برنامه {} معتبر نیست",
   "noReleaseFound": "نسخه مناسبی پیدا نشد",
   "noVersionFound": "نمی توان نسخه منتشر شده را تعیین کرد",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "حذف برنامه های انتخاب شده",
   "updateX": "به روز رسانی {}",
   "installX": "نصب {}",
-  "markXTrackOnlyAsUpdated": "علامت {}
-(فقط ردیابی)
-بروز شده",
+  "markXTrackOnlyAsUpdated": "علامت {}\\n(فقط ردیابی)\\nبروز شده",
   "changeX": "تغییر دادن {}",
   "installUpdateApps": "نصب/به‌روزرسانی برنامه‌ها",
   "installUpdateSelectedApps": "برنامه‌های انتخابی را نصب/به‌روزرسانی کنید",
@@ -79,9 +76,7 @@
   "pinToTop": "پین به بالا",
   "unpinFromTop": "برداشتن پین از بالا",
   "resetInstallStatusForSelectedAppsQuestion": "وضعیت نصب برنامه‌های انتخابی بازنشانی شود؟",
-  "installStatusOfXWillBeResetExplanation": "وضعیت نصب برنامه‌های انتخاب‌شده بازنشانی می‌شود.
-
-اگر نسخه برنامه نشان‌داده‌شده در Updatium به دلیل به‌روزرسانی‌های ناموفق یا مشکلات دیگر نادرست باشد، می‌تواند کمک کند.",
+  "installStatusOfXWillBeResetExplanation": "وضعیت نصب برنامه‌های انتخاب‌شده بازنشانی می‌شود.\\n\\nاگر نسخه برنامه نشان‌داده‌شده در Updatium به دلیل به‌روزرسانی‌های ناموفق یا مشکلات دیگر نادرست باشد، می‌تواند کمک کند.",
   "customLinkMessage": "این پیوندها بر روی دستگاه هایی با Updatium نصب شده کار می کنند",
   "shareAppConfigLinks": "اشتراک گذاری پیکربندی برنامه به عنوان پیوند HTML",
   "shareSelectedAppURLs": "اشتراک گذاری آدرس اینترنتی برنامه های انتخاب شده",
@@ -113,11 +108,7 @@
   "searchX": "جستجو {}",
   "noResults": "نتیجه ای پیدا نشد",
   "importX": " وارد کردن {}",
-  "importedAppsIdDisclaimer": "ممکن است برنامه‌های وارد شده به اشتباه به‌عنوان \"نصب نشده\" نشان داده شوند.
-برای رفع این مشکل، آنها را دوباره از طریق Updatium نصب کنید.
-این نباید روی داده‌های برنامه تأثیر بگذارد.
-
-فقط بر روی آدرس اینترنتی و روش‌های درون ریزی شخص ثالث تأثیر می‌گذارد.",
+  "importedAppsIdDisclaimer": "ممکن است برنامه‌های وارد شده به اشتباه به‌عنوان \\\"نصب نشده\\\" نشان داده شوند.\\nبرای رفع این مشکل، آنها را دوباره از طریق Updatium نصب کنید.\\nاین نباید روی داده‌های برنامه تأثیر بگذارد.\\n\\nفقط بر روی آدرس اینترنتی و روش‌های درون ریزی شخص ثالث تأثیر می‌گذارد.",
   "importErrors": "خطاهای وارد کردن",
   "importedXOfYApps": "{} از {} برنامه وارد شد.",
   "followingURLsHadErrors": "آدرس های اینترنتی زیر دارای خطا بودند:",
@@ -159,7 +150,7 @@
   "deviceSupportsXArch": "دستگاه شما از معماری پردازنده {} پشتیبانی میکند",
   "deviceSupportsFollowingArchs": "دستگاه شما از معماری های پردازنده زیر پشتیبانی می کند:",
   "warning": "اخطار",
-  "sourceIsXButPackageFromYPrompt": "منبع برنامه \"{}\" است اما بسته انتشار از \"{}\" آمده است. ادامه هید؟",
+  "sourceIsXButPackageFromYPrompt": "منبع برنامه \\\"{}\\\" است اما بسته انتشار از \\\"{}\\\" آمده است. ادامه هید؟",
   "updatesAvailable": "بروزرسانی در دسترس ",
   "updatesAvailableNotifDescription": "به کاربر اطلاع می دهد که به روز رسانی برای یک یا چند برنامه ردیابی شده توسط Updatium در دسترس است",
   "noNewUpdates": "به روز رسانی جدیدی وجود ندارد.",
@@ -276,7 +267,7 @@
   "enableBackgroundUpdates": "به روز رسانی پس زمینه را فعال کنید",
   "backgroundUpdateReqsExplanation": "به روز رسانی پس زمینه ممکن است برای همه برنامه ها امکان پذیر نباشد.",
   "backgroundUpdateLimitsExplanation": "موفقیت نصب پس‌زمینه تنها زمانی مشخص می‌شود که Updatium باز شود.",
-  "verifyLatestTag": "برچسب \"آخرین\" را تأیید کنید",
+  "verifyLatestTag": "برچسب \\\"آخرین\\\" را تأیید کنید",
   "intermediateLinkRegex": "برای بازدید از پیوند «میانگین» فیلتر کنید",
   "filterByLinkText": "لینک ها را بر اساس متن پیوند فیلتر کنید",
   "matchLinksOutsideATags": "لینک های خارج از تگ های <a>",
@@ -288,7 +279,7 @@
   "autoSelectHighestVersionCode": "انتخاب خودکار بالاترین نسخه کد APK",
   "versionExtractionRegEx": "نسخه استخراج RegEx",
   "trimVersionString": "برش رشته نسخه با RegEx",
-  "matchGroupToUseForX": "مطابقت دادن گروه برای استفاده برای \"{}\"",
+  "matchGroupToUseForX": "مطابقت دادن گروه برای استفاده برای \\\"{}\\\"",
   "matchGroupToUse": "گروه مورد استفاده را مطابقت دهید",
   "highlightTouchTargets": "اهداف لمسی کمتر واضح را برجسته کنید",
   "pickExportDir": "فهرست صادر کردن را انتخاب کنید",
@@ -336,7 +327,7 @@
   "latest": "آخرین",
   "invertRegEx": "معکوس کردن عبارت منظم",
   "note": "یادداشت",
-  "selfHostedNote": "از منوی کرکره ای \"{}\" می توان برای دسترسی به نمونه های خود میزبانی/سفارشی از هر منبعی استفاده کرد.",
+  "selfHostedNote": "از منوی کرکره ای \\\"{}\\\" می توان برای دسترسی به نمونه های خود میزبانی/سفارشی از هر منبعی استفاده کرد.",
   "badDownload": "APK قابل تجزیه نیست (دانلود ناسازگار یا جزئی)",
   "beforeNewInstallsShareToAppVerifier": "اشتراک‌گذاری برنامه‌های جدید با AppVerifier (در صورت وجود)",
   "appVerifierInstructionToast": "در AppVerifier به اشتراک بگذارید، سپس پس از آماده شدن به اینجا برگردید.",
@@ -362,23 +353,15 @@
   "GHReqPrefix": "مثال “sky22333/hubproxy”",
   "includeZips": "فایل های ZIP",
   "zippedApkFilterRegEx": "فیلتر APK در داخل Zip",
-  "googleVerificationWarningP1": "گوگل اعلام کرده است که از سال 2026/2027، تمام برنامه های موجود در دستگاه های اندرویدی معتبر نیاز به توسعه دهنده دارند تا جزئیات هویت شخصی را مستقیماً به گوگل ارسال کنند.
-
-پس از آن، Updatium ممکن است در دستگاه های اندرویدی گواهی شده کار نکند.",
+  "googleVerificationWarningP1": "گوگل اعلام کرده است که از سال 2026/2027، تمام برنامه های موجود در دستگاه های اندرویدی معتبر نیاز به توسعه دهنده دارند تا جزئیات هویت شخصی را مستقیماً به گوگل ارسال کنند.\\n\\nپس از آن، Updatium ممکن است در دستگاه های اندرویدی گواهی شده کار نکند.",
   "googleVerificationWarningP2": "به https://Keepandroidopen.org یا برای اطلاعات بیشتر بروید.",
-  "googleVerificationWarningP3": "توجه داشته باشید که در کوتاه مدت، ممکن است همچنان برای نصب برنامه های \"unverified\" (غیر سازگار) از طریق یک فرایند \"advanced Flow\" که گوگل وعده داده است پس از واکنش گسترده به اعلام خود اجرا کند، اما آنها جزئیات چگونگی کار این را به طوری که مشخص نیست که آیا آن واقعا حفظ آزادی های کاربر در هر روش عملی.
-
-در هر صورت، حرکت گوگل یک گام مهم به سمت پایان محاسبات رایگان و عمومی برای افراد است.
-
-سیستم عامل های غیر گواهی شده، مانند گرافنموس، باید تا زمانی که اجازه دارند به وجود خود ادامه دهند، تحت تاثیر قرار گیرند.",
+  "googleVerificationWarningP3": "توجه داشته باشید که در کوتاه مدت، ممکن است همچنان برای نصب برنامه های \\\"unverified\\\" (غیر سازگار) از طریق یک فرایند \\\"advanced Flow\\\" که گوگل وعده داده است پس از واکنش گسترده به اعلام خود اجرا کند، اما آنها جزئیات چگونگی کار این را به طوری که مشخص نیست که آیا آن واقعا حفظ آزادی های کاربر در هر روش عملی.\\n\\nدر هر صورت، حرکت گوگل یک گام مهم به سمت پایان محاسبات رایگان و عمومی برای افراد است.\\n\\nسیستم عامل های غیر گواهی شده، مانند گرافنموس، باید تا زمانی که اجازه دارند به وجود خود ادامه دهند، تحت تاثیر قرار گیرند.",
   "multipleSigners": "ثبت نام های متعدد",
   "securityDisclaimerTitle": "سلب مسئولیت امنیتی و حقوقی",
   "license": "مجوز",
   "licenseText": "این برنامه تحت مجوز GPL v3 توزیع شده است.",
   "disclaimer": "سلب مسئولیت",
-  "disclaimerText": "این برنامه هیچ یک از برنامه‌های خارجی را توزیع، میزبانی یا تأیید نمی‌کند. کاربر مسئولیت کامل امنیت و قانونی بودن هر نرم‌افزاری که از طریق این ابزار نصب می‌شود را بر عهده دارد.
-
-https://github.com/omeritzics/Updatium تنها مکان رسمی برای دانلود Updatium است - به شدت توصیه می‌شود آن را از جاهای دیگر دانلود نکنید زیرا دانلود از منابع غیررسمی ناامن است.",
+  "disclaimerText": "این برنامه هیچ یک از برنامه‌های خارجی را توزیع، میزبانی یا تأیید نمی‌کند. کاربر مسئولیت کامل امنیت و قانونی بودن هر نرم‌افزاری که از طریق این ابزار نصب می‌شود را بر عهده دارد.\\n\\nhttps://github.com/omeritzics/Updatium تنها مکان رسمی برای دانلود Updatium است - به شدت توصیه می‌شود آن را از جاهای دیگر دانلود نکنید زیرا دانلود از منابع غیررسمی ناامن است.",
   "privacy": "حریم خصوصی",
   "privacyText": "این برنامه متمرکز بر حریم خصوصی است و داده‌های شخصی جمع‌آوری نمی‌کند.",
   "acceptAndContinue": "پذیرش و ادامه",
@@ -387,12 +370,11 @@ https://github.com/omeritzics/Updatium تنها مکان رسمی برای دا�
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "برنامه ها",
   "@apps": {
     "plural": {
       "one": "برنامه {}",
-      "other": "{} برنامه ها",
+      "other": "{} برنامه ها"
     },
     "placeholders": {
       "count": {
@@ -400,12 +382,11 @@ https://github.com/omeritzics/Updatium تنها مکان رسمی برای دا�
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "{} APK",
-      "other": "{} APKs",
+      "other": "{} APKs"
     },
     "placeholders": {
       "count": {
@@ -413,12 +394,11 @@ https://github.com/omeritzics/Updatium تنها مکان رسمی برای دا�
       }
     }
   },
-
   "minute": "{} دقیقه",
   "@minute": {
     "plural": {
       "one": "{} دقیقه",
-      "other": "{} دقیقه",
+      "other": "{} دقیقه"
     },
     "placeholders": {
       "count": {
@@ -426,12 +406,11 @@ https://github.com/omeritzics/Updatium تنها مکان رسمی برای دا�
       }
     }
   },
-
   "hour": "{} ساعت",
   "@hour": {
     "plural": {
       "one": "{} ساعت",
-      "other": "{} ساعت",
+      "other": "{} ساعت"
     },
     "placeholders": {
       "count": {
@@ -439,12 +418,11 @@ https://github.com/omeritzics/Updatium تنها مکان رسمی برای دا�
       }
     }
   },
-
   "day": "{} روز",
   "@day": {
     "plural": {
       "one": "{} روز",
-      "other": "{} روز",
+      "other": "{} روز"
     },
     "placeholders": {
       "count": {

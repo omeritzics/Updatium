@@ -1,6 +1,5 @@
 {
   "@@locale": "ar",
-
   "invalidURLForSource": "رابط تطبيق {} غير صالح",
   "noReleaseFound": "تعذر العثور على إصدار مناسب",
   "noVersionFound": "تعذر تحديد إصدار التطبيق",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "أزل التطبيقات المحددة",
   "updateX": "حدِّث {}",
   "installX": "ثبِّت {}",
-  "markXTrackOnlyAsUpdated": "علِّم {}
-(للتعقب فقط)
-كمحدث",
+  "markXTrackOnlyAsUpdated": "علِّم {}\\n(للتعقب فقط)\\nكمحدث",
   "changeX": "غيِّر {}",
   "installUpdateApps": "ثبِّت/حدِّث التطبيقات",
   "installUpdateSelectedApps": "ثبِّت/حدِّث التطبيقات المحددة",
@@ -79,9 +76,7 @@
   "pinToTop": "تثبيت في الأعلى",
   "unpinFromTop": "إلغاء التثبيت من الأعلى",
   "resetInstallStatusForSelectedAppsQuestion": "إعادة تعيين حالة التثبيت للتطبيقات المحددة؟",
-  "installStatusOfXWillBeResetExplanation": "سيتم إعادة تعيين حالة التثبيت لأي تطبيقات محددة.
-
-قد يساعد هذا عندما يكون إصدار التطبيق المعروض في Updatium غير صحيح بسبب فشل التحديثات أو مشاكل أخرى.",
+  "installStatusOfXWillBeResetExplanation": "سيتم إعادة تعيين حالة التثبيت لأي تطبيقات محددة.\\n\\nقد يساعد هذا عندما يكون إصدار التطبيق المعروض في Updatium غير صحيح بسبب فشل التحديثات أو مشاكل أخرى.",
   "customLinkMessage": "هذه الروابط تعمل على الأجهزة التي بها Updatium مثبتًا",
   "shareAppConfigLinks": "مشاركة تكوين التطبيق كرابط HTML",
   "shareSelectedAppURLs": "مشاركة روابط التطبيقات المحددة",
@@ -113,11 +108,7 @@
   "searchX": "بحث {}",
   "noResults": "لا توجد نتائج",
   "importX": "استيراد {}",
-  "importedAppsIdDisclaimer": "قد تظهر التطبيقات المستوردة بشكل غير صحيح كـ \"غير مثبتة\".
-لإصلاح هذا، قم بإعادة تثبيتها عبر Updatium.
-هذا لا يؤثر على بيانات التطبيق.
-
-ينطبق فقط على طرق الاستيراد عبر الروابط أو الطرف الثالث.",
+  "importedAppsIdDisclaimer": "قد تظهر التطبيقات المستوردة بشكل غير صحيح كـ \\\"غير مثبتة\\\".\\nلإصلاح هذا، قم بإعادة تثبيتها عبر Updatium.\\nهذا لا يؤثر على بيانات التطبيق.\\n\\nينطبق فقط على طرق الاستيراد عبر الروابط أو الطرف الثالث.",
   "importErrors": "أخطاء الاستيراد",
   "importedXOfYApps": "استوردت {} من {} تطبيقات.",
   "followingURLsHadErrors": "حدثت أخطاء في الروابط التالية:",
@@ -288,7 +279,7 @@
   "autoSelectHighestVersionCode": "تحديد أعلى إصدار تلقائيًا",
   "versionExtractionRegEx": "تعبير نمطي لاستخراج الإصدار",
   "trimVersionString": "قص سلسلة الإصدار باستخدام تعبير نمطي",
-  "matchGroupToUseForX": "مجموعة المطابقة لاستخدامها لـ \"{}\"",
+  "matchGroupToUseForX": "مجموعة المطابقة لاستخدامها لـ \\\"{}\\\"",
   "matchGroupToUse": "مجموعة المطابقة لاستخدامها في تعبير استخراج الإصدار",
   "highlightTouchTargets": "تمييز أهداف اللمس الأقل وضوحًا",
   "pickExportDir": "اختر دليل التصدير",
@@ -336,7 +327,7 @@
   "latest": "الأحدث",
   "invertRegEx": "اعكس التعبير النمطي",
   "note": "ملاحظة",
-  "selfHostedNote": "يمكن استخدام القائمة المنسدلة \"{}\" للوصول إلى نسخ مخصصة/مستضافة ذاتيًا لأي مصدر.",
+  "selfHostedNote": "يمكن استخدام القائمة المنسدلة \\\"{}\\\" للوصول إلى نسخ مخصصة/مستضافة ذاتيًا لأي مصدر.",
   "badDownload": "تعذر تحليل ملف APK (تنزيل غير متوافق أو غير مكتمل)",
   "beforeNewInstallsShareToAppVerifier": "مشاركة التطبيقات الجديدة مع AppVerifier (إذا كان متاحًا)",
   "appVerifierInstructionToast": "شارك مع AppVerifier، ثم عد هنا عندما تكون جاهزًا.",
@@ -354,31 +345,23 @@
   "welcome": "مرحبًا",
   "documentationLinksNote": "تحتوي صفحة Updatium على GitHub المرتبطة أدناه على روابط لمقاطع فيديو، مقالات، مناقشات وموارد أخرى ستساعدك على فهم كيفية استخدام التطبيق.",
   "batteryOptimizationNote": "لاحظ أن التنزيلات في الخلفية قد تعمل بشكل أكثر موثوقية إذا قمت بتعطيل تحسينات بطارية النظام لـ Updatium.",
-  "fileDeletionError": "فشل حذف الملف (حاول حذفه يدويًا ثم حاول مرة أخرى): \"{}\"",
+  "fileDeletionError": "فشل حذف الملف (حاول حذفه يدويًا ثم حاول مرة أخرى): \\\"{}\\\"",
   "foregroundService": "الحصول على خدمة الحصول على خدمة المقدمة",
   "foregroundServiceExplanation": "استخدام خدمة مقدمة للتحقق من التحديثات (أكثر موثوقية وتستهلك طاقة أكبر)",
   "fgServiceNotice": "هذا الإخطار مطلوب للتحقق من التحديث في الخلفية (يمكن إخفاؤه في إعدادات نظام التشغيل)",
   "excludeSecrets": "استعبد الأسرار",
-  "GHReqPrefix": "نسخة \"sky22333/hubproxy\" لطلبات GitHub",
+  "GHReqPrefix": "نسخة \\\"sky22333/hubproxy\\\" لطلبات GitHub",
   "includeZips": "ضمّن ملفات ZIP",
   "zippedApkFilterRegEx": "تصفية ملفات APK داخل ZIP",
-  "googleVerificationWarningP1": "(جوجل) أعلن أنه، بدءاً من عام 2026/2027، كل التطبيقات على أجهزة (أندرويد) مصدقة ستطلب من المطور تقديم تفاصيل الهوية الشخصية مباشرة إلى (غوغل).
-
-بعد ذلك، قد يتوقف Updatium عن العمل على أجهزة أندرويدية معتمدة.",
+  "googleVerificationWarningP1": "(جوجل) أعلن أنه، بدءاً من عام 2026/2027، كل التطبيقات على أجهزة (أندرويد) مصدقة ستطلب من المطور تقديم تفاصيل الهوية الشخصية مباشرة إلى (غوغل).\\n\\nبعد ذلك، قد يتوقف Updatium عن العمل على أجهزة أندرويدية معتمدة.",
   "googleVerificationWarningP2": "Go to https://keepandroidopen.org/ for more information.",
-  "googleVerificationWarningP3": "ونلاحظ أنه في الأجل القصير، قد يظل من الممكن تركيب عملية \" غير متوافقة \" من خلال عملية \" تدفق سريع \" وعد غوغل بتنفيذها بعد رد فعل واسع النطاق على إعلانهم، ولكنهم لم يفصلوا كيف سينجح ذلك حتى لا يتضح ما إذا كان سيحافظ حقا على حريات المستعملين بأي طريقة عملية.
-
-على أية حال، حركة (جوجل) خطوة هامة نحو نهاية الحوسبة المجانية ذات الأغراض العامة للأفراد
-
-وينبغي ألا يتأثر هذا النظام غير المصدق عليه، مثل غرافينيوس، طالما يسمح له باستمرار وجوده.",
+  "googleVerificationWarningP3": "ونلاحظ أنه في الأجل القصير، قد يظل من الممكن تركيب عملية \\\" غير متوافقة \\\" من خلال عملية \\\" تدفق سريع \\\" وعد غوغل بتنفيذها بعد رد فعل واسع النطاق على إعلانهم، ولكنهم لم يفصلوا كيف سينجح ذلك حتى لا يتضح ما إذا كان سيحافظ حقا على حريات المستعملين بأي طريقة عملية.\\n\\nعلى أية حال، حركة (جوجل) خطوة هامة نحو نهاية الحوسبة المجانية ذات الأغراض العامة للأفراد\\n\\nوينبغي ألا يتأثر هذا النظام غير المصدق عليه، مثل غرافينيوس، طالما يسمح له باستمرار وجوده.",
   "multipleSigners": "عدد من الدول الموقعة",
   "securityDisclaimerTitle": "إخلاء مسؤولية الأمان والقانوني",
   "license": "الرخصة",
   "licenseText": "هذا التطبيق موزع تحت رخصة GPL v3.",
   "disclaimer": "إخلاء المسؤولية",
-  "disclaimerText": "هذا التطبيق لا يوزع أو يستضيف أو يتحقق من أي من التطبيقات الخارجية. يتحمل المستخدم المسؤولية الكاملة عن سلامة وقانونية أي برنامج يتم تثبيته من خلال هذه الأداة.
-
-https://github.com/omeritzics/Updatium هو المكان الرسمي الوحيد لتنزيل Updatium - يُنصح بشدة بعدم تنزيله من أماكن أخرى حيث أن تنزيله من مصادر غير رسمية غير آمن.",
+  "disclaimerText": "هذا التطبيق لا يوزع أو يستضيف أو يتحقق من أي من التطبيقات الخارجية. يتحمل المستخدم المسؤولية الكاملة عن سلامة وقانونية أي برنامج يتم تثبيته من خلال هذه الأداة.\\n\\nhttps://github.com/omeritzics/Updatium هو المكان الرسمي الوحيد لتنزيل Updatium - يُنصح بشدة بعدم تنزيله من أماكن أخرى حيث أن تنزيله من مصادر غير رسمية غير آمن.",
   "privacy": "الخصوصية",
   "privacyText": "هذا التطبيق يركز على الخصوصية ولا يجمع البيانات الشخصية.",
   "acceptAndContinue": "موافق ومتابعة",
@@ -387,13 +370,12 @@ https://github.com/omeritzics/Updatium هو المكان الرسمي الوحي
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "التطبيقات",
   "@apps": {
     "plural": {
       "one": "{} تطبيق",
       "two": "تطبيقان",
-      "other": "{} تطبيقات",
+      "other": "{} تطبيقات"
     },
     "placeholders": {
       "count": {
@@ -401,13 +383,12 @@ https://github.com/omeritzics/Updatium هو المكان الرسمي الوحي
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "{} APK",
       "two": "APKان",
-      "other": "{} APKs",
+      "other": "{} APKs"
     },
     "placeholders": {
       "count": {
@@ -415,13 +396,12 @@ https://github.com/omeritzics/Updatium هو المكان الرسمي الوحي
       }
     }
   },
-
   "minute": "{} دقائق",
   "@minute": {
     "plural": {
       "one": "{} دقيقة",
       "two": "دقيقتان",
-      "other": "{} دقائق",
+      "other": "{} دقائق"
     },
     "placeholders": {
       "count": {
@@ -429,13 +409,12 @@ https://github.com/omeritzics/Updatium هو المكان الرسمي الوحي
       }
     }
   },
-
   "hour": "{} ساعات",
   "@hour": {
     "plural": {
       "one": "{} ساعة",
       "two": "ساعتان",
-      "other": "{} ساعات",
+      "other": "{} ساعات"
     },
     "placeholders": {
       "count": {
@@ -443,13 +422,12 @@ https://github.com/omeritzics/Updatium هو المكان الرسمي الوحي
       }
     }
   },
-
   "day": "{} أيام",
   "@day": {
     "plural": {
       "one": "{} يوم",
       "two": "يومان",
-      "other": "{} أيام",
+      "other": "{} أيام"
     },
     "placeholders": {
       "count": {

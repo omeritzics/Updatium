@@ -1,6 +1,5 @@
 {
   "@@locale": "ml",
-
   "invalidURLForSource": "ഒരു സാധുവായ {} ആപ്പ് URL അല്ല",
   "noReleaseFound": "അനുയോജ്യമായ റിലീസ് കണ്ടെത്താനായില്ല",
   "noVersionFound": "റിലീസ് പതിപ്പ് നിർണ്ണയിക്കാനായില്ല",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "തിരഞ്ഞെടുത്ത ആപ്പുകൾ നീക്കം ചെയ്യുക",
   "updateX": "{} അപ്‌ഡേറ്റ് ചെയ്യുക",
   "installX": "{} ഇൻസ്റ്റാൾ ചെയ്യുക",
-  "markXTrackOnlyAsUpdated": "{}
-(ട്രാക്ക്-മാത്രം)
-അപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തുക",
+  "markXTrackOnlyAsUpdated": "{}\\n(ട്രാക്ക്-മാത്രം)\\nഅപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തുക",
   "changeX": "{} മാറ്റുക",
   "installUpdateApps": "ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യുക/അപ്‌ഡേറ്റ് ചെയ്യുക",
   "installUpdateSelectedApps": "തിരഞ്ഞെടുത്ത ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യുക/അപ്‌ഡേറ്റ് ചെയ്യുക",
@@ -79,9 +76,7 @@
   "pinToTop": "മുകളിൽ പിൻ ചെയ്യുക",
   "unpinFromTop": "മുകളിൽ നിന്ന് അൺപിൻ ചെയ്യുക",
   "resetInstallStatusForSelectedAppsQuestion": "തിരഞ്ഞെടുത്ത ആപ്പുകളുടെ ഇൻസ്റ്റാൾ സ്റ്റാറ്റസ് റീസെറ്റ് ചെയ്യണോ?",
-  "installStatusOfXWillBeResetExplanation": "തിരഞ്ഞെടുത്ത ഏതെങ്കിലും ആപ്പുകളുടെ ഇൻസ്റ്റാൾ സ്റ്റാറ്റസ് റീസെറ്റ് ചെയ്യപ്പെടും.
-
-പരാജയപ്പെട്ട അപ്‌ഡേറ്റുകളോ മറ്റ് പ്രശ്നങ്ങളോ കാരണം ഒബ്‌റ്റേനിയത്തിൽ കാണിക്കുന്ന ആപ്പ് പതിപ്പ് തെറ്റായിരിക്കുമ്പോൾ ഇത് സഹായകമാകും.",
+  "installStatusOfXWillBeResetExplanation": "തിരഞ്ഞെടുത്ത ഏതെങ്കിലും ആപ്പുകളുടെ ഇൻസ്റ്റാൾ സ്റ്റാറ്റസ് റീസെറ്റ് ചെയ്യപ്പെടും.\\n\\nപരാജയപ്പെട്ട അപ്‌ഡേറ്റുകളോ മറ്റ് പ്രശ്നങ്ങളോ കാരണം ഒബ്‌റ്റേനിയത്തിൽ കാണിക്കുന്ന ആപ്പ് പതിപ്പ് തെറ്റായിരിക്കുമ്പോൾ ഇത് സഹായകമാകും.",
   "customLinkMessage": "ഈ ലിങ്കുകൾ ഒബ്‌റ്റേനിയം ഇൻസ്റ്റാൾ ചെയ്ത ഉപകരണങ്ങളിൽ പ്രവർത്തിക്കും",
   "shareAppConfigLinks": "ആപ്പ് കോൺഫിഗറേഷൻ HTML ലിങ്കായി പങ്കിടുക",
   "shareSelectedAppURLs": "തിരഞ്ഞെടുത്ത ആപ്പ് URL-കൾ പങ്കിടുക",
@@ -113,11 +108,7 @@
   "searchX": "{} തിരയുക",
   "noResults": "ഫലങ്ങളൊന്നും കണ്ടെത്തിയില്ല",
   "importX": "{} ഇംപോർട്ട് ചെയ്യുക",
-  "importedAppsIdDisclaimer": "ഇംപോർട്ട് ചെയ്ത ആപ്പുകൾ \"ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല\" എന്ന് തെറ്റായി കാണിച്ചേക്കാം.
-ഇത് ശരിയാക്കാൻ, ഒബ്‌റ്റേനിയം വഴി അവ വീണ്ടും ഇൻസ്റ്റാൾ ചെയ്യുക.
-ഇത് ആപ്പ് ഡാറ്റയെ ബാധിക്കില്ല.
-
-URL, മൂന്നാം കക്ഷി ഇംപോർട്ട് രീതികളെ മാത്രം ബാധിക്കുന്നു.",
+  "importedAppsIdDisclaimer": "ഇംപോർട്ട് ചെയ്ത ആപ്പുകൾ \\\"ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല\\\" എന്ന് തെറ്റായി കാണിച്ചേക്കാം.\\nഇത് ശരിയാക്കാൻ, ഒബ്‌റ്റേനിയം വഴി അവ വീണ്ടും ഇൻസ്റ്റാൾ ചെയ്യുക.\\nഇത് ആപ്പ് ഡാറ്റയെ ബാധിക്കില്ല.\\n\\nURL, മൂന്നാം കക്ഷി ഇംപോർട്ട് രീതികളെ മാത്രം ബാധിക്കുന്നു.",
   "importErrors": "ഇംപോർട്ട് പിശകുകൾ",
   "importedXOfYApps": "{} ആപ്പുകളിൽ {} എണ്ണം ഇംപോർട്ട് ചെയ്തു.",
   "followingURLsHadErrors": "ഇനിപ്പറയുന്ന URL-കളിൽ പിശകുകൾ ഉണ്ടായിരുന്നു:",
@@ -287,7 +278,7 @@ URL, മൂന്നാം കക്ഷി ഇംപോർട്ട് രീത
   "autoSelectHighestVersionCode": "ഏറ്റവും ഉയർന്ന versionCode APK സ്വയമേവ തിരഞ്ഞെടുക്കുക",
   "versionExtractionRegEx": "പതിപ്പ് സ്ട്രിംഗ് വേർതിരിച്ചെടുക്കുന്നതിനുള്ള റെഗുലർ എക്സ്പ്രഷൻ",
   "trimVersionString": "റെഗുലർ എക്സ്പ്രഷൻ ഉപയോഗിച്ച് പതിപ്പ് സ്ട്രിംഗ് ട്രിം ചെയ്യുക",
-  "matchGroupToUseForX": "\"{}\" നായി ഉപയോഗിക്കേണ്ട ഗ്രൂപ്പ് മാച്ച് ചെയ്യുക",
+  "matchGroupToUseForX": "\\\"{}\\\" നായി ഉപയോഗിക്കേണ്ട ഗ്രൂപ്പ് മാച്ച് ചെയ്യുക",
   "matchGroupToUse": "പതിപ്പ് സ്ട്രിംഗ് വേർതിരിച്ചെടുക്കുന്നതിനുള്ള റെഗുലർ എക്സ്പ്രഷനായി ഉപയോഗിക്കേണ്ട ഗ്രൂപ്പ് മാച്ച് ചെയ്യുക",
   "highlightTouchTargets": "കുറഞ്ഞ വ്യക്തതയുള്ള ടച്ച് ടാർഗെറ്റുകൾ ഹൈലൈറ്റ് ചെയ്യുക",
   "pickExportDir": "എക്സ്പോർട്ട് ഡയറക്ടറി തിരഞ്ഞെടുക്കുക",
@@ -335,7 +326,7 @@ URL, മൂന്നാം കക്ഷി ഇംപോർട്ട് രീത
   "latest": "ഏറ്റവും പുതിയത്",
   "invertRegEx": "റെഗുലർ എക്സ്പ്രഷൻ വിപരീതമാക്കുക",
   "note": "ശ്രദ്ധിക്കുക",
-  "selfHostedNote": "ഏത് ഉറവിടത്തിന്റെയും സെൽഫ്-ഹോസ്റ്റ് ചെയ്ത/കസ്റ്റം ഇൻസ്റ്റൻസുകളിലേക്ക് എത്താൻ \"{}\" ഡ്രോപ്പ്ഡൗൺ ഉപയോഗിക്കാം.",
+  "selfHostedNote": "ഏത് ഉറവിടത്തിന്റെയും സെൽഫ്-ഹോസ്റ്റ് ചെയ്ത/കസ്റ്റം ഇൻസ്റ്റൻസുകളിലേക്ക് എത്താൻ \\\"{}\\\" ഡ്രോപ്പ്ഡൗൺ ഉപയോഗിക്കാം.",
   "badDownload": "APK പാഴ്സ് ചെയ്യാൻ കഴിഞ്ഞില്ല (അനുയോജ്യമല്ലാത്തതോ ഭാഗികമായ ഡൗൺലോഡോ)",
   "beforeNewInstallsShareToAppVerifier": "പുതിയ ആപ്പുകൾ AppVerifier-ലേക്ക് പങ്കിടുക (ലഭ്യമെങ്കിൽ)",
   "appVerifierInstructionToast": "AppVerifier-ലേക്ക് പങ്കിടുക, തുടർന്ന് തയ്യാറാകുമ്പോൾ ഇവിടെ തിരിച്ചെത്തുക.",
@@ -353,7 +344,7 @@ URL, മൂന്നാം കക്ഷി ഇംപോർട്ട് രീത
   "welcome": "സ്വാഗതം",
   "documentationLinksNote": "താഴെ ലിങ്ക് ചെയ്തിട്ടുള്ള ഒബ്‌റ്റേനിയം GitHub പേജിൽ ആപ്പ് എങ്ങനെ ഉപയോഗിക്കാമെന്ന് മനസ്സിലാക്കാൻ സഹായിക്കുന്ന വീഡിയോകൾ, ലേഖനങ്ങൾ, ചർച്ചകൾ, മറ്റ് വിഭവങ്ങൾ എന്നിവയുടെ ലിങ്കുകൾ അടങ്ങിയിരിക്കുന്നു.",
   "batteryOptimizationNote": "ഒബ്‌റ്റേനിയത്തിനായുള്ള OS ബാറ്ററി ഒപ്റ്റിമൈസേഷനുകൾ പ്രവർത്തനരഹിതമാക്കുകയാണെങ്കിൽ ബാക്ക്ഗ്രൗണ്ട് ഡൗൺലോഡുകൾ കൂടുതൽ വിശ്വസനീയമായി പ്രവർത്തിച്ചേക്കാം എന്നത് ശ്രദ്ധിക്കുക.",
-  "fileDeletionError": "ഫയൽ ഇല്ലാതാക്കാൻ പരാജയപ്പെട്ടു (സ്വമേധയാ ഇല്ലാതാക്കാൻ ശ്രമിക്കുക, എന്നിട്ട് വീണ്ടും ശ്രമിക്കുക): \"{}\"",
+  "fileDeletionError": "ഫയൽ ഇല്ലാതാക്കാൻ പരാജയപ്പെട്ടു (സ്വമേധയാ ഇല്ലാതാക്കാൻ ശ്രമിക്കുക, എന്നിട്ട് വീണ്ടും ശ്രമിക്കുക): \\\"{}\\\"",
   "foregroundService": "Updatium foreground service",
   "foregroundServiceExplanation": "Use a foreground service for update checking (more reliable, consumes more power)",
   "fgServiceNotice": "This notification is required for background update checking (it can be hidden in the OS settings)",
@@ -361,15 +352,9 @@ URL, മൂന്നാം കക്ഷി ഇംപോർട്ട് രീത
   "GHReqPrefix": "'sky22333/hubproxy' instance for GitHub requests",
   "includeZips": "Include ZIP files",
   "zippedApkFilterRegEx": "Filter APKs inside ZIP",
-  "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.
-
-After then, Updatium may stop working on certified Android devices.",
+  "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \\\"certified\\\" Android devices will require the developer to submit personal identity details directly to Google.\\n\\nAfter then, Updatium may stop working on certified Android devices.",
   "googleVerificationWarningP2": "Go to https://keepandroidopen.org/ for more information.",
-  "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.
-
-In any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.
-
-Non-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
+  "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \\\"unverified\\\" (non-compliant) apps through an \\\"advanced flow\\\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\\n\\nIn any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.\\n\\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
   "multipleSigners": "Multiple Signers",
   "securityDisclaimerTitle": "സുരക്ഷാ നിയമ നിരാകരണം",
   "license": "ലൈസൻസ്",
@@ -380,12 +365,11 @@ Non-certified OSes, like GrapheneOS, should be unaffected by this for as long as
   "privacyText": "ഈ ആപ്പ് സ്വകാര്യം പരിഗണിക്കുന്നതും വ്യക്തിഗത ഡാറ്റ ശേഖരിക്കുന്നതുമല്ല.",
   "acceptAndContinue": "അംഗീകരിച്ച് തുടരുക",
   "decline": "നിരസിക്കുക",
-
   "apps": "ആപ്പുകൾ",
   "@apps": {
     "plural": {
       "one": "{} ആപ്പ്",
-      "other": "{} ആപ്പുകൾ",
+      "other": "{} ആപ്പുകൾ"
     },
     "placeholders": {
       "count": {
@@ -393,12 +377,11 @@ Non-certified OSes, like GrapheneOS, should be unaffected by this for as long as
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "{} APK",
-      "other": "{} APK-കൾ",
+      "other": "{} APK-കൾ"
     },
     "placeholders": {
       "count": {
@@ -406,12 +389,11 @@ Non-certified OSes, like GrapheneOS, should be unaffected by this for as long as
       }
     }
   },
-
   "minute": "{} മിനിറ്റുകൾ",
   "@minute": {
     "plural": {
       "one": "{} മിനിറ്റ്",
-      "other": "{} മിനിറ്റുകൾ",
+      "other": "{} മിനിറ്റുകൾ"
     },
     "placeholders": {
       "count": {
@@ -419,12 +401,11 @@ Non-certified OSes, like GrapheneOS, should be unaffected by this for as long as
       }
     }
   },
-
   "hour": "{} മണിക്കൂർ",
   "@hour": {
     "plural": {
       "one": "{} മണിക്കൂർ",
-      "other": "{} മണിക്കൂർ",
+      "other": "{} മണിക്കൂർ"
     },
     "placeholders": {
       "count": {
@@ -432,12 +413,11 @@ Non-certified OSes, like GrapheneOS, should be unaffected by this for as long as
       }
     }
   },
-
   "day": "{} ദിവസങ്ങൾ",
   "@day": {
     "plural": {
       "one": "{} ദിവസം",
-      "other": "{} ദിവസങ്ങൾ",
+      "other": "{} ദിവസങ്ങൾ"
     },
     "placeholders": {
       "count": {

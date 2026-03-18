@@ -1,6 +1,5 @@
 {
   "@@locale": "he",
-
   "invalidURLForSource": "אין זו כתובת יישום תקנית של {}",
   "noReleaseFound": "לא נמצאה מהדורה מתאימה",
   "noVersionFound": "לא היה ניתן להסיק את מספר הגרסה",
@@ -66,9 +65,7 @@
   "removeSelectedApps": "הסרת היישומים שנבחרו",
   "updateX": "עדכון {}",
   "installX": "התקנת {}",
-  "markXTrackOnlyAsUpdated": "סימון {}
-(למעקב עדכונים בלבד)
-כמעודכן",
+  "markXTrackOnlyAsUpdated": "סימון {}\\n(למעקב עדכונים בלבד)\\nכמעודכן",
   "changeX": "שינוי {}",
   "installUpdateApps": "התקנת/עדכון יישומים",
   "installUpdateSelectedApps": "התקנת/עדכון היישומים שנבחרו",
@@ -79,9 +76,7 @@
   "pinToTop": "הצמדה לחלק העליון",
   "unpinFromTop": "ביטול הצמדה לחלק העליון",
   "resetInstallStatusForSelectedAppsQuestion": "לאפס את מצב ההתקנה ליישומים שנבחרו?",
-  "installStatusOfXWillBeResetExplanation": "The install status of any selected apps will be reset.
-
-This can help when the app version shown in Updatium is incorrect due to failed updates or other issues.",
+  "installStatusOfXWillBeResetExplanation": "The install status of any selected apps will be reset.\\n\\nThis can help when the app version shown in Updatium is incorrect due to failed updates or other issues.",
   "customLinkMessage": "הקישורים האלה עובדים במכשירים שבהם מותקן היישום Updatium",
   "shareAppConfigLinks": "שיתוף תצורת היישום בתור קישור HTML",
   "shareSelectedAppURLs": "שיתוף כתובות היישומים שנבחרו",
@@ -113,11 +108,7 @@ This can help when the app version shown in Updatium is incorrect due to failed 
   "searchX": "חיפוש {}",
   "noResults": "אין תוצאות",
   "importX": "ייבוא {}",
-  "importedAppsIdDisclaimer": "יישומים מיובאים עלולים להופיע בטעות בתור יישומים „לא מותקנים”.
-בשביל לתקן זאת, יש להתקין אותם פעם נוספת דרך Updatium.
-נתוני היישום לא אמורים להיות מושפעים מכך.
-
-הערה זו תקפה רק לגבי כתובות ושיטות ייבוא מצד שלישי.",
+  "importedAppsIdDisclaimer": "יישומים מיובאים עלולים להופיע בטעות בתור יישומים „לא מותקנים”.\\nבשביל לתקן זאת, יש להתקין אותם פעם נוספת דרך Updatium.\\nנתוני היישום לא אמורים להיות מושפעים מכך.\\n\\nהערה זו תקפה רק לגבי כתובות ושיטות ייבוא מצד שלישי.",
   "importErrors": "ייבוא שגיאות",
   "importedXOfYApps": "יובאו {} מתוך {} יישומים.",
   "followingURLsHadErrors": "הכתובות הבאות נתקלו בשגיאות:",
@@ -305,7 +296,7 @@ This can help when the app version shown in Updatium is incorrect due to failed 
   "autoSelectHighestVersionCode": "Auto-select highest versionCode APK",
   "versionExtractionRegEx": "Version string extraction RegEx",
   "trimVersionString": "Trim version string with RegEx",
-  "matchGroupToUseForX": "Match group to use for \"{}\"",
+  "matchGroupToUseForX": "Match group to use for \\\"{}\\\"",
   "matchGroupToUse": "Match group to use for version string extraction RegEx",
   "highlightTouchTargets": "Highlight less obvious touch targets",
   "pickExportDir": "בחירת תיקייה לייצוא",
@@ -353,7 +344,7 @@ This can help when the app version shown in Updatium is incorrect due to failed 
   "latest": "גרסה עדכנית",
   "invertRegEx": "היפוך ביטוי רגולרי",
   "note": "הערה",
-  "selfHostedNote": "הרשימה הנפתחת \"{}\" מאפשרת למשוך קבצים מעותקים מותאמים אישית/באירוח עצמי של כל מקור שהוא.",
+  "selfHostedNote": "הרשימה הנפתחת \\\"{}\\\" מאפשרת למשוך קבצים מעותקים מותאמים אישית/באירוח עצמי של כל מקור שהוא.",
   "badDownload": "לא היה ניתן לפענח את קובץ ה־APK (בשל חוסר תאימות או הורדה חלקית)",
   "beforeNewInstallsShareToAppVerifier": "שיתוף היישומים חדשים עם AppVerifier (אם זמין)",
   "appVerifierInstructionToast": "שיתוף עם AppVerifier, ואז חזרה לכאן כשהיישום מוכן.",
@@ -371,8 +362,8 @@ This can help when the app version shown in Updatium is incorrect due to failed 
   "sortMethod": "שיטת מיון",
   "welcome": "ברוך בואך",
   "documentationLinksNote": "The Updatium GitHub page linked below contains links to videos, articles, discussions, and other resources that will help you understand how to use the app.",
-  "batteryOptimizationNote": "Note that background downloads may work more reliably if you switch to the \"foreground service\" in the Updatium settings and/or disable battery optimization for Updatium in your OS settings.",
-  "fileDeletionError": "מחיקת הקובץ נכשלה (כדאי לנסות למחוק אותו ידנית ואז לנסות שוב): \"{}\"",
+  "batteryOptimizationNote": "Note that background downloads may work more reliably if you switch to the \\\"foreground service\\\" in the Updatium settings and/or disable battery optimization for Updatium in your OS settings.",
+  "fileDeletionError": "מחיקת הקובץ נכשלה (כדאי לנסות למחוק אותו ידנית ואז לנסות שוב): \\\"{}\\\"",
   "foregroundService": "שירות העדכון החזיתי של Updatium",
   "foregroundServiceExplanation": "Use a foreground service for update checking (more reliable, consumes more power)",
   "fgServiceNotice": "This notification is required for background update checking (it can be hidden in the OS settings)",
@@ -380,23 +371,15 @@ This can help when the app version shown in Updatium is incorrect due to failed 
   "GHReqPrefix": "'sky22333/hubproxy' instance for GitHub requests",
   "includeZips": "לכלול קובצי ZIP",
   "zippedApkFilterRegEx": "סינון קובצי APK בתוך קובץ ZIP",
-  "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.
-
-After then, Updatium may stop working on certified Android devices.",
+  "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \\\"certified\\\" Android devices will require the developer to submit personal identity details directly to Google.\\n\\nAfter then, Updatium may stop working on certified Android devices.",
   "googleVerificationWarningP2": "Go to https://keepandroidopen.org/ for more information.",
-  "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.
-
-In any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.
-
-Non-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
+  "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \\\"unverified\\\" (non-compliant) apps through an \\\"advanced flow\\\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\\n\\nIn any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.\\n\\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
   "multipleSigners": "Multiple Signers",
   "securityDisclaimerTitle": "כתב ויתור בנוגע לאבטחה ונושאים משפטיים",
   "license": "רישיון",
   "licenseText": "יישום זה מופץ תחת רישיון GPL v3.",
   "disclaimer": "כתב ויתור",
-  "disclaimerText": "יישום זה אינו מפיץ, מארח או מאמת יישומים חיצוניים כלשהם. המשתמש נושא באחריות המלאה לביטחון וחוקיות כל תוכנה המותקנת באמצעות כלי זה.
-
-https://github.com/omeritzics/Updatium הוא המקום הרשמי היחיד להוריד את Updatium - מומלץ מאוד לא להוריד אותו ממקומות אחרים מכיוון שההורדה ממקורות לא רשמיים אינה בטוחה.",
+  "disclaimerText": "יישום זה אינו מפיץ, מארח או מאמת יישומים חיצוניים כלשהם. המשתמש נושא באחריות המלאה לביטחון וחוקיות כל תוכנה המותקנת באמצעות כלי זה.\\n\\nhttps://github.com/omeritzics/Updatium הוא המקום הרשמי היחיד להוריד את Updatium - מומלץ מאוד לא להוריד אותו ממקומות אחרים מכיוון שההורדה ממקורות לא רשמיים אינה בטוחה.",
   "privacy": "פרטיות",
   "privacyText": "יישום זה ממוקד פרטיות ואינו אוסף נתונים אישיים.",
   "acceptAndContinue": "קבלה והמשך",
@@ -405,13 +388,12 @@ https://github.com/omeritzics/Updatium הוא המקום הרשמי היחיד �
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-
   "apps": "יישומים",
   "@apps": {
     "plural": {
       "one": "יישום אחד",
       "two": "שני יישומים",
-      "other": "{} יישומים",
+      "other": "{} יישומים"
     },
     "placeholders": {
       "count": {
@@ -419,13 +401,12 @@ https://github.com/omeritzics/Updatium הוא המקום הרשמי היחיד �
       }
     }
   },
-
   "apk": "APK",
   "@apk": {
     "plural": {
       "one": "קובץ APK אחד",
       "two": "שני קובצי APK",
-      "other": "{} קובצי APK",
+      "other": "{} קובצי APK"
     },
     "placeholders": {
       "count": {
@@ -433,13 +414,12 @@ https://github.com/omeritzics/Updatium הוא המקום הרשמי היחיד �
       }
     }
   },
-
   "minute": "{} דקות",
   "@minute": {
     "plural": {
       "one": "דקה אחת",
       "two": "שתי דקות",
-      "other": "{} דקות",
+      "other": "{} דקות"
     },
     "placeholders": {
       "count": {
@@ -447,13 +427,12 @@ https://github.com/omeritzics/Updatium הוא המקום הרשמי היחיד �
       }
     }
   },
-
   "hour": "{} שעות",
   "@hour": {
     "plural": {
       "one": "שעה אחת",
       "two": "שעתיים",
-      "other": "{} שעות",
+      "other": "{} שעות"
     },
     "placeholders": {
       "count": {
@@ -461,13 +440,12 @@ https://github.com/omeritzics/Updatium הוא המקום הרשמי היחיד �
       }
     }
   },
-
   "day": "{} ימים",
   "@day": {
     "plural": {
       "one": "יום אחד",
       "two": "יומיים",
-      "other": "{} ימים",
+      "other": "{} ימים"
     },
     "placeholders": {
       "count": {
