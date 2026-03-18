@@ -16,6 +16,17 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:updatium/generated/app_localizations.dart';
 
+// Helper function to get localized source names
+String getLocalizedSourceName(String sourceName, BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
+  switch (sourceName) {
+    case 'GitHub starred repositories':
+      return l10n.githubStarredRepos;
+    default:
+      return sourceName;
+  }
+}
+
 class AddAppPage extends StatefulWidget {
   const AddAppPage({super.key});
 
@@ -351,7 +362,7 @@ class AddAppPageState extends State<AddAppPage> {
                         context: context,
                         builder: (BuildContext ctx) {
                           return GeneratedFormModal(
-                            title: AppLocalizations.of(context)!.searchX(e.name),
+                            title: AppLocalizations.of(context)!.searchX(getLocalizedSourceName(e.name, context)),
                             items: [
                               ...e.searchQuerySettingFormItems.map((e) => [e]),
                               [
@@ -535,7 +546,7 @@ class AddAppPageState extends State<AddAppPage> {
                             });
                             changeUserInput(userInput, true, false);
                           },
-                          child: Text(s.name),
+                          child: Text(getLocalizedSourceName(s.name, context)),
                         ),
                       ),
                 ],
@@ -598,7 +609,7 @@ class AddAppPageState extends State<AddAppPage> {
       children: [
         const SizedBox(height: 16),
         Text(
-          AppLocalizations.of(context)!.additionalOptsFor(pickedSource?.name ?? AppLocalizations.of(context)!.source),
+          AppLocalizations.of(context)!.additionalOptsFor(getLocalizedSourceName(pickedSource?.name ?? AppLocalizations.of(context)!.source, context)),
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
@@ -724,7 +735,7 @@ class AddAppPageState extends State<AddAppPage> {
                                   }
                                 : null,
                             child: Text(
-                              '${e.name}${e.enforceTrackOnly ? ' (track-only)' : ''}${e.canSearch ? ' (searchable)' : ''}',
+                              '${getLocalizedSourceName(e.name, context)}${e.enforceTrackOnly ? ' ${AppLocalizations.of(context)!.trackOnlyInBrackets}' : ''}${e.canSearch ? ' ${AppLocalizations.of(context)!.searchableInBrackets}' : ''}',
                               style: TextStyle(
                                 decoration: e.hosts.isNotEmpty
                                     ? TextDecoration.underline

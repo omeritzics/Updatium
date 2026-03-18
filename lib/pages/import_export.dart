@@ -14,6 +14,17 @@ import 'package:file_picker/file_picker.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:updatium/generated/app_localizations.dart';
 
+// Helper function to get localized source names
+String getLocalizedSourceName(String sourceName, BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
+  switch (sourceName) {
+    case 'GitHub starred repositories':
+      return l10n.githubStarredRepos;
+    default:
+      return sourceName;
+  }
+}
+
 class ImportExportPage extends StatefulWidget {
   const ImportExportPage({super.key});
 
@@ -209,7 +220,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               context: context,
               builder: (BuildContext ctx) {
                 return GeneratedFormModal(
-                  title: AppLocalizations.of(context)!.importX(source.name),
+                  title: AppLocalizations.of(context)!.importX(getLocalizedSourceName(source.name, context)),
                   items: source.requiredArgs
                       .map((e) => [GeneratedFormTextField(e, label: e)])
                       .toList(),
@@ -475,7 +486,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   runMassSourceImport(source);
                                 },
                           icon: const Icon(Icons.cloud_download),
-                          label: Text(AppLocalizations.of(context)!.importX(source.name)),
+                          label: Text(AppLocalizations.of(context)!.importX(getLocalizedSourceName(source.name, context))),
                         ),
                       ],
                     ),

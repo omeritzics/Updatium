@@ -20,6 +20,17 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:updatium/generated/app_localizations.dart';
 
+// Helper function to get localized source names
+String getLocalizedSourceName(String sourceName, BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
+  switch (sourceName) {
+    case 'GitHub starred repositories':
+      return l10n.githubStarredRepos;
+    default:
+      return sourceName;
+  }
+}
+
 class AppsPage extends StatefulWidget {
   const AppsPage({super.key});
 
@@ -1514,7 +1525,7 @@ class AppsPageState extends State<AppsPage> {
                   [
                     MapEntry('', AppLocalizations.of(context)!.none),
                     ...sourceProvider.sources.map(
-                      (e) => MapEntry(e.runtimeType.toString(), e.name),
+                      (e) => MapEntry(e.runtimeType.toString(), getLocalizedSourceName(e.name, context)),
                     ),
                   ],
                 ),
