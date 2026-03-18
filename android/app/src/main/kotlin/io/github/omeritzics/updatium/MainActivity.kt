@@ -94,8 +94,7 @@ class MainActivity : FlutterActivity() {
             )
         } catch (e: PackageManager.NameNotFoundException) {
             null
-        } catch (e: Exception) {
-            null
+        }
         }
     }
 }
