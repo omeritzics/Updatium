@@ -982,10 +982,11 @@ onChanged: _securityProviderInitialized ? (value) async {
                             onChanged: _securityProviderInitialized ? (value) async {
                               if (value != null) {
                                 await _securityProvider.setUpdateInterval(value);
-                                setState(() {});
+                                if (mounted) {
+                                  setState(() {});
+                                }
                               }
                             } : null,
-                          ),
                         ),
                         height16,
                         // Update button with error handling
