@@ -1,6 +1,6 @@
 {
   "@@locale": "ja",
-  "invalidURLForSource": "{}は有効なソースURLではありません",
+  "invalidURLForSource": "は有効なソースURLではありません",
   "noReleaseFound": "適切なリリースが見つかりませんでした",
   "noVersionFound": "リリースバージョンを特定できませんでした",
   "urlMatchesNoSource": "URLが既知のソースと一致しません",
@@ -29,7 +29,7 @@
   "githubStarredRepos": "GitHubでスターしたリポジトリ",
   "uname": "ユーザー名",
   "wrongArgNum": "引数の数が間違っています",
-  "xIsTrackOnly": "{} は「追跡のみ」です",
+  "xIsTrackOnly": " は「追跡のみ」です",
   "source": "ソース",
   "app": "アプリ",
   "appsFromSourceAreTrackOnly": "このソースからのアプリは「追跡のみ」です。",
@@ -44,7 +44,7 @@
   "add": "追加",
   "searchSomeSourcesLabel": "検索 (一部ソースのみ)",
   "search": "検索",
-  "additionalOptsFor": "{}の追加オプション",
+  "additionalOptsFor": "の追加オプション",
   "supportedSources": "対応するソース",
   "trackOnlyInBrackets": "(追跡のみ)",
   "searchableInBrackets": "(検索可能)",
@@ -52,24 +52,24 @@
   "noApps": "ようこそ！",
   "noAppsSubtext": "下の「アプリを追加」をタップして、最初のアプリを追加できます。",
   "noAppsForFilter": "フィルターに一致するアプリはありません",
-  "byX": "by {}",
-  "percentProgress": "ダウンロード中: {}%",
+  "byX": "by ",
+  "percentProgress": "ダウンロード中: %",
   "pleaseWait": "しばらくお待ちください",
   "updateAvailable": "アップデートが利用可能",
   "notInstalled": "未インストール",
   "pseudoVersion": "疑似バージョン",
   "selectAll": "すべて選択",
-  "deselectX": "{} 件の選択を解除",
-  "xWillBeRemovedButRemainInstalled": "{} はUpdatiumから削除されますが、デバイスにはインストールされたままです。",
+  "deselectX": " 件の選択を解除",
+  "xWillBeRemovedButRemainInstalled": " はUpdatiumから削除されますが、デバイスにはインストールされたままです。",
   "removeSelectedAppsQuestion": "選択したアプリを削除しますか？",
   "removeSelectedApps": "選択したアプリを削除する",
-  "updateX": "{} をアップデートする",
-  "installX": "{} をインストールする",
-  "markXTrackOnlyAsUpdated": "{}\\n(追跡のみ)\\nをアップデート済みとしてマークする",
-  "changeX": "{} を変更する",
+  "updateX": " をアップデートする",
+  "installX": " をインストールする",
+  "markXTrackOnlyAsUpdated": "\\n(追跡のみ)\\nをアップデート済みとしてマークする",
+  "changeX": " を変更する",
   "installUpdateApps": "アプリのインストール/アップデート",
   "installUpdateSelectedApps": "選択したアプリのインストール/アップデート",
-  "markXSelectedAppsAsUpdated": "{}個の選択したアプリをアップデート済みとしてマークしますか？",
+  "markXSelectedAppsAsUpdated": "個の選択したアプリをアップデート済みとしてマークしますか？",
   "no": "いいえ",
   "yes": "はい",
   "markSelectedAppsUpdated": "選択したアプリをアップデート済みとしてマークする",
@@ -92,25 +92,25 @@
   "nonInstalledApps": "未インストールのアプリ",
   "importExport": "インポート/エクスポート",
   "settings": "設定",
-  "exportedTo": "{} にエクスポートしました",
+  "exportedTo": " にエクスポートしました",
   "updatiumExport": "Updatium エクスポート",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "無効な入力",
-  "importedX": "{} をインポートしました",
+  "importedX": " をインポートしました",
   "updatiumImport": "Updatium インポート",
   "importFromURLList": "URLリストからのインポート",
   "searchQuery": "検索キーワード",
   "appURLList": "アプリのURLリスト",
   "line": "行",
-  "searchX": "{} で検索",
+  "searchX": " で検索",
   "noResults": "結果は見つかりませんでした",
-  "importX": "{} をインポート",
+  "importX": " をインポート",
   "importedAppsIdDisclaimer": "インポートしたアプリが「未インストール」と表示されることがあります。\\nこの問題を解決するには、Updatiumから再インストールしてください。\\nアプリのデータには影響しません。\\n\\nURLとサードパーティのインポートメソッドにのみ影響します。",
   "importErrors": "インポートエラー",
-  "importedXOfYApps": "{} / {} アプリをインポートしました",
+  "importedXOfYApps": " /  アプリをインポートしました",
   "followingURLsHadErrors": "以下のURLでエラーが発生しました:",
   "selectURL": "URLを選択",
   "selectURLs": "URLを選択",
@@ -146,25 +146,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "updatium-エクスポート",
   "pickAnAPK": "APKを選択",
-  "appHasMoreThanOnePackage": "{} は複数のパッケージが存在します: ",
-  "deviceSupportsXArch": "お使いのデバイスは {} CPUアーキテクチャに対応しています。",
+  "appHasMoreThanOnePackage": " は複数のパッケージが存在します: ",
+  "deviceSupportsXArch": "お使いのデバイスは  CPUアーキテクチャに対応しています。",
   "deviceSupportsFollowingArchs": "お使いのデバイスは、以下のCPUアーキテクチャをサポートしています:",
   "warning": "警告",
-  "sourceIsXButPackageFromYPrompt": "アプリのソースは'{}'ですが、リリースパッケージは'{}'からダウンロードされます。続行しますか？",
+  "sourceIsXButPackageFromYPrompt": "アプリのソースは''ですが、リリースパッケージは''からダウンロードされます。続行しますか？",
   "updatesAvailable": "アップデートが利用可能",
   "updatesAvailableNotifDescription": "Updatiumが追跡している1つまたは複数のアプリのアップデートが利用可能であることをユーザーに通知する",
   "noNewUpdates": "新しいアップデートはありません。",
-  "xHasAnUpdate": "{} のアップデートが利用可能です。",
+  "xHasAnUpdate": " のアップデートが利用可能です。",
   "appsUpdated": "アプリをアップデートしました",
   "appsNotUpdated": "アプリのアップデートに失敗しました",
   "appsUpdatedNotifDescription": "1つまたは複数のアプリのアップデートがバックグラウンドで適用されたことをユーザーに通知する",
-  "xWasUpdatedToY": "{} が {} にアップデートされました",
-  "xWasNotUpdatedToY": "{} の {} へのアップデートに失敗しました",
+  "xWasUpdatedToY": " が  にアップデートされました",
+  "xWasNotUpdatedToY": " の  へのアップデートに失敗しました",
   "errorCheckingUpdates": "アップデート確認中のエラー",
   "errorCheckingUpdatesNotifDescription": "バックグラウンドでのアップデート確認に失敗した際に表示される通知",
   "appsRemoved": "削除されたアプリ",
   "appsRemovedNotifDescription": "アプリの読み込み中にエラーが発生したため、1つまたは複数のアプリが削除されたことをユーザーに通知する",
-  "xWasRemovedDueToErrorY": "次のエラーのため、{} は削除されました: {}",
+  "xWasRemovedDueToErrorY": "次のエラーのため、 は削除されました: ",
   "completeAppInstallation": "アプリのインストールを完了する",
   "updatiumMustBeOpenToInstallApps": "アプリをインストールするにはUpdatiumを開く必要があります",
   "completeAppInstallationNotifDescription": "アプリのインストールを完了するために、Updatiumに戻る必要があります",
@@ -172,15 +172,15 @@
   "checkingForUpdatesNotifDescription": "アップデートを確認する際に表示される一時的な通知",
   "pleaseAllowInstallPerm": "Updatiumによるアプリのインストールを許可してください",
   "trackOnly": "追跡のみ",
-  "errorWithHttpStatusCode": "エラー {}",
+  "errorWithHttpStatusCode": "エラー ",
   "versionCorrectionDisabled": "バージョン補正無効 (プラグインが動作していません)",
   "unknown": "不明",
   "none": "なし",
   "all": "すべて",
   "never": "しない",
-  "latestVersionX": "最新: {}",
-  "installedVersionX": "インストール済み: {}",
-  "lastUpdateCheckX": "最終アップデート確認: {}",
+  "latestVersionX": "最新: ",
+  "installedVersionX": "インストール済み: ",
+  "lastUpdateCheckX": "最終アップデート確認: ",
   "remove": "削除",
   "yesMarkUpdated": "はい、アップデート済みとしてマークします",
   "fdroid": "F-Droid公式",
@@ -197,9 +197,9 @@
   "additionalOptions": "追加のオプション",
   "disableVersionDetection": "バージョン検出を無効にする",
   "noVersionDetectionExplanation": "このオプションは、バージョン検出が正しく機能しないアプリにのみ使用する必要があります。",
-  "downloadingX": "{} をダウンロード中",
-  "downloadX": "{} をダウンロード",
-  "downloadedX": "{} をダウンロードしました",
+  "downloadingX": " をダウンロード中",
+  "downloadX": " をダウンロード",
+  "downloadedX": " をダウンロードしました",
   "releaseAsset": "リリースアセット",
   "downloadNotifDescription": "アプリのダウンロード状況を通知する",
   "noAPKFound": "APKが見つかりません",
@@ -243,7 +243,7 @@
   "hideNonInstalledApps": "未インストールのアプリを非表示",
   "gitlabPATLabel": "GitLab パーソナルアクセストークン",
   "about": "概要",
-  "requiresCredentialsInSettings": "{}: これには追加の認証が必要です (設定にて)",
+  "requiresCredentialsInSettings": ": これには追加の認証が必要です (設定にて)",
   "checkOnStart": "起動時にアップデートを確認する",
   "safeMode": "セーフモード",
   "safeModeDescription": "アプリ追加ページを非表示にし、代わりにインポート/エクスポートを表示",
@@ -263,7 +263,7 @@
   "customLinkFilterRegex": "正規表現によるカスタムリンクフィルター (デフォルト '.apk$')",
   "appsPossiblyUpdated": "アプリのアップデートを試行",
   "appsPossiblyUpdatedNotifDescription": "1つまたは複数のアプリのアップデートがバックグラウンドで適用された可能性があることをユーザーに通知する",
-  "xWasPossiblyUpdatedToY": "{} が {} にアップデートされた可能性があります。",
+  "xWasPossiblyUpdatedToY": " が  にアップデートされた可能性があります。",
   "enableBackgroundUpdates": "バックグラウンドアップデートを有効化する",
   "backgroundUpdateReqsExplanation": "バックグラウンドアップデートは、すべてのアプリで利用できるとは限りません。",
   "backgroundUpdateLimitsExplanation": "バックグラウンドアップデートが成功したかどうかは、Updatiumを起動したときにしか判断できません。",
@@ -279,7 +279,7 @@
   "autoSelectHighestVersionCode": "最も高いバージョンコードのAPKを自動で選択する",
   "versionExtractionRegEx": "バージョン抽出の正規表現",
   "trimVersionString": "正規表現でバージョン文字列をトリムする",
-  "matchGroupToUseForX": "\\\"{}\\\"に使用するマッチしたグループ",
+  "matchGroupToUseForX": "\\\"\\\"に使用するマッチしたグループ",
   "matchGroupToUse": "バージョン抽出に使用するマッチしたグループ",
   "highlightTouchTargets": "目立たないタップ可能な対象をハイライトする",
   "pickExportDir": "エクスポートディレクトリを選択",
@@ -302,12 +302,12 @@
   "appsPossiblyUpdatedNotifChannel": "アプリのアップデートを試行",
   "errorCheckingUpdatesNotifChannel": "アップデート確認中のエラー",
   "appsRemovedNotifChannel": "削除されたアプリ",
-  "downloadingXNotifChannel": "{} をダウンロード中",
+  "downloadingXNotifChannel": " をダウンロード中",
   "completeAppInstallationNotifChannel": "アプリのインストールを完了する",
   "checkingForUpdatesNotifChannel": "アップデートを確認中",
   "onlyCheckInstalledOrTrackOnlyApps": "インストール済みのアプリと「追跡のみ」のアプリのアップデートのみを確認する",
   "supportFixedAPKURL": "固定されたAPKのURLをサポートする",
-  "selectX": "{} 選択",
+  "selectX": " 選択",
   "parallelDownloads": "並行ダウンロードを許可する",
   "useShizuku": "ShizukuまたはSuiを使用してインストールする",
   "shizukuBinderNotFound": "Shizukuが起動していません",
@@ -327,7 +327,7 @@
   "latest": "最新",
   "invertRegEx": "正規表現を反転",
   "note": "注",
-  "selfHostedNote": "ドロップダウン\\\"{}\\\"を使用すると、あらゆるソースのセルフホスト/カスタムインスタンスにアクセスできます。",
+  "selfHostedNote": "ドロップダウン\\\"\\\"を使用すると、あらゆるソースのセルフホスト/カスタムインスタンスにアクセスできます。",
   "badDownload": "APK を解析できませんでした（互換性がないか、部分的にダウンロードされています）。",
   "beforeNewInstallsShareToAppVerifier": "AppVerifierで新しいアプリを共有する（利用可能な場合）",
   "appVerifierInstructionToast": "AppVerifierに共有し、準備ができたらここに戻ってください。",
@@ -345,7 +345,7 @@
   "welcome": "ようこそ",
   "documentationLinksNote": "以下のリンクにあるUpdatium GitHubページには、ビデオ、記事、ディスカッション、その他のリソースへのリンクがあり、アプリの使い方を理解するのに役立ちます。",
   "batteryOptimizationNote": "Updatiumの設定で「フォアグラウンドサービス」に切り替えるか、OSの設定でバッテリー最適化を無効にすると、バックグラウンドダウンロードがより確実に動作するようになります。",
-  "fileDeletionError": "ファイルの削除に失敗しました（手動で削除してから再試行してください）：\\\"{}\\\"",
+  "fileDeletionError": "ファイルの削除に失敗しました（手動で削除してから再試行してください）：\\\"\\\"",
   "foregroundService": "Updatium フォアグラウンドサービス",
   "foregroundServiceExplanation": "アップデート確認にフォアグラウンドサービスを使用する（より信頼性が高いが、より電力を消費する）",
   "fgServiceNotice": "この通知は、バックグラウンドでアップデートを確認するために必要です（OSの設定で非表示にできます）。",
@@ -373,7 +373,7 @@
   "apps": "アプリ",
   "@apps": {
     "plural": {
-      "other": "{} 個のアプリ"
+      "other": "{count} 個のアプリ"
     },
     "placeholders": {
       "count": {
@@ -384,7 +384,7 @@
   "apk": "APK",
   "@apk": {
     "plural": {
-      "other": "{} APK"
+      "other": "{count} APK"
     },
     "placeholders": {
       "count": {
@@ -392,10 +392,10 @@
       }
     }
   },
-  "minute": "{} 分",
+  "minute": "分",
   "@minute": {
     "plural": {
-      "other": "{} 分"
+      "other": "{count} 分"
     },
     "placeholders": {
       "count": {
@@ -403,10 +403,10 @@
       }
     }
   },
-  "hour": "{} 時間",
+  "hour": "時間",
   "@hour": {
     "plural": {
-      "other": "{} 時間"
+      "other": "{count} 時間"
     },
     "placeholders": {
       "count": {
@@ -414,10 +414,10 @@
       }
     }
   },
-  "day": "{} 日",
+  "day": "日",
   "@day": {
     "plural": {
-      "other": "{} 日"
+      "other": "{count} 日"
     },
     "placeholders": {
       "count": {

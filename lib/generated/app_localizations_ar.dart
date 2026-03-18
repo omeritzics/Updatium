@@ -10,7 +10,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return 'رابط تطبيق $arg1 غير صالح';
+    return 'رابط تطبيق  غير صالح';
   }
 
   @override
@@ -100,7 +100,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1 للتعقب فقط';
+    return ' للتعقب فقط';
   }
 
   @override
@@ -148,7 +148,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return 'خيارات إضافية لـ $arg1';
+    return 'خيارات إضافية لـ ';
   }
 
   @override
@@ -175,12 +175,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return 'بواسطة $arg1';
+    return 'بواسطة ';
   }
 
   @override
   String percentProgress(String arg1) {
-    return 'التقدم: $arg1%';
+    return 'التقدم: %';
   }
 
   @override
@@ -200,12 +200,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return 'إلغاء تحديد $arg1';
+    return 'إلغاء تحديد ';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return 'سيتم إزالة $arg1 من Updatium لكنه سيظل مثبتًا على الجهاز.';
+    return 'سيتم إزالة  من Updatium لكنه سيظل مثبتًا على الجهاز.';
   }
 
   @override
@@ -216,22 +216,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return 'حدِّث $arg1';
+    return 'حدِّث ';
   }
 
   @override
   String installX(String arg1) {
-    return 'ثبِّت $arg1';
+    return 'ثبِّت ';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return 'علِّم $arg1\n(للتعقب فقط)\nكمحدث';
+    return 'علِّم \\n(للتعقب فقط)\\nكمحدث';
   }
 
   @override
   String changeX(String arg1) {
-    return 'غيِّر $arg1';
+    return 'غيِّر ';
   }
 
   @override
@@ -242,7 +242,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return 'تعليم $arg1 تطبيقات محددة كمحدثة؟';
+    return 'تعليم  تطبيقات محددة كمحدثة؟';
   }
 
   @override
@@ -266,7 +266,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      'سيتم إعادة تعيين حالة التثبيت لأي تطبيقات محددة.\n\nقد يساعد هذا عندما يكون إصدار التطبيق المعروض في Updatium غير صحيح بسبب فشل التحديثات أو مشاكل أخرى.';
+      'سيتم إعادة تعيين حالة التثبيت لأي تطبيقات محددة.\\n\\nقد يساعد هذا عندما يكون إصدار التطبيق المعروض في Updatium غير صحيح بسبب فشل التحديثات أو مشاكل أخرى.';
 
   @override
   String get customLinkMessage =>
@@ -316,7 +316,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return 'تم التصدير إلى $arg1';
+    return 'تم التصدير إلى ';
   }
 
   @override
@@ -339,7 +339,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return 'تم استيراد $arg1';
+    return 'تم استيراد ';
   }
 
   @override
@@ -359,7 +359,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return 'بحث $arg1';
+    return 'بحث ';
   }
 
   @override
@@ -367,19 +367,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return 'استيراد $arg1';
+    return 'استيراد ';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      'قد تظهر التطبيقات المستوردة بشكل غير صحيح كـ \"غير مثبتة\".\nلإصلاح هذا، قم بإعادة تثبيتها عبر Updatium.\nهذا لا يؤثر على بيانات التطبيق.\n\nينطبق فقط على طرق الاستيراد عبر الروابط أو الطرف الثالث.';
+      'قد تظهر التطبيقات المستوردة بشكل غير صحيح كـ \\\"غير مثبتة\\\".\\nلإصلاح هذا، قم بإعادة تثبيتها عبر Updatium.\\nهذا لا يؤثر على بيانات التطبيق.\\n\\nينطبق فقط على طرق الاستيراد عبر الروابط أو الطرف الثالث.';
 
   @override
   String get importErrors => 'أخطاء الاستيراد';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return 'استوردت $arg1 من $arg2 تطبيقات.';
+    return 'استوردت  من  تطبيقات.';
   }
 
   @override
@@ -496,12 +496,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1 يحتوي على أكثر من حزمة:';
+    return ' يحتوي على أكثر من حزمة:';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return 'جهازك يدعم بنية المعالج $arg1.';
+    return 'جهازك يدعم بنية المعالج .';
   }
 
   @override
@@ -512,7 +512,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return 'مصدر التطبيق هو \'$arg1\' لكن الحزمة تأتي من \'$arg2\'. استمر؟';
+    return 'مصدر التطبيق هو \'\' لكن الحزمة تأتي من \'\'. استمر؟';
   }
 
   @override
@@ -527,7 +527,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1 لديه تحديث.';
+    return ' لديه تحديث.';
   }
 
   @override
@@ -542,12 +542,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return 'حُدث $arg1 إلى $arg2.';
+    return 'حُدث  إلى .';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return 'فشل تحديث $arg1 إلى $arg2.';
+    return 'فشل تحديث  إلى .';
   }
 
   @override
@@ -566,7 +566,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return 'تمت إزالة $arg1 بسبب هذا الخطأ: $arg2';
+    return 'تمت إزالة  بسبب هذا الخطأ: ';
   }
 
   @override
@@ -596,7 +596,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return 'خطأ $arg1';
+    return 'خطأ ';
   }
 
   @override
@@ -617,17 +617,17 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return 'الأحدث: $arg1';
+    return 'الأحدث: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return 'المثبت: $arg1';
+    return 'المثبت: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return 'آخر تحقق من التحديثات: $arg1';
+    return 'آخر تحقق من التحديثات: ';
   }
 
   @override
@@ -727,17 +727,17 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return 'جارِ تنزيل $arg1';
+    return 'جارِ تنزيل ';
   }
 
   @override
   String downloadX(String arg1) {
-    return 'تنزيل $arg1';
+    return 'تنزيل ';
   }
 
   @override
   String downloadedX(String arg1) {
-    return 'نُزَّل $arg1';
+    return 'نُزَّل ';
   }
 
   @override
@@ -880,7 +880,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1 يحتاج إلى بيانات اعتماد إضافية (في الإعدادات)';
+    return ' يحتاج إلى بيانات اعتماد إضافية (في الإعدادات)';
   }
 
   @override
@@ -950,7 +950,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1 قد تم تحديثه إلى $arg2.';
+    return ' قد تم تحديثه إلى .';
   }
 
   @override
@@ -1005,7 +1005,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return 'مجموعة المطابقة لاستخدامها لـ \"$arg1\"';
+    return 'مجموعة المطابقة لاستخدامها لـ \\\"\\\"';
   }
 
   @override
@@ -1079,7 +1079,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return 'جارِ تنزيل $arg1';
+    return 'جارِ تنزيل ';
   }
 
   @override
@@ -1097,7 +1097,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return 'اختر $arg1';
+    return 'اختر ';
   }
 
   @override
@@ -1184,7 +1184,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return 'يمكن استخدام القائمة المنسدلة \"$arg1\" للوصول إلى نسخ مخصصة/مستضافة ذاتيًا لأي مصدر.';
+    return 'يمكن استخدام القائمة المنسدلة \\\"\\\" للوصول إلى نسخ مخصصة/مستضافة ذاتيًا لأي مصدر.';
   }
 
   @override
@@ -1240,7 +1240,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String fileDeletionError(String arg1) {
-    return 'فشل حذف الملف (حاول حذفه يدويًا ثم حاول مرة أخرى): \"$arg1\"';
+    return 'فشل حذف الملف (حاول حذفه يدويًا ثم حاول مرة أخرى): \\\"\\\"';
   }
 
   @override
@@ -1265,7 +1265,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      '(جوجل) أعلن أنه، بدءاً من عام 2026/2027، كل التطبيقات على أجهزة (أندرويد) مصدقة ستطلب من المطور تقديم تفاصيل الهوية الشخصية مباشرة إلى (غوغل).\n\nبعد ذلك، قد يتوقف Updatium عن العمل على أجهزة أندرويدية معتمدة.';
+      '(جوجل) أعلن أنه، بدءاً من عام 2026/2027، كل التطبيقات على أجهزة (أندرويد) مصدقة ستطلب من المطور تقديم تفاصيل الهوية الشخصية مباشرة إلى (غوغل).\\n\\nبعد ذلك، قد يتوقف Updatium عن العمل على أجهزة أندرويدية معتمدة.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1273,7 +1273,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      'ونلاحظ أنه في الأجل القصير، قد يظل من الممكن تركيب عملية \" غير متوافقة \" من خلال عملية \" تدفق سريع \" وعد غوغل بتنفيذها بعد رد فعل واسع النطاق على إعلانهم، ولكنهم لم يفصلوا كيف سينجح ذلك حتى لا يتضح ما إذا كان سيحافظ حقا على حريات المستعملين بأي طريقة عملية.\n\nعلى أية حال، حركة (جوجل) خطوة هامة نحو نهاية الحوسبة المجانية ذات الأغراض العامة للأفراد\n\nوينبغي ألا يتأثر هذا النظام غير المصدق عليه، مثل غرافينيوس، طالما يسمح له باستمرار وجوده.';
+      'ونلاحظ أنه في الأجل القصير، قد يظل من الممكن تركيب عملية \\\" غير متوافقة \\\" من خلال عملية \\\" تدفق سريع \\\" وعد غوغل بتنفيذها بعد رد فعل واسع النطاق على إعلانهم، ولكنهم لم يفصلوا كيف سينجح ذلك حتى لا يتضح ما إذا كان سيحافظ حقا على حريات المستعملين بأي طريقة عملية.\\n\\nعلى أية حال، حركة (جوجل) خطوة هامة نحو نهاية الحوسبة المجانية ذات الأغراض العامة للأفراد\\n\\nوينبغي ألا يتأثر هذا النظام غير المصدق عليه، مثل غرافينيوس، طالما يسمح له باستمرار وجوده.';
 
   @override
   String get multipleSigners => 'عدد من الدول الموقعة';
@@ -1292,7 +1292,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      'هذا التطبيق لا يوزع أو يستضيف أو يتحقق من أي من التطبيقات الخارجية. يتحمل المستخدم المسؤولية الكاملة عن سلامة وقانونية أي برنامج يتم تثبيته من خلال هذه الأداة.\n\nhttps://github.com/omeritzics/Updatium هو المكان الرسمي الوحيد لتنزيل Updatium - يُنصح بشدة بعدم تنزيله من أماكن أخرى حيث أن تنزيله من مصادر غير رسمية غير آمن.';
+      'هذا التطبيق لا يوزع أو يستضيف أو يتحقق من أي من التطبيقات الخارجية. يتحمل المستخدم المسؤولية الكاملة عن سلامة وقانونية أي برنامج يتم تثبيته من خلال هذه الأداة.\\n\\nhttps://github.com/omeritzics/Updatium هو المكان الرسمي الوحيد لتنزيل Updatium - يُنصح بشدة بعدم تنزيله من أماكن أخرى حيث أن تنزيله من مصادر غير رسمية غير آمن.';
 
   @override
   String get privacy => 'الخصوصية';
@@ -1321,36 +1321,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'بصمة رابط APK';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
-  String get gHReqPrefix => 'نسخة \"sky22333/hubproxy\" لطلبات GitHub';
+  String get gHReqPrefix =>
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => 'استمر';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count تطبيقات';
+    return 'التطبيقات';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count دقائق';
+    return 'دقائق';
   }
 
   @override
   String hour(int count) {
-    return '$count ساعات';
+    return 'ساعات';
   }
 
   @override
   String day(int count) {
-    return '$count أيام';
+    return 'أيام';
   }
 }

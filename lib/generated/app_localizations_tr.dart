@@ -10,7 +10,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return 'Geçerli bir $arg1 uygulama URL\'si değil';
+    return 'Geçerli bir  uygulama URL\'si değil';
   }
 
   @override
@@ -102,7 +102,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1 sadece takip edilir';
+    return ' sadece takip edilir';
   }
 
   @override
@@ -151,7 +151,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return '$arg1 için ek seçenekler';
+    return ' için ek seçenekler';
   }
 
   @override
@@ -178,12 +178,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return '$arg1 Tarafından';
+    return ' Tarafından';
   }
 
   @override
   String percentProgress(String arg1) {
-    return 'İlerleme: $arg1%';
+    return 'İlerleme: %';
   }
 
   @override
@@ -203,12 +203,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return '$arg1\'yi Seçimden Kaldır';
+    return '\'yi Seçimden Kaldır';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return '$arg1 Updatium\'dan kaldırılacak ancak cihazınızda yüklü kalacaktır.';
+    return ' Updatium\'dan kaldırılacak ancak cihazınızda yüklü kalacaktır.';
   }
 
   @override
@@ -220,22 +220,22 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return '$arg1\'yi Güncelle';
+    return '\'yi Güncelle';
   }
 
   @override
   String installX(String arg1) {
-    return '$arg1\'yi Yükle';
+    return '\'yi Yükle';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return '$arg1(Takip Edilen) olarak Güncellendi olarak İşaretle';
+    return '(Takip Edilen) olarak Güncellendi olarak İşaretle';
   }
 
   @override
   String changeX(String arg1) {
-    return '$arg1\'yi Değiştir';
+    return '\'yi Değiştir';
   }
 
   @override
@@ -246,7 +246,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return 'Seçilen Uygulamaları $arg1 olarak Güncellendi olarak İşaretle?';
+    return 'Seçilen Uygulamaları  olarak Güncellendi olarak İşaretle?';
   }
 
   @override
@@ -271,7 +271,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      'Seçilen Uygulamaların yükleme durumu sıfırlanacak.\n\nBu, Updatium\'da gösterilen uygulama sürümünün başarısız güncellemeler veya diğer sorunlar nedeniyle yanlış olması durumunda yardımcı olabilir.';
+      'Seçilen Uygulamaların yükleme durumu sıfırlanacak.\\n\\nBu, Updatium\'da gösterilen uygulama sürümünün başarısız güncellemeler veya diğer sorunlar nedeniyle yanlış olması durumunda yardımcı olabilir.';
 
   @override
   String get customLinkMessage =>
@@ -323,7 +323,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return '$arg1\'e Dışa Aktarıldı';
+    return '\'e Dışa Aktarıldı';
   }
 
   @override
@@ -346,7 +346,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return '$arg1 İçe Aktarıldı';
+    return ' İçe Aktarıldı';
   }
 
   @override
@@ -366,7 +366,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return '$arg1\'yi Ara';
+    return '\'yi Ara';
   }
 
   @override
@@ -374,19 +374,19 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return '$arg1 İçe Aktar';
+    return ' İçe Aktar';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      'İçe Aktarılan Uygulamalar yanlışlıkla \"Yüklenmedi\" olarak gösterilebilir.\nBunu düzeltmek için bunları Updatium üzerinden yeniden yükleyin.\nBu, yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.\n\nYalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.';
+      'İçe Aktarılan Uygulamalar yanlışlıkla \\\"Yüklenmedi\\\" olarak gösterilebilir.\\nBunu düzeltmek için bunları Updatium üzerinden yeniden yükleyin.\\nBu, yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.\\n\\nYalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.';
 
   @override
   String get importErrors => 'İçe Aktarma Hataları';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '$arg1\'den $arg2 Uygulama İçe Aktarıldı.';
+    return '\'den  Uygulama İçe Aktarıldı.';
   }
 
   @override
@@ -505,12 +505,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1\'nin birden fazla paketi var:';
+    return '\'nin birden fazla paketi var:';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return 'Cihazınız $arg1 CPU mimarisini destekliyor.';
+    return 'Cihazınız  CPU mimarisini destekliyor.';
   }
 
   @override
@@ -522,7 +522,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return 'Uygulama kaynağı \'$arg1\', ancak dağıtım paketi \'$arg2\'. Devam etmek istiyor musunuz?';
+    return 'Uygulama kaynağı \'\', ancak dağıtım paketi \'\'. Devam etmek istiyor musunuz?';
   }
 
   @override
@@ -537,7 +537,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1 güncellemesi var.';
+    return ' güncellemesi var.';
   }
 
   @override
@@ -552,12 +552,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return '$arg1, $arg2 sürümüne güncellendi.';
+    return ',  sürümüne güncellendi.';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return '$arg1, $arg2 sürümüne güncellenemedi.';
+    return ',  sürümüne güncellenemedi.';
   }
 
   @override
@@ -576,7 +576,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '$arg1 şu hatadan dolayı kaldırıldı: $arg2';
+    return ' şu hatadan dolayı kaldırıldı: ';
   }
 
   @override
@@ -606,7 +606,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return 'Hata $arg1';
+    return 'Hata ';
   }
 
   @override
@@ -627,17 +627,17 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return 'En son sürüm: $arg1';
+    return 'En son sürüm: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return 'Yüklü: $arg1';
+    return 'Yüklü: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return 'Son güncelleme denetlemesi: $arg1';
+    return 'Son güncelleme denetlemesi: ';
   }
 
   @override
@@ -738,17 +738,17 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return '$arg1 indiriliyor';
+    return ' indiriliyor';
   }
 
   @override
   String downloadX(String arg1) {
-    return '$arg1\'yi indir';
+    return '\'yi indir';
   }
 
   @override
   String downloadedX(String arg1) {
-    return '$arg1 indirildi';
+    return ' indirildi';
   }
 
   @override
@@ -894,7 +894,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1 ek kimlik bilgileri gerektirir (Ayarlarda)';
+    return ' ek kimlik bilgileri gerektirir (Ayarlarda)';
   }
 
   @override
@@ -968,7 +968,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1 $arg2 sürümüne güncellenmiş olabilir.';
+    return '  sürümüne güncellenmiş olabilir.';
   }
 
   @override
@@ -1027,7 +1027,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return '\"$arg1\" için kullanılacak grubu eşleştir';
+    return '\\\"\\\" için kullanılacak grubu eşleştir';
   }
 
   @override
@@ -1106,7 +1106,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return '$arg1 indiriliyor';
+    return ' indiriliyor';
   }
 
   @override
@@ -1125,7 +1125,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return '$arg1\'yi seç';
+    return '\'yi seç';
   }
 
   @override
@@ -1213,7 +1213,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return '\"$arg1\" açılır menüsü, herhangi bir kaynağın bireysel (self-hosted) veya özel örneklerine ulaşmak için kullanılabilir.';
+    return '\\\"\\\" açılır menüsü, herhangi bir kaynağın bireysel (self-hosted) veya özel örneklerine ulaşmak için kullanılabilir.';
   }
 
   @override
@@ -1264,11 +1264,11 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get batteryOptimizationNote =>
-      'Updatium ayarlarında \"ön plan hizmeti\"ne geçerseniz ve/veya Updatium için işletim sistemi pil optimizasyonlarını devre dışı bırakırsanız arka planda indirmelerin daha güvenilir şekilde çalışabileceğini unutmayın.';
+      'Updatium ayarlarında \\\"ön plan hizmeti\\\"ne geçerseniz ve/veya Updatium için işletim sistemi pil optimizasyonlarını devre dışı bırakırsanız arka planda indirmelerin daha güvenilir şekilde çalışabileceğini unutmayın.';
 
   @override
   String fileDeletionError(String arg1) {
-    return 'Dosya silinemedi (elle silmeyi deneyin ve sonra tekrar deneyin): \"$arg1\"';
+    return 'Dosya silinemedi (elle silmeyi deneyin ve sonra tekrar deneyin): \\\"\\\"';
   }
 
   @override
@@ -1293,7 +1293,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Google, 2026/2027\'den itibaren \"sertifikalı\" Android cihazlardaki bütün uygulamaların, geliştiricinin kişisel kimlik bilgilerini doğrudan Google\'a göndermesini gerektireceğini duyurdu.\n\nBu tarihten sonra, Updatium sertifikalı Android cihazlarda çalışmayı durabilir.';
+      'Google, 2026/2027\'den itibaren \\\"sertifikalı\\\" Android cihazlardaki bütün uygulamaların, geliştiricinin kişisel kimlik bilgilerini doğrudan Google\'a göndermesini gerektireceğini duyurdu.\\n\\nBu tarihten sonra, Updatium sertifikalı Android cihazlarda çalışmayı durabilir.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1301,7 +1301,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      'Kısa vadede, Google\'ın duyurudan sonra aldığı geniş tepkilerin ardından yapacağına söz verdiği \"gelişmiş akış\" işlemi ile \"doğrulanmamış\" (şartı yerine getirmeyen) uygulamaları yüklemek mümkün olabilir; ancak nasıl çalışacağını detaylandırmadıkları için bunun kullanıcı özgürlüğünü pratik anlamda gerçekten koruyup koruyamayacağı belirsizdir.\n\nHer halükârda Google\'ın bu hamlesi; bireyler için ücretsiz, genel amaçlı bilişim hizmetlerinin sonuna doğru atılmış önemli bir adımdır.\n\nVar olmalarına müsaade edildiği sürece, GrapheneOS gibi sertifikasız işletim sistemleri bundan etkilenmemelidir.';
+      'Kısa vadede, Google\'ın duyurudan sonra aldığı geniş tepkilerin ardından yapacağına söz verdiği \\\"gelişmiş akış\\\" işlemi ile \\\"doğrulanmamış\\\" (şartı yerine getirmeyen) uygulamaları yüklemek mümkün olabilir; ancak nasıl çalışacağını detaylandırmadıkları için bunun kullanıcı özgürlüğünü pratik anlamda gerçekten koruyup koruyamayacağı belirsizdir.\\n\\nHer halükârda Google\'ın bu hamlesi; bireyler için ücretsiz, genel amaçlı bilişim hizmetlerinin sonuna doğru atılmış önemli bir adımdır.\\n\\nVar olmalarına müsaade edildiği sürece, GrapheneOS gibi sertifikasız işletim sistemleri bundan etkilenmemelidir.';
 
   @override
   String get multipleSigners => 'Birden fazla imzacı';
@@ -1321,7 +1321,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      'Bu uygulama harici uygulamaları dağıtmaz, barındırmaz veya doğrulamaz. Kullanıcı, bu araç üzerinden yüklenen herhangi bir yazılımın güvenliği ve yasallığından tamamen sorumludur.\n\nhttps://github.com/omeritzics/Updatium Updatium\'u indirmek için tek resmi yerdir - resmi olmayan kaynaklardan indirmek güvenli olmadığından başka yerlerden indirmek şiddetle tavsiye edilmez.';
+      'Bu uygulama harici uygulamaları dağıtmaz, barındırmaz veya doğrulamaz. Kullanıcı, bu araç üzerinden yüklenen herhangi bir yazılımın güvenliği ve yasallığından tamamen sorumludur.\\n\\nhttps://github.com/omeritzics/Updatium Updatium\'u indirmek için tek resmi yerdir - resmi olmayan kaynaklardan indirmek güvenli olmadığından başka yerlerden indirmek şiddetle tavsiye edilmez.';
 
   @override
   String get privacy => 'Gizlilik';
@@ -1350,37 +1350,37 @@ class AppLocalizationsTr extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'APK bağlantısı hash\'i';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
   String get gHReqPrefix =>
-      'GitHub istekleri için \'sky22333/hubproxy\' örneği';
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => 'Devam et';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return 'Uygulamalar';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count dakika';
+    return 'dakika';
   }
 
   @override
   String hour(int count) {
-    return '$count saat';
+    return 'saat';
   }
 
   @override
   String day(int count) {
-    return '$count gün';
+    return 'gün';
   }
 }

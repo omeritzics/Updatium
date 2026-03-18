@@ -10,7 +10,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return 'Nije važeći URL aplikacije $arg1';
+    return 'Nije važeći URL aplikacije ';
   }
 
   @override
@@ -102,7 +102,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1 je samo za praćenje';
+    return ' je samo za praćenje';
   }
 
   @override
@@ -151,7 +151,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return 'Dodatne opcije za $arg1';
+    return 'Dodatne opcije za ';
   }
 
   @override
@@ -178,12 +178,12 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return 'Autor $arg1';
+    return 'Autor ';
   }
 
   @override
   String percentProgress(String arg1) {
-    return 'Napredak: $arg1%';
+    return 'Napredak: %';
   }
 
   @override
@@ -203,12 +203,12 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return 'Poništi odabir $arg1';
+    return 'Poništi odabir ';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return '$arg1 će biti uklonjen iz Updatiuma, ali će ostati instaliran na uređaju.';
+    return ' će biti uklonjen iz Updatiuma, ali će ostati instaliran na uređaju.';
   }
 
   @override
@@ -220,22 +220,22 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return 'Nadogradi $arg1';
+    return 'Nadogradi ';
   }
 
   @override
   String installX(String arg1) {
-    return 'Instaliraj $arg1';
+    return 'Instaliraj ';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return 'Označi $arg1\n(samo za praćenje)\nkao ažurirano';
+    return 'Označi \\n(samo za praćenje)\\nkao ažurirano';
   }
 
   @override
   String changeX(String arg1) {
-    return 'Promjena $arg1';
+    return 'Promjena ';
   }
 
   @override
@@ -247,7 +247,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return 'Označite $arg1 odabrane aplikacije kao ažurirane?';
+    return 'Označite  odabrane aplikacije kao ažurirane?';
   }
 
   @override
@@ -272,7 +272,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      'Status instalacije bilo koje odabrane aplikacije će se resetovati.\n\nTo može pomoći kada je verzija aplikacije prikazana u Updatiumu netačna zbog neuspjelih ažuriranja ili drugih problema.';
+      'Status instalacije bilo koje odabrane aplikacije će se resetovati.\\n\\nTo može pomoći kada je verzija aplikacije prikazana u Updatiumu netačna zbog neuspjelih ažuriranja ili drugih problema.';
 
   @override
   String get customLinkMessage =>
@@ -323,7 +323,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return 'Izvezeno u $arg1';
+    return 'Izvezeno u ';
   }
 
   @override
@@ -346,7 +346,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return 'Uvezeno $arg1';
+    return 'Uvezeno ';
   }
 
   @override
@@ -366,7 +366,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return 'Pretraživanje $arg1';
+    return 'Pretraživanje ';
   }
 
   @override
@@ -374,19 +374,19 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return 'Uvoz $arg1';
+    return 'Uvoz ';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      'Uvezene aplikacije mogu se pogrešno prikazati kao „Nije instalirano”.\nDa biste to riješili, ponovo ih instalirajte putem aplikacije Updatium.\nTo ne bi trebalo uticati na podatke aplikacije.\n\nUtječe samo na URL i metode uvoza treće strane.';
+      'Uvezene aplikacije mogu se pogrešno prikazati kao „Nije instalirano”.\\nDa biste to riješili, ponovo ih instalirajte putem aplikacije Updatium.\\nTo ne bi trebalo uticati na podatke aplikacije.\\n\\nUtječe samo na URL i metode uvoza treće strane.';
 
   @override
   String get importErrors => 'Uvezi greške';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '$arg1 od $arg2 aplikacija uvezeno.';
+    return ' od  aplikacija uvezeno.';
   }
 
   @override
@@ -503,12 +503,12 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1 ima više od jednog paketa:';
+    return ' ima više od jednog paketa:';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return 'Vaš uređaj podržava $arg1 arhitekturu procesora.';
+    return 'Vaš uređaj podržava  arhitekturu procesora.';
   }
 
   @override
@@ -520,7 +520,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return 'Izvor aplikacije je \'$arg1\', ali paket za izdavanje dolazi iz \'$arg2\'. Želite li nastaviti?';
+    return 'Izvor aplikacije je \'\', ali paket za izdavanje dolazi iz \'\'. Želite li nastaviti?';
   }
 
   @override
@@ -535,7 +535,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1 ima ažuriranje.';
+    return ' ima ažuriranje.';
   }
 
   @override
@@ -550,12 +550,12 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return '$arg1 je ažuriran na $arg2.';
+    return ' je ažuriran na .';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return 'Neuspješno ažuriranje $arg1 na $arg2.';
+    return 'Neuspješno ažuriranje  na .';
   }
 
   @override
@@ -574,7 +574,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '$arg1 je uklonjen zbog ove greške: $arg2';
+    return ' je uklonjen zbog ove greške: ';
   }
 
   @override
@@ -604,7 +604,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return 'Greška $arg1';
+    return 'Greška ';
   }
 
   @override
@@ -625,17 +625,17 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return 'Najnovija verzija: $arg1';
+    return 'Najnovija verzija: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return 'Instalirana verzija: $arg1';
+    return 'Instalirana verzija: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return 'Posljednja provjera ažuriranja: $arg1';
+    return 'Posljednja provjera ažuriranja: ';
   }
 
   @override
@@ -735,17 +735,17 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return 'Preuzimanje $arg1';
+    return 'Preuzimanje ';
   }
 
   @override
   String downloadX(String arg1) {
-    return 'Preuzeti $arg1';
+    return 'Preuzeti ';
   }
 
   @override
   String downloadedX(String arg1) {
-    return 'Preuzeto $arg1';
+    return 'Preuzeto ';
   }
 
   @override
@@ -891,7 +891,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1: Za ovo su potrebni dodatni akreditivi (u Postavkama)';
+    return ': Za ovo su potrebni dodatni akreditivi (u Postavkama)';
   }
 
   @override
@@ -963,7 +963,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1 aplikacija bi trebala biti ažurirana na $arg2.';
+    return ' aplikacija bi trebala biti ažurirana na .';
   }
 
   @override
@@ -1019,7 +1019,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return 'Podjesite grupu za upotebu za \"$arg1\"';
+    return 'Podjesite grupu za upotebu za \\\"\\\"';
   }
 
   @override
@@ -1095,7 +1095,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return 'Preuzimanje $arg1';
+    return 'Preuzimanje ';
   }
 
   @override
@@ -1114,7 +1114,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return 'Izaberite $arg1';
+    return 'Izaberite ';
   }
 
   @override
@@ -1202,7 +1202,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return '\"$arg1\" padajući meni se može koristiti da dosegnete vlastite/prilagođene instance bilo kojeg izvora.';
+    return '\\\"\\\" padajući meni se može koristiti da dosegnete vlastite/prilagođene instance bilo kojeg izvora.';
   }
 
   @override
@@ -1259,7 +1259,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String fileDeletionError(String arg1) {
-    return 'Neuspješno brisanje datoteke (probajte je ručno obrisati, pa pokušajte ponovo): \"$arg1\"';
+    return 'Neuspješno brisanje datoteke (probajte je ručno obrisati, pa pokušajte ponovo): \\\"\\\"';
   }
 
   @override
@@ -1284,7 +1284,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.\n\nAfter then, Updatium may stop working on certified Android devices.';
+      'Google has announced that, starting in 2026/2027, all apps on \\\"certified\\\" Android devices will require the developer to submit personal identity details directly to Google.\\n\\nAfter then, Updatium may stop working on certified Android devices.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1292,7 +1292,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      'Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\n\nIn any case, Google\'s move is a significant step towards the end of free, general-purpose computing for individuals.\n\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.';
+      'Note that in the short term, it may continue to be possible to install \\\"unverified\\\" (non-compliant) apps through an \\\"advanced flow\\\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\\n\\nIn any case, Google\'s move is a significant step towards the end of free, general-purpose computing for individuals.\\n\\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.';
 
   @override
   String get multipleSigners => 'Multiple Signers';
@@ -1313,7 +1313,7 @@ class AppLocalizationsBs extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      'Ova aplikacija ne distribuira, ne hostuje niti verifikuje nijednu od eksternih aplikacija. Korisnik snosi punu odgovornost za bezbednost i zakonitost bilo kog softvera instaliranog putem ovog alata.\n\nhttps://github.com/omeritzics/Updatium je jedino zvanično mjesto za preuzimanje Updatiuma - strogo se preporučuje da se ne preuzima s drugih mjesta jer je preuzimanje iz nezvaničnih izvora nesigurno.';
+      'Ova aplikacija ne distribuira, ne hostuje niti verifikuje nijednu od eksternih aplikacija. Korisnik snosi punu odgovornost za bezbednost i zakonitost bilo kog softvera instaliranog putem ovog alata.\\n\\nhttps://github.com/omeritzics/Updatium je jedino zvanično mjesto za preuzimanje Updatiuma - strogo se preporučuje da se ne preuzima s drugih mjesta jer je preuzimanje iz nezvaničnih izvora nesigurno.';
 
   @override
   String get privacy => 'Privatnost';
@@ -1342,36 +1342,37 @@ class AppLocalizationsBs extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'APK Link Hash';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
-  String get gHReqPrefix => '\'sky22333/hubproxy\' istanca za GitHub zahtjeve';
+  String get gHReqPrefix =>
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => 'Nastavite';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return 'Aplikacije';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return 'min.';
   }
 
   @override
   String hour(int count) {
-    return '$count hours';
+    return 'sat/i';
   }
 
   @override
   String day(int count) {
-    return '$count days';
+    return 'dana';
   }
 }

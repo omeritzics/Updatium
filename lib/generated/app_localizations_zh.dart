@@ -10,7 +10,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return '无效的 $arg1 URL';
+    return '无效的  URL';
   }
 
   @override
@@ -96,7 +96,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '“$arg1”为“仅追踪”模式';
+    return '“”为“仅追踪”模式';
   }
 
   @override
@@ -143,7 +143,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return '$arg1 的更多选项';
+    return ' 的更多选项';
   }
 
   @override
@@ -170,12 +170,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return '开发者：$arg1';
+    return '开发者：';
   }
 
   @override
   String percentProgress(String arg1) {
-    return '进度：$arg1%';
+    return '进度：%';
   }
 
   @override
@@ -195,12 +195,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return '取消选择 $arg1';
+    return '取消选择 ';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return '“$arg1”将从 Updatium 中删除，但仍安装在您的设备中。';
+    return '“”将从 Updatium 中删除，但仍安装在您的设备中。';
   }
 
   @override
@@ -211,22 +211,22 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return '更新 $arg1';
+    return '更新 ';
   }
 
   @override
   String installX(String arg1) {
-    return '安装 $arg1';
+    return '安装 ';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return '将“$arg1”\n（仅追踪）\n标记为已更新';
+    return '将“”\\n（仅追踪）\\n标记为已更新';
   }
 
   @override
   String changeX(String arg1) {
-    return '更改 $arg1';
+    return '更改 ';
   }
 
   @override
@@ -237,7 +237,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return '是否将选中的 $arg1 个应用标记为已更新？';
+    return '是否将选中的  个应用标记为已更新？';
   }
 
   @override
@@ -260,7 +260,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      '选中应用的安装状态将会被重置。\n\n当更新安装失败或其他问题导致 Updatium 中的应用版本显示错误时，可以尝试通过此方法解决。';
+      '选中应用的安装状态将会被重置。\\n\\n当更新安装失败或其他问题导致 Updatium 中的应用版本显示错误时，可以尝试通过此方法解决。';
 
   @override
   String get customLinkMessage => '分享链接仅适用于已安装 Updatium 的设备';
@@ -309,7 +309,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return '已导出至 $arg1';
+    return '已导出至 ';
   }
 
   @override
@@ -332,7 +332,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return '已导入 $arg1';
+    return '已导入 ';
   }
 
   @override
@@ -352,7 +352,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return '搜索$arg1';
+    return '搜索';
   }
 
   @override
@@ -360,19 +360,19 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return '导入$arg1';
+    return '导入';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      '导入的应用可能会错误地显示为“未安装”状态。\n请通过 Updatium 重新安装这些应用来解决此问题。';
+      '导入的应用可能会错误地显示为“未安装”状态。\\n请通过 Updatium 重新安装这些应用来解决此问题。';
 
   @override
   String get importErrors => '导入错误';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '已导入 $arg1 中的 $arg2 个应用。';
+    return '已导入  中的  个应用。';
   }
 
   @override
@@ -488,12 +488,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '“$arg1”有多个架构可用：';
+    return '“”有多个架构可用：';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return '您的设备支持 $arg1 架构。';
+    return '您的设备支持  架构。';
   }
 
   @override
@@ -504,7 +504,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return '此应用的来源是“$arg1”，但 APK 文件来自“$arg2”。是否继续？';
+    return '此应用的来源是“”，但 APK 文件来自“”。是否继续？';
   }
 
   @override
@@ -518,7 +518,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '“$arg1”可以更新了。';
+    return '“”可以更新了。';
   }
 
   @override
@@ -532,12 +532,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return '“$arg1”已更新至 $arg2。';
+    return '“”已更新至 。';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return '未能将 $arg1 更新为 $arg2。';
+    return '未能将  更新为 。';
   }
 
   @override
@@ -554,7 +554,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '“$arg1”由于以下错误被删除：$arg2';
+    return '“”由于以下错误被删除：';
   }
 
   @override
@@ -580,7 +580,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return '$arg1 错误';
+    return ' 错误';
   }
 
   @override
@@ -600,17 +600,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return '最新版本：$arg1';
+    return '最新版本：';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return '当前版本：$arg1';
+    return '当前版本：';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return '上次更新检查：$arg1';
+    return '上次更新检查：';
   }
 
   @override
@@ -708,17 +708,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return '正在下载 $arg1';
+    return '正在下载 ';
   }
 
   @override
   String downloadX(String arg1) {
-    return '下载 $arg1';
+    return '下载 ';
   }
 
   @override
   String downloadedX(String arg1) {
-    return '已下载 $arg1';
+    return '已下载 ';
   }
 
   @override
@@ -852,7 +852,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1：此功能需要额外的凭据（在“设置”中添加）';
+    return '：此功能需要额外的凭据（在“设置”中添加）';
   }
 
   @override
@@ -905,7 +905,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get customLinkFilterRegex =>
-      '筛选自定义来源的 APK 文件链接\n（正则表达式，默认匹配模式为“.apk\$”）';
+      '筛选自定义来源的 APK 文件链接\\n（正则表达式，默认匹配模式为“.apk\$”）';
 
   @override
   String get appsPossiblyUpdated => '已尝试更新应用';
@@ -915,7 +915,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '已尝试将“$arg1”更新至 $arg2。';
+    return '已尝试将“”更新至 。';
   }
 
   @override
@@ -965,7 +965,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return '“$arg1”中引用的捕获组';
+    return '“”中引用的捕获组';
   }
 
   @override
@@ -1036,7 +1036,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return '正在下载“$arg1”';
+    return '正在下载“”';
   }
 
   @override
@@ -1053,7 +1053,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return '选择$arg1';
+    return '选择';
   }
 
   @override
@@ -1138,7 +1138,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return '可以通过“$arg1”下拉菜单来指向任意来源的自托管/自定义实例。';
+    return '可以通过“”下拉菜单来指向任意来源的自托管/自定义实例。';
   }
 
   @override
@@ -1191,7 +1191,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String fileDeletionError(String arg1) {
-    return '删除文件失败（请手动删除后再次尝试）：\"$arg1\"';
+    return '删除文件失败（请手动删除后再次尝试）：\\\"\\\"';
   }
 
   @override
@@ -1214,7 +1214,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Google宣布,从2026/2027年开始,所有在\"认证\"Android设备上的应用程序都将要求开发者直接向Google提交个人身份细节.\n\n之后,Updatium可能会停止在认证的Android设备上工作.';
+      'Google宣布,从2026/2027年开始,所有在\\\"认证\\\"Android设备上的应用程序都将要求开发者直接向Google提交个人身份细节.\\n\\n之后,Updatium可能会停止在认证的Android设备上工作.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1222,7 +1222,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      '请注意,在短期内,通过谷歌承诺在广泛反对其公告后实施的\"高级流程\"程序,可能继续安装\"未经验证\"(不符合要求)的应用软件,但他们没有详细说明这将如何运作,因此不清楚它是否会以任何实际方式真正维护用户自由.\n\n无论如何，谷歌的这一举动是朝向个人自由、通用计算结束的重要一步.\n\n未经认证的OS,如GrapheneOS,只要允许继续存在,就不应受到影响.';
+      '请注意,在短期内,通过谷歌承诺在广泛反对其公告后实施的\\\"高级流程\\\"程序,可能继续安装\\\"未经验证\\\"(不符合要求)的应用软件,但他们没有详细说明这将如何运作,因此不清楚它是否会以任何实际方式真正维护用户自由.\\n\\n无论如何，谷歌的这一举动是朝向个人自由、通用计算结束的重要一步.\\n\\n未经认证的OS,如GrapheneOS,只要允许继续存在,就不应受到影响.';
 
   @override
   String get multipleSigners => '多个签名人';
@@ -1241,7 +1241,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      '本应用程序不分发、托管或验证任何外部应用程序。用户对通过此工具安装的任何软件的安全性和合法性承担全部责任。\n\nhttps://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 - 强烈建议不要从其他地方下载，因为从非官方来源下载是不安全的。';
+      '本应用程序不分发、托管或验证任何外部应用程序。用户对通过此工具安装的任何软件的安全性和合法性承担全部责任。\\n\\nhttps://github.com/omeritzics/Updatium 是下载 Updatium 的唯一官方地点 - 强烈建议不要从其他地方下载，因为从非官方来源下载是不安全的。';
 
   @override
   String get privacy => '隐私';
@@ -1269,37 +1269,38 @@ class AppLocalizationsZh extends AppLocalizations {
   String get githubStarPromptDontShowAgain => '不再显示';
 
   @override
-  String get aPKLinkHash => 'APK 文件链接散列值';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
-  String get gHReqPrefix => '用于 GitHub 请求的 \"sky22333/hubproxy \"实例';
+  String get gHReqPrefix =>
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => '继续';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return '应用列表';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count 分钟';
+    return '分钟';
   }
 
   @override
   String hour(int count) {
-    return '$count 小时';
+    return '小时';
   }
 
   @override
   String day(int count) {
-    return '$count 天';
+    return '天';
   }
 }
 
@@ -1309,7 +1310,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String invalidURLForSource(String arg1) {
-    return '不是有效的 $arg1 應用程式 URL';
+    return '不是有效的  應用程式 URL';
   }
 
   @override
@@ -1395,7 +1396,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1 是僅追蹤';
+    return ' 是僅追蹤';
   }
 
   @override
@@ -1442,7 +1443,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String additionalOptsFor(String arg1) {
-    return '$arg1 的其他選項';
+    return ' 的其他選項';
   }
 
   @override
@@ -1469,12 +1470,12 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String byX(String arg1) {
-    return '由 $arg1';
+    return '由 ';
   }
 
   @override
   String percentProgress(String arg1) {
-    return '進度：$arg1%';
+    return '進度：%';
   }
 
   @override
@@ -1494,12 +1495,12 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String deselectX(String arg1) {
-    return '取消選取 $arg1';
+    return '取消選取 ';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return '$arg1 將從 Updatium 中移除，但仍然安裝在裝置上。';
+    return ' 將從 Updatium 中移除，但仍然安裝在裝置上。';
   }
 
   @override
@@ -1510,22 +1511,22 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String updateX(String arg1) {
-    return '更新 $arg1';
+    return '更新 ';
   }
 
   @override
   String installX(String arg1) {
-    return '安裝 $arg1';
+    return '安裝 ';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return '標記 $arg1\n（僅追蹤）\n為已更新';
+    return '標記 \\n（僅追蹤）\\n為已更新';
   }
 
   @override
   String changeX(String arg1) {
-    return '更改 $arg1';
+    return '更改 ';
   }
 
   @override
@@ -1536,7 +1537,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return '標記 $arg1 個選取的應用程式為已更新？';
+    return '標記  個選取的應用程式為已更新？';
   }
 
   @override
@@ -1559,7 +1560,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      '任何選取應用程式的安裝狀態將被重設。\n\n這可以在由於更新失敗或其他問題導致 Updatium 顯示的應用程式版本不正確時有所幫助。';
+      '任何選取應用程式的安裝狀態將被重設。\\n\\n這可以在由於更新失敗或其他問題導致 Updatium 顯示的應用程式版本不正確時有所幫助。';
 
   @override
   String get customLinkMessage => '這些連結適用於已安裝 Updatium 的裝置';
@@ -1608,7 +1609,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String exportedTo(String arg1) {
-    return '匯出到 $arg1';
+    return '匯出到 ';
   }
 
   @override
@@ -1631,7 +1632,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String importedX(String arg1) {
-    return '已匯入 $arg1';
+    return '已匯入 ';
   }
 
   @override
@@ -1651,7 +1652,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String searchX(String arg1) {
-    return '搜尋 $arg1';
+    return '搜尋 ';
   }
 
   @override
@@ -1659,19 +1660,19 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String importX(String arg1) {
-    return '匯入 $arg1';
+    return '匯入 ';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      '匯入的應用程式可能會錯誤地顯示為「未安裝」。\n要修正此問題，請透過 Updatium 重新安裝它們。\n這不應該影響應用程式資料。\n\n僅影響 URL 和第三方匯入方法。';
+      '匯入的應用程式可能會錯誤地顯示為「未安裝」。\\n要修正此問題，請透過 Updatium 重新安裝它們。\\n這不應該影響應用程式資料。\\n\\n僅影響 URL 和第三方匯入方法。';
 
   @override
   String get importErrors => '匯入錯誤';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '已匯入 $arg1 個中的 $arg2 個應用程式。';
+    return '已匯入  個中的  個應用程式。';
   }
 
   @override
@@ -1781,12 +1782,12 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1 有多個套件：';
+    return ' 有多個套件：';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return '您的裝置支援 $arg1 CPU 架構。';
+    return '您的裝置支援  CPU 架構。';
   }
 
   @override
@@ -1797,7 +1798,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return '應用程式來源是 「$arg1」，但發佈套件來自 「$arg2」。要繼續嗎？';
+    return '應用程式來源是 「」，但發佈套件來自 「」。要繼續嗎？';
   }
 
   @override
@@ -1812,7 +1813,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1 有一個更新。';
+    return ' 有一個更新。';
   }
 
   @override
@@ -1826,12 +1827,12 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return '$arg1 已更新到 $arg2。';
+    return ' 已更新到 。';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return '未能將 $arg1 更新到 $arg2。';
+    return '未能將  更新到 。';
   }
 
   @override
@@ -1848,7 +1849,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '$arg1 已因以下錯誤被移除：$arg2';
+    return ' 已因以下錯誤被移除：';
   }
 
   @override
@@ -1875,7 +1876,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return '錯誤 $arg1';
+    return '錯誤 ';
   }
 
   @override
@@ -1895,17 +1896,17 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String latestVersionX(String arg1) {
-    return '最新版本：$arg1';
+    return '最新版本：';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return '已安裝版本：$arg1';
+    return '已安裝版本：';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return '上次檢查更新時間：$arg1';
+    return '上次檢查更新時間：';
   }
 
   @override
@@ -1958,17 +1959,17 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String downloadingX(String arg1) {
-    return '正在下載 $arg1';
+    return '正在下載 ';
   }
 
   @override
   String downloadX(String arg1) {
-    return '下載 $arg1';
+    return '下載 ';
   }
 
   @override
   String downloadedX(String arg1) {
-    return '已下載 $arg1';
+    return '已下載 ';
   }
 
   @override
@@ -2102,7 +2103,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1 需要額外的憑證（在設定中）';
+    return ' 需要額外的憑證（在設定中）';
   }
 
   @override
@@ -2165,7 +2166,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1 可能已更新到 $arg2。';
+    return ' 可能已更新到 。';
   }
 
   @override
@@ -2216,7 +2217,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return '用於「$arg1」的對應群組';
+    return '用於「」的對應群組';
   }
 
   @override
@@ -2287,7 +2288,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return '正在下載 $arg1';
+    return '正在下載 ';
   }
 
   @override
@@ -2304,7 +2305,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String selectX(String arg1) {
-    return '選擇 $arg1';
+    return '選擇 ';
   }
 
   @override
@@ -2374,7 +2375,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String selfHostedNote(String arg1) {
-    return '可使用「$arg1」下拉選單來存取任何來源的自行託管/自訂執行個體。';
+    return '可使用「」下拉選單來存取任何來源的自行託管/自訂執行個體。';
   }
 
   @override
@@ -2447,7 +2448,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Google 已宣布，自 2026／2027 年起，所有在「通過認證（certified）」的 Android 裝置上執行的應用程式，都必須由開發者直接向 Google 提交個人身分資訊。\n\n之後，Updatium 可能會停止在通過認證的 Android 裝置上運作。';
+      'Google 已宣布，自 2026／2027 年起，所有在「通過認證（certified）」的 Android 裝置上執行的應用程式，都必須由開發者直接向 Google 提交個人身分資訊。\\n\\n之後，Updatium 可能會停止在通過認證的 Android 裝置上運作。';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -2455,7 +2456,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String get googleVerificationWarningP3 =>
-      '請注意，從短期來看，Google 表示在其公告引發廣泛反彈後，可能仍可透過其承諾實作的「進階流程（advanced flow）」來安裝「未經驗證」（不符合規範）的應用程式；然而，Google 尚未說明此流程的具體運作方式，因此無法確定它是否能在實務上真正維護使用者的自由。\n\n無論如何，Google 的這項作法，都是朝向終結個人自由、通用運算的一大步。\n\n只要仍被允許持續存在，像 GrapheneOS 這類未通過認證的作業系統，理論上不會受到此政策影響。';
+      '請注意，從短期來看，Google 表示在其公告引發廣泛反彈後，可能仍可透過其承諾實作的「進階流程（advanced flow）」來安裝「未經驗證」（不符合規範）的應用程式；然而，Google 尚未說明此流程的具體運作方式，因此無法確定它是否能在實務上真正維護使用者的自由。\\n\\n無論如何，Google 的這項作法，都是朝向終結個人自由、通用運算的一大步。\\n\\n只要仍被允許持續存在，像 GrapheneOS 這類未通過認證的作業系統，理論上不會受到此政策影響。';
 
   @override
   String get multipleSigners => '多重簽署者';
@@ -2474,7 +2475,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String get disclaimerText =>
-      '此應用程式不分發、託管或驗證任何外部應用程式。使用者對透過此工具安裝的任何軟體的安全性和合法性承擔全部責任。\n\nhttps://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 - 強烈建議不要從其他地方下載，因為從非官方來源下載是不安全的。';
+      '此應用程式不分發、託管或驗證任何外部應用程式。使用者對透過此工具安裝的任何軟體的安全性和合法性承擔全部責任。\\n\\nhttps://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 - 強烈建議不要從其他地方下載，因為從非官方來源下載是不安全的。';
 
   @override
   String get privacy => '隱私';
@@ -2502,11 +2503,27 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'APK 連結 Hash';
+  String apps(int count) {
+    return '應用程式';
+  }
 
   @override
-  String get gHReqPrefix => 'GitHub 請求的 \'sky22333/hubproxy\' 實例';
+  String apk(int count) {
+    return 'APK';
+  }
 
   @override
-  String get continueAction => '繼續';
+  String minute(int count) {
+    return '分鐘';
+  }
+
+  @override
+  String hour(int count) {
+    return '小時';
+  }
+
+  @override
+  String day(int count) {
+    return '天';
+  }
 }

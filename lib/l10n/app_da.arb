@@ -1,6 +1,6 @@
 {
   "@@locale": "da",
-  "invalidURLForSource": "Ikke et gyldigt {} app-URL",
+  "invalidURLForSource": "Ikke et gyldigt  app-URL",
   "noReleaseFound": "Kunne ikke finde en passende udgivelse",
   "noVersionFound": "Kunne ikke afgøre udgivelsesversion",
   "urlMatchesNoSource": "URL'en matcher ikke en kendt kilde",
@@ -29,7 +29,7 @@
   "githubStarredRepos": "Stjernemarkeret GitHub-repos",
   "uname": "Brugernavn",
   "wrongArgNum": "Forkert antal argumenter angivet",
-  "xIsTrackOnly": "{} er 'Følg Kun'",
+  "xIsTrackOnly": " er 'Følg Kun'",
   "source": "Kilde",
   "app": "App",
   "appsFromSourceAreTrackOnly": "Apps fra denne kilde er 'Følg Kun'.",
@@ -44,7 +44,7 @@
   "add": "Tilføj",
   "searchSomeSourcesLabel": "Søg (kun visse kilder)",
   "search": "Søg",
-  "additionalOptsFor": "Flere indstillinger for {}",
+  "additionalOptsFor": "Flere indstillinger for ",
   "supportedSources": "Understøttede kilder",
   "trackOnlyInBrackets": "(Følg Kun)",
   "searchableInBrackets": "(Kan Søges)",
@@ -52,24 +52,24 @@
   "noApps": "Ingen apps",
   "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
   "noAppsForFilter": "Ingen apps til filter",
-  "byX": "Af {}",
-  "percentProgress": "Hentning: {}%",
+  "byX": "Af ",
+  "percentProgress": "Hentning: %",
   "pleaseWait": "Vent venligst",
   "updateAvailable": "Opdatering tilgængelig",
   "notInstalled": "Ikke installeret",
   "pseudoVersion": "pseudo-version",
   "selectAll": "Vælg alle",
-  "deselectX": "Fravælg {}",
-  "xWillBeRemovedButRemainInstalled": "{} fjernes fra Updatium, men forbliver installeret på enheden.",
+  "deselectX": "Fravælg ",
+  "xWillBeRemovedButRemainInstalled": " fjernes fra Updatium, men forbliver installeret på enheden.",
   "removeSelectedAppsQuestion": "Fjern valgte apps?",
   "removeSelectedApps": "Fjern valgte apps",
-  "updateX": "Opdater {}",
-  "installX": "Installer {}",
-  "markXTrackOnlyAsUpdated": "Markér {}\\n(Følg Kun)\\nsom opdateret",
-  "changeX": "Skift {}",
+  "updateX": "Opdater ",
+  "installX": "Installer ",
+  "markXTrackOnlyAsUpdated": "Markér \\n(Følg Kun)\\nsom opdateret",
+  "changeX": "Skift ",
   "installUpdateApps": "Installer/Opdater apps",
   "installUpdateSelectedApps": "Installer/Opdater valgte apps",
-  "markXSelectedAppsAsUpdated": "Markér {} valgte apps som opdateret?",
+  "markXSelectedAppsAsUpdated": "Markér  valgte apps som opdateret?",
   "no": "Nej",
   "yes": "Ja",
   "markSelectedAppsUpdated": "Markér valgte apps som opdateret",
@@ -92,25 +92,25 @@
   "nonInstalledApps": "Ikke-installerede apps",
   "importExport": "Import/Eksport",
   "settings": "Indstillinger",
-  "exportedTo": "Eksportér til {}",
+  "exportedTo": "Eksportér til ",
   "updatiumExport": "Updatium-eksport",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Ugyldigt input",
-  "importedX": "Importerede {}",
+  "importedX": "Importerede ",
   "updatiumImport": "Updatium-import",
   "importFromURLList": "Importér fra URL-liste",
   "searchQuery": "Søgning",
   "appURLList": "Liste over app-URL'er",
   "line": "Linje",
-  "searchX": "Søg {}",
+  "searchX": "Søg ",
   "noResults": "Ingen resultater fundet",
-  "importX": "Importér {}",
+  "importX": "Importér ",
   "importedAppsIdDisclaimer": "Importerede apps vises muligvis forkert som \\\"Ikke installeret\\\".\\nFor at løse dette, geninstaller dem via Updatium.\\nDette bør ikke påvirke app-data.\\n\\nPåvirker kun URL- og tredjepartsimportmetoder.",
   "importErrors": "Importfejl",
-  "importedXOfYApps": "{} af {} app importeret.",
+  "importedXOfYApps": " af  app importeret.",
   "followingURLsHadErrors": "Følgende URL'er havde fejl:",
   "selectURL": "Vælg URL",
   "selectURLs": "Vælg URL'er",
@@ -146,25 +146,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "updatium-eksport",
   "pickAnAPK": "Vælg en APK",
-  "appHasMoreThanOnePackage": "{} har mere end én pakke:",
-  "deviceSupportsXArch": "Din enhed understøtter CPU-arkitekturen {}.",
+  "appHasMoreThanOnePackage": " har mere end én pakke:",
+  "deviceSupportsXArch": "Din enhed understøtter CPU-arkitekturen .",
   "deviceSupportsFollowingArchs": "Din enhed understøtter følgende CPU-arkitekturer:",
   "warning": "Advarsel",
-  "sourceIsXButPackageFromYPrompt": "App-kilden er '{}', men udgivelsespakken kommer fra '{}'. Fortsæt?",
+  "sourceIsXButPackageFromYPrompt": "App-kilden er '', men udgivelsespakken kommer fra ''. Fortsæt?",
   "updatesAvailable": "Opdateringer tilgængelige",
   "updatesAvailableNotifDescription": "Underretter brugeren om tilgængelige opdateringer for en eller flere apps, som Updatium følger",
   "noNewUpdates": "Ingen nye opdateringer.",
-  "xHasAnUpdate": "{} har en opdatering.",
+  "xHasAnUpdate": " har en opdatering.",
   "appsUpdated": "Apps opdateret",
   "appsNotUpdated": "Kunne ikke opdatere applikationerne",
   "appsUpdatedNotifDescription": "Underretter brugeren om, at opdateringer til en eller flere apps blev udført i baggrunden",
-  "xWasUpdatedToY": "{} blev opdateret til {}.",
-  "xWasNotUpdatedToY": "Kunne ikke opdatere {} til {}.",
+  "xWasUpdatedToY": " blev opdateret til .",
+  "xWasNotUpdatedToY": "Kunne ikke opdatere  til .",
   "errorCheckingUpdates": "Fejl ved tjek for opdateringer",
   "errorCheckingUpdatesNotifDescription": "En meddelelse, der vises, opdateringstjek i baggrunden mislykkes",
   "appsRemoved": "Apps fjernet",
   "appsRemovedNotifDescription": "Underretter brugeren om, at en eller flere apps blev fjernet grundet fejl under indlæsning af dem",
-  "xWasRemovedDueToErrorY": "{} blev fjernet grundet denne fejl: {}",
+  "xWasRemovedDueToErrorY": " blev fjernet grundet denne fejl: ",
   "completeAppInstallation": "Færdiggør app-installation",
   "updatiumMustBeOpenToInstallApps": "Updatium skal være åben for at installere apps",
   "completeAppInstallationNotifDescription": "Beder brugeren om at gå tilbage til Updatium for at færdiggøre installation af en app",
@@ -172,15 +172,15 @@
   "checkingForUpdatesNotifDescription": "Kortvarig meddelelse ved tjek for opdateringer",
   "pleaseAllowInstallPerm": "Tillad venligst Updatium at installere apps",
   "trackOnly": "Følg Kun",
-  "errorWithHttpStatusCode": "Fejl {}",
+  "errorWithHttpStatusCode": "Fejl ",
   "versionCorrectionDisabled": "Versionskorrektion deaktiveret (plugin ser ikke ud til at virke)",
   "unknown": "Ukendt",
   "none": "Ingen",
   "all": "Alle",
   "never": "Aldrig",
-  "latestVersionX": "Seneste: {}",
-  "installedVersionX": "Installeret: {}",
-  "lastUpdateCheckX": "Sidste opdateringstjek: {}",
+  "latestVersionX": "Seneste: ",
+  "installedVersionX": "Installeret: ",
+  "lastUpdateCheckX": "Sidste opdateringstjek: ",
   "remove": "Fjern",
   "yesMarkUpdated": "Ja, markér som opdateret",
   "fdroid": "F-Droid Officiel",
@@ -197,9 +197,9 @@
   "additionalOptions": "Flere indstillinger",
   "disableVersionDetection": "Deaktivér versionsregistrering",
   "noVersionDetectionExplanation": "Denne indstilling bør kun bruges til apps, hvor versionsregistrering ikke virker korrekt.",
-  "downloadingX": "Henter {}",
-  "downloadX": "Hent {}",
-  "downloadedX": "Hentede {}",
+  "downloadingX": "Henter ",
+  "downloadX": "Hent ",
+  "downloadedX": "Hentede ",
   "releaseAsset": "Udgivelsesressource",
   "downloadNotifDescription": "Underretter brugeren om status på hentning af en app",
   "noAPKFound": "Ingen APK fundet",
@@ -243,7 +243,7 @@
   "hideNonInstalledApps": "Skjul ikke-installerede apps",
   "gitlabPATLabel": "GitLab Personlig Adgangstoken",
   "about": "Om",
-  "requiresCredentialsInSettings": "{} kræver yderligere legitimation (i Indstillinger)",
+  "requiresCredentialsInSettings": " kræver yderligere legitimation (i Indstillinger)",
   "checkOnStart": "Tjek for opdateringer ved opstart",
   "safeMode": "Sikker tilstand",
   "safeModeDescription": "Skjul Tilføj app-side og vis Import/Eksport i stedet",
@@ -263,7 +263,7 @@
   "customLinkFilterRegex": "Brugerdefineret APK-linkfilter efter regulært udtryk (standard '.apk$')",
   "appsPossiblyUpdated": "App-opdateringer forsøgt",
   "appsPossiblyUpdatedNotifDescription": "Underretter brugeren om, at opdateringer til en eller flere apps muligvis blev udført i baggrunden",
-  "xWasPossiblyUpdatedToY": "{} er muligvis blevet opdateret til {}.",
+  "xWasPossiblyUpdatedToY": " er muligvis blevet opdateret til .",
   "enableBackgroundUpdates": "Aktivér baggrundsopdateringer",
   "backgroundUpdateReqsExplanation": "Baggrundsopdateringer er måske ikke mulige for alle apps.",
   "backgroundUpdateLimitsExplanation": "En vellykket baggrundsinstallation kan kun afgøres, når Updatium åbnes.",
@@ -279,7 +279,7 @@
   "autoSelectHighestVersionCode": "Auto-vælg højeste versionKode af APK",
   "versionExtractionRegEx": "RegEx for versionsstrengsudtrækning",
   "trimVersionString": "Trim versionsstreng med RegEx",
-  "matchGroupToUseForX": "Match-gruppe til brug for \\\"{}\\\"",
+  "matchGroupToUseForX": "Match-gruppe til brug for \\\"\\\"",
   "matchGroupToUse": "RegEx-matchgruppe til brug for versionsstrengsudtrækning",
   "highlightTouchTargets": "Fremhæv mindre åbenlyse berøringsmål",
   "pickExportDir": "Vælg eksportmappe",
@@ -302,12 +302,12 @@
   "appsPossiblyUpdatedNotifChannel": "App-opdateringer forsøgt",
   "errorCheckingUpdatesNotifChannel": "Fejl ved opdateringstjek",
   "appsRemovedNotifChannel": "Apps fjernet",
-  "downloadingXNotifChannel": "Henter {}",
+  "downloadingXNotifChannel": "Henter ",
   "completeAppInstallationNotifChannel": "Færdiggør app-installation",
   "checkingForUpdatesNotifChannel": "Tjekker for opdateringer",
   "onlyCheckInstalledOrTrackOnlyApps": "Tjek kun installerede og 'Følg Kun'-apps for opdateringer",
   "supportFixedAPKURL": "Understøt fikserede APK-URL'er",
-  "selectX": "Vælg {}",
+  "selectX": "Vælg ",
   "parallelDownloads": "Tillad samtidige overførsler",
   "useShizuku": "Brug Shizuku eller Sui til at installere",
   "shizukuBinderNotFound": "Shizuku-tjeneste kører ikke",
@@ -327,7 +327,7 @@
   "latest": "Seneste",
   "invertRegEx": "Inverter regulært udtryk",
   "note": "Bemærk",
-  "selfHostedNote": "Rullemenuen \\\"{}\\\" kan bruges til at nå selvhostede/brugerdefinerede instanser af enhver kilde.",
+  "selfHostedNote": "Rullemenuen \\\"\\\" kan bruges til at nå selvhostede/brugerdefinerede instanser af enhver kilde.",
   "badDownload": "APK'en kunne ikke analyseres (inkompatibel eller delvis hentning)",
   "beforeNewInstallsShareToAppVerifier": "Del nye apps med AppVerifier (hvis tilgængelig)",
   "appVerifierInstructionToast": "Del til AppVerifier, og vend tilbage, når du er klar.",
@@ -345,7 +345,7 @@
   "welcome": "Velkommen",
   "documentationLinksNote": "Updatiums GitHub-side, som der linkes til nedenfor, indeholder links til videoer, artikler, diskussioner og andre ressourcer, som kan hjælpe dig med at forstå, hvordan du bruger appen.",
   "batteryOptimizationNote": "Bemærk, at baggrundsdownloads kan fungere mere pålideligt, hvis du deaktiverer OS-batterioptimering for Updatium.",
-  "fileDeletionError": "Kunne ikke slette filen (prøv at slette den manuelt og prøv igen): \\\"{}\\\"",
+  "fileDeletionError": "Kunne ikke slette filen (prøv at slette den manuelt og prøv igen): \\\"\\\"",
   "foregroundService": "Updatium forgrundstjeneste",
   "foregroundServiceExplanation": "Brug en forgrundstjeneste til opdateringskontrol (mere pålidelig, bruger mere strøm)",
   "fgServiceNotice": "Denne meddelelse er nødvendig for baggrundsopdateringskontrol (den kan skjules i OS-indstillingerne).",
@@ -373,8 +373,8 @@
   "apps": "Apps",
   "@apps": {
     "plural": {
-      "one": "{} App",
-      "other": "{} Apps"
+      "one": "{count} App",
+      "other": "{count} Apps"
     },
     "placeholders": {
       "count": {
@@ -385,8 +385,8 @@
   "apk": "APK",
   "@apk": {
     "plural": {
-      "one": "{} APK",
-      "other": "{} APK'er"
+      "one": "{count} APK",
+      "other": "{count} APK'er"
     },
     "placeholders": {
       "count": {
@@ -394,11 +394,11 @@
       }
     }
   },
-  "minute": "{} minutter",
+  "minute": "minutter",
   "@minute": {
     "plural": {
-      "one": "{} minut",
-      "other": "{} minutter"
+      "one": "{count} minut",
+      "other": "{count} minutter"
     },
     "placeholders": {
       "count": {
@@ -406,11 +406,11 @@
       }
     }
   },
-  "hour": "{} timer",
+  "hour": "timer",
   "@hour": {
     "plural": {
-      "one": "{} time",
-      "other": "{} timer"
+      "one": "{count} time",
+      "other": "{count} timer"
     },
     "placeholders": {
       "count": {
@@ -418,11 +418,11 @@
       }
     }
   },
-  "day": "{} dage",
+  "day": "dage",
   "@day": {
     "plural": {
-      "one": "{} dag",
-      "other": "{} dage"
+      "one": "{count} dag",
+      "other": "{count} dage"
     },
     "placeholders": {
       "count": {

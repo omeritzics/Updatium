@@ -10,7 +10,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return 'Pole kehtiv $arg1 äpi URL';
+    return 'Pole kehtiv  äpi URL';
   }
 
   @override
@@ -102,7 +102,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1 on ainult jälgimiseks';
+    return ' on ainult jälgimiseks';
   }
 
   @override
@@ -151,7 +151,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return 'Lisavalikud $arg1 jaoks';
+    return 'Lisavalikud  jaoks';
   }
 
   @override
@@ -178,12 +178,12 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return 'Autor: $arg1';
+    return 'Autor: ';
   }
 
   @override
   String percentProgress(String arg1) {
-    return 'Edenemine: $arg1%';
+    return 'Edenemine: %';
   }
 
   @override
@@ -203,12 +203,12 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return 'Tühista $arg1 valik';
+    return 'Tühista  valik';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return '$arg1 eemaldatakse Updatiumist, kuid jääb seadmesse installituks.';
+    return ' eemaldatakse Updatiumist, kuid jääb seadmesse installituks.';
   }
 
   @override
@@ -219,22 +219,22 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return 'Uuenda $arg1';
+    return 'Uuenda ';
   }
 
   @override
   String installX(String arg1) {
-    return 'Installi $arg1';
+    return 'Installi ';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return 'Märgi $arg1\n(ainult jälgimine)\nuuendatuks';
+    return 'Märgi \\n(ainult jälgimine)\\nuuendatuks';
   }
 
   @override
   String changeX(String arg1) {
-    return 'Muuda $arg1';
+    return 'Muuda ';
   }
 
   @override
@@ -245,7 +245,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return 'Märgi $arg1 valitud äpi uuendatuks?';
+    return 'Märgi  valitud äpi uuendatuks?';
   }
 
   @override
@@ -269,7 +269,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      'Kõikide valitud äpide installimise olek lähtestatakse.\n\nSee võib aidata, kui Updatiumis näidatav äpi versioon on vale nurkunud uuenduste või muude probleemide tõttu.';
+      'Kõikide valitud äpide installimise olek lähtestatakse.\\n\\nSee võib aidata, kui Updatiumis näidatav äpi versioon on vale nurkunud uuenduste või muude probleemide tõttu.';
 
   @override
   String get customLinkMessage =>
@@ -319,7 +319,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return 'Eksporditud asukohta $arg1';
+    return 'Eksporditud asukohta ';
   }
 
   @override
@@ -342,7 +342,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return 'Imporditud $arg1';
+    return 'Imporditud ';
   }
 
   @override
@@ -362,7 +362,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return 'Otsi $arg1';
+    return 'Otsi ';
   }
 
   @override
@@ -370,19 +370,19 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return 'Impordi $arg1';
+    return 'Impordi ';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      'Imporditud äpid võivad valesti näidata kui \"pole installitud\".\nSelle parandamiseks installige need uuesti Updatiumi kaudu.\nSee ei tohiks mõjutada äpi andmeid.\n\nMõjutab ainult URL- ja kolmanda osapoole importimeetodeid.';
+      'Imporditud äpid võivad valesti näidata kui \\\"pole installitud\\\".\\nSelle parandamiseks installige need uuesti Updatiumi kaudu.\\nSee ei tohiks mõjutada äpi andmeid.\\n\\nMõjutab ainult URL- ja kolmanda osapoole importimeetodeid.';
 
   @override
   String get importErrors => 'Importimisvead';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '$arg1 / $arg2 äpi imporditud.';
+    return ' /  äpi imporditud.';
   }
 
   @override
@@ -499,12 +499,12 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1-l on rohkem kui üks pakett:';
+    return '-l on rohkem kui üks pakett:';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return 'Teie seade toetab $arg1 CPU-arhitektuuri.';
+    return 'Teie seade toetab  CPU-arhitektuuri.';
   }
 
   @override
@@ -516,7 +516,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return 'Äpi allikas on \'$arg1\', kuid väljaandepakett tuleb allikast \'$arg2\'. Jätkame?';
+    return 'Äpi allikas on \'\', kuid väljaandepakett tuleb allikast \'\'. Jätkame?';
   }
 
   @override
@@ -531,7 +531,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1-l on uuendus.';
+    return '-l on uuendus.';
   }
 
   @override
@@ -546,12 +546,12 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return '$arg1 uuendati versioonile $arg2.';
+    return ' uuendati versioonile .';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return '$arg1 uuendamine versioonile $arg2 ebaõnnestus.';
+    return ' uuendamine versioonile  ebaõnnestus.';
   }
 
   @override
@@ -570,7 +570,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '$arg1 eemaldati järgmise vea tõttu: $arg2';
+    return ' eemaldati järgmise vea tõttu: ';
   }
 
   @override
@@ -600,7 +600,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return 'Viga $arg1';
+    return 'Viga ';
   }
 
   @override
@@ -621,17 +621,17 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return 'Viimane: $arg1';
+    return 'Viimane: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return 'Installitud: $arg1';
+    return 'Installitud: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return 'Viimane uuenduste kontroll: $arg1';
+    return 'Viimane uuenduste kontroll: ';
   }
 
   @override
@@ -730,17 +730,17 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return '$arg1 allalaadimine';
+    return ' allalaadimine';
   }
 
   @override
   String downloadX(String arg1) {
-    return 'Laadi $arg1 alla';
+    return 'Laadi  alla';
   }
 
   @override
   String downloadedX(String arg1) {
-    return '$arg1 allalaaditud';
+    return ' allalaaditud';
   }
 
   @override
@@ -886,7 +886,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1 vajab lisandmed (seadetes)';
+    return ' vajab lisandmed (seadetes)';
   }
 
   @override
@@ -959,7 +959,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1 võidi uuendada versioonile $arg2.';
+    return ' võidi uuendada versioonile .';
   }
 
   @override
@@ -1015,7 +1015,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return 'Kasutatav vaste grupp \"$arg1\" jaoks';
+    return 'Kasutatav vaste grupp \\\"\\\" jaoks';
   }
 
   @override
@@ -1090,7 +1090,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return '$arg1 allalaadimine';
+    return ' allalaadimine';
   }
 
   @override
@@ -1108,7 +1108,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return 'Vali $arg1';
+    return 'Vali ';
   }
 
   @override
@@ -1197,7 +1197,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return '\"$arg1\" rippmenüüd saab kasutada iseseisvate/kohandatud allikate instantsidele juurdepääsuks.';
+    return '\\\"\\\" rippmenüüd saab kasutada iseseisvate/kohandatud allikate instantsidele juurdepääsuks.';
   }
 
   @override
@@ -1249,11 +1249,11 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get batteryOptimizationNote =>
-      'Pange tähele, et taustalised allalaadimised võivad töötada usaldusväärsemalt, kui lülitate Updatiumi seadetes üle \"taustateenusele\" ja/või keelate Updatiumile oma operatsioonisüsteemi seadetes aku optimeerimine.';
+      'Pange tähele, et taustalised allalaadimised võivad töötada usaldusväärsemalt, kui lülitate Updatiumi seadetes üle \\\"taustateenusele\\\" ja/või keelate Updatiumile oma operatsioonisüsteemi seadetes aku optimeerimine.';
 
   @override
   String fileDeletionError(String arg1) {
-    return 'Faili kustutamine ebaõnnestus (proovige kustutada käsitsi ja proovige uuesti): \"$arg1\"';
+    return 'Faili kustutamine ebaõnnestus (proovige kustutada käsitsi ja proovige uuesti): \\\"\\\"';
   }
 
   @override
@@ -1278,7 +1278,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Google on teatanud, et alates 2026./2027. aastast vajavad kõik \"sertifitseeritud\" Androidi seadmed, et arendaja esitaks isiklikud identiteediandmed otse Google\'le.\n\nPärast seda võib Updatium lõpetada töötamise sertifitseeritud Androidi seadmetel.';
+      'Google on teatanud, et alates 2026./2027. aastast vajavad kõik \\\"sertifitseeritud\\\" Androidi seadmed, et arendaja esitaks isiklikud identiteediandmed otse Google\'le.\\n\\nPärast seda võib Updatium lõpetada töötamise sertifitseeritud Androidi seadmetel.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1286,7 +1286,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      'Pange tähele, et lühikesel tähtajal võib olla võimalik installida \"kinnitamata\" (mittesobivad) äpid \"täiustatud protsessi\" kaudu, mille Google on lubanud implementeerida pärast laia vastukaja oma teadaandele, kuid nad ei ole üksikasjaliselt kirjeldanud, kuidas see töötab, mistõttu on selge, kas see tõesti säilitab kasutajate vabadused praktilises mõttes.\n\nIgatahes, Google\'i samm on oluline samm vaba üldotstarbelise arvutamise lõpule füüsiliste isikute jaoks.\n\nMitte-sertifitseeritud operatsioonisüsteemid, nagu GrapheneOS, peaksid jääda mõjutamata niikaua kui neil on lubatud olemas olla.';
+      'Pange tähele, et lühikesel tähtajal võib olla võimalik installida \\\"kinnitamata\\\" (mittesobivad) äpid \\\"täiustatud protsessi\\\" kaudu, mille Google on lubanud implementeerida pärast laia vastukaja oma teadaandele, kuid nad ei ole üksikasjaliselt kirjeldanud, kuidas see töötab, mistõttu on selge, kas see tõesti säilitab kasutajate vabadused praktilises mõttes.\\n\\nIgatahes, Google\'i samm on oluline samm vaba üldotstarbelise arvutamise lõpule füüsiliste isikute jaoks.\\n\\nMitte-sertifitseeritud operatsioonisüsteemid, nagu GrapheneOS, peaksid jääda mõjutamata niikaua kui neil on lubatud olemas olla.';
 
   @override
   String get multipleSigners => 'Mitu allkirjastajat';
@@ -1305,7 +1305,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      'See rakendus ei levita, ei majuta ega kinnita ühtegi välist rakendust. Kasutaja kannab täielikut vastutust kõigi selle tööriistaga installitud tarkvara turvalisuse ja seaduslikkuse eest.\n\nhttps://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadimiseks - on tugevasti soovitatud mitte alla laadida teist kohtadest, kuna allalaadimine mitteametlikelt allikatest ei ole turvaline.';
+      'See rakendus ei levita, ei majuta ega kinnita ühtegi välist rakendust. Kasutaja kannab täielikut vastutust kõigi selle tööriistaga installitud tarkvara turvalisuse ja seaduslikkuse eest.\\n\\nhttps://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadimiseks - on tugevasti soovitatud mitte alla laadida teist kohtadest, kuna allalaadimine mitteametlikelt allikatest ei ole turvaline.';
 
   @override
   String get privacy => 'Privaatsus';
@@ -1334,37 +1334,37 @@ class AppLocalizationsEt extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'APK lingi räsi';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
   String get gHReqPrefix =>
-      '\'sky22333/hubproxy\' instants GitHub päringute jaoks';
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => 'Jätka';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return 'Äpid';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return 'minutit';
   }
 
   @override
   String hour(int count) {
-    return '$count hours';
+    return 'tundi';
   }
 
   @override
   String day(int count) {
-    return '$count days';
+    return 'päeva';
   }
 }

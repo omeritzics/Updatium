@@ -1,6 +1,6 @@
 {
   "@@locale": "vi",
-  "invalidURLForSource": "URL ứng dụng {} không hợp lệ",
+  "invalidURLForSource": "URL ứng dụng  không hợp lệ",
   "noReleaseFound": "Không thể tìm thấy bản phát hành phù hợp",
   "noVersionFound": "Không thể xác định phiên bản phát hành",
   "urlMatchesNoSource": "URL không khớp với nguồn đã biết",
@@ -29,7 +29,7 @@
   "githubStarredRepos": "Kho lưu trữ có gắn dấu sao GitHub",
   "uname": "Tên người dùng",
   "wrongArgNum": "Số lượng đối số được cung cấp sai",
-  "xIsTrackOnly": "{} là Chỉ theo dõi",
+  "xIsTrackOnly": " là Chỉ theo dõi",
   "source": "Nguồn",
   "app": "Ứng dụng",
   "appsFromSourceAreTrackOnly": "Các ứng dụng từ nguồn này là 'Chỉ theo dõi'.",
@@ -44,7 +44,7 @@
   "add": "Thêm",
   "searchSomeSourcesLabel": "Tìm kiếm (Chỉ một số nguồn)",
   "search": "Tìm kiếm",
-  "additionalOptsFor": "Tùy chọn bổ sung cho {}",
+  "additionalOptsFor": "Tùy chọn bổ sung cho ",
   "supportedSources": "Nguồn được hỗ trợ",
   "trackOnlyInBrackets": "(Chỉ theo dõi)",
   "searchableInBrackets": "(Có thể tìm kiếm)",
@@ -52,24 +52,24 @@
   "noApps": "Chào mừng!",
   "noAppsSubtext": "Bạn có thể thêm ứng dụng đầu tiên bằng cách nhấn vào 'Thêm' bên dưới.",
   "noAppsForFilter": "Không có ứng dụng cho bộ lọc",
-  "byX": "Bởi {}",
-  "percentProgress": "Đang tải {}%",
+  "byX": "Bởi ",
+  "percentProgress": "Đang tải %",
   "pleaseWait": "Vui lòng chờ",
   "updateAvailable": "Có sẵn bản cập nhật",
   "notInstalled": "Chưa cài đặt",
   "pseudoVersion": "phiên bản giả",
   "selectAll": "Chọn tất cả",
-  "deselectX": "Bỏ chọn {}",
-  "xWillBeRemovedButRemainInstalled": "{} sẽ bị xóa khỏi Updatium nhưng vẫn còn cài đặt trên thiết bị.",
+  "deselectX": "Bỏ chọn ",
+  "xWillBeRemovedButRemainInstalled": " sẽ bị xóa khỏi Updatium nhưng vẫn còn cài đặt trên thiết bị.",
   "removeSelectedAppsQuestion": "Xóa ứng dụng đã chọn?",
   "removeSelectedApps": "Xóa ứng dụng đã chọn",
-  "updateX": "Cập nhật {}",
-  "installX": "Cài đặt {}",
-  "markXTrackOnlyAsUpdated": "Đánh dấu {}\\n(Chỉ theo dõi)\\nnhư là đã cập nhật",
-  "changeX": "Thay đổi {}",
+  "updateX": "Cập nhật ",
+  "installX": "Cài đặt ",
+  "markXTrackOnlyAsUpdated": "Đánh dấu \\n(Chỉ theo dõi)\\nnhư là đã cập nhật",
+  "changeX": "Thay đổi ",
   "installUpdateApps": "Cài đặt/Cập nhật ứng dụng",
   "installUpdateSelectedApps": "Cài đặt/Cập nhật ứng dụng đã chọn",
-  "markXSelectedAppsAsUpdated": "Đánh dấu {} ứng dụng đã chọn là đã cập nhật?",
+  "markXSelectedAppsAsUpdated": "Đánh dấu  ứng dụng đã chọn là đã cập nhật?",
   "no": "Không",
   "yes": "Đúng",
   "markSelectedAppsUpdated": "Đánh dấu các ứng dụng đã chọn là đã cập nhật",
@@ -92,25 +92,25 @@
   "nonInstalledApps": "Ứng dụng chưa được cài đặt",
   "importExport": "Nhập/Xuất",
   "settings": "Thiết đặt",
-  "exportedTo": "Đã xuất sang {}",
+  "exportedTo": "Đã xuất sang ",
   "updatiumExport": "Xuất",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Đầu vào không hợp lệ",
-  "importedX": "Đã nhập {}",
+  "importedX": "Đã nhập ",
   "updatiumImport": "Nhập",
   "importFromURLList": "Nhập từ danh sách URL",
   "searchQuery": "Truy vấn tìm kiếm",
   "appURLList": "Danh sách URL ứng dụng",
   "line": "Hàng",
-  "searchX": "Tìm kiếm {}",
+  "searchX": "Tìm kiếm ",
   "noResults": "Không có kết quả nào được tìm thấy",
-  "importX": "Nhập {}",
+  "importX": "Nhập ",
   "importedAppsIdDisclaimer": "Ứng dụng đã nhập có thể hiển thị không chính xác là \\\"Chưa được cài đặt\\\".\\nĐể khắc phục sự cố này, hãy cài đặt lại chúng thông qua Updatium.\\nĐiều này sẽ không ảnh hưởng đến dữ liệu Ứng dụng.\\n\\nChỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba.",
   "importErrors": "Lỗi nhập",
-  "importedXOfYApps": "{} trong số {} Ứng dụng đã được nhập.",
+  "importedXOfYApps": " trong số  Ứng dụng đã được nhập.",
   "followingURLsHadErrors": "Các URL sau có lỗi:",
   "selectURL": "Chọn URL",
   "selectURLs": "Chọn URL",
@@ -146,25 +146,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "updatium-export",
   "pickAnAPK": "Chọn một APK",
-  "appHasMoreThanOnePackage": "{} có nhiều gói:",
-  "deviceSupportsXArch": "Thiết bị của bạn hỗ trợ kiến trúc CPU {}.",
+  "appHasMoreThanOnePackage": " có nhiều gói:",
+  "deviceSupportsXArch": "Thiết bị của bạn hỗ trợ kiến trúc CPU .",
   "deviceSupportsFollowingArchs": "Thiết bị của bạn hỗ trợ các kiến trúc CPU sau:",
   "warning": "Cảnh báo",
-  "sourceIsXButPackageFromYPrompt": "Nguồn ứng dụng là '{}' nhưng gói phát hành đến từ '{}'. Tiếp tục?",
+  "sourceIsXButPackageFromYPrompt": "Nguồn ứng dụng là '' nhưng gói phát hành đến từ ''. Tiếp tục?",
   "updatesAvailable": "Cập nhật có sẵn",
   "updatesAvailableNotifDescription": "Thông báo cho người dùng rằng có bản cập nhật cho một hoặc nhiều Ứng dụng được theo dõi bởi Updatium",
   "noNewUpdates": "Không có bản cập nhật mới.",
-  "xHasAnUpdate": "{} có bản cập nhật.",
+  "xHasAnUpdate": " có bản cập nhật.",
   "appsUpdated": "Ứng dụng đã cập nhật ",
   "appsNotUpdated": "Ứng dụng đã cập nhật không thành công",
   "appsUpdatedNotifDescription": "Thông báo cho người dùng rằng các bản cập nhật cho một hoặc nhiều Ứng dụng đã được áp dụng trong nền",
-  "xWasUpdatedToY": "{} đã được cập nhật thành {}.",
-  "xWasNotUpdatedToY": "{} đã cập nhật thành {} không thành công.",
+  "xWasUpdatedToY": " đã được cập nhật thành .",
+  "xWasNotUpdatedToY": " đã cập nhật thành  không thành công.",
   "errorCheckingUpdates": "Lỗi kiểm tra bản cập nhật",
   "errorCheckingUpdatesNotifDescription": "Thông báo hiển thị khi kiểm tra cập nhật nền không thành công",
   "appsRemoved": "Ứng dụng đã loại bỏ",
   "appsRemovedNotifDescription": "Thông báo cho người dùng rằng một hoặc nhiều Ứng dụng đã bị loại bỏ do lỗi khi tải chúng",
-  "xWasRemovedDueToErrorY": "{} đã bị loại bỏ do lỗi này: {}",
+  "xWasRemovedDueToErrorY": " đã bị loại bỏ do lỗi này: ",
   "completeAppInstallation": "Hoàn tất cài đặt ứng dụng",
   "updatiumMustBeOpenToInstallApps": "Updatium phải được mở để cài đặt Ứng dụng",
   "completeAppInstallationNotifDescription": "Yêu cầu người dùng quay lại Updatium để hoàn tất cài đặt Ứng dụng",
@@ -172,15 +172,15 @@
   "checkingForUpdatesNotifDescription": "Thông báo tạm thời xuất hiện khi kiểm tra bản cập nhật",
   "pleaseAllowInstallPerm": "Vui lòng cho phép Updatium cài đặt Ứng dụng",
   "trackOnly": "Chỉ theo dõi",
-  "errorWithHttpStatusCode": "Lỗi {}",
+  "errorWithHttpStatusCode": "Lỗi ",
   "versionCorrectionDisabled": "Tính năng sửa phiên bản bị vô hiệu hóa (plugin dường như không hoạt động)",
   "unknown": "Không xác định",
   "none": "Không",
   "all": "Tất cả",
   "never": "Không bao giờ",
-  "latestVersionX": "Phiên bản mới nhất: {}",
-  "installedVersionX": "Phiên bản đã cài đặt: {}",
-  "lastUpdateCheckX": "Kiểm tra cập nhật lần cuối: {}",
+  "latestVersionX": "Phiên bản mới nhất: ",
+  "installedVersionX": "Phiên bản đã cài đặt: ",
+  "lastUpdateCheckX": "Kiểm tra cập nhật lần cuối: ",
   "remove": "Loại bỏ",
   "yesMarkUpdated": "Có, Đánh dấu là đã cập nhật",
   "fdroid": "F-Droid Chính thức",
@@ -197,9 +197,9 @@
   "additionalOptions": "Tùy chọn bổ sung",
   "disableVersionDetection": "Tắt tính năng phát hiện phiên bản",
   "noVersionDetectionExplanation": "Chỉ nên sử dụng tùy chọn này cho Ứng dụng mà tính năng phát hiện phiên bản không hoạt động chính xác.",
-  "downloadingX": "Đang tải xuống {}",
-  "downloadX": "Tải xuống {}",
-  "downloadedX": "Đã tải xuống {}",
+  "downloadingX": "Đang tải xuống ",
+  "downloadX": "Tải xuống ",
+  "downloadedX": "Đã tải xuống ",
   "releaseAsset": "Tệp phát hành",
   "downloadNotifDescription": "Thông báo cho người dùng về tiến trình tải xuống Ứng dụng",
   "noAPKFound": "Không tìm thấy APK",
@@ -243,7 +243,7 @@
   "hideNonInstalledApps": "Ẩn các ứng dụng chưa được cài đặt",
   "gitlabPATLabel": "Token truy cập cá nhân GitLab",
   "about": "Giới thiệu",
-  "requiresCredentialsInSettings": "{}: Điều này cần thông tin xác thực bổ sung (trong Thiết đặt)",
+  "requiresCredentialsInSettings": ": Điều này cần thông tin xác thực bổ sung (trong Thiết đặt)",
   "checkOnStart": "Kiểm tra các bản cập nhật khi khởi động",
   "safeMode": "Chế độ an toàn",
   "safeModeDescription": "Ẩn trang Thêm ứng dụng và hiển thị Nhập/Xuất thay thế",
@@ -263,7 +263,7 @@
   "customLinkFilterRegex": "Bộ lọc liên kết APK tùy chỉnh theo biểu thức chính quy (Mặc định '.apk$')",
   "appsPossiblyUpdated": "Đã cố gắng cập nhật ứng dụng",
   "appsPossiblyUpdatedNotifDescription": "Thông báo cho người dùng rằng các bản cập nhật cho một hoặc nhiều Ứng dụng có khả năng được áp dụng trong nền",
-  "xWasPossiblyUpdatedToY": "{} có thể đã được cập nhật thành {}.",
+  "xWasPossiblyUpdatedToY": " có thể đã được cập nhật thành .",
   "enableBackgroundUpdates": "Tự động cập nhật trong nền",
   "backgroundUpdateReqsExplanation": "Có thể không thực hiện được cập nhật trong nền cho tất cả ứng dụng.",
   "backgroundUpdateLimitsExplanation": "Sự thành công của cài đặt trong nền chỉ có thể được xác định khi mở Updatium.",
@@ -279,7 +279,7 @@
   "autoSelectHighestVersionCode": "Tự động chọn APK mã phiên bản cao nhất",
   "versionExtractionRegEx": "Trích xuất phiên bản RegEx",
   "trimVersionString": "Cắt chuỗi phiên bản bằng RegEx",
-  "matchGroupToUseForX": "Nhóm khớp được dùng cho \\\"{}\\\"",
+  "matchGroupToUseForX": "Nhóm khớp được dùng cho \\\"\\\"",
   "matchGroupToUse": "Nhóm đối sánh để sử dụng cho Regex trích xuất phiên bản",
   "highlightTouchTargets": "Đánh dấu các mục tiêu cảm ứng ít rõ ràng hơn",
   "pickExportDir": "Chọn thư mục xuất",
@@ -302,12 +302,12 @@
   "appsPossiblyUpdatedNotifChannel": "Đã cố gắng cập nhật ứng dụng",
   "errorCheckingUpdatesNotifChannel": "Lỗi kiểm tra bản cập nhật",
   "appsRemovedNotifChannel": "Ứng dụng đã bị loại bỏ",
-  "downloadingXNotifChannel": "Đang tải xuống {}",
+  "downloadingXNotifChannel": "Đang tải xuống ",
   "completeAppInstallationNotifChannel": "Hoàn tất cài đặt ứng dụng",
   "checkingForUpdatesNotifChannel": "Đang kiểm tra cập nhật",
   "onlyCheckInstalledOrTrackOnlyApps": "Chỉ kiểm tra cập nhật các ứng dụng đã cài đặt và Chỉ theo dõi",
   "supportFixedAPKURL": "Hỗ trợ URL APK cố định",
-  "selectX": "Lựa chọn {}",
+  "selectX": "Lựa chọn ",
   "parallelDownloads": "Cho phép tải đa luồng",
   "useShizuku": "Sử dụng Shizuku hoặc Sui để cài đặt",
   "shizukuBinderNotFound": "Shizuku chưa khởi động",
@@ -327,7 +327,7 @@
   "latest": "Mới nhất",
   "invertRegEx": "Đảo ngược biểu thức chính quy",
   "note": "Ghi chú",
-  "selfHostedNote": "Trình đơn thả xuống \\\"{}\\\" có thể được dùng để tiếp cận các phiên bản tự lưu trữ/tùy chỉnh của bất kỳ nguồn nào.",
+  "selfHostedNote": "Trình đơn thả xuống \\\"\\\" có thể được dùng để tiếp cận các phiên bản tự lưu trữ/tùy chỉnh của bất kỳ nguồn nào.",
   "badDownload": "Không thể phân tích cú pháp APK (tải xuống một phần hoặc không tương thích)",
   "beforeNewInstallsShareToAppVerifier": "Chia sẻ ứng dụng mới với AppVerifier (nếu có)",
   "appVerifierInstructionToast": "Chia sẻ lên AppVerifier, sau đó quay lại đây khi sẵn sàng.",
@@ -345,7 +345,7 @@
   "welcome": "Chào mừng",
   "documentationLinksNote": "Trang GitHub của Updatium được liên kết bên dưới chứa các liên kết đến video, bài viết, thảo luận và các tài nguyên khác sẽ giúp bạn hiểu cách sử dụng ứng dụng.",
   "batteryOptimizationNote": "Lưu ý: tải xuống nền có thể hoạt động ổn định hơn nếu bạn tắt tối ưu pin của hệ điều hành cho Updatium.",
-  "fileDeletionError": "Không thể xóa tệp (hãy thử xóa tệp thủ công rồi thử lại): \\\"{}\\\"",
+  "fileDeletionError": "Không thể xóa tệp (hãy thử xóa tệp thủ công rồi thử lại): \\\"\\\"",
   "foregroundService": "Dịch vụ nền Updatium",
   "foregroundServiceExplanation": "Sử dụng dịch vụ nền trước để kiểm tra cập nhật (đáng tin cậy hơn, tiêu tốn nhiều pin hơn)",
   "fgServiceNotice": "Thông báo này là bắt buộc để kiểm tra cập nhật nền (có thể ẩn trong cài đặt hệ điều hành).",
@@ -373,8 +373,8 @@
   "apps": "Ứng dụng",
   "@apps": {
     "plural": {
-      "one": "{} Ứng dụng",
-      "other": "{} Ứng dụng"
+      "one": "{count} Ứng dụng",
+      "other": "{count} Ứng dụng"
     },
     "placeholders": {
       "count": {
@@ -385,8 +385,8 @@
   "apk": "APK",
   "@apk": {
     "plural": {
-      "one": "{} APK",
-      "other": "{} APKs"
+      "one": "{count} APK",
+      "other": "{count} APKs"
     },
     "placeholders": {
       "count": {
@@ -394,11 +394,11 @@
       }
     }
   },
-  "minute": "{} phút",
+  "minute": "phút",
   "@minute": {
     "plural": {
-      "one": "{} phút",
-      "other": "{} phút"
+      "one": "{count} phút",
+      "other": "{count} phút"
     },
     "placeholders": {
       "count": {
@@ -406,11 +406,11 @@
       }
     }
   },
-  "hour": "{} giờ",
+  "hour": "giờ",
   "@hour": {
     "plural": {
-      "one": "{} giờ",
-      "other": "{} giờ"
+      "one": "{count} giờ",
+      "other": "{count} giờ"
     },
     "placeholders": {
       "count": {
@@ -418,11 +418,11 @@
       }
     }
   },
-  "day": "{} ngày",
+  "day": "ngày",
   "@day": {
     "plural": {
-      "one": "{} ngày",
-      "other": "{} ngày"
+      "one": "{count} ngày",
+      "other": "{count} ngày"
     },
     "placeholders": {
       "count": {

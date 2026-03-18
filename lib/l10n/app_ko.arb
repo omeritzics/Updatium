@@ -1,6 +1,6 @@
 {
   "@@locale": "ko",
-  "invalidURLForSource": "유효한 {} 앱 URL이 아닙니다",
+  "invalidURLForSource": "유효한  앱 URL이 아닙니다",
   "noReleaseFound": "적절한 릴리스를 찾을 수 없습니다",
   "noVersionFound": "릴리스 버전을 결정할 수 없습니다",
   "urlMatchesNoSource": "URL이 알려진 소스와 일치하지 않습니다",
@@ -29,7 +29,7 @@
   "githubStarredRepos": "GitHub 즐겨찾기 저장소",
   "uname": "사용자 이름",
   "wrongArgNum": "잘못된 인수 수 제공",
-  "xIsTrackOnly": "{}는 추적 전용입니다",
+  "xIsTrackOnly": "는 추적 전용입니다",
   "source": "소스",
   "app": "앱",
   "appsFromSourceAreTrackOnly": "이 소스의 앱은 '추적 전용'입니다.",
@@ -44,7 +44,7 @@
   "add": "추가",
   "searchSomeSourcesLabel": "검색 (일부 소스만)",
   "search": "검색",
-  "additionalOptsFor": "{}에 대한 추가 옵션",
+  "additionalOptsFor": "에 대한 추가 옵션",
   "supportedSources": "지원되는 소스",
   "trackOnlyInBrackets": "(추적 전용)",
   "searchableInBrackets": "(검색 가능)",
@@ -52,24 +52,24 @@
   "noApps": "환영합니다!",
   "noAppsSubtext": "아래의 '앱 추가'를 탭하여 첫 번째 앱을 추가할 수 있습니다.",
   "noAppsForFilter": "필터에 대한 앱 없음",
-  "byX": "{}에 의해",
-  "percentProgress": "진행률: {}%",
+  "byX": "에 의해",
+  "percentProgress": "진행률: %",
   "pleaseWait": "기다려 주세요",
   "updateAvailable": "업데이트 가능",
   "notInstalled": "설치되지 않음",
   "pseudoVersion": "의사 버전",
   "selectAll": "모두 선택",
-  "deselectX": "{} 선택 해제",
-  "xWillBeRemovedButRemainInstalled": "{}는 Updatium에서 제거되지만 장치에 설치된 상태로 남아 있습니다.",
+  "deselectX": " 선택 해제",
+  "xWillBeRemovedButRemainInstalled": "는 Updatium에서 제거되지만 장치에 설치된 상태로 남아 있습니다.",
   "removeSelectedAppsQuestion": "선택한 앱을 제거하시겠습니까?",
   "removeSelectedApps": "선택한 앱 제거",
-  "updateX": "{} 업데이트",
-  "installX": "{} 설치",
-  "markXTrackOnlyAsUpdated": "{}\\n(추적 전용)\\n업데이트됨으로 표시",
-  "changeX": "{} 변경",
+  "updateX": " 업데이트",
+  "installX": " 설치",
+  "markXTrackOnlyAsUpdated": "\\n(추적 전용)\\n업데이트됨으로 표시",
+  "changeX": " 변경",
   "installUpdateApps": "앱 설치/업데이트",
   "installUpdateSelectedApps": "선택한 앱 설치/업데이트",
-  "markXSelectedAppsAsUpdated": "{} 선택한 앱을 업데이트됨으로 표시하시겠습니까?",
+  "markXSelectedAppsAsUpdated": " 선택한 앱을 업데이트됨으로 표시하시겠습니까?",
   "no": "아니요",
   "yes": "예",
   "markSelectedAppsUpdated": "선택한 앱을 업데이트됨으로 표시",
@@ -92,25 +92,25 @@
   "nonInstalledApps": "설치되지 않은 앱",
   "importExport": "가져오기/내보내기",
   "settings": "설정",
-  "exportedTo": "{}로 내보내기 완료",
+  "exportedTo": "로 내보내기 완료",
   "updatiumExport": "Updatium 내보내기",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "잘못된 입력",
-  "importedX": "{} 가져오기 완료",
+  "importedX": " 가져오기 완료",
   "updatiumImport": "Updatium 가져오기",
   "importFromURLList": "URL 목록에서 가져오기",
   "searchQuery": "검색 쿼리",
   "appURLList": "앱 URL 목록",
   "line": "줄",
-  "searchX": "{} 검색",
+  "searchX": " 검색",
   "noResults": "결과가 없습니다",
-  "importX": "{} 가져오기",
+  "importX": " 가져오기",
   "importedAppsIdDisclaimer": "가져온 앱은 \\\"설치되지 않음\\\"으로 잘못 표시될 수 있습니다.\\n이를 수정하려면 Updatium을 통해 다시 설치하십시오.\\n앱 데이터에는 영향을 미치지 않습니다.\\n\\nURL 및 타사 가져오기 방법에만 영향을 미칩니다.",
   "importErrors": "가져오기 오류",
-  "importedXOfYApps": "{}개의 앱 중 {}개 가져오기 완료.",
+  "importedXOfYApps": "개의 앱 중 개 가져오기 완료.",
   "followingURLsHadErrors": "다음 URL에 오류가 있었습니다:",
   "selectURL": "URL 선택",
   "selectURLs": "URL 선택",
@@ -146,25 +146,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "updatium-export",
   "pickAnAPK": "APK 선택",
-  "appHasMoreThanOnePackage": "{}에는 둘 이상의 패키지가 있습니다:",
-  "deviceSupportsXArch": "장치는 {} CPU 아키텍처를 지원합니다.",
+  "appHasMoreThanOnePackage": "에는 둘 이상의 패키지가 있습니다:",
+  "deviceSupportsXArch": "장치는  CPU 아키텍처를 지원합니다.",
   "deviceSupportsFollowingArchs": "장치는 다음 CPU 아키텍처를 지원합니다:",
   "warning": "경고",
-  "sourceIsXButPackageFromYPrompt": "앱 소스는 '{}'이지만 릴리스 패키지는 '{}'에서 제공됩니다. 계속하시겠습니까?",
+  "sourceIsXButPackageFromYPrompt": "앱 소스는 ''이지만 릴리스 패키지는 ''에서 제공됩니다. 계속하시겠습니까?",
   "updatesAvailable": "업데이트 가능",
   "updatesAvailableNotifDescription": "Updatium이 추적하는 하나 이상의 앱에 대한 업데이트가 있음을 사용자에게 알립니다",
   "noNewUpdates": "새로운 업데이트가 없습니다.",
-  "xHasAnUpdate": "{}에 업데이트가 있습니다.",
+  "xHasAnUpdate": "에 업데이트가 있습니다.",
   "appsUpdated": "앱 업데이트됨",
   "appsNotUpdated": "앱 업데이트 실패",
   "appsUpdatedNotifDescription": "백그라운드에서 하나 이상의 앱에 대한 업데이트가 적용되었음을 사용자에게 알립니다",
-  "xWasUpdatedToY": "{}가 {}로 업데이트되었습니다.",
-  "xWasNotUpdatedToY": "{}를 {}로 업데이트하지 못했습니다.",
+  "xWasUpdatedToY": "가 로 업데이트되었습니다.",
+  "xWasNotUpdatedToY": "를 로 업데이트하지 못했습니다.",
   "errorCheckingUpdates": "업데이트 확인 오류",
   "errorCheckingUpdatesNotifDescription": "백그라운드 업데이트 확인이 실패할 때 표시되는 알림",
   "appsRemoved": "앱 제거됨",
   "appsRemovedNotifDescription": "로드 중 오류로 인해 하나 이상의 앱이 제거되었음을 사용자에게 알립니다",
-  "xWasRemovedDueToErrorY": "{}가 다음 오류로 인해 제거되었습니다: {}",
+  "xWasRemovedDueToErrorY": "가 다음 오류로 인해 제거되었습니다: ",
   "completeAppInstallation": "앱 설치 완료",
   "updatiumMustBeOpenToInstallApps": "앱을 설치하려면 Updatium이 열려 있어야 합니다",
   "completeAppInstallationNotifDescription": "앱 설치를 완료하려면 Updatium으로 돌아가도록 사용자에게 요청합니다",
@@ -172,15 +172,15 @@
   "checkingForUpdatesNotifDescription": "업데이트 확인 시 나타나는 일시적인 알림",
   "pleaseAllowInstallPerm": "Updatium이 앱을 설치할 수 있도록 허용해 주세요",
   "trackOnly": "추적 전용",
-  "errorWithHttpStatusCode": "오류 {}",
+  "errorWithHttpStatusCode": "오류 ",
   "versionCorrectionDisabled": "버전 수정 비활성화됨 (플러그인이 작동하지 않는 것 같습니다)",
   "unknown": "알 수 없음",
   "none": "없음",
   "all": "모두",
   "never": "절대",
-  "latestVersionX": "최신: {}",
-  "installedVersionX": "설치됨: {}",
-  "lastUpdateCheckX": "마지막 업데이트 확인: {}",
+  "latestVersionX": "최신: ",
+  "installedVersionX": "설치됨: ",
+  "lastUpdateCheckX": "마지막 업데이트 확인: ",
   "remove": "제거",
   "yesMarkUpdated": "예, 업데이트됨으로 표시",
   "fdroid": "F-Droid 공식",
@@ -197,9 +197,9 @@
   "additionalOptions": "추가 옵션",
   "disableVersionDetection": "버전 감지 비활성화",
   "noVersionDetectionExplanation": "이 옵션은 버전 감지가 올바르게 작동하지 않는 앱에만 사용해야 합니다.",
-  "downloadingX": "{} 다운로드 중",
-  "downloadX": "{} 다운로드",
-  "downloadedX": "{} 다운로드 완료",
+  "downloadingX": " 다운로드 중",
+  "downloadX": " 다운로드",
+  "downloadedX": " 다운로드 완료",
   "releaseAsset": "릴리스 자산",
   "downloadNotifDescription": "앱 다운로드 진행 상황을 사용자에게 알립니다",
   "noAPKFound": "APK를 찾을 수 없습니다",
@@ -243,7 +243,7 @@
   "hideNonInstalledApps": "설치되지 않은 앱 숨기기",
   "gitlabPATLabel": "GitLab 개인 액세스 토큰",
   "about": "정보",
-  "requiresCredentialsInSettings": "{}는 추가 자격 증명이 필요합니다 (설정에서)",
+  "requiresCredentialsInSettings": "는 추가 자격 증명이 필요합니다 (설정에서)",
   "checkOnStart": "시작 시 업데이트 확인",
   "safeMode": "안전 모드",
   "safeModeDescription": "앱 추가 페이지를 숨기고 대신 가져오기/내보내기 표시",
@@ -263,7 +263,7 @@
   "customLinkFilterRegex": "정규 표현식으로 사용자 정의 APK 링크 필터링 (기본값 '.apk$')",
   "appsPossiblyUpdated": "앱 업데이트 시도됨",
   "appsPossiblyUpdatedNotifDescription": "백그라운드에서 하나 이상의 앱에 대한 업데이트가 잠재적으로 적용되었음을 사용자에게 알립니다",
-  "xWasPossiblyUpdatedToY": "{}가 {}로 업데이트되었을 수 있습니다.",
+  "xWasPossiblyUpdatedToY": "가 로 업데이트되었을 수 있습니다.",
   "enableBackgroundUpdates": "백그라운드 업데이트 활성화",
   "backgroundUpdateReqsExplanation": "모든 앱에 대해 백그라운드 업데이트가 가능하지 않을 수 있습니다.",
   "backgroundUpdateLimitsExplanation": "백그라운드 설치의 성공 여부는 Updatium이 열릴 때만 확인할 수 있습니다.",
@@ -279,7 +279,7 @@
   "autoSelectHighestVersionCode": "가장 높은 versionCode APK 자동 선택",
   "versionExtractionRegEx": "버전 문자열 추출 정규 표현식",
   "trimVersionString": "정규 표현식으로 버전 문자열 자르기",
-  "matchGroupToUseForX": "\\\"{}\\\"에 사용할 일치 그룹",
+  "matchGroupToUseForX": "\\\"\\\"에 사용할 일치 그룹",
   "matchGroupToUse": "버전 문자열 추출 정규 표현식에 사용할 일치 그룹",
   "highlightTouchTargets": "덜 명확한 터치 대상 강조",
   "pickExportDir": "내보내기 디렉토리 선택",
@@ -302,12 +302,12 @@
   "appsPossiblyUpdatedNotifChannel": "앱 업데이트 시도됨",
   "errorCheckingUpdatesNotifChannel": "업데이트 확인 오류",
   "appsRemovedNotifChannel": "앱 제거됨",
-  "downloadingXNotifChannel": "{} 다운로드 중",
+  "downloadingXNotifChannel": " 다운로드 중",
   "completeAppInstallationNotifChannel": "앱 설치 완료",
   "checkingForUpdatesNotifChannel": "업데이트 확인 중",
   "onlyCheckInstalledOrTrackOnlyApps": "설치된 앱과 추적 전용 앱만 업데이트 확인",
   "supportFixedAPKURL": "고정 APK URL 지원",
-  "selectX": "{} 선택",
+  "selectX": " 선택",
   "parallelDownloads": "병렬 다운로드 허용",
   "useShizuku": "Shizuku 또는 Sui를 사용하여 설치",
   "shizukuBinderNotFound": "Shizuku 서비스가 실행 중이 아닙니다",
@@ -327,7 +327,7 @@
   "latest": "최신",
   "invertRegEx": "정규 표현식 반전",
   "note": "노트",
-  "selfHostedNote": "\\\"{}\\\" 드롭다운을 사용하여 소스의 자체 호스팅/사용자 정의 인스턴스에 도달할 수 있습니다.",
+  "selfHostedNote": "\\\"\\\" 드롭다운을 사용하여 소스의 자체 호스팅/사용자 정의 인스턴스에 도달할 수 있습니다.",
   "badDownload": "APK를 구문 분석할 수 없습니다 (호환되지 않거나 부분 다운로드)",
   "beforeNewInstallsShareToAppVerifier": "새 앱을 AppVerifier와 공유 (가능한 경우)",
   "appVerifierInstructionToast": "AppVerifier에 공유한 후 준비가 되면 여기로 돌아오세요.",
@@ -345,7 +345,7 @@
   "welcome": "환영",
   "documentationLinksNote": "아래에 링크된 Updatium 깃허브 페이지에는 앱 사용 방법을 이해하는 데 도움이 되는 동영상, 기사, 토론 및 기타 리소스에 대한 링크가 포함되어 있습니다.",
   "batteryOptimizationNote": "Updatium의 OS 배터리 최적화를 비활성화하면 백그라운드 다운로드가 더 안정적으로 작동할 수 있습니다.",
-  "fileDeletionError": "파일을 삭제하지 못했습니다(수동으로 삭제한 후 다시 시도하세요): \\\"{}\\\"",
+  "fileDeletionError": "파일을 삭제하지 못했습니다(수동으로 삭제한 후 다시 시도하세요): \\\"\\\"",
   "foregroundService": "옵테니움 포그라운드 서비스",
   "foregroundServiceExplanation": "업데이트 확인을 위해 포그라운드 서비스 사용(안정성 향상, 전력 소비량 증가)",
   "fgServiceNotice": "이 알림은 백그라운드 업데이트 확인에 필요합니다(OS 설정에서 숨길 수 있음).",
@@ -373,7 +373,7 @@
   "apps": "앱",
   "@apps": {
     "plural": {
-      "other": "{} 앱"
+      "other": "{count} 앱"
     },
     "placeholders": {
       "count": {
@@ -384,7 +384,7 @@
   "apk": "APK",
   "@apk": {
     "plural": {
-      "other": "{} APK"
+      "other": "{count} APK"
     },
     "placeholders": {
       "count": {
@@ -392,10 +392,10 @@
       }
     }
   },
-  "minute": "{} 분",
+  "minute": "분",
   "@minute": {
     "plural": {
-      "other": "{} 분"
+      "other": "{count} 분"
     },
     "placeholders": {
       "count": {
@@ -403,10 +403,10 @@
       }
     }
   },
-  "hour": "{} 시간",
+  "hour": "시간",
   "@hour": {
     "plural": {
-      "other": "{} 시간"
+      "other": "{count} 시간"
     },
     "placeholders": {
       "count": {
@@ -414,10 +414,10 @@
       }
     }
   },
-  "day": "{} 일",
+  "day": "일",
   "@day": {
     "plural": {
-      "other": "{} 일"
+      "other": "{count} 일"
     },
     "placeholders": {
       "count": {

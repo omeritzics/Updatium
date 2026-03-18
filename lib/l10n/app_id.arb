@@ -1,6 +1,6 @@
 {
   "@@locale": "id",
-  "invalidURLForSource": "Bukan URL aplikasi {} yang valid",
+  "invalidURLForSource": "Bukan URL aplikasi  yang valid",
   "noReleaseFound": "Tidak dapat menemukan rilis yang sesuai",
   "noVersionFound": "Tidak dapat memastikan versi rilis yang sesuai",
   "urlMatchesNoSource": "URL tidak sesuai dengan sumber yang diketahui",
@@ -29,7 +29,7 @@
   "githubStarredRepos": "Repositori berbintang GitHub",
   "uname": "Nama pengguna",
   "wrongArgNum": "Salah memberikan jumlah argumen",
-  "xIsTrackOnly": "{} adalah Pelacakan Saja",
+  "xIsTrackOnly": " adalah Pelacakan Saja",
   "source": "Sumber",
   "app": "Aplikasi",
   "appsFromSourceAreTrackOnly": "Aplikasi dari sumber ini hanya untuk 'Pelacakan Saja'.",
@@ -44,7 +44,7 @@
   "add": "Tambah",
   "searchSomeSourcesLabel": "Cari (beberapa sumber saja)",
   "search": "Cari",
-  "additionalOptsFor": "Opsi tambahan untuk {}",
+  "additionalOptsFor": "Opsi tambahan untuk ",
   "supportedSources": "Sumber yang didukung",
   "trackOnlyInBrackets": "(Pelacakan Saja)",
   "searchableInBrackets": "(Dapat dicari)",
@@ -52,24 +52,24 @@
   "noApps": "Selamat datang!",
   "noAppsSubtext": "Anda dapat menambahkan aplikasi pertama dengan mengetuk 'Tambah aplikasi' di bawah.",
   "noAppsForFilter": "Tidak ada aplikasi untuk difilter",
-  "byX": "Oleh {}",
-  "percentProgress": "Perkembangan: {}%",
+  "byX": "Oleh ",
+  "percentProgress": "Perkembangan: %",
   "pleaseWait": "Harap tunggu",
   "updateAvailable": "Pembaruan tersedia",
   "notInstalled": "Tidak terpasang",
   "pseudoVersion": "versi semu",
   "selectAll": "Pilih semua",
-  "deselectX": "Batal pilih {}",
-  "xWillBeRemovedButRemainInstalled": "{} akan dihapus dari Updatium tetapi tetap terpasang di perangkat.",
+  "deselectX": "Batal pilih ",
+  "xWillBeRemovedButRemainInstalled": " akan dihapus dari Updatium tetapi tetap terpasang di perangkat.",
   "removeSelectedAppsQuestion": "Hapus aplikasi terpilih?",
   "removeSelectedApps": "Hapus aplikasi terpilih",
-  "updateX": "Perbarui {}",
-  "installX": "Pasang {}",
-  "markXTrackOnlyAsUpdated": "Tandai {}\\n(Pelacakan Saja)\\nsudah diperbarui",
-  "changeX": "Ubah {}",
+  "updateX": "Perbarui ",
+  "installX": "Pasang ",
+  "markXTrackOnlyAsUpdated": "Tandai \\n(Pelacakan Saja)\\nsudah diperbarui",
+  "changeX": "Ubah ",
   "installUpdateApps": "Pasang/perbarui aplikasi",
   "installUpdateSelectedApps": "Pasang/perbarui aplikasi terpilih",
-  "markXSelectedAppsAsUpdated": "Tandai {} aplikasi terpilih sudah diperbarui?",
+  "markXSelectedAppsAsUpdated": "Tandai  aplikasi terpilih sudah diperbarui?",
   "no": "Tidak",
   "yes": "Ya",
   "markSelectedAppsUpdated": "Tandai aplikasi terpilih sudah diperbarui",
@@ -92,25 +92,25 @@
   "nonInstalledApps": "Aplikasi tidak terpasang",
   "importExport": "Impor/ekspor",
   "settings": "Pengaturan",
-  "exportedTo": "Diekspor ke {}",
+  "exportedTo": "Diekspor ke ",
   "updatiumExport": "Ekspor Updatium",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Masukan tidak valid",
-  "importedX": "{} diimpor",
+  "importedX": " diimpor",
   "updatiumImport": "Impor Updatium",
   "importFromURLList": "Impor dari daftar URL",
   "searchQuery": "Cari Kueri",
   "appURLList": "Daftar URL aplikasi",
   "line": "Baris",
-  "searchX": "Cari {}",
+  "searchX": "Cari ",
   "noResults": "Tidak ada hasil yang ditemukan",
-  "importX": "Impor {}",
+  "importX": "Impor ",
   "importedAppsIdDisclaimer": "Aplikasi yang diimpor mungkin secara salah ditampilkan sebagai \\\"Tidak terpasang\\\".\\nUntuk memperbaikinya, lakukan pemasangan ulang melalui Updatium.\\nHal ini seharusnya tidak mempengaruhi data aplikasi.\\n\\nHanya mempengaruhi metode impor URL dan pihak ketiga.",
   "importErrors": "Kesalahan impor",
-  "importedXOfYApps": "{} dari {} aplikasi diimpor.",
+  "importedXOfYApps": " dari  aplikasi diimpor.",
   "followingURLsHadErrors": "URL berikut mengalami kesalahan:",
   "selectURL": "Pilih URL",
   "selectURLs": "Pilih URL",
@@ -146,25 +146,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "ekspor-updatium",
   "pickAnAPK": "Pilih APK",
-  "appHasMoreThanOnePackage": "{} memiliki lebih dari satu paket:",
-  "deviceSupportsXArch": "Perangkat Anda mendukung arsitektur CPU {}.",
+  "appHasMoreThanOnePackage": " memiliki lebih dari satu paket:",
+  "deviceSupportsXArch": "Perangkat Anda mendukung arsitektur CPU .",
   "deviceSupportsFollowingArchs": "Perangkat anda mendukung arsitektur CPU berikut:",
   "warning": "Peringatan",
-  "sourceIsXButPackageFromYPrompt": "Sumber aplikasinya adalah '{}' tetapi paket rilisnya berasal dari '{}'. Lanjutkan?",
+  "sourceIsXButPackageFromYPrompt": "Sumber aplikasinya adalah '' tetapi paket rilisnya berasal dari ''. Lanjutkan?",
   "updatesAvailable": "Pembaruan tersedia",
   "updatesAvailableNotifDescription": "Memberi tahu pengguna bahwa pembaruan tersedia untuk aplikasi yang dilacak oleh Updatium",
   "noNewUpdates": "Tidak ada pembaruan baru.",
-  "xHasAnUpdate": "{} memiliki pembaruan.",
+  "xHasAnUpdate": " memiliki pembaruan.",
   "appsUpdated": "Aplikasi diperbarui",
   "appsNotUpdated": "Gagal memperbarui aplikasi",
   "appsUpdatedNotifDescription": "Memberi tahu pengguna bahwa pembaruan terhadap aplikasi diterapkan di latar belakang",
-  "xWasUpdatedToY": "{} telah diperbarui ke {}.",
-  "xWasNotUpdatedToY": "Gagal memperbarui {} ke {}.",
+  "xWasUpdatedToY": " telah diperbarui ke .",
+  "xWasNotUpdatedToY": "Gagal memperbarui  ke .",
   "errorCheckingUpdates": "Kesalahan dalam memeriksa pembaruan",
   "errorCheckingUpdatesNotifDescription": "Notifikasi yang ditampilkan saat pemeriksaan pembaruan latar belakang gagal",
   "appsRemoved": "Aplikasi dihapus",
   "appsRemovedNotifDescription": "Memberi tahu pengguna bahwa aplikasi dihapus karena kesalahan saat memuatnya",
-  "xWasRemovedDueToErrorY": "{} dihapus karena kesalahan berikut: {}",
+  "xWasRemovedDueToErrorY": " dihapus karena kesalahan berikut: ",
   "completeAppInstallation": "Selesaikan pemasangan aplikasi",
   "updatiumMustBeOpenToInstallApps": "Updatium harus terbuka untuk memasang aplikasi",
   "completeAppInstallationNotifDescription": "Meminta pengguna kembali ke Updatium untuk menyelesaikan pemasangan aplikasi",
@@ -172,15 +172,15 @@
   "checkingForUpdatesNotifDescription": "Notifikasi sementara yang ditampilkan saat memeriksa pembaruan",
   "pleaseAllowInstallPerm": "Harap izinkan Updatium untuk memasang aplikasi",
   "trackOnly": "Pelacakan Saja",
-  "errorWithHttpStatusCode": "Kesalahan {}",
+  "errorWithHttpStatusCode": "Kesalahan ",
   "versionCorrectionDisabled": "Koreksi versi dinonaktifkan (sepertinya plugin tidak berfungsi)",
   "unknown": "Tidak diketahui",
   "none": "Tidak ada",
   "all": "Semua",
   "never": "Tidak pernah",
-  "latestVersionX": "Terbaru: {}",
-  "installedVersionX": "Terpasang: {}",
-  "lastUpdateCheckX": "Terakhir memeriksa pembaruan: {}",
+  "latestVersionX": "Terbaru: ",
+  "installedVersionX": "Terpasang: ",
+  "lastUpdateCheckX": "Terakhir memeriksa pembaruan: ",
   "remove": "Hapus",
   "yesMarkUpdated": "Ya, tandai bahwa sudah diperbarui",
   "fdroid": "F-Droid Resmi",
@@ -197,9 +197,9 @@
   "additionalOptions": "Opsi tambahan",
   "disableVersionDetection": "Nonaktifkan pendeteksi versi",
   "noVersionDetectionExplanation": "Opsi ini hanya boleh digunakan untuk aplikasi dengan pendeteksi versi yang tidak berfungsi dengan benar.",
-  "downloadingX": "Mengunduh {}",
-  "downloadX": "Unduh {}",
-  "downloadedX": "{} diunduh",
+  "downloadingX": "Mengunduh ",
+  "downloadX": "Unduh ",
+  "downloadedX": " diunduh",
   "releaseAsset": "Aset rilis",
   "downloadNotifDescription": "Memberi tahu pengguna perkembangan dalam mengunduh aplikasi",
   "noAPKFound": "Tidak ada APK ditemukan",
@@ -243,7 +243,7 @@
   "hideNonInstalledApps": "Sembunyikan aplikasi yang belum terpasang",
   "gitlabPATLabel": "Token Akses Pribadi GitLab",
   "about": "Tentang",
-  "requiresCredentialsInSettings": "{} memerlukan kredensial tambahan (dalam pengaturan)",
+  "requiresCredentialsInSettings": " memerlukan kredensial tambahan (dalam pengaturan)",
   "checkOnStart": "Periksa pembaruan saat proses memulai",
   "safeMode": "Mode Aman",
   "safeModeDescription": "Sembunyikan halaman Tambah Aplikasi dan tampilkan Impor/Ekspor sebagai gantinya",
@@ -263,7 +263,7 @@
   "customLinkFilterRegex": "Filter tautan APK kustom dengan ekspresi reguler (Standar '.apk$')",
   "appsPossiblyUpdated": "Pembaruan aplikasi dicoba",
   "appsPossiblyUpdatedNotifDescription": "Memberi tahu pengguna bahwa pembaruan terhadap aplikasi berpotensi diterapkan di latar belakang",
-  "xWasPossiblyUpdatedToY": "{} mungkin telah diperbarui ke {}.",
+  "xWasPossiblyUpdatedToY": " mungkin telah diperbarui ke .",
   "enableBackgroundUpdates": "Aktifkan pembaruan latar belakang",
   "backgroundUpdateReqsExplanation": "Pembaruan latar belakang mungkin tidak dapat dilakukan untuk semua aplikasi.",
   "backgroundUpdateLimitsExplanation": "Keberhasilan pemasangan di latar belakang hanya dapat ditentukan ketika Updatium terbuka.",
@@ -279,7 +279,7 @@
   "autoSelectHighestVersionCode": "Pilih otomatis APK dengan versi kode tertinggi",
   "versionExtractionRegEx": "Reguler ekspresi terkait ekstraksi versi string",
   "trimVersionString": "Potong versi string dengan reguler ekspresi",
-  "matchGroupToUseForX": "Cocokkan grup yang akan digunakan untuk \\\"{}\\\"",
+  "matchGroupToUseForX": "Cocokkan grup yang akan digunakan untuk \\\"\\\"",
   "matchGroupToUse": "Cocokkan grup yang akan digunakan untuk reguler ekspresi terkait ekstraksi versi string",
   "highlightTouchTargets": "Sorot target sentuh yang kurang jelas",
   "pickExportDir": "Pilih direktori ekspor",
@@ -302,12 +302,12 @@
   "appsPossiblyUpdatedNotifChannel": "Pembaruan aplikasi dicoba",
   "errorCheckingUpdatesNotifChannel": "Kesalahan dalam memeriksa pembaruan",
   "appsRemovedNotifChannel": "Aplikasi dihapus",
-  "downloadingXNotifChannel": "Mengunduh {}",
+  "downloadingXNotifChannel": "Mengunduh ",
   "completeAppInstallationNotifChannel": "Selesaikan pemasangan aplikasi",
   "checkingForUpdatesNotifChannel": "Memeriksa pembaruan",
   "onlyCheckInstalledOrTrackOnlyApps": "Hanya periksa aplikasi yang dipasang dan ditandai 'Pelacakan Saja' untuk pembaruan",
   "supportFixedAPKURL": "Mendukung URL APK tetap",
-  "selectX": "Pilih {}",
+  "selectX": "Pilih ",
   "parallelDownloads": "Izinkan mengunduh paralel",
   "useShizuku": "Gunakan Shizuku atau Sui untuk memasang",
   "shizukuBinderNotFound": "Layanan Shizuku tidak berjalan",
@@ -327,7 +327,7 @@
   "latest": "Terbaru",
   "invertRegEx": "Balikkan ekspresi reguler",
   "note": "Catatan",
-  "selfHostedNote": "Dropdown \\\"{}\\\" bisa digunakan untuk menjangkau instansi yang dihosting sendiri/kustom dari sumber mana pun.",
+  "selfHostedNote": "Dropdown \\\"\\\" bisa digunakan untuk menjangkau instansi yang dihosting sendiri/kustom dari sumber mana pun.",
   "badDownload": "APK tidak dapat diurai (tidak kompatibel atau diunduh sebagian)",
   "beforeNewInstallsShareToAppVerifier": "Bagikan aplikasi baru dengan AppVerifier (jika tersedia)",
   "appVerifierInstructionToast": "Bagikan ke AppVerifier, lalu kembali ke sini jika sudah siap.",
@@ -345,7 +345,7 @@
   "welcome": "Selamat datang.",
   "documentationLinksNote": "Halaman GitHub Updatium yang ditautkan di bawah ini berisi tautan ke video, artikel, diskusi, dan sumber daya lain yang akan membantu Anda memahami cara menggunakan aplikasi.",
   "batteryOptimizationNote": "Perhatikan bahwa unduhan latar belakang dapat bekerja lebih andal jika Anda menonaktifkan optimasi baterai OS untuk Updatium.",
-  "fileDeletionError": "Gagal menghapus file (coba hapus secara manual, lalu coba lagi): \\\"{}\\\"",
+  "fileDeletionError": "Gagal menghapus file (coba hapus secara manual, lalu coba lagi): \\\"\\\"",
   "foregroundService": "Layanan latar depan Updatium",
   "foregroundServiceExplanation": "Gunakan layanan latar depan untuk pemeriksaan pembaruan (lebih dapat diandalkan, menghabiskan lebih banyak daya)",
   "fgServiceNotice": "Pemberitahuan ini diperlukan untuk pemeriksaan pembaruan latar belakang (dapat disembunyikan dalam pengaturan OS)",
@@ -373,8 +373,8 @@
   "apps": "Aplikasi",
   "@apps": {
     "plural": {
-      "one": "{} aplikasi",
-      "other": "{} aplikasi"
+      "one": "{count} aplikasi",
+      "other": "{count} aplikasi"
     },
     "placeholders": {
       "count": {
@@ -385,8 +385,8 @@
   "apk": "APK",
   "@apk": {
     "plural": {
-      "one": "{} APK",
-      "other": "{} APK"
+      "one": "{count} APK",
+      "other": "{count} APK"
     },
     "placeholders": {
       "count": {
@@ -394,11 +394,11 @@
       }
     }
   },
-  "minute": "{} menit",
+  "minute": "menit",
   "@minute": {
     "plural": {
-      "one": "{} menit",
-      "other": "{} menit"
+      "one": "{count} menit",
+      "other": "{count} menit"
     },
     "placeholders": {
       "count": {
@@ -406,11 +406,11 @@
       }
     }
   },
-  "hour": "{} jam",
+  "hour": "jam",
   "@hour": {
     "plural": {
-      "one": "{} jam",
-      "other": "{} jam"
+      "one": "{count} jam",
+      "other": "{count} jam"
     },
     "placeholders": {
       "count": {
@@ -418,11 +418,11 @@
       }
     }
   },
-  "day": "{} hari",
+  "day": "hari",
   "@day": {
     "plural": {
-      "one": "{} hari",
-      "other": "{} hari"
+      "one": "{count} hari",
+      "other": "{count} hari"
     },
     "placeholders": {
       "count": {

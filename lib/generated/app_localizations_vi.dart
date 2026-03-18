@@ -10,7 +10,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return 'URL ứng dụng $arg1 không hợp lệ';
+    return 'URL ứng dụng  không hợp lệ';
   }
 
   @override
@@ -101,7 +101,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1 là Chỉ theo dõi';
+    return ' là Chỉ theo dõi';
   }
 
   @override
@@ -150,7 +150,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return 'Tùy chọn bổ sung cho $arg1';
+    return 'Tùy chọn bổ sung cho ';
   }
 
   @override
@@ -177,12 +177,12 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return 'Bởi $arg1';
+    return 'Bởi ';
   }
 
   @override
   String percentProgress(String arg1) {
-    return 'Đang tải $arg1%';
+    return 'Đang tải %';
   }
 
   @override
@@ -202,12 +202,12 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return 'Bỏ chọn $arg1';
+    return 'Bỏ chọn ';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return '$arg1 sẽ bị xóa khỏi Updatium nhưng vẫn còn cài đặt trên thiết bị.';
+    return ' sẽ bị xóa khỏi Updatium nhưng vẫn còn cài đặt trên thiết bị.';
   }
 
   @override
@@ -218,22 +218,22 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return 'Cập nhật $arg1';
+    return 'Cập nhật ';
   }
 
   @override
   String installX(String arg1) {
-    return 'Cài đặt $arg1';
+    return 'Cài đặt ';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return 'Đánh dấu $arg1\n(Chỉ theo dõi)\nnhư là đã cập nhật';
+    return 'Đánh dấu \\n(Chỉ theo dõi)\\nnhư là đã cập nhật';
   }
 
   @override
   String changeX(String arg1) {
-    return 'Thay đổi $arg1';
+    return 'Thay đổi ';
   }
 
   @override
@@ -244,7 +244,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return 'Đánh dấu $arg1 ứng dụng đã chọn là đã cập nhật?';
+    return 'Đánh dấu  ứng dụng đã chọn là đã cập nhật?';
   }
 
   @override
@@ -269,7 +269,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      'Trạng thái cài đặt của mọi Ứng dụng đã chọn sẽ được đặt lại.\n\nĐiều này có thể hữu ích khi phiên bản Ứng dụng hiển thị trong Updatium không chính xác do cập nhật không thành công hoặc các sự cố khác.';
+      'Trạng thái cài đặt của mọi Ứng dụng đã chọn sẽ được đặt lại.\\n\\nĐiều này có thể hữu ích khi phiên bản Ứng dụng hiển thị trong Updatium không chính xác do cập nhật không thành công hoặc các sự cố khác.';
 
   @override
   String get customLinkMessage =>
@@ -320,7 +320,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return 'Đã xuất sang $arg1';
+    return 'Đã xuất sang ';
   }
 
   @override
@@ -343,7 +343,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return 'Đã nhập $arg1';
+    return 'Đã nhập ';
   }
 
   @override
@@ -363,7 +363,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return 'Tìm kiếm $arg1';
+    return 'Tìm kiếm ';
   }
 
   @override
@@ -371,19 +371,19 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return 'Nhập $arg1';
+    return 'Nhập ';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      'Ứng dụng đã nhập có thể hiển thị không chính xác là \"Chưa được cài đặt\".\nĐể khắc phục sự cố này, hãy cài đặt lại chúng thông qua Updatium.\nĐiều này sẽ không ảnh hưởng đến dữ liệu Ứng dụng.\n\nChỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba.';
+      'Ứng dụng đã nhập có thể hiển thị không chính xác là \\\"Chưa được cài đặt\\\".\\nĐể khắc phục sự cố này, hãy cài đặt lại chúng thông qua Updatium.\\nĐiều này sẽ không ảnh hưởng đến dữ liệu Ứng dụng.\\n\\nChỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba.';
 
   @override
   String get importErrors => 'Lỗi nhập';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '$arg1 trong số $arg2 Ứng dụng đã được nhập.';
+    return ' trong số  Ứng dụng đã được nhập.';
   }
 
   @override
@@ -500,12 +500,12 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1 có nhiều gói:';
+    return ' có nhiều gói:';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return 'Thiết bị của bạn hỗ trợ kiến trúc CPU $arg1.';
+    return 'Thiết bị của bạn hỗ trợ kiến trúc CPU .';
   }
 
   @override
@@ -517,7 +517,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return 'Nguồn ứng dụng là \'$arg1\' nhưng gói phát hành đến từ \'$arg2\'. Tiếp tục?';
+    return 'Nguồn ứng dụng là \'\' nhưng gói phát hành đến từ \'\'. Tiếp tục?';
   }
 
   @override
@@ -532,7 +532,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1 có bản cập nhật.';
+    return ' có bản cập nhật.';
   }
 
   @override
@@ -547,12 +547,12 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return '$arg1 đã được cập nhật thành $arg2.';
+    return ' đã được cập nhật thành .';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return '$arg1 đã cập nhật thành $arg2 không thành công.';
+    return ' đã cập nhật thành  không thành công.';
   }
 
   @override
@@ -571,7 +571,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '$arg1 đã bị loại bỏ do lỗi này: $arg2';
+    return ' đã bị loại bỏ do lỗi này: ';
   }
 
   @override
@@ -601,7 +601,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return 'Lỗi $arg1';
+    return 'Lỗi ';
   }
 
   @override
@@ -622,17 +622,17 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return 'Phiên bản mới nhất: $arg1';
+    return 'Phiên bản mới nhất: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return 'Phiên bản đã cài đặt: $arg1';
+    return 'Phiên bản đã cài đặt: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return 'Kiểm tra cập nhật lần cuối: $arg1';
+    return 'Kiểm tra cập nhật lần cuối: ';
   }
 
   @override
@@ -732,17 +732,17 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return 'Đang tải xuống $arg1';
+    return 'Đang tải xuống ';
   }
 
   @override
   String downloadX(String arg1) {
-    return 'Tải xuống $arg1';
+    return 'Tải xuống ';
   }
 
   @override
   String downloadedX(String arg1) {
-    return 'Đã tải xuống $arg1';
+    return 'Đã tải xuống ';
   }
 
   @override
@@ -888,7 +888,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1: Điều này cần thông tin xác thực bổ sung (trong Thiết đặt)';
+    return ': Điều này cần thông tin xác thực bổ sung (trong Thiết đặt)';
   }
 
   @override
@@ -958,7 +958,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1 có thể đã được cập nhật thành $arg2.';
+    return ' có thể đã được cập nhật thành .';
   }
 
   @override
@@ -1013,7 +1013,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return 'Nhóm khớp được dùng cho \"$arg1\"';
+    return 'Nhóm khớp được dùng cho \\\"\\\"';
   }
 
   @override
@@ -1088,7 +1088,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return 'Đang tải xuống $arg1';
+    return 'Đang tải xuống ';
   }
 
   @override
@@ -1106,7 +1106,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return 'Lựa chọn $arg1';
+    return 'Lựa chọn ';
   }
 
   @override
@@ -1195,7 +1195,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return 'Trình đơn thả xuống \"$arg1\" có thể được dùng để tiếp cận các phiên bản tự lưu trữ/tùy chỉnh của bất kỳ nguồn nào.';
+    return 'Trình đơn thả xuống \\\"\\\" có thể được dùng để tiếp cận các phiên bản tự lưu trữ/tùy chỉnh của bất kỳ nguồn nào.';
   }
 
   @override
@@ -1252,7 +1252,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String fileDeletionError(String arg1) {
-    return 'Không thể xóa tệp (hãy thử xóa tệp thủ công rồi thử lại): \"$arg1\"';
+    return 'Không thể xóa tệp (hãy thử xóa tệp thủ công rồi thử lại): \\\"\\\"';
   }
 
   @override
@@ -1277,7 +1277,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Google đã thông báo rằng, bắt đầu từ năm 2026/2027, tất cả các ứng dụng trên các thiết bị Android được chứng nhận sẽ yêu cầu nhà phát triển gửi thông tin cá nhân trực tiếp đến Google.\n\nSau đó, Updatium có thể ngừng hoạt động trên các thiết bị Android được chứng nhận.';
+      'Google đã thông báo rằng, bắt đầu từ năm 2026/2027, tất cả các ứng dụng trên các thiết bị Android được chứng nhận sẽ yêu cầu nhà phát triển gửi thông tin cá nhân trực tiếp đến Google.\\n\\nSau đó, Updatium có thể ngừng hoạt động trên các thiết bị Android được chứng nhận.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1285,7 +1285,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      'Ghi chú rằng trong ngắn hạn, nó có thể tiếp tục có thể được tiếp tục để cài đặt các ứng dụng \"không xác định\" thông qua một quá trình \"vô hạn dòng chảy\" mà Google đã hứa sẽ thực hiện sau một hồi quy rộng cho thông báo của họ, nhưng họ không có chi tiết làm thế nào điều này sẽ hoạt động như thế nào vì vậy nó không rõ ràng nó sẽ thực sự bảo tồn tự do cho người dùng theo bất kỳ cách thực tế nào.\n\nTrong bất kỳ trường hợp nào, sự di chuyển của Google là một bước tiến đáng kể tới sự kết thúc của máy tính tự do, mục đích chung cho cá nhân.\n\nCác hệ điều hành không được ghi nhận, giống như GreneOS, nên không bị ảnh hưởng bởi điều này miễn là chúng được cho phép tiếp tục tồn tại.';
+      'Ghi chú rằng trong ngắn hạn, nó có thể tiếp tục có thể được tiếp tục để cài đặt các ứng dụng \\\"không xác định\\\" thông qua một quá trình \\\"vô hạn dòng chảy\\\" mà Google đã hứa sẽ thực hiện sau một hồi quy rộng cho thông báo của họ, nhưng họ không có chi tiết làm thế nào điều này sẽ hoạt động như thế nào vì vậy nó không rõ ràng nó sẽ thực sự bảo tồn tự do cho người dùng theo bất kỳ cách thực tế nào.\\n\\nTrong bất kỳ trường hợp nào, sự di chuyển của Google là một bước tiến đáng kể tới sự kết thúc của máy tính tự do, mục đích chung cho cá nhân.\\n\\nCác hệ điều hành không được ghi nhận, giống như GreneOS, nên không bị ảnh hưởng bởi điều này miễn là chúng được cho phép tiếp tục tồn tại.';
 
   @override
   String get multipleSigners => 'Nhiều người ký';
@@ -1306,7 +1306,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      'Ứng dụng này không phân phối, lưu trữ hoặc xác minh bất kỳ ứng dụng bên ngoài nào. Người dùng mang toàn bộ trách nhiệm về sự an toàn và tính hợp pháp của bất kỳ phần mềm nào được cài đặt thông qua công cụ này.\n\nhttps://github.com/omeritzics/Updatium là nơi chính thức duy nhất để tải xuống Updatium - rất không khuyến khích tải xuống từ nơi khác vì việc tải xuống từ các nguồn không chính thức không an toàn.';
+      'Ứng dụng này không phân phối, lưu trữ hoặc xác minh bất kỳ ứng dụng bên ngoài nào. Người dùng mang toàn bộ trách nhiệm về sự an toàn và tính hợp pháp của bất kỳ phần mềm nào được cài đặt thông qua công cụ này.\\n\\nhttps://github.com/omeritzics/Updatium là nơi chính thức duy nhất để tải xuống Updatium - rất không khuyến khích tải xuống từ nơi khác vì việc tải xuống từ các nguồn không chính thức không an toàn.';
 
   @override
   String get privacy => 'Quyền riêng tư';
@@ -1335,37 +1335,37 @@ class AppLocalizationsVi extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'Băm liên kết APK';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
   String get gHReqPrefix =>
-      'Thực thể \'sky22333/hubproxy\' cho các yêu cầu GitHub';
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => 'Tiếp tục';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return 'Ứng dụng';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return 'phút';
   }
 
   @override
   String hour(int count) {
-    return '$count hours';
+    return 'giờ';
   }
 
   @override
   String day(int count) {
-    return '$count days';
+    return 'ngày';
   }
 }

@@ -10,7 +10,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return 'ഒരു സാധുവായ $arg1 ആപ്പ് URL അല്ല';
+    return 'ഒരു സാധുവായ  ആപ്പ് URL അല്ല';
   }
 
   @override
@@ -103,7 +103,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1 ട്രാക്ക്-മാത്രം ആണ്';
+    return ' ട്രാക്ക്-മാത്രം ആണ്';
   }
 
   @override
@@ -154,7 +154,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return '$arg1 നായുള്ള അധിക ഓപ്ഷനുകൾ';
+    return ' നായുള്ള അധിക ഓപ്ഷനുകൾ';
   }
 
   @override
@@ -181,12 +181,12 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return '$arg1 വഴി';
+    return ' വഴി';
   }
 
   @override
   String percentProgress(String arg1) {
-    return 'പുരോഗതി: $arg1%';
+    return 'പുരോഗതി: %';
   }
 
   @override
@@ -206,12 +206,12 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return '$arg1 തിരഞ്ഞെടുക്കൽ റദ്ദാക്കുക';
+    return ' തിരഞ്ഞെടുക്കൽ റദ്ദാക്കുക';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return '$arg1 ഒബ്‌റ്റേനിയത്തിൽ നിന്ന് നീക്കം ചെയ്യപ്പെടും, പക്ഷേ ഉപകരണത്തിൽ ഇൻസ്റ്റാൾ ചെയ്ത നിലയിൽ തുടരും.';
+    return ' ഒബ്‌റ്റേനിയത്തിൽ നിന്ന് നീക്കം ചെയ്യപ്പെടും, പക്ഷേ ഉപകരണത്തിൽ ഇൻസ്റ്റാൾ ചെയ്ത നിലയിൽ തുടരും.';
   }
 
   @override
@@ -223,22 +223,22 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return '$arg1 അപ്‌ഡേറ്റ് ചെയ്യുക';
+    return ' അപ്‌ഡേറ്റ് ചെയ്യുക';
   }
 
   @override
   String installX(String arg1) {
-    return '$arg1 ഇൻസ്റ്റാൾ ചെയ്യുക';
+    return ' ഇൻസ്റ്റാൾ ചെയ്യുക';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return '$arg1\n(ട്രാക്ക്-മാത്രം)\nഅപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തുക';
+    return '\\n(ട്രാക്ക്-മാത്രം)\\nഅപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തുക';
   }
 
   @override
   String changeX(String arg1) {
-    return '$arg1 മാറ്റുക';
+    return ' മാറ്റുക';
   }
 
   @override
@@ -251,7 +251,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return '$arg1 തിരഞ്ഞെടുത്ത ആപ്പുകൾ അപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തണോ?';
+    return ' തിരഞ്ഞെടുത്ത ആപ്പുകൾ അപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തണോ?';
   }
 
   @override
@@ -276,7 +276,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      'തിരഞ്ഞെടുത്ത ഏതെങ്കിലും ആപ്പുകളുടെ ഇൻസ്റ്റാൾ സ്റ്റാറ്റസ് റീസെറ്റ് ചെയ്യപ്പെടും.\n\nപരാജയപ്പെട്ട അപ്‌ഡേറ്റുകളോ മറ്റ് പ്രശ്നങ്ങളോ കാരണം ഒബ്‌റ്റേനിയത്തിൽ കാണിക്കുന്ന ആപ്പ് പതിപ്പ് തെറ്റായിരിക്കുമ്പോൾ ഇത് സഹായകമാകും.';
+      'തിരഞ്ഞെടുത്ത ഏതെങ്കിലും ആപ്പുകളുടെ ഇൻസ്റ്റാൾ സ്റ്റാറ്റസ് റീസെറ്റ് ചെയ്യപ്പെടും.\\n\\nപരാജയപ്പെട്ട അപ്‌ഡേറ്റുകളോ മറ്റ് പ്രശ്നങ്ങളോ കാരണം ഒബ്‌റ്റേനിയത്തിൽ കാണിക്കുന്ന ആപ്പ് പതിപ്പ് തെറ്റായിരിക്കുമ്പോൾ ഇത് സഹായകമാകും.';
 
   @override
   String get customLinkMessage =>
@@ -327,7 +327,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return '$arg1 ലേക്ക് എക്സ്പോർട്ട് ചെയ്തു';
+    return ' ലേക്ക് എക്സ്പോർട്ട് ചെയ്തു';
   }
 
   @override
@@ -350,7 +350,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return '$arg1 ഇംപോർട്ട് ചെയ്തു';
+    return ' ഇംപോർട്ട് ചെയ്തു';
   }
 
   @override
@@ -370,7 +370,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return '$arg1 തിരയുക';
+    return ' തിരയുക';
   }
 
   @override
@@ -378,19 +378,19 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return '$arg1 ഇംപോർട്ട് ചെയ്യുക';
+    return ' ഇംപോർട്ട് ചെയ്യുക';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      'ഇംപോർട്ട് ചെയ്ത ആപ്പുകൾ \"ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല\" എന്ന് തെറ്റായി കാണിച്ചേക്കാം.\nഇത് ശരിയാക്കാൻ, ഒബ്‌റ്റേനിയം വഴി അവ വീണ്ടും ഇൻസ്റ്റാൾ ചെയ്യുക.\nഇത് ആപ്പ് ഡാറ്റയെ ബാധിക്കില്ല.\n\nURL, മൂന്നാം കക്ഷി ഇംപോർട്ട് രീതികളെ മാത്രം ബാധിക്കുന്നു.';
+      'ഇംപോർട്ട് ചെയ്ത ആപ്പുകൾ \\\"ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല\\\" എന്ന് തെറ്റായി കാണിച്ചേക്കാം.\\nഇത് ശരിയാക്കാൻ, ഒബ്‌റ്റേനിയം വഴി അവ വീണ്ടും ഇൻസ്റ്റാൾ ചെയ്യുക.\\nഇത് ആപ്പ് ഡാറ്റയെ ബാധിക്കില്ല.\\n\\nURL, മൂന്നാം കക്ഷി ഇംപോർട്ട് രീതികളെ മാത്രം ബാധിക്കുന്നു.';
 
   @override
   String get importErrors => 'ഇംപോർട്ട് പിശകുകൾ';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '$arg1 ആപ്പുകളിൽ $arg2 എണ്ണം ഇംപോർട്ട് ചെയ്തു.';
+    return ' ആപ്പുകളിൽ  എണ്ണം ഇംപോർട്ട് ചെയ്തു.';
   }
 
   @override
@@ -508,12 +508,12 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1-ന് ഒന്നിൽ കൂടുതൽ പാക്കേജുകൾ ഉണ്ട്:';
+    return '-ന് ഒന്നിൽ കൂടുതൽ പാക്കേജുകൾ ഉണ്ട്:';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return 'നിങ്ങളുടെ ഉപകരണം $arg1 CPU ആർക്കിടെക്ചറിനെ പിന്തുണയ്ക്കുന്നു.';
+    return 'നിങ്ങളുടെ ഉപകരണം  CPU ആർക്കിടെക്ചറിനെ പിന്തുണയ്ക്കുന്നു.';
   }
 
   @override
@@ -525,7 +525,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return 'ആപ്പ് ഉറവിടം \'$arg1\' ആണ്, പക്ഷേ റിലീസ് പാക്കേജ് \'$arg2\'-ൽ നിന്നാണ് വരുന്നത്. തുടരണോ?';
+    return 'ആപ്പ് ഉറവിടം \'\' ആണ്, പക്ഷേ റിലീസ് പാക്കേജ് \'\'-ൽ നിന്നാണ് വരുന്നത്. തുടരണോ?';
   }
 
   @override
@@ -540,7 +540,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1-ന് ഒരു അപ്‌ഡേറ്റ് ഉണ്ട്.';
+    return '-ന് ഒരു അപ്‌ഡേറ്റ് ഉണ്ട്.';
   }
 
   @override
@@ -556,12 +556,12 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return '$arg1 $arg2 ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്തു.';
+    return '  ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്തു.';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return '$arg1 $arg2 ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്യാൻ പരാജയപ്പെട്ടു.';
+    return '  ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്യാൻ പരാജയപ്പെട്ടു.';
   }
 
   @override
@@ -580,7 +580,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '$arg1 ഈ പിശക് കാരണം നീക്കം ചെയ്തു: $arg2';
+    return ' ഈ പിശക് കാരണം നീക്കം ചെയ്തു: ';
   }
 
   @override
@@ -610,7 +610,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return 'പിശക് $arg1';
+    return 'പിശക് ';
   }
 
   @override
@@ -631,17 +631,17 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return 'ഏറ്റവും പുതിയത്: $arg1';
+    return 'ഏറ്റവും പുതിയത്: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return 'ഇൻസ്റ്റാൾ ചെയ്തത്: $arg1';
+    return 'ഇൻസ്റ്റാൾ ചെയ്തത്: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return 'അവസാന അപ്‌ഡേറ്റ് പരിശോധന: $arg1';
+    return 'അവസാന അപ്‌ഡേറ്റ് പരിശോധന: ';
   }
 
   @override
@@ -743,17 +743,17 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return '$arg1 ഡൗൺലോഡ് ചെയ്യുന്നു';
+    return ' ഡൗൺലോഡ് ചെയ്യുന്നു';
   }
 
   @override
   String downloadX(String arg1) {
-    return '$arg1 ഡൗൺലോഡ് ചെയ്യുക';
+    return ' ഡൗൺലോഡ് ചെയ്യുക';
   }
 
   @override
   String downloadedX(String arg1) {
-    return '$arg1 ഡൗൺലോഡ് ചെയ്തു';
+    return ' ഡൗൺലോഡ് ചെയ്തു';
   }
 
   @override
@@ -902,7 +902,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1-ന് അധിക ക്രെഡൻഷ്യലുകൾ ആവശ്യമാണ് (ക്രമീകരണങ്ങളിൽ)';
+    return '-ന് അധിക ക്രെഡൻഷ്യലുകൾ ആവശ്യമാണ് (ക്രമീകരണങ്ങളിൽ)';
   }
 
   @override
@@ -977,7 +977,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1 $arg2 ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്തിരിക്കാം.';
+    return '  ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്തിരിക്കാം.';
   }
 
   @override
@@ -1038,7 +1038,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return '\"$arg1\" നായി ഉപയോഗിക്കേണ്ട ഗ്രൂപ്പ് മാച്ച് ചെയ്യുക';
+    return '\\\"\\\" നായി ഉപയോഗിക്കേണ്ട ഗ്രൂപ്പ് മാച്ച് ചെയ്യുക';
   }
 
   @override
@@ -1119,7 +1119,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return '$arg1 ഡൗൺലോഡ് ചെയ്യുന്നു';
+    return ' ഡൗൺലോഡ് ചെയ്യുന്നു';
   }
 
   @override
@@ -1138,7 +1138,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return '$arg1 തിരഞ്ഞെടുക്കുക';
+    return ' തിരഞ്ഞെടുക്കുക';
   }
 
   @override
@@ -1227,7 +1227,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return 'ഏത് ഉറവിടത്തിന്റെയും സെൽഫ്-ഹോസ്റ്റ് ചെയ്ത/കസ്റ്റം ഇൻസ്റ്റൻസുകളിലേക്ക് എത്താൻ \"$arg1\" ഡ്രോപ്പ്ഡൗൺ ഉപയോഗിക്കാം.';
+    return 'ഏത് ഉറവിടത്തിന്റെയും സെൽഫ്-ഹോസ്റ്റ് ചെയ്ത/കസ്റ്റം ഇൻസ്റ്റൻസുകളിലേക്ക് എത്താൻ \\\"\\\" ഡ്രോപ്പ്ഡൗൺ ഉപയോഗിക്കാം.';
   }
 
   @override
@@ -1284,7 +1284,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String fileDeletionError(String arg1) {
-    return 'ഫയൽ ഇല്ലാതാക്കാൻ പരാജയപ്പെട്ടു (സ്വമേധയാ ഇല്ലാതാക്കാൻ ശ്രമിക്കുക, എന്നിട്ട് വീണ്ടും ശ്രമിക്കുക): \"$arg1\"';
+    return 'ഫയൽ ഇല്ലാതാക്കാൻ പരാജയപ്പെട്ടു (സ്വമേധയാ ഇല്ലാതാക്കാൻ ശ്രമിക്കുക, എന്നിട്ട് വീണ്ടും ശ്രമിക്കുക): \\\"\\\"';
   }
 
   @override
@@ -1309,7 +1309,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.\n\nAfter then, Updatium may stop working on certified Android devices.';
+      'Google has announced that, starting in 2026/2027, all apps on \\\"certified\\\" Android devices will require the developer to submit personal identity details directly to Google.\\n\\nAfter then, Updatium may stop working on certified Android devices.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1317,7 +1317,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      'Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\n\nIn any case, Google\'s move is a significant step towards the end of free, general-purpose computing for individuals.\n\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.';
+      'Note that in the short term, it may continue to be possible to install \\\"unverified\\\" (non-compliant) apps through an \\\"advanced flow\\\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\\n\\nIn any case, Google\'s move is a significant step towards the end of free, general-purpose computing for individuals.\\n\\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.';
 
   @override
   String get multipleSigners => 'Multiple Signers';
@@ -1366,37 +1366,37 @@ class AppLocalizationsMl extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'APK ലിങ്ക് ഹാഷ്';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
   String get gHReqPrefix =>
       '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => 'തുടരുക';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return 'ആപ്പുകൾ';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return 'മിനിറ്റുകൾ';
   }
 
   @override
   String hour(int count) {
-    return '$count hours';
+    return 'മണിക്കൂർ';
   }
 
   @override
   String day(int count) {
-    return '$count days';
+    return 'ദിവസങ്ങൾ';
   }
 }

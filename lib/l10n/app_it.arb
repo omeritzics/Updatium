@@ -1,6 +1,6 @@
 {
   "@@locale": "it",
-  "invalidURLForSource": "URL dell'app {} non valido",
+  "invalidURLForSource": "URL dell'app  non valido",
   "noReleaseFound": "Impossibile trovare una release adatta",
   "noVersionFound": "Impossibile determinare la versione della release",
   "urlMatchesNoSource": "L'URL non corrisponde ad alcuna fonte conosciuta",
@@ -29,7 +29,7 @@
   "githubStarredRepos": "repository stellati da GitHub",
   "uname": "Nome utente",
   "wrongArgNum": "Numero di argomenti forniti errato",
-  "xIsTrackOnly": "{} è in modalità Solo-Monitoraggio",
+  "xIsTrackOnly": " è in modalità Solo-Monitoraggio",
   "source": "Fonte",
   "app": "App",
   "appsFromSourceAreTrackOnly": "Le app da questa fonte sono in modalità 'Solo-Monitoraggio'.",
@@ -44,7 +44,7 @@
   "add": "Aggiungi",
   "searchSomeSourcesLabel": "Cerca (solo per alcune fonti)",
   "search": "Cerca",
-  "additionalOptsFor": "Opzioni aggiuntive per {}",
+  "additionalOptsFor": "Opzioni aggiuntive per ",
   "supportedSources": "Fonti supportate",
   "trackOnlyInBrackets": "(Solo-Monitoraggio)",
   "searchableInBrackets": "(ricercabile)",
@@ -52,24 +52,24 @@
   "noApps": "Nessuna app",
   "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
   "noAppsForFilter": "Nessuna app per i filtri selezionati",
-  "byX": "Di {}",
-  "percentProgress": "Avanzamento: {}%",
+  "byX": "Di ",
+  "percentProgress": "Avanzamento: %",
   "pleaseWait": "In attesa",
   "updateAvailable": "Aggiornamento disponibile",
   "notInstalled": "Non installato",
   "pseudoVersion": "pseudo-versione",
   "selectAll": "Seleziona tutto",
-  "deselectX": "Deseleziona {}",
-  "xWillBeRemovedButRemainInstalled": "Verà effettuata la rimozione di {}, ma non la disinstallazione.",
+  "deselectX": "Deseleziona ",
+  "xWillBeRemovedButRemainInstalled": "Verà effettuata la rimozione di , ma non la disinstallazione.",
   "removeSelectedAppsQuestion": "Rimuovere le app selezionate?",
   "removeSelectedApps": "Rimuovi le app selezionate",
-  "updateX": "Aggiorna {}",
-  "installX": "Installa {}",
-  "markXTrackOnlyAsUpdated": "Contrassegna {}\\n(Solo-Monitoraggio)\\ncome aggiornata",
-  "changeX": "Modifica {}",
+  "updateX": "Aggiorna ",
+  "installX": "Installa ",
+  "markXTrackOnlyAsUpdated": "Contrassegna \\n(Solo-Monitoraggio)\\ncome aggiornata",
+  "changeX": "Modifica ",
   "installUpdateApps": "Installa/Aggiorna app",
   "installUpdateSelectedApps": "Installa/Aggiorna le app selezionate",
-  "markXSelectedAppsAsUpdated": "Contrassegnare le {} app selezionate come aggiornate?",
+  "markXSelectedAppsAsUpdated": "Contrassegnare le  app selezionate come aggiornate?",
   "no": "NO",
   "yes": "Sì",
   "markSelectedAppsUpdated": "Contrassegna le app selezionate come aggiornate",
@@ -92,25 +92,25 @@
   "nonInstalledApps": "App non installate",
   "importExport": "Importa/Esporta",
   "settings": "Impostazioni",
-  "exportedTo": "Esportato in {}",
+  "exportedTo": "Esportato in ",
   "updatiumExport": "Esporta da Updatium",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Inserimento non valido",
-  "importedX": "Importato {}",
+  "importedX": "Importato ",
   "updatiumImport": "Importa in Updatium",
   "importFromURLList": "Importa da lista di URL",
   "searchQuery": "Stringa di ricerca",
   "appURLList": "Lista di URL delle app",
   "line": "Linea",
-  "searchX": "Cerca su {}",
+  "searchX": "Cerca su ",
   "noResults": "Nessun risultato trovato",
-  "importX": "Importa {}",
+  "importX": "Importa ",
   "importedAppsIdDisclaimer": "Le app importate potrebbero essere visualizzate erroneamente come \\\"Non installate\\\".\\nPer risolvere il problema, reinstallale con Updatium.\\nCiò non dovrebbe influire sui dati delle app.\\n\\nRiguarda solo l'URL e i metodi di importazione di terze parti.",
   "importErrors": "Errori di importazione",
-  "importedXOfYApps": "{} app di {} importate.",
+  "importedXOfYApps": " app di  importate.",
   "followingURLsHadErrors": "I seguenti URL contengono errori:",
   "selectURL": "Seleziona l'URL",
   "selectURLs": "Seleziona gli URL",
@@ -146,25 +146,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "esportazione-updatium",
   "pickAnAPK": "Seleziona un APK",
-  "appHasMoreThanOnePackage": "{} offre più di un pacchetto:",
-  "deviceSupportsXArch": "Il dispositivo in uso supporta l'architettura {} della CPU.",
+  "appHasMoreThanOnePackage": " offre più di un pacchetto:",
+  "deviceSupportsXArch": "Il dispositivo in uso supporta l'architettura  della CPU.",
   "deviceSupportsFollowingArchs": "Il dispositivo in uso supporta le seguenti architetture della CPU:",
   "warning": "Attenzione",
-  "sourceIsXButPackageFromYPrompt": "L'origine dell'app è '{}' ma il pacchetto della release proviene da '{}'. Continuare?",
+  "sourceIsXButPackageFromYPrompt": "L'origine dell'app è '' ma il pacchetto della release proviene da ''. Continuare?",
   "updatesAvailable": "Aggiornamenti disponibili",
   "updatesAvailableNotifDescription": "Notifica all'utente che sono disponibili gli aggiornamenti di una o più app monitorate da Updatium",
   "noNewUpdates": "Nessun nuovo aggiornamento.",
-  "xHasAnUpdate": "Aggiornamento disponibile per {}",
+  "xHasAnUpdate": "Aggiornamento disponibile per ",
   "appsUpdated": "App aggiornate",
   "appsNotUpdated": "Impossibile aggiornare le applicazioni",
   "appsUpdatedNotifDescription": "Notifica all'utente che una o più app sono state aggiornate in secondo piano",
-  "xWasUpdatedToY": "{} è stato aggiornato alla {}.",
-  "xWasNotUpdatedToY": "Impossibile aggiornare {} a {}.",
+  "xWasUpdatedToY": " è stato aggiornato alla .",
+  "xWasNotUpdatedToY": "Impossibile aggiornare  a .",
   "errorCheckingUpdates": "Controllo degli errori per gli aggiornamenti",
   "errorCheckingUpdatesNotifDescription": "Una notifica che mostra quando il controllo degli aggiornamenti in secondo piano fallisce",
   "appsRemoved": "App rimosse",
   "appsRemovedNotifDescription": "Notifica all'utente che una o più app sono state rimosse a causa di errori durante il caricamento",
-  "xWasRemovedDueToErrorY": "{} è stata rimosso a causa di questo errore: {}",
+  "xWasRemovedDueToErrorY": " è stata rimosso a causa di questo errore: ",
   "completeAppInstallation": "Completa l'installazione dell'app",
   "updatiumMustBeOpenToInstallApps": "Updatium deve essere aperto per poter installare le app",
   "completeAppInstallationNotifDescription": "Chiede all'utente di riaprire Updatium per terminare l'installazione di un'app",
@@ -172,15 +172,15 @@
   "checkingForUpdatesNotifDescription": "Notifica transitoria che appare durante la verifica degli aggiornamenti",
   "pleaseAllowInstallPerm": "Per favore permetti a Updatium di installare le app",
   "trackOnly": "Solo-Monitoraggio",
-  "errorWithHttpStatusCode": "Errore {}",
+  "errorWithHttpStatusCode": "Errore ",
   "versionCorrectionDisabled": "Correzione della versione disattivata (il plugin sembra non funzionare)",
   "unknown": "Sconosciuto",
   "none": "Nessuno",
   "all": "Tutti",
   "never": "Mai",
-  "latestVersionX": "Ultima versione: {}",
-  "installedVersionX": "Versione installata: {}",
-  "lastUpdateCheckX": "Ultimo controllo degli aggiornamenti: {}",
+  "latestVersionX": "Ultima versione: ",
+  "installedVersionX": "Versione installata: ",
+  "lastUpdateCheckX": "Ultimo controllo degli aggiornamenti: ",
   "remove": "Rimuovi",
   "yesMarkUpdated": "Sì, contrassegna come aggiornata",
   "fdroid": "F-Droid ufficiale",
@@ -197,9 +197,9 @@
   "additionalOptions": "Opzioni aggiuntive",
   "disableVersionDetection": "Disattiva il rilevamento della versione",
   "noVersionDetectionExplanation": "Questa opzione dovrebbe essere usata solo per le app la cui versione non viene rilevata correttamente.",
-  "downloadingX": "Scaricamento di {} in corso",
-  "downloadX": "Scarica {}",
-  "downloadedX": "Scaricato {}",
+  "downloadingX": "Scaricamento di  in corso",
+  "downloadX": "Scarica ",
+  "downloadedX": "Scaricato ",
   "releaseAsset": "Rilascio Asset",
   "downloadNotifDescription": "Notifica all'utente lo stato di avanzamento del download di un'app",
   "noAPKFound": "Nessun APK trovato",
@@ -243,7 +243,7 @@
   "hideNonInstalledApps": "Nascondi le app non installate",
   "gitlabPATLabel": "GitLab Token di accesso personale",
   "about": "Informazioni",
-  "requiresCredentialsInSettings": "{}: Servono credenziali aggiuntive (in Impostazioni)",
+  "requiresCredentialsInSettings": ": Servono credenziali aggiuntive (in Impostazioni)",
   "checkOnStart": "Controlla una volta all'avvio",
   "safeMode": "Modalità sicura",
   "safeModeDescription": "Nascondi pagina Aggiungi app e mostra Importa/Esporta invece",
@@ -263,7 +263,7 @@
   "customLinkFilterRegex": "Filtra link APK personalizzato con espressione regolare (predefinito '.apk$')",
   "appsPossiblyUpdated": "Aggiornamenti app tentati",
   "appsPossiblyUpdatedNotifDescription": "Notifica all'utente che sono stati potenzialmente applicati in secondo piano aggiornamenti a una o più app",
-  "xWasPossiblyUpdatedToY": "{} potrebbe essere stata aggiornata alla {}.",
+  "xWasPossiblyUpdatedToY": " potrebbe essere stata aggiornata alla .",
   "enableBackgroundUpdates": "Attiva aggiornamenti in secondo piano",
   "backgroundUpdateReqsExplanation": "Gli aggiornamenti in secondo piano potrebbero non essere possibili per tutte le app.",
   "backgroundUpdateLimitsExplanation": "La riuscita di un'installazione in secondo piano può essere determinata solo quando viene aperto Updatium.",
@@ -279,7 +279,7 @@
   "autoSelectHighestVersionCode": "Auto-seleziona APK con versionCode più alto",
   "versionExtractionRegEx": "RegEx di estrazione versione",
   "trimVersionString": "Tagliare la stringa della versione con RegEx",
-  "matchGroupToUseForX": "Gruppo di corrispondenza da utilizzare per \\\"{}\\\"",
+  "matchGroupToUseForX": "Gruppo di corrispondenza da utilizzare per \\\"\\\"",
   "matchGroupToUse": "Gruppo da usare",
   "highlightTouchTargets": "Evidenzia elementi toccabili meno ovvi",
   "pickExportDir": "Scegli cartella esp.",
@@ -302,12 +302,12 @@
   "appsPossiblyUpdatedNotifChannel": "Aggiornamenti app tentati",
   "errorCheckingUpdatesNotifChannel": "Controllo degli errori per gli aggiornamenti",
   "appsRemovedNotifChannel": "App rimosse",
-  "downloadingXNotifChannel": "Scaricamento di {} in corso",
+  "downloadingXNotifChannel": "Scaricamento di  in corso",
   "completeAppInstallationNotifChannel": "Completa l'installazione dell'app",
   "checkingForUpdatesNotifChannel": "Controllo degli aggiornamenti in corso",
   "onlyCheckInstalledOrTrackOnlyApps": "Cerca aggiornamenti solo per app installate e app in Solo-Monitoraggio",
   "supportFixedAPKURL": "Supporta URL fissi di APK",
-  "selectX": "Seleziona {}",
+  "selectX": "Seleziona ",
   "parallelDownloads": "Permetti download paralleli",
   "useShizuku": "Utilizzare Shizuku o Sui per installare",
   "shizukuBinderNotFound": "Shizuku non è in esecuzione",
@@ -327,7 +327,7 @@
   "latest": "Ultimo",
   "invertRegEx": "Inverti espressione regolare",
   "note": "Nota",
-  "selfHostedNote": "Il menu a tendina \\\"{}\\\" può essere usato per raggiungere istanze autogestite/personali di qualsiasi fonte.",
+  "selfHostedNote": "Il menu a tendina \\\"\\\" può essere usato per raggiungere istanze autogestite/personali di qualsiasi fonte.",
   "badDownload": "Non è stato possibile analizzare l'APK (download incompatibile o parziale).",
   "beforeNewInstallsShareToAppVerifier": "Condividere le nuove applicazioni con AppVerifier (se disponibile)",
   "appVerifierInstructionToast": "Condividete con AppVerifier, quindi tornate qui quando siete pronti.",
@@ -345,7 +345,7 @@
   "welcome": "Benvenuti",
   "documentationLinksNote": "La pagina GitHub di Updatium collegata qui sotto contiene collegamenti a video, articoli, discussioni e altre risorse che vi aiuteranno a capire come utilizzare l'applicazione.",
   "batteryOptimizationNote": "Si noti che i download in background potrebbero funzionare in modo più affidabile se si disabilita l'ottimizzazione della batteria del sistema operativo per Updatium.",
-  "fileDeletionError": "Errore nell'eliminazione del file (provare a cancellarlo manualmente e poi riprovare): \\\"{}\\\"",
+  "fileDeletionError": "Errore nell'eliminazione del file (provare a cancellarlo manualmente e poi riprovare): \\\"\\\"",
   "foregroundService": "Servizio Updatium in primo piano",
   "foregroundServiceExplanation": "Utilizzare un servizio in primo piano per il controllo degli aggiornamenti (più affidabile, consuma più energia)",
   "fgServiceNotice": "Questa notifica è necessaria per il controllo degli aggiornamenti in background (può essere nascosta nelle impostazioni del sistema operativo).",
@@ -373,8 +373,8 @@
   "apps": "App",
   "@apps": {
     "plural": {
-      "one": "{} app",
-      "other": "{} app"
+      "one": "{count} app",
+      "other": "{count} app"
     },
     "placeholders": {
       "count": {
@@ -385,8 +385,8 @@
   "apk": "APK",
   "@apk": {
     "plural": {
-      "one": "{} APK",
-      "other": "{} APK"
+      "one": "{count} APK",
+      "other": "{count} APK"
     },
     "placeholders": {
       "count": {
@@ -394,11 +394,11 @@
       }
     }
   },
-  "minute": "{} minuti",
+  "minute": "minuti",
   "@minute": {
     "plural": {
-      "one": "{} minuto",
-      "other": "{} minuti"
+      "one": "{count} minuto",
+      "other": "{count} minuti"
     },
     "placeholders": {
       "count": {
@@ -406,11 +406,11 @@
       }
     }
   },
-  "hour": "{} ore",
+  "hour": "ore",
   "@hour": {
     "plural": {
-      "one": "{} ora",
-      "other": "{} ore"
+      "one": "{count} ora",
+      "other": "{count} ore"
     },
     "placeholders": {
       "count": {
@@ -418,11 +418,11 @@
       }
     }
   },
-  "day": "{} giorni",
+  "day": "giorni",
   "@day": {
     "plural": {
-      "one": "{} giorno",
-      "other": "{} giorni"
+      "one": "{count} giorno",
+      "other": "{count} giorni"
     },
     "placeholders": {
       "count": {

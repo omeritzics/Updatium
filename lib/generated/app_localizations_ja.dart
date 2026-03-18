@@ -10,7 +10,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return '$arg1は有効なソースURLではありません';
+    return 'は有効なソースURLではありません';
   }
 
   @override
@@ -96,7 +96,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1 は「追跡のみ」です';
+    return ' は「追跡のみ」です';
   }
 
   @override
@@ -144,7 +144,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return '$arg1の追加オプション';
+    return 'の追加オプション';
   }
 
   @override
@@ -170,12 +170,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return 'by $arg1';
+    return 'by ';
   }
 
   @override
   String percentProgress(String arg1) {
-    return 'ダウンロード中: $arg1%';
+    return 'ダウンロード中: %';
   }
 
   @override
@@ -195,12 +195,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return '$arg1 件の選択を解除';
+    return ' 件の選択を解除';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return '$arg1 はUpdatiumから削除されますが、デバイスにはインストールされたままです。';
+    return ' はUpdatiumから削除されますが、デバイスにはインストールされたままです。';
   }
 
   @override
@@ -211,22 +211,22 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return '$arg1 をアップデートする';
+    return ' をアップデートする';
   }
 
   @override
   String installX(String arg1) {
-    return '$arg1 をインストールする';
+    return ' をインストールする';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return '$arg1\n(追跡のみ)\nをアップデート済みとしてマークする';
+    return '\\n(追跡のみ)\\nをアップデート済みとしてマークする';
   }
 
   @override
   String changeX(String arg1) {
-    return '$arg1 を変更する';
+    return ' を変更する';
   }
 
   @override
@@ -237,7 +237,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return '$arg1個の選択したアプリをアップデート済みとしてマークしますか？';
+    return '個の選択したアプリをアップデート済みとしてマークしますか？';
   }
 
   @override
@@ -261,7 +261,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      '選択したアプリのインストール状態がリセットされます。\n\nアップデートに失敗した場合など、Updatiumに表示されるアプリのバージョンが正しくない場合に役立ちます。';
+      '選択したアプリのインストール状態がリセットされます。\\n\\nアップデートに失敗した場合など、Updatiumに表示されるアプリのバージョンが正しくない場合に役立ちます。';
 
   @override
   String get customLinkMessage => 'これらのリンクはUpdatiumがインストールされたデバイスで動作します';
@@ -310,7 +310,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return '$arg1 にエクスポートしました';
+    return ' にエクスポートしました';
   }
 
   @override
@@ -333,7 +333,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return '$arg1 をインポートしました';
+    return ' をインポートしました';
   }
 
   @override
@@ -353,7 +353,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return '$arg1 で検索';
+    return ' で検索';
   }
 
   @override
@@ -361,19 +361,19 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return '$arg1 をインポート';
+    return ' をインポート';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      'インポートしたアプリが「未インストール」と表示されることがあります。\nこの問題を解決するには、Updatiumから再インストールしてください。\nアプリのデータには影響しません。\n\nURLとサードパーティのインポートメソッドにのみ影響します。';
+      'インポートしたアプリが「未インストール」と表示されることがあります。\\nこの問題を解決するには、Updatiumから再インストールしてください。\\nアプリのデータには影響しません。\\n\\nURLとサードパーティのインポートメソッドにのみ影響します。';
 
   @override
   String get importErrors => 'インポートエラー';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '$arg1 / $arg2 アプリをインポートしました';
+    return ' /  アプリをインポートしました';
   }
 
   @override
@@ -490,12 +490,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1 は複数のパッケージが存在します: ';
+    return ' は複数のパッケージが存在します: ';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return 'お使いのデバイスは $arg1 CPUアーキテクチャに対応しています。';
+    return 'お使いのデバイスは  CPUアーキテクチャに対応しています。';
   }
 
   @override
@@ -507,7 +507,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return 'アプリのソースは\'$arg1\'ですが、リリースパッケージは\'$arg2\'からダウンロードされます。続行しますか？';
+    return 'アプリのソースは\'\'ですが、リリースパッケージは\'\'からダウンロードされます。続行しますか？';
   }
 
   @override
@@ -522,7 +522,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1 のアップデートが利用可能です。';
+    return ' のアップデートが利用可能です。';
   }
 
   @override
@@ -537,12 +537,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return '$arg1 が $arg2 にアップデートされました';
+    return ' が  にアップデートされました';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return '$arg1 の $arg2 へのアップデートに失敗しました';
+    return ' の  へのアップデートに失敗しました';
   }
 
   @override
@@ -561,7 +561,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '次のエラーのため、$arg1 は削除されました: $arg2';
+    return '次のエラーのため、 は削除されました: ';
   }
 
   @override
@@ -589,7 +589,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return 'エラー $arg1';
+    return 'エラー ';
   }
 
   @override
@@ -609,17 +609,17 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return '最新: $arg1';
+    return '最新: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return 'インストール済み: $arg1';
+    return 'インストール済み: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return '最終アップデート確認: $arg1';
+    return '最終アップデート確認: ';
   }
 
   @override
@@ -718,17 +718,17 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return '$arg1 をダウンロード中';
+    return ' をダウンロード中';
   }
 
   @override
   String downloadX(String arg1) {
-    return '$arg1 をダウンロード';
+    return ' をダウンロード';
   }
 
   @override
   String downloadedX(String arg1) {
-    return '$arg1 をダウンロードしました';
+    return ' をダウンロードしました';
   }
 
   @override
@@ -864,7 +864,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1: これには追加の認証が必要です (設定にて)';
+    return ': これには追加の認証が必要です (設定にて)';
   }
 
   @override
@@ -927,7 +927,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1 が $arg2 にアップデートされた可能性があります。';
+    return ' が  にアップデートされた可能性があります。';
   }
 
   @override
@@ -979,7 +979,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return '\"$arg1\"に使用するマッチしたグループ';
+    return '\\\"\\\"に使用するマッチしたグループ';
   }
 
   @override
@@ -1050,7 +1050,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return '$arg1 をダウンロード中';
+    return ' をダウンロード中';
   }
 
   @override
@@ -1068,7 +1068,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return '$arg1 選択';
+    return ' 選択';
   }
 
   @override
@@ -1153,7 +1153,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return 'ドロップダウン\"$arg1\"を使用すると、あらゆるソースのセルフホスト/カスタムインスタンスにアクセスできます。';
+    return 'ドロップダウン\\\"\\\"を使用すると、あらゆるソースのセルフホスト/カスタムインスタンスにアクセスできます。';
   }
 
   @override
@@ -1207,7 +1207,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String fileDeletionError(String arg1) {
-    return 'ファイルの削除に失敗しました（手動で削除してから再試行してください）：\"$arg1\"';
+    return 'ファイルの削除に失敗しました（手動で削除してから再試行してください）：\\\"\\\"';
   }
 
   @override
@@ -1232,7 +1232,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Googleは、2026年から2027年以降、「認定」Androidデバイス上のすべてのアプリにおいて、開発者が個人情報をGoogleに直接提出することを義務付けると発表しました。\n\nその後、Updatiumは認定Androidデバイスで動作しなくなる可能性があります。';
+      'Googleは、2026年から2027年以降、「認定」Androidデバイス上のすべてのアプリにおいて、開発者が個人情報をGoogleに直接提出することを義務付けると発表しました。\\n\\nその後、Updatiumは認定Androidデバイスで動作しなくなる可能性があります。';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1240,7 +1240,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      'なお、短期的には、Googleが発表後に広範な反発を受けて実装を約束した「高度なフロー」プロセスを通じて、「未検証」（非準拠）のアプリをインストールし続けることが可能になるかもしれません。しかし、その具体的な仕組みは明らかにされておらず、ユーザーの自由が実質的に保たれるかどうかは不明です。\n\nいずれにせよ、Googleのこの動きは、個人向けの自由な汎用コンピューティングの終焉に向けた大きな一歩です。\n\nGrapheneOSのような非認定OSは、その存在が許される限り、この影響を受けないはずです。';
+      'なお、短期的には、Googleが発表後に広範な反発を受けて実装を約束した「高度なフロー」プロセスを通じて、「未検証」（非準拠）のアプリをインストールし続けることが可能になるかもしれません。しかし、その具体的な仕組みは明らかにされておらず、ユーザーの自由が実質的に保たれるかどうかは不明です。\\n\\nいずれにせよ、Googleのこの動きは、個人向けの自由な汎用コンピューティングの終焉に向けた大きな一歩です。\\n\\nGrapheneOSのような非認定OSは、その存在が許される限り、この影響を受けないはずです。';
 
   @override
   String get multipleSigners => '複数の署名者';
@@ -1259,7 +1259,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      'このアプリケーションは外部アプリケーションを配布、ホスト、または検証しません。ユーザーはこのツールを通じてインストールされたソフトウェアの安全性と合法性について全責任を負います。\n\nhttps://github.com/omeritzics/Updatium はUpdatiumをダウンロードする唯一の公式場所です - 非公式のソースからダウンロードすることは安全ではないため、他の場所からダウンロードすることは強くお勧めしません。';
+      'このアプリケーションは外部アプリケーションを配布、ホスト、または検証しません。ユーザーはこのツールを通じてインストールされたソフトウェアの安全性と合法性について全責任を負います。\\n\\nhttps://github.com/omeritzics/Updatium はUpdatiumをダウンロードする唯一の公式場所です - 非公式のソースからダウンロードすることは安全ではないため、他の場所からダウンロードすることは強くお勧めしません。';
 
   @override
   String get privacy => 'プライバシー';
@@ -1287,36 +1287,37 @@ class AppLocalizationsJa extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'APKリンクのハッシュ';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
-  String get gHReqPrefix => 'GitHub リクエスト用の \'sky22333/hubproxy\' インスタンス';
+  String get gHReqPrefix =>
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => '続行';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return 'アプリ';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count分';
+    return '分';
   }
 
   @override
   String hour(int count) {
-    return '$count時間';
+    return '時間';
   }
 
   @override
   String day(int count) {
-    return '$count日';
+    return '日';
   }
 }

@@ -10,7 +10,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return 'Keine gültige $arg1 App-URL';
+    return 'Keine gültige  App-URL';
   }
 
   @override
@@ -62,7 +62,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get filterReleaseTitlesByRegEx =>
-      'Release-Titel nach regulärem Ausdruck\nfiltern';
+      'Release-Titel nach regulärem Ausdruck\\nfiltern';
 
   @override
   String get invalidRegEx => 'Ungültiger regulärer Ausdruck';
@@ -104,7 +104,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1 ist nur zur Nachverfolgung';
+    return ' ist nur zur Nachverfolgung';
   }
 
   @override
@@ -154,7 +154,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return 'Zusatzoptionen für $arg1';
+    return 'Zusatzoptionen für ';
   }
 
   @override
@@ -181,12 +181,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return 'Von $arg1';
+    return 'Von ';
   }
 
   @override
   String percentProgress(String arg1) {
-    return 'Fortschritt: $arg1%';
+    return 'Fortschritt: %';
   }
 
   @override
@@ -206,12 +206,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return '$arg1 abgewählt';
+    return ' abgewählt';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return '$arg1 wird aus Updatium entfernt, bleibt aber auf dem Gerät installiert.';
+    return ' wird aus Updatium entfernt, bleibt aber auf dem Gerät installiert.';
   }
 
   @override
@@ -222,22 +222,22 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return '$arg1 aktualisieren';
+    return ' aktualisieren';
   }
 
   @override
   String installX(String arg1) {
-    return '$arg1 installieren';
+    return ' installieren';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return 'Markiere $arg1\n(Nur nachverfolgen)\nals aktualisiert';
+    return 'Markiere \\n(Nur nachverfolgen)\\nals aktualisiert';
   }
 
   @override
   String changeX(String arg1) {
-    return '$arg1 ändern';
+    return ' ändern';
   }
 
   @override
@@ -249,7 +249,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return '$arg1 ausgewählte Apps als aktuell markieren?';
+    return ' ausgewählte Apps als aktuell markieren?';
   }
 
   @override
@@ -324,7 +324,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return 'Exportiert nach $arg1';
+    return 'Exportiert nach ';
   }
 
   @override
@@ -347,7 +347,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return '$arg1 importiert';
+    return ' importiert';
   }
 
   @override
@@ -367,7 +367,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return '$arg1 suchen';
+    return ' suchen';
   }
 
   @override
@@ -375,7 +375,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return '$arg1 importieren';
+    return ' importieren';
   }
 
   @override
@@ -387,7 +387,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '$arg1 von $arg2 Apps importiert.';
+    return ' von  Apps importiert.';
   }
 
   @override
@@ -505,12 +505,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1 verfügt über mehr als ein Paket:';
+    return ' verfügt über mehr als ein Paket:';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return 'Ihr Gerät unterstützt die CPU-Architektur $arg1.';
+    return 'Ihr Gerät unterstützt die CPU-Architektur .';
   }
 
   @override
@@ -522,7 +522,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return 'Die App-Quelle ist \'$arg1\', aber das Release-Paket stammt von \'$arg2\'. Fortfahren?';
+    return 'Die App-Quelle ist \'\', aber das Release-Paket stammt von \'\'. Fortfahren?';
   }
 
   @override
@@ -537,7 +537,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1 hat eine Aktualisierung.';
+    return ' hat eine Aktualisierung.';
   }
 
   @override
@@ -552,12 +552,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return '$arg1 wurde auf $arg2 aktualisiert.';
+    return ' wurde auf  aktualisiert.';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return 'Die Aktualisierung von $arg1 auf $arg2 ist fehlgeschlagen.';
+    return 'Die Aktualisierung von  auf  ist fehlgeschlagen.';
   }
 
   @override
@@ -576,7 +576,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '$arg1 wurde aufgrund des folgenden Fehlers entfernt: $arg2';
+    return ' wurde aufgrund des folgenden Fehlers entfernt: ';
   }
 
   @override
@@ -606,7 +606,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return 'Fehler $arg1';
+    return 'Fehler ';
   }
 
   @override
@@ -627,17 +627,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return 'Neueste Version: $arg1';
+    return 'Neueste Version: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return 'Installierte Version: $arg1';
+    return 'Installierte Version: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return 'Letzte Aktualisierungsprüfung: $arg1';
+    return 'Letzte Aktualisierungsprüfung: ';
   }
 
   @override
@@ -737,17 +737,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return '$arg1 wird heruntergeladen';
+    return ' wird heruntergeladen';
   }
 
   @override
   String downloadX(String arg1) {
-    return '$arg1 herunterladen';
+    return ' herunterladen';
   }
 
   @override
   String downloadedX(String arg1) {
-    return '$arg1 heruntergeladen';
+    return ' heruntergeladen';
   }
 
   @override
@@ -894,7 +894,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1: Benötigt zusätzliche Anmeldedaten (in den Einstellungen)';
+    return ': Benötigt zusätzliche Anmeldedaten (in den Einstellungen)';
   }
 
   @override
@@ -955,7 +955,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get filterReleaseNotesByRegEx =>
-      'Versionshinweise nach regulärem Ausdruck\nfiltern';
+      'Versionshinweise nach regulärem Ausdruck\\nfiltern';
 
   @override
   String get customLinkFilterRegex =>
@@ -970,7 +970,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1 wurde möglicherweise auf Version $arg2 aktualisiert.';
+    return ' wurde möglicherweise auf Version  aktualisiert.';
   }
 
   @override
@@ -1028,7 +1028,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return 'Zu verwendende Abgleichsgruppe für\n„$arg1“';
+    return 'Zu verwendende Abgleichsgruppe für\\n„“';
   }
 
   @override
@@ -1107,7 +1107,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return '$arg1 herunterladen';
+    return ' herunterladen';
   }
 
   @override
@@ -1126,7 +1126,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return '$arg1 wählen';
+    return ' wählen';
   }
 
   @override
@@ -1217,7 +1217,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return 'Das „$arg1“-Drop-down-Menü kann verwendet werden, um selbst gehostete/angepasste Instanzen einer beliebigen Quelle zu erreichen.';
+    return 'Das „“-Drop-down-Menü kann verwendet werden, um selbst gehostete/angepasste Instanzen einer beliebigen Quelle zu erreichen.';
   }
 
   @override
@@ -1274,7 +1274,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String fileDeletionError(String arg1) {
-    return 'Die Datei konnte nicht gelöscht werden (versuchen Sie, sie manuell zu löschen und versuchen Sie es dann erneut): \"$arg1\"';
+    return 'Die Datei konnte nicht gelöscht werden (versuchen Sie, sie manuell zu löschen und versuchen Sie es dann erneut): \\\"\\\"';
   }
 
   @override
@@ -1299,7 +1299,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Google hat bekannt gegeben, dass, ab 2026/2027, alle Apps auf \"zertifizierten\" Android-Geräten den Entwickler benötigen, um persönliche Identitätsdetails direkt an Google einzureichen.\n\nDanach kann Updatium auf zertifizierten Android-Geräten aufhören zu funktionieren.';
+      'Google hat bekannt gegeben, dass, ab 2026/2027, alle Apps auf \\\"zertifizierten\\\" Android-Geräten den Entwickler benötigen, um persönliche Identitätsdetails direkt an Google einzureichen.\\n\\nDanach kann Updatium auf zertifizierten Android-Geräten aufhören zu funktionieren.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1307,7 +1307,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      'Beachten Sie, dass es kurzfristig weiterhin möglich sein kann, \"unverifizierte\" (nicht-konforme) Apps durch einen \"fortgeschrittenen Flow\"-Prozess zu installieren, den Google versprochen hat, nach einem breiten Rückschluss auf ihre Ankündigung umzusetzen, aber sie haben nicht detailliert, wie dies funktioniert, so dass es unklar ist, ob es wirklich Benutzerfreiheiten in praktischer Weise erhalten wird.\n\nIn jedem Fall ist Googles Bewegung ein wesentlicher Schritt zum Ende des kostenlosen, universellen Computers für Einzelpersonen.\n\nNicht zertifizierte Betriebssysteme, wie GrapheneOS, sollten dadurch nicht beeinflusst werden, solange sie weiterhin existieren dürfen.';
+      'Beachten Sie, dass es kurzfristig weiterhin möglich sein kann, \\\"unverifizierte\\\" (nicht-konforme) Apps durch einen \\\"fortgeschrittenen Flow\\\"-Prozess zu installieren, den Google versprochen hat, nach einem breiten Rückschluss auf ihre Ankündigung umzusetzen, aber sie haben nicht detailliert, wie dies funktioniert, so dass es unklar ist, ob es wirklich Benutzerfreiheiten in praktischer Weise erhalten wird.\\n\\nIn jedem Fall ist Googles Bewegung ein wesentlicher Schritt zum Ende des kostenlosen, universellen Computers für Einzelpersonen.\\n\\nNicht zertifizierte Betriebssysteme, wie GrapheneOS, sollten dadurch nicht beeinflusst werden, solange sie weiterhin existieren dürfen.';
 
   @override
   String get multipleSigners => 'Mehrere Zeichen';
@@ -1328,7 +1328,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      'Diese Anwendung verteilt, hostet oder überprüft keine der externen Anwendungen. Der Benutzer trägt die volle Verantwortung für die Sicherheit und Legalität jeder Software, die über dieses Tool installiert wird.\n\nhttps://github.com/omeritzics/Updatium ist der einzige offizielle Ort, um Updatium herunterzuladen - es wird dringend davon abgeraten, es woanders herunterzuladen, da das Herunterladen von inoffiziellen Quellen unsicher ist.';
+      'Diese Anwendung verteilt, hostet oder überprüft keine der externen Anwendungen. Der Benutzer trägt die volle Verantwortung für die Sicherheit und Legalität jeder Software, die über dieses Tool installiert wird.\\n\\nhttps://github.com/omeritzics/Updatium ist der einzige offizielle Ort, um Updatium herunterzuladen - es wird dringend davon abgeraten, es woanders herunterzuladen, da das Herunterladen von inoffiziellen Quellen unsicher ist.';
 
   @override
   String get privacy => 'Datenschutz';
@@ -1357,36 +1357,37 @@ class AppLocalizationsDe extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'APK-Link-Hash';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
-  String get gHReqPrefix => 'sky22333/hubproxy\'-Instanz für GitHub-Anfragen';
+  String get gHReqPrefix =>
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => 'Weiter';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return 'Apps';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count Minuten';
+    return 'Minuten';
   }
 
   @override
   String hour(int count) {
-    return '$count Stunden';
+    return 'Stunden';
   }
 
   @override
   String day(int count) {
-    return '$count Tage';
+    return 'Tage';
   }
 }

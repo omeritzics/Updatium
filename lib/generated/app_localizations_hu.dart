@@ -10,7 +10,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return 'Érvénytelen a(z) $arg1 alkalmazás webcíme';
+    return 'Érvénytelen a(z)  alkalmazás webcíme';
   }
 
   @override
@@ -103,7 +103,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return 'A(z) $arg1 csak nyomon követhető';
+    return 'A(z)  csak nyomon követhető';
   }
 
   @override
@@ -153,7 +153,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return 'További lehetőségek a következőhöz: $arg1';
+    return 'További lehetőségek a következőhöz: ';
   }
 
   @override
@@ -180,12 +180,12 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return 'Fejlesztő: $arg1';
+    return 'Fejlesztő: ';
   }
 
   @override
   String percentProgress(String arg1) {
-    return 'Folyamat: $arg1%';
+    return 'Folyamat: %';
   }
 
   @override
@@ -205,12 +205,12 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return 'A(z) $arg1 kiválasztásának elvetése';
+    return 'A(z)  kiválasztásának elvetése';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return 'A(z) $arg1 el lesz távolítva az Updatiumból, de továbbra is telepítve marad az eszközön.';
+    return 'A(z)  el lesz távolítva az Updatiumból, de továbbra is telepítve marad az eszközön.';
   }
 
   @override
@@ -222,22 +222,22 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return '$arg1 frissítése';
+    return ' frissítése';
   }
 
   @override
   String installX(String arg1) {
-    return '$arg1 telepítése';
+    return ' telepítése';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return 'Megjelölés: $arg1\n(Csak nyomon követés)\nFrissítettként';
+    return 'Megjelölés: \\n(Csak nyomon követés)\\nFrissítettként';
   }
 
   @override
   String changeX(String arg1) {
-    return '$arg1-változás';
+    return '-változás';
   }
 
   @override
@@ -249,7 +249,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return 'Biztosan megjelöli a(z) $arg1 kiválasztott alkalmazást frissítettként?';
+    return 'Biztosan megjelöli a(z)  kiválasztott alkalmazást frissítettként?';
   }
 
   @override
@@ -274,7 +274,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      'A kiválasztott alkalmazások telepítési állapota visszaáll.\n\nEz akkor segíthet, ha az Updatiumban megjelenített alkalmazás-verzió hibás, a frissítések vagy egyéb problémák miatt.';
+      'A kiválasztott alkalmazások telepítési állapota visszaáll.\\n\\nEz akkor segíthet, ha az Updatiumban megjelenített alkalmazás-verzió hibás, a frissítések vagy egyéb problémák miatt.';
 
   @override
   String get customLinkMessage =>
@@ -326,7 +326,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return 'Exportálva ide: $arg1';
+    return 'Exportálva ide: ';
   }
 
   @override
@@ -349,7 +349,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return 'Importálva innen: $arg1';
+    return 'Importálva innen: ';
   }
 
   @override
@@ -369,7 +369,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return '$arg1 keresése';
+    return ' keresése';
   }
 
   @override
@@ -377,19 +377,19 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return '$arg1 importálása';
+    return ' importálása';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      'Előfordulhat, hogy az importált alkalmazások helytelenül „Nincs telepítve” jelzéssel jelennek meg.\nA probléma megoldásához telepítse újra őket az Updatiumon keresztül.\nEz nem érinti az alkalmazásadatokat.\n\nCsak a webcímekre és a harmadik féltől származó importálási módszerekre vonatkozik.';
+      'Előfordulhat, hogy az importált alkalmazások helytelenül „Nincs telepítve” jelzéssel jelennek meg.\\nA probléma megoldásához telepítse újra őket az Updatiumon keresztül.\\nEz nem érinti az alkalmazásadatokat.\\n\\nCsak a webcímekre és a harmadik féltől származó importálási módszerekre vonatkozik.';
 
   @override
   String get importErrors => 'Importálási hibák';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '$arg1/$arg2 alkalmazás importálva.';
+    return '/ alkalmazás importálva.';
   }
 
   @override
@@ -508,12 +508,12 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return 'A(z) $arg1 egynél több csomaggal rendelkezik:';
+    return 'A(z)  egynél több csomaggal rendelkezik:';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return 'Ez az eszköz támogatja a(z) $arg1 CPU-architektúrát.';
+    return 'Ez az eszköz támogatja a(z)  CPU-architektúrát.';
   }
 
   @override
@@ -525,7 +525,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return 'Az alkalmazás forrása a(z) „$arg1-tároló”, de a kiadási csomag innen származik: „$arg2”. Biztosan folytatja?';
+    return 'Az alkalmazás forrása a(z) „-tároló”, de a kiadási csomag innen származik: „”. Biztosan folytatja?';
   }
 
   @override
@@ -540,7 +540,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return 'A(z) $arg1 frissítést kapott.';
+    return 'A(z)  frissítést kapott.';
   }
 
   @override
@@ -555,12 +555,12 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return 'A(z) $arg1 frissítve lett a következőre: $arg2.';
+    return 'A(z)  frissítve lett a következőre: .';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return 'Nem sikerült frissíteni a következőt: $arg1, erre: $arg2.';
+    return 'Nem sikerült frissíteni a következőt: , erre: .';
   }
 
   @override
@@ -579,7 +579,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return 'A(z) $arg1 el lett távolítva a következő hiba miatt: $arg2';
+    return 'A(z)  el lett távolítva a következő hiba miatt: ';
   }
 
   @override
@@ -609,7 +609,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return 'Hiba $arg1';
+    return 'Hiba ';
   }
 
   @override
@@ -630,17 +630,17 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return 'Legújabb verzió: $arg1';
+    return 'Legújabb verzió: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return 'Telepített verzió: $arg1';
+    return 'Telepített verzió: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return 'Frissítések utoljára ellenőrizve: $arg1';
+    return 'Frissítések utoljára ellenőrizve: ';
   }
 
   @override
@@ -741,17 +741,17 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return '$arg1 letöltése';
+    return ' letöltése';
   }
 
   @override
   String downloadX(String arg1) {
-    return '$arg1 letöltése';
+    return ' letöltése';
   }
 
   @override
   String downloadedX(String arg1) {
-    return '$arg1 letöltve';
+    return ' letöltve';
   }
 
   @override
@@ -899,7 +899,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return 'A(z) $arg1 alkalmazásnak további hitelesítő adatokra van szüksége (a beállításokban)';
+    return 'A(z)  alkalmazásnak további hitelesítő adatokra van szüksége (a beállításokban)';
   }
 
   @override
@@ -974,7 +974,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return 'A(z) $arg1 frissülhetett a következőre: $arg2.';
+    return 'A(z)  frissülhetett a következőre: .';
   }
 
   @override
@@ -1035,7 +1035,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return 'A(z) „$arg1” esetén használandó csoport egyeztetése';
+    return 'A(z) „” esetén használandó csoport egyeztetése';
   }
 
   @override
@@ -1116,7 +1116,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return 'A(z) $arg1 letöltése';
+    return 'A(z)  letöltése';
   }
 
   @override
@@ -1135,7 +1135,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return '$arg1 kiválasztása';
+    return ' kiválasztása';
   }
 
   @override
@@ -1224,7 +1224,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return 'A(z) „$arg1” legördülő menü segítségével elérhetővé válnak a bármilyen más forrásból származó saját üzemeltetésű vagy egyéni példányok.';
+    return 'A(z) „” legördülő menü segítségével elérhetővé válnak a bármilyen más forrásból származó saját üzemeltetésű vagy egyéni példányok.';
   }
 
   @override
@@ -1280,7 +1280,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String fileDeletionError(String arg1) {
-    return 'Nem sikerült törölni a fájlt (próbálja meg kézzel törölni, majd próbálja meg újra): \"$arg1\"';
+    return 'Nem sikerült törölni a fájlt (próbálja meg kézzel törölni, majd próbálja meg újra): \\\"\\\"';
   }
 
   @override
@@ -1306,7 +1306,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'A Google bejelentette, hogy 2026/2027-től kezdődően az összes alkalmazáshoz, amely „tanúsított\" (certified) Android eszközökön fut, a fejlesztőknek a személyes azonosító adataikat közvetlenül a Google-nek kell majd benyújtaniuk.\n\nEzt követően, az Updatium esetleg nem fog működni a tanúsított Android eszközökön.';
+      'A Google bejelentette, hogy 2026/2027-től kezdődően az összes alkalmazáshoz, amely „tanúsított\\\" (certified) Android eszközökön fut, a fejlesztőknek a személyes azonosító adataikat közvetlenül a Google-nek kell majd benyújtaniuk.\\n\\nEzt követően, az Updatium esetleg nem fog működni a tanúsított Android eszközökön.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1314,7 +1314,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      'Fontos megjegyezni, hogy rövid távon még lehetséges lehet az „ellenőrizetlen” (nem megfelelő) alkalmazások telepítése egy „speciális folyamaton” keresztül, amelyre a Google ígéretet tett, hogy megvalósít a bejelentésüket követő széles körű felháborodás miatt. Azonban azt nem részletezték, hogy hogyan is működne ez, ezért nem világos, hogy ez gyakorlatilag megőrzi-e a felhasználók szabadsághoz való jogait.\n\nMindenesetre a Google lépése jelentős előrelépés a felhasználók számára elérhető szabad, általános célú alkalmazások megszűnése felé.\n\nA nem tanúsított operációs rendszereket, mint például a GrapheneOS, ez nem érinti mindaddig, amíg működhetnek.';
+      'Fontos megjegyezni, hogy rövid távon még lehetséges lehet az „ellenőrizetlen” (nem megfelelő) alkalmazások telepítése egy „speciális folyamaton” keresztül, amelyre a Google ígéretet tett, hogy megvalósít a bejelentésüket követő széles körű felháborodás miatt. Azonban azt nem részletezték, hogy hogyan is működne ez, ezért nem világos, hogy ez gyakorlatilag megőrzi-e a felhasználók szabadsághoz való jogait.\\n\\nMindenesetre a Google lépése jelentős előrelépés a felhasználók számára elérhető szabad, általános célú alkalmazások megszűnése felé.\\n\\nA nem tanúsított operációs rendszereket, mint például a GrapheneOS, ez nem érinti mindaddig, amíg működhetnek.';
 
   @override
   String get multipleSigners => 'Többen is aláírták';
@@ -1335,7 +1335,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      'Ez az alkalmazás nem terjeszti, nem hosztolja és nem ellenőrzi a külső alkalmazások egyikét sem. A felhasználó viseli a teljes felelősséget az ezen eszközzel telepített bármely szoftver biztonságáért és jogszerűségéért.\n\nhttps://github.com/omeritzics/Updatium az Updatium letöltésének egyetlen hivatalos helye - erősen nem javasolt más helyekről letölteni, mivel a nem hivatalos forrásokból történő letöltés nem biztonságos.';
+      'Ez az alkalmazás nem terjeszti, nem hosztolja és nem ellenőrzi a külső alkalmazások egyikét sem. A felhasználó viseli a teljes felelősséget az ezen eszközzel telepített bármely szoftver biztonságáért és jogszerűségéért.\\n\\nhttps://github.com/omeritzics/Updatium az Updatium letöltésének egyetlen hivatalos helye - erősen nem javasolt más helyekről letölteni, mivel a nem hivatalos forrásokból történő letöltés nem biztonságos.';
 
   @override
   String get privacy => 'Adatvédelem';
@@ -1364,37 +1364,37 @@ class AppLocalizationsHu extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'APK-hivatkozáskivonat';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
   String get gHReqPrefix =>
-      '„sky22333/hubproxy” példány a GitHub lekérdezéséhez';
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => 'Folytatás';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return 'Alkalmazások';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return 'perc';
   }
 
   @override
   String hour(int count) {
-    return '$count hours';
+    return 'óra';
   }
 
   @override
   String day(int count) {
-    return '$count days';
+    return 'nap';
   }
 }

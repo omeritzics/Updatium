@@ -10,7 +10,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return '유효한 $arg1 앱 URL이 아닙니다';
+    return '유효한  앱 URL이 아닙니다';
   }
 
   @override
@@ -96,7 +96,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1는 추적 전용입니다';
+    return '는 추적 전용입니다';
   }
 
   @override
@@ -144,7 +144,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return '$arg1에 대한 추가 옵션';
+    return '에 대한 추가 옵션';
   }
 
   @override
@@ -170,12 +170,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return '$arg1에 의해';
+    return '에 의해';
   }
 
   @override
   String percentProgress(String arg1) {
-    return '진행률: $arg1%';
+    return '진행률: %';
   }
 
   @override
@@ -195,12 +195,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return '$arg1 선택 해제';
+    return ' 선택 해제';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return '$arg1는 Updatium에서 제거되지만 장치에 설치된 상태로 남아 있습니다.';
+    return '는 Updatium에서 제거되지만 장치에 설치된 상태로 남아 있습니다.';
   }
 
   @override
@@ -211,22 +211,22 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return '$arg1 업데이트';
+    return ' 업데이트';
   }
 
   @override
   String installX(String arg1) {
-    return '$arg1 설치';
+    return ' 설치';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return '$arg1\n(추적 전용)\n업데이트됨으로 표시';
+    return '\\n(추적 전용)\\n업데이트됨으로 표시';
   }
 
   @override
   String changeX(String arg1) {
-    return '$arg1 변경';
+    return ' 변경';
   }
 
   @override
@@ -237,7 +237,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return '$arg1 선택한 앱을 업데이트됨으로 표시하시겠습니까?';
+    return ' 선택한 앱을 업데이트됨으로 표시하시겠습니까?';
   }
 
   @override
@@ -261,7 +261,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      '선택한 앱의 설치 상태가 재설정됩니다.\n\n이것은 실패한 업데이트나 기타 문제로 인해 Updatium에 표시된 앱 버전이 잘못된 경우에 도움이 될 수 있습니다.';
+      '선택한 앱의 설치 상태가 재설정됩니다.\\n\\n이것은 실패한 업데이트나 기타 문제로 인해 Updatium에 표시된 앱 버전이 잘못된 경우에 도움이 될 수 있습니다.';
 
   @override
   String get customLinkMessage => '이 링크는 Updatium이 설치된 장치에서 작동합니다';
@@ -310,7 +310,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return '$arg1로 내보내기 완료';
+    return '로 내보내기 완료';
   }
 
   @override
@@ -333,7 +333,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return '$arg1 가져오기 완료';
+    return ' 가져오기 완료';
   }
 
   @override
@@ -353,7 +353,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return '$arg1 검색';
+    return ' 검색';
   }
 
   @override
@@ -361,19 +361,19 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return '$arg1 가져오기';
+    return ' 가져오기';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      '가져온 앱은 \"설치되지 않음\"으로 잘못 표시될 수 있습니다.\n이를 수정하려면 Updatium을 통해 다시 설치하십시오.\n앱 데이터에는 영향을 미치지 않습니다.\n\nURL 및 타사 가져오기 방법에만 영향을 미칩니다.';
+      '가져온 앱은 \\\"설치되지 않음\\\"으로 잘못 표시될 수 있습니다.\\n이를 수정하려면 Updatium을 통해 다시 설치하십시오.\\n앱 데이터에는 영향을 미치지 않습니다.\\n\\nURL 및 타사 가져오기 방법에만 영향을 미칩니다.';
 
   @override
   String get importErrors => '가져오기 오류';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '$arg1개의 앱 중 $arg2개 가져오기 완료.';
+    return '개의 앱 중 개 가져오기 완료.';
   }
 
   @override
@@ -489,12 +489,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1에는 둘 이상의 패키지가 있습니다:';
+    return '에는 둘 이상의 패키지가 있습니다:';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return '장치는 $arg1 CPU 아키텍처를 지원합니다.';
+    return '장치는  CPU 아키텍처를 지원합니다.';
   }
 
   @override
@@ -505,7 +505,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return '앱 소스는 \'$arg1\'이지만 릴리스 패키지는 \'$arg2\'에서 제공됩니다. 계속하시겠습니까?';
+    return '앱 소스는 \'\'이지만 릴리스 패키지는 \'\'에서 제공됩니다. 계속하시겠습니까?';
   }
 
   @override
@@ -520,7 +520,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1에 업데이트가 있습니다.';
+    return '에 업데이트가 있습니다.';
   }
 
   @override
@@ -535,12 +535,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return '$arg1가 $arg2로 업데이트되었습니다.';
+    return '가 로 업데이트되었습니다.';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return '$arg1를 $arg2로 업데이트하지 못했습니다.';
+    return '를 로 업데이트하지 못했습니다.';
   }
 
   @override
@@ -559,7 +559,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '$arg1가 다음 오류로 인해 제거되었습니다: $arg2';
+    return '가 다음 오류로 인해 제거되었습니다: ';
   }
 
   @override
@@ -586,7 +586,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return '오류 $arg1';
+    return '오류 ';
   }
 
   @override
@@ -606,17 +606,17 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return '최신: $arg1';
+    return '최신: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return '설치됨: $arg1';
+    return '설치됨: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return '마지막 업데이트 확인: $arg1';
+    return '마지막 업데이트 확인: ';
   }
 
   @override
@@ -715,17 +715,17 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return '$arg1 다운로드 중';
+    return ' 다운로드 중';
   }
 
   @override
   String downloadX(String arg1) {
-    return '$arg1 다운로드';
+    return ' 다운로드';
   }
 
   @override
   String downloadedX(String arg1) {
-    return '$arg1 다운로드 완료';
+    return ' 다운로드 완료';
   }
 
   @override
@@ -860,7 +860,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1는 추가 자격 증명이 필요합니다 (설정에서)';
+    return '는 추가 자격 증명이 필요합니다 (설정에서)';
   }
 
   @override
@@ -924,7 +924,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1가 $arg2로 업데이트되었을 수 있습니다.';
+    return '가 로 업데이트되었을 수 있습니다.';
   }
 
   @override
@@ -976,7 +976,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return '\"$arg1\"에 사용할 일치 그룹';
+    return '\\\"\\\"에 사용할 일치 그룹';
   }
 
   @override
@@ -1047,7 +1047,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return '$arg1 다운로드 중';
+    return ' 다운로드 중';
   }
 
   @override
@@ -1064,7 +1064,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return '$arg1 선택';
+    return ' 선택';
   }
 
   @override
@@ -1149,7 +1149,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return '\"$arg1\" 드롭다운을 사용하여 소스의 자체 호스팅/사용자 정의 인스턴스에 도달할 수 있습니다.';
+    return '\\\"\\\" 드롭다운을 사용하여 소스의 자체 호스팅/사용자 정의 인스턴스에 도달할 수 있습니다.';
   }
 
   @override
@@ -1203,7 +1203,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String fileDeletionError(String arg1) {
-    return '파일을 삭제하지 못했습니다(수동으로 삭제한 후 다시 시도하세요): \"$arg1\"';
+    return '파일을 삭제하지 못했습니다(수동으로 삭제한 후 다시 시도하세요): \\\"\\\"';
   }
 
   @override
@@ -1227,7 +1227,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Google은 2026/2027에서 시작하여 \"certified\" Android 기기의 모든 앱은 Google에 직접 개인 식별 정보를 제출하기 위해 개발자가 필요합니다.\n\n그 후, Updatium은 인증 된 Android 장치에서 작동을 중지 할 수 있습니다.';
+      'Google은 2026/2027에서 시작하여 \\\"certified\\\" Android 기기의 모든 앱은 Google에 직접 개인 식별 정보를 제출하기 위해 개발자가 필요합니다.\\n\\n그 후, Updatium은 인증 된 Android 장치에서 작동을 중지 할 수 있습니다.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1235,7 +1235,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      '이 웹 사이트는 애플 리케이션에 전념. 우리는 정품 앱과 게임을 제공 할 목적으로이 사이트를 만들었습니다. 4AppsApk 최고의 안드로이드 애플 리케이션을위한 무료 APK 파일 다운로드 서비스, 계략.\n\n어떤 경우, Google의 이동은 개인을위한 무료, 범용 컴퓨팅의 끝으로 중요한 단계입니다.\n\nGrapheneOS와 같은 비 인증 된 OSes는 존재하지 않아야합니다.';
+      '이 웹 사이트는 애플 리케이션에 전념. 우리는 정품 앱과 게임을 제공 할 목적으로이 사이트를 만들었습니다. 4AppsApk 최고의 안드로이드 애플 리케이션을위한 무료 APK 파일 다운로드 서비스, 계략.\\n\\n어떤 경우, Google의 이동은 개인을위한 무료, 범용 컴퓨팅의 끝으로 중요한 단계입니다.\\n\\nGrapheneOS와 같은 비 인증 된 OSes는 존재하지 않아야합니다.';
 
   @override
   String get multipleSigners => '다수 Signers';
@@ -1254,7 +1254,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      '이 애플리케이션은 외부 애플리케이션을 배포, 호스팅 또는 검증하지 않습니다. 사용자는 이 도구를 통해 설치된 모든 소프트웨어의 안전성과 합법성에 대한 전적인 책임을 집니다.\n\nhttps://github.com/omeritzics/Updatium은 Updatium을 다운로드하는 유일한 공식 장소입니다 - 비공식 소스에서 다운로드하는 것은 안전하지 않으므로 다른 곳에서 다운로드하는 것은 강력히 권장되지 않습니다.';
+      '이 애플리케이션은 외부 애플리케이션을 배포, 호스팅 또는 검증하지 않습니다. 사용자는 이 도구를 통해 설치된 모든 소프트웨어의 안전성과 합법성에 대한 전적인 책임을 집니다.\\n\\nhttps://github.com/omeritzics/Updatium은 Updatium을 다운로드하는 유일한 공식 장소입니다 - 비공식 소스에서 다운로드하는 것은 안전하지 않으므로 다른 곳에서 다운로드하는 것은 강력히 권장되지 않습니다.';
 
   @override
   String get privacy => '개인정보 보호';
@@ -1282,36 +1282,37 @@ class AppLocalizationsKo extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'APK 링크 해시';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
-  String get gHReqPrefix => 'GitHub 요청을 위한 \'sky22333/hubproxy\' 인스턴스';
+  String get gHReqPrefix =>
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => '계속';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return '앱';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count분';
+    return '분';
   }
 
   @override
   String hour(int count) {
-    return '$count시간';
+    return '시간';
   }
 
   @override
   String day(int count) {
-    return '$count일';
+    return '일';
   }
 }

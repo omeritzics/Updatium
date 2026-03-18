@@ -1,6 +1,6 @@
 {
   "@@locale": "eo",
-  "invalidURLForSource": "Nevalida apo-URL {}",
+  "invalidURLForSource": "Nevalida apo-URL ",
   "noReleaseFound": "Ne eblas trovi taŭgan eldonon",
   "noVersionFound": "Ne eblas determini la eldonversion",
   "urlMatchesNoSource": "La URL ne konformas al konata fonto",
@@ -29,7 +29,7 @@
   "githubStarredRepos": "Stelaj GitHub-deponejoj",
   "uname": "Uzantnomo",
   "wrongArgNum": "Malĝusta nombro da provizitaj argumentoj",
-  "xIsTrackOnly": "{} estas nur sekvitaj",
+  "xIsTrackOnly": " estas nur sekvitaj",
   "source": "Fonto",
   "app": "Apo",
   "appsFromSourceAreTrackOnly": "Apoj el tiu fonto estas 'Nur sekvitaj'.",
@@ -44,7 +44,7 @@
   "add": "Aldoni",
   "searchSomeSourcesLabel": "Serĉi (nur kelkaj fontoj)",
   "search": "Serĉi",
-  "additionalOptsFor": "Kromaj opcioj por {}",
+  "additionalOptsFor": "Kromaj opcioj por ",
   "supportedSources": "Taskiĝata fontoj",
   "trackOnlyInBrackets": "(Nur sekvita)",
   "searchableInBrackets": "(Serĉebla)",
@@ -52,24 +52,24 @@
   "noApps": "Neniu apo",
   "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
   "noAppsForFilter": "Neniu apo por filtri",
-  "byX": "Laŭ {}",
-  "percentProgress": "Progreso: {}%",
+  "byX": "Laŭ ",
+  "percentProgress": "Progreso: %",
   "pleaseWait": "Bonvolu atendi",
   "updateAvailable": "Havebla ĝisdatigo",
   "notInstalled": "Neinstalita",
   "pseudoVersion": "Pseŭdoversio",
   "selectAll": "Selekti ĉion",
-  "deselectX": "Malselekti {}",
-  "xWillBeRemovedButRemainInstalled": "{} estas farigota de Updatium sed restos instalata en la disponaĵo.",
+  "deselectX": "Malselekti ",
+  "xWillBeRemovedButRemainInstalled": " estas farigota de Updatium sed restos instalata en la disponaĵo.",
   "removeSelectedAppsQuestion": "Farigi la selektitajn apojn?",
   "removeSelectedApps": "Farigi la selektitajn apojn",
-  "updateX": "Ĝisdatigi {}",
-  "installX": "Instali {}",
-  "markXTrackOnlyAsUpdated": "Marki {}\\n(Nur sekvita)\\nkiel ĝisdata",
-  "changeX": "Ŝanĝi {}",
+  "updateX": "Ĝisdatigi ",
+  "installX": "Instali ",
+  "markXTrackOnlyAsUpdated": "Marki \\n(Nur sekvita)\\nkiel ĝisdata",
+  "changeX": "Ŝanĝi ",
   "installUpdateApps": "Instali/ĝisdatigi apojn",
   "installUpdateSelectedApps": "Instali/ĝisdatigi la selektitajn apojn",
-  "markXSelectedAppsAsUpdated": "Marki la {} selektitajn apojn kiel ĝisdataj?",
+  "markXSelectedAppsAsUpdated": "Marki la  selektitajn apojn kiel ĝisdataj?",
   "no": "Ne",
   "yes": "Jes",
   "markSelectedAppsUpdated": "Marki la selektitajn apojn kiel ĝisdataj",
@@ -92,25 +92,25 @@
   "nonInstalledApps": "Neinstalita apoj",
   "importExport": "Importi/Eksporti",
   "settings": "Agordoj",
-  "exportedTo": "Eksportita en {}",
+  "exportedTo": "Eksportita en ",
   "updatiumExport": "Eksporti Updatium-n",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Nevalida enigo",
-  "importedX": "Importita {}",
+  "importedX": "Importita ",
   "updatiumImport": "Importi Updatium-n",
   "importFromURLList": "Eksporti el URL-listo",
   "searchQuery": "Informmendo de serĉo",
   "appURLList": "Listo de URLj de la apo",
   "line": "Horizontalo",
-  "searchX": "Serĉi {}",
+  "searchX": "Serĉi ",
   "noResults": "Neniu rezulto",
-  "importX": "Importi {}",
+  "importX": "Importi ",
   "importedAppsIdDisclaimer": "La importitaj apoj povas montriĝi malĝuste kiel \\\"Neinstalitaj\\\".\\nPor solvi tion, reinstalu ilin per Updatium.\\nTiu ne afekcios la apodatumoj.\\n\\nAkefcias nur la URL-ajn lak triajn importmetodojn.",
   "importErrors": "Eraroj de importado",
-  "importedXOfYApps": "{} apoj el {} importitaj.",
+  "importedXOfYApps": " apoj el  importitaj.",
   "followingURLsHadErrors": "La sekvantaj URLj havis erarojn:",
   "selectURL": "Selekti URLn",
   "selectURLs": "Selekti URLjn",
@@ -146,25 +146,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "eksporto-updatium",
   "pickAnAPK": "Selektu APKn",
-  "appHasMoreThanOnePackage": "{} havas pli ol unu pakaĵon:",
-  "deviceSupportsXArch": "Via disponaĵo taskiĝas la CPU-arkitekturon {}.",
+  "appHasMoreThanOnePackage": " havas pli ol unu pakaĵon:",
+  "deviceSupportsXArch": "Via disponaĵo taskiĝas la CPU-arkitekturon .",
   "deviceSupportsFollowingArchs": "Via disponaĵo taskiĝas la sekvantajn CPU-arkitekturojn:",
   "warning": "Avertu",
-  "sourceIsXButPackageFromYPrompt": "La apofonto estas '{}' sed la pakaĵo de ĝisdatigo devenas de '{}'. Daŭrigi?",
+  "sourceIsXButPackageFromYPrompt": "La apofonto estas '' sed la pakaĵo de ĝisdatigo devenas de ''. Daŭrigi?",
   "updatesAvailable": "Haveblaj ĝisdatigoj",
   "updatesAvailableNotifDescription": "Sciigas al la uzanto, ke ĝisdatigoj haveblas por unu aŭ pluraj apoj sekvitaj fare de Updatium.",
   "noNewUpdates": "Neniu nova ĝisdatigo.",
-  "xHasAnUpdate": "{} havas ĝisdatigon.",
+  "xHasAnUpdate": " havas ĝisdatigon.",
   "appsUpdated": "Ĝisdataj apoj",
   "appsNotUpdated": "Malsukcesis ĝisdatigi aplikaĵojn",
   "appsUpdatedNotifDescription": "Sciigas al la uzanto, ke ĝisdatigoj de unu aŭ pluraj apoj estas instalitaj fone.",
-  "xWasUpdatedToY": "{} estas ĝidatigita en {}.",
-  "xWasNotUpdatedToY": "Malsukcesas ĝisdatigi de {} en {}.",
+  "xWasUpdatedToY": " estas ĝidatigita en .",
+  "xWasNotUpdatedToY": "Malsukcesas ĝisdatigi de  en .",
   "errorCheckingUpdates": "Eraro serĉante ĝisdatigojn",
   "errorCheckingUpdatesNotifDescription": "Sciigas al la uzanto, kiam la serĉo de fonaj ĝisdatigoj malsukcesas.",
   "appsRemoved": "Forigitaj Apoj",
   "appsRemovedNotifDescription": "Sciigas al la uzanto, ke unu aŭ pluraj apoj estas forigitaj kaŭze de eraroj dum ilia ŝarĝado.",
-  "xWasRemovedDueToErrorY": "{} estas forigita kaŭze de tiu eraro: {}",
+  "xWasRemovedDueToErrorY": " estas forigita kaŭze de tiu eraro: ",
   "completeAppInstallation": "Kompleta instalado de la apo",
   "updatiumMustBeOpenToInstallApps": "Updatium devas esti malfermita por instali apojn",
   "completeAppInstallationNotifDescription": "Petas la uzanton reiri en Updatium por fini la instaladon de apo",
@@ -172,15 +172,15 @@
   "checkingForUpdatesNotifDescription": "Dumtempa sciigo kiu aperas dum la serĉo de ĝisdatigoj",
   "pleaseAllowInstallPerm": "Bonvolu permesi al Updatium instali apojn",
   "trackOnly": "Nur sekvita",
-  "errorWithHttpStatusCode": "Eraro {}",
+  "errorWithHttpStatusCode": "Eraro ",
   "versionCorrectionDisabled": "Versiokorekto malaktivigita (ŝajnas, ke la kromaĵo ne funkcias)",
   "unknown": "Nekonata",
   "none": "Nenio",
   "all": "All",
   "never": "Neniam",
-  "latestVersionX": "Lasta versio: {}",
-  "installedVersionX": "Instalita versio: {}",
-  "lastUpdateCheckX": "Lasta serĉo de ĝisdatigoj: {}",
+  "latestVersionX": "Lasta versio: ",
+  "installedVersionX": "Instalita versio: ",
+  "lastUpdateCheckX": "Lasta serĉo de ĝisdatigoj: ",
   "remove": "Forigi",
   "yesMarkUpdated": "Jes, marki kiel ĝisdata",
   "fdroid": "Oficiala F-Droid",
@@ -197,9 +197,9 @@
   "additionalOptions": "Kromaj opcioj",
   "disableVersionDetection": "Malaktivigi la versiodetekto",
   "noVersionDetectionExplanation": "Tiu opcio devas esti uzata nur por apoj, kie la versiodetekto ne funkcias ĝuste.",
-  "downloadingX": "Elŝutante {}",
-  "downloadX": "Elŝuti {}",
-  "downloadedX": "Elŝutita {}",
+  "downloadingX": "Elŝutante ",
+  "downloadX": "Elŝuti ",
+  "downloadedX": "Elŝutita ",
   "releaseAsset": "Aktiva versio",
   "downloadNotifDescription": "Sciigas al la uzanto pri la progreso de apo-elŝuton",
   "noAPKFound": "Neniu trovita APK",
@@ -243,7 +243,7 @@
   "hideNonInstalledApps": "Hide non-installed apps",
   "gitlabPATLabel": "GitLab persona atingoĵetono",
   "about": "Pri",
-  "requiresCredentialsInSettings": "{} bezonas kromajn informojn (en Agordoj)",
+  "requiresCredentialsInSettings": " bezonas kromajn informojn (en Agordoj)",
   "checkOnStart": "Serĉi ĝisdatigojn starte",
   "safeMode": "Sekura reĝimo",
   "safeModeDescription": "Kaŝi paĝon de Aldoni apo kaj montri Importo/Eksporto anstataŭe",
@@ -263,7 +263,7 @@
   "customLinkFilterRegex": "Filtro de APK-ligilo agordita per regula esprimo (defaŭlte '.apk$')",
   "appsPossiblyUpdated": "Provitaj apoĝisdatigoj",
   "appsPossiblyUpdatedNotifDescription": "Sciigas al la uzanto, ke ĝisdatigoj de unu aŭ pluraj apoj eble estas aplikitaj fone",
-  "xWasPossiblyUpdatedToY": "{} povas esti ĝisdata kiel {}.",
+  "xWasPossiblyUpdatedToY": " povas esti ĝisdata kiel .",
   "enableBackgroundUpdates": "Aktivigi fonajn ĝisdatigojn",
   "backgroundUpdateReqsExplanation": "Fonaj ĝisdatigoj ne eblas por ĉiuj apoj.",
   "backgroundUpdateLimitsExplanation": "La sukceso de fona instalado povas esti nur determinata dum la malfermo de Updatium.",
@@ -279,7 +279,7 @@
   "autoSelectHighestVersionCode": "Aŭtomate selekti la plej ĵusan version de la APK-kodo",
   "versionExtractionRegEx": "Ekstrakti la versioĉenon per regula esprimo",
   "trimVersionString": "Mallongigi la versioĉenon per regula esprimo",
-  "matchGroupToUseForX": "Konformecogrupo uzota por \\\"{}\\\"",
+  "matchGroupToUseForX": "Konformecogrupo uzota por \\\"\\\"",
   "matchGroupToUse": "Grupo de konformeco uzota por la eltiraĵo de la versio per regula esprimo",
   "highlightTouchTargets": "Emfazi malpi evidentajn klavojn",
   "pickExportDir": "Selekti la dosierujon de eksporto",
@@ -302,12 +302,12 @@
   "appsPossiblyUpdatedNotifChannel": "Provitaj apoĝisdatigoj",
   "errorCheckingUpdatesNotifChannel": "Eraro serĉante ĝisdatigojn",
   "appsRemovedNotifChannel": "Forigitaj aplikaĵoj",
-  "downloadingXNotifChannel": "Elŝutante {}",
+  "downloadingXNotifChannel": "Elŝutante ",
   "completeAppInstallationNotifChannel": "Kompleta apo instalado",
   "checkingForUpdatesNotifChannel": "Serĉante ĝisdatigojn",
   "onlyCheckInstalledOrTrackOnlyApps": "Nur serĉi la ĝisdatigojn de instalitaj kaj 'nur sekvitaj' apoj",
   "supportFixedAPKURL": "Taskiĝo de la fiksaj APK URLj",
-  "selectX": "Selekti {}",
+  "selectX": "Selekti ",
   "parallelDownloads": "Permesi dumajn elŝutojn",
   "useShizuku": "Uzi Shizuku aŭ Sui por instali",
   "shizukuBinderNotFound": "La servo Shizuku estas netrovebla",
@@ -327,7 +327,7 @@
   "latest": "Lasta versio",
   "invertRegEx": "Inversigi la regula esprimo",
   "note": "Noto",
-  "selfHostedNote": "La malvolvanta listo \\\"{}\\\" povas esti uzata por aliri al memgastigataj/agordata instancoj el ajna fonto.",
+  "selfHostedNote": "La malvolvanta listo \\\"\\\" povas esti uzata por aliri al memgastigataj/agordata instancoj el ajna fonto.",
   "badDownload": "La APK ne povis esti analizita (neakordigebla aŭ nekompleta elŝuto)",
   "beforeNewInstallsShareToAppVerifier": "Diskonigi novajn aplikaĵojn kun AppVerifier (se havebla)",
   "appVerifierInstructionToast": "Diskonigu kun AppVerifier, poste revenu ĉi tie kiam preta.",
@@ -345,7 +345,7 @@
   "welcome": "Welcome",
   "documentationLinksNote": "The Updatium GitHub page linked below contains links to videos, articles, discussions, and other resources that will help you understand how to use the app.",
   "batteryOptimizationNote": "Note that background downloads may work more reliably if you disable OS battery optimizations for Updatium.",
-  "fileDeletionError": "Failed to delete file (try deleting it manually then try again): \\\"{}\\\"",
+  "fileDeletionError": "Failed to delete file (try deleting it manually then try again): \\\"\\\"",
   "foregroundService": "Updatium foreground service",
   "foregroundServiceExplanation": "Use a foreground service for update checking (more reliable, consumes more power)",
   "fgServiceNotice": "This notification is required for background update checking (it can be hidden in the OS settings)",
@@ -373,8 +373,8 @@
   "apps": "Apoj",
   "@apps": {
     "plural": {
-      "one": "{} Apo",
-      "other": "{} Apoj"
+      "one": "{count} Apo",
+      "other": "{count} Apoj"
     },
     "placeholders": {
       "count": {
@@ -385,8 +385,8 @@
   "apk": "APK",
   "@apk": {
     "plural": {
-      "one": "{} APK",
-      "other": "{} APKj"
+      "one": "{count} APK",
+      "other": "{count} APKj"
     },
     "placeholders": {
       "count": {
@@ -394,11 +394,11 @@
       }
     }
   },
-  "minute": "{} minutoj",
+  "minute": "minutoj",
   "@minute": {
     "plural": {
-      "one": "{} minuto",
-      "other": "{} minutoj"
+      "one": "{count} minuto",
+      "other": "{count} minutoj"
     },
     "placeholders": {
       "count": {
@@ -406,11 +406,11 @@
       }
     }
   },
-  "hour": "{} horoj",
+  "hour": "horoj",
   "@hour": {
     "plural": {
-      "one": "{} horo",
-      "other": "{} horoj"
+      "one": "{count} horo",
+      "other": "{count} horoj"
     },
     "placeholders": {
       "count": {
@@ -418,11 +418,11 @@
       }
     }
   },
-  "day": "{} tagoj",
+  "day": "tagoj",
   "@day": {
     "plural": {
-      "one": "{} tago",
-      "other": "{} tagoj"
+      "one": "{count} tago",
+      "other": "{count} tagoj"
     },
     "placeholders": {
       "count": {

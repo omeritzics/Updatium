@@ -10,7 +10,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return 'Žádná platná adresa URL aplikace $arg1';
+    return 'Žádná platná adresa URL aplikace ';
   }
 
   @override
@@ -102,7 +102,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1 je určeno pouze pro sledování';
+    return ' je určeno pouze pro sledování';
   }
 
   @override
@@ -151,7 +151,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return 'Další možnosti pro $arg1';
+    return 'Další možnosti pro ';
   }
 
   @override
@@ -178,12 +178,12 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return 'Od $arg1';
+    return 'Od ';
   }
 
   @override
   String percentProgress(String arg1) {
-    return 'Pokrok: $arg1%';
+    return 'Pokrok: %';
   }
 
   @override
@@ -203,12 +203,12 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return 'Zrušit výběr $arg1';
+    return 'Zrušit výběr ';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return 'Aplikace $arg1 bude odstraněna z aplikace Updatium, ale zůstane nainstalována v zařízení.';
+    return 'Aplikace  bude odstraněna z aplikace Updatium, ale zůstane nainstalována v zařízení.';
   }
 
   @override
@@ -219,22 +219,22 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return 'Aktualizovat $arg1';
+    return 'Aktualizovat ';
   }
 
   @override
   String installX(String arg1) {
-    return 'Instalovat $arg1';
+    return 'Instalovat ';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return 'Označit aplikaci $arg1\n(pouze sledování)\njako aktualizovanou';
+    return 'Označit aplikaci \\n(pouze sledování)\\njako aktualizovanou';
   }
 
   @override
   String changeX(String arg1) {
-    return 'Změnit $arg1';
+    return 'Změnit ';
   }
 
   @override
@@ -246,7 +246,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return 'Označit $arg1 vybraných aplikací jako aktuální?';
+    return 'Označit  vybraných aplikací jako aktuální?';
   }
 
   @override
@@ -271,7 +271,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      'Stav instalace vybraných aplikací bude resetován.\n\nTo může být užitečné, pokud je verze aplikace zobrazená v aplikaci Updatium nesprávná z důvodu neúspěšných aktualizací nebo jiných problémů.';
+      'Stav instalace vybraných aplikací bude resetován.\\n\\nTo může být užitečné, pokud je verze aplikace zobrazená v aplikaci Updatium nesprávná z důvodu neúspěšných aktualizací nebo jiných problémů.';
 
   @override
   String get customLinkMessage =>
@@ -322,7 +322,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return 'Exportováno do $arg1';
+    return 'Exportováno do ';
   }
 
   @override
@@ -345,7 +345,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return 'Importováno $arg1';
+    return 'Importováno ';
   }
 
   @override
@@ -365,7 +365,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return 'Vyhledávání $arg1';
+    return 'Vyhledávání ';
   }
 
   @override
@@ -373,19 +373,19 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return 'Importovat $arg1';
+    return 'Importovat ';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      'Importované aplikace mohou být nesprávně zobrazeny jako „nenainstalované“.\nChcete-li to opravit, nainstalujte je znovu prostřednictvím aplikace Updatium.\nNemá vliv na data aplikací.\n\nOvlivňuje pouze způsoby importu URL a třetích stran.';
+      'Importované aplikace mohou být nesprávně zobrazeny jako „nenainstalované“.\\nChcete-li to opravit, nainstalujte je znovu prostřednictvím aplikace Updatium.\\nNemá vliv na data aplikací.\\n\\nOvlivňuje pouze způsoby importu URL a třetích stran.';
 
   @override
   String get importErrors => 'Chyba importu';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return 'Importováno $arg1 z $arg2 aplikací.';
+    return 'Importováno  z  aplikací.';
   }
 
   @override
@@ -502,12 +502,12 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1 má více než jeden balíček:';
+    return ' má více než jeden balíček:';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return 'Vaše zařízení podporuje architekturu CPU $arg1.';
+    return 'Vaše zařízení podporuje architekturu CPU .';
   }
 
   @override
@@ -519,7 +519,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return 'Zdroj aplikace je „$arg1“, ale balíček pro vydání pochází z „$arg2“. Pokračovat?';
+    return 'Zdroj aplikace je „“, ale balíček pro vydání pochází z „“. Pokračovat?';
   }
 
   @override
@@ -534,7 +534,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1 má aktualizaci.';
+    return ' má aktualizaci.';
   }
 
   @override
@@ -549,12 +549,12 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return 'Aplikace $arg1 byla aktualizována na $arg2.';
+    return 'Aplikace  byla aktualizována na .';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return 'Nepodařilo se aktualizovat $arg1 na $arg2.';
+    return 'Nepodařilo se aktualizovat  na .';
   }
 
   @override
@@ -573,7 +573,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '$arg1 byla odstraněna z důvodu následující chyby: $arg2';
+    return ' byla odstraněna z důvodu následující chyby: ';
   }
 
   @override
@@ -603,7 +603,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return 'Chyba $arg1';
+    return 'Chyba ';
   }
 
   @override
@@ -624,17 +624,17 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return 'Nejnovější verze: $arg1';
+    return 'Nejnovější verze: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return 'Nainstalovaná verze: $arg1';
+    return 'Nainstalovaná verze: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return 'Poslední kontrola aktualizací: $arg1';
+    return 'Poslední kontrola aktualizací: ';
   }
 
   @override
@@ -735,17 +735,17 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return 'Stáhnout $arg1';
+    return 'Stáhnout ';
   }
 
   @override
   String downloadX(String arg1) {
-    return 'Stáhnout $arg1';
+    return 'Stáhnout ';
   }
 
   @override
   String downloadedX(String arg1) {
-    return 'Staženo $arg1';
+    return 'Staženo ';
   }
 
   @override
@@ -890,7 +890,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1 vyžaduje další pověření (v nastavení)';
+    return ' vyžaduje další pověření (v nastavení)';
   }
 
   @override
@@ -963,7 +963,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1 mohlo být aktualizováno na $arg2.';
+    return ' mohlo být aktualizováno na .';
   }
 
   @override
@@ -1020,7 +1020,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return 'Shoda se skupinou k použití pro „$arg1“';
+    return 'Shoda se skupinou k použití pro „“';
   }
 
   @override
@@ -1097,7 +1097,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return 'Stáhnout $arg1';
+    return 'Stáhnout ';
   }
 
   @override
@@ -1117,7 +1117,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return 'Vybrat $arg1';
+    return 'Vybrat ';
   }
 
   @override
@@ -1204,7 +1204,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return 'Rozbalovací seznam „$arg1“ lze použít pro přístup k vlastním instancím libovolného zdroje.';
+    return 'Rozbalovací seznam „“ lze použít pro přístup k vlastním instancím libovolného zdroje.';
   }
 
   @override
@@ -1261,7 +1261,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String fileDeletionError(String arg1) {
-    return 'Soubor se nepodařilo odstranit (zkuste jej odstranit ručně a akci opakujte): „$arg1“';
+    return 'Soubor se nepodařilo odstranit (zkuste jej odstranit ručně a akci opakujte): „“';
   }
 
   @override
@@ -1286,7 +1286,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Společnost Google oznámila, že počínaje rokem 2026 / 2027 budou všechny aplikace na \"certifikovaných\" zařízeních pro Android vyžadovat, aby vývojář předložil osobní údaje o identitě přímo společnosti Google.\n\nPo této době, Updatium může přestat pracovat na certifikovaných Android zařízeních.';
+      'Společnost Google oznámila, že počínaje rokem 2026 / 2027 budou všechny aplikace na \\\"certifikovaných\\\" zařízeních pro Android vyžadovat, aby vývojář předložil osobní údaje o identitě přímo společnosti Google.\\n\\nPo této době, Updatium může přestat pracovat na certifikovaných Android zařízeních.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1294,7 +1294,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      'Všimněte si, že v krátkodobém horizontu může být i nadále možné instalovat \"neověřené\" (nevyhovující) aplikace prostřednictvím procesu \"pokročilého toku\", který Google slíbil implementovat po širokém odporu k jejich oznámení, ale neupřesnili, jak by to mělo fungovat, takže není jasné, zda bude skutečně zachovávat uživatelskou svobodu jakýmkoli praktickým způsobem.\n\nV každém případě je krok společnosti Google významným krokem ke konci volného, všeobecného výpočetní techniky pro jednotlivce.\n\nNecertifikované Osy, jako je GrapheneOS, by tím neměly být ovlivněny, pokud budou nadále existovat.';
+      'Všimněte si, že v krátkodobém horizontu může být i nadále možné instalovat \\\"neověřené\\\" (nevyhovující) aplikace prostřednictvím procesu \\\"pokročilého toku\\\", který Google slíbil implementovat po širokém odporu k jejich oznámení, ale neupřesnili, jak by to mělo fungovat, takže není jasné, zda bude skutečně zachovávat uživatelskou svobodu jakýmkoli praktickým způsobem.\\n\\nV každém případě je krok společnosti Google významným krokem ke konci volného, všeobecného výpočetní techniky pro jednotlivce.\\n\\nNecertifikované Osy, jako je GrapheneOS, by tím neměly být ovlivněny, pokud budou nadále existovat.';
 
   @override
   String get multipleSigners => 'Několik signers';
@@ -1315,7 +1315,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      'Tato aplikace nedistribuuje, nehostuje ani neověřuje žádné externí aplikace. Uživatel nese plnou odpovědnost za bezpečnost a legality jakéhokoli softwaru instalovaného prostřednictvím tohoto nástroje.\n\nhttps://github.com/omeritzics/Updatium je jediné oficiální místo pro stažení Updatia - důrazně se nedoporučuje stahovat jej z jiných míst, protože stahování z neoficiálních zdrojů není bezpečné.';
+      'Tato aplikace nedistribuuje, nehostuje ani neověřuje žádné externí aplikace. Uživatel nese plnou odpovědnost za bezpečnost a legality jakéhokoli softwaru instalovaného prostřednictvím tohoto nástroje.\\n\\nhttps://github.com/omeritzics/Updatium je jediné oficiální místo pro stažení Updatia - důrazně se nedoporučuje stahovat jej z jiných míst, protože stahování z neoficiálních zdrojů není bezpečné.';
 
   @override
   String get privacy => 'Soukromí';
@@ -1344,37 +1344,37 @@ class AppLocalizationsCs extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'Odkaz APK Hash';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
   String get gHReqPrefix =>
-      'instance \'sky22333/hubproxy\' pro požadavky GitHubu';
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => 'Pokračovat';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return 'Aplikace';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return 'minut';
   }
 
   @override
   String hour(int count) {
-    return '$count hours';
+    return 'hodin';
   }
 
   @override
   String day(int count) {
-    return '$count days';
+    return 'dní';
   }
 }

@@ -1,6 +1,6 @@
 {
   "@@locale": "hu",
-  "invalidURLForSource": "Érvénytelen a(z) {} alkalmazás webcíme",
+  "invalidURLForSource": "Érvénytelen a(z)  alkalmazás webcíme",
   "noReleaseFound": "Nem található megfelelő kiadás",
   "noVersionFound": "Nem sikerült meghatározni a kiadás verzióját",
   "urlMatchesNoSource": "A webcím nem egyezik egyetlen ismert forrással sem",
@@ -29,7 +29,7 @@
   "githubStarredRepos": "Csillagozott GitHub-tárolók",
   "uname": "Felhasználónév",
   "wrongArgNum": "A megadott argumentumok száma nem megfelelő",
-  "xIsTrackOnly": "A(z) {} csak nyomon követhető",
+  "xIsTrackOnly": "A(z)  csak nyomon követhető",
   "source": "Forrás",
   "app": "Alkalmazás",
   "appsFromSourceAreTrackOnly": "Az ebből a forrásból származó alkalmazások „csak nyomon követhetők”.",
@@ -44,7 +44,7 @@
   "add": "Hozzáadás",
   "searchSomeSourcesLabel": "Keresés (csak bizonyos források)",
   "search": "Keresés",
-  "additionalOptsFor": "További lehetőségek a következőhöz: {}",
+  "additionalOptsFor": "További lehetőségek a következőhöz: ",
   "supportedSources": "Támogatott források",
   "trackOnlyInBrackets": "(Csak nyomon követés)",
   "searchableInBrackets": "(Kereshető)",
@@ -52,24 +52,24 @@
   "noApps": "Üdvözlünk!",
   "noAppsSubtext": "Az első alkalmazás hozzáadásához koppintson alul a 'Hozzáadás' gombra.",
   "noAppsForFilter": "Nincsenek alkalmazások a szűrőhöz",
-  "byX": "Fejlesztő: {}",
-  "percentProgress": "Folyamat: {}%",
+  "byX": "Fejlesztő: ",
+  "percentProgress": "Folyamat: %",
   "pleaseWait": "Kis türelmet",
   "updateAvailable": "Frissítés érhető el",
   "notInstalled": "Nem telepített",
   "pseudoVersion": "pszeudoverzió",
   "selectAll": "Összes kiválasztása",
-  "deselectX": "A(z) {} kiválasztásának elvetése",
-  "xWillBeRemovedButRemainInstalled": "A(z) {} el lesz távolítva az Updatiumból, de továbbra is telepítve marad az eszközön.",
+  "deselectX": "A(z)  kiválasztásának elvetése",
+  "xWillBeRemovedButRemainInstalled": "A(z)  el lesz távolítva az Updatiumból, de továbbra is telepítve marad az eszközön.",
   "removeSelectedAppsQuestion": "Biztosan eltávolítja a kiválasztott alkalmazásokat?",
   "removeSelectedApps": "Kiválasztott alkalmazások eltávolítása",
-  "updateX": "{} frissítése",
-  "installX": "{} telepítése",
-  "markXTrackOnlyAsUpdated": "Megjelölés: {}\\n(Csak nyomon követés)\\nFrissítettként",
-  "changeX": "{}-változás",
+  "updateX": " frissítése",
+  "installX": " telepítése",
+  "markXTrackOnlyAsUpdated": "Megjelölés: \\n(Csak nyomon követés)\\nFrissítettként",
+  "changeX": "-változás",
   "installUpdateApps": "Alkalmazások telepítése/frissítése",
   "installUpdateSelectedApps": "Kiválasztott alkalmazások telepítése/frissítése",
-  "markXSelectedAppsAsUpdated": "Biztosan megjelöli a(z) {} kiválasztott alkalmazást frissítettként?",
+  "markXSelectedAppsAsUpdated": "Biztosan megjelöli a(z)  kiválasztott alkalmazást frissítettként?",
   "no": "Nem",
   "yes": "Igen",
   "markSelectedAppsUpdated": "Kiválasztott alkalmazások megjelölése frissítettként",
@@ -92,25 +92,25 @@
   "nonInstalledApps": "Nem telepített alkalmazások",
   "importExport": "Adatmozgatás",
   "settings": "Beállítások",
-  "exportedTo": "Exportálva ide: {}",
+  "exportedTo": "Exportálva ide: ",
   "updatiumExport": "Updatium-adatok exportálása",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Hibás bemenet",
-  "importedX": "Importálva innen: {}",
+  "importedX": "Importálva innen: ",
   "updatiumImport": "Updatium-adatok importálása",
   "importFromURLList": "Importálás webcímlistából",
   "searchQuery": "Keresési lekérdezés",
   "appURLList": "Alkalmazás-webcímlista",
   "line": "Sor",
-  "searchX": "{} keresése",
+  "searchX": " keresése",
   "noResults": "Nincs találat",
-  "importX": "{} importálása",
+  "importX": " importálása",
   "importedAppsIdDisclaimer": "Előfordulhat, hogy az importált alkalmazások helytelenül „Nincs telepítve” jelzéssel jelennek meg.\\nA probléma megoldásához telepítse újra őket az Updatiumon keresztül.\\nEz nem érinti az alkalmazásadatokat.\\n\\nCsak a webcímekre és a harmadik féltől származó importálási módszerekre vonatkozik.",
   "importErrors": "Importálási hibák",
-  "importedXOfYApps": "{}/{} alkalmazás importálva.",
+  "importedXOfYApps": "/ alkalmazás importálva.",
   "followingURLsHadErrors": "A következő webcímek hibákat tartalmaztak:",
   "selectURL": "Webcím kiválasztása",
   "selectURLs": "Webcímek kiválasztása",
@@ -146,25 +146,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "updatium-adat",
   "pickAnAPK": "Válasszon ki egy APK-t",
-  "appHasMoreThanOnePackage": "A(z) {} egynél több csomaggal rendelkezik:",
-  "deviceSupportsXArch": "Ez az eszköz támogatja a(z) {} CPU-architektúrát.",
+  "appHasMoreThanOnePackage": "A(z)  egynél több csomaggal rendelkezik:",
+  "deviceSupportsXArch": "Ez az eszköz támogatja a(z)  CPU-architektúrát.",
   "deviceSupportsFollowingArchs": "Ez az eszköz a következő CPU-architektúrákat támogatja:",
   "warning": "Figyelem",
-  "sourceIsXButPackageFromYPrompt": "Az alkalmazás forrása a(z) „{}-tároló”, de a kiadási csomag innen származik: „{}”. Biztosan folytatja?",
+  "sourceIsXButPackageFromYPrompt": "Az alkalmazás forrása a(z) „-tároló”, de a kiadási csomag innen származik: „”. Biztosan folytatja?",
   "updatesAvailable": "Frissítések érhetők el",
   "updatesAvailableNotifDescription": "Értesíti a felhasználót, hogy egy vagy több, az Updatium által nyomon követett alkalmazáshoz frissítések állnak rendelkezésre",
   "noNewUpdates": "Nincsenek új frissítések.",
-  "xHasAnUpdate": "A(z) {} frissítést kapott.",
+  "xHasAnUpdate": "A(z)  frissítést kapott.",
   "appsUpdated": "Alkalmazások frissítve",
   "appsNotUpdated": "Nem sikerült frissíteni az alkalmazásokat",
   "appsUpdatedNotifDescription": "Értesíti a felhasználót, hogy egy vagy több alkalmazás frissítése a háttérben történt.",
-  "xWasUpdatedToY": "A(z) {} frissítve lett a következőre: {}.",
-  "xWasNotUpdatedToY": "Nem sikerült frissíteni a következőt: {}, erre: {}.",
+  "xWasUpdatedToY": "A(z)  frissítve lett a következőre: .",
+  "xWasNotUpdatedToY": "Nem sikerült frissíteni a következőt: , erre: .",
   "errorCheckingUpdates": "Hiba a frissítések ellenőrzésekor",
   "errorCheckingUpdatesNotifDescription": "Értesítés, amely akkor jelenik meg, amikor a frissítések ellenőrzése a háttérben nem sikerül",
   "appsRemoved": "Alkalmazások eltávolítva",
   "appsRemovedNotifDescription": "Értesíti a felhasználót, hogy egy vagy több alkalmazás egy betöltés közbeni hiba miatt el lesz(nek) távolítva",
-  "xWasRemovedDueToErrorY": "A(z) {} el lett távolítva a következő hiba miatt: {}",
+  "xWasRemovedDueToErrorY": "A(z)  el lett távolítva a következő hiba miatt: ",
   "completeAppInstallation": "Teljes alkalmazástelepítés",
   "updatiumMustBeOpenToInstallApps": "Az alkalmazások telepítéséhez az Updatiumnak megnyitva kell lennie",
   "completeAppInstallationNotifDescription": "Megkéri a felhasználót, hogy térjen vissza az Updatiumhoz, hogy befejezze az alkalmazás telepítését",
@@ -172,15 +172,15 @@
   "checkingForUpdatesNotifDescription": "Átmeneti értesítés, amely a frissítések ellenőrzésekor jelenik meg",
   "pleaseAllowInstallPerm": "Engedélyezze az Updatiumnak az alkalmazások telepítését",
   "trackOnly": "Csak nyomon követés",
-  "errorWithHttpStatusCode": "Hiba {}",
+  "errorWithHttpStatusCode": "Hiba ",
   "versionCorrectionDisabled": "Verziókorrekció letiltva (úgy tűnik, hogy a bővítmény nem működik)",
   "unknown": "Ismeretlen",
   "none": "Semmi",
   "all": "Összes",
   "never": "Soha",
-  "latestVersionX": "Legújabb verzió: {}",
-  "installedVersionX": "Telepített verzió: {}",
-  "lastUpdateCheckX": "Frissítések utoljára ellenőrizve: {}",
+  "latestVersionX": "Legújabb verzió: ",
+  "installedVersionX": "Telepített verzió: ",
+  "lastUpdateCheckX": "Frissítések utoljára ellenőrizve: ",
   "remove": "Eltávolítás",
   "yesMarkUpdated": "Igen, megjelölés frissítettként",
   "fdroid": "F-Droid hivatalos",
@@ -197,9 +197,9 @@
   "additionalOptions": "További beállítások",
   "disableVersionDetection": "Verziófelismerés letiltása",
   "noVersionDetectionExplanation": "Ezt a beállítást csak olyan alkalmazásoknál szabad használni, ahol a verziófelismerés nem működik megfelelően.",
-  "downloadingX": "{} letöltése",
-  "downloadX": "{} letöltése",
-  "downloadedX": "{} letöltve",
+  "downloadingX": " letöltése",
+  "downloadX": " letöltése",
+  "downloadedX": " letöltve",
   "releaseAsset": "Kiadási csomag",
   "downloadNotifDescription": "Értesíti a felhasználót az alkalmazás letöltésének előrehaladásáról",
   "noAPKFound": "Nem található APK",
@@ -243,7 +243,7 @@
   "hideNonInstalledApps": "Nem telepített alkalmazások elrejtése",
   "gitlabPATLabel": "GitLab személyes hozzáférési token",
   "about": "Névjegy",
-  "requiresCredentialsInSettings": "A(z) {} alkalmazásnak további hitelesítő adatokra van szüksége (a beállításokban)",
+  "requiresCredentialsInSettings": "A(z)  alkalmazásnak további hitelesítő adatokra van szüksége (a beállításokban)",
   "checkOnStart": "Frissítések ellenőrzése az alkalmazás megnyitásakor",
   "safeMode": "Biztonságos mód",
   "safeModeDescription": "Alkalmazás hozzáadása oldal elrejtése és Import/Export megjelenítése helyette",
@@ -263,7 +263,7 @@
   "customLinkFilterRegex": "Egyéni APK-hivatkozásszűrő reguláris kifejezéssel (Alapértelmezett „.apk$”)",
   "appsPossiblyUpdated": "Megkísérelt alkalmazás-frissítések",
   "appsPossiblyUpdatedNotifDescription": "Értesíti a felhasználót, hogy egy vagy több alkalmazás frissítése lehetséges a háttérben",
-  "xWasPossiblyUpdatedToY": "A(z) {} frissülhetett a következőre: {}.",
+  "xWasPossiblyUpdatedToY": "A(z)  frissülhetett a következőre: .",
   "enableBackgroundUpdates": "Háttérfrissítések engedélyezése",
   "backgroundUpdateReqsExplanation": "Előfordulhat, hogy nem minden alkalmazásnál lehetséges a háttérbeli frissítés.",
   "backgroundUpdateLimitsExplanation": "A háttérben történő telepítés sikeressége csak az Updatium megnyitásakor állapítható meg.",
@@ -279,7 +279,7 @@
   "autoSelectHighestVersionCode": "Legmagasabb verziókódú APK automatikus kiválasztása",
   "versionExtractionRegEx": "Verzió-karakterlánc kivonatolása reguláris kifejezéssel",
   "trimVersionString": "Verzió-karakterlánc levágása reguláris kifejezéssel",
-  "matchGroupToUseForX": "A(z) „{}” esetén használandó csoport egyeztetése",
+  "matchGroupToUseForX": "A(z) „” esetén használandó csoport egyeztetése",
   "matchGroupToUse": "Verzió-karakterlánc kivonatolásához használandó csoport reguláris kifejezéssel való egyeztetése",
   "highlightTouchTargets": "Kevésbé egyértelmű érintési pontok kiemelése",
   "pickExportDir": "Válassza ki a könyvtárat, ahová exportálni szeretne",
@@ -302,12 +302,12 @@
   "appsPossiblyUpdatedNotifChannel": "Megkísérelt alkalmazás-frissítések",
   "errorCheckingUpdatesNotifChannel": "Hiba a frissítések ellenőrzésekor",
   "appsRemovedNotifChannel": "Eltávolított alkalmazások",
-  "downloadingXNotifChannel": "A(z) {} letöltése",
+  "downloadingXNotifChannel": "A(z)  letöltése",
   "completeAppInstallationNotifChannel": "Teljes alkalmazás telepítés",
   "checkingForUpdatesNotifChannel": "Frissítések ellenőrzése",
   "onlyCheckInstalledOrTrackOnlyApps": "Csak a telepített és a csak nyomon követhető alkalmazások frissítéseinek ellenőrzése",
   "supportFixedAPKURL": "Támogatja a rögzített APK-webcímeket",
-  "selectX": "{} kiválasztása",
+  "selectX": " kiválasztása",
   "parallelDownloads": "Párhuzamos letöltések engedélyezése",
   "useShizuku": "Shizuku vagy Sui használata a telepítéshez",
   "shizukuBinderNotFound": "A Shizuku szolgáltatás nem fut",
@@ -327,7 +327,7 @@
   "latest": "Legújabb",
   "invertRegEx": "Reguláris kifejezés invertálása",
   "note": "Megjegyzés",
-  "selfHostedNote": "A(z) „{}” legördülő menü segítségével elérhetővé válnak a bármilyen más forrásból származó saját üzemeltetésű vagy egyéni példányok.",
+  "selfHostedNote": "A(z) „” legördülő menü segítségével elérhetővé válnak a bármilyen más forrásból származó saját üzemeltetésű vagy egyéni példányok.",
   "badDownload": "Az APK-t nem lehetett elemezni (inkompatibilis vagy részleges letöltés)",
   "beforeNewInstallsShareToAppVerifier": "Új alkalmazások megosztása az AppVerifierrel (ha elérhető)",
   "appVerifierInstructionToast": "Ossza meg az AppVerifierrel, majd térjen vissza ide, ha kész.",
@@ -345,7 +345,7 @@
   "welcome": "Üdvözöljük!",
   "documentationLinksNote": "Az alábbi hivatkozás az Updatium GitHub oldalára vezet, amely további videók, cikkek, beszélgetések és egyéb források hivatkozásait tartalmazza, amelyek segítenek megérteni az alkalmazás használatát.",
   "batteryOptimizationNote": "Megjegyzés: A háttérfrissítések megbízhatóbban működhetnek, ha kikapcsolja a rendszer akkumulátor-optimalizálását az Updatium számára.",
-  "fileDeletionError": "Nem sikerült törölni a fájlt (próbálja meg kézzel törölni, majd próbálja meg újra): \\\"{}\\\"",
+  "fileDeletionError": "Nem sikerült törölni a fájlt (próbálja meg kézzel törölni, majd próbálja meg újra): \\\"\\\"",
   "foregroundService": "Updatium előtér-szolgáltatás",
   "foregroundServiceExplanation": "Előtér-szolgáltatás használata a frissítések ellenőrzéséhez (megbízhatóbb, de több energiát fogyaszt)",
   "fgServiceNotice": "Ez az értesítés a háttérben történő frissítésellenőrzéshez szükséges (a rendszer beállításaiban elrejthető).",
@@ -373,8 +373,8 @@
   "apps": "Alkalmazások",
   "@apps": {
     "plural": {
-      "one": "{} alkalmazás",
-      "other": "{} alkalmazás"
+      "one": "{count} alkalmazás",
+      "other": "{count} alkalmazás"
     },
     "placeholders": {
       "count": {
@@ -385,8 +385,8 @@
   "apk": "APK",
   "@apk": {
     "plural": {
-      "one": "{} APK",
-      "other": "{} APK"
+      "one": "{count} APK",
+      "other": "{count} APK"
     },
     "placeholders": {
       "count": {
@@ -394,11 +394,11 @@
       }
     }
   },
-  "minute": "{} perc",
+  "minute": "perc",
   "@minute": {
     "plural": {
-      "one": "{} perc",
-      "other": "{} perc"
+      "one": "{count} perc",
+      "other": "{count} perc"
     },
     "placeholders": {
       "count": {
@@ -406,11 +406,11 @@
       }
     }
   },
-  "hour": "{} óra",
+  "hour": "óra",
   "@hour": {
     "plural": {
-      "one": "{} óra",
-      "other": "{} óra"
+      "one": "{count} óra",
+      "other": "{count} óra"
     },
     "placeholders": {
       "count": {
@@ -418,11 +418,11 @@
       }
     }
   },
-  "day": "{} nap",
+  "day": "nap",
   "@day": {
     "plural": {
-      "one": "{} nap",
-      "other": "{} nap"
+      "one": "{count} nap",
+      "other": "{count} nap"
     },
     "placeholders": {
       "count": {

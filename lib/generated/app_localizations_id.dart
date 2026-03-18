@@ -10,7 +10,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String invalidURLForSource(String arg1) {
-    return 'Bukan URL aplikasi $arg1 yang valid';
+    return 'Bukan URL aplikasi  yang valid';
   }
 
   @override
@@ -103,7 +103,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String xIsTrackOnly(String arg1) {
-    return '$arg1 adalah Pelacakan Saja';
+    return ' adalah Pelacakan Saja';
   }
 
   @override
@@ -152,7 +152,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String additionalOptsFor(String arg1) {
-    return 'Opsi tambahan untuk $arg1';
+    return 'Opsi tambahan untuk ';
   }
 
   @override
@@ -179,12 +179,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String byX(String arg1) {
-    return 'Oleh $arg1';
+    return 'Oleh ';
   }
 
   @override
   String percentProgress(String arg1) {
-    return 'Perkembangan: $arg1%';
+    return 'Perkembangan: %';
   }
 
   @override
@@ -204,12 +204,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String deselectX(String arg1) {
-    return 'Batal pilih $arg1';
+    return 'Batal pilih ';
   }
 
   @override
   String xWillBeRemovedButRemainInstalled(String arg1) {
-    return '$arg1 akan dihapus dari Updatium tetapi tetap terpasang di perangkat.';
+    return ' akan dihapus dari Updatium tetapi tetap terpasang di perangkat.';
   }
 
   @override
@@ -220,22 +220,22 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String updateX(String arg1) {
-    return 'Perbarui $arg1';
+    return 'Perbarui ';
   }
 
   @override
   String installX(String arg1) {
-    return 'Pasang $arg1';
+    return 'Pasang ';
   }
 
   @override
   String markXTrackOnlyAsUpdated(String arg1) {
-    return 'Tandai $arg1\n(Pelacakan Saja)\nsudah diperbarui';
+    return 'Tandai \\n(Pelacakan Saja)\\nsudah diperbarui';
   }
 
   @override
   String changeX(String arg1) {
-    return 'Ubah $arg1';
+    return 'Ubah ';
   }
 
   @override
@@ -246,7 +246,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String markXSelectedAppsAsUpdated(String arg1) {
-    return 'Tandai $arg1 aplikasi terpilih sudah diperbarui?';
+    return 'Tandai  aplikasi terpilih sudah diperbarui?';
   }
 
   @override
@@ -271,7 +271,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get installStatusOfXWillBeResetExplanation =>
-      'Status pemasangan dari aplikasi terpilih akan diatur ulang.\n\nHal ini bisa membantu saat versi aplikasi yang ditampilkan di Updatium salah akibat pembaruan yang gagal atau masalah lainnya.';
+      'Status pemasangan dari aplikasi terpilih akan diatur ulang.\\n\\nHal ini bisa membantu saat versi aplikasi yang ditampilkan di Updatium salah akibat pembaruan yang gagal atau masalah lainnya.';
 
   @override
   String get customLinkMessage =>
@@ -322,7 +322,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String exportedTo(String arg1) {
-    return 'Diekspor ke $arg1';
+    return 'Diekspor ke ';
   }
 
   @override
@@ -345,7 +345,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String importedX(String arg1) {
-    return '$arg1 diimpor';
+    return ' diimpor';
   }
 
   @override
@@ -365,7 +365,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String searchX(String arg1) {
-    return 'Cari $arg1';
+    return 'Cari ';
   }
 
   @override
@@ -373,19 +373,19 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String importX(String arg1) {
-    return 'Impor $arg1';
+    return 'Impor ';
   }
 
   @override
   String get importedAppsIdDisclaimer =>
-      'Aplikasi yang diimpor mungkin secara salah ditampilkan sebagai \"Tidak terpasang\".\nUntuk memperbaikinya, lakukan pemasangan ulang melalui Updatium.\nHal ini seharusnya tidak mempengaruhi data aplikasi.\n\nHanya mempengaruhi metode impor URL dan pihak ketiga.';
+      'Aplikasi yang diimpor mungkin secara salah ditampilkan sebagai \\\"Tidak terpasang\\\".\\nUntuk memperbaikinya, lakukan pemasangan ulang melalui Updatium.\\nHal ini seharusnya tidak mempengaruhi data aplikasi.\\n\\nHanya mempengaruhi metode impor URL dan pihak ketiga.';
 
   @override
   String get importErrors => 'Kesalahan impor';
 
   @override
   String importedXOfYApps(String arg1, String arg2) {
-    return '$arg1 dari $arg2 aplikasi diimpor.';
+    return ' dari  aplikasi diimpor.';
   }
 
   @override
@@ -503,12 +503,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String appHasMoreThanOnePackage(String arg1) {
-    return '$arg1 memiliki lebih dari satu paket:';
+    return ' memiliki lebih dari satu paket:';
   }
 
   @override
   String deviceSupportsXArch(String arg1) {
-    return 'Perangkat Anda mendukung arsitektur CPU $arg1.';
+    return 'Perangkat Anda mendukung arsitektur CPU .';
   }
 
   @override
@@ -520,7 +520,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String sourceIsXButPackageFromYPrompt(String arg1, String arg2) {
-    return 'Sumber aplikasinya adalah \'$arg1\' tetapi paket rilisnya berasal dari \'$arg2\'. Lanjutkan?';
+    return 'Sumber aplikasinya adalah \'\' tetapi paket rilisnya berasal dari \'\'. Lanjutkan?';
   }
 
   @override
@@ -535,7 +535,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String xHasAnUpdate(String arg1) {
-    return '$arg1 memiliki pembaruan.';
+    return ' memiliki pembaruan.';
   }
 
   @override
@@ -550,12 +550,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String xWasUpdatedToY(String arg1, String arg2) {
-    return '$arg1 telah diperbarui ke $arg2.';
+    return ' telah diperbarui ke .';
   }
 
   @override
   String xWasNotUpdatedToY(String arg1, String arg2) {
-    return 'Gagal memperbarui $arg1 ke $arg2.';
+    return 'Gagal memperbarui  ke .';
   }
 
   @override
@@ -574,7 +574,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String xWasRemovedDueToErrorY(String arg1, String arg2) {
-    return '$arg1 dihapus karena kesalahan berikut: $arg2';
+    return ' dihapus karena kesalahan berikut: ';
   }
 
   @override
@@ -604,7 +604,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String errorWithHttpStatusCode(String arg1) {
-    return 'Kesalahan $arg1';
+    return 'Kesalahan ';
   }
 
   @override
@@ -625,17 +625,17 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String latestVersionX(String arg1) {
-    return 'Terbaru: $arg1';
+    return 'Terbaru: ';
   }
 
   @override
   String installedVersionX(String arg1) {
-    return 'Terpasang: $arg1';
+    return 'Terpasang: ';
   }
 
   @override
   String lastUpdateCheckX(String arg1) {
-    return 'Terakhir memeriksa pembaruan: $arg1';
+    return 'Terakhir memeriksa pembaruan: ';
   }
 
   @override
@@ -736,17 +736,17 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String downloadingX(String arg1) {
-    return 'Mengunduh $arg1';
+    return 'Mengunduh ';
   }
 
   @override
   String downloadX(String arg1) {
-    return 'Unduh $arg1';
+    return 'Unduh ';
   }
 
   @override
   String downloadedX(String arg1) {
-    return '$arg1 diunduh';
+    return ' diunduh';
   }
 
   @override
@@ -895,7 +895,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String requiresCredentialsInSettings(String arg1) {
-    return '$arg1 memerlukan kredensial tambahan (dalam pengaturan)';
+    return ' memerlukan kredensial tambahan (dalam pengaturan)';
   }
 
   @override
@@ -969,7 +969,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String xWasPossiblyUpdatedToY(String arg1, String arg2) {
-    return '$arg1 mungkin telah diperbarui ke $arg2.';
+    return ' mungkin telah diperbarui ke .';
   }
 
   @override
@@ -1027,7 +1027,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String matchGroupToUseForX(String arg1) {
-    return 'Cocokkan grup yang akan digunakan untuk \"$arg1\"';
+    return 'Cocokkan grup yang akan digunakan untuk \\\"\\\"';
   }
 
   @override
@@ -1103,7 +1103,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String downloadingXNotifChannel(String arg1) {
-    return 'Mengunduh $arg1';
+    return 'Mengunduh ';
   }
 
   @override
@@ -1122,7 +1122,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String selectX(String arg1) {
-    return 'Pilih $arg1';
+    return 'Pilih ';
   }
 
   @override
@@ -1210,7 +1210,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String selfHostedNote(String arg1) {
-    return 'Dropdown \"$arg1\" bisa digunakan untuk menjangkau instansi yang dihosting sendiri/kustom dari sumber mana pun.';
+    return 'Dropdown \\\"\\\" bisa digunakan untuk menjangkau instansi yang dihosting sendiri/kustom dari sumber mana pun.';
   }
 
   @override
@@ -1267,7 +1267,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String fileDeletionError(String arg1) {
-    return 'Gagal menghapus file (coba hapus secara manual, lalu coba lagi): \"$arg1\"';
+    return 'Gagal menghapus file (coba hapus secara manual, lalu coba lagi): \\\"\\\"';
   }
 
   @override
@@ -1292,7 +1292,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP1 =>
-      'Google has announced that, starting in 2026 / 2027, all apps on \"certified\" Android devices will needs the developer to submit personal identity details directly to Google.\n\nSetelah itu, Updatium mungkin berhenti bekerja pada perangkat Android bersertifikat.';
+      'Google has announced that, starting in 2026 / 2027, all apps on \\\"certified\\\" Android devices will needs the developer to submit personal identity details directly to Google.\\n\\nSetelah itu, Updatium mungkin berhenti bekerja pada perangkat Android bersertifikat.';
 
   @override
   String get googleVerificationWarningP2 =>
@@ -1300,7 +1300,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get googleVerificationWarningP3 =>
-      'Perlu dicatat bahwa dalam jangka pendek, mungkin terus mungkin untuk memasang aplikasi \"belum diverifikasi\" (bukan -compliant) melalui proses \"arus maju\" yang Google janjikan untuk mengimplementasikan setelah reaksi luas terhadap pengumuman mereka, tetapi mereka tidak rinci bagaimana hal ini akan bekerja sehingga tidak jelas apakah itu benar-benar akan menjaga kebebasan pengguna dengan cara praktis.\n\nDalam hal apapun, Google bergerak adalah langkah yang signifikan menuju akhir bebas, tujuan umum komputasi untuk individu.\n\nOS tidak bersertifikat, seperti GrapheneOS, seharusnya tidak terpengaruh oleh hal ini selama mereka diizinkan untuk terus ada.';
+      'Perlu dicatat bahwa dalam jangka pendek, mungkin terus mungkin untuk memasang aplikasi \\\"belum diverifikasi\\\" (bukan -compliant) melalui proses \\\"arus maju\\\" yang Google janjikan untuk mengimplementasikan setelah reaksi luas terhadap pengumuman mereka, tetapi mereka tidak rinci bagaimana hal ini akan bekerja sehingga tidak jelas apakah itu benar-benar akan menjaga kebebasan pengguna dengan cara praktis.\\n\\nDalam hal apapun, Google bergerak adalah langkah yang signifikan menuju akhir bebas, tujuan umum komputasi untuk individu.\\n\\nOS tidak bersertifikat, seperti GrapheneOS, seharusnya tidak terpengaruh oleh hal ini selama mereka diizinkan untuk terus ada.';
 
   @override
   String get multipleSigners => 'Tanda Tangan Ganda';
@@ -1320,7 +1320,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get disclaimerText =>
-      'Aplikasi ini tidak mendistribusikan, menghosting, atau memverifikasi aplikasi eksternal mana pun. Pengguna menanggung tanggung jawab penuh atas keamanan dan legalitas perangkat lunak apa pun yang diinstal melalui alat ini.\n\nhttps://github.com/omeritzics/Updatium adalah satu-satunya tempat resmi untuk mengunduh Updatium - sangat tidak disarankan mengunduhnya dari tempat lain karena mengunduh dari sumber tidak resmi tidak aman.';
+      'Aplikasi ini tidak mendistribusikan, menghosting, atau memverifikasi aplikasi eksternal mana pun. Pengguna menanggung tanggung jawab penuh atas keamanan dan legalitas perangkat lunak apa pun yang diinstal melalui alat ini.\\n\\nhttps://github.com/omeritzics/Updatium adalah satu-satunya tempat resmi untuk mengunduh Updatium - sangat tidak disarankan mengunduhnya dari tempat lain karena mengunduh dari sumber tidak resmi tidak aman.';
 
   @override
   String get privacy => 'Privasi';
@@ -1349,37 +1349,37 @@ class AppLocalizationsId extends AppLocalizations {
   String get githubStarPromptDontShowAgain => 'Don\'t show again';
 
   @override
-  String get aPKLinkHash => 'Hash tautan APK';
+  String get aPKLinkHash => 'APK link hash';
 
   @override
   String get gHReqPrefix =>
-      'Instance \'sky22333/hubproxy\' untuk permintaan GitHub';
+      '\'sky22333/hubproxy\' instance for GitHub requests';
 
   @override
-  String get continueAction => 'Lanjut';
+  String get continueAction => 'Continue';
 
   @override
   String apps(int count) {
-    return '$count Apps';
+    return 'Aplikasi';
   }
 
   @override
   String apk(int count) {
-    return '$count APKs';
+    return 'APK';
   }
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return 'menit';
   }
 
   @override
   String hour(int count) {
-    return '$count hours';
+    return 'jam';
   }
 
   @override
   String day(int count) {
-    return '$count days';
+    return 'hari';
   }
 }
