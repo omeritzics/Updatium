@@ -1157,6 +1157,31 @@ class AppLocalizationsFa extends AppLocalizations {
   String get directAPKLink => 'لینک مستقیم APK';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'نام';
+
+  @override
+  String get sortMethod => 'Sort Method';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload =>
+      'قبل از دانلود، جزئیات برنامه را بازخوانی کنید';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => 'یک نسخه شبه در حال استفاده است';
 
   @override
@@ -1203,10 +1228,6 @@ class AppLocalizationsFa extends AppLocalizations {
   String get useFirstApkOfVersion => 'اولین بار از چندین APK';
 
   @override
-  String get refreshBeforeDownload =>
-      'قبل از دانلود، جزئیات برنامه را بازخوانی کنید';
-
-  @override
   String get tencentAppStore => 'Tencent App Store';
 
   @override
@@ -1216,13 +1237,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get vivoAppStore => 'vivo App Store (CN)';
 
   @override
-  String get name => 'نام';
-
-  @override
   String get smartname => 'Name (Smart)';
-
-  @override
-  String get sortMethod => 'Sort Method';
 
   @override
   String get welcome => 'خوش آمدید خوش آمدید';

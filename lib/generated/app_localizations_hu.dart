@@ -1183,6 +1183,31 @@ class AppLocalizationsHu extends AppLocalizations {
   String get directAPKLink => 'Közvetlen APK-hivatkozás';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'Név';
+
+  @override
+  String get sortMethod => 'Rendezési eljárás';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload =>
+      'Alkalmazás adatainak frissítése a letöltés előtt';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => 'Egy pszeudoverzió van használatban';
 
   @override
@@ -1231,10 +1256,6 @@ class AppLocalizationsHu extends AppLocalizations {
       'Legelső APK automatikus kiválasztása, ha több APK is található';
 
   @override
-  String get refreshBeforeDownload =>
-      'Alkalmazás adatainak frissítése a letöltés előtt';
-
-  @override
   String get tencentAppStore => 'Tencent Appstore';
 
   @override
@@ -1244,13 +1265,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get vivoAppStore => 'Vivo App Store (CN)';
 
   @override
-  String get name => 'Név';
-
-  @override
   String get smartname => 'Név (Okos)';
-
-  @override
-  String get sortMethod => 'Rendezési eljárás';
 
   @override
   String get welcome => 'Üdvözöljük!';

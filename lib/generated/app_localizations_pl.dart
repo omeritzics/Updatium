@@ -1175,6 +1175,31 @@ class AppLocalizationsPl extends AppLocalizations {
   String get directAPKLink => 'Bezpośredni link do pliku apk';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'Nazwa';
+
+  @override
+  String get sortMethod => 'Metoda sortowania';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload =>
+      'Odśwież szczegóły aplikacji przed pobraniem';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => 'Pseudo-wersja jest w użyciu';
 
   @override
@@ -1224,10 +1249,6 @@ class AppLocalizationsPl extends AppLocalizations {
       'Automatyczny wybór pierwszego z wielu plików APK';
 
   @override
-  String get refreshBeforeDownload =>
-      'Odśwież szczegóły aplikacji przed pobraniem';
-
-  @override
   String get tencentAppStore => 'Tencent App Store';
 
   @override
@@ -1237,13 +1258,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get vivoAppStore => 'vivo App Store (CN)';
 
   @override
-  String get name => 'Nazwa';
-
-  @override
   String get smartname => 'Nazwa (Smart)';
-
-  @override
-  String get sortMethod => 'Metoda sortowania';
 
   @override
   String get welcome => 'Witamy';

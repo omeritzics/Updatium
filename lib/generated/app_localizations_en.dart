@@ -814,7 +814,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get releaseDateAsVersion => 'Use release date as version string';
 
   @override
-  String get releaseTitleAsVersion => 'Use release title as version string';
+  String get releaseTitleAsVersion => 'Release title as version';
 
   @override
   String get releaseDateAsVersionExplanation =>
@@ -968,7 +968,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'The success of a background install can only be determined when Updatium is opened.';
 
   @override
-  String get verifyLatestTag => 'Verify the \'latest\' tag';
+  String get verifyLatestTag => 'Verify latest tag';
 
   @override
   String get intermediateLinkRegex =>
@@ -1150,6 +1150,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get directAPKLink => 'Direct APK link';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get sortMethod => 'Sort method';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload => 'Refresh app details before download';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => 'A pseudo-version is in use';
 
   @override
@@ -1197,9 +1221,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get useFirstApkOfVersion => 'Auto-select first of multiple APKs';
 
   @override
-  String get refreshBeforeDownload => 'Refresh app details before download';
-
-  @override
   String get tencentAppStore => 'Tencent App Store';
 
   @override
@@ -1209,13 +1230,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vivoAppStore => 'vivo App Store (CN)';
 
   @override
-  String get name => 'Name';
-
-  @override
   String get smartname => 'Name (smart)';
-
-  @override
-  String get sortMethod => 'Sort method';
 
   @override
   String get welcome => 'Welcome';

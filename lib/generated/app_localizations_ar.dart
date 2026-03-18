@@ -1144,6 +1144,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get directAPKLink => 'رابط APK مباشر';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'الاسم';
+
+  @override
+  String get sortMethod => 'طريقة الترتيب';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload => 'تحديث تفاصيل التطبيق قبل التنزيل';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => 'يتم استخدام إصدار وهمي';
 
   @override
@@ -1192,9 +1216,6 @@ class AppLocalizationsAr extends AppLocalizations {
       'التحديد التلقائي الأول من بين عدة ملفات APK';
 
   @override
-  String get refreshBeforeDownload => 'تحديث تفاصيل التطبيق قبل التنزيل';
-
-  @override
   String get tencentAppStore => 'متجر Tencent للتطبيقات';
 
   @override
@@ -1204,13 +1225,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get vivoAppStore => 'متجر vivo للتطبيقات (CN)';
 
   @override
-  String get name => 'الاسم';
-
-  @override
   String get smartname => 'الاسم (ذكي)';
-
-  @override
-  String get sortMethod => 'طريقة الترتيب';
 
   @override
   String get welcome => 'مرحبًا';

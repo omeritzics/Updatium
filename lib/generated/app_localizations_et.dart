@@ -1156,6 +1156,31 @@ class AppLocalizationsEt extends AppLocalizations {
   String get directAPKLink => 'Otsene APK link';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'Nimi';
+
+  @override
+  String get sortMethod => 'Sortimismeetod';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload =>
+      'Värskenda äpi detaile enne allalaadimist';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => 'Pseudo-versioon on kasutusel';
 
   @override
@@ -1204,10 +1229,6 @@ class AppLocalizationsEt extends AppLocalizations {
       'Automaatselt vali mitme APK seast esimene';
 
   @override
-  String get refreshBeforeDownload =>
-      'Värskenda äpi detaile enne allalaadimist';
-
-  @override
   String get tencentAppStore => 'Tencent App Store';
 
   @override
@@ -1217,13 +1238,7 @@ class AppLocalizationsEt extends AppLocalizations {
   String get vivoAppStore => 'vivo App Store (CN)';
 
   @override
-  String get name => 'Nimi';
-
-  @override
   String get smartname => 'Nimi (nutikas)';
-
-  @override
-  String get sortMethod => 'Sortimismeetod';
 
   @override
   String get welcome => 'Tere tulemast';

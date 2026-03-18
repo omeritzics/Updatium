@@ -1098,6 +1098,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get directAPKLink => 'APK 文件直链';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => '发行名称';
+
+  @override
+  String get sortMethod => '排序方法';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload => '下载前刷新应用详情';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => '正在使用虚拟版本号';
 
   @override
@@ -1143,9 +1167,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get useFirstApkOfVersion => '存在多个 APK 文件时自动选择第一个';
 
   @override
-  String get refreshBeforeDownload => '下载前刷新应用详情';
-
-  @override
   String get tencentAppStore => '腾讯应用宝';
 
   @override
@@ -1155,13 +1176,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get vivoAppStore => '（中国）vivo应用商店';
 
   @override
-  String get name => '发行名称';
-
-  @override
   String get smartname => '发行名称（智能）';
-
-  @override
-  String get sortMethod => '排序方法';
 
   @override
   String get welcome => '欢迎';
@@ -2334,6 +2349,15 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
   String get directAPKLink => '直接 APK 連結';
 
   @override
+  String get name => '名稱';
+
+  @override
+  String get sortMethod => '排序方式';
+
+  @override
+  String get refreshBeforeDownload => '下載前刷新應用程式詳細資訊';
+
+  @override
   String get pseudoVersionInUse => '正在使用偽版本';
 
   @override
@@ -2376,9 +2400,6 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
   String get useFirstApkOfVersion => '自動選擇多個 APK 的第一個';
 
   @override
-  String get refreshBeforeDownload => '下載前刷新應用程式詳細資訊';
-
-  @override
   String get tencentAppStore => '騰訊應用寶';
 
   @override
@@ -2388,13 +2409,7 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
   String get vivoAppStore => 'vivo 應用商店 (CN)';
 
   @override
-  String get name => '名稱';
-
-  @override
   String get smartname => '名稱（智慧）';
-
-  @override
-  String get sortMethod => '排序方式';
 
   @override
   String get welcome => '歡迎';

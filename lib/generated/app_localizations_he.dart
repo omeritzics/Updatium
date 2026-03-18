@@ -1150,6 +1150,30 @@ class AppLocalizationsHe extends AppLocalizations {
   String get directAPKLink => 'קישור ישיר לקובץ APK';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'שם';
+
+  @override
+  String get sortMethod => 'שיטת מיון';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload => 'רענון פרטי היישום לפני ההורדה';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => 'נעשה שימוש במעֵין־גרסה';
 
   @override
@@ -1198,9 +1222,6 @@ class AppLocalizationsHe extends AppLocalizations {
       'בחירה אוטומטית של הראשון מתוך קובצי APK מרובים';
 
   @override
-  String get refreshBeforeDownload => 'רענון פרטי היישום לפני ההורדה';
-
-  @override
   String get tencentAppStore => '‏Tencent App Store';
 
   @override
@@ -1210,13 +1231,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get vivoAppStore => '‏vivo App Store (סין)';
 
   @override
-  String get name => 'שם';
-
-  @override
   String get smartname => 'שם (שיטה חכמה)';
-
-  @override
-  String get sortMethod => 'שיטת מיון';
 
   @override
   String get welcome => 'ברוך בואך';

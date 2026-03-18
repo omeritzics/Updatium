@@ -1178,6 +1178,31 @@ class AppLocalizationsPt extends AppLocalizations {
   String get directAPKLink => 'Link direto do APK';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'Nome';
+
+  @override
+  String get sortMethod => 'Método de ordenação';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload =>
+      'Atualizar os detalhes da aplicação antes da transferência';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => 'Uma pseudo-versão está em uso';
 
   @override
@@ -1227,10 +1252,6 @@ class AppLocalizationsPt extends AppLocalizations {
       'Seleção automática do primeiro de vários APKs';
 
   @override
-  String get refreshBeforeDownload =>
-      'Atualizar os detalhes da aplicação antes da transferência';
-
-  @override
   String get tencentAppStore => 'Tencent App Store';
 
   @override
@@ -1240,13 +1261,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get vivoAppStore => 'vivo App Store (CN)';
 
   @override
-  String get name => 'Nome';
-
-  @override
   String get smartname => 'Nome (Smart)';
-
-  @override
-  String get sortMethod => 'Método de ordenação';
 
   @override
   String get welcome => 'Bem-vindo';
@@ -2495,6 +2510,16 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get directAPKLink => 'Link direto ao APK';
 
   @override
+  String get name => 'Nome';
+
+  @override
+  String get sortMethod => 'Método de ordenação';
+
+  @override
+  String get refreshBeforeDownload =>
+      'Atualizar detalhes do app antes de baixar';
+
+  @override
   String get pseudoVersionInUse => 'Uma pseudo-versão está em uso';
 
   @override
@@ -2540,10 +2565,6 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
       'Seleção automática do primeiro de vários APKs';
 
   @override
-  String get refreshBeforeDownload =>
-      'Atualizar detalhes do app antes de baixar';
-
-  @override
   String get tencentAppStore => 'Loja de Apps da Tencent';
 
   @override
@@ -2553,13 +2574,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get vivoAppStore => 'Vivo App Store (CN)';
 
   @override
-  String get name => 'Nome';
-
-  @override
   String get smartname => 'Nome (inteligente)';
-
-  @override
-  String get sortMethod => 'Método de ordenação';
 
   @override
   String get welcome => 'Boas vindas';

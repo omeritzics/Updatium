@@ -1109,6 +1109,30 @@ class AppLocalizationsKo extends AppLocalizations {
   String get directAPKLink => '직접 APK 링크';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => '이름';
+
+  @override
+  String get sortMethod => '정렬 방법';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload => '다운로드 전에 앱 세부 정보 새로 고침';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => '의사 버전 사용 중';
 
   @override
@@ -1155,9 +1179,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get useFirstApkOfVersion => '여러 앱 중 첫 번째 앱 자동 선택';
 
   @override
-  String get refreshBeforeDownload => '다운로드 전에 앱 세부 정보 새로 고침';
-
-  @override
   String get tencentAppStore => '텐센트 앱 스토어';
 
   @override
@@ -1167,13 +1188,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get vivoAppStore => 'vivo App Store (CN)';
 
   @override
-  String get name => '이름';
-
-  @override
   String get smartname => '이름(스마트)';
-
-  @override
-  String get sortMethod => '정렬 방법';
 
   @override
   String get welcome => '환영';

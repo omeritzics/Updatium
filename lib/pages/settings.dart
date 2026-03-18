@@ -62,6 +62,34 @@ String getLanguageName(Locale locale) {
   return languageNames[key] ?? locale.languageCode.toUpperCase();
 }
 
+// Helper function for proper pluralization
+String getLocalizedDuration(int minutes, BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
+  
+  if (minutes < 60) {
+    return l10n.minute(minutes);
+  } else if (minutes < 24 * 60) {
+    int hours = minutes ~/ 60;
+    int remainingMinutes = minutes % 60;
+    
+    String hourText;
+    if (hours == 1) {
+      hourText = l10n.hour(hours).replaceAll('hours', 'hour').replaceAll('ساعات', 'ساعة').replaceAll('ساعات', 'ساعة').replaceAll('heures', 'heure').replaceAll('horas', 'hora').replaceAll('Stunden', 'Stunde').replaceAll('小時', '小時').replaceAll('시간', '시간').replaceAll('ore', 'ora').replaceAll('horas', 'hora').replaceAll('uren', 'uur').replaceAll('часов', 'час').replaceAll('saat', 'saat').replaceAll('שעות', 'שעה');
+    } else {
+      hourText = l10n.hour(hours);
+    }
+    
+    if (remainingMinutes == 0) {
+      return hourText;
+    } else {
+      return '$hourText ${l10n.minute(remainingMinutes)}';
+    }
+  } else {
+    int days = minutes ~/ (24 * 60);
+    return l10n.day(days);
+  }
+}
+
 // Helper function to get localized source names
 String getLocalizedSourceName(String sourceName, BuildContext context) {
   final l10n = AppLocalizations.of(context)!;
@@ -89,16 +117,46 @@ GeneratedFormItem localizeFormItem(GeneratedFormItem item, BuildContext context)
         localizedLabel = l10n.gitlabPATLabel;
         break;
       case 'GitHub request prefix':
-        localizedLabel = 'GitHub request prefix'; // Keep as is for now
+        localizedLabel = l10n.githubRequestPrefix;
         break;
       case 'GitLab request prefix':
-        localizedLabel = 'GitLab request prefix'; // Keep as is for now
+        localizedLabel = l10n.gitlabRequestPrefix;
         break;
       case 'Default pseudo-versioning method':
         localizedLabel = l10n.defaultPseudoVersioningMethod;
         break;
       case 'About':
         localizedLabel = l10n.about;
+        break;
+      case 'Include prereleases':
+        localizedLabel = l10n.includePrereleases;
+        break;
+      case 'Fallback to older releases':
+        localizedLabel = l10n.fallbackToOlderReleases;
+        break;
+      case 'Filter release titles by regular expression':
+        localizedLabel = l10n.filterReleaseTitlesByRegEx;
+        break;
+      case 'Filter release notes by regular expression':
+        localizedLabel = l10n.filterReleaseNotesByRegEx;
+        break;
+      case 'Verify latest tag':
+        localizedLabel = l10n.verifyLatestTag;
+        break;
+      case 'Sort method':
+        localizedLabel = l10n.sortMethod;
+        break;
+      case 'Release title as version':
+        localizedLabel = l10n.releaseTitleAsVersion;
+        break;
+      case 'Minimum star count':
+        localizedLabel = l10n.minimumStarCount;
+        break;
+      case 'Skip update notifications':
+        localizedLabel = l10n.skipUpdateNotifications;
+        break;
+      case 'Refresh before download':
+        localizedLabel = l10n.refreshBeforeDownload;
         break;
     }
     
@@ -132,6 +190,21 @@ GeneratedFormItem localizeFormItem(GeneratedFormItem item, BuildContext context)
       switch (option.value) {
         case 'Partial APK Hash':
           localizedValue = l10n.partialAPKHash;
+          break;
+        case 'Release date':
+          localizedValue = l10n.releaseDate;
+          break;
+        case 'Smart name':
+          localizedValue = l10n.smartName;
+          break;
+        case 'None':
+          localizedValue = l10n.none;
+          break;
+        case 'Smart + Date':
+          localizedValue = l10n.smartPlusDate;
+          break;
+        case 'Name':
+          localizedValue = l10n.name;
           break;
         default:
           localizedValue = option.value;
@@ -219,25 +292,23 @@ class _SettingsPageState extends State<SettingsPage> {
     }
     if (valInterpolated < 60) {
       updateInterval = valInterpolated;
-      updateIntervalLabel = AppLocalizations.of(context)!.minute(valInterpolated.round());
+      updateIntervalLabel = getLocalizedDuration(valInterpolated.round(), context);
     } else if (valInterpolated < 8 * 60) {
       int valRounded = (valInterpolated / 15).floor() * 15;
       updateInterval = valRounded;
-      updateIntervalLabel = AppLocalizations.of(context)!.hour(valRounded ~/ 60);
-      int mins = valRounded % 60;
-      if (mins != 0) updateIntervalLabel += " ${AppLocalizations.of(context)!.minute(mins)}";
+      updateIntervalLabel = getLocalizedDuration(valRounded, context);
     } else if (valInterpolated < 24 * 60) {
       int valRounded = (valInterpolated / 30).floor() * 30;
       updateInterval = valRounded;
-      updateIntervalLabel = AppLocalizations.of(context)!.hour((valRounded / 60).round());
+      updateIntervalLabel = getLocalizedDuration(valRounded, context);
     } else if (valInterpolated < 7 * 24 * 60) {
       int valRounded = (valInterpolated / (12 * 60)).floor() * 12 * 60;
       updateInterval = valRounded;
-      updateIntervalLabel = AppLocalizations.of(context)!.day((valRounded / (24 * 60)).round());
+      updateIntervalLabel = getLocalizedDuration(valRounded, context);
     } else {
       int valRounded = (valInterpolated / (24 * 60)).floor() * 24 * 60;
       updateInterval = valRounded;
-      updateIntervalLabel = AppLocalizations.of(context)!.day(valRounded ~/ (24 * 60));
+      updateIntervalLabel = getLocalizedDuration(valRounded, context);
     }
   }
 

@@ -1154,6 +1154,31 @@ class AppLocalizationsVi extends AppLocalizations {
   String get directAPKLink => 'Liên kết APK trực tiếp';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'Tên';
+
+  @override
+  String get sortMethod => 'Phương thức sắp xếp';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload =>
+      'Cập nhật thông tin ứng dụng trước khi tải xuống';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => 'Phiên bản giả đang được sử dụng';
 
   @override
@@ -1203,10 +1228,6 @@ class AppLocalizationsVi extends AppLocalizations {
       'Tự động chọn tệp APK đầu tiên trong danh sách nhiều tệp APK.';
 
   @override
-  String get refreshBeforeDownload =>
-      'Cập nhật thông tin ứng dụng trước khi tải xuống';
-
-  @override
   String get tencentAppStore => 'Tencent App Store';
 
   @override
@@ -1216,13 +1237,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get vivoAppStore => 'vivo App Store (CN)';
 
   @override
-  String get name => 'Tên';
-
-  @override
   String get smartname => 'Tên (Thông minh)';
-
-  @override
-  String get sortMethod => 'Phương thức sắp xếp';
 
   @override
   String get welcome => 'Chào mừng';

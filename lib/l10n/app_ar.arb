@@ -718,4 +718,28 @@
       }
     }
   }
+  "apk": "{count} APKs",
+  "apkcombo": "APKCombo",
+  "apkmirror": "APKMirror",
+  "apkpure": "APKPure",
+  "appLogsHint": "View application logs",
+  "appSourceHint": "Open app source repository",
+  "aptoide": "Aptoide",
+  "codeberg": "Codeberg",
+  "githubRequestPrefix": "GitHub request prefix",
+  "gitlab": "GitLab",
+  "gitlabRequestPrefix": "GitLab request prefix",
+  "html": "HTML",
+  "huaweiappgallery": "Huawei App Gallery",
+  "izzyondroid": "IzzyOnDroid",
+  "jenkins": "Jenkins",
+  "minimumStarCount": "Minimum star count",
+  "neutroncode": "NeutronCode",
+  "rustore": "RuStore",
+  "smartName": "Smart name",
+  "smartPlusDate": "Smart + Date",
+  "sourcehut": "SourceHut",
+  "telegramapp": "Telegram App",
+  "uptodown": "Uptodown",
+  "wikiHint": "Open Updatium wiki documentation",
 }

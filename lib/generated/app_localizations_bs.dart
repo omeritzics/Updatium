@@ -1161,6 +1161,31 @@ class AppLocalizationsBs extends AppLocalizations {
   String get directAPKLink => 'Direktna APK veza';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'Ime';
+
+  @override
+  String get sortMethod => 'Metoda sortiranja';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload =>
+      'Osvježi detalje aplikacije prije preuzimanja';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => 'Pseudo-verzija je u upotrebi';
 
   @override
@@ -1210,10 +1235,6 @@ class AppLocalizationsBs extends AppLocalizations {
       'Automatski izaberi prvi ako postoji više APK-ova';
 
   @override
-  String get refreshBeforeDownload =>
-      'Osvježi detalje aplikacije prije preuzimanja';
-
-  @override
   String get tencentAppStore => 'Tencent prodavnica aplikacija';
 
   @override
@@ -1223,13 +1244,7 @@ class AppLocalizationsBs extends AppLocalizations {
   String get vivoAppStore => 'vivo prodavnica aplikacija (Kina)';
 
   @override
-  String get name => 'Ime';
-
-  @override
   String get smartname => 'Ime (Smart)';
-
-  @override
-  String get sortMethod => 'Metoda sortiranja';
 
   @override
   String get welcome => 'Dobrodošli';

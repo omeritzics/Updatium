@@ -1113,6 +1113,30 @@ class AppLocalizationsJa extends AppLocalizations {
   String get directAPKLink => 'APKのダイレクトリンク';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'アプリ名';
+
+  @override
+  String get sortMethod => 'ソート方法';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload => 'ダウンロード前にアプリの詳細を更新する';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => '疑似バージョンが使用されています';
 
   @override
@@ -1159,9 +1183,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get useFirstApkOfVersion => '複数のAPKから最初のAPKを自動選択する';
 
   @override
-  String get refreshBeforeDownload => 'ダウンロード前にアプリの詳細を更新する';
-
-  @override
   String get tencentAppStore => 'Tencent App Store';
 
   @override
@@ -1171,13 +1192,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get vivoAppStore => 'vivo App Store (CN)';
 
   @override
-  String get name => 'アプリ名';
-
-  @override
   String get smartname => 'アプリ名（スマート）';
-
-  @override
-  String get sortMethod => 'ソート方法';
 
   @override
   String get welcome => 'ようこそ';

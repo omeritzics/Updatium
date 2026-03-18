@@ -1589,7 +1589,7 @@ abstract class AppLocalizations {
   /// No description provided for @releaseTitleAsVersion.
   ///
   /// In en, this message translates to:
-  /// **'Use release title as version string'**
+  /// **'Release title as version'**
   String get releaseTitleAsVersion;
 
   /// No description provided for @releaseDateAsVersionExplanation.
@@ -1859,7 +1859,7 @@ abstract class AppLocalizations {
   /// No description provided for @verifyLatestTag.
   ///
   /// In en, this message translates to:
-  /// **'Verify the \'latest\' tag'**
+  /// **'Verify latest tag'**
   String get verifyLatestTag;
 
   /// No description provided for @intermediateLinkRegex.
@@ -2180,6 +2180,54 @@ abstract class AppLocalizations {
   /// **'Direct APK link'**
   String get directAPKLink;
 
+  /// No description provided for @githubRequestPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'GitHub request prefix'**
+  String get githubRequestPrefix;
+
+  /// No description provided for @smartName.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart name'**
+  String get smartName;
+
+  /// No description provided for @smartPlusDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart + Date'**
+  String get smartPlusDate;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @sortMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort method'**
+  String get sortMethod;
+
+  /// No description provided for @minimumStarCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum star count'**
+  String get minimumStarCount;
+
+  /// No description provided for @refreshBeforeDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh app details before download'**
+  String get refreshBeforeDownload;
+
+  /// No description provided for @gitlabRequestPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'GitLab request prefix'**
+  String get gitlabRequestPrefix;
+
   /// No description provided for @pseudoVersionInUse.
   ///
   /// In en, this message translates to:
@@ -2264,12 +2312,6 @@ abstract class AppLocalizations {
   /// **'Auto-select first of multiple APKs'**
   String get useFirstApkOfVersion;
 
-  /// No description provided for @refreshBeforeDownload.
-  ///
-  /// In en, this message translates to:
-  /// **'Refresh app details before download'**
-  String get refreshBeforeDownload;
-
   /// No description provided for @tencentAppStore.
   ///
   /// In en, this message translates to:
@@ -2288,23 +2330,11 @@ abstract class AppLocalizations {
   /// **'vivo App Store (CN)'**
   String get vivoAppStore;
 
-  /// No description provided for @name.
-  ///
-  /// In en, this message translates to:
-  /// **'Name'**
-  String get name;
-
   /// No description provided for @smartname.
   ///
   /// In en, this message translates to:
   /// **'Name (smart)'**
   String get smartname;
-
-  /// No description provided for @sortMethod.
-  ///
-  /// In en, this message translates to:
-  /// **'Sort method'**
-  String get sortMethod;
 
   /// No description provided for @welcome.
   ///

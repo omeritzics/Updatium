@@ -708,4 +708,11 @@
       }
     }
   }
+  "apk": "{count} APKs",
+  "apps": "{count} Apps",
+  "githubRequestPrefix": "GitHub request prefix",
+  "gitlabRequestPrefix": "GitLab request prefix",
+  "minimumStarCount": "Minimum star count",
+  "smartName": "Smart name",
+  "smartPlusDate": "Smart + Date",
 }

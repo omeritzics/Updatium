@@ -43,16 +43,46 @@ GeneratedFormItem localizeFormItem(GeneratedFormItem item, BuildContext context)
         localizedLabel = l10n.gitlabPATLabel;
         break;
       case 'GitHub request prefix':
-        localizedLabel = 'GitHub request prefix'; // Keep as is for now
+        localizedLabel = l10n.githubRequestPrefix;
         break;
       case 'GitLab request prefix':
-        localizedLabel = 'GitLab request prefix'; // Keep as is for now
+        localizedLabel = l10n.gitlabRequestPrefix;
         break;
       case 'Default pseudo-versioning method':
         localizedLabel = l10n.defaultPseudoVersioningMethod;
         break;
       case 'About':
         localizedLabel = l10n.about;
+        break;
+      case 'Include prereleases':
+        localizedLabel = l10n.includePrereleases;
+        break;
+      case 'Fallback to older releases':
+        localizedLabel = l10n.fallbackToOlderReleases;
+        break;
+      case 'Filter release titles by regular expression':
+        localizedLabel = l10n.filterReleaseTitlesByRegEx;
+        break;
+      case 'Filter release notes by regular expression':
+        localizedLabel = l10n.filterReleaseNotesByRegEx;
+        break;
+      case 'Verify latest tag':
+        localizedLabel = l10n.verifyLatestTag;
+        break;
+      case 'Sort method':
+        localizedLabel = l10n.sortMethod;
+        break;
+      case 'Release title as version':
+        localizedLabel = l10n.releaseTitleAsVersion;
+        break;
+      case 'Minimum star count':
+        localizedLabel = l10n.minimumStarCount;
+        break;
+      case 'Skip update notifications':
+        localizedLabel = l10n.skipUpdateNotifications;
+        break;
+      case 'Refresh before download':
+        localizedLabel = l10n.refreshBeforeDownload;
         break;
     }
     
@@ -86,6 +116,21 @@ GeneratedFormItem localizeFormItem(GeneratedFormItem item, BuildContext context)
       switch (option.value) {
         case 'Partial APK Hash':
           localizedValue = l10n.partialAPKHash;
+          break;
+        case 'Release date':
+          localizedValue = l10n.releaseDate;
+          break;
+        case 'Smart name':
+          localizedValue = l10n.smartName;
+          break;
+        case 'None':
+          localizedValue = l10n.none;
+          break;
+        case 'Smart + Date':
+          localizedValue = l10n.smartPlusDate;
+          break;
+        case 'Name':
+          localizedValue = l10n.name;
           break;
         default:
           localizedValue = option.value;

@@ -1186,6 +1186,31 @@ class AppLocalizationsMl extends AppLocalizations {
   String get directAPKLink => 'നേരിട്ടുള്ള APK ലിങ്ക്';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
+  String get smartName => 'Smart name';
+
+  @override
+  String get smartPlusDate => 'Smart + Date';
+
+  @override
+  String get name => 'പേര്';
+
+  @override
+  String get sortMethod => 'അടുക്കുന്ന രീതി';
+
+  @override
+  String get minimumStarCount => 'Minimum star count';
+
+  @override
+  String get refreshBeforeDownload =>
+      'ഡൗൺലോഡ് ചെയ്യുന്നതിന് മുമ്പ് ആപ്പ് വിവരങ്ങൾ പുതുക്കുക';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
+
+  @override
   String get pseudoVersionInUse => 'ഒരു സ്യൂഡോ-പതിപ്പ് ഉപയോഗത്തിലുണ്ട്';
 
   @override
@@ -1235,10 +1260,6 @@ class AppLocalizationsMl extends AppLocalizations {
       'ഒന്നിലധികം APK-കളിൽ നിന്ന് ആദ്യത്തേത് സ്വയമേവ തിരഞ്ഞെടുക്കുക';
 
   @override
-  String get refreshBeforeDownload =>
-      'ഡൗൺലോഡ് ചെയ്യുന്നതിന് മുമ്പ് ആപ്പ് വിവരങ്ങൾ പുതുക്കുക';
-
-  @override
   String get tencentAppStore => 'ടെൻസെന്റ് ആപ്പ് സ്റ്റോർ';
 
   @override
@@ -1248,13 +1269,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get vivoAppStore => 'വിവോ ആപ്പ് സ്റ്റോർ (CN)';
 
   @override
-  String get name => 'പേര്';
-
-  @override
   String get smartname => 'പേര് (സ്മാർട്ട്)';
-
-  @override
-  String get sortMethod => 'അടുക്കുന്ന രീതി';
 
   @override
   String get welcome => 'സ്വാഗതം';

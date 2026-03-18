@@ -729,4 +729,12 @@
       }
     }
   }
+  "aPKLinkHash": "APK link hash",
+  "apk": "{count} APKs",
+  "gHReqPrefix": "'sky22333/hubproxy' instance for GitHub requests",
+  "githubRequestPrefix": "GitHub request prefix",
+  "gitlabRequestPrefix": "GitLab request prefix",
+  "minimumStarCount": "Minimum star count",
+  "smartName": "Smart name",
+  "smartPlusDate": "Smart + Date",
 }
