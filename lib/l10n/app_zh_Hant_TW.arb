@@ -1,5 +1,5 @@
 {
-  "@@locale": "zh-Hant-TW",
+  "@@locale": "zh_Hant_TW",
   "invalidURLForSource": "不是有效的 {} 應用程式 URL",
   "noReleaseFound": "找不到合適的版本",
   "noVersionFound": "無法確定版本",

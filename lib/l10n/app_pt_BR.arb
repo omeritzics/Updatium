@@ -1,5 +1,5 @@
 {
-  "@@locale": "pt-BR",
+  "@@locale": "pt_BR",
   "invalidURLForSource": "Não é uma URL de app válida de {}",
   "noReleaseFound": "Não foi possível encontrar um lançamento adequado",
   "noVersionFound": "Não foi possível determinar a versão do lançamento",
