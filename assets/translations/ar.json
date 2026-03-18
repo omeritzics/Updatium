@@ -275,6 +275,9 @@
     "about": "حول",
     "requiresCredentialsInSettings": "{} يحتاج إلى بيانات اعتماد إضافية (في الإعدادات)",
     "checkOnStart": "التحقق من التحديثات عند البدء",
+    "safeMode": "الوضع الآمن",
+    "safeModeDescription": "إخفاء صفحة إضافة التطبيق وإظهار الاستيراد/التصدير بدلاً منها",
+    "safeModeAddAppDisabled": "إضافة التطبيق معطلة في الوضع الآمن",
     "tryInferAppIdFromCode": "محاولة استنتاج معرّف التطبيق من الكود المصدري",
     "removeOnExternalUninstall": "إزالة التطبيقات المثبتة خارجيًا تلقائيًا",
     "pickHighestVersionCode": "تحديد أعلى إصدار تلقائيًا",
@@ -472,5 +475,9 @@
     "privacy": "الخصوصية",
     "privacyText": "هذا التطبيق يركز على الخصوصية ولا يجمع البيانات الشخصية.",
     "acceptAndContinue": "موافق ومتابعة",
-    "decline": "رفض"
+    "decline": "رفض",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

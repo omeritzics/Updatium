@@ -239,11 +239,14 @@
     "dontShowTrackOnlyWarnings": "Geen waarschuwingen weergeven voor 'Alleen volgen'",
     "dontShowAPKOriginWarnings": "Geen waarschuwingen weergeven voor APK-herkomst",
     "moveNonInstalledAppsToBottom": "Niet-geïnstalleerde apps onderaan de apps-lijst plaatsen",
-    "hideNonInstalledApps": "Hide non-installed apps",
+    "hideNonInstalledApps": "Verberg niet-geïnstalleerde apps",
     "gitlabPATLabel": "GitLab persoonlijk toegangskenmerk",
     "about": "Over",
     "requiresCredentialsInSettings": "{} vereist aanvullende referenties (in Instellingen)",
     "checkOnStart": "Bij opstarten op updates controleren",
+    "safeMode": "Veilige modus",
+    "safeModeDescription": "Verberg App toevoegen-pagina en toon Importeer/Exporteer in plaats daarvan",
+    "safeModeAddAppDisabled": "App toevoegen is uitgeschakeld in veilige modus",
     "tryInferAppIdFromCode": "Probeer de app-ID af te leiden uit de broncode",
     "removeOnExternalUninstall": "Extern verwijderde apps automatisch verwijderen",
     "pickHighestVersionCode": "De APK met de hoogste versiecode automatisch selecteren",
@@ -425,5 +428,9 @@
     "privacy": "Privacy",
     "privacyText": "Deze app is privacy-gericht en verzamelt geen persoonlijke gegevens.",
     "acceptAndContinue": "Accepteren en doorgaan",
-    "decline": "Weigeren"
+    "decline": "Weigeren",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

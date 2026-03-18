@@ -244,7 +244,10 @@
     "about": "Giới thiệu",
     "requiresCredentialsInSettings": "{}: Điều này cần thông tin xác thực bổ sung (trong Thiết đặt)",
     "checkOnStart": "Kiểm tra các bản cập nhật khi khởi động",
-    "tryInferAppIdFromCode": "Thử suy ra ID ứng dụng từ mã nguồn",
+    "safeMode": "Chế độ an toàn",
+    "safeModeDescription": "Ẩn trang Thêm ứng dụng và hiển thị Nhập/Xuất thay thế",
+    "safeModeAddAppDisabled": "Thêm ứng dụng bị vô hiệu hóa trong chế độ an toàn",
+    "tryInferAppIdFromCode": "Cố gắng suy ra ID ứng dụng từ mã nguồn",
     "removeOnExternalUninstall": "Tự động xóa ứng dụng đã gỡ cài đặt bên ngoài",
     "pickHighestVersionCode": "Tự động chọn APK mã phiên bản cao nhất",
     "checkUpdateOnDetailPage": "Kiểm tra các bản cập nhật khi mở trang chi tiết Ứng dụng",
@@ -425,5 +428,9 @@
     "privacy": "Quyền riêng tư",
     "privacyText": "Ứng dụng này tập trung vào quyền riêng tư và không thu thập dữ liệu cá nhân.",
     "acceptAndContinue": "Chấp nhận và tiếp tục",
-    "decline": "Từ chối"
+    "decline": "Từ chối",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

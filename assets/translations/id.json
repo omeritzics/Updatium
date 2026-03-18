@@ -244,7 +244,10 @@
     "about": "Tentang",
     "requiresCredentialsInSettings": "{} memerlukan kredensial tambahan (dalam pengaturan)",
     "checkOnStart": "Periksa pembaruan saat proses memulai",
-    "tryInferAppIdFromCode": "Coba untuk menebak ID aplikasi dari kode sumber",
+    "safeMode": "Mode Aman",
+    "safeModeDescription": "Sembunyikan halaman Tambah Aplikasi dan tampilkan Impor/Ekspor sebagai gantinya",
+    "safeModeAddAppDisabled": "Tambah Aplikasi dinonaktifkan dalam Mode Aman",
+    "tryInferAppIdFromCode": "Coba menebak ID aplikasi dari kode sumber",
     "removeOnExternalUninstall": "Hapus otomatis aplikasi yang dicopot pemasangannya dari luar",
     "pickHighestVersionCode": "Pilih otomatis APK dengan versi kode tertinggi",
     "checkUpdateOnDetailPage": "Periksa pembaruan saat membuka halaman detail aplikasi",
@@ -425,5 +428,9 @@
     "privacy": "Privasi",
     "privacyText": "Aplikasi ini berfokus pada privasi dan tidak mengumpulkan data pribadi.",
     "acceptAndContinue": "Terima dan Lanjutkan",
-    "decline": "Tolak"
+    "decline": "Tolak",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

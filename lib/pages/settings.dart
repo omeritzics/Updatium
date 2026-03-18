@@ -706,6 +706,32 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(tr('safeMode')),
+                                  Text(
+                                    tr('safeModeDescription'),
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.labelSmall,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Switch(
+                              value: settingsProvider.safeMode,
+                              onChanged: (value) {
+                                settingsProvider.safeMode = value;
+                              },
+                            ),
+                          ],
+                        ),
+                        height16,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Flexible(child: Text(tr('checkOnStart'))),
                             Switch(
                               value: settingsProvider.checkOnStart,
@@ -830,8 +856,38 @@ class _SettingsPageState extends State<SettingsPage> {
                               value: settingsProvider.useShizuku,
                               onChanged: (useShizuku) {
                                 if (useShizuku) {
-                                  // ShizukuApkInstaller functionality removed
-                                  settingsProvider.useShizuku = false;
+                                  ShizukuApkInstaller().checkPermission().then((
+                                    resCode,
+                                  ) {
+                                    settingsProvider.useShizuku =
+                                        resCode?.startsWith('granted') ?? false;
+                                    switch (resCode) {
+                                      case 'services_not_found':
+                                        showError(
+                                          UpdatiumError(
+                                            tr('shizukuBinderNotFound'),
+                                          ),
+                                          context,
+                                        );
+                                      case 'old_shizuku':
+                                        showError(
+                                          UpdatiumError(tr('shizukuOld')),
+                                          context,
+                                        );
+                                      case 'old_android_with_adb':
+                                        showError(
+                                          UpdatiumError(
+                                            tr('shizukuOldAndroidWithADB'),
+                                          ),
+                                          context,
+                                        );
+                                      case 'denied':
+                                        showError(
+                                          UpdatiumError(tr('cancelled')),
+                                          context,
+                                        );
+                                    }
+                                  });
                                 } else {
                                   settingsProvider.useShizuku = false;
                                 }

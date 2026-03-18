@@ -244,6 +244,9 @@
     "about": "Про програму",
     "requiresCredentialsInSettings": "{} потребує додаткових облікових даних (у налаштуваннях)",
     "checkOnStart": "Перевірити наявність оновлень при запуску",
+    "safeMode": "Безпечний режим",
+    "safeModeDescription": "Приховати сторінку Додати додаток і показати Імпорт/Експорт натомість",
+    "safeModeAddAppDisabled": "Додавання додатка вимкнено в безпечному режимі",
     "tryInferAppIdFromCode": "Спробувати вивести ідентифікатор застосунку з вихідного коду",
     "removeOnExternalUninstall": "Автоматично видаляти застосунки, які було видалено зовнішнім чином",
     "pickHighestVersionCode": "Автоматично вибрати APK з найвищим кодом версії",
@@ -425,5 +428,9 @@
     "privacy": "Конфіденційність",
     "privacyText": "Цей додаток орієнтований на конфіденційність і не збирає особисті дані.",
     "acceptAndContinue": "Прийняти та продовжити",
-    "decline": "Відхилити"
+    "decline": "Відхилити",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

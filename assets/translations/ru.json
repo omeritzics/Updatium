@@ -275,7 +275,10 @@
     "about": "Описание",
     "requiresCredentialsInSettings": "{}: для этого требуются дополнительные учётные данные (в настройках)",
     "checkOnStart": "Проверять наличие обновлений при запуске",
-    "tryInferAppIdFromCode": "Пытаться определить ID приложения из исходного кода",
+    "safeMode": "Безопасный режим",
+    "safeModeDescription": "Скрыть страницу Добавить приложение и показать Импорт/Экспорт вместо этого",
+    "safeModeAddAppDisabled": "Добавление приложения отключено в безопасном режиме",
+    "tryInferAppIdFromCode": "Попытаться определить ID приложения из исходного кода",
     "removeOnExternalUninstall": "Автоматически убирать из списка удалённые извне приложения",
     "pickHighestVersionCode": "Автовыбор актуальной версии кода APK",
     "checkUpdateOnDetailPage": "Проверять наличие обновлений при открытии страницы приложения",
@@ -468,5 +471,9 @@
     "privacy": "Конфиденциальность",
     "privacyText": "Это приложение ориентировано на конфиденциальность и не собирает личные данные.",
     "acceptAndContinue": "Принять и продолжить",
-    "decline": "Отклонить"
+    "decline": "Отклонить",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

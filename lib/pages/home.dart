@@ -9,6 +9,7 @@ import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/pages/apps.dart';
+import 'package:updatium/pages/import_export.dart';
 import 'package:updatium/pages/security_disclaimer.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
@@ -41,42 +42,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool isLinkActivity = false;
   late List<AnimationController> _iconControllers;
   late List<Animation<double>> _iconAnimations;
+  bool _iconsInitialized = false;
 
-  List<NavigationPageItem> pages = [
-    NavigationPageItem(
-      tr('appsString'),
-      Icons.apps,
-      AppsPage(key: GlobalKey<AppsPageState>()),
-    ),
-    NavigationPageItem(
-      tr('addApp'),
-      Icons.add_circle,
-      AddAppPage(key: GlobalKey<AddAppPageState>()),
-    ),
-    NavigationPageItem(tr('settings'), Icons.settings, const SettingsPage()),
-  ];
+  List<NavigationPageItem> getPages(SettingsProvider settingsProvider) {
+    return [
+      NavigationPageItem(
+        tr('appsString'),
+        Icons.apps,
+        AppsPage(key: GlobalKey<AppsPageState>()),
+      ),
+      NavigationPageItem(
+        settingsProvider.safeMode ? tr('importExport') : tr('addApp'),
+        settingsProvider.safeMode ? Icons.import_export : Icons.add_circle,
+        settingsProvider.safeMode
+            ? const ImportExportPage()
+            : AddAppPage(key: GlobalKey<AddAppPageState>()),
+      ),
+      NavigationPageItem(tr('settings'), Icons.settings, const SettingsPage()),
+    ];
+  }
 
   @override
   void initState() {
     super.initState();
-
-    // Initialize animation controllers for each nav item
-    _iconControllers = List.generate(
-      pages.length,
-      (index) => AnimationController(
-        duration: const Duration(milliseconds: 600),
-        vsync: this,
-      ),
-    );
-
-    _iconAnimations = _iconControllers
-        .map(
-          (controller) => Tween<double>(begin: 0, end: 1).animate(
-            CurvedAnimation(parent: controller, curve: Curves.easeInOut),
-          ),
-        )
-        .toList();
-
     initDeepLinks();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var sp = context.read<SettingsProvider>();
@@ -144,11 +132,45 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_iconsInitialized) {
+      final settingsProvider = context.read<SettingsProvider>();
+      final pagesList = getPages(settingsProvider);
+      _iconControllers = List.generate(
+        pagesList.length,
+        (index) => AnimationController(
+          duration: const Duration(milliseconds: 600),
+          vsync: this,
+        ),
+      );
+
+      _iconAnimations = _iconControllers
+          .map(
+            (controller) => Tween<double>(begin: 0, end: 1).animate(
+              CurvedAnimation(parent: controller, curve: Curves.easeInOut),
+            ),
+          )
+          .toList();
+
+      _iconsInitialized = true;
+      setState(() {}); // Rebuild after initialization
+    }
+  }
+
   Future<void> initDeepLinks() async {
     // AppLinks functionality removed
 
     goToAddApp(String data) async {
+      final settingsProvider = context.read<SettingsProvider>();
+      if (settingsProvider.safeMode) {
+        showError(UpdatiumError(tr('safeModeAddAppDisabled')), context);
+        return;
+      }
       switchToPage(1);
+      final pages = getPages(settingsProvider);
       while ((pages[1].widget.key as GlobalKey<AddAppPageState>?)
               ?.currentState ==
           null) {
@@ -161,6 +183,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     goToExistingApp(String appId) async {
       // Go to Apps page
       switchToPage(0);
+      final settingsProvider = context.read<SettingsProvider>();
+      final pages = getPages(settingsProvider);
       while ((pages[0].widget.key as GlobalKey<AppsPageState>?)?.currentState ==
           null) {
         await Future.delayed(const Duration(microseconds: 1));
@@ -269,6 +293,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> switchToPage(int index) async {
     setIsReversing(index);
+    final settingsProvider = context.read<SettingsProvider>();
+    final pages = getPages(settingsProvider);
     if (index == 0) {
       while ((pages[0].widget.key as GlobalKey<AppsPageState>).currentState !=
           null) {
@@ -295,6 +321,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     AppsProvider appsProvider = context.watch<AppsProvider>();
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
+
+    final pages = getPages(settingsProvider);
 
     if (!prevIsLoading &&
         prevAppCount >= 0 &&
@@ -338,7 +366,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
         bottomNavigationBar: Semantics(
           label: 'Main navigation',
-          hint: 'Navigate between apps, add app, and settings',
+          hint:
+              'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
           child: NavigationBar(
             selectedIndex: selectedIndexHistory.isEmpty
                 ? 0
@@ -349,9 +378,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               HapticFeedback.selectionClick();
 
               // Trigger full-rotation animation
-              _iconControllers[index].forward().then((_) {
-                _iconControllers[index].reset();
-              });
+              if (_iconsInitialized && index < _iconControllers.length) {
+                _iconControllers[index].forward().then((_) {
+                  _iconControllers[index].reset();
+                });
+              }
 
               switchToPage(index);
             },
@@ -359,15 +390,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               int index = entry.key;
               var page = entry.value;
               return NavigationDestination(
-                icon: AnimatedBuilder(
-                  animation: _iconAnimations[index],
-                  builder: (context, child) {
-                    return Transform.rotate(
-                      angle: _iconAnimations[index].value * 2 * 3.14159,
-                      child: Icon(page.icon),
-                    );
-                  },
-                ),
+                icon: _iconsInitialized && index < _iconAnimations.length
+                    ? AnimatedBuilder(
+                        animation: _iconAnimations[index],
+                        builder: (context, child) {
+                          return Transform.rotate(
+                            angle: _iconAnimations[index].value * 2 * 3.14159,
+                            child: Icon(page.icon),
+                          );
+                        },
+                      )
+                    : Icon(page.icon),
                 label: page.title,
               );
             }).toList(),
@@ -391,8 +424,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           });
           return false;
         }
-        return !(pages[0].widget.key as GlobalKey<AppsPageState>).currentState!
-            .clearSelected();
+        final settingsProvider = context.read<SettingsProvider>();
+        final pages = getPages(settingsProvider);
+        return !((pages[0].widget.key as GlobalKey<AppsPageState>).currentState
+                ?.clearSelected() ??
+            false);
       },
     );
   }

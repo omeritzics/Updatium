@@ -526,4 +526,13 @@ class SettingsProvider with ChangeNotifier {
     prefs?.setBool('useGridView', val);
     notifyListeners();
   }
+
+  bool get safeMode {
+    return prefs?.getBool('safeMode') ?? false;
+  }
+
+  set safeMode(bool val) {
+    prefs?.setBool('safeMode', val);
+    notifyListeners();
+  }
 }

@@ -244,7 +244,10 @@
     "about": "Programmist",
     "requiresCredentialsInSettings": "{} vajab lisandmed (seadetes)",
     "checkOnStart": "Kontrolli uuendusi käivitamisel",
-    "tryInferAppIdFromCode": "Proovi äpi ID-t tuvastada lähtekoodist",
+    "safeMode": "Turvarežiim",
+    "safeModeDescription": "Peida Lisa rakendus leht ja näita selle asemel Import/Eksport",
+    "safeModeAddAppDisabled": "Rakenduse lisamine on turvarežiimis keelatud",
+    "tryInferAppIdFromCode": "Proovi tuletada appi ID lähtekoodist",
     "removeOnExternalUninstall": "Eemalda automaatselt väliselt desinstallitud äpid",
     "pickHighestVersionCode": "Automaatselt vali kõrgeima versioonikoodiga APK",
     "checkUpdateOnDetailPage": "Kontrolli uuendusi äpi detaillehe avamisel",
@@ -425,5 +428,9 @@
     "privacy": "Privaatsus",
     "privacyText": "See rakendus on privaatsuskeskne ja ei kogu isiklikke andmeid.",
     "acceptAndContinue": "Nõustu & Jätka",
-    "decline": "Keeldu"
+    "decline": "Keeldu",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

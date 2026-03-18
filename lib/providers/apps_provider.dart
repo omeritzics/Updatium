@@ -1103,8 +1103,10 @@ class AppsProvider with ChangeNotifier {
       // AndroidPackageInstaller functionality removed
       code = 'not_implemented';
     } else {
-      // ShizukuApkInstaller functionality removed
-      code = 'not_implemented';
+      code = await ShizukuApkInstaller().installAPK(
+        file.file.uri.toString(),
+        shizukuPretendToBeGooglePlay ? "com.android.vending" : "",
+      );
     }
     bool installed = false;
     if (code != null && code != 0 && code != 3) {
@@ -1401,8 +1403,16 @@ class AppsProvider with ChangeNotifier {
             throw UpdatiumError(tr('cancelled'));
           }
         } else {
-          // ShizukuApkInstaller functionality removed
-          throw UpdatiumError(tr('shizukuNotSupported'));
+          switch ((await ShizukuApkInstaller().checkPermission())!) {
+            case 'binder_not_found':
+              throw UpdatiumError(tr('shizukuBinderNotFound'));
+            case 'old_shizuku':
+              throw UpdatiumError(tr('shizukuOld'));
+            case 'old_android_with_adb':
+              throw UpdatiumError(tr('shizukuOldAndroidWithADB'));
+            case 'denied':
+              throw UpdatiumError(tr('cancelled'));
+          }
         }
         if (!willBeSilent && context != null && !settingsProvider.useShizuku) {
           // ignore: use_build_context_synchronously

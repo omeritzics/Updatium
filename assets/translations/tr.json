@@ -244,6 +244,9 @@
     "about": "Hakkında",
     "requiresCredentialsInSettings": "{} ek kimlik bilgileri gerektirir (Ayarlarda)",
     "checkOnStart": "Açılışta güncellemeleri denetle",
+    "safeMode": "Güvenli Mod",
+    "safeModeDescription": "Uygulama Ekle sayfasını gizle ve bunun yerine İçe/Dışa Aktar'ı göster",
+    "safeModeAddAppDisabled": "Uygulama Ekle güvenli modda devre dışı",
     "tryInferAppIdFromCode": "Uygulama kimliğini kaynak kodundan bulmaya çalış",
     "removeOnExternalUninstall": "Harici olarak kaldırılan uygulamaları otomatik olarak kaldır",
     "pickHighestVersionCode": "Otomatik olarak en yüksek sürüm koduna sahip APK'yı seç",
@@ -425,5 +428,9 @@
     "privacy": "Gizlilik",
     "privacyText": "Bu uygulama gizlilik odaklıdır ve kişisel veri toplamaz.",
     "acceptAndContinue": "Kabul Et ve Devam Et",
-    "decline": "Reddet"
+    "decline": "Reddet",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

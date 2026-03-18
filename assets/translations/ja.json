@@ -275,7 +275,10 @@
     "about": "概要",
     "requiresCredentialsInSettings": "{}: これには追加の認証が必要です (設定にて)",
     "checkOnStart": "起動時にアップデートを確認する",
-    "tryInferAppIdFromCode": "ソースコードからApp IDを推測する",
+    "safeMode": "セーフモード",
+    "safeModeDescription": "アプリ追加ページを非表示にし、代わりにインポート/エクスポートを表示",
+    "safeModeAddAppDisabled": "アプリ追加はセーフモードで無効になっています",
+    "tryInferAppIdFromCode": "ソースコードからアプリIDを推測しようとする",
     "removeOnExternalUninstall": "外部でアンインストールされたアプリを自動的に削除する",
     "pickHighestVersionCode": "最も高いバージョンコードのAPKを自動的に選択する",
     "checkUpdateOnDetailPage": "アプリの詳細ページを開く際にアップデートを確認する",
@@ -456,5 +459,9 @@
     "privacy": "プライバシー",
     "privacyText": "このアプリはプライバシー重視で、個人データを収集しません。",
     "acceptAndContinue": "同意して続行",
-    "decline": "拒否"
+    "decline": "拒否",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

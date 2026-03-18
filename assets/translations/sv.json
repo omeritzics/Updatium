@@ -244,6 +244,9 @@
     "about": "Om",
     "requiresCredentialsInSettings": "{}: This needs additional credentials (in Settings)",
     "checkOnStart": "Kolla efter uppdateringar vid start",
+    "safeMode": "Säkert läge",
+    "safeModeDescription": "Dölj Lägg till app-sida och visa Importera/Exportera istället",
+    "safeModeAddAppDisabled": "Lägg till app är inaktiverat i säkert läge",
     "tryInferAppIdFromCode": "Försök härleda app-id från källkoden",
     "removeOnExternalUninstall": "Ta bort externt avinstallerade appar automatiskt",
     "pickHighestVersionCode": "Välj automatiskt högsta versionskod APK",
@@ -425,5 +428,9 @@
     "privacy": "Integritet",
     "privacyText": "Denna app är integritetsfokuserad och samlar inte in personlig data.",
     "acceptAndContinue": "Acceptera och fortsätt",
-    "decline": "Avvisa"
+    "decline": "Avvisa",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

@@ -813,6 +813,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  shizuku_apk_installer:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "3ef7f8fbf904848d144304556b0f80c91fee82a5"
+      url: "https://github.com/re7gog/shizuku_apk_installer"
+    source: git
+    version: "1.2.0"
   sky_engine:
     dependency: transitive
     description: flutter

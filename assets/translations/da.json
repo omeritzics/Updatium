@@ -244,6 +244,9 @@
     "about": "Om",
     "requiresCredentialsInSettings": "{} kræver yderligere legitimation (i Indstillinger)",
     "checkOnStart": "Tjek for opdateringer ved opstart",
+    "safeMode": "Sikker tilstand",
+    "safeModeDescription": "Skjul Tilføj app-side og vis Import/Eksport i stedet",
+    "safeModeAddAppDisabled": "Tilføj app er deaktiveret i sikker tilstand",
     "tryInferAppIdFromCode": "Forsøg at udlede app-ID fra kildekode",
     "removeOnExternalUninstall": "Fjern automatisk eksternt afinstallerede apps",
     "pickHighestVersionCode": "Auto-vælg højeste versionKode af APK",
@@ -425,5 +428,9 @@
     "privacy": "Privatliv",
     "privacyText": "Denne app er privatlivsfokuseret og indsamler ikke personlige data.",
     "acceptAndContinue": "Accepter og fortsæt",
-    "decline": "Afvis"
+    "decline": "Afvis",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

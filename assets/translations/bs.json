@@ -244,6 +244,9 @@
     "about": "O nama",
     "requiresCredentialsInSettings": "{}: Za ovo su potrebni dodatni akreditivi (u Postavkama)",
     "checkOnStart": "Provjerite ima li novosti pri pokretanju",
+    "safeMode": "Sigurnosni režim",
+    "safeModeDescription": "Sakrij stranicu za dodavanje aplikacija i prikaži uvoz/izvoz umjesto toga",
+    "safeModeAddAppDisabled": "Dodavanje aplikacija je onemogućeno u sigurnosnom režimu",
     "tryInferAppIdFromCode": "Pokušati otkriti ID aplikacije iz izvornog koda",
     "removeOnExternalUninstall": "Automatski ukloni eksterno deinstalirane aplikacije",
     "pickHighestVersionCode": "Automatski odaberite najviši kôd verzije APK-a",
@@ -425,5 +428,9 @@
     "privacy": "Privatnost",
     "privacyText": "Ova aplikacija je fokusirana na privatnost i ne prikuplja lične podatke.",
     "acceptAndContinue": "Prihvatam i Nastavim",
-    "decline": "Odbij"
+    "decline": "Odbij",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }

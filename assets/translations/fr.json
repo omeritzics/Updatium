@@ -292,7 +292,10 @@
     "about": "À propos",
     "requiresCredentialsInSettings": "{} a besoin d'informations d'identification supplémentaires (dans les Paramètres)",
     "checkOnStart": "Rechercher les mises à jour au démarrage",
-    "tryInferAppIdFromCode": "Essayer de déduire l'identifiant de l'application à partir du code source",
+    "safeMode": "Mode sans échec",
+    "safeModeDescription": "Masquer la page Ajouter une application et afficher Importer/Exporter à la place",
+    "safeModeAddAppDisabled": "L'ajout d'application est désactivé en mode sans échec",
+    "tryInferAppIdFromCode": "Essayer de déduire l'ID de l'application à partir du code source",
     "removeOnExternalUninstall": "Supprimer automatiquement les applications désinstallées en externe",
     "pickHighestVersionCode": "Sélectionner automatiquement la version la plus récente du code APK",
     "checkUpdateOnDetailPage": "Rechercher les mises à jour lors de l'ouverture de la page détaillée d'une application",
@@ -474,5 +477,9 @@
     "privacy": "Confidentialité",
     "privacyText": "Cette application est axée sur la confidentialité et ne collecte pas de données personnelles.",
     "acceptAndContinue": "Accepter et continuer",
-    "decline": "Refuser"
+    "decline": "Refuser",
+    "githubStarPromptTitle": "Vous aimez Updatium ?",
+    "githubStarPromptContent": "Updatium est un projet communautaire open-source volontaire développé pendant mon temps libre. Si vous souhaitez soutenir le projet, merci de lui donner une étoile sur GitHub pour nous aider à atteindre plus d'utilisateurs et de contributeurs. Vous ne serez plus sollicité à ce sujet. Merci d'avance ! :)",
+    "githubStarPromptStar": "Donner une étoile",
+    "githubStarPromptDontShowAgain": "Ne plus afficher"
 }

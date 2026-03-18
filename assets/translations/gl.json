@@ -244,6 +244,9 @@
     "about": "Sobre",
     "requiresCredentialsInSettings": "{} precisa credenciais adicionais (nos Axustes)",
     "checkOnStart": "Buscar actualizacións ao inicio",
+    "safeMode": "Modo seguro",
+    "safeModeDescription": "Agochar a páxina Engadir aplicación e mostrar Importar/Exportar no seu lugar",
+    "safeModeAddAppDisabled": "Engadir aplicación está desactivado no modo seguro",
     "tryInferAppIdFromCode": "Intentar adiviñar o ID da app desde o código fonte",
     "removeOnExternalUninstall": "Retirar automaticamente as apps desinstaladas externamente",
     "pickHighestVersionCode": "Autoseleccionar o APK coa versión máis alta",
@@ -425,5 +428,9 @@
     "privacy": "Privacidade",
     "privacyText": "Este aplicativo está centrado na privacidade e non recolle datos persoais.",
     "acceptAndContinue": "Aceptar e continuar",
-    "decline": "Rexeitar"
+    "decline": "Rexeitar",
+    "githubStarPromptTitle": "Enjoying Updatium?",
+    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
+    "githubStarPromptStar": "Star",
+    "githubStarPromptDontShowAgain": "Don't show again"
 }
