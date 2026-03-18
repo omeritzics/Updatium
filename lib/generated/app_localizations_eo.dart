@@ -879,7 +879,7 @@ class AppLocalizationsEo extends AppLocalizations {
       'Movi neinstalatajn apojn al malsupro de la langeto Apoj';
 
   @override
-  String get hideNonInstalledApps => 'Hide non-installed apps';
+  String get hideNonInstalledApps => 'Kaŝi neinstalitajn aplikaĵojn';
 
   @override
   String get gitlabPATLabel => 'GitLab persona atingoĵetono';

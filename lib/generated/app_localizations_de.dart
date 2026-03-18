@@ -884,7 +884,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Nicht installierte Apps ans Ende der App-Ansicht verschieben';
 
   @override
-  String get hideNonInstalledApps => 'Verstecke nicht installierte Apps';
+  String get hideNonInstalledApps => 'Installierte Apps nicht ausblenden';
 
   @override
   String get gitlabPATLabel => 'Persönlicher Zugangstoken für GitLab';

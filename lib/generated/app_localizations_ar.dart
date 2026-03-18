@@ -870,7 +870,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'نقل التطبيقات غير المثبتة إلى أسفل قائمة التطبيقات';
 
   @override
-  String get hideNonInstalledApps => 'Hide non-installed apps';
+  String get hideNonInstalledApps => 'إخفاء التطبيقات غير المثبتة';
 
   @override
   String get gitlabPATLabel => 'رمز الوصول الشخصي لـ GitLab';
