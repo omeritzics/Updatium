@@ -554,7 +554,7 @@ class AddAppPageState extends State<AddAppPage> {
               [
                 GeneratedFormTextField(
                   'searchSomeSources',
-                  label: 'Search specific sources',
+                  label: AppLocalizations.of(context)!.searchSomeSourcesLabel,
                   required: false,
                 ),
               ],
@@ -571,15 +571,15 @@ class AddAppPageState extends State<AddAppPage> {
         const SizedBox(width: 16),
         searching
             ? Semantics(
-                label: 'Searching',
+                label: AppLocalizations.of(context)!.search,
                 child: const CircularProgressIndicator(),
               )
             : Semantics(
                 button: true,
-                label: 'Search',
+                label: AppLocalizations.of(context)!.search,
                 hint: searchQuery.isEmpty
-                    ? 'Enter search terms first'
-                    : 'Search for apps',
+                    ? AppLocalizations.of(context)!.searchQuery
+                    : AppLocalizations.of(context)!.searchX(AppLocalizations.of(context)!.appsString),
                 excludeSemantics: true,
                 child: FilledButton(
                   onPressed: searchQuery.isEmpty || doingSomething
@@ -587,7 +587,7 @@ class AddAppPageState extends State<AddAppPage> {
                       : () {
                           runSearch();
                         },
-                  child: Text('Search'),
+                  child: Text(AppLocalizations.of(context)!.search),
                 ),
               ),
       ],
@@ -598,7 +598,7 @@ class AddAppPageState extends State<AddAppPage> {
       children: [
         const SizedBox(height: 16),
         Text(
-          'Additional options for ${pickedSource?.name ?? 'source'}',
+          AppLocalizations.of(context)!.additionalOptsFor(pickedSource?.name ?? AppLocalizations.of(context)!.source),
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
@@ -642,7 +642,7 @@ class AddAppPageState extends State<AddAppPage> {
               [
                 GeneratedFormSwitch(
                   'inferAppIdIfOptional',
-                  label: 'Try to infer app ID from package name if possible',
+                  label: AppLocalizations.of(context)!.tryInferAppIdFromCode,
                   defaultValue: inferAppIdIfOptional,
                 ),
               ],
@@ -664,7 +664,7 @@ class AddAppPageState extends State<AddAppPage> {
               [
                 GeneratedFormTextField(
                   'appId',
-                  label: 'App ID - Custom',
+                  label: '${AppLocalizations.of(context)!.appId} - ${AppLocalizations.of(context)!.custom}',
                   required: false,
                   additionalValidators: [
                     (value) {
@@ -675,7 +675,7 @@ class AddAppPageState extends State<AddAppPage> {
                         r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
                       ).hasMatch(value);
                       if (!isValid) {
-                        return 'Invalid input';
+                        return AppLocalizations.of(context)!.invalidInput;
                       }
                       return null;
                     },
@@ -707,8 +707,8 @@ class AddAppPageState extends State<AddAppPage> {
                 context: context,
                 builder: (context) {
                   return GeneratedFormModal(
-                    singleNullReturnButton: 'OK',
-                    title: 'Supported sources',
+                    singleNullReturnButton: AppLocalizations.of(context)!.ok,
+                    title: AppLocalizations.of(context)!.supportedSources,
                     items: const [],
                     additionalWidgets: [
                       ...sourceProvider.sources.map(
@@ -736,18 +736,18 @@ class AddAppPageState extends State<AddAppPage> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Note:',
+                        AppLocalizations.of(context)!.note,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
-                      Text('Some sources can be self-hosted. You can override the source URL to use a self-hosted instance.'),
+                      Text(AppLocalizations.of(context)!.selfHostedNote(AppLocalizations.of(context)!.overrideSource)),
                     ],
                   );
                 },
               );
             },
             child: Text(
-              'Supported sources',
+              AppLocalizations.of(context)!.supportedSources,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.underline,
@@ -774,7 +774,7 @@ class AddAppPageState extends State<AddAppPage> {
                 vertical: 20,
               ),
               title: Text(
-                'Add App',
+                AppLocalizations.of(context)!.addApp,
                 style: TextStyle(
                   color: Theme.of(context).textTheme.bodyMedium!.color,
                 ),
@@ -831,7 +831,7 @@ class AddAppPageState extends State<AddAppPage> {
           );
         },
         icon: const Icon(Icons.import_export),
-        label: Text('Import/Export'),
+        label: Text(AppLocalizations.of(context)!.importExport),
       ),
     );
   }
