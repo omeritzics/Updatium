@@ -62,6 +62,103 @@ String getLanguageName(Locale locale) {
   return languageNames[key] ?? locale.languageCode.toUpperCase();
 }
 
+// Helper function to get localized source names
+String getLocalizedSourceName(String sourceName, BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
+  switch (sourceName) {
+    case 'GitHub starred repositories':
+      return l10n.githubStarredRepos;
+    case 'Direct APK Link':
+      return l10n.directAPKLink;
+    default:
+      return sourceName;
+  }
+}
+
+// Helper function to localize form item labels
+GeneratedFormItem localizeFormItem(GeneratedFormItem item, BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
+  
+  if (item is GeneratedFormTextField) {
+    String localizedLabel = item.label;
+    switch (item.label) {
+      case 'GitHub personal access token (increases rate limit)':
+        localizedLabel = l10n.githubPATLabel;
+        break;
+      case 'GitLab personal access token (increases rate limit)':
+        localizedLabel = l10n.gitlabPATLabel;
+        break;
+      case 'GitHub request prefix':
+        localizedLabel = 'GitHub request prefix'; // Keep as is for now
+        break;
+      case 'GitLab request prefix':
+        localizedLabel = 'GitLab request prefix'; // Keep as is for now
+        break;
+      case 'Default pseudo-versioning method':
+        localizedLabel = l10n.defaultPseudoVersioningMethod;
+        break;
+      case 'About':
+        localizedLabel = l10n.about;
+        break;
+    }
+    
+    // Localize "About" text in belowWidgets
+    List<Widget>? localizedBelowWidgets = item.belowWidgets?.map((widget) {
+      if (widget is Text && widget.data == 'About') {
+        return Text(
+          l10n.about,
+          style: widget.style,
+        );
+      }
+      return widget;
+    }).toList();
+    
+    return GeneratedFormTextField(
+      item.key,
+      label: localizedLabel,
+      defaultValue: item.defaultValue,
+      required: item.required,
+      password: item.password,
+      hint: item.hint,
+      textInputType: item.textInputType,
+      autoCompleteOptions: item.autoCompleteOptions,
+      additionalValidators: item.additionalValidators as List<String? Function(String?)>,
+      belowWidgets: localizedBelowWidgets as List<Widget>,
+    );
+  } else if (item is GeneratedFormDropdown) {
+    // Localize dropdown options
+    List<MapEntry<String, String>>? localizedOpts = item.opts?.map((option) {
+      String localizedValue = option.value;
+      switch (option.value) {
+        case 'Partial APK Hash':
+          localizedValue = l10n.partialAPKHash;
+          break;
+        default:
+          localizedValue = option.value;
+      }
+      return MapEntry(option.key, localizedValue);
+    }).toList();
+    
+    String localizedLabel = item.label;
+    switch (item.label) {
+      case 'Default pseudo-versioning method':
+        localizedLabel = l10n.defaultPseudoVersioningMethod;
+        break;
+      default:
+        localizedLabel = item.label;
+    }
+    
+    return GeneratedFormDropdown(
+      item.key,
+      localizedOpts,
+      label: localizedLabel,
+      defaultValue: item.defaultValue,
+    );
+  }
+  
+  return item; // Return other types unchanged
+}
+
 // Spacing constants
 const height8 = SizedBox(height: 8);
 const height16 = SizedBox(height: 16);
@@ -464,13 +561,14 @@ class _SettingsPageState extends State<SettingsPage> {
     var sourceSpecificFields = sourceProvider.sources.map((e) {
       if (e.sourceConfigSettingFormItems.isNotEmpty) {
         return GeneratedForm(
-          items: e.sourceConfigSettingFormItems.map((e) {
-            if (e is GeneratedFormSwitch) {
-              e.defaultValue = settingsProvider.getSettingBool(e.key);
+          items: e.sourceConfigSettingFormItems.map((formItem) {
+            var localizedItem = localizeFormItem(formItem, context);
+            if (localizedItem is GeneratedFormSwitch) {
+              localizedItem.defaultValue = settingsProvider.getSettingBool(localizedItem.key);
             } else {
-              e.defaultValue = settingsProvider.getSettingString(e.key);
+              localizedItem.defaultValue = settingsProvider.getSettingString(localizedItem.key);
             }
-            return [e];
+            return [localizedItem];
           }).toList(),
           onValueChanges: (values, valid, isBuilding) {
             if (valid && !isBuilding) {

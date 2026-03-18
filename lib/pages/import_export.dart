@@ -20,6 +20,8 @@ String getLocalizedSourceName(String sourceName, BuildContext context) {
   switch (sourceName) {
     case 'GitHub starred repositories':
       return l10n.githubStarredRepos;
+    case 'Direct APK Link':
+      return l10n.directAPKLink;
     default:
       return sourceName;
   }
