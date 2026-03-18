@@ -375,7 +375,8 @@
     "plural": {
       "one": "{count} aplikace",
       "few": "{count} aplikace",
-      "other": "{count} aplikací"
+      "other": "{count} aplikací",
+      "many": "{count} apps"
     },
     "placeholders": {
       "count": {
@@ -387,7 +388,9 @@
   "@apk": {
     "plural": {
       "one": "{count} APK",
-      "other": "{count} APK"
+      "other": "{count} APK",
+      "few": "{count} APK",
+      "many": "{count} APK"
     },
     "placeholders": {
       "count": {
@@ -400,7 +403,8 @@
     "plural": {
       "one": "{count} minuta",
       "few": "{count} minuty",
-      "other": "{count} minut"
+      "other": "{count} minut",
+      "many": "{count} minutes"
     },
     "placeholders": {
       "count": {
@@ -413,7 +417,8 @@
     "plural": {
       "one": "{count} hodina",
       "few": "{count} hodiny",
-      "other": "{count} hodin"
+      "other": "{count} hodin",
+      "many": "{count} hours"
     },
     "placeholders": {
       "count": {
@@ -426,7 +431,8 @@
     "plural": {
       "one": "{count} den",
       "few": "{count} dny",
-      "other": "{count} dní"
+      "other": "{count} dní",
+      "many": "{count} days"
     },
     "placeholders": {
       "count": {

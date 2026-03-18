@@ -391,7 +391,7 @@
   "apps": "יישומים",
   "@apps": {
     "plural": {
-      "one": "יישום אחד",
+      "one": "{count} יישום",
       "two": "שני יישומים",
       "other": "{count} יישומים"
     },
@@ -406,7 +406,9 @@
     "plural": {
       "one": "קובץ APK אחד",
       "two": "שני קובצי APK",
-      "other": "{count} קובצי APK"
+      "other": "{count} קובצי APK",
+      "zero": "{count} קבצי APK",
+      "many": "{count} קבצי APK"
     },
     "placeholders": {
       "count": {
@@ -417,7 +419,7 @@
   "minute": "דקות",
   "@minute": {
     "plural": {
-      "one": "דקה אחת",
+      "one": "{count} דקה",
       "two": "שתי דקות",
       "other": "{count} דקות"
     },
@@ -430,7 +432,7 @@
   "hour": "שעות",
   "@hour": {
     "plural": {
-      "one": "שעה אחת",
+      "one": "{count} שעה",
       "two": "שעתיים",
       "other": "{count} שעות"
     },
@@ -443,7 +445,7 @@
   "day": "ימים",
   "@day": {
     "plural": {
-      "one": "יום אחד",
+      "one": "{count} יום",
       "two": "יומיים",
       "other": "{count} ימים"
     },

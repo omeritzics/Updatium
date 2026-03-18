@@ -375,7 +375,8 @@
     "plural": {
       "one": "{count} приложение",
       "few": "{count} приложения",
-      "other": "{count} приложений"
+      "other": "{count} приложений",
+      "many": "{count} apps"
     },
     "placeholders": {
       "count": {
@@ -388,7 +389,8 @@
     "plural": {
       "one": "{count} APK-файл",
       "few": "{count} APK-файла",
-      "other": "{count} APK-файлов"
+      "other": "{count} APK-файлов",
+      "many": "{count} APK"
     },
     "placeholders": {
       "count": {
@@ -401,7 +403,8 @@
     "plural": {
       "one": "{count} минута",
       "few": "{count} минуты",
-      "other": "{count} минут"
+      "other": "{count} минут",
+      "many": "{count} minutes"
     },
     "placeholders": {
       "count": {
@@ -414,7 +417,8 @@
     "plural": {
       "one": "{count} час",
       "few": "{count} часа",
-      "other": "{count} часов"
+      "other": "{count} часов",
+      "many": "{count} hours"
     },
     "placeholders": {
       "count": {
@@ -427,7 +431,8 @@
     "plural": {
       "one": "{count} день",
       "few": "{count} дня",
-      "other": "{count} дней"
+      "other": "{count} дней",
+      "many": "{count} days"
     },
     "placeholders": {
       "count": {

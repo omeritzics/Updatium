@@ -388,7 +388,10 @@
     "plural": {
       "one": "{count} APK",
       "two": "APKان",
-      "other": "{count} APKs"
+      "other": "{count} APKs",
+      "zero": "{count} ملفات APK",
+      "few": "{count} ملفات APK",
+      "many": "{count} ملفات APK"
     },
     "placeholders": {
       "count": {
