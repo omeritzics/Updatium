@@ -67,9 +67,18 @@ class MainActivity : FlutterActivity() {
                     )
                     appsList.add(appMap)
                 }
-            } catch (e: Exception) {
-                // Skip apps that can't be accessed
-            }
+import android.util.Log
+
+class MainActivity : FlutterActivity() {
+    private val CHANNEL = "updatium/package_manager"
+    private val TAG = "MainActivity"
+    
+    // ... other code ...
+    
+    } catch (e: Exception) {
+        Log.w(TAG, "Skipping inaccessible package entry", e)
+    }
+}
         }
 
         return appsList
