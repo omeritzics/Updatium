@@ -1,13 +1,7 @@
 {
   "@@locale": "eo",
-  "invalidURLForSource": "Nevalida apo-URL {arg1}",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+
+  "invalidURLForSource": "Nevalida apo-URL {}",
   "noReleaseFound": "Ne eblas trovi taŭgan eldonon",
   "noVersionFound": "Ne eblas determini la eldonversion",
   "urlMatchesNoSource": "La URL ne konformas al konata fonto",
@@ -26,6 +20,7 @@
   "invalidRegEx": "Nevalida regula esprimo",
   "noDescription": "Neniu priskribo",
   "cancel": "Nuligi",
+  "continue": "Daŭrigi",
   "requiredInBrackets": "(Neprigata)",
   "dropdownNoOptsError": "ERARO: LA MALVOLVANTA LISTO DEVAS HAVI ALMENAŬ UNU OPCION",
   "color": "Koloro",
@@ -35,14 +30,7 @@
   "githubStarredRepos": "Stelaj GitHub-deponejoj",
   "uname": "Uzantnomo",
   "wrongArgNum": "Malĝusta nombro da provizitaj argumentoj",
-  "xIsTrackOnly": "{arg1} estas nur sekvitaj",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} estas nur sekvitaj",
   "source": "Fonto",
   "app": "Apo",
   "appsFromSourceAreTrackOnly": "Apoj el tiu fonto estas 'Nur sekvitaj'.",
@@ -57,14 +45,7 @@
   "add": "Aldoni",
   "searchSomeSourcesLabel": "Serĉi (nur kelkaj fontoj)",
   "search": "Serĉi",
-  "additionalOptsFor": "Kromaj opcioj por {arg1}",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "Kromaj opcioj por {}",
   "supportedSources": "Taskiĝata fontoj",
   "trackOnlyInBrackets": "(Nur sekvita)",
   "searchableInBrackets": "(Serĉebla)",
@@ -72,94 +53,35 @@
   "noApps": "Neniu apo",
   "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
   "noAppsForFilter": "Neniu apo por filtri",
-  "byX": "Laŭ {arg1}",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "Progreso: {arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "Laŭ {}",
+  "percentProgress": "Progreso: {}%",
   "pleaseWait": "Bonvolu atendi",
   "updateAvailable": "Havebla ĝisdatigo",
   "notInstalled": "Neinstalita",
   "pseudoVersion": "Pseŭdoversio",
   "selectAll": "Selekti ĉion",
-  "deselectX": "Malselekti {arg1}",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "{arg1} estas farigota de Updatium sed restos instalata en la disponaĵo.",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "Malselekti {}",
+  "xWillBeRemovedButRemainInstalled": "{} estas farigota de Updatium sed restos instalata en la disponaĵo.",
   "removeSelectedAppsQuestion": "Farigi la selektitajn apojn?",
   "removeSelectedApps": "Farigi la selektitajn apojn",
-  "updateX": "Ĝisdatigi {arg1}",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "Instali {arg1}",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "Marki {arg1}\n(Nur sekvita)\nkiel ĝisdata",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "Ŝanĝi {arg1}",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "Ĝisdatigi {}",
+  "installX": "Instali {}",
+  "markXTrackOnlyAsUpdated": "Marki {}
+(Nur sekvita)
+kiel ĝisdata",
+  "changeX": "Ŝanĝi {}",
   "installUpdateApps": "Instali/ĝisdatigi apojn",
   "installUpdateSelectedApps": "Instali/ĝisdatigi la selektitajn apojn",
-  "markXSelectedAppsAsUpdated": "Marki la {arg1} selektitajn apojn kiel ĝisdataj?",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "Marki la {} selektitajn apojn kiel ĝisdataj?",
   "no": "Ne",
   "yes": "Jes",
   "markSelectedAppsUpdated": "Marki la selektitajn apojn kiel ĝisdataj",
   "pinToTop": "Alpingli supre",
   "unpinFromTop": "Malalpingli el supro",
   "resetInstallStatusForSelectedAppsQuestion": "Rekomenci la instaladostaton de la selektitaj apoj?",
-  "installStatusOfXWillBeResetExplanation": "Instaladostato de ĉiuj selektitaj apoj estas rekomencota.\n\nTio povas utili kiam la versio de la montrata application en Updatium estas malĝusta kaŭze de malsukcesaj ĝidatigoj aŭ aliaj problemoj.",
+  "installStatusOfXWillBeResetExplanation": "Instaladostato de ĉiuj selektitaj apoj estas rekomencota.
+
+Tio povas utili kiam la versio de la montrata application en Updatium estas malĝusta kaŭze de malsukcesaj ĝidatigoj aŭ aliaj problemoj.",
   "customLinkMessage": "Tiuj ligiloj funkcias en disponaĵoj kun Updatium instalita",
   "shareAppConfigLinks": "Diskonigi la apo-agordojn kiel HTML ligilo",
   "shareSelectedAppURLs": "Diskonigi la selektitajn apo-URLjn",
@@ -175,63 +97,29 @@
   "nonInstalledApps": "Neinstalita apoj",
   "importExport": "Importi/Eksporti",
   "settings": "Agordoj",
-  "exportedTo": "Eksportita en {arg1}",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "Eksportita en {}",
   "updatiumExport": "Eksporti Updatium-n",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Nevalida enigo",
-  "importedX": "Importita {arg1}",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "Importita {}",
   "updatiumImport": "Importi Updatium-n",
   "importFromURLList": "Eksporti el URL-listo",
   "searchQuery": "Informmendo de serĉo",
   "appURLList": "Listo de URLj de la apo",
   "line": "Horizontalo",
-  "searchX": "Serĉi {arg1}",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "Serĉi {}",
   "noResults": "Neniu rezulto",
-  "importX": "Importi {arg1}",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "La importitaj apoj povas montriĝi malĝuste kiel \"Neinstalitaj\".\nPor solvi tion, reinstalu ilin per Updatium.\nTiu ne afekcios la apodatumoj.\n\nAkefcias nur la URL-ajn lak triajn importmetodojn.",
+  "importX": "Importi {}",
+  "importedAppsIdDisclaimer": "La importitaj apoj povas montriĝi malĝuste kiel \"Neinstalitaj\".
+Por solvi tion, reinstalu ilin per Updatium.
+Tiu ne afekcios la apodatumoj.
+
+Akefcias nur la URL-ajn lak triajn importmetodojn.",
   "importErrors": "Eraroj de importado",
-  "importedXOfYApps": "{arg1} apoj el {arg2} importitaj.",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "{} apoj el {} importitaj.",
   "followingURLsHadErrors": "La sekvantaj URLj havis erarojn:",
   "selectURL": "Selekti URLn",
   "selectURLs": "Selekti URLjn",
@@ -267,86 +155,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "eksporto-updatium",
   "pickAnAPK": "Selektu APKn",
-  "appHasMoreThanOnePackage": "{arg1} havas pli ol unu pakaĵon:",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "Via disponaĵo taskiĝas la CPU-arkitekturon {arg1}.",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{} havas pli ol unu pakaĵon:",
+  "deviceSupportsXArch": "Via disponaĵo taskiĝas la CPU-arkitekturon {}.",
   "deviceSupportsFollowingArchs": "Via disponaĵo taskiĝas la sekvantajn CPU-arkitekturojn:",
   "warning": "Avertu",
-  "sourceIsXButPackageFromYPrompt": "La apofonto estas '{arg1}' sed la pakaĵo de ĝisdatigo devenas de '{arg2}'. Daŭrigi?",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "La apofonto estas '{}' sed la pakaĵo de ĝisdatigo devenas de '{}'. Daŭrigi?",
   "updatesAvailable": "Haveblaj ĝisdatigoj",
   "updatesAvailableNotifDescription": "Sciigas al la uzanto, ke ĝisdatigoj haveblas por unu aŭ pluraj apoj sekvitaj fare de Updatium.",
   "noNewUpdates": "Neniu nova ĝisdatigo.",
-  "xHasAnUpdate": "{arg1} havas ĝisdatigon.",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{} havas ĝisdatigon.",
   "appsUpdated": "Ĝisdataj apoj",
   "appsNotUpdated": "Malsukcesis ĝisdatigi aplikaĵojn",
   "appsUpdatedNotifDescription": "Sciigas al la uzanto, ke ĝisdatigoj de unu aŭ pluraj apoj estas instalitaj fone.",
-  "xWasUpdatedToY": "{arg1} estas ĝidatigita en {arg2}.",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "Malsukcesas ĝisdatigi de {arg1} en {arg2}.",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "{} estas ĝidatigita en {}.",
+  "xWasNotUpdatedToY": "Malsukcesas ĝisdatigi de {} en {}.",
   "errorCheckingUpdates": "Eraro serĉante ĝisdatigojn",
   "errorCheckingUpdatesNotifDescription": "Sciigas al la uzanto, kiam la serĉo de fonaj ĝisdatigoj malsukcesas.",
   "appsRemoved": "Forigitaj Apoj",
   "appsRemovedNotifDescription": "Sciigas al la uzanto, ke unu aŭ pluraj apoj estas forigitaj kaŭze de eraroj dum ilia ŝarĝado.",
-  "xWasRemovedDueToErrorY": "{arg1} estas forigita kaŭze de tiu eraro: {arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "{} estas forigita kaŭze de tiu eraro: {}",
   "completeAppInstallation": "Kompleta instalado de la apo",
   "updatiumMustBeOpenToInstallApps": "Updatium devas esti malfermita por instali apojn",
   "completeAppInstallationNotifDescription": "Petas la uzanton reiri en Updatium por fini la instaladon de apo",
@@ -354,43 +181,15 @@
   "checkingForUpdatesNotifDescription": "Dumtempa sciigo kiu aperas dum la serĉo de ĝisdatigoj",
   "pleaseAllowInstallPerm": "Bonvolu permesi al Updatium instali apojn",
   "trackOnly": "Nur sekvita",
-  "errorWithHttpStatusCode": "Eraro {arg1}",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "Eraro {}",
   "versionCorrectionDisabled": "Versiokorekto malaktivigita (ŝajnas, ke la kromaĵo ne funkcias)",
   "unknown": "Nekonata",
   "none": "Nenio",
   "all": "All",
   "never": "Neniam",
-  "latestVersionX": "Lasta versio: {arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "Instalita versio: {arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "Lasta serĉo de ĝisdatigoj: {arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "Lasta versio: {}",
+  "installedVersionX": "Instalita versio: {}",
+  "lastUpdateCheckX": "Lasta serĉo de ĝisdatigoj: {}",
   "remove": "Forigi",
   "yesMarkUpdated": "Jes, marki kiel ĝisdata",
   "fdroid": "Oficiala F-Droid",
@@ -407,30 +206,9 @@
   "additionalOptions": "Kromaj opcioj",
   "disableVersionDetection": "Malaktivigi la versiodetekto",
   "noVersionDetectionExplanation": "Tiu opcio devas esti uzata nur por apoj, kie la versiodetekto ne funkcias ĝuste.",
-  "downloadingX": "Elŝutante {arg1}",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "Elŝuti {arg1}",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "Elŝutita {arg1}",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "Elŝutante {}",
+  "downloadX": "Elŝuti {}",
+  "downloadedX": "Elŝutita {}",
   "releaseAsset": "Aktiva versio",
   "downloadNotifDescription": "Sciigas al la uzanto pri la progreso de apo-elŝuton",
   "noAPKFound": "Neniu trovita APK",
@@ -474,14 +252,7 @@
   "hideNonInstalledApps": "Hide non-installed apps",
   "gitlabPATLabel": "GitLab persona atingoĵetono",
   "about": "Pri",
-  "requiresCredentialsInSettings": "{arg1} bezonas kromajn informojn (en Agordoj)",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{} bezonas kromajn informojn (en Agordoj)",
   "checkOnStart": "Serĉi ĝisdatigojn starte",
   "safeMode": "Sekura reĝimo",
   "safeModeDescription": "Kaŝi paĝon de Aldoni apo kaj montri Importo/Eksporto anstataŭe",
@@ -501,17 +272,7 @@
   "customLinkFilterRegex": "Filtro de APK-ligilo agordita per regula esprimo (defaŭlte '.apk$')",
   "appsPossiblyUpdated": "Provitaj apoĝisdatigoj",
   "appsPossiblyUpdatedNotifDescription": "Sciigas al la uzanto, ke ĝisdatigoj de unu aŭ pluraj apoj eble estas aplikitaj fone",
-  "xWasPossiblyUpdatedToY": "{arg1} povas esti ĝisdata kiel {arg2}.",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "{} povas esti ĝisdata kiel {}.",
   "enableBackgroundUpdates": "Aktivigi fonajn ĝisdatigojn",
   "backgroundUpdateReqsExplanation": "Fonaj ĝisdatigoj ne eblas por ĉiuj apoj.",
   "backgroundUpdateLimitsExplanation": "La sukceso de fona instalado povas esti nur determinata dum la malfermo de Updatium.",
@@ -527,14 +288,7 @@
   "autoSelectHighestVersionCode": "Aŭtomate selekti la plej ĵusan version de la APK-kodo",
   "versionExtractionRegEx": "Ekstrakti la versioĉenon per regula esprimo",
   "trimVersionString": "Mallongigi la versioĉenon per regula esprimo",
-  "matchGroupToUseForX": "Konformecogrupo uzota por \"{arg1}\"",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "Konformecogrupo uzota por \"{}\"",
   "matchGroupToUse": "Grupo de konformeco uzota por la eltiraĵo de la versio per regula esprimo",
   "highlightTouchTargets": "Emfazi malpi evidentajn klavojn",
   "pickExportDir": "Selekti la dosierujon de eksporto",
@@ -557,26 +311,12 @@
   "appsPossiblyUpdatedNotifChannel": "Provitaj apoĝisdatigoj",
   "errorCheckingUpdatesNotifChannel": "Eraro serĉante ĝisdatigojn",
   "appsRemovedNotifChannel": "Forigitaj aplikaĵoj",
-  "downloadingXNotifChannel": "Elŝutante {arg1}",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "Elŝutante {}",
   "completeAppInstallationNotifChannel": "Kompleta apo instalado",
   "checkingForUpdatesNotifChannel": "Serĉante ĝisdatigojn",
   "onlyCheckInstalledOrTrackOnlyApps": "Nur serĉi la ĝisdatigojn de instalitaj kaj 'nur sekvitaj' apoj",
   "supportFixedAPKURL": "Taskiĝo de la fiksaj APK URLj",
-  "selectX": "Selekti {arg1}",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "Selekti {}",
   "parallelDownloads": "Permesi dumajn elŝutojn",
   "useShizuku": "Uzi Shizuku aŭ Sui por instali",
   "shizukuBinderNotFound": "La servo Shizuku estas netrovebla",
@@ -589,20 +329,14 @@
   "useLatestAssetDateAsReleaseDate": "Uzi la lastan publikigitan elementon kiel eldondato",
   "defaultPseudoVersioningMethod": "Defaŭlta metodo de fikcia versio",
   "partialAPKHash": "Parta APKa haketo",
+  "APKLinkHash": "Haketo de la APKa ligilo",
   "directAPKLink": "Rekta APKa ligilo",
   "pseudoVersionInUse": "Pseŭdoversio estas uzata",
   "installed": "Instalita",
   "latest": "Lasta versio",
   "invertRegEx": "Inversigi la regula esprimo",
   "note": "Noto",
-  "selfHostedNote": "La malvolvanta listo \"{arg1}\" povas esti uzata por aliri al memgastigataj/agordata instancoj el ajna fonto.",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "La malvolvanta listo \"{}\" povas esti uzata por aliri al memgastigataj/agordata instancoj el ajna fonto.",
   "badDownload": "La APK ne povis esti analizita (neakordigebla aŭ nekompleta elŝuto)",
   "beforeNewInstallsShareToAppVerifier": "Diskonigi novajn aplikaĵojn kun AppVerifier (se havebla)",
   "appVerifierInstructionToast": "Diskonigu kun AppVerifier, poste revenu ĉi tie kiam preta.",
@@ -620,23 +354,23 @@
   "welcome": "Welcome",
   "documentationLinksNote": "The Updatium GitHub page linked below contains links to videos, articles, discussions, and other resources that will help you understand how to use the app.",
   "batteryOptimizationNote": "Note that background downloads may work more reliably if you disable OS battery optimizations for Updatium.",
-  "fileDeletionError": "Failed to delete file (try deleting it manually then try again): \"{arg1}\"",
-  "@fileDeletionError": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "fileDeletionError": "Failed to delete file (try deleting it manually then try again): \"{}\"",
   "foregroundService": "Updatium foreground service",
   "foregroundServiceExplanation": "Use a foreground service for update checking (more reliable, consumes more power)",
   "fgServiceNotice": "This notification is required for background update checking (it can be hidden in the OS settings)",
   "excludeSecrets": "Exclude secrets",
+  "GHReqPrefix": "'sky22333/hubproxy' instance for GitHub requests",
   "includeZips": "Include ZIP files",
   "zippedApkFilterRegEx": "Filter APKs inside ZIP",
-  "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.\n\nAfter then, Updatium may stop working on certified Android devices.",
+  "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.
+
+After then, Updatium may stop working on certified Android devices.",
   "googleVerificationWarningP2": "Go to https://keepandroidopen.org/ for more information.",
-  "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\n\nIn any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.\n\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
+  "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.
+
+In any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.
+
+Non-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
   "multipleSigners": "Multiple Signers",
   "securityDisclaimerTitle": "Sekureca kaj Jura Malrespondeco",
   "license": "Permesilo",
@@ -651,14 +385,64 @@
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-  "aPKLinkHash": "Haketo de la APKa ligilo",
-  "gHReqPrefix": "'sky22333/hubproxy' instance for GitHub requests",
-  "continueAction": "Daŭrigi",
-  "minute": "{count} minutoj",
-  "@minute": {
+
+  "apps": "Apoj",
+  "@{key}": {{
     "plural": {
-      "one": "{count} minuto",
-      "other": "{count} minutoj"
+      "one": "{} Apo",
+      "other": "{} Apoj",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "apk": "APK",
+  "@{key}": {{
+    "plural": {
+      "one": "{} APK",
+      "other": "{} APKj",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} minutoj",
+  "@{key}": {{
+    "plural": {
+      "one": "{} minuto",
+      "other": "{} minutoj",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "hour": "{} horoj",
+  "@{key}": {{
+    "plural": {
+      "one": "{} horo",
+      "other": "{} horoj",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "day": "{} tagoj",
+  "@{key}": {{
+    "plural": {
+      "one": "{} tago",
+      "other": "{} tagoj",
     },
     "placeholders": {
       "count": {
@@ -666,31 +450,4 @@
       }
     }
   }
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "apps": "{count} Apps",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "day": "{count} days",
-  "githubRequestPrefix": "GitHub request prefix",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "hour": "{count} hours",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minimumStarCount": "Minimum star count",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
 }

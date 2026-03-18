@@ -1,13 +1,7 @@
 {
   "@@locale": "ar",
-  "invalidURLForSource": "رابط تطبيق {arg1} غير صالح",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+
+  "invalidURLForSource": "رابط تطبيق {} غير صالح",
   "noReleaseFound": "تعذر العثور على إصدار مناسب",
   "noVersionFound": "تعذر تحديد إصدار التطبيق",
   "urlMatchesNoSource": "الرابط لا يتطابق مع مصدر معروف",
@@ -26,6 +20,7 @@
   "invalidRegEx": "تعبير نمطي غير صالح",
   "noDescription": "لا يوجد وصف",
   "cancel": "ألغِ",
+  "continue": "استمر",
   "requiredInBrackets": "(مطلوب)",
   "dropdownNoOptsError": "خطأ: يجب أن يحتوي القائمة المنسدلة على خيار واحد على الأقل",
   "color": "لون",
@@ -35,14 +30,7 @@
   "githubStarredRepos": "مستودعات GitHub المفضلة",
   "uname": "اسم المستخدم",
   "wrongArgNum": "عدد وسائط غير صحيح",
-  "xIsTrackOnly": "{arg1} للتعقب فقط",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} للتعقب فقط",
   "source": "المصدر",
   "app": "التطبيق",
   "appsFromSourceAreTrackOnly": "تطبيقات هذا المصدر للتعقب فقط.",
@@ -57,14 +45,7 @@
   "add": "أضف",
   "searchSomeSourcesLabel": "بحث (بعض المصادر فقط)",
   "search": "بحث",
-  "additionalOptsFor": "خيارات إضافية لـ {arg1}",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "خيارات إضافية لـ {}",
   "supportedSources": "المصادر المدعومة",
   "trackOnlyInBrackets": "(للتعقب فقط)",
   "searchableInBrackets": "(قابل للبحث)",
@@ -72,94 +53,35 @@
   "noApps": "مرحباً!",
   "noAppsSubtext": "يمكنك إضافة أول تطبيق بالنقر على 'إضافة تطبيق' أدناه.",
   "noAppsForFilter": "لا توجد تطبيقات تطابق التصفية",
-  "byX": "بواسطة {arg1}",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "التقدم: {arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "بواسطة {}",
+  "percentProgress": "التقدم: {}%",
   "pleaseWait": "يُرجى الانتظار",
   "updateAvailable": "يتوفر تحديث",
   "notInstalled": "غير مثبت",
   "pseudoVersion": "إصدار وهمي",
   "selectAll": "تحديد الكل",
-  "deselectX": "إلغاء تحديد {arg1}",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "سيتم إزالة {arg1} من Updatium لكنه سيظل مثبتًا على الجهاز.",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "إلغاء تحديد {}",
+  "xWillBeRemovedButRemainInstalled": "سيتم إزالة {} من Updatium لكنه سيظل مثبتًا على الجهاز.",
   "removeSelectedAppsQuestion": "إزالة التطبيقات المحددة؟",
   "removeSelectedApps": "أزل التطبيقات المحددة",
-  "updateX": "حدِّث {arg1}",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "ثبِّت {arg1}",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "علِّم {arg1}\n(للتعقب فقط)\nكمحدث",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "غيِّر {arg1}",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "حدِّث {}",
+  "installX": "ثبِّت {}",
+  "markXTrackOnlyAsUpdated": "علِّم {}
+(للتعقب فقط)
+كمحدث",
+  "changeX": "غيِّر {}",
   "installUpdateApps": "ثبِّت/حدِّث التطبيقات",
   "installUpdateSelectedApps": "ثبِّت/حدِّث التطبيقات المحددة",
-  "markXSelectedAppsAsUpdated": "تعليم {arg1} تطبيقات محددة كمحدثة؟",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "تعليم {} تطبيقات محددة كمحدثة؟",
   "no": "لا",
   "yes": "نعم",
   "markSelectedAppsUpdated": "تعليم التطبيقات المحددة كمحدثة",
   "pinToTop": "تثبيت في الأعلى",
   "unpinFromTop": "إلغاء التثبيت من الأعلى",
   "resetInstallStatusForSelectedAppsQuestion": "إعادة تعيين حالة التثبيت للتطبيقات المحددة؟",
-  "installStatusOfXWillBeResetExplanation": "سيتم إعادة تعيين حالة التثبيت لأي تطبيقات محددة.\n\nقد يساعد هذا عندما يكون إصدار التطبيق المعروض في Updatium غير صحيح بسبب فشل التحديثات أو مشاكل أخرى.",
+  "installStatusOfXWillBeResetExplanation": "سيتم إعادة تعيين حالة التثبيت لأي تطبيقات محددة.
+
+قد يساعد هذا عندما يكون إصدار التطبيق المعروض في Updatium غير صحيح بسبب فشل التحديثات أو مشاكل أخرى.",
   "customLinkMessage": "هذه الروابط تعمل على الأجهزة التي بها Updatium مثبتًا",
   "shareAppConfigLinks": "مشاركة تكوين التطبيق كرابط HTML",
   "shareSelectedAppURLs": "مشاركة روابط التطبيقات المحددة",
@@ -175,63 +97,29 @@
   "nonInstalledApps": "تطبيقات غير مثبتة",
   "importExport": "استيراد/تصدير",
   "settings": "الإعدادات",
-  "exportedTo": "تم التصدير إلى {arg1}",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "تم التصدير إلى {}",
   "updatiumExport": "تصدير Updatium",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "إدخال غير صالح",
-  "importedX": "تم استيراد {arg1}",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "تم استيراد {}",
   "updatiumImport": "استيراد Updatium",
   "importFromURLList": "استيراد من قائمة الروابط",
   "searchQuery": "استعلام البحث",
   "appURLList": "قائمة روابط التطبيقات",
   "line": "سطر",
-  "searchX": "بحث {arg1}",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "بحث {}",
   "noResults": "لا توجد نتائج",
-  "importX": "استيراد {arg1}",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "قد تظهر التطبيقات المستوردة بشكل غير صحيح كـ \"غير مثبتة\".\nلإصلاح هذا، قم بإعادة تثبيتها عبر Updatium.\nهذا لا يؤثر على بيانات التطبيق.\n\nينطبق فقط على طرق الاستيراد عبر الروابط أو الطرف الثالث.",
+  "importX": "استيراد {}",
+  "importedAppsIdDisclaimer": "قد تظهر التطبيقات المستوردة بشكل غير صحيح كـ \"غير مثبتة\".
+لإصلاح هذا، قم بإعادة تثبيتها عبر Updatium.
+هذا لا يؤثر على بيانات التطبيق.
+
+ينطبق فقط على طرق الاستيراد عبر الروابط أو الطرف الثالث.",
   "importErrors": "أخطاء الاستيراد",
-  "importedXOfYApps": "استوردت {arg1} من {arg2} تطبيقات.",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "استوردت {} من {} تطبيقات.",
   "followingURLsHadErrors": "حدثت أخطاء في الروابط التالية:",
   "selectURL": "حدّد رابطًا",
   "selectURLs": "حدّد روابط",
@@ -267,86 +155,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "تصدير-updatium",
   "pickAnAPK": "اختر ملف APK",
-  "appHasMoreThanOnePackage": "{arg1} يحتوي على أكثر من حزمة:",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "جهازك يدعم بنية المعالج {arg1}.",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{} يحتوي على أكثر من حزمة:",
+  "deviceSupportsXArch": "جهازك يدعم بنية المعالج {}.",
   "deviceSupportsFollowingArchs": "جهازك يدعم بنى المعالج التالية:",
   "warning": "تحذير",
-  "sourceIsXButPackageFromYPrompt": "مصدر التطبيق هو '{arg1}' لكن الحزمة تأتي من '{arg2}'. استمر؟",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "مصدر التطبيق هو '{}' لكن الحزمة تأتي من '{}'. استمر؟",
   "updatesAvailable": "تحديثات متاحة",
   "updatesAvailableNotifDescription": "يخطر المستخدم بوجود تحديثات لواحد أو أكثر من التطبيقات التي يتعقبها Updatium",
   "noNewUpdates": "لا توجد تحديثات جديدة.",
-  "xHasAnUpdate": "{arg1} لديه تحديث.",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{} لديه تحديث.",
   "appsUpdated": "حُدثت التطبيقات",
   "appsNotUpdated": "فشل تحديث التطبيقات",
   "appsUpdatedNotifDescription": "يخطر المستخدم بأن تحديثات لواحد أو أكثر من التطبيقات طبقت في الخلفية",
-  "xWasUpdatedToY": "حُدث {arg1} إلى {arg2}.",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "فشل تحديث {arg1} إلى {arg2}.",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "حُدث {} إلى {}.",
+  "xWasNotUpdatedToY": "فشل تحديث {} إلى {}.",
   "errorCheckingUpdates": "خطأ في التحقق من التحديثات",
   "errorCheckingUpdatesNotifDescription": "إشعار يظهر عند فشل التحقق من التحديثات في الخلفية",
   "appsRemoved": "تمت إزالة التطبيقات",
   "appsRemovedNotifDescription": "يخطر المستخدم بأنه تمت إزالة واحد أو أكثر من التطبيقات بسبب أخطاء أثناء تحميلها",
-  "xWasRemovedDueToErrorY": "تمت إزالة {arg1} بسبب هذا الخطأ: {arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "تمت إزالة {} بسبب هذا الخطأ: {}",
   "completeAppInstallation": "إكمال تثبيت التطبيق",
   "updatiumMustBeOpenToInstallApps": "يجب فتح Updatium لتثبيت التطبيقات",
   "completeAppInstallationNotifDescription": "يطلب من المستخدم العودة إلى Updatium لإكمال تثبيت التطبيق",
@@ -354,43 +181,15 @@
   "checkingForUpdatesNotifDescription": "إشعار مؤقت يظهر عند التحقق من التحديثات",
   "pleaseAllowInstallPerm": "يرجى السماح لـ Updatium بتثبيت التطبيقات",
   "trackOnly": "للتعقب فقط",
-  "errorWithHttpStatusCode": "خطأ {arg1}",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "خطأ {}",
   "versionCorrectionDisabled": "تعطيل تصحيح الإصدار (يبدو أن الملحق لا يعمل)",
   "unknown": "غير معروف",
   "none": "لا شيء",
   "all": "الكل",
   "never": "أبدًا",
-  "latestVersionX": "الأحدث: {arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "المثبت: {arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "آخر تحقق من التحديثات: {arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "الأحدث: {}",
+  "installedVersionX": "المثبت: {}",
+  "lastUpdateCheckX": "آخر تحقق من التحديثات: {}",
   "remove": "أزل",
   "yesMarkUpdated": "نعم، علِّم كمحدث",
   "fdroid": "F-Droid الرسمي",
@@ -407,30 +206,9 @@
   "additionalOptions": "خيارات إضافية",
   "disableVersionDetection": "عطّل اكتشاف الإصدار",
   "noVersionDetectionExplanation": "يجب استخدام هذا الخيار فقط للتطبيقات التي لا يعمل فيها اكتشاف الإصدار بشكل صحيح.",
-  "downloadingX": "جارِ تنزيل {arg1}",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "تنزيل {arg1}",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "نُزَّل {arg1}",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "جارِ تنزيل {}",
+  "downloadX": "تنزيل {}",
+  "downloadedX": "نُزَّل {}",
   "releaseAsset": "ملف الإصدار",
   "downloadNotifDescription": "يخطر المستخدم بالتقدم في تنزيل التطبيق",
   "noAPKFound": "لم يُعثر على ملف APK",
@@ -474,14 +252,7 @@
   "hideNonInstalledApps": "Hide non-installed apps",
   "gitlabPATLabel": "رمز الوصول الشخصي لـ GitLab",
   "about": "حول",
-  "requiresCredentialsInSettings": "{arg1} يحتاج إلى بيانات اعتماد إضافية (في الإعدادات)",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{} يحتاج إلى بيانات اعتماد إضافية (في الإعدادات)",
   "checkOnStart": "التحقق من التحديثات عند البدء",
   "safeMode": "الوضع الآمن",
   "safeModeDescription": "إخفاء صفحة إضافة التطبيق وإظهار الاستيراد/التصدير بدلاً منها",
@@ -501,17 +272,7 @@
   "customLinkFilterRegex": "تصفية روابط APK المخصصة باستخدام تعبير نمطي (افتراضيًا '.apk$')",
   "appsPossiblyUpdated": "تمت محاولة تحديث التطبيقات",
   "appsPossiblyUpdatedNotifDescription": "يخطر المستخدم بأن تحديثات لواحد أو أكثر من التطبيقات قد تم تطبيقها في الخلفية",
-  "xWasPossiblyUpdatedToY": "{arg1} قد تم تحديثه إلى {arg2}.",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "{} قد تم تحديثه إلى {}.",
   "enableBackgroundUpdates": "تمكين التحديثات في الخلفية",
   "backgroundUpdateReqsExplanation": "قد لا تكون التحديثات في الخلفية ممكنة لجميع التطبيقات.",
   "backgroundUpdateLimitsExplanation": "يمكن تحديد نجاح التثبيت في الخلفية فقط عند فتح Updatium.",
@@ -527,14 +288,7 @@
   "autoSelectHighestVersionCode": "تحديد أعلى إصدار تلقائيًا",
   "versionExtractionRegEx": "تعبير نمطي لاستخراج الإصدار",
   "trimVersionString": "قص سلسلة الإصدار باستخدام تعبير نمطي",
-  "matchGroupToUseForX": "مجموعة المطابقة لاستخدامها لـ \"{arg1}\"",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "مجموعة المطابقة لاستخدامها لـ \"{}\"",
   "matchGroupToUse": "مجموعة المطابقة لاستخدامها في تعبير استخراج الإصدار",
   "highlightTouchTargets": "تمييز أهداف اللمس الأقل وضوحًا",
   "pickExportDir": "اختر دليل التصدير",
@@ -557,26 +311,12 @@
   "appsPossiblyUpdatedNotifChannel": "حاولّ تحديث التطبيقات",
   "errorCheckingUpdatesNotifChannel": "خطأ في التحقق من التحديثات",
   "appsRemovedNotifChannel": "أُزيلت التطبيقات",
-  "downloadingXNotifChannel": "جارِ تنزيل {arg1}",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "جارِ تنزيل {}",
   "completeAppInstallationNotifChannel": "اكمل تثبيت التطبيق",
   "checkingForUpdatesNotifChannel": "جارِ التحقق من التحديثات",
   "onlyCheckInstalledOrTrackOnlyApps": "التحقق فقط من التطبيقات المثبتة أو للتعقب فقط",
   "supportFixedAPKURL": "دعم روابط APK الثابتة",
-  "selectX": "اختر {arg1}",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "اختر {}",
   "parallelDownloads": "السماح بالتنزيل المتوازي",
   "useShizuku": "استخدم Shizuku أو Sui للتثبيت",
   "shizukuBinderNotFound": "خدمة Shizuku غير قيد التشغيل",
@@ -589,20 +329,14 @@
   "useLatestAssetDateAsReleaseDate": "استخدم أحدث رفع للأصول كتاريخ إصدار",
   "defaultPseudoVersioningMethod": "طريقة الإصدار الوهمي الافتراضية",
   "partialAPKHash": "جزء من بصمة APK",
+  "APKLinkHash": "بصمة رابط APK",
   "directAPKLink": "رابط APK مباشر",
   "pseudoVersionInUse": "يتم استخدام إصدار وهمي",
   "installed": "مثبت",
   "latest": "الأحدث",
   "invertRegEx": "اعكس التعبير النمطي",
   "note": "ملاحظة",
-  "selfHostedNote": "يمكن استخدام القائمة المنسدلة \"{arg1}\" للوصول إلى نسخ مخصصة/مستضافة ذاتيًا لأي مصدر.",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "يمكن استخدام القائمة المنسدلة \"{}\" للوصول إلى نسخ مخصصة/مستضافة ذاتيًا لأي مصدر.",
   "badDownload": "تعذر تحليل ملف APK (تنزيل غير متوافق أو غير مكتمل)",
   "beforeNewInstallsShareToAppVerifier": "مشاركة التطبيقات الجديدة مع AppVerifier (إذا كان متاحًا)",
   "appVerifierInstructionToast": "شارك مع AppVerifier، ثم عد هنا عندما تكون جاهزًا.",
@@ -620,29 +354,31 @@
   "welcome": "مرحبًا",
   "documentationLinksNote": "تحتوي صفحة Updatium على GitHub المرتبطة أدناه على روابط لمقاطع فيديو، مقالات، مناقشات وموارد أخرى ستساعدك على فهم كيفية استخدام التطبيق.",
   "batteryOptimizationNote": "لاحظ أن التنزيلات في الخلفية قد تعمل بشكل أكثر موثوقية إذا قمت بتعطيل تحسينات بطارية النظام لـ Updatium.",
-  "fileDeletionError": "فشل حذف الملف (حاول حذفه يدويًا ثم حاول مرة أخرى): \"{arg1}\"",
-  "@fileDeletionError": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "fileDeletionError": "فشل حذف الملف (حاول حذفه يدويًا ثم حاول مرة أخرى): \"{}\"",
   "foregroundService": "الحصول على خدمة الحصول على خدمة المقدمة",
   "foregroundServiceExplanation": "استخدام خدمة مقدمة للتحقق من التحديثات (أكثر موثوقية وتستهلك طاقة أكبر)",
   "fgServiceNotice": "هذا الإخطار مطلوب للتحقق من التحديث في الخلفية (يمكن إخفاؤه في إعدادات نظام التشغيل)",
   "excludeSecrets": "استعبد الأسرار",
+  "GHReqPrefix": "نسخة \"sky22333/hubproxy\" لطلبات GitHub",
   "includeZips": "ضمّن ملفات ZIP",
   "zippedApkFilterRegEx": "تصفية ملفات APK داخل ZIP",
-  "googleVerificationWarningP1": "(جوجل) أعلن أنه، بدءاً من عام 2026/2027، كل التطبيقات على أجهزة (أندرويد) مصدقة ستطلب من المطور تقديم تفاصيل الهوية الشخصية مباشرة إلى (غوغل).\n\nبعد ذلك، قد يتوقف Updatium عن العمل على أجهزة أندرويدية معتمدة.",
+  "googleVerificationWarningP1": "(جوجل) أعلن أنه، بدءاً من عام 2026/2027، كل التطبيقات على أجهزة (أندرويد) مصدقة ستطلب من المطور تقديم تفاصيل الهوية الشخصية مباشرة إلى (غوغل).
+
+بعد ذلك، قد يتوقف Updatium عن العمل على أجهزة أندرويدية معتمدة.",
   "googleVerificationWarningP2": "Go to https://keepandroidopen.org/ for more information.",
-  "googleVerificationWarningP3": "ونلاحظ أنه في الأجل القصير، قد يظل من الممكن تركيب عملية \" غير متوافقة \" من خلال عملية \" تدفق سريع \" وعد غوغل بتنفيذها بعد رد فعل واسع النطاق على إعلانهم، ولكنهم لم يفصلوا كيف سينجح ذلك حتى لا يتضح ما إذا كان سيحافظ حقا على حريات المستعملين بأي طريقة عملية.\n\nعلى أية حال، حركة (جوجل) خطوة هامة نحو نهاية الحوسبة المجانية ذات الأغراض العامة للأفراد\n\nوينبغي ألا يتأثر هذا النظام غير المصدق عليه، مثل غرافينيوس، طالما يسمح له باستمرار وجوده.",
+  "googleVerificationWarningP3": "ونلاحظ أنه في الأجل القصير، قد يظل من الممكن تركيب عملية \" غير متوافقة \" من خلال عملية \" تدفق سريع \" وعد غوغل بتنفيذها بعد رد فعل واسع النطاق على إعلانهم، ولكنهم لم يفصلوا كيف سينجح ذلك حتى لا يتضح ما إذا كان سيحافظ حقا على حريات المستعملين بأي طريقة عملية.
+
+على أية حال، حركة (جوجل) خطوة هامة نحو نهاية الحوسبة المجانية ذات الأغراض العامة للأفراد
+
+وينبغي ألا يتأثر هذا النظام غير المصدق عليه، مثل غرافينيوس، طالما يسمح له باستمرار وجوده.",
   "multipleSigners": "عدد من الدول الموقعة",
   "securityDisclaimerTitle": "إخلاء مسؤولية الأمان والقانوني",
   "license": "الرخصة",
   "licenseText": "هذا التطبيق موزع تحت رخصة GPL v3.",
   "disclaimer": "إخلاء المسؤولية",
-  "disclaimerText": "هذا التطبيق لا يوزع أو يستضيف أو يتحقق من أي من التطبيقات الخارجية. يتحمل المستخدم المسؤولية الكاملة عن سلامة وقانونية أي برنامج يتم تثبيته من خلال هذه الأداة.\n\nhttps://github.com/omeritzics/Updatium هو المكان الرسمي الوحيد لتنزيل Updatium - يُنصح بشدة بعدم تنزيله من أماكن أخرى حيث أن تنزيله من مصادر غير رسمية غير آمن.",
+  "disclaimerText": "هذا التطبيق لا يوزع أو يستضيف أو يتحقق من أي من التطبيقات الخارجية. يتحمل المستخدم المسؤولية الكاملة عن سلامة وقانونية أي برنامج يتم تثبيته من خلال هذه الأداة.
+
+https://github.com/omeritzics/Updatium هو المكان الرسمي الوحيد لتنزيل Updatium - يُنصح بشدة بعدم تنزيله من أماكن أخرى حيث أن تنزيله من مصادر غير رسمية غير آمن.",
   "privacy": "الخصوصية",
   "privacyText": "هذا التطبيق يركز على الخصوصية ولا يجمع البيانات الشخصية.",
   "acceptAndContinue": "موافق ومتابعة",
@@ -651,18 +387,13 @@
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-  "aPKLinkHash": "بصمة رابط APK",
-  "gHReqPrefix": "نسخة \"sky22333/hubproxy\" لطلبات GitHub",
-  "continueAction": "استمر",
-  "apps": "{count} تطبيقات",
+
+  "apps": "التطبيقات",
   "@apps": {
     "plural": {
-      "zero": "تطبيقات",
-      "one": "تطبيق",
+      "one": "{} تطبيق",
       "two": "تطبيقان",
-      "few": "تطبيقات",
-      "many": "تطبيقًا",
-      "other": "تطبيقات"
+      "other": "{} تطبيقات",
     },
     "placeholders": {
       "count": {
@@ -670,15 +401,27 @@
       }
     }
   },
-  "minute": "{count} دقائق",
+
+  "apk": "APK",
+  "@apk": {
+    "plural": {
+      "one": "{} APK",
+      "two": "APKان",
+      "other": "{} APKs",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} دقائق",
   "@minute": {
     "plural": {
-      "zero": "دقائق",
-      "one": "دقيقة",
+      "one": "{} دقيقة",
       "two": "دقيقتان",
-      "few": "دقائق",
-      "many": "دقيقة",
-      "other": "دقائق"
+      "other": "{} دقائق",
     },
     "placeholders": {
       "count": {
@@ -686,15 +429,13 @@
       }
     }
   },
-  "hour": "{count} ساعات",
+
+  "hour": "{} ساعات",
   "@hour": {
     "plural": {
-      "zero": "ساعات",
-      "one": "ساعة",
+      "one": "{} ساعة",
       "two": "ساعتان",
-      "few": "ساعات",
-      "many": "ساعة",
-      "other": "ساعات"
+      "other": "{} ساعات",
     },
     "placeholders": {
       "count": {
@@ -702,15 +443,13 @@
       }
     }
   },
-  "day": "{count} أيام",
+
+  "day": "{} أيام",
   "@day": {
     "plural": {
-      "zero": "أيام",
-      "one": "يوم",
+      "one": "{} يوم",
       "two": "يومان",
-      "few": "أيام",
-      "many": "يومًا",
-      "other": "أيام"
+      "other": "{} أيام",
     },
     "placeholders": {
       "count": {
@@ -718,28 +457,4 @@
       }
     }
   }
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "githubRequestPrefix": "GitHub request prefix",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minimumStarCount": "Minimum star count",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
 }

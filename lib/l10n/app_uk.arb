@@ -1,13 +1,7 @@
 {
   "@@locale": "uk",
-  "invalidURLForSource": "Неправильна URL-адреса для джерела застосунку {arg1}",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+
+  "invalidURLForSource": "Неправильна URL-адреса для джерела застосунку {}",
   "noReleaseFound": "Не вдалося знайти відповідне видання",
   "noVersionFound": "Не вдалося визначити версію видання",
   "urlMatchesNoSource": "URL не відповідає відомому джерелу",
@@ -26,6 +20,7 @@
   "invalidRegEx": "Неприпустимий регулярний вираз",
   "noDescription": "Немає опису",
   "cancel": "Скасувати",
+  "continue": "Продовжити",
   "requiredInBrackets": "(Обов'язково)",
   "dropdownNoOptsError": "ПОМИЛКА: В ВИПАДАЮЧОМУ СПИСКУ МАЄ БУТИ ХОЧА Б ОДИН ЕЛЕМЕНТ",
   "color": "Колір",
@@ -35,14 +30,7 @@
   "githubStarredRepos": "Відзначені репозиторії GitHub",
   "uname": "Ім'я користувача",
   "wrongArgNum": "Надано неправильну кількість аргументів",
-  "xIsTrackOnly": "{arg1} - тільки відстежування",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} - тільки відстежування",
   "source": "Джерело",
   "app": "застосунок",
   "appsFromSourceAreTrackOnly": "Застосунки з цього джерела є лише для відстежування.",
@@ -57,14 +45,7 @@
   "add": "Додати",
   "searchSomeSourcesLabel": "Пошук (Лише деякі джерела)",
   "search": "Пошук",
-  "additionalOptsFor": "Додаткові опції для {arg1}",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "Додаткові опції для {}",
   "supportedSources": "Підтримувані джерела",
   "trackOnlyInBrackets": "(Тільки для відстеження)",
   "searchableInBrackets": "(Можливий пошук)",
@@ -72,94 +53,35 @@
   "noApps": "Застосунків немає",
   "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
   "noAppsForFilter": "Застосунків для фільтрації немає",
-  "byX": "Від {arg1}",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "Прогрес: {arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "Від {}",
+  "percentProgress": "Прогрес: {}%",
   "pleaseWait": "Будь ласка, зачекайте",
   "updateAvailable": "Доступно оновлення",
   "notInstalled": "Не встановлено",
   "pseudoVersion": "псевдо-версія",
   "selectAll": "Вибрати все",
-  "deselectX": "Скасувати вибір {arg1}",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "{arg1} буде видалено з Updatium, але залишиться встановленим на пристрої.",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "Скасувати вибір {}",
+  "xWillBeRemovedButRemainInstalled": "{} буде видалено з Updatium, але залишиться встановленим на пристрої.",
   "removeSelectedAppsQuestion": "Видалити вибрані застосунки?",
   "removeSelectedApps": "Видалити вибрані застосунки",
-  "updateX": "Оновити {arg1}",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "Встановити {arg1}",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "Позначити {arg1}\n(Тільки відстежування)\nяк оновлено",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "Змінити {arg1}",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "Оновити {}",
+  "installX": "Встановити {}",
+  "markXTrackOnlyAsUpdated": "Позначити {}
+(Тільки відстежування)
+як оновлено",
+  "changeX": "Змінити {}",
   "installUpdateApps": "Встановити/Оновити застосунки",
   "installUpdateSelectedApps": "Встановити/Оновити вибрані застосунки",
-  "markXSelectedAppsAsUpdated": "Позначити {arg1} вибрані застосунки як оновлені?",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "Позначити {} вибрані застосунки як оновлені?",
   "no": "Ні",
   "yes": "Так",
   "markSelectedAppsUpdated": "Позначити вибрані застосунки як оновлені",
   "pinToTop": "Закріпити угорі",
   "unpinFromTop": "Відкріпити зверху",
   "resetInstallStatusForSelectedAppsQuestion": "Скинути статус встановлення для вибраних застосунків?",
-  "installStatusOfXWillBeResetExplanation": "Статус встановлення будь-яких вибраних застосунків буде скинутий.\n\nЦе може допомогти, коли версія застосунку, відображена в Updatium, є неправильною через невдалі оновлення або інші проблеми.",
+  "installStatusOfXWillBeResetExplanation": "Статус встановлення будь-яких вибраних застосунків буде скинутий.
+
+Це може допомогти, коли версія застосунку, відображена в Updatium, є неправильною через невдалі оновлення або інші проблеми.",
   "customLinkMessage": "Ці посилання працюють на пристроях з встановленим Updatium",
   "shareAppConfigLinks": "Поділитися посиланнями на конфігурацію Застосунку як HTML",
   "shareSelectedAppURLs": "Поділитися вибраними URL-адресами застосунків",
@@ -175,63 +97,29 @@
   "nonInstalledApps": "Невстановлені застосунки",
   "importExport": "Імпорт/Експорт",
   "settings": "Налаштування",
-  "exportedTo": "Експортовано в {arg1}",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "Експортовано в {}",
   "updatiumExport": "Експорт з Updatium",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Недійсний ввід",
-  "importedX": "Імпортовано {arg1}",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "Імпортовано {}",
   "updatiumImport": "Імпорт в Updatium",
   "importFromURLList": "Імпорт зі списку URL-адрес",
   "searchQuery": "Пошуковий запит",
   "appURLList": "Список URL-адрес застосунків",
   "line": "Лінія",
-  "searchX": "Пошук {arg1}",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "Пошук {}",
   "noResults": "Результати відсутні",
-  "importX": "Імпорт {arg1}",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "Імпортовані застосунки можуть неправильно відображатися як \"Не встановлені\".\nДля виправлення цього перевстановіть їх через Updatium.\nЦе не повинно вплинути на дані застосунків.\n\nПов'язано лише з URL-адресами та імпортом від третіх сторін.",
+  "importX": "Імпорт {}",
+  "importedAppsIdDisclaimer": "Імпортовані застосунки можуть неправильно відображатися як \"Не встановлені\".
+Для виправлення цього перевстановіть їх через Updatium.
+Це не повинно вплинути на дані застосунків.
+
+Пов'язано лише з URL-адресами та імпортом від третіх сторін.",
   "importErrors": "Помилки імпорту",
-  "importedXOfYApps": "Імпортовано {arg1} з {arg2} застосунків.",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "Імпортовано {} з {} застосунків.",
   "followingURLsHadErrors": "Помилки в наступних URL-адресах:",
   "selectURL": "Вибрати URL",
   "selectURLs": "Вибрати URL-адреси",
@@ -267,86 +155,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "експорт з Updatium",
   "pickAnAPK": "Вибрати APK",
-  "appHasMoreThanOnePackage": "{arg1} має більше одного пакету:",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "Ваш пристрій підтримує архітектуру процесора {arg1}.",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{} має більше одного пакету:",
+  "deviceSupportsXArch": "Ваш пристрій підтримує архітектуру процесора {}.",
   "deviceSupportsFollowingArchs": "Ваш пристрій підтримує наступні архітектури процесора:",
   "warning": "Попередження",
-  "sourceIsXButPackageFromYPrompt": "Джерело застосунку - '{arg1}' але пакет випуску походить з '{arg2}'. Продовжити?",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "Джерело застосунку - '{}' але пакет випуску походить з '{}'. Продовжити?",
   "updatesAvailable": "Доступні оновлення",
   "updatesAvailableNotifDescription": "Повідомляє користувача, що доступні оновлення для одного чи декількох застосунків, які відстежує Updatium",
   "noNewUpdates": "Немає нових оновлень.",
-  "xHasAnUpdate": "{arg1} має оновлення.",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{} має оновлення.",
   "appsUpdated": "Застосунки оновлено",
   "appsNotUpdated": "Не вдалося оновити програми",
   "appsUpdatedNotifDescription": "Повідомляє користувача, що оновлення одного чи декількох застосунків було застосовано в фоновому режимі",
-  "xWasUpdatedToY": "{arg1} було оновлено до {arg2}.",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "Не вдалося оновити {arg1} на {arg2}.",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "{} було оновлено до {}.",
+  "xWasNotUpdatedToY": "Не вдалося оновити {} на {}.",
   "errorCheckingUpdates": "Помилка перевірки оновлень",
   "errorCheckingUpdatesNotifDescription": "Повідомлення, яке з'являється, коли перевірка оновлень в фоновому режимі завершується невдачею",
   "appsRemoved": "Застосунки видалено",
   "appsRemovedNotifDescription": "Повідомляє користувача, що один чи декілька застосунків були видалені через помилки при завантаженні",
-  "xWasRemovedDueToErrorY": "{arg1} було видалено через цю помилку: {arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "{} було видалено через цю помилку: {}",
   "completeAppInstallation": "Завершення установки застосунку",
   "updatiumMustBeOpenToInstallApps": "Для встановлення застосунків Updatium має бути відкритий",
   "completeAppInstallationNotifDescription": "Прохання користувача повернутися до Updatium для завершення установки застосунку",
@@ -354,43 +181,15 @@
   "checkingForUpdatesNotifDescription": "Тимчасове повідомлення, яке з'являється при перевірці оновлень",
   "pleaseAllowInstallPerm": "Будь ласка, дозвольте Updatium встановлювати застосунки",
   "trackOnly": "Тільки відстеження",
-  "errorWithHttpStatusCode": "Помилка {arg1} HTTP-коду",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "Помилка {} HTTP-коду",
   "versionCorrectionDisabled": "Виправлення версії вимкнено (здається, плагін не працює)",
   "unknown": "Невідомо",
   "none": "Нічого",
   "all": "Усе.",
   "never": "Ніколи",
-  "latestVersionX": "Остання версія: {arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "Встановлено: {arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "Остання перевірка оновлень: {arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "Остання версія: {}",
+  "installedVersionX": "Встановлено: {}",
+  "lastUpdateCheckX": "Остання перевірка оновлень: {}",
   "remove": "Видалити",
   "yesMarkUpdated": "Так, позначити як оновлене",
   "fdroid": "F-Droid Офіційний",
@@ -407,30 +206,9 @@
   "additionalOptions": "Додаткові опції",
   "disableVersionDetection": "Вимкнути визначення версії",
   "noVersionDetectionExplanation": "Цю опцію слід використовувати лише для застосунків, де визначення версії працює неправильно.",
-  "downloadingX": "Завантаження {arg1}",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "Завантажити {arg1}",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "Завантажено {arg1}",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "Завантаження {}",
+  "downloadX": "Завантажити {}",
+  "downloadedX": "Завантажено {}",
   "releaseAsset": "Звільнити актив",
   "downloadNotifDescription": "Повідомляє користувача про прогрес завантаження застосунку",
   "noAPKFound": "APK не знайдено",
@@ -474,14 +252,7 @@
   "hideNonInstalledApps": "Приховати невстановлені застосунки",
   "gitlabPATLabel": "Особистий токен GitLab (Увімкнення пошуку та краще виявлення APK)",
   "about": "Про програму",
-  "requiresCredentialsInSettings": "{arg1} потребує додаткових облікових даних (у налаштуваннях)",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{} потребує додаткових облікових даних (у налаштуваннях)",
   "checkOnStart": "Перевірити наявність оновлень при запуску",
   "safeMode": "Безпечний режим",
   "safeModeDescription": "Приховати сторінку Додати додаток і показати Імпорт/Експорт натомість",
@@ -501,17 +272,7 @@
   "customLinkFilterRegex": "Фільтр кастомного посилання на APK за регулярним виразом (за замовчуванням '.apk$')",
   "appsPossiblyUpdated": "Спроб оновлення застосунків",
   "appsPossiblyUpdatedNotifDescription": "Повідомляє користувача, що оновлення одного або декількох застосунків можливо були застосовані в фоновому режимі",
-  "xWasPossiblyUpdatedToY": "{arg1} можливо було оновлено до {arg2}.",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "{} можливо було оновлено до {}.",
   "enableBackgroundUpdates": "Увімкнути оновлення в фоновому режимі",
   "backgroundUpdateReqsExplanation": "Оновлення в фоновому режимі може бути неможливим для всіх застосунків.",
   "backgroundUpdateLimitsExplanation": "Успіх фонової установки може бути визначений лише після відкриття Updatium.",
@@ -527,14 +288,7 @@
   "autoSelectHighestVersionCode": "Автоматичний вибір APK з найвищим кодом версії",
   "versionExtractionRegEx": "Регулярний вираз для вилучення рядка версії",
   "trimVersionString": "Обрізати рядок версії за допомогою RegEx",
-  "matchGroupToUseForX": "Група збігів для \"{arg1}\"",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "Група збігів для \"{}\"",
   "matchGroupToUse": "Група співпадінь для використання в регулярному виразі вилучення версії",
   "highlightTouchTargets": "Підсвічувати менш очевидні області дотику",
   "pickExportDir": "Вибрати каталог експорту",
@@ -557,26 +311,12 @@
   "appsPossiblyUpdatedNotifChannel": "Спроба оновлення застосунків",
   "errorCheckingUpdatesNotifChannel": "Помилка перевірки оновлень",
   "appsRemovedNotifChannel": "Застосунки видалені",
-  "downloadingXNotifChannel": "Завантаження {arg1}",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "Завантаження {}",
   "completeAppInstallationNotifChannel": "Завершення встановлення застосунку",
   "checkingForUpdatesNotifChannel": "Перевірка оновлень",
   "onlyCheckInstalledOrTrackOnlyApps": "Перевіряти лише встановлені та застосунки, які відстежуються для оновлень",
   "supportFixedAPKURL": "Підтримка фіксованих посилань на APK",
-  "selectX": "Вибрати {arg1}",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "Вибрати {}",
   "parallelDownloads": "Дозволити паралельні завантаження",
   "useShizuku": "Використовуйте Shizuku або Sui для встановлення",
   "shizukuBinderNotFound": "Сумісний сервіс Shizuku не було знайдено",
@@ -589,20 +329,14 @@
   "useLatestAssetDateAsReleaseDate": "Використовувати останню дату завантаження ресурсу як дату випуску",
   "defaultPseudoVersioningMethod": "Метод за замовчуванням псевдо-версіонування",
   "partialAPKHash": "Хеш часткового APK",
+  "APKLinkHash": "Хеш посилання на APK",
   "directAPKLink": "Пряме посилання на APK",
   "pseudoVersionInUse": "Використовується псевдо-версія",
   "installed": "Встановлено",
   "latest": "Остання",
   "invertRegEx": "Інвертувати регулярний вираз",
   "note": "Примітка",
-  "selfHostedNote": "Випадаючий список \"{arg1}\" може використовуватися для доступу до власних/призначених для самостійного використання екземплярів будь-якого джерела.",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "Випадаючий список \"{}\" може використовуватися для доступу до власних/призначених для самостійного використання екземплярів будь-якого джерела.",
   "badDownload": "APK не вдалося розпарсити (несумісний або часткове завантаження)",
   "beforeNewInstallsShareToAppVerifier": "Діліться новими додатками з AppVerifier (якщо доступно)",
   "appVerifierInstructionToast": "Надішліть на AppVerifier, а потім поверніться сюди, коли будете готові.",
@@ -620,29 +354,31 @@
   "welcome": "Ласкаво просимо.",
   "documentationLinksNote": "Сторінка Updatium на GitHub, посилання на яку наведено нижче, містить посилання на відео, статті, дискусії та інші ресурси, які допоможуть вам зрозуміти, як користуватися додатком.",
   "batteryOptimizationNote": "Зауважте, що фонові завантаження можуть працювати надійніше, якщо ви вимкнете оптимізацію батареї ОС для Updatium.",
-  "fileDeletionError": "Не вдалося видалити файл (спробуйте видалити його вручну, а потім спробуйте ще раз): \"{arg1}\"",
-  "@fileDeletionError": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "fileDeletionError": "Не вдалося видалити файл (спробуйте видалити його вручну, а потім спробуйте ще раз): \"{}\"",
   "foregroundService": "Обслуговування переднього плану Updatium",
   "foregroundServiceExplanation": "Використовуйте службу переднього плану для перевірки оновлень (надійніша, споживає більше енергії)",
   "fgServiceNotice": "Це сповіщення необхідне для фонової перевірки оновлень (його можна приховати в налаштуваннях ОС)",
   "excludeSecrets": "Виключити секрети",
+  "GHReqPrefix": "екземпляр 'sky22333/hubproxy' для запитів на GitHub",
   "includeZips": "Додайте ZIP-файли",
   "zippedApkFilterRegEx": "Фільтруйте APK-файли всередині ZIP",
-  "googleVerificationWarningP1": "Google оголосила, що, починаючи з 2026/2027, всі додатки на \"сертифікованих\" пристроях Android будуть вимагати розробника, щоб подати особисті дані в Інтернеті безпосередньо на Google.\n\nПісля цього, Updatium може припинити працювати на сертифікованих пристроях Android.",
+  "googleVerificationWarningP1": "Google оголосила, що, починаючи з 2026/2027, всі додатки на \"сертифікованих\" пристроях Android будуть вимагати розробника, щоб подати особисті дані в Інтернеті безпосередньо на Google.
+
+Після цього, Updatium може припинити працювати на сертифікованих пристроях Android.",
   "googleVerificationWarningP2": "Перейти на https://keepandroidopen.org/ для отримання додаткової інформації.",
-  "googleVerificationWarningP3": "Зауважте, що в короткостроковому терміні вона може продовжувати бути можливою для установки \"необґрунтованих\" (некомпліантних) додатків через процес \"додатковий потік\", який Google обіцяє реалізувати після широкої задньої вії до їх оголошення, але вони не докладно, як це буде працювати так, що це не зрозуміло, чи це буде дійсно зберігати свобод користувачів будь-яким практичним способом.\n\nУ будь-якому випадку, переміщення Google є важливим кроком до кінця безкоштовного, універсального обчислення для фізичних осіб.\n\nНесертифіковані ОС, як GrapheneOS, повинні бути неоцінені цими протягом тривалого часу, щоб вони могли продовжити існування.",
+  "googleVerificationWarningP3": "Зауважте, що в короткостроковому терміні вона може продовжувати бути можливою для установки \"необґрунтованих\" (некомпліантних) додатків через процес \"додатковий потік\", який Google обіцяє реалізувати після широкої задньої вії до їх оголошення, але вони не докладно, як це буде працювати так, що це не зрозуміло, чи це буде дійсно зберігати свобод користувачів будь-яким практичним способом.
+
+У будь-якому випадку, переміщення Google є важливим кроком до кінця безкоштовного, універсального обчислення для фізичних осіб.
+
+Несертифіковані ОС, як GrapheneOS, повинні бути неоцінені цими протягом тривалого часу, щоб вони могли продовжити існування.",
   "multipleSigners": "Кілька підписників",
   "securityDisclaimerTitle": "Відмова від відповідальності щодо безпеки та правових питань",
   "license": "Ліцензія",
   "licenseText": "Цей додаток розповсюджується під ліцензією GPL v3.",
   "disclaimer": "Відмова від відповідальності",
-  "disclaimerText": "Цей додаток не розповсюджує, не розміщує та не перевіряє жодні зовнішні додатки. Користувач несе повну відповідальність за безпеку та законність будь-якого програмного забезпечення, встановленого через цей інструмент.\n\nhttps://github.com/omeritzics/Updatium - це єдине офіційне місце для завантаження Updatium - наполегливо не рекомендується завантажувати його з інших місць, оскільки завантаження з неофіційних джерел небезпечне.",
+  "disclaimerText": "Цей додаток не розповсюджує, не розміщує та не перевіряє жодні зовнішні додатки. Користувач несе повну відповідальність за безпеку та законність будь-якого програмного забезпечення, встановленого через цей інструмент.
+
+https://github.com/omeritzics/Updatium - це єдине офіційне місце для завантаження Updatium - наполегливо не рекомендується завантажувати його з інших місць, оскільки завантаження з неофіційних джерел небезпечне.",
   "privacy": "Конфіденційність",
   "privacyText": "Цей додаток орієнтований на конфіденційність і не збирає особисті дані.",
   "acceptAndContinue": "Прийняти та продовжити",
@@ -651,35 +387,69 @@
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-  "aPKLinkHash": "Хеш посилання на APK",
-  "gHReqPrefix": "екземпляр 'sky22333/hubproxy' для запитів на GitHub",
-  "continueAction": "Продовжити"
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "apps": "{count} Apps",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "day": "{count} days",
-  "githubRequestPrefix": "GitHub request prefix",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "hour": "{count} hours",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minimumStarCount": "Minimum star count",
-  "minute": "{count} minutes",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
+
+  "apps": "Застосунки",
+  "@apps": {
+    "plural": {
+      "one": "{} застосунок",
+      "other": "{} застосунки",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "apk": "APK",
+  "@apk": {
+    "plural": {
+      "one": "{} APK",
+      "other": "{} APK-файли",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} хвилин",
+  "@minute": {
+    "plural": {
+      "one": "{} хвилина",
+      "other": "{} хвилин",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "hour": "{} годин",
+  "@hour": {
+    "plural": {
+      "one": "{} година",
+      "other": "{} годин",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "day": "{} днів",
+  "@day": {
+    "plural": {
+      "one": "{} день",
+      "other": "{} днів",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -1,13 +1,7 @@
 {
   "@@locale": "vi",
-  "invalidURLForSource": "URL ứng dụng {arg1} không hợp lệ",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+
+  "invalidURLForSource": "URL ứng dụng {} không hợp lệ",
   "noReleaseFound": "Không thể tìm thấy bản phát hành phù hợp",
   "noVersionFound": "Không thể xác định phiên bản phát hành",
   "urlMatchesNoSource": "URL không khớp với nguồn đã biết",
@@ -26,6 +20,7 @@
   "invalidRegEx": "Biểu thức chính quy không hợp lệ",
   "noDescription": "Không có mô tả",
   "cancel": "Hủy",
+  "continue": "Tiếp tục",
   "requiredInBrackets": "(Yêu cầu)",
   "dropdownNoOptsError": "LỖI: TẢI XUỐNG PHẢI CÓ ÍT NHẤT MỘT LỰA CHỌN",
   "color": "Màu sắc",
@@ -35,14 +30,7 @@
   "githubStarredRepos": "Kho lưu trữ có gắn dấu sao GitHub",
   "uname": "Tên người dùng",
   "wrongArgNum": "Số lượng đối số được cung cấp sai",
-  "xIsTrackOnly": "{arg1} là Chỉ theo dõi",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} là Chỉ theo dõi",
   "source": "Nguồn",
   "app": "Ứng dụng",
   "appsFromSourceAreTrackOnly": "Các ứng dụng từ nguồn này là 'Chỉ theo dõi'.",
@@ -57,14 +45,7 @@
   "add": "Thêm",
   "searchSomeSourcesLabel": "Tìm kiếm (Chỉ một số nguồn)",
   "search": "Tìm kiếm",
-  "additionalOptsFor": "Tùy chọn bổ sung cho {arg1}",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "Tùy chọn bổ sung cho {}",
   "supportedSources": "Nguồn được hỗ trợ",
   "trackOnlyInBrackets": "(Chỉ theo dõi)",
   "searchableInBrackets": "(Có thể tìm kiếm)",
@@ -72,94 +53,35 @@
   "noApps": "Chào mừng!",
   "noAppsSubtext": "Bạn có thể thêm ứng dụng đầu tiên bằng cách nhấn vào 'Thêm' bên dưới.",
   "noAppsForFilter": "Không có ứng dụng cho bộ lọc",
-  "byX": "Bởi {arg1}",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "Đang tải {arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "Bởi {}",
+  "percentProgress": "Đang tải {}%",
   "pleaseWait": "Vui lòng chờ",
   "updateAvailable": "Có sẵn bản cập nhật",
   "notInstalled": "Chưa cài đặt",
   "pseudoVersion": "phiên bản giả",
   "selectAll": "Chọn tất cả",
-  "deselectX": "Bỏ chọn {arg1}",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "{arg1} sẽ bị xóa khỏi Updatium nhưng vẫn còn cài đặt trên thiết bị.",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "Bỏ chọn {}",
+  "xWillBeRemovedButRemainInstalled": "{} sẽ bị xóa khỏi Updatium nhưng vẫn còn cài đặt trên thiết bị.",
   "removeSelectedAppsQuestion": "Xóa ứng dụng đã chọn?",
   "removeSelectedApps": "Xóa ứng dụng đã chọn",
-  "updateX": "Cập nhật {arg1}",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "Cài đặt {arg1}",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "Đánh dấu {arg1}\n(Chỉ theo dõi)\nnhư là đã cập nhật",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "Thay đổi {arg1}",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "Cập nhật {}",
+  "installX": "Cài đặt {}",
+  "markXTrackOnlyAsUpdated": "Đánh dấu {}
+(Chỉ theo dõi)
+như là đã cập nhật",
+  "changeX": "Thay đổi {}",
   "installUpdateApps": "Cài đặt/Cập nhật ứng dụng",
   "installUpdateSelectedApps": "Cài đặt/Cập nhật ứng dụng đã chọn",
-  "markXSelectedAppsAsUpdated": "Đánh dấu {arg1} ứng dụng đã chọn là đã cập nhật?",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "Đánh dấu {} ứng dụng đã chọn là đã cập nhật?",
   "no": "Không",
   "yes": "Đúng",
   "markSelectedAppsUpdated": "Đánh dấu các ứng dụng đã chọn là đã cập nhật",
   "pinToTop": "Ghim đầu trang",
   "unpinFromTop": "Bỏ ghim khỏi đầu trang",
   "resetInstallStatusForSelectedAppsQuestion": "Đặt lại trạng thái cài đặt cho ứng dụng đã chọn?",
-  "installStatusOfXWillBeResetExplanation": "Trạng thái cài đặt của mọi Ứng dụng đã chọn sẽ được đặt lại.\n\nĐiều này có thể hữu ích khi phiên bản Ứng dụng hiển thị trong Updatium không chính xác do cập nhật không thành công hoặc các sự cố khác.",
+  "installStatusOfXWillBeResetExplanation": "Trạng thái cài đặt của mọi Ứng dụng đã chọn sẽ được đặt lại.
+
+Điều này có thể hữu ích khi phiên bản Ứng dụng hiển thị trong Updatium không chính xác do cập nhật không thành công hoặc các sự cố khác.",
   "customLinkMessage": "Các liên kết này hoạt động trên các thiết bị có cài đặt Updatium",
   "shareAppConfigLinks": "Chia sẻ cấu hình ứng dụng dưới dạng liên kết HTML",
   "shareSelectedAppURLs": "Chia sẻ URL ứng dụng đã chọn",
@@ -175,63 +97,29 @@
   "nonInstalledApps": "Ứng dụng chưa được cài đặt",
   "importExport": "Nhập/Xuất",
   "settings": "Thiết đặt",
-  "exportedTo": "Đã xuất sang {arg1}",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "Đã xuất sang {}",
   "updatiumExport": "Xuất",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Đầu vào không hợp lệ",
-  "importedX": "Đã nhập {arg1}",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "Đã nhập {}",
   "updatiumImport": "Nhập",
   "importFromURLList": "Nhập từ danh sách URL",
   "searchQuery": "Truy vấn tìm kiếm",
   "appURLList": "Danh sách URL ứng dụng",
   "line": "Hàng",
-  "searchX": "Tìm kiếm {arg1}",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "Tìm kiếm {}",
   "noResults": "Không có kết quả nào được tìm thấy",
-  "importX": "Nhập {arg1}",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "Ứng dụng đã nhập có thể hiển thị không chính xác là \"Chưa được cài đặt\".\nĐể khắc phục sự cố này, hãy cài đặt lại chúng thông qua Updatium.\nĐiều này sẽ không ảnh hưởng đến dữ liệu Ứng dụng.\n\nChỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba.",
+  "importX": "Nhập {}",
+  "importedAppsIdDisclaimer": "Ứng dụng đã nhập có thể hiển thị không chính xác là \"Chưa được cài đặt\".
+Để khắc phục sự cố này, hãy cài đặt lại chúng thông qua Updatium.
+Điều này sẽ không ảnh hưởng đến dữ liệu Ứng dụng.
+
+Chỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba.",
   "importErrors": "Lỗi nhập",
-  "importedXOfYApps": "{arg1} trong số {arg2} Ứng dụng đã được nhập.",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "{} trong số {} Ứng dụng đã được nhập.",
   "followingURLsHadErrors": "Các URL sau có lỗi:",
   "selectURL": "Chọn URL",
   "selectURLs": "Chọn URL",
@@ -267,86 +155,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "updatium-export",
   "pickAnAPK": "Chọn một APK",
-  "appHasMoreThanOnePackage": "{arg1} có nhiều gói:",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "Thiết bị của bạn hỗ trợ kiến trúc CPU {arg1}.",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{} có nhiều gói:",
+  "deviceSupportsXArch": "Thiết bị của bạn hỗ trợ kiến trúc CPU {}.",
   "deviceSupportsFollowingArchs": "Thiết bị của bạn hỗ trợ các kiến trúc CPU sau:",
   "warning": "Cảnh báo",
-  "sourceIsXButPackageFromYPrompt": "Nguồn ứng dụng là '{arg1}' nhưng gói phát hành đến từ '{arg2}'. Tiếp tục?",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "Nguồn ứng dụng là '{}' nhưng gói phát hành đến từ '{}'. Tiếp tục?",
   "updatesAvailable": "Cập nhật có sẵn",
   "updatesAvailableNotifDescription": "Thông báo cho người dùng rằng có bản cập nhật cho một hoặc nhiều Ứng dụng được theo dõi bởi Updatium",
   "noNewUpdates": "Không có bản cập nhật mới.",
-  "xHasAnUpdate": "{arg1} có bản cập nhật.",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{} có bản cập nhật.",
   "appsUpdated": "Ứng dụng đã cập nhật ",
   "appsNotUpdated": "Ứng dụng đã cập nhật không thành công",
   "appsUpdatedNotifDescription": "Thông báo cho người dùng rằng các bản cập nhật cho một hoặc nhiều Ứng dụng đã được áp dụng trong nền",
-  "xWasUpdatedToY": "{arg1} đã được cập nhật thành {arg2}.",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "{arg1} đã cập nhật thành {arg2} không thành công.",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "{} đã được cập nhật thành {}.",
+  "xWasNotUpdatedToY": "{} đã cập nhật thành {} không thành công.",
   "errorCheckingUpdates": "Lỗi kiểm tra bản cập nhật",
   "errorCheckingUpdatesNotifDescription": "Thông báo hiển thị khi kiểm tra cập nhật nền không thành công",
   "appsRemoved": "Ứng dụng đã loại bỏ",
   "appsRemovedNotifDescription": "Thông báo cho người dùng rằng một hoặc nhiều Ứng dụng đã bị loại bỏ do lỗi khi tải chúng",
-  "xWasRemovedDueToErrorY": "{arg1} đã bị loại bỏ do lỗi này: {arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "{} đã bị loại bỏ do lỗi này: {}",
   "completeAppInstallation": "Hoàn tất cài đặt ứng dụng",
   "updatiumMustBeOpenToInstallApps": "Updatium phải được mở để cài đặt Ứng dụng",
   "completeAppInstallationNotifDescription": "Yêu cầu người dùng quay lại Updatium để hoàn tất cài đặt Ứng dụng",
@@ -354,43 +181,15 @@
   "checkingForUpdatesNotifDescription": "Thông báo tạm thời xuất hiện khi kiểm tra bản cập nhật",
   "pleaseAllowInstallPerm": "Vui lòng cho phép Updatium cài đặt Ứng dụng",
   "trackOnly": "Chỉ theo dõi",
-  "errorWithHttpStatusCode": "Lỗi {arg1}",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "Lỗi {}",
   "versionCorrectionDisabled": "Tính năng sửa phiên bản bị vô hiệu hóa (plugin dường như không hoạt động)",
   "unknown": "Không xác định",
   "none": "Không",
   "all": "Tất cả",
   "never": "Không bao giờ",
-  "latestVersionX": "Phiên bản mới nhất: {arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "Phiên bản đã cài đặt: {arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "Kiểm tra cập nhật lần cuối: {arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "Phiên bản mới nhất: {}",
+  "installedVersionX": "Phiên bản đã cài đặt: {}",
+  "lastUpdateCheckX": "Kiểm tra cập nhật lần cuối: {}",
   "remove": "Loại bỏ",
   "yesMarkUpdated": "Có, Đánh dấu là đã cập nhật",
   "fdroid": "F-Droid Chính thức",
@@ -407,30 +206,9 @@
   "additionalOptions": "Tùy chọn bổ sung",
   "disableVersionDetection": "Tắt tính năng phát hiện phiên bản",
   "noVersionDetectionExplanation": "Chỉ nên sử dụng tùy chọn này cho Ứng dụng mà tính năng phát hiện phiên bản không hoạt động chính xác.",
-  "downloadingX": "Đang tải xuống {arg1}",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "Tải xuống {arg1}",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "Đã tải xuống {arg1}",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "Đang tải xuống {}",
+  "downloadX": "Tải xuống {}",
+  "downloadedX": "Đã tải xuống {}",
   "releaseAsset": "Tệp phát hành",
   "downloadNotifDescription": "Thông báo cho người dùng về tiến trình tải xuống Ứng dụng",
   "noAPKFound": "Không tìm thấy APK",
@@ -474,14 +252,7 @@
   "hideNonInstalledApps": "Ẩn các ứng dụng chưa được cài đặt",
   "gitlabPATLabel": "Token truy cập cá nhân GitLab",
   "about": "Giới thiệu",
-  "requiresCredentialsInSettings": "{arg1}: Điều này cần thông tin xác thực bổ sung (trong Thiết đặt)",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{}: Điều này cần thông tin xác thực bổ sung (trong Thiết đặt)",
   "checkOnStart": "Kiểm tra các bản cập nhật khi khởi động",
   "safeMode": "Chế độ an toàn",
   "safeModeDescription": "Ẩn trang Thêm ứng dụng và hiển thị Nhập/Xuất thay thế",
@@ -501,17 +272,7 @@
   "customLinkFilterRegex": "Bộ lọc liên kết APK tùy chỉnh theo biểu thức chính quy (Mặc định '.apk$')",
   "appsPossiblyUpdated": "Đã cố gắng cập nhật ứng dụng",
   "appsPossiblyUpdatedNotifDescription": "Thông báo cho người dùng rằng các bản cập nhật cho một hoặc nhiều Ứng dụng có khả năng được áp dụng trong nền",
-  "xWasPossiblyUpdatedToY": "{arg1} có thể đã được cập nhật thành {arg2}.",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "{} có thể đã được cập nhật thành {}.",
   "enableBackgroundUpdates": "Tự động cập nhật trong nền",
   "backgroundUpdateReqsExplanation": "Có thể không thực hiện được cập nhật trong nền cho tất cả ứng dụng.",
   "backgroundUpdateLimitsExplanation": "Sự thành công của cài đặt trong nền chỉ có thể được xác định khi mở Updatium.",
@@ -527,14 +288,7 @@
   "autoSelectHighestVersionCode": "Tự động chọn APK mã phiên bản cao nhất",
   "versionExtractionRegEx": "Trích xuất phiên bản RegEx",
   "trimVersionString": "Cắt chuỗi phiên bản bằng RegEx",
-  "matchGroupToUseForX": "Nhóm khớp được dùng cho \"{arg1}\"",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "Nhóm khớp được dùng cho \"{}\"",
   "matchGroupToUse": "Nhóm đối sánh để sử dụng cho Regex trích xuất phiên bản",
   "highlightTouchTargets": "Đánh dấu các mục tiêu cảm ứng ít rõ ràng hơn",
   "pickExportDir": "Chọn thư mục xuất",
@@ -557,26 +311,12 @@
   "appsPossiblyUpdatedNotifChannel": "Đã cố gắng cập nhật ứng dụng",
   "errorCheckingUpdatesNotifChannel": "Lỗi kiểm tra bản cập nhật",
   "appsRemovedNotifChannel": "Ứng dụng đã bị loại bỏ",
-  "downloadingXNotifChannel": "Đang tải xuống {arg1}",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "Đang tải xuống {}",
   "completeAppInstallationNotifChannel": "Hoàn tất cài đặt ứng dụng",
   "checkingForUpdatesNotifChannel": "Đang kiểm tra cập nhật",
   "onlyCheckInstalledOrTrackOnlyApps": "Chỉ kiểm tra cập nhật các ứng dụng đã cài đặt và Chỉ theo dõi",
   "supportFixedAPKURL": "Hỗ trợ URL APK cố định",
-  "selectX": "Lựa chọn {arg1}",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "Lựa chọn {}",
   "parallelDownloads": "Cho phép tải đa luồng",
   "useShizuku": "Sử dụng Shizuku hoặc Sui để cài đặt",
   "shizukuBinderNotFound": "Shizuku chưa khởi động",
@@ -589,20 +329,14 @@
   "useLatestAssetDateAsReleaseDate": "Sử dụng nội dung tải lên mới nhất làm ngày phát hành",
   "defaultPseudoVersioningMethod": "Phương pháp tạo phiên bản giả mặc định",
   "partialAPKHash": "Băm APK một phần",
+  "APKLinkHash": "Băm liên kết APK",
   "directAPKLink": "Liên kết APK trực tiếp",
   "pseudoVersionInUse": "Phiên bản giả đang được sử dụng",
   "installed": "Đã cài đặt",
   "latest": "Mới nhất",
   "invertRegEx": "Đảo ngược biểu thức chính quy",
   "note": "Ghi chú",
-  "selfHostedNote": "Trình đơn thả xuống \"{arg1}\" có thể được dùng để tiếp cận các phiên bản tự lưu trữ/tùy chỉnh của bất kỳ nguồn nào.",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "Trình đơn thả xuống \"{}\" có thể được dùng để tiếp cận các phiên bản tự lưu trữ/tùy chỉnh của bất kỳ nguồn nào.",
   "badDownload": "Không thể phân tích cú pháp APK (tải xuống một phần hoặc không tương thích)",
   "beforeNewInstallsShareToAppVerifier": "Chia sẻ ứng dụng mới với AppVerifier (nếu có)",
   "appVerifierInstructionToast": "Chia sẻ lên AppVerifier, sau đó quay lại đây khi sẵn sàng.",
@@ -620,29 +354,31 @@
   "welcome": "Chào mừng",
   "documentationLinksNote": "Trang GitHub của Updatium được liên kết bên dưới chứa các liên kết đến video, bài viết, thảo luận và các tài nguyên khác sẽ giúp bạn hiểu cách sử dụng ứng dụng.",
   "batteryOptimizationNote": "Lưu ý: tải xuống nền có thể hoạt động ổn định hơn nếu bạn tắt tối ưu pin của hệ điều hành cho Updatium.",
-  "fileDeletionError": "Không thể xóa tệp (hãy thử xóa tệp thủ công rồi thử lại): \"{arg1}\"",
-  "@fileDeletionError": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "fileDeletionError": "Không thể xóa tệp (hãy thử xóa tệp thủ công rồi thử lại): \"{}\"",
   "foregroundService": "Dịch vụ nền Updatium",
   "foregroundServiceExplanation": "Sử dụng dịch vụ nền trước để kiểm tra cập nhật (đáng tin cậy hơn, tiêu tốn nhiều pin hơn)",
   "fgServiceNotice": "Thông báo này là bắt buộc để kiểm tra cập nhật nền (có thể ẩn trong cài đặt hệ điều hành).",
   "excludeSecrets": "Loại trừ thông tin bí mật",
+  "GHReqPrefix": "Thực thể 'sky22333/hubproxy' cho các yêu cầu GitHub",
   "includeZips": "Bao gồm các tệp ZIP",
   "zippedApkFilterRegEx": "Lọc các tệp APK bên trong tệp ZIP",
-  "googleVerificationWarningP1": "Google đã thông báo rằng, bắt đầu từ năm 2026/2027, tất cả các ứng dụng trên các thiết bị Android được chứng nhận sẽ yêu cầu nhà phát triển gửi thông tin cá nhân trực tiếp đến Google.\n\nSau đó, Updatium có thể ngừng hoạt động trên các thiết bị Android được chứng nhận.",
+  "googleVerificationWarningP1": "Google đã thông báo rằng, bắt đầu từ năm 2026/2027, tất cả các ứng dụng trên các thiết bị Android được chứng nhận sẽ yêu cầu nhà phát triển gửi thông tin cá nhân trực tiếp đến Google.
+
+Sau đó, Updatium có thể ngừng hoạt động trên các thiết bị Android được chứng nhận.",
   "googleVerificationWarningP2": "Truy cập https://keepandroidopen.org/ để biết thêm thông tin.",
-  "googleVerificationWarningP3": "Ghi chú rằng trong ngắn hạn, nó có thể tiếp tục có thể được tiếp tục để cài đặt các ứng dụng \"không xác định\" thông qua một quá trình \"vô hạn dòng chảy\" mà Google đã hứa sẽ thực hiện sau một hồi quy rộng cho thông báo của họ, nhưng họ không có chi tiết làm thế nào điều này sẽ hoạt động như thế nào vì vậy nó không rõ ràng nó sẽ thực sự bảo tồn tự do cho người dùng theo bất kỳ cách thực tế nào.\n\nTrong bất kỳ trường hợp nào, sự di chuyển của Google là một bước tiến đáng kể tới sự kết thúc của máy tính tự do, mục đích chung cho cá nhân.\n\nCác hệ điều hành không được ghi nhận, giống như GreneOS, nên không bị ảnh hưởng bởi điều này miễn là chúng được cho phép tiếp tục tồn tại.",
+  "googleVerificationWarningP3": "Ghi chú rằng trong ngắn hạn, nó có thể tiếp tục có thể được tiếp tục để cài đặt các ứng dụng \"không xác định\" thông qua một quá trình \"vô hạn dòng chảy\" mà Google đã hứa sẽ thực hiện sau một hồi quy rộng cho thông báo của họ, nhưng họ không có chi tiết làm thế nào điều này sẽ hoạt động như thế nào vì vậy nó không rõ ràng nó sẽ thực sự bảo tồn tự do cho người dùng theo bất kỳ cách thực tế nào.
+
+Trong bất kỳ trường hợp nào, sự di chuyển của Google là một bước tiến đáng kể tới sự kết thúc của máy tính tự do, mục đích chung cho cá nhân.
+
+Các hệ điều hành không được ghi nhận, giống như GreneOS, nên không bị ảnh hưởng bởi điều này miễn là chúng được cho phép tiếp tục tồn tại.",
   "multipleSigners": "Nhiều người ký",
   "securityDisclaimerTitle": "Tuyên bố Từ chối Trách nhiệm Bảo mật và Pháp lý",
   "license": "Giấy phép",
   "licenseText": "Ứng dụng này được phân phối theo Giấy phép GPL v3.",
   "disclaimer": "Tuyên bố từ chối trách nhiệm",
-  "disclaimerText": "Ứng dụng này không phân phối, lưu trữ hoặc xác minh bất kỳ ứng dụng bên ngoài nào. Người dùng mang toàn bộ trách nhiệm về sự an toàn và tính hợp pháp của bất kỳ phần mềm nào được cài đặt thông qua công cụ này.\n\nhttps://github.com/omeritzics/Updatium là nơi chính thức duy nhất để tải xuống Updatium - rất không khuyến khích tải xuống từ nơi khác vì việc tải xuống từ các nguồn không chính thức không an toàn.",
+  "disclaimerText": "Ứng dụng này không phân phối, lưu trữ hoặc xác minh bất kỳ ứng dụng bên ngoài nào. Người dùng mang toàn bộ trách nhiệm về sự an toàn và tính hợp pháp của bất kỳ phần mềm nào được cài đặt thông qua công cụ này.
+
+https://github.com/omeritzics/Updatium là nơi chính thức duy nhất để tải xuống Updatium - rất không khuyến khích tải xuống từ nơi khác vì việc tải xuống từ các nguồn không chính thức không an toàn.",
   "privacy": "Quyền riêng tư",
   "privacyText": "Ứng dụng này tập trung vào quyền riêng tư và không thu thập dữ liệu cá nhân.",
   "acceptAndContinue": "Chấp nhận và tiếp tục",
@@ -651,35 +387,69 @@
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-  "aPKLinkHash": "Băm liên kết APK",
-  "gHReqPrefix": "Thực thể 'sky22333/hubproxy' cho các yêu cầu GitHub",
-  "continueAction": "Tiếp tục"
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "apps": "{count} Apps",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "day": "{count} days",
-  "githubRequestPrefix": "GitHub request prefix",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "hour": "{count} hours",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minimumStarCount": "Minimum star count",
-  "minute": "{count} minutes",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
+
+  "apps": "Ứng dụng",
+  "@apps": {
+    "plural": {
+      "one": "{} Ứng dụng",
+      "other": "{} Ứng dụng",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "apk": "APK",
+  "@apk": {
+    "plural": {
+      "one": "{} APK",
+      "other": "{} APKs",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} phút",
+  "@minute": {
+    "plural": {
+      "one": "{} phút",
+      "other": "{} phút",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "hour": "{} giờ",
+  "@hour": {
+    "plural": {
+      "one": "{} giờ",
+      "other": "{} giờ",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "day": "{} ngày",
+  "@day": {
+    "plural": {
+      "one": "{} ngày",
+      "other": "{} ngày",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

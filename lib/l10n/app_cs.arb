@@ -1,13 +1,7 @@
 {
   "@@locale": "cs",
-  "invalidURLForSource": "Žádná platná adresa URL aplikace {arg1}",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+
+  "invalidURLForSource": "Žádná platná adresa URL aplikace {}",
   "noReleaseFound": "Nebyla nalezena odpovídající verze",
   "noVersionFound": "Nelze určit verzi vydání",
   "urlMatchesNoSource": "URL neodpovídá žádnému známému zdroji",
@@ -26,6 +20,7 @@
   "invalidRegEx": "Neplatný regulární výraz",
   "noDescription": "Žádný popis",
   "cancel": "Zrušit",
+  "continue": "Pokračovat",
   "requiredInBrackets": "(vyžadováno)",
   "dropdownNoOptsError": "CHYBA: ROZBALOVACÍ NABÍDKA MUSÍ MÍT ALESPOŇ JEDNU MOŽNOST",
   "color": "Barvu",
@@ -35,14 +30,7 @@
   "githubStarredRepos": "Repozitáře na GitHubu označené hvězdičkou",
   "uname": "Uživatelské jméno",
   "wrongArgNum": "Nesprávný počet zadaných argumentů",
-  "xIsTrackOnly": "{arg1} je určeno pouze pro sledování",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} je určeno pouze pro sledování",
   "source": "Zdroj",
   "app": "Aplikace",
   "appsFromSourceAreTrackOnly": "Aplikace z tohoto zdroje jsou „pouze pro sledování“.",
@@ -57,14 +45,7 @@
   "add": "Přidat",
   "searchSomeSourcesLabel": "Vyhledávání (pouze pro určité zdroje)",
   "search": "Hledat",
-  "additionalOptsFor": "Další možnosti pro {arg1}",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "Další možnosti pro {}",
   "supportedSources": "Podporované zdroje",
   "trackOnlyInBrackets": "(pouze sledování)",
   "searchableInBrackets": "(s možností vyhledávání)",
@@ -72,94 +53,35 @@
   "noApps": "Žádné aplikace",
   "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
   "noAppsForFilter": "Žádné aplikace pro vybraný filtr",
-  "byX": "Od {arg1}",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "Pokrok: {arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "Od {}",
+  "percentProgress": "Pokrok: {}%",
   "pleaseWait": "Počkejte prosím",
   "updateAvailable": "Aktualizace je k dispozici",
   "notInstalled": "Není nainstalováno",
   "pseudoVersion": "pseudoverze",
   "selectAll": "Vybrat vše",
-  "deselectX": "Zrušit výběr {arg1}",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "Aplikace {arg1} bude odstraněna z aplikace Updatium, ale zůstane nainstalována v zařízení.",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "Zrušit výběr {}",
+  "xWillBeRemovedButRemainInstalled": "Aplikace {} bude odstraněna z aplikace Updatium, ale zůstane nainstalována v zařízení.",
   "removeSelectedAppsQuestion": "Odstranit vybrané aplikace?",
   "removeSelectedApps": "Odstranit vybrané aplikace",
-  "updateX": "Aktualizovat {arg1}",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "Instalovat {arg1}",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "Označit aplikaci {arg1}\n(pouze sledování)\njako aktualizovanou",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "Změnit {arg1}",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "Aktualizovat {}",
+  "installX": "Instalovat {}",
+  "markXTrackOnlyAsUpdated": "Označit aplikaci {}
+(pouze sledování)
+jako aktualizovanou",
+  "changeX": "Změnit {}",
   "installUpdateApps": "Instalovat/aktualizovat aplikace",
   "installUpdateSelectedApps": "Instalovat/aktualizovat vybrané aplikace",
-  "markXSelectedAppsAsUpdated": "Označit {arg1} vybraných aplikací jako aktuální?",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "Označit {} vybraných aplikací jako aktuální?",
   "no": "Ne",
   "yes": "Ano",
   "markSelectedAppsUpdated": "Označit vybrané aplikace jako aktuální",
   "pinToTop": "Připnout nahoru",
   "unpinFromTop": "Odepnout shora",
   "resetInstallStatusForSelectedAppsQuestion": "Obnovit stav instalace vybraných aplikací?",
-  "installStatusOfXWillBeResetExplanation": "Stav instalace vybraných aplikací bude resetován.\n\nTo může být užitečné, pokud je verze aplikace zobrazená v aplikaci Updatium nesprávná z důvodu neúspěšných aktualizací nebo jiných problémů.",
+  "installStatusOfXWillBeResetExplanation": "Stav instalace vybraných aplikací bude resetován.
+
+To může být užitečné, pokud je verze aplikace zobrazená v aplikaci Updatium nesprávná z důvodu neúspěšných aktualizací nebo jiných problémů.",
   "customLinkMessage": "Tyto odkazy fungují na zařízeních s nainstalovaným Updatium",
   "shareAppConfigLinks": "Sdílet konfiguraci aplikace jako odkaz HTML",
   "shareSelectedAppURLs": "Sdílet adresy URL vybraných aplikací",
@@ -175,63 +97,29 @@
   "nonInstalledApps": "Nenainstalované aplikace",
   "importExport": "Dovoz / vývoz",
   "settings": "Nastavení",
-  "exportedTo": "Exportováno do {arg1}",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "Exportováno do {}",
   "updatiumExport": "Export aplikace Updatium",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Neplatný vstup",
-  "importedX": "Importováno {arg1}",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "Importováno {}",
   "updatiumImport": "Import aplikace Updatium",
   "importFromURLList": "Importovat ze seznamu adres",
   "searchQuery": "Vyhledávací dotaz",
   "appURLList": "Seznam adres aplikací",
   "line": "Linka",
-  "searchX": "Vyhledávání {arg1}",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "Vyhledávání {}",
   "noResults": "Nebyly nalezeny žádné výsledky",
-  "importX": "Importovat {arg1}",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "Importované aplikace mohou být nesprávně zobrazeny jako „nenainstalované“.\nChcete-li to opravit, nainstalujte je znovu prostřednictvím aplikace Updatium.\nNemá vliv na data aplikací.\n\nOvlivňuje pouze způsoby importu URL a třetích stran.",
+  "importX": "Importovat {}",
+  "importedAppsIdDisclaimer": "Importované aplikace mohou být nesprávně zobrazeny jako „nenainstalované“.
+Chcete-li to opravit, nainstalujte je znovu prostřednictvím aplikace Updatium.
+Nemá vliv na data aplikací.
+
+Ovlivňuje pouze způsoby importu URL a třetích stran.",
   "importErrors": "Chyba importu",
-  "importedXOfYApps": "Importováno {arg1} z {arg2} aplikací.",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "Importováno {} z {} aplikací.",
   "followingURLsHadErrors": "U následujících adres došlo k chybám:",
   "selectURL": "Vybrat adresu",
   "selectURLs": "Select adresy",
@@ -267,86 +155,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "updatium-export",
   "pickAnAPK": "Vybrat APK",
-  "appHasMoreThanOnePackage": "{arg1} má více než jeden balíček:",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "Vaše zařízení podporuje architekturu CPU {arg1}.",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{} má více než jeden balíček:",
+  "deviceSupportsXArch": "Vaše zařízení podporuje architekturu CPU {}.",
   "deviceSupportsFollowingArchs": "Vaše zařízení podporuje následující architektury CPU:",
   "warning": "Varování",
-  "sourceIsXButPackageFromYPrompt": "Zdroj aplikace je „{arg1}“, ale balíček pro vydání pochází z „{arg2}“. Pokračovat?",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "Zdroj aplikace je „{}“, ale balíček pro vydání pochází z „{}“. Pokračovat?",
   "updatesAvailable": "Dostupné aktualizace",
   "updatesAvailableNotifDescription": "Upozorňuje uživatele, že jsou k dispozici aktualizace pro jednu nebo více aplikací sledovaných Updatium",
   "noNewUpdates": "Žádné nové aktualizace.",
-  "xHasAnUpdate": "{arg1} má aktualizaci.",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{} má aktualizaci.",
   "appsUpdated": "Aplikace aktualizovány",
   "appsNotUpdated": "Nepodařilo se aktualizovat aplikace",
   "appsUpdatedNotifDescription": "Upozornit, že byly provedeny aktualizace jedné nebo více aplikací na pozadí",
-  "xWasUpdatedToY": "Aplikace {arg1} byla aktualizována na {arg2}.",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "Nepodařilo se aktualizovat {arg1} na {arg2}.",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "Aplikace {} byla aktualizována na {}.",
+  "xWasNotUpdatedToY": "Nepodařilo se aktualizovat {} na {}.",
   "errorCheckingUpdates": "Chyba kontroly aktualizací",
   "errorCheckingUpdatesNotifDescription": "Zobrazit oznámení při neúspěšné kontrole aktualizací na pozadí",
   "appsRemoved": "Odstraněné aplikace",
   "appsRemovedNotifDescription": "Oznámit, že jedna nebo více aplikací bylo odstraněno z důvodu chyb při načítání",
-  "xWasRemovedDueToErrorY": "{arg1} byla odstraněna z důvodu následující chyby: {arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "{} byla odstraněna z důvodu následující chyby: {}",
   "completeAppInstallation": "Dokončit instalaci aplikace",
   "updatiumMustBeOpenToInstallApps": "Updatium musí být otevřeno, aby bylo možné instalovat aplikace",
   "completeAppInstallationNotifDescription": "Vyzvat k návratu do Updatium pro dokončení instalace aplikací",
@@ -354,43 +181,15 @@
   "checkingForUpdatesNotifDescription": "Dočasné oznámení zobrazené při kontrole aktualizací",
   "pleaseAllowInstallPerm": "Povolte prosím aplikaci Updatium instalovat aplikace",
   "trackOnly": "Pouze sledovat",
-  "errorWithHttpStatusCode": "Chyba {arg1}",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "Chyba {}",
   "versionCorrectionDisabled": "Oprava verze zakázána (zásuvný modul zřejmě nefunguje)",
   "unknown": "Neznám",
   "none": "Žádný",
   "all": "Všechny",
   "never": "Nikdy",
-  "latestVersionX": "Nejnovější verze: {arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "Nainstalovaná verze: {arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "Poslední kontrola aktualizací: {arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "Nejnovější verze: {}",
+  "installedVersionX": "Nainstalovaná verze: {}",
+  "lastUpdateCheckX": "Poslední kontrola aktualizací: {}",
   "remove": "Odebrat",
   "yesMarkUpdated": "Ano, označit jako aktualizované",
   "fdroid": "Oficiální repozitář F-Droid",
@@ -407,30 +206,9 @@
   "additionalOptions": "Další možnosti",
   "disableVersionDetection": "Deaktivovat detekci verze",
   "noVersionDetectionExplanation": "Tato možnost by měla být použita pouze u aplikace, kde detekce verzí nefunguje správně.",
-  "downloadingX": "Stáhnout {arg1}",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "Stáhnout {arg1}",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "Staženo {arg1}",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "Stáhnout {}",
+  "downloadX": "Stáhnout {}",
+  "downloadedX": "Staženo {}",
   "releaseAsset": "Soubor vydání",
   "downloadNotifDescription": "Informuje uživatele o průběhu stahování aplikace",
   "noAPKFound": "Žádná APK nebyla nalezena",
@@ -474,14 +252,7 @@
   "hideNonInstalledApps": "Skrýt neinstalované aplikace",
   "gitlabPATLabel": "Osobní přístupový token GitLab",
   "about": "Informace",
-  "requiresCredentialsInSettings": "{arg1} vyžaduje další pověření (v nastavení)",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{} vyžaduje další pověření (v nastavení)",
   "checkOnStart": "Zkontrolovat aktualizace při spuštění",
   "safeMode": "Bezpečný režim",
   "safeModeDescription": "Skrýt stránku přidání aplikace a místo toho zobrazit Import/Export",
@@ -501,17 +272,7 @@
   "customLinkFilterRegex": "Vlastní filtr odkazů APK podle regulárního výrazu (výchozí: „.apk$“)",
   "appsPossiblyUpdated": "Byly provedeny pokusy o aktualizaci aplikací",
   "appsPossiblyUpdatedNotifDescription": "Upozorňuje uživatele, že na pozadí mohly být provedeny aktualizace jedné nebo více aplikací",
-  "xWasPossiblyUpdatedToY": "{arg1} mohlo být aktualizováno na {arg2}.",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "{} mohlo být aktualizováno na {}.",
   "enableBackgroundUpdates": "Povolit aktualizace na pozadí",
   "backgroundUpdateReqsExplanation": "Aktualizace na pozadí nemusí být možná pro všechny aplikace.",
   "backgroundUpdateLimitsExplanation": "Úspěšnost instalace na pozadí lze určit pouze v případě, že je otevřeno Updatium.",
@@ -527,14 +288,7 @@
   "autoSelectHighestVersionCode": "Automaticky vybrat APK s nejvyšším kódem verze",
   "versionExtractionRegEx": "Extrakce verze pomocí RegEx",
   "trimVersionString": "Oříznutí řetězce verze pomocí RegEx",
-  "matchGroupToUseForX": "Shoda se skupinou k použití pro „{arg1}“",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "Shoda se skupinou k použití pro „{}“",
   "matchGroupToUse": "Odpovídá použité skupině",
   "highlightTouchTargets": "Zvýraznit méně zjevné cíle dotyku",
   "pickExportDir": "Vybrat adresář pro export",
@@ -557,26 +311,12 @@
   "appsPossiblyUpdatedNotifChannel": "Byly provedeny pokusy o aktualizace aplikací",
   "errorCheckingUpdatesNotifChannel": "Chyba při kontrole aktualizací",
   "appsRemovedNotifChannel": "Aplikace odstraněny",
-  "downloadingXNotifChannel": "Stáhnout {arg1}",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "Stáhnout {}",
   "completeAppInstallationNotifChannel": "Dokončit instalaci aplikace",
   "checkingForUpdatesNotifChannel": "Zkontrolovat aktualizace",
   "onlyCheckInstalledOrTrackOnlyApps": "Aktualizace kontrolovat pouze u nainstalovaných a sledovaných aplikací",
   "supportFixedAPKURL": "Odhadnout novější verzi na základě prvních třiceti číslic kontrolního součtu adresy URL APK, pokud není podporována jinak",
-  "selectX": "Vybrat {arg1}",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "Vybrat {}",
   "parallelDownloads": "Povolit souběžné stahování",
   "useShizuku": "K instalaci použít Shizuku nebo Sui",
   "shizukuBinderNotFound": "Shizuku neběží",
@@ -589,20 +329,14 @@
   "useLatestAssetDateAsReleaseDate": "Použít poslední nahraný soubor jako datum vydání",
   "defaultPseudoVersioningMethod": "Výchozí metoda pseudoverze",
   "partialAPKHash": "Částečný hash APK",
+  "APKLinkHash": "Odkaz APK Hash",
   "directAPKLink": "Přímý odkaz APK",
   "pseudoVersionInUse": "Pseudoverze se používá",
   "installed": "Nainstalováno",
   "latest": "Nejnovější",
   "invertRegEx": "Invertovat regulární výraz",
   "note": "Poznámka",
-  "selfHostedNote": "Rozbalovací seznam „{arg1}“ lze použít pro přístup k vlastním instancím libovolného zdroje.",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "Rozbalovací seznam „{}“ lze použít pro přístup k vlastním instancím libovolného zdroje.",
   "badDownload": "APK nelze analyzovat (nekompatibilní nebo částečné stažení)",
   "beforeNewInstallsShareToAppVerifier": "Sdílet nové aplikace s aplikací AppVerifier (pokud je k dispozici)",
   "appVerifierInstructionToast": "Sdílejte do aplikace AppVerifier a po dokončení se sem vraťte.",
@@ -620,29 +354,31 @@
   "welcome": "Vítejte na",
   "documentationLinksNote": "Níže odkazovaná stránka Updatium GitHub obsahuje odkazy na videa, články, diskuse a další zdroje, které vám pomohou pochopit, jak aplikaci používat.",
   "batteryOptimizationNote": "Upozorňujeme, že stahování na pozadí může fungovat spolehlivěji, pokud v nastavení aplikace Updatium přepnete na „službu v popředí“ a/nebo v nastavení operačního systému pro Updatium vypnete optimalizaci baterie.",
-  "fileDeletionError": "Soubor se nepodařilo odstranit (zkuste jej odstranit ručně a akci opakujte): „{arg1}“",
-  "@fileDeletionError": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "fileDeletionError": "Soubor se nepodařilo odstranit (zkuste jej odstranit ručně a akci opakujte): „{}“",
   "foregroundService": "Služba Updatium na popředí",
   "foregroundServiceExplanation": "Použít službu v popředí pro kontrolu aktualizací (spolehlivější, spotřebovává více energie)",
   "fgServiceNotice": "Toto oznámení je nutné pro kontrolu aktualizací na pozadí (lze jej skrýt v nastavení systému)",
   "excludeSecrets": "Vyloučit tajemství",
+  "GHReqPrefix": "instance 'sky22333/hubproxy' pro požadavky GitHubu",
   "includeZips": "Zahrnout soubory ZIP",
   "zippedApkFilterRegEx": "Filtrování souborů APK uvnitř ZIP",
-  "googleVerificationWarningP1": "Společnost Google oznámila, že počínaje rokem 2026 / 2027 budou všechny aplikace na \"certifikovaných\" zařízeních pro Android vyžadovat, aby vývojář předložil osobní údaje o identitě přímo společnosti Google.\n\nPo této době, Updatium může přestat pracovat na certifikovaných Android zařízeních.",
+  "googleVerificationWarningP1": "Společnost Google oznámila, že počínaje rokem 2026 / 2027 budou všechny aplikace na \"certifikovaných\" zařízeních pro Android vyžadovat, aby vývojář předložil osobní údaje o identitě přímo společnosti Google.
+
+Po této době, Updatium může přestat pracovat na certifikovaných Android zařízeních.",
   "googleVerificationWarningP2": "Další informace získáte na adrese https: / / keepandroidopen.org.",
-  "googleVerificationWarningP3": "Všimněte si, že v krátkodobém horizontu může být i nadále možné instalovat \"neověřené\" (nevyhovující) aplikace prostřednictvím procesu \"pokročilého toku\", který Google slíbil implementovat po širokém odporu k jejich oznámení, ale neupřesnili, jak by to mělo fungovat, takže není jasné, zda bude skutečně zachovávat uživatelskou svobodu jakýmkoli praktickým způsobem.\n\nV každém případě je krok společnosti Google významným krokem ke konci volného, všeobecného výpočetní techniky pro jednotlivce.\n\nNecertifikované Osy, jako je GrapheneOS, by tím neměly být ovlivněny, pokud budou nadále existovat.",
+  "googleVerificationWarningP3": "Všimněte si, že v krátkodobém horizontu může být i nadále možné instalovat \"neověřené\" (nevyhovující) aplikace prostřednictvím procesu \"pokročilého toku\", který Google slíbil implementovat po širokém odporu k jejich oznámení, ale neupřesnili, jak by to mělo fungovat, takže není jasné, zda bude skutečně zachovávat uživatelskou svobodu jakýmkoli praktickým způsobem.
+
+V každém případě je krok společnosti Google významným krokem ke konci volného, všeobecného výpočetní techniky pro jednotlivce.
+
+Necertifikované Osy, jako je GrapheneOS, by tím neměly být ovlivněny, pokud budou nadále existovat.",
   "multipleSigners": "Několik signers",
   "securityDisclaimerTitle": "Bezpečnostní a Právní Zřeknutí se Odpovědnosti",
   "license": "Licence",
   "licenseText": "Tato aplikace je distribuována pod licencí GPL v3.",
   "disclaimer": "Zřeknutí se odpovědnosti",
-  "disclaimerText": "Tato aplikace nedistribuuje, nehostuje ani neověřuje žádné externí aplikace. Uživatel nese plnou odpovědnost za bezpečnost a legality jakéhokoli softwaru instalovaného prostřednictvím tohoto nástroje.\n\nhttps://github.com/omeritzics/Updatium je jediné oficiální místo pro stažení Updatia - důrazně se nedoporučuje stahovat jej z jiných míst, protože stahování z neoficiálních zdrojů není bezpečné.",
+  "disclaimerText": "Tato aplikace nedistribuuje, nehostuje ani neověřuje žádné externí aplikace. Uživatel nese plnou odpovědnost za bezpečnost a legality jakéhokoli softwaru instalovaného prostřednictvím tohoto nástroje.
+
+https://github.com/omeritzics/Updatium je jediné oficiální místo pro stažení Updatia - důrazně se nedoporučuje stahovat jej z jiných míst, protože stahování z neoficiálních zdrojů není bezpečné.",
   "privacy": "Soukromí",
   "privacyText": "Tato aplikace je zaměřena na soukromí a nesbírá osobní údaje.",
   "acceptAndContinue": "Přijmout a pokračovat",
@@ -651,35 +387,73 @@
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-  "aPKLinkHash": "Odkaz APK Hash",
-  "gHReqPrefix": "instance 'sky22333/hubproxy' pro požadavky GitHubu",
-  "continueAction": "Pokračovat"
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "apps": "{count} Apps",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "day": "{count} days",
-  "githubRequestPrefix": "GitHub request prefix",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "hour": "{count} hours",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minimumStarCount": "Minimum star count",
-  "minute": "{count} minutes",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
+
+  "apps": "Aplikace",
+  "@apps": {
+    "plural": {
+      "one": "{} aplikace",
+      "few": "{} aplikace",
+      "other": "{} aplikací",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "apk": "APK",
+  "@apk": {
+    "plural": {
+      "one": "{} APK",
+      "other": "{} APK",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} minut",
+  "@minute": {
+    "plural": {
+      "one": "{} minuta",
+      "few": "{} minuty",
+      "other": "{} minut",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "hour": "{} hodin",
+  "@hour": {
+    "plural": {
+      "one": "{} hodina",
+      "few": "{} hodiny",
+      "other": "{} hodin",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "day": "{} dní",
+  "@day": {
+    "plural": {
+      "one": "{} den",
+      "few": "{} dny",
+      "other": "{} dní",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

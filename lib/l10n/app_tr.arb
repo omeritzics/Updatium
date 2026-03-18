@@ -1,13 +1,7 @@
 {
   "@@locale": "tr",
-  "invalidURLForSource": "Geçerli bir {arg1} uygulama URL'si değil",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+
+  "invalidURLForSource": "Geçerli bir {} uygulama URL'si değil",
   "noReleaseFound": "Uygun bir sürüm bulunamadı",
   "noVersionFound": "Sürüm bulunamadı",
   "urlMatchesNoSource": "URL, bilinen bir kaynakla eşleşmiyor",
@@ -26,6 +20,7 @@
   "invalidRegEx": "Geçersiz düzenli ifade",
   "noDescription": "Açıklama yok",
   "cancel": "İptal",
+  "continue": "Devam et",
   "requiredInBrackets": "(gerekli)",
   "dropdownNoOptsError": "HATA: AÇILIR MENÜDE EN AZ BİR SEÇENEK OLMALI",
   "color": "Renk",
@@ -35,14 +30,7 @@
   "githubStarredRepos": "GitHub yıldızlı depolar",
   "uname": "Kullanıcı adı",
   "wrongArgNum": "Yanlış sayıda argüman sağlandı",
-  "xIsTrackOnly": "{arg1} sadece takip edilir",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} sadece takip edilir",
   "source": "Kaynak",
   "app": "Uygulama",
   "appsFromSourceAreTrackOnly": "Bu kaynaktaki uygulamalar sadece takip edilir.",
@@ -57,14 +45,7 @@
   "add": "Ekle",
   "searchSomeSourcesLabel": "Ara (yalnızca bazı kaynaklar)",
   "search": "Ara",
-  "additionalOptsFor": "{arg1} için ek seçenekler",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "{} için ek seçenekler",
   "supportedSources": "Desteklenen kaynaklar",
   "trackOnlyInBrackets": "(sadece takip edilir)",
   "searchableInBrackets": "(aranabilir)",
@@ -72,94 +53,33 @@
   "noApps": "Uygulama Yok",
   "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
   "noAppsForFilter": "Filtre İçin Uygulama Yok",
-  "byX": "{arg1} Tarafından",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "İlerleme: {arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "{} Tarafından",
+  "percentProgress": "İlerleme: {}%",
   "pleaseWait": "Lütfen Bekleyin",
   "updateAvailable": "Güncelleme Var",
   "notInstalled": "Yüklenmedi",
   "pseudoVersion": "sözde versiyon",
   "selectAll": "Hepsini Seç",
-  "deselectX": "{arg1}'yi Seçimden Kaldır",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "{arg1} Updatium'dan kaldırılacak ancak cihazınızda yüklü kalacaktır.",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "{}'yi Seçimden Kaldır",
+  "xWillBeRemovedButRemainInstalled": "{} Updatium'dan kaldırılacak ancak cihazınızda yüklü kalacaktır.",
   "removeSelectedAppsQuestion": "Seçilen Uygulamaları Kaldırmak İstiyor musunuz?",
   "removeSelectedApps": "Seçilen Uygulamaları Kaldır",
-  "updateX": "{arg1}'yi Güncelle",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "{arg1}'yi Yükle",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "{arg1}(Takip Edilen) olarak Güncellendi olarak İşaretle",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "{arg1}'yi Değiştir",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "{}'yi Güncelle",
+  "installX": "{}'yi Yükle",
+  "markXTrackOnlyAsUpdated": "{}(Takip Edilen) olarak Güncellendi olarak İşaretle",
+  "changeX": "{}'yi Değiştir",
   "installUpdateApps": "Uygulamaları Yükle/Güncelle",
   "installUpdateSelectedApps": "Seçilen Uygulamaları Yükle/Güncelle",
-  "markXSelectedAppsAsUpdated": "Seçilen Uygulamaları {arg1} olarak Güncellendi olarak İşaretle?",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "Seçilen Uygulamaları {} olarak Güncellendi olarak İşaretle?",
   "no": "Hayır",
   "yes": "Evet",
   "markSelectedAppsUpdated": "Seçilen Uygulamaları Güncellendi olarak İşaretle",
   "pinToTop": "Üstte Tut",
   "unpinFromTop": "Üstten Kaldır",
   "resetInstallStatusForSelectedAppsQuestion": "Seçilen Uygulamaların Yükleme Durumunu Sıfırlamak İstiyor musunuz?",
-  "installStatusOfXWillBeResetExplanation": "Seçilen Uygulamaların yükleme durumu sıfırlanacak.\n\nBu, Updatium'da gösterilen uygulama sürümünün başarısız güncellemeler veya diğer sorunlar nedeniyle yanlış olması durumunda yardımcı olabilir.",
+  "installStatusOfXWillBeResetExplanation": "Seçilen Uygulamaların yükleme durumu sıfırlanacak.
+
+Bu, Updatium'da gösterilen uygulama sürümünün başarısız güncellemeler veya diğer sorunlar nedeniyle yanlış olması durumunda yardımcı olabilir.",
   "customLinkMessage": "Bu bağlantılar Updatium'un kurulu olduğu cihazlarda çalışır",
   "shareAppConfigLinks": "Uygulama yapılandırmasını HTML bağlantısı olarak paylaş",
   "shareSelectedAppURLs": "Seçili uygulamaların URL'lerini paylaş",
@@ -175,63 +95,29 @@
   "nonInstalledApps": "Yüklü olmayan uygulamalar",
   "importExport": "İçe/dışa aktar",
   "settings": "Ayarlar",
-  "exportedTo": "{arg1}'e Dışa Aktarıldı",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "{}'e Dışa Aktarıldı",
   "updatiumExport": "Updatium Dışa Aktar",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Geçersiz Giriş",
-  "importedX": "{arg1} İçe Aktarıldı",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "{} İçe Aktarıldı",
   "updatiumImport": "Updatium İçe Aktar",
   "importFromURLList": "URL Listesinden İçe Aktar (Örneğin OPML)",
   "searchQuery": "Arama Sorgusu",
   "appURLList": "Uygulama URL Listesi",
   "line": "Satır",
-  "searchX": "{arg1}'yi Ara",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "{}'yi Ara",
   "noResults": "Sonuç Bulunamadı",
-  "importX": "{arg1} İçe Aktar",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "İçe Aktarılan Uygulamalar yanlışlıkla \"Yüklenmedi\" olarak gösterilebilir.\nBunu düzeltmek için bunları Updatium üzerinden yeniden yükleyin.\nBu, yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.\n\nYalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.",
+  "importX": "{} İçe Aktar",
+  "importedAppsIdDisclaimer": "İçe Aktarılan Uygulamalar yanlışlıkla \"Yüklenmedi\" olarak gösterilebilir.
+Bunu düzeltmek için bunları Updatium üzerinden yeniden yükleyin.
+Bu, yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.
+
+Yalnızca URL ve üçüncü taraf içe aktarma yöntemlerini etkiler.",
   "importErrors": "İçe Aktarma Hataları",
-  "importedXOfYApps": "{arg1}'den {arg2} Uygulama İçe Aktarıldı.",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "{}'den {} Uygulama İçe Aktarıldı.",
   "followingURLsHadErrors": "Aşağıdaki URL'lerde hatalar oluştu:",
   "selectURL": "URL Seç",
   "selectURLs": "URL'leri Seç",
@@ -267,86 +153,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "updatium-ihracat",
   "pickAnAPK": "APK Seç",
-  "appHasMoreThanOnePackage": "{arg1}'nin birden fazla paketi var:",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "Cihazınız {arg1} CPU mimarisini destekliyor.",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{}'nin birden fazla paketi var:",
+  "deviceSupportsXArch": "Cihazınız {} CPU mimarisini destekliyor.",
   "deviceSupportsFollowingArchs": "Cihazınız şu CPU mimarilerini destekliyor:",
   "warning": "Uyarı",
-  "sourceIsXButPackageFromYPrompt": "Uygulama kaynağı '{arg1}', ancak dağıtım paketi '{arg2}'. Devam etmek istiyor musunuz?",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "Uygulama kaynağı '{}', ancak dağıtım paketi '{}'. Devam etmek istiyor musunuz?",
   "updatesAvailable": "Güncellemeler Var",
   "updatesAvailableNotifDescription": "Kullanıcıya Updatium tarafından takip edilen bir veya daha fazla uygulama için güncelleme bulunduğuna dair bilgi verir",
   "noNewUpdates": "Yeni güncelleme yok.",
-  "xHasAnUpdate": "{arg1} güncellemesi var.",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{} güncellemesi var.",
   "appsUpdated": "Uygulamalar güncellendi",
   "appsNotUpdated": "Uygulamalar güncellenemedi",
   "appsUpdatedNotifDescription": "Bir veya daha fazla uygulama güncellemesinin arka planda yapıldığını kullanıcıya bildirir",
-  "xWasUpdatedToY": "{arg1}, {arg2} sürümüne güncellendi.",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "{arg1}, {arg2} sürümüne güncellenemedi.",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "{}, {} sürümüne güncellendi.",
+  "xWasNotUpdatedToY": "{}, {} sürümüne güncellenemedi.",
   "errorCheckingUpdates": "Güncellemeler denetlenirken hata oluştu",
   "errorCheckingUpdatesNotifDescription": "Arka plan güncelleme denetlemesi başarısız olduğunda görünen bir bildirim",
   "appsRemoved": "Uygulamalar kaldırıldı",
   "appsRemovedNotifDescription": "Bir veya daha fazla uygulamanın, yüklenmesi sırasında oluşan hatalardan dolayı kaldırıldığını kullanıcıya bildirir",
-  "xWasRemovedDueToErrorY": "{arg1} şu hatadan dolayı kaldırıldı: {arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "{} şu hatadan dolayı kaldırıldı: {}",
   "completeAppInstallation": "Uygulama Yüklemeyi Tamamla",
   "updatiumMustBeOpenToInstallApps": "Uygulamaları yüklemek için Updatium'un açık olması gerekiyor",
   "completeAppInstallationNotifDescription": "Kullanıcıdan Updatium'a geri dönüp bir uygulama yüklemeyi tamamlamasını isteyen bir bildirim",
@@ -354,43 +179,15 @@
   "checkingForUpdatesNotifDescription": "Güncellemeler kontrol edildiğinde görünen geçici bir bildirim",
   "pleaseAllowInstallPerm": "Lütfen Updatium'un uygulama yüklemesine izin verin",
   "trackOnly": "Sadece Takip Et",
-  "errorWithHttpStatusCode": "Hata {arg1}",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "Hata {}",
   "versionCorrectionDisabled": "Sürüm düzeltme devre dışı (eklenti çalışmıyor gibi görünüyor)",
   "unknown": "Bilinmeyen",
   "none": "Hiçbiri",
   "all": "Tümü",
   "never": "Asla",
-  "latestVersionX": "En son sürüm: {arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "Yüklü: {arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "Son güncelleme denetlemesi: {arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "En son sürüm: {}",
+  "installedVersionX": "Yüklü: {}",
+  "lastUpdateCheckX": "Son güncelleme denetlemesi: {}",
   "remove": "Kaldır",
   "yesMarkUpdated": "Evet, güncel olarak işaretle",
   "fdroid": "Resmi F-Droid",
@@ -407,30 +204,9 @@
   "additionalOptions": "Ek seçenekler",
   "disableVersionDetection": "Sürüm algılamasını devre dışı bırak",
   "noVersionDetectionExplanation": "Bu seçenek yalnızca sürüm algılamasının doğru çalışmadığı uygulamalar için kullanılmalıdır.",
-  "downloadingX": "{arg1} indiriliyor",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "{arg1}'yi indir",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "{arg1} indirildi",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "{} indiriliyor",
+  "downloadX": "{}'yi indir",
+  "downloadedX": "{} indirildi",
   "releaseAsset": "Sürüm varlığı",
   "downloadNotifDescription": "Uygulama indirilmesi ilerlemesini kullanıcıya bildirir",
   "noAPKFound": "APK bulunamadı",
@@ -474,14 +250,7 @@
   "hideNonInstalledApps": "Yüklü olmayan uygulamaları gizle",
   "gitlabPATLabel": "GitLab kişisel erişim anahtarı",
   "about": "Hakkında",
-  "requiresCredentialsInSettings": "{arg1} ek kimlik bilgileri gerektirir (Ayarlarda)",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{} ek kimlik bilgileri gerektirir (Ayarlarda)",
   "checkOnStart": "Açılışta güncellemeleri denetle",
   "safeMode": "Güvenli Mod",
   "safeModeDescription": "Uygulama Ekle sayfasını gizle ve bunun yerine İçe/Dışa Aktar'ı göster",
@@ -501,17 +270,7 @@
   "customLinkFilterRegex": "Düzenli ifade ile APK bağlantı filtresi (varsayılan '.apk$')",
   "appsPossiblyUpdated": "Uygulama güncellemeleri denendi",
   "appsPossiblyUpdatedNotifDescription": "Bir veya daha fazla uygulama güncellemesinin arka planda yapılmış olabileceğini kullanıcıya bildirir",
-  "xWasPossiblyUpdatedToY": "{arg1} {arg2} sürümüne güncellenmiş olabilir.",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "{} {} sürümüne güncellenmiş olabilir.",
   "enableBackgroundUpdates": "Arka plan güncellemelerini etkinleştir",
   "backgroundUpdateReqsExplanation": "Arka plan güncellemeleri tüm uygulamalar için mümkün olmayabilir.",
   "backgroundUpdateLimitsExplanation": "Arka plan kurulumunun başarısı, Updatium'un açıldığında ancak belirlenebilir.",
@@ -527,14 +286,7 @@
   "autoSelectHighestVersionCode": "En yüksek versionCode olan APK'yı otomatik seç",
   "versionExtractionRegEx": "Sürüm dizesi bulmak için RegEx",
   "trimVersionString": "Sürüm dizesini RegEx ile kırp",
-  "matchGroupToUseForX": "\"{arg1}\" için kullanılacak grubu eşleştir",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "\"{}\" için kullanılacak grubu eşleştir",
   "matchGroupToUse": "Sürüm dizesi bulma RegEx'i için kullanılacak grubu eşleştir",
   "highlightTouchTargets": "Az belirgin olan dokunma hedeflerini vurgula",
   "pickExportDir": "Dışa aktarma klasörü seç",
@@ -557,26 +309,12 @@
   "appsPossiblyUpdatedNotifChannel": "Uygulama güncellemeleri denendi",
   "errorCheckingUpdatesNotifChannel": "Güncelleme denetlenirken hata",
   "appsRemovedNotifChannel": "Uygulamalar kaldırıldı",
-  "downloadingXNotifChannel": "{arg1} indiriliyor",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "{} indiriliyor",
   "completeAppInstallationNotifChannel": "Uygulama yüklemesini tamamla",
   "checkingForUpdatesNotifChannel": "Güncellemeler denetleniyor",
   "onlyCheckInstalledOrTrackOnlyApps": "Yalnızca yüklü ve 'sadece takip edilen' uygulamaların güncellemesini denetle",
   "supportFixedAPKURL": "Sabit APK URL'lerini destekle",
-  "selectX": "{arg1}'yi seç",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "{}'yi seç",
   "parallelDownloads": "Paralel indirmelere izin ver",
   "useShizuku": "Yüklemek için Shizuku ya da Sui kullan",
   "shizukuBinderNotFound": "Shizuku hizmeti çalışmıyor",
@@ -589,20 +327,14 @@
   "useLatestAssetDateAsReleaseDate": "En son varlık yüklemesini yayın tarihi olarak kullan",
   "defaultPseudoVersioningMethod": "Varsayılan sözde sürüm yöntemi",
   "partialAPKHash": "Kısmi APK hash'i",
+  "APKLinkHash": "APK bağlantısı hash'i",
   "directAPKLink": "Direkt APK bağlantısı",
   "pseudoVersionInUse": "Sözde sürüm kullanılıyor",
   "installed": "Yüklü",
   "latest": "En son",
   "invertRegEx": "Düzenli ifadeyi ters çevir",
   "note": "Not",
-  "selfHostedNote": "\"{arg1}\" açılır menüsü, herhangi bir kaynağın bireysel (self-hosted) veya özel örneklerine ulaşmak için kullanılabilir.",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "\"{}\" açılır menüsü, herhangi bir kaynağın bireysel (self-hosted) veya özel örneklerine ulaşmak için kullanılabilir.",
   "badDownload": "APK ayrıştırılamadı (uyumsuz veya kısmi indirme)",
   "beforeNewInstallsShareToAppVerifier": "Yeni Uygulamaları AppVerifier ile paylaşın (varsa)",
   "appVerifierInstructionToast": "AppVerifier ile paylaşın, hazır olduğunuzda buraya dönün.",
@@ -620,29 +352,31 @@
   "welcome": "Hoş geldiniz",
   "documentationLinksNote": "Aşağıda bağlantısı verilen Updatium GitHub sayfası, uygulamayı nasıl kullanacağınızı anlamanıza yardımcı olacak videolara, makalelere, tartışmalara ve diğer kaynaklara bağlantılar içerir.",
   "batteryOptimizationNote": "Updatium ayarlarında \"ön plan hizmeti\"ne geçerseniz ve/veya Updatium için işletim sistemi pil optimizasyonlarını devre dışı bırakırsanız arka planda indirmelerin daha güvenilir şekilde çalışabileceğini unutmayın.",
-  "fileDeletionError": "Dosya silinemedi (elle silmeyi deneyin ve sonra tekrar deneyin): \"{arg1}\"",
-  "@fileDeletionError": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "fileDeletionError": "Dosya silinemedi (elle silmeyi deneyin ve sonra tekrar deneyin): \"{}\"",
   "foregroundService": "Updatium ön plan hizmeti",
   "foregroundServiceExplanation": "Güncelleme denetimi için bir ön plan hizmeti kullanın (daha güvenilir, daha fazla güç tüketir)",
   "fgServiceNotice": "Bu bildirim arka planda güncelleme kontrolü için gereklidir (işletim sistemi ayarlarından gizlenebilir)",
   "excludeSecrets": "Sırları hariç tut",
+  "GHReqPrefix": "GitHub istekleri için 'sky22333/hubproxy' örneği",
   "includeZips": "ZIP dosyalarını dahil et",
   "zippedApkFilterRegEx": "ZIP içindeki APK'ları filtrele",
-  "googleVerificationWarningP1": "Google, 2026/2027'den itibaren \"sertifikalı\" Android cihazlardaki bütün uygulamaların, geliştiricinin kişisel kimlik bilgilerini doğrudan Google'a göndermesini gerektireceğini duyurdu.\n\nBu tarihten sonra, Updatium sertifikalı Android cihazlarda çalışmayı durabilir.",
+  "googleVerificationWarningP1": "Google, 2026/2027'den itibaren \"sertifikalı\" Android cihazlardaki bütün uygulamaların, geliştiricinin kişisel kimlik bilgilerini doğrudan Google'a göndermesini gerektireceğini duyurdu.
+
+Bu tarihten sonra, Updatium sertifikalı Android cihazlarda çalışmayı durabilir.",
   "googleVerificationWarningP2": "Daha fazla bilgi için https://keepandroidopen.org/ adresine gidin.",
-  "googleVerificationWarningP3": "Kısa vadede, Google'ın duyurudan sonra aldığı geniş tepkilerin ardından yapacağına söz verdiği \"gelişmiş akış\" işlemi ile \"doğrulanmamış\" (şartı yerine getirmeyen) uygulamaları yüklemek mümkün olabilir; ancak nasıl çalışacağını detaylandırmadıkları için bunun kullanıcı özgürlüğünü pratik anlamda gerçekten koruyup koruyamayacağı belirsizdir.\n\nHer halükârda Google'ın bu hamlesi; bireyler için ücretsiz, genel amaçlı bilişim hizmetlerinin sonuna doğru atılmış önemli bir adımdır.\n\nVar olmalarına müsaade edildiği sürece, GrapheneOS gibi sertifikasız işletim sistemleri bundan etkilenmemelidir.",
+  "googleVerificationWarningP3": "Kısa vadede, Google'ın duyurudan sonra aldığı geniş tepkilerin ardından yapacağına söz verdiği \"gelişmiş akış\" işlemi ile \"doğrulanmamış\" (şartı yerine getirmeyen) uygulamaları yüklemek mümkün olabilir; ancak nasıl çalışacağını detaylandırmadıkları için bunun kullanıcı özgürlüğünü pratik anlamda gerçekten koruyup koruyamayacağı belirsizdir.
+
+Her halükârda Google'ın bu hamlesi; bireyler için ücretsiz, genel amaçlı bilişim hizmetlerinin sonuna doğru atılmış önemli bir adımdır.
+
+Var olmalarına müsaade edildiği sürece, GrapheneOS gibi sertifikasız işletim sistemleri bundan etkilenmemelidir.",
   "multipleSigners": "Birden fazla imzacı",
   "securityDisclaimerTitle": "Güvenlik ve Yasal Sorumluluk Reddi",
   "license": "Lisans",
   "licenseText": "Bu uygulama GPL v3 Lisansı altında dağıtılmaktadır.",
   "disclaimer": "Sorumluluk Reddi",
-  "disclaimerText": "Bu uygulama harici uygulamaları dağıtmaz, barındırmaz veya doğrulamaz. Kullanıcı, bu araç üzerinden yüklenen herhangi bir yazılımın güvenliği ve yasallığından tamamen sorumludur.\n\nhttps://github.com/omeritzics/Updatium Updatium'u indirmek için tek resmi yerdir - resmi olmayan kaynaklardan indirmek güvenli olmadığından başka yerlerden indirmek şiddetle tavsiye edilmez.",
+  "disclaimerText": "Bu uygulama harici uygulamaları dağıtmaz, barındırmaz veya doğrulamaz. Kullanıcı, bu araç üzerinden yüklenen herhangi bir yazılımın güvenliği ve yasallığından tamamen sorumludur.
+
+https://github.com/omeritzics/Updatium Updatium'u indirmek için tek resmi yerdir - resmi olmayan kaynaklardan indirmek güvenli olmadığından başka yerlerden indirmek şiddetle tavsiye edilmez.",
   "privacy": "Gizlilik",
   "privacyText": "Bu uygulama gizlilik odaklıdır ve kişisel veri toplamaz.",
   "acceptAndContinue": "Kabul Et ve Devam Et",
@@ -651,14 +385,38 @@
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-  "aPKLinkHash": "APK bağlantısı hash'i",
-  "gHReqPrefix": "GitHub istekleri için 'sky22333/hubproxy' örneği",
-  "continueAction": "Devam et",
-  "minute": "{count} dakika",
+
+  "apps": "Uygulamalar",
+  "@apps": {
+    "plural": {
+      "one": "{} Uygulama",
+      "other": "{} Uygulama",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "apk": "APK",
+  "@apk": {
+    "plural": {
+      "one": "{} APK",
+      "other": "{} APK'lar",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} dakika",
   "@minute": {
     "plural": {
-      "one": "{count} dakika",
-      "other": "{count} dakika"
+      "one": "{} dakika",
+      "other": "{} dakika",
     },
     "placeholders": {
       "count": {
@@ -666,11 +424,12 @@
       }
     }
   },
-  "hour": "{count} saat",
+
+  "hour": "{} saat",
   "@hour": {
     "plural": {
-      "one": "{count} saat",
-      "other": "{count} saat"
+      "one": "{} saat",
+      "other": "{} saat",
     },
     "placeholders": {
       "count": {
@@ -678,11 +437,12 @@
       }
     }
   },
-  "day": "{count} gün",
+
+  "day": "{} gün",
   "@day": {
     "plural": {
-      "one": "{count} gün",
-      "other": "{count} gün"
+      "one": "{} gün",
+      "other": "{} gün",
     },
     "placeholders": {
       "count": {
@@ -690,29 +450,4 @@
       }
     }
   }
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "apps": "{count} Apps",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "githubRequestPrefix": "GitHub request prefix",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minimumStarCount": "Minimum star count",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
 }

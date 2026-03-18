@@ -1,13 +1,7 @@
 {
   "@@locale": "et",
-  "invalidURLForSource": "Pole kehtiv {arg1} äpi URL",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+
+  "invalidURLForSource": "Pole kehtiv {} äpi URL",
   "noReleaseFound": "Sobivat väljaannet ei leitud",
   "noVersionFound": "Ei suutnud tuvastada väljaande versiooni",
   "urlMatchesNoSource": "URL ei vasta tuntud allikale",
@@ -26,6 +20,7 @@
   "invalidRegEx": "Vigane regulaaravaldis",
   "noDescription": "Kirjeldus puudub",
   "cancel": "Tühista",
+  "continue": "Jätka",
   "requiredInBrackets": "(kohustuslik)",
   "dropdownNoOptsError": "VIGA: RIPPLOENDIS PEAB OLEMA VÄHEMALT ÜKS VALIK",
   "color": "Värv",
@@ -35,14 +30,7 @@
   "githubStarredRepos": "GitHub'i tärniga repod",
   "uname": "Kasutajanimi",
   "wrongArgNum": "Vale arv argumente antud",
-  "xIsTrackOnly": "{arg1} on ainult jälgimiseks",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} on ainult jälgimiseks",
   "source": "Allikas",
   "app": "Äpp",
   "appsFromSourceAreTrackOnly": "Selle allika äpid on 'ainult jälgimiseks'.",
@@ -57,14 +45,7 @@
   "add": "Lisa",
   "searchSomeSourcesLabel": "Otsi (ainult mõned allikad)",
   "search": "Otsi",
-  "additionalOptsFor": "Lisavalikud {arg1} jaoks",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "Lisavalikud {} jaoks",
   "supportedSources": "Toetatud allikad",
   "trackOnlyInBrackets": "(ainult jälgimine)",
   "searchableInBrackets": "(otsitav)",
@@ -72,94 +53,35 @@
   "noApps": "Tere tulemast!",
   "noAppsSubtext": "Saate lisada oma esimese äpi, valides allolevat 'Lisa äpp' nuppu.",
   "noAppsForFilter": "Filtrile äpe ei leitud",
-  "byX": "Autor: {arg1}",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "Edenemine: {arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "Autor: {}",
+  "percentProgress": "Edenemine: {}%",
   "pleaseWait": "Palun oodake",
   "updateAvailable": "Uuendus saadaval",
   "notInstalled": "Pole installitud",
   "pseudoVersion": "pseudo-versioon",
   "selectAll": "Vali kõik",
-  "deselectX": "Tühista {arg1} valik",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "{arg1} eemaldatakse Updatiumist, kuid jääb seadmesse installituks.",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "Tühista {} valik",
+  "xWillBeRemovedButRemainInstalled": "{} eemaldatakse Updatiumist, kuid jääb seadmesse installituks.",
   "removeSelectedAppsQuestion": "Eemalda valitud äpid?",
   "removeSelectedApps": "Eemalda valitud äpid",
-  "updateX": "Uuenda {arg1}",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "Installi {arg1}",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "Märgi {arg1}\n(ainult jälgimine)\nuuendatuks",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "Muuda {arg1}",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "Uuenda {}",
+  "installX": "Installi {}",
+  "markXTrackOnlyAsUpdated": "Märgi {}
+(ainult jälgimine)
+uuendatuks",
+  "changeX": "Muuda {}",
   "installUpdateApps": "Installi/uuenda äpid",
   "installUpdateSelectedApps": "Installi/uuenda valitud äpid",
-  "markXSelectedAppsAsUpdated": "Märgi {arg1} valitud äpi uuendatuks?",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "Märgi {} valitud äpi uuendatuks?",
   "no": "Ei",
   "yes": "Jah",
   "markSelectedAppsUpdated": "Märgi valitud äpid uuendatuks",
   "pinToTop": "Kinnita üles",
   "unpinFromTop": "Eemalda kinnitus ülevalt",
   "resetInstallStatusForSelectedAppsQuestion": "Lähtesta valitud äpide installimise olek?",
-  "installStatusOfXWillBeResetExplanation": "Kõikide valitud äpide installimise olek lähtestatakse.\n\nSee võib aidata, kui Updatiumis näidatav äpi versioon on vale nurkunud uuenduste või muude probleemide tõttu.",
+  "installStatusOfXWillBeResetExplanation": "Kõikide valitud äpide installimise olek lähtestatakse.
+
+See võib aidata, kui Updatiumis näidatav äpi versioon on vale nurkunud uuenduste või muude probleemide tõttu.",
   "customLinkMessage": "Need lingid töötavad seadmetel, kuhu on installitud Updatium",
   "shareAppConfigLinks": "Jaga äpi konfiguratsiooni HTML-lingina",
   "shareSelectedAppURLs": "Jaga valitud äpide URL-e",
@@ -175,63 +97,29 @@
   "nonInstalledApps": "Installimata äpid",
   "importExport": "Import/eksport",
   "settings": "Seaded",
-  "exportedTo": "Eksporditud asukohta {arg1}",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "Eksporditud asukohta {}",
   "updatiumExport": "Updatiumi eksport",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Vigane sisend",
-  "importedX": "Imporditud {arg1}",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "Imporditud {}",
   "updatiumImport": "Updatiumi import",
   "importFromURLList": "Impordi URL-loendist",
   "searchQuery": "Otsingupäring",
   "appURLList": "Äpi URL-loend",
   "line": "Rida",
-  "searchX": "Otsi {arg1}",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "Otsi {}",
   "noResults": "Tulemusi ei leitud",
-  "importX": "Impordi {arg1}",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "Imporditud äpid võivad valesti näidata kui \"pole installitud\".\nSelle parandamiseks installige need uuesti Updatiumi kaudu.\nSee ei tohiks mõjutada äpi andmeid.\n\nMõjutab ainult URL- ja kolmanda osapoole importimeetodeid.",
+  "importX": "Impordi {}",
+  "importedAppsIdDisclaimer": "Imporditud äpid võivad valesti näidata kui \"pole installitud\".
+Selle parandamiseks installige need uuesti Updatiumi kaudu.
+See ei tohiks mõjutada äpi andmeid.
+
+Mõjutab ainult URL- ja kolmanda osapoole importimeetodeid.",
   "importErrors": "Importimisvead",
-  "importedXOfYApps": "{arg1} / {arg2} äpi imporditud.",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "{} / {} äpi imporditud.",
   "followingURLsHadErrors": "Järgmistel URL-idel olid vead:",
   "selectURL": "Vali URL",
   "selectURLs": "Vali URL-id",
@@ -267,86 +155,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "updatium-eksport",
   "pickAnAPK": "Vali APK",
-  "appHasMoreThanOnePackage": "{arg1}-l on rohkem kui üks pakett:",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "Teie seade toetab {arg1} CPU-arhitektuuri.",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{}-l on rohkem kui üks pakett:",
+  "deviceSupportsXArch": "Teie seade toetab {} CPU-arhitektuuri.",
   "deviceSupportsFollowingArchs": "Teie seade toetab järgmisi CPU-arhitektuure:",
   "warning": "Hoiatus",
-  "sourceIsXButPackageFromYPrompt": "Äpi allikas on '{arg1}', kuid väljaandepakett tuleb allikast '{arg2}'. Jätkame?",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "Äpi allikas on '{}', kuid väljaandepakett tuleb allikast '{}'. Jätkame?",
   "updatesAvailable": "Uuendusi saadaval",
   "updatesAvailableNotifDescription": "Teavitab kasutajat, et Updatiumi poolt jälgitavatele ühele või enamale äpile on uuendusi saadaval",
   "noNewUpdates": "Uusi uuendusi pole.",
-  "xHasAnUpdate": "{arg1}-l on uuendus.",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{}-l on uuendus.",
   "appsUpdated": "Äpid uuendatud",
   "appsNotUpdated": "Äppide uuendamine ebaõnnestus",
   "appsUpdatedNotifDescription": "Teavitab kasutajat, et ühe või enama äpi uuendused rakendati taustal",
-  "xWasUpdatedToY": "{arg1} uuendati versioonile {arg2}.",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "{arg1} uuendamine versioonile {arg2} ebaõnnestus.",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "{} uuendati versioonile {}.",
+  "xWasNotUpdatedToY": "{} uuendamine versioonile {} ebaõnnestus.",
   "errorCheckingUpdates": "Viga uuenduste kontrollimisel",
   "errorCheckingUpdatesNotifDescription": "Teavitus, mis ilmub, kui taustauuenduste kontrollimine ebaõnnestub",
   "appsRemoved": "Äpid eemaldatud",
   "appsRemovedNotifDescription": "Teavitab kasutajat, et üks või rohkem äppi eemaldati nende laadimisel tekkinud vigade tõttu",
-  "xWasRemovedDueToErrorY": "{arg1} eemaldati järgmise vea tõttu: {arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "{} eemaldati järgmise vea tõttu: {}",
   "completeAppInstallation": "Lõpeta äpi installimine",
   "updatiumMustBeOpenToInstallApps": "Updatium peab olema avetud äppide installimiseks",
   "completeAppInstallationNotifDescription": "Palub kasutajal naasta Updatiumi äpi installimise lõpetamiseks",
@@ -354,43 +181,15 @@
   "checkingForUpdatesNotifDescription": "Ajutine teavitus, mis ilmub uuendusi kontrollides",
   "pleaseAllowInstallPerm": "Palun lubage Updatiumil äppe installida",
   "trackOnly": "Ainult jälgimine",
-  "errorWithHttpStatusCode": "Viga {arg1}",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "Viga {}",
   "versionCorrectionDisabled": "Versiooni parandamine keelatud (plugin näib ei töötavat)",
   "unknown": "Tundmatu",
   "none": "Pole",
   "all": "Kõik",
   "never": "Mitte kunagi",
-  "latestVersionX": "Viimane: {arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "Installitud: {arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "Viimane uuenduste kontroll: {arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "Viimane: {}",
+  "installedVersionX": "Installitud: {}",
+  "lastUpdateCheckX": "Viimane uuenduste kontroll: {}",
   "remove": "Eemalda",
   "yesMarkUpdated": "Jah, märgi uuendatuks",
   "fdroid": "F-Droid ametlik",
@@ -407,30 +206,9 @@
   "additionalOptions": "Lisavalikud",
   "disableVersionDetection": "Keela versiooni tuvastamine",
   "noVersionDetectionExplanation": "Seda valikut tuleks kasutada ainult äppide puhul, kus versiooni tuvastamine ei tööta korrektselt.",
-  "downloadingX": "{arg1} allalaadimine",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "Laadi {arg1} alla",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "{arg1} allalaaditud",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "{} allalaadimine",
+  "downloadX": "Laadi {} alla",
+  "downloadedX": "{} allalaaditud",
   "releaseAsset": "Väljaande vara",
   "downloadNotifDescription": "Teavitab kasutajat äpi allalaadimise edenemisest",
   "noAPKFound": "APK-d ei leitud",
@@ -474,14 +252,7 @@
   "hideNonInstalledApps": "Peida installimata äpid",
   "gitlabPATLabel": "GitLabi isiklik juurdepääsutunnus",
   "about": "Programmist",
-  "requiresCredentialsInSettings": "{arg1} vajab lisandmed (seadetes)",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{} vajab lisandmed (seadetes)",
   "checkOnStart": "Kontrolli uuendusi käivitamisel",
   "safeMode": "Turvarežiim",
   "safeModeDescription": "Peida Lisa rakendus leht ja näita selle asemel Import/Eksport",
@@ -501,17 +272,7 @@
   "customLinkFilterRegex": "Kohandatud APK lingi filter regulaaravaldisega (vaikimisi '.apk$')",
   "appsPossiblyUpdated": "Äpi uuendamise katse",
   "appsPossiblyUpdatedNotifDescription": "Teavitab kasutajat, et ühe või enama äpi uuendused võidi rakendada taustal",
-  "xWasPossiblyUpdatedToY": "{arg1} võidi uuendada versioonile {arg2}.",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "{} võidi uuendada versioonile {}.",
   "enableBackgroundUpdates": "Luba taustauuendused",
   "backgroundUpdateReqsExplanation": "Taustauuendused ei pruugi olla võimalikud kõikide äppide puhul.",
   "backgroundUpdateLimitsExplanation": "Taustalise installimise edu saab kindlaks teha ainult Updatiumi avamisel.",
@@ -527,14 +288,7 @@
   "autoSelectHighestVersionCode": "Automaatselt vali kõrgeima versioonikoodiga APK",
   "versionExtractionRegEx": "Versiooni stringi eraldamise RegEx",
   "trimVersionString": "Kärbi versiooni stringi RegEx-iga",
-  "matchGroupToUseForX": "Kasutatav vaste grupp \"{arg1}\" jaoks",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "Kasutatav vaste grupp \"{}\" jaoks",
   "matchGroupToUse": "Kasutatav vaste grupp versiooni stringi eraldamise RegEx-ile",
   "highlightTouchTargets": "Tõsta vähem ilmsed puutepunktid esile",
   "pickExportDir": "Vali ekspordi kataloog",
@@ -557,26 +311,12 @@
   "appsPossiblyUpdatedNotifChannel": "Äpi uuendamise katse",
   "errorCheckingUpdatesNotifChannel": "Viga uuenduste kontrollimisel",
   "appsRemovedNotifChannel": "Äpid eemaldatud",
-  "downloadingXNotifChannel": "{arg1} allalaadimine",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "{} allalaadimine",
   "completeAppInstallationNotifChannel": "Lõpeta äpi installimine",
   "checkingForUpdatesNotifChannel": "Uuenduste kontrollimine",
   "onlyCheckInstalledOrTrackOnlyApps": "Kontrolli uuendusi ainult installitud ja ainult jälgitavate äppide jaoks",
   "supportFixedAPKURL": "Toeta fikseeritud APK URL-e",
-  "selectX": "Vali {arg1}",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "Vali {}",
   "parallelDownloads": "Luba paralleelsed allalaadimised",
   "useShizuku": "Kasuta Shizuku või Sui installimiseks",
   "shizukuBinderNotFound": "Shizuku teenus ei tööta",
@@ -589,20 +329,14 @@
   "useLatestAssetDateAsReleaseDate": "Kasuta viimase vara üleslaadimist väljaande kuupäevana",
   "defaultPseudoVersioningMethod": "Vaikimisi pseudo-versioonimise meetod",
   "partialAPKHash": "Osaline APK räsi",
+  "APKLinkHash": "APK lingi räsi",
   "directAPKLink": "Otsene APK link",
   "pseudoVersionInUse": "Pseudo-versioon on kasutusel",
   "installed": "Installitud",
   "latest": "Viimane",
   "invertRegEx": "Pööra regulaaravaldis ümber",
   "note": "Märkus",
-  "selfHostedNote": "\"{arg1}\" rippmenüüd saab kasutada iseseisvate/kohandatud allikate instantsidele juurdepääsuks.",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "\"{}\" rippmenüüd saab kasutada iseseisvate/kohandatud allikate instantsidele juurdepääsuks.",
   "badDownload": "APK-d ei suudetud parsida (ühildumatu või osaline allalaadimine)",
   "beforeNewInstallsShareToAppVerifier": "Jaga uusi äppe AppVerifier-iga (kui saadaval)",
   "appVerifierInstructionToast": "Jaga AppVerifier-iga, naaske siia, kui olete valmis.",
@@ -620,29 +354,31 @@
   "welcome": "Tere tulemast",
   "documentationLinksNote": "Allpool lingitud Updatiumi GitHub leht sisaldab linke videotele, artiklitele, aruteludele ja muudele ressurssidele, mis aitavad teil mõista, kuidas rakendust kasutada.",
   "batteryOptimizationNote": "Pange tähele, et taustalised allalaadimised võivad töötada usaldusväärsemalt, kui lülitate Updatiumi seadetes üle \"taustateenusele\" ja/või keelate Updatiumile oma operatsioonisüsteemi seadetes aku optimeerimine.",
-  "fileDeletionError": "Faili kustutamine ebaõnnestus (proovige kustutada käsitsi ja proovige uuesti): \"{arg1}\"",
-  "@fileDeletionError": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "fileDeletionError": "Faili kustutamine ebaõnnestus (proovige kustutada käsitsi ja proovige uuesti): \"{}\"",
   "foregroundService": "Updatiumi taustateenus",
   "foregroundServiceExplanation": "Kasuta taustateenust uuenduste kontrollimiseks (usaldusväärsem, tarbib rohkem energiat)",
   "fgServiceNotice": "See teavitus on vajalik taustauuenduste kontrollimiseks (seda saab peita operatsioonisüsteemi seadetes)",
   "excludeSecrets": "Välista saladused",
+  "GHReqPrefix": "'sky22333/hubproxy' instants GitHub päringute jaoks",
   "includeZips": "Kaasa ZIP failid",
   "zippedApkFilterRegEx": "Filtreeri APK-sid ZIP-i sees",
-  "googleVerificationWarningP1": "Google on teatanud, et alates 2026./2027. aastast vajavad kõik \"sertifitseeritud\" Androidi seadmed, et arendaja esitaks isiklikud identiteediandmed otse Google'le.\n\nPärast seda võib Updatium lõpetada töötamise sertifitseeritud Androidi seadmetel.",
+  "googleVerificationWarningP1": "Google on teatanud, et alates 2026./2027. aastast vajavad kõik \"sertifitseeritud\" Androidi seadmed, et arendaja esitaks isiklikud identiteediandmed otse Google'le.
+
+Pärast seda võib Updatium lõpetada töötamise sertifitseeritud Androidi seadmetel.",
   "googleVerificationWarningP2": "Lisateabe saamiseks minge aadressile https://keepandroidopen.org/.",
-  "googleVerificationWarningP3": "Pange tähele, et lühikesel tähtajal võib olla võimalik installida \"kinnitamata\" (mittesobivad) äpid \"täiustatud protsessi\" kaudu, mille Google on lubanud implementeerida pärast laia vastukaja oma teadaandele, kuid nad ei ole üksikasjaliselt kirjeldanud, kuidas see töötab, mistõttu on selge, kas see tõesti säilitab kasutajate vabadused praktilises mõttes.\n\nIgatahes, Google'i samm on oluline samm vaba üldotstarbelise arvutamise lõpule füüsiliste isikute jaoks.\n\nMitte-sertifitseeritud operatsioonisüsteemid, nagu GrapheneOS, peaksid jääda mõjutamata niikaua kui neil on lubatud olemas olla.",
+  "googleVerificationWarningP3": "Pange tähele, et lühikesel tähtajal võib olla võimalik installida \"kinnitamata\" (mittesobivad) äpid \"täiustatud protsessi\" kaudu, mille Google on lubanud implementeerida pärast laia vastukaja oma teadaandele, kuid nad ei ole üksikasjaliselt kirjeldanud, kuidas see töötab, mistõttu on selge, kas see tõesti säilitab kasutajate vabadused praktilises mõttes.
+
+Igatahes, Google'i samm on oluline samm vaba üldotstarbelise arvutamise lõpule füüsiliste isikute jaoks.
+
+Mitte-sertifitseeritud operatsioonisüsteemid, nagu GrapheneOS, peaksid jääda mõjutamata niikaua kui neil on lubatud olemas olla.",
   "multipleSigners": "Mitu allkirjastajat",
   "securityDisclaimerTitle": "Turvalisuse ja juriidiline lahtiütlus",
   "license": "Litsents",
   "licenseText": "See rakendus levitatakse GPL v3 litsentsi alusel.",
   "disclaimer": "Lahtiütlus",
-  "disclaimerText": "See rakendus ei levita, ei majuta ega kinnita ühtegi välist rakendust. Kasutaja kannab täielikut vastutust kõigi selle tööriistaga installitud tarkvara turvalisuse ja seaduslikkuse eest.\n\nhttps://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadimiseks - on tugevasti soovitatud mitte alla laadida teist kohtadest, kuna allalaadimine mitteametlikelt allikatest ei ole turvaline.",
+  "disclaimerText": "See rakendus ei levita, ei majuta ega kinnita ühtegi välist rakendust. Kasutaja kannab täielikut vastutust kõigi selle tööriistaga installitud tarkvara turvalisuse ja seaduslikkuse eest.
+
+https://github.com/omeritzics/Updatium on ainus ametlik koht Updatiumi allalaadimiseks - on tugevasti soovitatud mitte alla laadida teist kohtadest, kuna allalaadimine mitteametlikelt allikatest ei ole turvaline.",
   "privacy": "Privaatsus",
   "privacyText": "See rakendus on privaatsuskeskne ja ei kogu isiklikke andmeid.",
   "acceptAndContinue": "Nõustu & Jätka",
@@ -651,35 +387,69 @@
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-  "aPKLinkHash": "APK lingi räsi",
-  "gHReqPrefix": "'sky22333/hubproxy' instants GitHub päringute jaoks",
-  "continueAction": "Jätka"
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "apps": "{count} Apps",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "day": "{count} days",
-  "githubRequestPrefix": "GitHub request prefix",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "hour": "{count} hours",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minimumStarCount": "Minimum star count",
-  "minute": "{count} minutes",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
+
+  "apps": "Äpid",
+  "@apps": {
+    "plural": {
+      "one": "{} Äpp",
+      "other": "{} Äppi",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "apk": "APK",
+  "@apk": {
+    "plural": {
+      "one": "{} APK",
+      "other": "{} APK-d",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} minutit",
+  "@minute": {
+    "plural": {
+      "one": "{} minut",
+      "other": "{} minutit",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "hour": "{} tundi",
+  "@hour": {
+    "plural": {
+      "one": "{} tund",
+      "other": "{} tundi",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "day": "{} päeva",
+  "@day": {
+    "plural": {
+      "one": "{} päev",
+      "other": "{} päeva",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

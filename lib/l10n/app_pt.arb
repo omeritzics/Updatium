@@ -1,13 +1,7 @@
 {
   "@@locale": "pt",
-  "invalidURLForSource": "URL {arg1} inválida",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+
+  "invalidURLForSource": "URL {} inválida",
   "noReleaseFound": "Não foi possível encontrar uma versão adequada",
   "noVersionFound": "Não foi possível encontrar uma versão",
   "urlMatchesNoSource": "A URL não corresponde a uma fonte conhecida",
@@ -19,13 +13,15 @@
   "unexpectedError": "Erro inesperado",
   "ok": "OK",
   "and": "e",
-  "githubPATLabel": "Token de acesso pessoal do GitHub\n(Reduz tempos de espera)",
+  "githubPATLabel": "Token de acesso pessoal do GitHub
+(Reduz tempos de espera)",
   "includePrereleases": "Incluir pré-lançamentos",
   "fallbackToOlderReleases": "Retornar para versões anteriores",
   "filterReleaseTitlesByRegEx": "Filtrar títulos de versões usando expressão regular",
   "invalidRegEx": "Expressão regular inválida",
   "noDescription": "Sem descrição",
   "cancel": "Cancelar",
+  "continue": "Continuar",
   "requiredInBrackets": "(Necessário)",
   "dropdownNoOptsError": "ERRO: O DROPDOWN DEVE TER PELO MENOS UMA OPÇÃO",
   "color": "Cor",
@@ -35,14 +31,7 @@
   "githubStarredRepos": "repositórios favoritos no GitHub",
   "uname": "Nome de usuário",
   "wrongArgNum": "Número de argumentos errado",
-  "xIsTrackOnly": "{arg1} é 'Apenas monitorar'",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} é 'Apenas monitorar'",
   "source": "Fonte",
   "app": "Aplicação",
   "appsFromSourceAreTrackOnly": "As aplicações desta fonte são 'Apenas monitorar'.",
@@ -57,14 +46,7 @@
   "add": "Adicionar",
   "searchSomeSourcesLabel": "Procurar (apenas algumas fontes)",
   "search": "Procurar",
-  "additionalOptsFor": "Opções adicionais para {arg1}",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "Opções adicionais para {}",
   "supportedSources": "Fontes compatíveis",
   "trackOnlyInBrackets": "(apenas monitorar)",
   "searchableInBrackets": "(pesquisável)",
@@ -72,94 +54,35 @@
   "noApps": "Bem-vindo!",
   "noAppsSubtext": "Pode adicionar a sua primeira aplicação tocando em 'Adicionar aplicação' abaixo.",
   "noAppsForFilter": "Sem aplicações para filtrar",
-  "byX": "Por {arg1}",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "Progresso: {arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "Por {}",
+  "percentProgress": "Progresso: {}%",
   "pleaseWait": "Por favor, espere",
   "updateAvailable": "Atualização disponível",
   "notInstalled": "Não instalado",
   "pseudoVersion": "pseudo-versão",
   "selectAll": "Selecionar todos",
-  "deselectX": "Deselecionar {arg1}",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "{arg1} será removido do Updatium mais permanecerá instalado no dispositivo.",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "Deselecionar {}",
+  "xWillBeRemovedButRemainInstalled": "{} será removido do Updatium mais permanecerá instalado no dispositivo.",
   "removeSelectedAppsQuestion": "Remover aplicações selecionadas?",
   "removeSelectedApps": "Remover aplicações selecionadas",
-  "updateX": "Atualizar {arg1}",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "Instalar {arg1}",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "Marcar {arg1}\n(Apenas monitorar)\ncomo Atualizado",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "Mudar {arg1}",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "Atualizar {}",
+  "installX": "Instalar {}",
+  "markXTrackOnlyAsUpdated": "Marcar {}
+(Apenas monitorar)
+como Atualizado",
+  "changeX": "Mudar {}",
   "installUpdateApps": "Instalar/Atualizar aplicações",
   "installUpdateSelectedApps": "Instalar/Atualizar aplicações selecionadas",
-  "markXSelectedAppsAsUpdated": "Marcar {arg1} aplicações selecionadas como atualizadas?",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "Marcar {} aplicações selecionadas como atualizadas?",
   "no": "Não",
   "yes": "Sim",
   "markSelectedAppsUpdated": "Marcar aplicações selecionadas como Atualizadas",
   "pinToTop": "Fixar no topo",
   "unpinFromTop": "Desafixar do topo",
   "resetInstallStatusForSelectedAppsQuestion": "Reiniciar o estado de instalação das aplicações selecionadas?",
-  "installStatusOfXWillBeResetExplanation": "O estado de instalação de todas as aplicações selecionadas será reiniciado.\n\nIsto pode ajudar quando uma versão de uma aplicação mostrada no Updatium está incorreta devido a falhas na atualização ou outros problemas.",
+  "installStatusOfXWillBeResetExplanation": "O estado de instalação de todas as aplicações selecionadas será reiniciado.
+
+Isto pode ajudar quando uma versão de uma aplicação mostrada no Updatium está incorreta devido a falhas na atualização ou outros problemas.",
   "customLinkMessage": "Esses links funcionam em dispositivos com o Updatium instalado",
   "shareAppConfigLinks": "Partilhar a configuração da aplicação como um link HTML",
   "shareSelectedAppURLs": "Partilhar URLs de aplicações selecionadas",
@@ -175,63 +98,29 @@
   "nonInstalledApps": "Aplicações não instaladas",
   "importExport": "Importar/Exportar",
   "settings": "Configurações",
-  "exportedTo": "Exportado para {arg1}",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "Exportado para {}",
   "updatiumExport": "Exportar dados do Updatium",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Entrada inválida",
-  "importedX": "Importado {arg1}",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "Importado {}",
   "updatiumImport": "Importar dados do Updatium",
   "importFromURLList": "Importar de lista de URLs",
   "searchQuery": "Pesquisa",
   "appURLList": "Lista de URLs de aplicações",
   "line": "Linha",
-  "searchX": "Pesquisar na/o {arg1}",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "Pesquisar na/o {}",
   "noResults": "Nenhum resultado encontrado",
-  "importX": "Importar {arg1}",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "Aplicações Importadas podem ser mostradas incorretamente como \"Não Instalado\".\nPara corrigir, reinstale-as usando o Updatium.\nIsto não deve afetar os dados da aplicação.\n\nAfeta apenas os métodos de importação de URL e de terceiros.",
+  "importX": "Importar {}",
+  "importedAppsIdDisclaimer": "Aplicações Importadas podem ser mostradas incorretamente como \"Não Instalado\".
+Para corrigir, reinstale-as usando o Updatium.
+Isto não deve afetar os dados da aplicação.
+
+Afeta apenas os métodos de importação de URL e de terceiros.",
   "importErrors": "Erros de importação",
-  "importedXOfYApps": "{arg1} de {arg2} aplicações importadas.",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "{} de {} aplicações importadas.",
   "followingURLsHadErrors": "As seguintes URLs apresentaram erros:",
   "selectURL": "Selecionar URL",
   "selectURLs": "Selecionar URLs",
@@ -267,86 +156,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "exportação de updatium",
   "pickAnAPK": "Selecionar um APK",
-  "appHasMoreThanOnePackage": "{arg1} tem mais de um pacote:",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "Seu dispositivo suporta a arquitetura de CPU {arg1}.",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{} tem mais de um pacote:",
+  "deviceSupportsXArch": "Seu dispositivo suporta a arquitetura de CPU {}.",
   "deviceSupportsFollowingArchs": "Seu dispositivo suporta as seguintes arquiteturas de CPU:",
   "warning": "Aviso",
-  "sourceIsXButPackageFromYPrompt": "A fonte da aplicação é '{arg1}' mas a origem do pacote é '{arg2}'. Continuar?",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "A fonte da aplicação é '{}' mas a origem do pacote é '{}'. Continuar?",
   "updatesAvailable": "Atualizações disponíveis",
   "updatesAvailableNotifDescription": "Notifica o utilizador quando as atualizações de uma ou mais aplicações monitorizadas pelo Updatium estão disponíveis",
   "noNewUpdates": "Sem novas atualizações.",
-  "xHasAnUpdate": "{arg1} tem uma atualização.",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{} tem uma atualização.",
   "appsUpdated": "Aplicações atualizadas",
   "appsNotUpdated": "Falha na atualização das aplicações",
   "appsUpdatedNotifDescription": "Notifica o utilizador quando as atualizações foram aplicadas em segundo plano para uma ou mais aplicações ",
-  "xWasUpdatedToY": "{arg1} foi atualizado para {arg2}.",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "Falha ao atualizar {arg1} para {arg2}.",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "{} foi atualizado para {}.",
+  "xWasNotUpdatedToY": "Falha ao atualizar {} para {}.",
   "errorCheckingUpdates": "Erro ao procurar por atualizações",
   "errorCheckingUpdatesNotifDescription": "Uma notificação que mostra quando a checagem por atualizações em segundo-plano falha",
   "appsRemoved": "Aplicações removidas",
   "appsRemovedNotifDescription": "Notifica o utilizador quando uma ou mais aplicações foram removidas devido a erros de carregamento",
-  "xWasRemovedDueToErrorY": "{arg1} foi removido devido a este erro: {arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "{} foi removido devido a este erro: {}",
   "completeAppInstallation": "Instalação da aplicação concluída",
   "updatiumMustBeOpenToInstallApps": "O Updatium deve estar aberto para instalar as aplicações",
   "completeAppInstallationNotifDescription": "Pede ao usuário que retorne ao Updatium para finalizar a instalação de uma aplicação",
@@ -354,43 +182,15 @@
   "checkingForUpdatesNotifDescription": "Notificação transiente que aparece quando o Updatium está verificando se há atualizações",
   "pleaseAllowInstallPerm": "Por favor, permita que o Updatium instale aplicações",
   "trackOnly": "Apenas monitorar",
-  "errorWithHttpStatusCode": "Erro {arg1}",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "Erro {}",
   "versionCorrectionDisabled": "Correção de versão desativada (plugin parece não funcionar)",
   "unknown": "Desconhecido",
   "none": "Nenhum",
   "all": "Todos",
   "never": "Nunca",
-  "latestVersionX": "Última versão: {arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "Versão instalada: {arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "Última verificação de atualizações: {arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "Última versão: {}",
+  "installedVersionX": "Versão instalada: {}",
+  "lastUpdateCheckX": "Última verificação de atualizações: {}",
   "remove": "Remover",
   "yesMarkUpdated": "Sim, marcar como atualizado",
   "fdroid": "Oficial F-Droid",
@@ -407,30 +207,9 @@
   "additionalOptions": "Opções adicionais",
   "disableVersionDetection": "Desativar detecção de versão",
   "noVersionDetectionExplanation": "Esta opção deve ser usada apenas por aplicações onde a deteção de versão não funciona corretamente.",
-  "downloadingX": "Baixando {arg1}",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "Descarregar {arg1}",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "Descarregado {arg1}",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "Baixando {}",
+  "downloadX": "Descarregar {}",
+  "downloadedX": "Descarregado {}",
   "releaseAsset": "Libertação de activos",
   "downloadNotifDescription": "Notifica o utilizador sobre o progresso do download de uma aplicação",
   "noAPKFound": "APK não encontrado",
@@ -474,14 +253,7 @@
   "hideNonInstalledApps": "Ocultar aplicações não instaladas",
   "gitlabPATLabel": "Token de acesso pessoal do Gitlab",
   "about": "Sobre",
-  "requiresCredentialsInSettings": "{arg1}: Isso requer credenciais adicionais (em Configurações)",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{}: Isso requer credenciais adicionais (em Configurações)",
   "checkOnStart": "Verificar se há atualizações ao iniciar",
   "safeMode": "Modo de segurança",
   "safeModeDescription": "Ocultar página Adicionar aplicativo e mostrar Importar/Exportar em vez disso",
@@ -501,17 +273,7 @@
   "customLinkFilterRegex": "Filtro de link personalizado usando expressão regular (Padrão '.apk$')",
   "appsPossiblyUpdated": "Aplicações possivelmente atualizadas",
   "appsPossiblyUpdatedNotifDescription": "Notifica o utilizador de que as atualizações de uma ou mais aplicações foram potencialmente aplicadas em segundo plano",
-  "xWasPossiblyUpdatedToY": "{arg1} pode ter sido atualizado para {arg2}.",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "{} pode ter sido atualizado para {}.",
   "enableBackgroundUpdates": "Ativar atualizações em segundo-plano",
   "backgroundUpdateReqsExplanation": "As atualizações em segundo plano podem não ser possíveis para todas as aplicações.",
   "backgroundUpdateLimitsExplanation": "O sucesso de uma instalação em segundo-plano só pode ser determinado quando o Updatium é aberto.",
@@ -527,14 +289,7 @@
   "autoSelectHighestVersionCode": "Auto-selecionar a versão mais recente",
   "versionExtractionRegEx": "Regex de extração de versão",
   "trimVersionString": "Cortar a cadeia de caracteres da versão com RegEx",
-  "matchGroupToUseForX": "Grupo de correspondência a utilizar para \"{arg1}\"",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "Grupo de correspondência a utilizar para \"{}\"",
   "matchGroupToUse": "Grupo correspondente a ser usado no Regex de extração de versão",
   "highlightTouchTargets": "Realçar áreas sensíveis ao toque que são menos óbvias",
   "pickExportDir": "Escolher diretório para exportação",
@@ -557,26 +312,12 @@
   "appsPossiblyUpdatedNotifChannel": "Aplicações possivelmente atualizadas",
   "errorCheckingUpdatesNotifChannel": "Erro ao procurar por atualizações",
   "appsRemovedNotifChannel": "Aplicações removidas",
-  "downloadingXNotifChannel": "Baixando {arg1}",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "Baixando {}",
   "completeAppInstallationNotifChannel": "Instalação da aplicação concluída",
   "checkingForUpdatesNotifChannel": "Checando por atualizações",
   "onlyCheckInstalledOrTrackOnlyApps": "Apenas verificar atualizações de aplicações instaladas e 'Apenas monitorizar'",
   "supportFixedAPKURL": "Suporte a APK com URLs fixas",
-  "selectX": "Selecionar {arg1}",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "Selecionar {}",
   "parallelDownloads": "Permitir downloads paralelos",
   "useShizuku": "Utilizar Shizuku ou Sui para instalar",
   "shizukuBinderNotFound": "O Shizuku não está rodando",
@@ -589,20 +330,14 @@
   "useLatestAssetDateAsReleaseDate": "Use o último upload de recursos como data de lançamento",
   "defaultPseudoVersioningMethod": "Método de pseudo-versionamento padrão",
   "partialAPKHash": "Hash APK parcial",
+  "APKLinkHash": "Hash de links APK",
   "directAPKLink": "Link direto do APK",
   "pseudoVersionInUse": "Uma pseudo-versão está em uso",
   "installed": "Instalado",
   "latest": "Mais recente",
   "invertRegEx": "Inverter expressão regular",
   "note": "Nota",
-  "selfHostedNote": "O menu suspenso \"{arg1}\" pode ser usado para acessar instâncias auto-hospedadas/personalizadas de qualquer fonte.",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "O menu suspenso \"{}\" pode ser usado para acessar instâncias auto-hospedadas/personalizadas de qualquer fonte.",
   "badDownload": "Não foi possível analisar o APK (transferência incompatível ou parcial)",
   "beforeNewInstallsShareToAppVerifier": "Partilhar novas aplicações com o AppVerifier (se disponível)",
   "appVerifierInstructionToast": "Partilhe com o AppVerifier e, em seguida, regresse aqui quando estiver pronto.",
@@ -620,29 +355,31 @@
   "welcome": "Bem-vindo",
   "documentationLinksNote": "A página do Updatium no GitHub com a ligação abaixo contém ligações para vídeos, artigos, discussões e outros recursos que o ajudarão a compreender como utilizar a aplicação.",
   "batteryOptimizationNote": "Note que os downloads em segundo plano podem funcionar de forma mais fiável se desativar as optimizações da bateria do SO para o Updatium.",
-  "fileDeletionError": "Falha ao eliminar o ficheiro (tente eliminá-lo manualmente e depois tente novamente): \"{arg1}\"",
-  "@fileDeletionError": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "fileDeletionError": "Falha ao eliminar o ficheiro (tente eliminá-lo manualmente e depois tente novamente): \"{}\"",
   "foregroundService": "Serviço de primeiro plano Updatium",
   "foregroundServiceExplanation": "Utilizar um serviço em primeiro plano para verificação de actualizações (mais fiável, consome mais energia)",
   "fgServiceNotice": "Esta notificação é necessária para a verificação de actualizações em segundo plano (pode ser ocultada nas definições do SO)",
   "excludeSecrets": "Excluir segredos",
+  "GHReqPrefix": "Instância 'sky22333/hubproxy' para pedidos de GitHub",
   "includeZips": "Incluir ficheiros ZIP",
   "zippedApkFilterRegEx": "Filtrar APKs dentro do ZIP",
-  "googleVerificationWarningP1": "O Google anunciou que, a partir de 2026/2027, todos os aplicativos em dispositivos Android \"certificados\" exigirão que o desenvolvedor envie detalhes de identidade pessoal diretamente ao Google.\n\nDepois disso, Updatium pode parar de funcionar em dispositivos Android certificados.",
+  "googleVerificationWarningP1": "O Google anunciou que, a partir de 2026/2027, todos os aplicativos em dispositivos Android \"certificados\" exigirão que o desenvolvedor envie detalhes de identidade pessoal diretamente ao Google.
+
+Depois disso, Updatium pode parar de funcionar em dispositivos Android certificados.",
   "googleVerificationWarningP2": "Vá para https://keepandroidopen.org/ para mais informações.",
-  "googleVerificationWarningP3": "Note que, a curto prazo, pode continuar a ser possível instalar aplicativos \"não verificados\" (não conformes) através de um processo de \"fluxo avançado\" que o Google prometeu implementar após uma ampla retrocesso ao seu anúncio, mas eles não detalharam como isso funcionaria então não é claro se ele realmente preservará as liberdades de usuário de alguma forma prática.\n\nEm qualquer caso, o movimento do Google é um passo significativo para o fim da computação gratuita, de propósito geral para os indivíduos.\n\nOS não certificados, como o GrapheneOS, não devem ser afetados por isso enquanto forem autorizados a continuar a existir.",
+  "googleVerificationWarningP3": "Note que, a curto prazo, pode continuar a ser possível instalar aplicativos \"não verificados\" (não conformes) através de um processo de \"fluxo avançado\" que o Google prometeu implementar após uma ampla retrocesso ao seu anúncio, mas eles não detalharam como isso funcionaria então não é claro se ele realmente preservará as liberdades de usuário de alguma forma prática.
+
+Em qualquer caso, o movimento do Google é um passo significativo para o fim da computação gratuita, de propósito geral para os indivíduos.
+
+OS não certificados, como o GrapheneOS, não devem ser afetados por isso enquanto forem autorizados a continuar a existir.",
   "multipleSigners": "Assinantes Múltiplos",
   "securityDisclaimerTitle": "Aviso de Segurança e Legal",
   "license": "Licença",
   "licenseText": "Esta aplicação é distribuída sob a Licença GPL v3.",
   "disclaimer": "Isenção de responsabilidade",
-  "disclaimerText": "Esta aplicação não distribui, hospeda ou verifica nenhuma das aplicações externas. O utilizador assume a responsabilidade total pela segurança e legalidade de qualquer software instalado através desta ferramenta.\n\nhttps://github.com/omeritzics/Updatium é o único lugar oficial para descarregar Updatium - é altamente desaconselhado descarregá-lo de outros locais, pois o descarregar de fontes não oficiais não é seguro.",
+  "disclaimerText": "Esta aplicação não distribui, hospeda ou verifica nenhuma das aplicações externas. O utilizador assume a responsabilidade total pela segurança e legalidade de qualquer software instalado através desta ferramenta.
+
+https://github.com/omeritzics/Updatium é o único lugar oficial para descarregar Updatium - é altamente desaconselhado descarregá-lo de outros locais, pois o descarregar de fontes não oficiais não é seguro.",
   "privacy": "Privacidade",
   "privacyText": "Esta aplicação é focada na privacidade e não recolhe dados pessoais.",
   "acceptAndContinue": "Aceitar e continuar",
@@ -651,14 +388,38 @@
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-  "aPKLinkHash": "Hash de links APK",
-  "gHReqPrefix": "Instância 'sky22333/hubproxy' para pedidos de GitHub",
-  "continueAction": "Continuar",
-  "minute": "{count} minutos",
+
+  "apps": "Aplicações",
+  "@apps": {
+    "plural": {
+      "one": "{} Aplicação",
+      "other": "{} Aplicações",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "apk": "APK",
+  "@apk": {
+    "plural": {
+      "one": "{} APK",
+      "other": "{} APKs",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} minutos",
   "@minute": {
     "plural": {
-      "one": "{count} minuto",
-      "other": "{count} minutos"
+      "one": "{} minuto",
+      "other": "{} minutos",
     },
     "placeholders": {
       "count": {
@@ -666,11 +427,12 @@
       }
     }
   },
-  "hour": "{count} horas",
+
+  "hour": "{} horas",
   "@hour": {
     "plural": {
-      "one": "{count} hora",
-      "other": "{count} horas"
+      "one": "{} hora",
+      "other": "{} horas",
     },
     "placeholders": {
       "count": {
@@ -678,11 +440,12 @@
       }
     }
   },
-  "day": "{count} dias",
+
+  "day": "{} dias",
   "@day": {
     "plural": {
-      "one": "{count} dia",
-      "other": "{count} dias"
+      "one": "{} dia",
+      "other": "{} dias",
     },
     "placeholders": {
       "count": {
@@ -690,29 +453,4 @@
       }
     }
   }
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "apps": "{count} Apps",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "githubRequestPrefix": "GitHub request prefix",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minimumStarCount": "Minimum star count",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
 }

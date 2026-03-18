@@ -1,13 +1,7 @@
 {
-  "@@locale": "zh_Hant_TW",
-  "invalidURLForSource": "不是有效的 {arg1} 應用程式 URL",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "@@locale": "zh-Hant-TW",
+
+  "invalidURLForSource": "不是有效的 {} 應用程式 URL",
   "noReleaseFound": "找不到合適的版本",
   "noVersionFound": "無法確定版本",
   "urlMatchesNoSource": "URL 不符合已知來源",
@@ -26,6 +20,7 @@
   "invalidRegEx": "無效的正則表達式",
   "noDescription": "沒有描述",
   "cancel": "取消",
+  "continue": "繼續",
   "requiredInBrackets": "（必填）",
   "dropdownNoOptsError": "錯誤：下拉選單必須至少有一個選項",
   "color": "顏色",
@@ -35,14 +30,7 @@
   "githubStarredRepos": "GitHub 打星星的專案",
   "uname": "使用者名稱",
   "wrongArgNum": "提供的參數數量錯誤",
-  "xIsTrackOnly": "{arg1} 是僅追蹤",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} 是僅追蹤",
   "source": "來源",
   "app": "應用程式",
   "appsFromSourceAreTrackOnly": "來自此來源的應用程式是「僅追蹤」。",
@@ -57,14 +45,7 @@
   "add": "新增",
   "searchSomeSourcesLabel": "搜尋（僅限部分來源）",
   "search": "搜尋",
-  "additionalOptsFor": "{arg1} 的其他選項",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "{} 的其他選項",
   "supportedSources": "支援的來源",
   "trackOnlyInBrackets": "（僅追蹤）",
   "searchableInBrackets": "（可搜尋）",
@@ -72,94 +53,35 @@
   "noApps": "無應用程式",
   "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
   "noAppsForFilter": "無符合過濾條件的應用程式",
-  "byX": "由 {arg1}",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "進度：{arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "由 {}",
+  "percentProgress": "進度：{}%",
   "pleaseWait": "請稍候",
   "updateAvailable": "有可用的更新",
   "notInstalled": "未安裝",
   "pseudoVersion": "偽版本",
   "selectAll": "全選",
-  "deselectX": "取消選取 {arg1}",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "{arg1} 將從 Updatium 中移除，但仍然安裝在裝置上。",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "取消選取 {}",
+  "xWillBeRemovedButRemainInstalled": "{} 將從 Updatium 中移除，但仍然安裝在裝置上。",
   "removeSelectedAppsQuestion": "移除選取的應用程式？",
   "removeSelectedApps": "移除選取的應用程式",
-  "updateX": "更新 {arg1}",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "安裝 {arg1}",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "標記 {arg1}\n（僅追蹤）\n為已更新",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "更改 {arg1}",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "更新 {}",
+  "installX": "安裝 {}",
+  "markXTrackOnlyAsUpdated": "標記 {}
+（僅追蹤）
+為已更新",
+  "changeX": "更改 {}",
   "installUpdateApps": "安裝/更新應用程式",
   "installUpdateSelectedApps": "安裝/更新選取的應用程式",
-  "markXSelectedAppsAsUpdated": "標記 {arg1} 個選取的應用程式為已更新？",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "標記 {} 個選取的應用程式為已更新？",
   "no": "否",
   "yes": "是",
   "markSelectedAppsUpdated": "標記選取的應用程式為已更新",
   "pinToTop": "釘選到頂端",
   "unpinFromTop": "取消釘選",
   "resetInstallStatusForSelectedAppsQuestion": "重設選取應用程式的安裝狀態？",
-  "installStatusOfXWillBeResetExplanation": "任何選取應用程式的安裝狀態將被重設。\n\n這可以在由於更新失敗或其他問題導致 Updatium 顯示的應用程式版本不正確時有所幫助。",
+  "installStatusOfXWillBeResetExplanation": "任何選取應用程式的安裝狀態將被重設。
+
+這可以在由於更新失敗或其他問題導致 Updatium 顯示的應用程式版本不正確時有所幫助。",
   "customLinkMessage": "這些連結適用於已安裝 Updatium 的裝置",
   "shareAppConfigLinks": "分享應用程式設定為 HTML 連結",
   "shareSelectedAppURLs": "分享選取的應用程式 URL",
@@ -175,63 +97,29 @@
   "nonInstalledApps": "未安裝的應用程式",
   "importExport": "匯入/匯出",
   "settings": "設定",
-  "exportedTo": "匯出到 {arg1}",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "匯出到 {}",
   "updatiumExport": "Updatium 匯出",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "無效的輸入",
-  "importedX": "已匯入 {arg1}",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "已匯入 {}",
   "updatiumImport": "Updatium 匯入",
   "importFromURLList": "從 URL 清單匯入",
   "searchQuery": "搜尋查詢",
   "appURLList": "應用程式 URL 清單",
   "line": "行",
-  "searchX": "搜尋 {arg1}",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "搜尋 {}",
   "noResults": "沒有找到結果",
-  "importX": "匯入 {arg1}",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "匯入的應用程式可能會錯誤地顯示為「未安裝」。\n要修正此問題，請透過 Updatium 重新安裝它們。\n這不應該影響應用程式資料。\n\n僅影響 URL 和第三方匯入方法。",
+  "importX": "匯入 {}",
+  "importedAppsIdDisclaimer": "匯入的應用程式可能會錯誤地顯示為「未安裝」。
+要修正此問題，請透過 Updatium 重新安裝它們。
+這不應該影響應用程式資料。
+
+僅影響 URL 和第三方匯入方法。",
   "importErrors": "匯入錯誤",
-  "importedXOfYApps": "已匯入 {arg1} 個中的 {arg2} 個應用程式。",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "已匯入 {} 個中的 {} 個應用程式。",
   "followingURLsHadErrors": "以下 URL 有錯誤：",
   "selectURL": "選擇 URL",
   "selectURLs": "選擇多個 URL",
@@ -267,86 +155,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "updatium-export",
   "pickAnAPK": "選擇一個 APK",
-  "appHasMoreThanOnePackage": "{arg1} 有多個套件：",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "您的裝置支援 {arg1} CPU 架構。",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{} 有多個套件：",
+  "deviceSupportsXArch": "您的裝置支援 {} CPU 架構。",
   "deviceSupportsFollowingArchs": "您的裝置支援以下 CPU 架構：",
   "warning": "警告",
-  "sourceIsXButPackageFromYPrompt": "應用程式來源是 「{arg1}」，但發佈套件來自 「{arg2}」。要繼續嗎？",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "應用程式來源是 「{}」，但發佈套件來自 「{}」。要繼續嗎？",
   "updatesAvailable": "有可用的更新",
   "updatesAvailableNotifDescription": "通知使用者有一個或多個由 Updatium 追蹤的應用程式有更新",
   "noNewUpdates": "沒有新更新。",
-  "xHasAnUpdate": "{arg1} 有一個更新。",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{} 有一個更新。",
   "appsUpdated": "應用程式已更新",
   "appsNotUpdated": "未能更新應用程式",
   "appsUpdatedNotifDescription": "通知使用者一個或多個應用程式的更新已在背景中套用",
-  "xWasUpdatedToY": "{arg1} 已更新到 {arg2}。",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "未能將 {arg1} 更新到 {arg2}。",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "{} 已更新到 {}。",
+  "xWasNotUpdatedToY": "未能將 {} 更新到 {}。",
   "errorCheckingUpdates": "檢查更新時出錯",
   "errorCheckingUpdatesNotifDescription": "背景檢查更新失敗時顯示的通知",
   "appsRemoved": "應用程式已移除",
   "appsRemovedNotifDescription": "通知使用者由於載入時出錯，一個或多個應用程式已被移除",
-  "xWasRemovedDueToErrorY": "{arg1} 已因以下錯誤被移除：{arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "{} 已因以下錯誤被移除：{}",
   "completeAppInstallation": "完成應用程式安裝",
   "updatiumMustBeOpenToInstallApps": "Updatium 必須開啟才能安裝應用程式",
   "completeAppInstallationNotifDescription": "請使用者回到 Updatium 以完成應用程式安裝",
@@ -354,43 +181,15 @@
   "checkingForUpdatesNotifDescription": "檢查更新時顯示的暫時性通知",
   "pleaseAllowInstallPerm": "請允許 Updatium 安裝應用程式",
   "trackOnly": "僅追蹤",
-  "errorWithHttpStatusCode": "錯誤 {arg1}",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "錯誤 {}",
   "versionCorrectionDisabled": "版本校正已停用（外掛程式似乎無法正常工作）",
   "unknown": "未知",
   "none": "無",
   "all": "全體",
   "never": "從不",
-  "latestVersionX": "最新版本：{arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "已安裝版本：{arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "上次檢查更新時間：{arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "最新版本：{}",
+  "installedVersionX": "已安裝版本：{}",
+  "lastUpdateCheckX": "上次檢查更新時間：{}",
   "remove": "移除",
   "yesMarkUpdated": "是，標記為已更新",
   "fdroid": "F-Droid 官方",
@@ -407,30 +206,9 @@
   "additionalOptions": "額外選項",
   "disableVersionDetection": "停用版本偵測",
   "noVersionDetectionExplanation": "此選項僅應用於版本偵測無法正確工作的應用程式。",
-  "downloadingX": "正在下載 {arg1}",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "下載 {arg1}",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "已下載 {arg1}",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "正在下載 {}",
+  "downloadX": "下載 {}",
+  "downloadedX": "已下載 {}",
   "releaseAsset": "發佈資源",
   "downloadNotifDescription": "通知使用者應用程式下載進度",
   "noAPKFound": "沒有找到 APK",
@@ -474,14 +252,7 @@
   "hideNonInstalledApps": "隱藏未安裝的應用程式",
   "gitlabPATLabel": "GitLab 個人存取權杖",
   "about": "關於",
-  "requiresCredentialsInSettings": "{arg1} 需要額外的憑證（在設定中）",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{} 需要額外的憑證（在設定中）",
   "checkOnStart": "啟動時檢查更新",
   "safeMode": "安全模式",
   "safeModeDescription": "隱藏新增應用程式頁面並顯示匯入/匯出",
@@ -501,17 +272,7 @@
   "customLinkFilterRegex": "自定 APK 連結過濾正則表達式（預設為 '.apk$'）",
   "appsPossiblyUpdated": "嘗試更新應用程式",
   "appsPossiblyUpdatedNotifDescription": "通知使用者一個或多個應用程式的更新可能已在背景中套用",
-  "xWasPossiblyUpdatedToY": "{arg1} 可能已更新到 {arg2}。",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "{} 可能已更新到 {}。",
   "enableBackgroundUpdates": "啟用背景更新",
   "backgroundUpdateReqsExplanation": "並非所有應用程式都能進行背景更新。",
   "backgroundUpdateLimitsExplanation": "背景安裝的成功與否只能在開啟 Updatium 時確定。",
@@ -527,14 +288,7 @@
   "autoSelectHighestVersionCode": "自動選擇最高 versionCode 的 APK",
   "versionExtractionRegEx": "版本字串提取正則表達式",
   "trimVersionString": "用正則表達式修剪版本字串",
-  "matchGroupToUseForX": "用於「{arg1}」的對應群組",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "用於「{}」的對應群組",
   "matchGroupToUse": "要用於版本字串提取的對應群組",
   "highlightTouchTargets": "突出顯示不明顯的觸控目標",
   "pickExportDir": "選擇匯出目錄",
@@ -557,26 +311,12 @@
   "appsPossiblyUpdatedNotifChannel": "嘗試更新應用程式",
   "errorCheckingUpdatesNotifChannel": "檢查更新錯誤",
   "appsRemovedNotifChannel": "應用程式已移除",
-  "downloadingXNotifChannel": "正在下載 {arg1}",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "正在下載 {}",
   "completeAppInstallationNotifChannel": "完成應用程式安裝",
   "checkingForUpdatesNotifChannel": "正在檢查更新",
   "onlyCheckInstalledOrTrackOnlyApps": "僅檢查已安裝和僅追蹤的應用程式更新",
   "supportFixedAPKURL": "支援固定的 APK 網址",
-  "selectX": "選擇 {arg1}",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "選擇 {}",
   "parallelDownloads": "允許平行下載",
   "useShizuku": "使用 Shizuku 或 Sui 來安裝",
   "shizukuBinderNotFound": "Shizuku 服務未運作",
@@ -589,20 +329,14 @@
   "useLatestAssetDateAsReleaseDate": "使用最新資源上傳日期作為發佈日期",
   "defaultPseudoVersioningMethod": "預設偽版本管理方法",
   "partialAPKHash": "部分 APK Hash",
+  "APKLinkHash": "APK 連結 Hash",
   "directAPKLink": "直接 APK 連結",
   "pseudoVersionInUse": "正在使用偽版本",
   "installed": "已安裝",
   "latest": "最新",
   "invertRegEx": "反轉正則表達式",
   "note": "備註",
-  "selfHostedNote": "可使用「{arg1}」下拉選單來存取任何來源的自行託管/自訂執行個體。",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "可使用「{}」下拉選單來存取任何來源的自行託管/自訂執行個體。",
   "badDownload": "無法解析 APK（不相容或下載不完整）",
   "beforeNewInstallsShareToAppVerifier": "將新應用程式分享到 AppVerifier（如果可用）",
   "appVerifierInstructionToast": "分享至 AppVerifier，然後準備好時回到此處。",
@@ -625,17 +359,26 @@
   "foregroundServiceExplanation": "使用前景服務進行更新檢查( 更可靠, 消耗更多電源)",
   "fgServiceNotice": "此通知用於背景更新檢查( 可以在 OS 設置中隱藏)",
   "excludeSecrets": "不包括機密內容",
+  "GHReqPrefix": "GitHub 請求的 'sky22333/hubproxy' 實例",
   "includeZips": "包含 ZIP 文件",
   "zippedApkFilterRegEx": "在 ZIP 內過濾 APK",
-  "googleVerificationWarningP1": "Google 已宣布，自 2026／2027 年起，所有在「通過認證（certified）」的 Android 裝置上執行的應用程式，都必須由開發者直接向 Google 提交個人身分資訊。\n\n之後，Updatium 可能會停止在通過認證的 Android 裝置上運作。",
+  "googleVerificationWarningP1": "Google 已宣布，自 2026／2027 年起，所有在「通過認證（certified）」的 Android 裝置上執行的應用程式，都必須由開發者直接向 Google 提交個人身分資訊。
+
+之後，Updatium 可能會停止在通過認證的 Android 裝置上運作。",
   "googleVerificationWarningP2": "如需更多資訊，請前往 https://keepandroidopen.org/.",
-  "googleVerificationWarningP3": "請注意，從短期來看，Google 表示在其公告引發廣泛反彈後，可能仍可透過其承諾實作的「進階流程（advanced flow）」來安裝「未經驗證」（不符合規範）的應用程式；然而，Google 尚未說明此流程的具體運作方式，因此無法確定它是否能在實務上真正維護使用者的自由。\n\n無論如何，Google 的這項作法，都是朝向終結個人自由、通用運算的一大步。\n\n只要仍被允許持續存在，像 GrapheneOS 這類未通過認證的作業系統，理論上不會受到此政策影響。",
+  "googleVerificationWarningP3": "請注意，從短期來看，Google 表示在其公告引發廣泛反彈後，可能仍可透過其承諾實作的「進階流程（advanced flow）」來安裝「未經驗證」（不符合規範）的應用程式；然而，Google 尚未說明此流程的具體運作方式，因此無法確定它是否能在實務上真正維護使用者的自由。
+
+無論如何，Google 的這項作法，都是朝向終結個人自由、通用運算的一大步。
+
+只要仍被允許持續存在，像 GrapheneOS 這類未通過認證的作業系統，理論上不會受到此政策影響。",
   "multipleSigners": "多重簽署者",
   "securityDisclaimerTitle": "安全與法律免責聲明",
   "license": "授權",
   "licenseText": "此應用程式採用 GPL v3 授權條款分發。",
   "disclaimer": "免責聲明",
-  "disclaimerText": "此應用程式不分發、託管或驗證任何外部應用程式。使用者對透過此工具安裝的任何軟體的安全性和合法性承擔全部責任。\n\nhttps://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 - 強烈建議不要從其他地方下載，因為從非官方來源下載是不安全的。",
+  "disclaimerText": "此應用程式不分發、託管或驗證任何外部應用程式。使用者對透過此工具安裝的任何軟體的安全性和合法性承擔全部責任。
+
+https://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 - 強烈建議不要從其他地方下載，因為從非官方來源下載是不安全的。",
   "privacy": "隱私",
   "privacyText": "此應用程式注重隱私，不收集個人資料。",
   "acceptAndContinue": "接受並繼續",
@@ -644,35 +387,64 @@
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-  "aPKLinkHash": "APK 連結 Hash",
-  "gHReqPrefix": "GitHub 請求的 'sky22333/hubproxy' 實例",
-  "continueAction": "繼續"
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "apps": "{count} Apps",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "day": "{count} days",
-  "githubRequestPrefix": "GitHub request prefix",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "hour": "{count} hours",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minimumStarCount": "Minimum star count",
-  "minute": "{count} minutes",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
+
+  "apps": "應用程式",
+  "@apps": {
+    "plural": {
+      "other": "{} 個應用程式",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "apk": "APK",
+  "@apk": {
+    "plural": {
+      "other": "{} 個 APK",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} 分鐘",
+  "@minute": {
+    "plural": {
+      "other": "{} 分鐘",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "hour": "{} 小時",
+  "@hour": {
+    "plural": {
+      "other": "{} 小時",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "day": "{} 天",
+  "@day": {
+    "plural": {
+      "other": "{} 天",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

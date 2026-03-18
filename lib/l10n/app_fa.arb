@@ -1,13 +1,7 @@
 {
   "@@locale": "fa",
-  "invalidURLForSource": "آدرس اینترنتی برنامه {arg1} معتبر نیست",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+
+  "invalidURLForSource": "آدرس اینترنتی برنامه {} معتبر نیست",
   "noReleaseFound": "نسخه مناسبی پیدا نشد",
   "noVersionFound": "نمی توان نسخه منتشر شده را تعیین کرد",
   "urlMatchesNoSource": "آدرس اینترنتی با منبع شناخته شده مطابقت ندارد",
@@ -26,6 +20,7 @@
   "invalidRegEx": "عبارت منظم نامعتبر است",
   "noDescription": "بدون توضیحات",
   "cancel": "لغو",
+  "continue": "ادامه دهید",
   "requiredInBrackets": "(ضروری)",
   "dropdownNoOptsError": "خطا: کشویی باید حداقل یک گزینه داشته باشد",
   "color": "رنگ",
@@ -35,14 +30,7 @@
   "githubStarredRepos": "مخازن ستاره دار گیتهاب",
   "uname": "نام کاربری",
   "wrongArgNum": "تعداد آرگومان های ارائه شده اشتباه است",
-  "xIsTrackOnly": "{arg1} فقط ردیابی",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} فقط ردیابی",
   "source": "منبع",
   "app": "برنامه",
   "appsFromSourceAreTrackOnly": "برنامه‌های این منبع «فقط ردیابی» هستند",
@@ -57,14 +45,7 @@
   "add": "اضافه کردن",
   "searchSomeSourcesLabel": "جستجو (فقط برخی منابع)",
   "search": "جستجو کردن",
-  "additionalOptsFor": "گزینه های اضافی برای {arg1}",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "گزینه های اضافی برای {}",
   "supportedSources": "منابع پشتیبانی شده",
   "trackOnlyInBrackets": "«فقط ردیابی»",
   "searchableInBrackets": "(قابل جستجو)",
@@ -72,94 +53,35 @@
   "noApps": "برنامه ای وجود ندارد",
   "noAppsSubtext": "You can add your first app by tapping on 'Add App' below.",
   "noAppsForFilter": "برنامه ای برای فیلتر کردن وجود ندارد",
-  "byX": "توسط {arg1}",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "پیش رفتن: {arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "توسط {}",
+  "percentProgress": "پیش رفتن: {}%",
   "pleaseWait": "لطفا صبر کنید",
   "updateAvailable": "بروزرسانی در دسترس",
   "notInstalled": "نصب نشده",
   "pseudoVersion": "نسخه شبه",
   "selectAll": "انتخاب همه",
-  "deselectX": "لغو انتخاب {arg1}",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "{arg1} از Updatium حذف می‌شود اما روی دستگاه نصب می‌ماند.",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "لغو انتخاب {}",
+  "xWillBeRemovedButRemainInstalled": "{} از Updatium حذف می‌شود اما روی دستگاه نصب می‌ماند.",
   "removeSelectedAppsQuestion": "برنامه های انتخابی حذف شود؟",
   "removeSelectedApps": "حذف برنامه های انتخاب شده",
-  "updateX": "به روز رسانی {arg1}",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "نصب {arg1}",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "علامت {arg1}\n(فقط ردیابی)\nبروز شده",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "تغییر دادن {arg1}",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "به روز رسانی {}",
+  "installX": "نصب {}",
+  "markXTrackOnlyAsUpdated": "علامت {}
+(فقط ردیابی)
+بروز شده",
+  "changeX": "تغییر دادن {}",
   "installUpdateApps": "نصب/به‌روزرسانی برنامه‌ها",
   "installUpdateSelectedApps": "برنامه‌های انتخابی را نصب/به‌روزرسانی کنید",
-  "markXSelectedAppsAsUpdated": "{arg1} برنامه های انتخابی را به عنوان به روز علامت گذاری کنید؟",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "{} برنامه های انتخابی را به عنوان به روز علامت گذاری کنید؟",
   "no": "خیر",
   "yes": "بله",
   "markSelectedAppsUpdated": "برنامه های انتخاب شده را به عنوان به روز علامت گذاری کنید",
   "pinToTop": "پین به بالا",
   "unpinFromTop": "برداشتن پین از بالا",
   "resetInstallStatusForSelectedAppsQuestion": "وضعیت نصب برنامه‌های انتخابی بازنشانی شود؟",
-  "installStatusOfXWillBeResetExplanation": "وضعیت نصب برنامه‌های انتخاب‌شده بازنشانی می‌شود.\n\nاگر نسخه برنامه نشان‌داده‌شده در Updatium به دلیل به‌روزرسانی‌های ناموفق یا مشکلات دیگر نادرست باشد، می‌تواند کمک کند.",
+  "installStatusOfXWillBeResetExplanation": "وضعیت نصب برنامه‌های انتخاب‌شده بازنشانی می‌شود.
+
+اگر نسخه برنامه نشان‌داده‌شده در Updatium به دلیل به‌روزرسانی‌های ناموفق یا مشکلات دیگر نادرست باشد، می‌تواند کمک کند.",
   "customLinkMessage": "این پیوندها بر روی دستگاه هایی با Updatium نصب شده کار می کنند",
   "shareAppConfigLinks": "اشتراک گذاری پیکربندی برنامه به عنوان پیوند HTML",
   "shareSelectedAppURLs": "اشتراک گذاری آدرس اینترنتی برنامه های انتخاب شده",
@@ -175,63 +97,29 @@
   "nonInstalledApps": "برنامه های نصب نشده",
   "importExport": "وارد کردن/صادر کردن",
   "settings": "تنظیمات",
-  "exportedTo": "صادر کردن به{arg1}",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "صادر کردن به{}",
   "updatiumExport": "صادر کردن Updatium",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "ورودی نامعتبر",
-  "importedX": "وارد شده {arg1}",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "وارد شده {}",
   "updatiumImport": "وارد کردن Updatium",
   "importFromURLList": "وارد کردن از فهرست آدرس اینترنتی",
   "searchQuery": "جستجوی سوال",
   "appURLList": "فهرست آدرس اینترنتی برنامه",
   "line": "خط",
-  "searchX": "جستجو {arg1}",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "جستجو {}",
   "noResults": "نتیجه ای پیدا نشد",
-  "importX": " وارد کردن {arg1}",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "ممکن است برنامه‌های وارد شده به اشتباه به‌عنوان \"نصب نشده\" نشان داده شوند.\nبرای رفع این مشکل، آنها را دوباره از طریق Updatium نصب کنید.\nاین نباید روی داده‌های برنامه تأثیر بگذارد.\n\nفقط بر روی آدرس اینترنتی و روش‌های درون ریزی شخص ثالث تأثیر می‌گذارد.",
+  "importX": " وارد کردن {}",
+  "importedAppsIdDisclaimer": "ممکن است برنامه‌های وارد شده به اشتباه به‌عنوان \"نصب نشده\" نشان داده شوند.
+برای رفع این مشکل، آنها را دوباره از طریق Updatium نصب کنید.
+این نباید روی داده‌های برنامه تأثیر بگذارد.
+
+فقط بر روی آدرس اینترنتی و روش‌های درون ریزی شخص ثالث تأثیر می‌گذارد.",
   "importErrors": "خطاهای وارد کردن",
-  "importedXOfYApps": "{arg1} از {arg2} برنامه وارد شد.",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "{} از {} برنامه وارد شد.",
   "followingURLsHadErrors": "آدرس های اینترنتی زیر دارای خطا بودند:",
   "selectURL": "آدرس اینترنتی انتخاب شده",
   "selectURLs": "آدرس های اینترنتی انتخاب شده",
@@ -267,86 +155,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "صادر کردن-updatium",
   "pickAnAPK": "یک APK انتخاب کنید",
-  "appHasMoreThanOnePackage": "{arg1} بیش از یک بسته دارد:",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "دستگاه شما از معماری پردازنده {arg1} پشتیبانی میکند",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{} بیش از یک بسته دارد:",
+  "deviceSupportsXArch": "دستگاه شما از معماری پردازنده {} پشتیبانی میکند",
   "deviceSupportsFollowingArchs": "دستگاه شما از معماری های پردازنده زیر پشتیبانی می کند:",
   "warning": "اخطار",
-  "sourceIsXButPackageFromYPrompt": "منبع برنامه \"{arg1}\" است اما بسته انتشار از \"{arg2}\" آمده است. ادامه هید؟",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "منبع برنامه \"{}\" است اما بسته انتشار از \"{}\" آمده است. ادامه هید؟",
   "updatesAvailable": "بروزرسانی در دسترس ",
   "updatesAvailableNotifDescription": "به کاربر اطلاع می دهد که به روز رسانی برای یک یا چند برنامه ردیابی شده توسط Updatium در دسترس است",
   "noNewUpdates": "به روز رسانی جدیدی وجود ندارد.",
-  "xHasAnUpdate": "{arg1} یک به روز رسانی دارد.",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{} یک به روز رسانی دارد.",
   "appsUpdated": "برنامه ها به روز شدند",
   "appsNotUpdated": "به روز رسانی برنامه ها ناموفق بود",
   "appsUpdatedNotifDescription": "به کاربر اطلاع می دهد که به روز رسانی یک یا چند برنامه در پس زمینه اعمال شده است",
-  "xWasUpdatedToY": "{arg1} به {arg2} به روز شد.",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "به روز رسانی {arg1} به {arg2} انجام نشد.",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "{} به {} به روز شد.",
+  "xWasNotUpdatedToY": "به روز رسانی {} به {} انجام نشد.",
   "errorCheckingUpdates": "خطا در بررسی به‌روزرسانی‌ها",
   "errorCheckingUpdatesNotifDescription": "اعلانی که وقتی بررسی به‌روزرسانی پس‌زمینه ناموفق است نشان می‌دهد",
   "appsRemoved": "برنامه ها حذف شدند",
   "appsRemovedNotifDescription": "به کاربر اطلاع می دهد که یک یا چند برنامه به دلیل خطا در هنگام بارگیری حذف شده است",
-  "xWasRemovedDueToErrorY": "{arg1} به دلیل این خطا حذف شد: {arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "{} به دلیل این خطا حذف شد: {}",
   "completeAppInstallation": "نصب کامل برنامه",
   "updatiumMustBeOpenToInstallApps": "Updatium باید برای نصب برنامه ها باز باشد",
   "completeAppInstallationNotifDescription": "از کاربر می‌خواهد برای پایان نصب برنامه به Updatium برگردد",
@@ -354,43 +181,15 @@
   "checkingForUpdatesNotifDescription": "اعلان گذرا که هنگام بررسی به روز رسانی ظاهر می شود",
   "pleaseAllowInstallPerm": "لطفاً به Updatium اجازه دهید برنامه‌ها را نصب کند",
   "trackOnly": "فقط ردیابی",
-  "errorWithHttpStatusCode": "خطا {arg1}",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "خطا {}",
   "versionCorrectionDisabled": "تصحیح نسخه غیرفعال شد (به نظر می رسد افزونه کار نمی کند)",
   "unknown": "ناشناخته",
   "none": "هیچ",
   "all": "همه چیز",
   "never": "هرگز",
-  "latestVersionX": "آخرین نسخه: {arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "نسخه نصب شده: {arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "بررسی آخرین به‌روزرسانی: {arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "آخرین نسخه: {}",
+  "installedVersionX": "نسخه نصب شده: {}",
+  "lastUpdateCheckX": "بررسی آخرین به‌روزرسانی: {}",
   "remove": "حذف",
   "yesMarkUpdated": "بله، علامت گذاری به عنوان به روز شده",
   "fdroid": "F-Droid Official",
@@ -407,30 +206,9 @@
   "additionalOptions": "گزینه های اضافی",
   "disableVersionDetection": "غیرفعال کردن تشخیص نسخه",
   "noVersionDetectionExplanation": "این گزینه فقط باید برای برنامه هایی استفاده شود که تشخیص نسخه به درستی کار نمی کند.",
-  "downloadingX": "در حال دانلود {arg1}",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "دانلود {arg1}",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "دانلود شده {arg1}",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "در حال دانلود {}",
+  "downloadX": "دانلود {}",
+  "downloadedX": "دانلود شده {}",
   "releaseAsset": "انتشار دارایی",
   "downloadNotifDescription": "کاربر را از پیشرفت دانلود یک برنامه مطلع می کند",
   "noAPKFound": "APK پیدا نشد فایل",
@@ -474,14 +252,7 @@
   "hideNonInstalledApps": "پنهان کردن برنامه‌های نصب‌نشده",
   "gitlabPATLabel": "رمز دسترسی شخصی GitLab",
   "about": "درباره",
-  "requiresCredentialsInSettings": "{arg1}: این به اعتبارنامه های اضافی نیاز دارد (در تنظیمات)",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{}: این به اعتبارنامه های اضافی نیاز دارد (در تنظیمات)",
   "checkOnStart": "بررسی در شروع",
   "safeMode": "حالت امن",
   "safeModeDescription": "پنهان کردن صفحه افزودن برنامه و نمایش وارد/صدور به جای آن",
@@ -501,17 +272,7 @@
   "customLinkFilterRegex": "فیلتر پیوند سفارشی بر اساس عبارت منظم (پیش‌فرض '.apk$')",
   "appsPossiblyUpdated": "به‌روزرسانی برنامه انجام شد",
   "appsPossiblyUpdatedNotifDescription": "به کاربر اطلاع می‌دهد که به‌روزرسانی‌های یک یا چند برنامه به طور بالقوه در پس‌زمینه اعمال شده است",
-  "xWasPossiblyUpdatedToY": "ممکن است {arg1} به {arg2} به روز شده باشد.",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "ممکن است {} به {} به روز شده باشد.",
   "enableBackgroundUpdates": "به روز رسانی پس زمینه را فعال کنید",
   "backgroundUpdateReqsExplanation": "به روز رسانی پس زمینه ممکن است برای همه برنامه ها امکان پذیر نباشد.",
   "backgroundUpdateLimitsExplanation": "موفقیت نصب پس‌زمینه تنها زمانی مشخص می‌شود که Updatium باز شود.",
@@ -527,14 +288,7 @@
   "autoSelectHighestVersionCode": "انتخاب خودکار بالاترین نسخه کد APK",
   "versionExtractionRegEx": "نسخه استخراج RegEx",
   "trimVersionString": "برش رشته نسخه با RegEx",
-  "matchGroupToUseForX": "مطابقت دادن گروه برای استفاده برای \"{arg1}\"",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "مطابقت دادن گروه برای استفاده برای \"{}\"",
   "matchGroupToUse": "گروه مورد استفاده را مطابقت دهید",
   "highlightTouchTargets": "اهداف لمسی کمتر واضح را برجسته کنید",
   "pickExportDir": "فهرست صادر کردن را انتخاب کنید",
@@ -557,26 +311,12 @@
   "appsPossiblyUpdatedNotifChannel": "به‌روزرسانی برنامه انجام شد",
   "errorCheckingUpdatesNotifChannel": "خطا در بررسی به‌روزرسانی‌ها",
   "appsRemovedNotifChannel": "برنامه ها حذف شدند",
-  "downloadingXNotifChannel": "در حال دانلود {arg1}",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "در حال دانلود {}",
   "completeAppInstallationNotifChannel": "نصب کامل برنامه",
   "checkingForUpdatesNotifChannel": "بررسی به‌روزرسانی‌ها",
   "onlyCheckInstalledOrTrackOnlyApps": "فقط برنامه های نصب شده و فقط ردیابی را برای به روز رسانی بررسی کنید",
   "supportFixedAPKURL": "پشتیبانی از URL های APK ثابت",
-  "selectX": "انتخاب کنید {arg1}",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "انتخاب کنید {}",
   "parallelDownloads": "اجازه دانلود موازی",
   "useShizuku": "برای نصب از Shizuku یا Sui استفاده کنید",
   "shizukuBinderNotFound": "Shizuku در حال اجرا نیست",
@@ -589,20 +329,14 @@
   "useLatestAssetDateAsReleaseDate": "استفاده از آخرین بارگذاری دارایی به عنوان تاریخ انتشار",
   "defaultPseudoVersioningMethod": "روش پیش فرض شبه نسخه",
   "partialAPKHash": "هش جزئی APK",
+  "APKLinkHash": "هش پیوند APK",
   "directAPKLink": "لینک مستقیم APK",
   "pseudoVersionInUse": "یک نسخه شبه در حال استفاده است",
   "installed": "نصب شده است",
   "latest": "آخرین",
   "invertRegEx": "معکوس کردن عبارت منظم",
   "note": "یادداشت",
-  "selfHostedNote": "از منوی کرکره ای \"{arg1}\" می توان برای دسترسی به نمونه های خود میزبانی/سفارشی از هر منبعی استفاده کرد.",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "از منوی کرکره ای \"{}\" می توان برای دسترسی به نمونه های خود میزبانی/سفارشی از هر منبعی استفاده کرد.",
   "badDownload": "APK قابل تجزیه نیست (دانلود ناسازگار یا جزئی)",
   "beforeNewInstallsShareToAppVerifier": "اشتراک‌گذاری برنامه‌های جدید با AppVerifier (در صورت وجود)",
   "appVerifierInstructionToast": "در AppVerifier به اشتراک بگذارید، سپس پس از آماده شدن به اینجا برگردید.",
@@ -620,29 +354,31 @@
   "welcome": "خوش آمدید خوش آمدید",
   "documentationLinksNote": "صفحه GitHub به دست آمده در زیر شامل پیوندهایی با ویدیوها، مقالات، بحث ها و سایر منابع است که به شما کمک می کند تا چگونگی استفاده از برنامه را درک کنید.",
   "batteryOptimizationNote": "Note that background downloads may work more reliably if you disable OS battery optimizations for Updatium.",
-  "fileDeletionError": "شکست برای حذف فایل (سعی کنید آن را به صورت دستی حذف کنید سپس دوباره امتحان کنید): “{arg1}”",
-  "@fileDeletionError": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "fileDeletionError": "شکست برای حذف فایل (سعی کنید آن را به صورت دستی حذف کنید سپس دوباره امتحان کنید): “{}”",
   "foregroundService": "خدمات Foreground",
   "foregroundServiceExplanation": "استفاده از یک سرویس پیش زمینه برای بررسی به روز رسانی (قابل اعتماد تر، مصرف انرژی بیشتر)",
   "fgServiceNotice": "این اعلان برای بررسی به روز رسانی پس زمینه مورد نیاز است (می تواند در تنظیمات OS پنهان شود)",
   "excludeSecrets": "رازهای پنهان",
+  "GHReqPrefix": "مثال “sky22333/hubproxy”",
   "includeZips": "فایل های ZIP",
   "zippedApkFilterRegEx": "فیلتر APK در داخل Zip",
-  "googleVerificationWarningP1": "گوگل اعلام کرده است که از سال 2026/2027، تمام برنامه های موجود در دستگاه های اندرویدی معتبر نیاز به توسعه دهنده دارند تا جزئیات هویت شخصی را مستقیماً به گوگل ارسال کنند.\n\nپس از آن، Updatium ممکن است در دستگاه های اندرویدی گواهی شده کار نکند.",
+  "googleVerificationWarningP1": "گوگل اعلام کرده است که از سال 2026/2027، تمام برنامه های موجود در دستگاه های اندرویدی معتبر نیاز به توسعه دهنده دارند تا جزئیات هویت شخصی را مستقیماً به گوگل ارسال کنند.
+
+پس از آن، Updatium ممکن است در دستگاه های اندرویدی گواهی شده کار نکند.",
   "googleVerificationWarningP2": "به https://Keepandroidopen.org یا برای اطلاعات بیشتر بروید.",
-  "googleVerificationWarningP3": "توجه داشته باشید که در کوتاه مدت، ممکن است همچنان برای نصب برنامه های \"unverified\" (غیر سازگار) از طریق یک فرایند \"advanced Flow\" که گوگل وعده داده است پس از واکنش گسترده به اعلام خود اجرا کند، اما آنها جزئیات چگونگی کار این را به طوری که مشخص نیست که آیا آن واقعا حفظ آزادی های کاربر در هر روش عملی.\n\nدر هر صورت، حرکت گوگل یک گام مهم به سمت پایان محاسبات رایگان و عمومی برای افراد است.\n\nسیستم عامل های غیر گواهی شده، مانند گرافنموس، باید تا زمانی که اجازه دارند به وجود خود ادامه دهند، تحت تاثیر قرار گیرند.",
+  "googleVerificationWarningP3": "توجه داشته باشید که در کوتاه مدت، ممکن است همچنان برای نصب برنامه های \"unverified\" (غیر سازگار) از طریق یک فرایند \"advanced Flow\" که گوگل وعده داده است پس از واکنش گسترده به اعلام خود اجرا کند، اما آنها جزئیات چگونگی کار این را به طوری که مشخص نیست که آیا آن واقعا حفظ آزادی های کاربر در هر روش عملی.
+
+در هر صورت، حرکت گوگل یک گام مهم به سمت پایان محاسبات رایگان و عمومی برای افراد است.
+
+سیستم عامل های غیر گواهی شده، مانند گرافنموس، باید تا زمانی که اجازه دارند به وجود خود ادامه دهند، تحت تاثیر قرار گیرند.",
   "multipleSigners": "ثبت نام های متعدد",
   "securityDisclaimerTitle": "سلب مسئولیت امنیتی و حقوقی",
   "license": "مجوز",
   "licenseText": "این برنامه تحت مجوز GPL v3 توزیع شده است.",
   "disclaimer": "سلب مسئولیت",
-  "disclaimerText": "این برنامه هیچ یک از برنامه‌های خارجی را توزیع، میزبانی یا تأیید نمی‌کند. کاربر مسئولیت کامل امنیت و قانونی بودن هر نرم‌افزاری که از طریق این ابزار نصب می‌شود را بر عهده دارد.\n\nhttps://github.com/omeritzics/Updatium تنها مکان رسمی برای دانلود Updatium است - به شدت توصیه می‌شود آن را از جاهای دیگر دانلود نکنید زیرا دانلود از منابع غیررسمی ناامن است.",
+  "disclaimerText": "این برنامه هیچ یک از برنامه‌های خارجی را توزیع، میزبانی یا تأیید نمی‌کند. کاربر مسئولیت کامل امنیت و قانونی بودن هر نرم‌افزاری که از طریق این ابزار نصب می‌شود را بر عهده دارد.
+
+https://github.com/omeritzics/Updatium تنها مکان رسمی برای دانلود Updatium است - به شدت توصیه می‌شود آن را از جاهای دیگر دانلود نکنید زیرا دانلود از منابع غیررسمی ناامن است.",
   "privacy": "حریم خصوصی",
   "privacyText": "این برنامه متمرکز بر حریم خصوصی است و داده‌های شخصی جمع‌آوری نمی‌کند.",
   "acceptAndContinue": "پذیرش و ادامه",
@@ -651,35 +387,69 @@
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-  "aPKLinkHash": "هش پیوند APK",
-  "gHReqPrefix": "مثال “sky22333/hubproxy”",
-  "continueAction": "ادامه دهید"
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "apps": "{count} Apps",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "day": "{count} days",
-  "githubRequestPrefix": "GitHub request prefix",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "hour": "{count} hours",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minimumStarCount": "Minimum star count",
-  "minute": "{count} minutes",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
+
+  "apps": "برنامه ها",
+  "@apps": {
+    "plural": {
+      "one": "برنامه {}",
+      "other": "{} برنامه ها",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "apk": "APK",
+  "@apk": {
+    "plural": {
+      "one": "{} APK",
+      "other": "{} APKs",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} دقیقه",
+  "@minute": {
+    "plural": {
+      "one": "{} دقیقه",
+      "other": "{} دقیقه",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "hour": "{} ساعت",
+  "@hour": {
+    "plural": {
+      "one": "{} ساعت",
+      "other": "{} ساعت",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "day": "{} روز",
+  "@day": {
+    "plural": {
+      "one": "{} روز",
+      "other": "{} روز",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -1,13 +1,7 @@
 {
   "@@locale": "id",
-  "invalidURLForSource": "Bukan URL aplikasi {arg1} yang valid",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+
+  "invalidURLForSource": "Bukan URL aplikasi {} yang valid",
   "noReleaseFound": "Tidak dapat menemukan rilis yang sesuai",
   "noVersionFound": "Tidak dapat memastikan versi rilis yang sesuai",
   "urlMatchesNoSource": "URL tidak sesuai dengan sumber yang diketahui",
@@ -26,6 +20,7 @@
   "invalidRegEx": "Ekspresi reguler tidak valid",
   "noDescription": "Tidak ada deskripsi",
   "cancel": "Batal",
+  "continue": "Lanjut",
   "requiredInBrackets": "(Diperlukan)",
   "dropdownNoOptsError": "KESALAHAN: DROPDOWN HARUS MEMILIKI SETIDAKNYA SATU OPSI",
   "color": "Warna",
@@ -35,14 +30,7 @@
   "githubStarredRepos": "Repositori berbintang GitHub",
   "uname": "Nama pengguna",
   "wrongArgNum": "Salah memberikan jumlah argumen",
-  "xIsTrackOnly": "{arg1} adalah Pelacakan Saja",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} adalah Pelacakan Saja",
   "source": "Sumber",
   "app": "Aplikasi",
   "appsFromSourceAreTrackOnly": "Aplikasi dari sumber ini hanya untuk 'Pelacakan Saja'.",
@@ -57,14 +45,7 @@
   "add": "Tambah",
   "searchSomeSourcesLabel": "Cari (beberapa sumber saja)",
   "search": "Cari",
-  "additionalOptsFor": "Opsi tambahan untuk {arg1}",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "Opsi tambahan untuk {}",
   "supportedSources": "Sumber yang didukung",
   "trackOnlyInBrackets": "(Pelacakan Saja)",
   "searchableInBrackets": "(Dapat dicari)",
@@ -72,94 +53,35 @@
   "noApps": "Selamat datang!",
   "noAppsSubtext": "Anda dapat menambahkan aplikasi pertama dengan mengetuk 'Tambah aplikasi' di bawah.",
   "noAppsForFilter": "Tidak ada aplikasi untuk difilter",
-  "byX": "Oleh {arg1}",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "Perkembangan: {arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "Oleh {}",
+  "percentProgress": "Perkembangan: {}%",
   "pleaseWait": "Harap tunggu",
   "updateAvailable": "Pembaruan tersedia",
   "notInstalled": "Tidak terpasang",
   "pseudoVersion": "versi semu",
   "selectAll": "Pilih semua",
-  "deselectX": "Batal pilih {arg1}",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "{arg1} akan dihapus dari Updatium tetapi tetap terpasang di perangkat.",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "Batal pilih {}",
+  "xWillBeRemovedButRemainInstalled": "{} akan dihapus dari Updatium tetapi tetap terpasang di perangkat.",
   "removeSelectedAppsQuestion": "Hapus aplikasi terpilih?",
   "removeSelectedApps": "Hapus aplikasi terpilih",
-  "updateX": "Perbarui {arg1}",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "Pasang {arg1}",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "Tandai {arg1}\n(Pelacakan Saja)\nsudah diperbarui",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "Ubah {arg1}",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "Perbarui {}",
+  "installX": "Pasang {}",
+  "markXTrackOnlyAsUpdated": "Tandai {}
+(Pelacakan Saja)
+sudah diperbarui",
+  "changeX": "Ubah {}",
   "installUpdateApps": "Pasang/perbarui aplikasi",
   "installUpdateSelectedApps": "Pasang/perbarui aplikasi terpilih",
-  "markXSelectedAppsAsUpdated": "Tandai {arg1} aplikasi terpilih sudah diperbarui?",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "Tandai {} aplikasi terpilih sudah diperbarui?",
   "no": "Tidak",
   "yes": "Ya",
   "markSelectedAppsUpdated": "Tandai aplikasi terpilih sudah diperbarui",
   "pinToTop": "Sematkan ke atas",
   "unpinFromTop": "Lepaskan semat dari atas",
   "resetInstallStatusForSelectedAppsQuestion": "Atur ulang status pemasangan untuk aplikasi terpilih?",
-  "installStatusOfXWillBeResetExplanation": "Status pemasangan dari aplikasi terpilih akan diatur ulang.\n\nHal ini bisa membantu saat versi aplikasi yang ditampilkan di Updatium salah akibat pembaruan yang gagal atau masalah lainnya.",
+  "installStatusOfXWillBeResetExplanation": "Status pemasangan dari aplikasi terpilih akan diatur ulang.
+
+Hal ini bisa membantu saat versi aplikasi yang ditampilkan di Updatium salah akibat pembaruan yang gagal atau masalah lainnya.",
   "customLinkMessage": "Tautan ini berfungsi pada perangkat yang terpasang Updatium",
   "shareAppConfigLinks": "Bagikan konfigurasi aplikasi sebagai tautan HTML",
   "shareSelectedAppURLs": "Bagikan URL aplikasi terpilih",
@@ -175,63 +97,29 @@
   "nonInstalledApps": "Aplikasi tidak terpasang",
   "importExport": "Impor/ekspor",
   "settings": "Pengaturan",
-  "exportedTo": "Diekspor ke {arg1}",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "Diekspor ke {}",
   "updatiumExport": "Ekspor Updatium",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "Masukan tidak valid",
-  "importedX": "{arg1} diimpor",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "{} diimpor",
   "updatiumImport": "Impor Updatium",
   "importFromURLList": "Impor dari daftar URL",
   "searchQuery": "Cari Kueri",
   "appURLList": "Daftar URL aplikasi",
   "line": "Baris",
-  "searchX": "Cari {arg1}",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "Cari {}",
   "noResults": "Tidak ada hasil yang ditemukan",
-  "importX": "Impor {arg1}",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "Aplikasi yang diimpor mungkin secara salah ditampilkan sebagai \"Tidak terpasang\".\nUntuk memperbaikinya, lakukan pemasangan ulang melalui Updatium.\nHal ini seharusnya tidak mempengaruhi data aplikasi.\n\nHanya mempengaruhi metode impor URL dan pihak ketiga.",
+  "importX": "Impor {}",
+  "importedAppsIdDisclaimer": "Aplikasi yang diimpor mungkin secara salah ditampilkan sebagai \"Tidak terpasang\".
+Untuk memperbaikinya, lakukan pemasangan ulang melalui Updatium.
+Hal ini seharusnya tidak mempengaruhi data aplikasi.
+
+Hanya mempengaruhi metode impor URL dan pihak ketiga.",
   "importErrors": "Kesalahan impor",
-  "importedXOfYApps": "{arg1} dari {arg2} aplikasi diimpor.",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "{} dari {} aplikasi diimpor.",
   "followingURLsHadErrors": "URL berikut mengalami kesalahan:",
   "selectURL": "Pilih URL",
   "selectURLs": "Pilih URL",
@@ -267,86 +155,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "ekspor-updatium",
   "pickAnAPK": "Pilih APK",
-  "appHasMoreThanOnePackage": "{arg1} memiliki lebih dari satu paket:",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "Perangkat Anda mendukung arsitektur CPU {arg1}.",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{} memiliki lebih dari satu paket:",
+  "deviceSupportsXArch": "Perangkat Anda mendukung arsitektur CPU {}.",
   "deviceSupportsFollowingArchs": "Perangkat anda mendukung arsitektur CPU berikut:",
   "warning": "Peringatan",
-  "sourceIsXButPackageFromYPrompt": "Sumber aplikasinya adalah '{arg1}' tetapi paket rilisnya berasal dari '{arg2}'. Lanjutkan?",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "Sumber aplikasinya adalah '{}' tetapi paket rilisnya berasal dari '{}'. Lanjutkan?",
   "updatesAvailable": "Pembaruan tersedia",
   "updatesAvailableNotifDescription": "Memberi tahu pengguna bahwa pembaruan tersedia untuk aplikasi yang dilacak oleh Updatium",
   "noNewUpdates": "Tidak ada pembaruan baru.",
-  "xHasAnUpdate": "{arg1} memiliki pembaruan.",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{} memiliki pembaruan.",
   "appsUpdated": "Aplikasi diperbarui",
   "appsNotUpdated": "Gagal memperbarui aplikasi",
   "appsUpdatedNotifDescription": "Memberi tahu pengguna bahwa pembaruan terhadap aplikasi diterapkan di latar belakang",
-  "xWasUpdatedToY": "{arg1} telah diperbarui ke {arg2}.",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "Gagal memperbarui {arg1} ke {arg2}.",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "{} telah diperbarui ke {}.",
+  "xWasNotUpdatedToY": "Gagal memperbarui {} ke {}.",
   "errorCheckingUpdates": "Kesalahan dalam memeriksa pembaruan",
   "errorCheckingUpdatesNotifDescription": "Notifikasi yang ditampilkan saat pemeriksaan pembaruan latar belakang gagal",
   "appsRemoved": "Aplikasi dihapus",
   "appsRemovedNotifDescription": "Memberi tahu pengguna bahwa aplikasi dihapus karena kesalahan saat memuatnya",
-  "xWasRemovedDueToErrorY": "{arg1} dihapus karena kesalahan berikut: {arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "{} dihapus karena kesalahan berikut: {}",
   "completeAppInstallation": "Selesaikan pemasangan aplikasi",
   "updatiumMustBeOpenToInstallApps": "Updatium harus terbuka untuk memasang aplikasi",
   "completeAppInstallationNotifDescription": "Meminta pengguna kembali ke Updatium untuk menyelesaikan pemasangan aplikasi",
@@ -354,43 +181,15 @@
   "checkingForUpdatesNotifDescription": "Notifikasi sementara yang ditampilkan saat memeriksa pembaruan",
   "pleaseAllowInstallPerm": "Harap izinkan Updatium untuk memasang aplikasi",
   "trackOnly": "Pelacakan Saja",
-  "errorWithHttpStatusCode": "Kesalahan {arg1}",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "Kesalahan {}",
   "versionCorrectionDisabled": "Koreksi versi dinonaktifkan (sepertinya plugin tidak berfungsi)",
   "unknown": "Tidak diketahui",
   "none": "Tidak ada",
   "all": "Semua",
   "never": "Tidak pernah",
-  "latestVersionX": "Terbaru: {arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "Terpasang: {arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "Terakhir memeriksa pembaruan: {arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "Terbaru: {}",
+  "installedVersionX": "Terpasang: {}",
+  "lastUpdateCheckX": "Terakhir memeriksa pembaruan: {}",
   "remove": "Hapus",
   "yesMarkUpdated": "Ya, tandai bahwa sudah diperbarui",
   "fdroid": "F-Droid Resmi",
@@ -407,30 +206,9 @@
   "additionalOptions": "Opsi tambahan",
   "disableVersionDetection": "Nonaktifkan pendeteksi versi",
   "noVersionDetectionExplanation": "Opsi ini hanya boleh digunakan untuk aplikasi dengan pendeteksi versi yang tidak berfungsi dengan benar.",
-  "downloadingX": "Mengunduh {arg1}",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "Unduh {arg1}",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "{arg1} diunduh",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "Mengunduh {}",
+  "downloadX": "Unduh {}",
+  "downloadedX": "{} diunduh",
   "releaseAsset": "Aset rilis",
   "downloadNotifDescription": "Memberi tahu pengguna perkembangan dalam mengunduh aplikasi",
   "noAPKFound": "Tidak ada APK ditemukan",
@@ -474,14 +252,7 @@
   "hideNonInstalledApps": "Sembunyikan aplikasi yang belum terpasang",
   "gitlabPATLabel": "Token Akses Pribadi GitLab",
   "about": "Tentang",
-  "requiresCredentialsInSettings": "{arg1} memerlukan kredensial tambahan (dalam pengaturan)",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{} memerlukan kredensial tambahan (dalam pengaturan)",
   "checkOnStart": "Periksa pembaruan saat proses memulai",
   "safeMode": "Mode Aman",
   "safeModeDescription": "Sembunyikan halaman Tambah Aplikasi dan tampilkan Impor/Ekspor sebagai gantinya",
@@ -501,17 +272,7 @@
   "customLinkFilterRegex": "Filter tautan APK kustom dengan ekspresi reguler (Standar '.apk$')",
   "appsPossiblyUpdated": "Pembaruan aplikasi dicoba",
   "appsPossiblyUpdatedNotifDescription": "Memberi tahu pengguna bahwa pembaruan terhadap aplikasi berpotensi diterapkan di latar belakang",
-  "xWasPossiblyUpdatedToY": "{arg1} mungkin telah diperbarui ke {arg2}.",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "{} mungkin telah diperbarui ke {}.",
   "enableBackgroundUpdates": "Aktifkan pembaruan latar belakang",
   "backgroundUpdateReqsExplanation": "Pembaruan latar belakang mungkin tidak dapat dilakukan untuk semua aplikasi.",
   "backgroundUpdateLimitsExplanation": "Keberhasilan pemasangan di latar belakang hanya dapat ditentukan ketika Updatium terbuka.",
@@ -527,14 +288,7 @@
   "autoSelectHighestVersionCode": "Pilih otomatis APK dengan versi kode tertinggi",
   "versionExtractionRegEx": "Reguler ekspresi terkait ekstraksi versi string",
   "trimVersionString": "Potong versi string dengan reguler ekspresi",
-  "matchGroupToUseForX": "Cocokkan grup yang akan digunakan untuk \"{arg1}\"",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "Cocokkan grup yang akan digunakan untuk \"{}\"",
   "matchGroupToUse": "Cocokkan grup yang akan digunakan untuk reguler ekspresi terkait ekstraksi versi string",
   "highlightTouchTargets": "Sorot target sentuh yang kurang jelas",
   "pickExportDir": "Pilih direktori ekspor",
@@ -557,26 +311,12 @@
   "appsPossiblyUpdatedNotifChannel": "Pembaruan aplikasi dicoba",
   "errorCheckingUpdatesNotifChannel": "Kesalahan dalam memeriksa pembaruan",
   "appsRemovedNotifChannel": "Aplikasi dihapus",
-  "downloadingXNotifChannel": "Mengunduh {arg1}",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "Mengunduh {}",
   "completeAppInstallationNotifChannel": "Selesaikan pemasangan aplikasi",
   "checkingForUpdatesNotifChannel": "Memeriksa pembaruan",
   "onlyCheckInstalledOrTrackOnlyApps": "Hanya periksa aplikasi yang dipasang dan ditandai 'Pelacakan Saja' untuk pembaruan",
   "supportFixedAPKURL": "Mendukung URL APK tetap",
-  "selectX": "Pilih {arg1}",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "Pilih {}",
   "parallelDownloads": "Izinkan mengunduh paralel",
   "useShizuku": "Gunakan Shizuku atau Sui untuk memasang",
   "shizukuBinderNotFound": "Layanan Shizuku tidak berjalan",
@@ -589,20 +329,14 @@
   "useLatestAssetDateAsReleaseDate": "Gunakan unggahan aset terbaru sebagai tanggal rilis",
   "defaultPseudoVersioningMethod": "Metode versi semu standar",
   "partialAPKHash": "Hash APK parsial",
+  "APKLinkHash": "Hash tautan APK",
   "directAPKLink": "Tautan APK langsung",
   "pseudoVersionInUse": "Versi semu sedang digunakan",
   "installed": "Terpasang",
   "latest": "Terbaru",
   "invertRegEx": "Balikkan ekspresi reguler",
   "note": "Catatan",
-  "selfHostedNote": "Dropdown \"{arg1}\" bisa digunakan untuk menjangkau instansi yang dihosting sendiri/kustom dari sumber mana pun.",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "Dropdown \"{}\" bisa digunakan untuk menjangkau instansi yang dihosting sendiri/kustom dari sumber mana pun.",
   "badDownload": "APK tidak dapat diurai (tidak kompatibel atau diunduh sebagian)",
   "beforeNewInstallsShareToAppVerifier": "Bagikan aplikasi baru dengan AppVerifier (jika tersedia)",
   "appVerifierInstructionToast": "Bagikan ke AppVerifier, lalu kembali ke sini jika sudah siap.",
@@ -620,29 +354,31 @@
   "welcome": "Selamat datang.",
   "documentationLinksNote": "Halaman GitHub Updatium yang ditautkan di bawah ini berisi tautan ke video, artikel, diskusi, dan sumber daya lain yang akan membantu Anda memahami cara menggunakan aplikasi.",
   "batteryOptimizationNote": "Perhatikan bahwa unduhan latar belakang dapat bekerja lebih andal jika Anda menonaktifkan optimasi baterai OS untuk Updatium.",
-  "fileDeletionError": "Gagal menghapus file (coba hapus secara manual, lalu coba lagi): \"{arg1}\"",
-  "@fileDeletionError": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "fileDeletionError": "Gagal menghapus file (coba hapus secara manual, lalu coba lagi): \"{}\"",
   "foregroundService": "Layanan latar depan Updatium",
   "foregroundServiceExplanation": "Gunakan layanan latar depan untuk pemeriksaan pembaruan (lebih dapat diandalkan, menghabiskan lebih banyak daya)",
   "fgServiceNotice": "Pemberitahuan ini diperlukan untuk pemeriksaan pembaruan latar belakang (dapat disembunyikan dalam pengaturan OS)",
   "excludeSecrets": "Mengecualikan rahasia",
+  "GHReqPrefix": "Instance 'sky22333/hubproxy' untuk permintaan GitHub",
   "includeZips": "Menyertakan file ZIP",
   "zippedApkFilterRegEx": "Saring APK di dalam ZIP",
-  "googleVerificationWarningP1": "Google has announced that, starting in 2026 / 2027, all apps on \"certified\" Android devices will needs the developer to submit personal identity details directly to Google.\n\nSetelah itu, Updatium mungkin berhenti bekerja pada perangkat Android bersertifikat.",
+  "googleVerificationWarningP1": "Google has announced that, starting in 2026 / 2027, all apps on \"certified\" Android devices will needs the developer to submit personal identity details directly to Google.
+
+Setelah itu, Updatium mungkin berhenti bekerja pada perangkat Android bersertifikat.",
   "googleVerificationWarningP2": "Pergi ke https: / / keep androidpen.org / untuk informasi lebih lanjut.",
-  "googleVerificationWarningP3": "Perlu dicatat bahwa dalam jangka pendek, mungkin terus mungkin untuk memasang aplikasi \"belum diverifikasi\" (bukan -compliant) melalui proses \"arus maju\" yang Google janjikan untuk mengimplementasikan setelah reaksi luas terhadap pengumuman mereka, tetapi mereka tidak rinci bagaimana hal ini akan bekerja sehingga tidak jelas apakah itu benar-benar akan menjaga kebebasan pengguna dengan cara praktis.\n\nDalam hal apapun, Google bergerak adalah langkah yang signifikan menuju akhir bebas, tujuan umum komputasi untuk individu.\n\nOS tidak bersertifikat, seperti GrapheneOS, seharusnya tidak terpengaruh oleh hal ini selama mereka diizinkan untuk terus ada.",
+  "googleVerificationWarningP3": "Perlu dicatat bahwa dalam jangka pendek, mungkin terus mungkin untuk memasang aplikasi \"belum diverifikasi\" (bukan -compliant) melalui proses \"arus maju\" yang Google janjikan untuk mengimplementasikan setelah reaksi luas terhadap pengumuman mereka, tetapi mereka tidak rinci bagaimana hal ini akan bekerja sehingga tidak jelas apakah itu benar-benar akan menjaga kebebasan pengguna dengan cara praktis.
+
+Dalam hal apapun, Google bergerak adalah langkah yang signifikan menuju akhir bebas, tujuan umum komputasi untuk individu.
+
+OS tidak bersertifikat, seperti GrapheneOS, seharusnya tidak terpengaruh oleh hal ini selama mereka diizinkan untuk terus ada.",
   "multipleSigners": "Tanda Tangan Ganda",
   "securityDisclaimerTitle": "Penafian Keamanan dan Hukum",
   "license": "Lisensi",
   "licenseText": "Aplikasi ini didistribusikan di bawah Lisensi GPL v3.",
   "disclaimer": "Penafian",
-  "disclaimerText": "Aplikasi ini tidak mendistribusikan, menghosting, atau memverifikasi aplikasi eksternal mana pun. Pengguna menanggung tanggung jawab penuh atas keamanan dan legalitas perangkat lunak apa pun yang diinstal melalui alat ini.\n\nhttps://github.com/omeritzics/Updatium adalah satu-satunya tempat resmi untuk mengunduh Updatium - sangat tidak disarankan mengunduhnya dari tempat lain karena mengunduh dari sumber tidak resmi tidak aman.",
+  "disclaimerText": "Aplikasi ini tidak mendistribusikan, menghosting, atau memverifikasi aplikasi eksternal mana pun. Pengguna menanggung tanggung jawab penuh atas keamanan dan legalitas perangkat lunak apa pun yang diinstal melalui alat ini.
+
+https://github.com/omeritzics/Updatium adalah satu-satunya tempat resmi untuk mengunduh Updatium - sangat tidak disarankan mengunduhnya dari tempat lain karena mengunduh dari sumber tidak resmi tidak aman.",
   "privacy": "Privasi",
   "privacyText": "Aplikasi ini berfokus pada privasi dan tidak mengumpulkan data pribadi.",
   "acceptAndContinue": "Terima dan Lanjutkan",
@@ -651,35 +387,69 @@
   "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
   "githubStarPromptStar": "Star",
   "githubStarPromptDontShowAgain": "Don't show again",
-  "aPKLinkHash": "Hash tautan APK",
-  "gHReqPrefix": "Instance 'sky22333/hubproxy' untuk permintaan GitHub",
-  "continueAction": "Lanjut"
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "apps": "{count} Apps",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "day": "{count} days",
-  "githubRequestPrefix": "GitHub request prefix",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "hour": "{count} hours",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minimumStarCount": "Minimum star count",
-  "minute": "{count} minutes",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
+
+  "apps": "Aplikasi",
+  "@apps": {
+    "plural": {
+      "one": "{} aplikasi",
+      "other": "{} aplikasi",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "apk": "APK",
+  "@apk": {
+    "plural": {
+      "one": "{} APK",
+      "other": "{} APK",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} menit",
+  "@minute": {
+    "plural": {
+      "one": "{} menit",
+      "other": "{} menit",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "hour": "{} jam",
+  "@hour": {
+    "plural": {
+      "one": "{} jam",
+      "other": "{} jam",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "day": "{} hari",
+  "@day": {
+    "plural": {
+      "one": "{} hari",
+      "other": "{} hari",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

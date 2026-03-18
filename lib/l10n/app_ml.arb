@@ -1,13 +1,7 @@
 {
   "@@locale": "ml",
-  "invalidURLForSource": "ഒരു സാധുവായ {arg1} ആപ്പ് URL അല്ല",
-  "@invalidURLForSource": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+
+  "invalidURLForSource": "ഒരു സാധുവായ {} ആപ്പ് URL അല്ല",
   "noReleaseFound": "അനുയോജ്യമായ റിലീസ് കണ്ടെത്താനായില്ല",
   "noVersionFound": "റിലീസ് പതിപ്പ് നിർണ്ണയിക്കാനായില്ല",
   "urlMatchesNoSource": "URL അറിയപ്പെടുന്ന ഒരു ഉറവിടവുമായും യോജിക്കുന്നില്ല",
@@ -26,6 +20,7 @@
   "invalidRegEx": "സാധുവായ റെഗുലർ എക്സ്പ്രഷൻ അല്ല",
   "noDescription": "വിവരണം ലഭ്യമല്ല",
   "cancel": "റദ്ദാക്കുക",
+  "continue": "തുടരുക",
   "requiredInBrackets": "(ആവശ്യമാണ്)",
   "dropdownNoOptsError": "തെറ്റ്: ഡ്രോപ്പ്ഡൗണിന് കുറഞ്ഞത് ഒരു ഓപ്ഷനെങ്കിലും ഉണ്ടായിരിക്കണം",
   "color": "നിറം",
@@ -35,14 +30,7 @@
   "githubStarredRepos": "GitHub സ്റ്റാർ ചെയ്ത റെപ്പോസിറ്ററികൾ",
   "uname": "ഉപയോക്തൃനാമം",
   "wrongArgNum": "തെറ്റായ എണ്ണം ആർഗ്യുമെന്റുകൾ നൽകി",
-  "xIsTrackOnly": "{arg1} ട്രാക്ക്-മാത്രം ആണ്",
-  "@xIsTrackOnly": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xIsTrackOnly": "{} ട്രാക്ക്-മാത്രം ആണ്",
   "source": "ഉറവിടം",
   "app": "ആപ്പ്",
   "appsFromSourceAreTrackOnly": "ഈ ഉറവിടത്തിൽ നിന്നുള്ള ആപ്പുകൾ 'ട്രാക്ക്-മാത്രം' ആണ്.",
@@ -57,14 +45,7 @@
   "add": "ചേർക്കുക",
   "searchSomeSourcesLabel": "തിരയുക (ചില ഉറവിടങ്ങളിൽ മാത്രം)",
   "search": "തിരയുക",
-  "additionalOptsFor": "{arg1} നായുള്ള അധിക ഓപ്ഷനുകൾ",
-  "@additionalOptsFor": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "additionalOptsFor": "{} നായുള്ള അധിക ഓപ്ഷനുകൾ",
   "supportedSources": "പിന്തുണയ്ക്കുന്ന ഉറവിടങ്ങൾ",
   "trackOnlyInBrackets": "(ട്രാക്ക്-മാത്രം)",
   "searchableInBrackets": "(തിരയാവുന്നത്)",
@@ -72,94 +53,35 @@
   "noApps": "സ്വാഗതം!",
   "noAppsSubtext": "നിങ്ങളുടെ ആദ്യത്തെ ആപ്പ് ചേർക്കാൻ താഴെ 'ആപ്പ് ചേർക്കുക' ടാപ്പ് ചെയ്യുക.",
   "noAppsForFilter": "ഈ ഫിൽട്ടറിനായി ആപ്പുകളൊന്നുമില്ല",
-  "byX": "{arg1} വഴി",
-  "@byX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "percentProgress": "പുരോഗതി: {arg1}%",
-  "@percentProgress": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "byX": "{} വഴി",
+  "percentProgress": "പുരോഗതി: {}%",
   "pleaseWait": "ദയവായി കാത്തിരിക്കുക",
   "updateAvailable": "അപ്‌ഡേറ്റ് ലഭ്യമാണ്",
   "notInstalled": "ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല",
   "pseudoVersion": "സ്യൂഡോ-പതിപ്പ്",
   "selectAll": "എല്ലാം തിരഞ്ഞെടുക്കുക",
-  "deselectX": "{arg1} തിരഞ്ഞെടുക്കൽ റദ്ദാക്കുക",
-  "@deselectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "xWillBeRemovedButRemainInstalled": "{arg1} ഒബ്‌റ്റേനിയത്തിൽ നിന്ന് നീക്കം ചെയ്യപ്പെടും, പക്ഷേ ഉപകരണത്തിൽ ഇൻസ്റ്റാൾ ചെയ്ത നിലയിൽ തുടരും.",
-  "@xWillBeRemovedButRemainInstalled": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "deselectX": "{} തിരഞ്ഞെടുക്കൽ റദ്ദാക്കുക",
+  "xWillBeRemovedButRemainInstalled": "{} ഒബ്‌റ്റേനിയത്തിൽ നിന്ന് നീക്കം ചെയ്യപ്പെടും, പക്ഷേ ഉപകരണത്തിൽ ഇൻസ്റ്റാൾ ചെയ്ത നിലയിൽ തുടരും.",
   "removeSelectedAppsQuestion": "തിരഞ്ഞെടുത്ത ആപ്പുകൾ നീക്കം ചെയ്യണോ?",
   "removeSelectedApps": "തിരഞ്ഞെടുത്ത ആപ്പുകൾ നീക്കം ചെയ്യുക",
-  "updateX": "{arg1} അപ്‌ഡേറ്റ് ചെയ്യുക",
-  "@updateX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installX": "{arg1} ഇൻസ്റ്റാൾ ചെയ്യുക",
-  "@installX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "markXTrackOnlyAsUpdated": "{arg1}\n(ട്രാക്ക്-മാത്രം)\nഅപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തുക",
-  "@markXTrackOnlyAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "changeX": "{arg1} മാറ്റുക",
-  "@changeX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "updateX": "{} അപ്‌ഡേറ്റ് ചെയ്യുക",
+  "installX": "{} ഇൻസ്റ്റാൾ ചെയ്യുക",
+  "markXTrackOnlyAsUpdated": "{}
+(ട്രാക്ക്-മാത്രം)
+അപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തുക",
+  "changeX": "{} മാറ്റുക",
   "installUpdateApps": "ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യുക/അപ്‌ഡേറ്റ് ചെയ്യുക",
   "installUpdateSelectedApps": "തിരഞ്ഞെടുത്ത ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യുക/അപ്‌ഡേറ്റ് ചെയ്യുക",
-  "markXSelectedAppsAsUpdated": "{arg1} തിരഞ്ഞെടുത്ത ആപ്പുകൾ അപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തണോ?",
-  "@markXSelectedAppsAsUpdated": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "markXSelectedAppsAsUpdated": "{} തിരഞ്ഞെടുത്ത ആപ്പുകൾ അപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തണോ?",
   "no": "ഇല്ല",
   "yes": "അതെ",
   "markSelectedAppsUpdated": "തിരഞ്ഞെടുത്ത ആപ്പുകൾ അപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തുക",
   "pinToTop": "മുകളിൽ പിൻ ചെയ്യുക",
   "unpinFromTop": "മുകളിൽ നിന്ന് അൺപിൻ ചെയ്യുക",
   "resetInstallStatusForSelectedAppsQuestion": "തിരഞ്ഞെടുത്ത ആപ്പുകളുടെ ഇൻസ്റ്റാൾ സ്റ്റാറ്റസ് റീസെറ്റ് ചെയ്യണോ?",
-  "installStatusOfXWillBeResetExplanation": "തിരഞ്ഞെടുത്ത ഏതെങ്കിലും ആപ്പുകളുടെ ഇൻസ്റ്റാൾ സ്റ്റാറ്റസ് റീസെറ്റ് ചെയ്യപ്പെടും.\n\nപരാജയപ്പെട്ട അപ്‌ഡേറ്റുകളോ മറ്റ് പ്രശ്നങ്ങളോ കാരണം ഒബ്‌റ്റേനിയത്തിൽ കാണിക്കുന്ന ആപ്പ് പതിപ്പ് തെറ്റായിരിക്കുമ്പോൾ ഇത് സഹായകമാകും.",
+  "installStatusOfXWillBeResetExplanation": "തിരഞ്ഞെടുത്ത ഏതെങ്കിലും ആപ്പുകളുടെ ഇൻസ്റ്റാൾ സ്റ്റാറ്റസ് റീസെറ്റ് ചെയ്യപ്പെടും.
+
+പരാജയപ്പെട്ട അപ്‌ഡേറ്റുകളോ മറ്റ് പ്രശ്നങ്ങളോ കാരണം ഒബ്‌റ്റേനിയത്തിൽ കാണിക്കുന്ന ആപ്പ് പതിപ്പ് തെറ്റായിരിക്കുമ്പോൾ ഇത് സഹായകമാകും.",
   "customLinkMessage": "ഈ ലിങ്കുകൾ ഒബ്‌റ്റേനിയം ഇൻസ്റ്റാൾ ചെയ്ത ഉപകരണങ്ങളിൽ പ്രവർത്തിക്കും",
   "shareAppConfigLinks": "ആപ്പ് കോൺഫിഗറേഷൻ HTML ലിങ്കായി പങ്കിടുക",
   "shareSelectedAppURLs": "തിരഞ്ഞെടുത്ത ആപ്പ് URL-കൾ പങ്കിടുക",
@@ -175,63 +97,29 @@
   "nonInstalledApps": "ഇൻസ്റ്റാൾ ചെയ്യാത്ത ആപ്പുകൾ",
   "importExport": "ഇംപോർട്ട്/എക്സ്പോർട്ട്",
   "settings": "ക്രമീകരണങ്ങൾ",
-  "exportedTo": "{arg1} ലേക്ക് എക്സ്പോർട്ട് ചെയ്തു",
-  "@exportedTo": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "exportedTo": "{} ലേക്ക് എക്സ്പോർട്ട് ചെയ്തു",
   "updatiumExport": "ഒബ്‌റ്റേനിയം എക്സ്പോർട്ട്",
   "failedToExport": "Failed to export",
   "exportAlreadyInProgress": "Export already in progress",
   "failedToCreateExportFile": "Failed to create export file",
   "exportDirNotAccessible": "Export directory is not accessible",
   "invalidInput": "തെറ്റായ ഇൻപുട്ട്",
-  "importedX": "{arg1} ഇംപോർട്ട് ചെയ്തു",
-  "@importedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "importedX": "{} ഇംപോർട്ട് ചെയ്തു",
   "updatiumImport": "ഒബ്‌റ്റേനിയം ഇംപോർട്ട്",
   "importFromURLList": "URL ലിസ്റ്റിൽ നിന്ന് ഇംപോർട്ട് ചെയ്യുക",
   "searchQuery": "തിരയൽ ചോദ്യം",
   "appURLList": "ആപ്പ് URL ലിസ്റ്റ്",
   "line": "വരി",
-  "searchX": "{arg1} തിരയുക",
-  "@searchX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "searchX": "{} തിരയുക",
   "noResults": "ഫലങ്ങളൊന്നും കണ്ടെത്തിയില്ല",
-  "importX": "{arg1} ഇംപോർട്ട് ചെയ്യുക",
-  "@importX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "importedAppsIdDisclaimer": "ഇംപോർട്ട് ചെയ്ത ആപ്പുകൾ \"ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല\" എന്ന് തെറ്റായി കാണിച്ചേക്കാം.\nഇത് ശരിയാക്കാൻ, ഒബ്‌റ്റേനിയം വഴി അവ വീണ്ടും ഇൻസ്റ്റാൾ ചെയ്യുക.\nഇത് ആപ്പ് ഡാറ്റയെ ബാധിക്കില്ല.\n\nURL, മൂന്നാം കക്ഷി ഇംപോർട്ട് രീതികളെ മാത്രം ബാധിക്കുന്നു.",
+  "importX": "{} ഇംപോർട്ട് ചെയ്യുക",
+  "importedAppsIdDisclaimer": "ഇംപോർട്ട് ചെയ്ത ആപ്പുകൾ \"ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല\" എന്ന് തെറ്റായി കാണിച്ചേക്കാം.
+ഇത് ശരിയാക്കാൻ, ഒബ്‌റ്റേനിയം വഴി അവ വീണ്ടും ഇൻസ്റ്റാൾ ചെയ്യുക.
+ഇത് ആപ്പ് ഡാറ്റയെ ബാധിക്കില്ല.
+
+URL, മൂന്നാം കക്ഷി ഇംപോർട്ട് രീതികളെ മാത്രം ബാധിക്കുന്നു.",
   "importErrors": "ഇംപോർട്ട് പിശകുകൾ",
-  "importedXOfYApps": "{arg1} ആപ്പുകളിൽ {arg2} എണ്ണം ഇംപോർട്ട് ചെയ്തു.",
-  "@importedXOfYApps": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "importedXOfYApps": "{} ആപ്പുകളിൽ {} എണ്ണം ഇംപോർട്ട് ചെയ്തു.",
   "followingURLsHadErrors": "ഇനിപ്പറയുന്ന URL-കളിൽ പിശകുകൾ ഉണ്ടായിരുന്നു:",
   "selectURL": "URL തിരഞ്ഞെടുക്കുക",
   "selectURLs": "URL-കൾ തിരഞ്ഞെടുക്കുക",
@@ -267,86 +155,25 @@
   "importFailed": "Import failed",
   "updatiumExportHyphenatedLowercase": "ഒബ്‌റ്റേനിയം-എക്സ്പോർട്ട്",
   "pickAnAPK": "ഒരു APK തിരഞ്ഞെടുക്കുക",
-  "appHasMoreThanOnePackage": "{arg1}-ന് ഒന്നിൽ കൂടുതൽ പാക്കേജുകൾ ഉണ്ട്:",
-  "@appHasMoreThanOnePackage": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "deviceSupportsXArch": "നിങ്ങളുടെ ഉപകരണം {arg1} CPU ആർക്കിടെക്ചറിനെ പിന്തുണയ്ക്കുന്നു.",
-  "@deviceSupportsXArch": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "appHasMoreThanOnePackage": "{}-ന് ഒന്നിൽ കൂടുതൽ പാക്കേജുകൾ ഉണ്ട്:",
+  "deviceSupportsXArch": "നിങ്ങളുടെ ഉപകരണം {} CPU ആർക്കിടെക്ചറിനെ പിന്തുണയ്ക്കുന്നു.",
   "deviceSupportsFollowingArchs": "നിങ്ങളുടെ ഉപകരണം ഇനിപ്പറയുന്ന CPU ആർക്കിടെക്ചറുകളെ പിന്തുണയ്ക്കുന്നു:",
   "warning": "മുന്നറിയിപ്പ്",
-  "sourceIsXButPackageFromYPrompt": "ആപ്പ് ഉറവിടം '{arg1}' ആണ്, പക്ഷേ റിലീസ് പാക്കേജ് '{arg2}'-ൽ നിന്നാണ് വരുന്നത്. തുടരണോ?",
-  "@sourceIsXButPackageFromYPrompt": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "sourceIsXButPackageFromYPrompt": "ആപ്പ് ഉറവിടം '{}' ആണ്, പക്ഷേ റിലീസ് പാക്കേജ് '{}'-ൽ നിന്നാണ് വരുന്നത്. തുടരണോ?",
   "updatesAvailable": "അപ്‌ഡേറ്റുകൾ ലഭ്യമാണ്",
   "updatesAvailableNotifDescription": "ഒബ്‌റ്റേനിയം ട്രാക്ക് ചെയ്യുന്ന ഒന്നോ അതിലധികമോ ആപ്പുകൾക്ക് അപ്‌ഡേറ്റുകൾ ലഭ്യമാണെന്ന് ഉപയോക്താവിനെ അറിയിക്കുന്നു",
   "noNewUpdates": "പുതിയ അപ്‌ഡേറ്റുകളൊന്നുമില്ല.",
-  "xHasAnUpdate": "{arg1}-ന് ഒരു അപ്‌ഡേറ്റ് ഉണ്ട്.",
-  "@xHasAnUpdate": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "xHasAnUpdate": "{}-ന് ഒരു അപ്‌ഡേറ്റ് ഉണ്ട്.",
   "appsUpdated": "ആപ്പുകൾ അപ്‌ഡേറ്റ് ചെയ്തു",
   "appsNotUpdated": "ആപ്ലിക്കേഷനുകൾ അപ്‌ഡേറ്റ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു",
   "appsUpdatedNotifDescription": "ഒന്നോ അതിലധികമോ ആപ്പുകളിലേക്കുള്ള അപ്‌ഡേറ്റുകൾ ബാക്ക്ഗ്രൗണ്ടിൽ പ്രയോഗിച്ചു എന്ന് ഉപയോക്താവിനെ അറിയിക്കുന്നു",
-  "xWasUpdatedToY": "{arg1} {arg2} ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്തു.",
-  "@xWasUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
-  "xWasNotUpdatedToY": "{arg1} {arg2} ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്യാൻ പരാജയപ്പെട്ടു.",
-  "@xWasNotUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasUpdatedToY": "{} {} ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്തു.",
+  "xWasNotUpdatedToY": "{} {} ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്യാൻ പരാജയപ്പെട്ടു.",
   "errorCheckingUpdates": "അപ്‌ഡേറ്റുകൾ പരിശോധിക്കുന്നതിൽ പിശക്",
   "errorCheckingUpdatesNotifDescription": "ബാക്ക്ഗ്രൗണ്ട് അപ്‌ഡേറ്റ് പരിശോധന പരാജയപ്പെടുമ്പോൾ കാണിക്കുന്ന അറിയിപ്പ്",
   "appsRemoved": "ആപ്പുകൾ നീക്കം ചെയ്തു",
   "appsRemovedNotifDescription": "ഒന്നോ അതിലധികമോ ആപ്പുകൾ ലോഡ് ചെയ്യുന്നതിൽ പിശകുകൾ കാരണം നീക്കം ചെയ്തു എന്ന് ഉപയോക്താവിനെ അറിയിക്കുന്നു",
-  "xWasRemovedDueToErrorY": "{arg1} ഈ പിശക് കാരണം നീക്കം ചെയ്തു: {arg2}",
-  "@xWasRemovedDueToErrorY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasRemovedDueToErrorY": "{} ഈ പിശക് കാരണം നീക്കം ചെയ്തു: {}",
   "completeAppInstallation": "ആപ്പ് ഇൻസ്റ്റാളേഷൻ പൂർത്തിയാക്കുക",
   "updatiumMustBeOpenToInstallApps": "ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യാൻ ഒബ്‌റ്റേനിയം തുറന്നിരിക്കണം",
   "completeAppInstallationNotifDescription": "ഒരു ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുന്നത് പൂർത്തിയാക്കാൻ ഒബ്‌റ്റേനിയത്തിലേക്ക് മടങ്ങാൻ ഉപയോക്താവിനോട് ആവശ്യപ്പെടുന്നു",
@@ -354,43 +181,15 @@
   "checkingForUpdatesNotifDescription": "അപ്‌ഡേറ്റുകൾ പരിശോധിക്കുമ്പോൾ ദൃശ്യമാകുന്ന താൽക്കാലിക അറിയിപ്പ്",
   "pleaseAllowInstallPerm": "ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യാൻ ഒബ്‌റ്റേനിയത്തിന് അനുമതി നൽകുക",
   "trackOnly": "ട്രാക്ക്-മാത്രം",
-  "errorWithHttpStatusCode": "പിശക് {arg1}",
-  "@errorWithHttpStatusCode": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "errorWithHttpStatusCode": "പിശക് {}",
   "versionCorrectionDisabled": "പതിപ്പ് തിരുത്തൽ പ്രവർത്തനരഹിതമാക്കി (പ്ലഗിൻ പ്രവർത്തിക്കുന്നതായി തോന്നുന്നില്ല)",
   "unknown": "അജ്ഞാതം",
   "none": "ഒന്നുമില്ല",
   "all": "All",
   "never": "ഒരിക്കലുമില്ല",
-  "latestVersionX": "ഏറ്റവും പുതിയത്: {arg1}",
-  "@latestVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "installedVersionX": "ഇൻസ്റ്റാൾ ചെയ്തത്: {arg1}",
-  "@installedVersionX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "lastUpdateCheckX": "അവസാന അപ്‌ഡേറ്റ് പരിശോധന: {arg1}",
-  "@lastUpdateCheckX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "latestVersionX": "ഏറ്റവും പുതിയത്: {}",
+  "installedVersionX": "ഇൻസ്റ്റാൾ ചെയ്തത്: {}",
+  "lastUpdateCheckX": "അവസാന അപ്‌ഡേറ്റ് പരിശോധന: {}",
   "remove": "നീക്കം ചെയ്യുക",
   "yesMarkUpdated": "അതെ, അപ്‌ഡേറ്റ് ചെയ്തതായി അടയാളപ്പെടുത്തുക",
   "fdroid": "എഫ്-ഡ്രോയിഡ് ഒഫീഷ്യൽ",
@@ -407,30 +206,9 @@
   "additionalOptions": "കൂടുതൽ ഓപ്ഷനുകൾ",
   "disableVersionDetection": "പതിപ്പ് കണ്ടെത്തൽ പ്രവർത്തനരഹിതമാക്കുക",
   "noVersionDetectionExplanation": "പതിപ്പ് കണ്ടെത്തൽ ശരിയായി പ്രവർത്തിക്കാത്ത ആപ്പുകൾക്ക് മാത്രമേ ഈ ഓപ്ഷൻ ഉപയോഗിക്കാവൂ.",
-  "downloadingX": "{arg1} ഡൗൺലോഡ് ചെയ്യുന്നു",
-  "@downloadingX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadX": "{arg1} ഡൗൺലോഡ് ചെയ്യുക",
-  "@downloadX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadedX": "{arg1} ഡൗൺലോഡ് ചെയ്തു",
-  "@downloadedX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingX": "{} ഡൗൺലോഡ് ചെയ്യുന്നു",
+  "downloadX": "{} ഡൗൺലോഡ് ചെയ്യുക",
+  "downloadedX": "{} ഡൗൺലോഡ് ചെയ്തു",
   "releaseAsset": "റിലീസ് അസറ്റ്",
   "downloadNotifDescription": "ഒരു ആപ്പ് ഡൗൺലോഡ് ചെയ്യുന്നതിലെ പുരോഗതി ഉപയോക്താവിനെ അറിയിക്കുന്നു",
   "noAPKFound": "APK കണ്ടെത്തിയില്ല",
@@ -474,14 +252,7 @@
   "hideNonInstalledApps": "ഇൻസ്റ്റാൾ ചെയ്യാത്ത ആപ്പുകൾ മറയ്ക്കുക",
   "gitlabPATLabel": "GitLab പേഴ്സണൽ ആക്സസ് ടോക്കൺ",
   "about": "വിവരങ്ങൾ",
-  "requiresCredentialsInSettings": "{arg1}-ന് അധിക ക്രെഡൻഷ്യലുകൾ ആവശ്യമാണ് (ക്രമീകരണങ്ങളിൽ)",
-  "@requiresCredentialsInSettings": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "requiresCredentialsInSettings": "{}-ന് അധിക ക്രെഡൻഷ്യലുകൾ ആവശ്യമാണ് (ക്രമീകരണങ്ങളിൽ)",
   "checkOnStart": "തുടങ്ങുമ്പോൾ അപ്‌ഡേറ്റുകൾക്കായി പരിശോധിക്കുക",
   "tryInferAppIdFromCode": "സോഴ്സ് കോഡിൽ നിന്ന് ആപ്പ് ഐഡി അനുമാനിക്കാൻ ശ്രമിക്കുക",
   "removeOnExternalUninstall": "പുറത്ത് നിന്ന് അൺഇൻസ്റ്റാൾ ചെയ്ത ആപ്പുകൾ സ്വയമേവ നീക്കം ചെയ്യുക",
@@ -500,17 +271,7 @@
   "customLinkFilterRegex": "റെഗുലർ എക്സ്പ്രഷൻ ഉപയോഗിച്ചുള്ള കസ്റ്റം APK ലിങ്ക് ഫിൽട്ടർ (സ്ഥിരസ്ഥിതി '.apk$')",
   "appsPossiblyUpdated": "ആപ്പ് അപ്‌ഡേറ്റുകൾ ശ്രമിച്ചു",
   "appsPossiblyUpdatedNotifDescription": "ഒന്നോ അതിലധികമോ ആപ്പുകളിലേക്കുള്ള അപ്‌ഡേറ്റുകൾ ബാക്ക്ഗ്രൗണ്ടിൽ പ്രയോഗിക്കാൻ സാധ്യതയുണ്ടെന്ന് ഉപയോക്താവിനെ അറിയിക്കുന്നു",
-  "xWasPossiblyUpdatedToY": "{arg1} {arg2} ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്തിരിക്കാം.",
-  "@xWasPossiblyUpdatedToY": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      },
-      "arg2": {
-        "type": "String"
-      }
-    }
-  },
+  "xWasPossiblyUpdatedToY": "{} {} ലേക്ക് അപ്‌ഡേറ്റ് ചെയ്തിരിക്കാം.",
   "enableBackgroundUpdates": "ബാക്ക്ഗ്രൗണ്ട് അപ്‌ഡേറ്റുകൾ പ്രവർത്തനക്ഷമമാക്കുക",
   "backgroundUpdateReqsExplanation": "എല്ലാ ആപ്പുകൾക്കും ബാക്ക്ഗ്രൗണ്ട് അപ്‌ഡേറ്റുകൾ സാധ്യമായെന്ന് വരില്ല.",
   "backgroundUpdateLimitsExplanation": "ബാക്ക്ഗ്രൗണ്ട് ഇൻസ്റ്റാളിന്റെ വിജയം ഒബ്‌റ്റേനിയം തുറക്കുമ്പോൾ മാത്രമേ നിർണ്ണയിക്കാൻ കഴിയൂ.",
@@ -526,14 +287,7 @@
   "autoSelectHighestVersionCode": "ഏറ്റവും ഉയർന്ന versionCode APK സ്വയമേവ തിരഞ്ഞെടുക്കുക",
   "versionExtractionRegEx": "പതിപ്പ് സ്ട്രിംഗ് വേർതിരിച്ചെടുക്കുന്നതിനുള്ള റെഗുലർ എക്സ്പ്രഷൻ",
   "trimVersionString": "റെഗുലർ എക്സ്പ്രഷൻ ഉപയോഗിച്ച് പതിപ്പ് സ്ട്രിംഗ് ട്രിം ചെയ്യുക",
-  "matchGroupToUseForX": "\"{arg1}\" നായി ഉപയോഗിക്കേണ്ട ഗ്രൂപ്പ് മാച്ച് ചെയ്യുക",
-  "@matchGroupToUseForX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "matchGroupToUseForX": "\"{}\" നായി ഉപയോഗിക്കേണ്ട ഗ്രൂപ്പ് മാച്ച് ചെയ്യുക",
   "matchGroupToUse": "പതിപ്പ് സ്ട്രിംഗ് വേർതിരിച്ചെടുക്കുന്നതിനുള്ള റെഗുലർ എക്സ്പ്രഷനായി ഉപയോഗിക്കേണ്ട ഗ്രൂപ്പ് മാച്ച് ചെയ്യുക",
   "highlightTouchTargets": "കുറഞ്ഞ വ്യക്തതയുള്ള ടച്ച് ടാർഗെറ്റുകൾ ഹൈലൈറ്റ് ചെയ്യുക",
   "pickExportDir": "എക്സ്പോർട്ട് ഡയറക്ടറി തിരഞ്ഞെടുക്കുക",
@@ -556,26 +310,12 @@
   "appsPossiblyUpdatedNotifChannel": "ആപ്പ് അപ്‌ഡേറ്റുകൾ ശ്രമിച്ചു",
   "errorCheckingUpdatesNotifChannel": "അപ്‌ഡേറ്റുകൾ പരിശോധിക്കുന്നതിൽ പിശക്",
   "appsRemovedNotifChannel": "ആപ്പുകൾ നീക്കം ചെയ്തു",
-  "downloadingXNotifChannel": "{arg1} ഡൗൺലോഡ് ചെയ്യുന്നു",
-  "@downloadingXNotifChannel": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "downloadingXNotifChannel": "{} ഡൗൺലോഡ് ചെയ്യുന്നു",
   "completeAppInstallationNotifChannel": "ആപ്പ് ഇൻസ്റ്റാളേഷൻ പൂർത്തിയാക്കുക",
   "checkingForUpdatesNotifChannel": "അപ്‌ഡേറ്റുകൾ പരിശോധിക്കുന്നു",
   "onlyCheckInstalledOrTrackOnlyApps": "ഇൻസ്റ്റാൾ ചെയ്തതും ട്രാക്ക്-മാത്രം ആപ്പുകളും മാത്രം അപ്‌ഡേറ്റുകൾക്കായി പരിശോധിക്കുക",
   "supportFixedAPKURL": "സ്ഥിരമായ APK URL-കളെ പിന്തുണയ്ക്കുക",
-  "selectX": "{arg1} തിരഞ്ഞെടുക്കുക",
-  "@selectX": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selectX": "{} തിരഞ്ഞെടുക്കുക",
   "parallelDownloads": "പാരലൽ ഡൗൺലോഡുകൾ അനുവദിക്കുക",
   "useShizuku": "ഇൻസ്റ്റാൾ ചെയ്യാൻ ഷിസുകു അല്ലെങ്കിൽ സ്യൂ ഉപയോഗിക്കുക",
   "shizukuBinderNotFound": "ഷിസുകു സേവനം പ്രവർത്തിക്കുന്നില്ല",
@@ -588,20 +328,14 @@
   "useLatestAssetDateAsReleaseDate": "ഏറ്റവും പുതിയ അസറ്റ് അപ്‌ലോഡ് റിലീസ് തീയതിയായി ഉപയോഗിക്കുക",
   "defaultPseudoVersioningMethod": "സ്ഥിരസ്ഥിതി സ്യൂഡോ-പതിപ്പ് രീതി",
   "partialAPKHash": "ഭാഗിക APK ഹാഷ്",
+  "APKLinkHash": "APK ലിങ്ക് ഹാഷ്",
   "directAPKLink": "നേരിട്ടുള്ള APK ലിങ്ക്",
   "pseudoVersionInUse": "ഒരു സ്യൂഡോ-പതിപ്പ് ഉപയോഗത്തിലുണ്ട്",
   "installed": "ഇൻസ്റ്റാൾ ചെയ്തത്",
   "latest": "ഏറ്റവും പുതിയത്",
   "invertRegEx": "റെഗുലർ എക്സ്പ്രഷൻ വിപരീതമാക്കുക",
   "note": "ശ്രദ്ധിക്കുക",
-  "selfHostedNote": "ഏത് ഉറവിടത്തിന്റെയും സെൽഫ്-ഹോസ്റ്റ് ചെയ്ത/കസ്റ്റം ഇൻസ്റ്റൻസുകളിലേക്ക് എത്താൻ \"{arg1}\" ഡ്രോപ്പ്ഡൗൺ ഉപയോഗിക്കാം.",
-  "@selfHostedNote": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "selfHostedNote": "ഏത് ഉറവിടത്തിന്റെയും സെൽഫ്-ഹോസ്റ്റ് ചെയ്ത/കസ്റ്റം ഇൻസ്റ്റൻസുകളിലേക്ക് എത്താൻ \"{}\" ഡ്രോപ്പ്ഡൗൺ ഉപയോഗിക്കാം.",
   "badDownload": "APK പാഴ്സ് ചെയ്യാൻ കഴിഞ്ഞില്ല (അനുയോജ്യമല്ലാത്തതോ ഭാഗികമായ ഡൗൺലോഡോ)",
   "beforeNewInstallsShareToAppVerifier": "പുതിയ ആപ്പുകൾ AppVerifier-ലേക്ക് പങ്കിടുക (ലഭ്യമെങ്കിൽ)",
   "appVerifierInstructionToast": "AppVerifier-ലേക്ക് പങ്കിടുക, തുടർന്ന് തയ്യാറാകുമ്പോൾ ഇവിടെ തിരിച്ചെത്തുക.",
@@ -619,23 +353,23 @@
   "welcome": "സ്വാഗതം",
   "documentationLinksNote": "താഴെ ലിങ്ക് ചെയ്തിട്ടുള്ള ഒബ്‌റ്റേനിയം GitHub പേജിൽ ആപ്പ് എങ്ങനെ ഉപയോഗിക്കാമെന്ന് മനസ്സിലാക്കാൻ സഹായിക്കുന്ന വീഡിയോകൾ, ലേഖനങ്ങൾ, ചർച്ചകൾ, മറ്റ് വിഭവങ്ങൾ എന്നിവയുടെ ലിങ്കുകൾ അടങ്ങിയിരിക്കുന്നു.",
   "batteryOptimizationNote": "ഒബ്‌റ്റേനിയത്തിനായുള്ള OS ബാറ്ററി ഒപ്റ്റിമൈസേഷനുകൾ പ്രവർത്തനരഹിതമാക്കുകയാണെങ്കിൽ ബാക്ക്ഗ്രൗണ്ട് ഡൗൺലോഡുകൾ കൂടുതൽ വിശ്വസനീയമായി പ്രവർത്തിച്ചേക്കാം എന്നത് ശ്രദ്ധിക്കുക.",
-  "fileDeletionError": "ഫയൽ ഇല്ലാതാക്കാൻ പരാജയപ്പെട്ടു (സ്വമേധയാ ഇല്ലാതാക്കാൻ ശ്രമിക്കുക, എന്നിട്ട് വീണ്ടും ശ്രമിക്കുക): \"{arg1}\"",
-  "@fileDeletionError": {
-    "placeholders": {
-      "arg1": {
-        "type": "String"
-      }
-    }
-  },
+  "fileDeletionError": "ഫയൽ ഇല്ലാതാക്കാൻ പരാജയപ്പെട്ടു (സ്വമേധയാ ഇല്ലാതാക്കാൻ ശ്രമിക്കുക, എന്നിട്ട് വീണ്ടും ശ്രമിക്കുക): \"{}\"",
   "foregroundService": "Updatium foreground service",
   "foregroundServiceExplanation": "Use a foreground service for update checking (more reliable, consumes more power)",
   "fgServiceNotice": "This notification is required for background update checking (it can be hidden in the OS settings)",
   "excludeSecrets": "Exclude secrets",
+  "GHReqPrefix": "'sky22333/hubproxy' instance for GitHub requests",
   "includeZips": "Include ZIP files",
   "zippedApkFilterRegEx": "Filter APKs inside ZIP",
-  "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.\n\nAfter then, Updatium may stop working on certified Android devices.",
+  "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.
+
+After then, Updatium may stop working on certified Android devices.",
   "googleVerificationWarningP2": "Go to https://keepandroidopen.org/ for more information.",
-  "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\n\nIn any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.\n\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
+  "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.
+
+In any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.
+
+Non-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
   "multipleSigners": "Multiple Signers",
   "securityDisclaimerTitle": "സുരക്ഷാ നിയമ നിരാകരണം",
   "license": "ലൈസൻസ്",
@@ -646,40 +380,69 @@
   "privacyText": "ഈ ആപ്പ് സ്വകാര്യം പരിഗണിക്കുന്നതും വ്യക്തിഗത ഡാറ്റ ശേഖരിക്കുന്നതുമല്ല.",
   "acceptAndContinue": "അംഗീകരിച്ച് തുടരുക",
   "decline": "നിരസിക്കുക",
-  "aPKLinkHash": "APK ലിങ്ക് ഹാഷ്",
-  "gHReqPrefix": "'sky22333/hubproxy' instance for GitHub requests",
-  "continueAction": "തുടരുക"
-  "apk": "{count} APKs",
-  "apkcombo": "APKCombo",
-  "apkmirror": "APKMirror",
-  "apkpure": "APKPure",
-  "appLogsHint": "View application logs",
-  "appSourceHint": "Open app source repository",
-  "apps": "{count} Apps",
-  "aptoide": "Aptoide",
-  "codeberg": "Codeberg",
-  "day": "{count} days",
-  "githubRequestPrefix": "GitHub request prefix",
-  "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-  "githubStarPromptDontShowAgain": "Don't show again",
-  "githubStarPromptStar": "Star",
-  "githubStarPromptTitle": "Enjoying Updatium?",
-  "gitlab": "GitLab",
-  "gitlabRequestPrefix": "GitLab request prefix",
-  "hour": "{count} hours",
-  "html": "HTML",
-  "huaweiappgallery": "Huawei App Gallery",
-  "izzyondroid": "IzzyOnDroid",
-  "jenkins": "Jenkins",
-  "minStarCount": "Minimum star count",
-  "minimumStarCount": "Minimum star count",
-  "minute": "{count} minutes",
-  "neutroncode": "NeutronCode",
-  "rustore": "RuStore",
-  "smartName": "Smart name",
-  "smartPlusDate": "Smart + Date",
-  "sourcehut": "SourceHut",
-  "telegramapp": "Telegram App",
-  "uptodown": "Uptodown",
-  "wikiHint": "Open Updatium wiki documentation",
+
+  "apps": "ആപ്പുകൾ",
+  "@apps": {
+    "plural": {
+      "one": "{} ആപ്പ്",
+      "other": "{} ആപ്പുകൾ",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "apk": "APK",
+  "@apk": {
+    "plural": {
+      "one": "{} APK",
+      "other": "{} APK-കൾ",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "minute": "{} മിനിറ്റുകൾ",
+  "@minute": {
+    "plural": {
+      "one": "{} മിനിറ്റ്",
+      "other": "{} മിനിറ്റുകൾ",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "hour": "{} മണിക്കൂർ",
+  "@hour": {
+    "plural": {
+      "one": "{} മണിക്കൂർ",
+      "other": "{} മണിക്കൂർ",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "day": "{} ദിവസങ്ങൾ",
+  "@day": {
+    "plural": {
+      "one": "{} ദിവസം",
+      "other": "{} ദിവസങ്ങൾ",
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
