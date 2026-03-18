@@ -963,7 +963,9 @@ onChanged: _securityProviderInitialized ? (value) async {
                           value: _securityProviderInitialized ? _securityProvider.getAutoUpdateEnabled() : false,
                           onChanged: _securityProviderInitialized ? (value) async {
                             await _securityProvider.setAutoUpdateEnabled(value);
-                            setState(() {});
+                            if (mounted) {
+                              setState(() {});
+                            }
                           } : null,
                         ),
                         ListTile(
