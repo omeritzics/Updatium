@@ -653,5 +653,41 @@
   "githubStarPromptDontShowAgain": "不再显示",
   "aPKLinkHash": "APK 文件链接散列值",
   "gHReqPrefix": "用于 GitHub 请求的 \"sky22333/hubproxy \"实例",
-  "continueAction": "继续"
+  "continueAction": "继续",
+  "minute": "{count} 分钟",
+  "@minute": {
+    "plural": {
+      "one": "{count} 分钟",
+      "other": "{count} 分钟"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hour": "{count} 小时",
+  "@hour": {
+    "plural": {
+      "one": "{count} 小时",
+      "other": "{count} 小时"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "day": "{count} 天",
+  "@day": {
+    "plural": {
+      "one": "{count} 天",
+      "other": "{count} 天"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

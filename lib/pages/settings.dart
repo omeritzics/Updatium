@@ -122,25 +122,25 @@ class _SettingsPageState extends State<SettingsPage> {
     }
     if (valInterpolated < 60) {
       updateInterval = valInterpolated;
-      updateIntervalLabel = '$valInterpolated minutes';
+      updateIntervalLabel = AppLocalizations.of(context)!.minute(valInterpolated.round());
     } else if (valInterpolated < 8 * 60) {
       int valRounded = (valInterpolated / 15).floor() * 15;
       updateInterval = valRounded;
-      updateIntervalLabel = '${valRounded ~/ 60} hours';
+      updateIntervalLabel = AppLocalizations.of(context)!.hour(valRounded ~/ 60);
       int mins = valRounded % 60;
-      if (mins != 0) updateIntervalLabel += " ${mins} minutes";
+      if (mins != 0) updateIntervalLabel += " ${AppLocalizations.of(context)!.minute(mins)}";
     } else if (valInterpolated < 24 * 60) {
       int valRounded = (valInterpolated / 30).floor() * 30;
       updateInterval = valRounded;
-      updateIntervalLabel = '${(valRounded / 60).round()} hours';
+      updateIntervalLabel = AppLocalizations.of(context)!.hour((valRounded / 60).round());
     } else if (valInterpolated < 7 * 24 * 60) {
       int valRounded = (valInterpolated / (12 * 60)).floor() * 12 * 60;
       updateInterval = valRounded;
-      updateIntervalLabel = '${(valRounded / (24 * 60)).round()} days';
+      updateIntervalLabel = AppLocalizations.of(context)!.day((valRounded / (24 * 60)).round());
     } else {
       int valRounded = (valInterpolated / (24 * 60)).floor() * 24 * 60;
       updateInterval = valRounded;
-      updateIntervalLabel = '${valRounded ~/ (24 * 60)} days';
+      updateIntervalLabel = AppLocalizations.of(context)!.day(valRounded ~/ (24 * 60));
     }
   }
 
@@ -1307,7 +1307,7 @@ class _LogsDialogState extends State<LogsDialog> {
                   });
                   filterLogs(day);
                 },
-                child: Text('$day days'),
+                child: Text(AppLocalizations.of(context)!.day(day)),
               );
             }).toList(),
           ),

@@ -686,5 +686,47 @@
         "type": "int"
       }
     }
+  },
+  "minute": "{count} דקות",
+  "@minute": {
+    "plural": {
+      "one": "דקה",
+      "two": "2 דקות",
+      "many": "דקות",
+      "other": "דקות"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hour": "{count} שעות",
+  "@hour": {
+    "plural": {
+      "one": "שעה",
+      "two": "2 שעות",
+      "many": "שעות",
+      "other": "שעות"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "day": "{count} ימים",
+  "@day": {
+    "plural": {
+      "one": "יום",
+      "two": "2 ימים",
+      "many": "ימים",
+      "other": "ימים"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

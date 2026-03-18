@@ -653,5 +653,47 @@
   "githubStarPromptDontShowAgain": "Don't show again",
   "aPKLinkHash": "Хеш ссылки APK",
   "gHReqPrefix": "Использовать «sky22333/hubproxy» для запросов на GitHub",
-  "continueAction": "Продолжить"
+  "continueAction": "Продолжить",
+  "minute": "{count} минут",
+  "@minute": {
+    "plural": {
+      "one": "{count} минута",
+      "few": "{count} минуты",
+      "many": "{count} минут",
+      "other": "{count} минуты"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hour": "{count} часов",
+  "@hour": {
+    "plural": {
+      "one": "{count} час",
+      "few": "{count} часа",
+      "many": "{count} часов",
+      "other": "{count} часа"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "day": "{count} дней",
+  "@day": {
+    "plural": {
+      "one": "{count} день",
+      "few": "{count} дня",
+      "many": "{count} дней",
+      "other": "{count} дня"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

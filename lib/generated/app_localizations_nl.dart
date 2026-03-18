@@ -1354,6 +1354,16 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return '$count minuten';
+  }
+
+  @override
+  String hour(int count) {
+    return '$count uren';
+  }
+
+  @override
+  String day(int count) {
+    return '$count dagen';
   }
 }

@@ -653,5 +653,41 @@
   "githubStarPromptDontShowAgain": "Don't show again",
   "aPKLinkHash": "APK bağlantısı hash'i",
   "gHReqPrefix": "GitHub istekleri için 'sky22333/hubproxy' örneği",
-  "continueAction": "Devam et"
+  "continueAction": "Devam et",
+  "minute": "{count} dakika",
+  "@minute": {
+    "plural": {
+      "one": "{count} dakika",
+      "other": "{count} dakika"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hour": "{count} saat",
+  "@hour": {
+    "plural": {
+      "one": "{count} saat",
+      "other": "{count} saat"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "day": "{count} gün",
+  "@day": {
+    "plural": {
+      "one": "{count} gün",
+      "other": "{count} gün"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

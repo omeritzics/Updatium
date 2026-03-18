@@ -1274,7 +1274,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return '$count 分钟';
+  }
+
+  @override
+  String hour(int count) {
+    return '$count 小时';
+  }
+
+  @override
+  String day(int count) {
+    return '$count 天';
   }
 }
 

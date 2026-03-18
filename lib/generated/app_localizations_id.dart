@@ -1357,4 +1357,14 @@ class AppLocalizationsId extends AppLocalizations {
   String minute(int count) {
     return '$count minutes';
   }
+
+  @override
+  String hour(int count) {
+    return '$count hours';
+  }
+
+  @override
+  String day(int count) {
+    return '$count days';
+  }
 }

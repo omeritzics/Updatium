@@ -653,5 +653,38 @@
   "githubStarPromptDontShowAgain": "Don't show again",
   "aPKLinkHash": "APK 링크 해시",
   "gHReqPrefix": "GitHub 요청을 위한 'sky22333/hubproxy' 인스턴스",
-  "continueAction": "계속"
+  "continueAction": "계속",
+  "minute": "{count}분",
+  "@minute": {
+    "plural": {
+      "other": "{count}분"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hour": "{count}시간",
+  "@hour": {
+    "plural": {
+      "other": "{count}시간"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "day": "{count}일",
+  "@day": {
+    "plural": {
+      "other": "{count}일"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

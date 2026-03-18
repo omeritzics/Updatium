@@ -669,5 +669,53 @@
         "type": "int"
       }
     }
+  },
+  "minute": "{count} دقائق",
+  "@minute": {
+    "plural": {
+      "zero": "دقائق",
+      "one": "دقيقة",
+      "two": "دقيقتان",
+      "few": "دقائق",
+      "many": "دقيقة",
+      "other": "دقائق"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hour": "{count} ساعات",
+  "@hour": {
+    "plural": {
+      "zero": "ساعات",
+      "one": "ساعة",
+      "two": "ساعتان",
+      "few": "ساعات",
+      "many": "ساعة",
+      "other": "ساعات"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "day": "{count} أيام",
+  "@day": {
+    "plural": {
+      "zero": "أيام",
+      "one": "يوم",
+      "two": "يومان",
+      "few": "أيام",
+      "many": "يومًا",
+      "other": "أيام"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -1287,6 +1287,16 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return '$count분';
+  }
+
+  @override
+  String hour(int count) {
+    return '$count시간';
+  }
+
+  @override
+  String day(int count) {
+    return '$count일';
   }
 }

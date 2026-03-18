@@ -2503,6 +2503,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} minutes'**
   String minute(int count);
+
+  /// No description provided for @hour.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hours'**
+  String hour(int count);
+
+  /// No description provided for @day.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days'**
+  String day(int count);
 }
 
 class _AppLocalizationsDelegate

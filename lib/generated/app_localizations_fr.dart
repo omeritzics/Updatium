@@ -1381,4 +1381,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String minute(int count) {
     return '$count minutes';
   }
+
+  @override
+  String hour(int count) {
+    return '$count heures';
+  }
+
+  @override
+  String day(int count) {
+    return '$count jours';
+  }
 }

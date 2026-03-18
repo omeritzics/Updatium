@@ -707,5 +707,29 @@
         "type": "int"
       }
     }
+  },
+  "hour": "{count} hours",
+  "@hour": {
+    "plural": {
+      "one": "{count} hour",
+      "other": "{count} hours"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "day": "{count} days",
+  "@day": {
+    "plural": {
+      "one": "{count} day",
+      "other": "{count} days"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

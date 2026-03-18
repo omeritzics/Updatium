@@ -653,5 +653,38 @@
   "githubStarPromptDontShowAgain": "Don't show again",
   "aPKLinkHash": "APKリンクのハッシュ",
   "gHReqPrefix": "GitHub リクエスト用の 'sky22333/hubproxy' インスタンス",
-  "continueAction": "続行"
+  "continueAction": "続行",
+  "minute": "{count}分",
+  "@minute": {
+    "plural": {
+      "other": "{count}分"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hour": "{count}時間",
+  "@hour": {
+    "plural": {
+      "other": "{count}時間"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "day": "{count}日",
+  "@day": {
+    "plural": {
+      "other": "{count}日"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

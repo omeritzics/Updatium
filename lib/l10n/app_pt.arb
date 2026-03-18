@@ -653,5 +653,41 @@
   "githubStarPromptDontShowAgain": "Don't show again",
   "aPKLinkHash": "Hash de links APK",
   "gHReqPrefix": "Instância 'sky22333/hubproxy' para pedidos de GitHub",
-  "continueAction": "Continuar"
+  "continueAction": "Continuar",
+  "minute": "{count} minutos",
+  "@minute": {
+    "plural": {
+      "one": "{count} minuto",
+      "other": "{count} minutos"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hour": "{count} horas",
+  "@hour": {
+    "plural": {
+      "one": "{count} hora",
+      "other": "{count} horas"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "day": "{count} dias",
+  "@day": {
+    "plural": {
+      "one": "{count} dia",
+      "other": "{count} dias"
+    },
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

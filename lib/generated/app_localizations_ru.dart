@@ -1360,6 +1360,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String minute(int count) {
-    return '$count minutes';
+    return '$count минут';
+  }
+
+  @override
+  String hour(int count) {
+    return '$count часов';
+  }
+
+  @override
+  String day(int count) {
+    return '$count дней';
   }
 }
