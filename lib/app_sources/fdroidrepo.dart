@@ -16,7 +16,7 @@ class FDroidRepo extends AppSource {
       [
         GeneratedFormTextField(
           'appIdOrName',
-          label: 'App ID or name': AppLocalizations.of(context)!.appIdOrName,,
+          label: AppLocalizations.of(context)!.appIdOrName,,
           hint: 'Repos have multiple apps': AppLocalizations.of(context)!.reposHaveMultipleApps,,
           required: true,
         ),
@@ -24,14 +24,14 @@ class FDroidRepo extends AppSource {
       [
         GeneratedFormSwitch(
           'pickHighestVersionCode',
-          label: 'Pick highest version code': AppLocalizations.of(context)!.pickHighestVersionCode,,
+          label: AppLocalizations.of(context)!.pickHighestVersionCode,,
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'trySelectingSuggestedVersionCode',
-          label: 'Try selecting suggested version code': AppLocalizations.of(context)!.trySelectingSuggestedVersionCode,,
+          label: AppLocalizations.of(context)!.trySelectingSuggestedVersionCode,,
           defaultValue: true,
         ),
       ],

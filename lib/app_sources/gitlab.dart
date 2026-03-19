@@ -50,7 +50,7 @@ class GitLab extends AppSource {
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: 'Fallback to older releases': AppLocalizations.of(context)!.fallbackToOlderReleases,,
+          label: AppLocalizations.of(context)!.fallbackToOlderReleases,,
           defaultValue: true,
         ),
       ],

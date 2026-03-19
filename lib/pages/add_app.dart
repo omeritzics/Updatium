@@ -20,7 +20,7 @@ import 'package:updatium/generated/app_localizations.dart';
 String getLocalizedSourceName(String sourceName, BuildContext context) {
   final l10n = AppLocalizations.of(context)!;
   switch (sourceName) {
-    case AppLocalizations.of(context)!.githubStarredRepos:
+    case 'GitHub starred repositories':
       return l10n.githubStarredRepos;
     case 'Direct APK Link':
       return l10n.directAPKLink;

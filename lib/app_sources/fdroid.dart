@@ -18,7 +18,7 @@ class FDroid extends AppSource {
       [
         GeneratedFormTextField(
           'filterVersionsByRegEx',
-          label: 'Filter versions by regular expression': AppLocalizations.of(context)!.filterVersionsByRegEx,,
+          label: AppLocalizations.of(context)!.filterVersionsByRegEx,,
           required: false,
           additionalValidators: [
             (value) {
@@ -30,14 +30,14 @@ class FDroid extends AppSource {
       [
         GeneratedFormSwitch(
           'trySelectingSuggestedVersionCode',
-          label: 'Try selecting suggested version code': AppLocalizations.of(context)!.trySelectingSuggestedVersionCode,,
+          label: AppLocalizations.of(context)!.trySelectingSuggestedVersionCode,,
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
-          label: 'Auto select highest version code': AppLocalizations.of(context)!.autoSelectHighestVersionCode,,
+          label: AppLocalizations.of(context)!.autoSelectHighestVersionCode,,
         ),
       ],
     ];

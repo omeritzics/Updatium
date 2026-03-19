@@ -25,7 +25,7 @@ class DirectAPKLink extends AppSource {
   }
 
   @override
-  String get name => 'Direct APK Link': AppLocalizations.of(context)!.directAPKLink,;
+  String get name => 'Direct APK Link';
 
   @override
   List<List<GeneratedFormItem>> get additionalSourceAppSpecificSettingFormItems => [
@@ -38,8 +38,8 @@ class DirectAPKLink extends AppSource {
       GeneratedFormDropdown(
         'defaultPseudoVersioningMethod',
         [
-          MapEntry('partialAPKHash', 'Partial APK Hash': AppLocalizations.of(context)!.partialAPKHash,),
-          MapEntry('ETag': AppLocalizations.of(context)!.etag,, 'ETag': AppLocalizations.of(context)!.etag,),
+          MapEntry('partialAPKHash', 'Partial APK Hash'),
+          MapEntry('ETag', 'ETag'),
         ],
         label: 'Default pseudo-versioning method',
         defaultValue: 'partialAPKHash',

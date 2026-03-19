@@ -36,7 +36,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              'About': AppLocalizations.of(context)!.about,
+              'About',
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -47,7 +47,7 @@ class GitHub extends AppSource {
         ],
       ),
       GeneratedFormTextField(
-        'GHReqPrefix': AppLocalizations.of(context)!.githubRequestPrefix,
+        'GHReqPrefix',
         label: 'GitHub request prefix',
         hint: 'gh-proxy.org',
         required: false,
@@ -76,7 +76,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              'About': AppLocalizations.of(context)!.about,
+              'About',
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -92,7 +92,7 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'includePrereleases',
-          label: 'Include prereleases': AppLocalizations.of(context)!.includePrereleases,
+          label: 'Include prereleases',
           defaultValue: false,
         ),
       ],

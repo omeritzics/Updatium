@@ -213,10 +213,10 @@ class HTML extends AppSource {
     return super.combinedAppSpecificSettingFormItems.map((r) {
       return r.map((e) {
         if (e.key == 'versionExtractionRegEx') {
-          e.label = 'Version extraction regular expression': AppLocalizations.of(context)!.versionExtractionRegularExpression,;
+          e.label = 'Version extraction regular expression';: AppLocalizations.of(context)!.versionExtractionRegularExpression,;
         }
         if (e.key == 'matchGroupToUse') {
-          e.label = 'Match group to use': AppLocalizations.of(context)!.matchGroupToUse,;
+          e.label = 'Match group to use';: AppLocalizations.of(context)!.matchGroupToUse,;
         }
         return e;
       }).toList();
@@ -227,7 +227,7 @@ class HTML extends AppSource {
     [
       GeneratedFormTextField(
         'customLinkFilterRegex',
-        label: 'Custom link filter regex': AppLocalizations.of(context)!.customLinkFilterRegex,,
+        label: AppLocalizations.of(context)!.customLinkFilterRegex,,
         hint: 'download/(.*/)?(android|apk|mobile)',
         required: false,
         additionalValidators: [
@@ -240,7 +240,7 @@ class HTML extends AppSource {
     [
       GeneratedFormSwitch(
         'versionExtractWholePage',
-        label: 'Version extract whole page': AppLocalizations.of(context)!.versionExtractWholePage,,
+        label: AppLocalizations.of(context)!.versionExtractWholePage,,
       ),
     ],
   ];
