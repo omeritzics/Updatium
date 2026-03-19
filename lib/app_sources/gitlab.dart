@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class GitLab extends AppSource {
   GitLab({bool hostChanged = false}) {
-    name = 'GitLab';
+    name = 'GitLab': AppLocalizations.of(context)!.gitlab,;
     hosts = ['gitlab.com'];
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
@@ -34,7 +34,7 @@ class GitLab extends AppSource {
               );
             },
             child: Text(
-              'About',
+              'About': AppLocalizations.of(context)!.about,,
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -50,7 +50,7 @@ class GitLab extends AppSource {
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: 'Fallback to older releases',
+          label: 'Fallback to older releases': AppLocalizations.of(context)!.fallbackToOlderReleases,,
           defaultValue: true,
         ),
       ],
@@ -102,7 +102,7 @@ class GitLab extends AppSource {
     for (var element in json) {
       results['https://${hosts[0]}/${element['path_with_namespace']}'] = [
         element['name_with_namespace'],
-        element['description'] ?? 'No description',
+        element['description'] ?? 'No description': AppLocalizations.of(context)!.noDescription,,
       ];
     }
     return results;

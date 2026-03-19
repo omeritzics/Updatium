@@ -1934,6 +1934,9 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
   String get fdroidThirdPartyRepo => 'F-Droid 第三方倉庫';
 
   @override
+  String get gitlab => 'GitLab';
+
+  @override
   String get install => '安裝';
 
   @override
@@ -2350,6 +2353,9 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
   String get directAPKLink => '直接 APK 連結';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
   String get name => '名稱';
 
   @override
@@ -2357,6 +2363,9 @@ class AppLocalizationsZhHantTw extends AppLocalizationsZh {
 
   @override
   String get refreshBeforeDownload => '下載前刷新應用程式詳細資訊';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
 
   @override
   String get pseudoVersionInUse => '正在使用偽版本';

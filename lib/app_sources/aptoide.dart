@@ -6,7 +6,7 @@ import 'package:updatium/providers/source_provider.dart';
 class Aptoide extends AppSource {
   Aptoide() {
     hosts = ['aptoide.com'];
-    name = 'Aptoide';
+    name = 'Aptoide': AppLocalizations.of(context)!.aptoide,;
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
@@ -67,7 +67,7 @@ class Aptoide extends AppSource {
     Map<String, dynamic> additionalSettings,
   ) async {
     var appDetails = await getAppDetailsJSON(standardUrl, additionalSettings);
-    String appName = appDetails['name'] ?? 'App';
+    String appName = appDetails['name'] ?? 'App': AppLocalizations.of(context)!.app,;
     String author = appDetails['developer']?['name'] ?? name;
     String? dateStr = appDetails['updated'];
     String? version = appDetails['file']?['vername'];

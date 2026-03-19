@@ -36,7 +36,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              'About',
+              'About': AppLocalizations.of(context)!.about,
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -47,7 +47,7 @@ class GitHub extends AppSource {
         ],
       ),
       GeneratedFormTextField(
-        'GHReqPrefix',
+        'GHReqPrefix': AppLocalizations.of(context)!.githubRequestPrefix,
         label: 'GitHub request prefix',
         hint: 'gh-proxy.org',
         required: false,
@@ -76,7 +76,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              'About',
+              'About': AppLocalizations.of(context)!.about,
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -92,21 +92,21 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'includePrereleases',
-          label: 'Include prereleases',
+          label: 'Include prereleases': AppLocalizations.of(context)!.includePrereleases,
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: 'Fallback to older releases',
+          label: 'Fallback to older releases': AppLocalizations.of(context)!.fallbackToOlderReleases,
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormTextField(
           'filterReleaseTitlesByRegEx',
-          label: 'Filter release titles by regular expression',
+          label: 'Filter release titles by regular expression': AppLocalizations.of(context)!.filterReleaseTitlesByRegEx,
           required: false,
           additionalValidators: [
             (value) {
@@ -118,7 +118,7 @@ class GitHub extends AppSource {
       [
         GeneratedFormTextField(
           'filterReleaseNotesByRegEx',
-          label: 'Filter release notes by regular expression',
+          label: 'Filter release notes by regular expression': AppLocalizations.of(context)!.filterReleaseNotesByRegEx,
           required: false,
           additionalValidators: [
             (value) {
@@ -138,7 +138,7 @@ class GitHub extends AppSource {
             MapEntry('smartname-datefallback', 'Smart + Date'),
             MapEntry('name', 'Name'),
           ],
-          label: 'Sort method',
+          label: 'Sort method': AppLocalizations.of(context)!.sortMethod,
           defaultValue: 'date',
           required: false,
         ),
@@ -146,14 +146,14 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'useLatestAssetDateAsReleaseDate',
-          label: 'Use latest asset date as release date',
+          label: 'Use latest asset date as release date': AppLocalizations.of(context)!.useLatestAssetDateAsReleaseDate,
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'releaseTitleAsVersion',
-          label: 'Release title as version',
+          label: 'Release title as version': AppLocalizations.of(context)!.releaseTitleAsVersion,
           defaultValue: false,
         ),
       ],
@@ -163,7 +163,7 @@ class GitHub extends AppSource {
     searchQuerySettingFormItems = [
       GeneratedFormTextField(
         'minStarCount',
-        label: 'Minimum star count',
+        label: 'Minimum star count': AppLocalizations.of(context)!.minimumStarCount,
         defaultValue: '0',
         additionalValidators: [
           (value) {

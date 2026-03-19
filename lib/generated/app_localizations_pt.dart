@@ -2051,6 +2051,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get fdroidThirdPartyRepo => 'Repositório de terceiros do F-Droid';
 
   @override
+  String get gitlab => 'GitLab';
+
+  @override
   String get install => 'Instalar';
 
   @override
@@ -2510,6 +2513,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get directAPKLink => 'Link direto ao APK';
 
   @override
+  String get githubRequestPrefix => 'GitHub request prefix';
+
+  @override
   String get name => 'Nome';
 
   @override
@@ -2518,6 +2524,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   @override
   String get refreshBeforeDownload =>
       'Atualizar detalhes do app antes de baixar';
+
+  @override
+  String get gitlabRequestPrefix => 'GitLab request prefix';
 
   @override
   String get pseudoVersionInUse => 'Uma pseudo-versão está em uso';

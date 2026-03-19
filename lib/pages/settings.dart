@@ -94,7 +94,7 @@ String getLocalizedDuration(int minutes, BuildContext context) {
 String getLocalizedSourceName(String sourceName, BuildContext context) {
   final l10n = AppLocalizations.of(context)!;
   switch (sourceName) {
-    case 'GitHub starred repositories':
+    case AppLocalizations.of(context)!.githubStarredRepos:
       return l10n.githubStarredRepos;
     case 'Direct APK Link':
       return l10n.directAPKLink;

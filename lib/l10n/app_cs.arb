@@ -439,5 +439,8 @@
         "type": "int"
       }
     }
-  }
+  },
+  "gitlab": "GitLab",
+  "githubRequestPrefix": "GitHub request prefix",
+  "gitlabRequestPrefix": "GitLab request prefix"
 }
