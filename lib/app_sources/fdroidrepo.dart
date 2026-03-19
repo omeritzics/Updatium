@@ -16,22 +16,22 @@ class FDroidRepo extends AppSource {
       [
         GeneratedFormTextField(
           'appIdOrName',
-          label: AppLocalizations.of(context)!.appIdOrName,,
-          hint: 'Repos have multiple apps': AppLocalizations.of(context)!.reposHaveMultipleApps,,
+          label: 'App ID or name',
+          hint: 'Repos have multiple apps',
           required: true,
         ),
       ],
       [
         GeneratedFormSwitch(
           'pickHighestVersionCode',
-          label: AppLocalizations.of(context)!.pickHighestVersionCode,,
+          label: 'Pick highest version code',
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'trySelectingSuggestedVersionCode',
-          label: AppLocalizations.of(context)!.trySelectingSuggestedVersionCode,,
+          label: 'Try selecting suggested version code',
           defaultValue: true,
         ),
       ],
@@ -208,7 +208,7 @@ class FDroidRepo extends AppSource {
         }).toList();
       }
       if (foundApps.isEmpty) {
-        throw UpdatiumError('App with ID or name not found': AppLocalizations.of(context)!.appWithIdOrNameNotFound,);
+        throw UpdatiumError('App with ID or name not found');
       }
       var authorName = body.querySelector('repo')?.attributes['name'] ?? name;
       String appId = foundApps[0].attributes['id']!;

@@ -18,7 +18,7 @@ class FDroid extends AppSource {
       [
         GeneratedFormTextField(
           'filterVersionsByRegEx',
-          label: AppLocalizations.of(context)!.filterVersionsByRegEx,,
+          label: 'Filter versions by regular expression',
           required: false,
           additionalValidators: [
             (value) {
@@ -30,14 +30,14 @@ class FDroid extends AppSource {
       [
         GeneratedFormSwitch(
           'trySelectingSuggestedVersionCode',
-          label: AppLocalizations.of(context)!.trySelectingSuggestedVersionCode,,
+          label: 'Try selecting suggested version code',
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
-          label: AppLocalizations.of(context)!.autoSelectHighestVersionCode,,
+          label: 'Auto select highest version code',
         ),
       ],
     ];
@@ -169,7 +169,7 @@ class FDroid extends AppSource {
           urlsWithDescriptions[url] = [
             e.querySelector('.package-name')?.text.trim() ?? '',
             e.querySelector('.package-summary')?.text.trim() ??
-                'No description': AppLocalizations.of(context)!.noDescription,,
+                'No description'
           ];
         }
       });

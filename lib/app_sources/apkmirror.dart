@@ -18,14 +18,14 @@ class APKMirror extends AppSource {
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: AppLocalizations.of(context)!.fallbackToOlderReleases,,
+          label: 'Fallback to older releases',
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormTextField(
           'filterReleaseTitlesByRegEx',
-          label: AppLocalizations.of(context)!.filterReleaseTitlesByRegEx,,
+          label: 'Filter release titles by regular expression',
           required: false,
           additionalValidators: [
             (value) {

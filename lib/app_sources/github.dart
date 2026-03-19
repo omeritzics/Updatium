@@ -99,14 +99,14 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: 'Fallback to older releases': AppLocalizations.of(context)!.fallbackToOlderReleases,
+          label: 'Fallback to older releases',
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormTextField(
           'filterReleaseTitlesByRegEx',
-          label: 'Filter release titles by regular expression': AppLocalizations.of(context)!.filterReleaseTitlesByRegEx,
+          label: 'Filter release titles by regular expression',
           required: false,
           additionalValidators: [
             (value) {
@@ -118,7 +118,7 @@ class GitHub extends AppSource {
       [
         GeneratedFormTextField(
           'filterReleaseNotesByRegEx',
-          label: 'Filter release notes by regular expression': AppLocalizations.of(context)!.filterReleaseNotesByRegEx,
+          label: 'Filter release notes by regular expression',
           required: false,
           additionalValidators: [
             (value) {
@@ -138,7 +138,7 @@ class GitHub extends AppSource {
             MapEntry('smartname-datefallback', 'Smart + Date'),
             MapEntry('name', 'Name'),
           ],
-          label: 'Sort method': AppLocalizations.of(context)!.sortMethod,
+          label: 'Sort method',
           defaultValue: 'date',
           required: false,
         ),
@@ -146,14 +146,14 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'useLatestAssetDateAsReleaseDate',
-          label: 'Use latest asset date as release date': AppLocalizations.of(context)!.useLatestAssetDateAsReleaseDate,
+          label: 'Use latest asset date as release date',
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'releaseTitleAsVersion',
-          label: 'Release title as version': AppLocalizations.of(context)!.releaseTitleAsVersion,
+          label: 'Release title as version',
           defaultValue: false,
         ),
       ],
@@ -163,7 +163,7 @@ class GitHub extends AppSource {
     searchQuerySettingFormItems = [
       GeneratedFormTextField(
         'minStarCount',
-        label: 'Minimum star count': AppLocalizations.of(context)!.minimumStarCount,
+        label: 'Minimum star count',
         defaultValue: '0',
         additionalValidators: [
           (value) {

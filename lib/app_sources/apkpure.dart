@@ -24,21 +24,21 @@ class APKPure extends AppSource {
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: AppLocalizations.of(context)!.fallbackToOlderReleases,,
+          label: 'Fallback to older releases',
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormSwitch(
           'stayOneVersionBehind',
-          label: AppLocalizations.of(context)!.stayOneVersionBehind,,
+          label: 'Stay one version behind',
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'useFirstApkOfVersion',
-          label: AppLocalizations.of(context)!.useFirstAPKOfVersion,,
+          label: 'Use first APK of version',
           defaultValue: true,
         ),
       ],
