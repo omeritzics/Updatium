@@ -59,7 +59,7 @@ A: Updatium started as a fork of [Obtainium](https://github.com/ImranR98/Obtaini
 A: One word - antisemitism. While Obtainium is a really powerful tool, its developer intended to block people from a specific nation from getting involved into the project. Updatium aims not just to be an update to Obtainium, but also to provide a broad, accepting, welcoming open source community.
 
 ### Q: Does Updatium encourage piracy?
-A: Definately not! Updatium is highly against piracy and modded applications.
+A: Absolutely not! Updatium is highly against piracy and modded applications.
 
 ### Q: How can I help?
-A: There are many ways you can. Simply open an issue on the project's GitHub and introduce yourself. Your contribution doesn't have to be code - it could also be bug reporting, translating the app into new languages (or improving existing translations), design proposals and ideas. Starring Updatium and sharing it to people who you think may like it can also help Updatium grow. Thanks in advance :)
+A: There are many ways you can. Simply open an issue on the project's GitHub and introduce yourself. Your contribution doesn't have to be code - it could also be bug reporting, translating the app into new languages (or improving existing translations), design proposals and ideas. Starring Updatium and sharing it to people who you think may like it can also help Updatium grow. Thank you for your support :)
