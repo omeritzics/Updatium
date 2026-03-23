@@ -52,3 +52,6 @@ Every language is welcome to Updatium, but your help is needed to make it happen
 
 ## Limitations
 - For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.
+
+## Frequently Answered Questions
+Coming soon...
