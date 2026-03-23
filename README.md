@@ -53,7 +53,7 @@ Every language is welcome to Updatium, but your help is needed to make it happen
 
 ## Frequently Asked Questions
 ### Q: What is Updatium?
-A: Updatium started as a fork of [Obtainium](https://github.com/ImranR98/Obtainium), aiming to be a better alternative to it. Updatium is a customizable app catalogue, to which you can add almost any application you want from a variaty of sources, like GitHub and APKPure.
+A: Updatium started as a fork of [Obtainium](https://github.com/ImranR98/Obtainium), aiming to be a better alternative to it. Updatium is a customizable app catalogue, to which you can add almost any application you want from a variety of sources, like GitHub and APKPure.
 
 ### Q: Why fork Obtainium?
 A: One word - antisemitism. While Obtainium is a really powerful tool, its developer intended to block people from a specific nation from getting involved into the project. Updatium aims not just to be an update to Obtainium, but also to provide a broad, accepting, welcoming open source community.
