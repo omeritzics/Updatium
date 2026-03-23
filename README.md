@@ -4,16 +4,7 @@
 [![Nightly Build](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml/badge.svg)](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
 [![Translation Help Wanted](https://img.shields.io/badge/translation-help_wanted-blue)](https://github.com/omeritzics/Updatium/tree/main/assets/translations)
 
-Update your Android apps directly from the APK source. Forked from [Obtainium](https://github.com/ImranR98/Obtainium) due to the developer's problematic political views and his terrible behavior toward Jewish people who wanted to contribute to his app, aiming to provide a professional, inclusive, and community-driven alternative.
-
-Updatium helps you to install apps and update them directly from their release pages or APK sources, and to receive notifications when updates are available.
-
-## Download
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/latest)
-
-[![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
-
-Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware.
+Update your Android apps directly from the APK source. Updatium helps you to install apps and update them directly from their release pages or APK sources, and to receive notifications when updates are available.
 
 ## Features
 ### Currently supported App sources:
@@ -36,6 +27,13 @@ Based on Material Design 3 Expressive guidelines.
 - Hide non-installed apps.
 - Better accessability for screen readers.
 - Grid View.
+
+## Download
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/latest)
+
+[![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
+
+Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware.
 
 ## Screenshots
 
