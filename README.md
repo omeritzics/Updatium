@@ -4,16 +4,7 @@
 [![Nightly Build](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml/badge.svg)](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
 [![Translation Help Wanted](https://img.shields.io/badge/translation-help_wanted-blue)](https://github.com/omeritzics/Updatium/tree/main/assets/translations)
 
-Update your Android apps directly from the APK source. Forked from [Obtainium](https://github.com/ImranR98/Obtainium) due to the developer's problematic political views and his terrible behavior toward Jewish people who wanted to contribute to his app, aiming to provide a professional, inclusive, and community-driven alternative.
-
-Updatium helps you to install apps and update them directly from their release pages or APK sources, and to receive notifications when updates are available.
-
-## Download
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/latest)
-
-[![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
-
-Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware.
+Update your Android apps directly from the APK source. Updatium helps you to install apps and update them directly from their release pages or APK sources, and to receive notifications when updates are available.
 
 ## Features
 ### Currently supported App sources:
@@ -37,11 +28,18 @@ Based on Material Design 3 Expressive guidelines.
 - Better accessability for screen readers.
 - Grid View.
 
+## Download
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/latest)
+
+[![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
+
+Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware.
+
 ## Screenshots
 
 | <img src="./assets/screenshots/1.apps.png" alt="Apps Page" /> | <img src="./assets/screenshots/2.dark_theme.png" alt="Dark Theme" />           | <img src="./assets/screenshots/3.material_you.png" alt="Material You" />    |
 | ------------------------------------------------------ | ----------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| <img src="./assets/screenshots/4.app.png" alt="App Page" />   | <img src="./assets/screenshots/5.app_opts.png" alt="App Options" /> |  |
+| <img src="./assets/screenshots/4.app.png" alt="App Page" />   | |  |
 
 ### Localization
 Updatium currently supports 31 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull with the new translations added to [here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
@@ -52,3 +50,16 @@ Every language is welcome to Updatium, but your help is needed to make it happen
 
 ## Limitations
 - For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.
+
+## Frequently Asked Questions
+### Q: What is Updatium?
+A: Updatium started as a fork of [Obtainium](https://github.com/ImranR98/Obtainium), aiming to be a better alternative to it. Updatium is a customizable app catalogue, to which you can add almost any application you want from a variety of sources, like GitHub and APKPure.
+
+### Q: Why fork Obtainium?
+A: One word - antisemitism. While Obtainium is a really powerful tool, its developer intended to block people from a specific nation from getting involved into the project. Updatium aims not just to be an update to Obtainium, but also to provide a broad, accepting, welcoming open source community.
+
+### Q: Does Updatium encourage piracy?
+A: Absolutely not! Updatium is highly against piracy and modded applications.
+
+### Q: How can I help?
+A: There are many ways you can. Simply open an issue on the project's GitHub and introduce yourself. Your contribution doesn't have to be code - it could also be bug reporting, translating the app into new languages (or improving existing translations), design proposals and ideas. Starring Updatium and sharing it to people who you think may like it can also help Updatium grow. Thank you for your support :)
