@@ -15,6 +15,7 @@ import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/utils/category_emojis.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -146,9 +147,6 @@ class AppsPageState extends State<AppsPage> {
   DateTime? refreshingSince;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
 
-  // Cache gradient stops by category count to avoid recomputation
-  final Map<int, List<double>> _stopsCache = {};
-
   // Helper function to preserve transparency regardless of theme overrides
   Color preserveTransparency(Color baseColor, double alpha) {
     // Always apply the requested transparency, ensuring it takes priority
@@ -156,18 +154,17 @@ class AppsPageState extends State<AppsPage> {
     return baseColor.withOpacity(alpha);
   }
 
-  // Helper function to get category color with preserved transparency
-  Color getCategoryColor(
+  // Helper function to get category emoji
+  String getCategoryEmoji(
     String category,
-    int alpha,
     SettingsProvider settingsProvider,
   ) {
-    final categoryColorValue = settingsProvider.categories[category];
-    if (categoryColorValue != null) {
-      return Color(categoryColorValue).withAlpha(alpha);
+    final categoryEmojiValue = settingsProvider.categoryEmojis[category];
+    if (categoryEmojiValue != null) {
+      return categoryEmojiValue;
     }
-    // Fallback to truly transparent color
-    return Color.fromARGB(0, 0, 0, 0);
+    // Fallback to default emoji mapping
+    return CategoryEmojis.getEmojiForCategory(category);
   }
 
   bool clearSelected() {
@@ -646,37 +643,25 @@ class AppsPageState extends State<AppsPage> {
         },
       );
 
-      var transparent = Theme.of(
-        context,
-      ).colorScheme.surface.withAlpha(0).toARGB32();
-      List<double> stops = [
-        ...listedApps[index].app.categories.asMap().entries.map(
-          (e) =>
-              ((e.key / (listedApps[index].app.categories.length - 1)) -
-              0.0001),
-        ),
-        1,
-      ];
-      if (stops.length == 2) {
-        stops[0] = 0.9999;
-      }
+      // Get category emojis for display
+      List<String> categoryEmojis = listedApps[index].app.categories
+          .map((e) => getCategoryEmoji(e, settingsProvider))
+          .toList();
+      
       return Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            stops: stops,
-            begin: const Alignment(-1, 0),
-            end: const Alignment(-0.97, 0),
-            colors: [
-              ...listedApps[index].app.categories.map(
-                (e) => getCategoryColor(e, 255, settingsProvider),
-              ),
-              Colors.transparent,
-            ],
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
           ),
         ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: () {
+        child: Stack(
+          children: [
+            // Main content
+            InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
             if (selectedAppIds.isNotEmpty) {
               toggleAppSelected(listedApps[index].app);
             } else {
@@ -771,29 +756,26 @@ class AppsPageState extends State<AppsPage> {
                 : trailingRow,
           ),
         ),
+            // Emoji overlay
+            if (categoryEmojis.isNotEmpty && settingsProvider.showCategoryEmojis)
+              Positioned(
+                top: 8,
+                left: 8,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    categoryEmojis.take(3).join(' '),
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
+          ],
+        ),
       );
-    }
-
-    List<double> categoryStops(List<String> categories) {
-      final n = categories.length;
-      final cached = _stopsCache[n];
-      if (cached != null) return cached;
-      List<double> result;
-      if (n > 1) {
-        result = [
-          ...List<double>.generate(
-            n,
-            (i) => ((i / (n - 1)) - 0.0001).clamp(0.0, 1.0),
-          ),
-          1.0,
-        ];
-      } else if (n == 1) {
-        result = const [0.9999, 1.0];
-      } else {
-        result = const [1.0];
-      }
-      _stopsCache[n] = result;
-      return result;
     }
 
     Widget getSingleAppGridTile(int index) {
@@ -801,30 +783,25 @@ class AppsPageState extends State<AppsPage> {
           listedApps[index].app.installedVersion != null &&
           listedApps[index].app.installedVersion !=
               listedApps[index].app.latestVersion;
-      var transparent = Theme.of(
-        context,
-      ).colorScheme.surface.withAlpha(0).value;
-      final categories = listedApps[index].app.categories;
-      final stops = categoryStops(categories);
+      
+      // Get category emojis for display
+      List<String> categoryEmojis = listedApps[index].app.categories
+          .map((e) => getCategoryEmoji(e, settingsProvider))
+          .toList();
 
       return Container(
         decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(
-            stops: stops,
-            begin: const Alignment(-1, -1),
-            end: const Alignment(1, 1),
-            colors: [
-              ...listedApps[index].app.categories.map(
-                (e) => getCategoryColor(e, 40, settingsProvider),
-              ),
-              Colors.transparent,
-            ],
+          border: Border.all(
+            color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
           ),
         ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
+        child: Stack(
+          children: [
+            InkWell(
+              borderRadius: BorderRadius.circular(12),
+              onTap: () {
             if (selectedAppIds.isNotEmpty) {
               toggleAppSelected(listedApps[index].app);
             } else {
@@ -1024,6 +1001,23 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                 ),
+                // Emoji overlay
+                if (categoryEmojis.isNotEmpty && settingsProvider.showCategoryEmojis)
+                  Positioned(
+                    top: 4,
+                    left: 4,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.7),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        categoryEmojis.take(2).join(' '),
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
             ],
           ),
         ),
@@ -1047,10 +1041,20 @@ class AppsPageState extends State<AppsPage> {
           .toList();
 
       capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
+      
+      final settingsProvider = context.read<SettingsProvider>();
+      final categoryName = listedCategories[index] ?? tr('noCategory');
+      String displayText = capFirstChar(categoryName);
+      
+      if (settingsProvider.showCategoryEmojis && listedCategories[index] != null) {
+        final emoji = CategoryEmojis.getEmojiForCategory(listedCategories[index]!);
+        displayText = '$emoji $displayText';
+      }
+      
       return ExpansionTile(
         initiallyExpanded: true,
         title: Text(
-          capFirstChar(listedCategories[index] ?? tr('noCategory')),
+          displayText,
           style: const TextStyle(fontWeight: FontWeight.bold),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

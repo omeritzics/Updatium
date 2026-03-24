@@ -268,6 +268,29 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Map<String, String> get categoryEmojis =>
+      Map<String, String>.from(jsonDecode(prefs?.getString('categoryEmojis') ?? '{}'));
+
+  void setCategoryEmojis(Map<String, String> emojis, {AppsProvider? appsProvider}) {
+    if (appsProvider != null) {
+      List<App> changedApps = appsProvider
+          .getAppValues()
+          .map((a) {
+            var n1 = a.app.categories.length;
+            a.app.categories.removeWhere((c) => !emojis.keys.contains(c));
+            return n1 > a.app.categories.length ? a.app : null;
+          })
+          .where((element) => element != null)
+          .map((e) => e as App)
+          .toList();
+      if (changedApps.isNotEmpty) {
+        appsProvider.saveApps(changedApps);
+      }
+    }
+    prefs?.setString('categoryEmojis', jsonEncode(emojis));
+    notifyListeners();
+  }
+
   Map<String, int> get categories =>
       Map<String, int>.from(jsonDecode(prefs?.getString('categories') ?? '{}'));
 
@@ -533,6 +556,15 @@ class SettingsProvider with ChangeNotifier {
 
   set safeMode(bool val) {
     prefs?.setBool('safeMode', val);
+    notifyListeners();
+  }
+
+  bool get showCategoryEmojis {
+    return prefs?.getBool('showCategoryEmojis') ?? true;
+  }
+
+  set showCategoryEmojis(bool val) {
+    prefs?.setBool('showCategoryEmojis', val);
     notifyListeners();
   }
 }

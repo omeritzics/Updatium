@@ -1038,6 +1038,19 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Flexible(child: Text(tr('showCategoryEmojis'))),
+                            Switch(
+                              value: settingsProvider.showCategoryEmojis,
+                              onChanged: (value) {
+                                settingsProvider.showCategoryEmojis = value;
+                              },
+                            ),
+                          ],
+                        ),
+                        height16,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Flexible(
                               child: Text(tr('dontShowTrackOnlyWarnings')),
                             ),
