@@ -893,7 +893,17 @@ class _UpdatiumState extends State<Updatium> {
 
           // Set theme-aware system UI overlay style for Android 10+
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            final brightness = Theme.of(context).brightness;
+            Brightness brightness;
+            if (settingsProvider.theme == ThemeSettings.dark) {
+              brightness = Brightness.dark;
+            } else if (settingsProvider.theme == ThemeSettings.light) {
+              brightness = Brightness.light;
+            } else {
+              // System theme - check platform brightness
+              final platformBrightness = MediaQuery.of(context).platformBrightness;
+              brightness = platformBrightness;
+            }
+            
             final systemNavigationBarColor = brightness == Brightness.dark
                 ? Colors.black
                 : Colors.white;
