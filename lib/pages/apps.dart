@@ -1250,7 +1250,7 @@ class AppsPageState extends State<AppsPage> {
                   initValid: true,
                   singleNullReturnButton: tr('continue'),
                   additionalWidgets: [
-                    CategoryEditorSelector(
+                    EmojiCategoryEditorSelector(
                       preselected: !showPrompt ? preselected ?? {} : {},
                       showLabelWhenNotEmpty: false,
                       onSelected: (categories) {
@@ -1564,7 +1564,7 @@ class AppsPageState extends State<AppsPage> {
             ],
             additionalWidgets: [
               height16,
-              CategoryEditorSelector(
+              EmojiCategoryEditorSelector(
                 preselected: filter.categoryFilter,
                 onSelected: (categories) {
                   filter.categoryFilter = categories.toSet();

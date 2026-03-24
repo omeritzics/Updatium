@@ -1128,7 +1128,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                         height16,
-                        const CategoryEditorSelector(
+                        const EmojiCategoryEditorSelector(
                           showLabelWhenNotEmpty: false,
                         ),
                       ],
@@ -1328,13 +1328,13 @@ class _LogsDialogState extends State<LogsDialog> {
   }
 }
 
-class CategoryEditorSelector extends StatefulWidget {
+class EmojiCategoryEditorSelector extends StatefulWidget {
   final void Function(List<String> categories)? onSelected;
   final bool singleSelect;
   final Set<String> preselected;
   final WrapAlignment alignment;
   final bool showLabelWhenNotEmpty;
-  const CategoryEditorSelector({
+  const EmojiCategoryEditorSelector({
     super.key,
     this.onSelected,
     this.singleSelect = false,
@@ -1344,17 +1344,18 @@ class CategoryEditorSelector extends StatefulWidget {
   });
 
   @override
-  State<CategoryEditorSelector> createState() => _CategoryEditorSelectorState();
+  State<EmojiCategoryEditorSelector> createState() => _EmojiCategoryEditorSelectorState();
 }
 
-class _CategoryEditorSelectorState extends State<CategoryEditorSelector> {
-  Map<String, MapEntry<int, bool>> storedValues = {};
+class _EmojiCategoryEditorSelectorState extends State<EmojiCategoryEditorSelector> {
+  Map<String, MapEntry<String, bool>> storedValues = {};
+  final TextEditingController _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var settingsProvider = context.watch<SettingsProvider>();
     var appsProvider = context.watch<AppsProvider>();
-    storedValues = settingsProvider.categories.map(
+    storedValues = settingsProvider.categoryEmojis.map(
       (key, value) => MapEntry(
         key,
         MapEntry(
@@ -1363,39 +1364,94 @@ class _CategoryEditorSelectorState extends State<CategoryEditorSelector> {
         ),
       ),
     );
-    return GeneratedForm(
-      items: [
-        [
-          GeneratedFormTagInput(
-            'categories',
-            label: tr('categories'),
-            emptyMessage: tr('noCategories'),
-            defaultValue: storedValues,
-            alignment: widget.alignment,
-            deleteConfirmationMessage: MapEntry(
-              tr('deleteCategoriesQuestion'),
-              tr('categoryDeleteWarning'),
-            ),
-            singleSelect: widget.singleSelect,
-            showLabelWhenNotEmpty: widget.showLabelWhenNotEmpty,
-          ),
-        ],
-      ],
-      onValueChanges: ((values, valid, isBuilding) {
-        if (!isBuilding) {
-          storedValues =
-              values['categories'] as Map<String, MapEntry<int, bool>>;
-          settingsProvider.setCategories(
-            storedValues.map((key, value) => MapEntry(key, value.key)),
-            appsProvider: appsProvider,
-          );
-          if (widget.onSelected != null) {
-            widget.onSelected!(
-              storedValues.keys.where((k) => storedValues[k]!.value).toList(),
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          tr('categories'),
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        height8,
+        Wrap(
+          alignment: widget.alignment,
+          children: storedValues.entries.map((entry) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              child: FilterChip(
+                label: Text('${entry.value.value} ${entry.key}'),
+                selected: entry.value.value,
+                onSelected: (selected) {
+                  setState(() {
+                    storedValues[entry.key] = MapEntry(entry.value.key, selected);
+                  });
+                },
+                deleteIcon: const Icon(Icons.close, size: 16),
+                onDeleted: () {
+                  setState(() {
+                    storedValues.remove(entry.key);
+                  });
+                },
+              ),
             );
-          }
-        }
-      }),
+          }).toList(),
+        ),
+        height8,
+        if (storedValues.isEmpty)
+          Text(
+            tr('noCategories'),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
+        height8,
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: _textController,
+                decoration: InputDecoration(
+                  labelText: tr('addCategory') + ' (emoji)',
+                  hintText: '🎮 Gaming',
+                  border: const OutlineInputBorder(),
+                ),
+                onSubmitted: (value) {
+                  if (value.trim().isNotEmpty) {
+                    final parts = value.trim().split(' ');
+                    if (parts.length >= 2) {
+                      final emoji = parts.first;
+                      final categoryName = parts.sublist(1).join(' ').trim();
+                      if (categoryName.isNotEmpty) {
+                        setState(() {
+                          storedValues[categoryName] = MapEntry(emoji, true);
+                        });
+                        _textController.clear();
+                      }
+                    }
+                  }
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
+            FilledButton.tonal(
+              onPressed: storedValues.isNotEmpty
+                  ? () {
+                      settingsProvider.setCategoryEmojis(
+                        storedValues.map((key, value) => MapEntry(key, value.key)),
+                        appsProvider: appsProvider,
+                      );
+                      if (widget.onSelected != null) {
+                        widget.onSelected!(
+                          storedValues.keys.where((k) => storedValues[k]!.value).toList(),
+                        );
+                      }
+                    }
+                  : null,
+              child: Text(tr('save')),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
