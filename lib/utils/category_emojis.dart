@@ -131,10 +131,10 @@ class CategoryEmojis {
     if (emoji != null) return emoji;
     
     // Try partial match
-    for (String key in _emojiMap.keys) {
-      if (category.toLowerCase().contains(key)) {
-        return _emojiMap[key]!;
-      }
+    final sortedKeys = _emojiMap.keys.toList();
+    sortedKeys.sort((a, b) => b.length.compareTo(a.length));
+    for (final key in sortedKeys) {
+      if (category.toLowerCase().contains(key)) return _emojiMap[key]!;
     }
     
     // Return default emoji
