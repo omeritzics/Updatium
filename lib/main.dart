@@ -397,17 +397,17 @@ class _UpdatiumState extends State<Updatium> {
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
-              surfaceContainerHighest: Colors.white.withValues(alpha: 0.12),
-              surfaceContainerHigh: Colors.white.withValues(alpha: 0.09),
-              surfaceContainer: Colors.white.withValues(alpha: 0.06),
-              surfaceContainerLow: Colors.white.withValues(alpha: 0.04),
-              surfaceContainerLowest: Colors.white.withValues(alpha: 0.02),
+              surfaceContainerHighest: Colors.white,
+              surfaceContainerHigh: Colors.white,
+              surfaceContainer: Colors.white,
+              surfaceContainerLow: Colors.white,
+              surfaceContainerLowest: Colors.white,
               surfaceDim: Colors.black,
-              surfaceBright: Colors.white.withValues(alpha: 0.05),
-              onSurface: Colors.white.withValues(alpha: 0.95),
-              onSurfaceVariant: Colors.white.withValues(alpha: 0.7),
-              outline: Colors.white.withValues(alpha: 0.25),
-              outlineVariant: Colors.white.withValues(alpha: 0.12),
+              surfaceBright: Colors.white,
+              onSurface: Colors.white,
+              onSurfaceVariant: Colors.white,
+              outline: Colors.white,
+              outlineVariant: Colors.white,
             );
           }
 
@@ -572,7 +572,7 @@ class _UpdatiumState extends State<Updatium> {
                   elevation: isDark ? 3 : 2,
                   shadowColor: isDark
                       ? Colors.black38
-                      : Colors.black.withValues(alpha: 0.2),
+                      : Colors.black,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 28,
                     vertical: 14,
@@ -643,7 +643,7 @@ class _UpdatiumState extends State<Updatium> {
                   vertical: 16,
                 ),
                 hintStyle: TextStyle(
-                  color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
+                  color: scheme.onSurfaceVariant,
                   fontWeight: FontWeight.w400,
                 ),
                 labelStyle: TextStyle(
@@ -691,7 +691,7 @@ class _UpdatiumState extends State<Updatium> {
                     vertical: 16,
                   ),
                   hintStyle: TextStyle(
-                    color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
+                    color: scheme.onSurfaceVariant,
                     fontWeight: FontWeight.w400,
                   ),
                   labelStyle: TextStyle(
@@ -757,7 +757,7 @@ class _UpdatiumState extends State<Updatium> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 tileColor: scheme.surface,
-                selectedTileColor: scheme.surface.withValues(alpha: 0.2),
+                selectedTileColor: scheme.surface,
                 iconColor: scheme.onSurfaceVariant,
                 textColor: scheme.onSurface,
                 titleTextStyle: TextStyle(
@@ -785,7 +785,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Text Selection
               textSelectionTheme: TextSelectionThemeData(
-                selectionColor: scheme.primary.withValues(alpha: 0.3),
+                selectionColor: scheme.primary,
                 selectionHandleColor: scheme.primary,
                 cursorColor: scheme.primary,
               ),
@@ -803,7 +803,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Chip Theme - preserve M3 Expressive transparency
               chipTheme: ChipThemeData(
-                backgroundColor: scheme.surface.withValues(alpha: 0.1),
+                backgroundColor: scheme.surface,
                 selectedColor: scheme.secondaryContainer,
                 disabledColor: scheme.surface,
                 labelStyle: TextStyle(
@@ -865,7 +865,7 @@ class _UpdatiumState extends State<Updatium> {
                 activeTrackColor: scheme.primary,
                 inactiveTrackColor: scheme.surfaceContainerHighest,
                 thumbColor: scheme.primary,
-                overlayColor: scheme.primary.withValues(alpha: 0.2),
+                overlayColor: scheme.primary,
                 valueIndicatorColor: scheme.primary,
               ),
 
@@ -879,7 +879,7 @@ class _UpdatiumState extends State<Updatium> {
                 }),
                 trackColor: WidgetStateProperty.resolveWith((states) {
                   if (states.contains(WidgetState.selected)) {
-                    return scheme.primary.withValues(alpha: 0.5);
+                    return scheme.primary;
                   }
                   return scheme.surfaceContainerHighest;
                 }),
