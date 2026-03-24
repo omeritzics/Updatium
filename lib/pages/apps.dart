@@ -166,8 +166,8 @@ class AppsPageState extends State<AppsPage> {
     if (categoryColorValue != null) {
       return Color(categoryColorValue).withAlpha(alpha);
     }
-    // Fallback to truly transparent color
-    return Color.fromARGB(0, 0, 0, 0);
+    // Fallback to theme-based surface color
+    return Theme.of(context).colorScheme.surface;
   }
 
   bool clearSelected() {
@@ -670,7 +670,7 @@ class AppsPageState extends State<AppsPage> {
               ...listedApps[index].app.categories.map(
                 (e) => getCategoryColor(e, 255, settingsProvider),
               ),
-              Colors.transparent,
+              Theme.of(context).colorScheme.surface,
             ],
           ),
         ),
@@ -818,7 +818,7 @@ class AppsPageState extends State<AppsPage> {
               ...listedApps[index].app.categories.map(
                 (e) => getCategoryColor(e, 40, settingsProvider),
               ),
-              Colors.transparent,
+              Theme.of(context).colorScheme.surface,
             ],
           ),
         ),
@@ -1839,8 +1839,8 @@ class AppsPageState extends State<AppsPage> {
             child: Image(
               image: const AssetImage('assets/graphics/icon_small.png'),
               color: Theme.of(context).brightness == Brightness.dark
-                  ? preserveTransparency(Colors.white, 0.4)
-                  : preserveTransparency(Colors.white, 0.3),
+                  ? preserveTransparency(Theme.of(context).colorScheme.surface, 0.4)
+                  : preserveTransparency(Theme.of(context).colorScheme.surface, 0.3),
               colorBlendMode: BlendMode.modulate,
               gaplessPlayback: true,
               errorBuilder: (context, error, stackTrace) {

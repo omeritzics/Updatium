@@ -155,7 +155,7 @@ void main() async {
   // Enable edge-to-edge mode for Android 10+ (API 29)
   if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent),
+      const SystemUiOverlayStyle(systemNavigationBarColor: Colors.white),
     );
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
@@ -887,7 +887,7 @@ class _UpdatiumState extends State<Updatium> {
                   return scheme.surfaceContainerHighest;
                 }),
                 trackOutlineColor: WidgetStateProperty.resolveWith((states) {
-                  return Colors.transparent;
+                  return Theme.of(context).colorScheme.outline;
                 }),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
