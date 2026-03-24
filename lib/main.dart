@@ -785,7 +785,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Text Selection
               textSelectionTheme: TextSelectionThemeData(
-                selectionColor: scheme.primary,
+                selectionColor: scheme.primary.withOpacity(0.4),
                 selectionHandleColor: scheme.primary,
                 cursorColor: scheme.primary,
               ),
