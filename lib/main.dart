@@ -154,9 +154,6 @@ void main() async {
 
   // Enable edge-to-edge mode for Android 10+ (API 29)
   if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(systemNavigationBarColor: Colors.white),
-    );
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
 
@@ -887,12 +884,24 @@ class _UpdatiumState extends State<Updatium> {
                   return scheme.surfaceContainerHighest;
                 }),
                 trackOutlineColor: WidgetStateProperty.resolveWith((states) {
-                  return Theme.of(context).colorScheme.outline;
+                  return scheme.outline;
                 }),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
             );
           }
+
+          // Set theme-aware system UI overlay style for Android 10+
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final brightness = Theme.of(context).brightness;
+            final systemNavigationBarColor = brightness == Brightness.dark
+                ? Colors.black
+                : Colors.white;
+            
+            SystemChrome.setSystemUIOverlayStyle(
+              SystemUiOverlayStyle(systemNavigationBarColor: systemNavigationBarColor),
+            );
+          });
 
           return MaterialApp(
             title: 'Updatium',
