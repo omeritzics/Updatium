@@ -230,6 +230,7 @@
     "versionDetection": "Versiooni tuvastamine",
     "standardVersionDetection": "Standardne versiooni tuvastamine",
     "groupByCategory": "Grupeeri kategooria järgi",
+    "showCategoryEmojis": "Kategooria-emojide näitamine",
     "listView": "Loendivaade",
     "gridView": "Ruudustikuvaade",
     "autoApkFilterByArch": "Proovi filtreerida APK-sid CPU-arhitektuuri järgi, kui võimalik",

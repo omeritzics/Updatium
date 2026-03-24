@@ -230,6 +230,7 @@
     "versionDetection": "Визначення версії",
     "standardVersionDetection": "Стандартне визначення версії",
     "groupByCategory": "Групувати за категоріями",
+    "showCategoryEmojis": "Показувати емодзі категорій",
     "listView": "Вигляд списку",
     "gridView": "Вигляд сітки",
     "autoApkFilterByArch": "Спробувати фільтрувати APK за архітектурою ЦП, якщо можливо",

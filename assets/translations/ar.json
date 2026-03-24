@@ -230,6 +230,7 @@
     "versionDetection": "اكتشاف الإصدار",
     "standardVersionDetection": "اكتشاف الإصدار القياسي",
     "groupByCategory": "التجميع حسب التصنيف",
+    "showCategoryEmojis": "عرض رموز التصنيف",
     "listView": "عرض القائمة",
     "gridView": "عرض الشبكة",
     "autoApkFilterByArch": "محاولة تصفية ملفات APK حسب بنية المعالج إذا أمكن",

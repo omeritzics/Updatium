@@ -230,6 +230,7 @@
     "versionDetection": "Versieherkenning",
     "standardVersionDetection": "Standaard versieherkenning",
     "groupByCategory": "Groeperen op categorie",
+    "showCategoryEmojis": "Categorie-emojis weergeven",
     "listView": "Lijstweergave",
     "gridView": "Rasterweergave",
     "autoApkFilterByArch": "Probeer APK's te filteren op CPU-architectuur, indien mogelijk",

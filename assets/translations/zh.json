@@ -230,6 +230,7 @@
     "versionDetection": "版本检测",
     "standardVersionDetection": "常规版本检测",
     "groupByCategory": "按类别分组",
+    "showCategoryEmojis": "显示类别表情符号",
     "listView": "列表视图",
     "gridView": "网格视图",
     "autoApkFilterByArch": "如果可能，尝试按 CPU 架构筛选 APK 文件",

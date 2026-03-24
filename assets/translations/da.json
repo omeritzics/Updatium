@@ -230,6 +230,7 @@
     "versionDetection": "Versionsregistrering",
     "standardVersionDetection": "Standard versionsregistrering",
     "groupByCategory": "Gruppér efter kategori",
+    "showCategoryEmojis": "Vis kategori-emojis",
     "listView": "Listevisning",
     "gridView": "Gittervisning",
     "autoApkFilterByArch": "Forsøg at filtrere APK'er efter CPU-arkitektur, hvis muligt",

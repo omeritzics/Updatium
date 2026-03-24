@@ -230,6 +230,7 @@
     "versionDetection": "Phát hiện phiên bản",
     "standardVersionDetection": "Phát hiện phiên bản tiêu chuẩn",
     "groupByCategory": "Nhóm theo danh mục",
+    "showCategoryEmojis": "Hiển thị emoji danh mục",
     "listView": "Chế độ xem danh sách",
     "gridView": "Chế độ xem lưới",
     "autoApkFilterByArch": "Cố gắng lọc APK theo kiến trúc CPU nếu có thể",

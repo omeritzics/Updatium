@@ -230,6 +230,7 @@
     "versionDetection": "Определение версии",
     "standardVersionDetection": "Стандартное",
     "groupByCategory": "Группировать по категориям",
+    "showCategoryEmojis": "Показывать эмодзи категорий",
     "listView": "Вид списка",
     "gridView": "Вид сетки",
     "autoApkFilterByArch": "Пытаться фильтровать APK по архитектуре процессора",

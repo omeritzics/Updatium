@@ -230,6 +230,7 @@
     "versionDetection": "Detekce verze",
     "standardVersionDetection": "Standardní detekce verze",
     "groupByCategory": "Seskupit podle kategorie",
+    "showCategoryEmojis": "Zobrazit emoji kategorií",
     "listView": "Zobrazení seznamu",
     "gridView": "Zobrazení mřížky",
     "autoApkFilterByArch": "Pokud je to možné, pokuste se filtrovat soubory APK podle architektury procesoru",

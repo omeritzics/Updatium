@@ -230,6 +230,7 @@
     "versionDetection": "تشخیص نسخه",
     "standardVersionDetection": "تشخیص نسخه استاندارد",
     "groupByCategory": "دسته‌بندی بر اساس گروه",
+    "showCategoryEmojis": "نمایش ایموجی دسته",
     "listView": "نمای لیست",
     "gridView": "نمای شبکه",
     "autoApkFilterByArch": "تلاش برای فیلتر کردن APK ها بر اساس معماری CPU در صورت امکان",

@@ -230,6 +230,7 @@
     "versionDetection": "バージョン検出",
     "standardVersionDetection": "標準のバージョン検出",
     "groupByCategory": "カテゴリー別にグループ化",
+    "showCategoryEmojis": "カテゴリー絵文字を表示",
     "listView": "リスト表示",
     "gridView": "グリッド表示",
     "autoApkFilterByArch": "可能であれば、CPUアーキテクチャによるAPKのフィルタリングを試みる",

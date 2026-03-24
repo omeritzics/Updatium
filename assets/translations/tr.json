@@ -230,6 +230,7 @@
     "versionDetection": "Sürüm tespiti",
     "standardVersionDetection": "Standart sürüm tespiti",
     "groupByCategory": "Kategoriye göre grupla",
+    "showCategoryEmojis": "Kategori emoji'lerini göster",
     "listView": "Liste görünümü",
     "gridView": "Izgara görünümü",
     "autoApkFilterByArch": "Mümkün olduğunda APK'ları CPU mimarisine göre filtrelemeye çalış",

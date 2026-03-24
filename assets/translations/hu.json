@@ -230,6 +230,7 @@
     "versionDetection": "Verziófelismerés",
     "standardVersionDetection": "Alapértelmezett verziófelismerés",
     "groupByCategory": "Csoportosítás kategória alapján",
+    "showCategoryEmojis": "Kategória emoji-k megjelenítése",
     "listView": "Lista nézet",
     "gridView": "Rács nézet",
     "autoApkFilterByArch": "APK-k CPU-architektúra szerinti szűrése, ha lehetséges",

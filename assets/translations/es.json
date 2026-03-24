@@ -247,6 +247,7 @@
     "versionDetection": "Detección de versiones",
     "standardVersionDetection": "Por versión",
     "groupByCategory": "Agrupar por categoría",
+    "showCategoryEmojis": "Mostrar emojis de categoría",
     "listView": "Vista de lista",
     "gridView": "Vista de cuadrícula",
     "autoApkFilterByArch": "Filtrar APK por arquitectura del procesador (si es posible)",

@@ -230,6 +230,7 @@
     "versionDetection": "Otkrivanje verzije",
     "standardVersionDetection": "Detekcija standardne verzije",
     "groupByCategory": "Grupiši po kategoriji",
+    "showCategoryEmojis": "Prikaži emoji kategorije",
     "listView": "Prikaz liste",
     "gridView": "Prikaz mreže",
     "autoApkFilterByArch": "Pokušajte filtrirati APK-ove po arhitekturi procesora ako je moguće",

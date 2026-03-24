@@ -1001,26 +1001,26 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                 ),
-                // Emoji overlay
-                if (categoryEmojis.isNotEmpty && settingsProvider.showCategoryEmojis)
-                  Positioned(
-                    top: 4,
-                    left: 4,
-                    child: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Text(
-                        categoryEmojis.take(2).join(' '),
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    ),
-                  ),
             ],
           ),
         ),
+        // Emoji overlay moved outside InkWell
+        if (categoryEmojis.isNotEmpty && settingsProvider.showCategoryEmojis)
+          Positioned(
+            top: 4,
+            left: 4,
+            child: Container(
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.7),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                categoryEmojis.take(2).join(' '),
+                style: const TextStyle(fontSize: 12),
+              ),
+            ),
+          ),
       );
     }
 
@@ -1042,7 +1042,6 @@ class AppsPageState extends State<AppsPage> {
 
       capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
       
-      final settingsProvider = context.read<SettingsProvider>();
       final categoryName = listedCategories[index] ?? tr('noCategory');
       String displayText = capFirstChar(categoryName);
       
