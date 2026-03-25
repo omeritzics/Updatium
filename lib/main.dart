@@ -891,6 +891,31 @@ class _UpdatiumState extends State<Updatium> {
                 }),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
+
+              // Dialog Theme for AMOLED black theme compatibility
+              dialogTheme: DialogTheme(
+                backgroundColor: scheme.surface,
+                surfaceTintColor: scheme.surfaceTint,
+                shadowColor: isDark ? Colors.black26 : Colors.black12,
+                elevation: isDark ? 6 : 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(28),
+                ),
+                titleTextStyle: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0,
+                  height: 1.33,
+                ),
+                contentTextStyle: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.5,
+                  height: 1.5,
+                ),
+              ),
             );
           }
 
