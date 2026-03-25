@@ -848,25 +848,10 @@ class _UpdatiumState extends State<Updatium> {
                 year2023: false,
               ),
 
-              // Material Design 3 2024 Expressive Centered Slider Theme - preserve M3 Expressive transparency
-              sliderTheme: SliderThemeData(
+              // Material Design 3 2024 Expressive Slider Theme - use default Expressive properties
+              sliderTheme: const SliderThemeData(
                 year2023: false,
-                trackHeight: 8,
-                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
-                overlayShape: const RoundSliderOverlayShape(overlayRadius: 28),
-                valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-                valueIndicatorTextStyle: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.25,
-                  height: 1.5,
-                ).copyWith(color: scheme.onPrimary),
                 showValueIndicator: ShowValueIndicator.onDrag,
-                activeTrackColor: scheme.primary,
-                inactiveTrackColor: scheme.surfaceContainerHighest,
-                thumbColor: scheme.primary,
-                overlayColor: scheme.primary,
-                valueIndicatorColor: scheme.primary,
               ),
 
               // Material Design 3 Switch Theme - preserve M3 Expressive transparency

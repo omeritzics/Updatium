@@ -36,10 +36,10 @@ class _AppPageState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
     // Consistent spacing constants
-    const height2 = SizedBox(height: 2);
-    const height8 = SizedBox(height: 8);
-    const height10 = SizedBox(height: 10);
-    const height24 = SizedBox(height: 24);
+    const _ = SizedBox(height: 2);
+    const _ = SizedBox(height: 8);
+    const _ = SizedBox(height: 10);
+    const _ = SizedBox(height: 24);
     const height32 = SizedBox(height: 32);
     const height85 = SizedBox(height: 85);
 
@@ -692,105 +692,5 @@ class _AppPageState extends State<AppPage> {
     );
   }
 
-  Widget _buildSimpleIcon(App app, double size) {
-    return Consumer<AppsProvider>(
-      builder: (context, appsProvider, child) {
-        final appInMemory = appsProvider.apps[app.id];
 
-        // If icon is already loaded, display it immediately
-        if (appInMemory?.icon != null) {
-          return Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(size * 0.125),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(size * 0.125),
-              child: Image.memory(
-                appInMemory!.icon!,
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
-                gaplessPlayback: true,
-                opacity: AlwaysStoppedAnimation(
-                  appInMemory.installedInfo == null ? 0.6 : 1,
-                ),
-                errorBuilder: (context, error, stackTrace) {
-                  return _buildFallbackIcon(size);
-                },
-              ),
-            ),
-          );
-        }
-
-        // Load icon asynchronously if not available
-        return FutureBuilder(
-          future: appsProvider.updateAppIcon(app.id),
-          builder: (context, snapshot) {
-            final updatedAppInMemory = appsProvider.apps[app.id];
-
-            if (updatedAppInMemory?.icon != null) {
-              return Container(
-                width: size,
-                height: size,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(size * 0.125),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(size * 0.125),
-                  child: Image.memory(
-                    updatedAppInMemory!.icon!,
-                    width: size,
-                    height: size,
-                    fit: BoxFit.cover,
-                    gaplessPlayback: true,
-                    opacity: AlwaysStoppedAnimation(
-                      updatedAppInMemory.installedInfo == null ? 0.6 : 1,
-                    ),
-                    errorBuilder: (context, error, stackTrace) {
-                      return _buildFallbackIcon(size);
-                    },
-                  ),
-                ),
-              );
-            }
-
-            // Show fallback while loading or if failed
-            return _buildFallbackIcon(size);
-          },
-        );
-      },
-    );
-  }
-
-  Widget _buildFallbackIcon(double size) {
-    var settingsProvider = context.read<SettingsProvider>();
-    bool usePureBlack =
-        settingsProvider.useBlackTheme &&
-        Theme.of(context).brightness == Brightness.dark;
-
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(size * 0.125),
-        color: usePureBlack
-            ? Colors.black
-            : Theme.of(context).colorScheme.surface,
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(size * 0.125),
-        child: Icon(
-          Icons.apps,
-          size: size * 0.5,
-          color: usePureBlack
-              ? Colors.white
-              : Theme.of(
-                  context,
-                ).colorScheme.onSurfaceVariant,
-        ),
-      ),
-    );
-  }
 }
