@@ -599,81 +599,81 @@ class _AppPageState extends State<AppPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                if (source != null &&
-                    source.combinedAppSpecificSettingFormItems.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  if (source != null &&
+                      source.combinedAppSpecificSettingFormItems.isNotEmpty)
+                    IconButton(
+                      onPressed: app?.downloadProgress != null || updating
+                          ? null
+                          : () async {
+                              var values = await showAdditionalOptionsDialog();
+                              handleAdditionalOptionChanges(values);
+                            },
+                      tooltip: tr('additionalOptions'),
+                      icon: const Icon(Icons.edit),
+                    ),
+                  if (app?.app.installedVersion != null &&
+                      app?.app.installedVersion != app?.app.latestVersion &&
+                      !isVersionDetectionStandard &&
+                      !trackOnly)
+                    IconButton(
+                      onPressed: app?.downloadProgress != null || updating
+                          ? null
+                          : showMarkUpdatedDialog,
+                      tooltip: tr('markUpdated'),
+                      icon: const Icon(Icons.done),
+                    ),
+                  if ((!isVersionDetectionStandard || trackOnly) &&
+                      app?.app.installedVersion != null &&
+                      app?.app.installedVersion == app?.app.latestVersion)
+                    IconButton(
+                      onPressed: app?.app == null || updating
+                          ? null
+                          : () {
+                              app!.app.installedVersion = null;
+                              appsProvider.saveApps([app.app]);
+                            },
+                      icon: const Icon(Icons.restore_rounded),
+                      tooltip: tr('resetInstallStatus'),
+                    ),
+                  const SizedBox(width: 16.0),
+                  Expanded(child: getInstallOrUpdateButton()),
+                  const SizedBox(width: 16.0),
                   IconButton(
                     onPressed: app?.downloadProgress != null || updating
-                        ? null
-                        : () async {
-                            var values = await showAdditionalOptionsDialog();
-                            handleAdditionalOptionChanges(values);
-                          },
-                    tooltip: tr('additionalOptions'),
-                    icon: const Icon(Icons.edit),
-                  ),
-                if (app?.app.installedVersion != null &&
-                    app?.app.installedVersion != app?.app.latestVersion &&
-                    !isVersionDetectionStandard &&
-                    !trackOnly)
-                  IconButton(
-                    onPressed: app?.downloadProgress != null || updating
-                        ? null
-                        : showMarkUpdatedDialog,
-                    tooltip: tr('markUpdated'),
-                    icon: const Icon(Icons.done),
-                  ),
-                if ((!isVersionDetectionStandard || trackOnly) &&
-                    app?.app.installedVersion != null &&
-                    app?.app.installedVersion == app?.app.latestVersion)
-                  IconButton(
-                    onPressed: app?.app == null || updating
                         ? null
                         : () {
-                            app!.app.installedVersion = null;
-                            appsProvider.saveApps([app.app]);
+                            appsProvider
+                                .removeAppsWithModal(
+                                  context,
+                                  app != null ? [app.app] : [],
+                                )
+                                .then((value) {
+                                  if (value == true) {
+                                    Navigator.of(context).pop();
+                                  }
+                                });
                           },
-                    icon: const Icon(Icons.restore_rounded),
-                    tooltip: tr('resetInstallStatus'),
+                    tooltip: tr('remove'),
+                    icon: const Icon(Icons.delete),
                   ),
-                const SizedBox(width: 16.0),
-                Expanded(child: getInstallOrUpdateButton()),
-                const SizedBox(width: 16.0),
-                IconButton(
-                  onPressed: app?.downloadProgress != null || updating
-                      ? null
-                      : () {
-                          appsProvider
-                              .removeAppsWithModal(
-                                context,
-                                app != null ? [app.app] : [],
-                              )
-                              .then((value) {
-                                if (value == true) {
-                                  Navigator.of(context).pop();
-                                }
-                              });
-                        },
-                  tooltip: tr('remove'),
-                  icon: const Icon(Icons.delete),
-                ),
-              ],
-            ),
-          ),
-          if (app?.downloadProgress != null)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-              child: LinearProgressIndicator(
-                value: app!.downloadProgress! >= 0
-                    ? app.downloadProgress! / 100
-                    : null,
+                ],
               ),
             ),
-        ],
+            if (app?.downloadProgress != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                child: LinearProgressIndicator(
+                  value: app!.downloadProgress! >= 0
+                      ? app.downloadProgress! / 100
+                      : null,
+                ),
+              ),
+          ],
         ),
       ),
     );
