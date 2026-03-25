@@ -896,7 +896,7 @@ class _UpdatiumState extends State<Updatium> {
               ),
 
               // Dialog Theme for AMOLED black theme compatibility
-              dialogTheme: DialogTheme(
+              dialogTheme: DialogThemeData(
                 backgroundColor: scheme.surface,
                 surfaceTintColor: scheme.surfaceTint,
                 shadowColor: isDark ? Colors.black26 : Colors.black12,

@@ -587,16 +587,18 @@ class _AppPageState extends State<AppPage> {
       ),
     );
 
-    getBottomSheetMenu() => Padding(
-      padding: EdgeInsets.fromLTRB(
-        16,
-        8,
-        16,
-        MediaQuery.of(context).padding.bottom + 16,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
+    getBottomSheetMenu() => Container(
+      color: Theme.of(context).colorScheme.surface,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(
+          16,
+          8,
+          16,
+          MediaQuery.of(context).padding.bottom + 16,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
             child: Row(
@@ -672,6 +674,7 @@ class _AppPageState extends State<AppPage> {
               ),
             ),
         ],
+        ),
       ),
     );
 
