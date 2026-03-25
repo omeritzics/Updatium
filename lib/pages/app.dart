@@ -588,7 +588,7 @@ class _AppPageState extends State<AppPage> {
     );
 
     getBottomSheetMenu() => Container(
-      color: Theme.of(context).colorScheme.surface,
+      color: Theme.of(context).colorScheme.surfaceContainerLow,
       child: Padding(
         padding: EdgeInsets.fromLTRB(
           16,
@@ -671,6 +671,10 @@ class _AppPageState extends State<AppPage> {
                 value: app!.downloadProgress! >= 0
                     ? app.downloadProgress! / 100
                     : null,
+                backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Theme.of(context).colorScheme.primary,
+                ),
               ),
             ),
         ],
