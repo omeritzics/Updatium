@@ -66,6 +66,9 @@ jobs:
           # This replaces the existing applicationId with a unique one for this commit
           sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle.kts || true
           
+          # Remove debug suffix to avoid invalid package name conflicts
+          sed -i 's/applicationIdSuffix = ".debug"/applicationIdSuffix = ""/g' android/app/build.gradle.kts || true
+          
           # Build optimized debug APK for the normal flavor
           # Flutter-level optimizations only (no Android build config changes)
           flutter build apk --debug --flavor normal \
