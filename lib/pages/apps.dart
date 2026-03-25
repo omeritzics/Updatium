@@ -639,7 +639,7 @@ class AppsPageState extends State<AppsPage> {
           }
 
           return SizedBox(
-            width: 120,
+            width: 140,
             height: double.infinity,
             child: Center(child: action),
           );
