@@ -623,22 +623,20 @@ class _AppPageState extends State<AppPage> {
                   IconButton(
                     onPressed: app?.downloadProgress != null || updating
                         ? null
-                        : showMarkUpdatedDialog,
-                    tooltip: tr('markUpdated'),
-                    icon: const Icon(Icons.done),
-                  ),
-                if ((!isVersionDetectionStandard || trackOnly) &&
-                    app?.app.installedVersion != null &&
-                    app?.app.installedVersion == app?.app.latestVersion)
-                  IconButton(
-                    onPressed: app?.app == null || updating
-                        ? null
                         : () {
-                            app!.app.installedVersion = null;
-                            appsProvider.saveApps([app.app]);
+                            appsProvider
+                                .removeAppsWithModal(
+                                  context,
+                                  app != null ? [app.app] : [],
+                                )
+                                .then((value) {
+                                  if (value == true) {
+                                    Navigator.of(context).pop();
+                                  }
+                                });
                           },
-                    icon: const Icon(Icons.restore_rounded),
-                    tooltip: tr('resetInstallStatus'),
+                    tooltip: tr('remove'),
+                    icon: const Icon(Icons.delete),
                   ),
                 const SizedBox(width: 16.0),
                 Expanded(child: getInstallOrUpdateButton()),
