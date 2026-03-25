@@ -540,7 +540,7 @@ class _UpdatiumState extends State<Updatium> {
                 ),
                 margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                 surfaceTintColor: scheme.surfaceTint,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
+                shadowColor: isDark ? Colors.black.withValues(alpha: 0.26) : Colors.black.withValues(alpha: 0.12),
               ),
               // Expressive FilledButton with tonal styling - preserve M3 Expressive transparency
               filledButtonTheme: FilledButtonThemeData(
@@ -557,7 +557,7 @@ class _UpdatiumState extends State<Updatium> {
                       ? scheme.onSecondaryContainer
                       : scheme.onSecondaryContainer,
                   elevation: isDark ? 2 : 1,
-                  shadowColor: isDark ? Colors.black26 : Colors.black12,
+                  shadowColor: isDark ? Colors.black.withValues(alpha: 0.26) : Colors.black.withValues(alpha: 0.12),
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.1,
@@ -571,8 +571,8 @@ class _UpdatiumState extends State<Updatium> {
                   shape: const StadiumBorder(),
                   elevation: isDark ? 3 : 2,
                   shadowColor: isDark
-                      ? Colors.black38
-                      : Colors.black26,
+                      ? Colors.black.withValues(alpha: 0.38)
+                      : Colors.black.withValues(alpha: 0.26),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 28,
                     vertical: 14,
@@ -730,7 +730,7 @@ class _UpdatiumState extends State<Updatium> {
                 foregroundColor: scheme.onSurface,
                 elevation: 0,
                 scrolledUnderElevation: 1,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
+                shadowColor: isDark ? Colors.black.withValues(alpha: 0.26) : Colors.black.withValues(alpha: 0.12),
                 surfaceTintColor: scheme.surfaceTint,
                 centerTitle: true,
                 titleTextStyle: TextStyle(
@@ -785,7 +785,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Text Selection
               textSelectionTheme: TextSelectionThemeData(
-                selectionColor: scheme.primary.withOpacity(0.4),
+                selectionColor: scheme.primary,
                 selectionHandleColor: scheme.primary,
                 cursorColor: scheme.primary,
               ),
@@ -879,7 +879,7 @@ class _UpdatiumState extends State<Updatium> {
                 }),
                 trackColor: WidgetStateProperty.resolveWith((states) {
                   if (states.contains(WidgetState.selected)) {
-                    return scheme.primary;
+                    return scheme.primary.withValues(alpha: 0.5);
                   }
                   return scheme.surfaceContainerHighest;
                 }),

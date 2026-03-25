@@ -88,7 +88,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: colorScheme.surface.withValues(alpha: 0.1),
+                        color: colorScheme.surfaceContainer,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(

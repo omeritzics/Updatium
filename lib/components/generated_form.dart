@@ -556,9 +556,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                               ),
                               child: ChoiceChip(
                                 label: Text(e2.key),
-                                backgroundColor: Color(
-                                  e2.value.key,
-                                ).withAlpha(50),
+                                backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
                                 selectedColor: Color(e2.value.key),
                                 visualDensity: VisualDensity.compact,
                                 selected: e2.value.value,

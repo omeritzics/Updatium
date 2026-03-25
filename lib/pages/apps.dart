@@ -648,7 +648,7 @@ class AppsPageState extends State<AppsPage> {
 
       var transparent = Theme.of(
         context,
-      ).colorScheme.surface.withAlpha(0).toARGB32();
+      ).colorScheme.surface;
       List<double> stops = [
         ...listedApps[index].app.categories.asMap().entries.map(
           (e) =>
@@ -803,7 +803,7 @@ class AppsPageState extends State<AppsPage> {
               listedApps[index].app.latestVersion;
       var transparent = Theme.of(
         context,
-      ).colorScheme.surface.withAlpha(0).value;
+      ).colorScheme.surface;
       final categories = listedApps[index].app.categories;
       final stops = categoryStops(categories);
 

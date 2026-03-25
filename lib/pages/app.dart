@@ -204,18 +204,12 @@ class _AppPageState extends State<AppPage> {
                                   Theme.of(context).brightness ==
                                       Brightness.dark;
                               if (usePureBlack) {
-                                return Colors.white.withValues(alpha: 0.16);
+                                return Theme.of(context).colorScheme.surfaceContainerHighest;
                               }
-                              return (Theme.of(context).brightness ==
+                              return Theme.of(context).brightness ==
                                           Brightness.light
                                       ? Theme.of(context).primaryColor
-                                      : Theme.of(context).primaryColorLight)
-                                  .withAlpha(
-                                    Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? 20
-                                        : 40,
-                                  );
+                                      : Theme.of(context).primaryColorLight;
                             }()
                           : null,
                     ),
@@ -404,17 +398,12 @@ class _AppPageState extends State<AppPage> {
                               settingsProvider.useBlackTheme &&
                               Theme.of(context).brightness == Brightness.dark;
                           if (usePureBlack) {
-                            return Colors.white.withValues(alpha: 0.16);
+                            return Theme.of(context).colorScheme.surfaceContainerHighest;
                           }
-                          return (Theme.of(context).brightness ==
+                          return Theme.of(context).brightness ==
                                       Brightness.light
                                   ? Theme.of(context).primaryColor
-                                  : Theme.of(context).primaryColorLight)
-                              .withAlpha(
-                                Theme.of(context).brightness == Brightness.light
-                                    ? 20
-                                    : 40,
-                              );
+                                  : Theme.of(context).primaryColorLight;
                         }()
                       : null,
                 ),
@@ -787,8 +776,8 @@ class _AppPageState extends State<AppPage> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(size * 0.125),
         color: usePureBlack
-            ? Colors.black.withValues(alpha: 0.2)
-            : Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
+            ? Colors.black
+            : Theme.of(context).colorScheme.surface,
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(size * 0.125),
@@ -796,10 +785,10 @@ class _AppPageState extends State<AppPage> {
           Icons.apps,
           size: size * 0.5,
           color: usePureBlack
-              ? Colors.white.withValues(alpha: 0.6)
+              ? Colors.white
               : Theme.of(
                   context,
-                ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                ).colorScheme.onSurfaceVariant,
         ),
       ),
     );
