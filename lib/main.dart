@@ -418,6 +418,115 @@ class _UpdatiumState extends State<Updatium> {
 
           // Shared theme component generator with Material Design Expressive
           ThemeData createTheme(ColorScheme scheme, bool isDark) {
+            // Define text theme as local variable for reusability
+            final textTheme = TextTheme(
+              displayLarge: TextStyle(
+                fontSize: 57,
+                fontWeight: FontWeight.w400,
+                letterSpacing: -0.25,
+                height: 1.12,
+                color: scheme.onSurface,
+              ),
+              displayMedium: TextStyle(
+                fontSize: 45,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0,
+                height: 1.16,
+                color: scheme.onSurface,
+              ),
+              displaySmall: TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0,
+                height: 1.22,
+                color: scheme.onSurface,
+              ),
+              headlineLarge: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0,
+                height: 1.25,
+                color: scheme.onSurface,
+              ),
+              headlineMedium: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0,
+                height: 1.29,
+                color: scheme.onSurface,
+              ),
+              headlineSmall: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0,
+                height: 1.33,
+                color: scheme.onSurface,
+              ),
+              titleLarge: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0,
+                height: 1.27,
+                color: scheme.onSurface,
+              ),
+              titleMedium: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.15,
+                height: 1.5,
+                color: scheme.onSurface,
+              ),
+              titleSmall: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+                height: 1.43,
+                color: scheme.onSurface,
+              ),
+              bodyLarge: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.5,
+                height: 1.5,
+                color: scheme.onSurface,
+              ),
+              bodyMedium: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.25,
+                height: 1.5,
+                color: scheme.onSurface,
+              ),
+              bodySmall: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.4,
+                height: 1.33,
+                color: scheme.onSurface,
+              ),
+              labelLarge: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+                height: 1.43,
+                color: scheme.onSurface,
+              ),
+              labelMedium: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.5,
+                height: 1.33,
+                color: scheme.onSurface,
+              ),
+              labelSmall: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.5,
+                height: 1.27,
+                color: scheme.onSurface,
+              ),
+            );
+
             return ThemeData(
               useMaterial3: true,
               colorScheme: scheme,
@@ -426,113 +535,7 @@ class _UpdatiumState extends State<Updatium> {
                   : 'Inter',
 
               // Expressive Typography
-              textTheme: TextTheme(
-                displayLarge: TextStyle(
-                  fontSize: 57,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: -0.25,
-                  height: 1.12,
-                  color: scheme.onSurface,
-                ),
-                displayMedium: TextStyle(
-                  fontSize: 45,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.16,
-                  color: scheme.onSurface,
-                ),
-                displaySmall: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.22,
-                  color: scheme.onSurface,
-                ),
-                headlineLarge: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.25,
-                  color: scheme.onSurface,
-                ),
-                headlineMedium: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.29,
-                  color: scheme.onSurface,
-                ),
-                headlineSmall: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.33,
-                  color: scheme.onSurface,
-                ),
-                titleLarge: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0,
-                  height: 1.27,
-                  color: scheme.onSurface,
-                ),
-                titleMedium: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.15,
-                  height: 1.5,
-                  color: scheme.onSurface,
-                ),
-                titleSmall: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1,
-                  height: 1.43,
-                  color: scheme.onSurface,
-                ),
-                bodyLarge: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.5,
-                  height: 1.5,
-                  color: scheme.onSurface,
-                ),
-                bodyMedium: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.25,
-                  height: 1.5,
-                  color: scheme.onSurface,
-                ),
-                bodySmall: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.4,
-                  height: 1.33,
-                  color: scheme.onSurface,
-                ),
-                labelLarge: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1,
-                  height: 1.43,
-                  color: scheme.onSurface,
-                ),
-                labelMedium: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.5,
-                  height: 1.33,
-                  color: scheme.onSurface,
-                ),
-                labelSmall: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.5,
-                  height: 1.27,
-                  color: scheme.onSurface,
-                ),
-              ),
+              textTheme: textTheme,
 
               // Expressive Card Design - preserve M3 Expressive transparency
               cardTheme: CardThemeData(
@@ -901,20 +904,8 @@ class _UpdatiumState extends State<Updatium> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(28),
                 ),
-                titleTextStyle: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0,
-                  height: 1.33,
-                ),
-                contentTextStyle: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.5,
-                  height: 1.5,
-                ),
+                titleTextStyle: textTheme.headlineSmall,
+                contentTextStyle: textTheme.bodyLarge,
               ),
             );
           }
