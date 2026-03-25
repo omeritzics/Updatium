@@ -431,7 +431,7 @@ class SettingsProvider with ChangeNotifier {
 
   Future<void> pickExportDir({bool remove = false}) async {
     // DocMan functionality removed
-    var currentOneWayDataSyncDir = await getExportDir();
+    await getExportDir();
     if (!remove) {
       // SAF picker functionality removed
     }

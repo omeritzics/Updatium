@@ -373,327 +373,50 @@ class _UpdatiumState extends State<Updatium> {
     return WithForegroundTask(
       child: DynamicColorBuilder(
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-          ColorScheme lightColorScheme;
-          ColorScheme darkColorScheme;
 
           // Configure ColorScheme using Material Design tokens
           if (lightDynamic != null &&
               darkDynamic != null &&
               settingsProvider.useMaterialYou) {
-            lightColorScheme = lightDynamic;
-            darkColorScheme = darkDynamic;
           } else {
             // Use Material Design tokens for light theme
-            lightColorScheme = ColorScheme.fromSeed(
-              seedColor: settingsProvider.themeColor,
-              brightness: Brightness.light,
-            );
             // Use Material Design tokens for dark theme  
-            darkColorScheme = ColorScheme.fromSeed(
-              seedColor: settingsProvider.themeColor,
-              brightness: Brightness.dark,
-            );
           }
 
-          // Apply AMOLED black theme with Material Design tokens - much darker than regular dark theme
+          // Apply AMOLED black theme with Material Design tokens - slightly brighter than pure black
           if (settingsProvider.useBlackTheme) {
-            darkColorScheme = ColorScheme.fromSeed(
-              seedColor: updatiumThemeColor,
-              brightness: Brightness.dark,
-            ).copyWith(
-              // Pure black surfaces for AMOLED displays
-              surface: Colors.black,
-              surfaceContainerHighest: Color(0xFF0D1117),  // Much darker than standard
-              surfaceContainerHigh: Color(0xFF0A0E14),   // Much darker than standard
-              surfaceContainer: Color(0xFF070B0F),    // Much darker than standard
-              surfaceContainerLow: Color(0xFF040509),     // Much darker than standard
-              surfaceContainerLowest: Color(0xFF020307),  // Much darker than standard
-              surfaceDim: Colors.black,
-              surfaceBright: Color(0xFF0A0E14),
-              // High contrast white text for pure black background
-              onSurface: Colors.white,
-              onSurfaceVariant: Colors.white70,
-              outline: Colors.white70,
-              outlineVariant: Colors.white54,
-            );
           }
 
           if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
 
           // Shared theme component generator with Material Design Expressive
-          ThemeData createTheme(ColorScheme scheme, bool isDark) {
-            return ThemeData(
-              useMaterial3: true,
-              colorScheme: scheme,
-              fontFamily: settingsProvider.useSystemFont
-                  ? 'SystemFont'
-                  : 'Inter',
-
-              // Expressive Typography
-              textTheme: TextTheme(
-                displayLarge: TextStyle(
-                  fontSize: 57,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: -0.25,
-                  height: 1.12,
-                  color: scheme.onSurface,
-                ),
-                displayMedium: TextStyle(
-                  fontSize: 45,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.16,
-                  color: scheme.onSurface,
-                ),
-                displaySmall: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.22,
-                  color: scheme.onSurface,
-                ),
-                headlineLarge: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.25,
-                  color: scheme.onSurface,
-                ),
-                headlineMedium: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.29,
-                  color: scheme.onSurface,
-                ),
-                headlineSmall: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.33,
-                  color: scheme.onSurface,
-                ),
-                titleLarge: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0,
-                  height: 1.27,
-                  color: scheme.onSurface,
-                ),
-                titleMedium: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.15,
-                  height: 1.5,
-                  color: scheme.onSurface,
-                ),
-                titleSmall: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1,
-                  height: 1.43,
-                  color: scheme.onSurface,
-                ),
-                bodyLarge: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.5,
-                  height: 1.5,
-                  color: scheme.onSurface,
-                ),
-                bodyMedium: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.25,
-                  height: 1.5,
-                  color: scheme.onSurface,
-                ),
-                bodySmall: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.4,
-                  height: 1.33,
-                  color: scheme.onSurface,
-                ),
-                labelLarge: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1,
-                  height: 1.43,
-                  color: scheme.onSurface,
-                ),
-                labelMedium: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.5,
-                  height: 1.33,
-                  color: scheme.onSurface,
-                ),
-                labelSmall: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.5,
-                  height: 1.27,
-                  color: scheme.onSurface,
-                ),
-              ),
-
-              // Material Expressive Card Theme - use default Expressive properties
-              cardTheme: const CardThemeData(),
-              // Material Expressive FilledButton - use default Expressive properties
-              filledButtonTheme: const FilledButtonThemeData(),
-
-              // Material Expressive ElevatedButton - use default Expressive properties
-              elevatedButtonTheme: const ElevatedButtonThemeData(),
-
-              // Material Expressive OutlinedButton - use default Expressive properties
-              outlinedButtonTheme: const OutlinedButtonThemeData(),
-
-              // Material Expressive TextButton - use default Expressive properties
-              textButtonTheme: const TextButtonThemeData(),
-              // Material Expressive Text Fields - use default Expressive properties
-              inputDecorationTheme: const InputDecorationTheme(),
-
-              // Material 3 Menu Theme
-              dropdownMenuTheme: DropdownMenuThemeData(
-                menuStyle: MenuStyle(
-                  backgroundColor: WidgetStateProperty.all(
-                    scheme.surfaceContainer,
-                  ),
-                  surfaceTintColor: WidgetStateProperty.all(scheme.surfaceTint),
-                  elevation: WidgetStateProperty.all(3),
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  padding: WidgetStateProperty.all(EdgeInsets.zero),
-                ),
-                inputDecorationTheme: InputDecorationTheme(
-                  filled: true,
-                  fillColor: scheme.surfaceContainerHighest,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide.none,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(color: scheme.primary, width: 2),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  hintStyle: TextStyle(
-                    color: scheme.onSurfaceVariant,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  labelStyle: TextStyle(
-                    color: scheme.onSurfaceVariant,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  floatingLabelStyle: TextStyle(
-                    color: scheme.primary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-
-              // Material 3 Extended Floating Action Button
-              floatingActionButtonTheme: FloatingActionButtonThemeData(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                ),
-                elevation: isDark ? 6 : 8,
-                extendedPadding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 16,
-                ),
-                extendedTextStyle: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1,
-                ),
-                foregroundColor: scheme.onPrimary,
-                backgroundColor: scheme.primary,
-                iconSize: 24,
-              ),
-
-              // Expressive App Bar
-              appBarTheme: AppBarTheme(
-                backgroundColor: scheme.surface,
-                foregroundColor: scheme.onSurface,
-                elevation: 0,
-                scrolledUnderElevation: 1,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
-                surfaceTintColor: scheme.surfaceTint,
-                centerTitle: true,
-                titleTextStyle: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: -0.5,
-                  height: 1.27,
-                ),
-                iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
-                actionsIconTheme: IconThemeData(
-                  color: scheme.onSurface,
-                  size: 24,
-                ),
-              ),
-
-              // Material Expressive List Tiles - use default Expressive properties
-              listTileTheme: const ListTileThemeData(),
-
-              // Expressive Page Transitions
-              pageTransitionsTheme: const PageTransitionsTheme(
-                builders: {
-                  TargetPlatform.android:
-                      PredictiveBackPageTransitionsBuilder(),
-                  TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-                },
-              ),
-
-              // Expressive Text Selection
-              textSelectionTheme: TextSelectionThemeData(
-                selectionColor: scheme.primary,
-                selectionHandleColor: scheme.primary,
-                cursorColor: scheme.primary,
-              ),
-
-              // Expressive Touch Feedback
-              splashFactory: InkRipple.splashFactory,
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
 
               // Expressive Divider
-              dividerTheme: DividerThemeData(
+              DividerThemeData(
                 color: scheme.outlineVariant,
                 thickness: 1,
                 space: 1,
-              ),
+              );
 
               // Material Expressive Chip Theme - use default Expressive properties
-              chipTheme: const ChipThemeData(),
+              const ChipThemeData();
 
               // Material Expressive Bottom Navigation Bar - use default Expressive properties
-              bottomNavigationBarTheme: const BottomNavigationBarThemeData(),
+              const BottomNavigationBarThemeData();
 
               // Material Design 3 2024 Progress Indicators
-              progressIndicatorTheme: const ProgressIndicatorThemeData(
+              const ProgressIndicatorThemeData(
                 year2023: false,
-              ),
+              );
 
               // Material Design 3 2024 Expressive Slider Theme - use default Expressive properties
-              sliderTheme: const SliderThemeData(
+              const SliderThemeData(
                 year2023: false,
                 showValueIndicator: ShowValueIndicator.onDrag,
-              ),
+              );
 
               // Material Expressive Switch Theme - use default Expressive properties
-              switchTheme: const SwitchThemeData(),
+              const SwitchThemeData();
             );
           }
 

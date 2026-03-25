@@ -398,7 +398,7 @@ class _AppPageState extends State<AppPage> {
                               settingsProvider.useBlackTheme &&
                               Theme.of(context).brightness == Brightness.dark;
                           if (usePureBlack) {
-                            return Theme.of(context).colorScheme.surfaceContainerHighest;
+                            return Colors.black;
                           }
                           return Theme.of(context).brightness ==
                                       Brightness.light
