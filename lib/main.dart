@@ -542,78 +542,17 @@ class _UpdatiumState extends State<Updatium> {
                 surfaceTintColor: scheme.surfaceTint,
                 shadowColor: isDark ? Colors.black.withValues(alpha: 0.26) : Colors.black.withValues(alpha: 0.12),
               ),
-              // Expressive FilledButton with tonal styling - preserve M3 Expressive transparency
-              filledButtonTheme: FilledButtonThemeData(
-                style: FilledButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 14,
-                  ),
-                  backgroundColor: isDark
-                      ? scheme.secondaryContainer
-                      : scheme.secondaryContainer,
-                  foregroundColor: isDark
-                      ? scheme.onSecondaryContainer
-                      : scheme.onSecondaryContainer,
-                  elevation: isDark ? 2 : 1,
-                  shadowColor: isDark ? Colors.black.withValues(alpha: 0.26) : Colors.black.withValues(alpha: 0.12),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
-                  ),
-                ),
-              ),
+              // Material Expressive FilledButton - use default Expressive properties
+              filledButtonTheme: const FilledButtonThemeData(),
 
-              // Expressive ElevatedButton with subtle shadows - preserve M3 Expressive transparency
-              elevatedButtonTheme: ElevatedButtonThemeData(
-                style: ElevatedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  elevation: isDark ? 3 : 2,
-                  shadowColor: isDark
-                      ? Colors.black.withValues(alpha: 0.38)
-                      : Colors.black.withValues(alpha: 0.26),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 14,
-                  ),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
-                  ),
-                ),
-              ),
+              // Material Expressive ElevatedButton - use default Expressive properties
+              elevatedButtonTheme: const ElevatedButtonThemeData(),
 
-              // Expressive OutlinedButton
-              outlinedButtonTheme: OutlinedButtonThemeData(
-                style: OutlinedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  side: BorderSide(color: scheme.outline, width: 1.5),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 14,
-                  ),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
-                  ),
-                ),
-              ),
+              // Material Expressive OutlinedButton - use default Expressive properties
+              outlinedButtonTheme: const OutlinedButtonThemeData(),
 
-              // Expressive TextButton
-              textButtonTheme: TextButtonThemeData(
-                style: TextButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
-                  ),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
-                  ),
-                ),
-              ),
+              // Material Expressive TextButton - use default Expressive properties
+              textButtonTheme: const TextButtonThemeData(),
               // Material 3 Filled Text Fields
               inputDecorationTheme: InputDecorationTheme(
                 filled: true,

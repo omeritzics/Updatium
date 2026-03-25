@@ -510,6 +510,7 @@ class AppsPageState extends State<AppsPage> {
         if (refreshingSince != null || appsProvider.loadingApps)
           SliverToBoxAdapter(
             child: LinearProgressIndicator(
+              year2023: false,
               value: appsProvider.loadingApps
                   ? null
                   : appsProvider
@@ -1017,6 +1018,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                     child: Center(
                       child: CircularProgressIndicator(
+                        year2023: false,
                         value: listedApps[index].downloadProgress! >= 0
                             ? listedApps[index].downloadProgress! / 100
                             : null,

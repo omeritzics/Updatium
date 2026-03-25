@@ -655,6 +655,7 @@ class _AppPageState extends State<AppPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
               child: LinearProgressIndicator(
+                year2023: false,
                 value: app!.downloadProgress! >= 0
                     ? app.downloadProgress! / 100
                     : null,

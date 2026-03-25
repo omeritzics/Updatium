@@ -281,7 +281,9 @@ class AddAppPageState extends State<AddAppPage> {
         gettingAppInfo
             ? Semantics(
                 label: tr('gettingAppInfo'),
-                child: const CircularProgressIndicator(),
+                child: const CircularProgressIndicator(
+                  year2023: false,
+                ),
               )
             : Semantics(
                 button: true,
@@ -580,7 +582,9 @@ class AddAppPageState extends State<AddAppPage> {
         searching
             ? Semantics(
                 label: tr('searching'),
-                child: const CircularProgressIndicator(),
+                child: const CircularProgressIndicator(
+                  year2023: false,
+                ),
               )
             : Semantics(
                 button: true,

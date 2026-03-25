@@ -435,7 +435,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     const Column(
                       children: [
                         SizedBox(height: 14),
-                        LinearProgressIndicator(),
+                        LinearProgressIndicator(
+                          year2023: false,
+                        ),
                         SizedBox(height: 14),
                       ],
                     )
