@@ -66,8 +66,8 @@ jobs:
           # This replaces the existing applicationId with a unique one for this commit
           sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle.kts || true
           
-          # Build tree-shaken debug APK for the normal flavor
-          # --split-debug-info and --obfuscate enable tree shaking even for debug builds
+          # Build optimized debug APK for the normal flavor
+          # Flutter-level optimizations only (no Android build config changes)
           flutter build apk --debug --flavor normal \
             --split-debug-info=build/debug-info \
             --obfuscate \

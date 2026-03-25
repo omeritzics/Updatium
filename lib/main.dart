@@ -376,38 +376,45 @@ class _UpdatiumState extends State<Updatium> {
           ColorScheme lightColorScheme;
           ColorScheme darkColorScheme;
 
-          // Configure ColorScheme (Material You vs Seed)
+          // Configure ColorScheme using Material Design tokens
           if (lightDynamic != null &&
               darkDynamic != null &&
               settingsProvider.useMaterialYou) {
             lightColorScheme = lightDynamic;
             darkColorScheme = darkDynamic;
           } else {
+            // Use Material Design tokens for light theme
             lightColorScheme = ColorScheme.fromSeed(
               seedColor: settingsProvider.themeColor,
+              brightness: Brightness.light,
             );
+            // Use Material Design tokens for dark theme  
             darkColorScheme = ColorScheme.fromSeed(
               seedColor: settingsProvider.themeColor,
               brightness: Brightness.dark,
             );
           }
 
-          // Apply pure black surface for AMOLED black theme
-          // Apply semi-transparent surface colors for AMOLED black theme
+          // Apply AMOLED black theme with Material Design tokens - much darker than regular dark theme
           if (settingsProvider.useBlackTheme) {
-            darkColorScheme = darkColorScheme.copyWith(
+            darkColorScheme = ColorScheme.fromSeed(
+              seedColor: updatiumThemeColor,
+              brightness: Brightness.dark,
+            ).copyWith(
+              // Pure black surfaces for AMOLED displays
               surface: Colors.black,
-              surfaceContainerHighest: Color(0xFF2A2A2A),
-              surfaceContainerHigh: Color(0xFF242424),
-              surfaceContainer: Color(0xFF1E1E1E),
-              surfaceContainerLow: Color(0xFF181818),
-              surfaceContainerLowest: Color(0xFF121212),
+              surfaceContainerHighest: Color(0xFF0D1117),  // Much darker than standard
+              surfaceContainerHigh: Color(0xFF0A0E14),   // Much darker than standard
+              surfaceContainer: Color(0xFF070B0F),    // Much darker than standard
+              surfaceContainerLow: Color(0xFF040509),     // Much darker than standard
+              surfaceContainerLowest: Color(0xFF020307),  // Much darker than standard
               surfaceDim: Colors.black,
-              surfaceBright: Color(0xFF1E1E1E),
+              surfaceBright: Color(0xFF0A0E14),
+              // High contrast white text for pure black background
               onSurface: Colors.white,
-              onSurfaceVariant: Colors.white,
-              outline: Colors.white,
-              outlineVariant: Colors.white,
+              onSurfaceVariant: Colors.white70,
+              outline: Colors.white70,
+              outlineVariant: Colors.white54,
             );
           }
 
@@ -531,17 +538,8 @@ class _UpdatiumState extends State<Updatium> {
                 ),
               ),
 
-              // Expressive Card Design - preserve M3 Expressive transparency
-              cardTheme: CardThemeData(
-                elevation: isDark ? 2 : 1,
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                surfaceTintColor: scheme.surfaceTint,
-                shadowColor: isDark ? Colors.black.withValues(alpha: 0.26) : Colors.black.withValues(alpha: 0.12),
-              ),
+              // Material Expressive Card Theme - use default Expressive properties
+              cardTheme: const CardThemeData(),
               // Material Expressive FilledButton - use default Expressive properties
               filledButtonTheme: const FilledButtonThemeData(),
 
@@ -553,47 +551,8 @@ class _UpdatiumState extends State<Updatium> {
 
               // Material Expressive TextButton - use default Expressive properties
               textButtonTheme: const TextButtonThemeData(),
-              // Material 3 Filled Text Fields
-              inputDecorationTheme: InputDecorationTheme(
-                filled: true,
-                fillColor: scheme.surfaceContainer,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide.none,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.primary, width: 2),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.error, width: 2),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.error, width: 2),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-                hintStyle: TextStyle(
-                  color: scheme.onSurfaceVariant,
-                  fontWeight: FontWeight.w400,
-                ),
-                labelStyle: TextStyle(
-                  color: scheme.onSurfaceVariant,
-                  fontWeight: FontWeight.w400,
-                ),
-                floatingLabelStyle: TextStyle(
-                  color: scheme.primary,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              // Material Expressive Text Fields - use default Expressive properties
+              inputDecorationTheme: const InputDecorationTheme(),
 
               // Material 3 Menu Theme
               dropdownMenuTheme: DropdownMenuThemeData(
@@ -669,7 +628,7 @@ class _UpdatiumState extends State<Updatium> {
                 foregroundColor: scheme.onSurface,
                 elevation: 0,
                 scrolledUnderElevation: 1,
-                shadowColor: isDark ? Colors.black.withValues(alpha: 0.26) : Colors.black.withValues(alpha: 0.12),
+                shadowColor: isDark ? Colors.black26 : Colors.black12,
                 surfaceTintColor: scheme.surfaceTint,
                 centerTitle: true,
                 titleTextStyle: TextStyle(
@@ -686,32 +645,8 @@ class _UpdatiumState extends State<Updatium> {
                 ),
               ),
 
-              // Expressive List Tiles
-              listTileTheme: ListTileThemeData(
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 8,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                tileColor: scheme.surface,
-                selectedTileColor: scheme.secondaryContainer,
-                iconColor: scheme.onSurfaceVariant,
-                textColor: scheme.onSurface,
-                titleTextStyle: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.15,
-                ),
-                subtitleTextStyle: TextStyle(
-                  color: scheme.onSurfaceVariant,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.25,
-                ),
-              ),
+              // Material Expressive List Tiles - use default Expressive properties
+              listTileTheme: const ListTileThemeData(),
 
               // Expressive Page Transitions
               pageTransitionsTheme: const PageTransitionsTheme(
@@ -740,47 +675,11 @@ class _UpdatiumState extends State<Updatium> {
                 space: 1,
               ),
 
-              // Expressive Chip Theme - preserve M3 Expressive transparency
-              chipTheme: ChipThemeData(
-                backgroundColor: scheme.surface,
-                selectedColor: scheme.secondaryContainer,
-                disabledColor: scheme.surface,
-                labelStyle: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-                secondaryLabelStyle: TextStyle(
-                  color: scheme.onSecondaryContainer,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
+              // Material Expressive Chip Theme - use default Expressive properties
+              chipTheme: const ChipThemeData(),
 
-              // Expressive Bottom Navigation Bar
-              bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                backgroundColor: scheme.surface,
-                selectedItemColor: scheme.onSecondaryContainer,
-                unselectedItemColor: scheme.onSurfaceVariant,
-                selectedLabelStyle: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                ),
-                unselectedLabelStyle: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                ),
-                type: BottomNavigationBarType.fixed,
-                elevation: isDark ? 3 : 8,
-                landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-              ),
+              // Material Expressive Bottom Navigation Bar - use default Expressive properties
+              bottomNavigationBarTheme: const BottomNavigationBarThemeData(),
 
               // Material Design 3 2024 Progress Indicators
               progressIndicatorTheme: const ProgressIndicatorThemeData(
@@ -793,25 +692,8 @@ class _UpdatiumState extends State<Updatium> {
                 showValueIndicator: ShowValueIndicator.onDrag,
               ),
 
-              // Material Design 3 Switch Theme - preserve M3 Expressive transparency
-              switchTheme: SwitchThemeData(
-                thumbColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return scheme.primary;
-                  }
-                  return scheme.outline;
-                }),
-                trackColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return scheme.primary.withValues(alpha: 0.5);
-                  }
-                  return scheme.surfaceContainerHighest;
-                }),
-                trackOutlineColor: WidgetStateProperty.resolveWith((states) {
-                  return scheme.outline;
-                }),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
+              // Material Expressive Switch Theme - use default Expressive properties
+              switchTheme: const SwitchThemeData(),
             );
           }
 
