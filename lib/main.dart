@@ -397,13 +397,13 @@ class _UpdatiumState extends State<Updatium> {
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
-              surfaceContainerHighest: Colors.white,
-              surfaceContainerHigh: Colors.white,
-              surfaceContainer: Colors.white,
-              surfaceContainerLow: Colors.white,
-              surfaceContainerLowest: Colors.white,
+              surfaceContainerHighest: Color(0xFF2A2A2A),
+              surfaceContainerHigh: Color(0xFF242424),
+              surfaceContainer: Color(0xFF1E1E1E),
+              surfaceContainerLow: Color(0xFF181818),
+              surfaceContainerLowest: Color(0xFF121212),
               surfaceDim: Colors.black,
-              surfaceBright: Colors.white,
+              surfaceBright: Color(0xFF1E1E1E),
               onSurface: Colors.white,
               onSurfaceVariant: Colors.white,
               outline: Colors.white,
@@ -572,7 +572,7 @@ class _UpdatiumState extends State<Updatium> {
                   elevation: isDark ? 3 : 2,
                   shadowColor: isDark
                       ? Colors.black38
-                      : Colors.black,
+                      : Colors.black26,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 28,
                     vertical: 14,
@@ -757,7 +757,7 @@ class _UpdatiumState extends State<Updatium> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 tileColor: scheme.surface,
-                selectedTileColor: scheme.surface,
+                selectedTileColor: scheme.secondaryContainer,
                 iconColor: scheme.onSurfaceVariant,
                 textColor: scheme.onSurface,
                 titleTextStyle: TextStyle(
