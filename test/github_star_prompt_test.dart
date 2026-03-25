@@ -14,6 +14,7 @@ void main() {
     test('should set first launch date on first initialization', () async {
       // Create a mock widget tree for context
       final testWidget = MaterialApp(home: Container());
+      var tester;
       await tester.pumpWidget(testWidget);
 
       await GitHubStarPrompt.initializeAndCheck(tester.context);
@@ -32,6 +33,7 @@ void main() {
       );
 
       final testWidget = MaterialApp(home: Container());
+      late var tester;
       await tester.pumpWidget(testWidget);
 
       await GitHubStarPrompt.initializeAndCheck(tester.context);

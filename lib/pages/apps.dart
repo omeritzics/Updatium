@@ -197,24 +197,10 @@ class AppsPageState extends State<AppsPage> {
   @override
   Widget build(BuildContext context) {
     // M3 Expressive spacing constants (based on 4dp baseline grid)
-    const _ = SizedBox(height: 4);
     const height8 = SizedBox(height: 8);
     const height12 = SizedBox(height: 12);
     const height16 = SizedBox(height: 16);
-    const _ = SizedBox(height: 20);
     const height24 = SizedBox(height: 24);
-    const _ = SizedBox(height: 28);
-    const _ = SizedBox(height: 32);
-    const _ = SizedBox(height: 40);
-    const _ = SizedBox(height: 48);
-    const _ = SizedBox(height: 56);
-    const _ = SizedBox(height: 64);
-    const _ = SizedBox(width: 4);
-    const _ = SizedBox(width: 8);
-    const _ = SizedBox(width: 12);
-    const _ = SizedBox(width: 16);
-    const _ = SizedBox(width: 20);
-    const _ = SizedBox(width: 24);
 
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();

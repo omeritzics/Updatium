@@ -36,10 +36,6 @@ class _AppPageState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
     // Consistent spacing constants
-    const _ = SizedBox(height: 2);
-    const _ = SizedBox(height: 8);
-    const _ = SizedBox(height: 10);
-    const _ = SizedBox(height: 24);
     const height32 = SizedBox(height: 32);
     const height85 = SizedBox(height: 85);
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/pages/home.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -14,87 +15,50 @@ import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
-import 'package:easy_localization/easy_localization.dart';
-// ignore: implementation_imports
-import 'package:easy_localization/src/easy_localization_controller.dart';
-// ignore: implementation_imports
-import 'package:easy_localization/src/localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
 
-List<MapEntry<Locale, String>> supportedLocales = const [
-  MapEntry(Locale('en'), 'English'),
-  MapEntry(Locale('zh'), '简体中文'),
-  MapEntry(Locale('zh', 'Hant_TW'), '臺灣話'),
-  MapEntry(Locale('it'), 'Italiano'),
-  MapEntry(Locale('ja'), '日本語'),
-  MapEntry(Locale('he'), 'עברית'),
-  MapEntry(Locale('hu'), 'Magyar'),
-  MapEntry(Locale('de'), 'Deutsch'),
-  MapEntry(Locale('fa'), 'فارسی'),
-  MapEntry(Locale('fr'), 'Français'),
-  MapEntry(Locale('es'), 'Español'),
-  MapEntry(Locale('pl'), 'Polski'),
-  MapEntry(Locale('ru'), 'Русский'),
-  MapEntry(Locale('bs'), 'Bosanski'),
-  MapEntry(Locale('pt'), 'Português'),
-  MapEntry(Locale('pt', 'BR'), 'Brasileiro'),
-  MapEntry(Locale('cs'), 'Česky'),
-  MapEntry(Locale('sv'), 'Svenska'),
-  MapEntry(Locale('nl'), 'Nederlands'),
-  MapEntry(Locale('vi'), 'Tiếng Việt'),
-  MapEntry(Locale('tr'), 'Türkçe'),
-  MapEntry(Locale('uk'), 'Українська'),
-  MapEntry(Locale('da'), 'Dansk'),
-  MapEntry(Locale('et'), 'Eesti'),
-  MapEntry(
-    Locale('en', 'EO'),
-    'Esperanto',
-  ), // https://github.com/aissat/easy_localization/issues/220#issuecomment-846035493
-  MapEntry(Locale('in'), 'Bahasa Indonesia'),
-  MapEntry(Locale('ko'), '한국어'),
-  MapEntry(Locale('ca'), 'Català'),
-  MapEntry(Locale('ar'), 'العربية'),
-  MapEntry(Locale('ml'), 'മലയാളം'),
-  MapEntry(Locale('gl'), 'Galego'),
+const List<Locale> supportedLocales = [
+  Locale('en'),
+  Locale('zh'),
+  Locale('zh', 'Hant_TW'),
+  Locale('it'),
+  Locale('ja'),
+  Locale('he'),
+  Locale('hu'),
+  Locale('de'),
+  Locale('fa'),
+  Locale('fr'),
+  Locale('es'),
+  Locale('pl'),
+  Locale('ru'),
+  Locale('bs'),
+  Locale('pt'),
+  Locale('pt', 'BR'),
+  Locale('cs'),
+  Locale('sv'),
+  Locale('nl'),
+  Locale('vi'),
+  Locale('tr'),
+  Locale('uk'),
+  Locale('da'),
+  Locale('et'),
+  Locale('en', 'EO'),
+  Locale('in'),
+  Locale('ko'),
+  Locale('ca'),
+  Locale('ar'),
+  Locale('ml'),
+  Locale('gl'),
 ];
+
 const fallbackLocale = Locale('en');
-const localeDir = 'assets/translations';
 var fdroid = false;
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 
-Future<void> loadTranslations() async {
-  // See easy_localization/issues/210
-  await EasyLocalizationController.initEasyLocation();
-  var s = SettingsProvider();
-  try {
-    await s.initializeSettings();
-    var forceLocale = s.forcedLocale;
-    final controller = EasyLocalizationController(
-      saveLocale: true,
-      forceLocale: forceLocale,
-      fallbackLocale: fallbackLocale,
-      supportedLocales: supportedLocales.map((e) => e.key).toList(),
-      assetLoader: const RootBundleAssetLoader(),
-      useOnlyLangCode: false,
-      useFallbackTranslations: true,
-      path: localeDir,
-      onLoadError: (FlutterError e) {
-        throw e;
-      },
-    );
-    await controller.loadTranslations();
-    Localization.load(
-      controller.locale,
-      translations: controller.translations,
-      fallbackTranslations: controller.fallbackTranslations,
-    );
-  } finally {
-    // Clean up the temporary SettingsProvider instance
-    s.dispose();
-  }
-}
+// Define locale directory for EasyLocalization
+const String localeDir = 'assets/translations';
 
 @pragma('vm:entry-point')
 void backgroundFetchHeadlessTask(HeadlessTask task) async {
@@ -170,7 +134,7 @@ void main() async {
         Provider(create: (context) => LogsProvider()),
       ],
       child: EasyLocalization(
-        supportedLocales: supportedLocales.map((e) => e.key).toList(),
+        supportedLocales: supportedLocales,
         path: localeDir,
         fallbackLocale: fallbackLocale,
         useOnlyLangCode: false,
@@ -358,7 +322,7 @@ class _UpdatiumState extends State<Updatium> {
       }
 
       // Sync local and device locale if needed
-      if (!supportedLocales.map((e) => e.key).contains(context.locale) ||
+      if (!supportedLocales.contains(context.locale) ||
           (settingsProvider.forcedLocale == null &&
               context.deviceLocale != context.locale)) {
         settingsProvider.resetLocaleSafe(context);
@@ -373,52 +337,36 @@ class _UpdatiumState extends State<Updatium> {
     return WithForegroundTask(
       child: DynamicColorBuilder(
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-
+          // Define color schemes
+          ColorScheme lightColorScheme;
+          ColorScheme darkColorScheme;
+          
           // Configure ColorScheme using Material Design tokens
           if (lightDynamic != null &&
               darkDynamic != null &&
               settingsProvider.useMaterialYou) {
+            lightColorScheme = lightDynamic;
+            darkColorScheme = darkDynamic;
           } else {
-            // Use Material Design tokens for light theme
-            // Use Material Design tokens for dark theme  
+            // Use default Material Design color schemes
+            lightColorScheme = ColorScheme.fromSeed(
+              seedColor: Colors.blue,
+              brightness: Brightness.light,
+            );
+            darkColorScheme = ColorScheme.fromSeed(
+              seedColor: Colors.blue,
+              brightness: Brightness.dark,
+            );
           }
 
-          // Apply AMOLED black theme with Material Design tokens - slightly brighter than pure black
+          // Apply AMOLED black theme with Material Design tokens
           if (settingsProvider.useBlackTheme) {
+            darkColorScheme = darkColorScheme.copyWith(
+              surface: Colors.black,
+            );
           }
 
           if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
-
-          // Shared theme component generator with Material Design Expressive
-
-              // Expressive Divider
-              DividerThemeData(
-                color: scheme.outlineVariant,
-                thickness: 1,
-                space: 1,
-              );
-
-              // Material Expressive Chip Theme - use default Expressive properties
-              const ChipThemeData();
-
-              // Material Expressive Bottom Navigation Bar - use default Expressive properties
-              const BottomNavigationBarThemeData();
-
-              // Material Design 3 2024 Progress Indicators
-              const ProgressIndicatorThemeData(
-                year2023: false,
-              );
-
-              // Material Design 3 2024 Expressive Slider Theme - use default Expressive properties
-              const SliderThemeData(
-                year2023: false,
-                showValueIndicator: ShowValueIndicator.onDrag,
-              );
-
-              // Material Expressive Switch Theme - use default Expressive properties
-              const SwitchThemeData();
-            );
-          }
 
           // Set theme-aware system UI overlay style for Android 10+
           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -449,8 +397,14 @@ class _UpdatiumState extends State<Updatium> {
             locale: context.locale,
             navigatorKey: globalNavigatorKey,
             debugShowCheckedModeBanner: false,
-            theme: createTheme(lightColorScheme, false),
-            darkTheme: createTheme(darkColorScheme, true),
+            theme: ThemeData(
+              colorScheme: lightColorScheme,
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData(
+              colorScheme: darkColorScheme,
+              useMaterial3: true,
+            ),
             themeMode: settingsProvider.theme == ThemeSettings.dark
                 ? ThemeMode.dark
                 : (settingsProvider.theme == ThemeSettings.light
