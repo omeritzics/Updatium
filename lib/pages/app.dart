@@ -599,27 +599,48 @@ class _AppPageState extends State<AppPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                if (source != null &&
-                    source.combinedAppSpecificSettingFormItems.isNotEmpty)
-                  IconButton(
-                    onPressed: app?.downloadProgress != null || updating
-                        ? null
-                        : () async {
-                            var values = await showAdditionalOptionsDialog();
-                            handleAdditionalOptionChanges(values);
-                          },
-                    tooltip: tr('additionalOptions'),
-                    icon: const Icon(Icons.edit),
-                  ),
-                if (app?.app.installedVersion != null &&
-                    app?.app.installedVersion != app?.app.latestVersion &&
-                    !isVersionDetectionStandard &&
-                    !trackOnly)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  if (source != null &&
+                      source.combinedAppSpecificSettingFormItems.isNotEmpty)
+                    IconButton(
+                      onPressed: app?.downloadProgress != null || updating
+                          ? null
+                          : () async {
+                              var values = await showAdditionalOptionsDialog();
+                              handleAdditionalOptionChanges(values);
+                            },
+                      tooltip: tr('additionalOptions'),
+                      icon: const Icon(Icons.edit),
+                    ),
+                  if (app?.app.installedVersion != null &&
+                      app?.app.installedVersion != app?.app.latestVersion &&
+                      !isVersionDetectionStandard &&
+                      !trackOnly)
+                    IconButton(
+                      onPressed: app?.downloadProgress != null || updating
+                          ? null
+                          : () {
+                              appsProvider
+                                  .removeAppsWithModal(
+                                    context,
+                                    app != null ? [app.app] : [],
+                                  )
+                                  .then((value) {
+                                    if (value == true) {
+                                      Navigator.of(context).pop();
+                                    }
+                                  });
+                            },
+                      tooltip: tr('remove'),
+                      icon: const Icon(Icons.delete),
+                    ),
+                  const SizedBox(width: 16.0),
+                  Expanded(child: getInstallOrUpdateButton()),
+                  const SizedBox(width: 16.0),
                   IconButton(
                     onPressed: app?.downloadProgress != null || updating
                         ? null
@@ -638,44 +659,25 @@ class _AppPageState extends State<AppPage> {
                     tooltip: tr('remove'),
                     icon: const Icon(Icons.delete),
                   ),
-                const SizedBox(width: 16.0),
-                Expanded(child: getInstallOrUpdateButton()),
-                const SizedBox(width: 16.0),
-                IconButton(
-                  onPressed: app?.downloadProgress != null || updating
-                      ? null
-                      : () {
-                          appsProvider
-                              .removeAppsWithModal(
-                                context,
-                                app != null ? [app.app] : [],
-                              )
-                              .then((value) {
-                                if (value == true) {
-                                  Navigator.of(context).pop();
-                                }
-                              });
-                        },
-                  tooltip: tr('remove'),
-                  icon: const Icon(Icons.delete),
-                ),
-              ],
-            ),
-          ),
-          if (app?.downloadProgress != null)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-              child: LinearProgressIndicator(
-                value: app!.downloadProgress! >= 0
-                    ? app.downloadProgress! / 100
-                    : null,
-                backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).colorScheme.primary,
-                ),
+                ],
               ),
             ),
-        ],
+            if (app?.downloadProgress != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                child: LinearProgressIndicator(
+                  value: app!.downloadProgress! >= 0
+                      ? app.downloadProgress! / 100
+                      : null,
+                  backgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.surfaceContainerHighest,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );
