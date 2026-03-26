@@ -904,8 +904,20 @@ class _UpdatiumState extends State<Updatium> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(28),
                 ),
-                titleTextStyle: textTheme.headlineSmall,
-                contentTextStyle: textTheme.bodyLarge,
+                titleTextStyle: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0,
+                  height: 1.33,
+                ),
+                contentTextStyle: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.5,
+                  height: 1.5,
+                ),
               ),
             );
           }
