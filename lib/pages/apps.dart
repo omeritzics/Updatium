@@ -639,8 +639,7 @@ class AppsPageState extends State<AppsPage> {
           }
 
           return SizedBox(
-            width: 140,
-            height: double.infinity,
+            width: 120,
             child: Center(child: action),
           );
         },
@@ -704,8 +703,9 @@ class AppsPageState extends State<AppsPage> {
           child: ListTile(
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 24,
-              vertical: 12,
+              vertical: 16,
             ),
+            minVerticalPadding: 8,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
               side: selectedAppIds.contains(listedApps[index].app.id)
