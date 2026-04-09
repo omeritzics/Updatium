@@ -28,8 +28,9 @@ class TagEditor extends StatelessWidget {
     final goldenAngle = 180 * (3 - sqrt(5));
     final double hue = randomSeed * goldenAngle;
     final List<double> rgbValuesDbl = Hsluv.hpluvToRgb([hue, 100, 70]);
-    final List<int> rgbValues =
-        rgbValuesDbl.map((rgb) => (rgb * 255).toInt()).toList();
+    final List<int> rgbValues = rgbValuesDbl
+        .map((rgb) => (rgb * 255).toInt())
+        .toList();
     return Color.fromARGB(255, rgbValues[0], rgbValues[1], rgbValues[2]);
   }
 
@@ -42,9 +43,7 @@ class TagEditor extends StatelessWidget {
           title: Text(label),
           content: TextField(
             autofocus: true,
-            decoration: InputDecoration(
-              labelText: tr('label'),
-            ),
+            decoration: InputDecoration(labelText: tr('label')),
             onChanged: (value) => labelText = value,
           ),
           actions: [
@@ -127,10 +126,7 @@ class TagEditor extends StatelessWidget {
           : CrossAxisAlignment.stretch,
       children: [
         if (tags.isNotEmpty && showLabelWhenNotEmpty) ...[
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          Text(label, style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(height: 8),
         ],
         Wrap(
@@ -149,7 +145,8 @@ class TagEditor extends StatelessWidget {
                   final newTags = Map<String, MapEntry<int, bool>>.from(tags);
                   if (singleSelect && selected) {
                     newTags.updateAll(
-                        (k, v) => MapEntry(v.key, k == entry.key));
+                      (k, v) => MapEntry(v.key, k == entry.key),
+                    );
                   } else {
                     newTags[entry.key] = MapEntry(entry.value.key, selected);
                   }
