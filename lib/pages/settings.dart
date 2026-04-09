@@ -269,7 +269,7 @@ class _SettingsPageState extends State<SettingsPage> {
           readOnly: true,
           decoration: InputDecoration(
             labelText: tr('appSortBy'),
-            filled: true,
+            border: const OutlineInputBorder(),
             suffixIcon: const Icon(Icons.arrow_drop_down),
           ),
           onTap: () {
@@ -317,7 +317,7 @@ class _SettingsPageState extends State<SettingsPage> {
           readOnly: true,
           decoration: InputDecoration(
             labelText: tr('appSortOrder'),
-            filled: true,
+            border: const OutlineInputBorder(),
             suffixIcon: const Icon(Icons.arrow_drop_down),
           ),
           onTap: () {
@@ -359,7 +359,7 @@ class _SettingsPageState extends State<SettingsPage> {
           readOnly: true,
           decoration: InputDecoration(
             labelText: tr('language'),
-            filled: true,
+            border: const OutlineInputBorder(),
             suffixIcon: const Icon(Icons.arrow_drop_down),
           ),
           onTap: () {
@@ -878,7 +878,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               readOnly: true,
                               decoration: InputDecoration(
                                 labelText: tr('theme'),
-                                filled: true,
+                                border: const OutlineInputBorder(),
                                 suffixIcon: const Icon(Icons.arrow_drop_down),
                               ),
                               onTap: () {
@@ -1246,7 +1246,7 @@ class _LogsDialogState extends State<LogsDialog> {
                 readOnly: true,
                 decoration: InputDecoration(
                   labelText: tr('filterDays'),
-                  filled: true,
+                  border: const OutlineInputBorder(),
                   suffixIcon: const Icon(Icons.arrow_drop_down),
                 ),
                 onTap: () {
