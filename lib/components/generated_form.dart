@@ -331,7 +331,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                     someValueChanged();
                   });
                 },
-                decoration: const InputDecoration(filled: true).copyWith(
+                decoration: const InputDecoration().copyWith(
                   labelText:
                       '${formItem.label}${formItem.required ? ' *' : ''}',
                   hintText: formItem.hint,
@@ -395,7 +395,6 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 decoration: InputDecoration(
                   labelText:
                       '${formItem.label}${formItem.required ? ' *' : ''}',
-                  filled: true,
                   suffixIcon: const Icon(Icons.arrow_drop_down),
                 ),
                 onTap: () {

@@ -506,7 +506,6 @@ class AddAppPageState extends State<AddAppPage> {
                     readOnly: true,
                     decoration: InputDecoration(
                       labelText: tr('overrideSource'),
-                      filled: true,
                       suffixIcon: const Icon(Icons.arrow_drop_down),
                     ),
                     onTap: () {

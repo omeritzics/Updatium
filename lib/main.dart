@@ -620,17 +620,14 @@ class _UpdatiumState extends State<Updatium> {
                   ),
                 ),
               ),
-              // Material 3 Filled Text Fields
+              // Material 3 Outlined Text Fields
               inputDecorationTheme: InputDecorationTheme(
-                filled: true,
-                fillColor: scheme.surfaceContainer,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide.none,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide.none,
+                  borderSide: BorderSide(color: scheme.outline),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
@@ -678,15 +675,12 @@ class _UpdatiumState extends State<Updatium> {
                   padding: WidgetStateProperty.all(EdgeInsets.zero),
                 ),
                 inputDecorationTheme: InputDecorationTheme(
-                  filled: true,
-                  fillColor: scheme.surfaceContainerHighest,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide.none,
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide.none,
+                    borderSide: BorderSide(color: scheme.outline),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
