@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:hsluv/hsluv.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
@@ -34,7 +34,7 @@ class GeneratedFormTextField extends GeneratedFormItem {
 
   GeneratedFormTextField(
     super.key, {
-    String super.label = 'Input',
+    super.label,
     super.belowWidgets,
     String super.defaultValue = '',
     List<String? Function(String? value)> super.additionalValidators = const [],
@@ -76,7 +76,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
   GeneratedFormDropdown(
     super.key,
     this.opts, {
-    String super.label = 'Input',
+    super.label,
     super.belowWidgets,
     String super.defaultValue = '',
     this.disabledOptKeys,
@@ -111,7 +111,7 @@ class GeneratedFormSwitch extends GeneratedFormItem {
 
   GeneratedFormSwitch(
     super.key, {
-    String super.label = 'Input',
+    super.label,
     super.belowWidgets,
     bool super.defaultValue = false,
     bool disabled = false,
@@ -144,7 +144,7 @@ class GeneratedFormTagInput extends GeneratedFormItem {
   late bool showLabelWhenNotEmpty;
   GeneratedFormTagInput(
     super.key, {
-    String super.label = 'Input',
+    super.label,
     super.belowWidgets,
     Map<String, MapEntry<int, bool>> super.defaultValue = const {},
     List<String? Function(Map<String, MapEntry<int, bool>> value)>
@@ -216,7 +216,7 @@ class GeneratedFormSubForm extends GeneratedFormItem {
   GeneratedFormSubForm(
     super.key,
     this.items, {
-    String super.label = 'Input',
+    super.label,
     super.belowWidgets,
     super.defaultValue = const [],
   });
@@ -330,17 +330,17 @@ class _GeneratedFormState extends State<GeneratedForm> {
                     someValueChanged();
                   });
                 },
-                decoration: const InputDecoration().copyWith(
-                  labelText:
-                      '${formItem.label}${formItem.required ? ' *' : ''}',
+                decoration: InputDecoration(
+                  labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
                   hintText: formItem.hint,
+                  border: const OutlineInputBorder(),
                 ),
                 minLines: formItem.max <= 1 ? null : formItem.max,
                 maxLines: formItem.max <= 1 ? 1 : formItem.max,
                 validator: (value) {
                   if (formItem.required &&
                       (value == null || value.trim().isEmpty)) {
-                    return '${formItem.label} (required)';
+                    return '${formItem.label} ${tr('requiredInBrackets')}';
                   }
                   for (var validator in formItem.additionalValidators) {
                     String? result = validator(value);
@@ -377,51 +377,33 @@ class _GeneratedFormState extends State<GeneratedForm> {
           );
         } else if (formItem is GeneratedFormDropdown) {
           if (formItem.opts!.isEmpty) {
-            return Text('ERROR: DROPDOWN MUST HAVE AT LEAST ONE OPT');
+            return Text(tr('dropdownNoOptsError'));
           }
-          return MenuAnchor(
-            builder: (context, controller, child) {
-              final selectedValue =
-                  values[formItem.key] ?? formItem.opts!.first.key;
-              final selectedOption = formItem.opts!.firstWhere(
-                (e) => e.key == selectedValue,
-                orElse: () => formItem.opts!.first,
-              );
-
-              return TextField(
-                controller: TextEditingController(text: selectedOption.value),
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText:
-                      '${formItem.label}${formItem.required ? ' *' : ''}',
-                  suffixIcon: const Icon(Icons.arrow_drop_down),
-                ),
-                onTap: () {
-                  if (controller.isOpen) {
-                    controller.close();
-                  } else {
-                    controller.open();
-                  }
-                },
-              );
-            },
-            menuChildren: formItem.opts!.map((e2) {
+          return DropdownButtonFormField<String>(
+            value: values[formItem.key] ?? formItem.opts?.first.key,
+            decoration: InputDecoration(
+              labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
+              border: const OutlineInputBorder(),
+            ),
+            items: formItem.opts?.map((e2) {
               var enabled = formItem.disabledOptKeys?.contains(e2.key) != true;
-              return MenuItemButton(
-                onPressed: enabled
-                    ? () {
-                        setState(() {
-                          values[formItem.key] = e2.key;
-                          someValueChanged();
-                        });
-                      }
-                    : null,
+              return DropdownMenuItem<String>(
+                value: e2.key,
+                enabled: enabled,
                 child: Opacity(
                   opacity: enabled ? 1 : 0.5,
                   child: Text(e2.value),
                 ),
               );
             }).toList(),
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  values[formItem.key] = value;
+                  someValueChanged();
+                });
+              }
+            },
           );
         } else if (formItem is GeneratedFormSubForm) {
           values[formItem.key] = [];
@@ -457,33 +439,44 @@ class _GeneratedFormState extends State<GeneratedForm> {
       for (var e = 0; e < formInputs[r].length; e++) {
         String fieldKey = widget.items[r][e].key;
         if (widget.items[r][e] is GeneratedFormSwitch) {
-          formInputs[r][e] = Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(child: Text(widget.items[r][e].label)),
-              const SizedBox(width: 8),
-              Switch(
-                value: values[fieldKey],
-                onChanged: (widget.items[r][e] as GeneratedFormSwitch).disabled
-                    ? null
-                    : (value) {
-                        setState(() {
-                          values[fieldKey] = value;
-                          someValueChanged();
-                        });
-                      },
-              ),
-            ],
+          formInputs[r][e] = SwitchListTile(
+            title: Text(widget.items[r][e].label),
+            value: values[fieldKey],
+            contentPadding: EdgeInsets.zero,
+            onChanged: (widget.items[r][e] as GeneratedFormSwitch).disabled
+                ? null
+                : (value) {
+                    setState(() {
+                      values[fieldKey] = value;
+                      someValueChanged();
+                    });
+                  },
           );
         } else if (widget.items[r][e] is GeneratedFormTagInput) {
           onAddPressed() {
             showDialog<Map<String, dynamic>?>(
               context: context,
               builder: (BuildContext ctx) {
-                return GeneratedFormModal(
-                  title: widget.items[r][e].label,
-                  items: [
-                    [GeneratedFormTextField('label', label: 'Label')],
+                Map<String, dynamic> localValues = {};
+                return AlertDialog(
+                  title: Text(widget.items[r][e].label),
+                  content: GeneratedForm(
+                    items: [
+                      [GeneratedFormTextField('label', label: tr('label'))],
+                    ],
+                    onValueChanges: (vals, valid, isBuilding) {
+                      localValues = vals;
+                    },
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(null),
+                      child: Text(tr('cancel')),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(localValues),
+                      child: Text(tr('ok')),
+                    ),
                   ],
                 );
               },
@@ -641,7 +634,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             },
                             icon: const Icon(Icons.format_color_fill_rounded),
                             visualDensity: VisualDensity.compact,
-                            tooltip: 'Color',
+                            tooltip: tr('color'),
                           ),
                         )
                       : const SizedBox.shrink(),
@@ -672,17 +665,26 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                     (widget.items[r][e]
                                             as GeneratedFormTagInput)
                                         .deleteConfirmationMessage!;
-                                showDialog<Map<String, dynamic>?>(
+                                showDialog<bool>(
                                   context: context,
                                   builder: (BuildContext ctx) {
-                                    return GeneratedFormModal(
-                                      title: message.key,
-                                      message: message.value,
-                                      items: const [],
+                                    return AlertDialog(
+                                      title: Text(message.key),
+                                      content: Text(message.value),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.of(ctx).pop(false),
+                                          child: Text(tr('cancel')),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.of(ctx).pop(true),
+                                          child: Text(tr('ok')),
+                                        ),
+                                      ],
                                     );
                                   },
-                                ).then((value) {
-                                  if (value != null) {
+                                ).then((confirmed) {
+                                  if (confirmed == true) {
                                     fn();
                                   }
                                 });
@@ -692,7 +694,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             },
                             icon: const Icon(Icons.remove),
                             visualDensity: VisualDensity.compact,
-                            tooltip: 'Remove',
+                            tooltip: tr('remove'),
                           ),
                         )
                       : const SizedBox.shrink(),
@@ -716,7 +718,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             onPressed: onAddPressed,
                             icon: const Icon(Icons.add),
                             visualDensity: VisualDensity.compact,
-                            tooltip: 'Add',
+                            tooltip: tr('add'),
                           ),
                         ),
                 ],

@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:animations/animations.dart';
 import 'package:app_links/app_links.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/pages/apps.dart';
@@ -17,7 +17,6 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:updatium/generated/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -42,7 +41,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AppLinks _appLinks;
   StreamSubscription<Uri>? _linkSubscription;
   bool isLinkActivity = false;
-
   late List<AnimationController> _iconControllers;
   late List<Animation<double>> _iconAnimations;
   bool _iconsInitialized = false;
@@ -53,18 +51,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<NavigationPageItem> getPages(SettingsProvider settingsProvider) {
     return [
       NavigationPageItem(
-        AppLocalizations.of(context)!.appsString,
+        tr('appsString'),
         Icons.apps,
         AppsPage(key: _appsPageKey),
       ),
       NavigationPageItem(
-        settingsProvider.safeMode ? AppLocalizations.of(context)!.importExport : AppLocalizations.of(context)!.addApp,
+        settingsProvider.safeMode ? tr('importExport') : tr('addApp'),
         settingsProvider.safeMode ? Icons.import_export : Icons.add_circle,
         settingsProvider.safeMode
             ? const ImportExportPage()
             : AddAppPage(key: _addAppPageKey),
       ),
-      NavigationPageItem(AppLocalizations.of(context)!.settings, Icons.settings, const SettingsPage()),
+      NavigationPageItem(tr('settings'), Icons.settings, const SettingsPage()),
     ];
   }
 
@@ -74,50 +72,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     initDeepLinks();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var sp = context.read<SettingsProvider>();
-
-      // Sync local and device locale if needed
-      if (sp.prefs != null) {
-        final currentLocale = Localizations.localeOf(context);
-        List<Locale> supportedLocales = const [
-          Locale('en'),
-          Locale('zh'),
-          Locale('zh', 'Hant_TW'),
-          Locale('it'),
-          Locale('ja'),
-          Locale('he'),
-          Locale('ar'),
-          Locale('hu'),
-          Locale('de'),
-          Locale('fa'),
-          Locale('fr'),
-          Locale('es'),
-          Locale('pl'),
-          Locale('ru'),
-          Locale('bs'),
-          Locale('pt'),
-          Locale('pt', 'BR'),
-          Locale('cs'),
-          Locale('sv'),
-          Locale('nl'),
-          Locale('vi'),
-          Locale('tr'),
-          Locale('uk'),
-          Locale('da'),
-          Locale('et'),
-          Locale('eo'),
-          Locale('id'),
-          Locale('ko'),
-          Locale('ml'),
-          Locale('ca'),
-          Locale('gl'),
-        ];
-        
-        if (!supportedLocales.contains(currentLocale) ||
-            (sp.forcedLocale == null &&
-                Localizations.localeOf(context) != currentLocale)) {
-          sp.resetLocaleSafe(context);
-        }
-      }
 
       // Check if security disclaimer has been accepted
       final disclaimerAccepted =
@@ -141,13 +95,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           context: context,
           builder: (BuildContext ctx) {
             return AlertDialog(
-              title: Text(AppLocalizations.of(context)!.note),
+              title: Text(tr('note')),
               scrollable: true,
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 spacing: 20,
                 children: [
-                  Text(AppLocalizations.of(context)!.googleVerificationWarningP1),
+                  Text(tr('googleVerificationWarningP1')),
                   GestureDetector(
                     onTap: () {
                       launchUrlString(
@@ -156,14 +110,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       );
                     },
                     child: Text(
-                      AppLocalizations.of(context)!.googleVerificationWarningP2,
+                      tr('googleVerificationWarningP2'),
                       style: const TextStyle(
                         decoration: TextDecoration.underline,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Text(AppLocalizations.of(context)!.googleVerificationWarningP3),
+                  Text(tr('googleVerificationWarningP3')),
                 ],
               ),
               actions: [
@@ -172,7 +126,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     sp.googleVerificationWarningShown = true;
                     Navigator.of(context).pop(null);
                   },
-                  child: Text(AppLocalizations.of(context)!.ok),
+                  child: Text(tr('ok')),
                 ),
               ],
             );
@@ -216,7 +170,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     goToAddApp(String data) async {
       final settingsProvider = context.read<SettingsProvider>();
       if (settingsProvider.safeMode) {
-        showError(UpdatiumError(AppLocalizations.of(context)!.safeModeAddAppDisabled), context);
+        showError(UpdatiumError(tr('safeModeAddAppDisabled')), context);
         return;
       }
       switchToPage(1);
@@ -276,25 +230,37 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           if (await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
-                  return GeneratedFormModal(
-                    title: AppLocalizations.of(context)!.importX(action == 'app' ? AppLocalizations.of(context)!.app : AppLocalizations.of(context)!.appsString),
-                    items: const [],
-                    additionalWidgets: [
-                      ExpansionTile(
-                        leading: const Icon(Icons.info_outlined),
-                        title: Text('JSON'),
-                        children: [
-                          Text(
-                            dataStr,
-                            style: const TextStyle(fontFamily: 'monospace'),
-                          ),
-                        ],
+                  return AlertDialog(
+                    title: Text(tr(
+                      'importX',
+                      args: [
+                        (action == 'app' ? tr('app') : tr('appsString'))
+                            .toLowerCase(),
+                      ],
+                    )),
+                    content: ExpansionTile(
+                      leading: const Icon(Icons.info_outlined),
+                      title: const Text('Raw JSON'),
+                      children: [
+                        Text(
+                          dataStr,
+                          style: const TextStyle(fontFamily: 'monospace'),
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(null),
+                        child: Text(tr('cancel')),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(true),
+                        child: Text(tr('ok')),
                       ),
                     ],
                   );
                 },
-              ) !=
-              null) {
+              ) == true) {
             // ignore: use_build_context_synchronously
             var appsProvider = context.read<AppsProvider>();
             var result = await appsProvider.import(
@@ -304,12 +270,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             );
             // ignore: use_build_context_synchronously
             showMessage(
-              AppLocalizations.of(context)!.importedXOfYApps('${result.key.length}', '${result.key.length}'),
+              tr(
+                'importedX',
+                args: [plural('apps', result.key.length).toLowerCase()],
+              ),
               context,
             );
           }
         } else {
-          throw UpdatiumError(AppLocalizations.of(context)!.unknown);
+          throw UpdatiumError(tr('unknown'));
         }
       } catch (e) {
         showError(e, context);
@@ -416,9 +385,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               .widget,
         ),
         bottomNavigationBar: Semantics(
-          label: 'Navigation',
+          label: 'Main navigation',
           hint:
-              'Navigate between ${AppLocalizations.of(context)!.appsString.toLowerCase()}, ${settingsProvider.safeMode ? "import/export" : "add app"}, and ${AppLocalizations.of(context)!.settings.toLowerCase()}',
+              'Navigate between apps, ${settingsProvider.safeMode ? "import/export" : "add app"}, and settings',
           child: NavigationBar(
             selectedIndex: selectedIndexHistory.isEmpty
                 ? 0

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
-import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/apps.dart';
@@ -486,6 +485,7 @@ class _AppPageState extends State<AppPage> {
       return await showDialog<Map<String, dynamic>?>(
         context: context,
         builder: (BuildContext ctx) {
+          Map<String, dynamic> localValues = {};
           var items = (source?.combinedAppSpecificSettingFormItems ?? []).map((
             row,
           ) {
@@ -498,9 +498,25 @@ class _AppPageState extends State<AppPage> {
             return row;
           }).toList();
 
-          return GeneratedFormModal(
-            title: tr('additionalOptions'),
-            items: items,
+          return AlertDialog(
+            scrollable: true,
+            title: Text(tr('additionalOptions')),
+            content: GeneratedForm(
+              items: items,
+              onValueChanges: (vals, valid, isBuilding) {
+                localValues = vals;
+              },
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(null),
+                child: Text(tr('cancel')),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(localValues),
+                child: Text(tr('ok')),
+              ),
+            ],
           );
         },
       );

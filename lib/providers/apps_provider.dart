@@ -16,6 +16,7 @@ import 'package:android_package_installer/android_package_installer.dart';
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,8 +25,8 @@ import 'package:http/http.dart' as http;
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
+import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/services/icon_cache.dart';
 import 'package:updatium/services/icon_prefetcher.dart';
@@ -41,7 +42,6 @@ import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:docman/docman.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
-import 'package:updatium/generated/app_localizations.dart';
 
 final pm = AndroidPackageManager();
 final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
@@ -253,7 +253,7 @@ Future<String> checkPartialDownloadHashDynamic(
       return ab[0];
     }
   }
-  throw UnimplementedError('Version comparison failed');
+  throw NoVersionError();
 }
 
 Future<String> checkPartialDownloadHash(
@@ -270,7 +270,7 @@ Future<String> checkPartialDownloadHash(
   var client = IOClient(createHttpClient(allowInsecure));
   var response = await client.send(req);
   if (response.statusCode < 200 || response.statusCode > 299) {
-    throw UpdatiumError(response.reasonPhrase ?? "Unexpected error");
+    throw UpdatiumError(response.reasonPhrase ?? tr('unexpectedError'));
   }
   List<List<int>> bytes = await response.stream.take(bytesToGrab).toList();
   return hashListOfLists(bytes);
@@ -300,7 +300,7 @@ void deleteFile(File file) {
     file.deleteSync(recursive: true);
   } on PathAccessException catch (e) {
     throw UpdatiumError(
-      "File deletion error: ${e.path ?? "Unknown"}",
+      tr('fileDeletionError', args: [e.path ?? tr('unknown')]),
     );
   }
 }
@@ -517,7 +517,7 @@ Future<PackageInfo?> getInstalledInfo(
       );
     } catch (e) {
       if (printErr) {
-        print(e); // "OK"
+        print(e); // OK
       }
     }
   }
@@ -530,11 +530,7 @@ Future<Directory> getAppStorageDir() async =>
 
 class AppsProvider with ChangeNotifier {
   // In memory App state (should always be kept in sync with local storage versions)
-  Map<String, AppInMemory> _apps = {};
-  
-  // Public getter for apps
-  Map<String, AppInMemory> get apps => _apps;
-  
+  Map<String, AppInMemory> apps = {};
   bool loadingApps = false;
   bool gettingUpdates = false;
   bool exportInProgress = false;
@@ -608,7 +604,7 @@ class AppsProvider with ChangeNotifier {
     // The former case should be handled (give the App its real ID), the latter is a security issue
     var isTempIdBool = isTempId(app);
     if (app.id != newInfo.packageName) {
-      if (_apps[app.id] != null && !isTempIdBool && !app.allowIdChange) {
+      if (apps[app.id] != null && !isTempIdBool && !app.allowIdChange) {
         throw IDChangedError(newInfo.packageName!);
       }
       var idChangeWasAllowed = app.allowIdChange;
@@ -618,7 +614,7 @@ class AppsProvider with ChangeNotifier {
       downloadedFile = downloadedFile.renameSync(
         '${downloadedFile.parent.path}/${app.id}-${downloadUrl.hashCode}.${downloadedFile.path.split('.').last}',
       );
-      if (_apps[originalAppId] != null) {
+      if (apps[originalAppId] != null) {
         await removeApps([originalAppId]);
         await saveApps([
           app,
@@ -635,8 +631,8 @@ class AppsProvider with ChangeNotifier {
     bool useExisting = true,
   }) async {
     var notifId = DownloadNotification(app.finalName, 0).id;
-    if (_apps[app.id] != null) {
-      _apps[app.id]!.downloadProgress = 0;
+    if (apps[app.id] != null) {
+      apps[app.id]!.downloadProgress = 0;
       notifyListeners();
     }
     try {
@@ -679,8 +675,8 @@ class AppsProvider with ChangeNotifier {
         headers: headers,
         (double? progress) {
           int? prog = progress?.ceil();
-          if (_apps[app.id] != null) {
-            _apps[app.id]!.downloadProgress = progress;
+          if (apps[app.id] != null) {
+            apps[app.id]!.downloadProgress = progress;
             notifyListeners();
           }
           notif = DownloadNotification(app.finalName, prog ?? 100);
@@ -695,8 +691,8 @@ class AppsProvider with ChangeNotifier {
         logs: logs,
       );
       // Set to 90 for remaining steps, will make null in 'finally'
-      if (_apps[app.id] != null) {
-        _apps[app.id]!.downloadProgress = -1;
+      if (apps[app.id] != null) {
+        apps[app.id]!.downloadProgress = -1;
         notifyListeners();
         notif = DownloadNotification(app.finalName, -1);
         notificationsProvider?.notify(notif);
@@ -793,8 +789,8 @@ class AppsProvider with ChangeNotifier {
       }
     } finally {
       notificationsProvider?.cancel(notifId);
-      if (_apps[app.id] != null) {
-        _apps[app.id]!.downloadProgress = null;
+      if (apps[app.id] != null) {
+        apps[app.id]!.downloadProgress = null;
         notifyListeners();
       }
     }
@@ -938,7 +934,7 @@ class AppsProvider with ChangeNotifier {
         dir.file.delete(recursive: true);
       } catch (e) {
         logs.add('Could not install APKs from ${dir.type}: ${e.toString()}');
-        errors.add(dir.appId, e, appName: _apps[dir.appId]?.name);
+        errors.add(dir.appId, e, appName: apps[dir.appId]?.name);
       }
       if (errors.idsByErrorString.isNotEmpty) {
         throw errors;
@@ -964,7 +960,7 @@ class AppsProvider with ChangeNotifier {
         mimeType: 'application/vnd.android.package-archive',
       );
       Fluttertoast.showToast(
-        msg: "App verification instruction",
+        msg: tr('appVerifierInstructionToast'),
         toastLength: Toast.LENGTH_LONG,
       );
       await Share.shareXFiles([f]);
@@ -981,10 +977,10 @@ class AppsProvider with ChangeNotifier {
       } catch (e) {
         //
       } finally {
-        throw UpdatiumError("Bad download");
+        throw UpdatiumError(tr('badDownload'));
       }
     }
-    PackageInfo? appInfo = await getInstalledInfo(_apps[file.appId]!.app.id);
+    PackageInfo? appInfo = await getInstalledInfo(apps[file.appId]!.app.id);
     logs.add(
       'Installing "${newInfo.packageName}" version "${newInfo.versionName}" versionCode "${newInfo.versionCode}"${appInfo != null ? ' (from existing version "${appInfo.versionName}" versionCode "${appInfo.versionCode}")' : ''}',
     );
@@ -999,10 +995,10 @@ class AppsProvider with ChangeNotifier {
       // So we update the app's installed version first as we will never get to the later code
       // We can't conditionally get rid of the 'await' as this causes install fails (BG process times out) - see #896
       // TODO: When fixed, update this function and the calls to it accordingly
-      _apps[file.appId]!.app.installedVersion =
-          _apps[file.appId]!.app.latestVersion;
+      apps[file.appId]!.app.installedVersion =
+          apps[file.appId]!.app.latestVersion;
       await saveApps([
-        _apps[file.appId]!.app,
+        apps[file.appId]!.app,
       ], attemptToCorrectInstallStatus: false);
     }
     int? code;
@@ -1029,11 +1025,11 @@ class AppsProvider with ChangeNotifier {
       }
     } else if (code == 0) {
       installed = true;
-      _apps[file.appId]!.app.installedVersion =
-          _apps[file.appId]!.app.latestVersion;
+      apps[file.appId]!.app.installedVersion =
+          apps[file.appId]!.app.latestVersion;
       file.file.delete(recursive: true);
     }
-    await saveApps([_apps[file.appId]!.app]);
+    await saveApps([apps[file.appId]!.app]);
     return installed;
   }
 
@@ -1152,32 +1148,32 @@ class AppsProvider with ChangeNotifier {
     // 1. A URL cannot be picked
     // 2. That cannot be installed silently (IF no buildContext was given for interactive install)
     for (var id in appIds) {
-      if (_apps[id] == null) {
-        throw UpdatiumError("App not found");
+      if (apps[id] == null) {
+        throw UpdatiumError(tr('appNotFound'));
       }
       MapEntry<String, String>? apkUrl;
-      var trackOnly = _apps[id]!.app.additionalSettings['trackOnly'] == true;
+      var trackOnly = apps[id]!.app.additionalSettings['trackOnly'] == true;
       var refreshBeforeDownload =
-          _apps[id]!.app.additionalSettings['refreshBeforeDownload'] == true ||
-          _apps[id]!.app.apkUrls.isNotEmpty &&
-              _apps[id]!.app.apkUrls.first.value == 'placeholder';
+          apps[id]!.app.additionalSettings['refreshBeforeDownload'] == true ||
+          apps[id]!.app.apkUrls.isNotEmpty &&
+              apps[id]!.app.apkUrls.first.value == 'placeholder';
       if (refreshBeforeDownload) {
-        await checkUpdate(_apps[id]!.app.id);
+        await checkUpdate(apps[id]!.app.id);
       }
       if (!trackOnly) {
         // ignore: use_build_context_synchronously
-        apkUrl = await confirmAppFileUrl(_apps[id]!.app, context, false);
+        apkUrl = await confirmAppFileUrl(apps[id]!.app, context, false);
       }
       if (apkUrl != null) {
-        int urlInd = _apps[id]!.app.apkUrls
+        int urlInd = apps[id]!.app.apkUrls
             .map((e) => e.value)
             .toList()
             .indexOf(apkUrl.value);
-        if (urlInd >= 0 && urlInd != _apps[id]!.app.preferredApkIndex) {
-          _apps[id]!.app.preferredApkIndex = urlInd;
-          await saveApps([_apps[id]!.app]);
+        if (urlInd >= 0 && urlInd != apps[id]!.app.preferredApkIndex) {
+          apps[id]!.app.preferredApkIndex = urlInd;
+          await saveApps([apps[id]!.app]);
         }
-        if (context != null || await canInstallSilently(_apps[id]!.app)) {
+        if (context != null || await canInstallSilently(apps[id]!.app)) {
           appsToInstall.add(id);
         }
       }
@@ -1188,7 +1184,7 @@ class AppsProvider with ChangeNotifier {
     // Mark all specified track-only apps as latest
     saveApps(
       trackOnlyAppsToUpdate.map((e) {
-        var a = _apps[e]!.app;
+        var a = apps[e]!.app;
         a.installedVersion = a.latestVersion;
         return a;
       }).toList(),
@@ -1212,18 +1208,18 @@ class AppsProvider with ChangeNotifier {
       DownloadedApk? downloadedFile,
       DownloadedDir? downloadedDir,
     ) async {
-      _apps[id]?.downloadProgress = -1;
+      apps[id]?.downloadProgress = -1;
       notifyListeners();
       try {
         bool sayInstalled = true;
-        var contextIfNewInstall = _apps[id]?.installedInfo == null
+        var contextIfNewInstall = apps[id]?.installedInfo == null
             ? context
             : null;
         bool needBGWorkaround =
             willBeSilent && context == null && !settingsProvider.useShizuku;
         bool shizukuPretendToBeGooglePlay =
             settingsProvider.shizukuPretendToBeGooglePlay ||
-            _apps[id]!.app.additionalSettings['shizukuPretendToBeGooglePlay'] ==
+            apps[id]!.app.additionalSettings['shizukuPretendToBeGooglePlay'] ==
                 true;
         if (downloadedFile != null) {
           if (needBGWorkaround) {
@@ -1262,12 +1258,12 @@ class AppsProvider with ChangeNotifier {
         if (willBeSilent && context == null) {
           if (!settingsProvider.useShizuku) {
             notificationsProvider?.notify(
-              SilentUpdateAttemptNotification([_apps[id]!.app], id: id.hashCode),
+              SilentUpdateAttemptNotification([apps[id]!.app], id: id.hashCode),
             );
           } else {
             notificationsProvider?.notify(
               SilentUpdateNotification(
-                [_apps[id]!.app],
+                [apps[id]!.app],
                 sayInstalled,
                 id: id.hashCode,
               ),
@@ -1280,7 +1276,7 @@ class AppsProvider with ChangeNotifier {
           notificationsProvider?.cancel(UpdateNotification([]).id);
         }
       } finally {
-        _apps[id]?.downloadProgress = null;
+        apps[id]?.downloadProgress = null;
         notifyListeners();
       }
     }
@@ -1296,7 +1292,7 @@ class AppsProvider with ChangeNotifier {
         var downloadedArtifact =
             // ignore: use_build_context_synchronously
             await downloadApp(
-              _apps[id]!.app,
+              apps[id]!.app,
               context,
               notificationsProvider: notificationsProvider,
               useExisting: useExisting,
@@ -1307,21 +1303,21 @@ class AppsProvider with ChangeNotifier {
           downloadedDir = downloadedArtifact as DownloadedDir;
         }
         id = downloadedFile?.appId ?? downloadedDir!.appId;
-        willBeSilent = await canInstallSilently(_apps[id]!.app);
+        willBeSilent = await canInstallSilently(apps[id]!.app);
         if (!settingsProvider.useShizuku) {
           if (!(await settingsProvider.getInstallPermission(enforce: false))) {
-            throw UpdatiumError("Cancelled");
+            throw UpdatiumError(tr('cancelled'));
           }
         } else {
           switch ((await ShizukuApkInstaller().checkPermission())!) {
             case 'binder_not_found':
-              throw UpdatiumError("Shizuku binder not found");
+              throw UpdatiumError(tr('shizukuBinderNotFound'));
             case 'old_shizuku':
-              throw UpdatiumError("Shizuku version too old");
+              throw UpdatiumError(tr('shizukuOld'));
             case 'old_android_with_adb':
-              throw UpdatiumError("Shizuku version too old - Android with ADB");
+              throw UpdatiumError(tr('shizukuOldAndroidWithADB'));
             case 'denied':
-              throw UpdatiumError("Cancelled");
+              throw UpdatiumError(tr('cancelled'));
           }
         }
         if (!willBeSilent && context != null && !settingsProvider.useShizuku) {
@@ -1329,7 +1325,7 @@ class AppsProvider with ChangeNotifier {
           await waitForUserToReturnToForeground(context);
         }
       } catch (e) {
-        errors.add(id, e, appName: _apps[id]?.name);
+        errors.add(id, e, appName: apps[id]?.name);
       }
       return {
         'id': id,
@@ -1360,7 +1356,7 @@ class AppsProvider with ChangeNotifier {
           );
         } catch (e) {
           var id = res['id'] as String;
-          errors.add(id, e, appName: _apps[id]?.name);
+          errors.add(id, e, appName: apps[id]?.name);
         }
       }
     }
@@ -1381,35 +1377,35 @@ class AppsProvider with ChangeNotifier {
         .read<NotificationsProvider>();
     List<MapEntry<MapEntry<String, String>, App>> filesToDownload = [];
     for (var id in appIds) {
-      if (_apps[id] == null) {
-        throw UpdatiumError("App not found");
+      if (apps[id] == null) {
+        throw UpdatiumError(tr('appNotFound'));
       }
       MapEntry<String, String>? fileUrl;
       var refreshBeforeDownload =
-          _apps[id]!.app.additionalSettings['refreshBeforeDownload'] == true ||
-          _apps[id]!.app.apkUrls.isNotEmpty &&
-              _apps[id]!.app.apkUrls.first.value == 'placeholder';
+          apps[id]!.app.additionalSettings['refreshBeforeDownload'] == true ||
+          apps[id]!.app.apkUrls.isNotEmpty &&
+              apps[id]!.app.apkUrls.first.value == 'placeholder';
       if (refreshBeforeDownload) {
-        await checkUpdate(_apps[id]!.app.id);
+        await checkUpdate(apps[id]!.app.id);
       }
-      if (_apps[id]!.app.apkUrls.isNotEmpty ||
-          _apps[id]!.app.otherAssetUrls.isNotEmpty) {
+      if (apps[id]!.app.apkUrls.isNotEmpty ||
+          apps[id]!.app.otherAssetUrls.isNotEmpty) {
         // ignore: use_build_context_synchronously
         MapEntry<String, String>? tempFileUrl = await confirmAppFileUrl(
-          _apps[id]!.app,
+          apps[id]!.app,
           context,
           true,
           evenIfSingleChoice: true,
         );
         if (tempFileUrl != null) {
           var s = SourceProvider().getSource(
-            _apps[id]!.app.url,
-            overrideSource: _apps[id]!.app.overrideSource,
+            apps[id]!.app.url,
+            overrideSource: apps[id]!.app.overrideSource,
           );
           var additionalSettingsPlusSourceConfig = {
-            ..._apps[id]!.app.additionalSettings,
+            ...apps[id]!.app.additionalSettings,
             ...(await s.getSourceConfigValues(
-              _apps[id]!.app.additionalSettings,
+              apps[id]!.app.additionalSettings,
               settingsProvider,
             )),
           };
@@ -1420,14 +1416,14 @@ class AppsProvider with ChangeNotifier {
                 tempFileUrl.value,
                 additionalSettingsPlusSourceConfig,
               ),
-              _apps[id]!.app.url,
+              apps[id]!.app.url,
               additionalSettingsPlusSourceConfig,
             ),
           );
         }
       }
       if (fileUrl != null) {
-        filesToDownload.add(MapEntry(fileUrl, _apps[id]!.app));
+        filesToDownload.add(MapEntry(fileUrl, apps[id]!.app));
       }
     }
 
@@ -1733,7 +1729,7 @@ class AppsProvider with ChangeNotifier {
                 );
                 if (moddedApp != null) {
                   app = moddedApp;
-                  // "No"te the app ID if it was uninstalled externally
+                  // Note the app ID if it was uninstalled externally
                   if (moddedApp.installedVersion == null) {
                     removedAppIds.add(moddedApp.id);
                   }
@@ -1758,8 +1754,9 @@ class AppsProvider with ChangeNotifier {
     );
     if (errors.isNotEmpty) {
       removeApps(errors.map((e) => e[0]).toList());
-      // Note: Cannot send notification here without context
-      // This would need to be handled by the calling code
+      NotificationsProvider().notify(
+        AppsRemovedNotification(errors.map((e) => [e[1], e[2]]).toList()),
+      );
     }
     // Delete externally uninstalled Apps if needed
     if (removedAppIds.isNotEmpty) {
@@ -1818,12 +1815,12 @@ class AppsProvider with ChangeNotifier {
   }
 
   Future<void> updateAppIcon(String? appId) async {
-    if (_apps[appId]?.icon == null) {
-      final app = _apps[appId]?.app;
+    if (apps[appId]?.icon == null) {
+      final app = apps[appId]?.app;
       Uint8List? icon;
 
       // Try installed app icon first
-      icon = await _apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
+      icon = await apps[appId]?.installedInfo?.applicationInfo?.getAppIcon();
 
       // If no installed icon, try remote URL
       if (icon == null &&
@@ -1840,19 +1837,19 @@ class AppsProvider with ChangeNotifier {
       }
 
       if (icon != null) {
-        final currentAppInMemory = _apps[appId];
+        final currentAppInMemory = apps[appId];
         apps.update(
-          _apps[appId]!.app.id,
+          apps[appId]!.app.id,
           (value) => AppInMemory(
-            _apps[appId]!.app,
+            apps[appId]!.app,
             currentAppInMemory?.downloadProgress,
             currentAppInMemory?.installedInfo,
             icon,
           ),
           ifAbsent: () => AppInMemory(
-            _apps[appId]!.app,
+            apps[appId]!.app,
             null,
-            _apps[appId]!.installedInfo,
+            apps[appId]!.installedInfo,
             icon,
           ),
         );
@@ -1878,7 +1875,7 @@ class AppsProvider with ChangeNotifier {
 
     // If no icon from cache and no fallback provided, try installed app icon
     if (icon == null && fallbackIcon == null) {
-      final installedIcon = await _apps[appId]?.installedInfo?.applicationInfo
+      final installedIcon = await apps[appId]?.installedInfo?.applicationInfo
           ?.getAppIcon();
       if (installedIcon != null) {
         // Cache the installed icon for future use
@@ -2068,30 +2065,63 @@ class AppsProvider with ChangeNotifier {
               a.additionalSettings['trackOnly'] != true,
         )
         .isNotEmpty;
-    var values = await showDialog(
+
+    bool rmAppEntry = true;
+    bool uninstallAppFromDevice = false;
+
+    var values = await showDialog<Map<String, bool>?>(
       context: context,
       builder: (BuildContext ctx) {
-        return GeneratedFormModal(
-          primaryActionColor: Theme.of(context).colorScheme.error,
-          title: 'Remove ${apps.length} apps?',
-          items: !showUninstallOption
-              ? []
-              : [
-                  [
-                    GeneratedFormSwitch(
-                      'rmAppEntry',
-                      label: AppLocalizations.of(context)!.removeFromUpdatium,
-                      defaultValue: true,
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(plural('removeAppQuestion', apps.length)),
+              content: !showUninstallOption
+                  ? null
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SwitchListTile(
+                          title: Text(tr('removeFromUpdatium')),
+                          value: rmAppEntry,
+                          onChanged: (value) {
+                            setState(() {
+                              rmAppEntry = value;
+                            });
+                          },
+                        ),
+                        SwitchListTile(
+                          title: Text(tr('uninstallFromDevice')),
+                          value: uninstallAppFromDevice,
+                          onChanged: (value) {
+                            setState(() {
+                              uninstallAppFromDevice = value;
+                            });
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                  [
-                    GeneratedFormSwitch(
-                      'uninstallApp',
-                      label: AppLocalizations.of(context)!.uninstallFromDevice,
-                    ),
-                  ],
-                ],
-          initValid: true,
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(null),
+                  child: Text(tr('cancel')),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Theme.of(context).colorScheme.error,
+                  ),
+                  onPressed: () {
+                    HapticFeedback.selectionClick();
+                    Navigator.of(ctx).pop({
+                      'rmAppEntry': rmAppEntry,
+                      'uninstallApp': uninstallAppFromDevice,
+                    });
+                  },
+                  child: Text(tr('continue')),
+                ),
+              ],
+            );
+          },
         );
       },
     );
@@ -2099,10 +2129,10 @@ class AppsProvider with ChangeNotifier {
       bool uninstall = values['uninstallApp'] == true && showUninstallOption;
       bool remove = values['rmAppEntry'] == true || !showUninstallOption;
       if (uninstall) {
-        for (var app in apps) {
-          if (_apps[app.id]?.app.installedVersion != null) {
-            uninstallApp(app.id);
-            _apps[app.id]!.app.installedVersion = null;
+        for (var i = 0; i < apps.length; i++) {
+          if (apps[i].installedVersion != null) {
+            uninstallApp(apps[i].id);
+            apps[i].installedVersion = null;
           }
         }
         await saveApps(apps, attemptToCorrectInstallStatus: false);
@@ -2136,7 +2166,7 @@ class AppsProvider with ChangeNotifier {
   }
 
   Future<App?> checkUpdate(String appId) async {
-    App? currentApp = _apps[appId]!.app;
+    App? currentApp = apps[appId]!.app;
     SourceProvider sourceProvider = SourceProvider();
     App newApp = await sourceProvider.getApp(
       sourceProvider.getSource(
@@ -2177,10 +2207,10 @@ class AppsProvider with ChangeNotifier {
         .toList();
     appIds.sort(
       (a, b) =>
-          (_apps[a]!.app.lastUpdateCheck ??
+          (apps[a]!.app.lastUpdateCheck ??
                   DateTime.fromMicrosecondsSinceEpoch(0))
               .compareTo(
-                _apps[b]!.app.lastUpdateCheck ??
+                apps[b]!.app.lastUpdateCheck ??
                     DateTime.fromMicrosecondsSinceEpoch(0),
               ),
     );
@@ -2217,7 +2247,7 @@ class AppsProvider with ChangeNotifier {
                   throwErrorsForRetry) {
                 rethrow;
               }
-              errors.add(appId, e, appName: _apps[appId]?.name);
+              errors.add(appId, e, appName: apps[appId]?.name);
             }
             if (newApp != null) {
               updates.add(newApp);
@@ -2245,7 +2275,7 @@ class AppsProvider with ChangeNotifier {
     List<String> updateAppIds = [];
     List<String> appIds = apps.keys.toList();
     for (int i = 0; i < appIds.length; i++) {
-      App? app = _apps[appIds[i]]!.app;
+      App? app = apps[appIds[i]]!.app;
       if (app.installedVersion != app.latestVersion &&
           (!installedOnly || !nonInstalledOnly)) {
         if ((app.installedVersion == null &&
@@ -2299,7 +2329,7 @@ class AppsProvider with ChangeNotifier {
     SettingsProvider? sp,
   }) async {
     if (exportInProgress && !isAuto) {
-      throw UpdatiumError("Export already in progress");
+      throw UpdatiumError(tr('exportAlreadyInProgress'));
     }
 
     SettingsProvider settingsProvider = sp ?? this.settingsProvider;
@@ -2350,13 +2380,13 @@ class AppsProvider with ChangeNotifier {
         Map<String, dynamic> finalExport = generateExportJSON();
         // Create export file using docman
         if (exportDir.toString().isEmpty) {
-          throw UpdatiumError("Export directory URI empty");
+          throw UpdatiumError(tr('exportDirUriEmpty'));
         }
         final docFileResult = await DocumentFile.fromUri(exportDir.toString());
         final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
           final fileName =
-              '${"updatium-export"}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
+              '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
 
           try {
             final result = await dirDocFile.createFile(
@@ -2367,14 +2397,14 @@ class AppsProvider with ChangeNotifier {
             );
 
             if (result == null) {
-              throw UpdatiumError("Failed to create export file");
+              throw UpdatiumError(tr('failedToCreateExportFile'));
             }
           } catch (e) {
             // Handle MIME type detection errors specifically
             if (e.toString().contains('mime type') ||
                 e.toString().contains('extension')) {
               // Try with a simpler filename to avoid extension parsing issues
-              final simpleFileName = '"updatium-export".json';
+              final simpleFileName = 'updatium-export.json';
               try {
                 final fallbackResult = await dirDocFile.createFile(
                   name: simpleFileName,
@@ -2383,26 +2413,26 @@ class AppsProvider with ChangeNotifier {
                   ),
                 );
                 if (fallbackResult == null) {
-                  throw UpdatiumError("Failed to create export file");
+                  throw UpdatiumError(tr('failedToCreateExportFile'));
                 }
               } catch (fallbackError) {
                 throw UpdatiumError(
-                  '${"Failed to export"}: MIME type detection error - ${fallbackError.toString()}',
+                  '${tr('failedToExport')}: MIME type detection error - ${fallbackError.toString()}',
                 );
               }
             } else {
-              throw UpdatiumError('${"Failed to export"}: ${e.toString()}');
+              throw UpdatiumError('${tr('failedToExport')}: ${e.toString()}');
             }
           }
         } else {
-          throw UpdatiumError("Export directory not accessible");
+          throw UpdatiumError(tr('exportDirNotAccessible'));
         }
       } catch (e) {
         if (e is UpdatiumError) {
           rethrow;
         }
         debugPrint('Export error: $e');
-        throw UpdatiumError('${"Failed to export"}: ${e.toString()}');
+        throw UpdatiumError('${tr('failedToExport')}: ${e.toString()}');
       } finally {
         exportInProgress = false;
         notifyListeners();
@@ -2478,7 +2508,7 @@ class AppsProvider with ChangeNotifier {
     Map<String, dynamic> errorsMap = results[1];
     for (var app in pps) {
       if (apps.containsKey(app.id)) {
-        errorsMap.addAll({app.id: "App already added"});
+        errorsMap.addAll({app.id: tr('appAlreadyAdded')});
       } else {
         await saveApps([app], onlyIfExists: false);
       }
@@ -2499,18 +2529,18 @@ class AppsProvider with ChangeNotifier {
       // Categorize errors and provide user-friendly messages
       if (errorDetail.contains('timeout') ||
           errorDetail.contains('connection')) {
-        userMessage = "Network error";
+        userMessage = tr('networkError');
       } else if (errorDetail.contains('404') ||
           errorDetail.contains('not found')) {
-        userMessage = "App not found";
+        userMessage = tr('appNotFound');
       } else if (errorDetail.contains('parse') ||
           errorDetail.contains('format')) {
-        userMessage = "Invalid URL format";
+        userMessage = tr('invalidUrlFormat');
       } else if (errorDetail.contains('permission') ||
           errorDetail.contains('access')) {
-        userMessage = "Access denied";
+        userMessage = tr('accessDenied');
       } else {
-        userMessage = "Import failed";
+        userMessage = tr('importFailed');
       }
 
       return [e, userMessage];
@@ -2551,14 +2581,14 @@ class _AppFilePickerState extends State<AppFilePicker> {
       scrollable: true,
       title: Text(
         widget.pickAnyAsset
-            ? 'Select ${lowerCaseIfEnglish("release asset")}'
-            : "Pick an APK",
+            ? tr('selectX', args: [lowerCaseIfEnglish(tr('releaseAsset'))])
+            : tr('pickAnAPK'),
       ),
       content: Column(
         children: [
           urlsToSelectFrom.length > 1
               ? Text(
-                  'App has more than one package: ${widget.app.finalName}',
+                  tr('appHasMoreThanOnePackage', args: [widget.app.finalName]),
                 )
               : const SizedBox.shrink(),
           const SizedBox(height: 16),
@@ -2578,8 +2608,8 @@ class _AppFilePickerState extends State<AppFilePicker> {
           if (widget.archs != null)
             Text(
               widget.archs!.length == 1
-                  ? 'Device supports ${widget.archs![0]} architecture'
-                  : "Device supports following architectures" +
+                  ? tr('deviceSupportsXArch', args: [widget.archs![0]])
+                  : tr('deviceSupportsFollowingArchs') +
                         list2FriendlyString(
                           widget.archs!.map((e) => '\'$e\'').toList(),
                         ),
@@ -2592,14 +2622,14 @@ class _AppFilePickerState extends State<AppFilePicker> {
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text("Cancel"),
+          child: Text(tr('cancel')),
         ),
         TextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(fileUrl);
           },
-          child: Text("Continue"),
+          child: Text(tr('continue')),
         ),
       ],
     );
@@ -2625,23 +2655,29 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text("Warning"),
+      title: Text(tr('warning')),
       content: Text(
-        'Source is ${Uri.parse(widget.sourceUrl).host} but package is from ${Uri.parse(widget.apkUrl).host}. "Continue" anyway?',
+        tr(
+          'sourceIsXButPackageFromYPrompt',
+          args: [
+            Uri.parse(widget.sourceUrl).host,
+            Uri.parse(widget.apkUrl).host,
+          ],
+        ),
       ),
       actions: [
         TextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text("Cancel"),
+          child: Text(tr('cancel')),
         ),
         TextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);
           },
-          child: Text("Yes"),
+          child: Text(tr('yes')),
         ),
       ],
     );
@@ -2666,8 +2702,9 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
 Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
   // ignore: avoid_print
   print('BG task started $taskId: ${params.toString()}');
-  // Initialize Flutter bindings
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  await loadTranslations();
 
   LogsProvider logs = LogsProvider();
   NotificationsProvider notificationsProvider = NotificationsProvider();
@@ -2681,7 +2718,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
   if (netResult.contains(ConnectivityResult.none) ||
       netResult.isEmpty ||
       (netResult.contains(ConnectivityResult.vpn) && netResult.length == 1)) {
-    logs.add('BG update task: "No" network.');
+    logs.add('BG update task: No network.');
     return;
   }
 
@@ -2782,7 +2819,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
     MultiAppMultiError toThrow =
         MultiAppMultiError(); // All errors that will not lead to a retry, just a notification
     CheckingUpdatesNotification notif = CheckingUpdatesNotification(
-      'Checking ${toCheck.length} apps',
+      plural('apps', toCheck.length),
     ); // The notif. to show while checking
 
     try {
@@ -2837,7 +2874,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
         updates[i],
       );
       if (networkRestricted || chargingRestricted || !canInstallSilently) {
-        if (updates[i].additionalSettings['skipUpdatenotifications'] != true) {
+        if (updates[i].additionalSettings['skipUpdateNotifications'] != true) {
           logs.add(
             'BG update task notifying for ${updates[i].id} (networkRestricted $networkRestricted, chargingRestricted: $chargingRestricted, canInstallSilently: $canInstallSilently).',
           );
@@ -2896,7 +2933,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
       var temp = appsProvider.findExistingUpdates(installedOnly: true);
       for (var i = 0; i < temp.length; i++) {
         if (await appsProvider.canInstallSilently(
-          appsProvider._apps[temp[i]]!.app,
+          appsProvider.apps[temp[i]]!.app,
         )) {
           toInstall.add(MapEntry(temp[i], 0));
         }
