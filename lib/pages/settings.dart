@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:updatium/components/button_helpers.dart';
+
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -1275,7 +1275,7 @@ class _LogsDialogState extends State<LogsDialog> {
         ],
       ),
       actions: [
-        AppTextButton(
+        TextButton(
           onPressed: () async {
             var cont =
                 (await showDialog<Map<String, dynamic>?>(
@@ -1297,13 +1297,13 @@ class _LogsDialogState extends State<LogsDialog> {
           },
           child: Text(tr('remove')),
         ),
-        AppTextButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(tr('close')),
         ),
-        AppTextButton(
+        TextButton(
           onPressed: () {
             Share.share(logString ?? '', subject: tr('appLogs'));
             Navigator.of(context).pop();

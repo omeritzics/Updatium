@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:updatium/components/button_helpers.dart';
+
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -1060,7 +1060,7 @@ class AppsPageState extends State<AppsPage> {
 
     getSelectAllButton() {
       return selectedAppIds.isEmpty
-          ? AppTextButtonWithIcon(
+          ? TextButton.icon(
               onPressed: () {
                 selectThese(listedApps.map((e) => e.app).toList());
               },
@@ -1070,7 +1070,7 @@ class AppsPageState extends State<AppsPage> {
               ),
               label: Text(listedApps.length.toString()),
             )
-          : AppTextButtonWithIcon(
+          : TextButton.icon(
               onPressed: () {
                 selectedAppIds.isEmpty
                     ? selectThese(listedApps.map((e) => e.app).toList())
@@ -1287,13 +1287,13 @@ class AppsPageState extends State<AppsPage> {
               ),
             ),
             actions: [
-              AppTextButton(
+              TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
                 child: Text(tr('no')),
               ),
-              AppTextButton(
+              TextButton(
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   appsProvider.saveApps(
@@ -1342,7 +1342,7 @@ class AppsPageState extends State<AppsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  AppTextButton(
+                  TextButton(
                     onPressed: pinSelectedApps,
                     child: Text(
                       selectedApps.where((element) => element.pinned).isEmpty
@@ -1352,7 +1352,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  AppTextButton(
+                  TextButton(
                     onPressed: () {
                       String urls = '';
                       for (var a in selectedApps) {
@@ -1371,7 +1371,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  AppTextButton(
+                  TextButton(
                     onPressed: selectedAppIds.isEmpty
                         ? null
                         : () {
@@ -1400,7 +1400,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  AppTextButton(
+                  TextButton(
                     onPressed: () {
                       appsProvider
                           .downloadAppAssets(
@@ -1425,7 +1425,7 @@ class AppsPageState extends State<AppsPage> {
                     ),
                   ),
                   const Divider(),
-                  AppTextButton(
+                  TextButton(
                     onPressed: appsProvider.areDownloadsRunning()
                         ? null
                         : showMassMarkDialog,

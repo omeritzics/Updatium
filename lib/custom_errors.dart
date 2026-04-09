@@ -4,7 +4,7 @@ import 'package:android_package_installer/android_package_installer.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/components/button_helpers.dart';
+
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
@@ -142,7 +142,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
             child: Text(e.toString()),
           ),
           actions: [
-            AppTextButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
