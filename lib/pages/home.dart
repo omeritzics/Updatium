@@ -46,20 +46,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late List<AnimationController> _iconControllers;
   late List<Animation<double>> _iconAnimations;
   bool _iconsInitialized = false;
+  final GlobalKey<AppsPageState> _appsPageKey = GlobalKey<AppsPageState>();
+  final GlobalKey<AddAppPageState> _addAppPageKey = GlobalKey<AddAppPageState>();
+
 
   List<NavigationPageItem> getPages(SettingsProvider settingsProvider) {
     return [
       NavigationPageItem(
         AppLocalizations.of(context)!.appsString,
         Icons.apps,
-        AppsPage(key: GlobalKey<AppsPageState>()),
+        AppsPage(key: _appsPageKey),
       ),
       NavigationPageItem(
         settingsProvider.safeMode ? AppLocalizations.of(context)!.importExport : AppLocalizations.of(context)!.addApp,
         settingsProvider.safeMode ? Icons.import_export : Icons.add_circle,
         settingsProvider.safeMode
             ? const ImportExportPage()
-            : AddAppPage(key: GlobalKey<AddAppPageState>()),
+            : AddAppPage(key: _addAppPageKey),
       ),
       NavigationPageItem(AppLocalizations.of(context)!.settings, Icons.settings, const SettingsPage()),
     ];
