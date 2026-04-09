@@ -47,8 +47,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late List<Animation<double>> _iconAnimations;
   bool _iconsInitialized = false;
   final GlobalKey<AppsPageState> _appsPageKey = GlobalKey<AppsPageState>();
-  final GlobalKey<AddAppPageState> _addAppPageKey = GlobalKey<AddAppPageState>();
-
+  final GlobalKey<AddAppPageState> _addAppPageKey =
+      GlobalKey<AddAppPageState>();
 
   List<NavigationPageItem> getPages(SettingsProvider settingsProvider) {
     return [
