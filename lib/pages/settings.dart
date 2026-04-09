@@ -1,9 +1,9 @@
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:updatium/components/button_helpers.dart';
+
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -17,220 +17,6 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:updatium/generated/app_localizations.dart';
-
-// Helper function to get full language names
-String getLanguageName(Locale locale) {
-  final Map<String, String> languageNames = {
-    'ar': 'العربية',
-    'bs': 'Bosanski',
-    'ca': 'Català',
-    'cs': 'Čeština',
-    'da': 'Dansk',
-    'de': 'Deutsch',
-    'en': 'English',
-    'es': 'Español',
-    'et': 'Eesti',
-    'fa': 'فارسی',
-    'fr': 'Français',
-    'gl': 'Galego',
-    'he': 'עברית',
-    'hu': 'Magyar',
-    'id': 'Bahasa Indonesia',
-    'it': 'Italiano',
-    'ja': '日本語',
-    'ko': '한국어',
-    'ml': 'മലയാളം',
-    'nl': 'Nederlands',
-    'eo': 'Esperanto',
-    'pl': 'Polski',
-    'pt': 'Português',
-    'pt_BR': 'Português (Brasil)',
-    'ru': 'Русский',
-    'sv': 'Svenska',
-    'tr': 'Türkçe',
-    'uk': 'Українська',
-    'vi': 'Tiếng Việt',
-    'zh': '中文',
-    'zh_Hant_TW': '中文 (繁體)',
-  };
-  
-  final key = locale.countryCode != null 
-      ? '${locale.languageCode}_${locale.countryCode}'
-      : locale.languageCode;
-  
-  return languageNames[key] ?? locale.languageCode.toUpperCase();
-}
-
-// Helper function for proper pluralization
-String getLocalizedDuration(int minutes, BuildContext context) {
-  final l10n = AppLocalizations.of(context)!;
-  
-  if (minutes < 60) {
-    return l10n.minute(minutes);
-  } else if (minutes < 24 * 60) {
-    int hours = minutes ~/ 60;
-    int remainingMinutes = minutes % 60;
-    
-    String hourText;
-    if (hours == 1) {
-      hourText = l10n.hour(hours).replaceAll('hours', 'hour').replaceAll('ساعات', 'ساعة').replaceAll('ساعات', 'ساعة').replaceAll('heures', 'heure').replaceAll('horas', 'hora').replaceAll('Stunden', 'Stunde').replaceAll('小時', '小時').replaceAll('시간', '시간').replaceAll('ore', 'ora').replaceAll('horas', 'hora').replaceAll('uren', 'uur').replaceAll('часов', 'час').replaceAll('saat', 'saat').replaceAll('שעות', 'שעה');
-    } else {
-      hourText = l10n.hour(hours);
-    }
-    
-    if (remainingMinutes == 0) {
-      return hourText;
-    } else {
-      return '$hourText ${l10n.minute(remainingMinutes)}';
-    }
-  } else {
-    int days = minutes ~/ (24 * 60);
-    return l10n.day(days);
-  }
-}
-
-// Helper function to get localized source names
-String getLocalizedSourceName(String sourceName, BuildContext context) {
-  final l10n = AppLocalizations.of(context)!;
-  switch (sourceName) {
-    case 'GitHub starred repositories':
-      return l10n.githubStarredRepos;
-    case 'Direct APK Link':
-      return l10n.directAPKLink;
-    default:
-      return sourceName;
-  }
-}
-
-// Helper function to localize form item labels
-GeneratedFormItem localizeFormItem(GeneratedFormItem item, BuildContext context) {
-  final l10n = AppLocalizations.of(context)!;
-  
-  if (item is GeneratedFormTextField) {
-    String localizedLabel = item.label;
-    switch (item.label) {
-      case 'GitHub personal access token (increases rate limit)':
-        localizedLabel = l10n.githubPATLabel;
-        break;
-      case 'GitLab personal access token (increases rate limit)':
-        localizedLabel = l10n.gitlabPATLabel;
-        break;
-      case 'GitHub request prefix':
-        localizedLabel = l10n.githubRequestPrefix;
-        break;
-      case 'GitLab request prefix':
-        localizedLabel = l10n.gitlabRequestPrefix;
-        break;
-      case 'Default pseudo-versioning method':
-        localizedLabel = l10n.defaultPseudoVersioningMethod;
-        break;
-      case 'About':
-        localizedLabel = l10n.about;
-        break;
-      case 'Include prereleases':
-        localizedLabel = l10n.includePrereleases;
-        break;
-      case 'Fallback to older releases':
-        localizedLabel = l10n.fallbackToOlderReleases;
-        break;
-      case 'Filter release titles by regular expression':
-        localizedLabel = l10n.filterReleaseTitlesByRegEx;
-        break;
-      case 'Filter release notes by regular expression':
-        localizedLabel = l10n.filterReleaseNotesByRegEx;
-        break;
-      case 'Verify latest tag':
-        localizedLabel = l10n.verifyLatestTag;
-        break;
-      case 'Sort method':
-        localizedLabel = l10n.sortMethod;
-        break;
-      case 'Release title as version':
-        localizedLabel = l10n.releaseTitleAsVersion;
-        break;
-      case 'Minimum star count':
-        localizedLabel = l10n.minimumStarCount;
-        break;
-      case 'Skip update notifications':
-        localizedLabel = l10n.skipUpdateNotifications;
-        break;
-      case 'Refresh before download':
-        localizedLabel = l10n.refreshBeforeDownload;
-        break;
-    }
-    
-    // Localize "About" text in belowWidgets
-    List<Widget>? localizedBelowWidgets = item.belowWidgets?.map((widget) {
-      if (widget is Text && widget.data == 'About') {
-        return Text(
-          l10n.about,
-          style: widget.style,
-        );
-      }
-      return widget;
-    }).toList();
-    
-    return GeneratedFormTextField(
-      item.key,
-      label: localizedLabel,
-      defaultValue: item.defaultValue,
-      required: item.required,
-      password: item.password,
-      hint: item.hint,
-      textInputType: item.textInputType,
-      autoCompleteOptions: item.autoCompleteOptions,
-      additionalValidators: item.additionalValidators as List<String? Function(String?)>,
-      belowWidgets: localizedBelowWidgets as List<Widget>,
-    );
-  } else if (item is GeneratedFormDropdown) {
-    // Localize dropdown options
-    List<MapEntry<String, String>>? localizedOpts = item.opts?.map((option) {
-      String localizedValue = option.value;
-      switch (option.value) {
-        case 'Partial APK Hash':
-          localizedValue = l10n.partialAPKHash;
-          break;
-        case 'Release date':
-          localizedValue = l10n.releaseDate;
-          break;
-        case 'Smart name':
-          localizedValue = l10n.smartName;
-          break;
-        case 'None':
-          localizedValue = l10n.none;
-          break;
-        case 'Smart + Date':
-          localizedValue = l10n.smartPlusDate;
-          break;
-        case 'Name':
-          localizedValue = l10n.name;
-          break;
-        default:
-          localizedValue = option.value;
-      }
-      return MapEntry(option.key, localizedValue);
-    }).toList();
-    
-    String localizedLabel = item.label;
-    switch (item.label) {
-      case 'Default pseudo-versioning method':
-        localizedLabel = l10n.defaultPseudoVersioningMethod;
-        break;
-      default:
-        localizedLabel = item.label;
-    }
-    
-    return GeneratedFormDropdown(
-      item.key,
-      localizedOpts,
-      label: localizedLabel,
-      defaultValue: item.defaultValue,
-    );
-  }
-  
-  return item; // Return other types unchanged
-}
 
 // Spacing constants
 const height8 = SizedBox(height: 8);
@@ -261,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
   ];
   int updateInterval = 0;
   late SplineInterpolation updateIntervalInterpolator; // 🤓
-  String updateIntervalLabel = 'Never - manual only';
+  String updateIntervalLabel = tr('neverManualOnly');
   bool showIntervalLabel = true;
   final Map<ColorSwatch<Object>, String> colorsNameMap =
       <ColorSwatch<Object>, String>{
@@ -281,7 +67,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void processIntervalSliderValue(double val) {
     if (val < 0.5) {
       updateInterval = 0;
-      updateIntervalLabel = AppLocalizations.of(context)!.neverManualOnly;
+      updateIntervalLabel = tr('neverManualOnly');
       return;
     }
     int valInterpolated = 0;
@@ -292,23 +78,25 @@ class _SettingsPageState extends State<SettingsPage> {
     }
     if (valInterpolated < 60) {
       updateInterval = valInterpolated;
-      updateIntervalLabel = getLocalizedDuration(valInterpolated.round(), context);
+      updateIntervalLabel = plural('minute', valInterpolated);
     } else if (valInterpolated < 8 * 60) {
       int valRounded = (valInterpolated / 15).floor() * 15;
       updateInterval = valRounded;
-      updateIntervalLabel = getLocalizedDuration(valRounded, context);
+      updateIntervalLabel = plural('hour', valRounded ~/ 60);
+      int mins = valRounded % 60;
+      if (mins != 0) updateIntervalLabel += " ${plural('minute', mins)}";
     } else if (valInterpolated < 24 * 60) {
       int valRounded = (valInterpolated / 30).floor() * 30;
       updateInterval = valRounded;
-      updateIntervalLabel = getLocalizedDuration(valRounded, context);
+      updateIntervalLabel = plural('hour', valRounded / 60);
     } else if (valInterpolated < 7 * 24 * 60) {
       int valRounded = (valInterpolated / (12 * 60)).floor() * 12 * 60;
       updateInterval = valRounded;
-      updateIntervalLabel = getLocalizedDuration(valRounded, context);
+      updateIntervalLabel = plural('day', valRounded / (24 * 60));
     } else {
       int valRounded = (valInterpolated / (24 * 60)).floor() * 24 * 60;
       updateInterval = valRounded;
-      updateIntervalLabel = getLocalizedDuration(valRounded, context);
+      updateIntervalLabel = plural('day', valRounded ~/ (24 * 60));
     }
   }
 
@@ -324,7 +112,7 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (ctx, val) {
         return ((val.data?.version.sdkInt ?? 30) < 29)
             ? Text(
-                AppLocalizations.of(context)!.followSystemThemeExplanation,
+                tr('followSystemThemeExplanation'),
                 style: Theme.of(context).textTheme.labelSmall,
               )
             : const SizedBox.shrink();
@@ -351,11 +139,11 @@ class _SettingsPageState extends State<SettingsPage> {
           ColorPickerType.wheel: true,
         },
         pickerTypeLabels: <ColorPickerType, String>{
-          ColorPickerType.custom: AppLocalizations.of(context)!.standard,
-          ColorPickerType.wheel: AppLocalizations.of(context)!.custom,
+          ColorPickerType.custom: tr('standard'),
+          ColorPickerType.wheel: tr('custom'),
         },
         title: Text(
-          AppLocalizations.of(context)!.selectX(AppLocalizations.of(context)!.color.toLowerCase()),
+          tr('selectX', args: [tr('color').toLowerCase()]),
           style: Theme.of(context).textTheme.titleLarge,
         ),
         wheelDiameter: 192,
@@ -399,7 +187,7 @@ class _SettingsPageState extends State<SettingsPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       tileColor: Theme.of(context).colorScheme.surface,
       title: Text(
-        AppLocalizations.of(context)!.selectX(AppLocalizations.of(context)!.color.toLowerCase()),
+        tr('selectX', args: [tr('color').toLowerCase()]),
         style: Theme.of(context).textTheme.titleMedium,
       ),
       subtitle: Text(
@@ -444,7 +232,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: Text(AppLocalizations.of(context)!.useMaterialYou)),
+                  Flexible(child: Text(tr('useMaterialYou'))),
                   Switch(
                     value: settingsProvider.useMaterialYou,
                     onChanged: (value) {
@@ -463,16 +251,16 @@ class _SettingsPageState extends State<SettingsPage> {
         String selectedValue;
         switch (settingsProvider.sortColumn) {
           case SortColumnSettings.authorName:
-            selectedValue = AppLocalizations.of(context)!.authorName;
+            selectedValue = tr('authorName');
             break;
           case SortColumnSettings.nameAuthor:
-            selectedValue = AppLocalizations.of(context)!.nameAuthor;
+            selectedValue = tr('nameAuthor');
             break;
           case SortColumnSettings.added:
-            selectedValue = AppLocalizations.of(context)!.asAdded;
+            selectedValue = tr('asAdded');
             break;
           case SortColumnSettings.releaseDate:
-            selectedValue = AppLocalizations.of(context)!.releaseDate;
+            selectedValue = tr('releaseDate');
             break;
         }
 
@@ -480,7 +268,7 @@ class _SettingsPageState extends State<SettingsPage> {
           controller: TextEditingController(text: selectedValue),
           readOnly: true,
           decoration: InputDecoration(
-            labelText: AppLocalizations.of(context)!.appSortBy,
+            labelText: tr('appSortBy'),
             filled: true,
             suffixIcon: const Icon(Icons.arrow_drop_down),
           ),
@@ -497,22 +285,22 @@ class _SettingsPageState extends State<SettingsPage> {
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.authorName,
-          child: Text(AppLocalizations.of(context)!.authorName),
+          child: Text(tr('authorName')),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.nameAuthor,
-          child: Text(AppLocalizations.of(context)!.nameAuthor),
+          child: Text(tr('nameAuthor')),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.added,
-          child: Text(AppLocalizations.of(context)!.asAdded),
+          child: Text(tr('asAdded')),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.releaseDate,
-          child: Text(AppLocalizations.of(context)!.releaseDate),
+          child: Text(tr('releaseDate')),
         ),
       ],
     );
@@ -521,14 +309,14 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (context, controller, child) {
         String selectedValue =
             settingsProvider.sortOrder == SortOrderSettings.ascending
-            ? AppLocalizations.of(context)!.ascending
-            : AppLocalizations.of(context)!.descending;
+            ? tr('ascending')
+            : tr('descending');
 
         return TextField(
           controller: TextEditingController(text: selectedValue),
           readOnly: true,
           decoration: InputDecoration(
-            labelText: AppLocalizations.of(context)!.appSortOrder,
+            labelText: tr('appSortOrder'),
             filled: true,
             suffixIcon: const Icon(Icons.arrow_drop_down),
           ),
@@ -545,12 +333,12 @@ class _SettingsPageState extends State<SettingsPage> {
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortOrder = SortOrderSettings.ascending,
-          child: Text(AppLocalizations.of(context)!.ascending),
+          child: Text(tr('ascending')),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortOrder = SortOrderSettings.descending,
-          child: Text(AppLocalizations.of(context)!.descending),
+          child: Text(tr('descending')),
         ),
       ],
     );
@@ -558,20 +346,19 @@ class _SettingsPageState extends State<SettingsPage> {
     var localeDropdown = MenuAnchor(
       builder: (context, controller, child) {
         String selectedValue = settingsProvider.forcedLocale == null
-            ? AppLocalizations.of(context)!.followSystem
-            : getLanguageName(
-                supportedLocales
+            ? tr('followSystem')
+            : supportedLocales
                   .firstWhere(
-                    (e) => e.languageCode == settingsProvider.forcedLocale?.languageCode,
+                    (e) => e.key == settingsProvider.forcedLocale,
                     orElse: () => supportedLocales.first,
                   )
-                );
+                  .value;
 
         return TextField(
           controller: TextEditingController(text: selectedValue),
           readOnly: true,
           decoration: InputDecoration(
-            labelText: AppLocalizations.of(context)!.language,
+            labelText: tr('language'),
             filled: true,
             suffixIcon: const Icon(Icons.arrow_drop_down),
           ),
@@ -590,15 +377,15 @@ class _SettingsPageState extends State<SettingsPage> {
             settingsProvider.forcedLocale = null;
             settingsProvider.resetLocaleSafe(context);
           },
-          child: Text(AppLocalizations.of(context)!.followSystem),
+          child: Text(tr('followSystem')),
         ),
         ...supportedLocales.map(
           (e) => MenuItemButton(
             onPressed: () {
-              settingsProvider.forcedLocale = Locale(e.languageCode, e.countryCode);
-              // context.setLocale(e.languageCode); // Removed - not available in Flutter localization
+              settingsProvider.forcedLocale = e.key;
+              context.setLocale(e.key);
             },
-            child: Text(getLanguageName(e)),
+            child: Text(e.value),
           ),
         ),
       ],
@@ -632,14 +419,13 @@ class _SettingsPageState extends State<SettingsPage> {
     var sourceSpecificFields = sourceProvider.sources.map((e) {
       if (e.sourceConfigSettingFormItems.isNotEmpty) {
         return GeneratedForm(
-          items: e.sourceConfigSettingFormItems.map((formItem) {
-            var localizedItem = localizeFormItem(formItem, context);
-            if (localizedItem is GeneratedFormSwitch) {
-              localizedItem.defaultValue = settingsProvider.getSettingBool(localizedItem.key);
+          items: e.sourceConfigSettingFormItems.map((e) {
+            if (e is GeneratedFormSwitch) {
+              e.defaultValue = settingsProvider.getSettingBool(e.key);
             } else {
-              localizedItem.defaultValue = settingsProvider.getSettingString(localizedItem.key);
+              e.defaultValue = settingsProvider.getSettingString(e.key);
             }
-            return [localizedItem];
+            return [e];
           }).toList(),
           onValueChanges: (values, valid, isBuilding) {
             if (valid && !isBuilding) {
@@ -675,7 +461,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 vertical: 20,
               ),
               title: Text(
-                AppLocalizations.of(context)!.settings,
+                tr('settings'),
                 style: TextStyle(
                   color: Theme.of(context).textTheme.bodyMedium!.color,
                 ),
@@ -691,7 +477,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          AppLocalizations.of(context)!.updates,
+                          tr('updates'),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.primary,
@@ -703,7 +489,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         if (showIntervalLabel)
                           SizedBox(
                             child: Text(
-                              "${AppLocalizations.of(context)!.bgUpdateCheckInterval}: $updateIntervalLabel",
+                              "${tr('bgUpdateCheckInterval')}: $updateIntervalLabel",
                             ),
                           )
                         else
@@ -724,7 +510,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                         children: [
                                           Flexible(
                                             child: Text(
-                                              AppLocalizations.of(context)!.foregroundServiceExplanation,
+                                              tr(
+                                                'foregroundServiceExplanation',
+                                              ),
                                             ),
                                           ),
                                           Switch(
@@ -743,7 +531,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         children: [
                                           Flexible(
                                             child: Text(
-                                              AppLocalizations.of(context)!.enableBackgroundUpdates,
+                                              tr('enableBackgroundUpdates'),
                                             ),
                                           ),
                                           Switch(
@@ -759,13 +547,13 @@ class _SettingsPageState extends State<SettingsPage> {
                                       ),
                                       height8,
                                       Text(
-                                        AppLocalizations.of(context)!.backgroundUpdateReqsExplanation,
+                                        tr('backgroundUpdateReqsExplanation'),
                                         style: Theme.of(
                                           context,
                                         ).textTheme.labelSmall,
                                       ),
                                       Text(
-                                        AppLocalizations.of(context)!.backgroundUpdateLimitsExplanation,
+                                        tr('backgroundUpdateLimitsExplanation'),
                                         style: Theme.of(
                                           context,
                                         ).textTheme.labelSmall,
@@ -783,7 +571,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               children: [
                                                 Flexible(
                                                   child: Text(
-                                                    AppLocalizations.of(context)!.bgUpdatesOnWiFiOnly,
+                                                    tr('bgUpdatesOnWiFiOnly'),
                                                   ),
                                                 ),
                                                 Switch(
@@ -805,7 +593,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                               children: [
                                                 Flexible(
                                                   child: Text(
-                                                    AppLocalizations.of(context)!.bgUpdatesWhileChargingOnly,
+                                                    tr(
+                                                      'bgUpdatesWhileChargingOnly',
+                                                    ),
                                                   ),
                                                 ),
                                                 Switch(
@@ -835,9 +625,9 @@ class _SettingsPageState extends State<SettingsPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(AppLocalizations.of(context)!.safeMode),
+                                  Text(tr('safeMode')),
                                   Text(
-                                    AppLocalizations.of(context)!.safeModeDescription,
+                                    tr('safeModeDescription'),
                                     style: Theme.of(
                                       context,
                                     ).textTheme.labelSmall,
@@ -857,7 +647,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(AppLocalizations.of(context)!.checkOnStart)),
+                            Flexible(child: Text(tr('checkOnStart'))),
                             Switch(
                               value: settingsProvider.checkOnStart,
                               onChanged: (value) {
@@ -871,7 +661,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(AppLocalizations.of(context)!.checkUpdateOnDetailPage),
+                              child: Text(tr('checkUpdateOnDetailPage')),
                             ),
                             Switch(
                               value: settingsProvider.checkUpdateOnDetailPage,
@@ -888,7 +678,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           children: [
                             Flexible(
                               child: Text(
-                                AppLocalizations.of(context)!.onlyCheckInstalledOrTrackOnlyApps,
+                                tr('onlyCheckInstalledOrTrackOnlyApps'),
                               ),
                             ),
                             Switch(
@@ -907,7 +697,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(AppLocalizations.of(context)!.removeOnExternalUninstall),
+                              child: Text(tr('removeOnExternalUninstall')),
                             ),
                             Switch(
                               value: settingsProvider.removeOnExternalUninstall,
@@ -922,7 +712,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(AppLocalizations.of(context)!.parallelDownloads)),
+                            Flexible(child: Text(tr('parallelDownloads'))),
                             Switch(
                               value: settingsProvider.parallelDownloads,
                               onChanged: (value) {
@@ -941,7 +731,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    AppLocalizations.of(context)!.beforeNewInstallsShareToAppVerifier,
+                                    tr('beforeNewInstallsShareToAppVerifier'),
                                   ),
                                   GestureDetector(
                                     onTap: () {
@@ -951,7 +741,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                       );
                                     },
                                     child: Text(
-                                      AppLocalizations.of(context)!.about,
+                                      tr('about'),
                                       style: const TextStyle(
                                         decoration: TextDecoration.underline,
                                         fontSize: 12,
@@ -976,7 +766,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(AppLocalizations.of(context)!.useShizuku)),
+                            Flexible(child: Text(tr('useShizuku'))),
                             Switch(
                               value: settingsProvider.useShizuku,
                               onChanged: (useShizuku) {
@@ -990,25 +780,25 @@ class _SettingsPageState extends State<SettingsPage> {
                                       case 'services_not_found':
                                         showError(
                                           UpdatiumError(
-                                            AppLocalizations.of(context)!.shizukuBinderNotFound,
+                                            tr('shizukuBinderNotFound'),
                                           ),
                                           context,
                                         );
                                       case 'old_shizuku':
                                         showError(
-                                          UpdatiumError(AppLocalizations.of(context)!.shizukuOld),
+                                          UpdatiumError(tr('shizukuOld')),
                                           context,
                                         );
                                       case 'old_android_with_adb':
                                         showError(
                                           UpdatiumError(
-                                            AppLocalizations.of(context)!.shizukuOldAndroidWithADB,
+                                            tr('shizukuOldAndroidWithADB'),
                                           ),
                                           context,
                                         );
                                       case 'denied':
                                         showError(
-                                          UpdatiumError(AppLocalizations.of(context)!.cancelled),
+                                          UpdatiumError(tr('cancelled')),
                                           context,
                                         );
                                     }
@@ -1026,7 +816,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           children: [
                             Flexible(
                               child: Text(
-                                AppLocalizations.of(context)!.shizukuPretendToBeGooglePlay,
+                                tr('shizukuPretendToBeGooglePlay'),
                                 style: TextStyle(
                                   color: settingsProvider.useShizuku
                                       ? null
@@ -1050,7 +840,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         height32,
                         Text(
-                          AppLocalizations.of(context)!.sourceSpecific,
+                          tr('sourceSpecific'),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.primary,
@@ -1059,7 +849,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ...sourceSpecificFields,
                         height32,
                         Text(
-                          AppLocalizations.of(context)!.appearance,
+                          tr('appearance'),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.primary,
@@ -1071,13 +861,13 @@ class _SettingsPageState extends State<SettingsPage> {
                             String selectedValue;
                             switch (settingsProvider.theme) {
                               case ThemeSettings.system:
-                                selectedValue = AppLocalizations.of(context)!.followSystem;
+                                selectedValue = tr('followSystem');
                                 break;
                               case ThemeSettings.light:
-                                selectedValue = AppLocalizations.of(context)!.light;
+                                selectedValue = tr('light');
                                 break;
                               case ThemeSettings.dark:
-                                selectedValue = AppLocalizations.of(context)!.dark;
+                                selectedValue = tr('dark');
                                 break;
                             }
 
@@ -1087,7 +877,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                               readOnly: true,
                               decoration: InputDecoration(
-                                labelText: AppLocalizations.of(context)!.theme,
+                                labelText: tr('theme'),
                                 filled: true,
                                 suffixIcon: const Icon(Icons.arrow_drop_down),
                               ),
@@ -1104,17 +894,17 @@ class _SettingsPageState extends State<SettingsPage> {
                             MenuItemButton(
                               onPressed: () =>
                                   settingsProvider.theme = ThemeSettings.system,
-                              child: Text(AppLocalizations.of(context)!.followSystem),
+                              child: Text(tr('followSystem')),
                             ),
                             MenuItemButton(
                               onPressed: () =>
                                   settingsProvider.theme = ThemeSettings.light,
-                              child: Text(AppLocalizations.of(context)!.light),
+                              child: Text(tr('light')),
                             ),
                             MenuItemButton(
                               onPressed: () =>
                                   settingsProvider.theme = ThemeSettings.dark,
-                              child: Text(AppLocalizations.of(context)!.dark),
+                              child: Text(tr('dark')),
                             ),
                           ],
                         ),
@@ -1126,7 +916,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Flexible(child: Text(AppLocalizations.of(context)!.useBlackTheme)),
+                              Flexible(child: Text(tr('useBlackTheme'))),
                               Switch(
                                 value: settingsProvider.useBlackTheme,
                                 onChanged: (value) {
@@ -1164,7 +954,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Flexible(
-                                            child: Text(AppLocalizations.of(context)!.useSystemFont),
+                                            child: Text(tr('useSystemFont')),
                                           ),
                                           Switch(
                                             value:
@@ -1195,7 +985,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(AppLocalizations.of(context)!.pinUpdates)),
+                            Flexible(child: Text(tr('pinUpdates'))),
                             Switch(
                               value: settingsProvider.pinUpdates,
                               onChanged: (value) {
@@ -1209,7 +999,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(AppLocalizations.of(context)!.moveNonInstalledAppsToBottom),
+                              child: Text(tr('moveNonInstalledAppsToBottom')),
                             ),
                             Switch(
                               value: settingsProvider.buryNonInstalled,
@@ -1223,7 +1013,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(AppLocalizations.of(context)!.hideNonInstalledApps)),
+                            Flexible(child: Text(tr('hideNonInstalledApps'))),
                             Switch(
                               value: settingsProvider.hideNonInstalled,
                               onChanged: (value) {
@@ -1235,7 +1025,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(AppLocalizations.of(context)!.groupByCategory)),
+                            Flexible(child: Text(tr('groupByCategory'))),
                             Switch(
                               value: settingsProvider.groupByCategory,
                               onChanged: (value) {
@@ -1249,7 +1039,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(AppLocalizations.of(context)!.dontShowTrackOnlyWarnings),
+                              child: Text(tr('dontShowTrackOnlyWarnings')),
                             ),
                             Switch(
                               value: settingsProvider.hideTrackOnlyWarning,
@@ -1264,7 +1054,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Text(AppLocalizations.of(context)!.dontShowAPKOriginWarnings),
+                              child: Text(tr('dontShowAPKOriginWarnings')),
                             ),
                             Switch(
                               value: settingsProvider.hideAPKOriginWarning,
@@ -1278,7 +1068,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(AppLocalizations.of(context)!.disablePageTransitions)),
+                            Flexible(child: Text(tr('disablePageTransitions'))),
                             Switch(
                               value: settingsProvider.disablePageTransitions,
                               onChanged: (value) {
@@ -1291,7 +1081,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(AppLocalizations.of(context)!.reversePageTransitions)),
+                            Flexible(child: Text(tr('reversePageTransitions'))),
                             Switch(
                               value: settingsProvider.reversePageTransitions,
                               onChanged: settingsProvider.disablePageTransitions
@@ -1307,7 +1097,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(child: Text(AppLocalizations.of(context)!.highlightTouchTargets)),
+                            Flexible(child: Text(tr('highlightTouchTargets'))),
                             Switch(
                               value: settingsProvider.highlightTouchTargets,
                               onChanged: (value) {
@@ -1318,7 +1108,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         height32,
                         Text(
-                          AppLocalizations.of(context)!.categories,
+                          tr('categories'),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.primary,
@@ -1343,8 +1133,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 children: [
                   Semantics(
                     button: true,
-                    label: AppLocalizations.of(context)!.appSource,
-                    hint: AppLocalizations.of(context)!.appSourceHint,
+                    label: tr('appSource'),
+                    hint: tr('appSourceHint'),
                     child: IconButton(
                       visualDensity: VisualDensity.compact,
                       onPressed: () {
@@ -1353,14 +1143,14 @@ class _SettingsPageState extends State<SettingsPage> {
                           mode: LaunchMode.externalApplication,
                         );
                       },
-                      tooltip: AppLocalizations.of(context)!.appSource,
+                      tooltip: tr('appSource'),
                       icon: const Icon(Icons.code),
                     ),
                   ),
                   Semantics(
                     button: true,
-                    label: AppLocalizations.of(context)!.wiki,
-                    hint: AppLocalizations.of(context)!.wikiHint,
+                    label: tr('wiki'),
+                    hint: tr('wikiHint'),
                     child: IconButton(
                       visualDensity: VisualDensity.compact,
                       onPressed: () {
@@ -1369,8 +1159,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           mode: LaunchMode.externalApplication,
                         );
                       },
-                      tooltip: AppLocalizations.of(context)!.wiki,
-                      icon: Localizations.localeOf(context).languageCode == 'he'
+                      tooltip: tr('wiki'),
+                      icon: context.locale.languageCode == 'he'
                           ? Transform(
                               transform: Matrix4.identity(),
                               child: const Icon(Icons.help),
@@ -1380,14 +1170,14 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                   Semantics(
                     button: true,
-                    label: AppLocalizations.of(context)!.appLogs,
-                    hint: AppLocalizations.of(context)!.appLogsHint,
+                    label: tr('appLogs'),
+                    hint: tr('appLogsHint'),
                     child: IconButton(
                       visualDensity: VisualDensity.compact,
                       onPressed: () {
                         context.read<LogsProvider>().get().then((logs) {
                           if (logs.isEmpty) {
-                            showMessage(UpdatiumError(AppLocalizations.of(context)!.noLogs), context);
+                            showMessage(UpdatiumError(tr('noLogs')), context);
                           } else {
                             showDialog(
                               context: context,
@@ -1398,7 +1188,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           }
                         });
                       },
-                      tooltip: AppLocalizations.of(context)!.appLogs,
+                      tooltip: tr('appLogs'),
                       icon: const Icon(Icons.bug_report),
                     ),
                   ),
@@ -1433,7 +1223,7 @@ class _LogsDialogState extends State<LogsDialog> {
           .then((value) {
             setState(() {
               String l = value.map((e) => e.toString()).join('\n\n');
-              logString = l.isNotEmpty ? l : AppLocalizations.of(context)!.noLogs;
+              logString = l.isNotEmpty ? l : tr('noLogs');
             });
           });
     }
@@ -1444,18 +1234,18 @@ class _LogsDialogState extends State<LogsDialog> {
 
     return AlertDialog(
       scrollable: true,
-      title: Text(AppLocalizations.of(context)!.appLogs),
+      title: Text(tr('appLogs')),
       content: Column(
         children: [
           MenuAnchor(
             builder: (context, controller, child) {
               return TextField(
                 controller: TextEditingController(
-                  text: '$selectedDays days',
+                  text: plural('day', selectedDays),
                 ),
                 readOnly: true,
                 decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context)!.filter,
+                  labelText: tr('filterDays'),
                   filled: true,
                   suffixIcon: const Icon(Icons.arrow_drop_down),
                 ),
@@ -1476,7 +1266,7 @@ class _LogsDialogState extends State<LogsDialog> {
                   });
                   filterLogs(day);
                 },
-                child: Text(AppLocalizations.of(context)!.day(day)),
+                child: Text(plural('day', day)),
               );
             }).toList(),
           ),
@@ -1485,17 +1275,17 @@ class _LogsDialogState extends State<LogsDialog> {
         ],
       ),
       actions: [
-        AppTextButton(
+        TextButton(
           onPressed: () async {
             var cont =
                 (await showDialog<Map<String, dynamic>?>(
                   context: context,
                   builder: (BuildContext ctx) {
                     return GeneratedFormModal(
-                      title: AppLocalizations.of(context)!.appLogs,
+                      title: tr('appLogs'),
                       items: const [],
                       initValid: true,
-                      message: AppLocalizations.of(context)!.removeFromUpdatium,
+                      message: tr('removeFromUpdatium'),
                     );
                   },
                 )) !=
@@ -1505,20 +1295,20 @@ class _LogsDialogState extends State<LogsDialog> {
               Navigator.of(context).pop();
             }
           },
-          child: Text(AppLocalizations.of(context)!.remove),
+          child: Text(tr('remove')),
         ),
-        AppTextButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(AppLocalizations.of(context)!.close),
+          child: Text(tr('close')),
         ),
-        AppTextButton(
+        TextButton(
           onPressed: () {
-            Share.share(logString ?? '', subject: AppLocalizations.of(context)!.appLogs);
+            Share.share(logString ?? '', subject: tr('appLogs'));
             Navigator.of(context).pop();
           },
-          child: Text(AppLocalizations.of(context)!.share),
+          child: Text(tr('share')),
         ),
       ],
     );
@@ -1565,13 +1355,13 @@ class _CategoryEditorSelectorState extends State<CategoryEditorSelector> {
         [
           GeneratedFormTagInput(
             'categories',
-            label: AppLocalizations.of(context)!.categories,
-            emptyMessage: AppLocalizations.of(context)!.noCategories,
+            label: tr('categories'),
+            emptyMessage: tr('noCategories'),
             defaultValue: storedValues,
             alignment: widget.alignment,
             deleteConfirmationMessage: MapEntry(
-              AppLocalizations.of(context)!.deleteCategoriesQuestion,
-              AppLocalizations.of(context)!.categoryDeleteWarning,
+              tr('deleteCategoriesQuestion'),
+              tr('categoryDeleteWarning'),
             ),
             singleSelect: widget.singleSelect,
             showLabelWhenNotEmpty: widget.showLabelWhenNotEmpty,

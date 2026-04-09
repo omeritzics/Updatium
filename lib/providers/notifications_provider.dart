@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:updatium/components/button_helpers.dart';
+
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -225,7 +225,7 @@ class NotificationsProvider {
             title: Text(title),
             content: Text(content),
             actions: [
-              AppTextButton(
+              TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(null);
                   if (doublePop) {
