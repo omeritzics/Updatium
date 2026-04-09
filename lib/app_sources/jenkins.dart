@@ -1,11 +1,12 @@
 import 'dart:convert';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class Jenkins extends AppSource {
   Jenkins() {
+    name = tr('jenkins');
     versionDetectionDisallowed = true;
     neverAutoSelect = true;
     showReleaseDateAsVersionToggle = true;

@@ -9,6 +9,7 @@ import 'package:updatium/components/generated_form.dart';
 class SourceHut extends AppSource {
   SourceHut() {
     hosts = ['git.sr.ht'];
+    name = tr('sourcehut');
     showReleaseDateAsVersionToggle = true;
 
     additionalSourceAppSpecificSettingFormItems = [

@@ -6,7 +6,7 @@ import 'package:updatium/providers/source_provider.dart';
 class Aptoide extends AppSource {
   Aptoide() {
     hosts = ['aptoide.com'];
-    name = 'Aptoide';
+    name = tr('aptoide');
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;

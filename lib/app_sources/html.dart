@@ -280,6 +280,7 @@ class HTML extends AppSource {
     ],
   ];
   HTML() {
+    name = tr('html');
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormSubForm('intermediateLink', [

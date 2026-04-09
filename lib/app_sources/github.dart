@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/html.dart';
@@ -13,7 +14,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class GitHub extends AppSource {
   GitHub({hostChanged = false}) {
-    name = 'GitHub';
+    name = tr('github');
     hosts = ['github.com'];
     appIdInferIsOptional = true;
     showReleaseDateAsVersionToggle = true;
@@ -23,7 +24,7 @@ class GitHub extends AppSource {
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
         'github-creds',
-        label: 'GitHub personal access token (increases rate limit)',
+        label: tr('githubPATLabel'),
         password: true,
         required: false,
         belowWidgets: [
@@ -36,7 +37,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              'About',
+              tr('about'),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -48,7 +49,7 @@ class GitHub extends AppSource {
       ),
       GeneratedFormTextField(
         'GHReqPrefix',
-        label: 'GitHub request prefix',
+        label: tr('GHReqPrefix'),
         hint: 'gh-proxy.org',
         required: false,
         additionalValidators: [
@@ -61,7 +62,7 @@ class GitHub extends AppSource {
                 Uri.parse('https://$value/api.github.com');
               }
             } catch (e) {
-              return 'Invalid input';
+              return tr('invalidInput');
             }
             return null;
           },
@@ -76,7 +77,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              'About',
+              tr('about'),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -92,21 +93,21 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'includePrereleases',
-          label: 'Include prereleases',
+          label: tr('includePrereleases'),
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: 'Fallback to older releases',
+          label: tr('fallbackToOlderReleases'),
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormTextField(
           'filterReleaseTitlesByRegEx',
-          label: 'Filter release titles by regular expression',
+          label: tr('filterReleaseTitlesByRegEx'),
           required: false,
           additionalValidators: [
             (value) {
@@ -118,7 +119,7 @@ class GitHub extends AppSource {
       [
         GeneratedFormTextField(
           'filterReleaseNotesByRegEx',
-          label: 'Filter release notes by regular expression',
+          label: tr('filterReleaseNotesByRegEx'),
           required: false,
           additionalValidators: [
             (value) {
@@ -127,18 +128,18 @@ class GitHub extends AppSource {
           ],
         ),
       ],
-      [GeneratedFormSwitch('verifyLatestTag', label: 'Verify latest tag')],
+      [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
       [
         GeneratedFormDropdown(
           'sortMethodChoice',
           [
-            MapEntry('date', 'Release date'),
-            MapEntry('smartname', 'Smart name'),
-            MapEntry('none', 'None'),
-            MapEntry('smartname-datefallback', 'Smart + Date'),
-            MapEntry('name', 'Name'),
+            MapEntry('date', tr('releaseDate')),
+            MapEntry('smartname', tr('smartname')),
+            MapEntry('none', tr('none')),
+            MapEntry('smartname-datefallback', tr('smartPlusDate')),
+            MapEntry('name', tr('name')),
           ],
-          label: 'Sort method',
+          label: tr('sortMethod'),
           defaultValue: 'date',
           required: false,
         ),
@@ -146,14 +147,14 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'useLatestAssetDateAsReleaseDate',
-          label: 'Use latest asset date as release date',
+          label: tr('useLatestAssetDateAsReleaseDate'),
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'releaseTitleAsVersion',
-          label: 'Release title as version',
+          label: tr('releaseTitleAsVersion'),
           defaultValue: false,
         ),
       ],
@@ -163,14 +164,14 @@ class GitHub extends AppSource {
     searchQuerySettingFormItems = [
       GeneratedFormTextField(
         'minStarCount',
-        label: 'Minimum star count',
+        label: tr('minStarCount'),
         defaultValue: '0',
         additionalValidators: [
           (value) {
             try {
               int.parse(value ?? '0');
             } catch (e) {
-              return 'Invalid input';
+              return tr('invalidInput');
             }
             return null;
           },
@@ -308,7 +309,7 @@ class GitHub extends AppSource {
   @override
   Future<String?> getSourceNote() async {
     if (!hostChanged && (await getTokenIfAny({})) == null) {
-      return 'Add info in settings';
+      return '${tr('githubSourceNote')} ${hostChanged ? tr('addInfoBelow') : tr('addInfoInSettings')}';
     }
     return null;
   }
@@ -710,7 +711,7 @@ class GitHub extends AppSource {
               ((e['archived'] == true ? '[ARCHIVED] ' : '') +
                   (e['description'] != null
                       ? e['description'] as String
-                      : 'No description')),
+                      : tr('noDescription'))),
             ],
           });
         }

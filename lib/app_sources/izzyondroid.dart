@@ -7,6 +7,7 @@ class IzzyOnDroid extends AppSource {
 
   IzzyOnDroid() {
     hosts = ['izzysoft.de'];
+    name = tr('izzyondroid');
     fd = FDroid();
     additionalSourceAppSpecificSettingFormItems =
         fd.additionalSourceAppSpecificSettingFormItems;

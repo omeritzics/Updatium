@@ -11,6 +11,7 @@ import 'package:updatium/providers/source_provider.dart';
 class APKMirror extends AppSource {
   APKMirror() {
     hosts = ['apkmirror.com'];
+    name = tr('apkmirror');
     enforceTrackOnly = true;
     showReleaseDateAsVersionToggle = true;
 
