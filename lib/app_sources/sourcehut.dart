@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 class SourceHut extends AppSource {
   SourceHut() {
     hosts = ['git.sr.ht'];
+    name = tr('sourcehut');
     showReleaseDateAsVersionToggle = true;
 
     additionalSourceAppSpecificSettingFormItems = [

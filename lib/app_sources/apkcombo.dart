@@ -7,6 +7,7 @@ import 'package:updatium/providers/logs_provider.dart';
 class APKCombo extends AppSource {
   APKCombo() {
     hosts = ['apkcombo.com'];
+    name = tr('apkcombo');
     showReleaseDateAsVersionToggle = true;
   }
 

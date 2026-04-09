@@ -7,7 +7,7 @@ import 'package:updatium/providers/source_provider.dart';
 class TelegramApp extends AppSource {
   TelegramApp() {
     hosts = ['telegram.org'];
-    name = 'Telegram ${tr('app')}';
+    name = tr('telegramapp');
   }
 
   @override

@@ -21,6 +21,7 @@ DateTime? parseDateTimeMMMddCommayyyy(String? dateString) {
 class Uptodown extends AppSource {
   Uptodown() {
     hosts = ['uptodown.com'];
+    name = tr('uptodown');
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
