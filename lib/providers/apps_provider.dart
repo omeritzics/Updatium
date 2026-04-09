@@ -25,7 +25,6 @@ import 'package:http/http.dart' as http;
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -2066,30 +2065,63 @@ class AppsProvider with ChangeNotifier {
               a.additionalSettings['trackOnly'] != true,
         )
         .isNotEmpty;
-    var values = await showDialog(
+
+    bool rmAppEntry = true;
+    bool uninstallAppFromDevice = false;
+
+    var values = await showDialog<Map<String, bool>?>(
       context: context,
       builder: (BuildContext ctx) {
-        return GeneratedFormModal(
-          primaryActionColor: Theme.of(context).colorScheme.error,
-          title: plural('removeAppQuestion', apps.length),
-          items: !showUninstallOption
-              ? []
-              : [
-                  [
-                    GeneratedFormSwitch(
-                      'rmAppEntry',
-                      label: tr('removeFromUpdatium'),
-                      defaultValue: true,
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(plural('removeAppQuestion', apps.length)),
+              content: !showUninstallOption
+                  ? null
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SwitchListTile(
+                          title: Text(tr('removeFromUpdatium')),
+                          value: rmAppEntry,
+                          onChanged: (value) {
+                            setState(() {
+                              rmAppEntry = value;
+                            });
+                          },
+                        ),
+                        SwitchListTile(
+                          title: Text(tr('uninstallFromDevice')),
+                          value: uninstallAppFromDevice,
+                          onChanged: (value) {
+                            setState(() {
+                              uninstallAppFromDevice = value;
+                            });
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                  [
-                    GeneratedFormSwitch(
-                      'uninstallApp',
-                      label: tr('uninstallFromDevice'),
-                    ),
-                  ],
-                ],
-          initValid: true,
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(null),
+                  child: Text(tr('cancel')),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Theme.of(context).colorScheme.error,
+                  ),
+                  onPressed: () {
+                    HapticFeedback.selectionClick();
+                    Navigator.of(ctx).pop({
+                      'rmAppEntry': rmAppEntry,
+                      'uninstallApp': uninstallAppFromDevice,
+                    });
+                  },
+                  child: Text(tr('continue')),
+                ),
+              ],
+            );
+          },
         );
       },
     );

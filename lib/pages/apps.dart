@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
@@ -37,71 +36,79 @@ void showChangeLogDialog(
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return GeneratedFormModal(
-        title: tr('changes'),
-        items: const [],
-        message: app.latestVersion,
-        additionalWidgets: [
-          changesUrl != null
-              ? GestureDetector(
-                  child: Text(
+      return AlertDialog(
+        scrollable: true,
+        title: Text(tr('changes')),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(app.latestVersion),
+            const SizedBox(height: 16),
+            if (changesUrl != null) ...[
+              GestureDetector(
+                onTap: () {
+                  launchUrlString(
                     changesUrl,
-                    style: const TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontStyle: FontStyle.italic,
+                    mode: LaunchMode.externalApplication,
+                  );
+                },
+                child: Text(
+                  changesUrl,
+                  style: const TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
+            appSource.changeLogIfAnyIsMarkDown
+                ? ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.5,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  onTap: () {
-                    launchUrlString(
-                      changesUrl,
-                      mode: LaunchMode.externalApplication,
-                    );
-                  },
-                )
-              : const SizedBox.shrink(),
-          changesUrl != null
-              ? const SizedBox(height: 16)
-              : const SizedBox.shrink(),
-          appSource.changeLogIfAnyIsMarkDown
-              ? ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height * 0.5,
-                  ),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Markdown(
-                      styleSheet: MarkdownStyleSheet(
-                        blockquoteDecoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Markdown(
+                        styleSheet: MarkdownStyleSheet(
+                          blockquoteDecoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                          ),
+                        ),
+                        data: changeLog,
+                        onTapLink: (text, href, title) {
+                          if (href != null) {
+                            launchUrlString(
+                              href.startsWith('http://') ||
+                                      href.startsWith('https://')
+                                  ? href
+                                  : '${Uri.parse(app.url).origin}/$href',
+                              mode: LaunchMode.externalApplication,
+                            );
+                          }
+                        },
+                        extensionSet: md.ExtensionSet(
+                          md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                          [
+                            md.EmojiSyntax(),
+                            ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
+                          ],
                         ),
                       ),
-                      data: changeLog,
-                      onTapLink: (text, href, title) {
-                        if (href != null) {
-                          launchUrlString(
-                            href.startsWith('http://') ||
-                                    href.startsWith('https://')
-                                ? href
-                                : '${Uri.parse(app.url).origin}/$href',
-                            mode: LaunchMode.externalApplication,
-                          );
-                        }
-                      },
-                      extensionSet: md.ExtensionSet(
-                        md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                        [
-                          md.EmojiSyntax(),
-                          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
-                        ],
-                      ),
                     ),
-                  ),
-                )
-              : Text(changeLog),
+                  )
+                : Text(changeLog),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(tr('ok')),
+          ),
         ],
-        singleNullReturnButton: tr('ok'),
       );
     },
   );
@@ -1146,17 +1153,32 @@ class AppsPageState extends State<AppsPage> {
               showDialog<Map<String, dynamic>?>(
                 context: context,
                 builder: (BuildContext ctx) {
+                  Map<String, dynamic> localValues = {};
                   var totalApps =
                       existingUpdateIdsAllOrSelected.length +
                       newInstallIdsAllOrSelected.length +
                       trackOnlyUpdateIdsAllOrSelected.length;
-                  return GeneratedFormModal(
-                    title: tr(
+                  return AlertDialog(
+                    title: Text(tr(
                       'changeX',
                       args: [plural('apps', totalApps).toLowerCase()],
+                    )),
+                    content: GeneratedForm(
+                      items: formItems.map((e) => [e]).toList(),
+                      onValueChanges: (vals, valid, isBuilding) {
+                        localValues = vals;
+                      },
                     ),
-                    items: formItems.map((e) => [e]).toList(),
-                    initValid: true,
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(null),
+                        child: Text(tr('cancel')),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(localValues),
+                        child: Text(tr('ok')),
+                      ),
+                    ],
                   );
                 },
               ).then((values) async {
@@ -1219,41 +1241,49 @@ class AppsPageState extends State<AppsPage> {
           var cont = true;
           if (showPrompt) {
             cont =
-                await showDialog<Map<String, dynamic>?>(
+                await showDialog<bool>(
                   context: context,
                   builder: (BuildContext ctx) {
-                    return GeneratedFormModal(
-                      title: tr('categorize'),
-                      items: const [],
-                      initValid: true,
-                      message: tr('selectedCategorizeWarning'),
+                    return AlertDialog(
+                      title: Text(tr('categorize')),
+                      content: Text(tr('selectedCategorizeWarning')),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(false),
+                          child: Text(tr('cancel')),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(true),
+                          child: Text(tr('ok')),
+                        ),
+                      ],
                     );
                   },
-                ) !=
-                null;
+                ) == true;
           }
           if (cont) {
             // ignore: use_build_context_synchronously
-            await showDialog<Map<String, dynamic>?>(
+            await showDialog<void>(
               context: context,
               builder: (BuildContext ctx) {
-                return GeneratedFormModal(
-                  title: tr('categorize'),
-                  items: const [],
-                  initValid: true,
-                  singleNullReturnButton: tr('continue'),
-                  additionalWidgets: [
-                    CategoryEditorSelector(
-                      preselected: !showPrompt ? preselected ?? {} : {},
-                      showLabelWhenNotEmpty: false,
-                      onSelected: (categories) {
-                        appsProvider.saveApps(
-                          selectedApps.map((e) {
-                            e.categories = categories;
-                            return e;
-                          }).toList(),
-                        );
-                      },
+                return AlertDialog(
+                  title: Text(tr('categorize')),
+                  content: CategoryEditorSelector(
+                    preselected: !showPrompt ? preselected ?? {} : {},
+                    showLabelWhenNotEmpty: false,
+                    onSelected: (categories) {
+                      appsProvider.saveApps(
+                        selectedApps.map((e) {
+                          e.categories = categories;
+                          return e;
+                        }).toList(),
+                      );
+                    },
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(),
+                      child: Text(tr('continue')),
                     ),
                   ],
                 );
@@ -1500,16 +1530,20 @@ class AppsPageState extends State<AppsPage> {
       var values = await showDialog<Map<String, dynamic>?>(
         context: context,
         builder: (BuildContext ctx) {
-          var vals = filter.toFormValuesMap();
-          return GeneratedFormModal(
-            initValid: true,
-            title: tr('filterApps'),
-            items: [
-              [
-                GeneratedFormTextField(
-                  'appName',
-                  label: tr('appName'),
-                  required: false,
+          Map<String, dynamic> localValues = filter.toFormValuesMap();
+          return AlertDialog(
+            scrollable: true,
+            title: Text(tr('filterApps')),
+            content: GeneratedForm(
+              items: [
+                [
+                  GeneratedFormTextField(
+                    'appName',
+                    label: tr('appName'),
+                    required: false,
+                    defaultValue: localValues['appName'] ?? '',
+                  ),
+                ],
                   defaultValue: vals['appName'],
                 ),
                 GeneratedFormTextField(

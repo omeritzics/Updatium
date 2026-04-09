@@ -6,7 +6,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/pages/apps.dart';
@@ -231,31 +230,37 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           if (await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
-                  return GeneratedFormModal(
-                    title: tr(
+                  return AlertDialog(
+                    title: Text(tr(
                       'importX',
                       args: [
                         (action == 'app' ? tr('app') : tr('appsString'))
                             .toLowerCase(),
                       ],
+                    )),
+                    content: ExpansionTile(
+                      leading: const Icon(Icons.info_outlined),
+                      title: const Text('Raw JSON'),
+                      children: [
+                        Text(
+                          dataStr,
+                          style: const TextStyle(fontFamily: 'monospace'),
+                        ),
+                      ],
                     ),
-                    items: const [],
-                    additionalWidgets: [
-                      ExpansionTile(
-                        leading: const Icon(Icons.info_outlined),
-                        title: const Text('Raw JSON'),
-                        children: [
-                          Text(
-                            dataStr,
-                            style: const TextStyle(fontFamily: 'monospace'),
-                          ),
-                        ],
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(null),
+                        child: Text(tr('cancel')),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(true),
+                        child: Text(tr('ok')),
                       ),
                     ],
                   );
                 },
-              ) !=
-              null) {
+              ) == true) {
             // ignore: use_build_context_synchronously
             var appsProvider = context.read<AppsProvider>();
             var result = await appsProvider.import(

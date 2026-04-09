@@ -5,7 +5,6 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/apps_provider.dart';
@@ -1278,18 +1277,26 @@ class _LogsDialogState extends State<LogsDialog> {
         TextButton(
           onPressed: () async {
             var cont =
-                (await showDialog<Map<String, dynamic>?>(
+                (await showDialog<bool>(
                   context: context,
                   builder: (BuildContext ctx) {
-                    return GeneratedFormModal(
-                      title: tr('appLogs'),
-                      items: const [],
-                      initValid: true,
-                      message: tr('removeFromUpdatium'),
+                    return AlertDialog(
+                      title: Text(tr('appLogs')),
+                      content: Text(tr('removeFromUpdatium')),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(false),
+                          child: Text(tr('cancel')),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(true),
+                          child: Text(tr('ok')),
+                        ),
+                      ],
                     );
                   },
-                )) !=
-                null;
+                )) ==
+                true;
             if (cont) {
               logsProvider.clear();
               Navigator.of(context).pop();

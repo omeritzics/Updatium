@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -31,42 +29,58 @@ class _ImportExportPageState extends State<ImportExportPage> {
     var settingsProvider = context.watch<SettingsProvider>();
 
     urlListImport({String? initValue, bool overrideInitValid = false}) {
-      showDialog<Map<String, dynamic>?>(
+      final formKey = GlobalKey<FormState>();
+      final controller = TextEditingController(text: initValue ?? '');
+
+      showDialog<String?>(
         context: context,
         builder: (BuildContext ctx) {
-          return GeneratedFormModal(
-            initValid: overrideInitValid,
-            title: tr('importFromURLList'),
-            items: [
-              [
-                GeneratedFormTextField(
-                  'appURLList',
-                  defaultValue: initValue ?? '',
-                  label: tr('appURLList'),
-                  max: 7,
-                  additionalValidators: [
-                    (dynamic value) {
-                      if (value != null && value.isNotEmpty) {
-                        var lines = value.trim().split('\n');
-                        for (int i = 0; i < lines.length; i++) {
-                          try {
-                            sourceProvider.getSource(lines[i]);
-                          } catch (e) {
-                            return '${tr('line')} ${i + 1}: $e';
-                          }
-                        }
-                      }
-                      return null;
-                    },
-                  ],
+          return AlertDialog(
+            title: Text(tr('importFromURLList')),
+            content: Form(
+              key: formKey,
+              child: TextFormField(
+                controller: controller,
+                decoration: InputDecoration(
+                  labelText: tr('appURLList'),
+                  border: const OutlineInputBorder(),
                 ),
-              ],
+                maxLines: 7,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value != null && value.isNotEmpty) {
+                    var lines = value.trim().split('\n');
+                    for (int i = 0; i < lines.length; i++) {
+                      try {
+                        sourceProvider.getSource(lines[i]);
+                      } catch (e) {
+                        return '${tr('line')} ${i + 1}: $e';
+                      }
+                    }
+                  }
+                  return null;
+                },
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(null),
+                child: Text(tr('cancel')),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (formKey.currentState?.validate() == true) {
+                    Navigator.of(ctx).pop(controller.text);
+                  }
+                },
+                child: Text(tr('continue')),
+              ),
             ],
           );
         },
-      ).then((values) {
-        if (values != null) {
-          var urls = (values['appURLList'] as String).split('\n');
+      ).then((value) {
+        if (value != null && value.isNotEmpty) {
+          var urls = value.trim().split('\n');
           setState(() {
             importInProgress = true;
           });
@@ -208,17 +222,52 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
     runMassSourceImport(MassAppUrlSource source) {
       () async {
-            var values = await showDialog<Map<String, dynamic>?>(
-              context: context,
-              builder: (BuildContext ctx) {
-                return GeneratedFormModal(
-                  title: tr('importX', args: [source.name]),
-                  items: source.requiredArgs
-                      .map((e) => [GeneratedFormTextField(e, label: e)])
-                      .toList(),
-                );
-              },
+        final formKey = GlobalKey<FormState>();
+        final controllers = {
+          for (var arg in source.requiredArgs) arg: TextEditingController()
+        };
+
+        var values = await showDialog<Map<String, String>?>(
+          context: context,
+          builder: (BuildContext ctx) {
+            return AlertDialog(
+              title: Text(tr('importX', args: [source.name])),
+              content: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: source.requiredArgs.map((arg) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: TextFormField(
+                        controller: controllers[arg],
+                        decoration: InputDecoration(
+                          labelText: arg,
+                          border: const OutlineInputBorder(),
+                        ),
+                        validator: (v) => v == null || v.isEmpty ? tr('requiredInBrackets') : null,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(null),
+                  child: Text(tr('cancel')),
+                ),
+                TextButton(
+                  onPressed: () {
+                    if (formKey.currentState?.validate() == true) {
+                      Navigator.of(ctx).pop(controllers.map((k, v) => MapEntry(k, v.text)));
+                    }
+                  },
+                  child: Text(tr('continue')),
+                ),
+              ],
             );
+          },
+        );
             if (values != null) {
               setState(() {
                 importInProgress = true;
@@ -583,9 +632,8 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
   }
 }
 
-// ignore: must_be_immutable
 class SelectionModal extends StatefulWidget {
-  SelectionModal({
+  const SelectionModal({
     super.key,
     required this.entries,
     this.selectedByDefault = true,
@@ -595,12 +643,12 @@ class SelectionModal extends StatefulWidget {
     this.deselectThese = const [],
   });
 
-  String? title;
-  Map<String, List<String>> entries;
-  bool selectedByDefault;
-  List<String> deselectThese;
-  bool onlyOneSelectionAllowed;
-  bool titlesAreLinks;
+  final String? title;
+  final Map<String, List<String>> entries;
+  final bool selectedByDefault;
+  final List<String> deselectThese;
+  final bool onlyOneSelectionAllowed;
+  final bool titlesAreLinks;
 
   @override
   State<SelectionModal> createState() => _SelectionModalState();
@@ -609,6 +657,8 @@ class SelectionModal extends StatefulWidget {
 class _SelectionModalState extends State<SelectionModal> {
   Map<MapEntry<String, List<String>>, bool> entrySelections = {};
   String filterRegex = '';
+  final TextEditingController _filterController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -624,6 +674,12 @@ class _SelectionModalState extends State<SelectionModal> {
     if (widget.selectedByDefault && widget.onlyOneSelectionAllowed) {
       selectOnlyOne(widget.entries.entries.first.key);
     }
+  }
+
+  @override
+  void dispose() {
+    _filterController.dispose();
+    super.dispose();
   }
 
   void selectOnlyOne(String url) {
@@ -643,44 +699,31 @@ class _SelectionModalState extends State<SelectionModal> {
     Map<MapEntry<String, List<String>>, bool> filteredEntrySelections = {};
     entrySelections.forEach((key, value) {
       var searchableText = key.value.isEmpty ? key.key : key.value[0];
-      if (filterRegex.isEmpty || RegExp(filterRegex).hasMatch(searchableText)) {
-        filteredEntrySelections.putIfAbsent(key, () => value);
-      }
-    });
-    if (filterRegex.isNotEmpty && filteredEntrySelections.isEmpty) {
-      entrySelections.forEach((key, value) {
-        var searchableText = key.value.isEmpty ? key.key : key.value[0];
+      try {
         if (filterRegex.isEmpty ||
-            RegExp(
-              filterRegex,
-              caseSensitive: false,
-            ).hasMatch(searchableText)) {
+            RegExp(filterRegex, caseSensitive: false).hasMatch(searchableText)) {
           filteredEntrySelections.putIfAbsent(key, () => value);
         }
-      });
-    }
-    getSelectAllButton() {
-      if (widget.onlyOneSelectionAllowed) {
-        return SizedBox.shrink();
+      } catch (e) {
+        if (filterRegex.isEmpty ||
+            searchableText.toLowerCase().contains(filterRegex.toLowerCase())) {
+          filteredEntrySelections.putIfAbsent(key, () => value);
+        }
       }
-      var noneSelected = entrySelections.values.where((v) => v == true).isEmpty;
+    });
+
+    Widget getSelectAllButton() {
+      if (widget.onlyOneSelectionAllowed) {
+        return const SizedBox.shrink();
+      }
+      var noneSelected = entrySelections.values.every((v) => v == false);
       return noneSelected
           ? TextButton(
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
-              onPressed: () {
-                setState(() {
-                  selectAll();
-                });
-              },
+              onPressed: () => setState(selectAll),
               child: Text(tr('selectAll')),
             )
           : TextButton(
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
-              onPressed: () {
-                setState(() {
-                  selectAll(deselect: true);
-                });
-              },
+              onPressed: () => setState(() => selectAll(deselect: true)),
               child: Text(tr('deselectX', args: [tr('all')])),
             );
     }
@@ -689,34 +732,39 @@ class _SelectionModalState extends State<SelectionModal> {
       scrollable: true,
       title: Text(widget.title ?? tr('pick')),
       content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          GeneratedForm(
-            items: [
-              [
-                GeneratedFormTextField(
-                  'filter',
-                  label: tr('filter'),
-                  required: false,
-                  additionalValidators: [
-                    (value) {
-                      return regExValidator(value);
-                    },
-                  ],
-                ),
-              ],
-            ],
-            onValueChanges: (value, valid, isBuilding) {
-              if (valid && !isBuilding) {
-                if (value['filter'] != null) {
-                  setState(() {
-                    filterRegex = value['filter'];
-                  });
-                }
-              }
-            },
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: TextFormField(
+              controller: _filterController,
+              decoration: InputDecoration(
+                labelText: tr('filter'),
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: _filterController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          setState(() {
+                            _filterController.clear();
+                            filterRegex = '';
+                          });
+                        },
+                      )
+                    : null,
+                border: const OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  filterRegex = value;
+                });
+              },
+              validator: regExValidator,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+            ),
           ),
           ...filteredEntrySelections.keys.map((entry) {
-            selectThis(bool? value) {
+            void selectThis(bool? value) {
               setState(() {
                 value ??= false;
                 if (value! && widget.onlyOneSelectionAllowed) {
@@ -727,46 +775,40 @@ class _SelectionModalState extends State<SelectionModal> {
               });
             }
 
-            var urlLink = GestureDetector(
-              onTap: !widget.titlesAreLinks
-                  ? null
-                  : () {
-                      launchUrlString(
-                        entry.key,
-                        mode: LaunchMode.externalApplication,
-                      );
-                    },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+            Widget urlLink = Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  entry.value.isEmpty ? entry.key : entry.value[0],
+                  style: TextStyle(
+                    decoration: widget.titlesAreLinks ? TextDecoration.underline : null,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (widget.titlesAreLinks)
                   Text(
-                    entry.value.isEmpty ? entry.key : entry.value[0],
-                    style: TextStyle(
-                      decoration: widget.titlesAreLinks
-                          ? TextDecoration.underline
-                          : null,
-                      fontWeight: FontWeight.bold,
+                    Uri.tryParse(entry.key)?.host ?? entry.key,
+                    style: const TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontSize: 12,
                     ),
-                    textAlign: TextAlign.start,
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  if (widget.titlesAreLinks)
-                    Text(
-                      Uri.parse(entry.key).host,
-                      style: const TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontSize: 12,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                ],
-              ),
+              ],
             );
 
-            var descriptionText = entry.value.length <= 1
-                ? const SizedBox.shrink()
+            if (widget.titlesAreLinks) {
+              urlLink = GestureDetector(
+                onTap: () => launchUrlString(entry.key, mode: LaunchMode.externalApplication),
+                child: urlLink,
+              );
+            }
+
+            Widget? descriptionText = entry.value.length <= 1
+                ? null
                 : Text(
                     entry.value[1].length > 128
                         ? '${entry.value[1].substring(0, 128)}...'
@@ -779,96 +821,37 @@ class _SelectionModalState extends State<SelectionModal> {
                     overflow: TextOverflow.ellipsis,
                   );
 
-            var selectedEntries = entrySelections.entries
-                .where((e) => e.value)
-                .toList();
-
-            var singleSelectTile = ListTile(
-              title: GestureDetector(
-                onTap: widget.titlesAreLinks
-                    ? null
-                    : () {
-                        selectThis(!(entrySelections[entry] ?? false));
-                      },
-                child: urlLink,
-              ),
-              subtitle: entry.value.length <= 1
-                  ? null
-                  : GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectOnlyOne(entry.key);
-                        });
-                      },
-                      child: descriptionText,
-                    ),
-              leading: Radio<String>(
+            if (widget.onlyOneSelectionAllowed) {
+              return RadioListTile<String>(
+                title: urlLink,
+                subtitle: descriptionText,
                 value: entry.key,
-                groupValue: selectedEntries.isEmpty
-                    ? null
-                    : selectedEntries.first.key.key,
-                onChanged: (value) {
-                  setState(() {
-                    selectOnlyOne(entry.key);
-                  });
-                },
-              ),
-            );
-
-            var multiSelectTile = Row(
-              children: [
-                Checkbox(
-                  value: entrySelections[entry],
-                  onChanged: (value) {
-                    selectThis(value);
-                  },
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: widget.titlesAreLinks
-                            ? null
-                            : () {
-                                selectThis(!(entrySelections[entry] ?? false));
-                              },
-                        child: urlLink,
-                      ),
-                      entry.value.length <= 1
-                          ? const SizedBox.shrink()
-                          : GestureDetector(
-                              onTap: () {
-                                selectThis(!(entrySelections[entry] ?? false));
-                              },
-                              child: descriptionText,
-                            ),
-                      const SizedBox(height: 8),
-                    ],
-                  ),
-                ),
-              ],
-            );
-
-            return widget.onlyOneSelectionAllowed
-                ? singleSelectTile
-                : multiSelectTile;
+                groupValue: entrySelections.entries
+                    .where((e) => e.value)
+                    .map((e) => e.key.key)
+                    .firstOrNull,
+                onChanged: (value) => setState(() => selectOnlyOne(entry.key)),
+              );
+            } else {
+              return CheckboxListTile(
+                title: urlLink,
+                subtitle: descriptionText,
+                value: entrySelections[entry],
+                onChanged: selectThis,
+                controlAffinity: ListTileControlAffinity.leading,
+              );
+            }
           }),
         ],
       ),
       actions: [
         getSelectAllButton(),
         TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () => Navigator.of(context).pop(),
           child: Text(tr('cancel')),
         ),
         TextButton(
-          onPressed: entrySelections.values.where((b) => b).isEmpty
+          onPressed: entrySelections.values.every((v) => v == false)
               ? null
               : () {
                   Navigator.of(context).pop(

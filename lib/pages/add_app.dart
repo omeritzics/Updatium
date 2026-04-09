@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
@@ -358,41 +357,58 @@ class AddAppPageState extends State<AddAppPage> {
                       querySettings = await showDialog<Map<String, dynamic>?>(
                         context: context,
                         builder: (BuildContext ctx) {
-                          return GeneratedFormModal(
-                            title: tr('searchX', args: [e.name]),
-                            items: [
-                              ...e.searchQuerySettingFormItems.map((e) => [e]),
-                              [
-                                GeneratedFormTextField(
-                                  'url',
-                                  label: e.hosts.isNotEmpty
-                                      ? tr('overrideSource')
-                                      : plural('url', 1).substring(2),
-                                  autoCompleteOptions: [
-                                    ...(e.hosts.isNotEmpty ? [e.hosts[0]] : []),
-                                    ...appsProvider.apps.values
-                                        .where(
-                                          (a) =>
-                                              sourceProvider
-                                                  .getSource(
-                                                    a.app.url,
-                                                    overrideSource:
-                                                        a.app.overrideSource,
-                                                  )
-                                                  .runtimeType ==
-                                              e.runtimeType,
-                                        )
-                                        .map((a) {
-                                          var uri = Uri.parse(a.app.url);
-                                          return '${uri.origin}${uri.path}';
-                                        }),
-                                  ],
-                                  defaultValue: e.hosts.isNotEmpty
-                                      ? e.hosts[0]
-                                      : '',
-                                  required: true,
-                                ),
+                          Map<String, dynamic> localValues = {};
+                          return AlertDialog(
+                            scrollable: true,
+                            title: Text(tr('searchX', args: [e.name])),
+                            content: GeneratedForm(
+                              items: [
+                                ...e.searchQuerySettingFormItems.map((e) => [e]),
+                                [
+                                  GeneratedFormTextField(
+                                    'url',
+                                    label: e.hosts.isNotEmpty
+                                        ? tr('overrideSource')
+                                        : plural('url', 1).substring(2),
+                                    autoCompleteOptions: [
+                                      ...(e.hosts.isNotEmpty ? [e.hosts[0]] : []),
+                                      ...appsProvider.apps.values
+                                          .where(
+                                            (a) =>
+                                                sourceProvider
+                                                    .getSource(
+                                                      a.app.url,
+                                                      overrideSource:
+                                                          a.app.overrideSource,
+                                                    )
+                                                    .runtimeType ==
+                                                e.runtimeType,
+                                          )
+                                          .map((a) {
+                                            var uri = Uri.parse(a.app.url);
+                                            return '${uri.origin}${uri.path}';
+                                          }),
+                                    ],
+                                    defaultValue: e.hosts.isNotEmpty
+                                        ? e.hosts[0]
+                                        : '',
+                                    required: true,
+                                  ),
+                                ],
                               ],
+                              onValueChanges: (vals, valid, isBuilding) {
+                                localValues = vals;
+                              },
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(ctx).pop(null),
+                                child: Text(tr('cancel')),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.of(ctx).pop(localValues),
+                                child: Text(tr('ok')),
+                              ),
                             ],
                           );
                         },
