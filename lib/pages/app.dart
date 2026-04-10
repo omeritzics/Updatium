@@ -361,13 +361,7 @@ class _AppPageState extends State<AppPage> {
             ],
           ),
         SizedBox(height: small ? 10 : 24),
-        Text(
-          app?.name ?? tr('app'),
-          textAlign: TextAlign.center,
-          style: small
-              ? Theme.of(context).textTheme.titleLarge
-              : Theme.of(context).textTheme.headlineMedium,
-        ),
+
         Text(
           tr('byX', args: [app?.author ?? tr('unknown')]),
           textAlign: TextAlign.center,
@@ -698,21 +692,16 @@ class _AppPageState extends State<AppPage> {
       ),
     );
 
-    appScreenAppBar() => AppBar(
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-    );
+
 
     return Scaffold(
-      appBar: appScreenAppBar(),
-      backgroundColor: Theme.of(context).colorScheme.surface,
       body: RefreshIndicator(
         child: CustomScrollView(
           slivers: [
+            SliverAppBar.large(
+              pinned: true,
+              title: Text(app?.name ?? tr('app')),
+            ),
             SliverToBoxAdapter(child: Column(children: [getFullInfoColumn()])),
           ],
         ),
