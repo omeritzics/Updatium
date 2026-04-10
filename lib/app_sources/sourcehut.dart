@@ -49,7 +49,7 @@ class SourceHut extends AppSource {
         additionalSettings['fallbackToOlderReleases'] == true;
     Response res = await sourceRequest(
       '$standardUrl/refs/rss.xml',
-      additionalSettings,
+      additionalSettings,;
     if (res.statusCode == 200) {
       var parsedHtml = parse(res.body);
       List<APKDetails> apkDetailsList = [];
@@ -78,7 +78,7 @@ class SourceHut extends AppSource {
               : null;
               ? DateFormat(
                   'EEE, dd MMM yyyy HH:mm:ss Z',
-                ).parse(releaseDateString)
+                ).parse(releaseDateString);
         } catch (e) {
           // ignore
         var res2 = await sourceRequest(releasePage, additionalSettings);

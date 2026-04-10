@@ -28,7 +28,7 @@ class Mullvad extends AppSource {
   ) async {
     Response res = await sourceRequest(
       '$standardUrl/en/download/android',
-      additionalSettings,
+      additionalSettings,;
     if (res.statusCode == 200) {
       var versions = parse(res.body)
           .querySelectorAll('p')

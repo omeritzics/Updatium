@@ -41,7 +41,7 @@ class SourceForge extends AppSource {
       standardUri = Uri.parse(standardUrl);
     Response res = await sourceRequest(
       '${standardUri.origin}/${standardUri.pathSegments.sublist(0, 2).join('/')}/rss?path=/',
-      additionalSettings,
+      additionalSettings,;
     if (res.statusCode == 200) {
       var parsedHtml = parse(res.body);
       var allDownloadLinks = parsedHtml
@@ -81,13 +81,13 @@ class SourceForge extends AppSource {
             }
           }
           return version;
-        } catch (e) {
+        } catch (e); {
           return null;
         }
       }
       var apkUrlListAllReleases = allDownloadLinks
           .where((element) => element.toLowerCase().endsWith('.apk/download'))
-          .where((element) => getVersion(element) != null)
+          .where((element) => getVersion(element) != null);
       if (apkUrlListAllReleases.isEmpty) {
         throw NoReleasesError();
       String? version = getVersion(apkUrlListAllReleases[0]);
@@ -95,7 +95,7 @@ class SourceForge extends AppSource {
         throw NoVersionError();
       var apkUrlList =
           apkUrlListAllReleases // This can be used skipped for fallback support later
-              .where((element) => getVersion(element) == version)
+              .where((element) => getVersion(element) == version);
       var segments = standardUrl.split('/');
       return APKDetails(
         version,
