@@ -331,7 +331,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   });
                 },
                 decoration: InputDecoration(
-                  labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
+                  labelText:
+                      '${formItem.label}${formItem.required ? ' *' : ''}',
                   hintText: formItem.hint,
                   border: const OutlineInputBorder(),
                 ),
@@ -380,7 +381,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
             return Text(tr('dropdownNoOptsError'));
           }
           return DropdownButtonFormField<String>(
-            value: values[formItem.key] ?? formItem.opts?.first.key,
+            initialValue: values[formItem.key] ?? formItem.opts?.first.key,
             decoration: InputDecoration(
               labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
               border: const OutlineInputBorder(),
@@ -673,11 +674,13 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                       content: Text(message.value),
                                       actions: [
                                         TextButton(
-                                          onPressed: () => Navigator.of(ctx).pop(false),
+                                          onPressed: () =>
+                                              Navigator.of(ctx).pop(false),
                                           child: Text(tr('cancel')),
                                         ),
                                         TextButton(
-                                          onPressed: () => Navigator.of(ctx).pop(true),
+                                          onPressed: () =>
+                                              Navigator.of(ctx).pop(true),
                                           child: Text(tr('ok')),
                                         ),
                                       ],

@@ -231,13 +231,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 context: context,
                 builder: (BuildContext ctx) {
                   return AlertDialog(
-                    title: Text(tr(
-                      'importX',
-                      args: [
-                        (action == 'app' ? tr('app') : tr('appsString'))
-                            .toLowerCase(),
-                      ],
-                    )),
+                    title: Text(
+                      tr(
+                        'importX',
+                        args: [
+                          (action == 'app' ? tr('app') : tr('appsString'))
+                              .toLowerCase(),
+                        ],
+                      ),
+                    ),
                     content: ExpansionTile(
                       leading: const Icon(Icons.info_outlined),
                       title: const Text('Raw JSON'),
@@ -260,7 +262,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ],
                   );
                 },
-              ) == true) {
+              ) ==
+              true) {
             // ignore: use_build_context_synchronously
             var appsProvider = context.read<AppsProvider>();
             var result = await appsProvider.import(

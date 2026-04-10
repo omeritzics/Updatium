@@ -222,52 +222,56 @@ class _ImportExportPageState extends State<ImportExportPage> {
 
     runMassSourceImport(MassAppUrlSource source) {
       () async {
-        final formKey = GlobalKey<FormState>();
-        final controllers = {
-          for (var arg in source.requiredArgs) arg: TextEditingController()
-        };
+            final formKey = GlobalKey<FormState>();
+            final controllers = {
+              for (var arg in source.requiredArgs) arg: TextEditingController(),
+            };
 
-        var values = await showDialog<Map<String, String>?>(
-          context: context,
-          builder: (BuildContext ctx) {
-            return AlertDialog(
-              title: Text(tr('importX', args: [source.name])),
-              content: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: source.requiredArgs.map((arg) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: TextFormField(
-                        controller: controllers[arg],
-                        decoration: InputDecoration(
-                          labelText: arg,
-                          border: const OutlineInputBorder(),
-                        ),
-                        validator: (v) => v == null || v.isEmpty ? tr('requiredInBrackets') : null,
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(ctx).pop(null),
-                  child: Text(tr('cancel')),
-                ),
-                TextButton(
-                  onPressed: () {
-                    if (formKey.currentState?.validate() == true) {
-                      Navigator.of(ctx).pop(controllers.map((k, v) => MapEntry(k, v.text)));
-                    }
-                  },
-                  child: Text(tr('continue')),
-                ),
-              ],
+            var values = await showDialog<Map<String, String>?>(
+              context: context,
+              builder: (BuildContext ctx) {
+                return AlertDialog(
+                  title: Text(tr('importX', args: [source.name])),
+                  content: Form(
+                    key: formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: source.requiredArgs.map((arg) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: TextFormField(
+                            controller: controllers[arg],
+                            decoration: InputDecoration(
+                              labelText: arg,
+                              border: const OutlineInputBorder(),
+                            ),
+                            validator: (v) => v == null || v.isEmpty
+                                ? tr('requiredInBrackets')
+                                : null,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(null),
+                      child: Text(tr('cancel')),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        if (formKey.currentState?.validate() == true) {
+                          Navigator.of(
+                            ctx,
+                          ).pop(controllers.map((k, v) => MapEntry(k, v.text)));
+                        }
+                      },
+                      child: Text(tr('continue')),
+                    ),
+                  ],
+                );
+              },
             );
-          },
-        );
             if (values != null) {
               setState(() {
                 importInProgress = true;
@@ -701,7 +705,10 @@ class _SelectionModalState extends State<SelectionModal> {
       var searchableText = key.value.isEmpty ? key.key : key.value[0];
       try {
         if (filterRegex.isEmpty ||
-            RegExp(filterRegex, caseSensitive: false).hasMatch(searchableText)) {
+            RegExp(
+              filterRegex,
+              caseSensitive: false,
+            ).hasMatch(searchableText)) {
           filteredEntrySelections.putIfAbsent(key, () => value);
         }
       } catch (e) {
@@ -781,7 +788,9 @@ class _SelectionModalState extends State<SelectionModal> {
                 Text(
                   entry.value.isEmpty ? entry.key : entry.value[0],
                   style: TextStyle(
-                    decoration: widget.titlesAreLinks ? TextDecoration.underline : null,
+                    decoration: widget.titlesAreLinks
+                        ? TextDecoration.underline
+                        : null,
                     fontWeight: FontWeight.bold,
                   ),
                   maxLines: 2,
@@ -802,7 +811,10 @@ class _SelectionModalState extends State<SelectionModal> {
 
             if (widget.titlesAreLinks) {
               urlLink = GestureDetector(
-                onTap: () => launchUrlString(entry.key, mode: LaunchMode.externalApplication),
+                onTap: () => launchUrlString(
+                  entry.key,
+                  mode: LaunchMode.externalApplication,
+                ),
                 child: urlLink,
               );
             }
