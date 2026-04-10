@@ -1534,68 +1534,84 @@ class AppsPageState extends State<AppsPage> {
           return AlertDialog(
             scrollable: true,
             title: Text(tr('filterApps')),
-            content: GeneratedForm(
-              items: [
-                [
-                  GeneratedFormTextField(
-                    'appName',
-                    label: tr('appName'),
-                    required: false,
-                    defaultValue: localValues['appName'] ?? '',
-                  ),
-                ],
-                  defaultValue: vals['appName'],
-                ),
-                GeneratedFormTextField(
-                  'author',
-                  label: tr('author'),
-                  required: false,
-                  defaultValue: vals['author'],
-                ),
-              ],
-              [
-                GeneratedFormTextField(
-                  'appId',
-                  label: tr('appId'),
-                  required: false,
-                  defaultValue: vals['appId'],
-                ),
-              ],
-              [
-                GeneratedFormSwitch(
-                  'upToDateApps',
-                  label: tr('upToDateApps'),
-                  defaultValue: vals['upToDateApps'],
-                ),
-              ],
-              [
-                GeneratedFormSwitch(
-                  'nonInstalledApps',
-                  label: tr('nonInstalledApps'),
-                  defaultValue: vals['nonInstalledApps'],
-                ),
-              ],
-              [
-                GeneratedFormDropdown(
-                  'sourceFilter',
-                  label: tr('appSource'),
-                  defaultValue: filter.sourceFilter,
-                  [
-                    MapEntry('', tr('none')),
-                    ...sourceProvider.sources.map(
-                      (e) => MapEntry(e.runtimeType.toString(), e.name),
-                    ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GeneratedForm(
+                  items: [
+                    [
+                      GeneratedFormTextField(
+                        'appName',
+                        label: tr('appName'),
+                        required: false,
+                        defaultValue: localValues['appName'],
+                      ),
+                    ],
+                    [
+                      GeneratedFormTextField(
+                        'author',
+                        label: tr('author'),
+                        required: false,
+                        defaultValue: localValues['author'],
+                      ),
+                    ],
+                    [
+                      GeneratedFormTextField(
+                        'appId',
+                        label: tr('appId'),
+                        required: false,
+                        defaultValue: localValues['appId'],
+                      ),
+                    ],
+                    [
+                      GeneratedFormSwitch(
+                        'upToDateApps',
+                        label: tr('upToDateApps'),
+                        defaultValue: localValues['upToDateApps'],
+                      ),
+                    ],
+                    [
+                      GeneratedFormSwitch(
+                        'nonInstalledApps',
+                        label: tr('nonInstalledApps'),
+                        defaultValue: localValues['nonInstalledApps'],
+                      ),
+                    ],
+                    [
+                      GeneratedFormDropdown(
+                        'sourceFilter',
+                        label: tr('appSource'),
+                        defaultValue: localValues['sourceFilter'],
+                        [
+                          MapEntry('', tr('none')),
+                          ...sourceProvider.sources.map(
+                            (e) => MapEntry(e.runtimeType.toString(), e.name),
+                          ),
+                        ],
+                      ),
+                    ],
                   ],
+                  onValueChanges: (vals, valid, isBuilding) {
+                    localValues = vals;
+                  },
+                ),
+                height16,
+                CategoryEditorSelector(
+                  preselected: filter.categoryFilter,
+                  onSelected: (categories) {
+                    filter.categoryFilter = categories.toSet();
+                  },
                 ),
               ],
-            ],
-            additionalWidgets: [
-              height16,
-              CategoryEditorSelector(
-                preselected: filter.categoryFilter,
-                onSelected: (categories) {
-                  filter.categoryFilter = categories.toSet();
-                },
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(null),
+                child: Text(tr('cancel')),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(localValues),
+                child: Text(tr('ok')),
               ),
             ],
           );
