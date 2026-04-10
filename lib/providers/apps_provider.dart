@@ -19,7 +19,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:updatium/app_sources/directAPKLink.dart';
@@ -28,7 +27,6 @@ import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/services/icon_cache.dart';
-import 'package:updatium/services/icon_prefetcher.dart';
 import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
