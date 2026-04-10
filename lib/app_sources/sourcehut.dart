@@ -31,7 +31,12 @@ class SourceHut extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
+  }
+
+  @override
   String? changeLogPageFromStandardUrl(String standardUrl) => standardUrl;
+
+  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -49,7 +54,8 @@ class SourceHut extends AppSource {
         additionalSettings['fallbackToOlderReleases'] == true;
     Response res = await sourceRequest(
       '$standardUrl/refs/rss.xml',
-      additionalSettings,;
+      additionalSettings,
+    );
     if (res.statusCode == 200) {
       var parsedHtml = parse(res.body);
       List<APKDetails> apkDetailsList = [];
@@ -67,20 +73,20 @@ class SourceHut extends AppSource {
         }
         if (!fallbackToOlderReleases && ind > 1) {
           break;
+        }
         String? version = entry.querySelector('title')?.text.trim();
         if (version == null) {
           throw NoVersionError();
+        }
         String? releaseDateString = entry.querySelector('pubDate')?.innerHtml;
         DateTime? releaseDate;
         try {
           releaseDate = releaseDateString != null
-              ? DateFormat('E, dd MMM yyyy HH:mm:ss Z').parse(releaseDateString)
+              ? DateFormat('EEE, dd MMM yyyy HH:mm:ss Z').parse(releaseDateString)
               : null;
-              ? DateFormat(
-                  'EEE, dd MMM yyyy HH:mm:ss Z',
-                ).parse(releaseDateString);
         } catch (e) {
           // ignore
+        }
         var res2 = await sourceRequest(releasePage, additionalSettings);
         List<MapEntry<String, String>> apkUrls = [];
         if (res2.statusCode == 200) {
@@ -106,14 +112,20 @@ class SourceHut extends AppSource {
       }
       if (apkDetailsList.isEmpty) {
         throw NoReleasesError();
+      }
       if (fallbackToOlderReleases) {
         if (additionalSettings['trackOnly'] != true) {
           apkDetailsList = apkDetailsList
               .where((e) => e.apkUrls.isNotEmpty)
               .toList();
+        }
         if (apkDetailsList.isEmpty) {
           throw NoReleasesError();
+        }
+      }
       return apkDetailsList.first;
     } else {
       throw getUpdatiumHttpError(res);
+    }
+  }
 }

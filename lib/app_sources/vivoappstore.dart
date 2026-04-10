@@ -12,6 +12,34 @@ class VivoAppStore extends AppSource {
     canSearch = true;
     allowOverride = false;
   }
+
+  String parseVivoAppId(String url) {
+    var appId = Uri.parse(url.replaceAll('/#', '')).queryParameters['appId'];
+    if (appId == null || appId.isEmpty) {
+      throw InvalidURLError(name);
+    }
+    return appId;
+  }
+
+  Future<Map<String, dynamic>> getDetailJson(
+    String standardUrl,
+    Map<String, dynamic> additionalSettings,
+  ) async {
+    var vivoAppId = parseVivoAppId(standardUrl);
+    var apiBaseUrl = 'https://h5-api.appstore.vivo.com.cn/detail/';
+    var params = '?frompage=messageh5&app_version=2100';
+    var detailUrl = '$apiBaseUrl$vivoAppId$params';
+    var response = await sourceRequest(detailUrl, additionalSettings);
+    if (response.statusCode != 200) {
+      throw getUpdatiumHttpError(response);
+    }
+    var json = jsonDecode(response.body);
+    if (json['id'] == null) {
+      throw NoReleasesError();
+    }
+    return json;
+  }
+
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     var vivoAppId = parseVivoAppId(url);
@@ -32,6 +60,7 @@ class VivoAppStore extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
+    var json = await getDetailJson(standardUrl, additionalSettings);
     var appName = json['title_zh'].toString();
     var packageName = json['package_name'].toString();
     var versionName = json['version_name'].toString();
@@ -63,6 +92,7 @@ class VivoAppStore extends AppSource {
     var json = jsonDecode(response.body);
     if (json['code'] != 0 || !json['data']['appSearchResponse']['result']) {
       throw NoReleasesError();
+    }
     Map<String, List<String>> results = {};
     var resultsJson = json['data']['appSearchResponse']?['value'];
     if (resultsJson != null) {
@@ -72,34 +102,7 @@ class VivoAppStore extends AppSource {
           item['developer'].toString(),
         ];
       }
+    }
     return results;
-  }
-
-  Future<Map<String, dynamic>> getDetailJson(
-    String standardUrl,
-    Map<String, dynamic> additionalSettings,
-  ) async {
-    var vivoAppId = parseVivoAppId(standardUrl);
-    var vivoAppId = parseVivoAppId(standardUrl);
-    var apiBaseUrl = 'https://h5-api.appstore.vivo.com.cn/detail/';
-    var params = '?frompage=messageh5&app_version=2100';
-    var detailUrl = '$apiBaseUrl$vivoAppId$params';
-    var response = await sourceRequest(detailUrl, additionalSettings);
-    if (response.statusCode != 200) {
-      throw getUpdatiumHttpError(response);
-    }
-    var json = jsonDecode(response.body);
-    if (json['id'] == null) {
-      throw NoReleasesError();
-    }
-    return json;
-  }
-
-  String parseVivoAppId(String url) {
-    var appId = Uri.parse(url.replaceAll('/#', '')).queryParameters['appId'];
-    if (appId == null || appId.isEmpty) {
-      throw InvalidURLError(name);
-    }
-    return appId;
   }
 }

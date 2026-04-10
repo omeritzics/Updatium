@@ -20,15 +20,21 @@ class Mullvad extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
+  }
+
+  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       'https://github.com/mullvad/mullvadvpn-app/blob/master/CHANGELOG.md';
+
+  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
     Response res = await sourceRequest(
       '$standardUrl/en/download/android',
-      additionalSettings,;
+      additionalSettings,
+    );
     if (res.statusCode == 200) {
       var versions = parse(res.body)
           .querySelectorAll('p')
@@ -55,6 +61,7 @@ class Mullvad extends AppSource {
         )).changeLog;
       } catch (e) {
         // Ignore
+      }
       return APKDetails(
         versions[0],
         getApkUrlsFromUrls(['https://mullvad.net/download/app/apk/latest']),
@@ -63,4 +70,6 @@ class Mullvad extends AppSource {
       );
     } else {
       throw getUpdatiumHttpError(res);
+    }
+  }
 }

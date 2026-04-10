@@ -37,10 +37,13 @@ class GitHubStars implements MassAppUrlSource {
       throw getUpdatiumHttpError(res);
     }
   }
+  @override
   Future<Map<String, List<String>>> getUrlsWithDescriptions(
     List<String> args,
+  ) async {
     if (args.length != requiredArgs.length) {
       throw UpdatiumError(tr('wrongArgNum'));
+    }
     Map<String, List<String>> urlsWithDescriptions = {};
     var page = 1;
     while (true) {
@@ -51,5 +54,8 @@ class GitHubStars implements MassAppUrlSource {
       urlsWithDescriptions.addAll(pageUrls);
       if (pageUrls.length < 100) {
         break;
+      }
+    }
     return urlsWithDescriptions;
+  }
 }

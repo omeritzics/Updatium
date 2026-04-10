@@ -17,9 +17,13 @@ class Jenkins extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
+  }
+
   @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/-/releases';
+
+  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -35,6 +39,7 @@ class Jenkins extends AppSource {
           ? null
           : DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int);
       var version = json['number'] == null
+          ? ''
           : (json['number'] as int).toString();
       var apkUrls = (json['artifacts'] as List<dynamic>)
           .map((e) {
@@ -57,9 +62,11 @@ class Jenkins extends AppSource {
       return APKDetails(
         version,
         apkUrls,
-        releaseDate: releaseDate,
         AppNames(Uri.parse(standardUrl).host, standardUrl.split('/').last),
+        releaseDate: releaseDate,
       );
     } else {
       throw getUpdatiumHttpError(res);
+    }
+  }
 }
