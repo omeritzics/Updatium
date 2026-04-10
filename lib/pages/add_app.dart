@@ -12,6 +12,7 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -72,13 +73,18 @@ class AddAppPageState extends State<AddAppPage> {
         var prevHost = pickedSource?.hosts.isNotEmpty == true
             ? pickedSource?.hosts[0]
             : null;
-        var source = valid
-            ? sourceProvider.getSource(
-                userInput,
-                overrideSource: pickedSourceOverride,
-              )
-            : null;
-        if (pickedSource.runtimeType != source.runtimeType ||
+        AppSource? source;
+        if (valid) {
+          try {
+            source = sourceProvider.getSource(
+              userInput,
+              overrideSource: pickedSourceOverride,
+            );
+          } catch (e) {
+            // Ignore errors while typing
+          }
+        }
+        if (pickedSource?.runtimeType != source?.runtimeType ||
             overrideChanged ||
             (prevHost != null && prevHost != source?.hosts[0])) {
           pickedSource = source;
@@ -114,22 +120,44 @@ class AddAppPageState extends State<AddAppPage> {
       if (useTrackOnly &&
           (!settingsProvider.hideTrackOnlyWarning || ignoreHideSetting)) {
         // ignore: use_build_context_synchronously
-        var values = await showDialog(
+        var values = await showDialog<Map<String, dynamic>?>(
           context: context,
           builder: (BuildContext ctx) {
-            return GeneratedFormModal(
-              initValid: true,
-              title: tr(
+            Map<String, dynamic> localValues = {'hide': false};
+            return AlertDialog(
+              scrollable: true,
+              title: Text(tr(
                 'xIsTrackOnly',
                 args: [
                   pickedSource!.enforceTrackOnly ? tr('source') : tr('app'),
                 ],
+              )),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${pickedSource!.enforceTrackOnly ? tr('appsFromSourceAreTrackOnly') : tr('youPickedTrackOnly')}\n\n${tr('trackOnlyAppDescription')}'),
+                  const SizedBox(height: 16),
+                  GeneratedForm(
+                    items: [
+                      [GeneratedFormSwitch('hide', label: tr('dontShowAgain'))],
+                    ],
+                    onValueChanges: (vals, valid, isBuilding) {
+                      localValues = vals;
+                    },
+                  ),
+                ],
               ),
-              items: [
-                [GeneratedFormSwitch('hide', label: tr('dontShowAgain'))],
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(null),
+                  child: Text(tr('cancel')),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(localValues),
+                  child: Text(tr('ok')),
+                ),
               ],
-              message:
-                  '${pickedSource!.enforceTrackOnly ? tr('appsFromSourceAreTrackOnly') : tr('youPickedTrackOnly')}\n\n${tr('trackOnlyAppDescription')}',
             );
           },
         );
@@ -150,10 +178,19 @@ class AddAppPageState extends State<AddAppPage> {
           await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
-                  return GeneratedFormModal(
-                    title: tr('releaseDateAsVersion'),
-                    items: const [],
-                    message: tr('releaseDateAsVersionExplanation'),
+                  return AlertDialog(
+                    title: Text(tr('releaseDateAsVersion')),
+                    content: Text(tr('releaseDateAsVersionExplanation')),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(null),
+                        child: Text(tr('cancel')),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(true),
+                        child: Text(tr('ok')),
+                      ),
+                    ],
                   );
                 },
               ) ==
@@ -414,21 +451,27 @@ class AddAppPageState extends State<AddAppPage> {
                         },
                       );
                     }
+                    if (querySettings == null) {
+                      return null;
+                    }
                     return MapEntry(
                       e.runtimeType.toString(),
                       await e.search(
                         searchQuery,
-                        querySettings: querySettings ?? {},
+                        querySettings: querySettings,
                       ),
                     );
                   } catch (err) {
-                    if (err is! CredsNeededError) {
-                      rethrow;
-                    } else {
+                    if (err is CredsNeededError) {
                       err.unexpected = true;
                       showError(err, context);
-                      return null;
+                    } else {
+                      LogsProvider().add(
+                        'Search error for ${e.name}: ${err.toString()}',
+                        level: LogLevels.error,
+                      );
                     }
+                    return null;
                   }
                 }),
           )).whereType<MapEntry<String, Map<String, List<String>>>>().toList();
@@ -729,11 +772,13 @@ class AddAppPageState extends State<AddAppPage> {
               showDialog(
                 context: context,
                 builder: (context) {
-                  return GeneratedFormModal(
-                    singleNullReturnButton: tr('ok'),
-                    title: tr('supportedSources'),
-                    items: const [],
-                    additionalWidgets: [
+                  return AlertDialog(
+                    scrollable: true,
+                    title: Text(tr('supportedSources')),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                       ...sourceProvider.sources.map(
                         (e) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4),
@@ -764,6 +809,13 @@ class AddAppPageState extends State<AddAppPage> {
                       ),
                       const SizedBox(height: 4),
                       Text(tr('selfHostedNote', args: [tr('overrideSource')])),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text(tr('ok')),
+                      ),
                     ],
                   );
                 },
