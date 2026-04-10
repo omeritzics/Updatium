@@ -1850,7 +1850,7 @@ class AppsProvider with ChangeNotifier {
     if (installedIcon != null) {
       return installedIcon;
     }
-    
+
     return fallbackIcon;
   }
 

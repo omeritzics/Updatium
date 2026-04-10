@@ -16,12 +16,18 @@ class VivoAppStore extends AppSource {
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     var vivoAppId = parseVivoAppId(url);
     return '$appDetailUrl$vivoAppId';
+  }
+
+  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
     var json = await getDetailJson(standardUrl, additionalSettings);
     return json['package_name'];
+  }
+
+  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -40,9 +46,13 @@ class VivoAppStore extends AppSource {
       AppNames(developer, appName),
       releaseDate: DateTime.parse(uploadTime),
     );
+  }
+
+  @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
+  }) async {
     var apiBaseUrl =
         'https://h5-api.appstore.vivo.com.cn/h5appstore/search/result-list?app_version=2100&page_index=1&apps_per_page=20&target=local&cfrom=2&key=';
     var searchUrl = '$apiBaseUrl${Uri.encodeQueryComponent(query)}';
@@ -63,17 +73,33 @@ class VivoAppStore extends AppSource {
         ];
       }
     return results;
+  }
+
   Future<Map<String, dynamic>> getDetailJson(
+    String standardUrl,
+    Map<String, dynamic> additionalSettings,
+  ) async {
+    var vivoAppId = parseVivoAppId(standardUrl);
     var vivoAppId = parseVivoAppId(standardUrl);
     var apiBaseUrl = 'https://h5-api.appstore.vivo.com.cn/detail/';
     var params = '?frompage=messageh5&app_version=2100';
     var detailUrl = '$apiBaseUrl$vivoAppId$params';
     var response = await sourceRequest(detailUrl, additionalSettings);
+    if (response.statusCode != 200) {
+      throw getUpdatiumHttpError(response);
+    }
+    var json = jsonDecode(response.body);
     if (json['id'] == null) {
+      throw NoReleasesError();
+    }
     return json;
+  }
+
   String parseVivoAppId(String url) {
     var appId = Uri.parse(url.replaceAll('/#', '')).queryParameters['appId'];
     if (appId == null || appId.isEmpty) {
       throw InvalidURLError(name);
+    }
     return appId;
+  }
 }

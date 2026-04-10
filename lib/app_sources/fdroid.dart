@@ -7,6 +7,7 @@ import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/source_provider.dart';
+
 class FDroid extends AppSource {
   FDroid() {
     hosts = ['f-droid.org'];
@@ -39,7 +40,7 @@ class FDroid extends AppSource {
       ],
     ];
   }
-  
+
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegExB = RegExp(
@@ -69,7 +70,7 @@ class FDroid extends AppSource {
   }) async {
     return Uri.parse(standardUrl).pathSegments.last;
   }
-  
+
   @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
@@ -145,7 +146,7 @@ class FDroid extends AppSource {
     }
     return details;
   }
-  
+
   @override
   Future<Map<String, List<String>>> search(
     String query, {
@@ -173,7 +174,7 @@ class FDroid extends AppSource {
       throw getUpdatiumHttpError(res);
     }
   }
-  
+
   APKDetails getAPKUrlsFromFDroidPackagesAPIResponse(
     Response res,
     String apkUrlPrefix,
@@ -217,8 +218,7 @@ class FDroid extends AppSource {
         response['suggestedVersionCode'] != null &&
         filterVersionsByRegEx == null) {
       var suggestedReleases = releases.where(
-        (element) =>
-            element['versionCode'] == response['suggestedVersionCode'],
+        (element) => element['versionCode'] == response['suggestedVersionCode'],
       );
       if (suggestedReleases.isNotEmpty) {
         releaseChoices = suggestedReleases;
@@ -247,9 +247,9 @@ class FDroid extends AppSource {
     }
     // If a suggested release was not already picked, pick all those with the selected version
     if (releaseChoices.isEmpty) {
-      releaseChoices = releases.where(
-        (element) => element['versionName'] == version,
-      ).toList();
+      releaseChoices = releases
+          .where((element) => element['versionName'] == version)
+          .toList();
     }
     // For the remaining releases, use the toggles to auto-select one if possible
     if (releaseChoices.length > 1) {

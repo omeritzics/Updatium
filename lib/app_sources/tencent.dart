@@ -37,6 +37,7 @@ class Tencent extends AppSource {
       'https://a.app.$baseHost/o/simple.jsp?pkgname=$appId',
       additionalSettings,
       followRedirects: false,
+    );
     if (res.statusCode == 200) {
       dynamic json;
       try {
@@ -67,4 +68,6 @@ class Tencent extends AppSource {
       ], AppNames(author, appName));
     } else {
       throw getUpdatiumHttpError(res);
+    }
+  }
 }

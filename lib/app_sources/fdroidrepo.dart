@@ -92,6 +92,7 @@ class FDroidRepo extends AppSource {
       throw getUpdatiumHttpError(res);
     }
   }
+
   void runOnAddAppInputChange(String userInput) {
     additionalSourceAppSpecificSettingFormItems =
         additionalSourceAppSpecificSettingFormItems.map((row) {
@@ -134,6 +135,7 @@ class FDroidRepo extends AppSource {
     }
     return app;
   }
+
   Future<Response> sourceRequestWithURLVariants(
     String url,
     Map<String, dynamic> additionalSettings,
@@ -156,6 +158,7 @@ class FDroidRepo extends AppSource {
     }
     return res;
   }
+
   @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
@@ -185,7 +188,7 @@ class FDroidRepo extends AppSource {
     if (foundApps.isEmpty) {
       foundApps = body.querySelectorAll('application').where((element) {
         return element.querySelector('name')?.innerHtml.toLowerCase() ==
-            appIdOrName!.toLowerCase() ||
+                appIdOrName!.toLowerCase() ||
             element
                     .querySelector('name')
                     ?.innerHtml
@@ -197,73 +200,71 @@ class FDroidRepo extends AppSource {
     if (foundApps.isEmpty) {
       throw UpdatiumError(tr('appWithIdOrNameNotFound'));
     }
-      var authorName = body.querySelector('repo')?.attributes['name'] ?? name;
-      String appId = foundApps[0].attributes['id']!;
-      foundApps[0].querySelector('name')?.innerHtml ?? appId;
-      var appName = foundApps[0].querySelector('name')?.innerHtml ?? appId;
-      var releases = foundApps[0].querySelectorAll('package');
-      if (releases.isEmpty) {
-        throw NoReleasesError();
-      }
-      String? changeLog = foundApps[0].querySelector('changelog')?.innerHtml;
-      String? latestVersion = releases[0].querySelector('version')?.innerHtml;
-      if (latestVersion == null) {
-        throw NoVersionError();
-      }
-      String? marketvercodeStr = foundApps[0]
-          .querySelector('marketvercode')
-          ?.innerHtml;
-      int? marketvercode = int.tryParse(marketvercodeStr ?? '');
-      List selectedReleases = [];
-      if (trySelectingSuggestedVersionCode && marketvercode != null) {
-        selectedReleases = releases
-            .where(
-              (e) =>
-                  int.tryParse(
-                        e.querySelector('versioncode')?.innerHtml ?? '',
-                      ) ==
-                      marketvercode &&
-                  e.querySelector('apkname') != null,
-            )
-            .toList();
-      }
-      String? appAuthorName = foundApps[0].querySelector('author')?.innerHtml;
-      if (appAuthorName != null) {
-        authorName = appAuthorName;
-      }
-      if (selectedReleases.isEmpty) {
-        selectedReleases = releases.where(
-          (e) => e.querySelector('version')?.innerHtml == latestVersion,
-        ).toList();
-      }
-      if (selectedReleases.length > 1 && pickHighestVersionCode) {
-        selectedReleases.sort((e1, e2) {
-          return int.parse(
-            e2.querySelector('versioncode')!.innerHtml,
-          ).compareTo(int.parse(e1.querySelector('versioncode')!.innerHtml));
-        });
-        selectedReleases = [selectedReleases[0]];
-      }
-      String? selectedVersion = selectedReleases[0]
-          .querySelector('version')
-          ?.innerHtml;
-      if (selectedVersion == null) {
-        throw NoVersionError();
-      }
-      String? added = selectedReleases[0].querySelector('added')?.innerHtml;
-      DateTime? releaseDate = added != null ? DateTime.parse(added) : null;
-      List<String> apkUrls = selectedReleases
-          .map(
+    var authorName = body.querySelector('repo')?.attributes['name'] ?? name;
+    String appId = foundApps[0].attributes['id']!;
+    foundApps[0].querySelector('name')?.innerHtml ?? appId;
+    var appName = foundApps[0].querySelector('name')?.innerHtml ?? appId;
+    var releases = foundApps[0].querySelectorAll('package');
+    if (releases.isEmpty) {
+      throw NoReleasesError();
+    }
+    String? changeLog = foundApps[0].querySelector('changelog')?.innerHtml;
+    String? latestVersion = releases[0].querySelector('version')?.innerHtml;
+    if (latestVersion == null) {
+      throw NoVersionError();
+    }
+    String? marketvercodeStr = foundApps[0]
+        .querySelector('marketvercode')
+        ?.innerHtml;
+    int? marketvercode = int.tryParse(marketvercodeStr ?? '');
+    List selectedReleases = [];
+    if (trySelectingSuggestedVersionCode && marketvercode != null) {
+      selectedReleases = releases
+          .where(
             (e) =>
-                '${res.request!.url.toString().split('/').reversed.toList().sublist(1).reversed.join('/')}/${e.querySelector('apkname')!.innerHtml}',
+                int.tryParse(e.querySelector('versioncode')?.innerHtml ?? '') ==
+                    marketvercode &&
+                e.querySelector('apkname') != null,
           )
           .toList();
-      return APKDetails(
-        selectedVersion,
-        getApkUrlsFromUrls(apkUrls),
-        AppNames(authorName, appName),
-        releaseDate: releaseDate,
-        changeLog: changeLog,
-      );
+    }
+    String? appAuthorName = foundApps[0].querySelector('author')?.innerHtml;
+    if (appAuthorName != null) {
+      authorName = appAuthorName;
+    }
+    if (selectedReleases.isEmpty) {
+      selectedReleases = releases
+          .where((e) => e.querySelector('version')?.innerHtml == latestVersion)
+          .toList();
+    }
+    if (selectedReleases.length > 1 && pickHighestVersionCode) {
+      selectedReleases.sort((e1, e2) {
+        return int.parse(
+          e2.querySelector('versioncode')!.innerHtml,
+        ).compareTo(int.parse(e1.querySelector('versioncode')!.innerHtml));
+      });
+      selectedReleases = [selectedReleases[0]];
+    }
+    String? selectedVersion = selectedReleases[0]
+        .querySelector('version')
+        ?.innerHtml;
+    if (selectedVersion == null) {
+      throw NoVersionError();
+    }
+    String? added = selectedReleases[0].querySelector('added')?.innerHtml;
+    DateTime? releaseDate = added != null ? DateTime.parse(added) : null;
+    List<String> apkUrls = selectedReleases
+        .map(
+          (e) =>
+              '${res.request!.url.toString().split('/').reversed.toList().sublist(1).reversed.join('/')}/${e.querySelector('apkname')!.innerHtml}',
+        )
+        .toList();
+    return APKDetails(
+      selectedVersion,
+      getApkUrlsFromUrls(apkUrls),
+      AppNames(authorName, appName),
+      releaseDate: releaseDate,
+      changeLog: changeLog,
+    );
   }
 }

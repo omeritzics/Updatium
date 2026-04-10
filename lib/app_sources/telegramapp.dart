@@ -37,4 +37,5 @@ class TelegramApp extends AppSource {
     } else {
       throw getUpdatiumHttpError(res);
     }
+  }
 }

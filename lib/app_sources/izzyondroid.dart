@@ -26,13 +26,21 @@ class IzzyOnDroid extends AppSource {
       );
       match = standardUrlRegExB.firstMatch(url);
     }
+    if (match == null) {
       throw InvalidURLError(name);
+    }
     return match.group(0)!;
+  }
+
+  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
     return fd.tryInferringAppId(standardUrl);
+  }
+
+  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -44,7 +52,9 @@ class IzzyOnDroid extends AppSource {
         additionalSettings,
       ),
       'https://android.izzysoft.de/frepo/$appId',
-      standardUrl,
       name,
-      additionalSettings: additionalSettings,
+      additionalSettings,
+      standardUrl,
+    );
+  }
 }

@@ -9,6 +9,7 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
 class GitLab extends AppSource {
   GitLab({bool hostChanged = false}) {
     name = tr('gitlab');
@@ -102,6 +103,7 @@ class GitLab extends AppSource {
     }
     return results;
   }
+
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/-/releases';
 
@@ -120,6 +122,7 @@ class GitLab extends AppSource {
       return null;
     }
   }
+
   @override
   Future<String> assetUrlPrefetchModifier(
     String assetUrl,
@@ -143,7 +146,7 @@ class GitLab extends AppSource {
     bool trackOnly = additionalSettings['trackOnly'] == true;
     String? PAT = await getPATIfAny(hostChanged ? additionalSettings : {});
     String optionalAuth = (PAT != null) ? 'private_token=$PAT' : '';
-    
+
     // Get project ID
     Response res0 = await sourceRequest(
       'https://${hosts[0]}/api/v4/projects/$projectUriComponent?$optionalAuth',
@@ -164,7 +167,7 @@ class GitLab extends AppSource {
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
-    
+
     // Extract .apk details from received data
     var jsonData = jsonDecode(res.body) as List<dynamic>;
     Iterable<APKDetails> apkDetailsList = [];
@@ -201,10 +204,11 @@ class GitLab extends AppSource {
           .split('.xapk)')
           .join('.xapk\n')
           .split('\n')
-          .where((s) =>
+          .where(
+            (s) =>
                 s.startsWith('/uploads/') &&
-                (s.endsWith('apk') ||
-                    s.endsWith('xapk')))
+                (s.endsWith('apk') || s.endsWith('xapk')),
+          )
           .map((s) => 'https://${hosts[0]}/-/project/$projectId$s')
           .map((l) => MapEntry(Uri.parse(l).pathSegments.last, l));
       Map<String, String> apkUrls = {};
