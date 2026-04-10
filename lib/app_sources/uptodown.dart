@@ -16,6 +16,7 @@ DateTime? parseDateTimeMMMddCommayyyy(String? dateString) {
   }
   return releaseDate;
 }
+
 class Uptodown extends AppSource {
   Uptodown() {
     hosts = ['uptodown.com'];
@@ -38,7 +39,7 @@ class Uptodown extends AppSource {
     }
     return '${match.group(0)!}/android/download';
   }
-  
+
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
@@ -48,7 +49,7 @@ class Uptodown extends AppSource {
       additionalSettings,
     ))['appId'];
   }
-  
+
   Future<Map<String, String?>> getAppDetailsFromPage(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -84,7 +85,7 @@ class Uptodown extends AppSource {
       MapEntry('extension', extension),
     ]);
   }
-  
+
   @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
@@ -122,7 +123,7 @@ class Uptodown extends AppSource {
       releaseDate: relDate,
     );
   }
-  
+
   Future<String> assetUrlPrefetchModifier(
     String assetUrl,
     String standardUrl,

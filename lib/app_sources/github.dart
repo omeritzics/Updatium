@@ -458,19 +458,30 @@ class GitHub extends AppSource {
   Future<APKDetails> getLatestAPKDetailsCommon2(
     Future<String> Function(bool) reqUrlGenerator,
     dynamic Function(Response)? onHttpErrorCode,
+  ) async {
     try {
       return await getLatestAPKDetailsCommon(
         await reqUrlGenerator(false),
         standardUrl,
         onHttpErrorCode: onHttpErrorCode,
+      );
     } catch (err) {
       if (err is NoReleasesError && additionalSettings['trackOnly'] == true) {
         return await getLatestAPKDetailsCommon(
           await reqUrlGenerator(true),
           standardUrl,
           onHttpErrorCode: onHttpErrorCode,
-        rethrow;
+        );
+      }
+      rethrow;
+    }
+  }
+  
+  @override
   Future<APKDetails> getLatestAPKDetails(
+    String standardUrl,
+    Map<String, dynamic> additionalSettings,
+  ) async {
     return await getLatestAPKDetailsCommon2(
       standardUrl,
       (bool useTagUrl) async {
@@ -478,14 +489,22 @@ class GitHub extends AppSource {
       },
       (Response res) {
         rateLimitErrorCheck(res);
+      },
+    );
+  }
+  
   AppNames getAppNames(String standardUrl) {
     String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
     List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
     return AppNames(names[0], names.sublist(1).join('/'));
+  }
+  
   Future<Map<String, List<String>>> searchCommon(
     String query,
+    String requestUrl,
     String rootProp, {
     Map<String, dynamic> querySettings = const {},
+  }) async {
     Response res = await sourceRequest(requestUrl, {});
       int minStarCount = querySettings['minStarCount'] != null
           ? int.parse(querySettings['minStarCount'])
@@ -526,11 +545,15 @@ class GitHub extends AppSource {
         results2[undoGHProxyMod(k, sourceConfigSettingValues)] = v;
       });
       return results2;
-      return results;
+    }
+  }
+  
   void rateLimitErrorCheck(Response res) {
     if (res.headers['x-ratelimit-remaining'] == '0') {
       throw RateLimitError(
         (int.parse(res.headers['x-ratelimit-reset'] ?? '1800000000') / 60000000)
             .round(),
+      );
+    }
+  }
 }
-    return null;

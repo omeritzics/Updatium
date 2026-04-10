@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/providers/source_provider.dart';
+
 class Aptoide extends AppSource {
   Aptoide() {
     hosts = ['aptoide.com'];
@@ -22,7 +23,7 @@ class Aptoide extends AppSource {
     }
     return match.group(0)!;
   }
-  
+
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
@@ -32,7 +33,7 @@ class Aptoide extends AppSource {
       additionalSettings,
     ))['package'];
   }
-  
+
   Future<Map<String, dynamic>> getAppDetailsJSON(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -57,7 +58,7 @@ class Aptoide extends AppSource {
     }
     return jsonDecode(res2.body)?['nodes']?['meta']?['data'];
   }
-  
+
   @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,

@@ -9,7 +9,7 @@ class APKCombo extends AppSource {
     name = tr('apkcombo');
     showReleaseDateAsVersionToggle = true;
   }
-  
+
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -22,7 +22,7 @@ class APKCombo extends AppSource {
     }
     return match.group(0)!;
   }
-  
+
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
@@ -41,7 +41,7 @@ class APKCombo extends AppSource {
       return null;
     }
   }
-  
+
   @override
   Future<Map<String, String>?> getRequestHeaders(
     Map<String, dynamic> additionalSettings,
@@ -55,12 +55,15 @@ class APKCombo extends AppSource {
       "Host": hosts[0],
     };
   }
-  
+
   Future<List<MapEntry<String, String>>> getApkUrls(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var res = await sourceRequest('$standardUrl/download/apk', additionalSettings);
+    var res = await sourceRequest(
+      '$standardUrl/download/apk',
+      additionalSettings,
+    );
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
@@ -103,7 +106,7 @@ class APKCombo extends AppSource {
         .where((element) => element.value.isNotEmpty)
         .toList();
   }
-  
+
   Future<String> assetUrlPrefetchModifier(
     String assetUrl,
     String standardUrl,
@@ -118,7 +121,7 @@ class APKCombo extends AppSource {
     }
     throw NoAPKError();
   }
-  
+
   @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,

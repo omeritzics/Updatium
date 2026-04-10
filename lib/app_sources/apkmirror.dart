@@ -7,6 +7,7 @@ import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
+
 class APKMirror extends AppSource {
   APKMirror() {
     hosts = ['apkmirror.com'];
@@ -59,10 +60,10 @@ class APKMirror extends AppSource {
     }
     return match.group(0)!;
   }
-  
+
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/#whatsnew';
-  
+
   @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
@@ -126,7 +127,7 @@ class APKMirror extends AppSource {
       throw getUpdatiumHttpError(res);
     }
   }
-  
+
   AppNames getAppNames(String standardUrl) {
     String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
     List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');

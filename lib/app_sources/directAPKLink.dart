@@ -34,7 +34,7 @@ class DirectAPKLink extends AppSource {
       'autoApkFilterByArch',
     ];
   }
-  
+
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     if (!forSelection) {
@@ -47,7 +47,7 @@ class DirectAPKLink extends AppSource {
     }
     return match.group(0)!;
   }
-  
+
   @override
   Future<Map<String, String>?> getRequestHeaders(
     Map<String, dynamic> additionalSettings,
@@ -60,7 +60,7 @@ class DirectAPKLink extends AppSource {
       forAPKDownload: forAPKDownload,
     );
   }
-  
+
   @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,

@@ -24,35 +24,29 @@ class Codeberg extends AppSource {
     }
     return match.group(0)!;
   }
-  
+
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/releases';
-  
+
   @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    return await gh.getLatestAPKDetails(
-      standardUrl,
-      additionalSettings,
-    );
+    return await gh.getLatestAPKDetails(standardUrl, additionalSettings);
   }
-  
+
   AppNames getAppNames(String standardUrl) {
     String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
     List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
     return AppNames(names[0], names[1]);
   }
-  
+
   @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
   }) async {
-    return gh.search(
-      query,
-      querySettings: querySettings,
-    );
+    return gh.search(query, querySettings: querySettings);
   }
 }
