@@ -1373,24 +1373,24 @@ class UpdatiumError {
 class RateLimitError extends UpdatiumError {
   late int remainingMinutes;
   RateLimitError(this.remainingMinutes)
-      : super(plural('tooManyRequestsTryAgainInMinutes', remainingMinutes));
+    : super(plural('tooManyRequestsTryAgainInMinutes', remainingMinutes));
 }
 
 class InvalidURLError extends UpdatiumError {
   InvalidURLError(String sourceName)
-      : super(tr('invalidURLForSource', args: [sourceName]));
+    : super(tr('invalidURLForSource', args: [sourceName]));
 }
 
 class CredsNeededError extends UpdatiumError {
   CredsNeededError(String sourceName)
-      : super(tr('requiresCredentialsInSettings', args: [sourceName]));
+    : super(tr('requiresCredentialsInSettings', args: [sourceName]));
 }
 
 class NoReleasesError extends UpdatiumError {
   NoReleasesError({String? note})
-      : super(
-          '${tr('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
-        );
+    : super(
+        '${tr('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
+      );
 }
 
 class NoAPKError extends UpdatiumError {
@@ -1407,14 +1407,14 @@ class UnsupportedURLError extends UpdatiumError {
 
 class DowngradeError extends UpdatiumError {
   DowngradeError(int currentVersionCode, int newVersionCode)
-      : super(
-          '${tr('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
-        );
+    : super(
+        '${tr('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
+      );
 }
 
 class InstallError extends UpdatiumError {
   InstallError(int code)
-      : super(PackageInstallerStatus.byCode(code).name.substring(7));
+    : super(PackageInstallerStatus.byCode(code).name.substring(7));
 }
 
 class IDChangedError extends UpdatiumError {
@@ -1468,16 +1468,16 @@ String list2FriendlyString(List<String> list) {
   return list.length == 2
       ? '${list[0]} ${tr('and')} ${list[1]}'
       : list
-          .asMap()
-          .entries
-          .map(
-            (e) =>
-                e.value +
-                (e.key == list.length - 1
-                    ? ''
-                    : e.key == list.length - 2
-                        ? '${isUsingEnglish ? ',' : ''} and '
-                        : ', '),
-          )
-          .join('');
+            .asMap()
+            .entries
+            .map(
+              (e) =>
+                  e.value +
+                  (e.key == list.length - 1
+                      ? ''
+                      : e.key == list.length - 2
+                      ? '${isUsingEnglish ? ',' : ''} and '
+                      : ', '),
+            )
+            .join('');
 }

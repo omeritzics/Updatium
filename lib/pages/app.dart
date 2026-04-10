@@ -692,8 +692,6 @@ class _AppPageState extends State<AppPage> {
       ),
     );
 
-
-
     return Scaffold(
       body: RefreshIndicator(
         child: CustomScrollView(

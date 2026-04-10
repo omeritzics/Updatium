@@ -905,9 +905,9 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
   ).add(e.toString(), level: isError ? LogLevels.error : LogLevels.info);
 
   if (e is String || (e is UpdatiumError && !e.unexpected)) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(e.toString())),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(e.toString())));
   } else {
     showAdaptiveDialog(
       context: context,
