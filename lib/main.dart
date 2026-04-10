@@ -943,3 +943,40 @@ class _UpdatiumState extends State<Updatium> {
     );
   }
 }
+
+void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
+  Provider.of<LogsProvider>(
+    context,
+    listen: false,
+  ).add(e.toString(), level: isError ? LogLevels.error : LogLevels.info);
+
+  if (e is String || (e is UpdatiumError && !e.unexpected)) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(e.toString())),
+    );
+  } else {
+    showAdaptiveDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            e is MultiAppMultiError
+                ? tr(isError ? 'someErrors' : 'updates')
+                : tr(isError ? 'unexpectedError' : 'unknown'),
+          ),
+          content: SelectableText(e.toString()),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(tr('ok')),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+void showError(dynamic e, BuildContext context) {
+  showMessage(e, context, isError: true);
+}

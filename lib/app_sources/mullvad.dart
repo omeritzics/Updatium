@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class Mullvad extends AppSource {
@@ -10,7 +9,6 @@ class Mullvad extends AppSource {
     hosts = ['mullvad.net'];
     name = tr('mullvad');
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -22,13 +20,8 @@ class Mullvad extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
-  }
-
-  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       'https://github.com/mullvad/mullvadvpn-app/blob/master/CHANGELOG.md';
-
-  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -36,7 +29,6 @@ class Mullvad extends AppSource {
     Response res = await sourceRequest(
       '$standardUrl/en/download/android',
       additionalSettings,
-    );
     if (res.statusCode == 200) {
       var versions = parse(res.body)
           .querySelectorAll('p')
@@ -63,7 +55,6 @@ class Mullvad extends AppSource {
         )).changeLog;
       } catch (e) {
         // Ignore
-      }
       return APKDetails(
         versions[0],
         getApkUrlsFromUrls(['https://mullvad.net/download/app/apk/latest']),
@@ -72,6 +63,4 @@ class Mullvad extends AppSource {
       );
     } else {
       throw getUpdatiumHttpError(res);
-    }
-  }
 }

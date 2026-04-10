@@ -33,11 +33,11 @@ import 'package:updatium/app_sources/tencent.dart';
 import 'package:updatium/app_sources/uptodown.dart';
 import 'package:updatium/app_sources/vivoappstore.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/mass_app_sources/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
+import 'package:android_package_installer/android_package_installer.dart';
 
 class AppNames {
   late String author;
@@ -1360,4 +1360,126 @@ class SourceProvider {
     }
     return [apps, errors];
   }
+}
+
+class UpdatiumError {
+  late String message;
+  bool unexpected;
+  UpdatiumError(this.message, {this.unexpected = false});
+  @override
+  String toString() {
+    return message;
+  }
+}
+
+class RateLimitError extends UpdatiumError {
+  late int remainingMinutes;
+  RateLimitError(this.remainingMinutes)
+      : super(plural('tooManyRequestsTryAgainInMinutes', remainingMinutes));
+}
+
+class InvalidURLError extends UpdatiumError {
+  InvalidURLError(String sourceName)
+      : super(tr('invalidURLForSource', args: [sourceName]));
+}
+
+class CredsNeededError extends UpdatiumError {
+  CredsNeededError(String sourceName)
+      : super(tr('requiresCredentialsInSettings', args: [sourceName]));
+}
+
+class NoReleasesError extends UpdatiumError {
+  NoReleasesError({String? note})
+      : super(
+          '${tr('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
+        );
+}
+
+class NoAPKError extends UpdatiumError {
+  NoAPKError() : super(tr('noAPKFound'));
+}
+
+class NoVersionError extends UpdatiumError {
+  NoVersionError() : super(tr('noVersionFound'));
+}
+
+class UnsupportedURLError extends UpdatiumError {
+  UnsupportedURLError() : super(tr('urlMatchesNoSource'));
+}
+
+class DowngradeError extends UpdatiumError {
+  DowngradeError(int currentVersionCode, int newVersionCode)
+      : super(
+          '${tr('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
+        );
+}
+
+class InstallError extends UpdatiumError {
+  InstallError(int code)
+      : super(PackageInstallerStatus.byCode(code).name.substring(7));
+}
+
+class IDChangedError extends UpdatiumError {
+  IDChangedError(String newId) : super('${tr('appIdMismatch')} - $newId');
+}
+
+class NotImplementedError extends UpdatiumError {
+  NotImplementedError() : super(tr('functionNotImplemented'));
+}
+
+class MultiAppMultiError extends UpdatiumError {
+  Map<String, dynamic> rawErrors = {};
+  Map<String, List<String>> idsByErrorString = {};
+  Map<String, String> appIdNames = {};
+
+  MultiAppMultiError() : super(tr('placeholder'), unexpected: true);
+
+  void add(String appId, dynamic error, {String? appName}) {
+    if (error is SocketException) {
+      error = error.message;
+    }
+    rawErrors[appId] = error;
+    var string = error.toString();
+    var tempIds = idsByErrorString.remove(string);
+    tempIds ??= [];
+    tempIds.add(appId);
+    idsByErrorString.putIfAbsent(string, () => tempIds!);
+    if (appName != null) {
+      appIdNames[appId] = appName;
+    }
+  }
+
+  String errorString(String appId, {bool includeIdsWithNames = false}) =>
+      '${appIdNames.containsKey(appId) ? '${appIdNames[appId]}${includeIdsWithNames ? ' ($appId)' : ''}' : appId}: ${rawErrors[appId].toString()}';
+
+  String errorsAppsString(
+    String errString,
+    List<String> appIds, {
+    bool includeIdsWithNames = false,
+  }) =>
+      '$errString [${list2FriendlyString(appIds.map((id) => appIdNames.containsKey(id) == true ? '${appIdNames[id]}${includeIdsWithNames ? ' ($id)' : ''}' : id).toList())}]';
+
+  @override
+  String toString() => idsByErrorString.entries
+      .map((e) => errorsAppsString(e.key, e.value))
+      .join('\n\n');
+}
+
+String list2FriendlyString(List<String> list) {
+  var isUsingEnglish = isEnglish();
+  return list.length == 2
+      ? '${list[0]} ${tr('and')} ${list[1]}'
+      : list
+          .asMap()
+          .entries
+          .map(
+            (e) =>
+                e.value +
+                (e.key == list.length - 1
+                    ? ''
+                    : e.key == list.length - 2
+                        ? '${isUsingEnglish ? ',' : ''} and '
+                        : ', '),
+          )
+          .join('');
 }

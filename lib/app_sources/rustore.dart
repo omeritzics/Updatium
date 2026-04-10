@@ -4,9 +4,7 @@ import 'dart:typed_data';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_charset_detector/flutter_charset_detector.dart';
 import 'package:http/http.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
-
 class RuStore extends AppSource {
   RuStore() {
     hosts = ['rustore.ru'];
@@ -14,7 +12,6 @@ class RuStore extends AppSource {
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -26,16 +23,11 @@ class RuStore extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
-  }
-
-  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
     return Uri.parse(standardUrl).pathSegments.last;
-  }
-
   Future<dynamic> decodeJsonBody(Uint8List bytes) async {
     try {
       return jsonDecode((await CharsetDetector.autoDecode(bytes)).string);
@@ -45,10 +37,6 @@ class RuStore extends AppSource {
       } catch (_) {
         rethrow;
       }
-    }
-  }
-
-  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -57,15 +45,11 @@ class RuStore extends AppSource {
     Response res0 = await sourceRequest(
       'https://backapi.rustore.ru/applicationData/overallInfo/$appId',
       additionalSettings,
-    );
     if (res0.statusCode != 200) {
       throw getUpdatiumHttpError(res0);
-    }
     var appDetails = (await decodeJsonBody(res0.bodyBytes))['body'];
     if (appDetails['appId'] == null) {
       throw NoReleasesError();
-    }
-
     String appName = appDetails['appName'] ?? tr('app');
     String author = appDetails['companyName'] ?? name;
     String? dateStr = appDetails['appVerUpdatedAt'];
@@ -74,28 +58,18 @@ class RuStore extends AppSource {
     String? remoteIconUrl = appDetails['icon'];
     if (version == null) {
       throw NoVersionError();
-    }
     DateTime? relDate;
     if (dateStr != null) {
       relDate = DateTime.parse(dateStr);
-    }
-
     Response res1 = await sourceRequest(
       'https://backapi.rustore.ru/applicationData/v2/download-link',
-      additionalSettings,
       followRedirects: false,
       postBody: {"appId": appDetails['appId'], "firstInstall": true},
-    );
     var downloadDetails = (await decodeJsonBody(res1.bodyBytes))['body'];
-    try {
       if (res1.statusCode != 200 ||
           downloadDetails['downloadUrls'][0]['url'] == null) {
         throw NoAPKError();
-      }
-    } catch (e) {
       throw NoAPKError();
-    }
-
     return APKDetails(
       version,
       getApkUrlsFromUrls([
@@ -108,6 +82,4 @@ class RuStore extends AppSource {
       releaseDate: relDate,
       changeLog: changeLog,
       remoteIconUrl: remoteIconUrl,
-    );
-  }
 }

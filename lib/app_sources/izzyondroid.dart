@@ -1,11 +1,9 @@
 import 'package:updatium/app_sources/fdroid.dart';
-import 'package:updatium/custom_errors.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class IzzyOnDroid extends AppSource {
   late FDroid fd;
-
   IzzyOnDroid() {
     hosts = ['izzysoft.de'];
     name = tr('izzyondroid');
@@ -14,7 +12,6 @@ class IzzyOnDroid extends AppSource {
         fd.additionalSourceAppSpecificSettingFormItems;
     allowSubDomains = true;
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegExA = RegExp(
@@ -29,21 +26,13 @@ class IzzyOnDroid extends AppSource {
       );
       match = standardUrlRegExB.firstMatch(url);
     }
-    if (match == null) {
       throw InvalidURLError(name);
-    }
     return match.group(0)!;
-  }
-
-  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
     return fd.tryInferringAppId(standardUrl);
-  }
-
-  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -58,6 +47,4 @@ class IzzyOnDroid extends AppSource {
       standardUrl,
       name,
       additionalSettings: additionalSettings,
-    );
-  }
 }

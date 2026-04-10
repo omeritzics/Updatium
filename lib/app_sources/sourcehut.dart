@@ -1,7 +1,6 @@
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/html.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -11,7 +10,6 @@ class SourceHut extends AppSource {
     hosts = ['git.sr.ht'];
     name = tr('sourcehut');
     showReleaseDateAsVersionToggle = true;
-
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormSwitch(
@@ -22,7 +20,6 @@ class SourceHut extends AppSource {
       ],
     ];
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -34,12 +31,7 @@ class SourceHut extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
-  }
-
-  @override
   String? changeLogPageFromStandardUrl(String standardUrl) => standardUrl;
-
-  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -50,9 +42,7 @@ class SourceHut extends AppSource {
           .reversed
           .toList()
           .sublist(1)
-          .reversed
           .join('/');
-    }
     Uri standardUri = Uri.parse(standardUrl);
     String appName = standardUri.pathSegments.last;
     bool fallbackToOlderReleases =
@@ -60,12 +50,10 @@ class SourceHut extends AppSource {
     Response res = await sourceRequest(
       '$standardUrl/refs/rss.xml',
       additionalSettings,
-    );
     if (res.statusCode == 200) {
       var parsedHtml = parse(res.body);
       List<APKDetails> apkDetailsList = [];
       int ind = 0;
-
       for (var entry in parsedHtml.querySelectorAll('item').sublist(0, 6)) {
         ind++;
         String releasePage = // querySelector('link') fails for some reason
@@ -79,25 +67,20 @@ class SourceHut extends AppSource {
         }
         if (!fallbackToOlderReleases && ind > 1) {
           break;
-        }
         String? version = entry.querySelector('title')?.text.trim();
         if (version == null) {
           throw NoVersionError();
-        }
         String? releaseDateString = entry.querySelector('pubDate')?.innerHtml;
         DateTime? releaseDate;
         try {
           releaseDate = releaseDateString != null
               ? DateFormat('E, dd MMM yyyy HH:mm:ss Z').parse(releaseDateString)
               : null;
-          releaseDate = releaseDateString != null
               ? DateFormat(
                   'EEE, dd MMM yyyy HH:mm:ss Z',
                 ).parse(releaseDateString)
-              : null;
         } catch (e) {
           // ignore
-        }
         var res2 = await sourceRequest(releasePage, additionalSettings);
         List<MapEntry<String, String>> apkUrls = [];
         if (res2.statusCode == 200) {
@@ -109,7 +92,6 @@ class SourceHut extends AppSource {
                 .map((e) => ensureAbsoluteUrl(e, standardUri))
                 .toList(),
           );
-        }
         apkDetailsList.add(
           APKDetails(
             version,
@@ -124,20 +106,14 @@ class SourceHut extends AppSource {
       }
       if (apkDetailsList.isEmpty) {
         throw NoReleasesError();
-      }
       if (fallbackToOlderReleases) {
         if (additionalSettings['trackOnly'] != true) {
           apkDetailsList = apkDetailsList
               .where((e) => e.apkUrls.isNotEmpty)
               .toList();
-        }
         if (apkDetailsList.isEmpty) {
           throw NoReleasesError();
-        }
-      }
       return apkDetailsList.first;
     } else {
       throw getUpdatiumHttpError(res);
-    }
-  }
 }

@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
-
 class Tencent extends AppSource {
   Tencent() {
     name = tr('tencentAppStore');
@@ -11,7 +9,6 @@ class Tencent extends AppSource {
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -23,17 +20,11 @@ class Tencent extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
-  }
-
-  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
     return Uri.parse(standardUrl).pathSegments.last;
-  }
-
-  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -42,13 +33,10 @@ class Tencent extends AppSource {
     String baseHost = Uri.parse(
       standardUrl,
     ).host.split('.').reversed.toList().sublist(0, 2).reversed.join('.');
-
     var res = await sourceRequest(
       'https://a.app.$baseHost/o/simple.jsp?pkgname=$appId',
       additionalSettings,
       followRedirects: false,
-    );
-
     if (res.statusCode == 200) {
       dynamic json;
       try {
@@ -64,25 +52,19 @@ class Tencent extends AppSource {
         throw NoReleasesError();
       }
       if (json == null) {
-        throw NoReleasesError();
-      }
       var version = json['versionName'];
       var apkUrl = json['apkUrl64'];
       apkUrl ??= json['apkUrl'];
       if (apkUrl == null) {
         throw NoAPKError();
-      }
       var appName = json['appName'];
       var author = json['author'];
       var apkName =
           Uri.parse(apkUrl).queryParameters['fsname'] ??
           '${appId}_$version.apk';
-
       return APKDetails(version, [
         MapEntry(apkName, apkUrl),
       ], AppNames(author, appName));
     } else {
       throw getUpdatiumHttpError(res);
-    }
-  }
 }
