@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/providers/source_provider.dart';
+
 class Tencent extends AppSource {
   Tencent() {
     name = tr('tencentAppStore');
@@ -20,11 +21,17 @@ class Tencent extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
+  }
+
+  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
     return Uri.parse(standardUrl).pathSegments.last;
+  }
+
+  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -53,11 +60,14 @@ class Tencent extends AppSource {
         throw NoReleasesError();
       }
       if (json == null) {
+        throw NoReleasesError();
+      }
       var version = json['versionName'];
       var apkUrl = json['apkUrl64'];
       apkUrl ??= json['apkUrl'];
       if (apkUrl == null) {
         throw NoAPKError();
+      }
       var appName = json['appName'];
       var author = json['author'];
       var apkName =

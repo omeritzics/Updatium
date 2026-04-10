@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/providers/source_provider.dart';
+
 class GitHubStars implements MassAppUrlSource {
   @override
   late String name = tr('githubStarredRepos');
@@ -37,6 +38,7 @@ class GitHubStars implements MassAppUrlSource {
       throw getUpdatiumHttpError(res);
     }
   }
+
   @override
   Future<Map<String, List<String>>> getUrlsWithDescriptions(
     List<String> args,

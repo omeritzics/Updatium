@@ -98,9 +98,7 @@ class NeutronCode extends AppSource {
         throw NoVersionError();
       }
       String? apkUrl = 'https://${hosts[0]}/download/$filename';
-      var dateStringOriginal = http
-          .querySelector('.pd-date-txt')
-          ?.innerHtml;
+      var dateStringOriginal = http.querySelector('.pd-date-txt')?.innerHtml;
       var dateString = dateStringOriginal != null
           ? customDateParse(dateStringOriginal)
           : null;

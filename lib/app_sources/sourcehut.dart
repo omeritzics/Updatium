@@ -48,6 +48,7 @@ class SourceHut extends AppSource {
           .toList()
           .sublist(1)
           .join('/');
+    }
     Uri standardUri = Uri.parse(standardUrl);
     String appName = standardUri.pathSegments.last;
     bool fallbackToOlderReleases =
@@ -82,7 +83,9 @@ class SourceHut extends AppSource {
         DateTime? releaseDate;
         try {
           releaseDate = releaseDateString != null
-              ? DateFormat('EEE, dd MMM yyyy HH:mm:ss Z').parse(releaseDateString)
+              ? DateFormat(
+                  'EEE, dd MMM yyyy HH:mm:ss Z',
+                ).parse(releaseDateString)
               : null;
         } catch (e) {
           // ignore
@@ -98,17 +101,18 @@ class SourceHut extends AppSource {
                 .map((e) => ensureAbsoluteUrl(e, standardUri))
                 .toList(),
           );
-        apkDetailsList.add(
-          APKDetails(
-            version,
-            apkUrls,
-            AppNames(
-              entry.querySelector('author')?.innerHtml.trim() ?? appName,
-              appName,
+          apkDetailsList.add(
+            APKDetails(
+              version,
+              apkUrls,
+              AppNames(
+                entry.querySelector('author')?.innerHtml.trim() ?? appName,
+                appName,
+              ),
+              releaseDate: releaseDate,
             ),
-            releaseDate: releaseDate,
-          ),
-        );
+          );
+        }
       }
       if (apkDetailsList.isEmpty) {
         throw NoReleasesError();

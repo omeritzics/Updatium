@@ -22,15 +22,22 @@ class SourceForge extends AppSource {
     }
     RegExp standardUrlRegExB = RegExp(
       '^https?://(www\\.)?$sourceRegex/projects/[^/]+',
+    );
     match = standardUrlRegExB.firstMatch(url);
     if (match != null && match.group(0) == url) {
       url = '$url/files';
+    }
     RegExp standardUrlRegExA = RegExp(
       '^https?://(www\\.)?$sourceRegex/projects/[^/]+/files(/.+)?',
+    );
     match = standardUrlRegExA.firstMatch(url);
     if (match == null) {
       throw InvalidURLError(name);
+    }
     return match.group(0)!;
+  }
+
+  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -39,9 +46,11 @@ class SourceForge extends AppSource {
     if (standardUri.pathSegments.length == 2) {
       standardUrl = '$standardUrl/files';
       standardUri = Uri.parse(standardUrl);
+    }
     Response res = await sourceRequest(
       '${standardUri.origin}/${standardUri.pathSegments.sublist(0, 2).join('/')}/rss?path=/',
-      additionalSettings,;
+      additionalSettings,
+    );
     if (res.statusCode == 200) {
       var parsedHtml = parse(res.body);
       var allDownloadLinks = parsedHtml
@@ -49,7 +58,7 @@ class SourceForge extends AppSource {
           .map((e) => e.innerHtml)
           .where((element) => element.startsWith(standardUrl))
           .toList();
-      getVersion(String url) {
+      String? getVersion(String url) {
         try {
           var segments = url
               .substring(standardUrl.length)
@@ -57,8 +66,8 @@ class SourceForge extends AppSource {
               .where((element) => element.isNotEmpty)
               .toList()
               .reversed
-              .sublist(1)
-              .toList();
+              .toList()
+              .sublist(1);
           segments = segments.length > 1
               ? segments.reversed.toList().sublist(1).reversed.toList()
               : segments;
@@ -78,24 +87,30 @@ class SourceForge extends AppSource {
                 version = null;
               } else {
                 rethrow;
+              }
             }
           }
           return version;
-        } catch (e); {
+        } catch (e) {
           return null;
         }
       }
+
       var apkUrlListAllReleases = allDownloadLinks
           .where((element) => element.toLowerCase().endsWith('.apk/download'))
-          .where((element) => getVersion(element) != null);
+          .where((element) => getVersion(element) != null)
+          .toList();
       if (apkUrlListAllReleases.isEmpty) {
         throw NoReleasesError();
-      String? version = getVersion(apkUrlListAllReleases[0]);
+      }
+      String? version = getVersion(apkUrlListAllReleases.first);
       if (version == null) {
         throw NoVersionError();
+      }
       var apkUrlList =
           apkUrlListAllReleases // This can be used skipped for fallback support later
-              .where((element) => getVersion(element) == version);
+              .where((element) => getVersion(element) == version)
+              .toList();
       var segments = standardUrl.split('/');
       return APKDetails(
         version,
@@ -104,4 +119,6 @@ class SourceForge extends AppSource {
       );
     } else {
       throw getUpdatiumHttpError(res);
+    }
+  }
 }
