@@ -1728,10 +1728,9 @@ class AppsPageState extends State<AppsPage> {
             physics: const AlwaysScrollableScrollPhysics(),
             controller: scrollController,
             slivers: <Widget>[
-              SliverAppBar(
+              SliverAppBar.large(
                 pinned: true,
                 automaticallyImplyLeading: false,
-                expandedHeight: MediaQuery.of(context).size.height * 0.15,
                 actions: [
                   Consumer<AppsProvider>(
                     builder: (context, appsProvider, child) {
@@ -1785,19 +1784,7 @@ class AppsPageState extends State<AppsPage> {
                     },
                   ),
                 ],
-                flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: const EdgeInsets.only(
-                    left: 28,
-                    right: 88,
-                    bottom: 24,
-                  ),
-                  title: Text(
-                    tr('appsString'),
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.bodyMedium!.color,
-                    ),
-                  ),
-                ),
+                title: Text(tr('appsString')),
               ),
               ...getLoadingWidgets(),
               getDisplayedList(),

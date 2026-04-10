@@ -333,21 +333,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
+          SliverAppBar.large(
             pinned: true,
-            expandedHeight: MediaQuery.of(context).size.height * 0.15,
-            flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.symmetric(
-                horizontal: 24,
-                vertical: 20,
-              ),
-              title: Text(
-                tr('importExport'),
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium!.color,
-                ),
-              ),
-            ),
+            title: Text(tr('importExport')),
           ),
           SliverFillRemaining(
             child: Padding(
