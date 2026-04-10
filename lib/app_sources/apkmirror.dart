@@ -21,6 +21,7 @@ class APKMirror extends AppSource {
           defaultValue: true,
         ),
       ],
+      [
         GeneratedFormTextField(
           'filterReleaseTitlesByRegEx',
           label: tr('filterReleaseTitlesByRegEx'),
@@ -30,6 +31,8 @@ class APKMirror extends AppSource {
               return regExValidator(value);
             },
           ],
+        ),
+      ],
     ];
   }
   @override
@@ -42,6 +45,9 @@ class APKMirror extends AppSource {
       "User-Agent":
           "Updatium/${(await getInstalledInfo(updatiumId))?.versionName ?? '1.0.0'}",
     };
+  }
+
+  @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
       '^https?://(www\\.)?${getSourceRegex(hosts)}/apk/[^/]+/[^/]+',
@@ -52,10 +58,15 @@ class APKMirror extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
+  }
+  
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/#whatsnew';
+  
+  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
+    Map<String, dynamic> additionalSettings,
   ) async {
     bool fallbackToOlderReleases =
         additionalSettings['fallbackToOlderReleases'] == true;
@@ -68,6 +79,7 @@ class APKMirror extends AppSource {
     Response res = await sourceRequest(
       '$standardUrl/feed/',
       additionalSettings,
+    );
     if (res.statusCode == 200) {
       var items = parse(res.body).querySelectorAll('item');
       dynamic targetRelease;
@@ -100,7 +112,10 @@ class APKMirror extends AppSource {
           .trim();
       if (version == null || version.isEmpty) {
         version = titleString;
+      }
+      if (version == null) {
         throw NoVersionError();
+      }
       return APKDetails(
         version,
         [],
@@ -109,8 +124,12 @@ class APKMirror extends AppSource {
       );
     } else {
       throw getUpdatiumHttpError(res);
+    }
+  }
+  
   AppNames getAppNames(String standardUrl) {
     String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
     List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
     return AppNames(names[1], names[2]);
+  }
 }

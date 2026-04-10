@@ -32,7 +32,9 @@ class DirectAPKLink extends AppSource {
       'useVersionCodeAsOSVersion',
       'apkFilterRegEx',
       'autoApkFilterByArch',
+    ];
   }
+  
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     if (!forSelection) {
@@ -42,27 +44,38 @@ class DirectAPKLink extends AppSource {
     var match = standardUrlRegExA.firstMatch(url);
     if (match == null) {
       throw InvalidURLError(name);
+    }
     return match.group(0)!;
+  }
+  
+  @override
   Future<Map<String, String>?> getRequestHeaders(
     Map<String, dynamic> additionalSettings,
     String url, {
     bool forAPKDownload = false,
-  }) {
+  }) async {
     return html.getRequestHeaders(
       additionalSettings,
       url,
       forAPKDownload: forAPKDownload,
     );
+  }
+  
+  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
+    Map<String, dynamic> additionalSettings,
   ) async {
     var additionalSettingsNew = getDefaultValuesFromFormItems(
       html.combinedAppSpecificSettingFormItems,
+    );
     for (var s in additionalSettings.keys) {
       if (additionalSettingsNew.containsKey(s)) {
         additionalSettingsNew[s] = additionalSettings[s];
       }
+    }
     additionalSettingsNew['directAPKLink'] = true;
     additionalSettingsNew['versionDetection'] = false;
     return html.getLatestAPKDetails(standardUrl, additionalSettingsNew);
+  }
 }

@@ -21,6 +21,8 @@ class Aptoide extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
+  }
+  
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
@@ -29,6 +31,8 @@ class Aptoide extends AppSource {
       standardUrl,
       additionalSettings,
     ))['package'];
+  }
+  
   Future<Map<String, dynamic>> getAppDetailsJSON(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -36,17 +40,29 @@ class Aptoide extends AppSource {
     var res = await sourceRequest(standardUrl, additionalSettings);
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
+    }
     var idMatch = RegExp('"app":{"id":[0-9]+').firstMatch(res.body);
     String? id;
     if (idMatch != null) {
       id = res.body.substring(idMatch.start + 12, idMatch.end);
     } else {
       throw NoReleasesError();
+    }
     var res2 = await sourceRequest(
       'https://ws2.aptoide.com/api/7/getApp/app_id/$id',
+      additionalSettings,
+    );
     if (res2.statusCode != 200) {
+      throw getUpdatiumHttpError(res2);
+    }
     return jsonDecode(res2.body)?['nodes']?['meta']?['data'];
+  }
+  
+  @override
   Future<APKDetails> getLatestAPKDetails(
+    String standardUrl,
+    Map<String, dynamic> additionalSettings,
+  ) async {
     var appDetails = await getAppDetailsJSON(standardUrl, additionalSettings);
     String appName = appDetails['name'] ?? tr('app');
     String author = appDetails['developer']?['name'] ?? name;
@@ -56,15 +72,20 @@ class Aptoide extends AppSource {
     String? remoteIconUrl = appDetails['media']?['icon'];
     if (version == null) {
       throw NoVersionError();
+    }
     if (apkUrl == null) {
       throw NoAPKError();
+    }
     DateTime? relDate;
     if (dateStr != null) {
       relDate = DateTime.parse(dateStr);
+    }
     return APKDetails(
       version,
       getApkUrlsFromUrls([apkUrl]),
       AppNames(author, appName),
       releaseDate: relDate,
       remoteIconUrl: remoteIconUrl,
+    );
+  }
 }

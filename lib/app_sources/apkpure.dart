@@ -27,11 +27,17 @@ class APKPure extends AppSource {
           defaultValue: true,
         ),
       ],
+      [
+        GeneratedFormSwitch(
           'stayOneVersionBehind',
           label: tr('stayOneVersionBehind'),
           defaultValue: false,
+        ),
+        GeneratedFormSwitch(
           'useFirstApkOfVersion',
           label: tr('useFirstApkOfVersion'),
+        ),
+      ],
     ];
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
@@ -46,15 +52,23 @@ class APKPure extends AppSource {
     }
     RegExp standardUrlRegExA = RegExp(
       '^https?://(www\\.)?${getSourceRegex(hosts)}(/+[^/]{2})?/+[^/]+/+[^/]+',
+      caseSensitive: false,
+    );
     match = standardUrlRegExA.firstMatch(url);
     if (match == null) {
       throw InvalidURLError(name);
+    }
     return match.group(0)!;
+  }
+
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
     return Uri.parse(standardUrl).pathSegments.last;
+  }
+
+  
   Future<APKDetails> getDetailsForVersion(
     List<Map<String, dynamic>> versionVariants,
     List<String> supportedArchs,
@@ -74,6 +88,7 @@ class APKPure extends AppSource {
               architectures.isNotEmpty &&
               architectures.where((a) => supportedArchs.contains(a)).isEmpty) {
             return null;
+          }
           String type = e['asset']['type'];
           String downloadUri = e['asset']['url'];
           return MapEntry(
@@ -86,6 +101,7 @@ class APKPure extends AppSource {
         .unique((e) => e.key);
     if (apkUrls.isEmpty) {
       throw NoAPKError();
+    }
     // get version details from first variant
     var v = versionVariants.first;
     String version = v['version_name'];
@@ -95,17 +111,25 @@ class APKPure extends AppSource {
     String? changeLog = v['whatsnew'];
     if (changeLog != null && changeLog.isEmpty) {
       changeLog = null;
+    }
     if (additionalSettings['useFirstApkOfVersion'] == true) {
       apkUrls = [apkUrls.first];
+    }
     return APKDetails(
       version,
       apkUrls,
       AppNames(author, appName),
       releaseDate: releaseDate,
       changeLog: changeLog,
+    );
+  }
+  
+  @override
   Future<Map<String, String>?> getRequestHeaders(
+    Map<String, dynamic> additionalSettings,
     String url, {
     bool forAPKDownload = false,
+  }) async {
     if (forAPKDownload) {
       return null;
     } else {
@@ -114,8 +138,14 @@ class APKPure extends AppSource {
         "Ual-Access-ProjectA":
             '{"device_info":{"os_ver":"${((await DeviceInfoPlugin().androidInfo).version.sdkInt)}"}}',
       };
+    }
+  }
+  
+  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
+    Map<String, dynamic> additionalSettings,
+  ) async {
     String appId = (await tryInferringAppId(standardUrl))!;
     List<String> supportedArchs =
         (await DeviceInfoPlugin().androidInfo).supportedAbis;
@@ -123,8 +153,10 @@ class APKPure extends AppSource {
     var res = await sourceRequest(
       "https://tapi.pureapk.com/v3/get_app_his_version?package_name=$appId&hl=en",
       additionalSettings,
+    );
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
+    }
     List<Map<String, dynamic>> apks = jsonDecode(
       res.body,
     )['version_list'].cast<Map<String, dynamic>>();
@@ -137,12 +169,15 @@ class APKPure extends AppSource {
           String v = element['version_name'];
           if (!val.containsKey(v)) {
             val[v] = [];
+          }
           val[v]?.add(element);
           return val;
+        })
         .values
         .toList();
     if (versions.isEmpty) {
       throw NoReleasesError();
+    }
     for (var i = 0; i < versions.length; i++) {
       var v = versions[i];
       try {
@@ -158,5 +193,10 @@ class APKPure extends AppSource {
         if (additionalSettings['fallbackToOlderReleases'] != true ||
             i == versions.length - 1) {
           rethrow;
+        }
       }
+    }
     throw NoAPKError();
+  }
+  }
+}
