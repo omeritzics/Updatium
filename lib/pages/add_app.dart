@@ -126,17 +126,21 @@ class AddAppPageState extends State<AddAppPage> {
             Map<String, dynamic> localValues = {'hide': false};
             return AlertDialog(
               scrollable: true,
-              title: Text(tr(
-                'xIsTrackOnly',
-                args: [
-                  pickedSource!.enforceTrackOnly ? tr('source') : tr('app'),
-                ],
-              )),
+              title: Text(
+                tr(
+                  'xIsTrackOnly',
+                  args: [
+                    pickedSource!.enforceTrackOnly ? tr('source') : tr('app'),
+                  ],
+                ),
+              ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${pickedSource!.enforceTrackOnly ? tr('appsFromSourceAreTrackOnly') : tr('youPickedTrackOnly')}\n\n${tr('trackOnlyAppDescription')}'),
+                  Text(
+                    '${pickedSource!.enforceTrackOnly ? tr('appsFromSourceAreTrackOnly') : tr('youPickedTrackOnly')}\n\n${tr('trackOnlyAppDescription')}',
+                  ),
                   const SizedBox(height: 16),
                   GeneratedForm(
                     items: [
@@ -400,7 +404,9 @@ class AddAppPageState extends State<AddAppPage> {
                             title: Text(tr('searchX', args: [e.name])),
                             content: GeneratedForm(
                               items: [
-                                ...e.searchQuerySettingFormItems.map((e) => [e]),
+                                ...e.searchQuerySettingFormItems.map(
+                                  (e) => [e],
+                                ),
                                 [
                                   GeneratedFormTextField(
                                     'url',
@@ -408,7 +414,9 @@ class AddAppPageState extends State<AddAppPage> {
                                         ? tr('overrideSource')
                                         : plural('url', 1).substring(2),
                                     autoCompleteOptions: [
-                                      ...(e.hosts.isNotEmpty ? [e.hosts[0]] : []),
+                                      ...(e.hosts.isNotEmpty
+                                          ? [e.hosts[0]]
+                                          : []),
                                       ...appsProvider.apps.values
                                           .where(
                                             (a) =>
@@ -443,7 +451,8 @@ class AddAppPageState extends State<AddAppPage> {
                                 child: Text(tr('cancel')),
                               ),
                               TextButton(
-                                onPressed: () => Navigator.of(ctx).pop(localValues),
+                                onPressed: () =>
+                                    Navigator.of(ctx).pop(localValues),
                                 child: Text(tr('ok')),
                               ),
                             ],
@@ -456,10 +465,7 @@ class AddAppPageState extends State<AddAppPage> {
                     }
                     return MapEntry(
                       e.runtimeType.toString(),
-                      await e.search(
-                        searchQuery,
-                        querySettings: querySettings,
-                      ),
+                      await e.search(searchQuery, querySettings: querySettings),
                     );
                   } catch (err) {
                     if (err is CredsNeededError) {
@@ -779,36 +785,38 @@ class AddAppPageState extends State<AddAppPage> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                      ...sourceProvider.sources.map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: GestureDetector(
-                            onTap: e.hosts.isNotEmpty
-                                ? () {
-                                    launchUrlString(
-                                      'https://${e.hosts[0]}',
-                                      mode: LaunchMode.externalApplication,
-                                    );
-                                  }
-                                : null,
-                            child: Text(
-                              '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
-                              style: TextStyle(
-                                decoration: e.hosts.isNotEmpty
-                                    ? TextDecoration.underline
-                                    : TextDecoration.none,
+                        ...sourceProvider.sources.map(
+                          (e) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: GestureDetector(
+                              onTap: e.hosts.isNotEmpty
+                                  ? () {
+                                      launchUrlString(
+                                        'https://${e.hosts[0]}',
+                                        mode: LaunchMode.externalApplication,
+                                      );
+                                    }
+                                  : null,
+                              child: Text(
+                                '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
+                                style: TextStyle(
+                                  decoration: e.hosts.isNotEmpty
+                                      ? TextDecoration.underline
+                                      : TextDecoration.none,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        '${tr('note')}:',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(tr('selfHostedNote', args: [tr('overrideSource')])),
+                        const SizedBox(height: 16),
+                        Text(
+                          '${tr('note')}:',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          tr('selfHostedNote', args: [tr('overrideSource')]),
+                        ),
                       ],
                     ),
                     actions: [

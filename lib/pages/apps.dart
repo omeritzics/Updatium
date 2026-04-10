@@ -1159,10 +1159,12 @@ class AppsPageState extends State<AppsPage> {
                       newInstallIdsAllOrSelected.length +
                       trackOnlyUpdateIdsAllOrSelected.length;
                   return AlertDialog(
-                    title: Text(tr(
-                      'changeX',
-                      args: [plural('apps', totalApps).toLowerCase()],
-                    )),
+                    title: Text(
+                      tr(
+                        'changeX',
+                        args: [plural('apps', totalApps).toLowerCase()],
+                      ),
+                    ),
                     content: GeneratedForm(
                       items: formItems.map((e) => [e]).toList(),
                       onValueChanges: (vals, valid, isBuilding) {
@@ -1259,7 +1261,8 @@ class AppsPageState extends State<AppsPage> {
                       ],
                     );
                   },
-                ) == true;
+                ) ==
+                true;
           }
           if (cont) {
             // ignore: use_build_context_synchronously
