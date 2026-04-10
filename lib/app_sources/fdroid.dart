@@ -1,24 +1,23 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
-
 class FDroid extends AppSource {
   FDroid() {
     hosts = ['f-droid.org'];
-    name = 'F-Droid';
+    name = tr('fdroid');
     naiveStandardVersionDetection = true;
     canSearch = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(
           'filterVersionsByRegEx',
-          label: 'Filter versions by regular expression',
+          label: tr('filterVersionsByRegEx'),
           required: false,
           additionalValidators: [
             (value) {
@@ -27,22 +26,14 @@ class FDroid extends AppSource {
           ],
         ),
       ],
-      [
         GeneratedFormSwitch(
           'trySelectingSuggestedVersionCode',
-          label: 'Try selecting suggested version code',
+          label: tr('trySelectingSuggestedVersionCode'),
           defaultValue: true,
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
-          label: 'Auto select highest version code',
-        ),
-      ],
+          label: tr('autoSelectHighestVersionCode'),
     ];
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegExB = RegExp(
@@ -56,24 +47,15 @@ class FDroid extends AppSource {
     }
     RegExp standardUrlRegExA = RegExp(
       '^https?://(www\\.)?${getSourceRegex(hosts)}/+packages/+[^/]+',
-      caseSensitive: false,
-    );
     match = standardUrlRegExA.firstMatch(url);
     if (match == null) {
       throw InvalidURLError(name);
-    }
     return match.group(0)!;
-  }
-
-  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
     return Uri.parse(standardUrl).pathSegments.last;
-  }
-
-  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -89,7 +71,6 @@ class FDroid extends AppSource {
       standardUrl,
       name,
       additionalSettings: additionalSettings,
-    );
     if (!hostChanged) {
       try {
         var res = await sourceRequest(
@@ -119,72 +100,46 @@ class FDroid extends AppSource {
           } catch (e) {
             //
           }
-          try {
             GitLab(
-              hostChanged: true,
-            ).sourceSpecificStandardizeURL(details.changeLog!);
             isGitLab = true;
-          } catch (e) {
-            //
-          }
           if ((isGitHub || isGitLab) &&
               (details.changeLog?.indexOf('/blob/') ?? -1) >= 0) {
             details.changeLog = (await sourceRequest(
               details.changeLog!.replaceFirst('/blob/', '/raw/'),
               additionalSettings,
             )).body;
-          }
-        }
       } catch (e) {
         // Fail silently
       }
       if ((details.changeLog?.length ?? 0) > 2048) {
         details.changeLog = '${details.changeLog!.substring(0, 2048)}...';
-      }
-    }
     return details;
-  }
-
-  @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
-  }) async {
     Response res = await sourceRequest(
       'https://search.${hosts[0]}/?q=${Uri.encodeQueryComponent(query)}',
       {},
-    );
     if (res.statusCode == 200) {
       Map<String, List<String>> urlsWithDescriptions = {};
       parse(res.body).querySelectorAll('.package-header').forEach((e) {
         String? url = e.attributes['href'];
         if (url != null) {
-          try {
             standardizeUrl(url);
-          } catch (e) {
             url = null;
-          }
-        }
-        if (url != null) {
           urlsWithDescriptions[url] = [
             e.querySelector('.package-name')?.text.trim() ?? '',
             e.querySelector('.package-summary')?.text.trim() ??
-                'No description'
+                tr('noDescription'),
           ];
-        }
       });
       return urlsWithDescriptions;
     } else {
       throw getUpdatiumHttpError(res);
-    }
-  }
-
   APKDetails getAPKUrlsFromFDroidPackagesAPIResponse(
     Response res,
     String apkUrlPrefix,
-    String standardUrl,
     String sourceName, {
-    Map<String, dynamic> additionalSettings = const {},
   }) {
     var autoSelectHighestVersionCode =
         additionalSettings['autoSelectHighestVersionCode'] == true;
@@ -198,8 +153,6 @@ class FDroid extends AppSource {
     var apkFilterRegEx =
         (additionalSettings['apkFilterRegEx'] as String?)?.isNotEmpty == true
         ? additionalSettings['apkFilterRegEx']
-        : null;
-    if (res.statusCode == 200) {
       var response = jsonDecode(res.body);
       List<dynamic> releases = response['packages'] ?? [];
       if (apkFilterRegEx != null) {
@@ -211,10 +164,8 @@ class FDroid extends AppSource {
             false,
           ).isNotEmpty;
         }).toList();
-      }
       if (releases.isEmpty) {
         throw NoReleasesError();
-      }
       String? version;
       Iterable<dynamic> releaseChoices = [];
       // Grab the versionCode suggested if the user chose to do that
@@ -225,12 +176,9 @@ class FDroid extends AppSource {
         var suggestedReleases = releases.where(
           (element) =>
               element['versionCode'] == response['suggestedVersionCode'],
-        );
         if (suggestedReleases.isNotEmpty) {
           releaseChoices = suggestedReleases;
           version = suggestedReleases.first['versionName'];
-        }
-      }
       // Apply the release filter if any
       if (filterVersionsByRegEx?.isNotEmpty == true) {
         version = null;
@@ -240,23 +188,16 @@ class FDroid extends AppSource {
             filterVersionsByRegEx!,
           ).hasMatch(releases[i]['versionName'])) {
             version = releases[i]['versionName'];
-          }
-        }
         if (version == null) {
           throw NoVersionError();
-        }
-      }
       // Default to the highest version
       version ??= releases[0]['versionName'];
       if (version == null) {
         throw NoVersionError();
-      }
       // If a suggested release was not already picked, pick all those with the selected version
       if (releaseChoices.isEmpty) {
         releaseChoices = releases.where(
           (element) => element['versionName'] == version,
-        );
-      }
       // For the remaining releases, use the toggles to auto-select one if possible
       if (releaseChoices.length > 1) {
         if (autoSelectHighestVersionCode) {
@@ -269,12 +210,6 @@ class FDroid extends AppSource {
           );
           if (suggestedReleases.isNotEmpty) {
             releaseChoices = suggestedReleases;
-          }
-        }
-      }
-      if (releaseChoices.isEmpty) {
-        throw NoReleasesError();
-      }
       List<String> apkUrls = releaseChoices
           .map((e) => '${apkUrlPrefix}_${e['versionCode']}.apk')
           .toList();
@@ -283,8 +218,4 @@ class FDroid extends AppSource {
         getApkUrlsFromUrls(apkUrls.toSet().toList()),
         AppNames(sourceName, Uri.parse(standardUrl).pathSegments.last),
       );
-    } else {
-      throw getUpdatiumHttpError(res);
-    }
-  }
 }

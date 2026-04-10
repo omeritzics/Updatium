@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class NeutronCode extends AppSource {
@@ -10,7 +9,6 @@ class NeutronCode extends AppSource {
     name = tr('neutroncode');
     showReleaseDateAsVersionToggle = true;
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -22,11 +20,7 @@ class NeutronCode extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
-  }
-
-  @override
   String? changeLogPageFromStandardUrl(String standardUrl) => standardUrl;
-
   String monthNameToNumberString(String s) {
     switch (s.toLowerCase()) {
       case 'january':
@@ -55,14 +49,10 @@ class NeutronCode extends AppSource {
         return '12';
       default:
         throw ArgumentError('Invalid month name: $s');
-    }
-  }
-
   String? customDateParse(String dateString) {
     List<String> parts = dateString.split(' ');
     if (parts.length != 3) {
       return null;
-    }
     String result = '';
     for (var s in parts.reversed) {
       try {
@@ -75,11 +65,7 @@ class NeutronCode extends AppSource {
       } catch (e) {
         return null;
       }
-    }
     return result.substring(0, result.length - 1);
-  }
-
-  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -91,19 +77,15 @@ class NeutronCode extends AppSource {
       var filename = http.querySelector('.pd-filename .pd-float')?.innerHtml;
       if (filename == null) {
         throw NoReleasesError();
-      }
       var version = http
           .querySelector('.pd-version-txt')
           ?.nextElementSibling
           ?.innerHtml;
       if (version == null) {
         throw NoVersionError();
-      }
       String? apkUrl = 'https://${hosts[0]}/download/$filename';
       var dateStringOriginal = http
           .querySelector('.pd-date-txt')
-          ?.nextElementSibling
-          ?.innerHtml;
       var dateString = dateStringOriginal != null
           ? (customDateParse(dateStringOriginal))
           : null;
@@ -119,6 +101,4 @@ class NeutronCode extends AppSource {
       );
     } else {
       throw getUpdatiumHttpError(res);
-    }
-  }
 }

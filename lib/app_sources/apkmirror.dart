@@ -3,18 +3,15 @@ import 'dart:io';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
-import 'package:updatium/providers/source_provider.dart';
-
 class APKMirror extends AppSource {
   APKMirror() {
     hosts = ['apkmirror.com'];
     name = tr('apkmirror');
     enforceTrackOnly = true;
     showReleaseDateAsVersionToggle = true;
-
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormSwitch(
@@ -23,7 +20,6 @@ class APKMirror extends AppSource {
           defaultValue: true,
         ),
       ],
-      [
         GeneratedFormTextField(
           'filterReleaseTitlesByRegEx',
           label: 'Filter release titles by regular expression',
@@ -33,11 +29,8 @@ class APKMirror extends AppSource {
               return regExValidator(value);
             },
           ],
-        ),
-      ],
     ];
   }
-
   @override
   Future<Map<String, String>?> getRequestHeaders(
     Map<String, dynamic> additionalSettings,
@@ -48,9 +41,6 @@ class APKMirror extends AppSource {
       "User-Agent":
           "Updatium/${(await getInstalledInfo(updatiumId))?.versionName ?? '1.0.0'}",
     };
-  }
-
-  @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
       '^https?://(www\\.)?${getSourceRegex(hosts)}/apk/[^/]+/[^/]+',
@@ -61,16 +51,10 @@ class APKMirror extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
-  }
-
-  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/#whatsnew';
-
-  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
-    Map<String, dynamic> additionalSettings,
   ) async {
     bool fallbackToOlderReleases =
         additionalSettings['fallbackToOlderReleases'] == true;
@@ -83,7 +67,6 @@ class APKMirror extends AppSource {
     Response res = await sourceRequest(
       '$standardUrl/feed/',
       additionalSettings,
-    );
     if (res.statusCode == 200) {
       var items = parse(res.body).querySelectorAll('item');
       dynamic targetRelease;
@@ -116,10 +99,7 @@ class APKMirror extends AppSource {
           .trim();
       if (version == null || version.isEmpty) {
         version = titleString;
-      }
-      if (version == null || version.isEmpty) {
         throw NoVersionError();
-      }
       return APKDetails(
         version,
         [],
@@ -128,12 +108,8 @@ class APKMirror extends AppSource {
       );
     } else {
       throw getUpdatiumHttpError(res);
-    }
-  }
-
   AppNames getAppNames(String standardUrl) {
     String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
     List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
     return AppNames(names[1], names[2]);
-  }
 }

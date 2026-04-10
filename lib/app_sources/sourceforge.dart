@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class SourceForge extends AppSource {
@@ -9,7 +8,6 @@ class SourceForge extends AppSource {
     hosts = ['sourceforge.net'];
     name = tr('sourceforge');
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     var sourceRegex = getSourceRegex(hosts);
@@ -24,24 +22,15 @@ class SourceForge extends AppSource {
     }
     RegExp standardUrlRegExB = RegExp(
       '^https?://(www\\.)?$sourceRegex/projects/[^/]+',
-      caseSensitive: false,
-    );
     match = standardUrlRegExB.firstMatch(url);
     if (match != null && match.group(0) == url) {
       url = '$url/files';
-    }
     RegExp standardUrlRegExA = RegExp(
       '^https?://(www\\.)?$sourceRegex/projects/[^/]+/files(/.+)?',
-      caseSensitive: false,
-    );
     match = standardUrlRegExA.firstMatch(url);
     if (match == null) {
       throw InvalidURLError(name);
-    }
     return match.group(0)!;
-  }
-
-  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -50,11 +39,9 @@ class SourceForge extends AppSource {
     if (standardUri.pathSegments.length == 2) {
       standardUrl = '$standardUrl/files';
       standardUri = Uri.parse(standardUrl);
-    }
     Response res = await sourceRequest(
       '${standardUri.origin}/${standardUri.pathSegments.sublist(0, 2).join('/')}/rss?path=/',
       additionalSettings,
-    );
     if (res.statusCode == 200) {
       var parsedHtml = parse(res.body);
       var allDownloadLinks = parsedHtml
@@ -70,9 +57,7 @@ class SourceForge extends AppSource {
               .where((element) => element.isNotEmpty)
               .toList()
               .reversed
-              .toList()
               .sublist(1)
-              .reversed
               .toList();
           segments = segments.length > 1
               ? segments.reversed.toList().sublist(1).reversed.toList()
@@ -93,7 +78,6 @@ class SourceForge extends AppSource {
                 version = null;
               } else {
                 rethrow;
-              }
             }
           }
           return version;
@@ -101,23 +85,17 @@ class SourceForge extends AppSource {
           return null;
         }
       }
-
       var apkUrlListAllReleases = allDownloadLinks
           .where((element) => element.toLowerCase().endsWith('.apk/download'))
           .where((element) => getVersion(element) != null)
-          .toList();
       if (apkUrlListAllReleases.isEmpty) {
         throw NoReleasesError();
-      }
       String? version = getVersion(apkUrlListAllReleases[0]);
       if (version == null) {
         throw NoVersionError();
-      }
-
       var apkUrlList =
           apkUrlListAllReleases // This can be used skipped for fallback support later
               .where((element) => getVersion(element) == version)
-              .toList();
       var segments = standardUrl.split('/');
       return APKDetails(
         version,
@@ -126,6 +104,4 @@ class SourceForge extends AppSource {
       );
     } else {
       throw getUpdatiumHttpError(res);
-    }
-  }
 }

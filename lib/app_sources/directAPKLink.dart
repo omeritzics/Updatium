@@ -1,11 +1,9 @@
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class DirectAPKLink extends AppSource {
   HTML html = HTML();
-
   DirectAPKLink() {
     additionalSourceAppSpecificSettingFormItems = [
       ...html.additionalSourceAppSpecificSettingFormItems.where(
@@ -21,9 +19,7 @@ class DirectAPKLink extends AppSource {
       'useVersionCodeAsOSVersion',
       'apkFilterRegEx',
       'autoApkFilterByArch',
-    ];
   }
-
   @override
   String get name => 'Direct APK Link';
 
@@ -56,11 +52,7 @@ class DirectAPKLink extends AppSource {
     var match = standardUrlRegExA.firstMatch(url);
     if (match == null) {
       throw InvalidURLError(name);
-    }
     return match.group(0)!;
-  }
-
-  @override
   Future<Map<String, String>?> getRequestHeaders(
     Map<String, dynamic> additionalSettings,
     String url, {
@@ -71,23 +63,16 @@ class DirectAPKLink extends AppSource {
       url,
       forAPKDownload: forAPKDownload,
     );
-  }
-
-  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
-    Map<String, dynamic> additionalSettings,
   ) async {
     var additionalSettingsNew = getDefaultValuesFromFormItems(
       html.combinedAppSpecificSettingFormItems,
-    );
     for (var s in additionalSettings.keys) {
       if (additionalSettingsNew.containsKey(s)) {
         additionalSettingsNew[s] = additionalSettings[s];
       }
-    }
     additionalSettingsNew['directAPKLink'] = true;
     additionalSettingsNew['versionDetection'] = false;
     return html.getLatestAPKDetails(standardUrl, additionalSettingsNew);
-  }
 }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class Jenkins extends AppSource {
@@ -11,7 +10,6 @@ class Jenkins extends AppSource {
     neverAutoSelect = true;
     showReleaseDateAsVersionToggle = true;
   }
-
   String trimJobUrl(String url) {
     RegExp standardUrlRegEx = RegExp('.*/job/[^/]+');
     RegExpMatch? match = standardUrlRegEx.firstMatch(url);
@@ -19,13 +17,9 @@ class Jenkins extends AppSource {
       throw InvalidURLError(name);
     }
     return match.group(0)!;
-  }
-
   @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/-/releases';
-
-  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
     Map<String, dynamic> additionalSettings,
@@ -41,7 +35,6 @@ class Jenkins extends AppSource {
           ? null
           : DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int);
       var version = json['number'] == null
-          ? null
           : (json['number'] as int).toString();
       if (version == null) {
         throw NoVersionError();
@@ -72,6 +65,4 @@ class Jenkins extends AppSource {
       );
     } else {
       throw getUpdatiumHttpError(res);
-    }
-  }
 }
