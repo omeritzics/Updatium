@@ -89,7 +89,7 @@ jobs:
     
     steps:
       - name: Auto-Reject PR on Build Failure
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             // Wait a moment to ensure build is completely finished
@@ -136,7 +136,7 @@ jobs:
     
     steps:
       - name: Auto-Approve PR on Build Success
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             // Wait a moment to ensure build is completely finished
