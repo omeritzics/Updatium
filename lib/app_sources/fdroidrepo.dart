@@ -20,15 +20,21 @@ class FDroidRepo extends AppSource {
           required: true,
         ),
       ],
+      [
         GeneratedFormSwitch(
           'pickHighestVersionCode',
           label: tr('pickHighestVersionCode'),
           defaultValue: false,
+        ),
+        GeneratedFormSwitch(
           'trySelectingSuggestedVersionCode',
           label: tr('trySelectingSuggestedVersionCode'),
           defaultValue: true,
+        ),
+      ],
     ];
   }
+
   String removeQueryParamsFromUrl(String url, {List<String> keep = const []}) {
     var uri = Uri.parse(url);
     Map<String, dynamic> resultParams = {};
@@ -42,6 +48,8 @@ class FDroidRepo extends AppSource {
       url = url.substring(0, url.length - 1);
     }
     return url;
+  }
+
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     var standardUri = Uri.parse(url);
@@ -49,7 +57,11 @@ class FDroidRepo extends AppSource {
     if (pathSegments.isNotEmpty && pathSegments.last == 'index.xml') {
       pathSegments.removeLast();
       standardUri = standardUri.replace(path: pathSegments.join('/'));
+    }
     return removeQueryParamsFromUrl(standardUri.toString(), keep: ['appId']);
+  }
+
+  @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
@@ -57,7 +69,8 @@ class FDroidRepo extends AppSource {
     String? url = querySettings['url'];
     if (url == null) {
       throw NoReleasesError();
-    url = removeQueryParamsFromUrl(standardizeUrl(url));
+    }
+    url = removeQueryParamsFromUrl(url);
     var res = await sourceRequestWithURLVariants(url, {});
     if (res.statusCode == 200) {
       var body = parse(res.body);
@@ -77,6 +90,8 @@ class FDroidRepo extends AppSource {
       return results;
     } else {
       throw getUpdatiumHttpError(res);
+    }
+  }
   void runOnAddAppInputChange(String userInput) {
     additionalSourceAppSpecificSettingFormItems =
         additionalSourceAppSpecificSettingFormItems.map((row) {
@@ -95,6 +110,8 @@ class FDroidRepo extends AppSource {
           }).toList();
           return row;
         }).toList();
+  }
+
   App endOfGetAppChanges(App app) {
     var uri = Uri.parse(app.url);
     String? appId;
@@ -102,6 +119,7 @@ class FDroidRepo extends AppSource {
       appId = app.id;
     } else if (uri.queryParameters['appId'] != null) {
       appId = uri.queryParameters['appId'];
+    }
     if (appId != null) {
       app.url = uri
           .replace(
@@ -113,7 +131,9 @@ class FDroidRepo extends AppSource {
           .toString();
       app.additionalSettings['appIdOrName'] = appId;
       app.id = appId;
+    }
     return app;
+  }
   Future<Response> sourceRequestWithURLVariants(
     String url,
     Map<String, dynamic> additionalSettings,
@@ -132,35 +152,51 @@ class FDroidRepo extends AppSource {
           '$base/fdroid/repo/index.xml',
           additionalSettings,
         );
+      }
+    }
     return res;
+  }
+  @override
   Future<APKDetails> getLatestAPKDetails(
     String standardUrl,
+    Map<String, dynamic> additionalSettings,
+  ) async {
     String? appIdOrName = additionalSettings['appIdOrName'];
     var standardUri = Uri.parse(standardUrl);
     if (standardUri.queryParameters['appId'] != null) {
       appIdOrName = standardUri.queryParameters['appId'];
+    }
     standardUrl = removeQueryParamsFromUrl(standardUrl);
     bool pickHighestVersionCode = additionalSettings['pickHighestVersionCode'];
     bool trySelectingSuggestedVersionCode =
         additionalSettings['trySelectingSuggestedVersionCode'];
     if (appIdOrName == null) {
+      throw UpdatiumError(tr('appWithIdOrNameNotFound'));
+    }
     additionalSettings['appIdOrName'] = appIdOrName;
     var res = await sourceRequestWithURLVariants(
       standardUrl,
-      var foundApps = body.querySelectorAll('application').where((element) {
-        return element.attributes['id'] == appIdOrName;
+      additionalSettings,
+    );
+    var body = parse(res.body);
+    var foundApps = body.querySelectorAll('application').where((element) {
+      return element.attributes['id'] == appIdOrName;
+    }).toList();
+    if (foundApps.isEmpty) {
+      foundApps = body.querySelectorAll('application').where((element) {
+        return element.querySelector('name')?.innerHtml.toLowerCase() ==
+            appIdOrName!.toLowerCase() ||
+            element
+                    .querySelector('name')
+                    ?.innerHtml
+                    .toLowerCase()
+                    .contains(appIdOrName.toLowerCase()) ==
+                true;
       }).toList();
-      if (foundApps.isEmpty) {
-        foundApps = body.querySelectorAll('application').where((element) {
-          return element.querySelector('name')?.innerHtml.toLowerCase() ==
-              appIdOrName!.toLowerCase();
-          return element
-                  .querySelector('name')
-                  ?.innerHtml
-                  .toLowerCase()
-                  .contains(appIdOrName.toLowerCase()) ??
-              false;
-        throw UpdatiumError(tr('appWithIdOrNameNotFound'));
+    }
+    if (foundApps.isEmpty) {
+      throw UpdatiumError(tr('appWithIdOrNameNotFound'));
+    }
       var authorName = body.querySelector('repo')?.attributes['name'] ?? name;
       String appId = foundApps[0].attributes['id']!;
       foundApps[0].querySelector('name')?.innerHtml ?? appId;
@@ -168,10 +204,12 @@ class FDroidRepo extends AppSource {
       var releases = foundApps[0].querySelectorAll('package');
       if (releases.isEmpty) {
         throw NoReleasesError();
+      }
       String? changeLog = foundApps[0].querySelector('changelog')?.innerHtml;
       String? latestVersion = releases[0].querySelector('version')?.innerHtml;
       if (latestVersion == null) {
         throw NoVersionError();
+      }
       String? marketvercodeStr = foundApps[0]
           .querySelector('marketvercode')
           ?.innerHtml;
@@ -188,27 +226,37 @@ class FDroidRepo extends AppSource {
                   e.querySelector('apkname') != null,
             )
             .toList();
+      }
       String? appAuthorName = foundApps[0].querySelector('author')?.innerHtml;
       if (appAuthorName != null) {
         authorName = appAuthorName;
+      }
       if (selectedReleases.isEmpty) {
-                  e.querySelector('version')?.innerHtml == latestVersion &&
-        if (selectedReleases.length > 1 && pickHighestVersionCode) {
-          selectedReleases.sort((e1, e2) {
-            return int.parse(
-              e2.querySelector('versioncode')!.innerHtml,
-            ).compareTo(int.parse(e1.querySelector('versioncode')!.innerHtml));
-          });
-          selectedReleases = [selectedReleases[0]];
+        selectedReleases = releases.where(
+          (e) => e.querySelector('version')?.innerHtml == latestVersion,
+        ).toList();
+      }
+      if (selectedReleases.length > 1 && pickHighestVersionCode) {
+        selectedReleases.sort((e1, e2) {
+          return int.parse(
+            e2.querySelector('versioncode')!.innerHtml,
+          ).compareTo(int.parse(e1.querySelector('versioncode')!.innerHtml));
+        });
+        selectedReleases = [selectedReleases[0]];
+      }
       String? selectedVersion = selectedReleases[0]
           .querySelector('version')
+          ?.innerHtml;
       if (selectedVersion == null) {
+        throw NoVersionError();
+      }
       String? added = selectedReleases[0].querySelector('added')?.innerHtml;
       DateTime? releaseDate = added != null ? DateTime.parse(added) : null;
       List<String> apkUrls = selectedReleases
           .map(
             (e) =>
                 '${res.request!.url.toString().split('/').reversed.toList().sublist(1).reversed.join('/')}/${e.querySelector('apkname')!.innerHtml}',
+          )
           .toList();
       return APKDetails(
         selectedVersion,
@@ -217,4 +265,5 @@ class FDroidRepo extends AppSource {
         releaseDate: releaseDate,
         changeLog: changeLog,
       );
+  }
 }
