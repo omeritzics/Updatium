@@ -535,38 +535,3 @@ class GitHub extends AppSource {
 }
 
     return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
-    return null;
