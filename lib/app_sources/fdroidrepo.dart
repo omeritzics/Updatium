@@ -158,7 +158,7 @@ class FDroidRepo extends AppSource {
                   .querySelector('name')
                   ?.innerHtml
                   .toLowerCase()
-                  .contains(appIdOrName!.toLowerCase()) ??
+                  .contains(appIdOrName.toLowerCase()) ??
               false;
         throw UpdatiumError(tr('appWithIdOrNameNotFound'));
       var authorName = body.querySelector('repo')?.attributes['name'] ?? name;

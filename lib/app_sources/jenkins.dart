@@ -36,9 +36,6 @@ class Jenkins extends AppSource {
           : DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int);
       var version = json['number'] == null
           : (json['number'] as int).toString();
-      if (version == null) {
-        throw NoVersionError();
-      }
       var apkUrls = (json['artifacts'] as List<dynamic>)
           .map((e) {
             var path = (e['relativePath'] as String?);
