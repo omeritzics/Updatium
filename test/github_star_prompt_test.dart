@@ -11,18 +11,24 @@ void main() {
       SharedPreferences.setMockInitialValues({});
     });
 
-    testWidgets('should set first launch date on first initialization', (WidgetTester tester) async {
+    testWidgets('should set first launch date on first initialization', (
+      WidgetTester tester,
+    ) async {
       // Create a mock widget tree for context
       final testWidget = MaterialApp(home: Container());
       await tester.pumpWidget(testWidget);
 
-      await GitHubStarPrompt.initializeAndCheck(tester.element(find.byType(MaterialApp)));
+      await GitHubStarPrompt.initializeAndCheck(
+        tester.element(find.byType(MaterialApp)),
+      );
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.containsKey('first_launch_date'), isTrue);
     });
 
-    testWidgets('should not show prompt before 7 days', (WidgetTester tester) async {
+    testWidgets('should not show prompt before 7 days', (
+      WidgetTester tester,
+    ) async {
       // Set a first launch date 3 days ago
       final prefs = await SharedPreferences.getInstance();
       final threeDaysAgo = DateTime.now().subtract(const Duration(days: 3));
@@ -34,14 +40,18 @@ void main() {
       final testWidget = MaterialApp(home: Container());
       await tester.pumpWidget(testWidget);
 
-      await GitHubStarPrompt.initializeAndCheck(tester.element(find.byType(MaterialApp)));
+      await GitHubStarPrompt.initializeAndCheck(
+        tester.element(find.byType(MaterialApp)),
+      );
       await tester.pump();
 
       // Dialog should not appear
       expect(find.byType(AlertDialog), findsNothing);
     });
 
-    testWidgets('should mark prompt as shown when user dismisses', (WidgetTester tester) async {
+    testWidgets('should mark prompt as shown when user dismisses', (
+      WidgetTester tester,
+    ) async {
       // Set first launch date 8 days ago
       final prefs = await SharedPreferences.getInstance();
       final eightDaysAgo = DateTime.now().subtract(const Duration(days: 8));
@@ -53,7 +63,9 @@ void main() {
       final testWidget = MaterialApp(home: Container());
       await tester.pumpWidget(testWidget);
 
-      await GitHubStarPrompt.initializeAndCheck(tester.element(find.byType(MaterialApp)));
+      await GitHubStarPrompt.initializeAndCheck(
+        tester.element(find.byType(MaterialApp)),
+      );
       await tester.pumpAndSettle();
 
       // Dialog should appear
