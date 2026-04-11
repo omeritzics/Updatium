@@ -721,7 +721,9 @@ class AddAppPageState extends State<AddAppPage> {
                         'versionExtractionRegEx',
                         label: tr('trimVersionString'),
                         required: false,
-                        additionalValidators: [(value) => _regExValidator(value)],
+                        additionalValidators: [
+                          (value) => _regExValidator(value),
+                        ],
                       ),
                     ],
                     [
@@ -729,13 +731,16 @@ class AddAppPageState extends State<AddAppPage> {
                         'apkFilterRegEx',
                         label: tr('filterAPKsByRegEx'),
                         required: false,
-                        additionalValidators: [(value) => _regExValidator(value)],
+                        additionalValidators: [
+                          (value) => _regExValidator(value),
+                        ],
                       ),
                     ],
                     [
                       GeneratedFormSwitch(
                         'invertAPKFilter',
-                        label: '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+                        label:
+                            '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
                         defaultValue: false,
                       ),
                     ],
@@ -744,7 +749,9 @@ class AddAppPageState extends State<AddAppPage> {
                         'zippedApkFilterRegEx',
                         label: tr('zippedApkFilterRegEx'),
                         required: false,
-                        additionalValidators: [(value) => _regExValidator(value)],
+                        additionalValidators: [
+                          (value) => _regExValidator(value),
+                        ],
                       ),
                     ],
                     [
@@ -779,7 +786,7 @@ class AddAppPageState extends State<AddAppPage> {
       ],
     );
 
-  Widget getAdditionalOptsCol() => Column(
+    Widget getAdditionalOptsCol() => Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: 16),
