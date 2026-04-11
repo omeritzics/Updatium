@@ -143,8 +143,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       setState(() {
         importInProgress = true;
       });
-      FilePicker.platform
-          .pickFiles()
+      FilePicker.pickFiles()
           .then((result) {
             if (result != null) {
               String data = File(result.files.single.path!).readAsStringSync();
@@ -158,7 +157,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 appsProvider.apps.forEach((key, value) {
                   for (var c in value.app.categories) {
                     if (!cats.containsKey(c)) {
-                      cats[c] = generateRandomLightColor().value;
+                      cats[c] = generateRandomLightColor().toARGB32();
                     }
                   }
                 });
@@ -186,8 +185,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       setState(() {
         importInProgress = true;
       });
-      FilePicker.platform
-          .pickFiles()
+      FilePicker.pickFiles()
           .then((result) {
             if (result != null) {
               urlListImport(

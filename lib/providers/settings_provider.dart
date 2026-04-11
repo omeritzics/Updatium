@@ -71,7 +71,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   set themeColor(Color themeColor) {
-    prefs?.setInt('themeColor', themeColor.value);
+    prefs?.setInt('themeColor', themeColor.toARGB32());
     notifyListeners();
   }
 
@@ -431,7 +431,6 @@ class SettingsProvider with ChangeNotifier {
 
   Future<void> pickExportDir({bool remove = false}) async {
     // DocMan functionality removed
-    var currentOneWayDataSyncDir = await getExportDir();
     if (!remove) {
       // SAF picker functionality removed
     }

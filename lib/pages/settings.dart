@@ -390,7 +390,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
 
     var intervalSlider = Slider(
-      year2023: false,
       value: settingsProvider.updateIntervalSliderVal,
       max: updateIntervalNodes.length.toDouble(),
       divisions: updateIntervalNodes.length * 20,
@@ -1299,7 +1298,10 @@ class _LogsDialogState extends State<LogsDialog> {
         ),
         TextButton(
           onPressed: () {
-            Share.share(logString ?? '', subject: tr('appLogs'));
+            SharePlus.instance.share(ShareParams(
+              text: logString ?? '',
+              subject: tr('appLogs'),
+            ));
             Navigator.of(context).pop();
           },
           child: Text(tr('share')),

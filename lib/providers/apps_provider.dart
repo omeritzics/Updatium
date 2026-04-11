@@ -956,7 +956,7 @@ class AppsProvider with ChangeNotifier {
         msg: tr('appVerifierInstructionToast'),
         toastLength: Toast.LENGTH_LONG,
       );
-      await Share.shareXFiles([f]);
+      await SharePlus.instance.share(ShareParams(files: [f]));
     }
     var newInfo = await pm.getPackageArchiveInfo(
       archiveFilePath: file.file.path,
@@ -1949,6 +1949,7 @@ class AppsProvider with ChangeNotifier {
       export(isAuto: true).catchError((e) {
         // Log export errors but don't crash the app
         // Export failures shouldn't prevent the main operation from completing
+        return null;
       }),
     );
   }
@@ -2014,6 +2015,7 @@ class AppsProvider with ChangeNotifier {
         export(isAuto: true).catchError((e) {
           // Log export errors but don't crash the app
           // Export failures shouldn't prevent app removal from completing
+          return null;
         }),
       );
     }
@@ -2120,7 +2122,7 @@ class AppsProvider with ChangeNotifier {
     apps.forEach((key, value) {
       for (var c in value.app.categories) {
         if (!cats.containsKey(c)) {
-          cats[c] = generateRandomLightColor().value;
+          cats[c] = generateRandomLightColor().toARGB32();
         }
       }
     });

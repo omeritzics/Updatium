@@ -159,7 +159,7 @@ class AppsPageState extends State<AppsPage> {
   Color preserveTransparency(Color baseColor, double alpha) {
     // Always apply the requested transparency, ensuring it takes priority
     // over any theme-based color overrides
-    return baseColor.withOpacity(alpha);
+    return baseColor.withValues(alpha: alpha);
   }
 
   // Helper function to get category color with preserved transparency
@@ -203,24 +203,11 @@ class AppsPageState extends State<AppsPage> {
   @override
   Widget build(BuildContext context) {
     // M3 Expressive spacing constants (based on 4dp baseline grid)
-    const height4 = SizedBox(height: 4);
     const height8 = SizedBox(height: 8);
     const height12 = SizedBox(height: 12);
     const height16 = SizedBox(height: 16);
-    const height20 = SizedBox(height: 20);
     const height24 = SizedBox(height: 24);
-    const height28 = SizedBox(height: 28);
-    const height32 = SizedBox(height: 32);
-    const height40 = SizedBox(height: 40);
-    const height48 = SizedBox(height: 48);
-    const height56 = SizedBox(height: 56);
-    const height64 = SizedBox(height: 64);
-    const width4 = SizedBox(width: 4);
-    const width8 = SizedBox(width: 8);
-    const width12 = SizedBox(width: 12);
     const width16 = SizedBox(width: 16);
-    const width20 = SizedBox(width: 20);
-    const width24 = SizedBox(width: 24);
 
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
@@ -648,9 +635,6 @@ class AppsPageState extends State<AppsPage> {
         },
       );
 
-      var transparent = Theme.of(
-        context,
-      ).colorScheme.surface.withAlpha(0).toARGB32();
       List<double> stops = [
         ...listedApps[index].app.categories.asMap().entries.map(
           (e) =>
@@ -804,9 +788,6 @@ class AppsPageState extends State<AppsPage> {
           listedApps[index].app.installedVersion != null &&
           listedApps[index].app.installedVersion !=
               listedApps[index].app.latestVersion;
-      var transparent = Theme.of(
-        context,
-      ).colorScheme.surface.withAlpha(0).value;
       final categories = listedApps[index].app.categories;
       final stops = categoryStops(categories);
 
@@ -1391,9 +1372,11 @@ class AppsPageState extends State<AppsPage> {
                         urls += '${a.url}\n';
                       }
                       urls = urls.substring(0, urls.length - 1);
-                      Share.share(
-                        urls,
-                        subject: 'Updatium - ${tr('appsString')}',
+                      SharePlus.instance.share(
+                        ShareParams(
+                          text: urls,
+                          subject: 'Updatium - ${tr('appsString')}',
+                        ),
                       );
                       Navigator.of(context).pop();
                     },
@@ -1421,9 +1404,10 @@ class AppsPageState extends State<AppsPage> {
                               mimeType: 'application/json',
                               name: fn,
                             );
-                            Share.shareXFiles(
-                              [f],
-                              fileNameOverrides: ['$fn.json'],
+                            SharePlus.instance.share(
+                              ShareParams(
+                                files: [f],
+                              ),
                             );
                           },
                     child: Text(
@@ -1627,7 +1611,6 @@ class AppsPageState extends State<AppsPage> {
     }
 
     getFilterButtonsRow() {
-      var isFilterOff = filter.isIdenticalTo(neutralFilter, settingsProvider);
       return Row(
         children: [
           getSelectAllButton(),
@@ -1662,7 +1645,6 @@ class AppsPageState extends State<AppsPage> {
         if (settingsProvider.useGridView) {
           // Responsive grid configuration
           final screenWidth = MediaQuery.of(context).size.width;
-          final screenHeight = MediaQuery.of(context).size.height;
 
           // Calculate optimal cross axis extent based on screen width
           double maxCrossAxisExtent;
