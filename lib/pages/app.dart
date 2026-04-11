@@ -440,7 +440,6 @@ class _AppPageState extends State<AppPage> {
       ],
     );
 
-
     showAdditionalOptionsDialog() async {
       return await showDialog<Map<String, dynamic>?>(
         context: context,
@@ -678,6 +677,4 @@ class _AppPageState extends State<AppPage> {
       bottomSheet: getBottomSheetMenu(),
     );
   }
-
-
-  }
+}

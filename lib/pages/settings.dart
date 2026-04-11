@@ -1298,10 +1298,9 @@ class _LogsDialogState extends State<LogsDialog> {
         ),
         TextButton(
           onPressed: () {
-            SharePlus.instance.share(ShareParams(
-              text: logString ?? '',
-              subject: tr('appLogs'),
-            ));
+            SharePlus.instance.share(
+              ShareParams(text: logString ?? '', subject: tr('appLogs')),
+            );
             Navigator.of(context).pop();
           },
           child: Text(tr('share')),

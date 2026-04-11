@@ -44,10 +44,7 @@ class APKPure extends AppSource {
   }
 
   @override
-  String sourceSpecificStandardizeURL(
-    String url, {
-    bool forSelection = false,
-  }) {
+  String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegExB = RegExp(
       '^https?://m.${getSourceRegex(hosts)}(/+[^/]{2})?/+[^/]+/+[^/]+',
       caseSensitive: false,
@@ -93,9 +90,7 @@ class APKPure extends AppSource {
           }
           if (additionalSettings['autoApkFilterByArch'] == true &&
               architectures.isNotEmpty &&
-              architectures
-                  .where((a) => supportedArchs.contains(a))
-                  .isEmpty) {
+              architectures.where((a) => supportedArchs.contains(a)).isEmpty) {
             return null;
           }
           String type = e['asset']['type'];

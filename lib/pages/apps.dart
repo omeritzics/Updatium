@@ -1404,11 +1404,7 @@ class AppsPageState extends State<AppsPage> {
                               mimeType: 'application/json',
                               name: fn,
                             );
-                            SharePlus.instance.share(
-                              ShareParams(
-                                files: [f],
-                              ),
-                            );
+                            SharePlus.instance.share(ShareParams(files: [f]));
                           },
                     child: Text(
                       '${tr('share')} - ${tr('updatiumExport')}',
