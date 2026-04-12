@@ -47,7 +47,8 @@ class SecuritySettingsProvider {
 
   // Auto Scan Settings
   bool getAutoScanEnabled() => _prefs.getBool(_keyAutoScan) ?? true;
-  Future<void> setAutoScanEnabled(bool enabled) => _prefs.setBool(_keyAutoScan, enabled);
+  Future<void> setAutoScanEnabled(bool enabled) =>
+      _prefs.setBool(_keyAutoScan, enabled);
 
   // Auto Update Settings
   bool getAutoUpdateEnabled() => _prefs.getBool(_keyAutoUpdate) ?? true;
@@ -81,23 +82,30 @@ class SecuritySettingsProvider {
 
   // Threat Level Filter
   int getThreatLevelFilter() => _prefs.getInt(_keyThreatLevel) ?? 1;
-  Future<void> setThreatLevelFilter(int level) => _prefs.setInt(_keyThreatLevel, level);
+  Future<void> setThreatLevelFilter(int level) =>
+      _prefs.setInt(_keyThreatLevel, level);
 
   // Quarantine Settings
-  bool getQuarantineInfected() => _prefs.getBool(_keyQuarantineInfected) ?? true;
-  Future<void> setQuarantineInfected(bool enabled) => _prefs.setBool(_keyQuarantineInfected, enabled);
+  bool getQuarantineInfected() =>
+      _prefs.getBool(_keyQuarantineInfected) ?? true;
+  Future<void> setQuarantineInfected(bool enabled) =>
+      _prefs.setBool(_keyQuarantineInfected, enabled);
 
   // Last Update Tracking
   DateTime? getLastUpdate() {
     final timestamp = _prefs.getInt(_keyLastUpdate);
-    return timestamp != null ? DateTime.fromMillisecondsSinceEpoch(timestamp) : null;
+    return timestamp != null
+        ? DateTime.fromMillisecondsSinceEpoch(timestamp)
+        : null;
   }
 
-  Future<void> setLastUpdate(DateTime update) => _prefs.setInt(_keyLastUpdate, update.millisecondsSinceEpoch);
+  Future<void> setLastUpdate(DateTime update) =>
+      _prefs.setInt(_keyLastUpdate, update.millisecondsSinceEpoch);
 
   // Rules Version Tracking
   String? getRulesVersion() => _prefs.getString(_keyRulesVersion);
-  Future<void> setRulesVersion(String version) => _prefs.setString(_keyRulesVersion, version);
+  Future<void> setRulesVersion(String version) =>
+      _prefs.setString(_keyRulesVersion, version);
 
   /// Initialize the security scanner
   Future<void> initialize() async {
@@ -119,11 +127,13 @@ class SecuritySettingsProvider {
     if (result.error != null) {
       throw StateError(result.error!);
     }
-    
+
     // Apply threat level filter
     final threshold = getThreatLevelFilter();
-    final filteredMatches = result.matches.where((match) => match.threatLevel >= threshold).toList();
-    
+    final filteredMatches = result.matches
+        .where((match) => match.threatLevel >= threshold)
+        .toList();
+
     // Create filtered result for decision making and reporting
     final filteredResult = YARAScanResult(
       isInfected: filteredMatches.isNotEmpty,
@@ -132,12 +142,12 @@ class SecuritySettingsProvider {
       scanTime: result.scanTime,
       error: result.error,
     );
-    
+
     // Handle quarantine if enabled and filtered matches exist
     if (filteredResult.isInfected && getQuarantineInfected()) {
       await _quarantineFile(apkPath, filteredResult);
     }
-    
+
     return filteredResult;
   }
 
@@ -162,7 +172,8 @@ class SecuritySettingsProvider {
         await originalFile.delete();
       }
 
-      final reportPath = '${quarantineDir.path}/$timestamp-$fileName-report.json';
+      final reportPath =
+          '${quarantineDir.path}/$timestamp-$fileName-report.json';
       final report = {
         'originalPath': filePath,
         'quarantinedPath': quarantinedPath,

@@ -36,7 +36,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:updatium/security/security_settings_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-
 class AppInMemory {
   late App app;
   double? downloadProgress;
@@ -496,8 +495,10 @@ Future<List<PackageInfo>> getAllInstalledInfo() async {
   try {
     // Use platform channel to get all installed apps
     const platform = MethodChannel('updatium/package_manager');
-    final List<dynamic> installedApps = await platform.invokeMethod('getInstalledApps');
-    
+    final List<dynamic> installedApps = await platform.invokeMethod(
+      'getInstalledApps',
+    );
+
     List<PackageInfo> packageInfoList = [];
     for (var appData in installedApps) {
       try {
@@ -528,16 +529,19 @@ Future<PackageInfo?> getInstalledInfo(
   if (packageName == null || packageName.isEmpty) {
     return null;
   }
-  
+
   try {
     // Use platform channel to get specific app info
     const platform = MethodChannel('updatium/package_manager');
-    final Map<String, dynamic>? appData = await platform.invokeMethod('getAppInfo', {'packageName': packageName});
-    
+    final Map<String, dynamic>? appData = await platform.invokeMethod(
+      'getAppInfo',
+      {'packageName': packageName},
+    );
+
     if (appData == null) {
       return null;
     }
-    
+
     return PackageInfo(
       appName: appData['appName'] ?? '',
       packageName: appData['packageName'] ?? '',
@@ -972,7 +976,10 @@ class AppsProvider with ChangeNotifier {
   }
 
   /// Scan APK for malware before installation
-  Future<bool> _scanAPKForMalware(String apkPath, {List<String>? additionalApkPaths}) async {
+  Future<bool> _scanAPKForMalware(
+    String apkPath, {
+    List<String>? additionalApkPaths,
+  }) async {
     SecuritySettingsProvider? securityProvider;
     try {
       securityProvider = await SecuritySettingsProvider.create();
@@ -993,15 +1000,21 @@ class AppsProvider with ChangeNotifier {
 
       if (additionalApkPaths != null) {
         for (final additionalApkPath in additionalApkPaths) {
-          final additionalScanResult = await securityProvider.scanAPK(additionalApkPath);
+          final additionalScanResult = await securityProvider.scanAPK(
+            additionalApkPath,
+          );
 
           if (additionalScanResult.error != null) {
-            logs.add('Security scan error for additional APK: ${additionalScanResult.error}');
+            logs.add(
+              'Security scan error for additional APK: ${additionalScanResult.error}',
+            );
             return false;
           }
 
           if (additionalScanResult.isInfected) {
-            logs.add('Security scan detected malware in additional APK: ${additionalScanResult.matches.map((m) => m.ruleName).join(', ')}');
+            logs.add(
+              'Security scan detected malware in additional APK: ${additionalScanResult.matches.map((m) => m.ruleName).join(', ')}',
+            );
             return false;
           }
         }
@@ -1052,9 +1065,12 @@ class AppsProvider with ChangeNotifier {
       }
     }
     PackageInfo? appInfo = await getInstalledInfo(apps[file.appId]!.app.id);
-    
+
     // Security scan before installation
-    if (!(await _scanAPKForMalware(file.file.path, additionalApkPaths: additionalAPKs.map((a) => a.file.path).toList()))) {
+    if (!(await _scanAPKForMalware(
+      file.file.path,
+      additionalApkPaths: additionalAPKs.map((a) => a.file.path).toList(),
+    ))) {
       try {
         if (file.file.existsSync()) {
           deleteFile(file.file);
@@ -1069,7 +1085,7 @@ class AppsProvider with ChangeNotifier {
       }
       throw UpdatiumError(tr('securityScanBlocked'));
     }
-    
+
     logs.add(
       'Installing "${newInfo.packageName}" version "${newInfo.versionName}" versionCode "${newInfo.versionCode}"${appInfo != null ? ' (from existing version "${appInfo.versionName}" versionCode "${appInfo.versionCode}")' : ''}',
     );

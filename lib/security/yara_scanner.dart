@@ -32,12 +32,14 @@ class YARARuleUpdateError extends UpdatiumError {
   final List<String> failedSources;
   final List<String> successfulSources;
   final String details;
-  
+
   YARARuleUpdateError({
     required this.failedSources,
     required this.successfulSources,
     required this.details,
-  }) : super('Failed to update YARA rules from ${failedSources.length} sources: $details');
+  }) : super(
+         'Failed to update YARA rules from ${failedSources.length} sources: $details',
+       );
 }
 
 /// YARA Scan Result
@@ -117,10 +119,9 @@ class YARARule {
     // For backward compatibility, if the content contains multiple rules,
     // return the first one
     final rules = YARARule.parseMultiple(ruleContent);
-    return rules.isNotEmpty ? rules.first : YARARule(
-      name: 'unknown',
-      content: ruleContent,
-    );
+    return rules.isNotEmpty
+        ? rules.first
+        : YARARule(name: 'unknown', content: ruleContent);
   }
 
   /// Parse multiple YARA rules from a file content
@@ -128,15 +129,15 @@ class YARARule {
   static List<YARARule> parseMultiple(String fileContent) {
     final rules = <YARARule>[];
     final lines = fileContent.split('\n');
-    
+
     int currentRuleStart = -1;
     String? currentRuleName;
     final currentRuleLines = <String>[];
-    
+
     for (int i = 0; i < lines.length; i++) {
       final line = lines[i];
       final trimmedLine = line.trim();
-      
+
       // Detect rule block start
       if (trimmedLine.startsWith('rule ')) {
         // If we were building a previous rule, finalize it first
@@ -144,7 +145,7 @@ class YARARule {
           final ruleContent = currentRuleLines.join('\n');
           rules.add(_parseSingleRule(ruleContent, currentRuleName));
         }
-        
+
         // Start new rule
         currentRuleStart = i;
         currentRuleName = trimmedLine.substring(5).trim().split(' ').first;
@@ -153,7 +154,7 @@ class YARARule {
       } else if (currentRuleStart != -1) {
         // We're inside a rule block
         currentRuleLines.add(line);
-        
+
         // Check if this might be the end of a rule (next rule start or end of file)
         if (i == lines.length - 1) {
           // End of file - finalize the last rule
@@ -162,15 +163,15 @@ class YARARule {
         }
       }
     }
-    
+
     // Handle case where file has no explicit rule blocks (single rule without "rule " prefix)
     if (rules.isEmpty && fileContent.trim().isNotEmpty) {
       rules.add(_parseSingleRule(fileContent, null));
     }
-    
+
     return rules;
   }
-  
+
   /// Parse a single rule block with its content
   static YARARule _parseSingleRule(String ruleContent, String? fallbackName) {
     final lines = ruleContent.split('\n');
@@ -241,7 +242,7 @@ class YARAScanner {
   /// Initialize the scanner
   Future<void> initialize() async {
     await _loadRules();
-    
+
     // Check if any rules were actually loaded
     if (_rules.isEmpty) {
       // Trigger immediate update for fresh installs
@@ -254,10 +255,10 @@ class YARAScanner {
         _logs.add('Initial rule update failed: ${e.toString()}');
       }
     }
-    
+
     // Cancel existing timer before starting new one
     _updateTimer?.cancel();
-    
+
     if (config.enableAutoUpdate) {
       _startAutoUpdate();
     }
@@ -275,7 +276,7 @@ class YARAScanner {
       final newRules = <YARARule>[];
       int loadedCount = 0;
       int errorCount = 0;
-      
+
       await for (final entity in rulesDir.list()) {
         if (entity is File && entity.path.endsWith('.yar')) {
           try {
@@ -286,7 +287,9 @@ class YARAScanner {
           } catch (e) {
             errorCount++;
             // Log error without exposing sensitive file paths or rule content
-            _logs.add('Error loading YARA rule file: ${path.basename(entity.path)}');
+            _logs.add(
+              'Error loading YARA rule file: ${path.basename(entity.path)}',
+            );
           }
         }
       }
@@ -294,7 +297,9 @@ class YARAScanner {
       // Atomically replace the shared reference
       _rules.clear();
       _rules.addAll(newRules);
-      _logs.add('YARA rules loaded: $loadedCount successful, $errorCount failed');
+      _logs.add(
+        'YARA rules loaded: $loadedCount successful, $errorCount failed',
+      );
     } catch (e) {
       _logs.add('Error loading YARA rules: ${e.toString()}');
     }
@@ -308,14 +313,16 @@ class YARAScanner {
 
     for (final source in config.ruleSources) {
       try {
-        final response = await http.get(Uri.parse(source)).timeout(
-          const Duration(seconds: 30),
-          onTimeout: () => throw TimeoutException('Request timed out'),
-        );
+        final response = await http
+            .get(Uri.parse(source))
+            .timeout(
+              const Duration(seconds: 30),
+              onTimeout: () => throw TimeoutException('Request timed out'),
+            );
         if (response.statusCode == 200) {
           final fileName = source.split('/').last;
           final localPath = path.join(config.rulesDirectory, fileName);
-          
+
           final file = File(localPath);
           await file.writeAsString(response.body);
           successfulSources.add(source);
@@ -326,16 +333,20 @@ class YARAScanner {
           failedSources.add(source);
           errorDetails.add('$source: $error');
           // Log error without exposing full URLs
-          _logs.add('YARA rule update failed: ${path.basename(source)} - $error');
+          _logs.add(
+            'YARA rule update failed: ${path.basename(source)} - $error',
+          );
         }
       } catch (e) {
         failedSources.add(source);
         errorDetails.add('$source: $e');
         // Log error without exposing full URLs or stack traces
-        _logs.add('YARA rule update failed: ${path.basename(source)} - ${e.toString()}');
+        _logs.add(
+          'YARA rule update failed: ${path.basename(source)} - ${e.toString()}',
+        );
       }
     }
-    
+
     // Try to load the rules that were successfully updated
     if (successfulSources.isNotEmpty) {
       try {
@@ -348,10 +359,12 @@ class YARAScanner {
         _logs.add('YARA rules loading failed after update');
       }
     }
-    
+
     // Log summary without exposing sensitive details
-    _logs.add('YARA rules update completed: ${successfulSources.length} successful, ${failedSources.length} failed');
-    
+    _logs.add(
+      'YARA rules update completed: ${successfulSources.length} successful, ${failedSources.length} failed',
+    );
+
     // If there were any failures, throw an exception with actionable context
     if (failedSources.isNotEmpty) {
       throw YARARuleUpdateError(
@@ -375,7 +388,7 @@ class YARAScanner {
           level: LogLevels.error,
           context: 'YARAScanner._startAutoUpdate',
         );
-        
+
         // Also log structured information for security auditing
         await _logs.addStructured(
           operation: 'auto_update_rules',
@@ -383,7 +396,7 @@ class YARAScanner {
           errorCode: e.toString(),
           level: LogLevels.error,
         );
-        
+
         // Optionally print in debug mode for immediate visibility
         if (kDebugMode) {
           print('YARA auto update error: $e');
@@ -421,10 +434,7 @@ class YARAScanner {
   }
 
   /// Check if a file matches a specific YARA rule
-  Future<YARAMatch?> _checkRule(
-    YARARule rule,
-    List<int> fileBytes,
-  ) async {
+  Future<YARAMatch?> _checkRule(YARARule rule, List<int> fileBytes) async {
     final ruleLines = rule.content.split('\n');
     final stringPatterns = <String, List<int>>{};
     String? condition;
@@ -433,16 +443,28 @@ class YARAScanner {
     // Parse strings and condition
     for (final line in ruleLines) {
       final trimmedLine = line.trim();
-      
+
       if (trimmedLine.startsWith('condition:')) {
         condition = trimmedLine.substring(10).trim();
         // Parse condition to determine if it requires "all" or "any" strings
         requiresAll = _parseConditionLogic(condition);
       } else if (trimmedLine.contains('\$') && trimmedLine.contains(' = ')) {
         // Extract quoted strings: $name = "text"
-        final quotedPattern = RegExp(r'\$(\w+)\s*=\s*["\']([^"\']*)["\']');
-        final quotedMatch = quotedPattern.firstMatch(trimmedLine);
-        if (quotedMatch != null && quotedMatch.group(1) != null) {
+        RegExpMatch? quotedMatch;
+
+        // Try double quotes first
+        final doubleQuotePattern = RegExp(r'\$(\w+)\s*=\s*"([^"]*)"');
+        quotedMatch = doubleQuotePattern.firstMatch(trimmedLine);
+
+        // If no double quote match, try single quotes
+        if (quotedMatch == null) {
+          final singleQuotePattern = RegExp(r'\$(\w+)\s*=\s*' + r"'([^\']*)'");
+          quotedMatch = singleQuotePattern.firstMatch(trimmedLine);
+        }
+
+        if (quotedMatch != null &&
+            quotedMatch.group(1) != null &&
+            quotedMatch.group(2) != null) {
           final identifier = quotedMatch.group(1)!;
           final content = quotedMatch.group(2)!;
           if (content.isNotEmpty) {
@@ -450,25 +472,30 @@ class YARAScanner {
           }
           continue;
         }
-        
+
         // Extract hex sequences: $name = {6A 40} or $name = 6A 40 68
-        final hexPattern = RegExp(r'\$(\w+)\s*=\s*(?:{([^}]+)}|([0-9A-Fa-f\s]+))');
+        final hexPattern = RegExp(
+          r'\$(\w+)\s*=\s*(?:{([^}]+)}|([0-9A-Fa-f\s]+))',
+        );
         final hexMatch = hexPattern.firstMatch(trimmedLine);
         if (hexMatch != null && hexMatch.group(1) != null) {
           final identifier = hexMatch.group(1)!;
           final hexContent = hexMatch.group(2) ?? hexMatch.group(3) ?? '';
           final cleanHex = hexContent.replaceAll(RegExp(r'\s+'), '');
           final bytes = <int>[];
-          
+
           for (int i = 0; i < cleanHex.length; i += 2) {
             if (i + 1 < cleanHex.length) {
-              final byte = int.tryParse(cleanHex.substring(i, i + 2), radix: 16);
+              final byte = int.tryParse(
+                cleanHex.substring(i, i + 2),
+                radix: 16,
+              );
               if (byte != null) {
                 bytes.add(byte);
               }
             }
           }
-          
+
           if (bytes.isNotEmpty) {
             stringPatterns[identifier] = bytes;
           }
@@ -520,14 +547,14 @@ class YARAScanner {
     if (condition.isEmpty) return false;
 
     // Look for "all of" patterns
-    if (condition.contains('all of') || 
+    if (condition.contains('all of') ||
         condition.contains('all of them') ||
         condition.contains('and')) {
       return true;
     }
 
     // Look for "any of" patterns
-    if (condition.contains('any of') || 
+    if (condition.contains('any of') ||
         condition.contains('any of them') ||
         condition.contains('or')) {
       return false;
@@ -574,7 +601,7 @@ class YARAScanner {
     try {
       final file = File(filePath);
       final bytes = await file.readAsBytes();
-      
+
       final md5Hash = md5.convert(bytes);
       final sha1Hash = sha1.convert(bytes);
       final sha256Hash = sha256.convert(bytes);
@@ -585,9 +612,7 @@ class YARAScanner {
         'sha256': sha256Hash.toString(),
       };
     } catch (e) {
-      return {
-        'error': 'Failed to calculate hashes: $e',
-      };
+      return {'error': 'Failed to calculate hashes: $e'};
     }
   }
 
