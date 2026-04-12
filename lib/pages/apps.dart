@@ -259,7 +259,9 @@ class AppsPageState extends State<AppsPage> {
               !(filter.includeNonInstalled))) {
         return false;
       }
-      if (filter.nameFilter.isNotEmpty || filter.authorFilter.isNotEmpty || filter.descriptionFilter.isNotEmpty) {
+      if (filter.nameFilter.isNotEmpty ||
+          filter.authorFilter.isNotEmpty ||
+          filter.descriptionFilter.isNotEmpty) {
         List<String> nameTokens = filter.nameFilter
             .split(' ')
             .where((element) => element.trim().isNotEmpty)
@@ -284,8 +286,10 @@ class AppsPageState extends State<AppsPage> {
           }
         }
         for (var t in descriptionTokens) {
-          String? appDescription = app.app.additionalSettings['about']?.toString();
-          if (appDescription == null || !appDescription.toLowerCase().contains(t.toLowerCase())) {
+          String? appDescription = app.app.additionalSettings['about']
+              ?.toString();
+          if (appDescription == null ||
+              !appDescription.toLowerCase().contains(t.toLowerCase())) {
             return false;
           }
         }
