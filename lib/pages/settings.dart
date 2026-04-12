@@ -18,7 +18,9 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 // Spacing constants
 const height8 = SizedBox(height: 8);
+const height12 = SizedBox(height: 12);
 const height16 = SizedBox(height: 16);
+const height24 = SizedBox(height: 24);
 const height32 = SizedBox(height: 32);
 
 // Custom expandable category widget
@@ -961,13 +963,13 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ],
                         ),
-                        height32,
+                        height24,
                         ExpandableCategory(
                           title: tr('sourceSpecific'),
                           initiallyExpanded: false,
                           children: [...sourceSpecificFields],
                         ),
-                        height32,
+                        height24,
                         ExpandableCategory(
                           title: tr('appearance'),
                           initiallyExpanded: false,
@@ -1249,7 +1251,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ],
                         ),
-                        height32,
+                        height24,
                         ExpandableCategory(
                           title: tr('categories'),
                           initiallyExpanded: false,

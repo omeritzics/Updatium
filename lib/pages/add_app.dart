@@ -144,6 +144,7 @@ class AddAppPageState extends State<AddAppPage> {
             Map<String, dynamic> localValues = {'hide': false};
             return AlertDialog(
               scrollable: true,
+              contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
               title: Text(
                 tr(
                   'xIsTrackOnly',
@@ -419,8 +420,11 @@ class AddAppPageState extends State<AddAppPage> {
                           Map<String, dynamic> localValues = {};
                           return AlertDialog(
                             scrollable: true,
+                            contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
                             title: Text(tr('searchX', args: [e.name])),
-                            content: GeneratedForm(
+                            content: SizedBox(
+                              width: double.maxFinite,
+                              child: GeneratedForm(
                               items: [
                                 ...e.searchQuerySettingFormItems.map(
                                   (e) => [e],
@@ -462,6 +466,7 @@ class AddAppPageState extends State<AddAppPage> {
                               onValueChanges: (vals, valid, isBuilding) {
                                 localValues = vals;
                               },
+                            ),
                             ),
                             actions: [
                               TextButton(
@@ -891,6 +896,7 @@ class AddAppPageState extends State<AddAppPage> {
                 builder: (context) {
                   return AlertDialog(
                     scrollable: true,
+                    contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
                     title: Text(tr('supportedSources')),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,

@@ -38,6 +38,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
         builder: (BuildContext ctx) {
           return AlertDialog(
             title: Text(tr('importFromURLList')),
+            contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
             content: Form(
               key: formKey,
               child: TextFormField(

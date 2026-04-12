@@ -203,8 +203,6 @@ class AppsPageState extends State<AppsPage> {
   @override
   Widget build(BuildContext context) {
     // M3 Expressive spacing constants (based on 4dp baseline grid)
-    const height8 = SizedBox(height: 8);
-    const height12 = SizedBox(height: 12);
     const height16 = SizedBox(height: 16);
     const height24 = SizedBox(height: 24);
     const width16 = SizedBox(width: 16);
@@ -689,10 +687,10 @@ class AppsPageState extends State<AppsPage> {
           },
           child: ListTile(
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 16,
+              horizontal: 16,
+              vertical: 12,
             ),
-            minVerticalPadding: 8,
+            minVerticalPadding: 4,
             tileColor: Theme.of(context).colorScheme.surface,
             selected: selectedAppIds.contains(listedApps[index].app.id),
             leading: SizedBox(
@@ -1647,14 +1645,17 @@ class AppsPageState extends State<AppsPage> {
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: maxCrossAxisExtent,
               childAspectRatio: childAspectRatio,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
             ),
             delegate: SliverChildBuilderDelegate((
               BuildContext context,
               int index,
             ) {
-              return getSingleAppGridTile(index);
+              return Padding(
+                padding: const EdgeInsets.all(4),
+                child: getSingleAppGridTile(index),
+              );
             }, childCount: listedApps.length),
           );
         } else {
@@ -1663,7 +1664,10 @@ class AppsPageState extends State<AppsPage> {
               BuildContext context,
               int index,
             ) {
-              return getSingleAppHorizTile(index);
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                child: getSingleAppHorizTile(index),
+              );
             }, childCount: listedApps.length),
           );
         }
