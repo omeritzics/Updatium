@@ -579,7 +579,9 @@ class _AppPageState extends State<AppPage> {
               case 'additional_options':
                 if (source != null &&
                     source.combinedAppSpecificSettingFormItems.isNotEmpty) {
-                  showAdditionalOptionsDialog().then(handleAdditionalOptionChanges);
+                  showAdditionalOptionsDialog().then(
+                    handleAdditionalOptionChanges,
+                  );
                 }
                 break;
               case 'remove':

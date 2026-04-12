@@ -401,7 +401,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 }
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
                 child: Row(
                   children: [
                     Expanded(
@@ -411,17 +414,17 @@ class _SettingsPageState extends State<SettingsPage> {
                         children: [
                           Text(
                             tr('appSortBy'),
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: Theme.of(context).textTheme.labelSmall
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             selectedValue,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
@@ -562,7 +565,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 }
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
                 child: Row(
                   children: [
                     Expanded(
@@ -572,17 +578,17 @@ class _SettingsPageState extends State<SettingsPage> {
                         children: [
                           Text(
                             tr('appSortOrder'),
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: Theme.of(context).textTheme.labelSmall
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             selectedValue,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
@@ -685,7 +691,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 }
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
                 child: Row(
                   children: [
                     Expanded(
@@ -695,17 +704,17 @@ class _SettingsPageState extends State<SettingsPage> {
                         children: [
                           Text(
                             tr('language'),
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: Theme.of(context).textTheme.labelSmall
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             selectedValue,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
@@ -1270,14 +1279,18 @@ class _SettingsPageState extends State<SettingsPage> {
                                     borderRadius: BorderRadius.circular(16),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.shadow.withOpacity(0.1),
                                         blurRadius: 8,
                                         offset: const Offset(0, 2),
                                       ),
                                     ],
                                   ),
                                   child: Material(
-                                    color: Theme.of(context).colorScheme.surface,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.surface,
                                     borderRadius: BorderRadius.circular(16),
                                     elevation: 0,
                                     child: InkWell(
@@ -1290,37 +1303,58 @@ class _SettingsPageState extends State<SettingsPage> {
                                         }
                                       },
                                       child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 16,
+                                        ),
                                         child: Row(
                                           children: [
                                             Expanded(
                                               child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Text(
                                                     tr('theme'),
-                                                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                                      color: Theme.of(context).colorScheme.primary,
-                                                      fontWeight: FontWeight.w600,
-                                                    ),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelSmall
+                                                        ?.copyWith(
+                                                          color: Theme.of(
+                                                            context,
+                                                          ).colorScheme.primary,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
                                                   ),
                                                   const SizedBox(height: 4),
                                                   Text(
                                                     selectedValue,
-                                                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge
+                                                        ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                             AnimatedRotation(
-                                              turns: controller.isOpen ? 0.5 : 0,
-                                              duration: const Duration(milliseconds: 200),
+                                              turns: controller.isOpen
+                                                  ? 0.5
+                                                  : 0,
+                                              duration: const Duration(
+                                                milliseconds: 200,
+                                              ),
                                               child: Icon(
-                                                Icons.keyboard_arrow_down_rounded,
-                                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
+                                                color: Theme.of(
+                                                  context,
+                                                ).colorScheme.onSurfaceVariant,
                                                 size: 24,
                                               ),
                                             ),
@@ -1340,15 +1374,20 @@ class _SettingsPageState extends State<SettingsPage> {
                                       Icon(
                                         Icons.settings_system_daydream_rounded,
                                         size: 20,
-                                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onSurfaceVariant,
                                       ),
                                       const SizedBox(width: 12),
                                       Expanded(child: Text(tr('followSystem'))),
-                                      if (settingsProvider.theme == ThemeSettings.system)
+                                      if (settingsProvider.theme ==
+                                          ThemeSettings.system)
                                         Icon(
                                           Icons.check_rounded,
                                           size: 20,
-                                          color: Theme.of(context).colorScheme.primary,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
                                         ),
                                     ],
                                   ),
@@ -1361,15 +1400,20 @@ class _SettingsPageState extends State<SettingsPage> {
                                       Icon(
                                         Icons.light_mode_rounded,
                                         size: 20,
-                                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onSurfaceVariant,
                                       ),
                                       const SizedBox(width: 12),
                                       Expanded(child: Text(tr('light'))),
-                                      if (settingsProvider.theme == ThemeSettings.light)
+                                      if (settingsProvider.theme ==
+                                          ThemeSettings.light)
                                         Icon(
                                           Icons.check_rounded,
                                           size: 20,
-                                          color: Theme.of(context).colorScheme.primary,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
                                         ),
                                     ],
                                   ),
@@ -1382,15 +1426,20 @@ class _SettingsPageState extends State<SettingsPage> {
                                       Icon(
                                         Icons.dark_mode_rounded,
                                         size: 20,
-                                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onSurfaceVariant,
                                       ),
                                       const SizedBox(width: 12),
                                       Expanded(child: Text(tr('dark'))),
-                                      if (settingsProvider.theme == ThemeSettings.dark)
+                                      if (settingsProvider.theme ==
+                                          ThemeSettings.dark)
                                         Icon(
                                           Icons.check_rounded,
                                           size: 20,
-                                          color: Theme.of(context).colorScheme.primary,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
                                         ),
                                     ],
                                   ),
@@ -1698,7 +1747,9 @@ class _LogsDialogState extends State<LogsDialog> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.shadow.withOpacity(0.1),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -1718,7 +1769,10 @@ class _LogsDialogState extends State<LogsDialog> {
                       }
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
                       child: Row(
                         children: [
                           Expanded(
@@ -1728,17 +1782,19 @@ class _LogsDialogState extends State<LogsDialog> {
                               children: [
                                 Text(
                                   tr('filterDays'),
-                                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                    color: Theme.of(context).colorScheme.primary,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelSmall
+                                      ?.copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
                                   plural('day', selectedDays),
-                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                      ?.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
@@ -1748,7 +1804,9 @@ class _LogsDialogState extends State<LogsDialog> {
                             duration: const Duration(milliseconds: 200),
                             child: Icon(
                               Icons.keyboard_arrow_down_rounded,
-                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurfaceVariant,
                               size: 24,
                             ),
                           ),
@@ -1921,7 +1979,7 @@ class AboutDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     const version = '26.3.0';
     const buildNumber = '26020419';
-    
+
     return AlertDialog(
       scrollable: true,
       title: Row(
@@ -1956,11 +2014,7 @@ class AboutDialog extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Image.asset(
-                  'assets/graphics/icon.png',
-                  width: 80,
-                  height: 80,
-                ),
+                Image.asset('assets/graphics/icon.png', width: 80, height: 80),
                 const SizedBox(height: 16),
                 Text(
                   'Updatium',
@@ -2007,10 +2061,7 @@ class AboutDialog extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Text(
-            tr('sourceCode'),
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
+          Text(tr('sourceCode'), style: Theme.of(context).textTheme.titleSmall),
           const SizedBox(height: 8),
           TextButton.icon(
             onPressed: () {
@@ -2027,10 +2078,7 @@ class AboutDialog extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Text(
-            tr('license'),
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
+          Text(tr('license'), style: Theme.of(context).textTheme.titleSmall),
           const SizedBox(height: 8),
           TextButton.icon(
             onPressed: () {
@@ -2059,9 +2107,9 @@ class AboutDialog extends StatelessWidget {
               children: [
                 Text(
                   'Quick Links',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 12),
                 Row(
