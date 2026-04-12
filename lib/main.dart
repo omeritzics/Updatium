@@ -57,6 +57,10 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('ar'), 'العربية'),
   MapEntry(Locale('ml'), 'മലയാളം'),
   MapEntry(Locale('gl'), 'Galego'),
+  MapEntry(Locale('bg'), 'Български'),
+  MapEntry(Locale('kmr'), 'Kurdî (Kurmanjî)'),
+  MapEntry(Locale('ms'), 'Bahasa Melayu'),
+  MapEntry(Locale('ro'), 'Română'),
 ];
 const fallbackLocale = Locale('en');
 const localeDir = 'assets/translations';
@@ -756,7 +760,6 @@ class _UpdatiumState extends State<Updatium> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
-                tileColor: scheme.surface,
                 selectedTileColor: scheme.surface.withValues(alpha: 0.2),
                 iconColor: scheme.onSurfaceVariant,
                 textColor: scheme.onSurface,

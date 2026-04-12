@@ -212,6 +212,7 @@
     "installedVersionX": "インストール済み: {}",
     "lastUpdateCheckX": "最終アップデート確認: {}",
     "remove": "削除",
+    "quickLinks": "クイックリンク",
     "yesMarkUpdated": "はい、アップデート済みとしてマークします",
     "fdroid": "F-Droid公式",
     "appIdOrName": "アプリのIDまたは名前",
@@ -464,5 +465,8 @@
     "githubStarPromptTitle": "Updatiumをお楽しみですか？",
     "githubStarPromptContent": "Updatiumは、私の自由時間に開発したボランティアのオープンソースコミュニティプロジェクトです。プロジェクトをサポートしていただける場合は、より多くのユーザーや貢献者に到達するのを助けるために、GitHubでスターを付けていただくことをご検討ください。この件については今後ご案内しません。前もってありがとうございます！:)",
     "githubStarPromptStar": "スターを付ける",
-    "githubStarPromptDontShowAgain": "今後表示しない"
+    "githubStarPromptDontShowAgain": "今後表示しない",
+    "sourceCode": "ソースコード",
+    "developedBy": "開発者",
+    "appDescription": "カスタマイズ可能なAndroidアプリカタログで、APKソースから直接アプリを更新できます。"
 }

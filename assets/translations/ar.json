@@ -212,6 +212,7 @@
     "installedVersionX": "المثبت: {}",
     "lastUpdateCheckX": "آخر تحقق من التحديثات: {}",
     "remove": "أزل",
+    "quickLinks": "روابط سريعة",
     "yesMarkUpdated": "نعم، علِّم كمحدث",
     "fdroid": "F-Droid الرسمي",
     "appIdOrName": "معرّف التطبيق أو الاسم",
@@ -480,5 +481,8 @@
     "githubStarPromptTitle": "هل تستمتع بـ Updatium؟",
     "githubStarPromptContent": "Updatium هو مشروع مجتمعي مفتوح المصدر تطوعي تم تطويره في وقت فراغي. إذا كنت ترغب في دعم المشروع، يرجى التفكير في إعطائه نجمة على GitHub لمساعدتنا في الوصول إلى المزيد من المستخدمين والمساهمين. لن يتم تذكيرتك بذلك مرة أخرى. شكراً مقدماً! :)",
     "githubStarPromptStar": "إعطاء نجمة",
-    "githubStarPromptDontShowAgain": "عدم العرض مرة أخرى"
+    "githubStarPromptDontShowAgain": "عدم العرض مرة أخرى",
+    "sourceCode": "الكود المصدري",
+    "developedBy": "طور بواسطة",
+    "appDescription": "كتالوج قابل للتخصيص لتحديثات التطبيقات الأندرويد يسمح لك بتحديث تطبيقاتك مباشرة من مصادر APK الخاصة بها. يمكنه تحديث تطبيقاتك بشكل تلقائي من مصادر APK المخصصة."
 }

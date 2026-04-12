@@ -212,6 +212,7 @@
     "installedVersionX": "Installeret: {}",
     "lastUpdateCheckX": "Sidste opdateringstjek: {}",
     "remove": "Fjern",
+    "quickLinks": "Hurtige links",
     "yesMarkUpdated": "Ja, markér som opdateret",
     "fdroid": "F-Droid Officiel",
     "appIdOrName": "App-ID eller -navn",
@@ -464,5 +465,8 @@
     "githubStarPromptTitle": "Nyer du godt af Updatium?",
     "githubStarPromptContent": "Updatium er et frivilligt open source community-projekt, som jeg udvikler i min fritid. Hvis du ønsker at støtte projektet, så overvej venligst at give det en stjerne på GitHub for at hjælpe os med at nå flere brugere og bidragsydere. Du vil ikke blive påmindet om dette igen. Tak på forhånd! :)",
     "githubStarPromptStar": "Giv stjerne",
-    "githubStarPromptDontShowAgain": "Vis ikke igen"
+    "githubStarPromptDontShowAgain": "Vis ikke igen",
+    "sourceCode": "Kildekode",
+    "developedBy": "Udviklet af",
+    "appDescription": "En tilpasselig Android-appkatalog, der lader dig opdatere dine apps direkte fra deres APK-kilder."
 }

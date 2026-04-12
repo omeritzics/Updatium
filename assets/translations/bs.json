@@ -212,6 +212,7 @@
     "installedVersionX": "Instalirana verzija: {}",
     "lastUpdateCheckX": "Posljednja provjera ažuriranja: {}",
     "remove": "Izbriši",
+    "quickLinks": "Brzi linkovi",
     "yesMarkUpdated": "Da, označi kao ažurirano",
     "fdroid": "Službeni F-Droid",
     "appIdOrName": "ID ili ime aplikacije",
@@ -464,5 +465,8 @@
     "githubStarPromptTitle": "Uživate li u Updatiumu?",
     "githubStarPromptContent": "Updatium je volonterski projekt otvorenog koda koji razvijam u slobodno vrijeme. Ako želite podržati projekt, molimo vas da razmislite o davanju zvijezde na GitHubu kako bismo nam pomogli da dosegnemo više korisnika i doprinosilaca. Više se nećete obavještavati o ovome. Hvala unaprijed! :)",
     "githubStarPromptStar": "Daj zvijezdu",
-    "githubStarPromptDontShowAgain": "Ne prikazuj više"
+    "githubStarPromptDontShowAgain": "Ne prikazuj više",
+    "sourceCode": "Izvorni kod",
+    "developedBy": "Razvio",
+    "appDescription": "Prilagodljiv katalog Android aplikacija koji vam omoguava da aeurirate svoje aplikacije direktno iz njihovih APK izvora."
 }

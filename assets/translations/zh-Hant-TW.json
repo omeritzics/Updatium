@@ -212,6 +212,7 @@
     "installedVersionX": "已安裝版本：{}",
     "lastUpdateCheckX": "上次檢查更新時間：{}",
     "remove": "移除",
+    "quickLinks": "快速連結",
     "yesMarkUpdated": "是，標記為已更新",
     "fdroid": "F-Droid 官方",
     "appIdOrName": "應用程式 ID 或名稱",
@@ -464,5 +465,8 @@
     "githubStarPromptTitle": "您喜歡使用 Updatium 嗎？",
     "githubStarPromptContent": "Updatium 是一個自願性的開源社群專案，我在空閒時間開發。如果您想支持這個專案，請考慮在 GitHub 上給它一顆星，以幫助我們接觸更多用戶和貢獻者。您不會再收到關於此事的提醒。提前感謝！:)",
     "githubStarPromptStar": "給星",
-    "githubStarPromptDontShowAgain": "不再顯示"
+    "githubStarPromptDontShowAgain": "不再顯示",
+    "sourceCode": "åå§ç¢¼",
+    "developedBy": "éç¼è",
+    "appDescription": "ä¸åå¯èªå®ç¾©çAndroidæç¨ç¨å¼ç®éï¼åè¨±æ¨ç´æ¥å¾APKä¾æºæ´æ°æç¨ç¨å¼ã"
 }

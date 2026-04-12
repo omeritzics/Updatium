@@ -212,6 +212,7 @@
     "installedVersionX": "Phiên bản đã cài đặt: {}",
     "lastUpdateCheckX": "Kiểm tra cập nhật lần cuối: {}",
     "remove": "Loại bỏ",
+    "quickLinks": "Liên kết nhanh",
     "yesMarkUpdated": "Có, Đánh dấu là đã cập nhật",
     "fdroid": "F-Droid Chính thức",
     "appIdOrName": "ID hoặc tên ứng dụng",
@@ -464,5 +465,8 @@
     "githubStarPromptTitle": "Bạn có thích Updatium không?",
     "githubStarPromptContent": "Updatium là một dự án cộng đồng mã nguồn mở tự nguyện do tôi phát triển trong thời gian rảnh rỗi. Nếu bạn muốn hỗ trợ dự án, vui lòng cân nhắc cho nó một ngôi sao trên GitHub để giúp chúng tôi tiếp cận nhiều người dùng và người đóng góp hơn. Bạn sẽ không được nhắc về điều này nữa. Cảm ơn trước! :)",
     "githubStarPromptStar": "Cho ngôi sao",
-    "githubStarPromptDontShowAgain": "Không hiển thị lại"
+    "githubStarPromptDontShowAgain": "Không hiển thị lại",
+    "sourceCode": "Mã nguá»n",
+    "developedBy": "PhÃ¡t triá»n bá»i",
+    "appDescription": "Má»t danh má»¥c á»©ng dá»¥ng Android cÃ³ thá» tÃ¹y chá»nh cho phÃ©p báº¡n cáº­p nháº­t cÃ¡c á»©ng dá»¥ng trá»±c tiáº¿p tá»«ng nguá»n APK cá»§a chÃºng."
 }

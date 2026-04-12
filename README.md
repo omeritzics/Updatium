@@ -4,9 +4,9 @@
 [![Nightly Build](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml/badge.svg)](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
 [![Translation Help Wanted](https://img.shields.io/badge/translation-help_wanted-blue)](https://github.com/omeritzics/Updatium/tree/main/assets/translations)
 
-Update your Android apps directly from the APK source. Updatium helps you to install apps and update them directly from their release pages or APK sources, and to receive notifications when updates are available.
+Update your Android apps directly from the APK source. Updatium is a customizable Android app catalogue that allows you to update your apps directly from their APK sources, and to receive notifications when updates are available.
 
-#### [Testers needed. Click here for more information](https://github.com/omeritzics/Updatium/issues/280)
+#### [Testers needed. Click here for more information.](https://github.com/omeritzics/Updatium/issues/280)
 
 ## Features
 ### Currently supported App sources:
@@ -44,11 +44,13 @@ Do not download Updatium from unofficial sources (such as Appteka), since these 
 | <img src="./assets/screenshots/4.app.png" alt="App Page" />   | |  |
 
 ### Localization
-Updatium currently supports 31 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull with the new translations added to [here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
+Updatium currently supports 35 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull with the new translations added to [here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
 
 If you don't know how to make a pull request, and/or you don't have any experience with Git, you can open an issue [here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help you with adding your language. 
 
 Every language is welcome to Updatium, but your help is needed to make it happen.
+
+* Currently supported locales: English, 简体中文, 臺灣話, Italiano, 日本語, עברית, Magyar, Deutsch, فارسی, Français, Español, Polski, Русский, Bosanski, Português, Česky, Svenska, Nederlands, Tiếng Việt, Türkçe, Українська, Dansk, Eesti, Esperanto, Bahasa Indonesia, 한국어, Català, العربية, മലയാളം, Galego, Български, Kurdî (Kurmanjî), Bahasa Melayu, Română.
 
 ## Limitations
 - For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.

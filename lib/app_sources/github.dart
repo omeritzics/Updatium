@@ -21,7 +21,7 @@ class GitHub extends AppSource {
 
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        'github-creds',
+        tr('githubPATLabel'),
         label: tr('githubPATLabel'),
         password: true,
         required: false,
@@ -46,7 +46,7 @@ class GitHub extends AppSource {
         ],
       ),
       GeneratedFormTextField(
-        'GHReqPrefix',
+        tr('GHReqPrefix'),
         label: tr('GHReqPrefix'),
         hint: 'gh-proxy.org',
         required: false,
@@ -289,7 +289,7 @@ class GitHub extends AppSource {
       additionalSettings,
       settingsProvider,
     );
-    String? creds = sourceConfig['github-creds'];
+    String? creds = sourceConfig['githubPATLabel'];
     if ((additionalSettings['GHReqPrefix'] as String? ?? '').isNotEmpty) {
       creds = null;
     }

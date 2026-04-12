@@ -214,6 +214,7 @@
     "installedVersionX": "Installierte Version: {}",
     "lastUpdateCheckX": "Letzte Aktualisierungsprüfung: {}",
     "remove": "Entfernen",
+    "quickLinks": "Schnelllinks",
     "yesMarkUpdated": "Ja, als aktualisiert markieren",
     "fdroid": "Offizielles F-Droid-Repo",
     "appIdOrName": "App-ID oder Name",
@@ -482,5 +483,8 @@
     "githubStarPromptTitle": "Gefällt Ihnen Updatium?",
     "githubStarPromptContent": "Updatium ist ein freiwilliges Open-Source-Community-Projekt, das in meiner Freizeit entwickelt wird. Wenn Sie das Projekt unterstützen möchten, erwägen Sie bitte, ihm auf GitHub einen Stern zu geben, um uns zu helfen, mehr Nutzer und Mitwirkende zu erreichen. Sie werden darüber nicht mehr belästigt. Vielen Dank im Voraus! :)",
     "githubStarPromptStar": "Stern geben",
-    "githubStarPromptDontShowAgain": "Nicht mehr anzeigen"
+    "githubStarPromptDontShowAgain": "Nicht mehr anzeigen",
+    "sourceCode": "Quellcode",
+    "developedBy": "Entwickelt von",
+    "appDescription": "Ein anpassbarer Android-App-Katalog, der es Ihnen ermöglicht, Ihre Apps direkt aus ihren APK-Quellen zu aktualisieren."
 }

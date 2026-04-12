@@ -212,6 +212,7 @@
     "installedVersionX": "Terpasang: {}",
     "lastUpdateCheckX": "Terakhir memeriksa pembaruan: {}",
     "remove": "Hapus",
+    "quickLinks": "Tautan Cepat",
     "yesMarkUpdated": "Ya, tandai bahwa sudah diperbarui",
     "fdroid": "F-Droid Resmi",
     "appIdOrName": "ID atau nama aplikasi",
@@ -464,5 +465,8 @@
     "githubStarPromptTitle": "Menikmati Updatium?",
     "githubStarPromptContent": "Updatium adalah proyek komunitas sumber terbuka sukarela yang saya kembangkan di waktu luang saya. Jika Anda ingin mendukung proyek ini, silakan pertimbangkan untuk memberikan bintang di GitHub untuk membantu kami mencapai lebih banyak pengguna dan kontributor. Anda tidak akan dimintai lagi tentang ini. Terima kasih sebelumnya! :)",
     "githubStarPromptStar": "Beri bintang",
-    "githubStarPromptDontShowAgain": "Jangan tampilkan lagi"
+    "githubStarPromptDontShowAgain": "Jangan tampilkan lagi",
+    "sourceCode": "Kode sumber",
+    "developedBy": "Dikembangkan oleh",
+    "appDescription": "Katalog aplikasi Android yang dapat disesuaikan yang memungkinkan Anda memperbarui aplikasi langsung dari sumber APK mereka."
 }

@@ -212,6 +212,7 @@
     "installedVersionX": "Telepített verzió: {}",
     "lastUpdateCheckX": "Frissítések utoljára ellenőrizve: {}",
     "remove": "Eltávolítás",
+    "quickLinks": "Gyors linkek",
     "yesMarkUpdated": "Igen, megjelölés frissítettként",
     "fdroid": "F-Droid hivatalos",
     "appIdOrName": "Alkalmazás-azonosító vagy név",
@@ -464,5 +465,8 @@
     "githubStarPromptTitle": "Élvezi az Updatiumot?",
     "githubStarPromptContent": "Az Updatium egy önkéntes, nyílt forráskódú közösségi projekt, amelyet a szabadidőmben fejlesztek. Ha szeretné támogatni a projektet, fontolja meg, hogy ad egy csillagot a GitHubon, hogy segítsen nekünk több felhasználót és hozzájárulót elérni. Erről többé nem fogunk emlékeztetni. Előre is köszönjük! :)",
     "githubStarPromptStar": "Csillag adása",
-    "githubStarPromptDontShowAgain": "Ne mutassa újra"
+    "githubStarPromptDontShowAgain": "Ne mutassa újra",
+    "sourceCode": "Forráskód",
+    "developedBy": "Fejlesztő",
+    "appDescription": "Egy testreszabható Android alkalmazáskatalógus, amely lehetõvé teszi az alkalmazások közvetlen frissítését az APK forrásaikból."
 }

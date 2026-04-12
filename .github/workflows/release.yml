@@ -144,7 +144,7 @@ jobs:
           path: build/app/outputs/flutter-apk/*.apk
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           name: "Updatium ${{ steps.version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
