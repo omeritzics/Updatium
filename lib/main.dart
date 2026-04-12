@@ -760,7 +760,7 @@ class _UpdatiumState extends State<Updatium> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
-                tileColor: scheme.surface,
+                tileColor: Colors.transparent,
                 selectedTileColor: scheme.surface.withValues(alpha: 0.2),
                 iconColor: scheme.onSurfaceVariant,
                 textColor: scheme.onSurface,
