@@ -311,7 +311,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
     settingsProvider.safeModeTapCount = tapCount + 1;
 
     _tapResetTimer?.cancel();
-    _tapResetTimer = Timer(const Duration(seconds: 2), () {
+    _tapResetTimer = Timer(const Duration(hours: 1), () {
       settingsProvider.safeModeTapCount = 0;
     });
 
