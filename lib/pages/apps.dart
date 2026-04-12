@@ -1665,7 +1665,10 @@ class AppsPageState extends State<AppsPage> {
               int index,
             ) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
+                ),
                 child: getSingleAppHorizTile(index),
               );
             }, childCount: listedApps.length),

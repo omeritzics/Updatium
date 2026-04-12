@@ -420,53 +420,59 @@ class AddAppPageState extends State<AddAppPage> {
                           Map<String, dynamic> localValues = {};
                           return AlertDialog(
                             scrollable: true,
-                            contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+                            contentPadding: const EdgeInsets.fromLTRB(
+                              24,
+                              16,
+                              24,
+                              16,
+                            ),
                             title: Text(tr('searchX', args: [e.name])),
                             content: SizedBox(
                               width: double.maxFinite,
                               child: GeneratedForm(
-                              items: [
-                                ...e.searchQuerySettingFormItems.map(
-                                  (e) => [e],
-                                ),
-                                [
-                                  GeneratedFormTextField(
-                                    'url',
-                                    label: e.hosts.isNotEmpty
-                                        ? tr('overrideSource')
-                                        : plural('url', 1).substring(2),
-                                    autoCompleteOptions: [
-                                      ...(e.hosts.isNotEmpty
-                                          ? [e.hosts[0]]
-                                          : []),
-                                      ...appsProvider.apps.values
-                                          .where(
-                                            (a) =>
-                                                sourceProvider
-                                                    .getSource(
-                                                      a.app.url,
-                                                      overrideSource:
-                                                          a.app.overrideSource,
-                                                    )
-                                                    .runtimeType ==
-                                                e.runtimeType,
-                                          )
-                                          .map((a) {
-                                            var uri = Uri.parse(a.app.url);
-                                            return '${uri.origin}${uri.path}';
-                                          }),
-                                    ],
-                                    defaultValue: e.hosts.isNotEmpty
-                                        ? e.hosts[0]
-                                        : '',
-                                    required: true,
+                                items: [
+                                  ...e.searchQuerySettingFormItems.map(
+                                    (e) => [e],
                                   ),
+                                  [
+                                    GeneratedFormTextField(
+                                      'url',
+                                      label: e.hosts.isNotEmpty
+                                          ? tr('overrideSource')
+                                          : plural('url', 1).substring(2),
+                                      autoCompleteOptions: [
+                                        ...(e.hosts.isNotEmpty
+                                            ? [e.hosts[0]]
+                                            : []),
+                                        ...appsProvider.apps.values
+                                            .where(
+                                              (a) =>
+                                                  sourceProvider
+                                                      .getSource(
+                                                        a.app.url,
+                                                        overrideSource: a
+                                                            .app
+                                                            .overrideSource,
+                                                      )
+                                                      .runtimeType ==
+                                                  e.runtimeType,
+                                            )
+                                            .map((a) {
+                                              var uri = Uri.parse(a.app.url);
+                                              return '${uri.origin}${uri.path}';
+                                            }),
+                                      ],
+                                      defaultValue: e.hosts.isNotEmpty
+                                          ? e.hosts[0]
+                                          : '',
+                                      required: true,
+                                    ),
+                                  ],
                                 ],
-                              ],
-                              onValueChanges: (vals, valid, isBuilding) {
-                                localValues = vals;
-                              },
-                            ),
+                                onValueChanges: (vals, valid, isBuilding) {
+                                  localValues = vals;
+                                },
+                              ),
                             ),
                             actions: [
                               TextButton(
