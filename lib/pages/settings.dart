@@ -1,7 +1,11 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/components/tag_editor.dart';
@@ -1504,7 +1508,7 @@ class _SettingsPageState extends State<SettingsPage> {
           showDialog(
             context: context,
             builder: (BuildContext ctx) {
-              return const AboutDialogWithSafeMode();
+              return const AboutDialog();
             },
           );
         },
@@ -1798,8 +1802,87 @@ class CategorySelector extends StatelessWidget {
   }
 }
 
-class AboutDialog extends StatelessWidget {
+class AboutDialog extends StatefulWidget {
   const AboutDialog({super.key});
+
+  @override
+  State<AboutDialog> createState() => _AboutDialogState();
+}
+
+class _AboutDialogState extends State<AboutDialog> {
+  int _versionTapCount = 0;
+  Timer? _tapResetTimer;
+
+  @override
+  void dispose() {
+    _tapResetTimer?.cancel();
+    super.dispose();
+  }
+
+  void _onVersionTapped() {
+    final settingsProvider = context.read<SettingsProvider>();
+    final isSafeModeEnabled = settingsProvider.safeMode;
+
+    setState(() {
+      _versionTapCount++;
+    });
+
+    _tapResetTimer?.cancel();
+    _tapResetTimer = Timer(const Duration(seconds: 2), () {
+      setState(() {
+        _versionTapCount = 0;
+      });
+    });
+
+    // Haptic feedback at milestones
+    if (_versionTapCount % 25 == 0) {
+      HapticFeedback.selectionClick();
+    }
+
+    // Show remaining taps when Safe Mode is enabled (only from third tap)
+    if (isSafeModeEnabled && _versionTapCount >= 3) {
+      final remaining = 613 - _versionTapCount;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            tr(
+              'safeModeTapsRemaining',
+            ).replaceAll('{count}', remaining.toString()),
+          ),
+          duration: const Duration(milliseconds: 800),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+
+    // Visual feedback at 100-tap intervals when Safe Mode is disabled
+    if (!isSafeModeEnabled &&
+        _versionTapCount % 100 == 0 &&
+        _versionTapCount > 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('$_versionTapCount...'),
+          duration: const Duration(milliseconds: 500),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+
+    // Success at 613 taps
+    if (_versionTapCount >= 613) {
+      setState(() {
+        _versionTapCount = 0;
+      });
+      _tapResetTimer?.cancel();
+
+      HapticFeedback.heavyImpact();
+      _showSafeModeDialog();
+    }
+  }
+
+  void _showSafeModeDialog() {
+    showDialog(context: context, builder: (context) => const SafeModeDialog());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1849,10 +1932,19 @@ class AboutDialog extends StatelessWidget {
                   ),
                 ),
                 gap8,
-                Text(
-                  'Version $version ($buildNumber)',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                GestureDetector(
+                  onTap: _onVersionTapped,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 8,
+                    ),
+                    child: Text(
+                      'Version $version ($buildNumber)',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
                   ),
                 ),
                 gap8,
