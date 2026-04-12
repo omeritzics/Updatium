@@ -556,196 +556,6 @@ class AppsPageState extends State<AppsPage> {
       );
     }
 
-    getSingleAppHorizTile(int index) {
-      // New trailing: show Install / Update button or Updated indicator
-      Widget trailingRow = Builder(
-        builder: (ctx) {
-          final ai = listedApps[index];
-          final app = ai.app;
-          final isInstalled = app.installedVersion != null;
-          final hasUpdateLocal =
-              isInstalled && app.installedVersion != app.latestVersion;
-          final isTrackOnly = app.additionalSettings['trackOnly'] == true;
-
-          Widget action;
-          if (isTrackOnly) {
-            action = const Icon(Icons.check_circle_outline);
-          } else if (!isInstalled) {
-            action = FilledButton.tonal(
-              onPressed: appsProvider.areDownloadsRunning()
-                  ? null
-                  : () {
-                      appsProvider
-                          .downloadAndInstallLatestApps([
-                            app.id,
-                          ], globalNavigatorKey.currentContext)
-                          .catchError((e) {
-                            showError(e, context);
-                            return <String>[];
-                          });
-                    },
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
-              child: Text(tr('install')),
-            );
-          } else if (hasUpdateLocal) {
-            action = FilledButton.tonal(
-              onPressed: appsProvider.areDownloadsRunning()
-                  ? null
-                  : () {
-                      appsProvider
-                          .downloadAndInstallLatestApps([
-                            app.id,
-                          ], globalNavigatorKey.currentContext)
-                          .catchError((e) {
-                            showError(e, context);
-                            return <String>[];
-                          });
-                    },
-              style: const ButtonStyle(visualDensity: VisualDensity.compact),
-              child: Text(tr('update')),
-            );
-          } else {
-            action = Chip(
-              avatar: Icon(
-                Icons.check_circle,
-                color: Theme.of(context).colorScheme.primary,
-                size: 16,
-              ),
-              label: Text(
-                tr('updated'),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 12,
-                ),
-              ),
-              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-              side: BorderSide(
-                color: preserveTransparency(
-                  Theme.of(context).colorScheme.primary,
-                  0.3,
-                ),
-                width: 1,
-              ),
-            );
-          }
-
-          return SizedBox(width: 120, child: Center(child: action));
-        },
-      );
-
-      List<double> stops = [
-        ...listedApps[index].app.categories.asMap().entries.map(
-          (e) =>
-              ((e.key / (listedApps[index].app.categories.length - 1)) -
-              0.0001),
-        ),
-        1,
-      ];
-      if (stops.length == 2) {
-        stops[0] = 0.9999;
-      }
-      return Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            stops: stops,
-            begin: const Alignment(-1, 0),
-            end: const Alignment(-0.97, 0),
-            colors: [
-              ...listedApps[index].app.categories.map(
-                (e) => getCategoryColor(e, 255, settingsProvider),
-              ),
-              Colors.transparent,
-            ],
-          ),
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: () {
-            if (selectedAppIds.isNotEmpty) {
-              toggleAppSelected(listedApps[index].app);
-            } else {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      AppPage(appId: listedApps[index].app.id),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                        return SharedAxisTransition(
-                          animation: animation,
-                          secondaryAnimation: secondaryAnimation,
-                          transitionType: SharedAxisTransitionType.horizontal,
-                          child: child,
-                        );
-                      },
-                ),
-              );
-            }
-          },
-          onLongPress: () {
-            toggleAppSelected(listedApps[index].app);
-          },
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
-            minVerticalPadding: 4,
-            tileColor: Theme.of(context).colorScheme.surface,
-            selected: selectedAppIds.contains(listedApps[index].app.id),
-            leading: SizedBox(
-              height: MediaQuery.of(context).size.width * 0.1,
-              width: MediaQuery.of(context).size.width * 0.1,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: getAppIcon(index),
-              ),
-            ),
-            title: Text(
-              listedApps[index].name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: listedApps[index].app.pinned
-                    ? FontWeight.w600
-                    : FontWeight.w500,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
-            subtitle: Text(
-              tr('byX', args: [listedApps[index].author]),
-              maxLines: 1,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                fontWeight: listedApps[index].app.pinned
-                    ? FontWeight.w500
-                    : FontWeight.w400,
-              ),
-            ),
-            trailing: listedApps[index].downloadProgress != null
-                ? SizedBox(
-                    child: Text(
-                      listedApps[index].downloadProgress! >= 0
-                          ? tr(
-                              'percentProgress',
-                              args: [
-                                listedApps[index].downloadProgress!
-                                    .toInt()
-                                    .toString(),
-                              ],
-                            )
-                          : tr('installing'),
-                      textAlign: (listedApps[index].downloadProgress! >= 0)
-                          ? TextAlign.start
-                          : TextAlign.end,
-                    ),
-                  )
-                : trailingRow,
-          ),
-        ),
-      );
-    }
-
     List<double> categoryStops(List<String> categories) {
       final n = categories.length;
       final cached = _stopsCache[n];
@@ -768,225 +578,338 @@ class AppsPageState extends State<AppsPage> {
       return result;
     }
 
-    Widget getSingleAppGridTile(int index) {
-      var hasUpdate =
-          listedApps[index].app.installedVersion != null &&
-          listedApps[index].app.installedVersion !=
-              listedApps[index].app.latestVersion;
-      final categories = listedApps[index].app.categories;
-      final stops = categoryStops(categories);
+    // Unified app tile widget that can render in both grid and list modes
+    Widget getUnifiedAppTile(int index, {bool isGridMode = false}) {
+      final appInfo = listedApps[index];
+      final app = appInfo.app;
+      final isInstalled = app.installedVersion != null;
+      final hasUpdateLocal = isInstalled && app.installedVersion != app.latestVersion;
+      final isTrackOnly = app.additionalSettings['trackOnly'] == true;
+      final isSelected = selectedAppIds.contains(app.id);
 
-      return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(
-            stops: stops,
-            begin: const Alignment(-1, -1),
-            end: const Alignment(1, 1),
-            colors: [
-              ...listedApps[index].app.categories.map(
-                (e) => getCategoryColor(e, 40, settingsProvider),
+      // Common action button builder
+      Widget buildActionButton() {
+        if (isTrackOnly) {
+          return const Icon(Icons.check_circle_outline);
+        } else if (!isInstalled) {
+          return FilledButton.tonal(
+            onPressed: appsProvider.areDownloadsRunning()
+                ? null
+                : () {
+                    appsProvider
+                        .downloadAndInstallLatestApps([
+                          app.id,
+                        ], globalNavigatorKey.currentContext)
+                        .catchError((e) {
+                          showError(e, context);
+                          return <String>[];
+                        });
+                  },
+            style: const ButtonStyle(visualDensity: VisualDensity.compact),
+            child: Text(tr('install')),
+          );
+        } else if (hasUpdateLocal) {
+          return FilledButton.tonal(
+            onPressed: appsProvider.areDownloadsRunning()
+                ? null
+                : () {
+                    appsProvider
+                        .downloadAndInstallLatestApps([
+                          app.id,
+                        ], globalNavigatorKey.currentContext)
+                        .catchError((e) {
+                          showError(e, context);
+                          return <String>[];
+                        });
+                  },
+            style: const ButtonStyle(visualDensity: VisualDensity.compact),
+            child: Text(tr('update')),
+          );
+        } else {
+          return Chip(
+            avatar: Icon(
+              Icons.check_circle,
+              color: Theme.of(context).colorScheme.primary,
+              size: isGridMode ? 14 : 16,
+            ),
+            label: Text(
+              tr('updated'),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: isGridMode ? 10 : 12,
               ),
-              Colors.transparent,
-            ],
+            ),
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            side: BorderSide(
+              color: preserveTransparency(
+                Theme.of(context).colorScheme.primary,
+                0.3,
+              ),
+              width: 1,
+            ),
+          );
+        }
+      }
+
+      // Common tap handlers
+      void handleTap() {
+        if (selectedAppIds.isNotEmpty) {
+          toggleAppSelected(app);
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AppPage(appId: app.id),
+            ),
+          );
+        }
+      }
+
+      void handleLongPress() {
+        toggleAppSelected(app);
+      }
+
+      // Common app icon
+      Widget appIcon = getAppIcon(index);
+
+      if (isGridMode) {
+        // Grid mode implementation
+        final categories = app.categories;
+        final stops = categoryStops(categories);
+
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: isSelected
+                ? Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3)
+                : null,
+            gradient: LinearGradient(
+              stops: stops,
+              begin: const Alignment(-1, -1),
+              end: const Alignment(1, 1),
+              colors: [
+                ...categories.map(
+                  (e) => getCategoryColor(e, 40, settingsProvider),
+                ),
+                Colors.transparent,
+              ],
+            ),
           ),
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            if (selectedAppIds.isNotEmpty) {
-              toggleAppSelected(listedApps[index].app);
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      AppPage(appId: listedApps[index].app.id),
-                ),
-              );
-            }
-          },
-          onLongPress: () {
-            toggleAppSelected(listedApps[index].app);
-          },
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              if (listedApps[index].app.pinned)
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Icon(
-                      Icons.push_pin,
-                      size: 16,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ),
-              if (hasUpdate)
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Icon(
-                      Icons.circle,
-                      size: 10,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    height: 56,
-                    width: 56,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: getAppIcon(index),
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      listedApps[index].name,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(12),
+            onTap: handleTap,
+            onLongPress: handleLongPress,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                if (app.pinned)
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Icon(
+                        Icons.push_pin,
+                        size: 16,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 2),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      listedApps[index].author,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(fontSize: 10),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Builder(
-                      builder: (ctx) {
-                        final ai = listedApps[index];
-                        final app = ai.app;
-                        final isInstalled = app.installedVersion != null;
-                        final hasUpdateLocal =
-                            isInstalled &&
-                            app.installedVersion != app.latestVersion;
-                        final isTrackOnly =
-                            app.additionalSettings['trackOnly'] == true;
-
-                        if (isTrackOnly) {
-                          return const SizedBox.shrink();
-                        }
-
-                        if (!isInstalled) {
-                          return FilledButton.tonal(
-                            onPressed: appsProvider.areDownloadsRunning()
-                                ? null
-                                : () {
-                                    appsProvider
-                                        .downloadAndInstallLatestApps([
-                                          app.id,
-                                        ], globalNavigatorKey.currentContext)
-                                        .catchError((e) {
-                                          showError(e, context);
-                                          return <String>[];
-                                        });
-                                  },
-                            style: const ButtonStyle(
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            child: Text(tr('install')),
-                          );
-                        }
-
-                        if (hasUpdateLocal) {
-                          return FilledButton.tonal(
-                            onPressed: appsProvider.areDownloadsRunning()
-                                ? null
-                                : () {
-                                    appsProvider
-                                        .downloadAndInstallLatestApps([
-                                          app.id,
-                                        ], globalNavigatorKey.currentContext)
-                                        .catchError((e) {
-                                          showError(e, context);
-                                          return <String>[];
-                                        });
-                                  },
-                            style: const ButtonStyle(
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            child: Text(tr('update')),
-                          );
-                        }
-
-                        return Chip(
-                          avatar: Icon(
-                            Icons.check_circle,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 14,
-                          ),
-                          label: Text(
-                            tr('updated'),
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 10,
-                            ),
-                          ),
-                          backgroundColor: Theme.of(
-                            context,
-                          ).colorScheme.primaryContainer,
-                          side: BorderSide(
-                            color: preserveTransparency(
-                              Theme.of(context).colorScheme.primary,
-                              0.3,
-                            ),
-                            width: 1,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              if (listedApps[index].downloadProgress != null)
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.black45,
-                    ),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        value: listedApps[index].downloadProgress! >= 0
-                            ? listedApps[index].downloadProgress! / 100
-                            : null,
+                if (hasUpdateLocal)
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Icon(
+                        Icons.circle,
+                        size: 10,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      height: 56,
+                      width: 56,
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: appIcon,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        appInfo.name,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        appInfo.author,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.copyWith(fontSize: 10),
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Builder(
+                        builder: (ctx) {
+                          if (isTrackOnly) {
+                            return const SizedBox.shrink();
+                          }
+                          return buildActionButton();
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-            ],
+                if (appInfo.downloadProgress != null)
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.black45,
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value: appInfo.downloadProgress! >= 0
+                              ? appInfo.downloadProgress! / 100
+                              : null,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        // List mode implementation
+        List<double> stops = [
+          ...app.categories.asMap().entries.map(
+            (e) =>
+                ((e.key / (app.categories.length - 1)) -
+                0.0001),
+          ),
+          1,
+        ];
+        if (stops.length == 2) {
+          stops[0] = 0.9999;
+        }
+
+        Widget trailingRow = Builder(
+          builder: (ctx) {
+            return SizedBox(width: 120, child: Center(child: buildActionButton()));
+          },
+        );
+
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              stops: stops,
+              begin: const Alignment(-1, 0),
+              end: const Alignment(-0.97, 0),
+              colors: [
+                ...app.categories.map(
+                  (e) => getCategoryColor(e, 255, settingsProvider),
+                ),
+                Colors.transparent,
+              ],
+            ),
+          ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: handleTap,
+            onLongPress: handleLongPress,
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
+              minVerticalPadding: 4,
+              tileColor: Theme.of(context).colorScheme.surface,
+              selectedTileColor: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
+              selected: isSelected,
+              leading: SizedBox(
+                height: MediaQuery.of(context).size.width * 0.1,
+                width: MediaQuery.of(context).size.width * 0.1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: appIcon,
+                ),
+              ),
+              title: Text(
+                appInfo.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: app.pinned
+                      ? FontWeight.w600
+                      : FontWeight.w500,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+              subtitle: Text(
+                tr('byX', args: [appInfo.author]),
+                maxLines: 1,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  fontWeight: app.pinned
+                      ? FontWeight.w500
+                      : FontWeight.w400,
+                ),
+              ),
+              trailing: appInfo.downloadProgress != null
+                  ? SizedBox(
+                      child: Text(
+                        appInfo.downloadProgress! >= 0
+                            ? tr(
+                                'percentProgress',
+                                args: [
+                                  appInfo.downloadProgress!
+                                      .toInt()
+                                      .toString(),
+                                ],
+                              )
+                            : tr('installing'),
+                        textAlign: (appInfo.downloadProgress! >= 0)
+                            ? TextAlign.start
+                            : TextAlign.end,
+                      ),
+                    )
+                  : trailingRow,
+            ),
+          ),
+        );
+      }
     }
 
+    getSingleAppHorizTile(int index) {
+      return getUnifiedAppTile(index, isGridMode: false);
+    }
+
+    getSingleAppGridTile(int index) {
+      return getUnifiedAppTile(index, isGridMode: true);
+    }
+
+    
     getCategoryCollapsibleTile(int index) {
       var filteredEntries = listedApps
           .asMap()
