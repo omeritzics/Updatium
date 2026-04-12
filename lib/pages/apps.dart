@@ -909,9 +909,9 @@ class AppsPageState extends State<AppsPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SliverGrid(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 190,
+                maxCrossAxisExtent: 200,
                 crossAxisSpacing: 8,
-                mainAxisSpacing: 12,
+                mainAxisSpacing: 8,
                 childAspectRatio: 0.6,
               ),
               delegate: SliverChildBuilderDelegate((
@@ -1579,7 +1579,7 @@ class AppsPageState extends State<AppsPage> {
 
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 190,
+              maxCrossAxisExtent: 200,
               crossAxisSpacing: spacing,
               mainAxisSpacing: spacing,
               childAspectRatio: 0.6,
