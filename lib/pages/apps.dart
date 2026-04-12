@@ -583,7 +583,8 @@ class AppsPageState extends State<AppsPage> {
       final appInfo = listedApps[index];
       final app = appInfo.app;
       final isInstalled = app.installedVersion != null;
-      final hasUpdateLocal = isInstalled && app.installedVersion != app.latestVersion;
+      final hasUpdateLocal =
+          isInstalled && app.installedVersion != app.latestVersion;
       final isTrackOnly = app.additionalSettings['trackOnly'] == true;
       final isSelected = selectedAppIds.contains(app.id);
 
@@ -658,9 +659,7 @@ class AppsPageState extends State<AppsPage> {
         } else {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => AppPage(appId: app.id),
-            ),
+            MaterialPageRoute(builder: (context) => AppPage(appId: app.id)),
           );
         }
       }
@@ -681,7 +680,9 @@ class AppsPageState extends State<AppsPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: isSelected
-                ? Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3)
+                ? Theme.of(
+                    context,
+                  ).colorScheme.primaryContainer.withOpacity(0.3)
                 : null,
             gradient: LinearGradient(
               stops: stops,
@@ -734,10 +735,7 @@ class AppsPageState extends State<AppsPage> {
                     SizedBox(
                       height: 56,
                       width: 56,
-                      child: FittedBox(
-                        fit: BoxFit.contain,
-                        child: appIcon,
-                      ),
+                      child: FittedBox(fit: BoxFit.contain, child: appIcon),
                     ),
                     const SizedBox(height: 6),
                     Padding(
@@ -804,9 +802,7 @@ class AppsPageState extends State<AppsPage> {
         // List mode implementation
         List<double> stops = [
           ...app.categories.asMap().entries.map(
-            (e) =>
-                ((e.key / (app.categories.length - 1)) -
-                0.0001),
+            (e) => ((e.key / (app.categories.length - 1)) - 0.0001),
           ),
           1,
         ];
@@ -816,7 +812,10 @@ class AppsPageState extends State<AppsPage> {
 
         Widget trailingRow = Builder(
           builder: (ctx) {
-            return SizedBox(width: 120, child: Center(child: buildActionButton()));
+            return SizedBox(
+              width: 120,
+              child: Center(child: buildActionButton()),
+            );
           },
         );
 
@@ -845,7 +844,9 @@ class AppsPageState extends State<AppsPage> {
               ),
               minVerticalPadding: 4,
               tileColor: Theme.of(context).colorScheme.surface,
-              selectedTileColor: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
+              selectedTileColor: Theme.of(
+                context,
+              ).colorScheme.primaryContainer.withOpacity(0.3),
               selected: isSelected,
               leading: SizedBox(
                 height: MediaQuery.of(context).size.width * 0.1,
@@ -860,9 +861,7 @@ class AppsPageState extends State<AppsPage> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: app.pinned
-                      ? FontWeight.w600
-                      : FontWeight.w500,
+                  fontWeight: app.pinned ? FontWeight.w600 : FontWeight.w500,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
@@ -871,9 +870,7 @@ class AppsPageState extends State<AppsPage> {
                 maxLines: 1,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  fontWeight: app.pinned
-                      ? FontWeight.w500
-                      : FontWeight.w400,
+                  fontWeight: app.pinned ? FontWeight.w500 : FontWeight.w400,
                 ),
               ),
               trailing: appInfo.downloadProgress != null
@@ -883,9 +880,7 @@ class AppsPageState extends State<AppsPage> {
                             ? tr(
                                 'percentProgress',
                                 args: [
-                                  appInfo.downloadProgress!
-                                      .toInt()
-                                      .toString(),
+                                  appInfo.downloadProgress!.toInt().toString(),
                                 ],
                               )
                             : tr('installing'),
@@ -909,7 +904,6 @@ class AppsPageState extends State<AppsPage> {
       return getUnifiedAppTile(index, isGridMode: true);
     }
 
-    
     getCategoryCollapsibleTile(int index) {
       var filteredEntries = listedApps
           .asMap()
