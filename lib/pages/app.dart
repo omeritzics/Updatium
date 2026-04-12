@@ -185,7 +185,6 @@ class _AppPageState extends State<AppPage> {
             ),
           ),
 
-
           /* Certificate Hashes */
           if (app != null && app.certificateHashes.isNotEmpty)
             Column(
@@ -450,8 +449,6 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-
-
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: Row(
@@ -480,24 +477,21 @@ class _AppPageState extends State<AppPage> {
                           )
                         : const Icon(Icons.refresh),
                     tooltip: tr('checkForUpdate'),
-                    onPressed:
-                        updating || areDownloadsRunning || app == null
-                            ? null
-                            : () => getUpdate(app.app.id),
+                    onPressed: updating || areDownloadsRunning || app == null
+                        ? null
+                        : () => getUpdate(app.app.id),
                   ),
                   // Additional options (conditional)
                   if (source != null &&
-                      source
-                          .combinedAppSpecificSettingFormItems
-                          .isNotEmpty)
+                      source.combinedAppSpecificSettingFormItems.isNotEmpty)
                     IconButton(
                       icon: const Icon(Icons.tune),
                       tooltip: tr('additionalOptions'),
                       onPressed: updating
                           ? null
                           : () => showAdditionalOptionsDialog().then(
-                                handleAdditionalOptionChanges,
-                              ),
+                              handleAdditionalOptionChanges,
+                            ),
                     ),
                   // Download assets (conditional)
                   if (app?.app.apkUrls.isNotEmpty == true ||
@@ -512,10 +506,9 @@ class _AppPageState extends State<AppPage> {
                           ? null
                           : () async {
                               try {
-                                await appsProvider.downloadAppAssets(
-                                  [app!.app.id],
-                                  context,
-                                );
+                                await appsProvider.downloadAppAssets([
+                                  app!.app.id,
+                                ], context);
                               } catch (e) {
                                 showError(e, context);
                               }
@@ -554,34 +547,31 @@ class _AppPageState extends State<AppPage> {
             onPressed:
                 !updating &&
                     (app?.app.installedVersion == null ||
-                        app?.app.installedVersion !=
-                            app?.app.latestVersion) &&
+                        app?.app.installedVersion != app?.app.latestVersion) &&
                     !areDownloadsRunning
-                    ? () async {
-                        try {
-                          var successMessage =
-                              app?.app.installedVersion == null
-                                  ? tr('installed')
-                                  : tr('appsUpdated');
-                          HapticFeedback.heavyImpact();
-                          var res = await appsProvider
-                              .downloadAndInstallLatestApps(
-                            app?.app.id != null ? [app!.app.id] : [],
-                            globalNavigatorKey.currentContext,
-                          );
-                          if (res.isNotEmpty && !trackOnly) {
-                            // ignore: use_build_context_synchronously
-                            showMessage(successMessage, context);
-                          }
-                          if (res.isNotEmpty && mounted) {
-                            Navigator.of(context).pop();
-                          }
-                        } catch (e) {
-                          // ignore: use_build_context_synchronously
-                          showError(e, context);
-                        }
+                ? () async {
+                    try {
+                      var successMessage = app?.app.installedVersion == null
+                          ? tr('installed')
+                          : tr('appsUpdated');
+                      HapticFeedback.heavyImpact();
+                      var res = await appsProvider.downloadAndInstallLatestApps(
+                        app?.app.id != null ? [app!.app.id] : [],
+                        globalNavigatorKey.currentContext,
+                      );
+                      if (res.isNotEmpty && !trackOnly) {
+                        // ignore: use_build_context_synchronously
+                        showMessage(successMessage, context);
                       }
-                    : null,
+                      if (res.isNotEmpty && mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    } catch (e) {
+                      // ignore: use_build_context_synchronously
+                      showError(e, context);
+                    }
+                  }
+                : null,
             icon: Icon(
               app?.app.installedVersion == null
                   ? Icons.install_mobile
