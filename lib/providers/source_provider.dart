@@ -331,7 +331,7 @@ class App {
   late Map<String, dynamic> additionalSettings;
   late DateTime? lastUpdateCheck;
   bool pinned = false;
-  List<String> categories;
+  List<String>? categories;
   late DateTime? releaseDate;
   late String? changeLog;
   late String? remoteIconUrl;

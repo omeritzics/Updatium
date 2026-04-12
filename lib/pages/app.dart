@@ -283,9 +283,7 @@ class _AppPageState extends State<AppPage> {
           height24,
           CategorySelector(
             alignment: WrapAlignment.center,
-            preselected: app?.app.categories != null
-                ? app!.app.categories.toSet()
-                : {},
+            preselected: app?.app.categories?.toSet() ?? {},
             onSelected: (categories) {
               if (app != null) {
                 app.app.categories = categories;
@@ -512,6 +510,10 @@ class _AppPageState extends State<AppPage> {
           flex: 4,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              elevation: 2,
+              shadowColor: Theme.of(context).colorScheme.shadow,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
@@ -576,6 +578,10 @@ class _AppPageState extends State<AppPage> {
               color: Theme.of(context).colorScheme.onPrimary,
             ),
             style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              elevation: 2,
+              shadowColor: Theme.of(context).colorScheme.shadow,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20),
@@ -682,49 +688,7 @@ class _AppPageState extends State<AppPage> {
       ],
     );
 
-    getBottomSheetMenu() => Container(
-      color: Theme.of(context).colorScheme.surfaceContainerLow,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(
-          16,
-          16,
-          16,
-          MediaQuery.of(context).padding.bottom + 16,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(width: 16.0),
-                  Expanded(child: getInstallOrUpdateButton()),
-                  const SizedBox(width: 16.0),
-                ],
-              ),
-            ),
-            if (app?.downloadProgress != null)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                child: LinearProgressIndicator(
-                  value: app!.downloadProgress! >= 0
-                      ? app.downloadProgress! / 100
-                      : null,
-                  backgroundColor: Theme.of(
-                    context,
-                  ).colorScheme.surfaceContainerHighest,
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
-
+    
     return Scaffold(
       body: RefreshIndicator(
         child: CustomScrollView(
@@ -820,7 +784,39 @@ class _AppPageState extends State<AppPage> {
                 ],
               ),
             ),
-            SliverToBoxAdapter(child: Column(children: [getFullInfoColumn()])),
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  getFullInfoColumn(),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: 16.0),
+                        Expanded(child: getInstallOrUpdateButton()),
+                        const SizedBox(width: 16.0),
+                      ],
+                    ),
+                  ),
+                  if (app?.downloadProgress != null)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
+                      child: LinearProgressIndicator(
+                        value: app!.downloadProgress! >= 0
+                            ? app.downloadProgress! / 100
+                            : null,
+                        backgroundColor: Theme.of(
+                          context,
+                        ).colorScheme.surfaceContainerHighest,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ],
         ),
         onRefresh: () async {
@@ -829,7 +825,6 @@ class _AppPageState extends State<AppPage> {
           }
         },
       ),
-      bottomSheet: getBottomSheetMenu(),
     );
   }
 }

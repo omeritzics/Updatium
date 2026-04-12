@@ -301,7 +301,7 @@ class AppsPageState extends State<AppsPage> {
       }
       if (filter.categoryFilter.isNotEmpty &&
           filter.categoryFilter
-              .intersection(app.app.categories.toSet())
+              .intersection(app.app.categories?.toSet() ?? <String>{})
               .isEmpty) {
         return false;
       }
@@ -429,7 +429,7 @@ class AppsPageState extends State<AppsPage> {
 
     List<String?> getListedCategories() {
       var temp = listedApps.map(
-        (e) => e.app.categories.isNotEmpty ? e.app.categories : [null],
+        (e) => e.app.categories?.isNotEmpty == true ? e.app.categories! : [null],
       );
       return temp.isNotEmpty
           ? {
@@ -869,8 +869,8 @@ class AppsPageState extends State<AppsPage> {
           .entries
           .where(
             (e) =>
-                e.value.app.categories.contains(listedCategories[index]) ||
-                e.value.app.categories.isEmpty &&
+                e.value.app.categories?.contains(listedCategories[index]) == true ||
+                e.value.app.categories?.isEmpty == true &&
                     listedCategories[index] == null,
           )
           .toList();
@@ -1059,7 +1059,7 @@ class AppsPageState extends State<AppsPage> {
           Set<String>? preselected;
           var showPrompt = false;
           for (var element in selectedApps) {
-            var currentCats = element.categories.toSet();
+            var currentCats = element.categories?.toSet() ?? <String>{};
             if (preselected == null) {
               preselected = currentCats;
             } else {
@@ -1488,12 +1488,28 @@ class AppsPageState extends State<AppsPage> {
       } else {
         // Flat View
         if (settingsProvider.useGridView) {
+          // Calculate optimal column count with min/max constraints
+          final screenWidth = MediaQuery.of(context).size.width;
+          final minItemWidth = 120.0;
+          final maxItemWidth = 200.0;
+          final spacing = 12.0;
+          
+          // Calculate how many columns fit with max item width
+          int maxColumns = ((screenWidth + spacing) / (maxItemWidth + spacing)).floor();
+          // Calculate how many columns fit with min item width  
+          int minColumns = ((screenWidth + spacing) / (minItemWidth + spacing)).floor();
+          
+          // Ensure we have at least 1 column and respect the constraints
+          int crossAxisCount = maxColumns;
+          if (crossAxisCount < 1) crossAxisCount = 1;
+          if (crossAxisCount > minColumns) crossAxisCount = minColumns;
+          
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: (MediaQuery.of(context).size.width / 160).floor(),
+              crossAxisCount: crossAxisCount,
               childAspectRatio: 0.6,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
+              crossAxisSpacing: spacing,
+              mainAxisSpacing: spacing,
             ),
             delegate: SliverChildBuilderDelegate((
               BuildContext context,

@@ -645,6 +645,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ExpansionTile(
+                          leading: Icon(
+                            Icons.system_update_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                           title: Text(
                             tr('updates'),
                             style: TextStyle(
@@ -1044,6 +1048,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap24,
                         ExpansionTile(
+                          leading: Icon(
+                            Icons.source_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                           title: Text(
                             tr('sourceSpecific'),
                             style: TextStyle(
@@ -1060,6 +1068,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap24,
                         ExpansionTile(
+                          leading: Icon(
+                            Icons.palette_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                           title: Text(
                             tr('appearance'),
                             style: TextStyle(
@@ -1422,6 +1434,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap24,
                         ExpansionTile(
+                          leading: Icon(
+                            Icons.category_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                           title: Text(
                             tr('categories'),
                             style: TextStyle(

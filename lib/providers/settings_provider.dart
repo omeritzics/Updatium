@@ -276,9 +276,9 @@ class SettingsProvider with ChangeNotifier {
       List<App> changedApps = appsProvider
           .getAppValues()
           .map((a) {
-            var n1 = a.app.categories.length;
-            a.app.categories.removeWhere((c) => !cats.keys.contains(c));
-            return n1 > a.app.categories.length ? a.app : null;
+            var n1 = a.app.categories?.length ?? 0;
+            a.app.categories?.removeWhere((c) => !cats.keys.contains(c));
+            return n1 > (a.app.categories?.length ?? 0) ? a.app : null;
           })
           .where((element) => element != null)
           .map((e) => e as App)
