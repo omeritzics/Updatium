@@ -67,18 +67,9 @@ class MainActivity : FlutterActivity() {
                     )
                     appsList.add(appMap)
                 }
-import android.util.Log
-
-class MainActivity : FlutterActivity() {
-    private val CHANNEL = "updatium/package_manager"
-    private val TAG = "MainActivity"
-    
-    // ... other code ...
-    
-    } catch (e: Exception) {
-        Log.w(TAG, "Skipping inaccessible package entry", e)
-    }
-}
+            } catch (e: Exception) {
+                // Skip packages that can't be accessed
+            }
         }
 
         return appsList
@@ -88,7 +79,7 @@ class MainActivity : FlutterActivity() {
         return try {
             val packageManager = packageManager
             val packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_META_DATA)
-            val applicationInfo = packageInfo.applicationInfo
+            val applicationInfo = packageInfo.applicationInfo ?: return null
 
             mapOf(
                 "appName" to packageManager.getApplicationLabel(applicationInfo).toString(),
@@ -103,7 +94,6 @@ class MainActivity : FlutterActivity() {
             )
         } catch (e: PackageManager.NameNotFoundException) {
             null
-        }
         }
     }
 }
