@@ -29,7 +29,7 @@ class _SafeModeDialogState extends State<SafeModeDialog> {
 
   Future<void> _setupPassword() async {
     print('Safe Mode Dialog: Starting password setup');
-    
+
     if (_passwordController.text.length < 8) {
       print('Safe Mode Dialog: Password too short');
       setState(() {

@@ -815,9 +815,12 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                               borderRadius: BorderRadius.circular(12),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 4),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4,
+                                ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Flexible(
                                       child: Column(
@@ -843,9 +846,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                             ? Theme.of(
                                                 context,
                                               ).colorScheme.primaryContainer
-                                            : Theme.of(
-                                                context,
-                                              ).colorScheme.surfaceContainerHighest,
+                                            : Theme.of(context)
+                                                  .colorScheme
+                                                  .surfaceContainerHighest,
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Icon(
