@@ -1730,7 +1730,7 @@ class AboutDialog extends StatelessWidget {
               color: Theme.of(context).colorScheme.primaryContainer,
             ),
             child: Icon(
-              Icons.update_rounded,
+              Icons.info_rounded,
               color: Theme.of(context).colorScheme.onPrimaryContainer,
               size: 28,
             ),
@@ -1860,7 +1860,7 @@ class AboutDialog extends StatelessWidget {
                             mode: LaunchMode.externalApplication,
                           );
                         },
-                        icon: const Icon(Icons.help_outline_rounded, size: 18),
+                        icon: const Icon(Icons.menu_book_rounded, size: 18),
                         label: Text(tr('wiki')),
                         style: TextButton.styleFrom(
                           alignment: Alignment.centerLeft,

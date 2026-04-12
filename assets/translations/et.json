@@ -435,5 +435,6 @@
     "githubStarPromptStar": "Anna tärn",
     "githubStarPromptDontShowAgain": "Ära näita enam",
     "sourceCode": "Lähtekood",
-    "developedBy": "Arendanud"
+    "developedBy": "Arendanud",
+    "appDescription": "Kohandatav Android-rakenduste kataloog, mis võimaldab teil värskendada oma rakendusi otse nende APK-allikatest."
 }

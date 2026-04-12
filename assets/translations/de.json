@@ -453,5 +453,6 @@
     "githubStarPromptStar": "Stern geben",
     "githubStarPromptDontShowAgain": "Nicht mehr anzeigen",
     "sourceCode": "Quellcode",
-    "developedBy": "Entwickelt von"
+    "developedBy": "Entwickelt von",
+    "appDescription": "Ein anpassbarer Android-App-Katalog, der es Ihnen ermöglicht, Ihre Apps direkt aus ihren APK-Quellen zu aktualisieren."
 }

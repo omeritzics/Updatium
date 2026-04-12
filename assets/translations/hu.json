@@ -435,5 +435,6 @@
     "githubStarPromptStar": "Csillag adása",
     "githubStarPromptDontShowAgain": "Ne mutassa újra",
     "sourceCode": "Forráskód",
-    "developedBy": "Fejlesztő"
+    "developedBy": "Fejlesztő",
+    "appDescription": "Egy testreszabható Android alkalmazáskatalógus, amely lehetõvé teszi az alkalmazások közvetlen frissítését az APK forrásaikból."
 }

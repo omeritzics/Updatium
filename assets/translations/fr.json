@@ -453,5 +453,6 @@
     "githubStarPromptStar": "Donner une étoile",
     "githubStarPromptDontShowAgain": "Ne plus afficher",
     "sourceCode": "Code source",
-    "developedBy": "Développé par"
+    "developedBy": "Développé par",
+    "appDescription": "Un catalogue d'applications Android personnalisable qui vous permet de mettre à jour vos applications directement depuis leurs sources APK."
 }

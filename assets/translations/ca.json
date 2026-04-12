@@ -435,5 +435,6 @@
     "githubStarPromptStar": "Donar una estrella",
     "githubStarPromptDontShowAgain": "No mostrar més",
     "sourceCode": "Codi font",
-    "developedBy": "Desenvolupat per"
+    "developedBy": "Desenvolupat per",
+    "appDescription": "Un catàleg d'aplicacions Android personalitzable que us permet actualitzar les vostres aplicacions directament des de les seves fonts APK."
 }

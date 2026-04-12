@@ -448,5 +448,6 @@
     "githubStarPromptStar": "Dát hvězdičku",
     "githubStarPromptDontShowAgain": "Nezobrazovat znovu",
     "sourceCode": "Zdrojový kód",
-    "developedBy": "Vyvinul"
+    "developedBy": "Vyvinul",
+    "appDescription": "Pizpôsobitelný katalog aplikací pro Android, který vám umoauje aktualizovat va aplikace pímo z jejich APK zdroj."
 }

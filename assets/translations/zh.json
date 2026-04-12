@@ -435,5 +435,6 @@
     "githubStarPromptStar": "加星标",
     "githubStarPromptDontShowAgain": "不再显示",
     "sourceCode": "源代码",
-    "developedBy": "开发者"
+    "developedBy": "开发者",
+    "appDescription": "一个可定制的Android应用目录，允许您直接从APK源更新应用程序。"
 }

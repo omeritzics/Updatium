@@ -435,5 +435,6 @@
     "githubStarPromptStar": "スターを付ける",
     "githubStarPromptDontShowAgain": "今後表示しない",
     "sourceCode": "ソースコード",
-    "developedBy": "開発者"
+    "developedBy": "開発者",
+    "appDescription": "カスタマイズ可能なAndroidアプリカタログで、APKソースから直接アプリを更新できます。"
 }

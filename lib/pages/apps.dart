@@ -1462,7 +1462,7 @@ class AppsPageState extends State<AppsPage> {
         if (settingsProvider.useGridView) {
           return SliverGrid(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
+              maxCrossAxisExtent: 180,
               childAspectRatio: 0.6,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,

@@ -453,5 +453,6 @@
     "githubStarPromptStar": "Yıldızla",
     "githubStarPromptDontShowAgain": "Bir daha gösterme",
     "sourceCode": "Kaynak Kodu",
-    "developedBy": "Geliştiren"
+    "developedBy": "Geliştiren",
+    "appDescription": "Android uygulamalarınızı doğrudan APK kaynaklarından güncellemenize izin veren özelleştirilebilir bir uygulama kataloğudur."
 }

@@ -525,8 +525,18 @@ class _AppPageState extends State<AppPage> {
     getInstallOrUpdateButton() => Row(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // Main action button (left side)
         Expanded(
+          flex: 4,
           child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
+              ),
+            ),
             onPressed:
                 !updating &&
                     (app?.app.installedVersion == null ||
@@ -566,81 +576,121 @@ class _AppPageState extends State<AppPage> {
             ),
           ),
         ),
-        const SizedBox(width: 1),
-        PopupMenuButton<String>(
-          icon: const Icon(Icons.arrow_drop_down),
-          onSelected: (String value) {
-            switch (value) {
-              case 'check_update':
-                if (app != null) {
-                  getUpdate(app.app.id);
-                }
-                break;
-              case 'additional_options':
-                if (source != null &&
-                    source.combinedAppSpecificSettingFormItems.isNotEmpty) {
-                  showAdditionalOptionsDialog().then(
-                    handleAdditionalOptionChanges,
-                  );
-                }
-                break;
-              case 'remove':
-                if (app?.app.installedVersion != null &&
-                    app?.app.installedVersion != app?.app.latestVersion &&
-                    !isVersionDetectionStandard &&
-                    !trackOnly) {
-                  appsProvider
-                      .removeAppsWithModal(
-                        context,
-                        app != null ? [app.app] : [],
-                      )
-                      .then((value) {
-                        if (value == true) {
-                          Navigator.of(context).pop();
-                        }
-                      });
-                }
-                break;
-            }
-          },
-          itemBuilder: (BuildContext context) => [
+        // Visual divider
+        Container(
+          width: 1,
+          height: 40,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.outline,
+          ),
+        ),
+        // Dropdown menu button (right side)
+        Container(
+          width: 48,
+          height: 48,
+          child: PopupMenuButton<String>(
+            icon: Icon(
+              Icons.arrow_drop_down,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+            style: ElevatedButton.styleFrom(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+              ),
+              padding: EdgeInsets.zero,
+              minimumSize: const Size(48, 48),
+            ),
+            enabled: !updating,
+            onSelected: (String value) async {
+              switch (value) {
+                case 'check_update':
+                  if (app != null) {
+                    getUpdate(app.app.id);
+                  }
+                  break;
+                case 'additional_options':
+                  if (source != null &&
+                      source.combinedAppSpecificSettingFormItems.isNotEmpty) {
+                    showAdditionalOptionsDialog().then(
+                      handleAdditionalOptionChanges,
+                    );
+                  }
+                  break;
+                case 'download_assets':
+                  if (app?.app == null || updating) {
+                    return;
+                  }
+                  try {
+                    await appsProvider.downloadAppAssets([
+                      app!.app.id,
+                    ], context);
+                  } catch (e) {
+                    showError(e, context);
+                  }
+                  break;
+                case 'remove':
+                  if (app?.app.installedVersion != null &&
+                      app?.app.installedVersion != app?.app.latestVersion &&
+                      !isVersionDetectionStandard &&
+                      !trackOnly) {
+                    appsProvider
+                        .removeAppsWithModal(
+                          context,
+                          app != null ? [app.app] : [],
+                        )
+                        .then((result) {
+                          if (result == true) {
+                            Navigator.of(context).pop();
+                          }
+                        });
+                  }
+                  break;
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              if (source != null &&
+                  source.combinedAppSpecificSettingFormItems.isNotEmpty)
+                PopupMenuItem<String>(
+                  value: 'additional_options',
+                  child: Row(
+                    children: [
+                      const Icon(Icons.edit),
+                      const SizedBox(width: 8),
+                      Text(tr('additionalOptions')),
+                    ],
+                  ),
+                ),
+              if (app?.app.apkUrls.isNotEmpty == true ||
+              app?.app.otherAssetUrls.isNotEmpty == true)
             PopupMenuItem<String>(
-              value: 'check_update',
+              value: 'download_assets',
               child: Row(
                 children: [
-                  const Icon(Icons.refresh),
+                  const Icon(Icons.file_download),
                   const SizedBox(width: 8),
-                  Text(tr('checkForUpdates')),
+                  Text(tr('downloadX', args: [lowerCaseIfEnglish(tr('releaseAsset'))])),
                 ],
               ),
             ),
-            if (source != null &&
-                source.combinedAppSpecificSettingFormItems.isNotEmpty)
-              PopupMenuItem<String>(
-                value: 'additional_options',
-                child: Row(
-                  children: [
-                    const Icon(Icons.edit),
-                    const SizedBox(width: 8),
-                    Text(tr('additionalOptions')),
-                  ],
+          if (app?.app.installedVersion != null &&
+                  app?.app.installedVersion != app?.app.latestVersion &&
+                  !isVersionDetectionStandard &&
+                  !trackOnly)
+                PopupMenuItem<String>(
+                  value: 'remove',
+                  child: Row(
+                    children: [
+                      const Icon(Icons.delete),
+                      const SizedBox(width: 8),
+                      Text(tr('remove')),
+                    ],
+                  ),
                 ),
-              ),
-            if (app?.app.installedVersion != null &&
-                app?.app.installedVersion != app?.app.latestVersion &&
-                !isVersionDetectionStandard &&
-                !trackOnly)
-              PopupMenuItem<String>(
-                value: 'remove',
-                child: Row(
-                  children: [
-                    const Icon(Icons.delete),
-                    const SizedBox(width: 8),
-                    Text(tr('remove')),
-                  ],
-                ),
-              ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -694,7 +744,75 @@ class _AppPageState extends State<AppPage> {
           slivers: [
             SliverAppBar.large(
               pinned: true,
-              title: Text(app?.name ?? tr('app')),
+              title: Row(
+                children: [
+                  if (app != null)
+                    Consumer<AppsProvider>(
+                      builder: (ctx, appsProvider, child) {
+                        final appInMemory = appsProvider.apps[app.app.id];
+                        
+                        if (appInMemory?.icon != null) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 12.0),
+                            child: Image.memory(
+                              appInMemory!.icon!,
+                              width: 32,
+                              height: 32,
+                              gaplessPlayback: true,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(
+                                  Icons.apps,
+                                  size: 32,
+                                  color: Theme.of(context).colorScheme.primary,
+                                );
+                              },
+                            ),
+                          );
+                        }
+                        
+                        // Load icon asynchronously if not available
+                        return FutureBuilder(
+                          future: appsProvider.updateAppIcon(app.app.id),
+                          builder: (ctx, snapshot) {
+                            final updatedAppInMemory = appsProvider.apps[app.app.id];
+                            
+                            if (updatedAppInMemory?.icon != null) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 12.0),
+                                child: Image.memory(
+                                  updatedAppInMemory!.icon!,
+                                  width: 32,
+                                  height: 32,
+                                  gaplessPlayback: true,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Icon(
+                                      Icons.apps,
+                                      size: 32,
+                                      color: Theme.of(context).colorScheme.primary,
+                                    );
+                                  },
+                                ),
+                              );
+                            }
+                            
+                            // Fallback icon while loading
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 12.0),
+                              child: Icon(
+                                Icons.apps,
+                                size: 32,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  Expanded(
+                    child: Text(app?.name ?? tr('app')),
+                  ),
+                ],
+              ),
             ),
             SliverToBoxAdapter(child: Column(children: [getFullInfoColumn()])),
           ],

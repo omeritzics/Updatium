@@ -435,5 +435,6 @@
     "githubStarPromptStar": "Поставити зірку",
     "githubStarPromptDontShowAgain": "Більше не показувати",
     "sourceCode": "Вихідний код",
-    "developedBy": "Розроблено"
+    "developedBy": "Розроблено",
+    "appDescription": "Налаштований каталог додатків Android, який дозволяє оновлювати ваші додатки напряму з їхніх джерел APK."
 }

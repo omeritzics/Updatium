@@ -435,5 +435,6 @@
     "githubStarPromptStar": "Giv stjerne",
     "githubStarPromptDontShowAgain": "Vis ikke igen",
     "sourceCode": "Kildekode",
-    "developedBy": "Udviklet af"
+    "developedBy": "Udviklet af",
+    "appDescription": "En tilpasselig Android-appkatalog, der lader dig opdatere dine apps direkte fra deres APK-kilder."
 }
