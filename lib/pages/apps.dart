@@ -896,6 +896,60 @@ class AppsPageState extends State<AppsPage> {
       );
     }
 
+    getCategoryGridTile(int index) {
+      var filteredEntries = listedApps
+          .asMap()
+          .entries
+          .where(
+            (e) =>
+                e.value.app.categories?.contains(listedCategories[index]) ==
+                    true ||
+                e.value.app.categories?.isEmpty == true &&
+                    listedCategories[index] == null,
+          )
+          .toList();
+
+      capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+            child: Row(
+              children: [
+                Text(
+                  capFirstChar(listedCategories[index] ?? tr('noCategory')),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  '(${filteredEntries.length})',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: SliverGrid(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 160,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                childAspectRatio: 0.6,
+              ),
+              delegate: SliverChildBuilderDelegate((
+                BuildContext context,
+                int index,
+              ) {
+                return getSingleAppGridTile(filteredEntries[index].key);
+              }, childCount: filteredEntries.length),
+            ),
+          ),
+        ],
+      );
+    }
+
     getSelectAllButton() {
       return selectedAppIds.isEmpty
           ? TextButton.icon(
@@ -1478,15 +1532,25 @@ class AppsPageState extends State<AppsPage> {
           !(listedCategories.isEmpty ||
               (listedCategories.length == 1 && listedCategories[0] == null))) {
         // Category View
-        return SliverList(
-          delegate: SliverChildBuilderDelegate((
-            BuildContext context,
-            int index,
-          ) {
-            // For now, Category view remains as list of ExpansionTiles
-            return getCategoryCollapsibleTile(index);
-          }, childCount: listedCategories.length),
-        );
+        if (settingsProvider.useGridView) {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate((
+              BuildContext context,
+              int index,
+            ) {
+              return getCategoryGridTile(index);
+            }, childCount: listedCategories.length),
+          );
+        } else {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate((
+              BuildContext context,
+              int index,
+            ) {
+              return getCategoryCollapsibleTile(index);
+            }, childCount: listedCategories.length),
+          );
+        }
       } else {
         // Flat View
         if (settingsProvider.useGridView) {
