@@ -664,18 +664,23 @@ class _AppPageState extends State<AppPage> {
                   ),
                 ),
               if (app?.app.apkUrls.isNotEmpty == true ||
-              app?.app.otherAssetUrls.isNotEmpty == true)
-            PopupMenuItem<String>(
-              value: 'download_assets',
-              child: Row(
-                children: [
-                  const Icon(Icons.file_download),
-                  const SizedBox(width: 8),
-                  Text(tr('downloadX', args: [lowerCaseIfEnglish(tr('releaseAsset'))])),
-                ],
-              ),
-            ),
-          if (app?.app.installedVersion != null &&
+                  app?.app.otherAssetUrls.isNotEmpty == true)
+                PopupMenuItem<String>(
+                  value: 'download_assets',
+                  child: Row(
+                    children: [
+                      const Icon(Icons.file_download),
+                      const SizedBox(width: 8),
+                      Text(
+                        tr(
+                          'downloadX',
+                          args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              if (app?.app.installedVersion != null &&
                   app?.app.installedVersion != app?.app.latestVersion &&
                   !isVersionDetectionStandard &&
                   !trackOnly)
@@ -750,7 +755,7 @@ class _AppPageState extends State<AppPage> {
                     Consumer<AppsProvider>(
                       builder: (ctx, appsProvider, child) {
                         final appInMemory = appsProvider.apps[app.app.id];
-                        
+
                         if (appInMemory?.icon != null) {
                           return Padding(
                             padding: const EdgeInsets.only(right: 12.0),
@@ -769,13 +774,14 @@ class _AppPageState extends State<AppPage> {
                             ),
                           );
                         }
-                        
+
                         // Load icon asynchronously if not available
                         return FutureBuilder(
                           future: appsProvider.updateAppIcon(app.app.id),
                           builder: (ctx, snapshot) {
-                            final updatedAppInMemory = appsProvider.apps[app.app.id];
-                            
+                            final updatedAppInMemory =
+                                appsProvider.apps[app.app.id];
+
                             if (updatedAppInMemory?.icon != null) {
                               return Padding(
                                 padding: const EdgeInsets.only(right: 12.0),
@@ -788,13 +794,15 @@ class _AppPageState extends State<AppPage> {
                                     return Icon(
                                       Icons.apps,
                                       size: 32,
-                                      color: Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
                                     );
                                   },
                                 ),
                               );
                             }
-                            
+
                             // Fallback icon while loading
                             return Padding(
                               padding: const EdgeInsets.only(right: 12.0),
@@ -808,9 +816,7 @@ class _AppPageState extends State<AppPage> {
                         );
                       },
                     ),
-                  Expanded(
-                    child: Text(app?.name ?? tr('app')),
-                  ),
+                  Expanded(child: Text(app?.name ?? tr('app'))),
                 ],
               ),
             ),
