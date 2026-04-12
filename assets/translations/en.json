@@ -462,6 +462,7 @@
     "appDescription": "A customizable Android app catalogue that allows you to update your apps directly from their APK sources.",
     "safeModeEnabled": "Safe Mode is enabled",
     "safeModeDisabled": "Safe Mode is disabled",
+    "safeModeDisable": "Disable Safe Mode",
     "safeModeAdmin": "Safe Mode Administration",
     "safeModeSetupDescription": "Set a password to enable Safe Mode. Once enabled, Safe Mode prevents adding new apps and can only be disabled with the password.",
     "safeModeToggleDescription": "Enter your password to toggle Safe Mode on or off.",

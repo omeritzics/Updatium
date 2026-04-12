@@ -818,11 +818,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   Switch(
                                     value: false,
                                     onChanged: (value) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            const SafeModeDialog(),
-                                      );
+                                      showSafeModeDialog(context);
                                     },
                                   ),
                                 ],
@@ -1873,7 +1869,7 @@ class _AboutDialogState extends State<AboutDialog> {
   }
 
   void _showSafeModeDialog() {
-    showDialog(context: context, builder: (context) => const SafeModeDialog());
+    showSafeModeDialog(context);
   }
 
   @override
