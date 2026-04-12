@@ -804,9 +804,12 @@ class _AppPageState extends State<AppPage> {
                         if (app?.author != null)
                           Text(
                             'By ${app?.author}',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurfaceVariant,
-                            ),
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurfaceVariant,
+                                ),
                           ),
                       ],
                     ),

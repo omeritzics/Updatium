@@ -38,9 +38,7 @@ class AddAppPageState extends State<AddAppPage> {
   int urlInputKey = 0;
   SourceProvider sourceProvider = SourceProvider();
   bool _advancedExpanded = false;
-  Map<String, dynamic> _advancedSettings = {
-    'zippedApkFilterRegEx': '',
-  };
+  Map<String, dynamic> _advancedSettings = {'zippedApkFilterRegEx': ''};
 
   String? _regExValidator(String? value) {
     if (value == null || value.isEmpty) {
