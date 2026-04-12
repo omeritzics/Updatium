@@ -9,6 +9,7 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_utils;
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GitHub extends AppSource {
@@ -404,11 +405,10 @@ class GitHub extends AppSource {
 
       findReleaseAssetUrls(dynamic release) =>
           (release['assets'] as List<dynamic>?)?.map((e) {
-            var ext = e['name'].toString().toLowerCase().split('.').last;
+            var ext = '.${e['name'].toString().toLowerCase().split('.').last}';
             var url =
-                !(ext == 'apk' ||
-                    ext == 'xapk' ||
-                    (includeZips && ext == 'zip'))
+                !(source_utils.supportedApkExtensions.contains(ext) ||
+                    (includeZips && ext == '.zip'))
                 ? (e['browser_download_url'] ?? e['url'])
                 : (e['url'] ?? e['browser_download_url']);
             url = undoGHProxyMod(url, sourceConfigSettingValues);
@@ -549,11 +549,9 @@ class GitHub extends AppSource {
             .map((e) => e['final_url'] as MapEntry<String, String>)
             .toList();
         var apkAssetsWithUrls = allAssetsWithUrls.where((element) {
-          var ext = (element['final_url'] as MapEntry<String, String>).key
-              .toLowerCase()
-              .split('.')
-              .last;
-          return ext == 'apk' || ext == 'xapk' || (includeZips && ext == 'zip');
+          var ext = '.${(element['final_url'] as MapEntry<String, String>).key.toLowerCase().split('.').last}';
+          return source_utils.supportedApkExtensions.contains(ext) ||
+              (includeZips && ext == '.zip');
         }).toList();
 
         var filteredApkUrls = filterApks(
