@@ -1,19 +1,19 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
-
-import 'package:updatium/main.dart';
+import 'package:provider/provider.dart';
+import 'package:updatium/components/tag_editor.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/native_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:updatium/main.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
@@ -1436,7 +1436,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           childrenPadding: const EdgeInsets.all(16),
                           children: [
                             gap16,
-                            const CategoryEditorSelector(
+                            CategoryTagEditor(
                               showLabelWhenNotEmpty: false,
                             ),
                           ],
@@ -1619,13 +1619,96 @@ class _LogsDialogState extends State<LogsDialog> {
   }
 }
 
-class CategoryEditorSelector extends StatefulWidget {
+class CategoryTagEditor extends StatelessWidget {
+  final bool showLabelWhenNotEmpty;
+  final WrapAlignment alignment;
+
+  const CategoryTagEditor({
+    super.key,
+    this.showLabelWhenNotEmpty = true,
+    this.alignment = WrapAlignment.start,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    var settingsProvider = context.watch<SettingsProvider>();
+    var appsProvider = context.watch<AppsProvider>();
+
+    // Convert categories Map<String, int> to TagEditor's expected Map<String, MapEntry<int, bool>> format
+    final tagEditorTags = settingsProvider.categories.map(
+      (key, value) => MapEntry(key, MapEntry(value, true)),
+    );
+
+    return TagEditor(
+      tags: tagEditorTags,
+      label: tr('categories'),
+      alignment: alignment,
+      showLabelWhenNotEmpty: showLabelWhenNotEmpty,
+      onTagsChanged: (newTags) {
+        // Convert back from TagEditor format to categories Map<String, int>
+        final newCategories = <String, int>{};
+        for (final entry in newTags.entries) {
+          if (entry.value.value) { // Only keep selected tags
+            newCategories[entry.key] = entry.value.key;
+          }
+        }
+        
+        // Find categories that were removed
+        final removedCategories = settingsProvider.categories.keys
+            .where((cat) => !newCategories.containsKey(cat))
+            .toList();
+
+        if (removedCategories.isNotEmpty) {
+          // Show confirmation dialog for category removal
+          showDialog(
+            context: context,
+            builder: (BuildContext ctx) {
+              return AlertDialog(
+                title: Text(tr('deleteCategoriesQuestion')),
+                content: Text(tr('categoryDeleteWarning')),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(ctx).pop(),
+                    child: Text(tr('cancel')),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      settingsProvider.setCategories(
+                        newCategories,
+                        appsProvider: appsProvider,
+                      );
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Text(tr('ok')),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          // Just add new categories without confirmation
+          settingsProvider.setCategories(
+            newCategories,
+            appsProvider: appsProvider,
+          );
+        }
+      },
+      deleteConfirmationMessage: MapEntry(
+        tr('deleteCategoriesQuestion'),
+        tr('categoryDeleteWarning'),
+      ),
+    );
+  }
+}
+
+class CategorySelector extends StatelessWidget {
   final void Function(List<String> categories)? onSelected;
   final bool singleSelect;
   final Set<String> preselected;
   final WrapAlignment alignment;
   final bool showLabelWhenNotEmpty;
-  const CategoryEditorSelector({
+  
+  const CategorySelector({
     super.key,
     this.onSelected,
     this.singleSelect = false,
@@ -1635,77 +1718,29 @@ class CategoryEditorSelector extends StatefulWidget {
   });
 
   @override
-  State<CategoryEditorSelector> createState() => _CategoryEditorSelectorState();
-}
-
-class _CategoryEditorSelectorState extends State<CategoryEditorSelector> {
-  @override
   Widget build(BuildContext context) {
     var settingsProvider = context.watch<SettingsProvider>();
-    var appsProvider = context.watch<AppsProvider>();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (settingsProvider.categories.isEmpty)
-          Text(
-            tr('noCategories'),
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          )
-        else
-          Wrap(
-            alignment: widget.alignment,
-            spacing: 8,
-            runSpacing: 8,
-            children: settingsProvider.categories.entries.map((entry) {
-              final categoryName = entry.key;
-              final isSelected = widget.preselected.contains(categoryName);
+    // Convert categories Map<String, int> to TagEditor's expected Map<String, MapEntry<int, bool>> format
+    final tagEditorTags = settingsProvider.categories.map(
+      (key, value) => MapEntry(key, MapEntry(value, preselected.contains(key))),
+    );
 
-              return FilterChip(
-                label: Text(categoryName),
-                selected: isSelected,
-                onSelected: (selected) {
-                  if (selected) {
-                    widget.onSelected?.call([categoryName]);
-                  } else {
-                    widget.onSelected?.call([]);
-                  }
-                },
-                deleteIcon: const Icon(Icons.close, size: 18),
-                onDeleted: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext ctx) {
-                      return AlertDialog(
-                        title: Text(tr('deleteCategoriesQuestion')),
-                        content: Text(tr('categoryDeleteWarning')),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(ctx).pop(),
-                            child: Text(tr('cancel')),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              settingsProvider.setCategories(
-                                settingsProvider.categories
-                                  ..remove(categoryName),
-                                appsProvider: appsProvider,
-                              );
-                              Navigator.of(ctx).pop();
-                            },
-                            child: Text(tr('ok')),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              );
-            }).toList(),
-          ),
-      ],
+    return TagEditor(
+      tags: tagEditorTags,
+      label: tr('categories'),
+      singleSelect: singleSelect,
+      alignment: alignment,
+      showLabelWhenNotEmpty: showLabelWhenNotEmpty,
+      onTagsChanged: (newTags) {
+        // Convert back from TagEditor format to List<String> for callback
+        final selectedCategories = newTags.entries
+            .where((entry) => entry.value.value)
+            .map((entry) => entry.key)
+            .toList();
+        
+        onSelected?.call(selectedCategories);
+      },
     );
   }
 }

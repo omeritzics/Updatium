@@ -2556,22 +2556,21 @@ class _AppFilePickerState extends State<AppFilePicker> {
                 )
               : const SizedBox.shrink(),
           const SizedBox(height: 16),
-          RadioGroup<String>(
-            onChanged: (String? val) {
-              setState(() {
-                fileUrl = urlsToSelectFrom.where((e) => e.value == val).first;
-              });
-            },
-            child: Column(
-              children: urlsToSelectFrom
-                  .map(
-                    (u) => RadioListTile<String>(
-                      title: Text(u.key),
-                      value: u.value,
-                    ),
-                  )
-                  .toList(),
-            ),
+          Column(
+            children: urlsToSelectFrom
+                .map(
+                  (u) => RadioListTile<String>(
+                    title: Text(u.key),
+                    value: u.value,
+                    groupValue: fileUrl?.value,
+                    onChanged: (String? value) {
+                      setState(() {
+                        fileUrl = urlsToSelectFrom.where((e) => e.value == value).first;
+                      });
+                    },
+                  ),
+                )
+                .toList(),
           ),
           if (widget.archs != null) const SizedBox(height: 16),
           if (widget.archs != null)

@@ -278,7 +278,7 @@ class _AppPageState extends State<AppPage> {
             ),
 
           height32,
-          CategoryEditorSelector(
+          CategorySelector(
             alignment: WrapAlignment.center,
             preselected: app?.app.categories != null
                 ? app!.app.categories.toSet()

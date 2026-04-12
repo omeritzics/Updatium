@@ -1100,7 +1100,7 @@ class AppsPageState extends State<AppsPage> {
               builder: (BuildContext ctx) {
                 return AlertDialog(
                   title: Text(tr('categorize')),
-                  content: CategoryEditorSelector(
+                  content: CategorySelector(
                     preselected: !showPrompt ? preselected ?? {} : {},
                     showLabelWhenNotEmpty: false,
                   ),
@@ -1427,7 +1427,7 @@ class AppsPageState extends State<AppsPage> {
                   },
                 ),
                 height16,
-                CategoryEditorSelector(
+                CategorySelector(
                   preselected: filter.categoryFilter,
                   onSelected: (categories) {
                     filter.categoryFilter = categories.toSet();

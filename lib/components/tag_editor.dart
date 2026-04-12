@@ -64,7 +64,7 @@ class TagEditor extends StatelessWidget {
         if (!newTags.containsKey(value)) {
           bool someSelected = newTags.values.any((e) => e.value);
           newTags[value] = MapEntry(
-            _generateRandomLightColor().value,
+            _generateRandomLightColor().toARGB32(),
             !(someSelected && singleSelect),
           );
           onTagsChanged(newTags);
@@ -73,44 +73,13 @@ class TagEditor extends StatelessWidget {
     });
   }
 
-  void _onRemovePressed(BuildContext context) {
-    void remove() {
-      final newTags = Map<String, MapEntry<int, bool>>.from(tags);
-      newTags.removeWhere((key, value) => value.value);
-      onTagsChanged(newTags);
-    }
-
-    if (deleteConfirmationMessage != null) {
-      showDialog<bool>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text(deleteConfirmationMessage!.key),
-          content: Text(deleteConfirmationMessage!.value),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: Text(tr('cancel')),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: Text(tr('confirm')),
-            ),
-          ],
-        ),
-      ).then((confirmed) {
-        if (confirmed == true) remove();
-      });
-    } else {
-      remove();
-    }
-  }
-
+  
   void _onColorPressed() {
     final newTags = Map<String, MapEntry<int, bool>>.from(tags);
     final selectedEntry = tags.entries.firstWhere((e) => e.value.value);
     int newColor = selectedEntry.value.key;
     while (newColor == selectedEntry.value.key) {
-      newColor = _generateRandomLightColor().value;
+      newColor = _generateRandomLightColor().toARGB32();
     }
     newTags[selectedEntry.key] = MapEntry(newColor, true);
     onTagsChanged(newTags);
@@ -136,7 +105,7 @@ class TagEditor extends StatelessWidget {
           runSpacing: 4,
           children: [
             ...tags.entries.map((entry) {
-              return ChoiceChip(
+              return InputChip(
                 label: Text(entry.key),
                 selected: entry.value.value,
                 backgroundColor: Color(entry.value.key).withValues(alpha: 0.2),
@@ -152,6 +121,12 @@ class TagEditor extends StatelessWidget {
                   }
                   onTagsChanged(newTags);
                 },
+                deleteIcon: const Icon(Icons.close, size: 18),
+                onDeleted: () {
+                  final newTags = Map<String, MapEntry<int, bool>>.from(tags);
+                  newTags.remove(entry.key);
+                  onTagsChanged(newTags);
+                },
               );
             }),
             if (selectedCount == 1)
@@ -159,12 +134,6 @@ class TagEditor extends StatelessWidget {
                 onPressed: _onColorPressed,
                 icon: const Icon(Icons.format_color_fill_rounded),
                 tooltip: tr('color'),
-              ),
-            if (selectedCount > 0)
-              IconButton(
-                onPressed: () => _onRemovePressed(context),
-                icon: const Icon(Icons.remove),
-                tooltip: tr('remove'),
               ),
             if (tags.isEmpty)
               TextButton.icon(

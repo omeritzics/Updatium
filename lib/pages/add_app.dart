@@ -818,7 +818,7 @@ class AddAppPageState extends State<AddAppPage> {
         Column(
           children: [
             const SizedBox(height: 16),
-            CategoryEditorSelector(
+            CategorySelector(
               alignment: WrapAlignment.start,
               onSelected: (categories) {
                 pickedCategories = categories;
