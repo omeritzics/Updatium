@@ -21,6 +21,118 @@ const height8 = SizedBox(height: 8);
 const height16 = SizedBox(height: 16);
 const height32 = SizedBox(height: 32);
 
+// Custom expandable category widget
+class ExpandableCategory extends StatefulWidget {
+  final String title;
+  final List<Widget> children;
+  final bool initiallyExpanded;
+  
+  const ExpandableCategory({
+    super.key,
+    required this.title,
+    required this.children,
+    this.initiallyExpanded = true,
+  });
+
+  @override
+  State<ExpandableCategory> createState() => _ExpandableCategoryState();
+}
+
+class _ExpandableCategoryState extends State<ExpandableCategory>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _expandAnimation;
+  bool _isExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+    _expandAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
+    
+    _isExpanded = widget.initiallyExpanded;
+    if (_isExpanded) {
+      _controller.value = 1.0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _toggle() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+      if (_isExpanded) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InkWell(
+          onTap: _toggle,
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+            child: Row(
+              children: [
+                Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                AnimatedRotation(
+                  turns: _isExpanded ? 0.5 : 0,
+                  duration: const Duration(milliseconds: 300),
+                  child: Icon(
+                    Icons.expand_more,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        AnimatedBuilder(
+          animation: _expandAnimation,
+          builder: (context, child) {
+            return ClipRect(
+              child: Align(
+                heightFactor: _expandAnimation.value,
+                alignment: Alignment.topCenter,
+                child: child,
+              ),
+            );
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: widget.children,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -461,647 +573,643 @@ class _SettingsPageState extends State<SettingsPage> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          tr('updates'),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        height16,
-                        //intervalDropdown,
-                        height16,
-                        if (showIntervalLabel)
-                          SizedBox(
-                            child: Text(
-                              "${tr('bgUpdateCheckInterval')}: $updateIntervalLabel",
-                            ),
-                          )
-                        else
-                          const SizedBox(height: 16),
-                        intervalSlider,
-                        FutureBuilder(
-                          builder: (ctx, val) {
-                            return (settingsProvider.updateInterval > 0) &&
-                                    (((val.data?.version.sdkInt ?? 0) >= 30) ||
-                                        settingsProvider.useShizuku)
-                                ? Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                        ExpandableCategory(
+                          title: tr('updates'),
+                          initiallyExpanded: true,
+                          children: [
+                            height16,
+                            //intervalDropdown,
+                            height16,
+                            if (showIntervalLabel)
+                              SizedBox(
+                                child: Text(
+                                  "${tr('bgUpdateCheckInterval')}: $updateIntervalLabel",
+                                ),
+                              )
+                            else
+                              const SizedBox(height: 16),
+                            intervalSlider,
+                            FutureBuilder(
+                              builder: (ctx, val) {
+                                return (settingsProvider.updateInterval > 0) &&
+                                        (((val.data?.version.sdkInt ?? 0) >= 30) ||
+                                            settingsProvider.useShizuku)
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Flexible(
-                                            child: Text(
-                                              tr(
-                                                'foregroundServiceExplanation',
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                  tr(
+                                                    'foregroundServiceExplanation',
+                                                  ),
+                                                ),
                                               ),
-                                            ),
+                                              Switch(
+                                                value:
+                                                    settingsProvider.useFGService,
+                                                onChanged: (value) {
+                                                  settingsProvider.useFGService =
+                                                      value;
+                                                },
+                                              ),
+                                            ],
                                           ),
-                                          Switch(
-                                            value:
-                                                settingsProvider.useFGService,
-                                            onChanged: (value) {
-                                              settingsProvider.useFGService =
-                                                  value;
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              tr('enableBackgroundUpdates'),
-                                            ),
-                                          ),
-                                          Switch(
-                                            value: settingsProvider
-                                                .enableBackgroundUpdates,
-                                            onChanged: (value) {
-                                              settingsProvider
-                                                      .enableBackgroundUpdates =
-                                                  value;
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                      height8,
-                                      Text(
-                                        tr('backgroundUpdateReqsExplanation'),
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.labelSmall,
-                                      ),
-                                      Text(
-                                        tr('backgroundUpdateLimitsExplanation'),
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.labelSmall,
-                                      ),
-                                      height8,
-                                      if (settingsProvider
-                                          .enableBackgroundUpdates)
-                                        Column(
-                                          children: [
-                                            height16,
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Flexible(
-                                                  child: Text(
-                                                    tr('bgUpdatesOnWiFiOnly'),
-                                                  ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                  tr('enableBackgroundUpdates'),
                                                 ),
-                                                Switch(
-                                                  value: settingsProvider
-                                                      .bgUpdatesOnWiFiOnly,
-                                                  onChanged: (value) {
-                                                    settingsProvider
-                                                            .bgUpdatesOnWiFiOnly =
-                                                        value;
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                            height16,
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                              ),
+                                              Switch(
+                                                value: settingsProvider
+                                                    .enableBackgroundUpdates,
+                                                onChanged: (value) {
+                                                  settingsProvider
+                                                          .enableBackgroundUpdates =
+                                                      value;
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                          height8,
+                                          Text(
+                                            tr('backgroundUpdateReqsExplanation'),
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.labelSmall,
+                                          ),
+                                          Text(
+                                            tr('backgroundUpdateLimitsExplanation'),
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.labelSmall,
+                                          ),
+                                          height8,
+                                          if (settingsProvider
+                                              .enableBackgroundUpdates)
+                                            Column(
                                               children: [
-                                                Flexible(
-                                                  child: Text(
-                                                    tr(
-                                                      'bgUpdatesWhileChargingOnly',
+                                                height16,
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                        tr('bgUpdatesOnWiFiOnly'),
+                                                      ),
                                                     ),
-                                                  ),
+                                                    Switch(
+                                                      value: settingsProvider
+                                                          .bgUpdatesOnWiFiOnly,
+                                                      onChanged: (value) {
+                                                        settingsProvider
+                                                                .bgUpdatesOnWiFiOnly =
+                                                            value;
+                                                      },
+                                                    ),
+                                                  ],
                                                 ),
-                                                Switch(
-                                                  value: settingsProvider
-                                                      .bgUpdatesWhileChargingOnly,
-                                                  onChanged: (value) {
-                                                    settingsProvider
-                                                            .bgUpdatesWhileChargingOnly =
-                                                        value;
-                                                  },
+                                                height16,
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                        tr(
+                                                          'bgUpdatesWhileChargingOnly',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Switch(
+                                                      value: settingsProvider
+                                                          .bgUpdatesWhileChargingOnly,
+                                                      onChanged: (value) {
+                                                        settingsProvider
+                                                                .bgUpdatesWhileChargingOnly =
+                                                            value;
+                                                      },
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
-                                          ],
-                                        ),
-                                    ],
-                                  )
-                                : const SizedBox.shrink();
-                          },
-                          future: DeviceInfoPlugin().androidInfo,
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(tr('safeMode')),
-                                  Text(
-                                    tr('safeModeDescription'),
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.labelSmall,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Switch(
-                              value: settingsProvider.safeMode,
-                              onChanged: (value) {
-                                settingsProvider.safeMode = value;
+                                        ],
+                                      )
+                                    : const SizedBox.shrink();
                               },
+                              future: DeviceInfoPlugin().androidInfo,
                             ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('checkOnStart'))),
-                            Switch(
-                              value: settingsProvider.checkOnStart,
-                              onChanged: (value) {
-                                settingsProvider.checkOnStart = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(tr('checkUpdateOnDetailPage')),
-                            ),
-                            Switch(
-                              value: settingsProvider.checkUpdateOnDetailPage,
-                              onChanged: (value) {
-                                settingsProvider.checkUpdateOnDetailPage =
-                                    value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                tr('onlyCheckInstalledOrTrackOnlyApps'),
-                              ),
-                            ),
-                            Switch(
-                              value: settingsProvider
-                                  .onlyCheckInstalledOrTrackOnlyApps,
-                              onChanged: (value) {
-                                settingsProvider
-                                        .onlyCheckInstalledOrTrackOnlyApps =
-                                    value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(tr('removeOnExternalUninstall')),
-                            ),
-                            Switch(
-                              value: settingsProvider.removeOnExternalUninstall,
-                              onChanged: (value) {
-                                settingsProvider.removeOnExternalUninstall =
-                                    value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('parallelDownloads'))),
-                            Switch(
-                              value: settingsProvider.parallelDownloads,
-                              onChanged: (value) {
-                                settingsProvider.parallelDownloads = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    tr('beforeNewInstallsShareToAppVerifier'),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      launchUrlString(
-                                        'https://github.com/soupslurpr/AppVerifier',
-                                        mode: LaunchMode.externalApplication,
-                                      );
-                                    },
-                                    child: Text(
-                                      tr('about'),
-                                      style: const TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        fontSize: 12,
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(tr('safeMode')),
+                                      Text(
+                                        tr('safeModeDescription'),
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.labelSmall,
                                       ),
+                                    ],
+                                  ),
+                                ),
+                                Switch(
+                                  value: settingsProvider.safeMode,
+                                  onChanged: (value) {
+                                    settingsProvider.safeMode = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('checkOnStart'))),
+                                Switch(
+                                  value: settingsProvider.checkOnStart,
+                                  onChanged: (value) {
+                                    settingsProvider.checkOnStart = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('checkUpdateOnDetailPage')),
+                                ),
+                                Switch(
+                                  value: settingsProvider.checkUpdateOnDetailPage,
+                                  onChanged: (value) {
+                                    settingsProvider.checkUpdateOnDetailPage =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    tr('onlyCheckInstalledOrTrackOnlyApps'),
+                                  ),
+                                ),
+                                Switch(
+                                  value: settingsProvider
+                                      .onlyCheckInstalledOrTrackOnlyApps,
+                                  onChanged: (value) {
+                                    settingsProvider
+                                            .onlyCheckInstalledOrTrackOnlyApps =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('removeOnExternalUninstall')),
+                                ),
+                                Switch(
+                                  value: settingsProvider.removeOnExternalUninstall,
+                                  onChanged: (value) {
+                                    settingsProvider.removeOnExternalUninstall =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('parallelDownloads'))),
+                                Switch(
+                                  value: settingsProvider.parallelDownloads,
+                                  onChanged: (value) {
+                                    settingsProvider.parallelDownloads = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        tr('beforeNewInstallsShareToAppVerifier'),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          launchUrlString(
+                                            'https://github.com/soupslurpr/AppVerifier',
+                                            mode: LaunchMode.externalApplication,
+                                          );
+                                        },
+                                        child: Text(
+                                          tr('about'),
+                                          style: const TextStyle(
+                                            decoration: TextDecoration.underline,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Switch(
+                                  value: settingsProvider
+                                      .beforeNewInstallsShareToAppVerifier,
+                                  onChanged: (value) {
+                                    settingsProvider
+                                            .beforeNewInstallsShareToAppVerifier =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('useShizuku'))),
+                                Switch(
+                                  value: settingsProvider.useShizuku,
+                                  onChanged: (useShizuku) {
+                                    if (useShizuku) {
+                                      ShizukuApkInstaller().checkPermission().then((
+                                        resCode,
+                                      ) {
+                                        settingsProvider.useShizuku =
+                                            resCode?.startsWith('granted') ?? false;
+                                        switch (resCode) {
+                                          case 'services_not_found':
+                                            showError(
+                                              UpdatiumError(
+                                                tr('shizukuBinderNotFound'),
+                                              ),
+                                              context,
+                                            );
+                                          case 'old_shizuku':
+                                            showError(
+                                              UpdatiumError(tr('shizukuOld')),
+                                              context,
+                                            );
+                                          case 'old_android_with_adb':
+                                            showError(
+                                              UpdatiumError(
+                                                tr('shizukuOldAndroidWithADB'),
+                                              ),
+                                              context,
+                                            );
+                                          case 'denied':
+                                            showError(
+                                              UpdatiumError(tr('cancelled')),
+                                              context,
+                                            );
+                                        }
+                                      });
+                                    } else {
+                                      settingsProvider.useShizuku = false;
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    tr('shizukuPretendToBeGooglePlay'),
+                                    style: TextStyle(
+                                      color: settingsProvider.useShizuku
+                                          ? null
+                                          : Theme.of(context).colorScheme.onSurface
+                                                .withValues(alpha: 0.6),
                                     ),
                                   ),
+                                ),
+                                Switch(
+                                  value:
+                                      settingsProvider.shizukuPretendToBeGooglePlay,
+                                  onChanged: settingsProvider.useShizuku
+                                      ? (value) {
+                                          settingsProvider
+                                                  .shizukuPretendToBeGooglePlay =
+                                              value;
+                                        }
+                                      : null,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        height32,
+                        ExpandableCategory(
+                          title: tr('sourceSpecific'),
+                          initiallyExpanded: false,
+                          children: [
+                            ...sourceSpecificFields,
+                          ],
+                        ),
+                        height32,
+                        ExpandableCategory(
+                          title: tr('appearance'),
+                          initiallyExpanded: false,
+                          children: [
+                            height16,
+                            MenuAnchor(
+                              builder: (context, controller, child) {
+                                String selectedValue;
+                                switch (settingsProvider.theme) {
+                                  case ThemeSettings.system:
+                                    selectedValue = tr('followSystem');
+                                    break;
+                                  case ThemeSettings.light:
+                                    selectedValue = tr('light');
+                                    break;
+                                  case ThemeSettings.dark:
+                                    selectedValue = tr('dark');
+                                    break;
+                                }
+
+                                return TextField(
+                                  controller: TextEditingController(
+                                    text: selectedValue,
+                                  ),
+                                  readOnly: true,
+                                  decoration: InputDecoration(
+                                    labelText: tr('theme'),
+                                    border: const OutlineInputBorder(),
+                                    suffixIcon: const Icon(Icons.arrow_drop_down),
+                                  ),
+                                  onTap: () {
+                                    if (controller.isOpen) {
+                                      controller.close();
+                                    } else {
+                                      controller.open();
+                                    }
+                                  },
+                                );
+                              },
+                              menuChildren: [
+                                MenuItemButton(
+                                  onPressed: () =>
+                                      settingsProvider.theme = ThemeSettings.system,
+                                  child: Text(tr('followSystem')),
+                                ),
+                                MenuItemButton(
+                                  onPressed: () =>
+                                      settingsProvider.theme = ThemeSettings.light,
+                                  child: Text(tr('light')),
+                                ),
+                                MenuItemButton(
+                                  onPressed: () =>
+                                      settingsProvider.theme = ThemeSettings.dark,
+                                  child: Text(tr('dark')),
+                                ),
+                              ],
+                            ),
+                            height8,
+                            if (settingsProvider.theme == ThemeSettings.system)
+                              followSystemThemeExplanation,
+                            height16,
+                            if (settingsProvider.theme != ThemeSettings.light)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(child: Text(tr('useBlackTheme'))),
+                                  Switch(
+                                    value: settingsProvider.useBlackTheme,
+                                    onChanged: (value) {
+                                      settingsProvider.useBlackTheme = value;
+                                    },
+                                  ),
                                 ],
                               ),
+                            height8,
+                            useMaterialThemeSwitch,
+                            height16,
+                            if (!settingsProvider.useMaterialYou) colorPicker,
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(child: sortDropdown),
+                                const SizedBox(width: 16),
+                                Expanded(child: orderDropdown),
+                              ],
                             ),
-                            Switch(
-                              value: settingsProvider
-                                  .beforeNewInstallsShareToAppVerifier,
-                              onChanged: (value) {
-                                settingsProvider
-                                        .beforeNewInstallsShareToAppVerifier =
-                                    value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('useShizuku'))),
-                            Switch(
-                              value: settingsProvider.useShizuku,
-                              onChanged: (useShizuku) {
-                                if (useShizuku) {
-                                  ShizukuApkInstaller().checkPermission().then((
-                                    resCode,
-                                  ) {
-                                    settingsProvider.useShizuku =
-                                        resCode?.startsWith('granted') ?? false;
-                                    switch (resCode) {
-                                      case 'services_not_found':
-                                        showError(
-                                          UpdatiumError(
-                                            tr('shizukuBinderNotFound'),
-                                          ),
-                                          context,
-                                        );
-                                      case 'old_shizuku':
-                                        showError(
-                                          UpdatiumError(tr('shizukuOld')),
-                                          context,
-                                        );
-                                      case 'old_android_with_adb':
-                                        showError(
-                                          UpdatiumError(
-                                            tr('shizukuOldAndroidWithADB'),
-                                          ),
-                                          context,
-                                        );
-                                      case 'denied':
-                                        showError(
-                                          UpdatiumError(tr('cancelled')),
-                                          context,
-                                        );
-                                    }
-                                  });
-                                } else {
-                                  settingsProvider.useShizuku = false;
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                tr('shizukuPretendToBeGooglePlay'),
-                                style: TextStyle(
-                                  color: settingsProvider.useShizuku
-                                      ? null
-                                      : Theme.of(context).colorScheme.onSurface
-                                            .withValues(alpha: 0.6),
-                                ),
-                              ),
-                            ),
-                            Switch(
-                              value:
-                                  settingsProvider.shizukuPretendToBeGooglePlay,
-                              onChanged: settingsProvider.useShizuku
-                                  ? (value) {
-                                      settingsProvider
-                                              .shizukuPretendToBeGooglePlay =
-                                          value;
-                                    }
-                                  : null,
-                            ),
-                          ],
-                        ),
-                        height32,
-                        Text(
-                          tr('sourceSpecific'),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        ...sourceSpecificFields,
-                        height32,
-                        Text(
-                          tr('appearance'),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        height16,
-                        MenuAnchor(
-                          builder: (context, controller, child) {
-                            String selectedValue;
-                            switch (settingsProvider.theme) {
-                              case ThemeSettings.system:
-                                selectedValue = tr('followSystem');
-                                break;
-                              case ThemeSettings.light:
-                                selectedValue = tr('light');
-                                break;
-                              case ThemeSettings.dark:
-                                selectedValue = tr('dark');
-                                break;
-                            }
-
-                            return TextField(
-                              controller: TextEditingController(
-                                text: selectedValue,
-                              ),
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                labelText: tr('theme'),
-                                border: const OutlineInputBorder(),
-                                suffixIcon: const Icon(Icons.arrow_drop_down),
-                              ),
-                              onTap: () {
-                                if (controller.isOpen) {
-                                  controller.close();
-                                } else {
-                                  controller.open();
-                                }
-                              },
-                            );
-                          },
-                          menuChildren: [
-                            MenuItemButton(
-                              onPressed: () =>
-                                  settingsProvider.theme = ThemeSettings.system,
-                              child: Text(tr('followSystem')),
-                            ),
-                            MenuItemButton(
-                              onPressed: () =>
-                                  settingsProvider.theme = ThemeSettings.light,
-                              child: Text(tr('light')),
-                            ),
-                            MenuItemButton(
-                              onPressed: () =>
-                                  settingsProvider.theme = ThemeSettings.dark,
-                              child: Text(tr('dark')),
-                            ),
-                          ],
-                        ),
-                        height8,
-                        if (settingsProvider.theme == ThemeSettings.system)
-                          followSystemThemeExplanation,
-                        height16,
-                        if (settingsProvider.theme != ThemeSettings.light)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(child: Text(tr('useBlackTheme'))),
-                              Switch(
-                                value: settingsProvider.useBlackTheme,
-                                onChanged: (value) {
-                                  settingsProvider.useBlackTheme = value;
-                                },
-                              ),
-                            ],
-                          ),
-                        height8,
-                        useMaterialThemeSwitch,
-                        height16,
-                        if (!settingsProvider.useMaterialYou) colorPicker,
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(child: sortDropdown),
-                            const SizedBox(width: 16),
-                            Expanded(child: orderDropdown),
-                          ],
-                        ),
-                        height16,
-                        localeDropdown,
-                        FutureBuilder(
-                          builder: (ctx, val) {
-                            return (val.data?.version.sdkInt ?? 0) >= 36
-                                ? Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      height16,
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                            height16,
+                            localeDropdown,
+                            FutureBuilder(
+                              builder: (ctx, val) {
+                                return (val.data?.version.sdkInt ?? 0) >= 36
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Flexible(
-                                            child: Text(tr('useSystemFont')),
-                                          ),
-                                          Switch(
-                                            value:
-                                                settingsProvider.useSystemFont,
-                                            onChanged: (useSystemFont) {
-                                              if (useSystemFont) {
-                                                NativeFeatures.loadSystemFont()
-                                                    .then((val) {
-                                                      settingsProvider
-                                                              .useSystemFont =
-                                                          true;
-                                                    });
-                                              } else {
-                                                settingsProvider.useSystemFont =
-                                                    false;
-                                              }
-                                            },
+                                          height16,
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Flexible(
+                                                child: Text(tr('useSystemFont')),
+                                              ),
+                                              Switch(
+                                                value:
+                                                    settingsProvider.useSystemFont,
+                                                onChanged: (useSystemFont) {
+                                                  if (useSystemFont) {
+                                                    NativeFeatures.loadSystemFont()
+                                                        .then((val) {
+                                                          settingsProvider
+                                                                  .useSystemFont =
+                                                              true;
+                                                        });
+                                                  } else {
+                                                    settingsProvider.useSystemFont =
+                                                        false;
+                                                  }
+                                                },
+                                              ),
+                                            ],
                                           ),
                                         ],
-                                      ),
-                                    ],
-                                  )
-                                : const SizedBox.shrink();
-                          },
-                          future: DeviceInfoPlugin().androidInfo,
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('pinUpdates'))),
-                            Switch(
-                              value: settingsProvider.pinUpdates,
-                              onChanged: (value) {
-                                settingsProvider.pinUpdates = value;
+                                      )
+                                    : const SizedBox.shrink();
                               },
+                              future: DeviceInfoPlugin().androidInfo,
                             ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(tr('moveNonInstalledAppsToBottom')),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('pinUpdates'))),
+                                Switch(
+                                  value: settingsProvider.pinUpdates,
+                                  onChanged: (value) {
+                                    settingsProvider.pinUpdates = value;
+                                  },
+                                ),
+                              ],
                             ),
-                            Switch(
-                              value: settingsProvider.buryNonInstalled,
-                              onChanged: (value) {
-                                settingsProvider.buryNonInstalled = value;
-                              },
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('moveNonInstalledAppsToBottom')),
+                                ),
+                                Switch(
+                                  value: settingsProvider.buryNonInstalled,
+                                  onChanged: (value) {
+                                    settingsProvider.buryNonInstalled = value;
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('hideNonInstalledApps'))),
-                            Switch(
-                              value: settingsProvider.hideNonInstalled,
-                              onChanged: (value) {
-                                settingsProvider.hideNonInstalled = value;
-                              },
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('hideNonInstalledApps'))),
+                                Switch(
+                                  value: settingsProvider.hideNonInstalled,
+                                  onChanged: (value) {
+                                    settingsProvider.hideNonInstalled = value;
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('groupByCategory'))),
-                            Switch(
-                              value: settingsProvider.groupByCategory,
-                              onChanged: (value) {
-                                settingsProvider.groupByCategory = value;
-                              },
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('groupByCategory'))),
+                                Switch(
+                                  value: settingsProvider.groupByCategory,
+                                  onChanged: (value) {
+                                    settingsProvider.groupByCategory = value;
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(tr('dontShowTrackOnlyWarnings')),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('dontShowTrackOnlyWarnings')),
+                                ),
+                                Switch(
+                                  value: settingsProvider.hideTrackOnlyWarning,
+                                  onChanged: (value) {
+                                    settingsProvider.hideTrackOnlyWarning = value;
+                                  },
+                                ),
+                              ],
                             ),
-                            Switch(
-                              value: settingsProvider.hideTrackOnlyWarning,
-                              onChanged: (value) {
-                                settingsProvider.hideTrackOnlyWarning = value;
-                              },
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('dontShowAPKOriginWarnings')),
+                                ),
+                                Switch(
+                                  value: settingsProvider.hideAPKOriginWarning,
+                                  onChanged: (value) {
+                                    settingsProvider.hideAPKOriginWarning = value;
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(tr('dontShowAPKOriginWarnings')),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('disablePageTransitions'))),
+                                Switch(
+                                  value: settingsProvider.disablePageTransitions,
+                                  onChanged: (value) {
+                                    settingsProvider.disablePageTransitions = value;
+                                  },
+                                ),
+                              ],
                             ),
-                            Switch(
-                              value: settingsProvider.hideAPKOriginWarning,
-                              onChanged: (value) {
-                                settingsProvider.hideAPKOriginWarning = value;
-                              },
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('reversePageTransitions'))),
+                                Switch(
+                                  value: settingsProvider.reversePageTransitions,
+                                  onChanged: settingsProvider.disablePageTransitions
+                                      ? null
+                                      : (value) {
+                                          settingsProvider.reversePageTransitions =
+                                              value;
+                                        },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('disablePageTransitions'))),
-                            Switch(
-                              value: settingsProvider.disablePageTransitions,
-                              onChanged: (value) {
-                                settingsProvider.disablePageTransitions = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('reversePageTransitions'))),
-                            Switch(
-                              value: settingsProvider.reversePageTransitions,
-                              onChanged: settingsProvider.disablePageTransitions
-                                  ? null
-                                  : (value) {
-                                      settingsProvider.reversePageTransitions =
-                                          value;
-                                    },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('highlightTouchTargets'))),
-                            Switch(
-                              value: settingsProvider.highlightTouchTargets,
-                              onChanged: (value) {
-                                settingsProvider.highlightTouchTargets = value;
-                              },
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('highlightTouchTargets'))),
+                                Switch(
+                                  value: settingsProvider.highlightTouchTargets,
+                                  onChanged: (value) {
+                                    settingsProvider.highlightTouchTargets = value;
+                                  },
+                                ),
+                              ],
                             ),
                           ],
                         ),
                         height32,
-                        Text(
-                          tr('categories'),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        height16,
-                        const CategoryEditorSelector(
-                          showLabelWhenNotEmpty: false,
+                        ExpandableCategory(
+                          title: tr('categories'),
+                          initiallyExpanded: false,
+                          children: [
+                            height16,
+                            const CategoryEditorSelector(
+                              showLabelWhenNotEmpty: false,
+                            ),
+                          ],
                         ),
                       ],
                     ),
