@@ -47,7 +47,6 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
-
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
     getUpdate(String id, {bool resetVersion = false}) async {

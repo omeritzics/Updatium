@@ -483,11 +483,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   ),
                   if (importInProgress || appsProvider.exportInProgress)
                     const Column(
-                      children: [
-                        gap12,
-                        LinearProgressIndicator(),
-                        gap12,
-                      ],
+                      children: [gap12, LinearProgressIndicator(), gap12],
                     )
                   else
                     Column(
