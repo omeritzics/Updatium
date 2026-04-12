@@ -171,6 +171,7 @@
     "updatiumMustBeOpenToInstallApps": "Updatium must be open to install apps",
     "completeAppInstallationNotifDescription": "Asks the user to return to Updatium to finish installing an app",
     "checkingForUpdates": "Checking for updates",
+    "checkForUpdate": "Check for update",
     "checkingForUpdatesNotifDescription": "Transient notification that appears when checking for updates",
     "pleaseAllowInstallPerm": "Please allow Updatium to install apps",
     "trackOnly": "Track-only",

@@ -184,69 +184,7 @@ class _AppPageState extends State<AppPage> {
               style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
             ),
           ),
-          if (app?.app.apkUrls.isNotEmpty == true ||
-              app?.app.otherAssetUrls.isNotEmpty == true)
-            GestureDetector(
-              onTap: app?.app == null || updating
-                  ? null
-                  : () async {
-                      try {
-                        await appsProvider.downloadAppAssets([
-                          app!.app.id,
-                        ], context);
-                      } catch (e) {
-                        showError(e, context);
-                      }
-                    },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: settingsProvider.highlightTouchTargets
-                          ? () {
-                              bool usePureBlack =
-                                  settingsProvider.useBlackTheme &&
-                                  Theme.of(context).brightness ==
-                                      Brightness.dark;
-                              if (usePureBlack) {
-                                return Colors.white.withValues(alpha: 0.16);
-                              }
-                              return (Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? Theme.of(context).primaryColor
-                                      : Theme.of(context).primaryColorLight)
-                                  .withAlpha(
-                                    Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? 20
-                                        : 40,
-                                  );
-                            }()
-                          : null,
-                    ),
-                    padding: settingsProvider.highlightTouchTargets
-                        ? const EdgeInsetsDirectional.fromSTEB(12, 8, 12, 8)
-                        : const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
-                    margin: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                    child: Text(
-                      tr(
-                        'downloadX',
-                        args: [lowerCaseIfEnglish(tr('releaseAsset'))],
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                        decoration: TextDecoration.underline,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+
 
           /* Certificate Hashes */
           if (app != null && app.certificateHashes.isNotEmpty)
@@ -425,7 +363,8 @@ class _AppPageState extends State<AppPage> {
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
-        gap80,
+        // Extra bottom padding to clear the floating toolbar + FAB
+        const SizedBox(height: 120),
       ],
     );
 
@@ -511,54 +450,144 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Main action button (left side)
-        Expanded(
-          flex: 4,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
-              elevation: 2,
-              shadowColor: Theme.of(context).colorScheme.shadow,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
-                ),
+
+
+    return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // ── Floating Toolbar pill (secondary actions) ──────────────────
+          Card(
+            elevation: 3,
+            shape: const StadiumBorder(),
+            color: Theme.of(context).colorScheme.surfaceContainerHigh,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Check for update
+                  IconButton(
+                    icon: updating
+                        ? SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          )
+                        : const Icon(Icons.refresh),
+                    tooltip: tr('checkForUpdate'),
+                    onPressed:
+                        updating || areDownloadsRunning || app == null
+                            ? null
+                            : () => getUpdate(app.app.id),
+                  ),
+                  // Additional options (conditional)
+                  if (source != null &&
+                      source
+                          .combinedAppSpecificSettingFormItems
+                          .isNotEmpty)
+                    IconButton(
+                      icon: const Icon(Icons.tune),
+                      tooltip: tr('additionalOptions'),
+                      onPressed: updating
+                          ? null
+                          : () => showAdditionalOptionsDialog().then(
+                                handleAdditionalOptionChanges,
+                              ),
+                    ),
+                  // Download assets (conditional)
+                  if (app?.app.apkUrls.isNotEmpty == true ||
+                      app?.app.otherAssetUrls.isNotEmpty == true)
+                    IconButton(
+                      icon: const Icon(Icons.file_download_outlined),
+                      tooltip: tr(
+                        'downloadX',
+                        args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+                      ),
+                      onPressed: app?.app == null || updating
+                          ? null
+                          : () async {
+                              try {
+                                await appsProvider.downloadAppAssets(
+                                  [app!.app.id],
+                                  context,
+                                );
+                              } catch (e) {
+                                showError(e, context);
+                              }
+                            },
+                    ),
+                  // Remove (conditional)
+                  if (app?.app.installedVersion != null &&
+                      app?.app.installedVersion != app?.app.latestVersion &&
+                      !isVersionDetectionStandard &&
+                      !trackOnly)
+                    IconButton(
+                      icon: const Icon(Icons.delete_outline),
+                      tooltip: tr('remove'),
+                      color: Theme.of(context).colorScheme.error,
+                      onPressed: updating
+                          ? null
+                          : () => appsProvider
+                                .removeAppsWithModal(
+                                  context,
+                                  app != null ? [app.app] : [],
+                                )
+                                .then((result) {
+                                  if (result == true) {
+                                    Navigator.of(context).pop();
+                                  }
+                                }),
+                    ),
+                ],
               ),
             ),
+          ),
+          const SizedBox(width: 16),
+          // ── FAB – primary action (Install / Update) ────────────────────
+          FloatingActionButton.extended(
+            heroTag: 'app_details_fab',
             onPressed:
                 !updating &&
                     (app?.app.installedVersion == null ||
-                        app?.app.installedVersion != app?.app.latestVersion) &&
+                        app?.app.installedVersion !=
+                            app?.app.latestVersion) &&
                     !areDownloadsRunning
-                ? () async {
-                    try {
-                      var successMessage = app?.app.installedVersion == null
-                          ? tr('installed')
-                          : tr('appsUpdated');
-                      HapticFeedback.heavyImpact();
-                      var res = await appsProvider.downloadAndInstallLatestApps(
-                        app?.app.id != null ? [app!.app.id] : [],
-                        globalNavigatorKey.currentContext,
-                      );
-                      if (res.isNotEmpty && !trackOnly) {
-                        // ignore: use_build_context_synchronously
-                        showMessage(successMessage, context);
+                    ? () async {
+                        try {
+                          var successMessage =
+                              app?.app.installedVersion == null
+                                  ? tr('installed')
+                                  : tr('appsUpdated');
+                          HapticFeedback.heavyImpact();
+                          var res = await appsProvider
+                              .downloadAndInstallLatestApps(
+                            app?.app.id != null ? [app!.app.id] : [],
+                            globalNavigatorKey.currentContext,
+                          );
+                          if (res.isNotEmpty && !trackOnly) {
+                            // ignore: use_build_context_synchronously
+                            showMessage(successMessage, context);
+                          }
+                          if (res.isNotEmpty && mounted) {
+                            Navigator.of(context).pop();
+                          }
+                        } catch (e) {
+                          // ignore: use_build_context_synchronously
+                          showError(e, context);
+                        }
                       }
-                      if (res.isNotEmpty && mounted) {
-                        Navigator.of(context).pop();
-                      }
-                    } catch (e) {
-                      // ignore: use_build_context_synchronously
-                      showError(e, context);
-                    }
-                  }
-                : null,
-            child: Text(
+                    : null,
+            icon: Icon(
+              app?.app.installedVersion == null
+                  ? Icons.install_mobile
+                  : Icons.system_update,
+            ),
+            label: Text(
               app?.app.installedVersion == null
                   ? !trackOnly
                         ? tr('install')
@@ -568,136 +597,8 @@ class _AppPageState extends State<AppPage> {
                   : tr('markUpdated'),
             ),
           ),
-        ),
-        // Visual divider
-        Container(
-          width: 1,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.outline,
-          ),
-        ),
-        // Dropdown menu button (right side)
-        Container(
-          width: 48,
-          height: 48,
-          child: PopupMenuButton<String>(
-            icon: Icon(
-              Icons.arrow_drop_down,
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
-              elevation: 2,
-              shadowColor: Theme.of(context).colorScheme.shadow,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
-              ),
-              padding: EdgeInsets.zero,
-              minimumSize: const Size(48, 48),
-            ),
-            enabled: !updating,
-            onSelected: (String value) async {
-              switch (value) {
-                case 'check_update':
-                  if (app != null) {
-                    getUpdate(app.app.id);
-                  }
-                  break;
-                case 'additional_options':
-                  if (source != null &&
-                      source.combinedAppSpecificSettingFormItems.isNotEmpty) {
-                    showAdditionalOptionsDialog().then(
-                      handleAdditionalOptionChanges,
-                    );
-                  }
-                  break;
-                case 'download_assets':
-                  if (app?.app == null || updating) {
-                    return;
-                  }
-                  try {
-                    await appsProvider.downloadAppAssets([
-                      app!.app.id,
-                    ], context);
-                  } catch (e) {
-                    showError(e, context);
-                  }
-                  break;
-                case 'remove':
-                  if (app?.app.installedVersion != null &&
-                      app?.app.installedVersion != app?.app.latestVersion &&
-                      !isVersionDetectionStandard &&
-                      !trackOnly) {
-                    appsProvider
-                        .removeAppsWithModal(
-                          context,
-                          app != null ? [app.app] : [],
-                        )
-                        .then((result) {
-                          if (result == true) {
-                            Navigator.of(context).pop();
-                          }
-                        });
-                  }
-                  break;
-              }
-            },
-            itemBuilder: (BuildContext context) => [
-              if (source != null &&
-                  source.combinedAppSpecificSettingFormItems.isNotEmpty)
-                PopupMenuItem<String>(
-                  value: 'additional_options',
-                  child: Row(
-                    children: [
-                      const Icon(Icons.edit),
-                      horizontalGap8,
-                      Text(tr('additionalOptions')),
-                    ],
-                  ),
-                ),
-              if (app?.app.apkUrls.isNotEmpty == true ||
-                  app?.app.otherAssetUrls.isNotEmpty == true)
-                PopupMenuItem<String>(
-                  value: 'download_assets',
-                  child: Row(
-                    children: [
-                      const Icon(Icons.file_download),
-                      horizontalGap8,
-                      Text(
-                        tr(
-                          'downloadX',
-                          args: [lowerCaseIfEnglish(tr('releaseAsset'))],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              if (app?.app.installedVersion != null &&
-                  app?.app.installedVersion != app?.app.latestVersion &&
-                  !isVersionDetectionStandard &&
-                  !trackOnly)
-                PopupMenuItem<String>(
-                  value: 'remove',
-                  child: Row(
-                    children: [
-                      const Icon(Icons.delete),
-                      horizontalGap8,
-                      Text(tr('remove')),
-                    ],
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ],
-    );
-
-    return Scaffold(
+        ],
+      ),
       body: RefreshIndicator(
         child: CustomScrollView(
           slivers: [
@@ -796,20 +697,9 @@ class _AppPageState extends State<AppPage> {
               child: Column(
                 children: [
                   getFullInfoColumn(),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(width: 16.0),
-                        Expanded(child: getInstallOrUpdateButton()),
-                        const SizedBox(width: 16.0),
-                      ],
-                    ),
-                  ),
                   if (app?.downloadProgress != null)
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                       child: LinearProgressIndicator(
                         value: app!.downloadProgress! >= 0
                             ? app.downloadProgress! / 100
