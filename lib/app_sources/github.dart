@@ -46,7 +46,7 @@ class GitHub extends AppSource {
         ],
       ),
       GeneratedFormTextField(
-        'GHReqPrefix',
+        tr('GHReqPrefix'),
         label: tr('GHReqPrefix'),
         hint: 'gh-proxy.org',
         required: false,

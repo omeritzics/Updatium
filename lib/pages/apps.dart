@@ -1718,6 +1718,7 @@ class AppsFilter {
       'upToDateApps': includeUptodate,
       'nonInstalledApps': includeNonInstalled,
       'sourceFilter': sourceFilter,
+      'categoryFilter': categoryFilter,
     };
   }
 
@@ -1728,6 +1729,7 @@ class AppsFilter {
     includeUptodate = values['upToDateApps'];
     includeNonInstalled = values['nonInstalledApps'];
     sourceFilter = values['sourceFilter'];
+    categoryFilter = values['categoryFilter'] ?? {};
   }
 
   bool isIdenticalTo(AppsFilter other, SettingsProvider settingsProvider) =>
