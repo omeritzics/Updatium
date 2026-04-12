@@ -258,6 +258,7 @@
     "moveNonInstalledAppsToBottom": "Mover apps no instaladas al final",
     "hideNonInstalledApps": "Ocultar apps no instaladas",
     "gitlabPATLabel": "Token de acceso personal a GitLab",
+    "github": "GitHub",
     "about": "Acerca de",
     "requiresCredentialsInSettings": "{}: Esto requiere credenciales adicionales (en ajustes)",
     "checkOnStart": "Comprobar actualizaciones al inicio",

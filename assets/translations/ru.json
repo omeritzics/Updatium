@@ -241,7 +241,8 @@
     "moveNonInstalledAppsToBottom": "Показывать неустановленные приложения внизу списка",
     "hideNonInstalledApps": "Скрыть неустановленные приложения",
     "gitlabPATLabel": "Персональный токен доступа GitLab",
-    "about": "Описание",
+    "github": "GitHub",
+    "about": "О приложении",
     "requiresCredentialsInSettings": "{}: для этого требуются дополнительные учётные данные (в настройках)",
     "checkOnStart": "Проверять наличие обновлений при запуске",
     "safeMode": "Безопасный режим",
@@ -441,8 +442,8 @@
     "privacyText": "Это приложение ориентировано на конфиденциальность и не собирает личные данные.",
     "acceptAndContinue": "Принять и продолжить",
     "decline": "Отклонить",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "Вам нравится Updatium?",
+    "githubStarPromptContent": "Updatium - это добровольный проект с открытым исходным кодом, который я разрабатываю в свободное время. Если вы хотите поддержать проект, пожалуйста, рассмотрите возможность поставить ему звезду на GitHub, чтобы помочь нам достичь большего количества пользователей и участников. Вы больше не будете получать напоминания об этом. Заранее спасибо! :)",
+    "githubStarPromptStar": "Поставить звезду",
+    "githubStarPromptDontShowAgain": "Больше не показывать"
 }

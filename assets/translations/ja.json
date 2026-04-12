@@ -241,7 +241,8 @@
     "moveNonInstalledAppsToBottom": "未インストールのアプリをアプリ一覧の下部に移動させる",
     "hideNonInstalledApps": "未インストールのアプリを非表示",
     "gitlabPATLabel": "GitLab パーソナルアクセストークン",
-    "about": "概要",
+    "github": "GitHub",
+    "about": "について",
     "requiresCredentialsInSettings": "{}: これには追加の認証が必要です (設定にて)",
     "checkOnStart": "起動時にアップデートを確認する",
     "safeMode": "セーフモード",
@@ -429,8 +430,8 @@
     "privacyText": "このアプリはプライバシー重視で、個人データを収集しません。",
     "acceptAndContinue": "同意して続行",
     "decline": "拒否",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "Updatiumをお楽しみですか？",
+    "githubStarPromptContent": "Updatiumは、私の自由時間に開発したボランティアのオープンソースコミュニティプロジェクトです。プロジェクトをサポートしていただける場合は、より多くのユーザーや貢献者に到達するのを助けるために、GitHubでスターを付けていただくことをご検討ください。この件については今後ご案内しません。前もってありがとうございます！:)",
+    "githubStarPromptStar": "スターを付ける",
+    "githubStarPromptDontShowAgain": "今後表示しない"
 }

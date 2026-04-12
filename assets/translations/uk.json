@@ -241,7 +241,8 @@
     "moveNonInstalledAppsToBottom": "Перемістити невстановлені застосунки вниз у перегляді застосунців",
     "hideNonInstalledApps": "Приховати невстановлені застосунки",
     "gitlabPATLabel": "Особистий токен GitLab (Увімкнення пошуку та краще виявлення APK)",
-    "about": "Про програму",
+    "github": "GitHub",
+    "about": "Про застосунок",
     "requiresCredentialsInSettings": "{} потребує додаткових облікових даних (у налаштуваннях)",
     "checkOnStart": "Перевірити наявність оновлень при запуску",
     "safeMode": "Безпечний режим",
@@ -429,8 +430,8 @@
     "privacyText": "Цей додаток орієнтований на конфіденційність і не збирає особисті дані.",
     "acceptAndContinue": "Прийняти та продовжити",
     "decline": "Відхилити",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "Вам подобається Updatium?",
+    "githubStarPromptContent": "Updatium - це добровільний проєкт з відкритим вихідним кодом, який я розробляю у свій вільний час. Якщо ви хочете підтримати проєкт, будь ласка, розгляньте можливість поставити йому зірку на GitHub, щоб допомогти нам досягти більше користувачів та учасників. Ви більше не отримуватимете нагадувань про це. Заздалегідь дякуємо! :)",
+    "githubStarPromptStar": "Поставити зірку",
+    "githubStarPromptDontShowAgain": "Більше не показувати"
 }

@@ -41,6 +41,7 @@
     "appSourceURL": "App source URL",
     "error": "Error",
     "add": "Add",
+    "advanced": "Advanced",
     "searchSomeSourcesLabel": "Search (some sources only)",
     "search": "Search",
     "additionalOptsFor": "Additional options for {}",

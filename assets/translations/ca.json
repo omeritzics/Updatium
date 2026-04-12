@@ -241,6 +241,7 @@
     "moveNonInstalledAppsToBottom": "Desplaça les aplicacions no instal·lades al capdavall de les aplicacions",
     "hideNonInstalledApps": "Amaga les aplicacions no instal·lades",
     "gitlabPATLabel": "Token d'accés personal a GitLab",
+    "github": "GitHub",
     "about": "Quant a",
     "requiresCredentialsInSettings": "{} requereix credencials addicionals (a Paràmetres)",
     "checkOnStart": "Comprova si hi ha actualitzacions en iniciar Updatium",
@@ -429,8 +430,8 @@
     "privacyText": "Aquesta aplicació està centrada en la privacitat i no recull dades personals.",
     "acceptAndContinue": "Acceptar i continuar",
     "decline": "Rebutjar",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "Estigueu gaudint d'Updatium?",
+    "githubStarPromptContent": "Updatium és un projecte comunitari voluntari de codi obert desenvolupat en el meu temps lliure. Si voleu donar suport al projecte, considereu donar-li una estrella a GitHub per ajudar-nos a arribar a més usuaris i col·laboradors. No se us tornarà a recordar això. Gràcies de forma anticipada! :)",
+    "githubStarPromptStar": "Donar una estrella",
+    "githubStarPromptDontShowAgain": "No mostrar més"
 }

@@ -241,6 +241,7 @@
     "moveNonInstalledAppsToBottom": "Liiguta installimata äpid äpide vaate alumisse ossa",
     "hideNonInstalledApps": "Peida installimata äpid",
     "gitlabPATLabel": "GitLabi isiklik juurdepääsutunnus",
+    "github": "GitHub",
     "about": "Programmist",
     "requiresCredentialsInSettings": "{} vajab lisandmed (seadetes)",
     "checkOnStart": "Kontrolli uuendusi käivitamisel",
@@ -429,8 +430,8 @@
     "privacyText": "See rakendus on privaatsuskeskne ja ei kogu isiklikke andmeid.",
     "acceptAndContinue": "Nõustu & Jätka",
     "decline": "Keeldu",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "Kas meeldib Updatium?",
+    "githubStarPromptContent": "Updatium on vabatahtlik avatud lähtekoodiga kogukonnaprojekt, mille arendan oma vabal ajal. Kui soovid projekti toetada, kaalu palun GitHubis tärni andmist, et aidata meil jõuda enamate kasutajate ja panustajateni. Teid ei selle kohta enam meelditakse. Aitäh ette! :)",
+    "githubStarPromptStar": "Anna tärn",
+    "githubStarPromptDontShowAgain": "Ära näita enam"
 }

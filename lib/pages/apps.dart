@@ -867,18 +867,18 @@ class AppsPageState extends State<AppsPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  height12,
+                  const SizedBox(height: 8),
                   SizedBox(
-                    height: 64,
-                    width: 64,
+                    height: 56,
+                    width: 56,
                     child: FittedBox(
                       fit: BoxFit.contain,
                       child: getAppIcon(index),
                     ),
                   ),
-                  height8,
+                  const SizedBox(height: 6),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Text(
                       listedApps[index].name,
                       textAlign: TextAlign.center,
@@ -886,13 +886,13 @@ class AppsPageState extends State<AppsPage> {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 13,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Text(
                       listedApps[index].author,
                       textAlign: TextAlign.center,
@@ -900,12 +900,12 @@ class AppsPageState extends State<AppsPage> {
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(
                         context,
-                      ).textTheme.bodySmall?.copyWith(fontSize: 11),
+                      ).textTheme.bodySmall?.copyWith(fontSize: 10),
                     ),
                   ),
-                  height8,
+                  const SizedBox(height: 4),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Builder(
                       builder: (ctx) {
                         final ai = listedApps[index];

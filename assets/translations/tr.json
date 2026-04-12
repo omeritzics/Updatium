@@ -258,6 +258,7 @@
     "moveNonInstalledAppsToBottom": "Yüklü olmayan uygulamaları listenin en altına taşı",
     "hideNonInstalledApps": "Yüklü olmayan uygulamaları gizle",
     "gitlabPATLabel": "GitLab kişisel erişim anahtarı",
+    "github": "GitHub",
     "about": "Hakkında",
     "requiresCredentialsInSettings": "{} için ek kimlik bilgileri gerekiyor (Ayarlarda)",
     "checkOnStart": "Başlangıçta güncellemeleri kontrol et",

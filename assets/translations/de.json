@@ -191,6 +191,7 @@
     "reposHaveMultipleApps": "Repos können mehrere Apps enthalten",
     "fdroidThirdPartyRepo": "F-Droid-Drittanbieter-Repo",
     "gitlab": "GitLab",
+    "github": "GitHub",
     "codeberg": "Codeberg",
     "izzyondroid": "IzzyOnDroid",
     "sourcehut": "SourceHut",
@@ -447,8 +448,8 @@
     "privacyText": "Diese App ist datenschutzorientiert und sammelt keine persönlichen Daten.",
     "acceptAndContinue": "Akzeptieren und fortfahren",
     "decline": "Ablehnen",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "Gefällt Ihnen Updatium?",
+    "githubStarPromptContent": "Updatium ist ein freiwilliges Open-Source-Community-Projekt, das in meiner Freizeit entwickelt wird. Wenn Sie das Projekt unterstützen möchten, erwägen Sie bitte, ihm auf GitHub einen Stern zu geben, um uns zu helfen, mehr Nutzer und Mitwirkende zu erreichen. Sie werden darüber nicht mehr belästigt. Vielen Dank im Voraus! :)",
+    "githubStarPromptStar": "Stern geben",
+    "githubStarPromptDontShowAgain": "Nicht mehr anzeigen"
 }
