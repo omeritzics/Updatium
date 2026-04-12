@@ -429,7 +429,8 @@ class AppsPageState extends State<AppsPage> {
 
     List<String?> getListedCategories() {
       var temp = listedApps.map(
-        (e) => e.app.categories?.isNotEmpty == true ? e.app.categories! : [null],
+        (e) =>
+            e.app.categories?.isNotEmpty == true ? e.app.categories! : [null],
       );
       return temp.isNotEmpty
           ? {
@@ -869,7 +870,8 @@ class AppsPageState extends State<AppsPage> {
           .entries
           .where(
             (e) =>
-                e.value.app.categories?.contains(listedCategories[index]) == true ||
+                e.value.app.categories?.contains(listedCategories[index]) ==
+                    true ||
                 e.value.app.categories?.isEmpty == true &&
                     listedCategories[index] == null,
           )
@@ -1493,17 +1495,19 @@ class AppsPageState extends State<AppsPage> {
           final minItemWidth = 120.0;
           final maxItemWidth = 200.0;
           final spacing = 12.0;
-          
+
           // Calculate how many columns fit with max item width
-          int maxColumns = ((screenWidth + spacing) / (maxItemWidth + spacing)).floor();
-          // Calculate how many columns fit with min item width  
-          int minColumns = ((screenWidth + spacing) / (minItemWidth + spacing)).floor();
-          
+          int maxColumns = ((screenWidth + spacing) / (maxItemWidth + spacing))
+              .floor();
+          // Calculate how many columns fit with min item width
+          int minColumns = ((screenWidth + spacing) / (minItemWidth + spacing))
+              .floor();
+
           // Ensure we have at least 1 column and respect the constraints
           int crossAxisCount = maxColumns;
           if (crossAxisCount < 1) crossAxisCount = 1;
           if (crossAxisCount > minColumns) crossAxisCount = minColumns;
-          
+
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: crossAxisCount,
