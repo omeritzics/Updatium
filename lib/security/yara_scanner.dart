@@ -271,7 +271,8 @@ class YARAScanner {
         await rulesDir.create(recursive: true);
       }
 
-      _rules.clear();
+      // Build new rules list to avoid concurrent modification
+      final newRules = <YARARule>[];
       int loadedCount = 0;
       int errorCount = 0;
       
@@ -280,7 +281,7 @@ class YARAScanner {
           try {
             final content = await entity.readAsString();
             final rules = YARARule.parseMultiple(content);
-            _rules.addAll(rules);
+            newRules.addAll(rules);
             loadedCount += rules.length;
           } catch (e) {
             errorCount++;
@@ -290,6 +291,9 @@ class YARAScanner {
         }
       }
 
+      // Atomically replace the shared reference
+      _rules.clear();
+      _rules.addAll(newRules);
       _logs.add('YARA rules loaded: $loadedCount successful, $errorCount failed');
     } catch (e) {
       _logs.add('Error loading YARA rules: ${e.toString()}');
@@ -396,7 +400,9 @@ class YARAScanner {
       final fileBytes = await file.readAsBytes();
       final matches = <YARAMatch>[];
 
-      for (final rule in _rules) {
+      // Take snapshot of rules to avoid concurrent modifications
+      final rules = List.from(_rules);
+      for (final rule in rules) {
         final match = await _checkRule(rule, fileBytes);
         if (match != null) {
           matches.add(match);
@@ -419,95 +425,126 @@ class YARAScanner {
     YARARule rule,
     List<int> fileBytes,
   ) async {
-    // Simple string matching (basic implementation)
-    // In a real implementation, you'd want to use proper YARA parsing
     final ruleLines = rule.content.split('\n');
-    final strings = <String>[];
+    final stringPatterns = <String, List<int>>{};
+    String? condition;
+    bool requiresAll = false; // Default to "any of" logic
 
+    // Parse strings and condition
     for (final line in ruleLines) {
       final trimmedLine = line.trim();
+      
       if (trimmedLine.startsWith('condition:')) {
-        // condition = trimmedLine.substring(10).trim(); // Not used in basic implementation
+        condition = trimmedLine.substring(10).trim();
+        // Parse condition to determine if it requires "all" or "any" strings
+        requiresAll = _parseConditionLogic(condition);
       } else if (trimmedLine.contains('\$') && trimmedLine.contains(' = ')) {
         // Extract quoted strings: $name = "text"
-        final quotedMatch = RegExp(r'\$(\w+)\s*=\s*["\']([^"\']+)["\']').firstMatch(trimmedLine);
+        final quotedPattern = RegExp(r'\$(\w+)\s*=\s*["\']([^"\']*)["\']');
+        final quotedMatch = quotedPattern.firstMatch(trimmedLine);
         if (quotedMatch != null && quotedMatch.group(1) != null) {
-          strings.add(quotedMatch.group(1)!);
+          final identifier = quotedMatch.group(1)!;
+          final content = quotedMatch.group(2)!;
+          if (content.isNotEmpty) {
+            stringPatterns[identifier] = utf8.encode(content);
+          }
           continue;
         }
         
         // Extract hex sequences: $name = {6A 40} or $name = 6A 40 68
-        final hexMatch = RegExp(r'\$(\w+)\s*=\s*(?:{([^}]+)}|([0-9A-Fa-f\s]+))').firstMatch(trimmedLine);
+        final hexPattern = RegExp(r'\$(\w+)\s*=\s*(?:{([^}]+)}|([0-9A-Fa-f\s]+))');
+        final hexMatch = hexPattern.firstMatch(trimmedLine);
         if (hexMatch != null && hexMatch.group(1) != null) {
-          strings.add(hexMatch.group(1)!);
-        }
-      }
-    }
-
-    // Check if any strings match in binary data
-    for (final string in strings) {
-      // Try quoted string pattern first
-      String? searchString;
-      List<int> searchBytes;
-      
-      final quotedPattern = RegExp(r'\$' + string + r'\s*=\s*["\']([^"\']+)["\']');
-      final quotedMatch = quotedPattern.firstMatch(rule.content);
-      
-      if (quotedMatch != null) {
-        // Case 1: Quoted strings - strip quotes and use utf8.encode
-        searchString = quotedMatch.group(1)!;
-        searchBytes = utf8.encode(searchString);
-      } else {
-        // Try hex patterns (both braced and unbraced)
-        final hexPattern = RegExp(r'\$' + string + r'\s*=\s*(?:{([^}]+)}|([0-9A-Fa-f\s]+))');
-        final hexMatch = hexPattern.firstMatch(rule.content);
-        
-        if (hexMatch != null) {
-          // Case 2: Hex sequences - parse hex pairs into bytes
-          final hexContent = hexMatch.group(1) ?? hexMatch.group(2)!;
+          final identifier = hexMatch.group(1)!;
+          final hexContent = hexMatch.group(2) ?? hexMatch.group(3) ?? '';
           final cleanHex = hexContent.replaceAll(RegExp(r'\s+'), '');
-          searchBytes = [];
+          final bytes = <int>[];
           
           for (int i = 0; i < cleanHex.length; i += 2) {
             if (i + 1 < cleanHex.length) {
               final byte = int.tryParse(cleanHex.substring(i, i + 2), radix: 16);
               if (byte != null) {
-                searchBytes.add(byte);
+                bytes.add(byte);
               }
             }
           }
-        } else {
-          // Case 3: Default text - try to find any remaining pattern and use utf8.encode
-          final defaultPattern = RegExp(r'\$' + string + r'\s*=\s*([^\n]+)');
-          final defaultMatch = defaultPattern.firstMatch(rule.content);
           
-          if (defaultMatch != null) {
-            searchString = defaultMatch.group(1)!.trim().replaceAll(RegExp(r'^["\']|["\']$'), '');
-            searchBytes = utf8.encode(searchString);
-          } else {
-            continue; // Skip if no pattern found
+          if (bytes.isNotEmpty) {
+            stringPatterns[identifier] = bytes;
           }
         }
       }
+    }
 
-      // Search for bytes in the file
-      if (_containsBytes(fileBytes, searchBytes)) {
-        return YARAMatch(
-          ruleName: rule.name,
-          description: rule.description ?? 'No description available',
-          author: rule.author,
-          tags: rule.tags,
-          threatLevel: _calculateThreatLevel(rule.tags),
-        );
+    // If no condition found, default to requiring at least one match
+    if (condition == null) {
+      requiresAll = false;
+    }
+
+    // Find which string identifiers match in the file
+    final matchedIdentifiers = <String>[];
+    for (final entry in stringPatterns.entries) {
+      if (_containsBytes(fileBytes, entry.value)) {
+        matchedIdentifiers.add(entry.key);
       }
+    }
+
+    // Evaluate condition based on matched identifiers
+    bool ruleMatches = false;
+    if (matchedIdentifiers.isEmpty) {
+      ruleMatches = false;
+    } else if (requiresAll) {
+      // All defined strings must be found
+      ruleMatches = matchedIdentifiers.length == stringPatterns.length;
+    } else {
+      // At least one string must be found
+      ruleMatches = matchedIdentifiers.isNotEmpty;
+    }
+
+    if (ruleMatches) {
+      return YARAMatch(
+        ruleName: rule.name,
+        description: rule.description ?? 'No description available',
+        author: rule.author,
+        tags: rule.tags,
+        threatLevel: _calculateThreatLevel(rule.tags),
+      );
     }
 
     return null;
   }
 
+  /// Parse condition logic to determine if rule requires "all" or "any" strings
+  bool _parseConditionLogic(String condition) {
+    // Default to "any of" logic unless explicitly requiring all
+    if (condition.isEmpty) return false;
+
+    // Look for "all of" patterns
+    if (condition.contains('all of') || 
+        condition.contains('all of them') ||
+        condition.contains('and')) {
+      return true;
+    }
+
+    // Look for "any of" patterns
+    if (condition.contains('any of') || 
+        condition.contains('any of them') ||
+        condition.contains('or')) {
+      return false;
+    }
+
+    // If condition is just a single identifier like "$a", default to any (requires at least one)
+    if (RegExp(r'^\$\w+$').hasMatch(condition.trim())) {
+      return false;
+    }
+
+    // Default to requiring at least one match for complex conditions
+    return false;
+  }
+
   /// Helper method to check if byte sequence contains another byte sequence
   bool _containsBytes(List<int> data, List<int> pattern) {
-    if (pattern.isEmpty) return true;
+    if (pattern.isEmpty) return false;
     if (data.length < pattern.length) return false;
 
     for (int i = 0; i <= data.length - pattern.length; i++) {
