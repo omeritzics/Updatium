@@ -18,6 +18,18 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+// Material 3 spacing tokens
+const gap8 = SizedBox(height: 8);
+const gap12 = SizedBox(height: 12);
+const gap16 = SizedBox(height: 16);
+const gap24 = SizedBox(height: 24);
+const gap32 = SizedBox(height: 32);
+
+const horizontalGap8 = SizedBox(width: 8);
+const horizontalGap12 = SizedBox(width: 12);
+const horizontalGap16 = SizedBox(width: 16);
+const horizontalGap24 = SizedBox(width: 24);
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -99,7 +111,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               scrollable: true,
               content: Column(
                 mainAxisSize: MainAxisSize.min,
-                spacing: 20,
                 children: [
                   Text(tr('googleVerificationWarningP1')),
                   GestureDetector(

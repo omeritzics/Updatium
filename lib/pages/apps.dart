@@ -18,6 +18,18 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:markdown/markdown.dart' as md;
 
+// Material 3 spacing tokens
+const gap8 = SizedBox(height: 8);
+const gap12 = SizedBox(height: 12);
+const gap16 = SizedBox(height: 16);
+const gap24 = SizedBox(height: 24);
+const gap32 = SizedBox(height: 32);
+
+const horizontalGap8 = SizedBox(width: 8);
+const horizontalGap12 = SizedBox(width: 12);
+const horizontalGap16 = SizedBox(width: 16);
+const horizontalGap24 = SizedBox(width: 24);
+
 class AppsPage extends StatefulWidget {
   const AppsPage({super.key});
 
@@ -199,11 +211,6 @@ class AppsPageState extends State<AppsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // M3 Expressive spacing constants (based on 4dp baseline grid)
-    const height16 = SizedBox(height: 16);
-    const height24 = SizedBox(height: 24);
-    const width16 = SizedBox(width: 16);
-
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
     var listedApps = appsProvider.getAppValues().toList();
@@ -472,7 +479,7 @@ class AppsPageState extends State<AppsPage> {
                         0.6,
                       ),
                     ),
-                    height24,
+                    gap24,
                     Text(
                       appsProvider.apps.isEmpty
                           ? appsProvider.loadingApps
@@ -1482,7 +1489,7 @@ class AppsPageState extends State<AppsPage> {
                     localValues = vals;
                   },
                 ),
-                height16,
+                gap16,
                 CategorySelector(
                   preselected: filter.categoryFilter,
                   onSelected: (categories) {
@@ -1515,7 +1522,7 @@ class AppsPageState extends State<AppsPage> {
       return Row(
         children: [
           getSelectAllButton(),
-          width16,
+          horizontalGap16,
           const VerticalDivider(),
           Expanded(
             child: Row(

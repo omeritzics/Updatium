@@ -14,6 +14,19 @@ import 'package:provider/provider.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:updatium/components/generated_form.dart';
 
+// Material 3 spacing tokens
+const gap8 = SizedBox(height: 8);
+const gap12 = SizedBox(height: 12);
+const gap16 = SizedBox(height: 16);
+const gap24 = SizedBox(height: 24);
+const gap32 = SizedBox(height: 32);
+const gap80 = SizedBox(height: 80);
+
+const horizontalGap8 = SizedBox(width: 8);
+const horizontalGap12 = SizedBox(width: 12);
+const horizontalGap16 = SizedBox(width: 16);
+const horizontalGap24 = SizedBox(width: 24);
+
 class AppPage extends StatefulWidget {
   const AppPage({super.key, required this.appId});
 
@@ -34,9 +47,6 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Material 3 spacing constants (4dp grid system)
-    const height24 = SizedBox(height: 24);
-    const height80 = SizedBox(height: 80);
 
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
@@ -133,7 +143,7 @@ class _AppPageState extends State<AppPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             child: Column(
               children: [
-                height24,
+                gap24,
                 Text(
                   versionLines,
                   textAlign: TextAlign.start,
@@ -163,7 +173,7 @@ class _AppPageState extends State<AppPage> {
                         ),
                       )
                     : const SizedBox.shrink(),
-                height24,
+                gap24,
               ],
             ),
           ),
@@ -244,7 +254,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                height24,
+                gap24,
                 Text(
                   "${plural('certificateHash', app.certificateHashes.length)}"
                   "${app.hasMultipleSigners ? " (${tr('multipleSigners')})" : ""}",
@@ -280,7 +290,7 @@ class _AppPageState extends State<AppPage> {
               ],
             ),
 
-          height24,
+          gap24,
           CategorySelector(
             alignment: WrapAlignment.center,
             preselected: app?.app.categories?.toSet() ?? {},
@@ -296,7 +306,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                height24,
+                gap24,
                 GestureDetector(
                   onLongPress: () {
                     Clipboard.setData(
@@ -416,7 +426,7 @@ class _AppPageState extends State<AppPage> {
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
-        height80,
+        gap80,
       ],
     );
 
@@ -646,7 +656,7 @@ class _AppPageState extends State<AppPage> {
                   child: Row(
                     children: [
                       const Icon(Icons.edit),
-                      const SizedBox(width: 8),
+                      horizontalGap8,
                       Text(tr('additionalOptions')),
                     ],
                   ),
@@ -658,7 +668,7 @@ class _AppPageState extends State<AppPage> {
                   child: Row(
                     children: [
                       const Icon(Icons.file_download),
-                      const SizedBox(width: 8),
+                      horizontalGap8,
                       Text(
                         tr(
                           'downloadX',
@@ -677,7 +687,7 @@ class _AppPageState extends State<AppPage> {
                   child: Row(
                     children: [
                       const Icon(Icons.delete),
-                      const SizedBox(width: 8),
+                      horizontalGap8,
                       Text(tr('remove')),
                     ],
                   ),

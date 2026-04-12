@@ -15,6 +15,18 @@ import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+// Material 3 spacing tokens
+const gap8 = SizedBox(height: 8);
+const gap12 = SizedBox(height: 12);
+const gap16 = SizedBox(height: 16);
+const gap24 = SizedBox(height: 24);
+const gap32 = SizedBox(height: 32);
+
+const horizontalGap8 = SizedBox(width: 8);
+const horizontalGap12 = SizedBox(width: 12);
+const horizontalGap16 = SizedBox(width: 16);
+const horizontalGap24 = SizedBox(width: 24);
+
 class AddAppPage extends StatefulWidget {
   const AddAppPage({super.key});
 
@@ -155,7 +167,7 @@ class AddAppPageState extends State<AddAppPage> {
                   Text(
                     '${pickedSource!.enforceTrackOnly ? tr('appsFromSourceAreTrackOnly') : tr('youPickedTrackOnly')}\n\n${tr('trackOnlyAppDescription')}',
                   ),
-                  const SizedBox(height: 16),
+                  gap16,
                   GeneratedForm(
                     items: [
                       [GeneratedFormSwitch('hide', label: tr('dontShowAgain'))],
@@ -331,7 +343,7 @@ class AddAppPageState extends State<AddAppPage> {
             },
           ),
         ),
-        const SizedBox(width: 16),
+        horizontalGap16,
         gettingAppInfo
             ? Semantics(
                 label: tr('gettingAppInfo'),
@@ -664,7 +676,7 @@ class AddAppPageState extends State<AddAppPage> {
             },
           ),
         ),
-        const SizedBox(width: 16),
+        horizontalGap16,
         searching
             ? Semantics(
                 label: tr('searching'),
@@ -692,7 +704,7 @@ class AddAppPageState extends State<AddAppPage> {
     Widget getAdvancedSection() => Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: 24),
+        gap24,
         Container(
           decoration: BoxDecoration(
             border: Border.all(
@@ -787,7 +799,7 @@ class AddAppPageState extends State<AddAppPage> {
     Widget getAdditionalOptsCol() => Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: 16),
+        gap16,
         Text(
           tr('additionalOptsFor', args: [pickedSource?.name ?? tr('source')]),
           style: TextStyle(
@@ -795,7 +807,7 @@ class AddAppPageState extends State<AddAppPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 16),
+        gap16,
         GeneratedForm(
           key: Key(
             '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}',
@@ -817,7 +829,7 @@ class AddAppPageState extends State<AddAppPage> {
         ),
         Column(
           children: [
-            const SizedBox(height: 16),
+            gap16,
             CategorySelector(
               alignment: WrapAlignment.start,
               onSelected: (categories) {
@@ -928,7 +940,7 @@ class AddAppPageState extends State<AddAppPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        gap16,
                         Text(
                           '${tr('note')}:',
                           style: const TextStyle(fontWeight: FontWeight.bold),
@@ -977,7 +989,7 @@ class AddAppPageState extends State<AddAppPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   getUrlInputRow(),
-                  const SizedBox(height: 16),
+                  gap16,
                   if (pickedSource != null) getHTMLSourceOverrideDropdown(),
                   if (shouldShowSearchBar()) getSearchBarRow(),
                   if (pickedSource != null)
