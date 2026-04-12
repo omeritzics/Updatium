@@ -4,7 +4,6 @@ import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
-import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -16,124 +15,17 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-// Spacing constants
-const height8 = SizedBox(height: 8);
-const height12 = SizedBox(height: 12);
-const height16 = SizedBox(height: 16);
-const height24 = SizedBox(height: 24);
-const height32 = SizedBox(height: 32);
+// Material 3 spacing tokens
+const gap8 = SizedBox(height: 8);
+const gap12 = SizedBox(height: 12);
+const gap16 = SizedBox(height: 16);
+const gap24 = SizedBox(height: 24);
+const gap32 = SizedBox(height: 32);
 
-// Custom expandable category widget
-class ExpandableCategory extends StatefulWidget {
-  final String title;
-  final List<Widget> children;
-  final bool initiallyExpanded;
-
-  const ExpandableCategory({
-    super.key,
-    required this.title,
-    required this.children,
-    this.initiallyExpanded = true,
-  });
-
-  @override
-  State<ExpandableCategory> createState() => _ExpandableCategoryState();
-}
-
-class _ExpandableCategoryState extends State<ExpandableCategory>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _expandAnimation;
-  bool _isExpanded = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
-    _expandAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    );
-
-    _isExpanded = widget.initiallyExpanded;
-    if (_isExpanded) {
-      _controller.value = 1.0;
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _toggle() {
-    setState(() {
-      _isExpanded = !_isExpanded;
-      if (_isExpanded) {
-        _controller.forward();
-      } else {
-        _controller.reverse();
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        InkWell(
-          onTap: _toggle,
-          borderRadius: BorderRadius.circular(8),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-            child: Row(
-              children: [
-                Text(
-                  widget.title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                AnimatedRotation(
-                  turns: _isExpanded ? 0.5 : 0,
-                  duration: const Duration(milliseconds: 300),
-                  child: Icon(
-                    Icons.expand_more,
-                    color: Theme.of(context).colorScheme.primary,
-                    size: 20,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        AnimatedBuilder(
-          animation: _expandAnimation,
-          builder: (context, child) {
-            return ClipRect(
-              child: Align(
-                heightFactor: _expandAnimation.value,
-                alignment: Alignment.topCenter,
-                child: child,
-              ),
-            );
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: widget.children,
-          ),
-        ),
-      ],
-    );
-  }
-}
+const horizontalGap8 = SizedBox(width: 8);
+const horizontalGap12 = SizedBox(width: 12);
+const horizontalGap16 = SizedBox(width: 16);
+const horizontalGap24 = SizedBox(width: 24);
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -158,7 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
     43200,
   ];
   int updateInterval = 0;
-  late SplineInterpolation updateIntervalInterpolator; // 🤓
+  late SplineInterpolation updateIntervalInterpolator;
   String updateIntervalLabel = tr('neverManualOnly');
   bool showIntervalLabel = true;
   final Map<ColorSwatch<Object>, String> colorsNameMap =
@@ -295,9 +187,9 @@ class _SettingsPageState extends State<SettingsPage> {
     }
 
     var colorPicker = ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      tileColor: Theme.of(context).colorScheme.surface,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      tileColor: Theme.of(context).colorScheme.surfaceContainer,
       title: Text(
         tr('selectX', args: [tr('color').toLowerCase()]),
         style: Theme.of(context).textTheme.titleMedium,
@@ -307,10 +199,10 @@ class _SettingsPageState extends State<SettingsPage> {
         "(${ColorTools.materialNameAndCode(settingsProvider.themeColor, colorSwatchNameMap: colorsNameMap)})",
       ),
       trailing: Container(
-        width: 48,
-        height: 48,
+        width: 40,
+        height: 40,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(20),
           color: settingsProvider.themeColor,
           border: Border.all(
             color: Theme.of(context).colorScheme.outline,
@@ -318,7 +210,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ),
         child: InkWell(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(20),
           onTap: () async {
             final Color colorBeforeDialog = settingsProvider.themeColor;
             if (!(await colorPickerDialog())) {
@@ -332,7 +224,7 @@ class _SettingsPageState extends State<SettingsPage> {
             color: settingsProvider.themeColor.computeLuminance() > 0.5
                 ? Colors.black
                 : Colors.white,
-            size: 24,
+            size: 20,
           ),
         ),
       ),
@@ -358,433 +250,279 @@ class _SettingsPageState extends State<SettingsPage> {
       future: DeviceInfoPlugin().androidInfo,
     );
 
-    var sortDropdown = MenuAnchor(
-      builder: (context, controller, child) {
-        String selectedValue;
-        switch (settingsProvider.sortColumn) {
-          case SortColumnSettings.authorName:
-            selectedValue = tr('authorName');
-            break;
-          case SortColumnSettings.nameAuthor:
-            selectedValue = tr('nameAuthor');
-            break;
-          case SortColumnSettings.added:
-            selectedValue = tr('asAdded');
-            break;
-          case SortColumnSettings.releaseDate:
-            selectedValue = tr('releaseDate');
-            break;
-        }
-
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Material(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(16),
-            elevation: 0,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(16),
-              onTap: () {
-                if (controller.isOpen) {
-                  controller.close();
-                } else {
-                  controller.open();
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 16,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            tr('appSortBy'),
-                            style: Theme.of(context).textTheme.labelSmall
-                                ?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            selectedValue,
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                    ),
-                    AnimatedRotation(
-                      turns: controller.isOpen ? 0.5 : 0,
-                      duration: const Duration(milliseconds: 200),
-                      child: Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        size: 24,
-                      ),
-                    ),
-                  ],
-                ),
+    var sortDropdown = Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              tr('appSortBy'),
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w600,
               ),
             ),
-          ),
-        );
-      },
-      menuChildren: [
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortColumn = SortColumnSettings.authorName,
-          child: Row(
-            children: [
-              Icon(
-                Icons.person_outline_rounded,
-                size: 20,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-              const SizedBox(width: 12),
-              Expanded(child: Text(tr('authorName'))),
-              if (settingsProvider.sortColumn == SortColumnSettings.authorName)
-                Icon(
-                  Icons.check_rounded,
-                  size: 20,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-            ],
-          ),
-        ),
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortColumn = SortColumnSettings.nameAuthor,
-          child: Row(
-            children: [
-              Icon(
-                Icons.sort_by_alpha_rounded,
-                size: 20,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-              const SizedBox(width: 12),
-              Expanded(child: Text(tr('nameAuthor'))),
-              if (settingsProvider.sortColumn == SortColumnSettings.nameAuthor)
-                Icon(
-                  Icons.check_rounded,
-                  size: 20,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-            ],
-          ),
-        ),
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortColumn = SortColumnSettings.added,
-          child: Row(
-            children: [
-              Icon(
-                Icons.add_circle_outline_rounded,
-                size: 20,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-              const SizedBox(width: 12),
-              Expanded(child: Text(tr('asAdded'))),
-              if (settingsProvider.sortColumn == SortColumnSettings.added)
-                Icon(
-                  Icons.check_rounded,
-                  size: 20,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-            ],
-          ),
-        ),
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortColumn = SortColumnSettings.releaseDate,
-          child: Row(
-            children: [
-              Icon(
-                Icons.calendar_today_outlined,
-                size: 20,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-              const SizedBox(width: 12),
-              Expanded(child: Text(tr('releaseDate'))),
-              if (settingsProvider.sortColumn == SortColumnSettings.releaseDate)
-                Icon(
-                  Icons.check_rounded,
-                  size: 20,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-            ],
-          ),
-        ),
-      ],
-    );
-
-    var orderDropdown = MenuAnchor(
-      builder: (context, controller, child) {
-        String selectedValue =
-            settingsProvider.sortOrder == SortOrderSettings.ascending
-            ? tr('ascending')
-            : tr('descending');
-
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Material(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(16),
-            elevation: 0,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(16),
-              onTap: () {
-                if (controller.isOpen) {
-                  controller.close();
-                } else {
-                  controller.open();
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 16,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            tr('appSortOrder'),
-                            style: Theme.of(context).textTheme.labelSmall
-                                ?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            selectedValue,
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                    ),
-                    AnimatedRotation(
-                      turns: controller.isOpen ? 0.5 : 0,
-                      duration: const Duration(milliseconds: 200),
-                      child: Icon(
-                        Icons.keyboard_arrow_down_rounded,
+            gap8,
+            DropdownButton<SortColumnSettings>(
+              value: settingsProvider.sortColumn,
+              isExpanded: true,
+              underline: const SizedBox(),
+              icon: const Icon(Icons.keyboard_arrow_down_rounded),
+              iconSize: 24,
+              iconEnabledColor: Theme.of(context).colorScheme.onSurfaceVariant,
+              items: [
+                DropdownMenuItem(
+                  value: SortColumnSettings.authorName,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.person_outline_rounded,
+                        size: 20,
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        size: 24,
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-      menuChildren: [
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortOrder = SortOrderSettings.ascending,
-          child: Row(
-            children: [
-              Icon(
-                Icons.arrow_upward_rounded,
-                size: 20,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-              const SizedBox(width: 12),
-              Expanded(child: Text(tr('ascending'))),
-              if (settingsProvider.sortOrder == SortOrderSettings.ascending)
-                Icon(
-                  Icons.check_rounded,
-                  size: 20,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-            ],
-          ),
-        ),
-        MenuItemButton(
-          onPressed: () =>
-              settingsProvider.sortOrder = SortOrderSettings.descending,
-          child: Row(
-            children: [
-              Icon(
-                Icons.arrow_downward_rounded,
-                size: 20,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-              const SizedBox(width: 12),
-              Expanded(child: Text(tr('descending'))),
-              if (settingsProvider.sortOrder == SortOrderSettings.descending)
-                Icon(
-                  Icons.check_rounded,
-                  size: 20,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-            ],
-          ),
-        ),
-      ],
-    );
-
-    var localeDropdown = MenuAnchor(
-      builder: (context, controller, child) {
-        String selectedValue = settingsProvider.forcedLocale == null
-            ? tr('followSystem')
-            : supportedLocales
-                  .firstWhere(
-                    (e) => e.key == settingsProvider.forcedLocale,
-                    orElse: () => supportedLocales.first,
-                  )
-                  .value;
-
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Material(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(16),
-            elevation: 0,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(16),
-              onTap: () {
-                if (controller.isOpen) {
-                  controller.close();
-                } else {
-                  controller.open();
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 16,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            tr('language'),
-                            style: Theme.of(context).textTheme.labelSmall
-                                ?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            selectedValue,
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                    ),
-                    AnimatedRotation(
-                      turns: controller.isOpen ? 0.5 : 0,
-                      duration: const Duration(milliseconds: 200),
-                      child: Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        size: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-      menuChildren: [
-        MenuItemButton(
-          onPressed: () {
-            settingsProvider.forcedLocale = null;
-            settingsProvider.resetLocaleSafe(context);
-          },
-          child: Row(
-            children: [
-              Icon(
-                Icons.settings_system_daydream_rounded,
-                size: 20,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-              const SizedBox(width: 12),
-              Expanded(child: Text(tr('followSystem'))),
-              if (settingsProvider.forcedLocale == null)
-                Icon(
-                  Icons.check_rounded,
-                  size: 20,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-            ],
-          ),
-        ),
-        ...supportedLocales.map(
-          (e) => MenuItemButton(
-            onPressed: () {
-              settingsProvider.forcedLocale = e.key;
-              context.setLocale(e.key);
-            },
-            child: Row(
-              children: [
-                Icon(
-                  Icons.language_rounded,
-                  size: 20,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-                const SizedBox(width: 12),
-                Expanded(child: Text(e.value)),
-                if (settingsProvider.forcedLocale == e.key)
-                  Icon(
-                    Icons.check_rounded,
-                    size: 20,
-                    color: Theme.of(context).colorScheme.primary,
+                      horizontalGap12,
+                      Expanded(child: Text(tr('authorName'))),
+                      if (settingsProvider.sortColumn == SortColumnSettings.authorName)
+                        Icon(
+                          Icons.check_rounded,
+                          size: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                    ],
                   ),
+                ),
+                DropdownMenuItem(
+                  value: SortColumnSettings.nameAuthor,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.sort_by_alpha_rounded,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      horizontalGap12,
+                      Expanded(child: Text(tr('nameAuthor'))),
+                      if (settingsProvider.sortColumn == SortColumnSettings.nameAuthor)
+                        Icon(
+                          Icons.check_rounded,
+                          size: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                    ],
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: SortColumnSettings.added,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.add_circle_outline_rounded,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      horizontalGap12,
+                      Expanded(child: Text(tr('asAdded'))),
+                      if (settingsProvider.sortColumn == SortColumnSettings.added)
+                        Icon(
+                          Icons.check_rounded,
+                          size: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                    ],
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: SortColumnSettings.releaseDate,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_today_outlined,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      horizontalGap12,
+                      Expanded(child: Text(tr('releaseDate'))),
+                      if (settingsProvider.sortColumn == SortColumnSettings.releaseDate)
+                        Icon(
+                          Icons.check_rounded,
+                          size: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                    ],
+                  ),
+                ),
               ],
+              onChanged: (SortColumnSettings? value) {
+                if (value != null) {
+                  settingsProvider.sortColumn = value;
+                }
+              },
             ),
-          ),
+          ],
         ),
-      ],
+      ),
+    );
+
+    var orderDropdown = Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              tr('appSortOrder'),
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            gap8,
+            DropdownButton<SortOrderSettings>(
+              value: settingsProvider.sortOrder,
+              isExpanded: true,
+              underline: const SizedBox(),
+              icon: const Icon(Icons.keyboard_arrow_down_rounded),
+              iconSize: 24,
+              iconEnabledColor: Theme.of(context).colorScheme.onSurfaceVariant,
+              items: [
+                DropdownMenuItem(
+                  value: SortOrderSettings.ascending,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.arrow_upward_rounded,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      horizontalGap12,
+                      Expanded(child: Text(tr('ascending'))),
+                      if (settingsProvider.sortOrder == SortOrderSettings.ascending)
+                        Icon(
+                          Icons.check_rounded,
+                          size: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                    ],
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: SortOrderSettings.descending,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.arrow_downward_rounded,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      horizontalGap12,
+                      Expanded(child: Text(tr('descending'))),
+                      if (settingsProvider.sortOrder == SortOrderSettings.descending)
+                        Icon(
+                          Icons.check_rounded,
+                          size: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+              onChanged: (SortOrderSettings? value) {
+                if (value != null) {
+                  settingsProvider.sortOrder = value;
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+
+    var localeDropdown = Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              tr('language'),
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            gap8,
+            DropdownButton<String?>(
+              value: settingsProvider.forcedLocale?.toString(),
+              isExpanded: true,
+              underline: const SizedBox(),
+              icon: const Icon(Icons.keyboard_arrow_down_rounded),
+              iconSize: 24,
+              iconEnabledColor: Theme.of(context).colorScheme.onSurfaceVariant,
+              items: [
+                DropdownMenuItem<String?>(
+                  value: null,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.settings_system_daydream_rounded,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      horizontalGap12,
+                      Expanded(child: Text(tr('followSystem'))),
+                      if (settingsProvider.forcedLocale == null)
+                        Icon(
+                          Icons.check_rounded,
+                          size: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                    ],
+                  ),
+                ),
+                ...supportedLocales.map(
+                  (e) => DropdownMenuItem<String>(
+                    value: e.key.toString(),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.language_rounded,
+                          size: 20,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                        horizontalGap12,
+                        Expanded(child: Text(e.value)),
+                        if (settingsProvider.forcedLocale?.toString() == e.key.toString())
+                          Icon(
+                            Icons.check_rounded,
+                            size: 20,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+              onChanged: (String? value) {
+                if (value == null) {
+                  settingsProvider.forcedLocale = null;
+                  settingsProvider.resetLocaleSafe(context);
+                } else {
+                  final entry = supportedLocales.firstWhere((e) => e.key.toString() == value);
+                  settingsProvider.forcedLocale = entry.key;
+                  context.setLocale(entry.key);
+                }
+              },
+            ),
+          ],
+        ),
+      ),
     );
 
     var intervalSlider = Slider(
@@ -813,29 +551,63 @@ class _SettingsPageState extends State<SettingsPage> {
 
     var sourceSpecificFields = sourceProvider.sources.map((e) {
       if (e.sourceConfigSettingFormItems.isNotEmpty) {
-        return GeneratedForm(
-          items: e.sourceConfigSettingFormItems.map((e) {
-            if (e is GeneratedFormSwitch) {
-              e.defaultValue = settingsProvider.getSettingBool(e.key);
-            } else {
-              e.defaultValue = settingsProvider.getSettingString(e.key);
-            }
-            return [e];
-          }).toList(),
-          onValueChanges: (values, valid, isBuilding) {
-            if (valid && !isBuilding) {
-              values.forEach((key, value) {
-                var formItem = e.sourceConfigSettingFormItems
-                    .where((i) => i.key == key)
-                    .firstOrNull;
-                if (formItem is GeneratedFormSwitch) {
-                  settingsProvider.setSettingBool(key, value == true);
+        return Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Theme.of(context).colorScheme.surfaceContainerLow,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                e.name,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              gap16,
+              ...e.sourceConfigSettingFormItems.map((formItem) {
+                if (formItem.key.contains('switch') || formItem.key.contains('enable')) {
+                  // Switch type
+                  final bool currentValue = settingsProvider.getSettingBool(formItem.key) ?? false;
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Text(formItem.key),
+                        ),
+                        Switch(
+                          value: currentValue,
+                          onChanged: (value) {
+                            settingsProvider.setSettingBool(formItem.key, value);
+                          },
+                        ),
+                      ],
+                    ),
+                  );
                 } else {
-                  settingsProvider.setSettingString(key, value ?? '');
+                  // Text field type
+                  final String currentValue = settingsProvider.getSettingString(formItem.key) ?? '';
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: TextField(
+                      controller: TextEditingController(text: currentValue),
+                      decoration: InputDecoration(
+                        labelText: formItem.key,
+                        border: const OutlineInputBorder(),
+                      ),
+                      onChanged: (value) {
+                        settingsProvider.setSettingString(formItem.key, value);
+                      },
+                    ),
+                  );
                 }
-              });
-            }
-          },
+              }).toList(),
+            ],
+          ),
         );
       } else {
         return Container();
@@ -859,13 +631,21 @@ class _SettingsPageState extends State<SettingsPage> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ExpandableCategory(
-                          title: tr('updates'),
+                        ExpansionTile(
+                          title: Text(
+                            tr('updates'),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
                           initiallyExpanded: true,
+                          tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+                          childrenPadding: const EdgeInsets.all(16),
                           children: [
-                            height16,
+                            gap16,
                             //intervalDropdown,
-                            height16,
+                            gap16,
                             if (showIntervalLabel)
                               SizedBox(
                                 child: Text(
@@ -873,7 +653,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               )
                             else
-                              const SizedBox(height: 16),
+                              gap16,
                             intervalSlider,
                             FutureBuilder(
                               builder: (ctx, val) {
@@ -927,7 +707,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               ),
                                             ],
                                           ),
-                                          height8,
+                                          gap8,
                                           Text(
                                             tr(
                                               'backgroundUpdateReqsExplanation',
@@ -944,12 +724,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                               context,
                                             ).textTheme.labelSmall,
                                           ),
-                                          height8,
+                                          gap8,
                                           if (settingsProvider
                                               .enableBackgroundUpdates)
                                             Column(
                                               children: [
-                                                height16,
+                                                gap16,
                                                 Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
@@ -973,7 +753,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                                     ),
                                                   ],
                                                 ),
-                                                height16,
+                                                gap16,
                                                 Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
@@ -1005,7 +785,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                               future: DeviceInfoPlugin().androidInfo,
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1032,11 +812,13 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(child: Text(tr('checkOnStart'))),
+                                Flexible(
+                                  child: Text(tr('checkOnStart')),
+                                ),
                                 Switch(
                                   value: settingsProvider.checkOnStart,
                                   onChanged: (value) {
@@ -1045,7 +827,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1062,7 +844,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1082,7 +864,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1099,7 +881,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1112,7 +894,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1158,7 +940,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1215,7 +997,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1247,213 +1029,161 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ],
                         ),
-                        height24,
-                        ExpandableCategory(
-                          title: tr('sourceSpecific'),
+                        gap24,
+                        ExpansionTile(
+                          title: Text(
+                            tr('sourceSpecific'),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
                           initiallyExpanded: false,
+                          tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+                          childrenPadding: const EdgeInsets.all(16),
                           children: [...sourceSpecificFields],
                         ),
-                        height24,
-                        ExpandableCategory(
-                          title: tr('appearance'),
+                        gap24,
+                        ExpansionTile(
+                          title: Text(
+                            tr('appearance'),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
                           initiallyExpanded: false,
+                          tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+                          childrenPadding: const EdgeInsets.all(16),
                           children: [
-                            height16,
-                            MenuAnchor(
-                              builder: (context, controller, child) {
-                                String selectedValue;
-                                switch (settingsProvider.theme) {
-                                  case ThemeSettings.system:
-                                    selectedValue = tr('followSystem');
-                                    break;
-                                  case ThemeSettings.light:
-                                    selectedValue = tr('light');
-                                    break;
-                                  case ThemeSettings.dark:
-                                    selectedValue = tr('dark');
-                                    break;
-                                }
-
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.shadow.withOpacity(0.1),
-                                        blurRadius: 8,
-                                        offset: const Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Material(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.surface,
-                                    borderRadius: BorderRadius.circular(16),
-                                    elevation: 0,
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(16),
-                                      onTap: () {
-                                        if (controller.isOpen) {
-                                          controller.close();
-                                        } else {
-                                          controller.open();
+                            gap16,
+                            Card(
+                              margin: EdgeInsets.zero,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      tr('theme'),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall
+                                          ?.copyWith(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.primary,
+                                            fontWeight:
+                                                FontWeight.w600,
+                                          ),
+                                    ),
+                                    gap8,
+                                    DropdownButton<ThemeSettings>(
+                                      value: settingsProvider.theme,
+                                      isExpanded: true,
+                                      underline: const SizedBox(),
+                                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                                      iconSize: 24,
+                                      iconEnabledColor: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant,
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: ThemeSettings.system,
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons
+                                                    .settings_system_daydream_rounded,
+                                                size: 20,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurfaceVariant,
+                                              ),
+                                              horizontalGap12,
+                                              Expanded(child: Text(tr('followSystem'))),
+                                              if (settingsProvider.theme ==
+                                                  ThemeSettings.system)
+                                                Icon(
+                                                  Icons.check_rounded,
+                                                  size: 20,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: ThemeSettings.light,
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.light_mode_rounded,
+                                                size: 20,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurfaceVariant,
+                                              ),
+                                              horizontalGap12,
+                                              Expanded(child: Text(tr('light'))),
+                                              if (settingsProvider.theme ==
+                                                  ThemeSettings.light)
+                                                Icon(
+                                                  Icons.check_rounded,
+                                                  size: 20,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: ThemeSettings.dark,
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.dark_mode_rounded,
+                                                size: 20,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurfaceVariant,
+                                              ),
+                                              horizontalGap12,
+                                              Expanded(child: Text(tr('dark'))),
+                                              if (settingsProvider.theme ==
+                                                  ThemeSettings.dark)
+                                                Icon(
+                                                  Icons.check_rounded,
+                                                  size: 20,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                      onChanged: (ThemeSettings? value) {
+                                        if (value != null) {
+                                          settingsProvider.theme = value;
                                         }
                                       },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 20,
-                                          vertical: 16,
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text(
-                                                    tr('theme'),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .labelSmall
-                                                        ?.copyWith(
-                                                          color: Theme.of(
-                                                            context,
-                                                          ).colorScheme.primary,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                  ),
-                                                  const SizedBox(height: 4),
-                                                  Text(
-                                                    selectedValue,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyLarge
-                                                        ?.copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            AnimatedRotation(
-                                              turns: controller.isOpen
-                                                  ? 0.5
-                                                  : 0,
-                                              duration: const Duration(
-                                                milliseconds: 200,
-                                              ),
-                                              child: Icon(
-                                                Icons
-                                                    .keyboard_arrow_down_rounded,
-                                                color: Theme.of(
-                                                  context,
-                                                ).colorScheme.onSurfaceVariant,
-                                                size: 24,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              menuChildren: [
-                                MenuItemButton(
-                                  onPressed: () => settingsProvider.theme =
-                                      ThemeSettings.system,
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.settings_system_daydream_rounded,
-                                        size: 20,
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onSurfaceVariant,
-                                      ),
-                                      const SizedBox(width: 12),
-                                      Expanded(child: Text(tr('followSystem'))),
-                                      if (settingsProvider.theme ==
-                                          ThemeSettings.system)
-                                        Icon(
-                                          Icons.check_rounded,
-                                          size: 20,
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.primary,
-                                        ),
-                                    ],
-                                  ),
+                                  ],
                                 ),
-                                MenuItemButton(
-                                  onPressed: () => settingsProvider.theme =
-                                      ThemeSettings.light,
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.light_mode_rounded,
-                                        size: 20,
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onSurfaceVariant,
-                                      ),
-                                      const SizedBox(width: 12),
-                                      Expanded(child: Text(tr('light'))),
-                                      if (settingsProvider.theme ==
-                                          ThemeSettings.light)
-                                        Icon(
-                                          Icons.check_rounded,
-                                          size: 20,
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.primary,
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                MenuItemButton(
-                                  onPressed: () => settingsProvider.theme =
-                                      ThemeSettings.dark,
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.dark_mode_rounded,
-                                        size: 20,
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onSurfaceVariant,
-                                      ),
-                                      const SizedBox(width: 12),
-                                      Expanded(child: Text(tr('dark'))),
-                                      if (settingsProvider.theme ==
-                                          ThemeSettings.dark)
-                                        Icon(
-                                          Icons.check_rounded,
-                                          size: 20,
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.primary,
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
-                            height8,
+                            gap8,
                             if (settingsProvider.theme == ThemeSettings.system)
                               followSystemThemeExplanation,
-                            height16,
+                            gap16,
                             if (settingsProvider.theme != ThemeSettings.light)
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(child: Text(tr('useBlackTheme'))),
                                   Switch(
@@ -1464,21 +1194,21 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ),
                                 ],
                               ),
-                            height8,
+                            gap8,
                             useMaterialThemeSwitch,
-                            height16,
+                            gap16,
                             if (!settingsProvider.useMaterialYou) colorPicker,
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(child: sortDropdown),
-                                const SizedBox(width: 16),
+                                horizontalGap16,
                                 Expanded(child: orderDropdown),
                               ],
                             ),
-                            height16,
+                            gap16,
                             localeDropdown,
                             FutureBuilder(
                               builder: (ctx, val) {
@@ -1487,7 +1217,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          height16,
+                                          gap16,
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -1523,7 +1253,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                               future: DeviceInfoPlugin().androidInfo,
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1536,7 +1266,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1553,7 +1283,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1580,7 +1310,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1596,7 +1326,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1612,7 +1342,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1629,7 +1359,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1650,7 +1380,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
-                            height16,
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1668,12 +1398,20 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ],
                         ),
-                        height24,
-                        ExpandableCategory(
-                          title: tr('categories'),
+                        gap24,
+                        ExpansionTile(
+                          title: Text(
+                            tr('categories'),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
                           initiallyExpanded: false,
+                          tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+                          childrenPadding: const EdgeInsets.all(16),
                           children: [
-                            height16,
+                            gap16,
                             const CategoryEditorSelector(
                               showLabelWhenNotEmpty: false,
                             ),
@@ -1697,7 +1435,7 @@ class _SettingsPageState extends State<SettingsPage> {
         icon: const Icon(Icons.info_outline_rounded),
         label: Text(tr('about')),
         extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
-        elevation: 6,
+        elevation: 3,
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
@@ -1740,112 +1478,68 @@ class _LogsDialogState extends State<LogsDialog> {
       title: Text(tr('appLogs')),
       content: Column(
         children: [
-          MenuAnchor(
-            builder: (context, controller, child) {
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.shadow.withOpacity(0.1),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Material(
-                  color: Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(16),
-                  elevation: 0,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(16),
-                    onTap: () {
-                      if (controller.isOpen) {
-                        controller.close();
-                      } else {
-                        controller.open();
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 16,
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  tr('filterDays'),
-                                  style: Theme.of(context).textTheme.labelSmall
-                                      ?.copyWith(
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.primary,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  plural('day', selectedDays),
-                                  style: Theme.of(context).textTheme.bodyLarge
-                                      ?.copyWith(fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                          ),
-                          AnimatedRotation(
-                            turns: controller.isOpen ? 0.5 : 0,
-                            duration: const Duration(milliseconds: 200),
-                            child: Icon(
-                              Icons.keyboard_arrow_down_rounded,
+          Card(
+                margin: EdgeInsets.zero,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        tr('filterDays'),
+                        style: Theme.of(context).textTheme.labelSmall
+                            ?.copyWith(
                               color: Theme.of(
                                 context,
-                              ).colorScheme.onSurfaceVariant,
-                              size: 24,
+                              ).colorScheme.primary,
+                              fontWeight: FontWeight.w600,
                             ),
-                          ),
-                        ],
                       ),
-                    ),
+                      gap8,
+                      DropdownButton<int>(
+                        value: selectedDays,
+                        isExpanded: true,
+                        underline: const SizedBox(),
+                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                        iconSize: 24,
+                        iconEnabledColor: Theme.of(context).colorScheme.onSurfaceVariant,
+                        items: days.map((day) {
+                          return DropdownMenuItem<int>(
+                            value: day,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.date_range_rounded,
+                                  size: 20,
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                ),
+                                horizontalGap12,
+                                Expanded(child: Text(plural('day', day))),
+                                if (selectedDays == day)
+                                  Icon(
+                                    Icons.check_rounded,
+                                    size: 20,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (int? value) {
+                          if (value != null) {
+                            setState(() {
+                              selectedDays = value;
+                            });
+                            filterLogs(value);
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ),
-              );
-            },
-            menuChildren: days.map((day) {
-              return MenuItemButton(
-                onPressed: () {
-                  setState(() {
-                    selectedDays = day;
-                  });
-                  filterLogs(day);
-                },
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.date_range_rounded,
-                      size: 20,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(child: Text(plural('day', day))),
-                    if (selectedDays == day)
-                      Icon(
-                        Icons.check_rounded,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
-          const SizedBox(height: 32),
+              ),
+          gap32,
           Text(logString ?? ''),
         ],
       ),
@@ -1920,54 +1614,73 @@ class CategoryEditorSelector extends StatefulWidget {
 }
 
 class _CategoryEditorSelectorState extends State<CategoryEditorSelector> {
-  Map<String, MapEntry<int, bool>> storedValues = {};
-
   @override
   Widget build(BuildContext context) {
     var settingsProvider = context.watch<SettingsProvider>();
     var appsProvider = context.watch<AppsProvider>();
-    storedValues = settingsProvider.categories.map(
-      (key, value) => MapEntry(
-        key,
-        MapEntry(
-          value,
-          storedValues[key]?.value ?? widget.preselected.contains(key),
-        ),
-      ),
-    );
-    return GeneratedForm(
-      items: [
-        [
-          GeneratedFormTagInput(
-            'categories',
-            label: tr('categories'),
-            emptyMessage: tr('noCategories'),
-            defaultValue: storedValues,
-            alignment: widget.alignment,
-            deleteConfirmationMessage: MapEntry(
-              tr('deleteCategoriesQuestion'),
-              tr('categoryDeleteWarning'),
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (settingsProvider.categories.isEmpty)
+          Text(
+            tr('noCategories'),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
-            singleSelect: widget.singleSelect,
-            showLabelWhenNotEmpty: widget.showLabelWhenNotEmpty,
+          )
+        else
+          Wrap(
+            alignment: widget.alignment,
+            spacing: 8,
+            runSpacing: 8,
+            children: settingsProvider.categories.entries.map((entry) {
+              final categoryName = entry.key;
+              final isSelected = widget.preselected.contains(categoryName);
+              
+              return FilterChip(
+                label: Text(categoryName),
+                selected: isSelected,
+                onSelected: (selected) {
+                  if (selected) {
+                    widget.onSelected?.call([categoryName]);
+                  } else {
+                    widget.onSelected?.call([]);
+                  }
+                },
+                deleteIcon: const Icon(Icons.close, size: 18),
+                onDeleted: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext ctx) {
+                      return AlertDialog(
+                        title: Text(tr('deleteCategoriesQuestion')),
+                        content: Text(tr('categoryDeleteWarning')),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(),
+                            child: Text(tr('cancel')),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              settingsProvider.setCategories(
+                                settingsProvider.categories
+                                  ..remove(categoryName),
+                                appsProvider: appsProvider,
+                              );
+                              Navigator.of(ctx).pop();
+                            },
+                            child: Text(tr('ok')),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              );
+            }).toList(),
           ),
-        ],
       ],
-      onValueChanges: ((values, valid, isBuilding) {
-        if (!isBuilding) {
-          storedValues =
-              values['categories'] as Map<String, MapEntry<int, bool>>;
-          settingsProvider.setCategories(
-            storedValues.map((key, value) => MapEntry(key, value.key)),
-            appsProvider: appsProvider,
-          );
-          if (widget.onSelected != null) {
-            widget.onSelected!(
-              storedValues.keys.where((k) => storedValues[k]!.value).toList(),
-            );
-          }
-        }
-      }),
     );
   }
 }
@@ -1997,7 +1710,7 @@ class AboutDialog extends StatelessWidget {
               size: 28,
             ),
           ),
-          const SizedBox(width: 16),
+          horizontalGap16,
           Text(tr('about')),
         ],
       ),
@@ -2015,21 +1728,21 @@ class AboutDialog extends StatelessWidget {
             child: Column(
               children: [
                 Image.asset('assets/graphics/icon.png', width: 80, height: 80),
-                const SizedBox(height: 16),
+                gap16,
                 Text(
                   'Updatium',
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 8),
+                gap8,
                 Text(
                   'Version $version ($buildNumber)',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
-                const SizedBox(height: 8),
+                gap8,
                 Text(
                   tr('appDescription'),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -2040,12 +1753,12 @@ class AboutDialog extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 24),
+          gap24,
           Text(
             tr('developedBy'),
             style: Theme.of(context).textTheme.titleSmall,
           ),
-          const SizedBox(height: 8),
+          gap8,
           TextButton.icon(
             onPressed: () {
               launchUrlString(
@@ -2060,9 +1773,9 @@ class AboutDialog extends StatelessWidget {
               padding: EdgeInsets.zero,
             ),
           ),
-          const SizedBox(height: 16),
+          gap16,
           Text(tr('sourceCode'), style: Theme.of(context).textTheme.titleSmall),
-          const SizedBox(height: 8),
+          gap8,
           TextButton.icon(
             onPressed: () {
               launchUrlString(
@@ -2077,9 +1790,9 @@ class AboutDialog extends StatelessWidget {
               padding: EdgeInsets.zero,
             ),
           ),
-          const SizedBox(height: 16),
+          gap16,
           Text(tr('license'), style: Theme.of(context).textTheme.titleSmall),
-          const SizedBox(height: 8),
+          gap8,
           TextButton.icon(
             onPressed: () {
               launchUrlString(
@@ -2094,7 +1807,7 @@ class AboutDialog extends StatelessWidget {
               padding: EdgeInsets.zero,
             ),
           ),
-          const SizedBox(height: 24),
+          gap24,
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(16),
@@ -2111,7 +1824,7 @@ class AboutDialog extends StatelessWidget {
                     context,
                   ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(height: 12),
+                gap12,
                 Row(
                   children: [
                     Expanded(
