@@ -34,9 +34,9 @@ class _AppPageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Consistent spacing constants
-    const height32 = SizedBox(height: 32);
-    const height85 = SizedBox(height: 85);
+    // Material 3 spacing constants (4dp grid system)
+    const height24 = SizedBox(height: 24);
+    const height80 = SizedBox(height: 80);
 
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
@@ -130,10 +130,10 @@ class _AppPageState extends State<AppPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             child: Column(
               children: [
-                height32,
+                height24,
                 Text(
                   versionLines,
                   textAlign: TextAlign.start,
@@ -163,14 +163,17 @@ class _AppPageState extends State<AppPage> {
                         ),
                       )
                     : const SizedBox.shrink(),
-                height32,
+                height24,
               ],
             ),
           ),
-          Text(
-            infoLines,
-            textAlign: TextAlign.start,
-            style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              infoLines,
+              textAlign: TextAlign.start,
+              style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
+            ),
           ),
           if (app?.app.apkUrls.isNotEmpty == true ||
               app?.app.otherAssetUrls.isNotEmpty == true)
@@ -215,9 +218,9 @@ class _AppPageState extends State<AppPage> {
                           : null,
                     ),
                     padding: settingsProvider.highlightTouchTargets
-                        ? const EdgeInsetsDirectional.fromSTEB(12, 6, 12, 6)
-                        : const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 2),
-                    margin: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
+                        ? const EdgeInsetsDirectional.fromSTEB(12, 8, 12, 8)
+                        : const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
+                    margin: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                     child: Text(
                       tr(
                         'downloadX',
@@ -241,7 +244,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                height32,
+                height24,
                 Text(
                   "${plural('certificateHash', app.certificateHashes.length)}"
                   "${app.hasMultipleSigners ? " (${tr('multipleSigners')})" : ""}",
@@ -260,8 +263,8 @@ class _AppPageState extends State<AppPage> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 25,
-                          vertical: 0,
+                          horizontal: 24,
+                          vertical: 4,
                         ),
                         child: Text(
                           hash,
@@ -277,7 +280,7 @@ class _AppPageState extends State<AppPage> {
               ],
             ),
 
-          height32,
+          height24,
           CategorySelector(
             alignment: WrapAlignment.center,
             preselected: app?.app.categories != null
@@ -295,7 +298,7 @@ class _AppPageState extends State<AppPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                height32,
+                height24,
                 GestureDetector(
                   onLongPress: () {
                     Clipboard.setData(
@@ -344,7 +347,7 @@ class _AppPageState extends State<AppPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(height: settingsProvider.highlightTouchTargets ? 2 : 8),
+        SizedBox(height: settingsProvider.highlightTouchTargets ? 4 : 8),
         GestureDetector(
           onTap: () {
             if (app?.app.url != null) {
@@ -387,9 +390,9 @@ class _AppPageState extends State<AppPage> {
                       : null,
                 ),
                 padding: settingsProvider.highlightTouchTargets
-                    ? const EdgeInsetsDirectional.fromSTEB(12, 6, 12, 6)
-                    : const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                margin: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                    ? const EdgeInsetsDirectional.fromSTEB(12, 8, 12, 8)
+                    : const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
+                margin: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                 child: Tooltip(
                   message: app?.app.url ?? '',
                   child: Text(
@@ -415,7 +418,7 @@ class _AppPageState extends State<AppPage> {
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
-        height85,
+        height80,
       ],
     );
 
@@ -684,7 +687,7 @@ class _AppPageState extends State<AppPage> {
       child: Padding(
         padding: EdgeInsets.fromLTRB(
           16,
-          8,
+          16,
           16,
           MediaQuery.of(context).padding.bottom + 16,
         ),
@@ -692,7 +695,7 @@ class _AppPageState extends State<AppPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -704,7 +707,7 @@ class _AppPageState extends State<AppPage> {
             ),
             if (app?.downloadProgress != null)
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                 child: LinearProgressIndicator(
                   value: app!.downloadProgress! >= 0
                       ? app.downloadProgress! / 100
@@ -784,7 +787,7 @@ class _AppPageState extends State<AppPage> {
 
                             // Fallback icon while loading
                             return Padding(
-                              padding: const EdgeInsets.only(right: 12.0),
+                              padding: const EdgeInsets.only(right: 16.0),
                               child: Icon(
                                 Icons.apps,
                                 size: 32,
