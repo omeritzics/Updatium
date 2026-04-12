@@ -910,7 +910,7 @@ class AppsPageState extends State<AppsPage> {
             child: SliverGrid(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 180,
-                crossAxisSpacing: 12,
+                crossAxisSpacing: 8,
                 mainAxisSpacing: 12,
                 childAspectRatio: 0.6,
               ),
@@ -1575,7 +1575,7 @@ class AppsPageState extends State<AppsPage> {
       } else {
         // Flat View
         if (settingsProvider.useGridView) {
-          final spacing = 12.0;
+          final spacing = 8.0;
 
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
