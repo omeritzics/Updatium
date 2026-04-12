@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:updatium/main.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/pages/apps.dart';
 import 'package:updatium/pages/import_export.dart';
@@ -13,7 +12,6 @@ import 'package:updatium/pages/security_disclaimer.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
-import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -175,103 +173,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> initDeepLinks() async {
     // AppLinks functionality removed
-
-    goToAddApp(String data) async {
-      final settingsProvider = context.read<SettingsProvider>();
-      if (settingsProvider.safeMode) {
-        showError(UpdatiumError(tr('safeModeAddAppDisabled')), context);
-        return;
-      }
-      switchToPage(1);
-      final pages = getPages(settingsProvider);
-      while ((pages[1].widget.key as GlobalKey<AddAppPageState>?)
-              ?.currentState ==
-          null) {
-        await Future.delayed(const Duration(microseconds: 1));
-      }
-      (pages[1].widget.key as GlobalKey<AddAppPageState>?)?.currentState
-          ?.linkFn(data);
-    }
-
-    goToExistingApp(String appId) async {
-      // Go to Apps page
-      switchToPage(0);
-      final settingsProvider = context.read<SettingsProvider>();
-      final pages = getPages(settingsProvider);
-      while ((pages[0].widget.key as GlobalKey<AppsPageState>?)?.currentState ==
-          null) {
-        await Future.delayed(const Duration(microseconds: 1));
-      }
-
-      // Navigate to the app
-      (pages[0].widget.key as GlobalKey<AppsPageState>?)?.currentState
-          ?.openAppById(appId);
-    }
-
-    interpretLink(Uri uri) async {
-      isLinkActivity = true;
-      var action = uri.host;
-      var data = uri.path.length > 1 ? uri.path.substring(1) : "";
-      try {
-        if (action == 'add') {
-          // Ensure apps are loaded
-          AppsProvider appsProvider = context.read<AppsProvider>();
-          while (appsProvider.loadingApps) {
-            await Future.delayed(const Duration(milliseconds: 10));
-          }
-
-          // See if we already have this app
-          String standardizedUrl = SourceProvider()
-              .getSource(data)
-              .standardizeUrl(data);
-
-          AppInMemory? existingApp = appsProvider.apps.values
-              .where((AppInMemory a) => a.app.url == standardizedUrl)
-              .firstOrNull;
-
-          if (existingApp != null) {
-            await goToExistingApp(existingApp.app.id);
-          } else {
-            await goToAddApp(data);
-          }
-        } else if (action == 'app' || action == 'apps') {
-          var dataStr = Uri.decodeComponent(data);
-          if (await showDialog(
-                context: context,
-                builder: (BuildContext ctx) {
-                  return _ImportDialog(action: action, dataStr: dataStr);
-                },
-              ) ==
-              true) {
-            // ignore: use_build_context_synchronously
-            var appsProvider = context.read<AppsProvider>();
-            var result = await appsProvider.import(
-              action == 'app'
-                  ? '{ "apps": [$dataStr] }'
-                  : '{ "apps": $dataStr }',
-            );
-            // ignore: use_build_context_synchronously
-            showMessage(
-              tr(
-                'importedX',
-                args: [plural('apps', result.key.length).toLowerCase()],
-              ),
-              context,
-            );
-          }
-        } else {
-          throw UpdatiumError(tr('unknown'));
-        }
-      } catch (e) {
-        showError(e, context);
-      }
-    }
-
-    // Check initial link if app was in cold state (terminated)
-    // AppLinks functionality removed
-    var initLinked = false;
-    // Handle link when app is in warm state (front or background)
-    // AppLinks functionality removed
   }
 
   void setIsReversing(int targetIndex) {
@@ -327,7 +228,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     prevAppCount = appsProvider.apps.length;
     prevIsLoading = appsProvider.loadingApps;
 
-    return WillPopScope(
+    return PopScope(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: PageTransitionSwitcher(
@@ -399,11 +300,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
         ),
       ),
-      onWillPop: () async {
+      onPopInvokedWithResult: (bool didPop, dynamic result) {
+        if (didPop) return;
         if (isLinkActivity &&
             selectedIndexHistory.length == 1 &&
             selectedIndexHistory.last == 1) {
-          return true;
+          return;
         }
         setIsReversing(
           selectedIndexHistory.length >= 2
@@ -414,13 +316,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           setState(() {
             selectedIndexHistory.removeLast();
           });
-          return false;
+          return;
         }
         final settingsProvider = context.read<SettingsProvider>();
         final pages = getPages(settingsProvider);
-        return !((pages[0].widget.key as GlobalKey<AppsPageState>).currentState
+        if (!((pages[0].widget.key as GlobalKey<AppsPageState>).currentState
                 ?.clearSelected() ??
-            false);
+            false)) {
+          Navigator.of(context).pop();
+        }
       },
     );
   }

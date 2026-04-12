@@ -15,6 +15,7 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:android_package_manager/android_package_manager.dart' as pm_pkg;
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:markdown/markdown.dart' as md;
 
@@ -164,6 +165,7 @@ class AppsPageState extends State<AppsPage> {
   DateTime? refreshingSince;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
   final Set<int> _expandedCategories = <int>{};
+  late pm_pkg.AndroidPackageManager pm = pm_pkg.AndroidPackageManager();
 
   // Helper function to preserve transparency regardless of theme overrides
   Color preserveTransparency(Color baseColor, double alpha) {
