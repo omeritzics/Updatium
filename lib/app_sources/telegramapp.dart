@@ -36,7 +36,10 @@ class TelegramApp extends AppSource {
       }
       String? apkUrl = 'https://telegram.org/dl/android/apk';
       return APKDetails(version, [
-        MapEntry<String, String>('telegram-$version${source_utils.supportedApkExtensions[0]}', apkUrl),
+        MapEntry<String, String>(
+          'telegram-$version${source_utils.supportedApkExtensions[0]}',
+          apkUrl,
+        ),
       ], AppNames('Telegram', 'Telegram'));
     } else {
       throw getUpdatiumHttpError(res);

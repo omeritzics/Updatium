@@ -327,9 +327,7 @@ Future<File> downloadFile(
   if (ext.endsWith('"') || ext.endsWith("other")) {
     ext = ext.substring(0, ext.length - 1);
   }
-  if ((source_utils.hasSupportedApkExtension(
-            Uri.tryParse(url)?.path ?? url,
-          ) ||
+  if ((source_utils.hasSupportedApkExtension(Uri.tryParse(url)?.path ?? url) ||
           ext == 'attachment') &&
       ext != 'apk') {
     ext = 'apk';
@@ -714,9 +712,7 @@ class AppsProvider with ChangeNotifier {
         apkDir = Directory(apkDirPath);
         var apks = apkDir
             .listSync()
-            .where(
-              (e) => source_utils.hasSupportedApkExtension(e.path),
-            )
+            .where((e) => source_utils.hasSupportedApkExtension(e.path))
             .toList();
 
         FileSystemEntity? temp;
@@ -1464,9 +1460,9 @@ class AppsProvider with ChangeNotifier {
                 app.additionalSettings,
                 fileUrl.value,
                 forAPKDownload:
-                  source_utils.hasSupportedApkExtension(fileUrl.key)
-                      ? true
-                      : false,
+                    source_utils.hasSupportedApkExtension(fileUrl.key)
+                    ? true
+                    : false,
               ),
           useExisting: false,
           allowInsecure: app.additionalSettings['allowInsecure'] == true,

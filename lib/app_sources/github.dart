@@ -549,7 +549,8 @@ class GitHub extends AppSource {
             .map((e) => e['final_url'] as MapEntry<String, String>)
             .toList();
         var apkAssetsWithUrls = allAssetsWithUrls.where((element) {
-          var ext = '.${(element['final_url'] as MapEntry<String, String>).key.toLowerCase().split('.').last}';
+          var ext =
+              '.${(element['final_url'] as MapEntry<String, String>).key.toLowerCase().split('.').last}';
           return source_utils.supportedApkExtensions.contains(ext) ||
               (includeZips && ext == '.zip');
         }).toList();
