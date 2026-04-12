@@ -1,0 +1,71 @@
+name: Flutter Dependency Upgrade
+
+on:
+  schedule:
+    # Run every Monday at 9:00 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          version: '3.38.9'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check for outdated packages
+        id: outdated
+        run: |
+          flutter pub outdated > outdated.txt
+          cat outdated.txt
+          # Check if there are any outdated packages (excluding git dependencies)
+          if grep -q "pub.dev packages" outdated.txt && ! grep -A 100 "pub.dev packages" outdated.txt | grep -q "All up-to-date"; then
+            echo "has_updates=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_updates=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upgrade dependencies
+        if: steps.outdated.outputs.has_updates == 'true'
+        run: |
+          flutter pub upgrade --major-versions
+          flutter pub get
+
+      - name: Create Pull Request
+        if: steps.outdated.outputs.has_updates == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: 'chore: upgrade Flutter dependencies'
+          body: |
+            Automated Flutter dependency upgrade.
+            
+            This PR updates Flutter/Dart packages from pub.dev to their latest versions.
+            
+            Git dependencies are not updated automatically and require manual review.
+          branch: upgrade/flutter-dependencies
+          commit-message: 'chore: upgrade Flutter dependencies'
+          labels: dependencies, flutter
+          delete-branch: true
