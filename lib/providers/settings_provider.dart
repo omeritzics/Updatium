@@ -546,7 +546,7 @@ class SettingsProvider with ChangeNotifier {
 
   Future<bool> setSafeModePassword(String password) async {
     try {
-      final hashed = bcrypt.hashPassword(password, bcrypt.generateSalt());
+      final hashed = BCrypt.hashpw(password, BCrypt.gensalt());
       await prefs?.setString('safeModePassword', hashed);
       notifyListeners();
       return true;
@@ -559,7 +559,7 @@ class SettingsProvider with ChangeNotifier {
     try {
       final stored = safeModePassword;
       if (stored == null) return false;
-      return bcrypt.checkPassword(password, stored);
+      return BCrypt.checkpw(password, stored);
     } catch (e) {
       return false;
     }

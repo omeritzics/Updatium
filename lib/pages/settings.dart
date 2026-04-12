@@ -2,6 +2,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/components/tag_editor.dart';
 import 'package:updatium/pages/safe_mode_dialog.dart';
