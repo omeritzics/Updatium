@@ -7,8 +7,6 @@ on:
   push:
     branches:
       - main 
-      - dev
-      - stable
   workflow_dispatch:
 
 jobs:
@@ -49,7 +47,7 @@ jobs:
         run: flutter pub get
         
       - name: Auto-fix linting issues
-        run: dart fix --apply
+        run: git pull && dart fix --apply
 
       - name: Format code
         run: dart format .
@@ -130,25 +128,31 @@ jobs:
           fi
           echo "Keystore verification successful"
 
-      - name: Build APK (Release Mode - Signed)
+      - name: Build APKs
         run: |
           flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
-          
-          mkdir -p build/outputs/
-          cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/updatium-nightly.apk
+          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --target-platform android-arm64 --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
 
-      - name: Upload Artifact
+          mkdir -p build/outputs/
+          cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/updatium-nightly-universal.apk
+          cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/updatium-nightly-arm64-v8a.apk
+
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v7
         with:
           name: Updatium-Nightly-APK
-          path: build/outputs/updatium-nightly.apk
+          path: |
+            build/outputs/updatium-nightly-universal.apk
+            build/outputs/updatium-nightly-arm64-v8a.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@v3
         with:
           tag_name: nightly
           name: "Updatium Nightly"
-          files: build/outputs/updatium-nightly.apk
+          files: |
+            build/outputs/updatium-nightly-universal.apk
+            build/outputs/updatium-nightly-arm64-v8a.apk
           prerelease: true
           overwrite: true
         env:

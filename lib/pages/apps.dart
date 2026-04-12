@@ -18,6 +18,18 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:markdown/markdown.dart' as md;
 
+// Material 3 spacing tokens
+const gap8 = SizedBox(height: 8);
+const gap12 = SizedBox(height: 12);
+const gap16 = SizedBox(height: 16);
+const gap24 = SizedBox(height: 24);
+const gap32 = SizedBox(height: 32);
+
+const horizontalGap8 = SizedBox(width: 8);
+const horizontalGap12 = SizedBox(width: 12);
+const horizontalGap16 = SizedBox(width: 16);
+const horizontalGap24 = SizedBox(width: 24);
+
 class AppsPage extends StatefulWidget {
   const AppsPage({super.key});
 
@@ -151,6 +163,7 @@ class AppsPageState extends State<AppsPage> {
   Set<String> selectedAppIds = {};
   DateTime? refreshingSince;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
+  final Set<int> _expandedCategories = <int>{};
 
   // Helper function to preserve transparency regardless of theme overrides
   Color preserveTransparency(Color baseColor, double alpha) {
@@ -199,11 +212,6 @@ class AppsPageState extends State<AppsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // M3 Expressive spacing constants (based on 4dp baseline grid)
-    const height16 = SizedBox(height: 16);
-    const height24 = SizedBox(height: 24);
-    const width16 = SizedBox(width: 16);
-
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
     var listedApps = appsProvider.getAppValues().toList();
@@ -301,7 +309,7 @@ class AppsPageState extends State<AppsPage> {
       }
       if (filter.categoryFilter.isNotEmpty &&
           filter.categoryFilter
-              .intersection(app.app.categories.toSet())
+              .intersection(app.app.categories?.toSet() ?? <String>{})
               .isEmpty) {
         return false;
       }
@@ -429,7 +437,8 @@ class AppsPageState extends State<AppsPage> {
 
     List<String?> getListedCategories() {
       var temp = listedApps.map(
-        (e) => e.app.categories.isNotEmpty ? e.app.categories : [null],
+        (e) =>
+            e.app.categories?.isNotEmpty == true ? e.app.categories! : [null],
       );
       return temp.isNotEmpty
           ? {
@@ -471,7 +480,7 @@ class AppsPageState extends State<AppsPage> {
                         0.6,
                       ),
                     ),
-                    height24,
+                    gap24,
                     Text(
                       appsProvider.apps.isEmpty
                           ? appsProvider.loadingApps
@@ -863,34 +872,57 @@ class AppsPageState extends State<AppsPage> {
       return _buildGridTile(index);
     }
 
-    getCategoryCollapsibleTile(int index) {
+    getCategoryGridTile(int index) {
       var filteredEntries = listedApps
           .asMap()
           .entries
           .where(
             (e) =>
-                e.value.app.categories.contains(listedCategories[index]) ||
-                e.value.app.categories.isEmpty &&
+                e.value.app.categories?.contains(listedCategories[index]) ==
+                    true ||
+                e.value.app.categories?.isEmpty == true &&
                     listedCategories[index] == null,
           )
           .toList();
 
-      var tiles = filteredEntries
-          .map((e) => getSingleAppHorizTile(e.key))
-          .toList();
-
       capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
-      return ExpansionTile(
-        initiallyExpanded: true,
-        title: Text(
-          capFirstChar(listedCategories[index] ?? tr('noCategory')),
-          style: const TextStyle(fontWeight: FontWeight.bold),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        controlAffinity: ListTileControlAffinity.leading,
-        trailing: Text(tiles.length.toString()),
-        children: [Column(children: tiles)],
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+            child: Row(
+              children: [
+                Text(
+                  capFirstChar(listedCategories[index] ?? tr('noCategory')),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  '(${filteredEntries.length})',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: SliverGrid(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 180,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 12,
+                childAspectRatio: 0.6,
+              ),
+              delegate: SliverChildBuilderDelegate((
+                BuildContext context,
+                int index,
+              ) {
+                return getSingleAppGridTile(filteredEntries[index].key);
+              }, childCount: filteredEntries.length),
+            ),
+          ),
+        ],
       );
     }
 
@@ -1059,7 +1091,7 @@ class AppsPageState extends State<AppsPage> {
           Set<String>? preselected;
           var showPrompt = false;
           for (var element in selectedApps) {
-            var currentCats = element.categories.toSet();
+            var currentCats = element.categories?.toSet() ?? <String>{};
             if (preselected == null) {
               preselected = currentCats;
             } else {
@@ -1426,7 +1458,7 @@ class AppsPageState extends State<AppsPage> {
                     localValues = vals;
                   },
                 ),
-                height16,
+                gap16,
                 CategorySelector(
                   preselected: filter.categoryFilter,
                   onSelected: (categories) {
@@ -1459,7 +1491,7 @@ class AppsPageState extends State<AppsPage> {
       return Row(
         children: [
           getSelectAllButton(),
-          width16,
+          horizontalGap16,
           const VerticalDivider(),
           Expanded(
             child: Row(
@@ -1476,24 +1508,81 @@ class AppsPageState extends State<AppsPage> {
           !(listedCategories.isEmpty ||
               (listedCategories.length == 1 && listedCategories[0] == null))) {
         // Category View
-        return SliverList(
-          delegate: SliverChildBuilderDelegate((
-            BuildContext context,
-            int index,
-          ) {
-            // For now, Category view remains as list of ExpansionTiles
-            return getCategoryCollapsibleTile(index);
-          }, childCount: listedCategories.length),
-        );
+        if (settingsProvider.useGridView) {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate((
+              BuildContext context,
+              int index,
+            ) {
+              return getCategoryGridTile(index);
+            }, childCount: listedCategories.length),
+          );
+        } else {
+          // Build all expansion panels at once for ExpansionPanelList
+          final panels = <ExpansionPanel>[];
+          for (int i = 0; i < listedCategories.length; i++) {
+            var filteredEntries = listedApps
+                .asMap()
+                .entries
+                .where(
+                  (e) =>
+                      e.value.app.categories?.contains(listedCategories[i]) ==
+                          true ||
+                      e.value.app.categories?.isEmpty == true &&
+                          listedCategories[i] == null,
+                )
+                .toList();
+
+            var tiles = filteredEntries
+                .map((e) => getSingleAppHorizTile(e.key))
+                .toList();
+
+            capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
+            panels.add(
+              ExpansionPanel(
+                headerBuilder: (BuildContext context, bool isExpanded) {
+                  return ListTile(
+                    title: Text(
+                      capFirstChar(listedCategories[i] ?? tr('noCategory')),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    trailing: Text(tiles.length.toString()),
+                  );
+                },
+                body: Column(children: tiles),
+                isExpanded: _expandedCategories.contains(i),
+              ),
+            );
+          }
+
+          return SliverToBoxAdapter(
+            child: ExpansionPanelList(
+              expansionCallback: (int index, bool isExpanded) {
+                setState(() {
+                  if (isExpanded) {
+                    _expandedCategories.remove(index);
+                  } else {
+                    _expandedCategories.add(index);
+                  }
+                });
+              },
+              children: panels,
+            ),
+          );
+        }
       } else {
         // Flat View
         if (settingsProvider.useGridView) {
+          final spacing = 8.0;
+
           return SliverGrid(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: (MediaQuery.of(context).size.width / 160).floor(),
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 180,
+              crossAxisSpacing: spacing,
+              mainAxisSpacing: spacing,
               childAspectRatio: 0.6,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
             ),
             delegate: SliverChildBuilderDelegate((
               BuildContext context,

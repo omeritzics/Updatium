@@ -34,7 +34,7 @@
 				</ul>
 			<li>Reupload-Stores</li>
 				<ul>
-				<li>APKMirror (nur Updatebenachrchtigungen; kein APK-Download möglich)</li>
+				<li>APKMirror</li>
 				<li>APKPure</li>
 				<li>Aptoide</li>
 				<li>Uptodown</li>

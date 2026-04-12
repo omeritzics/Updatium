@@ -1,16 +1,20 @@
+import 'dart:async';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:updatium/main.dart';
 import 'package:updatium/components/tag_editor.dart';
+import 'package:updatium/pages/safe_mode_dialog.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/native_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:updatium/main.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
@@ -645,6 +649,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ExpansionTile(
+                          leading: Icon(
+                            Icons.system_update_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                           title: Text(
                             tr('updates'),
                             style: TextStyle(
@@ -801,32 +809,58 @@ class _SettingsPageState extends State<SettingsPage> {
                               future: DeviceInfoPlugin().androidInfo,
                             ),
                             gap16,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(tr('safeMode')),
-                                      Text(
-                                        tr('safeModeDescription'),
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.labelSmall,
-                                      ),
-                                    ],
+                            if (!settingsProvider.safeMode)
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(child: Text(tr('safeMode'))),
+                                  Switch(
+                                    value: false,
+                                    onChanged: (value) {
+                                      showSafeModeEnableDialog(context);
+                                    },
                                   ),
-                                ),
-                                Switch(
-                                  value: settingsProvider.safeMode,
-                                  onChanged: (value) {
-                                    settingsProvider.safeMode = value;
-                                  },
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
+                            if (settingsProvider.safeMode)
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(tr('safeMode')),
+                                        Text(
+                                          tr('safeModeEnabled'),
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.labelSmall,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primaryContainer,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Icon(
+                                      Icons.lock,
+                                      size: 20,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimaryContainer,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1044,6 +1078,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap24,
                         ExpansionTile(
+                          leading: Icon(
+                            Icons.source_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                           title: Text(
                             tr('sourceSpecific'),
                             style: TextStyle(
@@ -1060,6 +1098,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap24,
                         ExpansionTile(
+                          leading: Icon(
+                            Icons.palette_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                           title: Text(
                             tr('appearance'),
                             style: TextStyle(
@@ -1422,6 +1464,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap24,
                         ExpansionTile(
+                          leading: Icon(
+                            Icons.category_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                           title: Text(
                             tr('categories'),
                             style: TextStyle(
@@ -1744,8 +1790,79 @@ class CategorySelector extends StatelessWidget {
   }
 }
 
-class AboutDialog extends StatelessWidget {
+class AboutDialog extends StatefulWidget {
   const AboutDialog({super.key});
+
+  @override
+  State<AboutDialog> createState() => _AboutDialogState();
+}
+
+class _AboutDialogState extends State<AboutDialog> {
+  Timer? _tapResetTimer;
+
+  @override
+  void dispose() {
+    _tapResetTimer?.cancel();
+    super.dispose();
+  }
+
+  void _onVersionTapped() {
+    final settingsProvider = context.read<SettingsProvider>();
+    final isSafeModeEnabled = settingsProvider.safeMode;
+    final tapCount = settingsProvider.safeModeTapCount;
+
+    settingsProvider.safeModeTapCount = tapCount + 1;
+
+    _tapResetTimer?.cancel();
+    _tapResetTimer = Timer(const Duration(hours: 1), () {
+      settingsProvider.safeModeTapCount = 0;
+    });
+
+    // Haptic feedback at milestones
+    if ((tapCount + 1) % 25 == 0) {
+      HapticFeedback.selectionClick();
+    }
+
+    // Show remaining taps when Safe Mode is enabled (only from third tap)
+    if (isSafeModeEnabled && (tapCount + 1) >= 3) {
+      final remaining = 613 - (tapCount + 1);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            tr(
+              'safeModeTapsRemaining',
+            ).replaceAll('{count}', remaining.toString()),
+          ),
+          duration: const Duration(milliseconds: 800),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+
+    // Visual feedback at 100-tap intervals when Safe Mode is disabled
+    if (!isSafeModeEnabled && (tapCount + 1) % 100 == 0 && (tapCount + 1) > 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${tapCount + 1}...'),
+          duration: const Duration(milliseconds: 500),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+
+    // Success at 613 taps
+    if ((tapCount + 1) >= 613) {
+      settingsProvider.safeModeTapCount = 0;
+      _tapResetTimer?.cancel();
+
+      HapticFeedback.heavyImpact();
+      _showSafeModeDialog();
+    }
+  }
+
+  void _showSafeModeDialog() {
+    showSafeModeDisableDialog(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1795,10 +1912,19 @@ class AboutDialog extends StatelessWidget {
                   ),
                 ),
                 gap8,
-                Text(
-                  'Version $version ($buildNumber)',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                GestureDetector(
+                  onTap: _onVersionTapped,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 8,
+                    ),
+                    child: Text(
+                      'Version $version ($buildNumber)',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
                   ),
                 ),
                 gap8,

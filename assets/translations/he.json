@@ -501,5 +501,22 @@
     "githubStarPromptDontShowAgain": "לא להציג שוב",
     "sourceCode": "קוד מקור",
     "developedBy": "בפיתוח על ידי",
-    "appDescription": "קטלוג יישומים הניתן להתאמה אישית עבור אנדרואיד, המאפשר לעדכן את היישומים ישירות מהמקורות לקובצי ה־APK שלהם."
+    "appDescription": "קטלוג יישומים הניתן להתאמה אישית עבור אנדרואיד, המאפשר לעדכן את היישומים ישירות מהמקורות לקובצי ה־APK שלהם.",
+    "safeModeEnabled": "המצב הבטוח מופעל",
+    "safeModeDisabled": "המצב הבטוח מושבת",
+    "safeModeDisable": "השבתת המצב הבטוח",
+    "safeModeAdmin": "Safe Mode Administration",
+    "safeModeSetupDescription": "יש לקבוע סיסמה בשביל להפעיל את המצב הבטוח. לאחר הפעלתו, המצב הבטוח ימנע הוספה של יישומים חדשים וניתן להשביתו רק בעזרת הסיסמה.",
+    "safeModeToggleDescription": "יש להקליד את הסיסמה שלך בשביל להפעיל או להשבית את המצב הבטוח.",
+    "safeModeSetPassword": "קביעת סיסמה",
+    "safeModeConfirmPassword": "אישור הסיסמה",
+    "safeModeEnterPassword": "נא להקליד סיסמה",
+    "safeModePasswordHint": "נדרשים 8 תווים לפחות",
+    "safeModePasswordTooShort": "הסיסמה חייבת להכיל לפחות 8 תווים",
+    "safeModePasswordMismatch": "הסיסמאות אינן תואמות",
+    "safeModePasswordIncorrect": "סיסמה שגויה",
+    "safeModePasswordError": "שגיאה בעת קביעת הסיסמה. נא לנסות שוב.",
+    "safeModeEnable": "הפעלת המצב הבטוח",
+    "safeModeToggle": "השבתת המצב הבטוח",
+    "safeModeTapsRemaining": "נותרו {count} הקשות עד להשבתת המצב הבטוח"
 }

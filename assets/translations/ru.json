@@ -480,5 +480,23 @@
     "githubStarPromptDontShowAgain": "Больше не показывать",
     "sourceCode": "ÐÑÑÐ¾Ð´Ð½ÑÐ¹ ÐºÐ¾Ð´",
     "developedBy": "Ð Ð°Ð·ÑÐ°Ð±Ð¾ÑÐ°Ð½Ð¾",
-    "appDescription": "ÐÐ°ÑÑÑÐ°Ð¸Ð²Ð°ÐµÐ¼ÑÐ¹ ÐºÐ°ÑÐ°Ð»Ð¾Ð³ Ð¿ÑÐ¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ð¹ Android, ÐºÐ¾ÑÐ¾ÑÑÐ¹ Ð¿Ð¾Ð·Ð²Ð¾Ð»ÑÐµÑ Ð¾Ð±Ð½Ð¾Ð²Ð»ÑÑÑ Ð²Ð°ÑÐ¸ Ð¿ÑÐ¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ Ð½Ð°Ð¿ÑÑÐ¼ÑÑ Ð¸Ð· Ð¸ÑÑÐ¾ÑÐ½Ð¸ÐºÐ¾Ð² APK."
+    "appDescription": "ÐÐ°ÑÑÑÐ°Ð¸Ð²Ð°ÐµÐ¼ÑÐ¹ ÐºÐ°ÑÐ°Ð»Ð¾Ð³ Ð¿ÑÐ¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ð¹ Android, ÐºÐ¾ÑÐ¾ÑÑÐ¹ Ð¿Ð¾Ð·Ð²Ð¾Ð»ÑÐµÑ Ð¾Ð±Ð½Ð¾Ð²Ð»ÑÑÑ Ð²Ð°ÑÐ¸ Ð¿ÑÐ¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ Ð½Ð°Ð¿ÑÑÐ¼ÑÑ Ð¸Ð· Ð¸ÑÑÐ¾ÑÐ½Ð¸ÐºÐ¾Ð² APK.",
+    "safeModeEnabled": "Safe Mode is enabled",
+    "safeModeDisabled": "Safe Mode is disabled",
+    "safeModeAdmin": "Safe Mode Administration",
+    "safeModeSetupDescription": "Set a password to enable Safe Mode. Once enabled, Safe Mode prevents adding new apps and can only be disabled with the password.",
+    "safeModeToggleDescription": "Enter your password to toggle Safe Mode on or off.",
+    "safeModeSetPassword": "Set Password",
+    "safeModeConfirmPassword": "Confirm Password",
+    "safeModeEnterPassword": "Enter Password",
+    "safeModePasswordHint": "Minimum 8 characters",
+    "safeModePasswordTooShort": "Password must be at least 8 characters long",
+    "safeModePasswordMismatch": "Passwords do not match",
+    "safeModePasswordIncorrect": "Incorrect password",
+    "safeModePasswordError": "Error setting password. Please try again.",
+    "safeModeEnable": "Enable Safe Mode",
+    "safeModeDisable": "Disable Safe Mode",
+    "safeModeTapsRemaining": "{count} taps remaining to disable Safe Mode",
+    "safeModeEnabledHint": "Safe Mode enabled. Tap on the version number in the Settings many times to disable.",
+    "gotIt": "Got it"
 }

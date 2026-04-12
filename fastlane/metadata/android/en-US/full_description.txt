@@ -22,7 +22,7 @@
 			<li>APKPure</li>
 			<li>Aptoide</li>
 			<li>Uptodown</li>
-			<li>APKMirror (Track-Only)</li>
+			<li>APKMirror</li>
 			<li>Huawei AppGallery</li>
 			<li>Tencent App Store</li>
 			<li>CoolApk</li>

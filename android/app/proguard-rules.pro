@@ -30,3 +30,34 @@
 -keep,allowobfuscation,allowshrinking class * extends com.google.gson.reflect.TypeToken
 
 ##---------------End: proguard configuration for Gson  ----------
+
+##---------------Begin: proguard configuration for Flutter  ----------
+# Flutter specific rules
+-keep class io.flutter.app.** { *; }
+-keep class io.flutter.plugin.**  { *; }
+-keep class io.flutter.util.**  { *; }
+-keep class io.flutter.view.**  { *; }
+-keep class io.flutter.**  { *; }
+-dontwarn io.flutter.embedding.**
+-keep class androidx.** { *; }
+-dontwarn androidx.**
+
+# Keep native methods
+-keepclasseswithmembernames class * {
+  native <methods>;
+}
+
+# Keep serialization
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod
+
+# Optimize and shrink
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+-verbose
+
+##---------------End: proguard configuration for Flutter  ----------

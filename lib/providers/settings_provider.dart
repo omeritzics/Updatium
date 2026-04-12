@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:bcrypt/bcrypt.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -276,9 +277,9 @@ class SettingsProvider with ChangeNotifier {
       List<App> changedApps = appsProvider
           .getAppValues()
           .map((a) {
-            var n1 = a.app.categories.length;
-            a.app.categories.removeWhere((c) => !cats.keys.contains(c));
-            return n1 > a.app.categories.length ? a.app : null;
+            var n1 = a.app.categories?.length ?? 0;
+            a.app.categories?.removeWhere((c) => !cats.keys.contains(c));
+            return n1 > (a.app.categories?.length ?? 0) ? a.app : null;
           })
           .where((element) => element != null)
           .map((e) => e as App)
@@ -532,6 +533,68 @@ class SettingsProvider with ChangeNotifier {
 
   set safeMode(bool val) {
     prefs?.setBool('safeMode', val);
+    notifyListeners();
+  }
+
+  String? get safeModePassword {
+    return prefs?.getString('safeModePassword');
+  }
+
+  bool get safeModePasswordSet {
+    return safeModePassword != null && safeModePassword!.isNotEmpty;
+  }
+
+  Future<bool> setSafeModePassword(String password) async {
+    try {
+      print('Safe Mode: Starting password setup');
+      final hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+      print('Safe Mode: Password hashed successfully');
+      await prefs?.setString('safeModePassword', hashed);
+      print('Safe Mode: Password saved to preferences');
+      notifyListeners();
+      print('Safe Mode: Setup completed successfully');
+      return true;
+    } catch (e) {
+      print('Safe Mode: Password setup failed - $e');
+      return false;
+    }
+  }
+
+  Future<bool> verifySafeModePassword(String password) async {
+    try {
+      final stored = safeModePassword;
+      if (stored == null) return false;
+      return BCrypt.checkpw(password, stored);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> clearSafeModePassword() async {
+    try {
+      await prefs?.remove('safeModePassword');
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  bool get safeModeHintShown {
+    return prefs?.getBool('safeModeHintShown') ?? false;
+  }
+
+  set safeModeHintShown(bool val) {
+    prefs?.setBool('safeModeHintShown', val);
+    notifyListeners();
+  }
+
+  int get safeModeTapCount {
+    return prefs?.getInt('safeModeTapCount') ?? 0;
+  }
+
+  set safeModeTapCount(int val) {
+    prefs?.setInt('safeModeTapCount', val);
     notifyListeners();
   }
 }

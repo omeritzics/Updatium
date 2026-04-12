@@ -13,6 +13,18 @@ import 'package:file_picker/file_picker.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:updatium/components/generated_form.dart';
 
+// Material 3 spacing tokens
+const gap8 = SizedBox(height: 8);
+const gap12 = SizedBox(height: 12);
+const gap16 = SizedBox(height: 16);
+const gap24 = SizedBox(height: 24);
+const gap32 = SizedBox(height: 32);
+
+const horizontalGap8 = SizedBox(width: 8);
+const horizontalGap12 = SizedBox(width: 12);
+const horizontalGap16 = SizedBox(width: 16);
+const horizontalGap24 = SizedBox(width: 24);
+
 class ImportExportPage extends StatefulWidget {
   const ImportExportPage({super.key});
 
@@ -156,7 +168,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               appsProvider.import(data).then((value) {
                 var cats = settingsProvider.categories;
                 appsProvider.apps.forEach((key, value) {
-                  for (var c in value.app.categories) {
+                  for (var c in value.app.categories ?? []) {
                     if (!cats.containsKey(c)) {
                       cats[c] = generateRandomLightColor().toARGB32();
                     }
@@ -369,7 +381,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 16),
+                              horizontalGap16,
                               Expanded(
                                 child: Semantics(
                                   button: true,
@@ -395,7 +407,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 8),
+                          gap8,
                           Row(
                             children: [
                               Expanded(
@@ -422,7 +434,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           if (snapshot.data != null)
                             Column(
                               children: [
-                                const SizedBox(height: 16),
+                                gap16,
                                 GeneratedForm(
                                   items: [
                                     [
@@ -471,16 +483,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   ),
                   if (importInProgress || appsProvider.exportInProgress)
                     const Column(
-                      children: [
-                        SizedBox(height: 14),
-                        LinearProgressIndicator(),
-                        SizedBox(height: 14),
-                      ],
+                      children: [gap12, LinearProgressIndicator(), gap12],
                     )
                   else
                     Column(
                       children: [
-                        SizedBox(height: 32),
+                        gap32,
                         Semantics(
                           button: true,
                           label: tr('importFromURLList'),
@@ -493,7 +501,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                             label: Text(tr('importFromURLList')),
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        gap8,
                         Semantics(
                           button: true,
                           label: tr('importFromURLsInFile'),
@@ -511,7 +519,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     (source) => Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const SizedBox(height: 8),
+                        gap8,
                         FilledButton.icon(
                           onPressed: importInProgress
                               ? null
@@ -534,7 +542,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       fontSize: 12,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  gap8,
                 ],
               ),
             ),
@@ -578,7 +586,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
             ),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-          const SizedBox(height: 16),
+          gap16,
           Text(
             tr('followingURLsHadErrors'),
             style: Theme.of(context).textTheme.bodyLarge,
@@ -587,7 +595,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 16),
+                gap16,
                 Text(
                   e[0],
                   style: Theme.of(context).textTheme.titleSmall,

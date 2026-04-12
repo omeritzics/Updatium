@@ -17,6 +17,18 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+// Material 3 spacing tokens
+const gap8 = SizedBox(height: 8);
+const gap12 = SizedBox(height: 12);
+const gap16 = SizedBox(height: 16);
+const gap24 = SizedBox(height: 24);
+const gap32 = SizedBox(height: 32);
+
+const horizontalGap8 = SizedBox(width: 8);
+const horizontalGap12 = SizedBox(width: 12);
+const horizontalGap16 = SizedBox(width: 16);
+const horizontalGap24 = SizedBox(width: 24);
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -97,7 +109,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               scrollable: true,
               content: Column(
                 mainAxisSize: MainAxisSize.min,
-                spacing: 20,
                 children: [
                   Text(tr('googleVerificationWarningP1')),
                   GestureDetector(
@@ -228,37 +239,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           if (await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
-                  return AlertDialog(
-                    title: Text(
-                      tr(
-                        'importX',
-                        args: [
-                          (action == 'app' ? tr('app') : tr('appsString'))
-                              .toLowerCase(),
-                        ],
-                      ),
-                    ),
-                    content: ExpansionTile(
-                      leading: const Icon(Icons.info_outlined),
-                      title: const Text('Raw JSON'),
-                      children: [
-                        Text(
-                          dataStr,
-                          style: const TextStyle(fontFamily: 'monospace'),
-                        ),
-                      ],
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(null),
-                        child: Text(tr('cancel')),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(true),
-                        child: Text(tr('ok')),
-                      ),
-                    ],
-                  );
+                  return _ImportDialog(action: action, dataStr: dataStr);
                 },
               ) ==
               true) {
@@ -451,5 +432,72 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     for (var controller in _iconControllers) {
       controller.dispose();
     }
+  }
+}
+
+class _ImportDialog extends StatefulWidget {
+  final String action;
+  final String dataStr;
+
+  const _ImportDialog({required this.action, required this.dataStr});
+
+  @override
+  State<_ImportDialog> createState() => _ImportDialogState();
+}
+
+class _ImportDialogState extends State<_ImportDialog> {
+  bool _isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        tr(
+          'importX',
+          args: [
+            (widget.action == 'app' ? tr('app') : tr('appsString'))
+                .toLowerCase(),
+          ],
+        ),
+      ),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: ExpansionPanelList(
+          expansionCallback: (int index, bool isExpanded) {
+            setState(() {
+              _isExpanded = isExpanded;
+            });
+          },
+          children: [
+            ExpansionPanel(
+              headerBuilder: (BuildContext context, bool isExpanded) {
+                return ListTile(
+                  leading: const Icon(Icons.info_outlined),
+                  title: const Text('Raw JSON'),
+                );
+              },
+              body: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  widget.dataStr,
+                  style: const TextStyle(fontFamily: 'monospace'),
+                ),
+              ),
+              isExpanded: _isExpanded,
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(null),
+          child: Text(tr('cancel')),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(true),
+          child: Text(tr('ok')),
+        ),
+      ],
+    );
   }
 }

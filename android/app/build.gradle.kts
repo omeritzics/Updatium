@@ -104,6 +104,14 @@ android {
                 }
                 null
             }
+            
+            // APK size optimizations for F-Droid/IzzyOnDroid (30MB limit)
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
         getByName("debug") {
             applicationIdSuffix = ".debug"
