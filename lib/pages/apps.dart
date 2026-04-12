@@ -259,12 +259,16 @@ class AppsPageState extends State<AppsPage> {
               !(filter.includeNonInstalled))) {
         return false;
       }
-      if (filter.nameFilter.isNotEmpty || filter.authorFilter.isNotEmpty) {
+      if (filter.nameFilter.isNotEmpty || filter.authorFilter.isNotEmpty || filter.descriptionFilter.isNotEmpty) {
         List<String> nameTokens = filter.nameFilter
             .split(' ')
             .where((element) => element.trim().isNotEmpty)
             .toList();
         List<String> authorTokens = filter.authorFilter
+            .split(' ')
+            .where((element) => element.trim().isNotEmpty)
+            .toList();
+        List<String> descriptionTokens = filter.descriptionFilter
             .split(' ')
             .where((element) => element.trim().isNotEmpty)
             .toList();
@@ -276,6 +280,12 @@ class AppsPageState extends State<AppsPage> {
         }
         for (var t in authorTokens) {
           if (!app.author.toLowerCase().contains(t.toLowerCase())) {
+            return false;
+          }
+        }
+        for (var t in descriptionTokens) {
+          String? appDescription = app.app.additionalSettings['about']?.toString();
+          if (appDescription == null || !appDescription.toLowerCase().contains(t.toLowerCase())) {
             return false;
           }
         }
@@ -1373,6 +1383,14 @@ class AppsPageState extends State<AppsPage> {
                       ),
                     ],
                     [
+                      GeneratedFormTextField(
+                        'description',
+                        label: tr('description'),
+                        required: false,
+                        defaultValue: localValues['description'],
+                      ),
+                    ],
+                    [
                       GeneratedFormSwitch(
                         'upToDateApps',
                         label: tr('upToDateApps'),
@@ -1467,8 +1485,8 @@ class AppsPageState extends State<AppsPage> {
         // Flat View
         if (settingsProvider.useGridView) {
           return SliverGrid(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 190,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: (MediaQuery.of(context).size.width / 160).floor(),
               childAspectRatio: 0.6,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
@@ -1695,6 +1713,7 @@ class AppsFilter {
   late String nameFilter;
   late String authorFilter;
   late String idFilter;
+  late String descriptionFilter;
   late bool includeUptodate;
   late bool includeNonInstalled;
   late Set<String> categoryFilter;
@@ -1704,6 +1723,7 @@ class AppsFilter {
     this.nameFilter = '',
     this.authorFilter = '',
     this.idFilter = '',
+    this.descriptionFilter = '',
     this.includeUptodate = true,
     this.includeNonInstalled = true,
     this.categoryFilter = const {},
@@ -1715,6 +1735,7 @@ class AppsFilter {
       'appName': nameFilter,
       'author': authorFilter,
       'appId': idFilter,
+      'description': descriptionFilter,
       'upToDateApps': includeUptodate,
       'nonInstalledApps': includeNonInstalled,
       'sourceFilter': sourceFilter,
@@ -1726,6 +1747,7 @@ class AppsFilter {
     nameFilter = values['appName']!;
     authorFilter = values['author']!;
     idFilter = values['appId']!;
+    descriptionFilter = values['description']!;
     includeUptodate = values['upToDateApps'];
     includeNonInstalled = values['nonInstalledApps'];
     sourceFilter = values['sourceFilter'];
@@ -1736,6 +1758,7 @@ class AppsFilter {
       authorFilter.trim() == other.authorFilter.trim() &&
       nameFilter.trim() == other.nameFilter.trim() &&
       idFilter.trim() == other.idFilter.trim() &&
+      descriptionFilter.trim() == other.descriptionFilter.trim() &&
       includeUptodate == other.includeUptodate &&
       includeNonInstalled == other.includeNonInstalled &&
       settingsProvider.setEqual(categoryFilter, other.categoryFilter) &&
