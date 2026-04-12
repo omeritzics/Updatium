@@ -453,7 +453,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 const SizedBox(width: 16),
                 Switch(
                   value: values[fieldKey],
-                  onChanged: (widget.items[r][e] as GeneratedFormSwitch).disabled
+                  onChanged:
+                      (widget.items[r][e] as GeneratedFormSwitch).disabled
                       ? null
                       : (value) {
                           setState(() {
