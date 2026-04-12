@@ -39,9 +39,7 @@ class AddAppPageState extends State<AddAppPage> {
   SourceProvider sourceProvider = SourceProvider();
   bool _advancedExpanded = false;
   Map<String, dynamic> _advancedSettings = {
-    'versionExtractionRegEx': '',
     'apkFilterRegEx': '',
-    'invertAPKFilter': false,
     'zippedApkFilterRegEx': '',
     'shizukuPretendToBeGooglePlay': false,
     'allowInsecure': false,
@@ -716,16 +714,6 @@ class AddAppPageState extends State<AddAppPage> {
                 child: GeneratedForm(
                   key: const Key('advancedSettings'),
                   items: [
-                    [
-                      GeneratedFormTextField(
-                        'versionExtractionRegEx',
-                        label: tr('trimVersionString'),
-                        required: false,
-                        additionalValidators: [
-                          (value) => _regExValidator(value),
-                        ],
-                      ),
-                    ],
                     [
                       GeneratedFormTextField(
                         'apkFilterRegEx',
