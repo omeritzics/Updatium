@@ -712,83 +712,89 @@ class AddAppPageState extends State<AddAppPage> {
             ),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: ExpansionTile(
-            title: Text(
-              tr('advanced'),
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            initiallyExpanded: _advancedExpanded,
-            onExpansionChanged: (expanded) {
+          child: ExpansionPanelList(
+            expansionCallback: (int index, bool isExpanded) {
               setState(() {
-                _advancedExpanded = expanded;
+                _advancedExpanded = isExpanded;
               });
             },
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: GeneratedForm(
-                  key: const Key('advancedSettings'),
-                  items: [
-                    [
-                      GeneratedFormTextField(
-                        'apkFilterRegEx',
-                        label: tr('filterAPKsByRegEx'),
-                        required: false,
-                        additionalValidators: [
-                          (value) => _regExValidator(value),
-                        ],
+              ExpansionPanel(
+                headerBuilder: (BuildContext context, bool isExpanded) {
+                  return ListTile(
+                    title: Text(
+                      tr('advanced'),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
                       ),
+                    ),
+                  );
+                },
+                body: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: GeneratedForm(
+                    key: const Key('advancedSettings'),
+                    items: [
+                      [
+                        GeneratedFormTextField(
+                          'apkFilterRegEx',
+                          label: tr('filterAPKsByRegEx'),
+                          required: false,
+                          additionalValidators: [
+                            (value) => _regExValidator(value),
+                          ],
+                        ),
+                      ],
+                      [
+                        GeneratedFormSwitch(
+                          'invertAPKFilter',
+                          label:
+                              '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+                          defaultValue: false,
+                        ),
+                      ],
+                      [
+                        GeneratedFormTextField(
+                          'zippedApkFilterRegEx',
+                          label: tr('zippedApkFilterRegEx'),
+                          required: false,
+                          additionalValidators: [
+                            (value) => _regExValidator(value),
+                          ],
+                        ),
+                      ],
+                      [
+                        GeneratedFormSwitch(
+                          'shizukuPretendToBeGooglePlay',
+                          label: tr('shizukuPretendToBeGooglePlay'),
+                          defaultValue: false,
+                        ),
+                      ],
+                      [
+                        GeneratedFormSwitch(
+                          'allowInsecure',
+                          label: tr('allowInsecure'),
+                          defaultValue: false,
+                        ),
+                      ],
                     ],
-                    [
-                      GeneratedFormSwitch(
-                        'invertAPKFilter',
-                        label:
-                            '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
-                        defaultValue: false,
-                      ),
-                    ],
-                    [
-                      GeneratedFormTextField(
-                        'zippedApkFilterRegEx',
-                        label: tr('zippedApkFilterRegEx'),
-                        required: false,
-                        additionalValidators: [
-                          (value) => _regExValidator(value),
-                        ],
-                      ),
-                    ],
-                    [
-                      GeneratedFormSwitch(
-                        'shizukuPretendToBeGooglePlay',
-                        label: tr('shizukuPretendToBeGooglePlay'),
-                        defaultValue: false,
-                      ),
-                    ],
-                    [
-                      GeneratedFormSwitch(
-                        'allowInsecure',
-                        label: tr('allowInsecure'),
-                        defaultValue: false,
-                      ),
-                    ],
-                  ],
-                  onValueChanges: (values, valid, isBuilding) {
-                    if (!isBuilding) {
-                      setState(() {
-                        _advancedSettings = values;
-                        // Only merge non-empty advanced settings into additional settings
-                        _advancedSettings.forEach((key, value) {
-                          if (value != null && value.toString().isNotEmpty) {
-                            additionalSettings[key] = value;
-                          }
+                    onValueChanges: (values, valid, isBuilding) {
+                      if (!isBuilding) {
+                        setState(() {
+                          _advancedSettings = values;
+                          // Only merge non-empty advanced settings into additional settings
+                          _advancedSettings.forEach((key, value) {
+                            if (value != null && value.toString().isNotEmpty) {
+                              additionalSettings[key] = value;
+                            }
+                          });
                         });
-                      });
-                    }
-                  },
+                      }
+                    },
+                  ),
                 ),
+                isExpanded: _advancedExpanded,
               ),
             ],
           ),

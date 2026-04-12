@@ -163,6 +163,7 @@ class AppsPageState extends State<AppsPage> {
   Set<String> selectedAppIds = {};
   DateTime? refreshingSince;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
+  final Set<int> _expandedCategories = <int>{};
 
   // Helper function to preserve transparency regardless of theme overrides
   Color preserveTransparency(Color baseColor, double alpha) {
@@ -871,38 +872,6 @@ class AppsPageState extends State<AppsPage> {
       return _buildGridTile(index);
     }
 
-    getCategoryCollapsibleTile(int index) {
-      var filteredEntries = listedApps
-          .asMap()
-          .entries
-          .where(
-            (e) =>
-                e.value.app.categories?.contains(listedCategories[index]) ==
-                    true ||
-                e.value.app.categories?.isEmpty == true &&
-                    listedCategories[index] == null,
-          )
-          .toList();
-
-      var tiles = filteredEntries
-          .map((e) => getSingleAppHorizTile(e.key))
-          .toList();
-
-      capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
-      return ExpansionTile(
-        initiallyExpanded: true,
-        title: Text(
-          capFirstChar(listedCategories[index] ?? tr('noCategory')),
-          style: const TextStyle(fontWeight: FontWeight.bold),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        controlAffinity: ListTileControlAffinity.leading,
-        trailing: Text(tiles.length.toString()),
-        children: [Column(children: tiles)],
-      );
-    }
-
     getCategoryGridTile(int index) {
       var filteredEntries = listedApps
           .asMap()
@@ -1549,13 +1518,58 @@ class AppsPageState extends State<AppsPage> {
             }, childCount: listedCategories.length),
           );
         } else {
-          return SliverList(
-            delegate: SliverChildBuilderDelegate((
-              BuildContext context,
-              int index,
-            ) {
-              return getCategoryCollapsibleTile(index);
-            }, childCount: listedCategories.length),
+          // Build all expansion panels at once for ExpansionPanelList
+          final panels = <ExpansionPanel>[];
+          for (int i = 0; i < listedCategories.length; i++) {
+            var filteredEntries = listedApps
+                .asMap()
+                .entries
+                .where(
+                  (e) =>
+                      e.value.app.categories?.contains(listedCategories[i]) ==
+                          true ||
+                      e.value.app.categories?.isEmpty == true &&
+                          listedCategories[i] == null,
+                )
+                .toList();
+
+            var tiles = filteredEntries
+                .map((e) => getSingleAppHorizTile(e.key))
+                .toList();
+
+            capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
+            panels.add(
+              ExpansionPanel(
+                headerBuilder: (BuildContext context, bool isExpanded) {
+                  return ListTile(
+                    title: Text(
+                      capFirstChar(listedCategories[i] ?? tr('noCategory')),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    trailing: Text(tiles.length.toString()),
+                  );
+                },
+                body: Column(children: tiles),
+                isExpanded: _expandedCategories.contains(i),
+              ),
+            );
+          }
+
+          return SliverToBoxAdapter(
+            child: ExpansionPanelList(
+              expansionCallback: (int index, bool isExpanded) {
+                setState(() {
+                  if (isExpanded) {
+                    _expandedCategories.remove(index);
+                  } else {
+                    _expandedCategories.add(index);
+                  }
+                });
+              },
+              children: panels,
+            ),
           );
         }
       } else {

@@ -126,6 +126,12 @@ class _SafeModeDialogState extends State<SafeModeDialog> {
         final newState = !settingsProvider.safeMode;
         settingsProvider.safeMode = newState;
 
+        // Clear password and reset hint when disabling Safe Mode
+        if (!newState) {
+          await settingsProvider.clearSafeModePassword();
+          settingsProvider.safeModeHintShown = false;
+        }
+
         if (mounted) {
           Navigator.of(context).pop(true);
           ScaffoldMessenger.of(context).showSnackBar(

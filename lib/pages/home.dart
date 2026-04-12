@@ -241,36 +241,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           if (await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
-                  return AlertDialog(
-                    title: Text(
-                      tr(
-                        'importX',
-                        args: [
-                          (action == 'app' ? tr('app') : tr('appsString'))
-                              .toLowerCase(),
-                        ],
-                      ),
-                    ),
-                    content: ExpansionTile(
-                      leading: const Icon(Icons.info_outlined),
-                      title: const Text('Raw JSON'),
-                      children: [
-                        Text(
-                          dataStr,
-                          style: const TextStyle(fontFamily: 'monospace'),
-                        ),
-                      ],
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(null),
-                        child: Text(tr('cancel')),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(true),
-                        child: Text(tr('ok')),
-                      ),
-                    ],
+                  return _ImportDialog(
+                    action: action,
+                    dataStr: dataStr,
                   );
                 },
               ) ==
@@ -474,5 +447,75 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     for (var controller in _iconControllers) {
       controller.dispose();
     }
+  }
+}
+
+class _ImportDialog extends StatefulWidget {
+  final String action;
+  final String dataStr;
+
+  const _ImportDialog({
+    required this.action,
+    required this.dataStr,
+  });
+
+  @override
+  State<_ImportDialog> createState() => _ImportDialogState();
+}
+
+class _ImportDialogState extends State<_ImportDialog> {
+  bool _isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        tr(
+          'importX',
+          args: [
+            (widget.action == 'app' ? tr('app') : tr('appsString'))
+                .toLowerCase(),
+          ],
+        ),
+      ),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: ExpansionPanelList(
+          expansionCallback: (int index, bool isExpanded) {
+            setState(() {
+              _isExpanded = isExpanded;
+            });
+          },
+          children: [
+            ExpansionPanel(
+              headerBuilder: (BuildContext context, bool isExpanded) {
+                return ListTile(
+                  leading: const Icon(Icons.info_outlined),
+                  title: const Text('Raw JSON'),
+                );
+              },
+              body: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  widget.dataStr,
+                  style: const TextStyle(fontFamily: 'monospace'),
+                ),
+              ),
+              isExpanded: _isExpanded,
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(null),
+          child: Text(tr('cancel')),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(true),
+          child: Text(tr('ok')),
+        ),
+      ],
+    );
   }
 }
