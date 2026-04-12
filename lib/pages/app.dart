@@ -148,7 +148,7 @@ class _AppPageState extends State<AppPage> {
                           app?.app.releaseDate == null
                               ? tr('changes')
                               : app!.app.releaseDate!.toLocal().toString(),
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.start,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.labelSmall!
@@ -169,7 +169,7 @@ class _AppPageState extends State<AppPage> {
           ),
           Text(
             infoLines,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.start,
             style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
           ),
           if (app?.app.apkUrls.isNotEmpty == true ||
@@ -187,7 +187,7 @@ class _AppPageState extends State<AppPage> {
                       }
                     },
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     decoration: BoxDecoration(
@@ -344,27 +344,6 @@ class _AppPageState extends State<AppPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(height: 0),
-        if (app?.app != null)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.info_outline,
-                color: Theme.of(context).colorScheme.primary,
-                size: small ? 16 : 24,
-              ),
-            ],
-          ),
-        SizedBox(height: small ? 10 : 24),
-
-        Text(
-          tr('byX', args: [app?.author ?? tr('unknown')]),
-          textAlign: TextAlign.center,
-          style: small
-              ? Theme.of(context).textTheme.titleMedium
-              : Theme.of(context).textTheme.titleLarge,
-        ),
         SizedBox(height: settingsProvider.highlightTouchTargets ? 2 : 8),
         GestureDetector(
           onTap: () {
@@ -382,7 +361,7 @@ class _AppPageState extends State<AppPage> {
             ).showSnackBar(SnackBar(content: Text(tr('copiedToClipboard'))));
           },
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
                 decoration: BoxDecoration(
@@ -415,7 +394,7 @@ class _AppPageState extends State<AppPage> {
                   message: app?.app.url ?? '',
                   child: Text(
                     app?.app.url ?? '',
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
@@ -430,7 +409,7 @@ class _AppPageState extends State<AppPage> {
         ),
         Text(
           app?.app.id ?? '',
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.start,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.labelSmall,
@@ -816,7 +795,22 @@ class _AppPageState extends State<AppPage> {
                         );
                       },
                     ),
-                  Expanded(child: Text(app?.name ?? tr('app'))),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(app?.name ?? tr('app')),
+                        if (app?.author != null)
+                          Text(
+                            'By ${app?.author}',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
