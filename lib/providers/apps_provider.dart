@@ -2563,12 +2563,14 @@ class _AppFilePickerState extends State<AppFilePicker> {
               });
             },
             child: Column(
-              children: urlsToSelectFrom.map(
-                (u) => RadioListTile<String>(
-                  title: Text(u.key),
-                  value: u.value,
-                ),
-              ).toList(),
+              children: urlsToSelectFrom
+                  .map(
+                    (u) => RadioListTile<String>(
+                      title: Text(u.key),
+                      value: u.value,
+                    ),
+                  )
+                  .toList(),
             ),
           ),
           if (widget.archs != null) const SizedBox(height: 16),
