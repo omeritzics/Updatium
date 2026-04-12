@@ -1490,30 +1490,14 @@ class AppsPageState extends State<AppsPage> {
       } else {
         // Flat View
         if (settingsProvider.useGridView) {
-          // Calculate optimal column count with min/max constraints
-          final screenWidth = MediaQuery.of(context).size.width;
-          final minItemWidth = 120.0;
-          final maxItemWidth = 200.0;
           final spacing = 12.0;
 
-          // Calculate how many columns fit with max item width
-          int maxColumns = ((screenWidth + spacing) / (maxItemWidth + spacing))
-              .floor();
-          // Calculate how many columns fit with min item width
-          int minColumns = ((screenWidth + spacing) / (minItemWidth + spacing))
-              .floor();
-
-          // Ensure we have at least 1 column and respect the constraints
-          int crossAxisCount = maxColumns;
-          if (crossAxisCount < 1) crossAxisCount = 1;
-          if (crossAxisCount > minColumns) crossAxisCount = minColumns;
-
           return SliverGrid(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxisCount,
-              childAspectRatio: 0.6,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 120,
               crossAxisSpacing: spacing,
               mainAxisSpacing: spacing,
+              childAspectRatio: 0.6,
             ),
             delegate: SliverChildBuilderDelegate((
               BuildContext context,
