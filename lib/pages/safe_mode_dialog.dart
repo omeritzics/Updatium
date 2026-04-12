@@ -51,24 +51,22 @@ void showSafeModeEnableDialog(BuildContext context) {
                     ),
                   );
 
-                  if (!settingsProvider.safeModeHintShown) {
-                    Future.delayed(const Duration(seconds: 2), () {
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(tr('safeModeEnabledHint')),
-                            duration: const Duration(seconds: 5),
-                            action: SnackBarAction(
-                              label: tr('gotIt'),
-                              onPressed: () {
-                                settingsProvider.safeModeHintShown = true;
-                              },
-                            ),
+                  Future.delayed(const Duration(seconds: 2), () {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(tr('safeModeEnabledHint')),
+                          duration: const Duration(seconds: 5),
+                          action: SnackBarAction(
+                            label: tr('gotIt'),
+                            onPressed: () {
+                              settingsProvider.safeModeHintShown = true;
+                            },
                           ),
-                        );
-                      }
-                    });
-                  }
+                        ),
+                      );
+                    }
+                  });
                 }
               } else {
                 errorMessage = tr('safeModePasswordError');
