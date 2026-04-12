@@ -1041,7 +1041,9 @@ class AppsProvider with ChangeNotifier {
       if (!status.isGranted) {
         status = await Permission.manageExternalStorage.request();
         if (!status.isGranted) {
-          throw Exception('MANAGE_EXTERNAL_STORAGE permission denied - cannot access OBB directory');
+          throw Exception(
+            'MANAGE_EXTERNAL_STORAGE permission denied - cannot access OBB directory',
+          );
         }
       }
     }
@@ -2568,9 +2570,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
             groupValue: fileUrl?.value,
             onChanged: (String? value) {
               setState(() {
-                fileUrl = urlsToSelectFrom
-                    .where((e) => e.value == value)
-                    .first;
+                fileUrl = urlsToSelectFrom.where((e) => e.value == value).first;
               });
             },
             child: Column(

@@ -99,10 +99,9 @@ class SourceForge extends AppSource {
 
       var apkUrlListAllReleases = allDownloadLinks
           .where(
-            (element) =>
-                source_utils.supportedApkExtensions.any(
-                  (ext) => element.toLowerCase().endsWith('$ext/download'),
-                ),
+            (element) => source_utils.supportedApkExtensions.any(
+              (ext) => element.toLowerCase().endsWith('$ext/download'),
+            ),
           )
           .where((element) => getVersion(element) != null)
           .toList();

@@ -70,7 +70,8 @@ class VivoAppStore extends AppSource {
     var developer = json['developer'].toString();
     var uploadTime = json['upload_time'].toString();
     var apkUrl = json['download_url'].toString();
-    var apkName = '${packageName}_$versionCode${source_utils.supportedApkExtensions[0]}';
+    var apkName =
+        '${packageName}_$versionCode${source_utils.supportedApkExtensions[0]}';
     return APKDetails(
       versionName,
       [MapEntry(apkName, apkUrl)],
