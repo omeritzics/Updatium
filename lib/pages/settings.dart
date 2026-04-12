@@ -26,7 +26,7 @@ class ExpandableCategory extends StatefulWidget {
   final String title;
   final List<Widget> children;
   final bool initiallyExpanded;
-  
+
   const ExpandableCategory({
     super.key,
     required this.title,
@@ -55,7 +55,7 @@ class _ExpandableCategoryState extends State<ExpandableCategory>
       parent: _controller,
       curve: Curves.easeInOut,
     );
-    
+
     _isExpanded = widget.initiallyExpanded;
     if (_isExpanded) {
       _controller.value = 1.0;
@@ -592,7 +592,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             FutureBuilder(
                               builder: (ctx, val) {
                                 return (settingsProvider.updateInterval > 0) &&
-                                        (((val.data?.version.sdkInt ?? 0) >= 30) ||
+                                        (((val.data?.version.sdkInt ?? 0) >=
+                                                30) ||
                                             settingsProvider.useShizuku)
                                     ? Column(
                                         crossAxisAlignment:
@@ -610,10 +611,11 @@ class _SettingsPageState extends State<SettingsPage> {
                                                 ),
                                               ),
                                               Switch(
-                                                value:
-                                                    settingsProvider.useFGService,
+                                                value: settingsProvider
+                                                    .useFGService,
                                                 onChanged: (value) {
-                                                  settingsProvider.useFGService =
+                                                  settingsProvider
+                                                          .useFGService =
                                                       value;
                                                 },
                                               ),
@@ -641,13 +643,17 @@ class _SettingsPageState extends State<SettingsPage> {
                                           ),
                                           height8,
                                           Text(
-                                            tr('backgroundUpdateReqsExplanation'),
+                                            tr(
+                                              'backgroundUpdateReqsExplanation',
+                                            ),
                                             style: Theme.of(
                                               context,
                                             ).textTheme.labelSmall,
                                           ),
                                           Text(
-                                            tr('backgroundUpdateLimitsExplanation'),
+                                            tr(
+                                              'backgroundUpdateLimitsExplanation',
+                                            ),
                                             style: Theme.of(
                                               context,
                                             ).textTheme.labelSmall,
@@ -665,7 +671,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                                   children: [
                                                     Flexible(
                                                       child: Text(
-                                                        tr('bgUpdatesOnWiFiOnly'),
+                                                        tr(
+                                                          'bgUpdatesOnWiFiOnly',
+                                                        ),
                                                       ),
                                                     ),
                                                     Switch(
@@ -717,7 +725,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               children: [
                                 Flexible(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(tr('safeMode')),
                                       Text(
@@ -758,7 +767,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                   child: Text(tr('checkUpdateOnDetailPage')),
                                 ),
                                 Switch(
-                                  value: settingsProvider.checkUpdateOnDetailPage,
+                                  value:
+                                      settingsProvider.checkUpdateOnDetailPage,
                                   onChanged: (value) {
                                     settingsProvider.checkUpdateOnDetailPage =
                                         value;
@@ -794,7 +804,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                   child: Text(tr('removeOnExternalUninstall')),
                                 ),
                                 Switch(
-                                  value: settingsProvider.removeOnExternalUninstall,
+                                  value: settingsProvider
+                                      .removeOnExternalUninstall,
                                   onChanged: (value) {
                                     settingsProvider.removeOnExternalUninstall =
                                         value;
@@ -821,23 +832,28 @@ class _SettingsPageState extends State<SettingsPage> {
                               children: [
                                 Flexible(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        tr('beforeNewInstallsShareToAppVerifier'),
+                                        tr(
+                                          'beforeNewInstallsShareToAppVerifier',
+                                        ),
                                       ),
                                       GestureDetector(
                                         onTap: () {
                                           launchUrlString(
                                             'https://github.com/soupslurpr/AppVerifier',
-                                            mode: LaunchMode.externalApplication,
+                                            mode:
+                                                LaunchMode.externalApplication,
                                           );
                                         },
                                         child: Text(
                                           tr('about'),
                                           style: const TextStyle(
-                                            decoration: TextDecoration.underline,
+                                            decoration:
+                                                TextDecoration.underline,
                                             fontSize: 12,
                                           ),
                                         ),
@@ -865,38 +881,47 @@ class _SettingsPageState extends State<SettingsPage> {
                                   value: settingsProvider.useShizuku,
                                   onChanged: (useShizuku) {
                                     if (useShizuku) {
-                                      ShizukuApkInstaller().checkPermission().then((
-                                        resCode,
-                                      ) {
-                                        settingsProvider.useShizuku =
-                                            resCode?.startsWith('granted') ?? false;
-                                        switch (resCode) {
-                                          case 'services_not_found':
-                                            showError(
-                                              UpdatiumError(
-                                                tr('shizukuBinderNotFound'),
-                                              ),
-                                              context,
-                                            );
-                                          case 'old_shizuku':
-                                            showError(
-                                              UpdatiumError(tr('shizukuOld')),
-                                              context,
-                                            );
-                                          case 'old_android_with_adb':
-                                            showError(
-                                              UpdatiumError(
-                                                tr('shizukuOldAndroidWithADB'),
-                                              ),
-                                              context,
-                                            );
-                                          case 'denied':
-                                            showError(
-                                              UpdatiumError(tr('cancelled')),
-                                              context,
-                                            );
-                                        }
-                                      });
+                                      ShizukuApkInstaller()
+                                          .checkPermission()
+                                          .then((resCode) {
+                                            settingsProvider.useShizuku =
+                                                resCode?.startsWith(
+                                                  'granted',
+                                                ) ??
+                                                false;
+                                            switch (resCode) {
+                                              case 'services_not_found':
+                                                showError(
+                                                  UpdatiumError(
+                                                    tr('shizukuBinderNotFound'),
+                                                  ),
+                                                  context,
+                                                );
+                                              case 'old_shizuku':
+                                                showError(
+                                                  UpdatiumError(
+                                                    tr('shizukuOld'),
+                                                  ),
+                                                  context,
+                                                );
+                                              case 'old_android_with_adb':
+                                                showError(
+                                                  UpdatiumError(
+                                                    tr(
+                                                      'shizukuOldAndroidWithADB',
+                                                    ),
+                                                  ),
+                                                  context,
+                                                );
+                                              case 'denied':
+                                                showError(
+                                                  UpdatiumError(
+                                                    tr('cancelled'),
+                                                  ),
+                                                  context,
+                                                );
+                                            }
+                                          });
                                     } else {
                                       settingsProvider.useShizuku = false;
                                     }
@@ -914,14 +939,16 @@ class _SettingsPageState extends State<SettingsPage> {
                                     style: TextStyle(
                                       color: settingsProvider.useShizuku
                                           ? null
-                                          : Theme.of(context).colorScheme.onSurface
+                                          : Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
                                                 .withValues(alpha: 0.6),
                                     ),
                                   ),
                                 ),
                                 Switch(
-                                  value:
-                                      settingsProvider.shizukuPretendToBeGooglePlay,
+                                  value: settingsProvider
+                                      .shizukuPretendToBeGooglePlay,
                                   onChanged: settingsProvider.useShizuku
                                       ? (value) {
                                           settingsProvider
@@ -938,9 +965,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ExpandableCategory(
                           title: tr('sourceSpecific'),
                           initiallyExpanded: false,
-                          children: [
-                            ...sourceSpecificFields,
-                          ],
+                          children: [...sourceSpecificFields],
                         ),
                         height32,
                         ExpandableCategory(
@@ -971,7 +996,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                   decoration: InputDecoration(
                                     labelText: tr('theme'),
                                     border: const OutlineInputBorder(),
-                                    suffixIcon: const Icon(Icons.arrow_drop_down),
+                                    suffixIcon: const Icon(
+                                      Icons.arrow_drop_down,
+                                    ),
                                   ),
                                   onTap: () {
                                     if (controller.isOpen) {
@@ -984,18 +1011,18 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                               menuChildren: [
                                 MenuItemButton(
-                                  onPressed: () =>
-                                      settingsProvider.theme = ThemeSettings.system,
+                                  onPressed: () => settingsProvider.theme =
+                                      ThemeSettings.system,
                                   child: Text(tr('followSystem')),
                                 ),
                                 MenuItemButton(
-                                  onPressed: () =>
-                                      settingsProvider.theme = ThemeSettings.light,
+                                  onPressed: () => settingsProvider.theme =
+                                      ThemeSettings.light,
                                   child: Text(tr('light')),
                                 ),
                                 MenuItemButton(
-                                  onPressed: () =>
-                                      settingsProvider.theme = ThemeSettings.dark,
+                                  onPressed: () => settingsProvider.theme =
+                                      ThemeSettings.dark,
                                   child: Text(tr('dark')),
                                 ),
                               ],
@@ -1006,7 +1033,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             height16,
                             if (settingsProvider.theme != ThemeSettings.light)
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(child: Text(tr('useBlackTheme'))),
                                   Switch(
@@ -1046,11 +1074,13 @@ class _SettingsPageState extends State<SettingsPage> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Flexible(
-                                                child: Text(tr('useSystemFont')),
+                                                child: Text(
+                                                  tr('useSystemFont'),
+                                                ),
                                               ),
                                               Switch(
-                                                value:
-                                                    settingsProvider.useSystemFont,
+                                                value: settingsProvider
+                                                    .useSystemFont,
                                                 onChanged: (useSystemFont) {
                                                   if (useSystemFont) {
                                                     NativeFeatures.loadSystemFont()
@@ -1060,7 +1090,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                                               true;
                                                         });
                                                   } else {
-                                                    settingsProvider.useSystemFont =
+                                                    settingsProvider
+                                                            .useSystemFont =
                                                         false;
                                                   }
                                                 },
@@ -1091,7 +1122,9 @@ class _SettingsPageState extends State<SettingsPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
-                                  child: Text(tr('moveNonInstalledAppsToBottom')),
+                                  child: Text(
+                                    tr('moveNonInstalledAppsToBottom'),
+                                  ),
                                 ),
                                 Switch(
                                   value: settingsProvider.buryNonInstalled,
@@ -1105,7 +1138,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(child: Text(tr('hideNonInstalledApps'))),
+                                Flexible(
+                                  child: Text(tr('hideNonInstalledApps')),
+                                ),
                                 Switch(
                                   value: settingsProvider.hideNonInstalled,
                                   onChanged: (value) {
@@ -1136,7 +1171,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                 Switch(
                                   value: settingsProvider.hideTrackOnlyWarning,
                                   onChanged: (value) {
-                                    settingsProvider.hideTrackOnlyWarning = value;
+                                    settingsProvider.hideTrackOnlyWarning =
+                                        value;
                                   },
                                 ),
                               ],
@@ -1151,7 +1187,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                 Switch(
                                   value: settingsProvider.hideAPKOriginWarning,
                                   onChanged: (value) {
-                                    settingsProvider.hideAPKOriginWarning = value;
+                                    settingsProvider.hideAPKOriginWarning =
+                                        value;
                                   },
                                 ),
                               ],
@@ -1160,11 +1197,15 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(child: Text(tr('disablePageTransitions'))),
+                                Flexible(
+                                  child: Text(tr('disablePageTransitions')),
+                                ),
                                 Switch(
-                                  value: settingsProvider.disablePageTransitions,
+                                  value:
+                                      settingsProvider.disablePageTransitions,
                                   onChanged: (value) {
-                                    settingsProvider.disablePageTransitions = value;
+                                    settingsProvider.disablePageTransitions =
+                                        value;
                                   },
                                 ),
                               ],
@@ -1173,13 +1214,18 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(child: Text(tr('reversePageTransitions'))),
+                                Flexible(
+                                  child: Text(tr('reversePageTransitions')),
+                                ),
                                 Switch(
-                                  value: settingsProvider.reversePageTransitions,
-                                  onChanged: settingsProvider.disablePageTransitions
+                                  value:
+                                      settingsProvider.reversePageTransitions,
+                                  onChanged:
+                                      settingsProvider.disablePageTransitions
                                       ? null
                                       : (value) {
-                                          settingsProvider.reversePageTransitions =
+                                          settingsProvider
+                                                  .reversePageTransitions =
                                               value;
                                         },
                                 ),
@@ -1189,11 +1235,14 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(child: Text(tr('highlightTouchTargets'))),
+                                Flexible(
+                                  child: Text(tr('highlightTouchTargets')),
+                                ),
                                 Switch(
                                   value: settingsProvider.highlightTouchTargets,
                                   onChanged: (value) {
-                                    settingsProvider.highlightTouchTargets = value;
+                                    settingsProvider.highlightTouchTargets =
+                                        value;
                                   },
                                 ),
                               ],
