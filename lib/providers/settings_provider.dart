@@ -546,11 +546,16 @@ class SettingsProvider with ChangeNotifier {
 
   Future<bool> setSafeModePassword(String password) async {
     try {
+      print('Safe Mode: Starting password setup');
       final hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+      print('Safe Mode: Password hashed successfully');
       await prefs?.setString('safeModePassword', hashed);
+      print('Safe Mode: Password saved to preferences');
       notifyListeners();
+      print('Safe Mode: Setup completed successfully');
       return true;
     } catch (e) {
+      print('Safe Mode: Password setup failed - $e');
       return false;
     }
   }

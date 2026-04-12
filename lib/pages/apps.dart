@@ -1494,7 +1494,7 @@ class AppsPageState extends State<AppsPage> {
 
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 120,
+              maxCrossAxisExtent: 160,
               crossAxisSpacing: spacing,
               mainAxisSpacing: spacing,
               childAspectRatio: 0.6,

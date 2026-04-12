@@ -28,7 +28,10 @@ class _SafeModeDialogState extends State<SafeModeDialog> {
   }
 
   Future<void> _setupPassword() async {
+    print('Safe Mode Dialog: Starting password setup');
+    
     if (_passwordController.text.length < 8) {
+      print('Safe Mode Dialog: Password too short');
       setState(() {
         _errorMessage = tr('safeModePasswordTooShort');
       });
@@ -36,6 +39,7 @@ class _SafeModeDialogState extends State<SafeModeDialog> {
     }
 
     if (_passwordController.text != _confirmPasswordController.text) {
+      print('Safe Mode Dialog: Passwords do not match');
       setState(() {
         _errorMessage = tr('safeModePasswordMismatch');
       });
@@ -48,12 +52,15 @@ class _SafeModeDialogState extends State<SafeModeDialog> {
     });
 
     try {
+      print('Safe Mode Dialog: Calling setSafeModePassword');
       final settingsProvider = context.read<SettingsProvider>();
       final success = await settingsProvider.setSafeModePassword(
         _passwordController.text,
       );
+      print('Safe Mode Dialog: setSafeModePassword returned $success');
 
       if (success) {
+        print('Safe Mode Dialog: Setting safeMode to true');
         settingsProvider.safeMode = true;
         if (mounted) {
           Navigator.of(context).pop(true);
@@ -86,11 +93,13 @@ class _SafeModeDialogState extends State<SafeModeDialog> {
           }
         }
       } else {
+        print('Safe Mode Dialog: setSafeModePassword failed');
         setState(() {
           _errorMessage = tr('safeModePasswordError');
         });
       }
     } catch (e) {
+      print('Safe Mode Dialog: Exception caught - $e');
       setState(() {
         _errorMessage = tr('safeModePasswordError');
       });
