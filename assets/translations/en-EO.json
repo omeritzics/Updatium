@@ -433,5 +433,7 @@
     "githubStarPromptTitle": "Ĉu vi ŝatas Updatium?",
     "githubStarPromptContent": "Updatium estas volontula malfermitkoda komunuma projekto, kiun mi ellaboris en mia libera tempo. Se vi ŝatus subteni la projekton, bonvolu konsideri doni al ĝi stelon en GitHub por helpi nin atingi pli da uzantoj kaj kontribuantoj. Vi ne estos rememorita pri tio denove. Antaŭdankon! :)",
     "githubStarPromptStar": "Doni stelon",
-    "githubStarPromptDontShowAgain": "Ne montri denove"
+    "githubStarPromptDontShowAgain": "Ne montri denove",
+    "sourceCode": "Fontokodo",
+    "developedBy": "Disvolvita de"
 }

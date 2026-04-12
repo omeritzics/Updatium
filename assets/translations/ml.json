@@ -428,5 +428,8 @@
     "privacy": "സ്വകാര്യത",
     "privacyText": "ഈ ആപ്പ് സ്വകാര്യം പരിഗണിക്കുന്നതും വ്യക്തിഗത ഡാറ്റ ശേഖരിക്കുന്നതുമല്ല.",
     "acceptAndContinue": "അംഗീകരിച്ച് തുടരുക",
-    "decline": "നിരസിക്കുക"
+    "decline": "നിരസിക്കുക",
+    "githubStarPromptDontShowAgain": "വീണ്ടും കാണിക്കരുതൂ",
+    "sourceCode": "സോഴ്സ് കോഡ്",
+    "developedBy": "വികസിപ്പിച്ച്"
 }

@@ -451,5 +451,7 @@
     "githubStarPromptTitle": "Updatium hoşunuza gitti mi?",
     "githubStarPromptContent": "Updatium, boş zamanlarımda geliştirdiğim gönüllü, açık kaynaklı bir topluluk projesidir. Projeyi desteklemek isterseniz, daha fazla kullanıcıya ve katılımcıya ulaşmamıza yardımcı olmak için lütfen projeyi GitHub'da yıldızlamayı (star) düşünün. Bu konuda sizi bir daha rahatsız etmeyeceğiz. Şimdiden teşekkürler! :)",
     "githubStarPromptStar": "Yıldızla",
-    "githubStarPromptDontShowAgain": "Bir daha gösterme"
+    "githubStarPromptDontShowAgain": "Bir daha gösterme",
+    "sourceCode": "Kaynak Kodu",
+    "developedBy": "Geliştiren"
 }

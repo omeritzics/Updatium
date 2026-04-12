@@ -446,5 +446,7 @@
     "githubStarPromptTitle": "Užíváte si Updatium?",
     "githubStarPromptContent": "Updatium je dobrovolný komunitní projekt s otevřeným zdrojovým kódem, který vyvíjím ve svém volném čase. Pokud byste chtěli projekt podpořit, zvažte prosím udělení hvězdičky na GitHubu, abychom mohli oslovit více uživatelů a přispěvatelů. Na toto vás již nebudeme znovu upozorňovat. Předem děkujeme! :)",
     "githubStarPromptStar": "Dát hvězdičku",
-    "githubStarPromptDontShowAgain": "Nezobrazovat znovu"
+    "githubStarPromptDontShowAgain": "Nezobrazovat znovu",
+    "sourceCode": "Zdrojový kód",
+    "developedBy": "Vyvinul"
 }

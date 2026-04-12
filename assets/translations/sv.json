@@ -433,5 +433,7 @@
     "githubStarPromptTitle": "Gillar du Updatium?",
     "githubStarPromptContent": "Updatium är ett volontärt open source-communityprojekt som jag utvecklat på min fritid. Om du vill stödja projektet, överväg vänligen att ge det en stjärna på GitHub för att hjälpa oss nå fler användare och bidragsgivare. Du kommer inte att påminnas om detta igen. Tack på förhand! :)",
     "githubStarPromptStar": "Ge stjärna",
-    "githubStarPromptDontShowAgain": "Visa inte igen"
+    "githubStarPromptDontShowAgain": "Visa inte igen",
+    "sourceCode": "Källkod",
+    "developedBy": "Utvecklad av"
 }

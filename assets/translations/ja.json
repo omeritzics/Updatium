@@ -433,5 +433,7 @@
     "githubStarPromptTitle": "Updatiumをお楽しみですか？",
     "githubStarPromptContent": "Updatiumは、私の自由時間に開発したボランティアのオープンソースコミュニティプロジェクトです。プロジェクトをサポートしていただける場合は、より多くのユーザーや貢献者に到達するのを助けるために、GitHubでスターを付けていただくことをご検討ください。この件については今後ご案内しません。前もってありがとうございます！:)",
     "githubStarPromptStar": "スターを付ける",
-    "githubStarPromptDontShowAgain": "今後表示しない"
+    "githubStarPromptDontShowAgain": "今後表示しない",
+    "sourceCode": "ソースコード",
+    "developedBy": "開発者"
 }

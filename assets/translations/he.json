@@ -466,5 +466,7 @@
     "githubStarPromptTitle": "כיף לך להשתמש ב־Updatium?",
     "githubStarPromptContent": "‏Updatium הוא מיזם קוד פתוח התנדבותי וקהילתי, שעל פיתוחו אני עובד בזמני הפנוי. אם ברצונך לתמוך במיזם, נא לשקול להעניק לו כוכב ב־GitHub בשביל לעזור למיזם להגיע לכמה שיותר משתמשים ותורמים. הבקשה הזו לא תופיע שוב. תודה מראש! :)",
     "githubStarPromptStar": "הענקת כוכב",
-    "githubStarPromptDontShowAgain": "לא להציג שוב"
+    "githubStarPromptDontShowAgain": "לא להציג שוב",
+    "sourceCode": "קוד מקור",
+    "developedBy": "פותח על ידי"
 }

@@ -433,5 +433,7 @@
     "githubStarPromptTitle": "Menikmati Updatium?",
     "githubStarPromptContent": "Updatium adalah proyek komunitas sumber terbuka sukarela yang saya kembangkan di waktu luang saya. Jika Anda ingin mendukung proyek ini, silakan pertimbangkan untuk memberikan bintang di GitHub untuk membantu kami mencapai lebih banyak pengguna dan kontributor. Anda tidak akan dimintai lagi tentang ini. Terima kasih sebelumnya! :)",
     "githubStarPromptStar": "Beri bintang",
-    "githubStarPromptDontShowAgain": "Jangan tampilkan lagi"
+    "githubStarPromptDontShowAgain": "Jangan tampilkan lagi",
+    "sourceCode": "Kode sumber",
+    "developedBy": "Dikembangkan oleh"
 }

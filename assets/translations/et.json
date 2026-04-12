@@ -433,5 +433,7 @@
     "githubStarPromptTitle": "Kas meeldib Updatium?",
     "githubStarPromptContent": "Updatium on vabatahtlik avatud lähtekoodiga kogukonnaprojekt, mille arendan oma vabal ajal. Kui soovid projekti toetada, kaalu palun GitHubis tärni andmist, et aidata meil jõuda enamate kasutajate ja panustajateni. Teid ei selle kohta enam meelditakse. Aitäh ette! :)",
     "githubStarPromptStar": "Anna tärn",
-    "githubStarPromptDontShowAgain": "Ära näita enam"
+    "githubStarPromptDontShowAgain": "Ära näita enam",
+    "sourceCode": "Lähtekood",
+    "developedBy": "Arendanud"
 }
