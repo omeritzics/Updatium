@@ -49,7 +49,7 @@ jobs:
         run: flutter pub get
         
       - name: Auto-fix linting issues
-        run: dart fix --apply
+        run: git pull && dart fix --apply
 
       - name: Format code
         run: dart format .
