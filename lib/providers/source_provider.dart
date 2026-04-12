@@ -66,6 +66,20 @@ class APKDetails {
   });
 }
 
+// Centralized supported APK file extensions
+const List<String> supportedApkExtensions = ['.apk', '.xapk'];
+
+// Check if a filename has a supported APK extension (case-insensitive)
+bool hasSupportedApkExtension(String filename) {
+  var lower = filename.toLowerCase();
+  return supportedApkExtensions.any((ext) => lower.endsWith(ext));
+}
+
+// Check if a filename ends with a specific extension (case-insensitive)
+bool endsWithExtension(String filename, String extension) {
+  return filename.toLowerCase().endsWith(extension.toLowerCase());
+}
+
 List<List<String>> stringMapListTo2DList(
   List<MapEntry<String, String>> mapList,
 ) => mapList.map((e) => [e.key, e.value]).toList();

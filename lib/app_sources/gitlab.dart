@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_utils;
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -188,26 +189,24 @@ class GitLab extends AppSource {
           .where(
             (s) =>
                 s.key.isNotEmpty &&
-                (s.key.toLowerCase().endsWith('.apk') ||
-                    s.key.toLowerCase().endsWith('.xapk') ||
-                    s.value.toLowerCase().endsWith('.apk') ||
-                    s.value.toLowerCase().endsWith(
-                      '.xapk',
-                    )), // TODO: Supported file types should be centralized somewhere and shared between sources
+                (source_utils.hasSupportedApkExtension(s.key) ||
+                    source_utils.hasSupportedApkExtension(s.value)),
           )
           .toList();
       var uploadedAPKsFromDescription = ((e['description'] ?? '') as String)
           .split('](')
           .join('\n')
-          .split('.apk)')
-          .join('.apk\n')
-          .split('.xapk)')
-          .join('.xapk\n')
+          .split('${source_utils.supportedApkExtensions[0]})')
+          .join('${source_utils.supportedApkExtensions[0]}\n')
+          .split('${source_utils.supportedApkExtensions[1]})')
+          .join('${source_utils.supportedApkExtensions[1]}\n')
           .split('\n')
           .where(
             (s) =>
                 s.startsWith('/uploads/') &&
-                (s.endsWith('apk') || s.endsWith('xapk')),
+                source_utils.supportedApkExtensions.any(
+                  (ext) => s.endsWith(ext.substring(1)),
+                ),
           )
           .map((s) => 'https://${hosts[0]}/-/project/$projectId$s')
           .map((l) => MapEntry(Uri.parse(l).pathSegments.last, l));

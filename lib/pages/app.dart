@@ -715,13 +715,13 @@ class _AppPageState extends State<AppPage> {
                             padding: const EdgeInsets.only(right: 12.0),
                             child: Image.memory(
                               appInMemory!.icon!,
-                              width: 32,
-                              height: 32,
+                              width: 40,
+                              height: 40,
                               gaplessPlayback: true,
                               errorBuilder: (context, error, stackTrace) {
                                 return Icon(
                                   Icons.apps,
-                                  size: 32,
+                                  size: 40,
                                   color: Theme.of(context).colorScheme.primary,
                                 );
                               },
@@ -741,13 +741,13 @@ class _AppPageState extends State<AppPage> {
                                 padding: const EdgeInsets.only(right: 12.0),
                                 child: Image.memory(
                                   updatedAppInMemory!.icon!,
-                                  width: 32,
-                                  height: 32,
+                                  width: 40,
+                                  height: 40,
                                   gaplessPlayback: true,
                                   errorBuilder: (context, error, stackTrace) {
                                     return Icon(
                                       Icons.apps,
-                                      size: 32,
+                                      size: 40,
                                       color: Theme.of(
                                         context,
                                       ).colorScheme.primary,
@@ -762,7 +762,7 @@ class _AppPageState extends State<AppPage> {
                               padding: const EdgeInsets.only(right: 16.0),
                               child: Icon(
                                 Icons.apps,
-                                size: 32,
+                                size: 40,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
                             );

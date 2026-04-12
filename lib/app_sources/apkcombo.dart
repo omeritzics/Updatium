@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_utils;
 import 'package:updatium/providers/logs_provider.dart';
 
 class APKCombo extends AppSource {
@@ -91,13 +92,15 @@ class APKCombo extends AppSource {
           return e.querySelectorAll('a').map((e) {
             String? url = e.attributes['href'];
             if (url != null &&
-                !Uri.parse(url).path.toLowerCase().endsWith('.apk')) {
+                !source_utils.hasSupportedApkExtension(Uri.parse(url).path)) {
               url = null;
             }
             String verCode =
                 e.querySelector('.info .header .vercode')?.text.trim() ?? '';
             return MapEntry<String, String>(
-              arch != null ? '$arch-$verCode.apk' : '',
+              arch != null
+                  ? '$arch-$verCode${source_utils.supportedApkExtensions[0]}'
+                  : '',
               url ?? '',
             );
           }).toList();

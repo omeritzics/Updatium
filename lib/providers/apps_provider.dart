@@ -1033,9 +1033,17 @@ class AppsProvider with ChangeNotifier {
   Future<void> moveObbFile(File file, String appId) async {
     if (!file.path.toLowerCase().endsWith('.obb')) return;
 
-    // TODO: Implement Android 11+ storage access using MANAGE_EXTERNAL_STORAGE or scoped storage
-    if ((await DeviceInfoPlugin().androidInfo).version.sdkInt <= 29) {
+    int sdkInt = (await DeviceInfoPlugin().androidInfo).version.sdkInt;
+    if (sdkInt <= 29) {
       await Permission.storage.request();
+    } else {
+      var status = await Permission.manageExternalStorage.status;
+      if (!status.isGranted) {
+        status = await Permission.manageExternalStorage.request();
+        if (!status.isGranted) {
+          throw Exception('MANAGE_EXTERNAL_STORAGE permission denied - cannot access OBB directory');
+        }
+      }
     }
 
     String obbDirPath = "${await getStorageRootPath()}/Android/obb/$appId";
@@ -2556,23 +2564,25 @@ class _AppFilePickerState extends State<AppFilePicker> {
                 )
               : const SizedBox.shrink(),
           const SizedBox(height: 16),
-          Column(
-            children: urlsToSelectFrom
-                .map(
-                  (u) => RadioListTile<String>(
-                    title: Text(u.key),
-                    value: u.value,
-                    groupValue: fileUrl?.value,
-                    onChanged: (String? value) {
-                      setState(() {
-                        fileUrl = urlsToSelectFrom
-                            .where((e) => e.value == value)
-                            .first;
-                      });
-                    },
-                  ),
-                )
-                .toList(),
+          RadioGroup<String>(
+            groupValue: fileUrl?.value,
+            onChanged: (String? value) {
+              setState(() {
+                fileUrl = urlsToSelectFrom
+                    .where((e) => e.value == value)
+                    .first;
+              });
+            },
+            child: Column(
+              children: urlsToSelectFrom
+                  .map(
+                    (u) => RadioListTile<String>(
+                      title: Text(u.key),
+                      value: u.value,
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
           if (widget.archs != null) const SizedBox(height: 16),
           if (widget.archs != null)
