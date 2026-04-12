@@ -337,9 +337,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
     }
 
     // Visual feedback at 100-tap intervals when Safe Mode is disabled
-    if (!isSafeModeEnabled &&
-        (tapCount + 1) % 100 == 0 &&
-        (tapCount + 1) > 0) {
+    if (!isSafeModeEnabled && (tapCount + 1) % 100 == 0 && (tapCount + 1) > 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${tapCount + 1}...'),
