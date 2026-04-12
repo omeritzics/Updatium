@@ -640,7 +640,7 @@ class AppsPageState extends State<AppsPage> {
       final isSelected = selectedAppIds.contains(app.id);
 
       return Card(
-        elevation: 2,
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         color: isSelected
             ? Theme.of(
                 context,
@@ -711,8 +711,32 @@ class AppsPageState extends State<AppsPage> {
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const SizedBox(height: 8),
-                    // Action button
-                    if (!isTrackOnly)
+                    // Action button or progress indicator
+                    if (appInfo.downloadProgress != null)
+                      SizedBox(
+                        width: 60,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (appInfo.downloadProgress! >= 0)
+                              Text(
+                                '${appInfo.downloadProgress!.toInt()}%',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            const SizedBox(height: 4),
+                            SizedBox(
+                              width: 40,
+                              height: 4,
+                              child: LinearProgressIndicator(
+                                value: appInfo.downloadProgress! >= 0
+                                    ? appInfo.downloadProgress! / 100
+                                    : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    else if (!isTrackOnly)
                       _buildActionButton(
                         app,
                         isInstalled,
@@ -722,24 +746,6 @@ class AppsPageState extends State<AppsPage> {
                   ],
                 ),
               ),
-              // Download progress overlay
-              if (appInfo.downloadProgress != null)
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.black54,
-                    ),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        value: appInfo.downloadProgress! >= 0
-                            ? appInfo.downloadProgress! / 100
-                            : null,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
             ],
           ),
         ),
@@ -1462,7 +1468,7 @@ class AppsPageState extends State<AppsPage> {
         if (settingsProvider.useGridView) {
           return SliverGrid(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 180,
+              maxCrossAxisExtent: 190,
               childAspectRatio: 0.6,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,

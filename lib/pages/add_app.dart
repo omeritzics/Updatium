@@ -39,10 +39,7 @@ class AddAppPageState extends State<AddAppPage> {
   SourceProvider sourceProvider = SourceProvider();
   bool _advancedExpanded = false;
   Map<String, dynamic> _advancedSettings = {
-    'apkFilterRegEx': '',
     'zippedApkFilterRegEx': '',
-    'shizukuPretendToBeGooglePlay': false,
-    'allowInsecure': false,
   };
 
   String? _regExValidator(String? value) {
@@ -772,8 +769,12 @@ class AddAppPageState extends State<AddAppPage> {
                     if (!isBuilding) {
                       setState(() {
                         _advancedSettings = values;
-                        // Merge advanced settings into additional settings
-                        additionalSettings.addAll(_advancedSettings);
+                        // Only merge non-empty advanced settings into additional settings
+                        _advancedSettings.forEach((key, value) {
+                          if (value != null && value.toString().isNotEmpty) {
+                            additionalSettings[key] = value;
+                          }
+                        });
                       });
                     }
                   },
@@ -812,8 +813,6 @@ class AddAppPageState extends State<AddAppPage> {
               setState(() {
                 additionalSettings = values;
                 additionalSettingsValid = valid;
-                // Merge advanced settings into additional settings
-                additionalSettings.addAll(_advancedSettings);
               });
             }
           },
@@ -1024,6 +1023,10 @@ class AddAppPageState extends State<AddAppPage> {
         },
         icon: const Icon(Icons.import_export),
         label: Text(tr('importExport')),
+        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
+        elevation: 3,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
     );
   }
