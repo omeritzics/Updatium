@@ -39,7 +39,9 @@ void showSafeModeDialog(BuildContext context) {
 
             try {
               final settingsProvider = context.read<SettingsProvider>();
-              final success = await settingsProvider.setSafeModePassword(passwordController.text);
+              final success = await settingsProvider.setSafeModePassword(
+                passwordController.text,
+              );
 
               if (success) {
                 settingsProvider.safeMode = true;
@@ -92,7 +94,9 @@ void showSafeModeDialog(BuildContext context) {
 
             try {
               final settingsProvider = context.read<SettingsProvider>();
-              final success = await settingsProvider.verifySafeModePassword(passwordController.text);
+              final success = await settingsProvider.verifySafeModePassword(
+                passwordController.text,
+              );
 
               if (success) {
                 final newState = !settingsProvider.safeMode;
@@ -108,7 +112,9 @@ void showSafeModeDialog(BuildContext context) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        newState ? tr('safeModeEnabled') : tr('safeModeDisabled'),
+                        newState
+                            ? tr('safeModeEnabled')
+                            : tr('safeModeDisabled'),
                       ),
                       backgroundColor: newState ? Colors.green : Colors.orange,
                     ),
@@ -135,7 +141,9 @@ void showSafeModeDialog(BuildContext context) {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(width: 12),
-                Text(passwordSet ? tr('safeModeDisable') : tr('safeModeEnable')),
+                Text(
+                  passwordSet ? tr('safeModeDisable') : tr('safeModeEnable'),
+                ),
               ],
             ),
             content: Column(
@@ -198,11 +206,13 @@ void showSafeModeDialog(BuildContext context) {
             ),
             actions: [
               TextButton(
-                onPressed: isLoading ? null : () {
-                  passwordController.dispose();
-                  confirmPasswordController.dispose();
-                  Navigator.of(context).pop();
-                },
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        passwordController.dispose();
+                        confirmPasswordController.dispose();
+                        Navigator.of(context).pop();
+                      },
                 child: Text(tr('cancel')),
               ),
               FilledButton(
@@ -216,7 +226,9 @@ void showSafeModeDialog(BuildContext context) {
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
                     : Text(
-                        passwordSet ? tr('safeModeDisable') : tr('safeModeEnable'),
+                        passwordSet
+                            ? tr('safeModeDisable')
+                            : tr('safeModeEnable'),
                       ),
               ),
             ],
