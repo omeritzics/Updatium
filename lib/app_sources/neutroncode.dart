@@ -1,14 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class NeutronCode extends AppSource {
   NeutronCode() {
     hosts = ['neutroncode.com'];
+    name = tr('neutroncode');
     showReleaseDateAsVersionToggle = true;
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -98,12 +98,9 @@ class NeutronCode extends AppSource {
         throw NoVersionError();
       }
       String? apkUrl = 'https://${hosts[0]}/download/$filename';
-      var dateStringOriginal = http
-          .querySelector('.pd-date-txt')
-          ?.nextElementSibling
-          ?.innerHtml;
+      var dateStringOriginal = http.querySelector('.pd-date-txt')?.innerHtml;
       var dateString = dateStringOriginal != null
-          ? (customDateParse(dateStringOriginal))
+          ? customDateParse(dateStringOriginal)
           : null;
       var changeLogElements = http.querySelectorAll('.pd-fdesc p');
       return APKDetails(

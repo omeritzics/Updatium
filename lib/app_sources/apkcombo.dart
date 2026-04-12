@@ -1,12 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart' show parse;
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 
 class APKCombo extends AppSource {
   APKCombo() {
     hosts = ['apkcombo.com'];
+    name = tr('apkcombo');
     showReleaseDateAsVersionToggle = true;
   }
 
@@ -23,7 +23,6 @@ class APKCombo extends AppSource {
     return match.group(0)!;
   }
 
-  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
@@ -61,12 +60,14 @@ class APKCombo extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    var res = await sourceRequest('$standardUrl/download/apk', {});
+    var res = await sourceRequest(
+      '$standardUrl/download/apk',
+      additionalSettings,
+    );
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
     var html = parse(res.body);
-
     // Try multiple selectors for APK variants
     var apkElements = html.querySelectorAll('#variants-tab > div > ul > li');
     if (apkElements.isEmpty) {
@@ -75,11 +76,9 @@ class APKCombo extends AppSource {
     if (apkElements.isEmpty) {
       apkElements = html.querySelectorAll('.download-variant');
     }
-
     if (apkElements.isEmpty) {
       throw NoReleasesError();
     }
-
     return apkElements
         .map((e) {
           String? arch = e
@@ -108,7 +107,6 @@ class APKCombo extends AppSource {
         .toList();
   }
 
-  @override
   Future<String> assetUrlPrefetchModifier(
     String assetUrl,
     String standardUrl,
@@ -138,7 +136,6 @@ class APKCombo extends AppSource {
       throw getUpdatiumHttpError(preres);
     }
     var res = parse(preres.body);
-
     // Try multiple selectors for version
     String? version = res.querySelector('div.version')?.text.trim();
     version ??= res.querySelector('.version')?.text.trim();
@@ -146,7 +143,6 @@ class APKCombo extends AppSource {
     if (version == null) {
       throw NoVersionError();
     }
-
     // Try multiple selectors for app name
     String? appName = res.querySelector('div.app_name')?.text.trim();
     if (appName == null || appName.isEmpty) {
@@ -156,7 +152,6 @@ class APKCombo extends AppSource {
       appName = res.querySelector('h1')?.text.trim();
     }
     appName = (appName?.isNotEmpty == true) ? appName! : appId;
-
     // Try multiple selectors for author
     String? author = res.querySelector('div.author')?.text.trim();
     if (author == null || author.isEmpty) {
@@ -166,20 +161,17 @@ class APKCombo extends AppSource {
       author = res.querySelector('.developer')?.text.trim();
     }
     author = (author?.isNotEmpty == true) ? author! : appName;
-
     // Try multiple selectors for release date
     List<String> infoArray = res
         .querySelectorAll('div.information-table > .item > div.value')
         .map((e) => e.text.trim())
         .toList();
-
     if (infoArray.isEmpty) {
       infoArray = res
           .querySelectorAll('.info-item .value')
           .map((e) => e.text.trim())
           .toList();
     }
-
     DateTime? releaseDate;
     if (infoArray.length >= 2) {
       String dateString = infoArray[1];

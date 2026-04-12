@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 DateTime? parseDateTimeMMMddCommayyyy(String? dateString) {
@@ -21,6 +20,7 @@ DateTime? parseDateTimeMMMddCommayyyy(String? dateString) {
 class Uptodown extends AppSource {
   Uptodown() {
     hosts = ['uptodown.com'];
+    name = tr('uptodown');
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
@@ -40,7 +40,6 @@ class Uptodown extends AppSource {
     return '${match.group(0)!}/android/download';
   }
 
-  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
@@ -125,16 +124,12 @@ class Uptodown extends AppSource {
     );
   }
 
-  @override
   Future<String> assetUrlPrefetchModifier(
     String assetUrl,
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
     var res = await sourceRequest(assetUrl, additionalSettings);
-    if (res.statusCode != 200) {
-      throw getUpdatiumHttpError(res);
-    }
     var html = parse(res.body);
     var finalUrlKey = html
         .querySelector('#detail-download-button')

@@ -1,18 +1,17 @@
 import 'package:updatium/app_sources/fdroid.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class IzzyOnDroid extends AppSource {
   late FDroid fd;
-
   IzzyOnDroid() {
     hosts = ['izzysoft.de'];
+    name = tr('izzyondroid');
     fd = FDroid();
     additionalSourceAppSpecificSettingFormItems =
         fd.additionalSourceAppSpecificSettingFormItems;
     allowSubDomains = true;
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegExA = RegExp(
@@ -53,9 +52,9 @@ class IzzyOnDroid extends AppSource {
         additionalSettings,
       ),
       'https://android.izzysoft.de/frepo/$appId',
-      standardUrl,
       name,
-      additionalSettings: additionalSettings,
+      additionalSettings,
+      standardUrl,
     );
   }
 }

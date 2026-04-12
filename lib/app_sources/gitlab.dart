@@ -4,21 +4,19 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
-import 'package:updatium/custom_errors.dart';
-import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GitLab extends AppSource {
   GitLab({bool hostChanged = false}) {
-    name = 'GitLab';
+    name = tr('gitlab');
     hosts = ['gitlab.com'];
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
-
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
         'gitlab-creds',
@@ -42,11 +40,9 @@ class GitLab extends AppSource {
               ),
             ),
           ),
-          const SizedBox(height: 4),
         ],
       ),
     ];
-
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormSwitch(
@@ -87,7 +83,6 @@ class GitLab extends AppSource {
     return creds != null && creds.isNotEmpty ? creds : null;
   }
 
-  @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
@@ -109,11 +104,9 @@ class GitLab extends AppSource {
     return results;
   }
 
-  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/-/releases';
 
-  @override
   Future<Map<String, String>?> getRequestHeaders(
     Map<String, dynamic> additionalSettings,
     String url, {
@@ -150,10 +143,9 @@ class GitLab extends AppSource {
     var names = GitHub(hostChanged: true).getAppNames(standardUrl);
     String projectUriComponent =
         '${Uri.encodeComponent(names.author)}%2F${Uri.encodeComponent(names.name)}';
+    bool trackOnly = additionalSettings['trackOnly'] == true;
     String? PAT = await getPATIfAny(hostChanged ? additionalSettings : {});
     String optionalAuth = (PAT != null) ? 'private_token=$PAT' : '';
-
-    bool trackOnly = additionalSettings['trackOnly'] == true;
 
     // Get project ID
     Response res0 = await sourceRequest(
@@ -167,7 +159,6 @@ class GitLab extends AppSource {
     if (projectId == null) {
       throw NoReleasesError();
     }
-
     // Request data from REST API
     Response res = await sourceRequest(
       'https://${hosts[0]}/api/v4/projects/$projectUriComponent/${trackOnly ? 'repository/tags' : 'releases'}?$optionalAuth',
@@ -178,9 +169,9 @@ class GitLab extends AppSource {
     }
 
     // Extract .apk details from received data
+    var jsonData = jsonDecode(res.body) as List<dynamic>;
     Iterable<APKDetails> apkDetailsList = [];
-    var json = jsonDecode(res.body) as List<dynamic>;
-    apkDetailsList = json.map((e) {
+    apkDetailsList = jsonData.map((e) {
       var apkUrlsFromAssets = (e['assets']?['links'] as List<dynamic>? ?? [])
           .map((e) {
             var url = (e['direct_asset_url'] ?? e['url'] ?? '') as String;
@@ -216,14 +207,10 @@ class GitLab extends AppSource {
           .where(
             (s) =>
                 s.startsWith('/uploads/') &&
-                (s.endsWith('apk') ||
-                    s.endsWith(
-                      'xapk',
-                    )), // TODO: Supported file types should be centralized somewhere and shared between sources
+                (s.endsWith('apk') || s.endsWith('xapk')),
           )
           .map((s) => 'https://${hosts[0]}/-/project/$projectId$s')
-          .map((l) => MapEntry(Uri.parse(l).pathSegments.last, l))
-          .toList();
+          .map((l) => MapEntry(Uri.parse(l).pathSegments.last, l));
       Map<String, String> apkUrls = {};
       for (var entry in apkUrlsFromAssets) {
         apkUrls[entry.key] = entry.value;
@@ -247,7 +234,6 @@ class GitLab extends AppSource {
       throw NoReleasesError();
     }
     var finalResult = apkDetailsList.first;
-
     // Fallback procedure
     bool fallbackToOlderReleases =
         additionalSettings['fallbackToOlderReleases'] == true;
@@ -260,11 +246,9 @@ class GitLab extends AppSource {
       }
       finalResult = apkDetailsList.first;
     }
-
     if (finalResult.apkUrls.isEmpty && !trackOnly) {
       throw NoAPKError();
     }
-
     finalResult.apkUrls = finalResult.apkUrls.map((apkUrl) {
       if (RegExp(
         '^$standardUrl/-/jobs/[0-9]+/artifacts/file/[^/]+',
@@ -277,7 +261,6 @@ class GitLab extends AppSource {
         return apkUrl;
       }
     }).toList();
-
     return finalResult;
   }
 }

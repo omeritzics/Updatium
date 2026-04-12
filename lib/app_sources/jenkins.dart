@@ -1,16 +1,15 @@
 import 'dart:convert';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class Jenkins extends AppSource {
   Jenkins() {
+    name = tr('jenkins');
     versionDetectionDisallowed = true;
     neverAutoSelect = true;
     showReleaseDateAsVersionToggle = true;
   }
-
   String trimJobUrl(String url) {
     RegExp standardUrlRegEx = RegExp('.*/job/[^/]+');
     RegExpMatch? match = standardUrlRegEx.firstMatch(url);
@@ -40,11 +39,8 @@ class Jenkins extends AppSource {
           ? null
           : DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int);
       var version = json['number'] == null
-          ? null
+          ? ''
           : (json['number'] as int).toString();
-      if (version == null) {
-        throw NoVersionError();
-      }
       var apkUrls = (json['artifacts'] as List<dynamic>)
           .map((e) {
             var path = (e['relativePath'] as String?);
@@ -66,8 +62,8 @@ class Jenkins extends AppSource {
       return APKDetails(
         version,
         apkUrls,
-        releaseDate: releaseDate,
         AppNames(Uri.parse(standardUrl).host, standardUrl.split('/').last),
+        releaseDate: releaseDate,
       );
     } else {
       throw getUpdatiumHttpError(res);

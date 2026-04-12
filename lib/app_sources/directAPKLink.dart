@@ -1,12 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class DirectAPKLink extends AppSource {
   HTML html = HTML();
-
   DirectAPKLink() {
     name = tr('directAPKLink');
     additionalSourceAppSpecificSettingFormItems = [
@@ -55,7 +53,7 @@ class DirectAPKLink extends AppSource {
     Map<String, dynamic> additionalSettings,
     String url, {
     bool forAPKDownload = false,
-  }) {
+  }) async {
     return html.getRequestHeaders(
       additionalSettings,
       url,

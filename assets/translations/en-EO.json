@@ -241,6 +241,7 @@
     "moveNonInstalledAppsToBottom": "Movi neinstalatajn apojn al malsupro de la langeto Apoj",
     "hideNonInstalledApps": "Hide non-installed apps",
     "gitlabPATLabel": "GitLab persona atingoĵetono",
+    "github": "GitHub",
     "about": "Pri",
     "requiresCredentialsInSettings": "{} bezonas kromajn informojn (en Agordoj)",
     "checkOnStart": "Serĉi ĝisdatigojn starte",
@@ -429,8 +430,8 @@
     "privacyText": "Ĉi tiu aplikaĵo fokusiĝas pri privateco kaj ne kolektas personajn datumojn.",
     "acceptAndContinue": "Akcepti kaj Daŭrigi",
     "decline": "Rifuzi",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "Ĉu vi ŝatas Updatium?",
+    "githubStarPromptContent": "Updatium estas volontula malfermitkoda komunuma projekto, kiun mi ellaboris en mia libera tempo. Se vi ŝatus subteni la projekton, bonvolu konsideri doni al ĝi stelon en GitHub por helpi nin atingi pli da uzantoj kaj kontribuantoj. Vi ne estos rememorita pri tio denove. Antaŭdankon! :)",
+    "githubStarPromptStar": "Doni stelon",
+    "githubStarPromptDontShowAgain": "Ne montri denove"
 }

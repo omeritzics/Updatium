@@ -272,6 +272,7 @@
     "moveNonInstalledAppsToBottom": "نقل التطبيقات غير المثبتة إلى أسفل قائمة التطبيقات",
     "hideNonInstalledApps": "Hide non-installed apps",
     "gitlabPATLabel": "رمز الوصول الشخصي لـ GitLab",
+    "github": "GitHub",
     "about": "حول",
     "requiresCredentialsInSettings": "{} يحتاج إلى بيانات اعتماد إضافية (في الإعدادات)",
     "checkOnStart": "التحقق من التحديثات عند البدء",
@@ -476,8 +477,8 @@
     "privacyText": "هذا التطبيق يركز على الخصوصية ولا يجمع البيانات الشخصية.",
     "acceptAndContinue": "موافق ومتابعة",
     "decline": "رفض",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "هل تستمتع بـ Updatium؟",
+    "githubStarPromptContent": "Updatium هو مشروع مجتمعي مفتوح المصدر تطوعي تم تطويره في وقت فراغي. إذا كنت ترغب في دعم المشروع، يرجى التفكير في إعطائه نجمة على GitHub لمساعدتنا في الوصول إلى المزيد من المستخدمين والمساهمين. لن يتم تذكيرتك بذلك مرة أخرى. شكراً مقدماً! :)",
+    "githubStarPromptStar": "إعطاء نجمة",
+    "githubStarPromptDontShowAgain": "عدم العرض مرة أخرى"
 }

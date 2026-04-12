@@ -4,17 +4,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
-import 'package:updatium/providers/source_provider.dart';
 
 class APKMirror extends AppSource {
   APKMirror() {
     hosts = ['apkmirror.com'];
+    name = tr('apkmirror');
     enforceTrackOnly = true;
     showReleaseDateAsVersionToggle = true;
-
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormSwitch(
@@ -37,7 +36,6 @@ class APKMirror extends AppSource {
       ],
     ];
   }
-
   @override
   Future<Map<String, String>?> getRequestHeaders(
     Map<String, dynamic> additionalSettings,
@@ -63,7 +61,6 @@ class APKMirror extends AppSource {
     return match.group(0)!;
   }
 
-  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/#whatsnew';
 
@@ -117,7 +114,7 @@ class APKMirror extends AppSource {
       if (version == null || version.isEmpty) {
         version = titleString;
       }
-      if (version == null || version.isEmpty) {
+      if (version == null) {
         throw NoVersionError();
       }
       return APKDetails(

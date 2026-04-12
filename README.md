@@ -6,6 +6,8 @@
 
 Update your Android apps directly from the APK source. Updatium helps you to install apps and update them directly from their release pages or APK sources, and to receive notifications when updates are available.
 
+#### [Testers needed. Click here for more information](https://github.com/omeritzics/Updatium/issues/280)
+
 ## Features
 ### Currently supported App sources:
 | Open Source (General) | Other (General) | Other (App-specific) |

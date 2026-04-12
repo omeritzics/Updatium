@@ -1,9 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/components/button_helpers.dart';
-import 'package:updatium/components/generated_form_modal.dart';
-import 'package:updatium/custom_errors.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/apps.dart';
 import 'package:updatium/pages/settings.dart';
@@ -13,6 +12,7 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:provider/provider.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:updatium/components/generated_form.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key, required this.appId});
@@ -35,10 +35,6 @@ class _AppPageState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
     // Consistent spacing constants
-    const height2 = SizedBox(height: 2);
-    const height8 = SizedBox(height: 8);
-    const height10 = SizedBox(height: 10);
-    const height24 = SizedBox(height: 24);
     const height32 = SizedBox(height: 32);
     const height85 = SizedBox(height: 85);
 
@@ -361,13 +357,7 @@ class _AppPageState extends State<AppPage> {
             ],
           ),
         SizedBox(height: small ? 10 : 24),
-        Text(
-          app?.name ?? tr('app'),
-          textAlign: TextAlign.center,
-          style: small
-              ? Theme.of(context).textTheme.titleLarge
-              : Theme.of(context).textTheme.headlineMedium,
-        ),
+
         Text(
           tr('byX', args: [app?.author ?? tr('unknown')]),
           textAlign: TextAlign.center,
@@ -450,41 +440,11 @@ class _AppPageState extends State<AppPage> {
       ],
     );
 
-    showMarkUpdatedDialog() {
-      return showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: Text(tr('alreadyUpToDateQuestion')),
-            actions: [
-              AppTextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(tr('no')),
-              ),
-              AppTextButton(
-                onPressed: () {
-                  HapticFeedback.selectionClick();
-                  var updatedApp = app?.app;
-                  if (updatedApp != null) {
-                    updatedApp.installedVersion = updatedApp.latestVersion;
-                    appsProvider.saveApps([updatedApp]);
-                  }
-                  Navigator.of(context).pop();
-                },
-                child: Text(tr('yesMarkUpdated')),
-              ),
-            ],
-          );
-        },
-      );
-    }
-
     showAdditionalOptionsDialog() async {
       return await showDialog<Map<String, dynamic>?>(
         context: context,
         builder: (BuildContext ctx) {
+          Map<String, dynamic> localValues = {};
           var items = (source?.combinedAppSpecificSettingFormItems ?? []).map((
             row,
           ) {
@@ -497,9 +457,25 @@ class _AppPageState extends State<AppPage> {
             return row;
           }).toList();
 
-          return GeneratedFormModal(
-            title: tr('additionalOptions'),
-            items: items,
+          return AlertDialog(
+            scrollable: true,
+            title: Text(tr('additionalOptions')),
+            content: GeneratedForm(
+              items: items,
+              onValueChanges: (vals, valid, isBuilding) {
+                localValues = vals;
+              },
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(null),
+                child: Text(tr('cancel')),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(localValues),
+                child: Text(tr('ok')),
+              ),
+            ],
           );
         },
       );
@@ -546,149 +522,180 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => AppTextButton(
-      onPressed:
-          !updating &&
-              (app?.app.installedVersion == null ||
-                  app?.app.installedVersion != app?.app.latestVersion) &&
-              !areDownloadsRunning
-          ? () async {
-              try {
-                var successMessage = app?.app.installedVersion == null
-                    ? tr('installed')
-                    : tr('appsUpdated');
-                HapticFeedback.heavyImpact();
-                var res = await appsProvider.downloadAndInstallLatestApps(
-                  app?.app.id != null ? [app!.app.id] : [],
-                  globalNavigatorKey.currentContext,
-                );
-                if (res.isNotEmpty && !trackOnly) {
-                  // ignore: use_build_context_synchronously
-                  showMessage(successMessage, context);
+    getInstallOrUpdateButton() => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed:
+                !updating &&
+                    (app?.app.installedVersion == null ||
+                        app?.app.installedVersion != app?.app.latestVersion) &&
+                    !areDownloadsRunning
+                ? () async {
+                    try {
+                      var successMessage = app?.app.installedVersion == null
+                          ? tr('installed')
+                          : tr('appsUpdated');
+                      HapticFeedback.heavyImpact();
+                      var res = await appsProvider.downloadAndInstallLatestApps(
+                        app?.app.id != null ? [app!.app.id] : [],
+                        globalNavigatorKey.currentContext,
+                      );
+                      if (res.isNotEmpty && !trackOnly) {
+                        // ignore: use_build_context_synchronously
+                        showMessage(successMessage, context);
+                      }
+                      if (res.isNotEmpty && mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    } catch (e) {
+                      // ignore: use_build_context_synchronously
+                      showError(e, context);
+                    }
+                  }
+                : null,
+            child: Text(
+              app?.app.installedVersion == null
+                  ? !trackOnly
+                        ? tr('install')
+                        : tr('markInstalled')
+                  : !trackOnly
+                  ? tr('update')
+                  : tr('markUpdated'),
+            ),
+          ),
+        ),
+        const SizedBox(width: 1),
+        PopupMenuButton<String>(
+          icon: const Icon(Icons.arrow_drop_down),
+          onSelected: (String value) {
+            switch (value) {
+              case 'check_update':
+                if (app != null) {
+                  getUpdate(app.app.id);
                 }
-                if (res.isNotEmpty && mounted) {
-                  Navigator.of(context).pop();
-                }
-              } catch (e) {
-                // ignore: use_build_context_synchronously
-                showError(e, context);
-              }
-            }
-          : null,
-      child: Text(
-        app?.app.installedVersion == null
-            ? !trackOnly
-                  ? tr('install')
-                  : tr('markInstalled')
-            : !trackOnly
-            ? tr('update')
-            : tr('markUpdated'),
-      ),
-    );
-
-    getBottomSheetMenu() => Padding(
-      padding: EdgeInsets.fromLTRB(
-        16,
-        8,
-        16,
-        MediaQuery.of(context).padding.bottom + 16,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+                break;
+              case 'additional_options':
                 if (source != null &&
-                    source.combinedAppSpecificSettingFormItems.isNotEmpty)
-                  IconButton(
-                    onPressed: app?.downloadProgress != null || updating
-                        ? null
-                        : () async {
-                            var values = await showAdditionalOptionsDialog();
-                            handleAdditionalOptionChanges(values);
-                          },
-                    tooltip: tr('additionalOptions'),
-                    icon: const Icon(Icons.edit),
-                  ),
+                    source.combinedAppSpecificSettingFormItems.isNotEmpty) {
+                  showAdditionalOptionsDialog().then(
+                    handleAdditionalOptionChanges,
+                  );
+                }
+                break;
+              case 'remove':
                 if (app?.app.installedVersion != null &&
                     app?.app.installedVersion != app?.app.latestVersion &&
                     !isVersionDetectionStandard &&
-                    !trackOnly)
-                  IconButton(
-                    onPressed: app?.downloadProgress != null || updating
-                        ? null
-                        : showMarkUpdatedDialog,
-                    tooltip: tr('markUpdated'),
-                    icon: const Icon(Icons.done),
-                  ),
-                if ((!isVersionDetectionStandard || trackOnly) &&
-                    app?.app.installedVersion != null &&
-                    app?.app.installedVersion == app?.app.latestVersion)
-                  IconButton(
-                    onPressed: app?.app == null || updating
-                        ? null
-                        : () {
-                            app!.app.installedVersion = null;
-                            appsProvider.saveApps([app.app]);
-                          },
-                    icon: const Icon(Icons.restore_rounded),
-                    tooltip: tr('resetInstallStatus'),
-                  ),
-                const SizedBox(width: 16.0),
-                Expanded(child: getInstallOrUpdateButton()),
-                const SizedBox(width: 16.0),
-                IconButton(
-                  onPressed: app?.downloadProgress != null || updating
-                      ? null
-                      : () {
-                          appsProvider
-                              .removeAppsWithModal(
-                                context,
-                                app != null ? [app.app] : [],
-                              )
-                              .then((value) {
-                                if (value == true) {
-                                  Navigator.of(context).pop();
-                                }
-                              });
-                        },
-                  tooltip: tr('remove'),
-                  icon: const Icon(Icons.delete),
-                ),
-              ],
-            ),
-          ),
-          if (app?.downloadProgress != null)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-              child: LinearProgressIndicator(
-                value: app!.downloadProgress! >= 0
-                    ? app.downloadProgress! / 100
-                    : null,
+                    !trackOnly) {
+                  appsProvider
+                      .removeAppsWithModal(
+                        context,
+                        app != null ? [app.app] : [],
+                      )
+                      .then((value) {
+                        if (value == true) {
+                          Navigator.of(context).pop();
+                        }
+                      });
+                }
+                break;
+            }
+          },
+          itemBuilder: (BuildContext context) => [
+            PopupMenuItem<String>(
+              value: 'check_update',
+              child: Row(
+                children: [
+                  const Icon(Icons.refresh),
+                  const SizedBox(width: 8),
+                  Text(tr('checkForUpdates')),
+                ],
               ),
             ),
-        ],
-      ),
+            if (source != null &&
+                source.combinedAppSpecificSettingFormItems.isNotEmpty)
+              PopupMenuItem<String>(
+                value: 'additional_options',
+                child: Row(
+                  children: [
+                    const Icon(Icons.edit),
+                    const SizedBox(width: 8),
+                    Text(tr('additionalOptions')),
+                  ],
+                ),
+              ),
+            if (app?.app.installedVersion != null &&
+                app?.app.installedVersion != app?.app.latestVersion &&
+                !isVersionDetectionStandard &&
+                !trackOnly)
+              PopupMenuItem<String>(
+                value: 'remove',
+                child: Row(
+                  children: [
+                    const Icon(Icons.delete),
+                    const SizedBox(width: 8),
+                    Text(tr('remove')),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ],
     );
 
-    appScreenAppBar() => AppBar(
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        },
+    getBottomSheetMenu() => Container(
+      color: Theme.of(context).colorScheme.surfaceContainerLow,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(
+          16,
+          8,
+          16,
+          MediaQuery.of(context).padding.bottom + 16,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(width: 16.0),
+                  Expanded(child: getInstallOrUpdateButton()),
+                  const SizedBox(width: 16.0),
+                ],
+              ),
+            ),
+            if (app?.downloadProgress != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                child: LinearProgressIndicator(
+                  value: app!.downloadProgress! >= 0
+                      ? app.downloadProgress! / 100
+                      : null,
+                  backgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.surfaceContainerHighest,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
 
     return Scaffold(
-      appBar: appScreenAppBar(),
-      backgroundColor: Theme.of(context).colorScheme.surface,
       body: RefreshIndicator(
         child: CustomScrollView(
           slivers: [
+            SliverAppBar.large(
+              pinned: true,
+              title: Text(app?.name ?? tr('app')),
+            ),
             SliverToBoxAdapter(child: Column(children: [getFullInfoColumn()])),
           ],
         ),
@@ -699,108 +706,6 @@ class _AppPageState extends State<AppPage> {
         },
       ),
       bottomSheet: getBottomSheetMenu(),
-    );
-  }
-
-  Widget _buildSimpleIcon(App app, double size) {
-    return Consumer<AppsProvider>(
-      builder: (context, appsProvider, child) {
-        final appInMemory = appsProvider.apps[app.id];
-
-        // If icon is already loaded, display it immediately
-        if (appInMemory?.icon != null) {
-          return Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(size * 0.125),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(size * 0.125),
-              child: Image.memory(
-                appInMemory!.icon!,
-                width: size,
-                height: size,
-                fit: BoxFit.cover,
-                gaplessPlayback: true,
-                opacity: AlwaysStoppedAnimation(
-                  appInMemory.installedInfo == null ? 0.6 : 1,
-                ),
-                errorBuilder: (context, error, stackTrace) {
-                  return _buildFallbackIcon(size);
-                },
-              ),
-            ),
-          );
-        }
-
-        // Load icon asynchronously if not available
-        return FutureBuilder(
-          future: appsProvider.updateAppIcon(app.id),
-          builder: (context, snapshot) {
-            final updatedAppInMemory = appsProvider.apps[app.id];
-
-            if (updatedAppInMemory?.icon != null) {
-              return Container(
-                width: size,
-                height: size,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(size * 0.125),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(size * 0.125),
-                  child: Image.memory(
-                    updatedAppInMemory!.icon!,
-                    width: size,
-                    height: size,
-                    fit: BoxFit.cover,
-                    gaplessPlayback: true,
-                    opacity: AlwaysStoppedAnimation(
-                      updatedAppInMemory.installedInfo == null ? 0.6 : 1,
-                    ),
-                    errorBuilder: (context, error, stackTrace) {
-                      return _buildFallbackIcon(size);
-                    },
-                  ),
-                ),
-              );
-            }
-
-            // Show fallback while loading or if failed
-            return _buildFallbackIcon(size);
-          },
-        );
-      },
-    );
-  }
-
-  Widget _buildFallbackIcon(double size) {
-    var settingsProvider = context.read<SettingsProvider>();
-    bool usePureBlack =
-        settingsProvider.useBlackTheme &&
-        Theme.of(context).brightness == Brightness.dark;
-
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(size * 0.125),
-        color: usePureBlack
-            ? Colors.black.withValues(alpha: 0.2)
-            : Theme.of(context).colorScheme.surface.withValues(alpha: 0.1),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(size * 0.125),
-        child: Icon(
-          Icons.apps,
-          size: size * 0.5,
-          color: usePureBlack
-              ? Colors.white.withValues(alpha: 0.6)
-              : Theme.of(
-                  context,
-                ).colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
-        ),
-      ),
     );
   }
 }

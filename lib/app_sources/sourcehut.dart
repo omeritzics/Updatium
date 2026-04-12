@@ -1,7 +1,6 @@
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/html.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -9,8 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 class SourceHut extends AppSource {
   SourceHut() {
     hosts = ['git.sr.ht'];
+    name = tr('sourcehut');
     showReleaseDateAsVersionToggle = true;
-
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormSwitch(
@@ -21,7 +20,6 @@ class SourceHut extends AppSource {
       ],
     ];
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -49,7 +47,6 @@ class SourceHut extends AppSource {
           .reversed
           .toList()
           .sublist(1)
-          .reversed
           .join('/');
     }
     Uri standardUri = Uri.parse(standardUrl);
@@ -64,7 +61,6 @@ class SourceHut extends AppSource {
       var parsedHtml = parse(res.body);
       List<APKDetails> apkDetailsList = [];
       int ind = 0;
-
       for (var entry in parsedHtml.querySelectorAll('item').sublist(0, 6)) {
         ind++;
         String releasePage = // querySelector('link') fails for some reason
@@ -87,9 +83,6 @@ class SourceHut extends AppSource {
         DateTime? releaseDate;
         try {
           releaseDate = releaseDateString != null
-              ? DateFormat('E, dd MMM yyyy HH:mm:ss Z').parse(releaseDateString)
-              : null;
-          releaseDate = releaseDateString != null
               ? DateFormat(
                   'EEE, dd MMM yyyy HH:mm:ss Z',
                 ).parse(releaseDateString)
@@ -108,18 +101,18 @@ class SourceHut extends AppSource {
                 .map((e) => ensureAbsoluteUrl(e, standardUri))
                 .toList(),
           );
-        }
-        apkDetailsList.add(
-          APKDetails(
-            version,
-            apkUrls,
-            AppNames(
-              entry.querySelector('author')?.innerHtml.trim() ?? appName,
-              appName,
+          apkDetailsList.add(
+            APKDetails(
+              version,
+              apkUrls,
+              AppNames(
+                entry.querySelector('author')?.innerHtml.trim() ?? appName,
+                appName,
+              ),
+              releaseDate: releaseDate,
             ),
-            releaseDate: releaseDate,
-          ),
-        );
+          );
+        }
       }
       if (apkDetailsList.isEmpty) {
         throw NoReleasesError();

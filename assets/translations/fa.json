@@ -241,6 +241,7 @@
     "moveNonInstalledAppsToBottom": "برنامه های نصب نشده را به نمای پایین برنامه ها منتقل کنید",
     "hideNonInstalledApps": "پنهان کردن برنامه‌های نصب‌نشده",
     "gitlabPATLabel": "رمز دسترسی شخصی GitLab",
+    "github": "GitHub",
     "about": "درباره",
     "requiresCredentialsInSettings": "{}: این به اعتبارنامه های اضافی نیاز دارد (در تنظیمات)",
     "checkOnStart": "بررسی در شروع",
@@ -429,8 +430,8 @@
     "privacyText": "این برنامه متمرکز بر حریم خصوصی است و داده‌های شخصی جمع‌آوری نمی‌کند.",
     "acceptAndContinue": "پذیرش و ادامه",
     "decline": "رد کردن",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "از Updatium لذت می‌برید؟",
+    "githubStarPromptContent": "Updatium یک پروژه داوطلبانه متن‌باز جامعه‌محور است که در وقت آزاد من توسعه داده شده است. اگر مایل به حمایت از پروژه هستید، لطفاً در نظر داشته باشید که به آن در GitHub ستاره بدهید تا به ما کمک کنید تا به کاربران و مشارکت‌کنندگان بیشتری برسیم. دیگر در این مورد به شما یادآوری نخواهد شد. از قبل متشکریم! :)",
+    "githubStarPromptStar": "ستاره دادن",
+    "githubStarPromptDontShowAgain": "دیگر نشان نده"
 }

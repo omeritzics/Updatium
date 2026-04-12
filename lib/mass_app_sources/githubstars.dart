@@ -3,16 +3,12 @@ import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class GitHubStars implements MassAppUrlSource {
   @override
   late String name = tr('githubStarredRepos');
-
-  @override
   late List<String> requiredArgs = [tr('uname')];
-
   Future<Map<String, List<String>>> getOnePageOfUserStarredUrlsWithDescriptions(
     String username,
     int page,

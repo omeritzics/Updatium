@@ -1,15 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class TelegramApp extends AppSource {
   TelegramApp() {
     hosts = ['telegram.org'];
-    name = 'Telegram ${tr('app')}';
+    name = tr('telegramapp');
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     return 'https://${hosts[0]}';

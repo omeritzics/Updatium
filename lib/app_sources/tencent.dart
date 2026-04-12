@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class Tencent extends AppSource {
@@ -11,7 +10,6 @@ class Tencent extends AppSource {
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -42,13 +40,11 @@ class Tencent extends AppSource {
     String baseHost = Uri.parse(
       standardUrl,
     ).host.split('.').reversed.toList().sublist(0, 2).reversed.join('.');
-
     var res = await sourceRequest(
       'https://a.app.$baseHost/o/simple.jsp?pkgname=$appId',
       additionalSettings,
       followRedirects: false,
     );
-
     if (res.statusCode == 200) {
       dynamic json;
       try {
@@ -77,7 +73,6 @@ class Tencent extends AppSource {
       var apkName =
           Uri.parse(apkUrl).queryParameters['fsname'] ??
           '${appId}_$version.apk';
-
       return APKDetails(version, [
         MapEntry(apkName, apkUrl),
       ], AppNames(author, appName));

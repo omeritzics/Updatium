@@ -1,13 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class SourceForge extends AppSource {
   SourceForge() {
     hosts = ['sourceforge.net'];
+    name = tr('sourceforge');
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     var sourceRegex = getSourceRegex(hosts);
@@ -22,7 +22,6 @@ class SourceForge extends AppSource {
     }
     RegExp standardUrlRegExB = RegExp(
       '^https?://(www\\.)?$sourceRegex/projects/[^/]+',
-      caseSensitive: false,
     );
     match = standardUrlRegExB.firstMatch(url);
     if (match != null && match.group(0) == url) {
@@ -30,7 +29,6 @@ class SourceForge extends AppSource {
     }
     RegExp standardUrlRegExA = RegExp(
       '^https?://(www\\.)?$sourceRegex/projects/[^/]+/files(/.+)?',
-      caseSensitive: false,
     );
     match = standardUrlRegExA.firstMatch(url);
     if (match == null) {
@@ -60,7 +58,7 @@ class SourceForge extends AppSource {
           .map((e) => e.innerHtml)
           .where((element) => element.startsWith(standardUrl))
           .toList();
-      getVersion(String url) {
+      String? getVersion(String url) {
         try {
           var segments = url
               .substring(standardUrl.length)
@@ -69,9 +67,7 @@ class SourceForge extends AppSource {
               .toList()
               .reversed
               .toList()
-              .sublist(1)
-              .reversed
-              .toList();
+              .sublist(1);
           segments = segments.length > 1
               ? segments.reversed.toList().sublist(1).reversed.toList()
               : segments;
@@ -107,11 +103,10 @@ class SourceForge extends AppSource {
       if (apkUrlListAllReleases.isEmpty) {
         throw NoReleasesError();
       }
-      String? version = getVersion(apkUrlListAllReleases[0]);
+      String? version = getVersion(apkUrlListAllReleases.first);
       if (version == null) {
         throw NoVersionError();
       }
-
       var apkUrlList =
           apkUrlListAllReleases // This can be used skipped for fallback support later
               .where((element) => getVersion(element) == version)

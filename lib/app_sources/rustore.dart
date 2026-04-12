@@ -4,17 +4,15 @@ import 'dart:typed_data';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_charset_detector/flutter_charset_detector.dart';
 import 'package:http/http.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class RuStore extends AppSource {
   RuStore() {
     hosts = ['rustore.ru'];
-    name = 'RuStore';
+    name = tr('rustore');
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -65,7 +63,6 @@ class RuStore extends AppSource {
     if (appDetails['appId'] == null) {
       throw NoReleasesError();
     }
-
     String appName = appDetails['appName'] ?? tr('app');
     String author = appDetails['companyName'] ?? name;
     String? dateStr = appDetails['appVerUpdatedAt'];
@@ -79,7 +76,6 @@ class RuStore extends AppSource {
     if (dateStr != null) {
       relDate = DateTime.parse(dateStr);
     }
-
     Response res1 = await sourceRequest(
       'https://backapi.rustore.ru/applicationData/v2/download-link',
       additionalSettings,
@@ -87,15 +83,10 @@ class RuStore extends AppSource {
       postBody: {"appId": appDetails['appId'], "firstInstall": true},
     );
     var downloadDetails = (await decodeJsonBody(res1.bodyBytes))['body'];
-    try {
-      if (res1.statusCode != 200 ||
-          downloadDetails['downloadUrls'][0]['url'] == null) {
-        throw NoAPKError();
-      }
-    } catch (e) {
+    if (res1.statusCode != 200 ||
+        downloadDetails['downloadUrls'][0]['url'] == null) {
       throw NoAPKError();
     }
-
     return APKDetails(
       version,
       getApkUrlsFromUrls([

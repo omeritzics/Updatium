@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -14,7 +13,6 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class GitHub extends AppSource {
   GitHub({hostChanged = false}) {
-    name = 'GitHub';
     hosts = ['github.com'];
     appIdInferIsOptional = true;
     showReleaseDateAsVersionToggle = true;
@@ -59,7 +57,7 @@ class GitHub extends AppSource {
                 throw true;
               }
               if (value != null) {
-                Uri.parse('https://$value/api.github.com');
+                Uri.parse('https://${value}/api.github.com');
               }
             } catch (e) {
               return tr('invalidInput');
@@ -136,12 +134,14 @@ class GitHub extends AppSource {
             MapEntry('date', tr('releaseDate')),
             MapEntry('smartname', tr('smartname')),
             MapEntry('none', tr('none')),
-            MapEntry('smartname-datefallback', 'Smart + Date'),
+            MapEntry(
+              'smartname-datefallback',
+              '${tr('smartname')} x ${tr('releaseDate')}',
+            ),
             MapEntry('name', tr('name')),
           ],
           label: tr('sortMethod'),
           defaultValue: 'date',
-          required: false,
         ),
       ],
       [
@@ -725,7 +725,7 @@ class GitHub extends AppSource {
     }
   }
 
-  String undoGHProxyMod(
+  undoGHProxyMod(
     String reqUrl,
     Map<String, String> sourceConfigSettingValues,
   ) => reqUrl.replaceFirst(

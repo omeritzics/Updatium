@@ -3,11 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:updatium/components/button_helpers.dart';
+
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/components/generated_form_modal.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -16,13 +13,127 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:updatium/security/security_settings_provider.dart';
 
 // Spacing constants
 const height8 = SizedBox(height: 8);
+const height12 = SizedBox(height: 12);
 const height16 = SizedBox(height: 16);
+const height24 = SizedBox(height: 24);
 const height32 = SizedBox(height: 32);
+
+// Custom expandable category widget
+class ExpandableCategory extends StatefulWidget {
+  final String title;
+  final List<Widget> children;
+  final bool initiallyExpanded;
+
+  const ExpandableCategory({
+    super.key,
+    required this.title,
+    required this.children,
+    this.initiallyExpanded = true,
+  });
+
+  @override
+  State<ExpandableCategory> createState() => _ExpandableCategoryState();
+}
+
+class _ExpandableCategoryState extends State<ExpandableCategory>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _expandAnimation;
+  bool _isExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+    _expandAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
+
+    _isExpanded = widget.initiallyExpanded;
+    if (_isExpanded) {
+      _controller.value = 1.0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _toggle() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+      if (_isExpanded) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InkWell(
+          onTap: _toggle,
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+            child: Row(
+              children: [
+                Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                AnimatedRotation(
+                  turns: _isExpanded ? 0.5 : 0,
+                  duration: const Duration(milliseconds: 300),
+                  child: Icon(
+                    Icons.expand_more,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        AnimatedBuilder(
+          animation: _expandAnimation,
+          builder: (context, child) {
+            return ClipRect(
+              child: Align(
+                heightFactor: _expandAnimation.value,
+                alignment: Alignment.topCenter,
+                child: child,
+              ),
+            );
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: widget.children,
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -32,8 +143,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  late SecuritySettingsProvider _securityProvider;
-  bool _securityProviderInitialized = false;
   List<int> updateIntervalNodes = [
     15,
     30,
@@ -103,82 +212,6 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  Future<void> _showAboutDialog(BuildContext context) async {
-    String applicationVersion = '26.2'; // fallback
-    try {
-      final packageInfo = await PackageInfo.fromPlatform();
-      applicationVersion = packageInfo.buildNumber.isNotEmpty 
-          ? '${packageInfo.version}+${packageInfo.buildNumber}'
-          : packageInfo.version;
-    } catch (e) {
-      // Keep fallback version if PackageInfo fails
-    }
-    
-    if (context.mounted) {
-      showAboutDialog(
-        context: context,
-        applicationName: 'Updatium',
-        applicationVersion: applicationVersion,
-        applicationIcon: const Icon(Icons.apps, size: 48),
-        children: [
-          Text(tr('updateYourAndroidAppsDirectlyFromTheAPKSource')),
-          const SizedBox(height: 16),
-          Text('© 2026 Omer I.S. (@omeritzics)'),
-        const SizedBox(height: 16),
-        TextButton(
-          onPressed: () {
-            launchUrlString(
-              'https://github.com/omeritzics/Updatium',
-              mode: LaunchMode.externalApplication,
-            );
-          },
-          child: Text(tr('appSource')),
-        ),
-        TextButton(
-          onPressed: () {
-            launchUrlString(
-              'https://github.com/omeritzics/Updatium/wiki',
-              mode: LaunchMode.externalApplication,
-            );
-          },
-          child: Text(tr('wiki')),
-        ),
-      ],
-      );
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeSecurityProvider();
-  }
-
-  @override
-  void dispose() {
-    // Clean up resources if needed
-    super.dispose();
-  }
-
-  Future<void> _initializeSecurityProvider() async {
-    try {
-      _securityProvider = await SecuritySettingsProvider.create();
-      await _securityProvider.initialize();
-      if (mounted) {
-        setState(() {
-          _securityProviderInitialized = true;
-        });
-      }
-    } catch (e) {
-      // Handle initialization error
-      if (mounted) {
-        setState(() {
-          _securityProviderInitialized = false;
-        });
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
@@ -186,8 +219,6 @@ class _SettingsPageState extends State<SettingsPage> {
     if (settingsProvider.prefs == null) settingsProvider.initializeSettings();
     initUpdateIntervalInterpolator();
     processIntervalSliderValue(settingsProvider.updateIntervalSliderVal);
-
-    // Initialization is handled in initState, not build
 
     var followSystemThemeExplanation = FutureBuilder(
       builder: (ctx, val) {
@@ -345,43 +376,159 @@ class _SettingsPageState extends State<SettingsPage> {
             break;
         }
 
-        return TextField(
-          controller: TextEditingController(text: selectedValue),
-          readOnly: true,
-          decoration: InputDecoration(
-            labelText: tr('appSortBy'),
-            filled: true,
-            suffixIcon: const Icon(Icons.arrow_drop_down),
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-          onTap: () {
-            if (controller.isOpen) {
-              controller.close();
-            } else {
-              controller.open();
-            }
-          },
+          child: Material(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                if (controller.isOpen) {
+                  controller.close();
+                } else {
+                  controller.open();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            tr('appSortBy'),
+                            style: Theme.of(context).textTheme.labelSmall
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            selectedValue,
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    ),
+                    AnimatedRotation(
+                      turns: controller.isOpen ? 0.5 : 0,
+                      duration: const Duration(milliseconds: 200),
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         );
       },
       menuChildren: [
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.authorName,
-          child: Text(tr('authorName')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.person_outline_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('authorName'))),
+              if (settingsProvider.sortColumn == SortColumnSettings.authorName)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.nameAuthor,
-          child: Text(tr('nameAuthor')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.sort_by_alpha_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('nameAuthor'))),
+              if (settingsProvider.sortColumn == SortColumnSettings.nameAuthor)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.added,
-          child: Text(tr('asAdded')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.add_circle_outline_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('asAdded'))),
+              if (settingsProvider.sortColumn == SortColumnSettings.added)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.releaseDate,
-          child: Text(tr('releaseDate')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.calendar_today_outlined,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('releaseDate'))),
+              if (settingsProvider.sortColumn == SortColumnSettings.releaseDate)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
       ],
     );
@@ -393,33 +540,117 @@ class _SettingsPageState extends State<SettingsPage> {
             ? tr('ascending')
             : tr('descending');
 
-        return TextField(
-          controller: TextEditingController(text: selectedValue),
-          readOnly: true,
-          decoration: InputDecoration(
-            labelText: tr('appSortOrder'),
-            filled: true,
-            suffixIcon: const Icon(Icons.arrow_drop_down),
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-          onTap: () {
-            if (controller.isOpen) {
-              controller.close();
-            } else {
-              controller.open();
-            }
-          },
+          child: Material(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                if (controller.isOpen) {
+                  controller.close();
+                } else {
+                  controller.open();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            tr('appSortOrder'),
+                            style: Theme.of(context).textTheme.labelSmall
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            selectedValue,
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    ),
+                    AnimatedRotation(
+                      turns: controller.isOpen ? 0.5 : 0,
+                      duration: const Duration(milliseconds: 200),
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         );
       },
       menuChildren: [
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortOrder = SortOrderSettings.ascending,
-          child: Text(tr('ascending')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.arrow_upward_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('ascending'))),
+              if (settingsProvider.sortOrder == SortOrderSettings.ascending)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortOrder = SortOrderSettings.descending,
-          child: Text(tr('descending')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.arrow_downward_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('descending'))),
+              if (settingsProvider.sortOrder == SortOrderSettings.descending)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
       ],
     );
@@ -435,21 +666,73 @@ class _SettingsPageState extends State<SettingsPage> {
                   )
                   .value;
 
-        return TextField(
-          controller: TextEditingController(text: selectedValue),
-          readOnly: true,
-          decoration: InputDecoration(
-            labelText: tr('language'),
-            filled: true,
-            suffixIcon: const Icon(Icons.arrow_drop_down),
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-          onTap: () {
-            if (controller.isOpen) {
-              controller.close();
-            } else {
-              controller.open();
-            }
-          },
+          child: Material(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                if (controller.isOpen) {
+                  controller.close();
+                } else {
+                  controller.open();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            tr('language'),
+                            style: Theme.of(context).textTheme.labelSmall
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            selectedValue,
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    ),
+                    AnimatedRotation(
+                      turns: controller.isOpen ? 0.5 : 0,
+                      duration: const Duration(milliseconds: 200),
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         );
       },
       menuChildren: [
@@ -458,7 +741,23 @@ class _SettingsPageState extends State<SettingsPage> {
             settingsProvider.forcedLocale = null;
             settingsProvider.resetLocaleSafe(context);
           },
-          child: Text(tr('followSystem')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.settings_system_daydream_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('followSystem'))),
+              if (settingsProvider.forcedLocale == null)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
         ...supportedLocales.map(
           (e) => MenuItemButton(
@@ -466,14 +765,29 @@ class _SettingsPageState extends State<SettingsPage> {
               settingsProvider.forcedLocale = e.key;
               context.setLocale(e.key);
             },
-            child: Text(e.value),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.language_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+                const SizedBox(width: 12),
+                Expanded(child: Text(e.value)),
+                if (settingsProvider.forcedLocale == e.key)
+                  Icon(
+                    Icons.check_rounded,
+                    size: 20,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+              ],
+            ),
           ),
         ),
       ],
     );
 
     var intervalSlider = Slider(
-      year2023: false,
       value: settingsProvider.updateIntervalSliderVal,
       max: updateIntervalNodes.length.toDouble(),
       divisions: updateIntervalNodes.length * 20,
@@ -530,28 +844,12 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async => _showAboutDialog(context),
-        child: const Icon(Icons.info),
-      ),
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
+          SliverAppBar.large(
             pinned: true,
             automaticallyImplyLeading: false,
-            expandedHeight: MediaQuery.of(context).size.height * 0.15,
-            flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.symmetric(
-                horizontal: 24,
-                vertical: 20,
-              ),
-              title: Text(
-                tr('settings'),
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyMedium!.color,
-                ),
-              ),
-            ),
+            title: Text(tr('settings')),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -561,731 +859,825 @@ class _SettingsPageState extends State<SettingsPage> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          tr('updates'),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        height16,
-                        //intervalDropdown,
-                        height16,
-                        if (showIntervalLabel)
-                          SizedBox(
-                            child: Text(
-                              "${tr('bgUpdateCheckInterval')}: $updateIntervalLabel",
+                        ExpandableCategory(
+                          title: tr('updates'),
+                          initiallyExpanded: true,
+                          children: [
+                            height16,
+                            //intervalDropdown,
+                            height16,
+                            if (showIntervalLabel)
+                              SizedBox(
+                                child: Text(
+                                  "${tr('bgUpdateCheckInterval')}: $updateIntervalLabel",
+                                ),
+                              )
+                            else
+                              const SizedBox(height: 16),
+                            intervalSlider,
+                            FutureBuilder(
+                              builder: (ctx, val) {
+                                return (settingsProvider.updateInterval > 0) &&
+                                        (((val.data?.version.sdkInt ?? 0) >=
+                                                30) ||
+                                            settingsProvider.useShizuku)
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                  tr(
+                                                    'foregroundServiceExplanation',
+                                                  ),
+                                                ),
+                                              ),
+                                              Switch(
+                                                value: settingsProvider
+                                                    .useFGService,
+                                                onChanged: (value) {
+                                                  settingsProvider
+                                                          .useFGService =
+                                                      value;
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                  tr('enableBackgroundUpdates'),
+                                                ),
+                                              ),
+                                              Switch(
+                                                value: settingsProvider
+                                                    .enableBackgroundUpdates,
+                                                onChanged: (value) {
+                                                  settingsProvider
+                                                          .enableBackgroundUpdates =
+                                                      value;
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                          height8,
+                                          Text(
+                                            tr(
+                                              'backgroundUpdateReqsExplanation',
+                                            ),
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.labelSmall,
+                                          ),
+                                          Text(
+                                            tr(
+                                              'backgroundUpdateLimitsExplanation',
+                                            ),
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.labelSmall,
+                                          ),
+                                          height8,
+                                          if (settingsProvider
+                                              .enableBackgroundUpdates)
+                                            Column(
+                                              children: [
+                                                height16,
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                        tr(
+                                                          'bgUpdatesOnWiFiOnly',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Switch(
+                                                      value: settingsProvider
+                                                          .bgUpdatesOnWiFiOnly,
+                                                      onChanged: (value) {
+                                                        settingsProvider
+                                                                .bgUpdatesOnWiFiOnly =
+                                                            value;
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                                height16,
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                        tr(
+                                                          'bgUpdatesWhileChargingOnly',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Switch(
+                                                      value: settingsProvider
+                                                          .bgUpdatesWhileChargingOnly,
+                                                      onChanged: (value) {
+                                                        settingsProvider
+                                                                .bgUpdatesWhileChargingOnly =
+                                                            value;
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                        ],
+                                      )
+                                    : const SizedBox.shrink();
+                              },
+                              future: DeviceInfoPlugin().androidInfo,
                             ),
-                          )
-                        else
-                          const SizedBox(height: 16),
-                        intervalSlider,
-                        FutureBuilder(
-                          builder: (ctx, val) {
-                            return (settingsProvider.updateInterval > 0) &&
-                                    (((val.data?.version.sdkInt ?? 0) >= 30) ||
-                                        settingsProvider.useShizuku)
-                                ? Column(
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              tr(
-                                                'foregroundServiceExplanation',
-                                              ),
-                                            ),
-                                          ),
-                                          Switch(
-                                            value:
-                                                settingsProvider.useFGService,
-                                            onChanged: (value) {
-                                              settingsProvider.useFGService =
-                                                  value;
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              tr('enableBackgroundUpdates'),
-                                            ),
-                                          ),
-                                          Switch(
-                                            value: settingsProvider
-                                                .enableBackgroundUpdates,
-                                            onChanged: (value) {
-                                              settingsProvider
-                                                      .enableBackgroundUpdates =
-                                                  value;
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                      height8,
+                                      Text(tr('safeMode')),
                                       Text(
-                                        tr('backgroundUpdateReqsExplanation'),
+                                        tr('safeModeDescription'),
                                         style: Theme.of(
                                           context,
                                         ).textTheme.labelSmall,
                                       ),
+                                    ],
+                                  ),
+                                ),
+                                Switch(
+                                  value: settingsProvider.safeMode,
+                                  onChanged: (value) {
+                                    settingsProvider.safeMode = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('checkOnStart'))),
+                                Switch(
+                                  value: settingsProvider.checkOnStart,
+                                  onChanged: (value) {
+                                    settingsProvider.checkOnStart = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('checkUpdateOnDetailPage')),
+                                ),
+                                Switch(
+                                  value:
+                                      settingsProvider.checkUpdateOnDetailPage,
+                                  onChanged: (value) {
+                                    settingsProvider.checkUpdateOnDetailPage =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    tr('onlyCheckInstalledOrTrackOnlyApps'),
+                                  ),
+                                ),
+                                Switch(
+                                  value: settingsProvider
+                                      .onlyCheckInstalledOrTrackOnlyApps,
+                                  onChanged: (value) {
+                                    settingsProvider
+                                            .onlyCheckInstalledOrTrackOnlyApps =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('removeOnExternalUninstall')),
+                                ),
+                                Switch(
+                                  value: settingsProvider
+                                      .removeOnExternalUninstall,
+                                  onChanged: (value) {
+                                    settingsProvider.removeOnExternalUninstall =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('parallelDownloads'))),
+                                Switch(
+                                  value: settingsProvider.parallelDownloads,
+                                  onChanged: (value) {
+                                    settingsProvider.parallelDownloads = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
                                       Text(
-                                        tr('backgroundUpdateLimitsExplanation'),
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.labelSmall,
+                                        tr(
+                                          'beforeNewInstallsShareToAppVerifier',
+                                        ),
                                       ),
-                                      height8,
-                                      if (settingsProvider
-                                          .enableBackgroundUpdates)
-                                        Column(
-                                          children: [
-                                            height16,
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Flexible(
-                                                  child: Text(
-                                                    tr('bgUpdatesOnWiFiOnly'),
+                                      GestureDetector(
+                                        onTap: () {
+                                          launchUrlString(
+                                            'https://github.com/soupslurpr/AppVerifier',
+                                            mode:
+                                                LaunchMode.externalApplication,
+                                          );
+                                        },
+                                        child: Text(
+                                          tr('about'),
+                                          style: const TextStyle(
+                                            decoration:
+                                                TextDecoration.underline,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Switch(
+                                  value: settingsProvider
+                                      .beforeNewInstallsShareToAppVerifier,
+                                  onChanged: (value) {
+                                    settingsProvider
+                                            .beforeNewInstallsShareToAppVerifier =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('useShizuku'))),
+                                Switch(
+                                  value: settingsProvider.useShizuku,
+                                  onChanged: (useShizuku) {
+                                    if (useShizuku) {
+                                      ShizukuApkInstaller()
+                                          .checkPermission()
+                                          .then((resCode) {
+                                            settingsProvider.useShizuku =
+                                                resCode?.startsWith(
+                                                  'granted',
+                                                ) ??
+                                                false;
+                                            switch (resCode) {
+                                              case 'services_not_found':
+                                                showError(
+                                                  UpdatiumError(
+                                                    tr('shizukuBinderNotFound'),
                                                   ),
-                                                ),
-                                                Switch(
-                                                  value: settingsProvider
-                                                      .bgUpdatesOnWiFiOnly,
-                                                  onChanged: (value) {
-                                                    settingsProvider
-                                                            .bgUpdatesOnWiFiOnly =
-                                                        value;
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                            height16,
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Flexible(
-                                                  child: Text(
+                                                  context,
+                                                );
+                                              case 'old_shizuku':
+                                                showError(
+                                                  UpdatiumError(
+                                                    tr('shizukuOld'),
+                                                  ),
+                                                  context,
+                                                );
+                                              case 'old_android_with_adb':
+                                                showError(
+                                                  UpdatiumError(
                                                     tr(
-                                                      'bgUpdatesWhileChargingOnly',
+                                                      'shizukuOldAndroidWithADB',
                                                     ),
                                                   ),
-                                                ),
-                                                Switch(
-                                                  value: settingsProvider
-                                                      .bgUpdatesWhileChargingOnly,
-                                                  onChanged: (value) {
-                                                    settingsProvider
-                                                            .bgUpdatesWhileChargingOnly =
-                                                        value;
-                                                  },
-                                                ),
-                                              ],
+                                                  context,
+                                                );
+                                              case 'denied':
+                                                showError(
+                                                  UpdatiumError(
+                                                    tr('cancelled'),
+                                                  ),
+                                                  context,
+                                                );
+                                            }
+                                          });
+                                    } else {
+                                      settingsProvider.useShizuku = false;
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    tr('shizukuPretendToBeGooglePlay'),
+                                    style: TextStyle(
+                                      color: settingsProvider.useShizuku
+                                          ? null
+                                          : Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withValues(alpha: 0.6),
+                                    ),
+                                  ),
+                                ),
+                                Switch(
+                                  value: settingsProvider
+                                      .shizukuPretendToBeGooglePlay,
+                                  onChanged: settingsProvider.useShizuku
+                                      ? (value) {
+                                          settingsProvider
+                                                  .shizukuPretendToBeGooglePlay =
+                                              value;
+                                        }
+                                      : null,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        height24,
+                        ExpandableCategory(
+                          title: tr('sourceSpecific'),
+                          initiallyExpanded: false,
+                          children: [...sourceSpecificFields],
+                        ),
+                        height24,
+                        ExpandableCategory(
+                          title: tr('appearance'),
+                          initiallyExpanded: false,
+                          children: [
+                            height16,
+                            MenuAnchor(
+                              builder: (context, controller, child) {
+                                String selectedValue;
+                                switch (settingsProvider.theme) {
+                                  case ThemeSettings.system:
+                                    selectedValue = tr('followSystem');
+                                    break;
+                                  case ThemeSettings.light:
+                                    selectedValue = tr('light');
+                                    break;
+                                  case ThemeSettings.dark:
+                                    selectedValue = tr('dark');
+                                    break;
+                                }
+
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.shadow.withOpacity(0.1),
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Material(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.surface,
+                                    borderRadius: BorderRadius.circular(16),
+                                    elevation: 0,
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(16),
+                                      onTap: () {
+                                        if (controller.isOpen) {
+                                          controller.close();
+                                        } else {
+                                          controller.open();
+                                        }
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 16,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(
+                                                    tr('theme'),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelSmall
+                                                        ?.copyWith(
+                                                          color: Theme.of(
+                                                            context,
+                                                          ).colorScheme.primary,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                  ),
+                                                  const SizedBox(height: 4),
+                                                  Text(
+                                                    selectedValue,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge
+                                                        ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            AnimatedRotation(
+                                              turns: controller.isOpen
+                                                  ? 0.5
+                                                  : 0,
+                                              duration: const Duration(
+                                                milliseconds: 200,
+                                              ),
+                                              child: Icon(
+                                                Icons
+                                                    .keyboard_arrow_down_rounded,
+                                                color: Theme.of(
+                                                  context,
+                                                ).colorScheme.onSurfaceVariant,
+                                                size: 24,
+                                              ),
                                             ),
                                           ],
                                         ),
-                                    ],
-                                  )
-                                : const SizedBox.shrink();
-                          },
-                          future: DeviceInfoPlugin().androidInfo,
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(tr('safeMode')),
-                                  Text(
-                                    tr('safeModeDescription'),
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.labelSmall,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Switch(
-                              value: settingsProvider.safeMode,
-                              onChanged: (value) {
-                                settingsProvider.safeMode = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('checkOnStart'))),
-                            Switch(
-                              value: settingsProvider.checkOnStart,
-                              onChanged: (value) {
-                                settingsProvider.checkOnStart = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(tr('checkUpdateOnDetailPage')),
-                            ),
-                            Switch(
-                              value: settingsProvider.checkUpdateOnDetailPage,
-                              onChanged: (value) {
-                                settingsProvider.checkUpdateOnDetailPage =
-                                    value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                tr('onlyCheckInstalledOrTrackOnlyApps'),
-                              ),
-                            ),
-                            Switch(
-                              value: settingsProvider
-                                  .onlyCheckInstalledOrTrackOnlyApps,
-                              onChanged: (value) {
-                                settingsProvider
-                                        .onlyCheckInstalledOrTrackOnlyApps =
-                                    value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(tr('removeOnExternalUninstall')),
-                            ),
-                            Switch(
-                              value: settingsProvider.removeOnExternalUninstall,
-                              onChanged: (value) {
-                                settingsProvider.removeOnExternalUninstall =
-                                    value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('parallelDownloads'))),
-                            Switch(
-                              value: settingsProvider.parallelDownloads,
-                              onChanged: (value) {
-                                settingsProvider.parallelDownloads = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    tr('beforeNewInstallsShareToAppVerifier'),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      launchUrlString(
-                                        'https://github.com/soupslurpr/AppVerifier',
-                                        mode: LaunchMode.externalApplication,
-                                      );
-                                    },
-                                    child: Text(
-                                      tr('about'),
-                                      style: const TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        fontSize: 12,
                                       ),
                                     ),
                                   ),
+                                );
+                              },
+                              menuChildren: [
+                                MenuItemButton(
+                                  onPressed: () => settingsProvider.theme =
+                                      ThemeSettings.system,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.settings_system_daydream_rounded,
+                                        size: 20,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onSurfaceVariant,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(child: Text(tr('followSystem'))),
+                                      if (settingsProvider.theme ==
+                                          ThemeSettings.system)
+                                        Icon(
+                                          Icons.check_rounded,
+                                          size: 20,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                MenuItemButton(
+                                  onPressed: () => settingsProvider.theme =
+                                      ThemeSettings.light,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.light_mode_rounded,
+                                        size: 20,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onSurfaceVariant,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(child: Text(tr('light'))),
+                                      if (settingsProvider.theme ==
+                                          ThemeSettings.light)
+                                        Icon(
+                                          Icons.check_rounded,
+                                          size: 20,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                MenuItemButton(
+                                  onPressed: () => settingsProvider.theme =
+                                      ThemeSettings.dark,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.dark_mode_rounded,
+                                        size: 20,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onSurfaceVariant,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(child: Text(tr('dark'))),
+                                      if (settingsProvider.theme ==
+                                          ThemeSettings.dark)
+                                        Icon(
+                                          Icons.check_rounded,
+                                          size: 20,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            height8,
+                            if (settingsProvider.theme == ThemeSettings.system)
+                              followSystemThemeExplanation,
+                            height16,
+                            if (settingsProvider.theme != ThemeSettings.light)
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(child: Text(tr('useBlackTheme'))),
+                                  Switch(
+                                    value: settingsProvider.useBlackTheme,
+                                    onChanged: (value) {
+                                      settingsProvider.useBlackTheme = value;
+                                    },
+                                  ),
                                 ],
                               ),
+                            height8,
+                            useMaterialThemeSwitch,
+                            height16,
+                            if (!settingsProvider.useMaterialYou) colorPicker,
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(child: sortDropdown),
+                                const SizedBox(width: 16),
+                                Expanded(child: orderDropdown),
+                              ],
                             ),
-                            Switch(
-                              value: settingsProvider
-                                  .beforeNewInstallsShareToAppVerifier,
-                              onChanged: (value) {
-                                settingsProvider
-                                        .beforeNewInstallsShareToAppVerifier =
-                                    value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('useShizuku'))),
-                            Switch(
-                              value: settingsProvider.useShizuku,
-                              onChanged: (useShizuku) {
-                                if (useShizuku) {
-                                  ShizukuApkInstaller().checkPermission().then((
-                                    resCode,
-                                  ) {
-                                    settingsProvider.useShizuku =
-                                        resCode?.startsWith('granted') ?? false;
-                                    switch (resCode) {
-                                      case 'services_not_found':
-                                        showError(
-                                          UpdatiumError(
-                                            tr('shizukuBinderNotFound'),
-                                          ),
-                                          context,
-                                        );
-                                      case 'old_shizuku':
-                                        showError(
-                                          UpdatiumError(tr('shizukuOld')),
-                                          context,
-                                        );
-                                      case 'old_android_with_adb':
-                                        showError(
-                                          UpdatiumError(
-                                            tr('shizukuOldAndroidWithADB'),
-                                          ),
-                                          context,
-                                        );
-                                      case 'denied':
-                                        showError(
-                                          UpdatiumError(tr('cancelled')),
-                                          context,
-                                        );
-                                    }
-                                  });
-                                } else {
-                                  settingsProvider.useShizuku = false;
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                tr('shizukuPretendToBeGooglePlay'),
-                                style: TextStyle(
-                                  color: settingsProvider.useShizuku
-                                      ? null
-                                      : Theme.of(context).colorScheme.onSurface
-                                            .withValues(alpha: 0.6),
-                                ),
-                              ),
-                            ),
-                            Switch(
-                              value:
-                                  settingsProvider.shizukuPretendToBeGooglePlay,
-                              onChanged: settingsProvider.useShizuku
-                                  ? (value) {
-                                      settingsProvider
-                                              .shizukuPretendToBeGooglePlay =
-                                          value;
-                                    }
-                                  : null,
-                            ),
-                          ],
-                        ),
-                        height32,
-                        Text(
-                          tr('sourceSpecific'),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        ...sourceSpecificFields,
-                        height32,
-                        Text(
-                          tr('yaraMalwareScanner'),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        height16,
-                        Text(
-                          tr('yaraScannerDescription'),
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        height16,
-                        SwitchListTile(
-                          title: Text(tr('enableAutoScan')),
-                          subtitle: Text(tr('enableAutoScanDescription')),
-                          value: _securityProviderInitialized ? _securityProvider.getAutoScanEnabled() : false,
-onChanged: _securityProviderInitialized ? (value) async {
-                            await _securityProvider.setAutoScanEnabled(value);
-                            if (mounted) {
-                              setState(() {});
-                            }
-                          } : null,
-                        ),
-                        SwitchListTile(
-                          title: Text(tr('enableAutoUpdate')),
-                          subtitle: Text(tr('enableAutoUpdateDescription')),
-                          value: _securityProviderInitialized ? _securityProvider.getAutoUpdateEnabled() : false,
-                          onChanged: _securityProviderInitialized ? (value) async {
-                            await _securityProvider.setAutoUpdateEnabled(value);
-                            if (mounted) {
-                              setState(() {});
-                            }
-                          } : null,
-                        ),
-                        ListTile(
-                          title: Text(tr('updateInterval')),
-                          subtitle: Text(tr('updateIntervalDescription')),
-                          trailing: DropdownButton<int>(
-                            value: _securityProviderInitialized ? _securityProvider.getUpdateInterval() : 1,
-                            items: [1, 6, 12, 24, 48, 72].map((hours) {
-                              return DropdownMenuItem<int>(
-                                value: hours,
-                                child: Text('$hours ${hours == 1 ? tr('hour') : tr('hours')}'),
-                              );
-                            }).toList(),
-                            onChanged: _securityProviderInitialized ? (value) async {
-                              if (value != null) {
-                                await _securityProvider.setUpdateInterval(value);
-                                if (mounted) {
-                                  setState(() {});
-                                }
-                              }
-                            } : null,
-                        ),
-                        height16,
-                        // Update button with error handling
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton.icon(
-                            onPressed: _securityProviderInitialized ? () async {
-                              try {
-                                await _securityProvider.updateRules();
-                                if (mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(tr('rulesUpdatedSuccessfully'))),
-                                  );
-                                }
-                              } catch (e) {
-                                if (mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(tr('rulesUpdateFailed')),
-                                      backgroundColor: Theme.of(context).colorScheme.error,
-                                    ),
-                                  );
-                                }
-                              }
-                            } : null,
-                            icon: const Icon(Icons.download),
-                            label: Text(tr('updateNow')),
-                          ),
-                        ),
-                        height32,
-                        Text(
-                          tr('appearance'),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        height16,
-                        MenuAnchor(
-                          builder: (context, controller, child) {
-                            String selectedValue;
-                            switch (settingsProvider.theme) {
-                              case ThemeSettings.system:
-                                selectedValue = tr('followSystem');
-                                break;
-                              case ThemeSettings.light:
-                                selectedValue = tr('light');
-                                break;
-                              case ThemeSettings.dark:
-                                selectedValue = tr('dark');
-                                break;
-                            }
-
-                            return TextField(
-                              controller: TextEditingController(
-                                text: selectedValue,
-                              ),
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                labelText: tr('theme'),
-                                filled: true,
-                                suffixIcon: const Icon(Icons.arrow_drop_down),
-                              ),
-                              onTap: () {
-                                if (controller.isOpen) {
-                                  controller.close();
-                                } else {
-                                  controller.open();
-                                }
-                              },
-                            );
-                          },
-                          menuChildren: [
-                            MenuItemButton(
-                              onPressed: () =>
-                                  settingsProvider.theme = ThemeSettings.system,
-                              child: Text(tr('followSystem')),
-                            ),
-                            MenuItemButton(
-                              onPressed: () =>
-                                  settingsProvider.theme = ThemeSettings.light,
-                              child: Text(tr('light')),
-                            ),
-                            MenuItemButton(
-                              onPressed: () =>
-                                  settingsProvider.theme = ThemeSettings.dark,
-                              child: Text(tr('dark')),
-                            ),
-                          ],
-                        ),
-                        height8,
-                        if (settingsProvider.theme == ThemeSettings.system)
-                          followSystemThemeExplanation,
-                        height16,
-                        if (settingsProvider.theme != ThemeSettings.light)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(child: Text(tr('useBlackTheme'))),
-                              Switch(
-                                value: settingsProvider.useBlackTheme,
-                                onChanged: (value) {
-                                  settingsProvider.useBlackTheme = value;
-                                },
-                              ),
-                            ],
-                          ),
-                        height8,
-                        useMaterialThemeSwitch,
-                        height16,
-                        if (!settingsProvider.useMaterialYou) colorPicker,
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(child: sortDropdown),
-                            const SizedBox(width: 16),
-                            Expanded(child: orderDropdown),
-                          ],
-                        ),
-                        height16,
-                        localeDropdown,
-                        FutureBuilder(
-                          builder: (ctx, val) {
-                            return (val.data?.version.sdkInt ?? 0) >= 36
-                                ? Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      height16,
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                            height16,
+                            localeDropdown,
+                            FutureBuilder(
+                              builder: (ctx, val) {
+                                return (val.data?.version.sdkInt ?? 0) >= 36
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Flexible(
-                                            child: Text(tr('useSystemFont')),
-                                          ),
-                                          Switch(
-                                            value:
-                                                settingsProvider.useSystemFont,
-                                            onChanged: (useSystemFont) {
-                                              if (useSystemFont) {
-                                                NativeFeatures.loadSystemFont()
-                                                    .then((val) {
-                                                      settingsProvider
-                                                              .useSystemFont =
-                                                          true;
-                                                    });
-                                              } else {
-                                                settingsProvider.useSystemFont =
-                                                    false;
-                                              }
-                                            },
+                                          height16,
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                  tr('useSystemFont'),
+                                                ),
+                                              ),
+                                              Switch(
+                                                value: settingsProvider
+                                                    .useSystemFont,
+                                                onChanged: (useSystemFont) {
+                                                  if (useSystemFont) {
+                                                    NativeFeatures.loadSystemFont()
+                                                        .then((val) {
+                                                          settingsProvider
+                                                                  .useSystemFont =
+                                                              true;
+                                                        });
+                                                  } else {
+                                                    settingsProvider
+                                                            .useSystemFont =
+                                                        false;
+                                                  }
+                                                },
+                                              ),
+                                            ],
                                           ),
                                         ],
-                                      ),
-                                    ],
-                                  )
-                                : const SizedBox.shrink();
-                          },
-                          future: DeviceInfoPlugin().androidInfo,
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('pinUpdates'))),
-                            Switch(
-                              value: settingsProvider.pinUpdates,
-                              onChanged: (value) {
-                                settingsProvider.pinUpdates = value;
+                                      )
+                                    : const SizedBox.shrink();
                               },
+                              future: DeviceInfoPlugin().androidInfo,
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('pinUpdates'))),
+                                Switch(
+                                  value: settingsProvider.pinUpdates,
+                                  onChanged: (value) {
+                                    settingsProvider.pinUpdates = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    tr('moveNonInstalledAppsToBottom'),
+                                  ),
+                                ),
+                                Switch(
+                                  value: settingsProvider.buryNonInstalled,
+                                  onChanged: (value) {
+                                    settingsProvider.buryNonInstalled = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('hideNonInstalledApps')),
+                                ),
+                                Switch(
+                                  value: settingsProvider.hideNonInstalled,
+                                  onChanged: (value) {
+                                    settingsProvider.hideNonInstalled = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(child: Text(tr('groupByCategory'))),
+                                Switch(
+                                  value: settingsProvider.groupByCategory,
+                                  onChanged: (value) {
+                                    settingsProvider.groupByCategory = value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('dontShowTrackOnlyWarnings')),
+                                ),
+                                Switch(
+                                  value: settingsProvider.hideTrackOnlyWarning,
+                                  onChanged: (value) {
+                                    settingsProvider.hideTrackOnlyWarning =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('dontShowAPKOriginWarnings')),
+                                ),
+                                Switch(
+                                  value: settingsProvider.hideAPKOriginWarning,
+                                  onChanged: (value) {
+                                    settingsProvider.hideAPKOriginWarning =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('disablePageTransitions')),
+                                ),
+                                Switch(
+                                  value:
+                                      settingsProvider.disablePageTransitions,
+                                  onChanged: (value) {
+                                    settingsProvider.disablePageTransitions =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('reversePageTransitions')),
+                                ),
+                                Switch(
+                                  value:
+                                      settingsProvider.reversePageTransitions,
+                                  onChanged:
+                                      settingsProvider.disablePageTransitions
+                                      ? null
+                                      : (value) {
+                                          settingsProvider
+                                                  .reversePageTransitions =
+                                              value;
+                                        },
+                                ),
+                              ],
+                            ),
+                            height16,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(tr('highlightTouchTargets')),
+                                ),
+                                Switch(
+                                  value: settingsProvider.highlightTouchTargets,
+                                  onChanged: (value) {
+                                    settingsProvider.highlightTouchTargets =
+                                        value;
+                                  },
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        height24,
+                        ExpandableCategory(
+                          title: tr('categories'),
+                          initiallyExpanded: false,
                           children: [
-                            Flexible(
-                              child: Text(tr('moveNonInstalledAppsToBottom')),
-                            ),
-                            Switch(
-                              value: settingsProvider.buryNonInstalled,
-                              onChanged: (value) {
-                                settingsProvider.buryNonInstalled = value;
-                              },
+                            height16,
+                            const CategoryEditorSelector(
+                              showLabelWhenNotEmpty: false,
                             ),
                           ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('hideNonInstalledApps'))),
-                            Switch(
-                              value: settingsProvider.hideNonInstalled,
-                              onChanged: (value) {
-                                settingsProvider.hideNonInstalled = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('groupByCategory'))),
-                            Switch(
-                              value: settingsProvider.groupByCategory,
-                              onChanged: (value) {
-                                settingsProvider.groupByCategory = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(tr('dontShowTrackOnlyWarnings')),
-                            ),
-                            Switch(
-                              value: settingsProvider.hideTrackOnlyWarning,
-                              onChanged: (value) {
-                                settingsProvider.hideTrackOnlyWarning = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(tr('dontShowAPKOriginWarnings')),
-                            ),
-                            Switch(
-                              value: settingsProvider.hideAPKOriginWarning,
-                              onChanged: (value) {
-                                settingsProvider.hideAPKOriginWarning = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('disablePageTransitions'))),
-                            Switch(
-                              value: settingsProvider.disablePageTransitions,
-                              onChanged: (value) {
-                                settingsProvider.disablePageTransitions = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('reversePageTransitions'))),
-                            Switch(
-                              value: settingsProvider.reversePageTransitions,
-                              onChanged: settingsProvider.disablePageTransitions
-                                  ? null
-                                  : (value) {
-                                      settingsProvider.reversePageTransitions =
-                                          value;
-                                    },
-                            ),
-                          ],
-                        ),
-                        height16,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(child: Text(tr('highlightTouchTargets'))),
-                            Switch(
-                              value: settingsProvider.highlightTouchTargets,
-                              onChanged: (value) {
-                                settingsProvider.highlightTouchTargets = value;
-                              },
-                            ),
-                          ],
-                        ),
-                        height32,
-                        Text(
-                          tr('categories'),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        height16,
-                        const CategoryEditorSelector(
-                          showLabelWhenNotEmpty: false,
                         ),
                       ],
                     ),
@@ -1293,80 +1685,22 @@ onChanged: _securityProviderInitialized ? (value) async {
           ),
         ],
       ),
-      persistentFooterButtons: [
-        Row(
-          children: [
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Semantics(
-                    button: true,
-                    label: tr('appSource'),
-                    hint: tr('appSourceHint'),
-                    child: IconButton(
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () {
-                        launchUrlString(
-                          settingsProvider.sourceUrl,
-                          mode: LaunchMode.externalApplication,
-                        );
-                      },
-                      tooltip: tr('appSource'),
-                      icon: const Icon(Icons.code),
-                    ),
-                  ),
-                  Semantics(
-                    button: true,
-                    label: tr('wiki'),
-                    hint: tr('wikiHint'),
-                    child: IconButton(
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () {
-                        launchUrlString(
-                          'https://github.com/omeritzics/Updatium/wiki',
-                          mode: LaunchMode.externalApplication,
-                        );
-                      },
-                      tooltip: tr('wiki'),
-                      icon: context.locale.languageCode == 'he'
-                          ? Transform(
-                              transform: Matrix4.identity(),
-                              child: const Icon(Icons.help),
-                            )
-                          : const Icon(Icons.help),
-                    ),
-                  ),
-                  Semantics(
-                    button: true,
-                    label: tr('appLogs'),
-                    hint: tr('appLogsHint'),
-                    child: IconButton(
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () {
-                        context.read<LogsProvider>().get().then((logs) {
-                          if (logs.isEmpty) {
-                            showMessage(UpdatiumError(tr('noLogs')), context);
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext ctx) {
-                                return const LogsDialog();
-                              },
-                            );
-                          }
-                        });
-                      },
-                      tooltip: tr('appLogs'),
-                      icon: const Icon(Icons.bug_report),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext ctx) {
+              return const AboutDialog();
+            },
+          );
+        },
+        icon: const Icon(Icons.info_outline_rounded),
+        label: Text(tr('about')),
+        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
+        elevation: 6,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      ),
     );
   }
 }
@@ -1408,23 +1742,79 @@ class _LogsDialogState extends State<LogsDialog> {
         children: [
           MenuAnchor(
             builder: (context, controller, child) {
-              return TextField(
-                controller: TextEditingController(
-                  text: plural('day', selectedDays),
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.shadow.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText: tr('filterDays'),
-                  filled: true,
-                  suffixIcon: const Icon(Icons.arrow_drop_down),
+                child: Material(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(16),
+                  elevation: 0,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () {
+                      if (controller.isOpen) {
+                        controller.close();
+                      } else {
+                        controller.open();
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  tr('filterDays'),
+                                  style: Theme.of(context).textTheme.labelSmall
+                                      ?.copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  plural('day', selectedDays),
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                      ?.copyWith(fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                          ),
+                          AnimatedRotation(
+                            turns: controller.isOpen ? 0.5 : 0,
+                            duration: const Duration(milliseconds: 200),
+                            child: Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurfaceVariant,
+                              size: 24,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                onTap: () {
-                  if (controller.isOpen) {
-                    controller.close();
-                  } else {
-                    controller.open();
-                  }
-                },
               );
             },
             menuChildren: days.map((day) {
@@ -1435,7 +1825,23 @@ class _LogsDialogState extends State<LogsDialog> {
                   });
                   filterLogs(day);
                 },
-                child: Text(plural('day', day)),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.date_range_rounded,
+                      size: 20,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(child: Text(plural('day', day))),
+                    if (selectedDays == day)
+                      Icon(
+                        Icons.check_rounded,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                  ],
+                ),
               );
             }).toList(),
           ),
@@ -1444,21 +1850,29 @@ class _LogsDialogState extends State<LogsDialog> {
         ],
       ),
       actions: [
-        AppTextButton(
+        TextButton(
           onPressed: () async {
             var cont =
-                (await showDialog<Map<String, dynamic>?>(
+                (await showDialog<bool>(
                   context: context,
                   builder: (BuildContext ctx) {
-                    return GeneratedFormModal(
-                      title: tr('appLogs'),
-                      items: const [],
-                      initValid: true,
-                      message: tr('removeFromUpdatium'),
+                    return AlertDialog(
+                      title: Text(tr('appLogs')),
+                      content: Text(tr('removeFromUpdatium')),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(false),
+                          child: Text(tr('cancel')),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(true),
+                          child: Text(tr('ok')),
+                        ),
+                      ],
                     );
                   },
-                )) !=
-                null;
+                )) ==
+                true;
             if (cont) {
               logsProvider.clear();
               Navigator.of(context).pop();
@@ -1466,15 +1880,17 @@ class _LogsDialogState extends State<LogsDialog> {
           },
           child: Text(tr('remove')),
         ),
-        AppTextButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(tr('close')),
         ),
-        AppTextButton(
+        TextButton(
           onPressed: () {
-            Share.share(logString ?? '', subject: tr('appLogs'));
+            SharePlus.instance.share(
+              ShareParams(text: logString ?? '', subject: tr('appLogs')),
+            );
             Navigator.of(context).pop();
           },
           child: Text(tr('share')),
@@ -1552,6 +1968,200 @@ class _CategoryEditorSelectorState extends State<CategoryEditorSelector> {
           }
         }
       }),
+    );
+  }
+}
+
+class AboutDialog extends StatelessWidget {
+  const AboutDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const version = '26.3.0';
+    const buildNumber = '26020419';
+
+    return AlertDialog(
+      scrollable: true,
+      title: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            child: Icon(
+              Icons.update_rounded,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+              size: 28,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Text(tr('about')),
+        ],
+      ),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            ),
+            child: Column(
+              children: [
+                Image.asset('assets/graphics/icon.png', width: 80, height: 80),
+                const SizedBox(height: 16),
+                Text(
+                  'Updatium',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Version $version ($buildNumber)',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  tr('appDescription'),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            tr('developedBy'),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          const SizedBox(height: 8),
+          TextButton.icon(
+            onPressed: () {
+              launchUrlString(
+                'https://github.com/omeritzics',
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            icon: const Icon(Icons.link_rounded, size: 18),
+            label: Text('omeritzics'),
+            style: TextButton.styleFrom(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.zero,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(tr('sourceCode'), style: Theme.of(context).textTheme.titleSmall),
+          const SizedBox(height: 8),
+          TextButton.icon(
+            onPressed: () {
+              launchUrlString(
+                'https://github.com/omeritzics/Updatium',
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            icon: const Icon(Icons.code_rounded, size: 18),
+            label: Text('GitHub'),
+            style: TextButton.styleFrom(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.zero,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(tr('license'), style: Theme.of(context).textTheme.titleSmall),
+          const SizedBox(height: 8),
+          TextButton.icon(
+            onPressed: () {
+              launchUrlString(
+                'https://github.com/omeritzics/Updatium/blob/main/LICENSE.md',
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            icon: const Icon(Icons.description_rounded, size: 18),
+            label: Text('GPL-3.0'),
+            style: TextButton.styleFrom(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.zero,
+            ),
+          ),
+          const SizedBox(height: 24),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(context).colorScheme.surfaceContainerLow,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Quick Links',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton.icon(
+                        onPressed: () {
+                          launchUrlString(
+                            'https://github.com/omeritzics/Updatium/wiki',
+                            mode: LaunchMode.externalApplication,
+                          );
+                        },
+                        icon: const Icon(Icons.help_outline_rounded, size: 18),
+                        label: Text(tr('wiki')),
+                        style: TextButton.styleFrom(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextButton.icon(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext ctx) {
+                              return const LogsDialog();
+                            },
+                          );
+                        },
+                        icon: const Icon(Icons.bug_report_outlined, size: 18),
+                        label: Text(tr('appLogs')),
+                        style: TextButton.styleFrom(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(tr('close')),
+        ),
+      ],
     );
   }
 }

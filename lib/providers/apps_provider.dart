@@ -17,18 +17,12 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/components/button_helpers.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:updatium/app_sources/directAPKLink.dart';
-import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/components/generated_form_modal.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
-import 'package:updatium/services/icon_cache.dart';
-import 'package:updatium/services/icon_prefetcher.dart';
 import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -598,8 +592,7 @@ class AppsProvider with ChangeNotifier {
         if (!iconsCacheDir.existsSync()) {
           iconsCacheDir.createSync();
         }
-        // Initialize IconCache with the icons directory
-        await IconCache.instance.initialize(cacheDir: iconsCacheDir);
+        // Icon cache initialization removed - service no longer available
       } else {
         APKDir = Directory('${(await getAppStorageDir()).path}/apks');
         if (!APKDir.existsSync()) {
@@ -609,8 +602,7 @@ class AppsProvider with ChangeNotifier {
         if (!iconsCacheDir.existsSync()) {
           iconsCacheDir.createSync();
         }
-        // Initialize IconCache with the icons directory
-        await IconCache.instance.initialize(cacheDir: iconsCacheDir);
+        // Icon cache initialization removed - service no longer available
       }
       if (!isBg) {
         // Load Apps into memory (in background processes, this is done later instead of in the constructor)
@@ -1042,7 +1034,7 @@ class AppsProvider with ChangeNotifier {
         msg: tr('appVerifierInstructionToast'),
         toastLength: Toast.LENGTH_LONG,
       );
-      await Share.shareXFiles([f]);
+      await SharePlus.instance.share(ShareParams(files: [f]));
     }
     var newInfo = await pm.getPackageArchiveInfo(
       archiveFilePath: file.file.path,
@@ -1602,7 +1594,7 @@ class AppsProvider with ChangeNotifier {
         ? app.installedInfo?.versionCode.toString()
         : app.installedInfo?.versionName;
     bool isHTMLWithNoVersionDetection =
-        (source.runtimeType == HTML().runtimeType &&
+        (source.runtimeType.toString() == 'HTML' &&
         (app.app.additionalSettings['versionExtractionRegEx'] as String?)
                 ?.isNotEmpty !=
             true);
@@ -1886,21 +1878,7 @@ class AppsProvider with ChangeNotifier {
             'Starting background icon pre-fetching for $appsWithRemoteIcons apps',
           );
 
-          // Start pre-fetching without awaiting to avoid blocking
-          unawaited(
-            IconPrefetcher.instance.startPrefetching(
-              apps: apps.values
-                  .where(
-                    (appInMemory) =>
-                        appInMemory.app.remoteIconUrl != null &&
-                        appInMemory.app.remoteIconUrl!.isNotEmpty,
-                  )
-                  .map((appInMemory) => appInMemory.app)
-                  .toList(),
-              topCount: 40, // Limit to top 40 apps to avoid overwhelming
-              forceRefresh: false,
-            ),
-          );
+          // Icon prefetching removed - service no longer available
         }
       } catch (e) {
         LogsProvider().add('Error starting icon pre-fetching: $e');
@@ -1951,91 +1929,74 @@ class AppsProvider with ChangeNotifier {
     }
   }
 
-  /// Get icon for an app using the IconCache service
-  /// This is the main API for getting app icons with remote URL support
+  /// Get icon for an app
   Future<Uint8List?> getIcon(
     String appId,
     String? remoteIconUrl, {
     bool forceRefresh = false,
     Uint8List? fallbackIcon,
   }) async {
-    // First try IconCache with remote URL
-    final icon = await IconCache.instance.getIcon(
-      appId,
-      remoteIconUrl,
-      forceRefresh: forceRefresh,
-      fallbackIcon: fallbackIcon,
-    );
-
-    // If no icon from cache and no fallback provided, try installed app icon
-    if (icon == null && fallbackIcon == null) {
-      final installedIcon = await apps[appId]?.installedInfo?.applicationInfo
-          ?.getAppIcon();
-      if (installedIcon != null) {
-        // Cache the installed icon for future use
-        await IconCache.instance.saveIcon(appId, installedIcon);
-        return installedIcon;
-      }
+    // Try to get from installed app
+    final installedIcon = await apps[appId]?.installedInfo?.applicationInfo
+        ?.getAppIcon();
+    if (installedIcon != null) {
+      return installedIcon;
     }
 
-    return icon;
+    return fallbackIcon;
   }
 
-  /// Check if an icon is cached for the given app
+  /// Check if an icon is available for the given app
   Future<bool> isIconCached(String appId, String? remoteIconUrl) async {
-    return await IconCache.instance.isIconCached(appId, remoteIconUrl);
+    return apps[appId]?.installedInfo?.applicationInfo?.getAppIcon() != null;
   }
 
-  /// Clear the icon cache
+  /// Clear icon cache (no-op - service removed)
   Future<void> clearIconCache() async {
-    await IconCache.instance.clearCache();
+    // Icon cache service removed - no operation
   }
 
-  /// Get icon cache statistics
+  /// Get icon cache statistics (no-op - service removed)
   Future<Map<String, dynamic>> getIconCacheStats() async {
-    return await IconCache.instance.getCacheStats();
+    return {};
   }
 
-  /// Start icon pre-fetching manually
+  /// Start icon pre-fetching manually (no-op - service removed)
   Future<void> startIconPrefetching({
     int topCount = 40,
     bool forceRefresh = false,
   }) async {
-    await IconPrefetcher.instance.startPrefetching(
-      apps: apps.values.map((appInMemory) => appInMemory.app).toList(),
-      topCount: topCount,
-      forceRefresh: forceRefresh,
-    );
+    // Icon prefetcher service removed - no operation
   }
 
-  /// Get icon pre-fetching status
-  PrefetchStatus getIconPrefetchingStatus() {
-    return IconPrefetcher.instance.getStatus();
+  /// Get icon pre-fetching status (no-op - service removed)
+  String getIconPrefetchingStatus() {
+    return 'disabled';
   }
 
-  /// Pause icon pre-fetching
+  /// Pause icon pre-fetching (no-op - service removed)
   void pauseIconPrefetching() {
-    IconPrefetcher.instance.pause();
+    // Icon prefetcher service removed - no operation
   }
 
-  /// Resume icon pre-fetching
+  /// Resume icon pre-fetching (no-op - service removed)
   void resumeIconPrefetching() {
-    IconPrefetcher.instance.resume();
+    // Icon prefetcher service removed - no operation
   }
 
-  /// Stop icon pre-fetching
+  /// Stop icon pre-fetching (no-op - service removed)
   void stopIconPrefetching() {
-    IconPrefetcher.instance.stop();
+    // Icon prefetcher service removed - no operation
   }
 
-  /// Get icon pre-fetching progress stream
-  Stream<PrefetchProgress> getIconPrefetchingProgress() {
-    return IconPrefetcher.instance.progressStream;
+  /// Get icon pre-fetching progress stream (no-op - service removed)
+  Stream<String> getIconPrefetchingProgress() {
+    return Stream.empty();
   }
 
-  /// Get icon pre-fetching result stream
-  Stream<PrefetchResult> getIconPrefetchingResults() {
-    return IconPrefetcher.instance.resultStream;
+  /// Get icon pre-fetching result stream (no-op - service removed)
+  Stream<String> getIconPrefetchingResults() {
+    return Stream.empty();
   }
 
   Future<void> saveApps(
@@ -2081,6 +2042,7 @@ class AppsProvider with ChangeNotifier {
       export(isAuto: true).catchError((e) {
         // Log export errors but don't crash the app
         // Export failures shouldn't prevent the main operation from completing
+        return null;
       }),
     );
   }
@@ -2146,6 +2108,7 @@ class AppsProvider with ChangeNotifier {
         export(isAuto: true).catchError((e) {
           // Log export errors but don't crash the app
           // Export failures shouldn't prevent app removal from completing
+          return null;
         }),
       );
     }
@@ -2159,30 +2122,63 @@ class AppsProvider with ChangeNotifier {
               a.additionalSettings['trackOnly'] != true,
         )
         .isNotEmpty;
-    var values = await showDialog(
+
+    bool rmAppEntry = true;
+    bool uninstallAppFromDevice = false;
+
+    var values = await showDialog<Map<String, bool>?>(
       context: context,
       builder: (BuildContext ctx) {
-        return GeneratedFormModal(
-          primaryActionColor: Theme.of(context).colorScheme.error,
-          title: plural('removeAppQuestion', apps.length),
-          items: !showUninstallOption
-              ? []
-              : [
-                  [
-                    GeneratedFormSwitch(
-                      'rmAppEntry',
-                      label: tr('removeFromUpdatium'),
-                      defaultValue: true,
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(plural('removeAppQuestion', apps.length)),
+              content: !showUninstallOption
+                  ? null
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SwitchListTile(
+                          title: Text(tr('removeFromUpdatium')),
+                          value: rmAppEntry,
+                          onChanged: (value) {
+                            setState(() {
+                              rmAppEntry = value;
+                            });
+                          },
+                        ),
+                        SwitchListTile(
+                          title: Text(tr('uninstallFromDevice')),
+                          value: uninstallAppFromDevice,
+                          onChanged: (value) {
+                            setState(() {
+                              uninstallAppFromDevice = value;
+                            });
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                  [
-                    GeneratedFormSwitch(
-                      'uninstallApp',
-                      label: tr('uninstallFromDevice'),
-                    ),
-                  ],
-                ],
-          initValid: true,
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(null),
+                  child: Text(tr('cancel')),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Theme.of(context).colorScheme.error,
+                  ),
+                  onPressed: () {
+                    HapticFeedback.selectionClick();
+                    Navigator.of(ctx).pop({
+                      'rmAppEntry': rmAppEntry,
+                      'uninstallApp': uninstallAppFromDevice,
+                    });
+                  },
+                  child: Text(tr('continue')),
+                ),
+              ],
+            );
+          },
         );
       },
     );
@@ -2219,7 +2215,7 @@ class AppsProvider with ChangeNotifier {
     apps.forEach((key, value) {
       for (var c in value.app.categories) {
         if (!cats.containsKey(c)) {
-          cats[c] = generateRandomLightColor().value;
+          cats[c] = generateRandomLightColor().toARGB32();
         }
       }
     });
@@ -2616,13 +2612,13 @@ class _AppFilePickerState extends State<AppFilePicker> {
         ],
       ),
       actions: [
-        AppTextButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        AppTextButton(
+        TextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(fileUrl);
@@ -2664,13 +2660,13 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
         ),
       ),
       actions: [
-        AppTextButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        AppTextButton(
+        TextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);

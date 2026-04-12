@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:hsluv/hsluv.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
@@ -331,10 +330,11 @@ class _GeneratedFormState extends State<GeneratedForm> {
                     someValueChanged();
                   });
                 },
-                decoration: const InputDecoration(filled: true).copyWith(
+                decoration: InputDecoration(
                   labelText:
                       '${formItem.label}${formItem.required ? ' *' : ''}',
                   hintText: formItem.hint,
+                  border: const OutlineInputBorder(),
                 ),
                 minLines: formItem.max <= 1 ? null : formItem.max,
                 maxLines: formItem.max <= 1 ? 1 : formItem.max,
@@ -380,50 +380,31 @@ class _GeneratedFormState extends State<GeneratedForm> {
           if (formItem.opts!.isEmpty) {
             return Text(tr('dropdownNoOptsError'));
           }
-          return MenuAnchor(
-            builder: (context, controller, child) {
-              final selectedValue =
-                  values[formItem.key] ?? formItem.opts!.first.key;
-              final selectedOption = formItem.opts!.firstWhere(
-                (e) => e.key == selectedValue,
-                orElse: () => formItem.opts!.first,
-              );
-
-              return TextField(
-                controller: TextEditingController(text: selectedOption.value),
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText:
-                      '${formItem.label}${formItem.required ? ' *' : ''}',
-                  filled: true,
-                  suffixIcon: const Icon(Icons.arrow_drop_down),
-                ),
-                onTap: () {
-                  if (controller.isOpen) {
-                    controller.close();
-                  } else {
-                    controller.open();
-                  }
-                },
-              );
-            },
-            menuChildren: formItem.opts!.map((e2) {
+          return DropdownButtonFormField<String>(
+            initialValue: values[formItem.key] ?? formItem.opts?.first.key,
+            decoration: InputDecoration(
+              labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
+              border: const OutlineInputBorder(),
+            ),
+            items: formItem.opts?.map((e2) {
               var enabled = formItem.disabledOptKeys?.contains(e2.key) != true;
-              return MenuItemButton(
-                onPressed: enabled
-                    ? () {
-                        setState(() {
-                          values[formItem.key] = e2.key;
-                          someValueChanged();
-                        });
-                      }
-                    : null,
+              return DropdownMenuItem<String>(
+                value: e2.key,
+                enabled: enabled,
                 child: Opacity(
                   opacity: enabled ? 1 : 0.5,
                   child: Text(e2.value),
                 ),
               );
             }).toList(),
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  values[formItem.key] = value;
+                  someValueChanged();
+                });
+              }
+            },
           );
         } else if (formItem is GeneratedFormSubForm) {
           values[formItem.key] = [];
@@ -459,33 +440,57 @@ class _GeneratedFormState extends State<GeneratedForm> {
       for (var e = 0; e < formInputs[r].length; e++) {
         String fieldKey = widget.items[r][e].key;
         if (widget.items[r][e] is GeneratedFormSwitch) {
-          formInputs[r][e] = Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(child: Text(widget.items[r][e].label)),
-              const SizedBox(width: 8),
-              Switch(
-                value: values[fieldKey],
-                onChanged: (widget.items[r][e] as GeneratedFormSwitch).disabled
-                    ? null
-                    : (value) {
-                        setState(() {
-                          values[fieldKey] = value;
-                          someValueChanged();
-                        });
-                      },
-              ),
-            ],
+          formInputs[r][e] = Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.items[r][e].label,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Switch(
+                  value: values[fieldKey],
+                  onChanged:
+                      (widget.items[r][e] as GeneratedFormSwitch).disabled
+                      ? null
+                      : (value) {
+                          setState(() {
+                            values[fieldKey] = value;
+                            someValueChanged();
+                          });
+                        },
+                ),
+              ],
+            ),
           );
         } else if (widget.items[r][e] is GeneratedFormTagInput) {
           onAddPressed() {
             showDialog<Map<String, dynamic>?>(
               context: context,
               builder: (BuildContext ctx) {
-                return GeneratedFormModal(
-                  title: widget.items[r][e].label,
-                  items: [
-                    [GeneratedFormTextField('label', label: tr('label'))],
+                Map<String, dynamic> localValues = {};
+                return AlertDialog(
+                  title: Text(widget.items[r][e].label),
+                  content: GeneratedForm(
+                    items: [
+                      [GeneratedFormTextField('label', label: tr('label'))],
+                    ],
+                    onValueChanges: (vals, valid, isBuilding) {
+                      localValues = vals;
+                    },
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(null),
+                      child: Text(tr('cancel')),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(localValues),
+                      child: Text(tr('ok')),
+                    ),
                   ],
                 );
               },
@@ -504,7 +509,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                         .where((element) => element.value.value)
                         .isNotEmpty;
                     temp[label] = MapEntry(
-                      generateRandomLightColor().value,
+                      generateRandomLightColor().toARGB32(),
                       !(someSelected && singleSelect),
                     );
                     values[fieldKey] = temp;
@@ -630,7 +635,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 // generate new color, ensure it is not the same
                                 int newColor = oldEntry.value.key;
                                 while (oldEntry.value.key == newColor) {
-                                  newColor = generateRandomLightColor().value;
+                                  newColor = generateRandomLightColor()
+                                      .toARGB32();
                                 }
                                 // Update entry with new color, remain selected
                                 temp.update(
@@ -674,17 +680,28 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                     (widget.items[r][e]
                                             as GeneratedFormTagInput)
                                         .deleteConfirmationMessage!;
-                                showDialog<Map<String, dynamic>?>(
+                                showDialog<bool>(
                                   context: context,
                                   builder: (BuildContext ctx) {
-                                    return GeneratedFormModal(
-                                      title: message.key,
-                                      message: message.value,
-                                      items: const [],
+                                    return AlertDialog(
+                                      title: Text(message.key),
+                                      content: Text(message.value),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(ctx).pop(false),
+                                          child: Text(tr('cancel')),
+                                        ),
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(ctx).pop(true),
+                                          child: Text(tr('ok')),
+                                        ),
+                                      ],
                                     );
                                   },
-                                ).then((value) {
-                                  if (value != null) {
+                                ).then((confirmed) {
+                                  if (confirmed == true) {
                                     fn();
                                   }
                                 });

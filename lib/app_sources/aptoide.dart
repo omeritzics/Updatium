@@ -1,18 +1,16 @@
 import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class Aptoide extends AppSource {
   Aptoide() {
     hosts = ['aptoide.com'];
-    name = 'Aptoide';
+    name = tr('aptoide');
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -26,7 +24,6 @@ class Aptoide extends AppSource {
     return match.group(0)!;
   }
 
-  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
@@ -57,7 +54,7 @@ class Aptoide extends AppSource {
       additionalSettings,
     );
     if (res2.statusCode != 200) {
-      throw getUpdatiumHttpError(res);
+      throw getUpdatiumHttpError(res2);
     }
     return jsonDecode(res2.body)?['nodes']?['meta']?['data'];
   }
@@ -84,7 +81,6 @@ class Aptoide extends AppSource {
     if (dateStr != null) {
       relDate = DateTime.parse(dateStr);
     }
-
     return APKDetails(
       version,
       getApkUrlsFromUrls([apkUrl]),

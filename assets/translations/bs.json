@@ -241,6 +241,7 @@
     "moveNonInstalledAppsToBottom": "Premjesti neinstalirane aplikacije na dno prikaza aplikacija",
     "hideNonInstalledApps": "Sakrij neinstalirane aplikacije",
     "gitlabPATLabel": "GitLab token za lični pristup",
+    "github": "GitHub",
     "about": "O nama",
     "requiresCredentialsInSettings": "{}: Za ovo su potrebni dodatni akreditivi (u Postavkama)",
     "checkOnStart": "Provjerite ima li novosti pri pokretanju",
@@ -429,8 +430,8 @@
     "privacyText": "Ova aplikacija je fokusirana na privatnost i ne prikuplja lične podatke.",
     "acceptAndContinue": "Prihvatam i Nastavim",
     "decline": "Odbij",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "Uživate li u Updatiumu?",
+    "githubStarPromptContent": "Updatium je volonterski projekt otvorenog koda koji razvijam u slobodno vrijeme. Ako želite podržati projekt, molimo vas da razmislite o davanju zvijezde na GitHubu kako bismo nam pomogli da dosegnemo više korisnika i doprinosilaca. Više se nećete obavještavati o ovome. Hvala unaprijed! :)",
+    "githubStarPromptStar": "Daj zvijezdu",
+    "githubStarPromptDontShowAgain": "Ne prikazuj više"
 }

@@ -13,6 +13,7 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:background_fetch/background_fetch.dart';
 import 'package:easy_localization/easy_localization.dart';
 // ignore: implementation_imports
 import 'package:easy_localization/src/easy_localization_controller.dart';
@@ -417,6 +418,115 @@ class _UpdatiumState extends State<Updatium> {
 
           // Shared theme component generator with Material Design Expressive
           ThemeData createTheme(ColorScheme scheme, bool isDark) {
+            // Define text theme as local variable for reusability
+            final textTheme = TextTheme(
+              displayLarge: TextStyle(
+                fontSize: 57,
+                fontWeight: FontWeight.w400,
+                letterSpacing: -0.25,
+                height: 1.12,
+                color: scheme.onSurface,
+              ),
+              displayMedium: TextStyle(
+                fontSize: 45,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0,
+                height: 1.16,
+                color: scheme.onSurface,
+              ),
+              displaySmall: TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0,
+                height: 1.22,
+                color: scheme.onSurface,
+              ),
+              headlineLarge: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0,
+                height: 1.25,
+                color: scheme.onSurface,
+              ),
+              headlineMedium: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0,
+                height: 1.29,
+                color: scheme.onSurface,
+              ),
+              headlineSmall: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0,
+                height: 1.33,
+                color: scheme.onSurface,
+              ),
+              titleLarge: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0,
+                height: 1.27,
+                color: scheme.onSurface,
+              ),
+              titleMedium: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.15,
+                height: 1.5,
+                color: scheme.onSurface,
+              ),
+              titleSmall: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+                height: 1.43,
+                color: scheme.onSurface,
+              ),
+              bodyLarge: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.5,
+                height: 1.5,
+                color: scheme.onSurface,
+              ),
+              bodyMedium: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.25,
+                height: 1.5,
+                color: scheme.onSurface,
+              ),
+              bodySmall: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 0.4,
+                height: 1.33,
+                color: scheme.onSurface,
+              ),
+              labelLarge: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+                height: 1.43,
+                color: scheme.onSurface,
+              ),
+              labelMedium: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.5,
+                height: 1.33,
+                color: scheme.onSurface,
+              ),
+              labelSmall: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.5,
+                height: 1.27,
+                color: scheme.onSurface,
+              ),
+            );
+
             return ThemeData(
               useMaterial3: true,
               colorScheme: scheme,
@@ -425,113 +535,7 @@ class _UpdatiumState extends State<Updatium> {
                   : 'Inter',
 
               // Expressive Typography
-              textTheme: TextTheme(
-                displayLarge: TextStyle(
-                  fontSize: 57,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: -0.25,
-                  height: 1.12,
-                  color: scheme.onSurface,
-                ),
-                displayMedium: TextStyle(
-                  fontSize: 45,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.16,
-                  color: scheme.onSurface,
-                ),
-                displaySmall: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.22,
-                  color: scheme.onSurface,
-                ),
-                headlineLarge: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.25,
-                  color: scheme.onSurface,
-                ),
-                headlineMedium: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.29,
-                  color: scheme.onSurface,
-                ),
-                headlineSmall: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.33,
-                  color: scheme.onSurface,
-                ),
-                titleLarge: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0,
-                  height: 1.27,
-                  color: scheme.onSurface,
-                ),
-                titleMedium: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.15,
-                  height: 1.5,
-                  color: scheme.onSurface,
-                ),
-                titleSmall: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1,
-                  height: 1.43,
-                  color: scheme.onSurface,
-                ),
-                bodyLarge: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.5,
-                  height: 1.5,
-                  color: scheme.onSurface,
-                ),
-                bodyMedium: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.25,
-                  height: 1.5,
-                  color: scheme.onSurface,
-                ),
-                bodySmall: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.4,
-                  height: 1.33,
-                  color: scheme.onSurface,
-                ),
-                labelLarge: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1,
-                  height: 1.43,
-                  color: scheme.onSurface,
-                ),
-                labelMedium: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.5,
-                  height: 1.33,
-                  color: scheme.onSurface,
-                ),
-                labelSmall: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.5,
-                  height: 1.27,
-                  color: scheme.onSurface,
-                ),
-              ),
+              textTheme: textTheme,
 
               // Expressive Card Design - preserve M3 Expressive transparency
               cardTheme: CardThemeData(
@@ -616,17 +620,14 @@ class _UpdatiumState extends State<Updatium> {
                   ),
                 ),
               ),
-              // Material 3 Filled Text Fields
+              // Material 3 Outlined Text Fields
               inputDecorationTheme: InputDecorationTheme(
-                filled: true,
-                fillColor: scheme.surfaceContainer,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide.none,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide.none,
+                  borderSide: BorderSide(color: scheme.outline),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
@@ -654,11 +655,11 @@ class _UpdatiumState extends State<Updatium> {
                 ),
                 floatingLabelStyle: TextStyle(
                   color: scheme.primary,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
 
-              // Expressive Dropdown Button Theme
+              // Material 3 Menu Theme
               dropdownMenuTheme: DropdownMenuThemeData(
                 menuStyle: MenuStyle(
                   backgroundColor: WidgetStateProperty.all(
@@ -674,29 +675,20 @@ class _UpdatiumState extends State<Updatium> {
                   padding: WidgetStateProperty.all(EdgeInsets.zero),
                 ),
                 inputDecorationTheme: InputDecorationTheme(
-                  filled: true,
-                  fillColor: scheme.surfaceContainerLow,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(
-                      color: scheme.outline.withValues(alpha: 0.2),
-                      width: 1,
-                    ),
+                    borderRadius: BorderRadius.circular(4),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(
-                      color: scheme.outline.withValues(alpha: 0.2),
-                      width: 1,
-                    ),
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: BorderSide(color: scheme.outline),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(4),
                     borderSide: BorderSide(color: scheme.primary, width: 2),
                   ),
                   contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 18,
+                    horizontal: 16,
+                    vertical: 16,
                   ),
                   hintStyle: TextStyle(
                     color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
@@ -704,16 +696,15 @@ class _UpdatiumState extends State<Updatium> {
                   ),
                   labelStyle: TextStyle(
                     color: scheme.onSurfaceVariant,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                   ),
                   floatingLabelStyle: TextStyle(
                     color: scheme.primary,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
 
-              
               // Material 3 Extended Floating Action Button
               floatingActionButtonTheme: FloatingActionButtonThemeData(
                 shape: const RoundedRectangleBorder(
@@ -897,6 +888,31 @@ class _UpdatiumState extends State<Updatium> {
                 }),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
+
+              // Dialog Theme for AMOLED black theme compatibility
+              dialogTheme: DialogThemeData(
+                backgroundColor: scheme.surface,
+                surfaceTintColor: scheme.surfaceTint,
+                shadowColor: isDark ? Colors.black26 : Colors.black12,
+                elevation: isDark ? 6 : 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(28),
+                ),
+                titleTextStyle: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0,
+                  height: 1.33,
+                ),
+                contentTextStyle: TextStyle(
+                  color: scheme.onSurface,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0.5,
+                  height: 1.5,
+                ),
+              ),
             );
           }
 
@@ -926,4 +942,41 @@ class _UpdatiumState extends State<Updatium> {
       ),
     );
   }
+}
+
+void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
+  Provider.of<LogsProvider>(
+    context,
+    listen: false,
+  ).add(e.toString(), level: isError ? LogLevels.error : LogLevels.info);
+
+  if (e is String || (e is UpdatiumError && !e.unexpected)) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(e.toString())));
+  } else {
+    showAdaptiveDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            e is MultiAppMultiError
+                ? tr(isError ? 'someErrors' : 'updates')
+                : tr(isError ? 'unexpectedError' : 'unknown'),
+          ),
+          content: SelectableText(e.toString()),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(tr('ok')),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+void showError(dynamic e, BuildContext context) {
+  showMessage(e, context, isError: true);
 }

@@ -241,6 +241,7 @@
     "moveNonInstalledAppsToBottom": "Pindahkan aplikasi tidak terpasang ke bawah tampilan aplikasi",
     "hideNonInstalledApps": "Sembunyikan aplikasi yang belum terpasang",
     "gitlabPATLabel": "Token Akses Pribadi GitLab",
+    "github": "GitHub",
     "about": "Tentang",
     "requiresCredentialsInSettings": "{} memerlukan kredensial tambahan (dalam pengaturan)",
     "checkOnStart": "Periksa pembaruan saat proses memulai",
@@ -429,8 +430,8 @@
     "privacyText": "Aplikasi ini berfokus pada privasi dan tidak mengumpulkan data pribadi.",
     "acceptAndContinue": "Terima dan Lanjutkan",
     "decline": "Tolak",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "Menikmati Updatium?",
+    "githubStarPromptContent": "Updatium adalah proyek komunitas sumber terbuka sukarela yang saya kembangkan di waktu luang saya. Jika Anda ingin mendukung proyek ini, silakan pertimbangkan untuk memberikan bintang di GitHub untuk membantu kami mencapai lebih banyak pengguna dan kontributor. Anda tidak akan dimintai lagi tentang ini. Terima kasih sebelumnya! :)",
+    "githubStarPromptStar": "Beri bintang",
+    "githubStarPromptDontShowAgain": "Jangan tampilkan lagi"
 }

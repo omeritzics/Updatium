@@ -241,6 +241,7 @@
     "moveNonInstalledAppsToBottom": "Flytta icke-installerade appar till botten av appvyn",
     "hideNonInstalledApps": "Dölj icke-installerade appar",
     "gitlabPATLabel": "Personligt åtkomsttoken för GitLab",
+    "github": "GitHub",
     "about": "Om",
     "requiresCredentialsInSettings": "{}: This needs additional credentials (in Settings)",
     "checkOnStart": "Kolla efter uppdateringar vid start",
@@ -429,8 +430,8 @@
     "privacyText": "Denna app är integritetsfokuserad och samlar inte in personlig data.",
     "acceptAndContinue": "Acceptera och fortsätt",
     "decline": "Avvisa",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "Gillar du Updatium?",
+    "githubStarPromptContent": "Updatium är ett volontärt open source-communityprojekt som jag utvecklat på min fritid. Om du vill stödja projektet, överväg vänligen att ge det en stjärna på GitHub för att hjälpa oss nå fler användare och bidragsgivare. Du kommer inte att påminnas om detta igen. Tack på förhand! :)",
+    "githubStarPromptStar": "Ge stjärna",
+    "githubStarPromptDontShowAgain": "Visa inte igen"
 }

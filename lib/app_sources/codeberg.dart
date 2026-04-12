@@ -1,20 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/app_sources/github.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class Codeberg extends AppSource {
   GitHub gh = GitHub(hostChanged: true);
   Codeberg() {
-    name = 'Forgejo (Codeberg)';
+    name = tr('codeberg');
     hosts = ['codeberg.org'];
-
     additionalSourceAppSpecificSettingFormItems =
         gh.additionalSourceAppSpecificSettingFormItems;
-
     canSearch = true;
     searchQuerySettingFormItems = gh.searchQuerySettingFormItems;
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     RegExp standardUrlRegEx = RegExp(
@@ -28,7 +25,6 @@ class Codeberg extends AppSource {
     return match.group(0)!;
   }
 
-  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/releases';
 
@@ -37,11 +33,7 @@ class Codeberg extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    return await gh.getLatestAPKDetailsCommon2(standardUrl, additionalSettings, (
-      bool useTagUrl,
-    ) async {
-      return 'https://${hosts[0]}/api/v1/repos${standardUrl.substring('https://${hosts[0]}'.length)}/${useTagUrl ? 'tags' : 'releases'}?per_page=100';
-    }, null);
+    return await gh.getLatestAPKDetails(standardUrl, additionalSettings);
   }
 
   AppNames getAppNames(String standardUrl) {
@@ -55,11 +47,6 @@ class Codeberg extends AppSource {
     String query, {
     Map<String, dynamic> querySettings = const {},
   }) async {
-    return gh.searchCommon(
-      query,
-      'https://${hosts[0]}/api/v1/repos/search?q=${Uri.encodeQueryComponent(query)}&limit=100',
-      'data',
-      querySettings: querySettings,
-    );
+    return gh.search(query, querySettings: querySettings);
   }
 }

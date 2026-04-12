@@ -241,6 +241,7 @@
     "moveNonInstalledAppsToBottom": "Niet-geïnstalleerde apps onderaan de apps-lijst plaatsen",
     "hideNonInstalledApps": "Verberg niet-geïnstalleerde apps",
     "gitlabPATLabel": "GitLab persoonlijk toegangskenmerk",
+    "github": "GitHub",
     "about": "Over",
     "requiresCredentialsInSettings": "{} vereist aanvullende referenties (in Instellingen)",
     "checkOnStart": "Bij opstarten op updates controleren",
@@ -429,8 +430,8 @@
     "privacyText": "Deze app is privacy-gericht en verzamelt geen persoonlijke gegevens.",
     "acceptAndContinue": "Accepteren en doorgaan",
     "decline": "Weigeren",
-    "githubStarPromptTitle": "Enjoying Updatium?",
-    "githubStarPromptContent": "Updatium is a voluntary, open-source community project developed in my free time. If you'd like to support the project, please consider starring it on GitHub to help us reach more users and contributors. You won't be nudged about this again. Thank you in advance! :)",
-    "githubStarPromptStar": "Star",
-    "githubStarPromptDontShowAgain": "Don't show again"
+    "githubStarPromptTitle": "Geniet u van Updatium?",
+    "githubStarPromptContent": "Updatium is een vrijwillig, open-source communityproject dat ik in mijn vrije tijd heb ontwikkeld. Als u het project wilt steunen, overweeg dan om het een ster te geven op GitHub om ons te helpen meer gebruikers en bijdragers te bereiken. U zult hierover niet meer worden herinnerd. Alvast bedankt! :)",
+    "githubStarPromptStar": "Ster geven",
+    "githubStarPromptDontShowAgain": "Niet meer weergeven"
 }

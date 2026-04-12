@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 extension Unique<E, Id> on List<E> {
@@ -18,6 +17,7 @@ extension Unique<E, Id> on List<E> {
 class APKPure extends AppSource {
   APKPure() {
     hosts = ['apkpure.net', 'apkpure.com'];
+    name = tr('apkpure');
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
@@ -35,12 +35,9 @@ class APKPure extends AppSource {
           label: tr('stayOneVersionBehind'),
           defaultValue: false,
         ),
-      ],
-      [
         GeneratedFormSwitch(
           'useFirstApkOfVersion',
           label: tr('useFirstApkOfVersion'),
-          defaultValue: true,
         ),
       ],
     ];
@@ -85,7 +82,6 @@ class APKPure extends AppSource {
         .map((e) {
           String appId = e['package_name'];
           String versionCode = e['version_code'];
-
           List<String> architectures = e['native_code']?.cast<String>();
           String architectureString = architectures.join(',');
           if (architectures.contains("universal") ||
@@ -97,10 +93,8 @@ class APKPure extends AppSource {
               architectures.where((a) => supportedArchs.contains(a)).isEmpty) {
             return null;
           }
-
           String type = e['asset']['type'];
           String downloadUri = e['asset']['url'];
-
           return MapEntry(
             '$appId-$versionCode-$architectureString.${type.toLowerCase()}',
             downloadUri,
@@ -109,11 +103,9 @@ class APKPure extends AppSource {
         .nonNulls
         .toList()
         .unique((e) => e.key);
-
     if (apkUrls.isEmpty) {
       throw NoAPKError();
     }
-
     // get version details from first variant
     var v = versionVariants.first;
     String version = v['version_name'];
@@ -124,11 +116,9 @@ class APKPure extends AppSource {
     if (changeLog != null && changeLog.isEmpty) {
       changeLog = null;
     }
-
     if (additionalSettings['useFirstApkOfVersion'] == true) {
       apkUrls = [apkUrls.first];
     }
-
     return APKDetails(
       version,
       apkUrls,
@@ -161,10 +151,8 @@ class APKPure extends AppSource {
     Map<String, dynamic> additionalSettings,
   ) async {
     String appId = (await tryInferringAppId(standardUrl))!;
-
     List<String> supportedArchs =
         (await DeviceInfoPlugin().androidInfo).supportedAbis;
-
     // request versions from API
     var res = await sourceRequest(
       "https://tapi.pureapk.com/v3/get_app_his_version?package_name=$appId&hl=en",
@@ -176,7 +164,6 @@ class APKPure extends AppSource {
     List<Map<String, dynamic>> apks = jsonDecode(
       res.body,
     )['version_list'].cast<Map<String, dynamic>>();
-
     // group by version
     List<List<Map<String, dynamic>>> versions = apks
         .fold<Map<String, List<Map<String, dynamic>>>>({}, (
@@ -192,11 +179,9 @@ class APKPure extends AppSource {
         })
         .values
         .toList();
-
     if (versions.isEmpty) {
       throw NoReleasesError();
     }
-
     for (var i = 0; i < versions.length; i++) {
       var v = versions[i];
       try {

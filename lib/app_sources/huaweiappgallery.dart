@@ -1,11 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart';
-import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class HuaweiAppGallery extends AppSource {
   HuaweiAppGallery() {
-    name = 'Huawei AppGallery';
+    name = tr('huaweiappgallery');
     hosts = ['appgallery.huawei.com', 'appgallery.cloud.huawei.com'];
     versionDetectionDisallowed = true;
     showReleaseDateAsVersionToggle = true;
@@ -54,7 +53,6 @@ class HuaweiAppGallery extends AppSource {
         .reversed
         .toList();
     parts.removeAt(0);
-    parts.removeAt(0);
     return parts.reversed.join('.');
   }
 
@@ -82,13 +80,9 @@ class HuaweiAppGallery extends AppSource {
     }
     String appId = appIdFromRedirectDlUrl(res.headers['location']!);
     if (appId.isEmpty) {
-      throw NoReleasesError();
+      throw NoVersionError();
     }
-    var relDateStr = res.headers['location']
-        ?.split('?')[0]
-        .split('.')
-        .reversed
-        .toList()[1];
+    var relDateStr = res.headers['location']?.split('?')[0].split('/')[1];
     if (relDateStr == null || relDateStr.length != 10) {
       throw NoVersionError();
     }

@@ -4,9 +4,8 @@ import 'package:animations/animations.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/components/button_helpers.dart';
-import 'package:updatium/components/generated_form_modal.dart';
-import 'package:updatium/custom_errors.dart';
+
+import 'package:updatium/main.dart';
 import 'package:updatium/pages/add_app.dart';
 import 'package:updatium/pages/apps.dart';
 import 'package:updatium/pages/import_export.dart';
@@ -43,20 +42,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late List<AnimationController> _iconControllers;
   late List<Animation<double>> _iconAnimations;
   bool _iconsInitialized = false;
+  final GlobalKey<AppsPageState> _appsPageKey = GlobalKey<AppsPageState>();
+  final GlobalKey<AddAppPageState> _addAppPageKey =
+      GlobalKey<AddAppPageState>();
 
   List<NavigationPageItem> getPages(SettingsProvider settingsProvider) {
     return [
       NavigationPageItem(
         tr('appsString'),
         Icons.apps,
-        AppsPage(key: GlobalKey<AppsPageState>()),
+        AppsPage(key: _appsPageKey),
       ),
       NavigationPageItem(
         settingsProvider.safeMode ? tr('importExport') : tr('addApp'),
         settingsProvider.safeMode ? Icons.import_export : Icons.add_circle,
         settingsProvider.safeMode
             ? const ImportExportPage()
-            : AddAppPage(key: GlobalKey<AddAppPageState>()),
+            : AddAppPage(key: _addAppPageKey),
       ),
       NavigationPageItem(tr('settings'), Icons.settings, const SettingsPage()),
     ];
@@ -117,7 +119,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ],
               ),
               actions: [
-                AppTextButton(
+                TextButton(
                   onPressed: () {
                     sp.googleVerificationWarningShown = true;
                     Navigator.of(context).pop(null);
@@ -226,31 +228,40 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           if (await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
-                  return GeneratedFormModal(
-                    title: tr(
-                      'importX',
-                      args: [
-                        (action == 'app' ? tr('app') : tr('appsString'))
-                            .toLowerCase(),
+                  return AlertDialog(
+                    title: Text(
+                      tr(
+                        'importX',
+                        args: [
+                          (action == 'app' ? tr('app') : tr('appsString'))
+                              .toLowerCase(),
+                        ],
+                      ),
+                    ),
+                    content: ExpansionTile(
+                      leading: const Icon(Icons.info_outlined),
+                      title: const Text('Raw JSON'),
+                      children: [
+                        Text(
+                          dataStr,
+                          style: const TextStyle(fontFamily: 'monospace'),
+                        ),
                       ],
                     ),
-                    items: const [],
-                    additionalWidgets: [
-                      ExpansionTile(
-                        leading: const Icon(Icons.info_outlined),
-                        title: const Text('Raw JSON'),
-                        children: [
-                          Text(
-                            dataStr,
-                            style: const TextStyle(fontFamily: 'monospace'),
-                          ),
-                        ],
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(null),
+                        child: Text(tr('cancel')),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(true),
+                        child: Text(tr('ok')),
                       ),
                     ],
                   );
                 },
-              ) !=
-              null) {
+              ) ==
+              true) {
             // ignore: use_build_context_synchronously
             var appsProvider = context.read<AppsProvider>();
             var result = await appsProvider.import(
