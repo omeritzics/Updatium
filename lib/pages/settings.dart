@@ -818,7 +818,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   Switch(
                                     value: false,
                                     onChanged: (value) {
-                                      showSafeModeDialog(context);
+                                      showSafeModeEnableDialog(context);
                                     },
                                   ),
                                 ],
@@ -1798,7 +1798,6 @@ class AboutDialog extends StatefulWidget {
 }
 
 class _AboutDialogState extends State<AboutDialog> {
-  int _versionTapCount = 0;
   Timer? _tapResetTimer;
 
   @override
@@ -1810,26 +1809,23 @@ class _AboutDialogState extends State<AboutDialog> {
   void _onVersionTapped() {
     final settingsProvider = context.read<SettingsProvider>();
     final isSafeModeEnabled = settingsProvider.safeMode;
+    final tapCount = settingsProvider.safeModeTapCount;
 
-    setState(() {
-      _versionTapCount++;
-    });
+    settingsProvider.safeModeTapCount = tapCount + 1;
 
     _tapResetTimer?.cancel();
     _tapResetTimer = Timer(const Duration(seconds: 2), () {
-      setState(() {
-        _versionTapCount = 0;
-      });
+      settingsProvider.safeModeTapCount = 0;
     });
 
     // Haptic feedback at milestones
-    if (_versionTapCount % 25 == 0) {
+    if ((tapCount + 1) % 25 == 0) {
       HapticFeedback.selectionClick();
     }
 
     // Show remaining taps when Safe Mode is enabled (only from third tap)
-    if (isSafeModeEnabled && _versionTapCount >= 3) {
-      final remaining = 613 - _versionTapCount;
+    if (isSafeModeEnabled && (tapCount + 1) >= 3) {
+      final remaining = 613 - (tapCount + 1);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -1845,11 +1841,11 @@ class _AboutDialogState extends State<AboutDialog> {
 
     // Visual feedback at 100-tap intervals when Safe Mode is disabled
     if (!isSafeModeEnabled &&
-        _versionTapCount % 100 == 0 &&
-        _versionTapCount > 0) {
+        (tapCount + 1) % 100 == 0 &&
+        (tapCount + 1) > 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('$_versionTapCount...'),
+          content: Text('${tapCount + 1}...'),
           duration: const Duration(milliseconds: 500),
           behavior: SnackBarBehavior.floating,
         ),
@@ -1857,10 +1853,8 @@ class _AboutDialogState extends State<AboutDialog> {
     }
 
     // Success at 613 taps
-    if (_versionTapCount >= 613) {
-      setState(() {
-        _versionTapCount = 0;
-      });
+    if ((tapCount + 1) >= 613) {
+      settingsProvider.safeModeTapCount = 0;
       _tapResetTimer?.cancel();
 
       HapticFeedback.heavyImpact();
@@ -1869,7 +1863,7 @@ class _AboutDialogState extends State<AboutDialog> {
   }
 
   void _showSafeModeDialog() {
-    showSafeModeDialog(context);
+    showSafeModeDisableDialog(context);
   }
 
   @override

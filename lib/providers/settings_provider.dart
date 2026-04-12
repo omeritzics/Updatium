@@ -588,4 +588,13 @@ class SettingsProvider with ChangeNotifier {
     prefs?.setBool('safeModeHintShown', val);
     notifyListeners();
   }
+
+  int get safeModeTapCount {
+    return prefs?.getInt('safeModeTapCount') ?? 0;
+  }
+
+  set safeModeTapCount(int val) {
+    prefs?.setInt('safeModeTapCount', val);
+    notifyListeners();
+  }
 }

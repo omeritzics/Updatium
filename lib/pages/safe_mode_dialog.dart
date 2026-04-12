@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-void showSafeModeDialog(BuildContext context) {
+void showSafeModeEnableDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) {
@@ -14,9 +14,6 @@ void showSafeModeDialog(BuildContext context) {
       final confirmPasswordController = TextEditingController();
       bool isLoading = false;
       String? errorMessage;
-
-      final settingsProvider = context.watch<SettingsProvider>();
-      final passwordSet = settingsProvider.safeModePasswordSet;
 
       return StatefulBuilder(
         builder: (context, setState) {
@@ -69,59 +66,12 @@ void showSafeModeDialog(BuildContext context) {
                             ),
                           ),
                         );
-                        settingsProvider.safeModeHintShown = true;
                       }
                     });
                   }
                 }
               } else {
                 errorMessage = tr('safeModePasswordError');
-                setState(() {});
-              }
-            } catch (e) {
-              errorMessage = tr('safeModePasswordError');
-              setState(() {});
-            } finally {
-              isLoading = false;
-              setState(() {});
-            }
-          }
-
-          Future<void> toggleSafeMode() async {
-            isLoading = true;
-            errorMessage = null;
-            setState(() {});
-
-            try {
-              final settingsProvider = context.read<SettingsProvider>();
-              final success = await settingsProvider.verifySafeModePassword(
-                passwordController.text,
-              );
-
-              if (success) {
-                final newState = !settingsProvider.safeMode;
-                settingsProvider.safeMode = newState;
-
-                if (!newState) {
-                  await settingsProvider.clearSafeModePassword();
-                  settingsProvider.safeModeHintShown = false;
-                }
-
-                if (context.mounted) {
-                  Navigator.of(context).pop(true);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        newState
-                            ? tr('safeModeEnabled')
-                            : tr('safeModeDisabled'),
-                      ),
-                      backgroundColor: newState ? Colors.green : Colors.orange,
-                    ),
-                  );
-                }
-              } else {
-                errorMessage = tr('safeModePasswordIncorrect');
                 setState(() {});
               }
             } catch (e) {
@@ -141,9 +91,7 @@ void showSafeModeDialog(BuildContext context) {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(width: 12),
-                Text(
-                  passwordSet ? tr('safeModeDisable') : tr('safeModeEnable'),
-                ),
+                Text(tr('safeModeEnable')),
               ],
             ),
             content: Column(
@@ -151,47 +99,31 @@ void showSafeModeDialog(BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  passwordSet
-                      ? tr('safeModeToggleDescription')
-                      : tr('safeModeSetupDescription'),
+                  tr('safeModeSetupDescription'),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 20),
-                if (!passwordSet) ...[
-                  TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: tr('safeModeSetPassword'),
-                      hintText: tr('safeModePasswordHint'),
-                      border: const OutlineInputBorder(),
-                    ),
-                    enabled: !isLoading,
+                TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: tr('safeModeSetPassword'),
+                    hintText: tr('safeModePasswordHint'),
+                    border: const OutlineInputBorder(),
                   ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: confirmPasswordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: tr('safeModeConfirmPassword'),
-                      hintText: tr('safeModePasswordHint'),
-                      border: const OutlineInputBorder(),
-                    ),
-                    enabled: !isLoading,
+                  enabled: !isLoading,
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: confirmPasswordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: tr('safeModeConfirmPassword'),
+                    hintText: tr('safeModePasswordHint'),
+                    border: const OutlineInputBorder(),
                   ),
-                ] else ...[
-                  TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: tr('safeModeEnterPassword'),
-                      hintText: tr('safeModePasswordHint'),
-                      border: const OutlineInputBorder(),
-                    ),
-                    enabled: !isLoading,
-                    onSubmitted: (_) => toggleSafeMode(),
-                  ),
-                ],
+                  enabled: !isLoading,
+                ),
                 if (errorMessage != null) ...[
                   const SizedBox(height: 12),
                   Text(
@@ -216,20 +148,135 @@ void showSafeModeDialog(BuildContext context) {
                 child: Text(tr('cancel')),
               ),
               FilledButton(
-                onPressed: isLoading
-                    ? null
-                    : (passwordSet ? toggleSafeMode : setupPassword),
+                onPressed: isLoading ? null : setupPassword,
                 child: isLoading
                     ? const SizedBox(
                         width: 16,
                         height: 16,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : Text(
-                        passwordSet
-                            ? tr('safeModeDisable')
-                            : tr('safeModeEnable'),
-                      ),
+                    : Text(tr('safeModeEnable')),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
+
+void showSafeModeDisableDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      final passwordController = TextEditingController();
+      bool isLoading = false;
+      String? errorMessage;
+
+      return StatefulBuilder(
+        builder: (context, setState) {
+          Future<void> disableSafeMode() async {
+            isLoading = true;
+            errorMessage = null;
+            setState(() {});
+
+            try {
+              final settingsProvider = context.read<SettingsProvider>();
+              final success = await settingsProvider.verifySafeModePassword(
+                passwordController.text,
+              );
+
+              if (success) {
+                settingsProvider.safeMode = false;
+                await settingsProvider.clearSafeModePassword();
+                settingsProvider.safeModeHintShown = false;
+                settingsProvider.safeModeTapCount = 0;
+
+                if (context.mounted) {
+                  passwordController.dispose();
+                  Navigator.of(context).pop(true);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(tr('safeModeDisabled')),
+                      backgroundColor: Colors.orange,
+                    ),
+                  );
+                }
+              } else {
+                errorMessage = tr('safeModePasswordIncorrect');
+                setState(() {});
+              }
+            } catch (e) {
+              errorMessage = tr('safeModePasswordError');
+              setState(() {});
+            } finally {
+              isLoading = false;
+              setState(() {});
+            }
+          }
+
+          return AlertDialog(
+            title: Row(
+              children: [
+                Icon(
+                  Icons.lock_rounded,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(width: 12),
+                Text(tr('safeModeDisable')),
+              ],
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  tr('safeModeToggleDescription'),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 20),
+                TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: tr('safeModeEnterPassword'),
+                    hintText: tr('safeModePasswordHint'),
+                    border: const OutlineInputBorder(),
+                  ),
+                  enabled: !isLoading,
+                  onSubmitted: (_) => disableSafeMode(),
+                ),
+                if (errorMessage != null) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    errorMessage!,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: isLoading
+                    ? null
+                    : () {
+                        passwordController.dispose();
+                        Navigator.of(context).pop();
+                      },
+                child: Text(tr('cancel')),
+              ),
+              FilledButton(
+                onPressed: isLoading ? null : disableSafeMode,
+                child: isLoading
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : Text(tr('safeModeDisable')),
               ),
             ],
           );
@@ -248,7 +295,6 @@ class AboutDialogWithSafeMode extends StatefulWidget {
 }
 
 class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
-  int _versionTapCount = 0;
   Timer? _tapResetTimer;
 
   @override
@@ -260,26 +306,23 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
   void _onVersionTapped() {
     final settingsProvider = context.read<SettingsProvider>();
     final isSafeModeEnabled = settingsProvider.safeMode;
+    final tapCount = settingsProvider.safeModeTapCount;
 
-    setState(() {
-      _versionTapCount++;
-    });
+    settingsProvider.safeModeTapCount = tapCount + 1;
 
     _tapResetTimer?.cancel();
     _tapResetTimer = Timer(const Duration(seconds: 2), () {
-      setState(() {
-        _versionTapCount = 0;
-      });
+      settingsProvider.safeModeTapCount = 0;
     });
 
     // Haptic feedback at milestones
-    if (_versionTapCount % 25 == 0) {
+    if ((tapCount + 1) % 25 == 0) {
       HapticFeedback.selectionClick();
     }
 
     // Show remaining taps when Safe Mode is enabled (only from third tap)
-    if (isSafeModeEnabled && _versionTapCount >= 3) {
-      final remaining = 613 - _versionTapCount;
+    if (isSafeModeEnabled && (tapCount + 1) >= 3) {
+      final remaining = 613 - (tapCount + 1);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -295,11 +338,11 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
 
     // Visual feedback at 100-tap intervals when Safe Mode is disabled
     if (!isSafeModeEnabled &&
-        _versionTapCount % 100 == 0 &&
-        _versionTapCount > 0) {
+        (tapCount + 1) % 100 == 0 &&
+        (tapCount + 1) > 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('$_versionTapCount...'),
+          content: Text('${tapCount + 1}...'),
           duration: const Duration(milliseconds: 500),
           behavior: SnackBarBehavior.floating,
         ),
@@ -307,10 +350,8 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
     }
 
     // Success at 613 taps
-    if (_versionTapCount >= 613) {
-      setState(() {
-        _versionTapCount = 0;
-      });
+    if ((tapCount + 1) >= 613) {
+      settingsProvider.safeModeTapCount = 0;
       _tapResetTimer?.cancel();
 
       HapticFeedback.heavyImpact();
@@ -319,7 +360,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
   }
 
   void _showSafeModeDialog() {
-    showSafeModeDialog(context);
+    showSafeModeDisableDialog(context);
   }
 
   @override
