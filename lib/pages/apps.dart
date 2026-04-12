@@ -152,7 +152,6 @@ class AppsPageState extends State<AppsPage> {
   DateTime? refreshingSince;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
 
-
   // Helper function to preserve transparency regardless of theme overrides
   Color preserveTransparency(Color baseColor, double alpha) {
     // Always apply the requested transparency, ensuring it takes priority
@@ -569,7 +568,9 @@ class AppsPageState extends State<AppsPage> {
     // Install app helper method
     void _installApp(App app) {
       appsProvider
-          .downloadAndInstallLatestApps([app.id], globalNavigatorKey.currentContext)
+          .downloadAndInstallLatestApps([
+            app.id,
+          ], globalNavigatorKey.currentContext)
           .catchError((e) {
             showError(e, context);
             return <String>[];
@@ -577,22 +578,35 @@ class AppsPageState extends State<AppsPage> {
     }
 
     // Build action button for install/update/updated states
-    Widget _buildActionButton(App app, bool isInstalled, bool hasUpdate, {bool isCompact = false}) {
+    Widget _buildActionButton(
+      App app,
+      bool isInstalled,
+      bool hasUpdate, {
+      bool isCompact = false,
+    }) {
       if (!isInstalled) {
         return FilledButton.tonal(
-          onPressed: appsProvider.areDownloadsRunning() ? null : () => _installApp(app),
+          onPressed: appsProvider.areDownloadsRunning()
+              ? null
+              : () => _installApp(app),
           style: ButtonStyle(
             visualDensity: isCompact ? VisualDensity.compact : null,
-            minimumSize: WidgetStateProperty.all(isCompact ? const Size(60, 32) : null),
+            minimumSize: WidgetStateProperty.all(
+              isCompact ? const Size(60, 32) : null,
+            ),
           ),
           child: Text(tr('install')),
         );
       } else if (hasUpdate) {
         return FilledButton.tonal(
-          onPressed: appsProvider.areDownloadsRunning() ? null : () => _installApp(app),
+          onPressed: appsProvider.areDownloadsRunning()
+              ? null
+              : () => _installApp(app),
           style: ButtonStyle(
             visualDensity: isCompact ? VisualDensity.compact : null,
-            minimumSize: WidgetStateProperty.all(isCompact ? const Size(60, 32) : null),
+            minimumSize: WidgetStateProperty.all(
+              isCompact ? const Size(60, 32) : null,
+            ),
           ),
           child: Text(tr('update')),
         );
@@ -620,14 +634,17 @@ class AppsPageState extends State<AppsPage> {
       final appInfo = listedApps[index];
       final app = appInfo.app;
       final isInstalled = app.installedVersion != null;
-      final hasUpdate = isInstalled && app.installedVersion != app.latestVersion;
+      final hasUpdate =
+          isInstalled && app.installedVersion != app.latestVersion;
       final isTrackOnly = app.additionalSettings['trackOnly'] == true;
       final isSelected = selectedAppIds.contains(app.id);
 
       return Card(
         elevation: 2,
-        color: isSelected 
-            ? Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3)
+        color: isSelected
+            ? Theme.of(
+                context,
+              ).colorScheme.primaryContainer.withValues(alpha: 0.3)
             : null,
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
@@ -696,7 +713,12 @@ class AppsPageState extends State<AppsPage> {
                     const SizedBox(height: 8),
                     // Action button
                     if (!isTrackOnly)
-                      _buildActionButton(app, isInstalled, hasUpdate, isCompact: true),
+                      _buildActionButton(
+                        app,
+                        isInstalled,
+                        hasUpdate,
+                        isCompact: true,
+                      ),
                   ],
                 ),
               ),
@@ -729,7 +751,8 @@ class AppsPageState extends State<AppsPage> {
       final appInfo = listedApps[index];
       final app = appInfo.app;
       final isInstalled = app.installedVersion != null;
-      final hasUpdate = isInstalled && app.installedVersion != app.latestVersion;
+      final hasUpdate =
+          isInstalled && app.installedVersion != app.latestVersion;
       final isTrackOnly = app.additionalSettings['trackOnly'] == true;
       final isSelected = selectedAppIds.contains(app.id);
 
@@ -737,7 +760,9 @@ class AppsPageState extends State<AppsPage> {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         child: ListTile(
           selected: isSelected,
-          selectedTileColor: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3),
+          selectedTileColor: Theme.of(
+            context,
+          ).colorScheme.primaryContainer.withValues(alpha: 0.3),
           leading: SizedBox(
             height: 48,
             width: 48,
@@ -799,11 +824,11 @@ class AppsPageState extends State<AppsPage> {
                   ),
                 )
               : isTrackOnly
-                  ? Icon(
-                      Icons.check_circle_outline,
-                      color: Theme.of(context).colorScheme.primary,
-                    )
-                  : _buildActionButton(app, isInstalled, hasUpdate),
+              ? Icon(
+                  Icons.check_circle_outline,
+                  color: Theme.of(context).colorScheme.primary,
+                )
+              : _buildActionButton(app, isInstalled, hasUpdate),
           onTap: () => _handleAppTap(app),
           onLongPress: () => toggleAppSelected(app),
         ),
@@ -1442,12 +1467,12 @@ class AppsPageState extends State<AppsPage> {
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
             ),
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return getSingleAppGridTile(index);
-              },
-              childCount: listedApps.length,
-            ),
+            delegate: SliverChildBuilderDelegate((
+              BuildContext context,
+              int index,
+            ) {
+              return getSingleAppGridTile(index);
+            }, childCount: listedApps.length),
           );
         } else {
           return SliverList(

@@ -285,7 +285,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       horizontalGap12,
                       Expanded(child: Text(tr('authorName'))),
-                      if (settingsProvider.sortColumn == SortColumnSettings.authorName)
+                      if (settingsProvider.sortColumn ==
+                          SortColumnSettings.authorName)
                         Icon(
                           Icons.check_rounded,
                           size: 20,
@@ -305,7 +306,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       horizontalGap12,
                       Expanded(child: Text(tr('nameAuthor'))),
-                      if (settingsProvider.sortColumn == SortColumnSettings.nameAuthor)
+                      if (settingsProvider.sortColumn ==
+                          SortColumnSettings.nameAuthor)
                         Icon(
                           Icons.check_rounded,
                           size: 20,
@@ -325,7 +327,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       horizontalGap12,
                       Expanded(child: Text(tr('asAdded'))),
-                      if (settingsProvider.sortColumn == SortColumnSettings.added)
+                      if (settingsProvider.sortColumn ==
+                          SortColumnSettings.added)
                         Icon(
                           Icons.check_rounded,
                           size: 20,
@@ -345,7 +348,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       horizontalGap12,
                       Expanded(child: Text(tr('releaseDate'))),
-                      if (settingsProvider.sortColumn == SortColumnSettings.releaseDate)
+                      if (settingsProvider.sortColumn ==
+                          SortColumnSettings.releaseDate)
                         Icon(
                           Icons.check_rounded,
                           size: 20,
@@ -401,7 +405,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       horizontalGap12,
                       Expanded(child: Text(tr('ascending'))),
-                      if (settingsProvider.sortOrder == SortOrderSettings.ascending)
+                      if (settingsProvider.sortOrder ==
+                          SortOrderSettings.ascending)
                         Icon(
                           Icons.check_rounded,
                           size: 20,
@@ -421,7 +426,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       horizontalGap12,
                       Expanded(child: Text(tr('descending'))),
-                      if (settingsProvider.sortOrder == SortOrderSettings.descending)
+                      if (settingsProvider.sortOrder ==
+                          SortOrderSettings.descending)
                         Icon(
                           Icons.check_rounded,
                           size: 20,
@@ -498,7 +504,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         horizontalGap12,
                         Expanded(child: Text(e.value)),
-                        if (settingsProvider.forcedLocale?.toString() == e.key.toString())
+                        if (settingsProvider.forcedLocale?.toString() ==
+                            e.key.toString())
                           Icon(
                             Icons.check_rounded,
                             size: 20,
@@ -514,7 +521,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   settingsProvider.forcedLocale = null;
                   settingsProvider.resetLocaleSafe(context);
                 } else {
-                  final entry = supportedLocales.firstWhere((e) => e.key.toString() == value);
+                  final entry = supportedLocales.firstWhere(
+                    (e) => e.key.toString() == value,
+                  );
                   settingsProvider.forcedLocale = entry.key;
                   context.setLocale(entry.key);
                 }
@@ -562,27 +571,30 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               Text(
                 e.name,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
               gap16,
               ...e.sourceConfigSettingFormItems.map((formItem) {
-                if (formItem.key.contains('switch') || formItem.key.contains('enable')) {
+                if (formItem.key.contains('switch') ||
+                    formItem.key.contains('enable')) {
                   // Switch type
-                  final bool currentValue = settingsProvider.getSettingBool(formItem.key) ?? false;
+                  final bool currentValue =
+                      settingsProvider.getSettingBool(formItem.key) ?? false;
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Flexible(
-                          child: Text(formItem.key),
-                        ),
+                        Flexible(child: Text(formItem.key)),
                         Switch(
                           value: currentValue,
                           onChanged: (value) {
-                            settingsProvider.setSettingBool(formItem.key, value);
+                            settingsProvider.setSettingBool(
+                              formItem.key,
+                              value,
+                            );
                           },
                         ),
                       ],
@@ -590,7 +602,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   );
                 } else {
                   // Text field type
-                  final String currentValue = settingsProvider.getSettingString(formItem.key) ?? '';
+                  final String currentValue =
+                      settingsProvider.getSettingString(formItem.key) ?? '';
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: TextField(
@@ -640,7 +653,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ),
                           initiallyExpanded: true,
-                          tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+                          tilePadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
                           childrenPadding: const EdgeInsets.all(16),
                           children: [
                             gap16,
@@ -816,9 +831,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Text(tr('checkOnStart')),
-                                ),
+                                Flexible(child: Text(tr('checkOnStart'))),
                                 Switch(
                                   value: settingsProvider.checkOnStart,
                                   onChanged: (value) {
@@ -1039,7 +1052,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ),
                           initiallyExpanded: false,
-                          tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+                          tilePadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
                           childrenPadding: const EdgeInsets.all(16),
                           children: [...sourceSpecificFields],
                         ),
@@ -1053,7 +1068,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ),
                           initiallyExpanded: false,
-                          tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+                          tilePadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
                           childrenPadding: const EdgeInsets.all(16),
                           children: [
                             gap16,
@@ -1062,8 +1079,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(16),
                                 child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
@@ -1075,8 +1091,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                             color: Theme.of(
                                               context,
                                             ).colorScheme.primary,
-                                            fontWeight:
-                                                FontWeight.w600,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                     ),
                                     gap8,
@@ -1084,11 +1099,13 @@ class _SettingsPageState extends State<SettingsPage> {
                                       value: settingsProvider.theme,
                                       isExpanded: true,
                                       underline: const SizedBox(),
-                                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                                      icon: const Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                      ),
                                       iconSize: 24,
-                                      iconEnabledColor: Theme.of(context)
-                                          .colorScheme
-                                          .onSurfaceVariant,
+                                      iconEnabledColor: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurfaceVariant,
                                       items: [
                                         DropdownMenuItem(
                                           value: ThemeSettings.system,
@@ -1098,20 +1115,22 @@ class _SettingsPageState extends State<SettingsPage> {
                                                 Icons
                                                     .settings_system_daydream_rounded,
                                                 size: 20,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onSurfaceVariant,
+                                                color: Theme.of(
+                                                  context,
+                                                ).colorScheme.onSurfaceVariant,
                                               ),
                                               horizontalGap12,
-                                              Expanded(child: Text(tr('followSystem'))),
+                                              Expanded(
+                                                child: Text(tr('followSystem')),
+                                              ),
                                               if (settingsProvider.theme ==
                                                   ThemeSettings.system)
                                                 Icon(
                                                   Icons.check_rounded,
                                                   size: 20,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
+                                                  color: Theme.of(
+                                                    context,
+                                                  ).colorScheme.primary,
                                                 ),
                                             ],
                                           ),
@@ -1123,20 +1142,22 @@ class _SettingsPageState extends State<SettingsPage> {
                                               Icon(
                                                 Icons.light_mode_rounded,
                                                 size: 20,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onSurfaceVariant,
+                                                color: Theme.of(
+                                                  context,
+                                                ).colorScheme.onSurfaceVariant,
                                               ),
                                               horizontalGap12,
-                                              Expanded(child: Text(tr('light'))),
+                                              Expanded(
+                                                child: Text(tr('light')),
+                                              ),
                                               if (settingsProvider.theme ==
                                                   ThemeSettings.light)
                                                 Icon(
                                                   Icons.check_rounded,
                                                   size: 20,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
+                                                  color: Theme.of(
+                                                    context,
+                                                  ).colorScheme.primary,
                                                 ),
                                             ],
                                           ),
@@ -1148,9 +1169,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                               Icon(
                                                 Icons.dark_mode_rounded,
                                                 size: 20,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onSurfaceVariant,
+                                                color: Theme.of(
+                                                  context,
+                                                ).colorScheme.onSurfaceVariant,
                                               ),
                                               horizontalGap12,
                                               Expanded(child: Text(tr('dark'))),
@@ -1159,9 +1180,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                                 Icon(
                                                   Icons.check_rounded,
                                                   size: 20,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
+                                                  color: Theme.of(
+                                                    context,
+                                                  ).colorScheme.primary,
                                                 ),
                                             ],
                                           ),
@@ -1183,7 +1204,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             gap16,
                             if (settingsProvider.theme != ThemeSettings.light)
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(child: Text(tr('useBlackTheme'))),
                                   Switch(
@@ -1408,7 +1430,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ),
                           initiallyExpanded: false,
-                          tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+                          tilePadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
                           childrenPadding: const EdgeInsets.all(16),
                           children: [
                             gap16,
@@ -1479,66 +1503,67 @@ class _LogsDialogState extends State<LogsDialog> {
       content: Column(
         children: [
           Card(
-                margin: EdgeInsets.zero,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        tr('filterDays'),
-                        style: Theme.of(context).textTheme.labelSmall
-                            ?.copyWith(
+            margin: EdgeInsets.zero,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    tr('filterDays'),
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  gap8,
+                  DropdownButton<int>(
+                    value: selectedDays,
+                    isExpanded: true,
+                    underline: const SizedBox(),
+                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                    iconSize: 24,
+                    iconEnabledColor: Theme.of(
+                      context,
+                    ).colorScheme.onSurfaceVariant,
+                    items: days.map((day) {
+                      return DropdownMenuItem<int>(
+                        value: day,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.date_range_rounded,
+                              size: 20,
                               color: Theme.of(
                                 context,
-                              ).colorScheme.primary,
-                              fontWeight: FontWeight.w600,
+                              ).colorScheme.onSurfaceVariant,
                             ),
-                      ),
-                      gap8,
-                      DropdownButton<int>(
-                        value: selectedDays,
-                        isExpanded: true,
-                        underline: const SizedBox(),
-                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                        iconSize: 24,
-                        iconEnabledColor: Theme.of(context).colorScheme.onSurfaceVariant,
-                        items: days.map((day) {
-                          return DropdownMenuItem<int>(
-                            value: day,
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.date_range_rounded,
-                                  size: 20,
-                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                ),
-                                horizontalGap12,
-                                Expanded(child: Text(plural('day', day))),
-                                if (selectedDays == day)
-                                  Icon(
-                                    Icons.check_rounded,
-                                    size: 20,
-                                    color: Theme.of(context).colorScheme.primary,
-                                  ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (int? value) {
-                          if (value != null) {
-                            setState(() {
-                              selectedDays = value;
-                            });
-                            filterLogs(value);
-                          }
-                        },
-                      ),
-                    ],
+                            horizontalGap12,
+                            Expanded(child: Text(plural('day', day))),
+                            if (selectedDays == day)
+                              Icon(
+                                Icons.check_rounded,
+                                size: 20,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (int? value) {
+                      if (value != null) {
+                        setState(() {
+                          selectedDays = value;
+                        });
+                        filterLogs(value);
+                      }
+                    },
                   ),
-                ),
+                ],
               ),
+            ),
+          ),
           gap32,
           Text(logString ?? ''),
         ],
@@ -1618,7 +1643,7 @@ class _CategoryEditorSelectorState extends State<CategoryEditorSelector> {
   Widget build(BuildContext context) {
     var settingsProvider = context.watch<SettingsProvider>();
     var appsProvider = context.watch<AppsProvider>();
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1637,7 +1662,7 @@ class _CategoryEditorSelectorState extends State<CategoryEditorSelector> {
             children: settingsProvider.categories.entries.map((entry) {
               final categoryName = entry.key;
               final isSelected = widget.preselected.contains(categoryName);
-              
+
               return FilterChip(
                 label: Text(categoryName),
                 selected: isSelected,
