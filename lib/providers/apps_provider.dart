@@ -987,7 +987,7 @@ class AppsProvider with ChangeNotifier {
       // To work around this, we should assume the install will be successful
       // So we update the app's installed version first as we will never get to the later code
       // We can't conditionally get rid of the 'await' as this causes install fails (BG process times out) - see #896
-      // TODO: When fixed, update this function and the calls to it accordingly
+      // TODO: When background process issue (#896) is fixed, update this function and the calls to it accordingly
       apps[file.appId]!.app.installedVersion =
           apps[file.appId]!.app.latestVersion;
       await saveApps([
@@ -1033,7 +1033,7 @@ class AppsProvider with ChangeNotifier {
   Future<void> moveObbFile(File file, String appId) async {
     if (!file.path.toLowerCase().endsWith('.obb')) return;
 
-    // TODO: Does not support Android 11+
+    // TODO: Implement Android 11+ storage access using MANAGE_EXTERNAL_STORAGE or scoped storage
     if ((await DeviceInfoPlugin().androidInfo).version.sdkInt <= 29) {
       await Permission.storage.request();
     }
@@ -2556,16 +2556,19 @@ class _AppFilePickerState extends State<AppFilePicker> {
                 )
               : const SizedBox.shrink(),
           const SizedBox(height: 16),
-          ...urlsToSelectFrom.map(
-            (u) => RadioListTile<String>(
-              title: Text(u.key),
-              value: u.value,
-              groupValue: fileUrl!.value,
-              onChanged: (String? val) {
-                setState(() {
-                  fileUrl = urlsToSelectFrom.where((e) => e.value == val).first;
-                });
-              },
+          RadioGroup<String>(
+            onChanged: (String? val) {
+              setState(() {
+                fileUrl = urlsToSelectFrom.where((e) => e.value == val).first;
+              });
+            },
+            child: Column(
+              children: urlsToSelectFrom.map(
+                (u) => RadioListTile<String>(
+                  title: Text(u.key),
+                  value: u.value,
+                ),
+              ).toList(),
             ),
           ),
           if (widget.archs != null) const SizedBox(height: 16),
