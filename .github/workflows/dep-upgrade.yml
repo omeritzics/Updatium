@@ -1,0 +1,129 @@
+name: Dependency Upgrade
+
+on:
+  schedule:
+    # Run every Monday at 9:00 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          version: '3.38.9'
+          cache: true
+
+      - name: Update GitHub Actions
+        id: update-actions
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const { execSync } = require('child_process');
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Find all workflow files
+            const workflowFiles = execSync('find .github/workflows -name "*.yml" -o -name "*.yaml"').toString().trim().split('\n');
+            
+            let hasUpdates = false;
+            
+            for (const file of workflowFiles) {
+              if (!file) continue;
+              
+              console.log(`Processing ${file}`);
+              let content = fs.readFileSync(file, 'utf8');
+              const originalContent = content;
+              
+              // Find all uses: actions/...@vX patterns
+              const actionPattern = /uses:\s+([a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+)@v(\d+)/g;
+              let match;
+              
+              while ((match = actionPattern.exec(content)) !== null) {
+                const [fullMatch, actionOwnerRepo, currentVersion] = match;
+                const [owner, repo] = actionOwnerRepo.split('/');
+                
+                try {
+                  // Get latest release version from GitHub API
+                  const response = await github.rest.repos.getLatestRelease({
+                    owner: owner,
+                    repo: repo
+                  });
+                  
+                  const latestTag = response.data.tag_name;
+                  const latestVersion = latestTag.match(/v(\d+)/);
+                  
+                  if (latestVersion && parseInt(latestVersion[1]) > parseInt(currentVersion)) {
+                    console.log(`Updating ${actionOwnerRepo} from v${currentVersion} to ${latestTag}`);
+                    content = content.replace(fullMatch, fullMatch.replace(`@v${currentVersion}`, `@${latestTag}`));
+                    hasUpdates = true;
+                  }
+                } catch (error) {
+                  console.log(`Could not check ${actionOwnerRepo}: ${error.message}`);
+                }
+              }
+              
+              if (content !== originalContent) {
+                fs.writeFileSync(file, content);
+              }
+            }
+            
+            core.setOutput('has_action_updates', hasUpdates);
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check for outdated packages
+        id: outdated
+        run: |
+          flutter pub outdated > outdated.txt
+          cat outdated.txt
+          # Check if there are any outdated packages (excluding git dependencies)
+          if grep -q "pub.dev packages" outdated.txt && ! grep -A 100 "pub.dev packages" outdated.txt | grep -q "All up-to-date"; then
+            echo "has_updates=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_updates=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upgrade dependencies
+        if: steps.outdated.outputs.has_updates == 'true'
+        run: |
+          flutter pub upgrade --major-versions
+          flutter pub get
+
+      - name: Create Pull Request
+        if: steps.outdated.outputs.has_updates == 'true' || steps.update-actions.outputs.has_action_updates == 'true'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          title: 'chore: upgrade dependencies'
+          body: |
+            Automated dependency upgrade.
+            
+            This PR may include:
+            - Flutter/Dart packages from pub.dev to their latest versions
+            - GitHub Actions to their latest versions
+            
+            Git dependencies are not updated automatically and require manual review.
+          branch: upgrade/dependencies
+          commit-message: 'chore: upgrade dependencies'
+          labels: dependencies
+          delete-branch: true
