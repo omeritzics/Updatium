@@ -693,20 +693,7 @@ class AppsPageState extends State<AppsPage> {
               vertical: 16,
             ),
             minVerticalPadding: 8,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-              side: selectedAppIds.contains(listedApps[index].app.id)
-                  ? BorderSide(
-                      color: Theme.of(context).colorScheme.primary,
-                      width: 2,
-                    )
-                  : BorderSide.none,
-            ),
             tileColor: Theme.of(context).colorScheme.surface,
-            selectedTileColor: preserveTransparency(
-              Theme.of(context).colorScheme.primaryContainer,
-              0.3,
-            ),
             selected: selectedAppIds.contains(listedApps[index].app.id),
             leading: SizedBox(
               height: MediaQuery.of(context).size.width * 0.1,
@@ -827,18 +814,6 @@ class AppsPageState extends State<AppsPage> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              if (selectedAppIds.contains(listedApps[index].app.id))
-                Positioned.fill(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: preserveTransparency(
-                        Theme.of(context).colorScheme.primary,
-                        0.2,
-                      ),
-                    ),
-                  ),
-                ),
               if (listedApps[index].app.pinned)
                 Align(
                   alignment: Alignment.topLeft,
