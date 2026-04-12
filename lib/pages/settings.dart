@@ -376,43 +376,156 @@ class _SettingsPageState extends State<SettingsPage> {
             break;
         }
 
-        return TextField(
-          controller: TextEditingController(text: selectedValue),
-          readOnly: true,
-          decoration: InputDecoration(
-            labelText: tr('appSortBy'),
-            border: const OutlineInputBorder(),
-            suffixIcon: const Icon(Icons.arrow_drop_down),
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-          onTap: () {
-            if (controller.isOpen) {
-              controller.close();
-            } else {
-              controller.open();
-            }
-          },
+          child: Material(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                if (controller.isOpen) {
+                  controller.close();
+                } else {
+                  controller.open();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            tr('appSortBy'),
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            selectedValue,
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    AnimatedRotation(
+                      turns: controller.isOpen ? 0.5 : 0,
+                      duration: const Duration(milliseconds: 200),
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         );
       },
       menuChildren: [
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.authorName,
-          child: Text(tr('authorName')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.person_outline_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('authorName'))),
+              if (settingsProvider.sortColumn == SortColumnSettings.authorName)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.nameAuthor,
-          child: Text(tr('nameAuthor')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.sort_by_alpha_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('nameAuthor'))),
+              if (settingsProvider.sortColumn == SortColumnSettings.nameAuthor)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.added,
-          child: Text(tr('asAdded')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.add_circle_outline_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('asAdded'))),
+              if (settingsProvider.sortColumn == SortColumnSettings.added)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortColumn = SortColumnSettings.releaseDate,
-          child: Text(tr('releaseDate')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.calendar_today_outlined,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('releaseDate'))),
+              if (settingsProvider.sortColumn == SortColumnSettings.releaseDate)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
       ],
     );
@@ -424,33 +537,114 @@ class _SettingsPageState extends State<SettingsPage> {
             ? tr('ascending')
             : tr('descending');
 
-        return TextField(
-          controller: TextEditingController(text: selectedValue),
-          readOnly: true,
-          decoration: InputDecoration(
-            labelText: tr('appSortOrder'),
-            border: const OutlineInputBorder(),
-            suffixIcon: const Icon(Icons.arrow_drop_down),
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-          onTap: () {
-            if (controller.isOpen) {
-              controller.close();
-            } else {
-              controller.open();
-            }
-          },
+          child: Material(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                if (controller.isOpen) {
+                  controller.close();
+                } else {
+                  controller.open();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            tr('appSortOrder'),
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            selectedValue,
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    AnimatedRotation(
+                      turns: controller.isOpen ? 0.5 : 0,
+                      duration: const Duration(milliseconds: 200),
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         );
       },
       menuChildren: [
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortOrder = SortOrderSettings.ascending,
-          child: Text(tr('ascending')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.arrow_upward_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('ascending'))),
+              if (settingsProvider.sortOrder == SortOrderSettings.ascending)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
         MenuItemButton(
           onPressed: () =>
               settingsProvider.sortOrder = SortOrderSettings.descending,
-          child: Text(tr('descending')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.arrow_downward_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('descending'))),
+              if (settingsProvider.sortOrder == SortOrderSettings.descending)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
       ],
     );
@@ -466,21 +660,70 @@ class _SettingsPageState extends State<SettingsPage> {
                   )
                   .value;
 
-        return TextField(
-          controller: TextEditingController(text: selectedValue),
-          readOnly: true,
-          decoration: InputDecoration(
-            labelText: tr('language'),
-            border: const OutlineInputBorder(),
-            suffixIcon: const Icon(Icons.arrow_drop_down),
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-          onTap: () {
-            if (controller.isOpen) {
-              controller.close();
-            } else {
-              controller.open();
-            }
-          },
+          child: Material(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+            elevation: 0,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                if (controller.isOpen) {
+                  controller.close();
+                } else {
+                  controller.open();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            tr('language'),
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            selectedValue,
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    AnimatedRotation(
+                      turns: controller.isOpen ? 0.5 : 0,
+                      duration: const Duration(milliseconds: 200),
+                      child: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         );
       },
       menuChildren: [
@@ -489,7 +732,23 @@ class _SettingsPageState extends State<SettingsPage> {
             settingsProvider.forcedLocale = null;
             settingsProvider.resetLocaleSafe(context);
           },
-          child: Text(tr('followSystem')),
+          child: Row(
+            children: [
+              Icon(
+                Icons.settings_system_daydream_rounded,
+                size: 20,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 12),
+              Expanded(child: Text(tr('followSystem'))),
+              if (settingsProvider.forcedLocale == null)
+                Icon(
+                  Icons.check_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+            ],
+          ),
         ),
         ...supportedLocales.map(
           (e) => MenuItemButton(
@@ -497,7 +756,23 @@ class _SettingsPageState extends State<SettingsPage> {
               settingsProvider.forcedLocale = e.key;
               context.setLocale(e.key);
             },
-            child: Text(e.value),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.language_rounded,
+                  size: 20,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+                const SizedBox(width: 12),
+                Expanded(child: Text(e.value)),
+                if (settingsProvider.forcedLocale == e.key)
+                  Icon(
+                    Icons.check_rounded,
+                    size: 20,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+              ],
+            ),
           ),
         ),
       ],
@@ -990,42 +1265,135 @@ class _SettingsPageState extends State<SettingsPage> {
                                     break;
                                 }
 
-                                return TextField(
-                                  controller: TextEditingController(
-                                    text: selectedValue,
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
                                   ),
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    labelText: tr('theme'),
-                                    border: const OutlineInputBorder(),
-                                    suffixIcon: const Icon(
-                                      Icons.arrow_drop_down,
+                                  child: Material(
+                                    color: Theme.of(context).colorScheme.surface,
+                                    borderRadius: BorderRadius.circular(16),
+                                    elevation: 0,
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(16),
+                                      onTap: () {
+                                        if (controller.isOpen) {
+                                          controller.close();
+                                        } else {
+                                          controller.open();
+                                        }
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(
+                                                    tr('theme'),
+                                                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                                      color: Theme.of(context).colorScheme.primary,
+                                                      fontWeight: FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 4),
+                                                  Text(
+                                                    selectedValue,
+                                                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            AnimatedRotation(
+                                              turns: controller.isOpen ? 0.5 : 0,
+                                              duration: const Duration(milliseconds: 200),
+                                              child: Icon(
+                                                Icons.keyboard_arrow_down_rounded,
+                                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                                size: 24,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                  onTap: () {
-                                    if (controller.isOpen) {
-                                      controller.close();
-                                    } else {
-                                      controller.open();
-                                    }
-                                  },
                                 );
                               },
                               menuChildren: [
                                 MenuItemButton(
                                   onPressed: () => settingsProvider.theme =
                                       ThemeSettings.system,
-                                  child: Text(tr('followSystem')),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.settings_system_daydream_rounded,
+                                        size: 20,
+                                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(child: Text(tr('followSystem'))),
+                                      if (settingsProvider.theme == ThemeSettings.system)
+                                        Icon(
+                                          Icons.check_rounded,
+                                          size: 20,
+                                          color: Theme.of(context).colorScheme.primary,
+                                        ),
+                                    ],
+                                  ),
                                 ),
                                 MenuItemButton(
                                   onPressed: () => settingsProvider.theme =
                                       ThemeSettings.light,
-                                  child: Text(tr('light')),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.light_mode_rounded,
+                                        size: 20,
+                                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(child: Text(tr('light'))),
+                                      if (settingsProvider.theme == ThemeSettings.light)
+                                        Icon(
+                                          Icons.check_rounded,
+                                          size: 20,
+                                          color: Theme.of(context).colorScheme.primary,
+                                        ),
+                                    ],
+                                  ),
                                 ),
                                 MenuItemButton(
                                   onPressed: () => settingsProvider.theme =
                                       ThemeSettings.dark,
-                                  child: Text(tr('dark')),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.dark_mode_rounded,
+                                        size: 20,
+                                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(child: Text(tr('dark'))),
+                                      if (settingsProvider.theme == ThemeSettings.dark)
+                                        Icon(
+                                          Icons.check_rounded,
+                                          size: 20,
+                                          color: Theme.of(context).colorScheme.primary,
+                                        ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -1268,80 +1636,22 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ],
       ),
-      persistentFooterButtons: [
-        Row(
-          children: [
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Semantics(
-                    button: true,
-                    label: tr('appSource'),
-                    hint: tr('appSourceHint'),
-                    child: IconButton(
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () {
-                        launchUrlString(
-                          settingsProvider.sourceUrl,
-                          mode: LaunchMode.externalApplication,
-                        );
-                      },
-                      tooltip: tr('appSource'),
-                      icon: const Icon(Icons.code),
-                    ),
-                  ),
-                  Semantics(
-                    button: true,
-                    label: tr('wiki'),
-                    hint: tr('wikiHint'),
-                    child: IconButton(
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () {
-                        launchUrlString(
-                          'https://github.com/omeritzics/Updatium/wiki',
-                          mode: LaunchMode.externalApplication,
-                        );
-                      },
-                      tooltip: tr('wiki'),
-                      icon: context.locale.languageCode == 'he'
-                          ? Transform(
-                              transform: Matrix4.identity(),
-                              child: const Icon(Icons.help),
-                            )
-                          : const Icon(Icons.help),
-                    ),
-                  ),
-                  Semantics(
-                    button: true,
-                    label: tr('appLogs'),
-                    hint: tr('appLogsHint'),
-                    child: IconButton(
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () {
-                        context.read<LogsProvider>().get().then((logs) {
-                          if (logs.isEmpty) {
-                            showMessage(UpdatiumError(tr('noLogs')), context);
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext ctx) {
-                                return const LogsDialog();
-                              },
-                            );
-                          }
-                        });
-                      },
-                      tooltip: tr('appLogs'),
-                      icon: const Icon(Icons.bug_report),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext ctx) {
+              return const AboutDialog();
+            },
+          );
+        },
+        icon: const Icon(Icons.info_outline_rounded),
+        label: Text(tr('about')),
+        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
+        elevation: 6,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      ),
     );
   }
 }
@@ -1383,23 +1693,70 @@ class _LogsDialogState extends State<LogsDialog> {
         children: [
           MenuAnchor(
             builder: (context, controller, child) {
-              return TextField(
-                controller: TextEditingController(
-                  text: plural('day', selectedDays),
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).colorScheme.shadow.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
-                readOnly: true,
-                decoration: InputDecoration(
-                  labelText: tr('filterDays'),
-                  border: const OutlineInputBorder(),
-                  suffixIcon: const Icon(Icons.arrow_drop_down),
+                child: Material(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(16),
+                  elevation: 0,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () {
+                      if (controller.isOpen) {
+                        controller.close();
+                      } else {
+                        controller.open();
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  tr('filterDays'),
+                                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                    color: Theme.of(context).colorScheme.primary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  plural('day', selectedDays),
+                                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          AnimatedRotation(
+                            turns: controller.isOpen ? 0.5 : 0,
+                            duration: const Duration(milliseconds: 200),
+                            child: Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              size: 24,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                onTap: () {
-                  if (controller.isOpen) {
-                    controller.close();
-                  } else {
-                    controller.open();
-                  }
-                },
               );
             },
             menuChildren: days.map((day) {
@@ -1410,7 +1767,23 @@ class _LogsDialogState extends State<LogsDialog> {
                   });
                   filterLogs(day);
                 },
-                child: Text(plural('day', day)),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.date_range_rounded,
+                      size: 20,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(child: Text(plural('day', day))),
+                    if (selectedDays == day)
+                      Icon(
+                        Icons.check_rounded,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                  ],
+                ),
               );
             }).toList(),
           ),
@@ -1537,6 +1910,210 @@ class _CategoryEditorSelectorState extends State<CategoryEditorSelector> {
           }
         }
       }),
+    );
+  }
+}
+
+class AboutDialog extends StatelessWidget {
+  const AboutDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const version = '26.3.0';
+    const buildNumber = '26020419';
+    
+    return AlertDialog(
+      scrollable: true,
+      title: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            child: Icon(
+              Icons.update_rounded,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+              size: 28,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Text(tr('about')),
+        ],
+      ),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            ),
+            child: Column(
+              children: [
+                Image.asset(
+                  'assets/graphics/icon.png',
+                  width: 80,
+                  height: 80,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Updatium',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Version $version ($buildNumber)',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  tr('appDescription'),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            tr('developedBy'),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          const SizedBox(height: 8),
+          TextButton.icon(
+            onPressed: () {
+              launchUrlString(
+                'https://github.com/omeritzics',
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            icon: const Icon(Icons.link_rounded, size: 18),
+            label: Text('omeritzics'),
+            style: TextButton.styleFrom(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.zero,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            tr('sourceCode'),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          const SizedBox(height: 8),
+          TextButton.icon(
+            onPressed: () {
+              launchUrlString(
+                'https://github.com/omeritzics/Updatium',
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            icon: const Icon(Icons.code_rounded, size: 18),
+            label: Text('GitHub'),
+            style: TextButton.styleFrom(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.zero,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            tr('license'),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          const SizedBox(height: 8),
+          TextButton.icon(
+            onPressed: () {
+              launchUrlString(
+                'https://github.com/omeritzics/Updatium/blob/main/LICENSE.md',
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            icon: const Icon(Icons.description_rounded, size: 18),
+            label: Text('GPL-3.0'),
+            style: TextButton.styleFrom(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.zero,
+            ),
+          ),
+          const SizedBox(height: 24),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(context).colorScheme.surfaceContainerLow,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Quick Links',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton.icon(
+                        onPressed: () {
+                          launchUrlString(
+                            'https://github.com/omeritzics/Updatium/wiki',
+                            mode: LaunchMode.externalApplication,
+                          );
+                        },
+                        icon: const Icon(Icons.help_outline_rounded, size: 18),
+                        label: Text(tr('wiki')),
+                        style: TextButton.styleFrom(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextButton.icon(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext ctx) {
+                              return const LogsDialog();
+                            },
+                          );
+                        },
+                        icon: const Icon(Icons.bug_report_outlined, size: 18),
+                        label: Text(tr('appLogs')),
+                        style: TextButton.styleFrom(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(tr('close')),
+        ),
+      ],
     );
   }
 }

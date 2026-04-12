@@ -522,44 +522,125 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => TextButton(
-      onPressed:
-          !updating &&
-              (app?.app.installedVersion == null ||
-                  app?.app.installedVersion != app?.app.latestVersion) &&
-              !areDownloadsRunning
-          ? () async {
-              try {
-                var successMessage = app?.app.installedVersion == null
-                    ? tr('installed')
-                    : tr('appsUpdated');
-                HapticFeedback.heavyImpact();
-                var res = await appsProvider.downloadAndInstallLatestApps(
-                  app?.app.id != null ? [app!.app.id] : [],
-                  globalNavigatorKey.currentContext,
-                );
-                if (res.isNotEmpty && !trackOnly) {
-                  // ignore: use_build_context_synchronously
-                  showMessage(successMessage, context);
+    getInstallOrUpdateButton() => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed:
+                !updating &&
+                    (app?.app.installedVersion == null ||
+                        app?.app.installedVersion != app?.app.latestVersion) &&
+                    !areDownloadsRunning
+                ? () async {
+                    try {
+                      var successMessage = app?.app.installedVersion == null
+                          ? tr('installed')
+                          : tr('appsUpdated');
+                      HapticFeedback.heavyImpact();
+                      var res = await appsProvider.downloadAndInstallLatestApps(
+                        app?.app.id != null ? [app!.app.id] : [],
+                        globalNavigatorKey.currentContext,
+                      );
+                      if (res.isNotEmpty && !trackOnly) {
+                        // ignore: use_build_context_synchronously
+                        showMessage(successMessage, context);
+                      }
+                      if (res.isNotEmpty && mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    } catch (e) {
+                      // ignore: use_build_context_synchronously
+                      showError(e, context);
+                    }
+                  }
+                : null,
+            child: Text(
+              app?.app.installedVersion == null
+                  ? !trackOnly
+                        ? tr('install')
+                        : tr('markInstalled')
+                  : !trackOnly
+                  ? tr('update')
+                  : tr('markUpdated'),
+            ),
+          ),
+        ),
+        const SizedBox(width: 1),
+        PopupMenuButton<String>(
+          icon: const Icon(Icons.arrow_drop_down),
+          onSelected: (String value) {
+            switch (value) {
+              case 'check_update':
+                if (app != null) {
+                  getUpdate(app.app.id);
                 }
-                if (res.isNotEmpty && mounted) {
-                  Navigator.of(context).pop();
+                break;
+              case 'additional_options':
+                if (source != null &&
+                    source.combinedAppSpecificSettingFormItems.isNotEmpty) {
+                  showAdditionalOptionsDialog().then(handleAdditionalOptionChanges);
                 }
-              } catch (e) {
-                // ignore: use_build_context_synchronously
-                showError(e, context);
-              }
+                break;
+              case 'remove':
+                if (app?.app.installedVersion != null &&
+                    app?.app.installedVersion != app?.app.latestVersion &&
+                    !isVersionDetectionStandard &&
+                    !trackOnly) {
+                  appsProvider
+                      .removeAppsWithModal(
+                        context,
+                        app != null ? [app.app] : [],
+                      )
+                      .then((value) {
+                        if (value == true) {
+                          Navigator.of(context).pop();
+                        }
+                      });
+                }
+                break;
             }
-          : null,
-      child: Text(
-        app?.app.installedVersion == null
-            ? !trackOnly
-                  ? tr('install')
-                  : tr('markInstalled')
-            : !trackOnly
-            ? tr('update')
-            : tr('markUpdated'),
-      ),
+          },
+          itemBuilder: (BuildContext context) => [
+            PopupMenuItem<String>(
+              value: 'check_update',
+              child: Row(
+                children: [
+                  const Icon(Icons.refresh),
+                  const SizedBox(width: 8),
+                  Text(tr('checkForUpdates')),
+                ],
+              ),
+            ),
+            if (source != null &&
+                source.combinedAppSpecificSettingFormItems.isNotEmpty)
+              PopupMenuItem<String>(
+                value: 'additional_options',
+                child: Row(
+                  children: [
+                    const Icon(Icons.edit),
+                    const SizedBox(width: 8),
+                    Text(tr('additionalOptions')),
+                  ],
+                ),
+              ),
+            if (app?.app.installedVersion != null &&
+                app?.app.installedVersion != app?.app.latestVersion &&
+                !isVersionDetectionStandard &&
+                !trackOnly)
+              PopupMenuItem<String>(
+                value: 'remove',
+                child: Row(
+                  children: [
+                    const Icon(Icons.delete),
+                    const SizedBox(width: 8),
+                    Text(tr('remove')),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ],
     );
 
     getBottomSheetMenu() => Container(
@@ -577,63 +658,11 @@ class _AppPageState extends State<AppPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (source != null &&
-                      source.combinedAppSpecificSettingFormItems.isNotEmpty)
-                    IconButton(
-                      onPressed: app?.downloadProgress != null || updating
-                          ? null
-                          : () async {
-                              var values = await showAdditionalOptionsDialog();
-                              handleAdditionalOptionChanges(values);
-                            },
-                      tooltip: tr('additionalOptions'),
-                      icon: const Icon(Icons.edit),
-                    ),
-                  if (app?.app.installedVersion != null &&
-                      app?.app.installedVersion != app?.app.latestVersion &&
-                      !isVersionDetectionStandard &&
-                      !trackOnly)
-                    IconButton(
-                      onPressed: app?.downloadProgress != null || updating
-                          ? null
-                          : () {
-                              appsProvider
-                                  .removeAppsWithModal(
-                                    context,
-                                    app != null ? [app.app] : [],
-                                  )
-                                  .then((value) {
-                                    if (value == true) {
-                                      Navigator.of(context).pop();
-                                    }
-                                  });
-                            },
-                      tooltip: tr('remove'),
-                      icon: const Icon(Icons.delete),
-                    ),
                   const SizedBox(width: 16.0),
                   Expanded(child: getInstallOrUpdateButton()),
                   const SizedBox(width: 16.0),
-                  IconButton(
-                    onPressed: app?.downloadProgress != null || updating
-                        ? null
-                        : () {
-                            appsProvider
-                                .removeAppsWithModal(
-                                  context,
-                                  app != null ? [app.app] : [],
-                                )
-                                .then((value) {
-                                  if (value == true) {
-                                    Navigator.of(context).pop();
-                                  }
-                                });
-                          },
-                    tooltip: tr('remove'),
-                    icon: const Icon(Icons.delete),
-                  ),
                 ],
               ),
             ),
