@@ -1792,7 +1792,7 @@ class AboutDialog extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.link_rounded, size: 18),
-            label: Text('omeritzics'),
+            label: Text('Omer I.S. (@omeritzics)'),
             style: TextButton.styleFrom(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.zero,
@@ -1844,7 +1844,7 @@ class AboutDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Quick Links',
+                  tr('quickLinks'),
                   style: Theme.of(
                     context,
                   ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),

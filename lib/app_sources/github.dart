@@ -21,7 +21,7 @@ class GitHub extends AppSource {
 
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        'github-creds',
+        tr('github-creds'),
         label: tr('githubPATLabel'),
         password: true,
         required: false,

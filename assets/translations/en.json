@@ -184,6 +184,7 @@
     "installedVersionX": "Installed: {}",
     "lastUpdateCheckX": "Last update check: {}",
     "remove": "Remove",
+    "quickLinks": "Quick Links",
     "yesMarkUpdated": "Yes, mark as updated",
     "fdroid": "F-Droid official",
     "appIdOrName": "App ID or name",

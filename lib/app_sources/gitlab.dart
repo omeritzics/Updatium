@@ -19,7 +19,7 @@ class GitLab extends AppSource {
     this.hostChanged = hostChanged;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        'gitlab-creds',
+        tr('gitlab-creds'),
         label: tr('gitlabPATLabel'),
         password: true,
         required: false,
