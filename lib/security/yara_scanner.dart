@@ -176,23 +176,35 @@ class YARARule {
 
     int currentRuleStart = -1;
     String? currentRuleName;
+    final currentRuleTags = <String>[];
     final currentRuleLines = <String>[];
 
     for (int i = 0; i < lines.length; i++) {
       final line = lines[i];
       final trimmedLine = line.trim();
 
-      // Detect rule block start
-      if (trimmedLine.startsWith('rule ')) {
+      // Detect rule block start with optional qualifier and tag list
+      final rulePattern = RegExp(r'^\s*(?:private|global)?\s*rule\s+([^\s{:]+)(?:\s*:\s*([^{]+))?');
+      final ruleMatch = rulePattern.firstMatch(trimmedLine);
+      
+      if (ruleMatch != null) {
         // If we were building a previous rule, finalize it first
         if (currentRuleStart != -1 && currentRuleName != null) {
           final ruleContent = currentRuleLines.join('\n');
-          rules.add(_parseSingleRule(ruleContent, currentRuleName));
+          rules.add(_parseSingleRule(ruleContent, currentRuleName, currentRuleTags));
         }
 
         // Start new rule
         currentRuleStart = i;
-        currentRuleName = trimmedLine.substring(5).trim().split(' ').first;
+        currentRuleName = ruleMatch.group(1);
+        currentRuleTags.clear();
+        
+        // Extract tags from group 2 if present (standard tags after colon)
+        final tagList = ruleMatch.group(2);
+        if (tagList != null && tagList.trim().isNotEmpty) {
+          currentRuleTags.addAll(tagList.trim().split(RegExp(r'\s+')));
+        }
+        
         currentRuleLines.clear();
         currentRuleLines.add(line);
       } else if (currentRuleStart != -1) {
@@ -203,31 +215,40 @@ class YARARule {
         if (i == lines.length - 1) {
           // End of file - finalize the last rule
           final ruleContent = currentRuleLines.join('\n');
-          rules.add(_parseSingleRule(ruleContent, currentRuleName!));
+          rules.add(_parseSingleRule(ruleContent, currentRuleName!, currentRuleTags));
         }
       }
     }
 
     // Handle case where file has no explicit rule blocks (single rule without "rule " prefix)
     if (rules.isEmpty && fileContent.trim().isNotEmpty) {
-      rules.add(_parseSingleRule(fileContent, null));
+      rules.add(_parseSingleRule(fileContent, null, []));
     }
 
     return rules;
   }
 
   /// Parse a single rule block with its content
-  static YARARule _parseSingleRule(String ruleContent, String? fallbackName) {
+  static YARARule _parseSingleRule(String ruleContent, String? fallbackName, List<String> initialTags) {
     final lines = ruleContent.split('\n');
     String? ruleName = fallbackName;
     String? author;
     String? description;
-    final tags = <String>[];
+    final tags = List<String>.from(initialTags);
 
     for (final line in lines) {
       final trimmedLine = line.trim();
-      if (trimmedLine.startsWith('rule ') && ruleName == null) {
-        ruleName = trimmedLine.substring(5).trim().split(' ').first;
+      // Use the same regex pattern to extract rule name and tags from header
+      final rulePattern = RegExp(r'^\s*(?:private|global)?\s*rule\s+([^\s{:]+)(?:\s*:\s*([^{]+))?');
+      final ruleMatch = rulePattern.firstMatch(trimmedLine);
+      
+      if (ruleMatch != null && ruleName == null) {
+        ruleName = ruleMatch.group(1);
+        // Extract tags from group 2 if present (standard tags after colon)
+        final tagList = ruleMatch.group(2);
+        if (tagList != null && tagList.trim().isNotEmpty) {
+          tags.addAll(tagList.trim().split(RegExp(r'\s+')));
+        }
       } else if (trimmedLine.startsWith('author = ')) {
         author = trimmedLine.substring(9).trim().replaceAll('"', '');
       } else if (trimmedLine.startsWith('description = ')) {

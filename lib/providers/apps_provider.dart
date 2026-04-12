@@ -34,7 +34,8 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:updatium/security/security_settings_provider.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:android_package_manager/android_package_manager.dart';
+import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 
 class AppInMemory {
   late App app;
@@ -493,29 +494,9 @@ Future<File> downloadFile(
 
 Future<List<PackageInfo>> getAllInstalledInfo() async {
   try {
-    // Use platform channel to get all installed apps
-    const platform = MethodChannel('updatium/package_manager');
-    final List<dynamic> installedApps = await platform.invokeMethod(
-      'getInstalledApps',
-    );
-
-    List<PackageInfo> packageInfoList = [];
-    for (var appData in installedApps) {
-      try {
-        // Create PackageInfo objects from the platform data
-        final packageInfo = PackageInfo(
-          appName: appData['appName'] ?? '',
-          packageName: appData['packageName'] ?? '',
-          version: appData['version'] ?? '',
-          buildNumber: appData['buildNumber'] ?? '',
-        );
-        packageInfoList.add(packageInfo);
-      } catch (e) {
-        // Skip individual app errors but continue processing others
-        print('Error parsing app data: $e'); // OK
-      }
-    }
-    return packageInfoList;
+    final pm = AndroidPackageManager();
+    final packages = await pm.getInstalledPackages();
+    return packages ?? [];
   } catch (e) {
     print('Error getting installed apps: $e'); // OK
     return [];
@@ -531,23 +512,8 @@ Future<PackageInfo?> getInstalledInfo(
   }
 
   try {
-    // Use platform channel to get specific app info
-    const platform = MethodChannel('updatium/package_manager');
-    final Map<String, dynamic>? appData = await platform.invokeMethod(
-      'getAppInfo',
-      {'packageName': packageName},
-    );
-
-    if (appData == null) {
-      return null;
-    }
-
-    return PackageInfo(
-      appName: appData['appName'] ?? '',
-      packageName: appData['packageName'] ?? '',
-      version: appData['version'] ?? '',
-      buildNumber: appData['buildNumber'] ?? '',
-    );
+    final pm = AndroidPackageManager();
+    return await pm.getPackageInfo(packageName: packageName);
   } catch (e) {
     if (printErr) {
       print(e); // OK
@@ -567,6 +533,7 @@ class AppsProvider with ChangeNotifier {
   bool gettingUpdates = false;
   bool exportInProgress = false;
   LogsProvider logs = LogsProvider();
+  late AndroidPackageManager pm = AndroidPackageManager();
 
   // Variables to keep track of the app foreground status (installs can't run in the background)
   bool isForeground = true;
@@ -1109,9 +1076,10 @@ class AppsProvider with ChangeNotifier {
     int? code;
     if (!settingsProvider.useShizuku) {
       // AndroidPackageInstaller functionality removed
-      code = 'not_implemented';
+      code = null;
     } else {
-      code = await ShizukuApkInstaller().installAPK(
+      final shizuku = ShizukuApkInstaller();
+      code = await shizuku.installAPK(
         file.file.uri.toString(),
         shizukuPretendToBeGooglePlay ? "com.android.vending" : "",
       );
@@ -1411,7 +1379,8 @@ class AppsProvider with ChangeNotifier {
             throw UpdatiumError(tr('cancelled'));
           }
         } else {
-          switch ((await ShizukuApkInstaller().checkPermission())!) {
+          final shizuku = ShizukuApkInstaller();
+          switch ((await shizuku.checkPermission())!) {
             case 'binder_not_found':
               throw UpdatiumError(tr('shizukuBinderNotFound'));
             case 'old_shizuku':
@@ -1862,10 +1831,8 @@ class AppsProvider with ChangeNotifier {
     }
     // Delete externally uninstalled Apps if needed
     if (removedAppIds.isNotEmpty) {
-      if (removedAppIds.isNotEmpty) {
-        if (settingsProvider.removeOnExternalUninstall) {
-          await removeApps(removedAppIds);
-        }
+      if (settingsProvider.removeOnExternalUninstall) {
+        await removeApps(removedAppIds);
       }
     }
     loadingApps = false;
@@ -2433,8 +2400,6 @@ class AppsProvider with ChangeNotifier {
       notifyListeners();
 
       try {
-        var encoder = const JsonEncoder.withIndent("    ");
-        Map<String, dynamic> finalExport = generateExportJSON();
         // DocMan functionality removed - just return null
         return null;
       } catch (e) {
@@ -2447,10 +2412,6 @@ class AppsProvider with ChangeNotifier {
         exportInProgress = false;
         notifyListeners();
       }
-
-      returnPath = exportDir.pathSegments
-          .join('/')
-          .replaceFirst('tree/primary:', '/');
     }
     return returnPath;
   }
