@@ -241,10 +241,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           if (await showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
-                  return _ImportDialog(
-                    action: action,
-                    dataStr: dataStr,
-                  );
+                  return _ImportDialog(action: action, dataStr: dataStr);
                 },
               ) ==
               true) {
@@ -454,10 +451,7 @@ class _ImportDialog extends StatefulWidget {
   final String action;
   final String dataStr;
 
-  const _ImportDialog({
-    required this.action,
-    required this.dataStr,
-  });
+  const _ImportDialog({required this.action, required this.dataStr});
 
   @override
   State<_ImportDialog> createState() => _ImportDialogState();
