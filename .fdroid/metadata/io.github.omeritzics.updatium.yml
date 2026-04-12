@@ -1,0 +1,46 @@
+License: GPL-3.0-or-later
+WebSite: https://github.com/omeritzics/Updatium
+SourceCode: https://github.com/omeritzics/Updatium
+IssueTracker: https://github.com/omeritzics/Updatium/issues
+Changelog: https://github.com/omeritzics/Updatium/releases
+Donate: https://github.com/omeritzics/Updatium
+
+AutoName: Updatium
+Summary: Update Android apps from APK sources
+Description: |
+  Updatium is a customizable Android app catalogue that allows you to update your apps directly from their APK sources, and to receive notifications when updates are available.
+
+  Features:
+  * Support for multiple APK sources (GitHub, GitLab, F-Droid, APKPure, APKMirror, etc.)
+  * Material Design 3 Expressive interface
+  * Customizable app catalog with grid and list views
+  * Update notifications
+  * Dark theme and Material You support
+  * Safe Mode with password protection
+  * Localization support for 35+ languages
+
+RepoType: git
+Repo: https://github.com/omeritzics/Updatium.git
+
+Builds:
+  - versionName: 26.3.0
+    versionCode: 26020419
+    commit: main
+    submodules: true
+    output: build/app/outputs/flutter-apk/app-fdroid-release.apk
+    srclibs:
+      - flutter@stable
+    prebuild:
+      - export PUB_CACHE=$(pwd)/.pub-cache
+      - $$flutter$$/bin/flutter config --no-analytics
+      - $$flutter$$/bin/flutter pub get
+    build:
+      - export PUB_CACHE=$(pwd)/.pub-cache
+      - $$flutter$$/bin/flutter build apk --flavor fdroid --release
+
+AutoUpdateMode: None
+UpdateCheckMode: Tags
+CurrentVersion: 26.3.0
+CurrentVersionCode: 26020419
+
+# Note: APK size optimized with ProGuard and resource shrinking for IzzyOnDroid 30MB limit
