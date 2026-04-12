@@ -6,7 +6,7 @@
 
 Update your Android apps directly from the APK source. Updatium helps you to install apps and update them directly from their release pages or APK sources, and to receive notifications when updates are available.
 
-#### [Testers needed. Click here for more information](https://github.com/omeritzics/Updatium/issues/280)
+#### [Testers needed. Click here for more information.](https://github.com/omeritzics/Updatium/issues/280)
 
 ## Features
 ### Currently supported App sources:
@@ -44,7 +44,7 @@ Do not download Updatium from unofficial sources (such as Appteka), since these 
 | <img src="./assets/screenshots/4.app.png" alt="App Page" />   | |  |
 
 ### Localization
-Updatium currently supports 31 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull with the new translations added to [here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
+Updatium currently supports 35 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull with the new translations added to [here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
 
 If you don't know how to make a pull request, and/or you don't have any experience with Git, you can open an issue [here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help you with adding your language. 
 
