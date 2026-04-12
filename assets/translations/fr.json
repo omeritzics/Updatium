@@ -183,6 +183,7 @@
     "installedVersionX": "Version installée : {}",
     "lastUpdateCheckX": "Dernière recherche de mises à jour : {}",
     "remove": "Supprimer",
+    "quickLinks": "Liens rapides",
     "yesMarkUpdated": "Oui, marquer comme étant à jour",
     "fdroid": "F-Droid Officiel",
     "appIdOrName": "ID ou nom de l'application",

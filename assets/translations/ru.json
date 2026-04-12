@@ -181,6 +181,7 @@
     "installedVersionX": "Установленная версия: {}",
     "lastUpdateCheckX": "Последняя проверка: {}",
     "remove": "Удалить",
+    "quickLinks": "Быстрые ссылки",
     "yesMarkUpdated": "Да, отметить как обновлённое",
     "fdroid": "Официальные репозитории F-Droid",
     "appIdOrName": "ID или название приложения",

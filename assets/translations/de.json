@@ -183,6 +183,7 @@
     "installedVersionX": "Installierte Version: {}",
     "lastUpdateCheckX": "Letzte Aktualisierungsprüfung: {}",
     "remove": "Entfernen",
+    "quickLinks": "Schnelllinks",
     "yesMarkUpdated": "Ja, als aktualisiert markieren",
     "fdroid": "Offizielles F-Droid-Repo",
     "appIdOrName": "App-ID oder Name",

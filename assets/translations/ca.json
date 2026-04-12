@@ -181,6 +181,7 @@
     "installedVersionX": "Versió instal·lada: {}",
     "lastUpdateCheckX": "Última comprovació d'actualització: {}",
     "remove": "Suprimeix",
+    "quickLinks": "Enllaços ràpids",
     "yesMarkUpdated": "Sí, marca com a actualitzada",
     "fdroid": "Repositori oficial F-Droid",
     "appIdOrName": "ID o nom de l'aplicació",

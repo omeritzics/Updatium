@@ -181,6 +181,7 @@
     "installedVersionX": "インストール済み: {}",
     "lastUpdateCheckX": "最終アップデート確認: {}",
     "remove": "削除",
+    "quickLinks": "クイックリンク",
     "yesMarkUpdated": "はい、アップデート済みとしてマークします",
     "fdroid": "F-Droid公式",
     "appIdOrName": "アプリのIDまたは名前",

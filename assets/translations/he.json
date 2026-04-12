@@ -75,7 +75,7 @@
     "pinToTop": "הצמדה לחלק העליון",
     "unpinFromTop": "ביטול הצמדה לחלק העליון",
     "resetInstallStatusForSelectedAppsQuestion": "לאפס את מצב ההתקנה ליישומים שנבחרו?",
-    "installStatusOfXWillBeResetExplanation": "The install status of any selected apps will be reset.\n\nThis can help when the app version shown in Updatium is incorrect due to failed updates or other issues.",
+    "installStatusOfXWillBeResetExplanation": "מצב ההתקנה יתאפס לכל היישומים הנבחרים.\n\nThis can help when the app version shown in Updatium is incorrect due to failed updates or other issues.",
     "customLinkMessage": "הקישורים האלה עובדים במכשירים שבהם מותקן היישום Updatium",
     "shareAppConfigLinks": "שיתוף תצורת היישום בתור קישור HTML",
     "shareSelectedAppURLs": "שיתוף כתובות היישומים שנבחרו",
@@ -141,10 +141,10 @@
     "close": "סגירה",
     "share": "שיתוף",
     "appNotFound": "היישום לא נמצא",
-    "networkError": "Network connection failed",
-    "invalidUrlFormat": "Invalid URL format",
-    "accessDenied": "Access denied",
-    "importFailed": "Import failed",
+    "networkError": "החיבור לרשת נכשל",
+    "invalidUrlFormat": "תבנית כתובת לא תקנית",
+    "accessDenied": "הגישה נדחתה",
+    "importFailed": "הייבוא נכשל",
     "updatiumExportHyphenatedLowercase": "updatium-export",
     "pickAnAPK": "נא לבחור קובץ APK",
     "appHasMoreThanOnePackage": "ליישום {} יש יותר מחבילה אחת:",
@@ -183,6 +183,7 @@
     "installedVersionX": "גרסה מותקנת: {}",
     "lastUpdateCheckX": "בדיקת העדכונים האחרונה: {}",
     "remove": "הסרה",
+    "quickLinks": "קישורים מהירים",
     "yesMarkUpdated": "כן, לסמן כמעודכן",
     "fdroid": "מאגר F-Droid הרשמי",
     "appIdOrName": "מזהה או שם של יישום",
@@ -293,7 +294,7 @@
     "exemptFromBackgroundUpdates": "הוצאה מהעדכונים ברקע (אם מופעלים)",
     "bgUpdatesOnWiFiOnly": "השבתת עדכוני רקע כאשר המכשיר אינו מחובר לרשת אלחוטית (Wi-Fi)",
     "bgUpdatesWhileChargingOnly": "השבתת עדכוני רקע כאשר המכשיר אינו בהטענה",
-    "autoSelectHighestVersionCode": "Auto-select highest versionCode APK",
+    "autoSelectHighestVersionCode": "בחירה אוטומטית של קובץ ה־APK עם קוד הגרסה הגבוה ביותר",
     "versionExtractionRegEx": "ביטוי רגולרי לחילוץ מחרוזת הגרסה",
     "trimVersionString": "קיצוץ מחרוזת הגרסה בעזרת ביטוי רגולרי",
     "matchGroupToUseForX": "Match group to use for \"{}\"",
@@ -374,7 +375,7 @@
     "googleVerificationWarningP1": "Google has announced that, starting in 2026/2027, all apps on \"certified\" Android devices will require the developer to submit personal identity details directly to Google.\n\nAfter then, Updatium may stop working on certified Android devices.",
     "googleVerificationWarningP2": "Go to https://keepandroidopen.org/ for more information.",
     "googleVerificationWarningP3": "Note that in the short term, it may continue to be possible to install \"unverified\" (non-compliant) apps through an \"advanced flow\" process that Google has promised to implement after broad backlash to their announcement, but they have not detailed how this would work so it is unclear whether it will truly preserve user freedoms in any practical way.\n\nIn any case, Google's move is a significant step towards the end of free, general-purpose computing for individuals.\n\nNon-certified OSes, like GrapheneOS, should be unaffected by this for as long as they are allowed to continue to exist.",
-    "multipleSigners": "Multiple Signers",
+    "multipleSigners": "חותמים מרובים",
     "removeAppQuestion": {
         "one": "להסיר את היישום?",
         "two": "להסיר את שני היישומים?",
@@ -391,9 +392,9 @@
         "other": "BG update checking encountered a {}, will schedule a retry check in {} minutes"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "BG update checking found {} update - will notify user if needed",
-        "two": "BG update checking found {} updates - will notify user if needed",
-        "other": "BG update checking found {} updates - will notify user if needed"
+        "one": "בדיקת העדכונים ברקע מצאה עדכון אחד - המשתמש יקבל התראה במידת הצורך",
+        "two": "בדיקת העדכונים ברקע מצאה שני עדכונים - המשתמש יקבל התראה במידת הצורך",
+        "other": "בדיקת העדכונים ברקע מצאה {} עדכונים - המשתמש יקבל התראה במידת הצורך"
     },
     "apps": {
         "one": "יישום אחד",
@@ -441,9 +442,9 @@
         "other": "נכשל העדכון של {} ועוד {} יישומים."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} ועוד יישום אחד עשויים להיות עודכנו.",
-        "two": "{} and 2 more apps may have been updated.",
-        "other": "{} and {} more apps may have been updated."
+        "one": "ייתכן כי {} ועוד יישום אחד התעדכנו.",
+        "two": "ייתכן כי {} ועוד שני יישומים התעדכנו.",
+        "other": "ייתכן כי {} ועוד {} יישומים התעדכנו."
     },
     "apk": {
         "one": "קובץ APK אחד",
@@ -468,6 +469,6 @@
     "githubStarPromptStar": "הענקת כוכב",
     "githubStarPromptDontShowAgain": "לא להציג שוב",
     "sourceCode": "קוד מקור",
-    "developedBy": "פותח על ידי",
-    "appDescription": "קטלוג יישומים הניתן להתאמה אישית עבור אנדרואיד, המאפשר לעדכן את היישומים ישירות מהמקורות לקובצי ה־APK שלהם"
+    "developedBy": "בפיתוח על ידי",
+    "appDescription": "קטלוג יישומים הניתן להתאמה אישית עבור אנדרואיד, המאפשר לעדכן את היישומים ישירות מהמקורות לקובצי ה־APK שלהם."
 }

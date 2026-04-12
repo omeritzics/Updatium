@@ -181,6 +181,7 @@
     "installedVersionX": "已安裝版本：{}",
     "lastUpdateCheckX": "上次檢查更新時間：{}",
     "remove": "移除",
+    "quickLinks": "快速連結",
     "yesMarkUpdated": "是，標記為已更新",
     "fdroid": "F-Droid 官方",
     "appIdOrName": "應用程式 ID 或名稱",
