@@ -20,11 +20,55 @@ class YARAConfig {
     this.updateInterval = const Duration(hours: 24),
     this.enableAutoUpdate = true,
     this.ruleSources = const [
-      'https://raw.githubusercontent.com/Yara-Rules/rules/master/index.yar',
-      'https://raw.githubusercontent.com/Yara-Rules/rules/master/malware/MALW_YaraRule_APT.yar',
-      'https://raw.githubusercontent.com/Yara-Rules/rules/master/malware/MALW_YaraRule_Mobile.yar',
+      'https://raw.githubusercontent.com/Yara-Rules/rules/0f93570194a80d2f2032869055808b0ddcdfb360/index.yar',
+      'https://raw.githubusercontent.com/Yara-Rules/rules/0f93570194a80d2f2032869055808b0ddcdfb360/malware/MALW_YaraRule_APT.yar',
+      'https://raw.githubusercontent.com/Yara-Rules/rules/0f93570194a80d2f2032869055808b0ddcdfb360/malware/MALW_YaraRule_Mobile.yar',
     ],
   });
+}
+
+/// YARA Rule Manifest
+class YARARuleManifest {
+  final Map<String, String> fileHashes;
+  final String signature;
+  final DateTime timestamp;
+  final String version;
+
+  YARARuleManifest({
+    required this.fileHashes,
+    required this.signature,
+    required this.timestamp,
+    required this.version,
+  });
+
+  factory YARARuleManifest.fromJson(Map<String, dynamic> json) {
+    return YARARuleManifest(
+      fileHashes: Map<String, String>.from(json['fileHashes'] ?? {}),
+      signature: json['signature'] ?? '',
+      timestamp: DateTime.parse(
+        json['timestamp'] ?? DateTime.now().toIso8601String(),
+      ),
+      version: json['version'] ?? '1.0',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'fileHashes': fileHashes,
+      'signature': signature,
+      'timestamp': timestamp.toIso8601String(),
+      'version': version,
+    };
+  }
+}
+
+/// YARA Rule Verification Exception
+class YARARuleVerificationError extends UpdatiumError {
+  final String source;
+  final String reason;
+
+  YARARuleVerificationError({required this.source, required this.reason})
+    : super('YARA rule verification failed for $source: $reason');
 }
 
 /// YARA Rule Update Exception
@@ -281,6 +325,27 @@ class YARAScanner {
         if (entity is File && entity.path.endsWith('.yar')) {
           try {
             final content = await entity.readAsString();
+            final fileName = path.basename(entity.path);
+
+            // Find the corresponding source URL for this file
+            final sourceUrl = config.ruleSources.firstWhere(
+              (url) => url.endsWith(fileName),
+              orElse: () => '',
+            );
+
+            // Verify the rule file if we have a source URL
+            if (sourceUrl.isNotEmpty) {
+              try {
+                await _verifyRuleFile(sourceUrl, content);
+              } catch (e) {
+                errorCount++;
+                _logs.add(
+                  'Rule verification failed: $fileName - ${e.toString()}',
+                );
+                continue; // Skip this file
+              }
+            }
+
             final rules = YARARule.parseMultiple(content);
             newRules.addAll(rules);
             loadedCount += rules.length;
@@ -305,6 +370,109 @@ class YARAScanner {
     }
   }
 
+  /// Verify YARA rule file against manifest
+  Future<bool> _verifyRuleFile(String source, String content) async {
+    try {
+      // Calculate SHA256 hash of the content
+      final contentBytes = utf8.encode(content);
+      final contentHash = sha256.convert(contentBytes).toString();
+
+      // Try to fetch manifest for this source
+      final manifestUrl = _getManifestUrl(source);
+      if (manifestUrl == null) {
+        _logs.add(
+          'No manifest URL available for $source - skipping verification',
+        );
+        return true; // Allow if no manifest available
+      }
+
+      final manifestResponse = await http
+          .get(Uri.parse(manifestUrl))
+          .timeout(
+            const Duration(seconds: 10),
+            onTimeout: () =>
+                throw TimeoutException('Manifest request timed out'),
+          );
+
+      if (manifestResponse.statusCode != 200) {
+        throw YARARuleVerificationError(
+          source: source,
+          reason: 'Manifest HTTP ${manifestResponse.statusCode}',
+        );
+      }
+
+      final manifestData = jsonDecode(manifestResponse.body);
+      final manifest = YARARuleManifest.fromJson(manifestData);
+
+      // Get the expected hash for this file
+      final fileName = source.split('/').last;
+      final expectedHash = manifest.fileHashes[fileName];
+
+      if (expectedHash == null) {
+        throw YARARuleVerificationError(
+          source: source,
+          reason: 'File not found in manifest',
+        );
+      }
+
+      // Compare hashes
+      if (contentHash != expectedHash) {
+        throw YARARuleVerificationError(
+          source: source,
+          reason: 'Hash mismatch: expected $expectedHash, got $contentHash',
+        );
+      }
+
+      // Verify signature (basic implementation - in production, use proper cryptographic verification)
+      if (!_verifySignature(manifest, manifestData)) {
+        throw YARARuleVerificationError(
+          source: source,
+          reason: 'Invalid manifest signature',
+        );
+      }
+
+      _logs.add('Rule verification passed: $fileName');
+      return true;
+    } catch (e) {
+      if (e is YARARuleVerificationError) {
+        rethrow;
+      }
+      throw YARARuleVerificationError(
+        source: source,
+        reason: 'Verification failed: ${e.toString()}',
+      );
+    }
+  }
+
+  /// Get manifest URL for a given rule source
+  String? _getManifestUrl(String source) {
+    // For GitHub raw content, construct manifest URL
+    if (source.contains('raw.githubusercontent.com')) {
+      final uri = Uri.parse(source);
+      final segments = uri.pathSegments;
+      if (segments.length >= 4) {
+        // Extract owner, repo, and commit from path like /Yara-Rules/rules/commit/file.yar
+        final owner = segments[1];
+        final repo = segments[2];
+        final commit = segments[3];
+
+        return 'https://raw.githubusercontent.com/$owner/$repo/$commit/yara_rules_manifest.json';
+      }
+    }
+    return null;
+  }
+
+  /// Basic signature verification (placeholder - implement proper cryptographic verification)
+  bool _verifySignature(
+    YARARuleManifest manifest,
+    Map<String, dynamic> manifestData,
+  ) {
+    // In a production environment, implement proper digital signature verification
+    // using public key cryptography (e.g., RSA, Ed25519)
+    // For now, we'll do a basic check that signature exists and is not empty
+    return manifest.signature.isNotEmpty && manifest.signature.length > 10;
+  }
+
   /// Update rules from remote sources
   Future<void> updateRules() async {
     final List<String> failedSources = [];
@@ -323,11 +491,26 @@ class YARAScanner {
           final fileName = source.split('/').last;
           final localPath = path.join(config.rulesDirectory, fileName);
 
-          final file = File(localPath);
-          await file.writeAsString(response.body);
-          successfulSources.add(source);
-          // Log success without exposing full file paths
-          _logs.add('YARA rule updated: $fileName');
+          // Verify the rule file before saving
+          try {
+            await _verifyRuleFile(source, response.body);
+
+            final file = File(localPath);
+            await file.writeAsString(response.body);
+            successfulSources.add(source);
+            // Log success without exposing full file paths
+            _logs.add('YARA rule updated and verified: $fileName');
+          } catch (e) {
+            if (e is YARARuleVerificationError) {
+              failedSources.add(source);
+              errorDetails.add('$source: ${e.reason}');
+              _logs.add(
+                'YARA rule verification failed: ${path.basename(source)} - ${e.reason}',
+              );
+            } else {
+              rethrow;
+            }
+          }
         } else {
           final error = 'HTTP ${response.statusCode}: ${response.reasonPhrase}';
           failedSources.add(source);
