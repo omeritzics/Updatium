@@ -15,7 +15,8 @@ class SafeModeDialog extends StatefulWidget {
 
 class _SafeModeDialogState extends State<SafeModeDialog> {
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -48,8 +49,10 @@ class _SafeModeDialogState extends State<SafeModeDialog> {
 
     try {
       final settingsProvider = context.read<SettingsProvider>();
-      final success = await settingsProvider.setSafeModePassword(_passwordController.text);
-      
+      final success = await settingsProvider.setSafeModePassword(
+        _passwordController.text,
+      );
+
       if (success) {
         settingsProvider.safeMode = true;
         if (mounted) {
@@ -60,7 +63,7 @@ class _SafeModeDialogState extends State<SafeModeDialog> {
               backgroundColor: Colors.green,
             ),
           );
-          
+
           // Show hint snackbar if this is the first time Safe Mode is enabled
           if (!settingsProvider.safeModeHintShown) {
             Future.delayed(const Duration(seconds: 2), () {
@@ -106,17 +109,21 @@ class _SafeModeDialogState extends State<SafeModeDialog> {
 
     try {
       final settingsProvider = context.read<SettingsProvider>();
-      final success = await settingsProvider.verifySafeModePassword(_passwordController.text);
-      
+      final success = await settingsProvider.verifySafeModePassword(
+        _passwordController.text,
+      );
+
       if (success) {
         final newState = !settingsProvider.safeMode;
         settingsProvider.safeMode = newState;
-        
+
         if (mounted) {
           Navigator.of(context).pop(true);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(newState ? tr('safeModeEnabled') : tr('safeModeDisabled')),
+              content: Text(
+                newState ? tr('safeModeEnabled') : tr('safeModeDisabled'),
+              ),
               backgroundColor: newState ? Colors.green : Colors.orange,
             ),
           );
@@ -158,7 +165,9 @@ class _SafeModeDialogState extends State<SafeModeDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            passwordSet ? tr('safeModeToggleDescription') : tr('safeModeSetupDescription'),
+            passwordSet
+                ? tr('safeModeToggleDescription')
+                : tr('safeModeSetupDescription'),
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 20),
@@ -215,14 +224,18 @@ class _SafeModeDialogState extends State<SafeModeDialog> {
           child: Text(tr('cancel')),
         ),
         FilledButton(
-          onPressed: _isLoading ? null : (passwordSet ? _toggleSafeMode : _setupPassword),
+          onPressed: _isLoading
+              ? null
+              : (passwordSet ? _toggleSafeMode : _setupPassword),
           child: _isLoading
               ? const SizedBox(
                   width: 16,
                   height: 16,
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
-              : Text(passwordSet ? tr('safeModeDisable') : tr('safeModeEnable')),
+              : Text(
+                  passwordSet ? tr('safeModeDisable') : tr('safeModeEnable'),
+                ),
         ),
       ],
     );
@@ -233,7 +246,8 @@ class AboutDialogWithSafeMode extends StatefulWidget {
   const AboutDialogWithSafeMode({super.key});
 
   @override
-  State<AboutDialogWithSafeMode> createState() => _AboutDialogWithSafeModeState();
+  State<AboutDialogWithSafeMode> createState() =>
+      _AboutDialogWithSafeModeState();
 }
 
 class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
@@ -249,7 +263,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
   void _onVersionTapped() {
     final settingsProvider = context.read<SettingsProvider>();
     final isSafeModeEnabled = settingsProvider.safeMode;
-    
+
     setState(() {
       _versionTapCount++;
     });
@@ -271,7 +285,11 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
       final remaining = 613 - _versionTapCount;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(tr('safeModeTapsRemaining').replaceAll('{count}', remaining.toString())),
+          content: Text(
+            tr(
+              'safeModeTapsRemaining',
+            ).replaceAll('{count}', remaining.toString()),
+          ),
           duration: const Duration(milliseconds: 800),
           behavior: SnackBarBehavior.floating,
         ),
@@ -279,7 +297,9 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
     }
 
     // Visual feedback at 100-tap intervals when Safe Mode is disabled
-    if (!isSafeModeEnabled && _versionTapCount % 100 == 0 && _versionTapCount > 0) {
+    if (!isSafeModeEnabled &&
+        _versionTapCount % 100 == 0 &&
+        _versionTapCount > 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('$_versionTapCount...'),
@@ -295,17 +315,14 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
         _versionTapCount = 0;
       });
       _tapResetTimer?.cancel();
-      
+
       HapticFeedback.heavyImpact();
       _showSafeModeDialog();
     }
   }
 
   void _showSafeModeDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => const SafeModeDialog(),
-    );
+    showDialog(context: context, builder: (context) => const SafeModeDialog());
   }
 
   @override
@@ -359,7 +376,10 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
                 GestureDetector(
                   onTap: _onVersionTapped,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 8,
+                    ),
                     child: Text(
                       'Version $version ($buildNumber)',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(

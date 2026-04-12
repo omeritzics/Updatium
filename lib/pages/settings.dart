@@ -816,7 +816,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     children: [
                                       Text(tr('safeMode')),
                                       Text(
-                                        settingsProvider.safeMode 
+                                        settingsProvider.safeMode
                                             ? tr('safeModeEnabled')
                                             : tr('safeModeDisabled'),
                                         style: Theme.of(
@@ -830,8 +830,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                   padding: EdgeInsets.all(8),
                                   decoration: BoxDecoration(
                                     color: settingsProvider.safeMode
-                                        ? Theme.of(context).colorScheme.primaryContainer
-                                        : Theme.of(context).colorScheme.surfaceContainerHighest,
+                                        ? Theme.of(
+                                            context,
+                                          ).colorScheme.primaryContainer
+                                        : Theme.of(
+                                            context,
+                                          ).colorScheme.surfaceContainerHighest,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Icon(
@@ -840,8 +844,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                         : Icons.lock_open,
                                     size: 20,
                                     color: settingsProvider.safeMode
-                                        ? Theme.of(context).colorScheme.onPrimaryContainer
-                                        : Theme.of(context).colorScheme.onSurfaceVariant,
+                                        ? Theme.of(
+                                            context,
+                                          ).colorScheme.onPrimaryContainer
+                                        : Theme.of(
+                                            context,
+                                          ).colorScheme.onSurfaceVariant,
                                   ),
                                 ),
                               ],
