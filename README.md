@@ -50,6 +50,8 @@ If you don't know how to make a pull request, and/or you don't have any experien
 
 Every language is welcome to Updatium, but your help is needed to make it happen.
 
+*Currently supported locales: English, 简体中文, 臺灣話, Italiano, 日本語, עברית, Magyar, Deutsch, فارسی, Français, Español, Polski, Русский, Bosanski, Português, Česky, Svenska, Nederlands, Tiếng Việt, Türkçe, Українська, Dansk, Eesti, Esperanto, Bahasa Indonesia, 한국어, Català, العربية, മലയാളം, Galego, Български, Kurdî (Kurmanjî), Bahasa Melayu, Română.
+
 ## Limitations
 - For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.
 
