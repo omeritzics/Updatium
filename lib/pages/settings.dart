@@ -809,69 +809,57 @@ class _SettingsPageState extends State<SettingsPage> {
                               future: DeviceInfoPlugin().androidInfo,
                             ),
                             gap16,
-                            InkWell(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => const SafeModeDialog(),
-                                );
-                              },
-                              borderRadius: BorderRadius.circular(12),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 4,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Flexible(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(tr('safeMode')),
-                                          Text(
-                                            settingsProvider.safeMode
-                                                ? tr('safeModeEnabled')
-                                                : tr('safeModeDisabled'),
-                                            style: Theme.of(
-                                              context,
-                                            ).textTheme.labelSmall,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                        color: settingsProvider.safeMode
-                                            ? Theme.of(
-                                                context,
-                                              ).colorScheme.primaryContainer
-                                            : Theme.of(context)
-                                                  .colorScheme
-                                                  .surfaceContainerHighest,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Icon(
-                                        settingsProvider.safeMode
-                                            ? Icons.lock
-                                            : Icons.lock_open,
-                                        size: 20,
-                                        color: settingsProvider.safeMode
-                                            ? Theme.of(
-                                                context,
-                                              ).colorScheme.onPrimaryContainer
-                                            : Theme.of(
-                                                context,
-                                              ).colorScheme.onSurfaceVariant,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            if (!settingsProvider.safeMode)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(child: Text(tr('safeMode'))),
+                                  Switch(
+                                    value: false,
+                                    onChanged: (value) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => const SafeModeDialog(),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
-                            ),
+                            if (settingsProvider.safeMode)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(tr('safeMode')),
+                                        Text(
+                                          tr('safeModeEnabled'),
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.labelSmall,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .colorScheme.primaryContainer,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Icon(
+                                      Icons.lock,
+                                      size: 20,
+                                      color: Theme.of(context)
+                                          .colorScheme.onPrimaryContainer,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
