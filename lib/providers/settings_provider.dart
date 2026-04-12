@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:bcrypt/bcrypt.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -532,6 +533,54 @@ class SettingsProvider with ChangeNotifier {
 
   set safeMode(bool val) {
     prefs?.setBool('safeMode', val);
+    notifyListeners();
+  }
+
+  String? get safeModePassword {
+    return prefs?.getString('safeModePassword');
+  }
+
+  bool get safeModePasswordSet {
+    return safeModePassword != null && safeModePassword!.isNotEmpty;
+  }
+
+  Future<bool> setSafeModePassword(String password) async {
+    try {
+      final hashed = bcrypt.hashPassword(password, bcrypt.generateSalt());
+      await prefs?.setString('safeModePassword', hashed);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> verifySafeModePassword(String password) async {
+    try {
+      final stored = safeModePassword;
+      if (stored == null) return false;
+      return bcrypt.checkPassword(password, stored);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> clearSafeModePassword() async {
+    try {
+      await prefs?.remove('safeModePassword');
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  bool get safeModeHintShown {
+    return prefs?.getBool('safeModeHintShown') ?? false;
+  }
+
+  set safeModeHintShown(bool val) {
+    prefs?.setBool('safeModeHintShown', val);
     notifyListeners();
   }
 }

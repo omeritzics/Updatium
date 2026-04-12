@@ -2,15 +2,15 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:updatium/main.dart';
 import 'package:updatium/components/tag_editor.dart';
+import 'package:updatium/pages/safe_mode_dialog.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/native_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:updatium/main.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
@@ -815,7 +815,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                     children: [
                                       Text(tr('safeMode')),
                                       Text(
-                                        tr('safeModeDescription'),
+                                        settingsProvider.safeMode 
+                                            ? tr('safeModeEnabled')
+                                            : tr('safeModeDisabled'),
                                         style: Theme.of(
                                           context,
                                         ).textTheme.labelSmall,
@@ -823,11 +825,23 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ],
                                   ),
                                 ),
-                                Switch(
-                                  value: settingsProvider.safeMode,
-                                  onChanged: (value) {
-                                    settingsProvider.safeMode = value;
-                                  },
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: settingsProvider.safeMode
+                                        ? Theme.of(context).colorScheme.primaryContainer
+                                        : Theme.of(context).colorScheme.surfaceContainerHighest,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Icon(
+                                    settingsProvider.safeMode
+                                        ? Icons.lock
+                                        : Icons.lock_open,
+                                    size: 20,
+                                    color: settingsProvider.safeMode
+                                        ? Theme.of(context).colorScheme.onPrimaryContainer
+                                        : Theme.of(context).colorScheme.onSurfaceVariant,
+                                  ),
                                 ),
                               ],
                             ),
@@ -1466,7 +1480,7 @@ class _SettingsPageState extends State<SettingsPage> {
           showDialog(
             context: context,
             builder: (BuildContext ctx) {
-              return const AboutDialog();
+              return const AboutDialogWithSafeMode();
             },
           );
         },
