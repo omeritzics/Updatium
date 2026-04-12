@@ -73,7 +73,6 @@ class TagEditor extends StatelessWidget {
     });
   }
 
-  
   void _onColorPressed() {
     final newTags = Map<String, MapEntry<int, bool>>.from(tags);
     final selectedEntry = tags.entries.firstWhere((e) => e.value.value);

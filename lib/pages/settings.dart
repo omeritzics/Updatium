@@ -1436,9 +1436,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           childrenPadding: const EdgeInsets.all(16),
                           children: [
                             gap16,
-                            CategoryTagEditor(
-                              showLabelWhenNotEmpty: false,
-                            ),
+                            CategoryTagEditor(showLabelWhenNotEmpty: false),
                           ],
                         ),
                       ],
@@ -1648,11 +1646,12 @@ class CategoryTagEditor extends StatelessWidget {
         // Convert back from TagEditor format to categories Map<String, int>
         final newCategories = <String, int>{};
         for (final entry in newTags.entries) {
-          if (entry.value.value) { // Only keep selected tags
+          if (entry.value.value) {
+            // Only keep selected tags
             newCategories[entry.key] = entry.value.key;
           }
         }
-        
+
         // Find categories that were removed
         final removedCategories = settingsProvider.categories.keys
             .where((cat) => !newCategories.containsKey(cat))
@@ -1707,7 +1706,7 @@ class CategorySelector extends StatelessWidget {
   final Set<String> preselected;
   final WrapAlignment alignment;
   final bool showLabelWhenNotEmpty;
-  
+
   const CategorySelector({
     super.key,
     this.onSelected,
@@ -1738,7 +1737,7 @@ class CategorySelector extends StatelessWidget {
             .where((entry) => entry.value.value)
             .map((entry) => entry.key)
             .toList();
-        
+
         onSelected?.call(selectedCategories);
       },
     );
