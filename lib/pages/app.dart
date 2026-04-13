@@ -325,10 +325,7 @@ class _AppPageState extends State<AppPage> {
         SizedBox(height: settingsProvider.highlightTouchTargets ? 4 : 8),
         GestureDetector(
           onTap: () {
-            launchUrlString(
-              app.app.url,
-              mode: LaunchMode.externalApplication,
-            );
+            launchUrlString(app.app.url, mode: LaunchMode.externalApplication);
           },
           onLongPress: () {
             Clipboard.setData(ClipboardData(text: app.app.url));
@@ -610,10 +607,7 @@ class _AppPageState extends State<AppPage> {
                       onPressed: updating
                           ? null
                           : () => appsProvider
-                                .removeAppsWithModal(
-                                  context,
-                                  [app.app],
-                                )
+                                .removeAppsWithModal(context, [app.app])
                                 .then((result) {
                                   if (result == true) {
                                     Navigator.of(context).pop();
@@ -680,70 +674,70 @@ class _AppPageState extends State<AppPage> {
               pinned: true,
               title: Row(
                 children: [
-                    Consumer<AppsProvider>(
-                      builder: (ctx, appsProvider, child) {
-                        final appInMemory = appsProvider.apps[app.app.id];
+                  Consumer<AppsProvider>(
+                    builder: (ctx, appsProvider, child) {
+                      final appInMemory = appsProvider.apps[app.app.id];
 
-                        if (appInMemory?.icon != null) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 12.0),
-                            child: Image.memory(
-                              appInMemory!.icon!,
-                              width: 40,
-                              height: 40,
-                              gaplessPlayback: true,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Icon(
-                                  Icons.apps,
-                                  size: 40,
-                                  color: Theme.of(context).colorScheme.primary,
-                                );
-                              },
-                            ),
-                          );
-                        }
-
-                        // Load icon asynchronously if not available
-                        return FutureBuilder(
-                          future: appsProvider.updateAppIcon(app.app.id),
-                          builder: (ctx, snapshot) {
-                            final updatedAppInMemory =
-                                appsProvider.apps[app.app.id];
-
-                            if (updatedAppInMemory?.icon != null) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 12.0),
-                                child: Image.memory(
-                                  updatedAppInMemory!.icon!,
-                                  width: 40,
-                                  height: 40,
-                                  gaplessPlayback: true,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Icon(
-                                      Icons.apps,
-                                      size: 40,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.primary,
-                                    );
-                                  },
-                                ),
-                              );
-                            }
-
-                            // Fallback icon while loading
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 16.0),
-                              child: Icon(
+                      if (appInMemory?.icon != null) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: Image.memory(
+                            appInMemory!.icon!,
+                            width: 40,
+                            height: 40,
+                            gaplessPlayback: true,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Icon(
                                 Icons.apps,
                                 size: 40,
                                 color: Theme.of(context).colorScheme.primary,
+                              );
+                            },
+                          ),
+                        );
+                      }
+
+                      // Load icon asynchronously if not available
+                      return FutureBuilder(
+                        future: appsProvider.updateAppIcon(app.app.id),
+                        builder: (ctx, snapshot) {
+                          final updatedAppInMemory =
+                              appsProvider.apps[app.app.id];
+
+                          if (updatedAppInMemory?.icon != null) {
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 12.0),
+                              child: Image.memory(
+                                updatedAppInMemory!.icon!,
+                                width: 40,
+                                height: 40,
+                                gaplessPlayback: true,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Icon(
+                                    Icons.apps,
+                                    size: 40,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                  );
+                                },
                               ),
                             );
-                          },
-                        );
-                      },
-                    ),
+                          }
+
+                          // Fallback icon while loading
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: Icon(
+                              Icons.apps,
+                              size: 40,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -752,13 +746,13 @@ class _AppPageState extends State<AppPage> {
                         Text(app.name),
                         Text(
                           'By ${app.author}',
-                            style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurfaceVariant,
-                                ),
-                          ),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
+                              ),
+                        ),
                       ],
                     ),
                   ),
@@ -788,7 +782,7 @@ class _AppPageState extends State<AppPage> {
               ),
             ),
           ],
-        ), 
+        ),
         onRefresh: () async {
           getUpdate(app.app.id);
         },

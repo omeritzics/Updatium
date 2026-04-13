@@ -1564,7 +1564,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               ExpansionPanel(
                 headerBuilder: (BuildContext context, bool isExpanded) {
                   return KeyedSubtree(
-                    key: ValueKey('category_header_${listedCategories[i] ?? "null"}_$i'),
+                    key: ValueKey(
+                      'category_header_${listedCategories[i] ?? "null"}_$i',
+                    ),
                     child: ListTile(
                       title: Text(
                         capFirstChar(listedCategories[i] ?? tr('noCategory')),
@@ -1577,7 +1579,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   );
                 },
                 body: KeyedSubtree(
-                  key: ValueKey('category_body_${listedCategories[i] ?? "null"}_$i'),
+                  key: ValueKey(
+                    'category_body_${listedCategories[i] ?? "null"}_$i',
+                  ),
                   child: Column(children: tiles),
                 ),
                 isExpanded: _expandedCategories.contains(i),
@@ -1715,9 +1719,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ],
                 title: Text(tr('appsString')),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 8),
-              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 8)),
               ...getLoadingWidgets(),
               getDisplayedList(),
             ],
