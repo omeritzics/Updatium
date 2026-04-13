@@ -153,7 +153,8 @@ Null Function()? getChangeLogFn(BuildContext context, App app) {
         };
 }
 
-class AppsPageState extends State<AppsPage> {
+class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
+  late TabController _tabController;
   AppsFilter filter = AppsFilter();
   final AppsFilter neutralFilter = AppsFilter();
   var updatesOnlyFilter = AppsFilter(
@@ -211,6 +212,22 @@ class AppsPageState extends State<AppsPage> {
   var sourceProvider = SourceProvider();
 
   @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
@@ -258,6 +275,13 @@ class AppsPageState extends State<AppsPage> {
     }
 
     listedApps = listedApps.where((app) {
+      // Filter based on tab selection
+      if (_tabController.index == 1 && app.app.installedVersion == null) {
+        return false;
+      }
+      if (_tabController.index == 2 && app.app.installedVersion != null) {
+        return false;
+      }
       if (app.app.installedVersion == app.app.latestVersion &&
           !(filter.includeUptodate)) {
         return false;
@@ -1625,6 +1649,14 @@ class AppsPageState extends State<AppsPage> {
               SliverAppBar.large(
                 pinned: true,
                 automaticallyImplyLeading: false,
+                bottom: TabBar.secondary(
+                  controller: _tabController,
+                  tabs: [
+                    Tab(text: tr('all')),
+                    Tab(text: tr('installed')),
+                    Tab(text: tr('notInstalled')),
+                  ],
+                ),
                 actions: [
                   Consumer<AppsProvider>(
                     builder: (context, appsProvider, child) {
