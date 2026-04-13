@@ -626,10 +626,10 @@ class _AppPageState extends State<AppPage> {
                             ? tr('installed')
                             : tr('appsUpdated');
                         HapticFeedback.heavyImpact();
-                        var res = await appsProvider.downloadAndInstallLatestApps(
-                          [app.app.id],
-                          globalNavigatorKey.currentContext,
-                        );
+                        var res = await appsProvider
+                            .downloadAndInstallLatestApps([
+                              app.app.id,
+                            ], globalNavigatorKey.currentContext);
                         if (res.isNotEmpty && !trackOnly) {
                           // ignore: use_build_context_synchronously
                           showMessage(successMessage, context);
