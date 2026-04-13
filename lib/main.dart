@@ -887,9 +887,7 @@ class _UpdatiumState extends State<Updatium> {
                   }
                   return scheme.surfaceContainerHighest;
                 }),
-                trackOutlineColor: WidgetStateProperty.resolveWith((states) {
-                  return Colors.transparent;
-                }),
+                trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
 
