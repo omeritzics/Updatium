@@ -14,11 +14,11 @@ import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 // ignore: implementation_imports
-import 'package:easy_localization/src/easy_localization_controller.dart';
+import 'package:simple_localization/src/easy_localization_controller.dart';
 // ignore: implementation_imports
-import 'package:easy_localization/src/localization.dart';
+import 'package:simple_localization/src/localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
 

@@ -244,14 +244,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.1"
-  easy_localization:
-    dependency: "direct main"
-    description:
-      name: easy_localization
-      sha256: "2ccdf9db8fe4d9c5a75c122e6275674508fd0f0d49c827354967b8afcc56bbed"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.8"
   easy_logger:
     dependency: transitive
     description:
@@ -921,6 +913,15 @@ packages:
       url: "https://github.com/re7gog/shizuku_apk_installer"
     source: git
     version: "1.2.0"
+  simple_localization:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: develop
+      resolved-ref: e285a5fc35e4dfdc641989382caf3fa06cf3cb05
+      url: "https://github.com/omeritzics/simple_localization"
+    source: git
+    version: "3.0.9"
   sky_engine:
     dependency: transitive
     description: flutter

@@ -1,7 +1,7 @@
 // Exposes functions that can be used to send notifications to the user
 // Contains a set of pre-defined UpdatiumNotification objects that should be used throughout the app
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 

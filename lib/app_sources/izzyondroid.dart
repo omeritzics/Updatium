@@ -1,6 +1,6 @@
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 
 class IzzyOnDroid extends AppSource {
   late FDroid fd;
