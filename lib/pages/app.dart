@@ -185,7 +185,6 @@ class _AppPageState extends State<AppPage> {
             ),
           ),
 
-
           /* Certificate Hashes */
           if (app != null && app.certificateHashes.isNotEmpty)
             Column(
@@ -499,23 +498,27 @@ class _AppPageState extends State<AppPage> {
                                             ),
                                           ),
                                           IconButton(
-                                            icon: const Icon(Icons.copy, size: 16),
+                                            icon: const Icon(
+                                              Icons.copy,
+                                              size: 16,
+                                            ),
                                             onPressed: () {
                                               Clipboard.setData(
                                                 ClipboardData(text: hash),
                                               );
-                                              ScaffoldMessenger.of(ctx)
-                                                  .showSnackBar(
+                                              ScaffoldMessenger.of(
+                                                ctx,
+                                              ).showSnackBar(
                                                 SnackBar(
                                                   content: Text(
-                                                      tr('copiedToClipboard')),
+                                                    tr('copiedToClipboard'),
+                                                  ),
                                                 ),
                                               );
                                             },
                                             tooltip: tr('copy'),
                                             padding: const EdgeInsets.all(4),
-                                            constraints:
-                                                const BoxConstraints(),
+                                            constraints: const BoxConstraints(),
                                           ),
                                         ],
                                       ),
@@ -556,17 +559,15 @@ class _AppPageState extends State<AppPage> {
                     ),
                   // Edit / additional options (conditional)
                   if (source != null &&
-                      source
-                          .combinedAppSpecificSettingFormItems
-                          .isNotEmpty)
+                      source.combinedAppSpecificSettingFormItems.isNotEmpty)
                     IconButton(
                       icon: const Icon(Icons.edit_outlined),
                       tooltip: tr('additionalOptions'),
                       onPressed: updating
                           ? null
                           : () => showAdditionalOptionsDialog().then(
-                                handleAdditionalOptionChanges,
-                              ),
+                              handleAdditionalOptionChanges,
+                            ),
                     ),
                   // Remove (conditional)
                   if (app?.app.installedVersion != null &&
