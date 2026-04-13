@@ -158,18 +158,6 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool get googleVerificationWarningShown {
-    return prefs?.getBool('googleVerificationWarningShown') ?? false;
-  }
-
-  set googleVerificationWarningShown(bool googleVerificationWarningShown) {
-    prefs?.setBool(
-      'googleVerificationWarningShown',
-      googleVerificationWarningShown,
-    );
-    notifyListeners();
-  }
-
   bool checkJustStarted() {
     if (justStarted) {
       justStarted = false;

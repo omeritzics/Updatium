@@ -1649,7 +1649,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               SliverAppBar.large(
                 pinned: true,
                 automaticallyImplyLeading: false,
-                bottom: TabBar.secondary(
+                bottom: TabBar(
                   controller: _tabController,
                   tabs: [
                     Tab(text: tr('all')),

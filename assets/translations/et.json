@@ -354,9 +354,6 @@
     "GHReqPrefix": "'sky22333/hubproxy' instants GitHub päringute jaoks",
     "includeZips": "Kaasa ZIP failid",
     "zippedApkFilterRegEx": "Filtreeri APK-sid ZIP-i sees",
-    "googleVerificationWarningP1": "Google on teatanud, et alates 2026./2027. aastast vajavad kõik \"sertifitseeritud\" Androidi seadmed, et arendaja esitaks isiklikud identiteediandmed otse Google'le.\n\nPärast seda võib Updatium lõpetada töötamise sertifitseeritud Androidi seadmetel.",
-    "googleVerificationWarningP2": "Lisateabe saamiseks minge aadressile https://keepandroidopen.org/.",
-    "googleVerificationWarningP3": "Pange tähele, et lühikesel tähtajal võib olla võimalik installida \"kinnitamata\" (mittesobivad) äpid \"täiustatud protsessi\" kaudu, mille Google on lubanud implementeerida pärast laia vastukaja oma teadaandele, kuid nad ei ole üksikasjaliselt kirjeldanud, kuidas see töötab, mistõttu on selge, kas see tõesti säilitab kasutajate vabadused praktilises mõttes.\n\nIgatahes, Google'i samm on oluline samm vaba üldotstarbelise arvutamise lõpule füüsiliste isikute jaoks.\n\nMitte-sertifitseeritud operatsioonisüsteemid, nagu GrapheneOS, peaksid jääda mõjutamata niikaua kui neil on lubatud olemas olla.",
     "multipleSigners": "Mitu allkirjastajat",
     "removeAppQuestion": {
         "one": "Eemalda äpp?",

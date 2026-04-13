@@ -1,5 +1,11 @@
 package io.github.omeritzics.updatium
 
 import io.flutter.embedding.android.FlutterActivity
+import org.woheller69.freeDroidWarn.FreeDroidWarn
 
-class MainActivity : FlutterActivity()
+class MainActivity : FlutterActivity() {
+    override fun onCreate(savedInstanceState: android.os.Bundle?) {
+        super.onCreate(savedInstanceState)
+        FreeDroidWarn.showWarningOnUpgrade(this, BuildConfig.VERSION_CODE)
+    }
+}
