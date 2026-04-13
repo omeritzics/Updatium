@@ -22,7 +22,6 @@ import 'package:flutter/services.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:updatium/app_sources/directAPKLink.dart';
-import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
@@ -2252,7 +2251,7 @@ class AppsProvider with ChangeNotifier {
     apps.forEach((key, value) {
       for (var c in value.app.categories ?? []) {
         if (!cats.containsKey(c)) {
-          cats[c] = generateRandomLightColor().toARGB32();
+          cats[c] = settingsProvider.themeColor.toARGB32();
         }
       }
     });
