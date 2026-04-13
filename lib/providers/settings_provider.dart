@@ -202,7 +202,6 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
   bool get groupByCategory {
     return prefs?.getBool('groupByCategory') ?? false;
   }
