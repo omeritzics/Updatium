@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/components/generated_form.dart';
@@ -25,11 +25,6 @@ class FDroidRepo extends AppSource {
           'pickHighestVersionCode',
           label: tr('pickHighestVersionCode'),
           defaultValue: false,
-        ),
-        GeneratedFormSwitch(
-          'trySelectingSuggestedVersionCode',
-          label: tr('trySelectingSuggestedVersionCode'),
-          defaultValue: true,
         ),
       ],
     ];

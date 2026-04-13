@@ -376,9 +376,6 @@
     "GHReqPrefix": "mînak 'sky22333/hubproxy' ji bo daxwazên GitHub",
     "includeZips": "Pelên ZIP tê de bike",
     "zippedApkFilterRegEx": "APK-ên li hundirê ZIP-yan parzûn bike",
-    "googleVerificationWarningP1": "Google daxaniye ku, ji 2026/2027 ve, hemî sepanên li cîhazên Android yên 'sertîfîke' dê hewceyê ku pêdebirê agahiyên nasnameyê yên kesanî rasterast bi Google re bi rêxistin bike.\n\nPi vê re, dibe ku Updatium li ser cîhazên Android yên sertîfîke bisekinîne.",
-    "googleVerificationWarningP2": "Biçin https://keepandroidopen.org/ ji bo agahdarî zêdetir.",
-    "googleVerificationWarningP3": "Binihêrin ku li ser demê kin, dibe ku dewam bike ku sepanên 'ne-sertîfîke' (ne-derbasdar) bi rêbaza 'pêveketî' werin sazkirin ku Google promise kirî pi reaksiya mezin daxwazê wê bike, lê ne detay kirî çawa dê xebitîne, ji ber vê yekê ne diyar e ku dê rastî azadiya bikarhêneran bi awayekî praktîkî bigire.\n\nHer wiha, hereketa Google a girîng e ber bi dawiya komputerên giyanî yên azad, yên giyanî ji bo kesan.\n\nPergalên xebitandinê yên ne-sertîfîke, wek GrapheneOS, divê ji vê nebandar bin heya ku destûrê didin ku dewam bikin.",
     "multipleSigners": "Sazkarên Pir",
     "removeAppQuestion": {
         "one": "Sepan rakirin?",

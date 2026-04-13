@@ -14,13 +14,12 @@ import 'dart:typed_data';
 import 'package:android_intent_plus/flag.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:updatium/app_sources/directAPKLink.dart';
-import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
@@ -30,6 +29,7 @@ import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_utils;
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
@@ -322,7 +322,7 @@ Future<File> downloadFile(
   if (ext.endsWith('"') || ext.endsWith("other")) {
     ext = ext.substring(0, ext.length - 1);
   }
-  if (((Uri.tryParse(url)?.path ?? url).toLowerCase().endsWith('.apk') ||
+  if ((source_utils.hasSupportedApkExtension(Uri.tryParse(url)?.path ?? url) ||
           ext == 'attachment') &&
       ext != 'apk') {
     ext = 'apk';
@@ -695,8 +695,14 @@ class AppsProvider with ChangeNotifier {
         notificationsProvider?.notify(notif);
       }
       PackageInfo? newInfo;
-      var isAPK = downloadedFile.path.toLowerCase().endsWith('.apk');
-      var isXAPK = downloadedFile.path.toLowerCase().endsWith('.xapk');
+      var isAPK = source_utils.endsWithExtension(
+        downloadedFile.path,
+        source_utils.supportedApkExtensions[0],
+      );
+      var isXAPK = source_utils.endsWithExtension(
+        downloadedFile.path,
+        source_utils.supportedApkExtensions[1],
+      );
       Directory? apkDir;
       if (isAPK) {
         newInfo = await pm.getPackageArchiveInfo(
@@ -709,25 +715,25 @@ class AppsProvider with ChangeNotifier {
         apkDir = Directory(apkDirPath);
         var apks = apkDir
             .listSync()
-            .where((e) => e.path.toLowerCase().endsWith('.apk'))
+            .where((e) => source_utils.hasSupportedApkExtension(e.path))
+            .whereType<File>()
             .toList();
 
-        FileSystemEntity? temp;
-        apks.removeWhere((element) {
-          bool res = element.uri.pathSegments.last.startsWith(app.id);
-          if (res) {
-            temp = element;
-          }
-          return res;
-        });
-        if (temp != null) {
-          apks = [temp!, ...apks];
-        }
+        // Parse XAPK manifest if present
+        var manifest = parseXapkManifest(apkDir);
 
+        // Select appropriate APKs based on device architecture and manifest
+        var selectedApks = await selectApksForInstallation(
+          apks,
+          app.id,
+          manifest,
+        );
+
+        // Apply custom regex filter if provided
         if (app.additionalSettings['zippedApkFilterRegEx']?.isNotEmpty ==
             true) {
           var reg = RegExp(app.additionalSettings['zippedApkFilterRegEx']);
-          apks.removeWhere((apk) {
+          selectedApks.removeWhere((apk) {
             var shouldDelete = !reg.hasMatch(apk.uri.pathSegments.last);
             if (shouldDelete) {
               apk.delete();
@@ -736,20 +742,21 @@ class AppsProvider with ChangeNotifier {
           });
         }
 
-        if (apks.isEmpty) {
+        if (selectedApks.isEmpty) {
           throw NoAPKError();
         }
 
-        for (var i = 0; i < apks.length; i++) {
+        // Get package info from the first selected APK
+        for (var i = 0; i < selectedApks.length; i++) {
           try {
             newInfo = await pm.getPackageArchiveInfo(
-              archiveFilePath: apks[i].path,
+              archiveFilePath: selectedApks[i].path,
             );
             if (newInfo != null) {
               break;
             }
           } catch (e) {
-            if (i == apks.length - 1) {
+            if (i == selectedApks.length - 1) {
               rethrow;
             }
           }
@@ -880,16 +887,112 @@ class AppsProvider with ChangeNotifier {
     );
   }
 
+  // Parse XAPK manifest.json if present
+  Map<String, dynamic>? parseXapkManifest(Directory extractedDir) {
+    try {
+      var manifestFile = File('${extractedDir.path}/manifest.json');
+      if (manifestFile.existsSync()) {
+        var manifestContent = manifestFile.readAsStringSync();
+        return jsonDecode(manifestContent) as Map<String, dynamic>;
+      }
+    } catch (e) {
+      logs.add('Failed to parse XAPK manifest: ${e.toString()}');
+    }
+    return null;
+  }
+
+  // Get device supported ABIs in order of preference
+  Future<List<String>> getDeviceAbis() async {
+    var androidInfo = await DeviceInfoPlugin().androidInfo;
+    return androidInfo.supportedAbis;
+  }
+
+  // Filter APKs based on device architecture
+  Future<List<File>> filterApksByArchitecture(List<File> apkFiles) async {
+    if (apkFiles.isEmpty) return apkFiles;
+
+    var deviceAbis = await getDeviceAbis();
+    List<File> filteredApks = [];
+
+    // Try to match APKs with device ABI in order of preference
+    for (var abi in deviceAbis) {
+      var matchingApks = apkFiles.where((file) {
+        var fileName = file.uri.pathSegments.last.toLowerCase();
+        return fileName.contains(abi.toLowerCase());
+      }).toList();
+
+      if (matchingApks.isNotEmpty) {
+        filteredApks.addAll(matchingApks);
+        break; // Use the first matching ABI
+      }
+    }
+
+    // If no architecture-specific APKs found, return all APKs
+    if (filteredApks.isEmpty) {
+      return apkFiles;
+    }
+
+    return filteredApks;
+  }
+
+  // Select appropriate APKs for installation from XAPK
+  Future<List<File>> selectApksForInstallation(
+    List<File> apkFiles,
+    String appId,
+    Map<String, dynamic>? manifest,
+  ) async {
+    if (apkFiles.isEmpty) {
+      return apkFiles;
+    }
+
+    // Prioritize APKs that start with app ID
+    File? baseApk;
+    List<File> otherApks = [];
+
+    for (var apk in apkFiles) {
+      var fileName = apk.uri.pathSegments.last;
+      if (fileName.startsWith(appId)) {
+        baseApk = apk;
+      } else {
+        otherApks.add(apk);
+      }
+    }
+
+    // If manifest exists, use it for intelligent selection
+    if (manifest != null && manifest.containsKey('split_apks')) {
+      // Filter APKs by device architecture
+      var filteredApks = await filterApksByArchitecture(
+        baseApk != null ? [baseApk, ...otherApks] : otherApks,
+      );
+
+      // If base APK was found, ensure it's first
+      if (baseApk != null && filteredApks.contains(baseApk)) {
+        filteredApks.remove(baseApk);
+        filteredApks.insert(0, baseApk);
+      }
+
+      return filteredApks;
+    }
+
+    // Fallback: use architecture filtering without manifest
+    var allApks = baseApk != null ? [baseApk, ...otherApks] : otherApks;
+    var filteredApks = await filterApksByArchitecture(allApks);
+
+    // Ensure base APK (if found) is first
+    if (baseApk != null && filteredApks.contains(baseApk)) {
+      filteredApks.remove(baseApk);
+      filteredApks.insert(0, baseApk);
+    }
+
+    return filteredApks;
+  }
+
   Future<bool> installApkDir(
     DownloadedDir dir,
     BuildContext? firstTimeWithContext, {
     bool needsBGWorkaround = false,
     bool shizukuPretendToBeGooglePlay = false,
   }) async {
-    // We don't know which APKs in an XAPK or ZIP are supported by the user's device
-    // So we try installing all of them and assume success if at least one installed
-    // If 0 APKs installed, throw the first install error encountered
-    // Obviously this approach is naive and is undesirable in many cases, needs to be improved
     var somethingInstalled = false;
     try {
       MultiAppMultiError errors = MultiAppMultiError();
@@ -898,34 +1001,47 @@ class AppsProvider with ChangeNotifier {
           in dir.extracted
               .listSync(recursive: true, followLinks: false)
               .whereType<File>()) {
-        if (file.path.toLowerCase().endsWith('.apk')) {
+        if (source_utils.hasSupportedApkExtension(file.path)) {
           APKFiles.add(file);
         } else if (file.path.toLowerCase().endsWith('.obb')) {
           await moveObbFile(file, dir.appId);
         }
       }
 
-      File? temp;
-      APKFiles.removeWhere((element) {
-        bool res = element.uri.pathSegments.last.startsWith(dir.appId);
-        if (res) {
-          temp = element;
-        }
-        return res;
-      });
-      if (temp != null) {
-        APKFiles = [temp!, ...APKFiles];
+      if (APKFiles.isEmpty) {
+        throw NoAPKError();
       }
+
+      // Parse XAPK manifest if present
+      var manifest = parseXapkManifest(dir.extracted);
+
+      // Select appropriate APKs based on device architecture and manifest
+      var selectedApks = await selectApksForInstallation(
+        APKFiles,
+        dir.appId,
+        manifest,
+      );
+
+      if (selectedApks.isEmpty) {
+        throw NoAPKError();
+      }
+
+      logs.add(
+        'Installing ${selectedApks.length} APK(s) from ${dir.type} (filtered from ${APKFiles.length} total)',
+      );
 
       try {
         var wasInstalled = await installApk(
-          DownloadedApk(dir.appId, APKFiles[0]),
+          DownloadedApk(dir.appId, selectedApks[0]),
           firstTimeWithContext,
           needsBGWorkaround: needsBGWorkaround,
           shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
-          additionalAPKs: APKFiles.sublist(
-            1,
-          ).map((a) => DownloadedApk(dir.appId, a)).toList(),
+          additionalAPKs: selectedApks.length > 1
+              ? selectedApks
+                    .sublist(1)
+                    .map((a) => DownloadedApk(dir.appId, a))
+                    .toList()
+              : [],
         );
         somethingInstalled = somethingInstalled || wasInstalled;
         dir.file.delete(recursive: true);
@@ -1110,9 +1226,19 @@ class AppsProvider with ChangeNotifier {
   Future<void> moveObbFile(File file, String appId) async {
     if (!file.path.toLowerCase().endsWith('.obb')) return;
 
-    // TODO: Implement Android 11+ storage access using MANAGE_EXTERNAL_STORAGE or scoped storage
-    if ((await DeviceInfoPlugin().androidInfo).version.sdkInt <= 29) {
+    int sdkInt = (await DeviceInfoPlugin().androidInfo).version.sdkInt;
+    if (sdkInt <= 29) {
       await Permission.storage.request();
+    } else {
+      var status = await Permission.manageExternalStorage.status;
+      if (!status.isGranted) {
+        status = await Permission.manageExternalStorage.request();
+        if (!status.isGranted) {
+          throw Exception(
+            'MANAGE_EXTERNAL_STORAGE permission denied - cannot access OBB directory',
+          );
+        }
+      }
     }
 
     String obbDirPath = "${await getStorageRootPath()}/Android/obb/$appId";
@@ -1520,7 +1646,10 @@ class AppsProvider with ChangeNotifier {
               .getRequestHeaders(
                 app.additionalSettings,
                 fileUrl.value,
-                forAPKDownload: fileUrl.key.endsWith('.apk') ? true : false,
+                forAPKDownload:
+                    source_utils.hasSupportedApkExtension(fileUrl.key)
+                    ? true
+                    : false,
               ),
           useExisting: false,
           allowInsecure: app.additionalSettings['allowInsecure'] == true,
@@ -2198,7 +2327,7 @@ class AppsProvider with ChangeNotifier {
     apps.forEach((key, value) {
       for (var c in value.app.categories ?? []) {
         if (!cats.containsKey(c)) {
-          cats[c] = generateRandomLightColor().toARGB32();
+          cats[c] = settingsProvider.themeColor.toARGB32();
         }
       }
     });
@@ -2563,23 +2692,23 @@ class _AppFilePickerState extends State<AppFilePicker> {
                 )
               : const SizedBox.shrink(),
           const SizedBox(height: 16),
-          Column(
-            children: urlsToSelectFrom
-                .map(
-                  (u) => RadioListTile<String>(
-                    title: Text(u.key),
-                    value: u.value,
-                    groupValue: fileUrl?.value,
-                    onChanged: (String? value) {
-                      setState(() {
-                        fileUrl = urlsToSelectFrom
-                            .where((e) => e.value == value)
-                            .first;
-                      });
-                    },
-                  ),
-                )
-                .toList(),
+          RadioGroup<String>(
+            groupValue: fileUrl?.value,
+            onChanged: (String? value) {
+              setState(() {
+                fileUrl = urlsToSelectFrom.where((e) => e.value == value).first;
+              });
+            },
+            child: Column(
+              children: urlsToSelectFrom
+                  .map(
+                    (u) => RadioListTile<String>(
+                      title: Text(u.key),
+                      value: u.value,
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
           if (widget.archs != null) const SizedBox(height: 16),
           if (widget.archs != null)
@@ -2680,7 +2809,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
   // ignore: avoid_print
   print('BG task started $taskId: ${params.toString()}');
   WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
+  await SimpleLocalization.ensureInitialized();
   await loadTranslations();
 
   LogsProvider logs = LogsProvider();

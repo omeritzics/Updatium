@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -1826,7 +1826,7 @@ class _AboutDialogState extends State<AboutDialog> {
     // Show remaining taps when Safe Mode is enabled (only from third tap)
     if (isSafeModeEnabled && (tapCount + 1) >= 3) {
       final remaining = 613 - (tapCount + 1);
-      ScaffoldMessenger.of(context, rootNavigator: true).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
             tr(
@@ -1841,7 +1841,7 @@ class _AboutDialogState extends State<AboutDialog> {
 
     // Visual feedback at 100-tap intervals when Safe Mode is disabled
     if (!isSafeModeEnabled && (tapCount + 1) % 100 == 0 && (tapCount + 1) > 0) {
-      ScaffoldMessenger.of(context, rootNavigator: true).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${tapCount + 1}...'),
           duration: const Duration(milliseconds: 500),

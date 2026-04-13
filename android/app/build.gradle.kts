@@ -4,8 +4,7 @@ import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    // The Flutter Gradle Plugin must be applied after the Android plugin.
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -31,6 +30,10 @@ android {
     namespace = "io.github.omeritzics.updatium"
     compileSdk = 36
     ndkVersion = "28.2.13676358"
+    
+    buildFeatures {
+        buildConfig = true
+    }
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
@@ -124,6 +127,7 @@ android {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+    implementation("com.github.woheller69:FreeDroidWarn:V1.+")
 }
 
 flutter {

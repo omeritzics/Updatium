@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
@@ -154,7 +154,8 @@ Null Function()? getChangeLogFn(BuildContext context, App app) {
         };
 }
 
-class AppsPageState extends State<AppsPage> {
+class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
+  late TabController _tabController;
   AppsFilter filter = AppsFilter();
   final AppsFilter neutralFilter = AppsFilter();
   var updatesOnlyFilter = AppsFilter(
@@ -213,6 +214,22 @@ class AppsPageState extends State<AppsPage> {
   var sourceProvider = SourceProvider();
 
   @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
@@ -260,6 +277,13 @@ class AppsPageState extends State<AppsPage> {
     }
 
     listedApps = listedApps.where((app) {
+      // Filter based on tab selection
+      if (_tabController.index == 1 && app.app.installedVersion == null) {
+        return false;
+      }
+      if (_tabController.index == 2 && app.app.installedVersion != null) {
+        return false;
+      }
       if (app.app.installedVersion == app.app.latestVersion &&
           !(filter.includeUptodate)) {
         return false;
@@ -681,6 +705,7 @@ class AppsPageState extends State<AppsPage> {
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // App icon with status indicators
                     Stack(
@@ -729,7 +754,7 @@ class AppsPageState extends State<AppsPage> {
                     const SizedBox(height: 2),
                     // Author name
                     Text(
-                      appInfo.author,
+                      tr('byX', args: [appInfo.author]),
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -913,8 +938,8 @@ class AppsPageState extends State<AppsPage> {
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 190,
                 crossAxisSpacing: 8,
-                mainAxisSpacing: 12,
-                childAspectRatio: 0.6,
+                mainAxisSpacing: 8,
+                childAspectRatio: 0.65,
               ),
               delegate: SliverChildBuilderDelegate((
                 BuildContext context,
@@ -1584,7 +1609,7 @@ class AppsPageState extends State<AppsPage> {
               maxCrossAxisExtent: 190,
               crossAxisSpacing: spacing,
               mainAxisSpacing: spacing,
-              childAspectRatio: 0.6,
+              childAspectRatio: 0.65,
             ),
             delegate: SliverChildBuilderDelegate((
               BuildContext context,
@@ -1626,6 +1651,14 @@ class AppsPageState extends State<AppsPage> {
               SliverAppBar.large(
                 pinned: true,
                 automaticallyImplyLeading: false,
+                bottom: TabBar(
+                  controller: _tabController,
+                  tabs: [
+                    Tab(text: tr('all')),
+                    Tab(text: tr('installed')),
+                    Tab(text: tr('notInstalled')),
+                  ],
+                ),
                 actions: [
                   Consumer<AppsProvider>(
                     builder: (context, appsProvider, child) {

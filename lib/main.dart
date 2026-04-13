@@ -14,11 +14,11 @@ import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 // ignore: implementation_imports
-import 'package:easy_localization/src/easy_localization_controller.dart';
+import 'package:simple_localization/src/simple_localization_controller.dart';
 // ignore: implementation_imports
-import 'package:easy_localization/src/localization.dart';
+import 'package:simple_localization/src/localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
 
@@ -29,6 +29,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('it'), 'Italiano'),
   MapEntry(Locale('ja'), '日本語'),
   MapEntry(Locale('he'), 'עברית'),
+  MapEntry(Locale('hi'), 'हिन्दी'),
   MapEntry(Locale('hu'), 'Magyar'),
   MapEntry(Locale('de'), 'Deutsch'),
   MapEntry(Locale('fa'), 'فارسی'),
@@ -60,7 +61,9 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('bg'), 'Български'),
   MapEntry(Locale('kmr'), 'Kurdî (Kurmanjî)'),
   MapEntry(Locale('ms'), 'Bahasa Melayu'),
+  MapEntry(Locale('bn'), 'বাংলা'),
   MapEntry(Locale('ro'), 'Română'),
+  MapEntry(Locale('ug'), 'ئۇيغۇرچە'),
 ];
 const fallbackLocale = Locale('en');
 const localeDir = 'assets/translations';
@@ -70,17 +73,17 @@ final globalNavigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> loadTranslations() async {
   // See easy_localization/issues/210
-  await EasyLocalizationController.initEasyLocation();
+  await SimpleLocalizationController.initEasyLocation();
   var s = SettingsProvider();
   try {
     await s.initializeSettings();
     var forceLocale = s.forcedLocale;
-    final controller = EasyLocalizationController(
+    final controller = SimpleLocalizationController(
       saveLocale: true,
       forceLocale: forceLocale,
       fallbackLocale: fallbackLocale,
       supportedLocales: supportedLocales.map((e) => e.key).toList(),
-      assetLoader: const RootBundleAssetLoader(),
+      assetLoader: RootBundleAssetLoader.fromRootBundle(),
       useOnlyLangCode: false,
       useFallbackTranslations: true,
       path: localeDir,
@@ -154,7 +157,7 @@ void main() async {
   } catch (e) {
     // Already added, do nothing (see #375)
   }
-  await EasyLocalization.ensureInitialized();
+  await SimpleLocalization.ensureInitialized();
 
   // Enable edge-to-edge mode for Android 10+ (API 29)
   if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
@@ -176,7 +179,7 @@ void main() async {
         Provider(create: (context) => np),
         Provider(create: (context) => LogsProvider()),
       ],
-      child: EasyLocalization(
+      child: SimpleLocalization(
         supportedLocales: supportedLocales.map((e) => e.key).toList(),
         path: localeDir,
         fallbackLocale: fallbackLocale,
@@ -847,9 +850,7 @@ class _UpdatiumState extends State<Updatium> {
               ),
 
               // Material Design 3 2024 Progress Indicators
-              progressIndicatorTheme: const ProgressIndicatorThemeData(
-                year2023: false,
-              ),
+              progressIndicatorTheme: const ProgressIndicatorThemeData(),
 
               // Material Design 3 2024 Expressive Centered Slider Theme - preserve M3 Expressive transparency
               sliderTheme: SliderThemeData(

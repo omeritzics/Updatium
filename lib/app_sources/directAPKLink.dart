@@ -1,7 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_utils;
 
 class DirectAPKLink extends AppSource {
   HTML html = HTML();
@@ -40,7 +41,10 @@ class DirectAPKLink extends AppSource {
     if (!forSelection) {
       return url;
     }
-    RegExp standardUrlRegExA = RegExp('.+\\.apk\$', caseSensitive: false);
+    RegExp standardUrlRegExA = RegExp(
+      '.+\\.(${source_utils.supportedApkExtensions[0].substring(1)}|${source_utils.supportedApkExtensions[1].substring(1)})\$',
+      caseSensitive: false,
+    );
     var match = standardUrlRegExA.firstMatch(url);
     if (match == null) {
       throw InvalidURLError(name);

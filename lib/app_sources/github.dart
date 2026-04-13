@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/html.dart';
@@ -9,10 +9,12 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_utils;
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GitHub extends AppSource {
   GitHub({hostChanged = false}) {
+    name = tr('github');
     hosts = ['github.com'];
     appIdInferIsOptional = true;
     showReleaseDateAsVersionToggle = true;
@@ -87,78 +89,7 @@ class GitHub extends AppSource {
       ),
     ];
 
-    additionalSourceAppSpecificSettingFormItems = [
-      [
-        GeneratedFormSwitch(
-          'includePrereleases',
-          label: tr('includePrereleases'),
-          defaultValue: false,
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'fallbackToOlderReleases',
-          label: tr('fallbackToOlderReleases'),
-          defaultValue: true,
-        ),
-      ],
-      [
-        GeneratedFormTextField(
-          'filterReleaseTitlesByRegEx',
-          label: tr('filterReleaseTitlesByRegEx'),
-          required: false,
-          additionalValidators: [
-            (value) {
-              return regExValidator(value);
-            },
-          ],
-        ),
-      ],
-      [
-        GeneratedFormTextField(
-          'filterReleaseNotesByRegEx',
-          label: tr('filterReleaseNotesByRegEx'),
-          required: false,
-          additionalValidators: [
-            (value) {
-              return regExValidator(value);
-            },
-          ],
-        ),
-      ],
-      [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
-      [
-        GeneratedFormDropdown(
-          'sortMethodChoice',
-          [
-            MapEntry('date', tr('releaseDate')),
-            MapEntry('smartname', tr('smartname')),
-            MapEntry('none', tr('none')),
-            MapEntry(
-              'smartname-datefallback',
-              '${tr('smartname')} x ${tr('releaseDate')}',
-            ),
-            MapEntry('name', tr('name')),
-          ],
-          label: tr('sortMethod'),
-          defaultValue: 'date',
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'useLatestAssetDateAsReleaseDate',
-          label: tr('useLatestAssetDateAsReleaseDate'),
-          defaultValue: false,
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'releaseTitleAsVersion',
-          label: tr('releaseTitleAsVersion'),
-          defaultValue: false,
-        ),
-      ],
-    ];
+    additionalSourceAppSpecificSettingFormItems = [];
 
     canSearch = true;
     searchQuerySettingFormItems = [
@@ -404,11 +335,10 @@ class GitHub extends AppSource {
 
       findReleaseAssetUrls(dynamic release) =>
           (release['assets'] as List<dynamic>?)?.map((e) {
-            var ext = e['name'].toString().toLowerCase().split('.').last;
+            var ext = '.${e['name'].toString().toLowerCase().split('.').last}';
             var url =
-                !(ext == 'apk' ||
-                    ext == 'xapk' ||
-                    (includeZips && ext == 'zip'))
+                !(source_utils.supportedApkExtensions.contains(ext) ||
+                    (includeZips && ext == '.zip'))
                 ? (e['browser_download_url'] ?? e['url'])
                 : (e['url'] ?? e['browser_download_url']);
             url = undoGHProxyMod(url, sourceConfigSettingValues);
@@ -549,11 +479,10 @@ class GitHub extends AppSource {
             .map((e) => e['final_url'] as MapEntry<String, String>)
             .toList();
         var apkAssetsWithUrls = allAssetsWithUrls.where((element) {
-          var ext = (element['final_url'] as MapEntry<String, String>).key
-              .toLowerCase()
-              .split('.')
-              .last;
-          return ext == 'apk' || ext == 'xapk' || (includeZips && ext == 'zip');
+          var ext =
+              '.${(element['final_url'] as MapEntry<String, String>).key.toLowerCase().split('.').last}';
+          return source_utils.supportedApkExtensions.contains(ext) ||
+              (includeZips && ext == '.zip');
         }).toList();
 
         var filteredApkUrls = filterApks(

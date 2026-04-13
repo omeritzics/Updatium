@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:animations/animations.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:app_links/app_links.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,7 +14,6 @@ import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
@@ -79,8 +79,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     initDeepLinks();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      var sp = context.read<SettingsProvider>();
-
       // Check if security disclaimer has been accepted
       final disclaimerAccepted =
           await SecurityDisclaimerScreen.isDisclaimerAccepted();
@@ -96,49 +94,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           SystemNavigator.pop();
           return;
         }
-      }
-
-      if (!sp.googleVerificationWarningShown && DateTime.now().year == 2026) {
-        await showDialog(
-          context: context,
-          builder: (BuildContext ctx) {
-            return AlertDialog(
-              title: Text(tr('note')),
-              scrollable: true,
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(tr('googleVerificationWarningP1')),
-                  GestureDetector(
-                    onTap: () {
-                      launchUrlString(
-                        'https://keepandroidopen.org/',
-                        mode: LaunchMode.externalApplication,
-                      );
-                    },
-                    child: Text(
-                      tr('googleVerificationWarningP2'),
-                      style: const TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Text(tr('googleVerificationWarningP3')),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    sp.googleVerificationWarningShown = true;
-                    Navigator.of(context).pop(null);
-                  },
-                  child: Text(tr('ok')),
-                ),
-              ],
-            );
-          },
-        );
       }
     });
   }

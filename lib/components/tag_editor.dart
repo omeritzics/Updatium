@@ -1,7 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hsluv/hsluv.dart';
-import 'dart:math';
+import 'package:flex_color_picker/flex_color_picker.dart';
 
 class TagEditor extends StatelessWidget {
   final Map<String, MapEntry<int, bool>> tags;
@@ -22,17 +21,6 @@ class TagEditor extends StatelessWidget {
     this.showLabelWhenNotEmpty = true,
     this.deleteConfirmationMessage,
   });
-
-  Color _generateRandomLightColor() {
-    final randomSeed = Random().nextInt(120);
-    final goldenAngle = 180 * (3 - sqrt(5));
-    final double hue = randomSeed * goldenAngle;
-    final List<double> rgbValuesDbl = Hsluv.hpluvToRgb([hue, 100, 70]);
-    final List<int> rgbValues = rgbValuesDbl
-        .map((rgb) => (rgb * 255).toInt())
-        .toList();
-    return Color.fromARGB(255, rgbValues[0], rgbValues[1], rgbValues[2]);
-  }
 
   void _onAddPressed(BuildContext context) {
     String labelText = '';
@@ -64,7 +52,7 @@ class TagEditor extends StatelessWidget {
         if (!newTags.containsKey(value)) {
           bool someSelected = newTags.values.any((e) => e.value);
           newTags[value] = MapEntry(
-            _generateRandomLightColor().toARGB32(),
+            Theme.of(context).colorScheme.primary.toARGB32(),
             !(someSelected && singleSelect),
           );
           onTagsChanged(newTags);
@@ -73,15 +61,216 @@ class TagEditor extends StatelessWidget {
     });
   }
 
-  void _onColorPressed() {
+  void _onColorPressed(BuildContext context) {
     final newTags = Map<String, MapEntry<int, bool>>.from(tags);
     final selectedEntry = tags.entries.firstWhere((e) => e.value.value);
-    int newColor = selectedEntry.value.key;
-    while (newColor == selectedEntry.value.key) {
-      newColor = _generateRandomLightColor().toARGB32();
-    }
-    newTags[selectedEntry.key] = MapEntry(newColor, true);
-    onTagsChanged(newTags);
+    Color currentColor = Color(selectedEntry.value.key);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: Text(tr('selectX', args: [tr('color').toLowerCase()])),
+          content: SizedBox(
+            width: 300,
+            height: 400,
+            child: ColorPicker(
+              color: currentColor,
+              onColorChanged: (Color color) {
+                currentColor = color;
+              },
+              actionButtons: const ColorPickerActionButtons(
+                okButton: true,
+                closeButton: true,
+                dialogActionButtons: false,
+              ),
+              pickersEnabled: const <ColorPickerType, bool>{
+                ColorPickerType.both: false,
+                ColorPickerType.primary: false,
+                ColorPickerType.accent: false,
+                ColorPickerType.bw: false,
+                ColorPickerType.custom: true,
+                ColorPickerType.wheel: true,
+              },
+              pickerTypeLabels: <ColorPickerType, String>{
+                ColorPickerType.custom: tr('standard'),
+                ColorPickerType.wheel: tr('custom'),
+              },
+              wheelDiameter: 192,
+              wheelSquareBorderRadius: 32,
+              width: 48,
+              height: 48,
+              borderRadius: 24,
+              spacing: 8,
+              runSpacing: 8,
+              enableShadesSelection: false,
+              showMaterialName: true,
+              showColorName: true,
+              copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+                longPressMenu: true,
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(tr('cancel')),
+            ),
+            TextButton(
+              onPressed: () {
+                newTags[selectedEntry.key] = MapEntry(
+                  currentColor.toARGB32(),
+                  true,
+                );
+                onTagsChanged(newTags);
+                Navigator.pop(ctx);
+              },
+              child: Text(tr('ok')),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _onCategoryPressed(
+    BuildContext context,
+    String categoryName,
+    int categoryColor,
+  ) {
+    final newTags = Map<String, MapEntry<int, bool>>.from(tags);
+    String newName = categoryName;
+    Color currentColor = Color(categoryColor);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: Text(tr('editCategory')),
+          content: SizedBox(
+            width: 300,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    labelText: tr('name'),
+                    hintText: categoryName,
+                  ),
+                  onChanged: (value) => newName = value,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  tr('selectX', args: [tr('color').toLowerCase()]),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  height: 200,
+                  child: ColorPicker(
+                    color: currentColor,
+                    onColorChanged: (Color color) {
+                      currentColor = color;
+                    },
+                    actionButtons: const ColorPickerActionButtons(
+                      okButton: false,
+                      closeButton: false,
+                      dialogActionButtons: false,
+                    ),
+                    pickersEnabled: const <ColorPickerType, bool>{
+                      ColorPickerType.both: false,
+                      ColorPickerType.primary: false,
+                      ColorPickerType.accent: false,
+                      ColorPickerType.bw: false,
+                      ColorPickerType.custom: true,
+                      ColorPickerType.wheel: true,
+                    },
+                    pickerTypeLabels: <ColorPickerType, String>{
+                      ColorPickerType.custom: tr('standard'),
+                      ColorPickerType.wheel: tr('custom'),
+                    },
+                    wheelDiameter: 150,
+                    wheelSquareBorderRadius: 24,
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    spacing: 6,
+                    runSpacing: 6,
+                    enableShadesSelection: false,
+                    showMaterialName: false,
+                    showColorName: false,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(tr('cancel')),
+            ),
+            TextButton(
+              onPressed: () {
+                if (newName.trim().isNotEmpty && newName != categoryName) {
+                  // Category name changed - remove old entry and add new one
+                  final isSelected = newTags[categoryName]?.value ?? false;
+                  newTags.remove(categoryName);
+                  newTags[newName.trim()] = MapEntry(
+                    currentColor.toARGB32(),
+                    isSelected,
+                  );
+                } else if (newName.trim().isNotEmpty) {
+                  // Only color changed
+                  newTags[categoryName] = MapEntry(
+                    currentColor.toARGB32(),
+                    true,
+                  );
+                }
+                onTagsChanged(newTags);
+                Navigator.pop(ctx);
+              },
+              child: Text(tr('save')),
+            ),
+            TextButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext confirmCtx) {
+                    return AlertDialog(
+                      title: Text(tr('deleteCategory')),
+                      content: Text(tr('categoryDeleteWarning')),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(confirmCtx),
+                          child: Text(tr('cancel')),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            final newTags =
+                                Map<String, MapEntry<int, bool>>.from(tags);
+                            newTags.remove(categoryName);
+                            onTagsChanged(newTags);
+                            Navigator.pop(confirmCtx);
+                            Navigator.pop(ctx);
+                          },
+                          child: Text(tr('delete')),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: Text(
+                tr('delete'),
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -104,33 +293,40 @@ class TagEditor extends StatelessWidget {
           runSpacing: 4,
           children: [
             ...tags.entries.map((entry) {
-              return InputChip(
-                label: Text(entry.key),
-                selected: entry.value.value,
-                backgroundColor: Color(entry.value.key).withValues(alpha: 0.2),
-                selectedColor: Color(entry.value.key),
-                onSelected: (selected) {
-                  final newTags = Map<String, MapEntry<int, bool>>.from(tags);
-                  if (singleSelect && selected) {
-                    newTags.updateAll(
-                      (k, v) => MapEntry(v.key, k == entry.key),
-                    );
-                  } else {
-                    newTags[entry.key] = MapEntry(entry.value.key, selected);
-                  }
-                  onTagsChanged(newTags);
+              return GestureDetector(
+                onTap: () {
+                  _onCategoryPressed(context, entry.key, entry.value.key);
                 },
-                deleteIcon: const Icon(Icons.close, size: 18),
-                onDeleted: () {
-                  final newTags = Map<String, MapEntry<int, bool>>.from(tags);
-                  newTags.remove(entry.key);
-                  onTagsChanged(newTags);
-                },
+                child: InputChip(
+                  label: Text(entry.key),
+                  selected: entry.value.value,
+                  backgroundColor: Color(
+                    entry.value.key,
+                  ).withValues(alpha: 0.2),
+                  selectedColor: Color(entry.value.key),
+                  onSelected: (selected) {
+                    final newTags = Map<String, MapEntry<int, bool>>.from(tags);
+                    if (singleSelect && selected) {
+                      newTags.updateAll(
+                        (k, v) => MapEntry(v.key, k == entry.key),
+                      );
+                    } else {
+                      newTags[entry.key] = MapEntry(entry.value.key, selected);
+                    }
+                    onTagsChanged(newTags);
+                  },
+                  deleteIcon: const Icon(Icons.close, size: 18),
+                  onDeleted: () {
+                    final newTags = Map<String, MapEntry<int, bool>>.from(tags);
+                    newTags.remove(entry.key);
+                    onTagsChanged(newTags);
+                  },
+                ),
               );
             }),
             if (selectedCount == 1)
               IconButton(
-                onPressed: _onColorPressed,
+                onPressed: () => _onColorPressed(context),
                 icon: const Icon(Icons.format_color_fill_rounded),
                 tooltip: tr('color'),
               ),

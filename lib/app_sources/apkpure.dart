@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:updatium/components/generated_form.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 extension Unique<E, Id> on List<E> {
@@ -21,26 +20,7 @@ class APKPure extends AppSource {
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
-    additionalSourceAppSpecificSettingFormItems = [
-      [
-        GeneratedFormSwitch(
-          'fallbackToOlderReleases',
-          label: tr('fallbackToOlderReleases'),
-          defaultValue: true,
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'stayOneVersionBehind',
-          label: tr('stayOneVersionBehind'),
-          defaultValue: false,
-        ),
-        GeneratedFormSwitch(
-          'useFirstApkOfVersion',
-          label: tr('useFirstApkOfVersion'),
-        ),
-      ],
-    ];
+    additionalSourceAppSpecificSettingFormItems = [];
   }
 
   @override

@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:bcrypt/bcrypt.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:updatium/app_sources/github.dart';
@@ -155,18 +155,6 @@ class SettingsProvider with ChangeNotifier {
 
   set welcomeShown(bool welcomeShown) {
     prefs?.setBool('welcomeShown', welcomeShown);
-    notifyListeners();
-  }
-
-  bool get googleVerificationWarningShown {
-    return prefs?.getBool('googleVerificationWarningShown') ?? false;
-  }
-
-  set googleVerificationWarningShown(bool googleVerificationWarningShown) {
-    prefs?.setBool(
-      'googleVerificationWarningShown',
-      googleVerificationWarningShown,
-    );
     notifyListeners();
   }
 

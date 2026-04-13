@@ -1,0 +1,131 @@
+name: "CodeQL Analysis"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    # Run CodeQL weekly on Sundays at 2:00 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript' ]
+        # CodeQL supports multiple languages but we'll focus on the ones actually present in your project
+        # Note: Dart/Flutter is not directly supported by CodeQL, but we can analyze JavaScript if present
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          # If you want to specify custom queries, you can do so here
+          # queries: security-extended,security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v4
+        with:
+          # For Flutter projects, we need to customize the build process
+          # autobuild might not work perfectly, so we'll manually build if needed
+          build-commands: |
+            flutter pub get
+            flutter analyze
+            flutter build apk --debug
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{matrix.language}}"
+
+  flutter-security:
+    name: Flutter Security Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          version: '3.38.9'
+          cache: true
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run Flutter security analysis
+        run: |
+          echo "=== Flutter Security Analysis ==="
+          
+          # Run flutter analyze for potential security issues
+          flutter analyze --no-fatal-infos > flutter_analysis.txt 2>&1 || true
+          
+          # Check for common security issues in pubspec.yaml
+          echo "Checking pubspec.yaml for security configurations..."
+          if [ -f "pubspec.yaml" ]; then
+            # Check for insecure dependencies
+            echo "Checking for known vulnerable packages..."
+            flutter pub deps --style=tree > deps_tree.txt
+            
+            # Look for potential security issues
+            echo "=== Security Check Results ===" > security_check.txt
+            echo "Flutter analysis completed" >> security_check.txt
+            
+            # Check for common security patterns
+            if grep -q "http://" lib/ -r --include="*.dart" 2>/dev/null; then
+              echo "WARNING: Found unencrypted HTTP URLs" >> security_check.txt
+              grep -n "http://" lib/ -r --include="*.dart" >> security_check.txt
+            fi
+            
+            # Check for hardcoded secrets (basic pattern)
+            if grep -E "(password|secret|key|token)\s*=\s*['\"][^'\"]*['\"]" lib/ -r --include="*.dart" 2>/dev/null; then
+              echo "WARNING: Potential hardcoded secrets found" >> security_check.txt
+              grep -E "(password|secret|key|token)\s*=\s*['\"][^'\"]*['\"]" lib/ -r --include="*.dart" >> security_check.txt
+            fi
+            
+            # Check for debug prints in production code
+            if grep -E "(print\(|debugPrint\()" lib/ -r --include="*.dart" 2>/dev/null | grep -v "test/"; then
+              echo "WARNING: Debug prints found in production code" >> security_check.txt
+              grep -E "(print\(|debugPrint\()" lib/ -r --include="*.dart" 2>/dev/null | grep -v "test/" >> security_check.txt
+            fi
+            
+            echo "=== End Security Check ===" >> security_check.txt
+            cat security_check.txt
+          fi
+
+      - name: Upload Flutter analysis results
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: flutter-security-analysis
+          path: |
+            flutter_analysis.txt
+            deps_tree.txt
+            security_check.txt
+          retention-days: 30

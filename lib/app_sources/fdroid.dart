@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
@@ -28,11 +28,6 @@ class FDroid extends AppSource {
         ),
       ],
       [
-        GeneratedFormSwitch(
-          'trySelectingSuggestedVersionCode',
-          label: tr('trySelectingSuggestedVersionCode'),
-          defaultValue: true,
-        ),
         GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
           label: tr('autoSelectHighestVersionCode'),

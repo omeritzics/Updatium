@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:html/dom.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/apkcombo.dart';
@@ -64,6 +64,20 @@ class APKDetails {
     this.remoteIconUrl,
     this.allAssetUrls = const [],
   });
+}
+
+// Centralized supported APK file extensions
+const List<String> supportedApkExtensions = ['.apk', '.xapk'];
+
+// Check if a filename has a supported APK extension (case-insensitive)
+bool hasSupportedApkExtension(String filename) {
+  var lower = filename.toLowerCase();
+  return supportedApkExtensions.any((ext) => lower.endsWith(ext));
+}
+
+// Check if a filename ends with a specific extension (case-insensitive)
+bool endsWithExtension(String filename, String extension) {
+  return filename.toLowerCase().endsWith(extension.toLowerCase());
 }
 
 List<List<String>> stringMapListTo2DList(
@@ -528,7 +542,7 @@ Map<String, dynamic> getDefaultValuesFromFormItems(
 List<MapEntry<String, String>> getApkUrlsFromUrls(List<String> urls) =>
     urls.map((e) {
       var segments = e.split('/').where((el) => el.trim().isNotEmpty);
-      var apkSegs = segments.where((s) => s.toLowerCase().endsWith('.apk'));
+      var apkSegs = segments.where(hasSupportedApkExtension);
       return MapEntry(apkSegs.isNotEmpty ? apkSegs.last : segments.last, e);
     }).toList();
 
@@ -850,6 +864,96 @@ abstract class AppSource {
       GeneratedFormSwitch(
         'refreshBeforeDownload',
         label: tr('refreshBeforeDownload'),
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'fallbackToOlderReleases',
+        label: tr('fallbackToOlderReleases'),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'filterReleaseTitlesByRegEx',
+        label: tr('filterReleaseTitlesByRegEx'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'filterReleaseNotesByRegEx',
+        label: tr('filterReleaseNotesByRegEx'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'trySelectingSuggestedVersionCode',
+        label: tr('trySelectingSuggestedVersionCode'),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'includePrereleases',
+        label: tr('includePrereleases'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'stayOneVersionBehind',
+        label: tr('stayOneVersionBehind'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'useFirstApkOfVersion',
+        label: tr('useFirstApkOfVersion'),
+      ),
+    ],
+    [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
+    [
+      GeneratedFormDropdown(
+        'sortMethodChoice',
+        [
+          MapEntry('date', tr('releaseDate')),
+          MapEntry('smartname', tr('smartname')),
+          MapEntry('none', tr('none')),
+          MapEntry(
+            'smartname-datefallback',
+            '${tr('smartname')} x ${tr('releaseDate')}',
+          ),
+          MapEntry('name', tr('name')),
+        ],
+        label: tr('sortMethod'),
+        defaultValue: 'date',
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'useLatestAssetDateAsReleaseDate',
+        label: tr('useLatestAssetDateAsReleaseDate'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'releaseTitleAsVersion',
+        label: tr('releaseTitleAsVersion'),
+        defaultValue: false,
       ),
     ],
   ];

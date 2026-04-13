@@ -376,9 +376,6 @@
     "GHReqPrefix": "instanță 'sky22333/hubproxy' pentru cereri GitHub",
     "includeZips": "Include fișiere ZIP",
     "zippedApkFilterRegEx": "Filtrează APK-urile din interiorul ZIP-urilor",
-    "googleVerificationWarningP1": "Google a anunțat că, începând cu 2026/2027, toate aplicațiile pe dispozitivele Android 'certificate' vor necesita ca dezvoltatorul să trimită detalii de identitate personală direct către Google.\n\nDupă aceea, Updatium s-ar putea să nu mai funcționeze pe dispozitivele Android certificate.",
-    "googleVerificationWarningP2": "Mergeți la https://keepandroidopen.org/ pentru mai multe informații.",
-    "googleVerificationWarningP3": "Rețineți că pe termen scurt, ar putea continua să fie posibil să instalați aplicații 'neverificate' (neconforme) printr-un proces 'flux avansat' pe care Google l-a promis să-l implementeze după reacția puternică la anunțul lor, dar nu au detaliat cum ar funcționa, așa că nu este clar dacă va păstra cu adevărat libertățile utilizatorului în niciun mod practic.\n\nÎn orice caz, mișcarea Google este un pas semnificativ către sfârșitul calculatoarelor generale, libere pentru indivizi.\n\nSisteme de operare ne-certificate, precum GrapheneOS, ar trebui să fie neafectate de acest lucru atâta timp cât li se permite să continue să existe.",
     "multipleSigners": "Semnatari Multipli",
     "removeAppQuestion": {
         "one": "Eliminați aplicația?",

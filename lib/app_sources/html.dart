@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_utils;
 
 String ensureAbsoluteUrl(String ambiguousUrl, Uri referenceAbsoluteUrl) {
   try {
@@ -186,9 +187,9 @@ Future<List<MapEntry<String, String>>> grabLinksCommon(
       } catch (e) {
         // Some links may not have valid encoding
       }
-      return Uri.parse(
-        (filterLinkByText ? element.value : link).trim(),
-      ).path.toLowerCase().endsWith('.apk');
+      return source_utils.hasSupportedApkExtension(
+        Uri.parse((filterLinkByText ? element.value : link).trim()).path,
+      );
     }).toList();
   }
   if (!skipSort) {
@@ -280,6 +281,7 @@ class HTML extends AppSource {
     ],
   ];
   HTML() {
+    name = tr('html');
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormSubForm('intermediateLink', [
