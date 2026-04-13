@@ -526,6 +526,37 @@ Future<Directory> getAppStorageDir() async =>
     await getExternalStorageDirectory() ??
     await getApplicationDocumentsDirectory();
 
+/// Scan outcome for malware detection
+enum ScanOutcome { clean, infected, scannerError }
+
+/// Result of APK malware scan
+class ScanResult {
+  final ScanOutcome outcome;
+  final String? message;
+  final List<String>? matches;
+
+  ScanResult({
+    required this.outcome,
+    this.message,
+    this.matches,
+  });
+
+  factory ScanResult.clean() => ScanResult(outcome: ScanOutcome.clean);
+
+  factory ScanResult.infected(String message, List<String> matches) =>
+      ScanResult(
+        outcome: ScanOutcome.infected,
+        message: message,
+        matches: matches,
+      );
+
+  factory ScanResult.scannerError(String message) =>
+      ScanResult(
+        outcome: ScanOutcome.scannerError,
+        message: message,
+      );
+}
+
 class AppsProvider with ChangeNotifier {
   // In memory App state (should always be kept in sync with local storage versions)
   Map<String, AppInMemory> apps = {};
@@ -1059,7 +1090,7 @@ class AppsProvider with ChangeNotifier {
   }
 
   /// Scan APK for malware before installation
-  Future<bool> _scanAPKForMalware(
+  Future<ScanResult> _scanAPKForMalware(
     String apkPath, {
     List<String>? additionalApkPaths,
   }) async {
@@ -1071,14 +1102,18 @@ class AppsProvider with ChangeNotifier {
 
       if (scanResult.error != null) {
         logs.add('Security scan error for primary APK: ${scanResult.error}');
-        return false;
+        return ScanResult.scannerError('Security scan error for primary APK: ${scanResult.error}');
       }
 
       if (scanResult.isInfected) {
+        final matches = scanResult.matches.map((m) => m.ruleName).toList();
         logs.add(
-          'Security scan detected malware in APK: ${scanResult.matches.map((m) => m.ruleName).join(', ')}',
+          'Security scan detected malware in APK: ${matches.join(', ')}',
         );
-        return false;
+        return ScanResult.infected(
+          'Security scan detected malware in APK: ${matches.join(', ')}',
+          matches,
+        );
       }
 
       if (additionalApkPaths != null) {
@@ -1091,22 +1126,28 @@ class AppsProvider with ChangeNotifier {
             logs.add(
               'Security scan error for additional APK: ${additionalScanResult.error}',
             );
-            return false;
+            return ScanResult.scannerError(
+              'Security scan error for additional APK: ${additionalScanResult.error}',
+            );
           }
 
           if (additionalScanResult.isInfected) {
+            final matches = additionalScanResult.matches.map((m) => m.ruleName).toList();
             logs.add(
-              'Security scan detected malware in additional APK: ${additionalScanResult.matches.map((m) => m.ruleName).join(', ')}',
+              'Security scan detected malware in additional APK: ${matches.join(', ')}',
             );
-            return false;
+            return ScanResult.infected(
+              'Security scan detected malware in additional APK: ${matches.join(', ')}',
+              matches,
+            );
           }
         }
       }
 
-      return true;
+      return ScanResult.clean();
     } catch (e) {
       logs.add('Security scan failed: $e');
-      return false; // Block installation on scan failure
+      return ScanResult.scannerError('Security scan failed: $e'); // Block installation on scan failure
     } finally {
       securityProvider?.dispose();
     }
@@ -1150,10 +1191,11 @@ class AppsProvider with ChangeNotifier {
     PackageInfo? appInfo = await getInstalledInfo(apps[file.appId]!.app.id);
 
     // Security scan before installation
-    if (!(await _scanAPKForMalware(
+    final scanResult = await _scanAPKForMalware(
       file.file.path,
       additionalApkPaths: additionalAPKs.map((a) => a.file.path).toList(),
-    ))) {
+    );
+    if (scanResult.outcome != ScanOutcome.clean) {
       try {
         if (file.file.existsSync()) {
           deleteFile(file.file);
