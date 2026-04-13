@@ -98,7 +98,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           return;
         }
       }
-
     });
   }
 
