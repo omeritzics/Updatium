@@ -713,24 +713,24 @@ class AppsProvider with ChangeNotifier {
         var apks = apkDir
             .listSync()
             .where((e) => source_utils.hasSupportedApkExtension(e.path))
+            .whereType<File>()
             .toList();
 
-        FileSystemEntity? temp;
-        apks.removeWhere((element) {
-          bool res = element.uri.pathSegments.last.startsWith(app.id);
-          if (res) {
-            temp = element;
-          }
-          return res;
-        });
-        if (temp != null) {
-          apks = [temp!, ...apks];
-        }
+        // Parse XAPK manifest if present
+        var manifest = parseXapkManifest(apkDir);
 
+        // Select appropriate APKs based on device architecture and manifest
+        var selectedApks = await selectApksForInstallation(
+          apks,
+          app.id,
+          manifest,
+        );
+
+        // Apply custom regex filter if provided
         if (app.additionalSettings['zippedApkFilterRegEx']?.isNotEmpty ==
             true) {
           var reg = RegExp(app.additionalSettings['zippedApkFilterRegEx']);
-          apks.removeWhere((apk) {
+          selectedApks.removeWhere((apk) {
             var shouldDelete = !reg.hasMatch(apk.uri.pathSegments.last);
             if (shouldDelete) {
               apk.delete();
@@ -739,20 +739,21 @@ class AppsProvider with ChangeNotifier {
           });
         }
 
-        if (apks.isEmpty) {
+        if (selectedApks.isEmpty) {
           throw NoAPKError();
         }
 
-        for (var i = 0; i < apks.length; i++) {
+        // Get package info from the first selected APK
+        for (var i = 0; i < selectedApks.length; i++) {
           try {
             newInfo = await pm.getPackageArchiveInfo(
-              archiveFilePath: apks[i].path,
+              archiveFilePath: selectedApks[i].path,
             );
             if (newInfo != null) {
               break;
             }
           } catch (e) {
-            if (i == apks.length - 1) {
+            if (i == selectedApks.length - 1) {
               rethrow;
             }
           }
@@ -883,16 +884,114 @@ class AppsProvider with ChangeNotifier {
     );
   }
 
+  // Parse XAPK manifest.json if present
+  Map<String, dynamic>? parseXapkManifest(Directory extractedDir) {
+    try {
+      var manifestFile = File('${extractedDir.path}/manifest.json');
+      if (manifestFile.existsSync()) {
+        var manifestContent = manifestFile.readAsStringSync();
+        return jsonDecode(manifestContent) as Map<String, dynamic>;
+      }
+    } catch (e) {
+      logs.add('Failed to parse XAPK manifest: ${e.toString()}');
+    }
+    return null;
+  }
+
+  // Get device supported ABIs in order of preference
+  Future<List<String>> getDeviceAbis() async {
+    var androidInfo = await DeviceInfoPlugin().androidInfo;
+    return androidInfo.supportedAbis;
+  }
+
+  // Filter APKs based on device architecture
+  Future<List<File>> filterApksByArchitecture(
+    List<File> apkFiles,
+  ) async {
+    if (apkFiles.isEmpty) return apkFiles;
+
+    var deviceAbis = await getDeviceAbis();
+    List<File> filteredApks = [];
+
+    // Try to match APKs with device ABI in order of preference
+    for (var abi in deviceAbis) {
+      var matchingApks = apkFiles.where((file) {
+        var fileName = file.uri.pathSegments.last.toLowerCase();
+        return fileName.contains(abi.toLowerCase());
+      }).toList();
+
+      if (matchingApks.isNotEmpty) {
+        filteredApks.addAll(matchingApks);
+        break; // Use the first matching ABI
+      }
+    }
+
+    // If no architecture-specific APKs found, return all APKs
+    if (filteredApks.isEmpty) {
+      return apkFiles;
+    }
+
+    return filteredApks;
+  }
+
+  // Select appropriate APKs for installation from XAPK
+  Future<List<File>> selectApksForInstallation(
+    List<File> apkFiles,
+    String appId,
+    Map<String, dynamic>? manifest,
+  ) async {
+    if (apkFiles.isEmpty) {
+      return apkFiles;
+    }
+
+    // Prioritize APKs that start with app ID
+    File? baseApk;
+    List<File> otherApks = [];
+
+    for (var apk in apkFiles) {
+      var fileName = apk.uri.pathSegments.last;
+      if (fileName.startsWith(appId)) {
+        baseApk = apk;
+      } else {
+        otherApks.add(apk);
+      }
+    }
+
+    // If manifest exists, use it for intelligent selection
+    if (manifest != null && manifest.containsKey('split_apks')) {
+      // Filter APKs by device architecture
+      var filteredApks = await filterApksByArchitecture(
+        baseApk != null ? [baseApk, ...otherApks] : otherApks,
+      );
+
+      // If base APK was found, ensure it's first
+      if (baseApk != null && filteredApks.contains(baseApk)) {
+        filteredApks.remove(baseApk);
+        filteredApks.insert(0, baseApk);
+      }
+
+      return filteredApks;
+    }
+
+    // Fallback: use architecture filtering without manifest
+    var allApks = baseApk != null ? [baseApk, ...otherApks] : otherApks;
+    var filteredApks = await filterApksByArchitecture(allApks);
+
+    // Ensure base APK (if found) is first
+    if (baseApk != null && filteredApks.contains(baseApk)) {
+      filteredApks.remove(baseApk);
+      filteredApks.insert(0, baseApk);
+    }
+
+    return filteredApks;
+  }
+
   Future<bool> installApkDir(
     DownloadedDir dir,
     BuildContext? firstTimeWithContext, {
     bool needsBGWorkaround = false,
     bool shizukuPretendToBeGooglePlay = false,
   }) async {
-    // We don't know which APKs in an XAPK or ZIP are supported by the user's device
-    // So we try installing all of them and assume success if at least one installed
-    // If 0 APKs installed, throw the first install error encountered
-    // Obviously this approach is naive and is undesirable in many cases, needs to be improved
     var somethingInstalled = false;
     try {
       MultiAppMultiError errors = MultiAppMultiError();
@@ -908,27 +1007,40 @@ class AppsProvider with ChangeNotifier {
         }
       }
 
-      File? temp;
-      APKFiles.removeWhere((element) {
-        bool res = element.uri.pathSegments.last.startsWith(dir.appId);
-        if (res) {
-          temp = element;
-        }
-        return res;
-      });
-      if (temp != null) {
-        APKFiles = [temp!, ...APKFiles];
+      if (APKFiles.isEmpty) {
+        throw NoAPKError();
       }
+
+      // Parse XAPK manifest if present
+      var manifest = parseXapkManifest(dir.extracted);
+
+      // Select appropriate APKs based on device architecture and manifest
+      var selectedApks = await selectApksForInstallation(
+        APKFiles,
+        dir.appId,
+        manifest,
+      );
+
+      if (selectedApks.isEmpty) {
+        throw NoAPKError();
+      }
+
+      logs.add(
+        'Installing ${selectedApks.length} APK(s) from ${dir.type} (filtered from ${APKFiles.length} total)',
+      );
 
       try {
         var wasInstalled = await installApk(
-          DownloadedApk(dir.appId, APKFiles[0]),
+          DownloadedApk(dir.appId, selectedApks[0]),
           firstTimeWithContext,
           needsBGWorkaround: needsBGWorkaround,
           shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
-          additionalAPKs: APKFiles.sublist(
-            1,
-          ).map((a) => DownloadedApk(dir.appId, a)).toList(),
+          additionalAPKs: selectedApks.length > 1
+              ? selectedApks
+                  .sublist(1)
+                  .map((a) => DownloadedApk(dir.appId, a))
+                  .toList()
+              : [],
         );
         somethingInstalled = somethingInstalled || wasInstalled;
         dir.file.delete(recursive: true);
