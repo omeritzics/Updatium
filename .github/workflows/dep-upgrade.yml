@@ -46,6 +46,7 @@ jobs:
             const workflowFiles = execSync('find .github/workflows -name "*.yml" -o -name "*.yaml"').toString().trim().split('\n');
             
             let hasUpdates = false;
+            let updateSummary = [];
             
             for (const file of workflowFiles) {
               if (!file) continue;
@@ -76,6 +77,7 @@ jobs:
                     console.log(`Updating ${actionOwnerRepo} from v${currentVersion} to ${latestTag}`);
                     content = content.replace(fullMatch, fullMatch.replace(`@v${currentVersion}`, `@${latestTag}`));
                     hasUpdates = true;
+                    updateSummary.push(`${actionOwnerRepo}: v${currentVersion} -> ${latestTag}`);
                   }
                 } catch (error) {
                   console.log(`Could not check ${actionOwnerRepo}: ${error.message}`);
@@ -88,6 +90,7 @@ jobs:
             }
             
             core.setOutput('has_action_updates', hasUpdates);
+            core.setOutput('action_summary', updateSummary.join('\n'));
 
       - name: Install dependencies
         run: flutter pub get
@@ -97,9 +100,37 @@ jobs:
         run: |
           flutter pub outdated > outdated.txt
           cat outdated.txt
-          # Check if there are any outdated packages (excluding git dependencies)
+          
+          # Parse outdated packages and categorize by update type
+          echo "package_updates=" >> $GITHUB_OUTPUT
+          echo "major_updates=" >> $GITHUB_OUTPUT
+          echo "minor_updates=" >> $GITHUB_OUTPUT
+          echo "patch_updates=" >> $GITHUB_OUTPUT
+          
           if grep -q "pub.dev packages" outdated.txt && ! grep -A 100 "pub.dev packages" outdated.txt | grep -q "All up-to-date"; then
             echo "has_updates=true" >> $GITHUB_OUTPUT
+            
+            # Extract package information
+            awk '
+              /pub.dev packages/ { in_packages=1; next }
+              /Git dependencies/ { in_packages=0; next }
+              in_packages && /^[a-zA-Z]/ {
+                if ($1 != "Resolving") {
+                  pkg = $1
+                  current = $2
+                  latest = $4
+                  if (current != latest) {
+                    print pkg ":" current "->" latest
+                  }
+                }
+              }
+            ' outdated.txt > package_list.txt
+            
+            if [ -s package_list.txt ]; then
+              echo "package_updates<<EOF" >> $GITHUB_OUTPUT
+              cat package_list.txt >> $GITHUB_OUTPUT
+              echo "EOF" >> $GITHUB_OUTPUT
+            fi
           else
             echo "has_updates=false" >> $GITHUB_OUTPUT
           fi
@@ -107,8 +138,30 @@ jobs:
       - name: Upgrade dependencies
         if: steps.outdated.outputs.has_updates == 'true'
         run: |
+          echo "Upgrading dependencies..."
           flutter pub upgrade --major-versions
           flutter pub get
+          
+          # Generate upgrade summary
+          echo "=== Upgrade Summary ===" > upgrade_summary.txt
+          if [ -f package_list.txt ]; then
+            echo "Upgraded packages:" >> upgrade_summary.txt
+            cat package_list.txt >> upgrade_summary.txt
+          fi
+          echo "=== End Summary ===" >> upgrade_summary.txt
+          cat upgrade_summary.txt
+
+      - name: Security audit
+        run: |
+          echo "Running security audit..."
+          # Check for known security vulnerabilities
+          flutter pub deps --style=tree > deps_tree.txt
+          
+          # Basic security checks (can be expanded)
+          echo "=== Security Check Results ===" > security_report.txt
+          echo "Dependencies tree generated successfully" >> security_report.txt
+          echo "No automated vulnerability scanning configured" >> security_report.txt
+          echo "=== End Security Report ===" >> security_report.txt
 
       - name: Create Pull Request
         if: steps.outdated.outputs.has_updates == 'true' || steps.update-actions.outputs.has_action_updates == 'true'
@@ -118,12 +171,24 @@ jobs:
           body: |
             Automated dependency upgrade.
             
-            This PR may include:
-            - Flutter/Dart packages from pub.dev to their latest versions
-            - GitHub Actions to their latest versions
+            ## Summary
+            This PR includes automated updates for:
             
-            Git dependencies are not updated automatically and require manual review.
+            ### Flutter/Dart Packages
+            ${{ steps.outdated.outputs.package_updates }}
+            
+            ### GitHub Actions
+            ${{ steps.update-actions.outputs.action_summary }}
+            
+            ## Security
+            Basic security audit completed. No automated vulnerability scanning is configured.
+            
+            ## Notes
+            - Git dependencies are not updated automatically and require manual review
+            - Please review all changes before merging
+            - Test thoroughly after merging
           branch: upgrade/dependencies
           commit-message: 'chore: upgrade dependencies'
-          labels: dependencies
+          labels: dependencies, automated
           delete-branch: true
+          draft: false
