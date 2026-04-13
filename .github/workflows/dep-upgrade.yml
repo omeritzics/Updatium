@@ -9,6 +9,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  workflows: write
 
 jobs:
   upgrade:
@@ -93,12 +94,14 @@ jobs:
             core.setOutput('action_summary', updateSummary.join('\n'));
 
       - name: Setup Node.js (for ecosystem support)
+        if: hashFiles('package.json') != ''
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
       - name: Setup Python (for ecosystem support)
+        if: hashFiles('requirements.txt') != '' || hashFiles('pyproject.toml') != '' || hashFiles('Pipfile') != ''
         uses: actions/setup-python@v5
         with:
           python-version: '3.14'
