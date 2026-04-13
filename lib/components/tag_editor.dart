@@ -315,12 +315,6 @@ class TagEditor extends StatelessWidget {
                     }
                     onTagsChanged(newTags);
                   },
-                  deleteIcon: const Icon(Icons.close, size: 18),
-                  onDeleted: () {
-                    final newTags = Map<String, MapEntry<int, bool>>.from(tags);
-                    newTags.remove(entry.key);
-                    onTagsChanged(newTags);
-                  },
                 ),
               );
             }),

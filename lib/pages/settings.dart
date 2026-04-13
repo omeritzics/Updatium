@@ -273,97 +273,25 @@ class _SettingsPageState extends State<SettingsPage> {
             DropdownButton<SortColumnSettings>(
               value: settingsProvider.sortColumn,
               isExpanded: true,
-              underline: const SizedBox(),
-              icon: const Icon(Icons.keyboard_arrow_down_rounded),
-              iconSize: 24,
-              iconEnabledColor: Theme.of(context).colorScheme.onSurfaceVariant,
               items: [
                 DropdownMenuItem(
                   value: SortColumnSettings.authorName,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.person_outline_rounded,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                      horizontalGap12,
-                      Expanded(child: Text(tr('authorName'))),
-                      if (settingsProvider.sortColumn ==
-                          SortColumnSettings.authorName)
-                        Icon(
-                          Icons.check_rounded,
-                          size: 20,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                    ],
-                  ),
+                  child: Text(tr('authorName')),
                 ),
                 DropdownMenuItem(
                   value: SortColumnSettings.nameAuthor,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.sort_by_alpha_rounded,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                      horizontalGap12,
-                      Expanded(child: Text(tr('nameAuthor'))),
-                      if (settingsProvider.sortColumn ==
-                          SortColumnSettings.nameAuthor)
-                        Icon(
-                          Icons.check_rounded,
-                          size: 20,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                    ],
-                  ),
+                  child: Text(tr('nameAuthor')),
                 ),
                 DropdownMenuItem(
                   value: SortColumnSettings.added,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.add_circle_outline_rounded,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                      horizontalGap12,
-                      Expanded(child: Text(tr('asAdded'))),
-                      if (settingsProvider.sortColumn ==
-                          SortColumnSettings.added)
-                        Icon(
-                          Icons.check_rounded,
-                          size: 20,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                    ],
-                  ),
+                  child: Text(tr('added')),
                 ),
                 DropdownMenuItem(
                   value: SortColumnSettings.releaseDate,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_today_outlined,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                      horizontalGap12,
-                      Expanded(child: Text(tr('releaseDate'))),
-                      if (settingsProvider.sortColumn ==
-                          SortColumnSettings.releaseDate)
-                        Icon(
-                          Icons.check_rounded,
-                          size: 20,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                    ],
-                  ),
+                  child: Text(tr('releaseDate')),
                 ),
               ],
-              onChanged: (SortColumnSettings? value) {
+              onChanged: (value) {
                 if (value != null) {
                   settingsProvider.sortColumn = value;
                 }
@@ -393,55 +321,17 @@ class _SettingsPageState extends State<SettingsPage> {
             DropdownButton<SortOrderSettings>(
               value: settingsProvider.sortOrder,
               isExpanded: true,
-              underline: const SizedBox(),
-              icon: const Icon(Icons.keyboard_arrow_down_rounded),
-              iconSize: 24,
-              iconEnabledColor: Theme.of(context).colorScheme.onSurfaceVariant,
               items: [
                 DropdownMenuItem(
                   value: SortOrderSettings.ascending,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.arrow_upward_rounded,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                      horizontalGap12,
-                      Expanded(child: Text(tr('ascending'))),
-                      if (settingsProvider.sortOrder ==
-                          SortOrderSettings.ascending)
-                        Icon(
-                          Icons.check_rounded,
-                          size: 20,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                    ],
-                  ),
+                  child: Text(tr('ascending')),
                 ),
                 DropdownMenuItem(
                   value: SortOrderSettings.descending,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.arrow_downward_rounded,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                      horizontalGap12,
-                      Expanded(child: Text(tr('descending'))),
-                      if (settingsProvider.sortOrder ==
-                          SortOrderSettings.descending)
-                        Icon(
-                          Icons.check_rounded,
-                          size: 20,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                    ],
-                  ),
+                  child: Text(tr('descending')),
                 ),
               ],
-              onChanged: (SortOrderSettings? value) {
+              onChanged: (value) {
                 if (value != null) {
                   settingsProvider.sortOrder = value;
                 }
@@ -471,65 +361,23 @@ class _SettingsPageState extends State<SettingsPage> {
             DropdownButton<String?>(
               value: settingsProvider.forcedLocale?.toString(),
               isExpanded: true,
-              underline: const SizedBox(),
-              icon: const Icon(Icons.keyboard_arrow_down_rounded),
-              iconSize: 24,
-              iconEnabledColor: Theme.of(context).colorScheme.onSurfaceVariant,
               items: [
                 DropdownMenuItem<String?>(
                   value: null,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.settings_system_daydream_rounded,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                      horizontalGap12,
-                      Expanded(child: Text(tr('followSystem'))),
-                      if (settingsProvider.forcedLocale == null)
-                        Icon(
-                          Icons.check_rounded,
-                          size: 20,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                    ],
-                  ),
+                  child: Text(tr('followSystem')),
                 ),
                 ...supportedLocales.map(
                   (e) => DropdownMenuItem<String>(
                     value: e.key.toString(),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.language_rounded,
-                          size: 20,
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                        horizontalGap12,
-                        Expanded(child: Text(e.value)),
-                        if (settingsProvider.forcedLocale?.toString() ==
-                            e.key.toString())
-                          Icon(
-                            Icons.check_rounded,
-                            size: 20,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                      ],
-                    ),
+                    child: Text(e.value),
                   ),
                 ),
               ],
-              onChanged: (String? value) {
+              onChanged: (value) {
                 if (value == null) {
                   settingsProvider.forcedLocale = null;
-                  settingsProvider.resetLocaleSafe(context);
                 } else {
-                  final entry = supportedLocales.firstWhere(
-                    (e) => e.key.toString() == value,
-                  );
-                  settingsProvider.forcedLocale = entry.key;
-                  context.setLocale(entry.key);
+                  settingsProvider.forcedLocale = Locale(value);
                 }
               },
             ),
@@ -1140,94 +988,18 @@ class _SettingsPageState extends State<SettingsPage> {
                                     DropdownButton<ThemeSettings>(
                                       value: settingsProvider.theme,
                                       isExpanded: true,
-                                      underline: const SizedBox(),
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down_rounded,
-                                      ),
-                                      iconSize: 24,
-                                      iconEnabledColor: Theme.of(
-                                        context,
-                                      ).colorScheme.onSurfaceVariant,
                                       items: [
                                         DropdownMenuItem(
                                           value: ThemeSettings.system,
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons
-                                                    .settings_system_daydream_rounded,
-                                                size: 20,
-                                                color: Theme.of(
-                                                  context,
-                                                ).colorScheme.onSurfaceVariant,
-                                              ),
-                                              horizontalGap12,
-                                              Expanded(
-                                                child: Text(tr('followSystem')),
-                                              ),
-                                              if (settingsProvider.theme ==
-                                                  ThemeSettings.system)
-                                                Icon(
-                                                  Icons.check_rounded,
-                                                  size: 20,
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).colorScheme.primary,
-                                                ),
-                                            ],
-                                          ),
+                                          child: Text(tr('followSystem')),
                                         ),
                                         DropdownMenuItem(
                                           value: ThemeSettings.light,
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.light_mode_rounded,
-                                                size: 20,
-                                                color: Theme.of(
-                                                  context,
-                                                ).colorScheme.onSurfaceVariant,
-                                              ),
-                                              horizontalGap12,
-                                              Expanded(
-                                                child: Text(tr('light')),
-                                              ),
-                                              if (settingsProvider.theme ==
-                                                  ThemeSettings.light)
-                                                Icon(
-                                                  Icons.check_rounded,
-                                                  size: 20,
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).colorScheme.primary,
-                                                ),
-                                            ],
-                                          ),
+                                          child: Text(tr('light')),
                                         ),
                                         DropdownMenuItem(
                                           value: ThemeSettings.dark,
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.dark_mode_rounded,
-                                                size: 20,
-                                                color: Theme.of(
-                                                  context,
-                                                ).colorScheme.onSurfaceVariant,
-                                              ),
-                                              horizontalGap12,
-                                              Expanded(child: Text(tr('dark'))),
-                                              if (settingsProvider.theme ==
-                                                  ThemeSettings.dark)
-                                                Icon(
-                                                  Icons.check_rounded,
-                                                  size: 20,
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).colorScheme.primary,
-                                                ),
-                                            ],
-                                          ),
+                                          child: Text(tr('dark')),
                                         ),
                                       ],
                                       onChanged: (ThemeSettings? value) {
@@ -1565,34 +1337,10 @@ class _LogsDialogState extends State<LogsDialog> {
                   DropdownButton<int>(
                     value: selectedDays,
                     isExpanded: true,
-                    underline: const SizedBox(),
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    iconSize: 24,
-                    iconEnabledColor: Theme.of(
-                      context,
-                    ).colorScheme.onSurfaceVariant,
                     items: days.map((day) {
                       return DropdownMenuItem<int>(
                         value: day,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.date_range_rounded,
-                              size: 20,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurfaceVariant,
-                            ),
-                            horizontalGap12,
-                            Expanded(child: Text(plural('day', day))),
-                            if (selectedDays == day)
-                              Icon(
-                                Icons.check_rounded,
-                                size: 20,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                          ],
-                        ),
+                        child: Text(plural('day', day)),
                       );
                     }).toList(),
                     onChanged: (int? value) {

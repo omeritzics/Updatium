@@ -388,8 +388,8 @@ class _AppPageState extends State<AppPage> {
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
-        // Extra bottom padding to clear the floating toolbar + FAB
-        const SizedBox(height: 120),
+        // Extra bottom padding to clear the docked toolbar
+        const SizedBox(height: 96),
       ],
     );
 
@@ -476,19 +476,14 @@ class _AppPageState extends State<AppPage> {
     }
 
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // ── Floating Toolbar pill (secondary actions) ──────────────────
-          Card(
-            elevation: 3,
-            shape: const StadiumBorder(),
-            color: Theme.of(context).colorScheme.surfaceContainerHigh,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+      bottomNavigationBar: BottomAppBar(
+        height: 80,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
+          children: [
+            // ── Secondary actions (left side) ─────────────────────────────
+            Expanded(
               child: Row(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   // Show certificate hashes dialog (conditional)
                   if (app.certificateHashes.isNotEmpty)
@@ -617,55 +612,54 @@ class _AppPageState extends State<AppPage> {
                 ],
               ),
             ),
-          ),
-          const SizedBox(width: 16),
-          // ── FAB – primary action (Install / Update) ────────────────────
-          FloatingActionButton.extended(
-            heroTag: 'app_details_fab',
-            onPressed:
-                !updating &&
-                    (app.app.installedVersion == null ||
-                        app.app.installedVersion != app.app.latestVersion) &&
-                    !areDownloadsRunning
-                ? () async {
-                    try {
-                      var successMessage = app.app.installedVersion == null
-                          ? tr('installed')
-                          : tr('appsUpdated');
-                      HapticFeedback.heavyImpact();
-                      var res = await appsProvider.downloadAndInstallLatestApps(
-                        [app.app.id],
-                        globalNavigatorKey.currentContext,
-                      );
-                      if (res.isNotEmpty && !trackOnly) {
+            const SizedBox(width: 16),
+            // ── Primary action (Install / Update) ─────────────────────────
+            FilledButton.icon(
+              onPressed:
+                  !updating &&
+                      (app.app.installedVersion == null ||
+                          app.app.installedVersion != app.app.latestVersion) &&
+                      !areDownloadsRunning
+                  ? () async {
+                      try {
+                        var successMessage = app.app.installedVersion == null
+                            ? tr('installed')
+                            : tr('appsUpdated');
+                        HapticFeedback.heavyImpact();
+                        var res = await appsProvider.downloadAndInstallLatestApps(
+                          [app.app.id],
+                          globalNavigatorKey.currentContext,
+                        );
+                        if (res.isNotEmpty && !trackOnly) {
+                          // ignore: use_build_context_synchronously
+                          showMessage(successMessage, context);
+                        }
+                        if (res.isNotEmpty && mounted) {
+                          Navigator.of(context).pop();
+                        }
+                      } catch (e) {
                         // ignore: use_build_context_synchronously
-                        showMessage(successMessage, context);
+                        showError(e, context);
                       }
-                      if (res.isNotEmpty && mounted) {
-                        Navigator.of(context).pop();
-                      }
-                    } catch (e) {
-                      // ignore: use_build_context_synchronously
-                      showError(e, context);
                     }
-                  }
-                : null,
-            icon: Icon(
-              app.app.installedVersion == null
-                  ? Icons.install_mobile
-                  : Icons.system_update,
+                  : null,
+              icon: Icon(
+                app.app.installedVersion == null
+                    ? Icons.install_mobile
+                    : Icons.system_update,
+              ),
+              label: Text(
+                app.app.installedVersion == null
+                    ? !trackOnly
+                          ? tr('install')
+                          : tr('markInstalled')
+                    : !trackOnly
+                    ? tr('update')
+                    : tr('markUpdated'),
+              ),
             ),
-            label: Text(
-              app.app.installedVersion == null
-                  ? !trackOnly
-                        ? tr('install')
-                        : tr('markInstalled')
-                  : !trackOnly
-                  ? tr('update')
-                  : tr('markUpdated'),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
       body: RefreshIndicator(
         child: CustomScrollView(
