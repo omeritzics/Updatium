@@ -41,10 +41,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlin {
-        jvmToolchain(21)
-    }
-
     defaultConfig {
         applicationId = "io.github.omeritzics.updatium"
         // You can update the following values to match your application needs.
