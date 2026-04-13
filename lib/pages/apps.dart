@@ -687,7 +687,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       final isSelected = selectedAppIds.contains(app.id);
 
       return Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        margin: const EdgeInsets.symmetric(vertical: 4),
         color: isSelected
             ? Theme.of(
                 context,
@@ -698,6 +698,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           onTap: () => _handleAppTap(app),
           onLongPress: () => toggleAppSelected(app),
           child: Stack(
+            alignment: Alignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8),
@@ -922,27 +923,24 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: SliverGrid(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 190,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-                childAspectRatio: 0.65,
-              ),
-              delegate: SliverChildBuilderDelegate((
-                BuildContext context,
-                int index,
-              ) {
-                final appIndex = filteredEntries[index].key;
-                // Check if the app index is valid
-                if (appIndex >= 0 && appIndex < listedApps.length) {
-                  return getSingleAppGridTile(appIndex);
-                }
-                return const SizedBox.shrink();
-              }, childCount: filteredEntries.length),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 190,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+              childAspectRatio: 0.65,
             ),
+            itemCount: filteredEntries.length,
+            itemBuilder: (BuildContext context, int index) {
+              final appIndex = filteredEntries[index].key;
+              // Check if the app index is valid
+              if (appIndex >= 0 && appIndex < listedApps.length) {
+                return getSingleAppGridTile(appIndex);
+              }
+              return const SizedBox.shrink();
+            },
           ),
         ],
       );
@@ -1540,68 +1538,66 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             }, childCount: listedCategories.length),
           );
         } else {
-          // Build all expansion panels at once for ExpansionPanelList
-          final panels = <ExpansionPanel>[];
-          for (int i = 0; i < listedCategories.length; i++) {
-            var filteredEntries = listedApps
-                .asMap()
-                .entries
-                .where(
-                  (e) =>
-                      e.value.app.categories?.contains(listedCategories[i]) ==
-                          true ||
-                      e.value.app.categories?.isEmpty == true &&
-                          listedCategories[i] == null,
-                )
-                .toList();
+          // Build expansion tiles similar to settings page
+          capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
+          return SliverList(
+            delegate: SliverChildBuilderDelegate((
+              BuildContext context,
+              int index,
+            ) {
+              var filteredEntries = listedApps
+                  .asMap()
+                  .entries
+                  .where(
+                    (e) =>
+                        e.value.app.categories?.contains(listedCategories[index]) ==
+                            true ||
+                        e.value.app.categories?.isEmpty == true &&
+                            listedCategories[index] == null,
+                  )
+                  .toList();
 
-            var tiles = filteredEntries
-                .map((e) => getSingleAppHorizTile(e.key))
-                .toList();
+              if (filteredEntries.isEmpty) {
+                return const SizedBox.shrink();
+              }
 
-            capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
-            panels.add(
-              ExpansionPanel(
-                headerBuilder: (BuildContext context, bool isExpanded) {
-                  return KeyedSubtree(
+              var tiles = filteredEntries
+                  .map((e) => getSingleAppHorizTile(e.key))
+                  .toList();
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                child: Card(
+                  child: ExpansionTile(
                     key: ValueKey(
-                      'category_header_${listedCategories[i] ?? "null"}_$i',
+                      'category_${listedCategories[index] ?? "null"}_$index',
                     ),
-                    child: ListTile(
-                      title: Text(
-                        capFirstChar(listedCategories[i] ?? tr('noCategory')),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      trailing: Text(tiles.length.toString()),
+                    leading: Icon(
+                      Icons.category_rounded,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
-                  );
-                },
-                body: KeyedSubtree(
-                  key: ValueKey(
-                    'category_body_${listedCategories[i] ?? "null"}_$i',
+                    title: Text(
+                      capFirstChar(listedCategories[index] ?? tr('noCategory')),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    trailing: Text(tiles.length.toString()),
+                    initiallyExpanded: _expandedCategories.contains(index),
+                    onExpansionChanged: (isExpanded) {
+                      setState(() {
+                        if (isExpanded) {
+                          _expandedCategories.add(index);
+                        } else {
+                          _expandedCategories.remove(index);
+                        }
+                      });
+                    },
+                    tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+                    childrenPadding: const EdgeInsets.all(16),
+                    children: tiles,
                   ),
-                  child: Column(children: tiles),
                 ),
-                isExpanded: _expandedCategories.contains(i),
-              ),
-            );
-          }
-
-          return SliverToBoxAdapter(
-            child: ExpansionPanelList(
-              expansionCallback: (int index, bool isExpanded) {
-                setState(() {
-                  if (isExpanded) {
-                    _expandedCategories.remove(index);
-                  } else {
-                    _expandedCategories.add(index);
-                  }
-                });
-              },
-              children: panels,
-            ),
+              );
+            }, childCount: listedCategories.length),
           );
         }
       } else {
