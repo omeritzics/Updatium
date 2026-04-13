@@ -763,81 +763,142 @@ class _SelectionModalState extends State<SelectionModal> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
           ),
-          ...filteredEntrySelections.keys.map((entry) {
-            void selectThis(bool? value) {
-              setState(() {
-                value ??= false;
-                if (value! && widget.onlyOneSelectionAllowed) {
-                  selectOnlyOne(entry.key);
-                } else {
-                  entrySelections[entry] = value!;
+          if (widget.onlyOneSelectionAllowed)
+            RadioGroup<String>(
+              groupValue: entrySelections.entries
+                  .where((e) => e.value)
+                  .map((e) => e.key.key)
+                  .firstOrNull,
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() => selectOnlyOne(value));
                 }
-              });
-            }
-
-            Widget urlLink = Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  entry.value.isEmpty ? entry.key : entry.value[0],
-                  style: TextStyle(
-                    decoration: widget.titlesAreLinks
-                        ? TextDecoration.underline
-                        : null,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                if (widget.titlesAreLinks)
-                  Text(
-                    Uri.tryParse(entry.key)?.host ?? entry.key,
-                    style: const TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontSize: 12,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-              ],
-            );
-
-            if (widget.titlesAreLinks) {
-              urlLink = GestureDetector(
-                onTap: () => launchUrlString(
-                  entry.key,
-                  mode: LaunchMode.externalApplication,
-                ),
-                child: urlLink,
-              );
-            }
-
-            Widget? descriptionText = entry.value.length <= 1
-                ? null
-                : Text(
-                    entry.value[1].length > 128
-                        ? '${entry.value[1].substring(0, 128)}...'
-                        : entry.value[1],
-                    style: const TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 12,
-                    ),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
+              },
+              child: Column(
+                children: filteredEntrySelections.keys.map((entry) {
+                  Widget urlLink = Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        entry.value.isEmpty ? entry.key : entry.value[0],
+                        style: TextStyle(
+                          decoration: widget.titlesAreLinks
+                              ? TextDecoration.underline
+                              : null,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (widget.titlesAreLinks)
+                        Text(
+                          Uri.tryParse(entry.key)?.host ?? entry.key,
+                          style: const TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontSize: 12,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                    ],
                   );
 
-            if (widget.onlyOneSelectionAllowed) {
-              return RadioListTile<String>(
-                title: urlLink,
-                subtitle: descriptionText,
-                value: entry.key,
-                groupValue: entrySelections.entries
-                    .where((e) => e.value)
-                    .map((e) => e.key.key)
-                    .firstOrNull,
-                onChanged: (value) => setState(() => selectOnlyOne(entry.key)),
+                  if (widget.titlesAreLinks) {
+                    urlLink = GestureDetector(
+                      onTap: () => launchUrlString(
+                        entry.key,
+                        mode: LaunchMode.externalApplication,
+                      ),
+                      child: urlLink,
+                    );
+                  }
+
+                  Widget? descriptionText = entry.value.length <= 1
+                      ? null
+                      : Text(
+                          entry.value[1].length > 128
+                              ? '${entry.value[1].substring(0, 128)}...'
+                              : entry.value[1],
+                          style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 12,
+                          ),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        );
+
+                  return RadioListTile<String>(
+                    title: urlLink,
+                    subtitle: descriptionText,
+                    value: entry.key,
+                  );
+                }).toList(),
+              ),
+            )
+          else
+            ...filteredEntrySelections.keys.map((entry) {
+              void selectThis(bool? value) {
+                setState(() {
+                  value ??= false;
+                  if (value! && widget.onlyOneSelectionAllowed) {
+                    selectOnlyOne(entry.key);
+                  } else {
+                    entrySelections[entry] = value!;
+                  }
+                });
+              }
+
+              Widget urlLink = Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    entry.value.isEmpty ? entry.key : entry.value[0],
+                    style: TextStyle(
+                      decoration: widget.titlesAreLinks
+                          ? TextDecoration.underline
+                          : null,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (widget.titlesAreLinks)
+                    Text(
+                      Uri.tryParse(entry.key)?.host ?? entry.key,
+                      style: const TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                ],
               );
-            } else {
+
+              if (widget.titlesAreLinks) {
+                urlLink = GestureDetector(
+                  onTap: () => launchUrlString(
+                    entry.key,
+                    mode: LaunchMode.externalApplication,
+                  ),
+                  child: urlLink,
+                );
+              }
+
+              Widget? descriptionText = entry.value.length <= 1
+                  ? null
+                  : Text(
+                      entry.value[1].length > 128
+                          ? '${entry.value[1].substring(0, 128)}...'
+                          : entry.value[1],
+                      style: const TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 12,
+                      ),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    );
+
               return CheckboxListTile(
                 title: urlLink,
                 subtitle: descriptionText,
@@ -845,8 +906,7 @@ class _SelectionModalState extends State<SelectionModal> {
                 onChanged: selectThis,
                 controlAffinity: ListTileControlAffinity.leading,
               );
-            }
-          }),
+            }),
         ],
       ),
       actions: [
