@@ -102,7 +102,7 @@ jobs:
 
       - name: Setup Python (for ecosystem support)
         if: hashFiles('requirements.txt') != '' || hashFiles('pyproject.toml') != '' || hashFiles('Pipfile') != ''
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
 
