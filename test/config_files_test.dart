@@ -640,25 +640,26 @@ void main() {
 
       if (pubspecFile.existsSync()) {
         final content = pubspecFile.readAsStringSync();
+        final pubspec = Pubspec.parse(content);
 
         expect(
-          content,
-          contains('name:'),
+          pubspec.name,
+          isNotEmpty,
           reason: 'pubspec.yaml should have name field',
         );
         expect(
-          content,
-          contains('description:'),
+          pubspec.description,
+          isNotEmpty,
           reason: 'pubspec.yaml should have description field',
         );
         expect(
-          content,
-          contains('version:'),
+          pubspec.version.toString(),
+          isNotEmpty,
           reason: 'pubspec.yaml should have version field',
         );
         expect(
-          content,
-          contains('updatium'),
+          pubspec.name,
+          equals('updatium'),
           reason: 'pubspec.yaml should reference updatium',
         );
       }

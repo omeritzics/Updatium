@@ -85,6 +85,7 @@ dependencies:
   battery_plus: ^7.0.0
   flutter_charset_detector: ^5.0.0
   keyboard_detection: ^0.8.1
+  pubspec_parse: ^1.4.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
