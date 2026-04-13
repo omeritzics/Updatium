@@ -26,11 +26,6 @@ class FDroidRepo extends AppSource {
           label: tr('pickHighestVersionCode'),
           defaultValue: false,
         ),
-        GeneratedFormSwitch(
-          'trySelectingSuggestedVersionCode',
-          label: tr('trySelectingSuggestedVersionCode'),
-          defaultValue: true,
-        ),
       ],
     ];
   }

@@ -88,78 +88,7 @@ class GitHub extends AppSource {
       ),
     ];
 
-    additionalSourceAppSpecificSettingFormItems = [
-      [
-        GeneratedFormSwitch(
-          'includePrereleases',
-          label: tr('includePrereleases'),
-          defaultValue: false,
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'fallbackToOlderReleases',
-          label: tr('fallbackToOlderReleases'),
-          defaultValue: true,
-        ),
-      ],
-      [
-        GeneratedFormTextField(
-          'filterReleaseTitlesByRegEx',
-          label: tr('filterReleaseTitlesByRegEx'),
-          required: false,
-          additionalValidators: [
-            (value) {
-              return regExValidator(value);
-            },
-          ],
-        ),
-      ],
-      [
-        GeneratedFormTextField(
-          'filterReleaseNotesByRegEx',
-          label: tr('filterReleaseNotesByRegEx'),
-          required: false,
-          additionalValidators: [
-            (value) {
-              return regExValidator(value);
-            },
-          ],
-        ),
-      ],
-      [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
-      [
-        GeneratedFormDropdown(
-          'sortMethodChoice',
-          [
-            MapEntry('date', tr('releaseDate')),
-            MapEntry('smartname', tr('smartname')),
-            MapEntry('none', tr('none')),
-            MapEntry(
-              'smartname-datefallback',
-              '${tr('smartname')} x ${tr('releaseDate')}',
-            ),
-            MapEntry('name', tr('name')),
-          ],
-          label: tr('sortMethod'),
-          defaultValue: 'date',
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'useLatestAssetDateAsReleaseDate',
-          label: tr('useLatestAssetDateAsReleaseDate'),
-          defaultValue: false,
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'releaseTitleAsVersion',
-          label: tr('releaseTitleAsVersion'),
-          defaultValue: false,
-        ),
-      ],
-    ];
+    additionalSourceAppSpecificSettingFormItems = [];
 
     canSearch = true;
     searchQuerySettingFormItems = [

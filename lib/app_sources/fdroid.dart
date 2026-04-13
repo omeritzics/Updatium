@@ -29,11 +29,6 @@ class FDroid extends AppSource {
       ],
       [
         GeneratedFormSwitch(
-          'trySelectingSuggestedVersionCode',
-          label: tr('trySelectingSuggestedVersionCode'),
-          defaultValue: true,
-        ),
-        GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
           label: tr('autoSelectHighestVersionCode'),
         ),

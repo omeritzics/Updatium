@@ -44,15 +44,7 @@ class GitLab extends AppSource {
         ],
       ),
     ];
-    additionalSourceAppSpecificSettingFormItems = [
-      [
-        GeneratedFormSwitch(
-          'fallbackToOlderReleases',
-          label: tr('fallbackToOlderReleases'),
-          defaultValue: true,
-        ),
-      ],
-    ];
+    additionalSourceAppSpecificSettingFormItems = [];
   }
 
   @override

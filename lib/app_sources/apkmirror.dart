@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -14,27 +13,7 @@ class APKMirror extends AppSource {
     name = tr('apkmirror');
     enforceTrackOnly = false;
     showReleaseDateAsVersionToggle = true;
-    additionalSourceAppSpecificSettingFormItems = [
-      [
-        GeneratedFormSwitch(
-          'fallbackToOlderReleases',
-          label: tr('fallbackToOlderReleases'),
-          defaultValue: true,
-        ),
-      ],
-      [
-        GeneratedFormTextField(
-          'filterReleaseTitlesByRegEx',
-          label: tr('filterReleaseTitlesByRegEx'),
-          required: false,
-          additionalValidators: [
-            (value) {
-              return regExValidator(value);
-            },
-          ],
-        ),
-      ],
-    ];
+    additionalSourceAppSpecificSettingFormItems = [];
   }
   @override
   Future<Map<String, String>?> getRequestHeaders(

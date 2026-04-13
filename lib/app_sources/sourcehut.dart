@@ -3,7 +3,6 @@ import 'package:http/http.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_utils;
-import 'package:updatium/components/generated_form.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class SourceHut extends AppSource {
@@ -11,15 +10,7 @@ class SourceHut extends AppSource {
     hosts = ['git.sr.ht'];
     name = tr('sourcehut');
     showReleaseDateAsVersionToggle = true;
-    additionalSourceAppSpecificSettingFormItems = [
-      [
-        GeneratedFormSwitch(
-          'fallbackToOlderReleases',
-          label: tr('fallbackToOlderReleases'),
-          defaultValue: true,
-        ),
-      ],
-    ];
+    additionalSourceAppSpecificSettingFormItems = [];
   }
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
