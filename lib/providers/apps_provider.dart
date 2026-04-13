@@ -905,9 +905,7 @@ class AppsProvider with ChangeNotifier {
   }
 
   // Filter APKs based on device architecture
-  Future<List<File>> filterApksByArchitecture(
-    List<File> apkFiles,
-  ) async {
+  Future<List<File>> filterApksByArchitecture(List<File> apkFiles) async {
     if (apkFiles.isEmpty) return apkFiles;
 
     var deviceAbis = await getDeviceAbis();
@@ -1037,9 +1035,9 @@ class AppsProvider with ChangeNotifier {
           shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
           additionalAPKs: selectedApks.length > 1
               ? selectedApks
-                  .sublist(1)
-                  .map((a) => DownloadedApk(dir.appId, a))
-                  .toList()
+                    .sublist(1)
+                    .map((a) => DownloadedApk(dir.appId, a))
+                    .toList()
               : [],
         );
         somethingInstalled = somethingInstalled || wasInstalled;
