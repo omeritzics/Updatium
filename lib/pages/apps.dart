@@ -723,19 +723,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                        if (hasUpdate)
-                          Positioned(
-                            top: -4,
-                            right: -4,
-                            child: Container(
-                              width: 12,
-                              height: 12,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primary,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                          ),
                       ],
                     ),
                     const SizedBox(height: 8),
@@ -910,6 +897,11 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           )
           .toList();
 
+      // Skip rendering if no apps in this category
+      if (filteredEntries.isEmpty) {
+        return const SizedBox.shrink();
+      }
+
       capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -943,7 +935,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 BuildContext context,
                 int index,
               ) {
-                return getSingleAppGridTile(filteredEntries[index].key);
+                final appIndex = filteredEntries[index].key;
+                // Check if the app index is valid
+                if (appIndex >= 0 && appIndex < listedApps.length) {
+                  return getSingleAppGridTile(appIndex);
+                }
+                return const SizedBox.shrink();
               }, childCount: filteredEntries.length),
             ),
           ),
@@ -1566,17 +1563,23 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             panels.add(
               ExpansionPanel(
                 headerBuilder: (BuildContext context, bool isExpanded) {
-                  return ListTile(
-                    title: Text(
-                      capFirstChar(listedCategories[i] ?? tr('noCategory')),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                  return KeyedSubtree(
+                    key: ValueKey('category_header_${listedCategories[i] ?? "null"}_$i'),
+                    child: ListTile(
+                      title: Text(
+                        capFirstChar(listedCategories[i] ?? tr('noCategory')),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: Text(tiles.length.toString()),
                     ),
-                    trailing: Text(tiles.length.toString()),
                   );
                 },
-                body: Column(children: tiles),
+                body: KeyedSubtree(
+                  key: ValueKey('category_body_${listedCategories[i] ?? "null"}_$i'),
+                  child: Column(children: tiles),
+                ),
                 isExpanded: _expandedCategories.contains(i),
               ),
             );
@@ -1600,7 +1603,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       } else {
         // Flat View
         if (settingsProvider.useGridView) {
-          final spacing = 8.0;
+          final spacing = 4.0;
 
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -1711,6 +1714,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   ),
                 ],
                 title: Text(tr('appsString')),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 8),
               ),
               ...getLoadingWidgets(),
               getDisplayedList(),

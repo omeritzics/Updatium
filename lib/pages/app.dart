@@ -84,28 +84,61 @@ class _AppPageState extends State<AppPage> {
             overrideSource: app.app.overrideSource,
           )
         : null;
+
+    // Handle null app case - show loading or error
+    if (app == null) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (appsProvider.loadingApps)
+                const CircularProgressIndicator()
+              else
+                Column(
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      size: 64,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      tr('appNotFound'),
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      widget.appId,
+                      style: Theme.of(context).textTheme.bodySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ),
+      );
+    }
     if (!areDownloadsRunning &&
         prevApp == null &&
-        app != null &&
         settingsProvider.checkUpdateOnDetailPage) {
       prevApp = app;
       getUpdate(app.app.id);
     }
-    var trackOnly = app?.app.additionalSettings['trackOnly'] == true;
+    var trackOnly = app.app.additionalSettings['trackOnly'] == true;
 
     bool isVersionDetectionStandard =
-        app?.app.additionalSettings['versionDetection'] == true;
+        app.app.additionalSettings['versionDetection'] == true;
 
-    bool installedVersionIsEstimate = app?.app != null
-        ? isVersionPseudo(app!.app)
-        : false;
+    bool installedVersionIsEstimate = isVersionPseudo(app.app);
 
     getInfoColumn() {
       String versionLines = '';
-      bool installed = app?.app.installedVersion != null;
-      bool upToDate = app?.app.installedVersion == app?.app.latestVersion;
+      bool installed = app.app.installedVersion != null;
+      bool upToDate = app.app.installedVersion == app.app.latestVersion;
       if (installed) {
-        versionLines = '${app?.app.installedVersion} ${tr('installedVersion')}';
+        versionLines = '${app.app.installedVersion} ${tr('installedVersion')}';
         if (upToDate) {
           versionLines += '/${tr('latest')}';
         }
@@ -113,14 +146,14 @@ class _AppPageState extends State<AppPage> {
         versionLines = tr('notInstalled');
       }
       if (!upToDate) {
-        versionLines += '\n${app?.app.latestVersion} ${tr('latest')}';
+        versionLines += '\n${app.app.latestVersion} ${tr('latest')}';
       }
       String infoLines = tr(
         'lastUpdateCheckX',
         args: [
-          app?.app.lastUpdateCheck == null
+          app.app.lastUpdateCheck == null
               ? tr('never')
-              : '${app?.app.lastUpdateCheck?.toLocal()}',
+              : '${app.app.lastUpdateCheck?.toLocal()}',
         ],
       );
       if (trackOnly) {
@@ -129,11 +162,11 @@ class _AppPageState extends State<AppPage> {
       if (installedVersionIsEstimate) {
         infoLines = '${tr('pseudoVersionInUse')}\n$infoLines';
       }
-      if ((app?.app.apkUrls.length ?? 0) > 0) {
+      if (app.app.apkUrls.length > 0) {
         infoLines =
-            '$infoLines\n${app?.app.apkUrls.length == 1 ? app?.app.apkUrls[0].key : plural('apk', app?.app.apkUrls.length ?? 0)}';
+            '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : plural('apk', app.app.apkUrls.length)}';
       }
-      var changeLogFn = app != null ? getChangeLogFn(context, app.app) : null;
+      var changeLogFn = getChangeLogFn(context, app.app);
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -150,13 +183,13 @@ class _AppPageState extends State<AppPage> {
                     context,
                   ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
                 ),
-                changeLogFn != null || app?.app.releaseDate != null
+                changeLogFn != null || app.app.releaseDate != null
                     ? GestureDetector(
                         onTap: changeLogFn,
                         child: Text(
-                          app?.app.releaseDate == null
+                          app.app.releaseDate == null
                               ? tr('changes')
-                              : app!.app.releaseDate!.toLocal().toString(),
+                              : app.app.releaseDate!.toLocal().toString(),
                           textAlign: TextAlign.start,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -186,7 +219,7 @@ class _AppPageState extends State<AppPage> {
           ),
 
           /* Certificate Hashes */
-          if (app != null && app.certificateHashes.isNotEmpty)
+          if (app.certificateHashes.isNotEmpty)
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -229,16 +262,14 @@ class _AppPageState extends State<AppPage> {
           gap24,
           CategorySelector(
             alignment: WrapAlignment.center,
-            preselected: app?.app.categories?.toSet() ?? {},
+            preselected: app.app.categories?.toSet() ?? {},
             onSelected: (categories) {
-              if (app != null) {
-                app.app.categories = categories;
-                appsProvider.saveApps([app.app]);
-              }
+              app.app.categories = categories;
+              appsProvider.saveApps([app.app]);
             },
           ),
-          if (app?.app.additionalSettings['about'] is String &&
-              app?.app.additionalSettings['about'].isNotEmpty)
+          if (app.app.additionalSettings['about'] is String &&
+              app.app.additionalSettings['about'].isNotEmpty)
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -247,7 +278,7 @@ class _AppPageState extends State<AppPage> {
                   onLongPress: () {
                     Clipboard.setData(
                       ClipboardData(
-                        text: app?.app.additionalSettings['about'] ?? '',
+                        text: app.app.additionalSettings['about'] ?? '',
                       ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -263,7 +294,7 @@ class _AppPageState extends State<AppPage> {
                       ),
                       textAlign: WrapAlignment.center,
                     ),
-                    data: app?.app.additionalSettings['about'],
+                    data: app.app.additionalSettings['about'],
                     onTapLink: (text, href, title) {
                       if (href != null) {
                         launchUrlString(
@@ -294,15 +325,13 @@ class _AppPageState extends State<AppPage> {
         SizedBox(height: settingsProvider.highlightTouchTargets ? 4 : 8),
         GestureDetector(
           onTap: () {
-            if (app?.app.url != null) {
-              launchUrlString(
-                app?.app.url ?? '',
-                mode: LaunchMode.externalApplication,
-              );
-            }
+            launchUrlString(
+              app.app.url,
+              mode: LaunchMode.externalApplication,
+            );
           },
           onLongPress: () {
-            Clipboard.setData(ClipboardData(text: app?.app.url ?? ''));
+            Clipboard.setData(ClipboardData(text: app.app.url));
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text(tr('copiedToClipboard'))));
@@ -338,9 +367,9 @@ class _AppPageState extends State<AppPage> {
                     : const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
                 margin: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                 child: Tooltip(
-                  message: app?.app.url ?? '',
+                  message: app.app.url,
                   child: Text(
-                    app?.app.url ?? '',
+                    app.app.url,
                     textAlign: TextAlign.start,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -355,7 +384,7 @@ class _AppPageState extends State<AppPage> {
           ),
         ),
         Text(
-          app?.app.id ?? '',
+          app.app.id,
           textAlign: TextAlign.start,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
@@ -376,8 +405,8 @@ class _AppPageState extends State<AppPage> {
             row,
           ) {
             row = row.map((e) {
-              if (app?.app.additionalSettings[e.key] != null) {
-                e.defaultValue = app?.app.additionalSettings[e.key];
+              if (app.app.additionalSettings[e.key] != null) {
+                e.defaultValue = app.app.additionalSettings[e.key];
               }
               return e;
             }).toList();
@@ -409,7 +438,7 @@ class _AppPageState extends State<AppPage> {
     }
 
     handleAdditionalOptionChanges(Map<String, dynamic>? values) {
-      if (app != null && values != null) {
+      if (values != null) {
         Map<String, dynamic> originalSettings = app.app.additionalSettings;
         app.app.additionalSettings = values;
         if (source?.enforceTrackOnly == true) {
@@ -465,7 +494,7 @@ class _AppPageState extends State<AppPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // Show certificate hashes dialog (conditional)
-                  if (app != null && app.certificateHashes.isNotEmpty)
+                  if (app.certificateHashes.isNotEmpty)
                     IconButton(
                       icon: const Icon(Icons.tag),
                       tooltip: tr('certificateHash'),
@@ -537,20 +566,20 @@ class _AppPageState extends State<AppPage> {
                       ),
                     ),
                   // Download assets (conditional)
-                  if (app?.app.apkUrls.isNotEmpty == true ||
-                      app?.app.otherAssetUrls.isNotEmpty == true)
+                  if (app.app.apkUrls.isNotEmpty == true ||
+                      app.app.otherAssetUrls.isNotEmpty == true)
                     IconButton(
                       icon: const Icon(Icons.file_download_outlined),
                       tooltip: tr(
                         'downloadX',
                         args: [lowerCaseIfEnglish(tr('releaseAsset'))],
                       ),
-                      onPressed: app?.app == null || updating
+                      onPressed: updating
                           ? null
                           : () async {
                               try {
                                 await appsProvider.downloadAppAssets([
-                                  app!.app.id,
+                                  app.app.id,
                                 ], context);
                               } catch (e) {
                                 showError(e, context);
@@ -570,8 +599,8 @@ class _AppPageState extends State<AppPage> {
                             ),
                     ),
                   // Remove (conditional)
-                  if (app?.app.installedVersion != null &&
-                      app?.app.installedVersion != app?.app.latestVersion &&
+                  if (app.app.installedVersion != null &&
+                      app.app.installedVersion != app.app.latestVersion &&
                       !isVersionDetectionStandard &&
                       !trackOnly)
                     IconButton(
@@ -583,7 +612,7 @@ class _AppPageState extends State<AppPage> {
                           : () => appsProvider
                                 .removeAppsWithModal(
                                   context,
-                                  app != null ? [app.app] : [],
+                                  [app.app],
                                 )
                                 .then((result) {
                                   if (result == true) {
@@ -601,17 +630,17 @@ class _AppPageState extends State<AppPage> {
             heroTag: 'app_details_fab',
             onPressed:
                 !updating &&
-                    (app?.app.installedVersion == null ||
-                        app?.app.installedVersion != app?.app.latestVersion) &&
+                    (app.app.installedVersion == null ||
+                        app.app.installedVersion != app.app.latestVersion) &&
                     !areDownloadsRunning
                 ? () async {
                     try {
-                      var successMessage = app?.app.installedVersion == null
+                      var successMessage = app.app.installedVersion == null
                           ? tr('installed')
                           : tr('appsUpdated');
                       HapticFeedback.heavyImpact();
                       var res = await appsProvider.downloadAndInstallLatestApps(
-                        app?.app.id != null ? [app!.app.id] : [],
+                        [app.app.id],
                         globalNavigatorKey.currentContext,
                       );
                       if (res.isNotEmpty && !trackOnly) {
@@ -628,12 +657,12 @@ class _AppPageState extends State<AppPage> {
                   }
                 : null,
             icon: Icon(
-              app?.app.installedVersion == null
+              app.app.installedVersion == null
                   ? Icons.install_mobile
                   : Icons.system_update,
             ),
             label: Text(
-              app?.app.installedVersion == null
+              app.app.installedVersion == null
                   ? !trackOnly
                         ? tr('install')
                         : tr('markInstalled')
@@ -651,7 +680,6 @@ class _AppPageState extends State<AppPage> {
               pinned: true,
               title: Row(
                 children: [
-                  if (app != null)
                     Consumer<AppsProvider>(
                       builder: (ctx, appsProvider, child) {
                         final appInMemory = appsProvider.apps[app.app.id];
@@ -721,10 +749,9 @@ class _AppPageState extends State<AppPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(app?.name ?? tr('app')),
-                        if (app?.author != null)
-                          Text(
-                            'By ${app?.author}',
+                        Text(app.name),
+                        Text(
+                          'By ${app.author}',
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(
                                   color: Theme.of(
@@ -742,11 +769,11 @@ class _AppPageState extends State<AppPage> {
               child: Column(
                 children: [
                   getFullInfoColumn(),
-                  if (app?.downloadProgress != null)
+                  if (app.downloadProgress != null)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                       child: LinearProgressIndicator(
-                        value: app!.downloadProgress! >= 0
+                        value: app.downloadProgress! >= 0
                             ? app.downloadProgress! / 100
                             : null,
                         backgroundColor: Theme.of(
@@ -761,11 +788,9 @@ class _AppPageState extends State<AppPage> {
               ),
             ),
           ],
-        ),
+        ), 
         onRefresh: () async {
-          if (app != null) {
-            getUpdate(app.app.id);
-          }
+          getUpdate(app.app.id);
         },
       ),
     );
