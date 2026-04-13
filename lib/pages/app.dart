@@ -185,6 +185,7 @@ class _AppPageState extends State<AppPage> {
             ),
           ),
 
+
           /* Certificate Hashes */
           if (app != null && app.certificateHashes.isNotEmpty)
             Column(
@@ -464,34 +465,73 @@ class _AppPageState extends State<AppPage> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Check for update
-                  IconButton(
-                    icon: updating
-                        ? SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          )
-                        : const Icon(Icons.refresh),
-                    tooltip: tr('checkForUpdate'),
-                    onPressed: updating || areDownloadsRunning || app == null
-                        ? null
-                        : () => getUpdate(app.app.id),
-                  ),
-                  // Additional options (conditional)
-                  if (source != null &&
-                      source.combinedAppSpecificSettingFormItems.isNotEmpty)
+                  // Show certificate hashes dialog (conditional)
+                  if (app != null && app.certificateHashes.isNotEmpty)
                     IconButton(
-                      icon: const Icon(Icons.tune),
-                      tooltip: tr('additionalOptions'),
-                      onPressed: updating
-                          ? null
-                          : () => showAdditionalOptionsDialog().then(
-                              handleAdditionalOptionChanges,
+                      icon: const Icon(Icons.tag),
+                      tooltip: tr('certificateHash'),
+                      onPressed: () => showDialog<void>(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: Text(
+                            '${plural('certificateHash', app.certificateHashes.length)}'
+                            '${app.hasMultipleSigners ? ' (${tr('multipleSigners')})' : ''}',
+                          ),
+                          content: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: app.certificateHashes
+                                  .map(
+                                    (hash) => Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 6,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: SelectableText(
+                                              hash,
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontFamily: 'monospace',
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(Icons.copy, size: 16),
+                                            onPressed: () {
+                                              Clipboard.setData(
+                                                ClipboardData(text: hash),
+                                              );
+                                              ScaffoldMessenger.of(ctx)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                      tr('copiedToClipboard')),
+                                                ),
+                                              );
+                                            },
+                                            tooltip: tr('copy'),
+                                            padding: const EdgeInsets.all(4),
+                                            constraints:
+                                                const BoxConstraints(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
                             ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(ctx).pop(),
+                              child: Text(tr('ok')),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   // Download assets (conditional)
                   if (app?.app.apkUrls.isNotEmpty == true ||
@@ -513,6 +553,20 @@ class _AppPageState extends State<AppPage> {
                                 showError(e, context);
                               }
                             },
+                    ),
+                  // Edit / additional options (conditional)
+                  if (source != null &&
+                      source
+                          .combinedAppSpecificSettingFormItems
+                          .isNotEmpty)
+                    IconButton(
+                      icon: const Icon(Icons.edit_outlined),
+                      tooltip: tr('additionalOptions'),
+                      onPressed: updating
+                          ? null
+                          : () => showAdditionalOptionsDialog().then(
+                                handleAdditionalOptionChanges,
+                              ),
                     ),
                   // Remove (conditional)
                   if (app?.app.installedVersion != null &&
