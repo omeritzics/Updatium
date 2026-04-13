@@ -679,6 +679,7 @@ class AppsPageState extends State<AppsPage> {
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // App icon with status indicators
                     Stack(
@@ -727,7 +728,7 @@ class AppsPageState extends State<AppsPage> {
                     const SizedBox(height: 2),
                     // Author name
                     Text(
-                      appInfo.author,
+                      tr('byX', args: [appInfo.author]),
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
