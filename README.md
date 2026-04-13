@@ -44,13 +44,13 @@ Do not download Updatium from unofficial sources (such as Appteka), since these 
 | <img src="./assets/screenshots/4.app.png" alt="App Page" />   | |  |
 
 ### Localization
-Updatium currently supports 35 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull with the new translations added to [here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
+Updatium currently supports 36 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull with the new translations added to [here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
 
 If you don't know how to make a pull request, and/or you don't have any experience with Git, you can open an issue [here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help you with adding your language. 
 
 Every language is welcome to Updatium, but your help is needed to make it happen.
 
-* Currently supported locales: English, 简体中文, 臺灣話, Italiano, 日本語, עברית, Magyar, Deutsch, فارسی, Français, Español, Polski, Русский, Bosanski, Português, Česky, Svenska, Nederlands, Tiếng Việt, Türkçe, Українська, Dansk, Eesti, Esperanto, Bahasa Indonesia, 한국어, Català, العربية, മലയാളം, Galego, Български, Kurdî (Kurmanjî), Bahasa Melayu, Română.
+* Currently supported locales: English, 简体中文, 臺灣話, Italiano, 日本語, עברית, हिन्दी, Magyar, Deutsch, فارسی, Français, Español, Polski, Русский, Bosanski, Português, Česky, Svenska, Nederlands, Tiếng Việt, Türkçe, Українська, Dansk, Eesti, Esperanto, Bahasa Indonesia, 한국어, Català, العربية, മലയാളം, Galego, Български, Kurdî (Kurmanjî), Bahasa Melayu, Română.
 
 ## Limitations
 - For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.
