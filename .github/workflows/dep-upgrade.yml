@@ -446,62 +446,48 @@ jobs:
         if: steps.multi-ecosystem.outputs.has_updates == 'true' || steps.update-actions.outputs.has_action_updates == 'true'
         uses: peter-evans/create-pull-request@v8
         with:
-          title: 'chore: upgrade dependencies (multi-ecosystem)'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: 'chore: upgrade dependencies'
           body: |
-            Automated dependency upgrade across multiple ecosystems.
+            ## Automated Dependency Upgrade
             
-            ## Summary
-            This PR includes automated updates for:
+            This PR includes automated dependency updates across multiple ecosystems.
             
-            ### Flutter/Dart Packages
+            ### Updated Dependencies
+            
+            **Flutter/Dart Packages**
             ${{ steps.multi-ecosystem.outputs.flutter_updates }}
             
-            ### npm Packages
+            **npm Packages**  
             ${{ steps.multi-ecosystem.outputs.npm_updates }}
             
-            ### Python Packages
+            **Python Packages**
             ${{ steps.multi-ecosystem.outputs.python_updates }}
             
-            ### Docker Images
+            **Docker Images**
             ${{ steps.multi-ecosystem.outputs.docker_updates }}
             
-            ### GitHub Actions
+            **GitHub Actions**
             ${{ steps.update-actions.outputs.action_summary }}
             
-            ## Security
-            Comprehensive security audit completed across all ecosystems.
-            - Flutter dependencies tree generated and analyzed
-            - CodeQL integration for advanced security scanning
-            - npm audit performed (if applicable)
-            - Python security audit with pip-audit (if applicable)
-            - Docker security checks (if applicable)
-            - Hardcoded secrets and insecure patterns detection
+            ### Security & Health
             
-            ## Dependency Health Monitoring
-            ${{ steps.multi-ecosystem.outputs.health_issues }}
+            - **Security Audit**: Completed across all ecosystems
+            - **Dependency Health**: ${{ steps.multi-ecosystem.outputs.health_issues }}
+            - **Policy Violations**: ${{ steps.multi-ecosystem.outputs.policy_violations }}
             
-            ## Custom Update Policies
-            - Core packages (flutter, dart): Conservative updates only
-            - Security packages (http): Auto-update security patches
-            - Standard packages: Normal update policies applied
-            - Policy violations: ${{ steps.multi-ecosystem.outputs.policy_violations }}
+            ### Review Guidelines
             
-            ## CodeQL Integration
-            - Advanced CodeQL analysis runs in separate workflow
-            - Results available in GitHub Security tab
-            - Weekly automated scans scheduled
-            - Supports JavaScript analysis (and other languages as needed)
+            - Git dependencies require manual review
+            - Docker base image updates need verification  
+            - Check Security tab for detailed findings
+            - Test thoroughly before merging
             
-            ## Notes
-            - Git dependencies are not updated automatically and require manual review
-            - Docker base image updates require manual verification
-            - Security findings should be reviewed in the Security tab
-            - Health issues require immediate attention
-            - Custom policies enforced according to dependency-rules.yml
-            - Please review all changes before merging
-            - Test thoroughly after merging
+            ---
+            *This PR was created automatically by the dependency upgrade workflow*
           branch: upgrade/dependencies
-          commit-message: 'chore: upgrade dependencies (multi-ecosystem)'
-          labels: dependencies, automated, multi-ecosystem
+          commit-message: 'chore: upgrade dependencies'
+          labels: dependencies, automated
           delete-branch: true
           draft: false
+          assignees: ${{ github.repository_owner }}
