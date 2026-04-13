@@ -162,8 +162,6 @@ jobs:
           
           # Dependency Health Monitoring
           echo "=== Dependency Health Monitoring ==="
-          echo "health_issues=" >> $GITHUB_OUTPUT
-          echo "policy_violations=" >> $GITHUB_OUTPUT
           
           # Check Flutter package health
           if [ -f "pubspec.yaml" ]; then
@@ -493,7 +491,7 @@ jobs:
             - Advanced CodeQL analysis runs in separate workflow
             - Results available in GitHub Security tab
             - Weekly automated scans scheduled
-            - Supports JavaScript and Python analysis
+            - Supports JavaScript analysis (and other languages as needed)
             
             ## Notes
             - Git dependencies are not updated automatically and require manual review
