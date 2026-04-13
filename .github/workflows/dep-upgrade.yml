@@ -9,6 +9,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  workflows: write
 
 jobs:
   upgrade:
@@ -93,12 +94,14 @@ jobs:
             core.setOutput('action_summary', updateSummary.join('\n'));
 
       - name: Setup Node.js (for ecosystem support)
+        if: hashFiles('package.json') != ''
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
       - name: Setup Python (for ecosystem support)
+        if: hashFiles('requirements.txt') != '' || hashFiles('pyproject.toml') != '' || hashFiles('Pipfile') != ''
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -159,8 +162,6 @@ jobs:
           
           # Dependency Health Monitoring
           echo "=== Dependency Health Monitoring ==="
-          echo "health_issues=" >> $GITHUB_OUTPUT
-          echo "policy_violations=" >> $GITHUB_OUTPUT
           
           # Check Flutter package health
           if [ -f "pubspec.yaml" ]; then
@@ -490,7 +491,7 @@ jobs:
             - Advanced CodeQL analysis runs in separate workflow
             - Results available in GitHub Security tab
             - Weekly automated scans scheduled
-            - Supports JavaScript and Python analysis
+            - Supports JavaScript analysis (and other languages as needed)
             
             ## Notes
             - Git dependencies are not updated automatically and require manual review

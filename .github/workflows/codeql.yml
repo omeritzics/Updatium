@@ -24,9 +24,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript', 'python' ]
-        # CodeQL supports multiple languages but we'll focus on the ones most relevant to your project
-        # Note: Dart/Flutter is not directly supported by CodeQL, but we can analyze JavaScript and Python
+        language: [ 'javascript' ]
+        # CodeQL supports multiple languages but we'll focus on the ones actually present in your project
+        # Note: Dart/Flutter is not directly supported by CodeQL, but we can analyze JavaScript if present
 
     steps:
       - name: Checkout repository
