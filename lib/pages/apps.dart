@@ -1446,7 +1446,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     [
                       GeneratedFormTextField(
                         'description',
-                        label: tr('description'),
+                        label: tr('about'),
                         required: false,
                         defaultValue: localValues['description'],
                       ),
@@ -1654,7 +1654,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   tabs: [
                     Tab(text: tr('all')),
                     Tab(text: tr('installed')),
-                    Tab(text: tr('notInstalled')),
+                    Tab(text: tr('notInstalledApps')),
                   ],
                 ),
                 actions: [

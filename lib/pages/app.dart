@@ -105,7 +105,7 @@ class _AppPageState extends State<AppPage> {
       bool installed = app?.app.installedVersion != null;
       bool upToDate = app?.app.installedVersion == app?.app.latestVersion;
       if (installed) {
-        versionLines = '${app?.app.installedVersion} ${tr('installed')}';
+        versionLines = '${app?.app.installedVersion} ${tr('installedVersion')}';
         if (upToDate) {
           versionLines += '/${tr('latest')}';
         }
