@@ -261,7 +261,6 @@
     "dontShowTrackOnlyWarnings": "Nu arăta avertismentele 'doar pentru urmărire'",
     "dontShowAPKOriginWarnings": "Nu arăta avertismentele despre originea APK",
     "moveNonInstalledAppsToBottom": "Mută aplicațiile neinstalate la baza vizualizării aplicațiilor",
-    "hideNonInstalledApps": "Ascunde aplicațiile neinstalate",
     "gitlabPATLabel": "Token de acces personal GitLab",
     "about": "Despre",
     "requiresCredentialsInSettings": "{} necesită credențiale suplimentare (în Setări)",

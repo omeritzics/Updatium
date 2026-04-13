@@ -257,7 +257,6 @@
     "dontShowTrackOnlyWarnings": "No mostrar avisos sobre apps 'solo para seguimiento'",
     "dontShowAPKOriginWarnings": "No mostrar avisos sobre las fuentes de las APKs",
     "moveNonInstalledAppsToBottom": "Mover apps no instaladas al final",
-    "hideNonInstalledApps": "Ocultar apps no instaladas",
     "gitlabPATLabel": "Token de acceso personal a GitLab",
     "github": "GitHub",
     "about": "Acerca de",

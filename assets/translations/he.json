@@ -257,7 +257,6 @@
     "dontShowTrackOnlyWarnings": "לא להציג אזהרות מסוג ‚למעקב עדכונים בלבד’",
     "dontShowAPKOriginWarnings": "לא להציג אזהרות לגבי מקור קובץ ה־APK",
     "moveNonInstalledAppsToBottom": "העברת יישומים שאינם מותקנים לתחתית תצוגת היישומים",
-    "hideNonInstalledApps": "הסתרת יישומים שאינם מותקנים",
     "github": "GitHub",
     "gitlabPATLabel": "אסימון גישה אישי אל GitLab",
     "about": "מידע כללי",

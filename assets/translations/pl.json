@@ -242,7 +242,6 @@
     "dontShowTrackOnlyWarnings": "Nie pokazuj ostrzeżeń \"Tylko obserwowana\"",
     "dontShowAPKOriginWarnings": "Nie pokazuj ostrzeżeń o pochodzeniu APK",
     "moveNonInstalledAppsToBottom": "Przenieś niezainstalowane aplikacje na dół widoku aplikacji",
-    "hideNonInstalledApps": "Ukryj niezainstalowane aplikacje",
     "gitlabPATLabel": "Osobisty token dostępu GitLab",
     "advanced": "Zaawansowane",
     "apkcombo": "APKCombo",

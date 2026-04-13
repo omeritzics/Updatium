@@ -262,7 +262,6 @@
     "dontShowTrackOnlyWarnings": "'শুধুমাত্র-ট্র্যাক' সতর্কতা দেখাবেন না",
     "dontShowAPKOriginWarnings": "APK সোর্স সংক্রান্ত সতর্কতা দেখাবেন না",
     "moveNonInstalledAppsToBottom": "ইনস্টল না করা অ্যাপগুলোকে তালিকার নিচে পাঠান",
-    "hideNonInstalledApps": "ইনস্টল না করা অ্যাপগুলো লুকিয়ে রাখুন",
     "gitlabPATLabel": "GitLab পার্সোনাল অ্যাক্সেস টোকেন",
     "about": "সম্পর্কে",
     "requiresCredentialsInSettings": "{} এর জন্য অতিরিক্ত তথ্য প্রয়োজন (সেটিংসে দেখুন)",

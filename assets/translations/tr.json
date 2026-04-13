@@ -257,7 +257,6 @@
     "dontShowTrackOnlyWarnings": "'Sadece takip' (track-only) uyarılarını gösterme",
     "dontShowAPKOriginWarnings": "APK kökeni uyarılarını gösterme",
     "moveNonInstalledAppsToBottom": "Yüklü olmayan uygulamaları listenin en altına taşı",
-    "hideNonInstalledApps": "Yüklü olmayan uygulamaları gizle",
     "gitlabPATLabel": "GitLab kişisel erişim anahtarı",
     "github": "GitHub",
     "about": "Hakkında",

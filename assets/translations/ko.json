@@ -239,7 +239,6 @@
     "dontShowTrackOnlyWarnings": "'추적 전용' 경고 표시 안 함",
     "dontShowAPKOriginWarnings": "APK 출처 경고 표시 안 함",
     "moveNonInstalledAppsToBottom": "설치되지 않은 앱을 앱 보기 하단으로 이동",
-    "hideNonInstalledApps": "설치되지 않은 앱 숨기기",
     "gitlabPATLabel": "GitLab 개인 액세스 토큰",
     "github": "GitHub",
     "about": "정보",

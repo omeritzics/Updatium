@@ -1123,20 +1123,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Text(tr('hideNonInstalledApps')),
-                                ),
-                                Switch(
-                                  value: settingsProvider.hideNonInstalled,
-                                  onChanged: (value) {
-                                    settingsProvider.hideNonInstalled = value;
-                                  },
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
                                 Flexible(child: Text(tr('groupByCategory'))),
                                 Switch(
                                   value: settingsProvider.groupByCategory,

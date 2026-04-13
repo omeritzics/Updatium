@@ -757,6 +757,25 @@ class AppsProvider with ChangeNotifier {
             }
           }
         }
+
+        // Fallback: if selected APKs failed, try all APKs in the directory
+        // This handles cases where app.id is a temp ID and base APK wasn't selected
+        if (newInfo == null) {
+          for (var i = 0; i < apks.length; i++) {
+            try {
+              newInfo = await pm.getPackageArchiveInfo(
+                archiveFilePath: apks[i].path,
+              );
+              if (newInfo != null) {
+                break;
+              }
+            } catch (e) {
+              if (i == apks.length - 1) {
+                rethrow;
+              }
+            }
+          }
+        }
       }
       if (newInfo == null) {
         downloadedFile.delete();

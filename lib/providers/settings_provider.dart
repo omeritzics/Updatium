@@ -202,14 +202,6 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool get hideNonInstalled {
-    return prefs?.getBool('hideNonInstalled') ?? false;
-  }
-
-  set hideNonInstalled(bool show) {
-    prefs?.setBool('hideNonInstalled', show);
-    notifyListeners();
-  }
 
   bool get groupByCategory {
     return prefs?.getBool('groupByCategory') ?? false;

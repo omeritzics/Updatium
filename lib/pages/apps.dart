@@ -287,8 +287,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         return false;
       }
       if (app.app.installedVersion == null &&
-          (settingsProvider.hideNonInstalled ||
-              !(filter.includeNonInstalled))) {
+          !(filter.includeNonInstalled)) {
         return false;
       }
       if (filter.nameFilter.isNotEmpty ||

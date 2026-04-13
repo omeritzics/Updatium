@@ -26,7 +26,6 @@ Update your Android apps directly from the APK source. Updatium is a customizabl
 Based on Material Design 3 Expressive guidelines.
 
 ### Other Additional Features
-- Hide non-installed apps.
 - Better accessability for screen readers.
 - Grid View.
 

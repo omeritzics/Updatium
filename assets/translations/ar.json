@@ -240,7 +240,6 @@
     "dontShowTrackOnlyWarnings": "عدم إظهار تحذيرات 'للتعقب فقط'",
     "dontShowAPKOriginWarnings": "عدم إظهار تحذيرات مصدر APK",
     "moveNonInstalledAppsToBottom": "نقل التطبيقات غير المثبتة إلى أسفل قائمة التطبيقات",
-    "hideNonInstalledApps": "Hide non-installed apps",
     "gitlabPATLabel": "رمز الوصول الشخصي لـ GitLab",
     "github": "GitHub",
     "about": "حول",

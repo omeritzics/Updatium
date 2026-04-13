@@ -240,7 +240,6 @@
     "dontShowTrackOnlyWarnings": "忽略“仅追踪”模式警告",
     "dontShowAPKOriginWarnings": "忽略 APK 文件来源警告",
     "moveNonInstalledAppsToBottom": "将未安装应用置底",
-    "hideNonInstalledApps": "隐藏未安装的应用",
     "gitlabPATLabel": "GitLab 个人访问令牌",
     "github": "GitHub",
     "about": "关于",

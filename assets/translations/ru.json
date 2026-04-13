@@ -240,7 +240,6 @@
     "dontShowTrackOnlyWarnings": "Не показывать предупреждения о только отслеживаемых приложениях",
     "dontShowAPKOriginWarnings": "Не показывать предупреждения об отличающемся источнике APK-файлов",
     "moveNonInstalledAppsToBottom": "Показывать неустановленные приложения внизу списка",
-    "hideNonInstalledApps": "Скрыть неустановленные приложения",
     "gitlabPATLabel": "Персональный токен доступа GitLab",
     "github": "GitHub",
     "about": "О приложении",

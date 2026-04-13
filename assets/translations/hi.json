@@ -262,7 +262,6 @@
     "dontShowTrackOnlyWarnings": "'केवल-ट्रैक' चेतावनियाँ न दिखाएं",
     "dontShowAPKOriginWarnings": "APK मूल (origin) चेतावनियाँ न दिखाएं",
     "moveNonInstalledAppsToBottom": "बिना इंस्टॉल किए गए ऐप्स को ऐप दृश्य के नीचे ले जाएँ",
-    "hideNonInstalledApps": "बिना इंस्टॉल किए गए ऐप्स छिपाएँ",
     "gitlabPATLabel": "GitLab व्यक्तिगत एक्सेस टोकन",
     "about": "के बारे में",
     "requiresCredentialsInSettings": "{} को अतिरिक्त क्रेडेंशियल की आवश्यकता है (सेटिंग्स में)",
