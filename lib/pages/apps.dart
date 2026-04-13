@@ -1550,7 +1550,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   .entries
                   .where(
                     (e) =>
-                        e.value.app.categories?.contains(listedCategories[index]) ==
+                        e.value.app.categories?.contains(
+                              listedCategories[index],
+                            ) ==
                             true ||
                         e.value.app.categories?.isEmpty == true &&
                             listedCategories[index] == null,
@@ -1566,7 +1568,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   .toList();
 
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
+                ),
                 child: Card(
                   child: ExpansionTile(
                     key: ValueKey(
