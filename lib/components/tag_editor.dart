@@ -22,7 +22,6 @@ class TagEditor extends StatelessWidget {
     this.deleteConfirmationMessage,
   });
 
-  
   void _onAddPressed(BuildContext context) {
     String labelText = '';
     showDialog<String?>(
@@ -119,7 +118,10 @@ class TagEditor extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                newTags[selectedEntry.key] = MapEntry(currentColor.toARGB32(), true);
+                newTags[selectedEntry.key] = MapEntry(
+                  currentColor.toARGB32(),
+                  true,
+                );
                 onTagsChanged(newTags);
                 Navigator.pop(ctx);
               },
@@ -131,7 +133,11 @@ class TagEditor extends StatelessWidget {
     );
   }
 
-  void _onCategoryPressed(BuildContext context, String categoryName, int categoryColor) {
+  void _onCategoryPressed(
+    BuildContext context,
+    String categoryName,
+    int categoryColor,
+  ) {
     final newTags = Map<String, MapEntry<int, bool>>.from(tags);
     String newName = categoryName;
     Color currentColor = Color(categoryColor);
@@ -211,10 +217,16 @@ class TagEditor extends StatelessWidget {
                   // Category name changed - remove old entry and add new one
                   final isSelected = newTags[categoryName]?.value ?? false;
                   newTags.remove(categoryName);
-                  newTags[newName.trim()] = MapEntry(currentColor.toARGB32(), isSelected);
+                  newTags[newName.trim()] = MapEntry(
+                    currentColor.toARGB32(),
+                    isSelected,
+                  );
                 } else if (newName.trim().isNotEmpty) {
                   // Only color changed
-                  newTags[categoryName] = MapEntry(currentColor.toARGB32(), true);
+                  newTags[categoryName] = MapEntry(
+                    currentColor.toARGB32(),
+                    true,
+                  );
                 }
                 onTagsChanged(newTags);
                 Navigator.pop(ctx);
@@ -236,7 +248,8 @@ class TagEditor extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            final newTags = Map<String, MapEntry<int, bool>>.from(tags);
+                            final newTags =
+                                Map<String, MapEntry<int, bool>>.from(tags);
                             newTags.remove(categoryName);
                             onTagsChanged(newTags);
                             Navigator.pop(confirmCtx);
@@ -287,7 +300,9 @@ class TagEditor extends StatelessWidget {
                 child: InputChip(
                   label: Text(entry.key),
                   selected: entry.value.value,
-                  backgroundColor: Color(entry.value.key).withValues(alpha: 0.2),
+                  backgroundColor: Color(
+                    entry.value.key,
+                  ).withValues(alpha: 0.2),
                   selectedColor: Color(entry.value.key),
                   onSelected: (selected) {
                     final newTags = Map<String, MapEntry<int, bool>>.from(tags);
