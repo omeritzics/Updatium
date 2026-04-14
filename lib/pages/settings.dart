@@ -727,7 +727,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                       children: [
                                         Text(tr('preventUninstallation')),
                                         Text(
-                                          tr('preventUninstallationDescription'),
+                                          tr(
+                                            'preventUninstallationDescription',
+                                          ),
                                           style: Theme.of(
                                             context,
                                           ).textTheme.labelSmall,
@@ -736,7 +738,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                   ),
                                   Switch(
-                                    value: settingsProvider.preventUninstallation,
+                                    value:
+                                        settingsProvider.preventUninstallation,
                                     onChanged: (value) async {
                                       if (value) {
                                         // Enable device admin
@@ -745,20 +748,30 @@ class _SettingsPageState extends State<SettingsPage> {
                                         final isEnabled =
                                             await DeviceAdminService.isDeviceAdminEnabled();
                                         if (isEnabled) {
-                                          settingsProvider.preventUninstallation = true;
+                                          settingsProvider
+                                                  .preventUninstallation =
+                                              true;
                                         } else {
                                           // User declined or failed
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
                                             SnackBar(
-                                              content: Text(tr('deviceAdminRequired')),
+                                              content: Text(
+                                                tr('deviceAdminRequired'),
+                                              ),
                                             ),
                                           );
                                         }
                                       } else {
                                         // Prevent disabling when Safe Mode is enabled
-                                        ScaffoldMessenger.of(context).showSnackBar(
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
                                           SnackBar(
-                                            content: Text(tr('turnOffSafeModeFirst')),
+                                            content: Text(
+                                              tr('turnOffSafeModeFirst'),
+                                            ),
                                           ),
                                         );
                                       }

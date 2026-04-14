@@ -1,8 +1,9 @@
 import 'package:flutter/services.dart';
 
 class DeviceAdminService {
-  static const MethodChannel _channel =
-      MethodChannel('io.github.omeritzics.updatium/device_admin');
+  static const MethodChannel _channel = MethodChannel(
+    'io.github.omeritzics.updatium/device_admin',
+  );
 
   static Future<bool> isDeviceAdminEnabled() async {
     try {
@@ -23,8 +24,9 @@ class DeviceAdminService {
 
   static Future<bool> isUninstallProtectionEnabled() async {
     try {
-      final bool result =
-          await _channel.invokeMethod('isUninstallProtectionEnabled');
+      final bool result = await _channel.invokeMethod(
+        'isUninstallProtectionEnabled',
+      );
       return result;
     } catch (e) {
       return false;
@@ -33,8 +35,9 @@ class DeviceAdminService {
 
   static Future<bool> enableUninstallProtection() async {
     try {
-      final bool result =
-          await _channel.invokeMethod('enableUninstallProtection');
+      final bool result = await _channel.invokeMethod(
+        'enableUninstallProtection',
+      );
       return result;
     } catch (e) {
       return false;
@@ -43,8 +46,9 @@ class DeviceAdminService {
 
   static Future<bool> disableUninstallProtection() async {
     try {
-      final bool result =
-          await _channel.invokeMethod('disableUninstallProtection');
+      final bool result = await _channel.invokeMethod(
+        'disableUninstallProtection',
+      );
       return result;
     } catch (e) {
       return false;
