@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/services/device_admin_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 void showSafeModeEnableDialog(BuildContext context) {
@@ -189,6 +190,10 @@ void showSafeModeDisableDialog(BuildContext context) {
                 await settingsProvider.clearSafeModePassword();
                 settingsProvider.safeModeHintShown = false;
                 settingsProvider.safeModeTapCount = 0;
+
+                // Disable uninstall protection when Safe Mode is disabled
+                await DeviceAdminService.disableUninstallProtection();
+                settingsProvider.preventUninstallation = false;
 
                 if (context.mounted) {
                   passwordController.dispose();

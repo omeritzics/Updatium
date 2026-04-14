@@ -594,4 +594,13 @@ class SettingsProvider with ChangeNotifier {
     prefs?.setBool('updatesSectionExpanded', val);
     notifyListeners();
   }
+
+  bool get preventUninstallation {
+    return prefs?.getBool('preventUninstallation') ?? false;
+  }
+
+  set preventUninstallation(bool val) {
+    prefs?.setBool('preventUninstallation', val);
+    notifyListeners();
+  }
 }

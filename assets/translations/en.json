@@ -477,5 +477,9 @@
     "safeModeToggle": "Disable Safe Mode",
     "safeModeTapsRemaining": "{count} taps remaining to disable Safe Mode",
     "safeModeEnabledHint": "Safe Mode enabled. Tap on the version number in the Settings many times to disable.",
+    "preventUninstallation": "Prevent uninstallation",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
+    "turnOffSafeModeFirst": "Please turn off Safe Mode first",
     "gotIt": "Got it"
 }

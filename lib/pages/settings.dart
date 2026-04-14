@@ -14,6 +14,7 @@ import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/native_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/services/device_admin_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
@@ -710,6 +711,58 @@ class _SettingsPageState extends State<SettingsPage> {
                                         context,
                                       ).colorScheme.onPrimaryContainer,
                                     ),
+                                  ),
+                                ],
+                              ),
+                            gap16,
+                            if (settingsProvider.safeMode)
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(tr('preventUninstallation')),
+                                        Text(
+                                          tr('preventUninstallationDescription'),
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.labelSmall,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Switch(
+                                    value: settingsProvider.preventUninstallation,
+                                    onChanged: (value) async {
+                                      if (value) {
+                                        // Enable device admin
+                                        await DeviceAdminService.requestDeviceAdmin();
+                                        // Check if device admin is now enabled
+                                        final isEnabled =
+                                            await DeviceAdminService.isDeviceAdminEnabled();
+                                        if (isEnabled) {
+                                          settingsProvider.preventUninstallation = true;
+                                        } else {
+                                          // User declined or failed
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text(tr('deviceAdminRequired')),
+                                            ),
+                                          );
+                                        }
+                                      } else {
+                                        // Prevent disabling when Safe Mode is enabled
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text(tr('turnOffSafeModeFirst')),
+                                          ),
+                                        );
+                                      }
+                                    },
                                   ),
                                 ],
                               ),
