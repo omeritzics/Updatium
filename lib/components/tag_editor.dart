@@ -183,14 +183,20 @@ class TagEditor extends StatelessWidget {
       ).showPickerDialog(
         context,
         transitionBuilder:
-            (BuildContext context, Animation<double> a1, Animation<double> a2, Widget widget) {
-          final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
-          return Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.diagonal3Values(curvedValue, curvedValue, 1),
-            child: Opacity(opacity: curvedValue, child: widget),
-          );
-        },
+            (
+              BuildContext context,
+              Animation<double> a1,
+              Animation<double> a2,
+              Widget widget,
+            ) {
+              final curvedValue =
+                  Curves.easeInOutBack.transform(a1.value) - 1.0;
+              return Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.diagonal3Values(curvedValue, curvedValue, 1),
+                child: Opacity(opacity: curvedValue, child: widget),
+              );
+            },
         transitionDuration: const Duration(milliseconds: 250),
       );
     }

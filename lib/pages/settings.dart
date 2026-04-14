@@ -291,10 +291,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
               onValueChanges: (values, valid, isBuilding) {
                 if (!isBuilding && valid) {
-                  settingsProvider.sortColumn =
-                      SortColumnSettings.values.firstWhere(
-                    (e) => e.name == values['sortColumn'],
-                  );
+                  settingsProvider.sortColumn = SortColumnSettings.values
+                      .firstWhere((e) => e.name == values['sortColumn']);
                 }
               },
             ),
@@ -336,10 +334,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
               onValueChanges: (values, valid, isBuilding) {
                 if (!isBuilding && valid) {
-                  settingsProvider.sortOrder =
-                      SortOrderSettings.values.firstWhere(
-                    (e) => e.name == values['sortOrder'],
-                  );
+                  settingsProvider.sortOrder = SortOrderSettings.values
+                      .firstWhere((e) => e.name == values['sortOrder']);
                 }
               },
             ),
@@ -376,7 +372,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
                     label: tr('language'),
-                    defaultValue: settingsProvider.forcedLocale?.toString() ?? '',
+                    defaultValue:
+                        settingsProvider.forcedLocale?.toString() ?? '',
                     required: true,
                   ),
                 ],
