@@ -4,15 +4,35 @@ import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import androidx.activity.result.contract.ActivityResultContracts
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import org.woheller69.freeDroidWarn.FreeDroidWarn
 
 class MainActivity : FlutterActivity() {
-    private val CHANNEL = "io.github.omeritzics.updatium/device_admin"
+    private val DEVICE_ADMIN_CHANNEL = "io.github.omeritzics.updatium/device_admin"
+    private val SAF_CHANNEL = "io.github.omeritzics.updatium/saf"
     private lateinit var devicePolicyManager: DevicePolicyManager
     private lateinit var deviceAdminComponent: ComponentName
+    private var safResult: MethodChannel.Result? = null
+
+    private val openDirectoryTreeLauncher = registerForActivityResult(
+        ActivityResultContracts.OpenDocumentTree()
+    ) { uri: Uri? ->
+        if (uri != null && safResult != null) {
+            contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            )
+            safResult?.success(uri.toString())
+            safResult = null
+        } else if (safResult != null) {
+            safResult?.success(null)
+            safResult = null
+        }
+    }
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +43,9 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
+        
+        // Device admin channel
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, DEVICE_ADMIN_CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
                 "isDeviceAdminEnabled" -> {
                     val isEnabled = devicePolicyManager.isAdminActive(deviceAdminComponent)
@@ -54,6 +76,17 @@ class MainActivity : FlutterActivity() {
                     } else {
                         result.success(false)
                     }
+                }
+                else -> result.notImplemented()
+            }
+        }
+
+        // SAF channel
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, SAF_CHANNEL).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "openDirectoryTree" -> {
+                    safResult = result
+                    openDirectoryTreeLauncher.launch(null)
                 }
                 else -> result.notImplemented()
             }

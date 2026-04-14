@@ -526,64 +526,68 @@ class _AppPageState extends State<AppPage> {
       ),
     );
 
+    getToolbarButtons() {
+      return [
+        if (source != null &&
+            source.combinedAppSpecificSettingFormItems.isNotEmpty)
+          IconButton(
+            icon: const Icon(Icons.edit),
+            tooltip: tr('additionalOptions'),
+            onPressed: updating
+                ? null
+                : () {
+                    showAdditionalOptionsDialog().then(
+                      handleAdditionalOptionChanges,
+                    );
+                  },
+          ),
+        if (app.app.apkUrls.isNotEmpty == true ||
+            app.app.otherAssetUrls.isNotEmpty == true)
+          IconButton(
+            icon: const Icon(Icons.archive),
+            tooltip: tr(
+              'downloadX',
+              args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+            ),
+            onPressed: updating
+                ? null
+                : () async {
+                    try {
+                      await appsProvider.downloadAppAssets(
+                        [app.app.id],
+                        context,
+                      );
+                    } catch (e) {
+                      showError(e, context);
+                    }
+                  },
+          ),
+        if (app.app.installedVersion != null &&
+            app.app.installedVersion != app.app.latestVersion &&
+            !isVersionDetectionStandard &&
+            !trackOnly)
+          IconButton(
+            icon: const Icon(Icons.delete),
+            tooltip: tr('remove'),
+            onPressed: () {
+              appsProvider.removeAppsWithModal(context, [app.app]).then(
+                (result) {
+                  if (result == true) {
+                    Navigator.of(context).pop();
+                  }
+                },
+              );
+            },
+          ),
+      ];
+    }
+
     return Scaffold(
       body: RefreshIndicator(
         child: CustomScrollView(
           slivers: [
             SliverAppBar.large(
               pinned: true,
-              actions: [
-                if (source != null &&
-                    source.combinedAppSpecificSettingFormItems.isNotEmpty)
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    tooltip: tr('additionalOptions'),
-                    onPressed: updating
-                        ? null
-                        : () {
-                            showAdditionalOptionsDialog().then(
-                              handleAdditionalOptionChanges,
-                            );
-                          },
-                  ),
-                if (app.app.apkUrls.isNotEmpty == true ||
-                    app.app.otherAssetUrls.isNotEmpty == true)
-                  IconButton(
-                    icon: const Icon(Icons.folder_zip),
-                    tooltip: tr(
-                      'downloadX',
-                      args: [lowerCaseIfEnglish(tr('releaseAsset'))],
-                    ),
-                    onPressed: updating
-                        ? null
-                        : () async {
-                            try {
-                              await appsProvider.downloadAppAssets([
-                                app.app.id,
-                              ], context);
-                            } catch (e) {
-                              showError(e, context);
-                            }
-                          },
-                  ),
-                if (app.app.installedVersion != null &&
-                    app.app.installedVersion != app.app.latestVersion &&
-                    !isVersionDetectionStandard &&
-                    !trackOnly)
-                  IconButton(
-                    icon: const Icon(Icons.delete),
-                    tooltip: tr('remove'),
-                    onPressed: () {
-                      appsProvider.removeAppsWithModal(context, [app.app]).then(
-                        (result) {
-                          if (result == true) {
-                            Navigator.of(context).pop();
-                          }
-                        },
-                      );
-                    },
-                  ),
-              ],
               title: Row(
                 children: [
                   Consumer<AppsProvider>(
@@ -727,6 +731,12 @@ class _AppPageState extends State<AppPage> {
         onRefresh: () async {
           await getUpdate(app.app.id);
         },
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: getToolbarButtons(),
+        ),
       ),
     );
   }

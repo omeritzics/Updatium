@@ -35,6 +35,7 @@ import 'package:updatium/providers/source_provider.dart' as source_utils;
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:docman/docman.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 
 final pm = AndroidPackageManager();
@@ -2419,12 +2420,17 @@ class AppsProvider with ChangeNotifier {
       if (exportDir == null) {
         return null;
       }
-      // List and delete auto-export files using regular file I/O
+      // List and delete auto-export files using docman
       try {
-        final dir = Directory(exportDir);
-        if (await dir.exists()) {
-          final files = dir.list().where((f) => f.path.endsWith('-auto.json'));
-          await for (var file in files) {
+        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final dirDocFile = await docFileResult?.get();
+        if (dirDocFile != null) {
+          final files = await dirDocFile.listDocuments();
+          final autoFiles = files
+              .where((f) => f.name.endsWith('-auto.json'))
+              .toList();
+
+          for (var file in autoFiles) {
             await file.delete();
           }
         }
@@ -2450,22 +2456,55 @@ class AppsProvider with ChangeNotifier {
       try {
         var encoder = const JsonEncoder.withIndent("    ");
         Map<String, dynamic> finalExport = generateExportJSON();
-        // Create export file using regular file I/O
+        // Create export file using docman
         if (exportDir.toString().isEmpty) {
           throw UpdatiumError(tr('exportDirUriEmpty'));
         }
-        final dir = Directory(exportDir);
-        if (!await dir.exists()) {
+        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final dirDocFile = await docFileResult?.get();
+        if (dirDocFile != null) {
+          final fileName =
+              '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
+
+          try {
+            final result = await dirDocFile.createFile(
+              name: fileName,
+              bytes: Uint8List.fromList(
+                utf8.encode(encoder.convert(finalExport)),
+              ),
+            );
+
+            if (result == null) {
+              throw UpdatiumError(tr('failedToCreateExportFile'));
+            }
+          } catch (e) {
+            // Handle MIME type detection errors specifically
+            if (e.toString().contains('mime type') ||
+                e.toString().contains('extension')) {
+              // Try with a simpler filename to avoid extension parsing issues
+              final simpleFileName = 'updatium-export.json';
+              try {
+                final fallbackResult = await dirDocFile.createFile(
+                  name: simpleFileName,
+                  bytes: Uint8List.fromList(
+                    utf8.encode(encoder.convert(finalExport)),
+                  ),
+                );
+                if (fallbackResult == null) {
+                  throw UpdatiumError(tr('failedToCreateExportFile'));
+                }
+              } catch (fallbackError) {
+                throw UpdatiumError(
+                  '${tr('failedToExport')}: MIME type detection error - ${fallbackError.toString()}',
+                );
+              }
+            } else {
+              throw UpdatiumError('${tr('failedToExport')}: ${e.toString()}');
+            }
+          }
+        } else {
           throw UpdatiumError(tr('exportDirNotAccessible'));
         }
-
-        final fileName =
-            '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
-        final file = File('${exportDir}/$fileName');
-
-        await file.writeAsString(encoder.convert(finalExport));
-
-        returnPath = file.path;
       } catch (e) {
         if (e is UpdatiumError) {
           rethrow;
@@ -2476,6 +2515,10 @@ class AppsProvider with ChangeNotifier {
         exportInProgress = false;
         notifyListeners();
       }
+
+      returnPath = exportDir.pathSegments
+          .join('/')
+          .replaceFirst('tree/primary:', '/');
     }
     return returnPath;
   }

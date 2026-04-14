@@ -63,6 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
       <ColorSwatch<Object>, String>{
         ColorTools.createPrimarySwatch(updatiumThemeColor): 'Updatium',
       };
+  late ScrollController scrollController;
 
   void initUpdateIntervalInterpolator() {
     List<InterpolationNode> nodes = [];
@@ -111,12 +112,37 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize scroll controller - will get initial position in build
+    scrollController = ScrollController();
+    // Add listener to save scroll position
+    scrollController.addListener(() {
+      final settingsProvider = context.read<SettingsProvider>();
+      settingsProvider.settingsScrollPosition = scrollController.offset;
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
     SourceProvider sourceProvider = SourceProvider();
     if (settingsProvider.prefs == null) settingsProvider.initializeSettings();
     initUpdateIntervalInterpolator();
     processIntervalSliderValue(settingsProvider.updateIntervalSliderVal);
+
+    // Restore scroll position on first build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollController.hasClients) {
+        scrollController.jumpTo(settingsProvider.settingsScrollPosition);
+      }
+    });
 
     var followSystemThemeExplanation = FutureBuilder(
       builder: (ctx, val) {
@@ -472,6 +498,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
+        controller: scrollController,
         slivers: <Widget>[
           SliverAppBar.large(
             pinned: true,
@@ -803,26 +830,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
-                                  child: Text(
-                                    tr('onlyCheckInstalledOrTrackOnlyApps'),
-                                  ),
-                                ),
-                                Switch(
-                                  value: settingsProvider
-                                      .onlyCheckInstalledOrTrackOnlyApps,
-                                  onChanged: (value) {
-                                    settingsProvider
-                                            .onlyCheckInstalledOrTrackOnlyApps =
-                                        value;
-                                  },
-                                ),
-                              ],
-                            ),
-                            gap16,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
                                   child: Text(tr('removeOnExternalUninstall')),
                                 ),
                                 Switch(
@@ -996,7 +1003,12 @@ class _SettingsPageState extends State<SettingsPage> {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                          initiallyExpanded: false,
+                          initiallyExpanded:
+                              settingsProvider.sourceSpecificSectionExpanded,
+                          onExpansionChanged: (bool expanded) {
+                            settingsProvider.sourceSpecificSectionExpanded =
+                                expanded;
+                          },
                           tilePadding: const EdgeInsets.symmetric(
                             horizontal: 16,
                           ),
@@ -1016,7 +1028,11 @@ class _SettingsPageState extends State<SettingsPage> {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                          initiallyExpanded: false,
+                          initiallyExpanded:
+                              settingsProvider.appearanceSectionExpanded,
+                          onExpansionChanged: (bool expanded) {
+                            settingsProvider.appearanceSectionExpanded = expanded;
+                          },
                           tilePadding: const EdgeInsets.symmetric(
                             horizontal: 16,
                           ),
@@ -1296,7 +1312,11 @@ class _SettingsPageState extends State<SettingsPage> {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                          initiallyExpanded: false,
+                          initiallyExpanded:
+                              settingsProvider.categoriesSectionExpanded,
+                          onExpansionChanged: (bool expanded) {
+                            settingsProvider.categoriesSectionExpanded = expanded;
+                          },
                           tilePadding: const EdgeInsets.symmetric(
                             horizontal: 16,
                           ),
@@ -1486,6 +1506,7 @@ class CategoryTagEditor extends StatelessWidget {
       alignment: alignment,
       showLabelWhenNotEmpty: showLabelWhenNotEmpty,
       showCheckIcon: false,
+      editMode: true,
       onTagsChanged: (newTags) {
         // Convert back from TagEditor format to categories Map<String, int>
         final newCategories = <String, int>{};

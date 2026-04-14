@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:bcrypt/bcrypt.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/main.dart';
@@ -12,7 +13,6 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:file_picker/file_picker.dart';
 
 String updatiumTempId = 'omeritzics_updatium_${GitHub().hosts[0]}';
 String updatiumId = 'io.github.omeritzics.updatium';
@@ -399,8 +399,14 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String?> getExportDir() async {
-    return prefs?.getString('exportDir');
+  Future<Uri?> getExportDir() async {
+    var uriString = prefs?.getString('exportDir');
+    if (uriString != null) {
+      Uri? uri = Uri.parse(uriString);
+      return uri;
+    } else {
+      return null;
+    }
   }
 
   Future<void> pickExportDir({bool remove = false}) async {
@@ -410,10 +416,16 @@ class SettingsProvider with ChangeNotifier {
       return;
     }
 
-    String? selectedDirectory = await FilePicker.getDirectoryPath();
-    if (selectedDirectory != null) {
-      prefs?.setString('exportDir', selectedDirectory);
-      notifyListeners();
+    // Use SAF directory picker to get content URI for DocumentFile
+    try {
+      const platform = MethodChannel('io.github.omeritzics.updatium/saf');
+      final String? uri = await platform.invokeMethod('openDirectoryTree');
+      if (uri != null) {
+        prefs?.setString('exportDir', uri);
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint('Error picking directory: $e');
     }
   }
 
@@ -427,7 +439,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   bool get onlyCheckInstalledOrTrackOnlyApps {
-    return prefs?.getBool('onlyCheckInstalledOrTrackOnlyApps') ?? false;
+    return prefs?.getBool('onlyCheckInstalledOrTrackOnlyApps') ?? true;
   }
 
   set onlyCheckInstalledOrTrackOnlyApps(bool val) {
@@ -592,6 +604,42 @@ class SettingsProvider with ChangeNotifier {
 
   set updatesSectionExpanded(bool val) {
     prefs?.setBool('updatesSectionExpanded', val);
+    notifyListeners();
+  }
+
+  bool get sourceSpecificSectionExpanded {
+    return prefs?.getBool('sourceSpecificSectionExpanded') ?? false;
+  }
+
+  set sourceSpecificSectionExpanded(bool val) {
+    prefs?.setBool('sourceSpecificSectionExpanded', val);
+    notifyListeners();
+  }
+
+  bool get appearanceSectionExpanded {
+    return prefs?.getBool('appearanceSectionExpanded') ?? false;
+  }
+
+  set appearanceSectionExpanded(bool val) {
+    prefs?.setBool('appearanceSectionExpanded', val);
+    notifyListeners();
+  }
+
+  bool get categoriesSectionExpanded {
+    return prefs?.getBool('categoriesSectionExpanded') ?? false;
+  }
+
+  set categoriesSectionExpanded(bool val) {
+    prefs?.setBool('categoriesSectionExpanded', val);
+    notifyListeners();
+  }
+
+  double get settingsScrollPosition {
+    return prefs?.getDouble('settingsScrollPosition') ?? 0.0;
+  }
+
+  set settingsScrollPosition(double val) {
+    prefs?.setDouble('settingsScrollPosition', val);
     notifyListeners();
   }
 
