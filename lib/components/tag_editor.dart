@@ -347,7 +347,10 @@ class TagEditor extends StatelessWidget {
                     _onCategoryPressed(context, entry.key, entry.value.key);
                   } else {
                     final newTags = Map<String, MapEntry<int, bool>>.from(tags);
-                    newTags[entry.key] = MapEntry(entry.value.key, !entry.value.value);
+                    newTags[entry.key] = MapEntry(
+                      entry.value.key,
+                      !entry.value.value,
+                    );
                     onTagsChanged(newTags);
                   }
                 },
