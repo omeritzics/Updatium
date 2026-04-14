@@ -267,6 +267,7 @@ class _AppPageState extends State<AppPage> {
           CategorySelector(
             alignment: WrapAlignment.center,
             preselected: app.app.categories?.toSet() ?? {},
+            editMode: false,
             onSelected: (categories) {
               app.app.categories = categories;
               appsProvider.saveApps([app.app]);

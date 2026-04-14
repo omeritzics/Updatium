@@ -656,20 +656,17 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           child: Text(tr('update')),
         );
       } else {
-        return Chip(
-          avatar: Icon(
-            Icons.check_circle,
-            color: Theme.of(context).colorScheme.primary,
-            size: isCompact ? 14 : 16,
-          ),
-          label: Text(
-            tr('updated'),
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-              fontSize: isCompact ? 10 : 12,
+        return FilledButton.tonal(
+          onPressed: null,
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
+            foregroundColor: WidgetStateProperty.all(Colors.grey),
+            visualDensity: isCompact ? VisualDensity.compact : null,
+            minimumSize: WidgetStateProperty.all(
+              isCompact ? const Size(60, 32) : null,
             ),
           ),
-          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          child: Text(tr('updated')),
         );
       }
     }

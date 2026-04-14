@@ -12,6 +12,7 @@ class TagEditor extends StatelessWidget {
   final MapEntry<String, String>? deleteConfirmationMessage;
   final bool showCheckIcon;
   final bool showAddButton;
+  final bool editMode;
 
   const TagEditor({
     super.key,
@@ -24,6 +25,7 @@ class TagEditor extends StatelessWidget {
     this.deleteConfirmationMessage,
     this.showCheckIcon = true,
     this.showAddButton = true,
+    this.editMode = true,
   });
 
   void _onAddPressed(BuildContext context) {
@@ -341,7 +343,13 @@ class TagEditor extends StatelessWidget {
             ...tags.entries.map((entry) {
               return GestureDetector(
                 onTap: () {
-                  _onCategoryPressed(context, entry.key, entry.value.key);
+                  if (editMode) {
+                    _onCategoryPressed(context, entry.key, entry.value.key);
+                  } else {
+                    final newTags = Map<String, MapEntry<int, bool>>.from(tags);
+                    newTags[entry.key] = MapEntry(entry.value.key, !entry.value.value);
+                    onTagsChanged(newTags);
+                  }
                 },
                 child: InputChip(
                   label: Text(entry.key),

@@ -1550,6 +1550,7 @@ class CategorySelector extends StatelessWidget {
   final Set<String> preselected;
   final WrapAlignment alignment;
   final bool showLabelWhenNotEmpty;
+  final bool editMode;
 
   const CategorySelector({
     super.key,
@@ -1558,6 +1559,7 @@ class CategorySelector extends StatelessWidget {
     this.preselected = const {},
     this.alignment = WrapAlignment.start,
     this.showLabelWhenNotEmpty = true,
+    this.editMode = true,
   });
 
   @override
@@ -1576,6 +1578,7 @@ class CategorySelector extends StatelessWidget {
       alignment: alignment,
       showLabelWhenNotEmpty: showLabelWhenNotEmpty,
       showAddButton: false,
+      editMode: editMode,
       onTagsChanged: (newTags) {
         // Convert back from TagEditor format to List<String> for callback
         final selectedCategories = newTags.entries
