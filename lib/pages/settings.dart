@@ -1521,7 +1521,7 @@ class CategoryTagEditor extends StatelessWidget {
             context: context,
             builder: (BuildContext ctx) {
               return AlertDialog(
-                title: Text(tr('deleteCategoriesQuestion')),
+                title: Text(tr('categoryDeleteQuestion')),
                 content: Text(tr('categoryDeleteWarning')),
                 actions: [
                   TextButton(
@@ -1551,7 +1551,7 @@ class CategoryTagEditor extends StatelessWidget {
         }
       },
       deleteConfirmationMessage: MapEntry(
-        tr('deleteCategoriesQuestion'),
+        tr('categoryDeleteQuestion'),
         tr('categoryDeleteWarning'),
       ),
     );

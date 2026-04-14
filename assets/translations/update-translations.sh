@@ -59,6 +59,7 @@ extract_used_keys() {
         /AppLocalizations\.of\(context\)\!\.([a-zA-Z_][a-zA-Z0-9_]*)/g,
         /plural\(\s*['"`]([^'"`]+)['"`]/g,
         /AppLocalizations\.of\(context\)\!\.([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/g,
+        /['"`]([a-zA-Z_][a-zA-Z0-9_]*)['"`]\.tr\(\)/g,
       ];
       
       patterns.forEach(pattern => {
@@ -432,16 +433,13 @@ case "${1:-}" in
         remove_unused
         ;;
     "")
-        # Default behavior: check and update if needed
+        # Default behavior: automatically check and update missing keys
         if check_missing; then
             echo "✅ No action needed"
         else
             echo ""
-            read -p "Do you want to add missing keys? (y/N): " -n 1 -r
-            echo
-            if [[ $REPLY =~ ^[Yy]$ ]]; then
-                update_missing
-            fi
+            echo "🔄 Automatically adding missing keys..."
+            update_missing
         fi
         ;;
     *)

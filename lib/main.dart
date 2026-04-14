@@ -874,7 +874,6 @@ class _UpdatiumState extends State<Updatium> {
 
               // Material Design 3 2024 Expressive Centered Slider Theme - preserve M3 Expressive transparency
               sliderTheme: SliderThemeData(
-                year2023: false,
                 trackHeight: 8,
                 thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
                 overlayShape: const RoundSliderOverlayShape(overlayRadius: 28),
