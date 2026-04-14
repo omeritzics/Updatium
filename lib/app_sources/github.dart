@@ -72,7 +72,7 @@ class GitHub extends AppSource {
           GestureDetector(
             onTap: () {
               launchUrlString(
-                'https://github.com/sky22333/hubproxy',
+                'https://github.com/omeritzics/Updatium',
                 mode: LaunchMode.externalApplication,
               );
             },

@@ -41,6 +41,7 @@
     "appSourceURL": "آدرس اینترنتی منبع برنامه",
     "error": "خطا",
     "add": "اضافه کردن",
+    "advanced": "Advanced",
     "searchSomeSourcesLabel": "جستجو (فقط برخی منابع)",
     "search": "جستجو کردن",
     "additionalOptsFor": "گزینه های اضافی برای {}",
@@ -134,8 +135,10 @@
     "updates": "به روز رسانی ها",
     "sourceSpecific": "منبع خاص",
     "appSource": "منبع برنامه",
+    "appSourceHint": "Open app source repository",
     "noLogs": "بدون گزارش",
     "appLogs": "گزارش های برنامه",
+    "appLogsHint": "View application logs",
     "close": "بستن",
     "share": "اشتراک گذاری",
     "appNotFound": "برنامه پیدا نشد",
@@ -168,6 +171,7 @@
     "updatiumMustBeOpenToInstallApps": "Updatium باید برای نصب برنامه ها باز باشد",
     "completeAppInstallationNotifDescription": "از کاربر می‌خواهد برای پایان نصب برنامه به Updatium برگردد",
     "checkingForUpdates": "بررسی به‌روزرسانی‌ها",
+    "checkForUpdate": "Check for update",
     "checkingForUpdatesNotifDescription": "اعلان گذرا که هنگام بررسی به روز رسانی ظاهر می شود",
     "pleaseAllowInstallPerm": "لطفاً به Updatium اجازه دهید برنامه‌ها را نصب کند",
     "trackOnly": "فقط ردیابی",
@@ -189,6 +193,24 @@
     "appWithIdOrNameNotFound": "هیچ برنامه ای با آن شناسه یا نام یافت نشد",
     "reposHaveMultipleApps": "مخازن ممکن است شامل چندین برنامه باشد",
     "fdroidThirdPartyRepo": "مخازن شخص ثالث F-Droid",
+    "gitlab": "GitLab",
+    "github": "GitHub",
+    "codeberg": "Forgejo (Codeberg)",
+    "izzyondroid": "IzzyOnDroid",
+    "sourcehut": "SourceHut",
+    "mullvad": "Mullvad",
+    "sourceforge": "SourceForge",
+    "apkcombo": "APKCombo",
+    "apkpure": "APKPure",
+    "aptoide": "Aptoide",
+    "uptodown": "Uptodown",
+    "huaweiappgallery": "Huawei App Gallery",
+    "rustore": "RuStore",
+    "jenkins": "Jenkins",
+    "apkmirror": "APKMirror",
+    "telegramapp": "Telegram App",
+    "neutroncode": "NeutronCode",
+    "html": "HTML",
     "install": "نصب",
     "markInstalled": "علامت گذاری به عنوان نصب شده",
     "update": "به روز رسانی",
@@ -241,7 +263,6 @@
     "dontShowAPKOriginWarnings": "هشدارهای منبع APK را نشان ندهید",
     "moveNonInstalledAppsToBottom": "برنامه های نصب نشده را به نمای پایین برنامه ها منتقل کنید",
     "gitlabPATLabel": "رمز دسترسی شخصی GitLab",
-    "github": "GitHub",
     "about": "درباره",
     "requiresCredentialsInSettings": "{}: این به اعتبارنامه های اضافی نیاز دارد (در تنظیمات)",
     "checkOnStart": "بررسی در شروع",
@@ -334,6 +355,7 @@
     "beforeNewInstallsShareToAppVerifier": "اشتراک‌گذاری برنامه‌های جدید با AppVerifier (در صورت وجود)",
     "appVerifierInstructionToast": "در AppVerifier به اشتراک بگذارید، سپس پس از آماده شدن به اینجا برگردید.",
     "wiki": "راهنما/ویکی",
+    "wikiHint": "Open Updatium wiki documentation",
     "allowInsecure": "درخواست های HTTP ناامن را مجاز کنید",
     "stayOneVersionBehind": "یک نسخه از آخرین نسخه پشت سر بگذارید",
     "useFirstApkOfVersion": "اولین بار از چندین APK",
@@ -343,16 +365,16 @@
     "vivoAppStore": "vivo App Store (CN)",
     "name": "نام",
     "smartname": "Name (Smart)",
+    "smartPlusDate": "Smart + Date",
     "sortMethod": "Sort Method",
     "welcome": "خوش آمدید خوش آمدید",
-    "documentationLinksNote": "صفحه GitHub به دست آمده در زیر شامل پیوندهایی با ویدیوها، مقالات، بحث ها و سایر منابع است که به شما کمک می کند تا چگونگی استفاده از برنامه را درک کنید.",
     "batteryOptimizationNote": "Note that background downloads may work more reliably if you disable OS battery optimizations for Updatium.",
     "fileDeletionError": "شکست برای حذف فایل (سعی کنید آن را به صورت دستی حذف کنید سپس دوباره امتحان کنید): “{}”",
     "foregroundService": "خدمات Foreground",
     "foregroundServiceExplanation": "استفاده از یک سرویس پیش زمینه برای بررسی به روز رسانی (قابل اعتماد تر، مصرف انرژی بیشتر)",
     "fgServiceNotice": "این اعلان برای بررسی به روز رسانی پس زمینه مورد نیاز است (می تواند در تنظیمات OS پنهان شود)",
     "excludeSecrets": "رازهای پنهان",
-    "GHReqPrefix": "مثال “sky22333/hubproxy”",
+    "GHReqPrefix": "مثال “omeritzics/Updatium”",
     "includeZips": "فایل های ZIP",
     "zippedApkFilterRegEx": "فیلتر APK در داخل Zip",
     "multipleSigners": "ثبت نام های متعدد",
@@ -438,6 +460,7 @@
     "appDescription": "ØªØ§ÙÙÚ¯ Ø¨Ø±ÙÙÙ Ø§ÙØ±ÙÛØ¯Û ÙØ§Ø¨Ù Ø¨Ù Ø±ÙØ² Ø±Ø³Ø§ÙÛ Ø§Ø³Øª Ú©Ù Ø¨Ù Ø´ÙØ§ Ø§Ø¬Ø§Ø²Ù ÙÛØ¯ÙØ¯ Ø¨Ø±ÙÙÙ ÙØ§Û Ø®ÙØ¯ Ø±Ø§ Ø§Ø² ÙÙØ§Ø¹Ù ÙØ®ØªÙÙ Ø¨Ù Ø±ÙØ² Ú©ÙÛØ¯. Ø§ÛÙ Ø¨Ø±ÙØ§ÙÙ Ø¨Ù Ø´ÙØ§ Ø§Ø¬Ø§Ø²Ù ÙÛØ¯ÙØ¯ Ø¨Ø±ÙÙÙ ÙØ§Û Ø®ÙØ¯ Ø±Ø§ Ø§Ø² ÙÙØ§Ø¹Ù ÙØ®ØªÙÙ Ø¨Ù Ø±ÙØ² Ú©ÙÛØ¯ Ù Ø¨Ù Ø´ÙØ§ Ø§Ø¬Ø§Ø²Ù ÙÛØ¯ÙØ¯ Ø¨Ø±ÙÙÙ ÙØ§Û Ø®ÙØ¯ Ø±Ø§ Ø§Ø² ÙÙØ§Ø¹Ù ÙØ®ØªÙÙ Ø¨Ù Ø±ÙØ² Ú©ÙÛØ¯.",
     "safeModeEnabled": "حالت امن فعال شده است",
     "safeModeDisabled": "حالت امن غیرفعال شده است",
+    "safeModeDisable": "ØºÛØ±ÙØ¹Ø§Ù Ú©Ø±Ø¯Ù Ø­Ø§ÙØª Ø§ÙÙ",
     "safeModeAdmin": "مدیریت حالت امن",
     "safeModeSetupDescription": "رمز عبور را برای فعال کردن حالت امن تنظیم کنید. پس از فعال شدن، حالت امن از اضافه کردن برنامه های جدید جلوگیری می کند و تنها با رمز عبور می توان آن را غیرفعال کرد.",
     "safeModeToggleDescription": "رمز عبور خود را وارد کنید تا حالت امن را فعال یا غیرفعال کنید.",
@@ -450,8 +473,12 @@
     "safeModePasswordIncorrect": "رمز عبور اشتباه است",
     "safeModePasswordError": "خطایی در تنظیم رمز عبور رخ داد. لطفاً دوباره تلاش کنید.",
     "safeModeEnable": "ÙØ¹Ø§Ù Ú©Ø±Ø¯Ù Ø­Ø§ÙØª Ø§ÙÙ",
-    "safeModeDisable": "ØºÛØ±ÙØ¹Ø§Ù Ú©Ø±Ø¯Ù Ø­Ø§ÙØª Ø§ÙÙ",
+    "safeModeToggle": "Disable Safe Mode",
     "safeModeTapsRemaining": "{count} ÙÙØ³ Ø¨Ø§ÙÛ ÙØ§ÙØ¯Ù ØªØ§ Ø­Ø§ÙØª Ø§ÙÙ ØºÛØ±ÙØ¹Ø§Ù Ø´ÙØ¯",
     "safeModeEnabledHint": "Ø­Ø§ÙØª Ø§ÙÙ ÙØ¹Ø§Ù Ø´Ø¯. Ø¨Ø± Ø±ÙÛ Ø´ÙØ§Ø±Ù ÙØ³Ø®Ù Ø¯Ø± ØªÙØ¸ÛÙØ§Øª ÚÙØ¯ÛÙ Ø¨Ø§Ø± ÙÙØ³ Ú©ÙÛØ¯ ØªØºÛØ±ÙØ¹Ø§Ù Ú©ÙÛØ¯.",
+    "preventUninstallation": "Prevent uninstallation",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
+    "turnOffSafeModeFirst": "Please turn off Safe Mode first",
     "gotIt": "ÙÙÙÛØ¯Ù"
 }
