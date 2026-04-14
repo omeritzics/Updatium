@@ -12,6 +12,7 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:file_picker/file_picker.dart';
 
 String updatiumTempId = 'omeritzics_updatium_${GitHub().hosts[0]}';
 String updatiumId = 'io.github.omeritzics.updatium';
@@ -398,23 +399,22 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Uri?> getExportDir() async {
-    var uriString = prefs?.getString('exportDir');
-    if (uriString != null) {
-      Uri? uri = Uri.parse(uriString);
-      // DocMan functionality removed - just return the URI
-      return uri;
-    } else {
-      return null;
-    }
+  Future<String?> getExportDir() async {
+    return prefs?.getString('exportDir');
   }
 
   Future<void> pickExportDir({bool remove = false}) async {
-    // DocMan functionality removed
-    if (!remove) {
-      // SAF picker functionality removed
+    if (remove) {
+      prefs?.remove('exportDir');
+      notifyListeners();
+      return;
     }
-    // DocMan permission release functionality removed
+    
+    String? selectedDirectory = await FilePicker.getDirectoryPath();
+    if (selectedDirectory != null) {
+      prefs?.setString('exportDir', selectedDirectory);
+      notifyListeners();
+    }
   }
 
   bool get autoExportOnChanges {

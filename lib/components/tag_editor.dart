@@ -256,10 +256,6 @@ class TagEditor extends StatelessWidget {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: Text(tr('cancel')),
-            ),
-            TextButton(
               onPressed: () {
                 if (newName.trim().isNotEmpty && newName != categoryName) {
                   // Category name changed - remove old entry and add new one
@@ -281,6 +277,11 @@ class TagEditor extends StatelessWidget {
               },
               child: Text(tr('save')),
             ),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(tr('cancel')),
+            ),
+            const SizedBox(width: 16),
             TextButton(
               onPressed: () {
                 showDialog(
