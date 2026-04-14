@@ -49,8 +49,6 @@ class AddAppPageState extends State<AddAppPage> {
   List<String> pickedCategories = [];
   int urlInputKey = 0;
   SourceProvider sourceProvider = SourceProvider();
-  bool _advancedExpanded = false;
-  Map<String, dynamic> _advancedSettings = {'zippedApkFilterRegEx': ''};
 
   String? _regExValidator(String? value) {
     if (value == null || value.isEmpty) {
@@ -701,109 +699,6 @@ class AddAppPageState extends State<AddAppPage> {
       ],
     );
 
-    Widget getAdvancedSection() => Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        gap24,
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(
-                context,
-              ).colorScheme.outline.withValues(alpha: 0.3),
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: ExpansionPanelList(
-            expansionCallback: (int index, bool isExpanded) {
-              setState(() {
-                _advancedExpanded = isExpanded;
-              });
-            },
-            children: [
-              ExpansionPanel(
-                headerBuilder: (BuildContext context, bool isExpanded) {
-                  return ListTile(
-                    title: Text(
-                      tr('advanced'),
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
-                },
-                body: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: GeneratedForm(
-                    key: const Key('advancedSettings'),
-                    items: [
-                      [
-                        GeneratedFormTextField(
-                          'apkFilterRegEx',
-                          label: tr('filterAPKsByRegEx'),
-                          required: false,
-                          additionalValidators: [
-                            (value) => _regExValidator(value),
-                          ],
-                        ),
-                      ],
-                      [
-                        GeneratedFormSwitch(
-                          'invertAPKFilter',
-                          label:
-                              '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
-                          defaultValue: false,
-                        ),
-                      ],
-                      [
-                        GeneratedFormTextField(
-                          'zippedApkFilterRegEx',
-                          label: tr('zippedApkFilterRegEx'),
-                          required: false,
-                          additionalValidators: [
-                            (value) => _regExValidator(value),
-                          ],
-                        ),
-                      ],
-                      [
-                        GeneratedFormSwitch(
-                          'shizukuPretendToBeGooglePlay',
-                          label: tr('shizukuPretendToBeGooglePlay'),
-                          defaultValue: false,
-                        ),
-                      ],
-                      [
-                        GeneratedFormSwitch(
-                          'allowInsecure',
-                          label: tr('allowInsecure'),
-                          defaultValue: false,
-                        ),
-                      ],
-                    ],
-                    onValueChanges: (values, valid, isBuilding) {
-                      if (!isBuilding) {
-                        setState(() {
-                          _advancedSettings = values;
-                          // Only merge non-empty advanced settings into additional settings
-                          _advancedSettings.forEach((key, value) {
-                            if (value != null && value.toString().isNotEmpty) {
-                              additionalSettings[key] = value;
-                            }
-                          });
-                        });
-                      }
-                    },
-                  ),
-                ),
-                isExpanded: _advancedExpanded,
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-
     Widget getAdditionalOptsCol() => Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -1013,7 +908,75 @@ class AddAppPageState extends State<AddAppPage> {
                       future: pickedSource?.getSourceNote(),
                     ),
                   if (pickedSource != null) getAdditionalOptsCol(),
-                  if (pickedSource != null) getAdvancedSection(),
+                  if (pickedSource != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        gap24,
+                        Text(
+                          tr('advanced'),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        gap16,
+                        GeneratedForm(
+                          key: const Key('advancedSettings'),
+                          items: [
+                            [
+                              GeneratedFormTextField(
+                                'apkFilterRegEx',
+                                label: tr('filterAPKsByRegEx'),
+                                required: false,
+                                additionalValidators: [
+                                  (value) => _regExValidator(value),
+                                ],
+                              ),
+                            ],
+                            [
+                              GeneratedFormSwitch(
+                                'invertAPKFilter',
+                                label:
+                                    '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+                                defaultValue: false,
+                              ),
+                            ],
+                            [
+                              GeneratedFormTextField(
+                                'zippedApkFilterRegEx',
+                                label: tr('zippedApkFilterRegEx'),
+                                required: false,
+                                additionalValidators: [
+                                  (value) => _regExValidator(value),
+                                ],
+                              ),
+                            ],
+                            [
+                              GeneratedFormSwitch(
+                                'shizukuPretendToBeGooglePlay',
+                                label: tr('shizukuPretendToBeGooglePlay'),
+                                defaultValue: false,
+                              ),
+                            ],
+                            [
+                              GeneratedFormSwitch(
+                                'allowInsecure',
+                                label: tr('allowInsecure'),
+                                defaultValue: false,
+                              ),
+                            ],
+                          ],
+                          onValueChanges: (values, valid, isBuilding) {
+                            if (!isBuilding) {
+                              setState(() {
+                                additionalSettings.addAll(values);
+                              });
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
