@@ -486,9 +486,7 @@ class _AppPageState extends State<AppPage> {
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         elevation: 2,
         shadowColor: Theme.of(context).colorScheme.shadow,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       onPressed:
           !updating &&
@@ -501,10 +499,9 @@ class _AppPageState extends State<AppPage> {
                     ? tr('installed')
                     : tr('appsUpdated');
                 HapticFeedback.heavyImpact();
-                var res = await appsProvider.downloadAndInstallLatestApps(
-                  [app.app.id],
-                  globalNavigatorKey.currentContext,
-                );
+                var res = await appsProvider.downloadAndInstallLatestApps([
+                  app.app.id,
+                ], globalNavigatorKey.currentContext);
                 if (res.isNotEmpty && !trackOnly) {
                   // ignore: use_build_context_synchronously
                   showMessage(successMessage, context);
@@ -561,10 +558,9 @@ class _AppPageState extends State<AppPage> {
                         ? null
                         : () async {
                             try {
-                              await appsProvider.downloadAppAssets(
-                                [app.app.id],
-                                context,
-                              );
+                              await appsProvider.downloadAppAssets([
+                                app.app.id,
+                              ], context);
                             } catch (e) {
                               showError(e, context);
                             }

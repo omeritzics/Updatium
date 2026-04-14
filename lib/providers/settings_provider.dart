@@ -409,7 +409,7 @@ class SettingsProvider with ChangeNotifier {
       notifyListeners();
       return;
     }
-    
+
     String? selectedDirectory = await FilePicker.getDirectoryPath();
     if (selectedDirectory != null) {
       prefs?.setString('exportDir', selectedDirectory);

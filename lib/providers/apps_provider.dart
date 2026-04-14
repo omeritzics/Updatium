@@ -2423,9 +2423,7 @@ class AppsProvider with ChangeNotifier {
       try {
         final dir = Directory(exportDir);
         if (await dir.exists()) {
-          final files = dir.list().where(
-            (f) => f.path.endsWith('-auto.json'),
-          );
+          final files = dir.list().where((f) => f.path.endsWith('-auto.json'));
           await for (var file in files) {
             await file.delete();
           }
@@ -2460,15 +2458,13 @@ class AppsProvider with ChangeNotifier {
         if (!await dir.exists()) {
           throw UpdatiumError(tr('exportDirNotAccessible'));
         }
-        
+
         final fileName =
             '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
         final file = File('${exportDir}/$fileName');
-        
-        await file.writeAsString(
-          encoder.convert(finalExport),
-        );
-        
+
+        await file.writeAsString(encoder.convert(finalExport));
+
         returnPath = file.path;
       } catch (e) {
         if (e is UpdatiumError) {
