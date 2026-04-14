@@ -583,9 +583,7 @@ class _AppPageState extends State<AppPage> {
                     return;
                   }
                   try {
-                    await appsProvider.downloadAppAssets([
-                      app.app.id,
-                    ], context);
+                    await appsProvider.downloadAppAssets([app.app.id], context);
                   } catch (e) {
                     showError(e, context);
                   }
@@ -595,16 +593,13 @@ class _AppPageState extends State<AppPage> {
                       app.app.installedVersion != app.app.latestVersion &&
                       !isVersionDetectionStandard &&
                       !trackOnly) {
-                    appsProvider
-                        .removeAppsWithModal(
-                          context,
-                          [app.app],
-                        )
-                        .then((result) {
-                          if (result == true) {
-                            Navigator.of(context).pop();
-                          }
-                        });
+                    appsProvider.removeAppsWithModal(context, [app.app]).then((
+                      result,
+                    ) {
+                      if (result == true) {
+                        Navigator.of(context).pop();
+                      }
+                    });
                   }
                   break;
               }
@@ -709,7 +704,9 @@ class _AppPageState extends State<AppPage> {
 
                           if (updatedAppInMemory?.icon != null) {
                             return Padding(
-                              padding: const EdgeInsetsDirectional.only(end: 12.0),
+                              padding: const EdgeInsetsDirectional.only(
+                                end: 12.0,
+                              ),
                               child: Image.memory(
                                 updatedAppInMemory!.icon!,
                                 width: 40,
@@ -730,7 +727,9 @@ class _AppPageState extends State<AppPage> {
 
                           // Fallback icon while loading
                           return Padding(
-                            padding: const EdgeInsetsDirectional.only(end: 16.0),
+                            padding: const EdgeInsetsDirectional.only(
+                              end: 16.0,
+                            ),
                             child: Icon(
                               Icons.apps,
                               size: 40,
@@ -767,7 +766,12 @@ class _AppPageState extends State<AppPage> {
                 children: [
                   getFullInfoColumn(),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 32),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                      16,
+                      16,
+                      16,
+                      32,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -779,7 +783,12 @@ class _AppPageState extends State<AppPage> {
                   ),
                   if (app.downloadProgress != null)
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 32),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                        16,
+                        0,
+                        16,
+                        32,
+                      ),
                       child: LinearProgressIndicator(
                         value: app.downloadProgress! >= 0
                             ? app.downloadProgress! / 100
