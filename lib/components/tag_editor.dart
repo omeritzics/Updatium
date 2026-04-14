@@ -146,7 +146,7 @@ class TagEditor extends StatelessWidget {
     String newName = categoryName;
     Color currentColor = Color(categoryColor);
 
-    Future<bool> colorPickerDialog() async {
+    Future<bool> colorPickerDialog(BuildContext ctx) async {
       return ColorPicker(
         color: currentColor,
         onColorChanged: (Color color) => currentColor = color,
@@ -181,7 +181,7 @@ class TagEditor extends StatelessWidget {
           longPressMenu: true,
         ),
       ).showPickerDialog(
-        context,
+        ctx,
         transitionBuilder:
             (
               BuildContext context,
@@ -242,16 +242,10 @@ class TagEditor extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       onTap: () async {
                         final Color colorBeforeDialog = currentColor;
-                        if (!(await colorPickerDialog())) {
+                        if (!(await colorPickerDialog(context))) {
                           currentColor = colorBeforeDialog;
                         }
                       },
-                      child: Icon(
-                        Icons.palette,
-                        color: currentColor.computeLuminance() > 0.5
-                            ? Colors.black
-                            : Colors.white,
-                      ),
                     ),
                   ),
                 ),
@@ -356,6 +350,17 @@ class TagEditor extends StatelessWidget {
                     entry.value.key,
                   ).withValues(alpha: 0.2),
                   selectedColor: Color(entry.value.key),
+                  labelStyle: TextStyle(
+                    color: entry.value.value
+                        ? (Color(entry.value.key).computeLuminance() > 0.5
+                            ? Colors.black
+                            : Colors.white)
+                        : Theme.of(context).colorScheme.onSurface,
+                  ),
+                  side: BorderSide(
+                    color: Color(entry.value.key),
+                    width: 1,
+                  ),
                   onSelected: null,
                 ),
               );

@@ -39,40 +39,44 @@ class AppPage extends StatefulWidget {
 class _AppPageState extends State<AppPage> {
   AppInMemory? prevApp;
   bool updating = false;
+  bool _iconRequested = false;
+  Future<void>? _iconFuture;
 
   @override
   void initState() {
     super.initState();
   }
 
+  Future<void> getUpdate(String id, {bool resetVersion = false}) async {
+    var appsProvider = context.read<AppsProvider>();
+    try {
+      setState(() {
+        updating = true;
+      });
+      await appsProvider.checkUpdate(id);
+      if (resetVersion) {
+        appsProvider.apps[id]?.app.additionalSettings['versionDetection'] =
+            true;
+        if (appsProvider.apps[id]?.app.installedVersion != null) {
+          appsProvider.apps[id]?.app.installedVersion =
+              appsProvider.apps[id]?.app.latestVersion;
+        }
+        appsProvider.saveApps([appsProvider.apps[id]!.app]);
+      }
+    } catch (err) {
+      // ignore: use_build_context_synchronously
+      showError(err, context);
+    } finally {
+      setState(() {
+        updating = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
-    getUpdate(String id, {bool resetVersion = false}) async {
-      try {
-        setState(() {
-          updating = true;
-        });
-        await appsProvider.checkUpdate(id);
-        if (resetVersion) {
-          appsProvider.apps[id]?.app.additionalSettings['versionDetection'] =
-              true;
-          if (appsProvider.apps[id]?.app.installedVersion != null) {
-            appsProvider.apps[id]?.app.installedVersion =
-                appsProvider.apps[id]?.app.latestVersion;
-          }
-          appsProvider.saveApps([appsProvider.apps[id]!.app]);
-        }
-      } catch (err) {
-        // ignore: use_build_context_synchronously
-        showError(err, context);
-      } finally {
-        setState(() {
-          updating = false;
-        });
-      }
-    }
 
     bool areDownloadsRunning = appsProvider.areDownloadsRunning();
 
@@ -696,8 +700,12 @@ class _AppPageState extends State<AppPage> {
                       }
 
                       // Load icon asynchronously if not available
+                      if (!_iconRequested) {
+                        _iconRequested = true;
+                        _iconFuture = appsProvider.updateAppIcon(app.app.id);
+                      }
                       return FutureBuilder(
-                        future: appsProvider.updateAppIcon(app.app.id),
+                        future: _iconFuture,
                         builder: (ctx, snapshot) {
                           final updatedAppInMemory =
                               appsProvider.apps[app.app.id];
@@ -807,7 +815,7 @@ class _AppPageState extends State<AppPage> {
           ],
         ),
         onRefresh: () async {
-          getUpdate(app.app.id);
+          await getUpdate(app.app.id);
         },
       ),
     );

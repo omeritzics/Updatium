@@ -256,142 +256,124 @@ class _SettingsPageState extends State<SettingsPage> {
       future: DeviceInfoPlugin().androidInfo,
     );
 
-    var sortDropdown = Card(
-      margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              tr('appSortBy'),
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            gap8,
-            GeneratedForm(
-              items: [
-                [
-                  GeneratedFormDropdown(
-                    'sortColumn',
-                    [
-                      const MapEntry('authorName', 'authorName'),
-                      const MapEntry('nameAuthor', 'nameAuthor'),
-                      const MapEntry('added', 'added'),
-                      const MapEntry('releaseDate', 'releaseDate'),
-                    ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
-                    label: tr('appSortBy'),
-                    defaultValue: settingsProvider.sortColumn.name,
-                    required: true,
-                  ),
-                ],
-              ],
-              onValueChanges: (values, valid, isBuilding) {
-                if (!isBuilding && valid) {
-                  settingsProvider.sortColumn = SortColumnSettings.values
-                      .firstWhere((e) => e.name == values['sortColumn']);
-                }
-              },
-            ),
-          ],
+    var sortDropdown = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          tr('appSortBy'),
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-      ),
+        gap8,
+        GeneratedForm(
+          items: [
+            [
+              GeneratedFormDropdown(
+                'sortColumn',
+                [
+                  const MapEntry('authorName', 'authorName'),
+                  const MapEntry('nameAuthor', 'nameAuthor'),
+                  const MapEntry('added', 'added'),
+                  const MapEntry('releaseDate', 'releaseDate'),
+                ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
+                label: tr('appSortBy'),
+                defaultValue: settingsProvider.sortColumn.name,
+                required: true,
+              ),
+            ],
+          ],
+          onValueChanges: (values, valid, isBuilding) {
+            if (!isBuilding && valid) {
+              settingsProvider.sortColumn = SortColumnSettings.values
+                  .firstWhere((e) => e.name == values['sortColumn']);
+            }
+          },
+        ),
+      ],
     );
 
-    var orderDropdown = Card(
-      margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              tr('appSortOrder'),
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            gap8,
-            GeneratedForm(
-              items: [
-                [
-                  GeneratedFormDropdown(
-                    'sortOrder',
-                    [
-                      const MapEntry('ascending', 'ascending'),
-                      const MapEntry('descending', 'descending'),
-                    ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
-                    label: tr('appSortOrder'),
-                    defaultValue: settingsProvider.sortOrder.name,
-                    required: true,
-                  ),
-                ],
-              ],
-              onValueChanges: (values, valid, isBuilding) {
-                if (!isBuilding && valid) {
-                  settingsProvider.sortOrder = SortOrderSettings.values
-                      .firstWhere((e) => e.name == values['sortOrder']);
-                }
-              },
-            ),
-          ],
+    var orderDropdown = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          tr('appSortOrder'),
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-      ),
+        gap8,
+        GeneratedForm(
+          items: [
+            [
+              GeneratedFormDropdown(
+                'sortOrder',
+                [
+                  const MapEntry('ascending', 'ascending'),
+                  const MapEntry('descending', 'descending'),
+                ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
+                label: tr('appSortOrder'),
+                defaultValue: settingsProvider.sortOrder.name,
+                required: true,
+              ),
+            ],
+          ],
+          onValueChanges: (values, valid, isBuilding) {
+            if (!isBuilding && valid) {
+              settingsProvider.sortOrder = SortOrderSettings.values
+                  .firstWhere((e) => e.name == values['sortOrder']);
+            }
+          },
+        ),
+      ],
     );
 
-    var localeDropdown = Card(
-      margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              tr('language'),
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            gap8,
-            GeneratedForm(
-              items: [
-                [
-                  GeneratedFormDropdown(
-                    'forcedLocale',
-                    [
-                      const MapEntry('', 'followSystem'),
-                      ...supportedLocales.map(
-                        (e) => MapEntry(e.key.toString(), e.value),
-                      ),
-                    ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
-                    label: tr('language'),
-                    defaultValue:
-                        settingsProvider.forcedLocale?.toString() ?? '',
-                    required: true,
-                  ),
-                ],
-              ],
-              onValueChanges: (values, valid, isBuilding) {
-                if (!isBuilding && valid) {
-                  final localeValue = values['forcedLocale'] as String;
-                  if (localeValue.isEmpty) {
-                    settingsProvider.forcedLocale = null;
-                  } else {
-                    settingsProvider.forcedLocale = Locale(localeValue);
-                  }
-                }
-              },
-            ),
-          ],
+    var localeDropdown = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          tr('language'),
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-      ),
+        gap8,
+        GeneratedForm(
+          items: [
+            [
+              GeneratedFormDropdown(
+                'forcedLocale',
+                [
+                  const MapEntry('', 'followSystem'),
+                  ...supportedLocales.map(
+                    (e) => MapEntry(e.key.toString(), e.value),
+                  ),
+                ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
+                label: tr('language'),
+                defaultValue:
+                    settingsProvider.forcedLocale?.toString() ?? '',
+                required: true,
+              ),
+            ],
+          ],
+          onValueChanges: (values, valid, isBuilding) {
+            if (!isBuilding && valid) {
+              final localeValue = values['forcedLocale'] as String;
+              if (localeValue.isEmpty) {
+                settingsProvider.forcedLocale = null;
+              } else {
+                settingsProvider.forcedLocale = Locale(localeValue);
+              }
+            }
+          },
+        ),
+      ],
     );
 
     var intervalSlider = Slider(
@@ -1041,53 +1023,47 @@ class _SettingsPageState extends State<SettingsPage> {
                           childrenPadding: const EdgeInsets.all(16),
                           children: [
                             gap16,
-                            Card(
-                              margin: EdgeInsets.zero,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      tr('theme'),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall
-                                          ?.copyWith(
-                                            color: Theme.of(
-                                              context,
-                                            ).colorScheme.primary,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                    gap8,
-                                    DropdownButton<ThemeSettings>(
-                                      value: settingsProvider.theme,
-                                      isExpanded: true,
-                                      items: [
-                                        DropdownMenuItem(
-                                          value: ThemeSettings.system,
-                                          child: Text(tr('followSystem')),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: ThemeSettings.light,
-                                          child: Text(tr('light')),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: ThemeSettings.dark,
-                                          child: Text(tr('dark')),
-                                        ),
-                                      ],
-                                      onChanged: (ThemeSettings? value) {
-                                        if (value != null) {
-                                          settingsProvider.theme = value;
-                                        }
-                                      },
-                                    ),
-                                  ],
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  tr('theme'),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall
+                                      ?.copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                 ),
-                              ),
+                                gap8,
+                                GeneratedForm(
+                                  items: [
+                                    [
+                                      GeneratedFormDropdown(
+                                        'theme',
+                                        [
+                                          const MapEntry('system', 'followSystem'),
+                                          const MapEntry('light', 'light'),
+                                          const MapEntry('dark', 'dark'),
+                                        ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
+                                        label: tr('theme'),
+                                        defaultValue: settingsProvider.theme.name,
+                                        required: true,
+                                      ),
+                                    ],
+                                  ],
+                                  onValueChanges: (values, valid, isBuilding) {
+                                    if (!isBuilding && valid) {
+                                      settingsProvider.theme = ThemeSettings.values
+                                          .firstWhere((e) => e.name == values['theme']);
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
                             gap8,
                             if (settingsProvider.theme == ThemeSettings.system)
