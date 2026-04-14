@@ -324,8 +324,9 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
           onValueChanges: (values, valid, isBuilding) {
             if (!isBuilding && valid) {
-              settingsProvider.sortOrder = SortOrderSettings.values
-                  .firstWhere((e) => e.name == values['sortOrder']);
+              settingsProvider.sortOrder = SortOrderSettings.values.firstWhere(
+                (e) => e.name == values['sortOrder'],
+              );
             }
           },
         ),
@@ -356,8 +357,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
                 label: tr('language'),
-                defaultValue:
-                    settingsProvider.forcedLocale?.toString() ?? '',
+                defaultValue: settingsProvider.forcedLocale?.toString() ?? '',
                 required: true,
               ),
             ],
@@ -1029,9 +1029,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               children: [
                                 Text(
                                   tr('theme'),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelSmall
+                                  style: Theme.of(context).textTheme.labelSmall
                                       ?.copyWith(
                                         color: Theme.of(
                                           context,
@@ -1046,20 +1044,32 @@ class _SettingsPageState extends State<SettingsPage> {
                                       GeneratedFormDropdown(
                                         'theme',
                                         [
-                                          const MapEntry('system', 'followSystem'),
-                                          const MapEntry('light', 'light'),
-                                          const MapEntry('dark', 'dark'),
-                                        ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
+                                              const MapEntry(
+                                                'system',
+                                                'followSystem',
+                                              ),
+                                              const MapEntry('light', 'light'),
+                                              const MapEntry('dark', 'dark'),
+                                            ]
+                                            .map(
+                                              (e) =>
+                                                  MapEntry(e.key, tr(e.value)),
+                                            )
+                                            .toList(),
                                         label: tr('theme'),
-                                        defaultValue: settingsProvider.theme.name,
+                                        defaultValue:
+                                            settingsProvider.theme.name,
                                         required: true,
                                       ),
                                     ],
                                   ],
                                   onValueChanges: (values, valid, isBuilding) {
                                     if (!isBuilding && valid) {
-                                      settingsProvider.theme = ThemeSettings.values
-                                          .firstWhere((e) => e.name == values['theme']);
+                                      settingsProvider.theme = ThemeSettings
+                                          .values
+                                          .firstWhere(
+                                            (e) => e.name == values['theme'],
+                                          );
                                     }
                                   },
                                 ),

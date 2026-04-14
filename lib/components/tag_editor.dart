@@ -353,14 +353,11 @@ class TagEditor extends StatelessWidget {
                   labelStyle: TextStyle(
                     color: entry.value.value
                         ? (Color(entry.value.key).computeLuminance() > 0.5
-                            ? Colors.black
-                            : Colors.white)
+                              ? Colors.black
+                              : Colors.white)
                         : Theme.of(context).colorScheme.onSurface,
                   ),
-                  side: BorderSide(
-                    color: Color(entry.value.key),
-                    width: 1,
-                  ),
+                  side: BorderSide(color: Color(entry.value.key), width: 1),
                   onSelected: null,
                 ),
               );
