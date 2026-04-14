@@ -275,6 +275,35 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
   }
 
+  bool _canPop() {
+    if (isLinkActivity &&
+        selectedIndexHistory.length == 1 &&
+        selectedIndexHistory.last == 1) {
+      return true;
+    }
+    if (selectedIndexHistory.isNotEmpty) {
+      return false;
+    }
+    final settingsProvider = context.read<SettingsProvider>();
+    final pages = getPages(settingsProvider);
+    return !((pages[0].widget.key as GlobalKey<AppsPageState>).currentState
+            ?.clearSelected() ??
+        false);
+  }
+
+  void _handlePop() {
+    setIsReversing(
+      selectedIndexHistory.length >= 2
+          ? selectedIndexHistory.reversed.toList()[1]
+          : 0,
+    );
+    if (selectedIndexHistory.isNotEmpty) {
+      setState(() {
+        selectedIndexHistory.removeLast();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     AppsProvider appsProvider = context.watch<AppsProvider>();
@@ -293,7 +322,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     prevAppCount = appsProvider.apps.length;
     prevIsLoading = appsProvider.loadingApps;
 
-    return WillPopScope(
+    return PopScope(
+      canPop: _canPop(),
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          _handlePop();
+        }
+      },
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: PageTransitionSwitcher(
@@ -365,29 +400,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
         ),
       ),
-      onWillPop: () async {
-        if (isLinkActivity &&
-            selectedIndexHistory.length == 1 &&
-            selectedIndexHistory.last == 1) {
-          return true;
-        }
-        setIsReversing(
-          selectedIndexHistory.length >= 2
-              ? selectedIndexHistory.reversed.toList()[1]
-              : 0,
-        );
-        if (selectedIndexHistory.isNotEmpty) {
-          setState(() {
-            selectedIndexHistory.removeLast();
-          });
-          return false;
-        }
-        final settingsProvider = context.read<SettingsProvider>();
-        final pages = getPages(settingsProvider);
-        return !((pages[0].widget.key as GlobalKey<AppsPageState>).currentState
-                ?.clearSelected() ??
-            false);
-      },
     );
   }
 

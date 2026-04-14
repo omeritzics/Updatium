@@ -1007,7 +1007,6 @@ class AppsProvider with ChangeNotifier {
   Future<bool> installApkDir(
     DownloadedDir dir,
     BuildContext? firstTimeWithContext, {
-    bool needsBGWorkaround = false,
     bool shizukuPretendToBeGooglePlay = false,
   }) async {
     var somethingInstalled = false;
@@ -1051,7 +1050,6 @@ class AppsProvider with ChangeNotifier {
         var wasInstalled = await installApk(
           DownloadedApk(dir.appId, selectedApks[0]),
           firstTimeWithContext,
-          needsBGWorkaround: needsBGWorkaround,
           shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
           additionalAPKs: selectedApks.length > 1
               ? selectedApks
@@ -1078,7 +1076,6 @@ class AppsProvider with ChangeNotifier {
   Future<bool> installApk(
     DownloadedApk file,
     BuildContext? firstTimeWithContext, {
-    bool needsBGWorkaround = false,
     bool shizukuPretendToBeGooglePlay = false,
     List<DownloadedApk> additionalAPKs = const [],
   }) async {
@@ -1118,18 +1115,6 @@ class AppsProvider with ChangeNotifier {
         newInfo.versionCode! < appInfo.versionCode! &&
         !(await canDowngradeApps())) {
       throw DowngradeError(appInfo.versionCode!, newInfo.versionCode!);
-    }
-    if (needsBGWorkaround) {
-      // The below 'await' will never return if we are in a background process
-      // To work around this, we should assume the install will be successful
-      // So we update the app's installed version first as we will never get to the later code
-      // We can't conditionally get rid of the 'await' as this causes install fails (BG process times out) - see #896
-      // TODO: When background process issue (#896) is fixed, update this function and the calls to it accordingly
-      apps[file.appId]!.app.installedVersion =
-          apps[file.appId]!.app.latestVersion;
-      await saveApps([
-        apps[file.appId]!.app,
-      ], attemptToCorrectInstallStatus: false);
     }
     int? code;
     if (!settingsProvider.useShizuku) {
@@ -1355,45 +1340,24 @@ class AppsProvider with ChangeNotifier {
         var contextIfNewInstall = apps[id]?.installedInfo == null
             ? context
             : null;
-        bool needBGWorkaround =
-            willBeSilent && context == null && !settingsProvider.useShizuku;
         bool shizukuPretendToBeGooglePlay =
             settingsProvider.shizukuPretendToBeGooglePlay ||
             apps[id]!.app.additionalSettings['shizukuPretendToBeGooglePlay'] ==
                 true;
         if (downloadedFile != null) {
-          if (needBGWorkaround) {
-            // ignore: use_build_context_synchronously
-            installApk(
-              downloadedFile,
-              contextIfNewInstall,
-              needsBGWorkaround: true,
-              shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
-            );
-          } else {
-            // ignore: use_build_context_synchronously
-            sayInstalled = await installApk(
-              downloadedFile,
-              contextIfNewInstall,
-              shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
-            );
-          }
+          // ignore: use_build_context_synchronously
+          sayInstalled = await installApk(
+            downloadedFile,
+            contextIfNewInstall,
+            shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
+          );
         } else {
-          if (needBGWorkaround) {
-            // ignore: use_build_context_synchronously
-            installApkDir(
-              downloadedDir!,
-              contextIfNewInstall,
-              needsBGWorkaround: true,
-            );
-          } else {
-            // ignore: use_build_context_synchronously
-            sayInstalled = await installApkDir(
-              downloadedDir!,
-              contextIfNewInstall,
-              shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
-            );
-          }
+          // ignore: use_build_context_synchronously
+          sayInstalled = await installApkDir(
+            downloadedDir!,
+            contextIfNewInstall,
+            shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
+          );
         }
         if (willBeSilent && context == null) {
           if (!settingsProvider.useShizuku) {
