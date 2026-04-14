@@ -553,10 +553,9 @@ class _AppPageState extends State<AppPage> {
                 ? null
                 : () async {
                     try {
-                      await appsProvider.downloadAppAssets(
-                        [app.app.id],
-                        context,
-                      );
+                      await appsProvider.downloadAppAssets([
+                        app.app.id,
+                      ], context);
                     } catch (e) {
                       showError(e, context);
                     }
@@ -570,13 +569,13 @@ class _AppPageState extends State<AppPage> {
             icon: const Icon(Icons.delete),
             tooltip: tr('remove'),
             onPressed: () {
-              appsProvider.removeAppsWithModal(context, [app.app]).then(
-                (result) {
-                  if (result == true) {
-                    Navigator.of(context).pop();
-                  }
-                },
-              );
+              appsProvider.removeAppsWithModal(context, [app.app]).then((
+                result,
+              ) {
+                if (result == true) {
+                  Navigator.of(context).pop();
+                }
+              });
             },
           ),
       ];

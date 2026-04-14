@@ -1031,7 +1031,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           initiallyExpanded:
                               settingsProvider.appearanceSectionExpanded,
                           onExpansionChanged: (bool expanded) {
-                            settingsProvider.appearanceSectionExpanded = expanded;
+                            settingsProvider.appearanceSectionExpanded =
+                                expanded;
                           },
                           tilePadding: const EdgeInsets.symmetric(
                             horizontal: 16,
@@ -1315,7 +1316,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           initiallyExpanded:
                               settingsProvider.categoriesSectionExpanded,
                           onExpansionChanged: (bool expanded) {
-                            settingsProvider.categoriesSectionExpanded = expanded;
+                            settingsProvider.categoriesSectionExpanded =
+                                expanded;
                           },
                           tilePadding: const EdgeInsets.symmetric(
                             horizontal: 16,
