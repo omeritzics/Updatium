@@ -564,6 +564,22 @@ Future<List<MapEntry<String, String>>> filterApksByArch(
   return apkUrls;
 }
 
+List<MapEntry<String, String>> preferApkOverXapk(
+  List<MapEntry<String, String>> apkUrls,
+) {
+  if (apkUrls.length > 1) {
+    var apks = apkUrls.where((e) => e.key.toLowerCase().endsWith('.apk')).toList();
+    var xapks = apkUrls.where((e) => e.key.toLowerCase().endsWith('.xapk')).toList();
+    var others = apkUrls
+        .where((e) =>
+            !e.key.toLowerCase().endsWith('.apk') &&
+            !e.key.toLowerCase().endsWith('.xapk'))
+        .toList();
+    return [...apks, ...xapks, ...others];
+  }
+  return apkUrls;
+}
+
 String getSourceRegex(List<String> hosts) {
   return '(${hosts.join('|').replaceAll('.', '\\.')})';
 }
@@ -1380,6 +1396,11 @@ class SourceProvider {
     }
     if (additionalSettings['autoApkFilterByArch'] == true) {
       apk.apkUrls = await filterApksByArch(apk.apkUrls);
+    }
+    var sp = SettingsProvider();
+    await sp.initializeSettings();
+    if (sp.preferApkOverXapk) {
+      apk.apkUrls = preferApkOverXapk(apk.apkUrls);
     }
     var name = currentApp != null ? currentApp.name.trim() : '';
     name = name.isNotEmpty ? name : apk.names.name;

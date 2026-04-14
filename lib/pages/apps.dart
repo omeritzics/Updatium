@@ -902,45 +902,57 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       }
 
       capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-            child: Row(
-              children: [
-                Text(
-                  capFirstChar(listedCategories[index] ?? tr('noCategory')),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  '(${filteredEntries.length})',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        child: Card(
+          child: ExpansionTile(
+            key: ValueKey(
+              'category_grid_${listedCategories[index] ?? "null"}_$index',
             ),
-          ),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 190,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
-              childAspectRatio: 0.65,
+            leading: Icon(
+              Icons.category_rounded,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            itemCount: filteredEntries.length,
-            itemBuilder: (BuildContext context, int index) {
-              final appIndex = filteredEntries[index].key;
-              // Check if the app index is valid
-              if (appIndex >= 0 && appIndex < listedApps.length) {
-                return getSingleAppGridTile(appIndex);
-              }
-              return const SizedBox.shrink();
+            title: Text(
+              capFirstChar(listedCategories[index] ?? tr('noCategory')),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            trailing: Text(filteredEntries.length.toString()),
+            initiallyExpanded: _expandedCategories.contains(index),
+            onExpansionChanged: (isExpanded) {
+              setState(() {
+                if (isExpanded) {
+                  _expandedCategories.add(index);
+                } else {
+                  _expandedCategories.remove(index);
+                }
+              });
             },
+            tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+            childrenPadding: const EdgeInsets.all(16),
+            children: [
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 190,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
+                  childAspectRatio: 0.65,
+                ),
+                itemCount: filteredEntries.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final appIndex = filteredEntries[index].key;
+                  // Check if the app index is valid
+                  if (appIndex >= 0 && appIndex < listedApps.length) {
+                    return getSingleAppGridTile(appIndex);
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ],
           ),
-        ],
+        ),
       );
     }
 
@@ -1606,7 +1618,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       } else {
         // Flat View
         if (settingsProvider.useGridView) {
-          final spacing = 4.0;
+          final spacing = 6.0;
 
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

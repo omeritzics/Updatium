@@ -576,4 +576,22 @@ class SettingsProvider with ChangeNotifier {
     prefs?.setInt('safeModeTapCount', val);
     notifyListeners();
   }
+
+  bool get preferApkOverXapk {
+    return prefs?.getBool('preferApkOverXapk') ?? true;
+  }
+
+  set preferApkOverXapk(bool val) {
+    prefs?.setBool('preferApkOverXapk', val);
+    notifyListeners();
+  }
+
+  bool get updatesSectionExpanded {
+    return prefs?.getBool('updatesSectionExpanded') ?? false;
+  }
+
+  set updatesSectionExpanded(bool val) {
+    prefs?.setBool('updatesSectionExpanded', val);
+    notifyListeners();
+  }
 }

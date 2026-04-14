@@ -195,7 +195,7 @@ Future<File> downloadFileWithRetry(
       logs: logs,
     );
   } catch (e) {
-    if (retries > 0 && e is http.ClientException) {
+    if (retries > 0 && (e is http.ClientException || e.toString().contains('Connection closed'))) {
       await Future.delayed(const Duration(seconds: 5));
       return await downloadFileWithRetry(
         url,

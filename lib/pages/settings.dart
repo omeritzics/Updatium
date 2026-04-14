@@ -508,7 +508,10 @@ class _SettingsPageState extends State<SettingsPage> {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                          initiallyExpanded: true,
+                          initiallyExpanded: settingsProvider.updatesSectionExpanded,
+                          onExpansionChanged: (bool expanded) {
+                            settingsProvider.updatesSectionExpanded = expanded;
+                          },
                           tilePadding: const EdgeInsets.symmetric(
                             horizontal: 16,
                           ),
