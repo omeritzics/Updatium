@@ -41,7 +41,7 @@ class MainActivity : FlutterActivity() {
                 }
                 "enableUninstallProtection" -> {
                     if (devicePolicyManager.isAdminActive(deviceAdminComponent)) {
-                        devicePolicyManager.setDeviceOwner(deviceAdminComponent)
+                        devicePolicyManager.setUninstallBlocked(deviceAdminComponent, packageName, true)
                         result.success(true)
                     } else {
                         result.success(false)
@@ -49,7 +49,7 @@ class MainActivity : FlutterActivity() {
                 }
                 "disableUninstallProtection" -> {
                     if (devicePolicyManager.isAdminActive(deviceAdminComponent)) {
-                        devicePolicyManager.removeActiveAdmin(deviceAdminComponent)
+                        devicePolicyManager.setUninstallBlocked(deviceAdminComponent, packageName, false)
                         result.success(true)
                     } else {
                         result.success(false)
