@@ -101,6 +101,13 @@ void showSafeModeEnableDialog(BuildContext context) {
                   tr('safeModeSetupDescription'),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
+                const SizedBox(height: 12),
+                Text(
+                  tr('safeModeDisableHint'),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: passwordController,

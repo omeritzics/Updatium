@@ -10,6 +10,8 @@ class TagEditor extends StatelessWidget {
   final bool showLabelWhenNotEmpty;
   final Function(Map<String, MapEntry<int, bool>>) onTagsChanged;
   final MapEntry<String, String>? deleteConfirmationMessage;
+  final bool showCheckIcon;
+  final bool showAddButton;
 
   const TagEditor({
     super.key,
@@ -20,6 +22,8 @@ class TagEditor extends StatelessWidget {
     this.alignment = WrapAlignment.start,
     this.showLabelWhenNotEmpty = true,
     this.deleteConfirmationMessage,
+    this.showCheckIcon = true,
+    this.showAddButton = true,
   });
 
   void _onAddPressed(BuildContext context) {
@@ -142,6 +146,55 @@ class TagEditor extends StatelessWidget {
     String newName = categoryName;
     Color currentColor = Color(categoryColor);
 
+    Future<bool> colorPickerDialog() async {
+      return ColorPicker(
+        color: currentColor,
+        onColorChanged: (Color color) => currentColor = color,
+        actionButtons: const ColorPickerActionButtons(
+          okButton: true,
+          closeButton: true,
+          dialogActionButtons: false,
+        ),
+        pickersEnabled: const <ColorPickerType, bool>{
+          ColorPickerType.both: false,
+          ColorPickerType.primary: false,
+          ColorPickerType.accent: false,
+          ColorPickerType.bw: false,
+          ColorPickerType.custom: true,
+          ColorPickerType.wheel: true,
+        },
+        pickerTypeLabels: <ColorPickerType, String>{
+          ColorPickerType.custom: tr('standard'),
+          ColorPickerType.wheel: tr('custom'),
+        },
+        wheelDiameter: 192,
+        wheelSquareBorderRadius: 32,
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        spacing: 8,
+        runSpacing: 8,
+        enableShadesSelection: false,
+        showMaterialName: false,
+        showColorName: false,
+        copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+          longPressMenu: true,
+        ),
+      ).showPickerDialog(
+        context,
+        transitionBuilder:
+            (BuildContext context, Animation<double> a1, Animation<double> a2, Widget widget) {
+          final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+          return Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.diagonal3Values(curvedValue, curvedValue, 1),
+            child: Opacity(opacity: curvedValue, child: widget),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 250),
+      );
+    }
+
     showDialog(
       context: context,
       builder: (BuildContext ctx) {
@@ -162,45 +215,38 @@ class TagEditor extends StatelessWidget {
                   onChanged: (value) => newName = value,
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  tr('selectX', args: [tr('color').toLowerCase()]),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  height: 200,
-                  child: ColorPicker(
-                    color: currentColor,
-                    onColorChanged: (Color color) {
-                      currentColor = color;
-                    },
-                    actionButtons: const ColorPickerActionButtons(
-                      okButton: false,
-                      closeButton: false,
-                      dialogActionButtons: false,
-                    ),
-                    pickersEnabled: const <ColorPickerType, bool>{
-                      ColorPickerType.both: false,
-                      ColorPickerType.primary: false,
-                      ColorPickerType.accent: false,
-                      ColorPickerType.bw: false,
-                      ColorPickerType.custom: true,
-                      ColorPickerType.wheel: true,
-                    },
-                    pickerTypeLabels: <ColorPickerType, String>{
-                      ColorPickerType.custom: tr('standard'),
-                      ColorPickerType.wheel: tr('custom'),
-                    },
-                    wheelDiameter: 150,
-                    wheelSquareBorderRadius: 24,
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    tr('selectX', args: [tr('color').toLowerCase()]),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: Container(
                     width: 40,
                     height: 40,
-                    borderRadius: 20,
-                    spacing: 6,
-                    runSpacing: 6,
-                    enableShadesSelection: false,
-                    showMaterialName: false,
-                    showColorName: false,
+                    decoration: BoxDecoration(
+                      color: currentColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.outline,
+                        width: 1,
+                      ),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: () async {
+                        final Color colorBeforeDialog = currentColor;
+                        if (!(await colorPickerDialog())) {
+                          currentColor = colorBeforeDialog;
+                        }
+                      },
+                      child: Icon(
+                        Icons.palette,
+                        color: currentColor.computeLuminance() > 0.5
+                            ? Colors.black
+                            : Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -299,22 +345,12 @@ class TagEditor extends StatelessWidget {
                 },
                 child: InputChip(
                   label: Text(entry.key),
-                  selected: entry.value.value,
+                  selected: showCheckIcon ? entry.value.value : false,
                   backgroundColor: Color(
                     entry.value.key,
                   ).withValues(alpha: 0.2),
                   selectedColor: Color(entry.value.key),
-                  onSelected: (selected) {
-                    final newTags = Map<String, MapEntry<int, bool>>.from(tags);
-                    if (singleSelect && selected) {
-                      newTags.updateAll(
-                        (k, v) => MapEntry(v.key, k == entry.key),
-                      );
-                    } else {
-                      newTags[entry.key] = MapEntry(entry.value.key, selected);
-                    }
-                    onTagsChanged(newTags);
-                  },
+                  onSelected: null,
                 ),
               );
             }),
@@ -324,18 +360,19 @@ class TagEditor extends StatelessWidget {
                 icon: const Icon(Icons.format_color_fill_rounded),
                 tooltip: tr('color'),
               ),
-            if (tags.isEmpty)
-              TextButton.icon(
-                onPressed: () => _onAddPressed(context),
-                icon: const Icon(Icons.add),
-                label: Text(label),
-              )
-            else
-              IconButton(
-                onPressed: () => _onAddPressed(context),
-                icon: const Icon(Icons.add),
-                tooltip: tr('add'),
-              ),
+            if (showAddButton)
+              if (tags.isEmpty)
+                TextButton.icon(
+                  onPressed: () => _onAddPressed(context),
+                  icon: const Icon(Icons.add),
+                  label: Text(label),
+                )
+              else
+                IconButton(
+                  onPressed: () => _onAddPressed(context),
+                  icon: const Icon(Icons.add),
+                  tooltip: tr('add'),
+                ),
           ],
         ),
       ],

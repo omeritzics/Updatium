@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/components/tag_editor.dart';
+import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/pages/safe_mode_dialog.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -271,30 +272,29 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             gap8,
-            DropdownButton<SortColumnSettings>(
-              value: settingsProvider.sortColumn,
-              isExpanded: true,
+            GeneratedForm(
               items: [
-                DropdownMenuItem(
-                  value: SortColumnSettings.authorName,
-                  child: Text(tr('authorName')),
-                ),
-                DropdownMenuItem(
-                  value: SortColumnSettings.nameAuthor,
-                  child: Text(tr('nameAuthor')),
-                ),
-                DropdownMenuItem(
-                  value: SortColumnSettings.added,
-                  child: Text(tr('added')),
-                ),
-                DropdownMenuItem(
-                  value: SortColumnSettings.releaseDate,
-                  child: Text(tr('releaseDate')),
-                ),
+                [
+                  GeneratedFormDropdown(
+                    'sortColumn',
+                    [
+                      const MapEntry('authorName', 'authorName'),
+                      const MapEntry('nameAuthor', 'nameAuthor'),
+                      const MapEntry('added', 'added'),
+                      const MapEntry('releaseDate', 'releaseDate'),
+                    ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
+                    label: tr('appSortBy'),
+                    defaultValue: settingsProvider.sortColumn.name,
+                    required: true,
+                  ),
+                ],
               ],
-              onChanged: (value) {
-                if (value != null) {
-                  settingsProvider.sortColumn = value;
+              onValueChanges: (values, valid, isBuilding) {
+                if (!isBuilding && valid) {
+                  settingsProvider.sortColumn =
+                      SortColumnSettings.values.firstWhere(
+                    (e) => e.name == values['sortColumn'],
+                  );
                 }
               },
             ),
@@ -319,22 +319,27 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             gap8,
-            DropdownButton<SortOrderSettings>(
-              value: settingsProvider.sortOrder,
-              isExpanded: true,
+            GeneratedForm(
               items: [
-                DropdownMenuItem(
-                  value: SortOrderSettings.ascending,
-                  child: Text(tr('ascending')),
-                ),
-                DropdownMenuItem(
-                  value: SortOrderSettings.descending,
-                  child: Text(tr('descending')),
-                ),
+                [
+                  GeneratedFormDropdown(
+                    'sortOrder',
+                    [
+                      const MapEntry('ascending', 'ascending'),
+                      const MapEntry('descending', 'descending'),
+                    ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
+                    label: tr('appSortOrder'),
+                    defaultValue: settingsProvider.sortOrder.name,
+                    required: true,
+                  ),
+                ],
               ],
-              onChanged: (value) {
-                if (value != null) {
-                  settingsProvider.sortOrder = value;
+              onValueChanges: (values, valid, isBuilding) {
+                if (!isBuilding && valid) {
+                  settingsProvider.sortOrder =
+                      SortOrderSettings.values.firstWhere(
+                    (e) => e.name == values['sortOrder'],
+                  );
                 }
               },
             ),
@@ -359,26 +364,31 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             gap8,
-            DropdownButton<String?>(
-              value: settingsProvider.forcedLocale?.toString(),
-              isExpanded: true,
+            GeneratedForm(
               items: [
-                DropdownMenuItem<String?>(
-                  value: null,
-                  child: Text(tr('followSystem')),
-                ),
-                ...supportedLocales.map(
-                  (e) => DropdownMenuItem<String>(
-                    value: e.key.toString(),
-                    child: Text(e.value),
+                [
+                  GeneratedFormDropdown(
+                    'forcedLocale',
+                    [
+                      const MapEntry('', 'followSystem'),
+                      ...supportedLocales.map(
+                        (e) => MapEntry(e.key.toString(), e.value),
+                      ),
+                    ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
+                    label: tr('language'),
+                    defaultValue: settingsProvider.forcedLocale?.toString() ?? '',
+                    required: true,
                   ),
-                ),
+                ],
               ],
-              onChanged: (value) {
-                if (value == null) {
-                  settingsProvider.forcedLocale = null;
-                } else {
-                  settingsProvider.forcedLocale = Locale(value);
+              onValueChanges: (values, valid, isBuilding) {
+                if (!isBuilding && valid) {
+                  final localeValue = values['forcedLocale'] as String;
+                  if (localeValue.isEmpty) {
+                    settingsProvider.forcedLocale = null;
+                  } else {
+                    settingsProvider.forcedLocale = Locale(localeValue);
+                  }
                 }
               },
             ),
@@ -1492,6 +1502,7 @@ class CategoryTagEditor extends StatelessWidget {
       label: tr('categories'),
       alignment: alignment,
       showLabelWhenNotEmpty: showLabelWhenNotEmpty,
+      showCheckIcon: false,
       onTagsChanged: (newTags) {
         // Convert back from TagEditor format to categories Map<String, int>
         final newCategories = <String, int>{};
@@ -1581,6 +1592,7 @@ class CategorySelector extends StatelessWidget {
       singleSelect: singleSelect,
       alignment: alignment,
       showLabelWhenNotEmpty: showLabelWhenNotEmpty,
+      showAddButton: false,
       onTagsChanged: (newTags) {
         // Convert back from TagEditor format to List<String> for callback
         final selectedCategories = newTags.entries
