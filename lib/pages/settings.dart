@@ -508,7 +508,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                          initiallyExpanded: settingsProvider.updatesSectionExpanded,
+                          initiallyExpanded:
+                              settingsProvider.updatesSectionExpanded,
                           onExpansionChanged: (bool expanded) {
                             settingsProvider.updatesSectionExpanded = expanded;
                           },

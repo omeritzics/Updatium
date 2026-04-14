@@ -568,12 +568,18 @@ List<MapEntry<String, String>> preferApkOverXapk(
   List<MapEntry<String, String>> apkUrls,
 ) {
   if (apkUrls.length > 1) {
-    var apks = apkUrls.where((e) => e.key.toLowerCase().endsWith('.apk')).toList();
-    var xapks = apkUrls.where((e) => e.key.toLowerCase().endsWith('.xapk')).toList();
+    var apks = apkUrls
+        .where((e) => e.key.toLowerCase().endsWith('.apk'))
+        .toList();
+    var xapks = apkUrls
+        .where((e) => e.key.toLowerCase().endsWith('.xapk'))
+        .toList();
     var others = apkUrls
-        .where((e) =>
-            !e.key.toLowerCase().endsWith('.apk') &&
-            !e.key.toLowerCase().endsWith('.xapk'))
+        .where(
+          (e) =>
+              !e.key.toLowerCase().endsWith('.apk') &&
+              !e.key.toLowerCase().endsWith('.xapk'),
+        )
         .toList();
     return [...apks, ...xapks, ...others];
   }
