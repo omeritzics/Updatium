@@ -5,6 +5,7 @@ import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/main.dart';
+import 'package:updatium/mass_app_sources/githubstars.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -515,23 +516,26 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         ),
                       ],
                     ),
-                  ...sourceProvider.massUrlSources.map(
-                    (source) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        gap8,
-                        FilledButton.icon(
-                          onPressed: importInProgress
-                              ? null
-                              : () {
-                                  runMassSourceImport(source);
-                                },
-                          icon: const Icon(Icons.cloud_download),
-                          label: Text(tr('importX', args: [source.name])),
+                  ...sourceProvider.massUrlSources
+                      .where((source) =>
+                          !(source is GitHubStars && settingsProvider.safeMode))
+                      .map(
+                        (source) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            gap8,
+                            FilledButton.icon(
+                              onPressed: importInProgress
+                                  ? null
+                                  : () {
+                                      runMassSourceImport(source);
+                                    },
+                              icon: const Icon(Icons.cloud_download),
+                              label: Text(tr('importX', args: [source.name])),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
                   const Spacer(),
                   const Divider(height: 32),
                   Text(
