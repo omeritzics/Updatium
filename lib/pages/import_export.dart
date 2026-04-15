@@ -517,8 +517,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       ],
                     ),
                   ...sourceProvider.massUrlSources
-                      .where((source) =>
-                          !(source is GitHubStars && settingsProvider.safeMode))
+                      .where(
+                        (source) =>
+                            !(source is GitHubStars &&
+                                settingsProvider.safeMode),
+                      )
                       .map(
                         (source) => Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
