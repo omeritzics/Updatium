@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
@@ -1691,8 +1693,12 @@ class _AboutDialogState extends State<AboutDialog> {
 
   @override
   Widget build(BuildContext context) {
-    const version = '26.3.0';
-    const buildNumber = '26020419';
+    final pubspecFile = File('pubspec.yaml');
+    final pubspec = Pubspec.parse(pubspecFile.readAsStringSync());
+    final versionString = pubspec.version?.toString() ?? '';
+    final parts = versionString.split('+');
+    final version = parts[0];
+    final buildNumber = parts.length > 1 ? parts[1] : '';
 
     return AlertDialog(
       scrollable: true,
@@ -1745,7 +1751,7 @@ class _AboutDialogState extends State<AboutDialog> {
                       horizontal: 8,
                     ),
                     child: Text(
-                      'Version $version ($buildNumber)',
+                      '${tr('version')} $version ($buildNumber)',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),

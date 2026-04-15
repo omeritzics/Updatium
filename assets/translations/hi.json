@@ -176,7 +176,6 @@
     "updatiumMustBeOpenToInstallApps": "ऐप्स इंस्टॉल करने के लिए Updatium खुला होना चाहिए",
     "completeAppInstallationNotifDescription": "उपयोगकर्ता से ऐप इंस्टॉल करना समाप्त करने के लिए Updatium पर लौटने के लिए कहता है",
     "checkingForUpdates": "अपडेट की जाँच हो रही है",
-
     "checkForUpdates": "Check for updates",
     "checkingForUpdatesNotifDescription": "अपडेट की जाँच करते समय दिखाई देने वाली अस्थायी अधिसूचना",
     "pleaseAllowInstallPerm": "कृपया Updatium को ऐप इंस्टॉल करने की अनुमति दें",
@@ -470,7 +469,7 @@
     "safeModeEnabled": "सेफ मोड सक्षम है",
     "safeModeDisabled": "सेफ मोड अक्षम है",
     "safeModeDisable": "सेफ मोड अक्षम करें",
-    "safeModeDisableHint": "Tap multiple times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
     "safeModeAdmin": "सेफ मोड प्रशासन",
     "safeModeSetupDescription": "सेफ मोड सक्षम करने के लिए एक पासवर्ड सेट करें। एक बार सक्षम होने के बाद, सेफ मोड नए ऐप्स जोड़ने से रोकता है और इसे केवल पासवर्ड से ही अक्षम किया जा सकता है।",
     "safeModeToggleDescription": "सेफ मोड को चालू या बंद करने के लिए अपना पासवर्ड दर्ज करें।",
@@ -490,5 +489,6 @@
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
-    "gotIt": "समझ गया"
+    "gotIt": "समझ गया",
+    "version": "Version"
 }

@@ -176,7 +176,6 @@
     "updatiumMustBeOpenToInstallApps": "অ্যাপ ইনস্টল করতে Updatium খোলা থাকতে হবে",
     "completeAppInstallationNotifDescription": "অ্যাপ ইনস্টল শেষ করতে ব্যবহারকারীকে Updatium-এ ফিরে আসতে বলে",
     "checkingForUpdates": "আপডেট চেক করা হচ্ছে",
-
     "checkForUpdates": "Check for updates",
     "checkingForUpdatesNotifDescription": "আপডেট চেক করার সময় সাময়িক বিজ্ঞপ্তি",
     "pleaseAllowInstallPerm": "Updatium-কে অ্যাপ ইনস্টল করার অনুমতি দিন",
@@ -470,7 +469,7 @@
     "safeModeEnabled": "সেফ মোড সক্রিয়",
     "safeModeDisabled": "সেফ মোড নিষ্ক্রিয়",
     "safeModeDisable": "সেফ মোড বন্ধ করুন",
-    "safeModeDisableHint": "Tap multiple times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
     "safeModeAdmin": "সেফ মোড প্রশাসন",
     "safeModeSetupDescription": "সেফ মোড চালু করতে একটি পাসওয়ার্ড সেট করুন। এটি নতুন অ্যাপ যোগ করা প্রতিরোধ করে।",
     "safeModeToggleDescription": "সেফ মোড চালু বা বন্ধ করতে আপনার পাসওয়ার্ড দিন।",
@@ -490,5 +489,6 @@
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
-    "gotIt": "বুঝেছি"
+    "gotIt": "বুঝেছি",
+    "version": "Version"
 }
