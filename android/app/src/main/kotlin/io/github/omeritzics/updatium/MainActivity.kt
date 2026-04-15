@@ -5,7 +5,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.activity.result.contract.ActivityResultContracts
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -13,21 +12,23 @@ import org.woheller69.freeDroidWarn.FreeDroidWarn
 
 class MainActivity : FlutterActivity() {
     private val DEVICE_ADMIN_CHANNEL = "io.github.omeritzics.updatium/device_admin"
-    private val SAF_CHANNEL = "io.github.omeritzics.updatium/saf"
+    private val SAF_CHANNEL = "io.github.omeritzics/updatium/saf"
+    private val OPEN_DIRECTORY_TREE_REQUEST = 1001
     private lateinit var devicePolicyManager: DevicePolicyManager
     private lateinit var deviceAdminComponent: ComponentName
     private var safResult: MethodChannel.Result? = null
-    private lateinit var openDirectoryTreeLauncher: androidx.activity.result.ActivityResultLauncher<android.net.Uri?>
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         FreeDroidWarn.showWarningOnUpgrade(this, BuildConfig.VERSION_CODE)
         devicePolicyManager = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         deviceAdminComponent = ComponentName(this, DeviceAdminReceiver::class.java)
+    }
 
-        openDirectoryTreeLauncher = registerForActivityResult(
-            ActivityResultContracts.OpenDocumentTree()
-        ) { uri: android.net.Uri? ->
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == OPEN_DIRECTORY_TREE_REQUEST && resultCode == RESULT_OK) {
+            val uri = data?.data
             if (uri != null && safResult != null) {
                 contentResolver.takePersistableUriPermission(
                     uri,
@@ -87,7 +88,8 @@ class MainActivity : FlutterActivity() {
             when (call.method) {
                 "openDirectoryTree" -> {
                     safResult = result
-                    openDirectoryTreeLauncher.launch(null)
+                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                    startActivityForResult(intent, OPEN_DIRECTORY_TREE_REQUEST)
                 }
                 else -> result.notImplemented()
             }
