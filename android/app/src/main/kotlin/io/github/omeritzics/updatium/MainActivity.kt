@@ -17,28 +17,29 @@ class MainActivity : FlutterActivity() {
     private lateinit var devicePolicyManager: DevicePolicyManager
     private lateinit var deviceAdminComponent: ComponentName
     private var safResult: MethodChannel.Result? = null
-
-    private val openDirectoryTreeLauncher = registerForActivityResult(
-        ActivityResultContracts.OpenDocumentTree()
-    ) { uri: Uri? ->
-        if (uri != null && safResult != null) {
-            contentResolver.takePersistableUriPermission(
-                uri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-            )
-            safResult?.success(uri.toString())
-            safResult = null
-        } else if (safResult != null) {
-            safResult?.success(null)
-            safResult = null
-        }
-    }
+    private lateinit var openDirectoryTreeLauncher: androidx.activity.result.ActivityResultLauncher<android.net.Uri?>
 
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         FreeDroidWarn.showWarningOnUpgrade(this, BuildConfig.VERSION_CODE)
         devicePolicyManager = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         deviceAdminComponent = ComponentName(this, DeviceAdminReceiver::class.java)
+
+        openDirectoryTreeLauncher = registerForActivityResult(
+            ActivityResultContracts.OpenDocumentTree()
+        ) { uri: android.net.Uri? ->
+            if (uri != null && safResult != null) {
+                contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                )
+                safResult?.success(uri.toString())
+                safResult = null
+            } else if (safResult != null) {
+                safResult?.success(null)
+                safResult = null
+            }
+        }
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
