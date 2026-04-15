@@ -66,6 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ColorTools.createPrimarySwatch(updatiumThemeColor): 'Updatium',
       };
   late ScrollController scrollController;
+  bool _scrollPositionRestored = false;
 
   void initUpdateIntervalInterpolator() {
     List<InterpolationNode> nodes = [];
@@ -140,11 +141,14 @@ class _SettingsPageState extends State<SettingsPage> {
     processIntervalSliderValue(settingsProvider.updateIntervalSliderVal);
 
     // Restore scroll position on first build
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (scrollController.hasClients) {
-        scrollController.jumpTo(settingsProvider.settingsScrollPosition);
-      }
-    });
+    if (!_scrollPositionRestored) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (scrollController.hasClients) {
+          scrollController.jumpTo(settingsProvider.settingsScrollPosition);
+          _scrollPositionRestored = true;
+        }
+      });
+    }
 
     var followSystemThemeExplanation = FutureBuilder(
       builder: (ctx, val) {
@@ -1584,7 +1588,7 @@ class CategorySelector extends StatelessWidget {
     this.preselected = const {},
     this.alignment = WrapAlignment.start,
     this.showLabelWhenNotEmpty = true,
-    this.editMode = true,
+    this.editMode = false,
   });
 
   @override

@@ -148,7 +148,7 @@ class TagEditor extends StatelessWidget {
     String newName = categoryName;
     Color currentColor = Color(categoryColor);
 
-    Future<bool> colorPickerDialog(BuildContext ctx) async {
+    Future<bool> colorPickerDialog() async {
       return ColorPicker(
         color: currentColor,
         onColorChanged: (Color color) => currentColor = color,
@@ -183,7 +183,7 @@ class TagEditor extends StatelessWidget {
           longPressMenu: true,
         ),
       ).showPickerDialog(
-        ctx,
+        context,
         transitionBuilder:
             (
               BuildContext context,
@@ -244,7 +244,7 @@ class TagEditor extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       onTap: () async {
                         final Color colorBeforeDialog = currentColor;
-                        if (!(await colorPickerDialog(context))) {
+                        if (!(await colorPickerDialog())) {
                           currentColor = colorBeforeDialog;
                         }
                       },

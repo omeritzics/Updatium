@@ -132,9 +132,6 @@ class _AppPageState extends State<AppPage> {
     }
     var trackOnly = app.app.additionalSettings['trackOnly'] == true;
 
-    bool isVersionDetectionStandard =
-        app.app.additionalSettings['versionDetection'] == true;
-
     bool installedVersionIsEstimate = isVersionPseudo(app.app);
 
     getInfoColumn() {
@@ -267,7 +264,6 @@ class _AppPageState extends State<AppPage> {
           CategorySelector(
             alignment: WrapAlignment.center,
             preselected: app.app.categories?.toSet() ?? {},
-            editMode: false,
             onSelected: (categories) {
               app.app.categories = categories;
               appsProvider.saveApps([app.app]);
@@ -528,6 +524,14 @@ class _AppPageState extends State<AppPage> {
 
     getToolbarButtons() {
       return [
+        if (app.app.installedVersion != null)
+          IconButton(
+            icon: const Icon(Icons.open_in_new),
+            tooltip: tr('open'),
+            onPressed: () {
+              pm.openApp(app.app.id);
+            },
+          ),
         if (source != null &&
             source.combinedAppSpecificSettingFormItems.isNotEmpty)
           IconButton(
@@ -561,23 +565,19 @@ class _AppPageState extends State<AppPage> {
                     }
                   },
           ),
-        if (app.app.installedVersion != null &&
-            app.app.installedVersion != app.app.latestVersion &&
-            !isVersionDetectionStandard &&
-            !trackOnly)
-          IconButton(
-            icon: const Icon(Icons.delete),
-            tooltip: tr('remove'),
-            onPressed: () {
-              appsProvider.removeAppsWithModal(context, [app.app]).then((
-                result,
-              ) {
-                if (result == true) {
-                  Navigator.of(context).pop();
-                }
-              });
-            },
-          ),
+        IconButton(
+          icon: const Icon(Icons.delete),
+          tooltip: tr('remove'),
+          onPressed: () {
+            appsProvider.removeAppsWithModal(context, [app.app]).then((
+              result,
+            ) {
+              if (result == true) {
+                Navigator.of(context).pop();
+              }
+            });
+          },
+        ),
       ];
     }
 
