@@ -569,9 +569,7 @@ class _AppPageState extends State<AppPage> {
           icon: const Icon(Icons.delete),
           tooltip: tr('remove'),
           onPressed: () {
-            appsProvider.removeAppsWithModal(context, [app.app]).then((
-              result,
-            ) {
+            appsProvider.removeAppsWithModal(context, [app.app]).then((result) {
               if (result == true) {
                 Navigator.of(context).pop();
               }
