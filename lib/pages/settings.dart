@@ -307,8 +307,9 @@ class _SettingsPageState extends State<SettingsPage> {
       ],
       onValueChanges: (values, valid, isBuilding) {
         if (!isBuilding && valid) {
-          settingsProvider.sortColumn = SortColumnSettings.values
-              .firstWhere((e) => e.name == values['sortColumn']);
+          settingsProvider.sortColumn = SortColumnSettings.values.firstWhere(
+            (e) => e.name == values['sortColumn'],
+          );
         }
       },
     );
@@ -1018,21 +1019,18 @@ class _SettingsPageState extends State<SettingsPage> {
                                           const MapEntry('dark', 'dark'),
                                         ]
                                         .map(
-                                          (e) =>
-                                              MapEntry(e.key, tr(e.value)),
+                                          (e) => MapEntry(e.key, tr(e.value)),
                                         )
                                         .toList(),
                                     label: tr('theme'),
-                                    defaultValue:
-                                        settingsProvider.theme.name,
+                                    defaultValue: settingsProvider.theme.name,
                                     required: true,
                                   ),
                                 ],
                               ],
                               onValueChanges: (values, valid, isBuilding) {
                                 if (!isBuilding && valid) {
-                                  settingsProvider.theme = ThemeSettings
-                                      .values
+                                  settingsProvider.theme = ThemeSettings.values
                                       .firstWhere(
                                         (e) => e.name == values['theme'],
                                       );
