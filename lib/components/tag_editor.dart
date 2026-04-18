@@ -124,10 +124,7 @@ class TagEditor extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                newTags[selectedEntry.key] = MapEntry(
-                  currentColor.value,
-                  true,
-                );
+                newTags[selectedEntry.key] = MapEntry(currentColor.value, true);
                 onTagsChanged(newTags);
                 Navigator.pop(ctx);
               },
@@ -267,10 +264,7 @@ class TagEditor extends StatelessWidget {
                   );
                 } else if (newName.trim().isNotEmpty) {
                   // Only color changed
-                  newTags[categoryName] = MapEntry(
-                    currentColor.value,
-                    true,
-                  );
+                  newTags[categoryName] = MapEntry(currentColor.value, true);
                 }
                 onTagsChanged(newTags);
                 Navigator.pop(ctx);
