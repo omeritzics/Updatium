@@ -171,7 +171,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 appsProvider.apps.forEach((key, value) {
                   for (var c in value.app.categories ?? []) {
                     if (!cats.containsKey(c)) {
-                      cats[c] = generateRandomLightColor().toARGB32();
+                      cats[c] = generateRandomLightColor().value;
                     }
                   }
                 });

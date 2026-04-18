@@ -96,10 +96,10 @@ packages:
     dependency: "direct main"
     description:
       name: background_fetch
-      sha256: f5f0a5774cbe5e71ce62a9daf7f01007d07b3ac0c1fea1ecb131a3c5a273ca38
+      sha256: e2ada4efaf3ee45b2448fbe37a074a2ddd50ed4846a5a65dee43fd6d54c4e8b4
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.1"
+    version: "1.6.1"
   battery_plus:
     dependency: "direct main"
     description:
@@ -942,7 +942,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: e285a5fc35e4dfdc641989382caf3fa06cf3cb05
+      resolved-ref: "64f3d4b7a7a922859366b14d6a71f63792c1edc0"
       url: "https://github.com/omeritzics/simple_localization"
     source: git
     version: "3.0.9"
@@ -1155,10 +1155,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: "45caa6c5917fa127b5dbcfbd1fa60b14e583afdc08bfc96dda38886ca252eb60"
+      sha256: "046d3928e16fa4dc46e8350415661755ab759d9fc97fc21b5ab295f71e4f0499"
       url: "https://pub.dev"
     source: hosted
-    version: "15.0.2"
+    version: "15.1.0"
   web:
     dependency: transitive
     description:

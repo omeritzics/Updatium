@@ -181,7 +181,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   ) {
     final categoryColorValue = settingsProvider.categories[category];
     if (categoryColorValue != null) {
-      return Color(categoryColorValue).withAlpha(alpha);
+      return Color(categoryColorValue).withValues(alpha: alpha / 255);
     }
     // Fallback to truly transparent color
     return Color.fromARGB(0, 0, 0, 0);

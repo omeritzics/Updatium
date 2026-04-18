@@ -58,7 +58,7 @@ class TagEditor extends StatelessWidget {
         if (!newTags.containsKey(value)) {
           bool someSelected = newTags.values.any((e) => e.value);
           newTags[value] = MapEntry(
-            Theme.of(context).colorScheme.primary.toARGB32(),
+            Theme.of(context).colorScheme.primary.value,
             !(someSelected && singleSelect),
           );
           onTagsChanged(newTags);
@@ -125,7 +125,7 @@ class TagEditor extends StatelessWidget {
             TextButton(
               onPressed: () {
                 newTags[selectedEntry.key] = MapEntry(
-                  currentColor.toARGB32(),
+                  currentColor.value,
                   true,
                 );
                 onTagsChanged(newTags);
@@ -262,13 +262,13 @@ class TagEditor extends StatelessWidget {
                   final isSelected = newTags[categoryName]?.value ?? false;
                   newTags.remove(categoryName);
                   newTags[newName.trim()] = MapEntry(
-                    currentColor.toARGB32(),
+                    currentColor.value,
                     isSelected,
                   );
                 } else if (newName.trim().isNotEmpty) {
                   // Only color changed
                   newTags[categoryName] = MapEntry(
-                    currentColor.toARGB32(),
+                    currentColor.value,
                     true,
                   );
                 }

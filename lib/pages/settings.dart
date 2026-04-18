@@ -1636,12 +1636,20 @@ class _AboutDialogState extends State<AboutDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final pubspecFile = File('pubspec.yaml');
-    final pubspec = Pubspec.parse(pubspecFile.readAsStringSync());
-    final versionString = pubspec.version?.toString() ?? '';
-    final parts = versionString.split('+');
-    final version = parts[0];
-    final buildNumber = parts.length > 1 ? parts[1] : '';
+    String version = '';
+    String buildNumber = '';
+    try {
+      final pubspecFile = File('pubspec.yaml');
+      final pubspec = Pubspec.parse(pubspecFile.readAsStringSync());
+      final versionString = pubspec.version?.toString() ?? '';
+      final parts = versionString.split('+');
+      version = parts[0];
+      buildNumber = parts.length > 1 ? parts[1] : '';
+    } catch (e) {
+      // Fallback to default values if pubspec parsing fails
+      version = 'Unknown';
+      buildNumber = '';
+    }
 
     return AlertDialog(
       scrollable: true,

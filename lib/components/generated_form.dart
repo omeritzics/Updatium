@@ -509,7 +509,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                         .where((element) => element.value.value)
                         .isNotEmpty;
                     temp[label] = MapEntry(
-                      generateRandomLightColor().toARGB32(),
+                      generateRandomLightColor().value,
                       !(someSelected && singleSelect),
                     );
                     values[fieldKey] = temp;
@@ -563,7 +563,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 label: Text(e2.key),
                                 backgroundColor: Color(
                                   e2.value.key,
-                                ).withAlpha(50),
+                                ).withValues(alpha: 0.2),
                                 selectedColor: Color(e2.value.key),
                                 visualDensity: VisualDensity.compact,
                                 selected: e2.value.value,
@@ -636,12 +636,12 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 int newColor = oldEntry.value.key;
                                 while (oldEntry.value.key == newColor) {
                                   newColor = generateRandomLightColor()
-                                      .toARGB32();
+                                      .value;
                                 }
                                 // Update entry with new color, remain selected
                                 temp.update(
                                   oldEntry.key,
-                                  (old) => MapEntry(newColor, old.value),
+                                  (old) => MapEntry(newColor.value, old.value),
                                 );
                                 values[fieldKey] = temp;
                                 someValueChanged();
