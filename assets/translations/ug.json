@@ -273,7 +273,7 @@
     "requiresCredentialsInSettings": "{} قوشۇمچە كىنىشكە تەلەپ قىلىدۇ (تەڭشەكتە)",
     "checkOnStart": "قوزغالغاندا يېڭىلانما تەكشۈرۈش",
     "safeMode": "بىخەتەر ھالەت",
-    "safeModeDescription": "«ئەپ قوشۇش» بېتىنى يوشۇرۇپ، ئورنىغا «ئەكىرىش/ئەۋەتىش» نى كۆرسىتىدۇ",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "بىخەتەر ھالەتتە ئەپ قوشۇش چەكلەنگەن",
     "tryInferAppIdFromCode": "مەنبە كودىدىن ئەپ ID سىنى پەرەز قىلىش",
     "removeOnExternalUninstall": "ئەپ سىستېمىدىن ئۆچۈرۈلگەندە ئاپتوماتىك چىقىرىۋېتىش",

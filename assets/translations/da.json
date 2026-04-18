@@ -273,7 +273,7 @@
     "requiresCredentialsInSettings": "{} kræver yderligere legitimation (i Indstillinger)",
     "checkOnStart": "Tjek for opdateringer ved opstart",
     "safeMode": "Sikker tilstand",
-    "safeModeDescription": "Skjul Tilføj app-side og vis Import/Eksport i stedet",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Tilføj app er deaktiveret i sikker tilstand",
     "tryInferAppIdFromCode": "Forsøg at udlede app-ID fra kildekode",
     "removeOnExternalUninstall": "Fjern automatisk eksternt afinstallerede apps",

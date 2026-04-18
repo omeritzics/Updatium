@@ -273,7 +273,7 @@
     "requiresCredentialsInSettings": "{} hewceyê nasnameyên zêde heye (di Mîhengan de)",
     "checkOnStart": "Rojankirinê li ser destpêkê kontrol bike",
     "safeMode": "Moda Ewle",
-    "safeModeDescription": "Rûpela Sepanê Zêde Bike veber bike û Der/Daxwaz nîshan bike",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Sepanê Zêde Bike di Moda Ewle de neçalak e",
     "tryInferAppIdFromCode": "Hewl bide ku ID-ya sepanê ji kodê çavkaniyê bixwîne",
     "removeOnExternalUninstall": "Sepanên ku derve hatin rakirin otomatîk rake",

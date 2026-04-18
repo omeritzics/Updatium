@@ -273,7 +273,7 @@
     "requiresCredentialsInSettings": "{}: これには追加の認証が必要です (設定にて)",
     "checkOnStart": "起動時にアップデートを確認する",
     "safeMode": "セーフモード",
-    "safeModeDescription": "アプリ追加ページを非表示にし、代わりにインポート/エクスポートを表示",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "アプリ追加はセーフモードで無効になっています",
     "tryInferAppIdFromCode": "ソースコードからアプリIDを推測しようとする",
     "removeOnExternalUninstall": "外部でアンインストールされたアプリを自動的に削除する",

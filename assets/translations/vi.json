@@ -273,7 +273,7 @@
     "requiresCredentialsInSettings": "{}: Điều này cần thông tin xác thực bổ sung (trong Thiết đặt)",
     "checkOnStart": "Kiểm tra các bản cập nhật khi khởi động",
     "safeMode": "Chế độ an toàn",
-    "safeModeDescription": "Ẩn trang Thêm ứng dụng và hiển thị Nhập/Xuất thay thế",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Thêm ứng dụng bị vô hiệu hóa trong chế độ an toàn",
     "tryInferAppIdFromCode": "Cố gắng suy ra ID ứng dụng từ mã nguồn",
     "removeOnExternalUninstall": "Tự động xóa ứng dụng đã gỡ cài đặt bên ngoài",

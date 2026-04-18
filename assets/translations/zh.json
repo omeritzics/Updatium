@@ -273,7 +273,7 @@
     "requiresCredentialsInSettings": "{}：此功能需要额外的凭据（在“设置”中添加）",
     "checkOnStart": "启动时进行一次检查",
     "safeMode": "安全模式",
-    "safeModeDescription": "隐藏添加应用页面并显示导入/导出",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "添加应用在安全模式下已禁用",
     "tryInferAppIdFromCode": "尝试从源代码推断应用 ID",
     "removeOnExternalUninstall": "自动删除列表中已卸载的应用",

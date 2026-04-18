@@ -273,7 +273,7 @@
     "requiresCredentialsInSettings": "{} को अतिरिक्त क्रेडेंशियल की आवश्यकता है (सेटिंग्स में)",
     "checkOnStart": "स्टार्टअप पर अपडेट के लिए जाँच करें",
     "safeMode": "सेफ मोड",
-    "safeModeDescription": "ऐप जोड़ें पेज को छिपाएँ और इसके बजाय आयात/निर्यात दिखाएँ",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "सेफ मोड में 'ऐप जोड़ें' अक्षम है",
     "tryInferAppIdFromCode": "सोर्स कोड से ऐप ID का अनुमान लगाने का प्रयास करें",
     "removeOnExternalUninstall": "बाहरी रूप से अनइंस्टॉल किए गए ऐप्स को स्वचालित रूप से हटाएँ",

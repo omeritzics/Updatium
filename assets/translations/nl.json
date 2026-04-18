@@ -273,7 +273,7 @@
     "requiresCredentialsInSettings": "{} vereist aanvullende referenties (in Instellingen)",
     "checkOnStart": "Bij opstarten op updates controleren",
     "safeMode": "Veilige modus",
-    "safeModeDescription": "Verberg App toevoegen-pagina en toon Importeer/Exporteer in plaats daarvan",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "App toevoegen is uitgeschakeld in veilige modus",
     "tryInferAppIdFromCode": "Probeer de app-ID af te leiden uit de broncode",
     "removeOnExternalUninstall": "Extern verwijderde apps automatisch verwijderen",

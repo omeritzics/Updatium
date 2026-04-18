@@ -273,7 +273,7 @@
     "requiresCredentialsInSettings": "{}: Wymaga to dodatkowych poświadczeń (w Ustawieniach)",
     "checkOnStart": "Sprawdź aktualizacje przy uruchomieniu",
     "safeMode": "Tryb bezpieczny",
-    "safeModeDescription": "Ukryj stronę Dodaj aplikację i pokaż Import/Eksport zamiast tego",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Dodawanie aplikacji jest wyłączone w trybie bezpiecznym",
     "tryInferAppIdFromCode": "Spróbuj wywnioskować identyfikator aplikacji z kodu źródłowego",
     "removeOnExternalUninstall": "Automatyczne usuń odinstalowane zewnętrznie aplikacje",

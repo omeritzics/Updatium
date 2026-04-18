@@ -276,7 +276,7 @@
     "requiresCredentialsInSettings": "ל־{} נחוצים פרטי זיהוי נוספים (בהגדרות)",
     "checkOnStart": "בדיקת עדכונים בעת הפעלת היישום",
     "safeMode": "מצב בטוח",
-    "safeModeDescription": "הסתרת דף הוספת אפליקציה והצגת ייבוא/ייצוא במקום",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "הוספת אפליקציה מושבתת במצב בטוח",
     "tryInferAppIdFromCode": "ניסיון הסקת מזהה אפליקציה מקוד המקור",
     "removeOnExternalUninstall": "להסיר אוטומטית מהרשימה יישומים שהוסרו מחוץ ליישום",
@@ -398,9 +398,9 @@
         "other": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד {} דקות"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "BG update checking encountered a {}, will schedule a retry check in {} minute",
-        "two": "BG update checking encountered a {}, will schedule a retry check in {} minutes",
-        "other": "BG update checking encountered a {}, will schedule a retry check in {} minutes"
+        "one": "בדיקת העדכונים ברקע נתקלה ב{}, ניסיון בדיקה חוזר מתוכנן לעוד דקה",
+        "two": "בדיקת העדכונים ברקע נתקלה ב{}, ניסיון בדיקה חוזר מתוכנן לעוד שתי דקות",
+        "other": "בדיקת העדכונים ברקע נתקלה ב{}, ניסיון בדיקה חוזר מתוכנן לעוד {}} דקות"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "בדיקת העדכונים ברקע מצאה עדכון אחד - המשתמש יקבל התראה במידת הצורך",

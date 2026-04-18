@@ -273,7 +273,7 @@
     "requiresCredentialsInSettings": "{} 需要額外的憑證（在設定中）",
     "checkOnStart": "啟動時檢查更新",
     "safeMode": "安全模式",
-    "safeModeDescription": "隱藏新增應用程式頁面並顯示匯入/匯出",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "新增應用程式在安全模式中已停用",
     "tryInferAppIdFromCode": "嘗試從原始碼推斷應用程式 ID",
     "removeOnExternalUninstall": "自動移除外部解除安裝的應用程式",
