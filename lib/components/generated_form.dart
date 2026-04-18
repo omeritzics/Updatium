@@ -640,7 +640,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 // Update entry with new color, remain selected
                                 temp.update(
                                   oldEntry.key,
-                                  (old) => MapEntry(newColor.value, old.value),
+                                  (old) => MapEntry(newColor, old.value),
                                 );
                                 values[fieldKey] = temp;
                                 someValueChanged();
