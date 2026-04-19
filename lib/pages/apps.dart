@@ -1631,7 +1631,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             : tr('installUpdateSelectedApps'),
                         onPressed: selectedAppIds.isEmpty
                             ? () {
-                                selectThese(listedApps.map((e) => e.app).toList());
+                                selectThese(
+                                  listedApps.map((e) => e.app).toList(),
+                                );
                               }
                             : () {
                                 clearSelected();
@@ -1673,14 +1675,20 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       M3FloatingToolbarAction(
                         icon: Icons.push_pin,
                         semanticLabel:
-                            selectedApps.where((element) => element.pinned).isEmpty
+                            selectedApps
+                                .where((element) => element.pinned)
+                                .isEmpty
                             ? tr('pinToTop')
                             : tr('unpinFromTop'),
                         tooltip:
-                            selectedApps.where((element) => element.pinned).isEmpty
+                            selectedApps
+                                .where((element) => element.pinned)
+                                .isEmpty
                             ? tr('pinToTop')
                             : tr('unpinFromTop'),
-                        onPressed: selectedAppIds.isEmpty ? null : pinSelectedApps,
+                        onPressed: selectedAppIds.isEmpty
+                            ? null
+                            : pinSelectedApps,
                       ),
                       M3FloatingToolbarAction(
                         icon: Icons.more_horiz,
