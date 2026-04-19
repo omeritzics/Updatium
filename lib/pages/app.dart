@@ -2,6 +2,8 @@ import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
+import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
 
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/apps.dart';
@@ -524,112 +526,25 @@ class _AppPageState extends State<AppPage> {
       ),
     );
 
-    getToolbarButtons() {
-      return [
-        if (app.app.installedVersion != null)
-          IconButton(
-            icon: const Icon(Icons.open_in_new),
-            tooltip: tr('open'),
-            onPressed: () {
-              pm.openApp(app.app.id);
-            },
-          ),
-        if (source != null &&
-            source.combinedAppSpecificSettingFormItems.isNotEmpty)
-          IconButton(
-            icon: const Icon(Icons.edit),
-            tooltip: tr('additionalOptions'),
-            onPressed: updating
-                ? null
-                : () {
-                    showAdditionalOptionsDialog().then(
-                      handleAdditionalOptionChanges,
-                    );
-                  },
-          ),
-        if (app.app.apkUrls.isNotEmpty == true ||
-            app.app.otherAssetUrls.isNotEmpty == true)
-          IconButton(
-            icon: const Icon(Icons.archive),
-            tooltip: tr(
-              'downloadX',
-              args: [lowerCaseIfEnglish(tr('releaseAsset'))],
-            ),
-            onPressed: updating
-                ? null
-                : () async {
-                    try {
-                      await appsProvider.downloadAppAssets([
-                        app.app.id,
-                      ], context);
-                    } catch (e) {
-                      showError(e, context);
-                    }
-                  },
-          ),
-        IconButton(
-          icon: const Icon(Icons.delete),
-          tooltip: tr('remove'),
-          onPressed: () {
-            appsProvider.removeAppsWithModal(context, [app.app]).then((result) {
-              if (result == true) {
-                Navigator.of(context).pop();
-              }
-            });
-          },
-        ),
-      ];
-    }
-
     return Scaffold(
-      body: RefreshIndicator(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar.large(
-              pinned: true,
-              title: Row(
-                children: [
-                  Consumer<AppsProvider>(
-                    builder: (ctx, appsProvider, child) {
-                      final appInMemory = appsProvider.apps[app.app.id];
+      body: Stack(
+        children: [
+          RefreshIndicator(
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar.large(
+                  pinned: true,
+                  title: Row(
+                    children: [
+                      Consumer<AppsProvider>(
+                        builder: (ctx, appsProvider, child) {
+                          final appInMemory = appsProvider.apps[app.app.id];
 
-                      if (appInMemory?.icon != null) {
-                        return Padding(
-                          padding: const EdgeInsetsDirectional.only(end: 12.0),
-                          child: Image.memory(
-                            appInMemory!.icon!,
-                            width: 40,
-                            height: 40,
-                            gaplessPlayback: true,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Icon(
-                                Icons.apps,
-                                size: 40,
-                                color: Theme.of(context).colorScheme.primary,
-                              );
-                            },
-                          ),
-                        );
-                      }
-
-                      // Load icon asynchronously if not available
-                      if (!_iconRequested) {
-                        _iconRequested = true;
-                        _iconFuture = appsProvider.updateAppIcon(app.app.id);
-                      }
-                      return FutureBuilder(
-                        future: _iconFuture,
-                        builder: (ctx, snapshot) {
-                          final updatedAppInMemory =
-                              appsProvider.apps[app.app.id];
-
-                          if (updatedAppInMemory?.icon != null) {
+                          if (appInMemory?.icon != null) {
                             return Padding(
-                              padding: const EdgeInsetsDirectional.only(
-                                end: 12.0,
-                              ),
+                              padding: const EdgeInsetsDirectional.only(end: 12.0),
                               child: Image.memory(
-                                updatedAppInMemory!.icon!,
+                                appInMemory!.icon!,
                                 width: 40,
                                 height: 40,
                                 gaplessPlayback: true,
@@ -637,105 +552,201 @@ class _AppPageState extends State<AppPage> {
                                   return Icon(
                                     Icons.apps,
                                     size: 40,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.primary,
+                                    color: Theme.of(context).colorScheme.primary,
                                   );
                                 },
                               ),
                             );
                           }
 
-                          // Fallback icon while loading
-                          return Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                              end: 16.0,
-                            ),
-                            child: Icon(
-                              Icons.apps,
-                              size: 40,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                          // Load icon asynchronously if not available
+                          if (!_iconRequested) {
+                            _iconRequested = true;
+                            _iconFuture = appsProvider.updateAppIcon(app.app.id);
+                          }
+                          return FutureBuilder(
+                            future: _iconFuture,
+                            builder: (ctx, snapshot) {
+                              final updatedAppInMemory =
+                                  appsProvider.apps[app.app.id];
+
+                              if (updatedAppInMemory?.icon != null) {
+                                return Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                    end: 12.0,
+                                  ),
+                                  child: Image.memory(
+                                    updatedAppInMemory!.icon!,
+                                    width: 40,
+                                    height: 40,
+                                    gaplessPlayback: true,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Icon(
+                                        Icons.apps,
+                                        size: 40,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
+                                      );
+                                    },
+                                  ),
+                                );
+                              }
+
+                              // Fallback icon while loading
+                              return Padding(
+                                padding: const EdgeInsetsDirectional.only(
+                                  end: 16.0,
+                                ),
+                                child: Icon(
+                                  Icons.apps,
+                                  size: 40,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              );
+                            },
                           );
                         },
-                      );
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(app.name),
+                            Text(
+                              tr('byX', args: [app.author]),
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurfaceVariant,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      getFullInfoColumn(),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                          16,
+                          16,
+                          16,
+                          32,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(width: 16.0),
+                            Expanded(child: getInstallOrUpdateButton()),
+                            const SizedBox(width: 16.0),
+                          ],
+                        ),
+                      ),
+                      if (app.downloadProgress != null)
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                            16,
+                            0,
+                            16,
+                            32,
+                          ),
+                          child: LinearProgressIndicator(
+                            value: app.downloadProgress! >= 0
+                                ? app.downloadProgress! / 100
+                                : null,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainerHighest,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            onRefresh: () async {
+              await getUpdate(app.app.id);
+            },
+          ),
+          Positioned(
+            left: 16,
+            right: 16,
+            bottom: 16,
+            child: M3FloatingToolbar(
+              actions: [
+                if (app.app.installedVersion != null)
+                  M3FloatingToolbarAction(
+                    icon: Icons.open_in_new,
+                    semanticLabel: tr('open'),
+                    tooltip: tr('open'),
+                    onPressed: () {
+                      pm.openApp(app.app.id);
                     },
                   ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(app.name),
-                        Text(
-                          tr('byX', args: [app.author]),
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurfaceVariant,
-                              ),
-                        ),
-                      ],
-                    ),
+                if (source != null &&
+                    source.combinedAppSpecificSettingFormItems.isNotEmpty)
+                  M3FloatingToolbarAction(
+                    icon: Icons.edit,
+                    semanticLabel: tr('additionalOptions'),
+                    tooltip: tr('additionalOptions'),
+                    onPressed: updating
+                        ? () {}
+                        : () {
+                            showAdditionalOptionsDialog().then(
+                              handleAdditionalOptionChanges,
+                            );
+                          },
                   ),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  getFullInfoColumn(),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                      16,
-                      16,
-                      16,
-                      32,
+                if (app.app.apkUrls.isNotEmpty == true ||
+                    app.app.otherAssetUrls.isNotEmpty == true)
+                  M3FloatingToolbarAction(
+                    icon: Icons.archive,
+                    semanticLabel: tr(
+                      'downloadX',
+                      args: [lowerCaseIfEnglish(tr('releaseAsset'))],
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(width: 16.0),
-                        Expanded(child: getInstallOrUpdateButton()),
-                        const SizedBox(width: 16.0),
-                      ],
+                    tooltip: tr(
+                      'downloadX',
+                      args: [lowerCaseIfEnglish(tr('releaseAsset'))],
                     ),
+                    onPressed: updating
+                        ? () {}
+                        : () async {
+                            try {
+                              await appsProvider.downloadAppAssets([
+                                app.app.id,
+                              ], context);
+                            } catch (e) {
+                              showError(e, context);
+                            }
+                          },
                   ),
-                  if (app.downloadProgress != null)
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                        16,
-                        0,
-                        16,
-                        32,
-                      ),
-                      child: LinearProgressIndicator(
-                        value: app.downloadProgress! >= 0
-                            ? app.downloadProgress! / 100
-                            : null,
-                        backgroundColor: Theme.of(
-                          context,
-                        ).colorScheme.surfaceContainerHighest,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
+                M3FloatingToolbarAction(
+                  icon: Icons.delete,
+                  semanticLabel: tr('remove'),
+                  tooltip: tr('remove'),
+                  onPressed: () {
+                    appsProvider.removeAppsWithModal(context, [app.app]).then((result) {
+                      if (result == true) {
+                        Navigator.of(context).pop();
+                      }
+                    });
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
-        onRefresh: () async {
-          await getUpdate(app.app.id);
-        },
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: getToolbarButtons(),
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
+import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
 
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -953,32 +955,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       );
     }
 
-    getSelectAllButton() {
-      return selectedAppIds.isEmpty
-          ? TextButton.icon(
-              onPressed: () {
-                selectThese(listedApps.map((e) => e.app).toList());
-              },
-              icon: Icon(
-                Icons.select_all,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              label: Text(listedApps.length.toString()),
-            )
-          : TextButton.icon(
-              onPressed: () {
-                selectedAppIds.isEmpty
-                    ? selectThese(listedApps.map((e) => e.app).toList())
-                    : clearSelected();
-              },
-              icon: Icon(
-                selectedAppIds.isEmpty ? Icons.select_all : Icons.deselect,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              label: Text(selectedAppIds.length.toString()),
-            );
-    }
-
     getMassObtainFunction() {
       return appsProvider.areDownloadsRunning() ||
               (existingUpdateIdsAllOrSelected.isEmpty &&
@@ -1319,68 +1295,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       );
     }
 
-    getMainBottomButtons() {
-      return [
-        Semantics(
-          button: true,
-          label: selectedAppIds.isEmpty
-              ? tr('installUpdateApps')
-              : tr('installUpdateSelectedApps'),
-          hint: selectedAppIds.isEmpty
-              ? 'Install or update all apps'
-              : 'Install or update ${selectedAppIds.length} selected apps',
-          child: IconButton(
-            visualDensity: VisualDensity.compact,
-            onPressed: getMassObtainFunction(),
-            tooltip: selectedAppIds.isEmpty
-                ? tr('installUpdateApps')
-                : tr('installUpdateSelectedApps'),
-            icon: const Icon(Icons.file_download),
-          ),
-        ),
-        Semantics(
-          button: true,
-          label: tr('removeSelectedApps'),
-          hint: selectedAppIds.isEmpty
-              ? 'No apps selected'
-              : 'Remove ${selectedAppIds.length} selected apps',
-          child: IconButton(
-            visualDensity: VisualDensity.compact,
-            onPressed: selectedAppIds.isEmpty
-                ? null
-                : () {
-                    appsProvider.removeAppsWithModal(
-                      context,
-                      selectedApps.toList(),
-                    );
-                  },
-            tooltip: tr('removeSelectedApps'),
-            icon: const Icon(Icons.delete),
-          ),
-        ),
-        IconButton(
-          visualDensity: VisualDensity.compact,
-          onPressed: selectedAppIds.isEmpty ? null : launchCategorizeDialog(),
-          tooltip: tr('categorize'),
-          icon: const Icon(Icons.category),
-        ),
-        IconButton(
-          visualDensity: VisualDensity.compact,
-          onPressed: selectedAppIds.isEmpty ? null : pinSelectedApps,
-          tooltip: selectedApps.where((element) => element.pinned).isEmpty
-              ? tr('pinToTop')
-              : tr('unpinFromTop'),
-          icon: const Icon(Icons.push_pin),
-        ),
-        IconButton(
-          visualDensity: VisualDensity.compact,
-          onPressed: selectedAppIds.isEmpty ? null : showMoreOptionsDialog,
-          tooltip: tr('more'),
-          icon: const Icon(Icons.more_horiz),
-        ),
-      ];
-    }
-
     showFilterDialog() async {
       var values = await showDialog<Map<String, dynamic>?>(
         context: context,
@@ -1485,22 +1399,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           filter.setFormValuesFromMap(values);
         });
       }
-    }
-
-    getFilterButtonsRow() {
-      return Row(
-        children: [
-          getSelectAllButton(),
-          horizontalGap16,
-          const VerticalDivider(),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: getMainBottomButtons(),
-            ),
-          ),
-        ],
-      );
     }
 
     Widget getDisplayedList() {
@@ -1714,22 +1612,87 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               left: 16,
               right: 16,
               bottom: 16,
-              child: Material(
-                elevation: 6,
-                borderRadius: BorderRadius.circular(16),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(16),
+              child: M3FloatingToolbar(
+                actions: [
+                  M3FloatingToolbarAction(
+                    icon: Icons.select_all,
+                    label: selectedAppIds.isEmpty
+                        ? listedApps.length.toString()
+                        : selectedAppIds.length.toString(),
+                    semanticLabel: selectedAppIds.isEmpty
+                        ? tr('installUpdateApps')
+                        : tr('installUpdateSelectedApps'),
+                    tooltip: selectedAppIds.isEmpty
+                        ? tr('installUpdateApps')
+                        : tr('installUpdateSelectedApps'),
+                    onPressed: selectedAppIds.isEmpty
+                        ? () {
+                            selectThese(listedApps.map((e) => e.app).toList());
+                          }
+                        : () {
+                            clearSelected();
+                          },
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: getFilterButtonsRow(),
+                  M3FloatingToolbarAction(
+                    icon: Icons.file_download,
+                    semanticLabel: selectedAppIds.isEmpty
+                        ? tr('installUpdateApps')
+                        : tr('installUpdateSelectedApps'),
+                    tooltip: selectedAppIds.isEmpty
+                        ? tr('installUpdateApps')
+                        : tr('installUpdateSelectedApps'),
+                    onPressed: getMassObtainFunction() ?? () {},
                   ),
-                ),
+                  M3FloatingToolbarAction(
+                    icon: Icons.delete,
+                    semanticLabel: tr('removeSelectedApps'),
+                    tooltip: tr('removeSelectedApps'),
+                    onPressed: selectedAppIds.isEmpty
+                        ? () {}
+                        : () {
+                            appsProvider.removeAppsWithModal(
+                              context,
+                              selectedApps.toList(),
+                            );
+                          },
+                  ),
+                  M3FloatingToolbarAction(
+                    icon: Icons.category,
+                    semanticLabel: tr('categorize'),
+                    tooltip: tr('categorize'),
+                    onPressed: selectedAppIds.isEmpty
+                        ? () {}
+                        : () {
+                            launchCategorizeDialog()();
+                          },
+                  ),
+                  M3FloatingToolbarAction(
+                    icon: Icons.push_pin,
+                    semanticLabel: selectedApps
+                            .where((element) => element.pinned)
+                            .isEmpty
+                        ? tr('pinToTop')
+                        : tr('unpinFromTop'),
+                    tooltip: selectedApps
+                            .where((element) => element.pinned)
+                            .isEmpty
+                        ? tr('pinToTop')
+                        : tr('unpinFromTop'),
+                    onPressed: selectedAppIds.isEmpty
+                        ? () {}
+                        : pinSelectedApps,
+                  ),
+                  M3FloatingToolbarAction(
+                    icon: Icons.more_horiz,
+                    semanticLabel: tr('more'),
+                    tooltip: tr('more'),
+                    onPressed: selectedAppIds.isEmpty
+                        ? () {}
+                        : () {
+                            showMoreOptionsDialog();
+                          },
+                  ),
+                ],
               ),
             ),
         ],
