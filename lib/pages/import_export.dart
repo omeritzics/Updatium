@@ -507,7 +507,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           Semantics(
                             button: true,
                             label: tr('importFromURLsInFile'),
-                            hint: 'Import apps by reading URLs from a text file',
+                            hint:
+                                'Import apps by reading URLs from a text file',
                             excludeSemantics: true,
                             child: FilledButton.icon(
                               onPressed: importInProgress ? null : runUrlImport,
