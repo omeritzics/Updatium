@@ -688,70 +688,88 @@ class _AppPageState extends State<AppPage> {
             left: 16,
             right: 16,
             bottom: 16,
-            child: M3FloatingToolbar(
-              actions: [
-                if (app.app.installedVersion != null)
-                  M3FloatingToolbarAction(
-                    icon: Icons.open_in_new,
-                    semanticLabel: tr('open'),
-                    tooltip: tr('open'),
-                    onPressed: () {
-                      pm.openApp(app.app.id);
-                    },
-                  ),
-                if (source != null &&
-                    source.combinedAppSpecificSettingFormItems.isNotEmpty)
-                  M3FloatingToolbarAction(
-                    icon: Icons.edit,
-                    semanticLabel: tr('additionalOptions'),
-                    tooltip: tr('additionalOptions'),
-                    onPressed: updating
-                        ? () {}
-                        : () {
-                            showAdditionalOptionsDialog().then(
-                              handleAdditionalOptionChanges,
-                            );
-                          },
-                  ),
-                if (app.app.apkUrls.isNotEmpty == true ||
-                    app.app.otherAssetUrls.isNotEmpty == true)
-                  M3FloatingToolbarAction(
-                    icon: Icons.archive,
-                    semanticLabel: tr(
-                      'downloadX',
-                      args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+            child: Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: (() {
+                  final actionCount = [
+                    if (app.app.installedVersion != null) 1,
+                    if (source != null &&
+                        source.combinedAppSpecificSettingFormItems.isNotEmpty)
+                      1,
+                    if (app.app.apkUrls.isNotEmpty == true ||
+                        app.app.otherAssetUrls.isNotEmpty == true)
+                      1,
+                    1, // delete button always present
+                  ].length;
+                  return ((actionCount * 56) + ((actionCount - 1) * 8) + 32).toDouble();
+                })(),
+                child: M3FloatingToolbar(
+                  actions: [
+                    if (app.app.installedVersion != null)
+                      M3FloatingToolbarAction(
+                        icon: Icons.open_in_new,
+                        semanticLabel: tr('open'),
+                        tooltip: tr('open'),
+                        onPressed: () {
+                          pm.openApp(app.app.id);
+                        },
+                      ),
+                    if (source != null &&
+                        source.combinedAppSpecificSettingFormItems.isNotEmpty)
+                      M3FloatingToolbarAction(
+                        icon: Icons.edit,
+                        semanticLabel: tr('additionalOptions'),
+                        tooltip: tr('additionalOptions'),
+                        onPressed: updating
+                            ? null
+                            : () {
+                                showAdditionalOptionsDialog().then(
+                                  handleAdditionalOptionChanges,
+                                );
+                              },
+                      ),
+                    if (app.app.apkUrls.isNotEmpty == true ||
+                        app.app.otherAssetUrls.isNotEmpty == true)
+                      M3FloatingToolbarAction(
+                        icon: Icons.archive,
+                        semanticLabel: tr(
+                          'downloadX',
+                          args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+                        ),
+                        tooltip: tr(
+                          'downloadX',
+                          args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+                        ),
+                        onPressed: updating
+                            ? null
+                            : () async {
+                                try {
+                                  await appsProvider.downloadAppAssets([
+                                    app.app.id,
+                                  ], context);
+                                } catch (e) {
+                                  showError(e, context);
+                                }
+                              },
+                      ),
+                    M3FloatingToolbarAction(
+                      icon: Icons.delete,
+                      semanticLabel: tr('remove'),
+                      tooltip: tr('remove'),
+                      onPressed: () {
+                        appsProvider.removeAppsWithModal(context, [app.app]).then((
+                          result,
+                        ) {
+                          if (result == true) {
+                            Navigator.of(context).pop();
+                          }
+                        });
+                      },
                     ),
-                    tooltip: tr(
-                      'downloadX',
-                      args: [lowerCaseIfEnglish(tr('releaseAsset'))],
-                    ),
-                    onPressed: updating
-                        ? () {}
-                        : () async {
-                            try {
-                              await appsProvider.downloadAppAssets([
-                                app.app.id,
-                              ], context);
-                            } catch (e) {
-                              showError(e, context);
-                            }
-                          },
-                  ),
-                M3FloatingToolbarAction(
-                  icon: Icons.delete,
-                  semanticLabel: tr('remove'),
-                  tooltip: tr('remove'),
-                  onPressed: () {
-                    appsProvider.removeAppsWithModal(context, [app.app]).then((
-                      result,
-                    ) {
-                      if (result == true) {
-                        Navigator.of(context).pop();
-                      }
-                    });
-                  },
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ],

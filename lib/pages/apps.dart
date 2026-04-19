@@ -1612,83 +1612,89 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               left: 16,
               right: 16,
               bottom: 16,
-              child: M3FloatingToolbar(
-                actions: [
-                  M3FloatingToolbarAction(
-                    icon: Icons.select_all,
-                    label: selectedAppIds.isEmpty
-                        ? listedApps.length.toString()
-                        : selectedAppIds.length.toString(),
-                    semanticLabel: selectedAppIds.isEmpty
-                        ? tr('installUpdateApps')
-                        : tr('installUpdateSelectedApps'),
-                    tooltip: selectedAppIds.isEmpty
-                        ? tr('installUpdateApps')
-                        : tr('installUpdateSelectedApps'),
-                    onPressed: selectedAppIds.isEmpty
-                        ? () {
-                            selectThese(listedApps.map((e) => e.app).toList());
-                          }
-                        : () {
-                            clearSelected();
-                          },
+              child: Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: (6 * 56) + ((6 - 1) * 8) + 32,
+                  child: M3FloatingToolbar(
+                    actions: [
+                      M3FloatingToolbarAction(
+                        icon: Icons.select_all,
+                        label: selectedAppIds.isEmpty
+                            ? listedApps.length.toString()
+                            : selectedAppIds.length.toString(),
+                        semanticLabel: selectedAppIds.isEmpty
+                            ? tr('installUpdateApps')
+                            : tr('installUpdateSelectedApps'),
+                        tooltip: selectedAppIds.isEmpty
+                            ? tr('installUpdateApps')
+                            : tr('installUpdateSelectedApps'),
+                        onPressed: selectedAppIds.isEmpty
+                            ? () {
+                                selectThese(listedApps.map((e) => e.app).toList());
+                              }
+                            : () {
+                                clearSelected();
+                              },
+                      ),
+                      M3FloatingToolbarAction(
+                        icon: Icons.file_download,
+                        semanticLabel: selectedAppIds.isEmpty
+                            ? tr('installUpdateApps')
+                            : tr('installUpdateSelectedApps'),
+                        tooltip: selectedAppIds.isEmpty
+                            ? tr('installUpdateApps')
+                            : tr('installUpdateSelectedApps'),
+                        onPressed: getMassObtainFunction(),
+                      ),
+                      M3FloatingToolbarAction(
+                        icon: Icons.delete,
+                        semanticLabel: tr('removeSelectedApps'),
+                        tooltip: tr('removeSelectedApps'),
+                        onPressed: selectedAppIds.isEmpty
+                            ? null
+                            : () {
+                                appsProvider.removeAppsWithModal(
+                                  context,
+                                  selectedApps.toList(),
+                                );
+                              },
+                      ),
+                      M3FloatingToolbarAction(
+                        icon: Icons.category,
+                        semanticLabel: tr('categorize'),
+                        tooltip: tr('categorize'),
+                        onPressed: selectedAppIds.isEmpty
+                            ? null
+                            : () {
+                                launchCategorizeDialog()();
+                              },
+                      ),
+                      M3FloatingToolbarAction(
+                        icon: Icons.push_pin,
+                        semanticLabel:
+                            selectedApps.where((element) => element.pinned).isEmpty
+                            ? tr('pinToTop')
+                            : tr('unpinFromTop'),
+                        tooltip:
+                            selectedApps.where((element) => element.pinned).isEmpty
+                            ? tr('pinToTop')
+                            : tr('unpinFromTop'),
+                        onPressed: selectedAppIds.isEmpty ? null : pinSelectedApps,
+                      ),
+                      M3FloatingToolbarAction(
+                        icon: Icons.more_horiz,
+                        semanticLabel: tr('more'),
+                        tooltip: tr('more'),
+                        onPressed: selectedAppIds.isEmpty
+                            ? null
+                            : () {
+                                showMoreOptionsDialog();
+                              },
+                      ),
+                    ],
                   ),
-                  M3FloatingToolbarAction(
-                    icon: Icons.file_download,
-                    semanticLabel: selectedAppIds.isEmpty
-                        ? tr('installUpdateApps')
-                        : tr('installUpdateSelectedApps'),
-                    tooltip: selectedAppIds.isEmpty
-                        ? tr('installUpdateApps')
-                        : tr('installUpdateSelectedApps'),
-                    onPressed: getMassObtainFunction() ?? () {},
-                  ),
-                  M3FloatingToolbarAction(
-                    icon: Icons.delete,
-                    semanticLabel: tr('removeSelectedApps'),
-                    tooltip: tr('removeSelectedApps'),
-                    onPressed: selectedAppIds.isEmpty
-                        ? () {}
-                        : () {
-                            appsProvider.removeAppsWithModal(
-                              context,
-                              selectedApps.toList(),
-                            );
-                          },
-                  ),
-                  M3FloatingToolbarAction(
-                    icon: Icons.category,
-                    semanticLabel: tr('categorize'),
-                    tooltip: tr('categorize'),
-                    onPressed: selectedAppIds.isEmpty
-                        ? () {}
-                        : () {
-                            launchCategorizeDialog()();
-                          },
-                  ),
-                  M3FloatingToolbarAction(
-                    icon: Icons.push_pin,
-                    semanticLabel:
-                        selectedApps.where((element) => element.pinned).isEmpty
-                        ? tr('pinToTop')
-                        : tr('unpinFromTop'),
-                    tooltip:
-                        selectedApps.where((element) => element.pinned).isEmpty
-                        ? tr('pinToTop')
-                        : tr('unpinFromTop'),
-                    onPressed: selectedAppIds.isEmpty ? () {} : pinSelectedApps,
-                  ),
-                  M3FloatingToolbarAction(
-                    icon: Icons.more_horiz,
-                    semanticLabel: tr('more'),
-                    tooltip: tr('more'),
-                    onPressed: selectedAppIds.isEmpty
-                        ? () {}
-                        : () {
-                            showMoreOptionsDialog();
-                          },
-                  ),
-                ],
+                ),
               ),
             ),
         ],
