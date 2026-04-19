@@ -658,10 +658,6 @@ class _UpdatiumState extends State<Updatium> {
                     horizontal: 28,
                     vertical: 14,
                   ),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
-                  ),
                 ),
               ),
 
@@ -674,10 +670,6 @@ class _UpdatiumState extends State<Updatium> {
                     horizontal: 28,
                     vertical: 14,
                   ),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
-                  ),
                 ),
               ),
 
@@ -688,10 +680,6 @@ class _UpdatiumState extends State<Updatium> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 10,
-                  ),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
                   ),
                 ),
               ),
