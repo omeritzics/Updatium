@@ -361,6 +361,12 @@ class _SettingsPageState extends State<SettingsPage> {
           } else {
             settingsProvider.forcedLocale = Locale(localeValue);
           }
+          // Apply the locale change immediately
+          if (settingsProvider.forcedLocale != null) {
+            context.setLocale(settingsProvider.forcedLocale!);
+          } else {
+            context.resetLocale();
+          }
         }
       },
     );
