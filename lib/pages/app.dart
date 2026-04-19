@@ -723,7 +723,7 @@ class _AppPageState extends State<AppPage> {
                         semanticLabel: tr('additionalOptions'),
                         tooltip: tr('additionalOptions'),
                         onPressed: updating
-                            ? null
+                            ? () {}
                             : () {
                                 showAdditionalOptionsDialog().then(
                                   handleAdditionalOptionChanges,
@@ -743,7 +743,7 @@ class _AppPageState extends State<AppPage> {
                           args: [lowerCaseIfEnglish(tr('releaseAsset'))],
                         ),
                         onPressed: updating
-                            ? null
+                            ? () {}
                             : () async {
                                 try {
                                   await appsProvider.downloadAppAssets([
