@@ -1255,15 +1255,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  TextButton(
-                    onPressed: pinSelectedApps,
-                    child: Text(
-                      selectedApps.where((element) => element.pinned).isEmpty
-                          ? tr('pinToTop')
-                          : tr('unpinFromTop'),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
                   const Divider(),
                   TextButton(
                     onPressed: () {
@@ -1311,32 +1302,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  const Divider(),
-                  TextButton(
-                    onPressed: () {
-                      appsProvider
-                          .downloadAppAssets(
-                            selectedApps.map((e) => e.id).toList(),
-                            globalNavigatorKey.currentContext ?? context,
-                          )
-                          .catchError(
-                            // ignore: invalid_return_type_for_catch_error
-                            (e) => showError(
-                              e,
-                              globalNavigatorKey.currentContext ?? context,
-                            ),
-                          );
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      tr(
-                        'downloadX',
-                        args: [lowerCaseIfEnglish(tr('releaseAsset'))],
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const Divider(),
                   TextButton(
                     onPressed: appsProvider.areDownloadsRunning()
                         ? null
@@ -1398,6 +1363,14 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           onPressed: selectedAppIds.isEmpty ? null : launchCategorizeDialog(),
           tooltip: tr('categorize'),
           icon: const Icon(Icons.category),
+        ),
+        IconButton(
+          visualDensity: VisualDensity.compact,
+          onPressed: selectedAppIds.isEmpty ? null : pinSelectedApps,
+          tooltip: selectedApps.where((element) => element.pinned).isEmpty
+              ? tr('pinToTop')
+              : tr('unpinFromTop'),
+          icon: const Icon(Icons.push_pin),
         ),
         IconButton(
           visualDensity: VisualDensity.compact,
@@ -1652,91 +1625,115 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: RefreshIndicator(
-        onRefresh: refresh,
-        child: Scrollbar(
-          interactive: true,
-          controller: scrollController,
-          child: CustomScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            controller: scrollController,
-            slivers: <Widget>[
-              SliverAppBar.large(
-                pinned: true,
-                automaticallyImplyLeading: false,
-                bottom: TabBar(
-                  controller: _tabController,
-                  tabs: [
-                    Tab(text: tr('all')),
-                    Tab(text: tr('installed')),
-                    Tab(text: tr('notInstalledApps')),
-                  ],
-                ),
-                actions: [
-                  Consumer<AppsProvider>(
-                    builder: (context, appsProvider, child) {
-                      var isFilterOff = filter.isIdenticalTo(
-                        neutralFilter,
-                        settingsProvider,
-                      );
-                      return IconButton(
-                        color: Theme.of(context).colorScheme.primary,
-                        style: const ButtonStyle(
-                          visualDensity: VisualDensity.compact,
-                        ),
-                        tooltip: isFilterOff
-                            ? tr('filterApps')
-                            : '${tr('filter')} - ${tr('remove')}',
-                        onPressed: isFilterOff
-                            ? showFilterDialog
-                            : () {
-                                setState(() {
-                                  filter = AppsFilter();
-                                });
-                              },
-                        icon: Icon(
-                          isFilterOff
-                              ? Icons.search_rounded
-                              : Icons.search_off_rounded,
-                        ),
-                      );
-                    },
-                  ),
-                  Consumer<SettingsProvider>(
-                    builder: (context, settingsProvider, child) {
-                      return IconButton(
-                        color: Theme.of(context).colorScheme.primary,
-                        style: const ButtonStyle(
-                          visualDensity: VisualDensity.compact,
-                        ),
-                        tooltip: settingsProvider.useGridView
-                            ? tr('listView')
-                            : tr('gridView'),
-                        onPressed: () {
-                          settingsProvider.useGridView =
-                              !settingsProvider.useGridView;
+      body: Stack(
+        children: [
+          RefreshIndicator(
+            onRefresh: refresh,
+            child: Scrollbar(
+              interactive: true,
+              controller: scrollController,
+              child: CustomScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                controller: scrollController,
+                slivers: <Widget>[
+                  SliverAppBar.large(
+                    pinned: true,
+                    automaticallyImplyLeading: false,
+                    bottom: TabBar(
+                      controller: _tabController,
+                      tabs: [
+                        Tab(text: tr('all')),
+                        Tab(text: tr('installed')),
+                        Tab(text: tr('notInstalledApps')),
+                      ],
+                    ),
+                    actions: [
+                      Consumer<AppsProvider>(
+                        builder: (context, appsProvider, child) {
+                          var isFilterOff = filter.isIdenticalTo(
+                            neutralFilter,
+                            settingsProvider,
+                          );
+                          return IconButton(
+                            color: Theme.of(context).colorScheme.primary,
+                            style: const ButtonStyle(
+                              visualDensity: VisualDensity.compact,
+                            ),
+                            tooltip: isFilterOff
+                                ? tr('filterApps')
+                                : '${tr('filter')} - ${tr('remove')}',
+                            onPressed: isFilterOff
+                                ? showFilterDialog
+                                : () {
+                                    setState(() {
+                                      filter = AppsFilter();
+                                    });
+                                  },
+                            icon: Icon(
+                              isFilterOff
+                                  ? Icons.search_rounded
+                                  : Icons.search_off_rounded,
+                            ),
+                          );
                         },
-                        icon: Icon(
-                          settingsProvider.useGridView
-                              ? Icons.view_list_rounded
-                              : Icons.grid_view_rounded,
-                        ),
-                      );
-                    },
+                      ),
+                      Consumer<SettingsProvider>(
+                        builder: (context, settingsProvider, child) {
+                          return IconButton(
+                            color: Theme.of(context).colorScheme.primary,
+                            style: const ButtonStyle(
+                              visualDensity: VisualDensity.compact,
+                            ),
+                            tooltip: settingsProvider.useGridView
+                                ? tr('listView')
+                                : tr('gridView'),
+                            onPressed: () {
+                              settingsProvider.useGridView =
+                                  !settingsProvider.useGridView;
+                            },
+                            icon: Icon(
+                              settingsProvider.useGridView
+                                  ? Icons.view_list_rounded
+                                  : Icons.grid_view_rounded,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                    title: Text(tr('appsString')),
                   ),
+                  const SliverToBoxAdapter(child: SizedBox(height: 8)),
+                  ...getLoadingWidgets(),
+                  getDisplayedList(),
                 ],
-                title: Text(tr('appsString')),
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 8)),
-              ...getLoadingWidgets(),
-              getDisplayedList(),
-            ],
+            ),
           ),
-        ),
+          if (appsProvider.apps.isNotEmpty)
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: 16,
+              child: Material(
+                elevation: 6,
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    child: getFilterButtonsRow(),
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
-      bottomNavigationBar: appsProvider.apps.isEmpty
-          ? null
-          : BottomAppBar(child: getFilterButtonsRow()),
     );
   }
 
