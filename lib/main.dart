@@ -388,10 +388,12 @@ class _UpdatiumState extends State<Updatium> {
       }
 
       // Sync local and device locale if needed
-      if (!supportedLocales.map((e) => e.key).contains(context.locale) ||
-          (settingsProvider.forcedLocale == null &&
-              context.deviceLocale != context.locale)) {
+      if (!supportedLocales.map((e) => e.key).contains(context.locale)) {
         settingsProvider.resetLocaleSafe(context);
+      } else if (settingsProvider.forcedLocale != null &&
+          context.locale != settingsProvider.forcedLocale) {
+        // Apply forced locale if it's set but not currently active
+        context.setLocale(settingsProvider.forcedLocale!);
       }
     }
 
