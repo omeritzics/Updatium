@@ -879,7 +879,6 @@ class AddAppPageState extends State<AddAppPage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      bottomNavigationBar: pickedSource == null ? getSourcesListWidget() : null,
       body: CustomScrollView(
         shrinkWrap: true,
         slivers: <Widget>[
@@ -895,6 +894,7 @@ class AddAppPageState extends State<AddAppPage> {
                   gap16,
                   if (pickedSource != null) getHTMLSourceOverrideDropdown(),
                   if (shouldShowSearchBar()) getSearchBarRow(),
+                  if (pickedSource == null) getSourcesListWidget(),
                   if (pickedSource != null)
                     FutureBuilder(
                       builder: (ctx, val) {

@@ -502,18 +502,20 @@ class _ImportExportPageState extends State<ImportExportPage> {
                             label: Text(tr('importFromURLList')),
                           ),
                         ),
-                        gap8,
-                        Semantics(
-                          button: true,
-                          label: tr('importFromURLsInFile'),
-                          hint: 'Import apps by reading URLs from a text file',
-                          excludeSemantics: true,
-                          child: FilledButton.icon(
-                            onPressed: importInProgress ? null : runUrlImport,
-                            icon: const Icon(Icons.link),
-                            label: Text(tr('importFromURLsInFile')),
+                        if (!settingsProvider.safeMode) ...[
+                          gap8,
+                          Semantics(
+                            button: true,
+                            label: tr('importFromURLsInFile'),
+                            hint: 'Import apps by reading URLs from a text file',
+                            excludeSemantics: true,
+                            child: FilledButton.icon(
+                              onPressed: importInProgress ? null : runUrlImport,
+                              icon: const Icon(Icons.link),
+                              label: Text(tr('importFromURLsInFile')),
+                            ),
                           ),
-                        ),
+                        ],
                       ],
                     ),
                   ...sourceProvider.massUrlSources

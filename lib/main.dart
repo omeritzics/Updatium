@@ -575,17 +575,39 @@ class _UpdatiumState extends State<Updatium> {
               ),
             );
 
+            // Determine primary font based on locale
+            String getPrimaryFontForLocale(Locale locale) {
+              if (settingsProvider.useSystemFont) {
+                return 'SystemFont';
+              }
+
+              // CJK languages
+              if (locale.languageCode == 'zh' ||
+                  locale.languageCode == 'ja' ||
+                  locale.languageCode == 'ko') {
+                return 'NotoSansCJK';
+              }
+
+              // Hebrew
+              if (locale.languageCode == 'he') {
+                return 'NotoSansHebrew';
+              }
+
+              // Arabic
+              if (locale.languageCode == 'ar' ||
+                  locale.languageCode == 'fa' ||
+                  locale.languageCode == 'ug') {
+                return 'NotoSansArabic';
+              }
+
+              // Default to Google Sans Flex for other languages
+              return 'GoogleSansFlex';
+            }
+
             return ThemeData(
               useMaterial3: true,
               colorScheme: scheme,
-              fontFamily: settingsProvider.useSystemFont
-                  ? 'SystemFont'
-                  : 'GoogleSansFlex',
-              fontFamilyFallback: const [
-                'NotoSansCJK',
-                'NotoSansHebrew',
-                'NotoSansArabic',
-              ],
+              fontFamily: getPrimaryFontForLocale(context.locale),
 
               // Expressive Typography
               textTheme: textTheme,

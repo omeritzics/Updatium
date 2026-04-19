@@ -391,68 +391,77 @@ class _SettingsPageState extends State<SettingsPage> {
 
     var sourceSpecificFields = sourceProvider.sources.map((e) {
       if (e.sourceConfigSettingFormItems.isNotEmpty) {
-        return Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: Theme.of(context).colorScheme.surfaceContainerLow,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                e.name,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              gap16,
-              ...e.sourceConfigSettingFormItems.map((formItem) {
-                if (formItem.key.contains('switch') ||
-                    formItem.key.contains('enable')) {
-                  // Switch type
-                  final bool currentValue =
-                      settingsProvider.getSettingBool(formItem.key) ?? false;
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(child: Text(formItem.key)),
-                        Switch(
-                          value: currentValue,
-                          onChanged: (value) {
-                            settingsProvider.setSettingBool(
-                              formItem.key,
-                              value,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                } else {
-                  // Text field type
-                  final String currentValue =
-                      settingsProvider.getSettingString(formItem.key) ?? '';
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: TextField(
-                      controller: TextEditingController(text: currentValue),
-                      decoration: InputDecoration(
-                        labelText: formItem.key,
-                        border: const OutlineInputBorder(),
+        final isGitHubOrGitLab = e.runtimeType.toString() == 'GitHub' ||
+            e.runtimeType.toString() == 'GitLab';
+
+        final columnContent = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              e.name,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            gap16,
+            ...e.sourceConfigSettingFormItems.map((formItem) {
+              if (formItem.key.contains('switch') ||
+                  formItem.key.contains('enable')) {
+                // Switch type
+                final bool currentValue =
+                    settingsProvider.getSettingBool(formItem.key) ?? false;
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(child: Text(formItem.key)),
+                      Switch(
+                        value: currentValue,
+                        onChanged: (value) {
+                          settingsProvider.setSettingBool(
+                            formItem.key,
+                            value,
+                          );
+                        },
                       ),
-                      onChanged: (value) {
-                        settingsProvider.setSettingString(formItem.key, value);
-                      },
+                    ],
+                  ),
+                );
+              } else {
+                // Text field type
+                final String currentValue =
+                    settingsProvider.getSettingString(formItem.key) ?? '';
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: TextField(
+                    controller: TextEditingController(text: currentValue),
+                    decoration: InputDecoration(
+                      labelText: formItem.key,
+                      border: const OutlineInputBorder(),
                     ),
-                  );
-                }
-              }).toList(),
-            ],
-          ),
+                    onChanged: (value) {
+                      settingsProvider.setSettingString(formItem.key, value);
+                    },
+                  ),
+                );
+              }
+            }).toList(),
+          ],
         );
+
+        if (isGitHubOrGitLab) {
+          return columnContent;
+        } else {
+          return Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(context).colorScheme.surfaceContainerLow,
+            ),
+            child: columnContent,
+          );
+        }
       } else {
         return Container();
       }
@@ -1470,14 +1479,30 @@ class CategoryTagEditor extends StatelessWidget {
                   onChanged: (value) => categoryName = value,
                 ),
                 const SizedBox(height: 16),
-                InkWell(
-                  onTap: () async {
-                    final Color colorBeforeDialog = categoryColor;
-                    final result =
-                        await ColorPicker(
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    tr('selectX', args: [tr('color').toLowerCase()]),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: categoryColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.outline,
+                        width: 1,
+                      ),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: () async {
+                        final Color colorBeforeDialog = categoryColor;
+                        final result = await ColorPicker(
                           color: categoryColor,
-                          onColorChanged: (Color color) =>
-                              categoryColor = color,
+                          onColorChanged: (Color color) => categoryColor = color,
                           actionButtons: const ColorPickerActionButtons(
                             okButton: true,
                             closeButton: true,
@@ -1518,8 +1543,7 @@ class CategoryTagEditor extends StatelessWidget {
                                 Widget widget,
                               ) {
                                 final curvedValue =
-                                    Curves.easeInOutBack.transform(a1.value) -
-                                    1.0;
+                                    Curves.easeInOutBack.transform(a1.value) - 1.0;
                                 return Transform(
                                   alignment: Alignment.center,
                                   transform: Matrix4.diagonal3Values(
@@ -1535,27 +1559,10 @@ class CategoryTagEditor extends StatelessWidget {
                               },
                           transitionDuration: const Duration(milliseconds: 250),
                         );
-                    if (!result) {
-                      categoryColor = colorBeforeDialog;
-                    }
-                  },
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(
-                      tr('selectX', args: [tr('color').toLowerCase()]),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    trailing: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: categoryColor,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.outline,
-                          width: 1,
-                        ),
-                      ),
+                        if (!result) {
+                          categoryColor = colorBeforeDialog;
+                        }
+                      },
                     ),
                   ),
                 ),
@@ -1615,14 +1622,30 @@ class CategoryTagEditor extends StatelessWidget {
                   onChanged: (value) => newName = value,
                 ),
                 const SizedBox(height: 16),
-                InkWell(
-                  onTap: () async {
-                    final Color colorBeforeDialog = categoryColor;
-                    final result =
-                        await ColorPicker(
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    tr('selectX', args: [tr('color').toLowerCase()]),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: categoryColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.outline,
+                        width: 1,
+                      ),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: () async {
+                        final Color colorBeforeDialog = categoryColor;
+                        final result = await ColorPicker(
                           color: categoryColor,
-                          onColorChanged: (Color color) =>
-                              categoryColor = color,
+                          onColorChanged: (Color color) => categoryColor = color,
                           actionButtons: const ColorPickerActionButtons(
                             okButton: true,
                             closeButton: true,
@@ -1663,8 +1686,7 @@ class CategoryTagEditor extends StatelessWidget {
                                 Widget widget,
                               ) {
                                 final curvedValue =
-                                    Curves.easeInOutBack.transform(a1.value) -
-                                    1.0;
+                                    Curves.easeInOutBack.transform(a1.value) - 1.0;
                                 return Transform(
                                   alignment: Alignment.center,
                                   transform: Matrix4.diagonal3Values(
@@ -1680,27 +1702,10 @@ class CategoryTagEditor extends StatelessWidget {
                               },
                           transitionDuration: const Duration(milliseconds: 250),
                         );
-                    if (!result) {
-                      categoryColor = colorBeforeDialog;
-                    }
-                  },
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(
-                      tr('selectX', args: [tr('color').toLowerCase()]),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    trailing: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: categoryColor,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.outline,
-                          width: 1,
-                        ),
-                      ),
+                        if (!result) {
+                          categoryColor = colorBeforeDialog;
+                        }
+                      },
                     ),
                   ),
                 ),
