@@ -298,12 +298,23 @@ class SettingsProvider with ChangeNotifier {
       a.length == b.length && a.union(b).length == a.length;
 
   void resetLocaleSafe(BuildContext context) {
+    // Try exact match first
     if (context.supportedLocales.contains(context.deviceLocale)) {
       context.resetLocale();
-    } else {
-      context.setLocale(context.fallbackLocale!);
-      context.deleteSaveLocale();
+      return;
     }
+    
+    // Try language-only match (e.g., 'en-US' → 'en')
+    var languageOnly = Locale(context.deviceLocale.languageCode);
+    if (context.supportedLocales.contains(languageOnly)) {
+      context.setLocale(languageOnly);
+      context.deleteSaveLocale();
+      return;
+    }
+    
+    // Fallback to default
+    context.setLocale(context.fallbackLocale!);
+    context.deleteSaveLocale();
   }
 
   bool get removeOnExternalUninstall {

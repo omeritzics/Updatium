@@ -27,7 +27,7 @@
     "useMaterialYou": "Material You renklerini kullan",
     "githubStarredRepos": "Yıldızlanmış GitHub depoları",
     "gettingAppInfo": "Getting app info",
-    "uname": "Kullanıcı adı",
+    "username": "Kullanıcı adı",
     "wrongArgNum": "Yanlış sayıda argüman sağlandı",
     "xIsTrackOnly": "{} sadece takip ediliyor (track-only)",
     "source": "Kaynak",

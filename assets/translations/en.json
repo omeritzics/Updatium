@@ -27,7 +27,7 @@
   "useMaterialYou": "Use Material You colors",
   "githubStarredRepos": "GitHub starred repositories",
   "gettingAppInfo": "Getting app info",
-  "uname": "Username",
+  "username": "Username",
   "wrongArgNum": "Wrong number of arguments provided",
   "xIsTrackOnly": "{} is track-only",
   "source": "Source",
@@ -493,5 +493,7 @@
   "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
   "turnOffSafeModeFirst": "Please turn off Safe Mode first",
   "gotIt": "Got it",
-  "version": "Version"
+  "version": "Version",
+  "open": "Open",
+  "added": "Added"
 }

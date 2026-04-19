@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:pubspec_parse/pubspec_parse.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +11,15 @@ import 'package:updatium/main.dart';
 import 'package:updatium/components/tag_editor.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/pages/safe_mode_dialog.dart';
-import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/native_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:updatium/services/device_admin_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
-import 'package:flex_color_picker/flex_color_picker.dart';
 
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
@@ -1451,77 +1449,337 @@ class CategoryTagEditor extends StatelessWidget {
     this.alignment = WrapAlignment.start,
   });
 
+  void _onAddPressed(BuildContext context, SettingsProvider settingsProvider) {
+    String categoryName = '';
+    Color categoryColor = Theme.of(context).colorScheme.primary;
+    
+    showDialog<String?>(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: Text(tr('addCategory')),
+          content: SizedBox(
+            width: 300,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(labelText: tr('name')),
+                  onChanged: (value) => categoryName = value,
+                ),
+                const SizedBox(height: 16),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    tr('selectX', args: [tr('color').toLowerCase()]),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: categoryColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.outline,
+                        width: 1,
+                      ),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: () async {
+                        final Color colorBeforeDialog = categoryColor;
+                        final result = await ColorPicker(
+                          color: categoryColor,
+                          onColorChanged: (Color color) => categoryColor = color,
+                          actionButtons: const ColorPickerActionButtons(
+                            okButton: true,
+                            closeButton: true,
+                            dialogActionButtons: false,
+                          ),
+                          pickersEnabled: const <ColorPickerType, bool>{
+                            ColorPickerType.both: false,
+                            ColorPickerType.primary: false,
+                            ColorPickerType.accent: false,
+                            ColorPickerType.bw: false,
+                            ColorPickerType.custom: true,
+                            ColorPickerType.wheel: true,
+                          },
+                          pickerTypeLabels: <ColorPickerType, String>{
+                            ColorPickerType.custom: tr('standard'),
+                            ColorPickerType.wheel: tr('custom'),
+                          },
+                          wheelDiameter: 192,
+                          wheelSquareBorderRadius: 32,
+                          width: 48,
+                          height: 48,
+                          borderRadius: 24,
+                          spacing: 8,
+                          runSpacing: 8,
+                          enableShadesSelection: false,
+                          showMaterialName: false,
+                          showColorName: false,
+                          copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+                            longPressMenu: true,
+                          ),
+                        ).showPickerDialog(
+                          context,
+                          transitionBuilder:
+                              (
+                                BuildContext context,
+                                Animation<double> a1,
+                                Animation<double> a2,
+                                Widget widget,
+                              ) {
+                                final curvedValue =
+                                    Curves.easeInOutBack.transform(a1.value) - 1.0;
+                                return Transform(
+                                  alignment: Alignment.center,
+                                  transform: Matrix4.diagonal3Values(curvedValue, curvedValue, 1),
+                                  child: Opacity(opacity: curvedValue, child: widget),
+                                );
+                              },
+                          transitionDuration: const Duration(milliseconds: 250),
+                        );
+                        if (!result) {
+                          categoryColor = colorBeforeDialog;
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(tr('cancel')),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, categoryName),
+              child: Text(tr('add')),
+            ),
+          ],
+        );
+      },
+    ).then((value) {
+      if (value != null && value.trim().isNotEmpty) {
+        final newCategories = Map<String, int>.from(settingsProvider.categories);
+        if (!newCategories.containsKey(value.trim())) {
+          newCategories[value.trim()] = categoryColor.value;
+          settingsProvider.setCategories(newCategories);
+        }
+      }
+    });
+  }
+
+  void _onEditPressed(
+    BuildContext context,
+    SettingsProvider settingsProvider,
+    String oldName,
+  ) {
+    String newName = oldName;
+    Color categoryColor = Color(settingsProvider.categories[oldName] ?? Theme.of(context).colorScheme.primary.value);
+    
+    showDialog<String?>(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: Text(tr('editCategory')),
+          content: SizedBox(
+            width: 300,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(labelText: tr('name')),
+                  onChanged: (value) => newName = value,
+                ),
+                const SizedBox(height: 16),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    tr('selectX', args: [tr('color').toLowerCase()]),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: categoryColor,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.outline,
+                        width: 1,
+                      ),
+                    ),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: () async {
+                        final Color colorBeforeDialog = categoryColor;
+                        final result = await ColorPicker(
+                          color: categoryColor,
+                          onColorChanged: (Color color) => categoryColor = color,
+                          actionButtons: const ColorPickerActionButtons(
+                            okButton: true,
+                            closeButton: true,
+                            dialogActionButtons: false,
+                          ),
+                          pickersEnabled: const <ColorPickerType, bool>{
+                            ColorPickerType.both: false,
+                            ColorPickerType.primary: false,
+                            ColorPickerType.accent: false,
+                            ColorPickerType.bw: false,
+                            ColorPickerType.custom: true,
+                            ColorPickerType.wheel: true,
+                          },
+                          pickerTypeLabels: <ColorPickerType, String>{
+                            ColorPickerType.custom: tr('standard'),
+                            ColorPickerType.wheel: tr('custom'),
+                          },
+                          wheelDiameter: 192,
+                          wheelSquareBorderRadius: 32,
+                          width: 48,
+                          height: 48,
+                          borderRadius: 24,
+                          spacing: 8,
+                          runSpacing: 8,
+                          enableShadesSelection: false,
+                          showMaterialName: false,
+                          showColorName: false,
+                          copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+                            longPressMenu: true,
+                          ),
+                        ).showPickerDialog(
+                          context,
+                          transitionBuilder:
+                              (
+                                BuildContext context,
+                                Animation<double> a1,
+                                Animation<double> a2,
+                                Widget widget,
+                              ) {
+                                final curvedValue =
+                                    Curves.easeInOutBack.transform(a1.value) - 1.0;
+                                return Transform(
+                                  alignment: Alignment.center,
+                                  transform: Matrix4.diagonal3Values(curvedValue, curvedValue, 1),
+                                  child: Opacity(opacity: curvedValue, child: widget),
+                                );
+                              },
+                          transitionDuration: const Duration(milliseconds: 250),
+                        );
+                        if (!result) {
+                          categoryColor = colorBeforeDialog;
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(tr('cancel')),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, newName),
+              child: Text(tr('save')),
+            ),
+          ],
+        );
+      },
+    ).then((value) {
+      if (value != null && value.trim().isNotEmpty) {
+        final newCategories = Map<String, int>.from(settingsProvider.categories);
+        newCategories.remove(oldName);
+        newCategories[value.trim()] = categoryColor.value;
+        settingsProvider.setCategories(newCategories);
+      }
+    });
+  }
+
+  void _onDeletePressed(
+    BuildContext context,
+    SettingsProvider settingsProvider,
+    String categoryName,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: Text(tr('deleteCategory')),
+          content: Text(tr('categoryDeleteWarning')),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(tr('cancel')),
+            ),
+            TextButton(
+              onPressed: () {
+                final newCategories = Map<String, int>.from(settingsProvider.categories);
+                newCategories.remove(categoryName);
+                settingsProvider.setCategories(newCategories);
+                Navigator.pop(ctx);
+              },
+              child: Text(tr('delete')),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var settingsProvider = context.watch<SettingsProvider>();
-    var appsProvider = context.watch<AppsProvider>();
 
-    // Convert categories Map<String, int> to TagEditor's expected Map<String, MapEntry<int, bool>> format
-    final tagEditorTags = settingsProvider.categories.map(
-      (key, value) => MapEntry(key, MapEntry(value, true)),
-    );
+    final allTags = settingsProvider.categories.keys.toList();
 
-    return TagEditor(
-      tags: tagEditorTags,
-      label: tr('categories'),
-      alignment: alignment,
-      showLabelWhenNotEmpty: showLabelWhenNotEmpty,
-      showCheckIcon: false,
-      editMode: true,
-      onTagsChanged: (newTags) {
-        // Convert back from TagEditor format to categories Map<String, int>
-        final newCategories = <String, int>{};
-        for (final entry in newTags.entries) {
-          if (entry.value.value) {
-            // Only keep selected tags
-            newCategories[entry.key] = entry.value.key;
-          }
-        }
-
-        // Find categories that were removed
-        final removedCategories = settingsProvider.categories.keys
-            .where((cat) => !newCategories.containsKey(cat))
-            .toList();
-
-        if (removedCategories.isNotEmpty) {
-          // Show confirmation dialog for category removal
-          showDialog(
-            context: context,
-            builder: (BuildContext ctx) {
-              return AlertDialog(
-                title: Text(tr('categoryDeleteQuestion')),
-                content: Text(tr('categoryDeleteWarning')),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(ctx).pop(),
-                    child: Text(tr('cancel')),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      settingsProvider.setCategories(
-                        newCategories,
-                        appsProvider: appsProvider,
-                      );
-                      Navigator.of(ctx).pop();
-                    },
-                    child: Text(tr('ok')),
-                  ),
-                ],
+    return Column(
+      crossAxisAlignment: alignment == WrapAlignment.center
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.stretch,
+      children: [
+        if (allTags.isNotEmpty && showLabelWhenNotEmpty) ...[
+          Text(tr('categories'), style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: 8),
+        ],
+        Wrap(
+          alignment: alignment,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 4,
+          children: [
+            ...allTags.map((tag) {
+              final categoryColor = Color(settingsProvider.categories[tag] ?? Theme.of(context).colorScheme.primary.value);
+              return InkWell(
+                onTap: () => _onEditPressed(context, settingsProvider, tag),
+                borderRadius: BorderRadius.circular(8),
+                child: Chip(
+                  label: Text(tag),
+                  backgroundColor: categoryColor.withValues(alpha: 0.2),
+                  side: BorderSide(color: categoryColor, width: 1),
+                  onDeleted: () => _onDeletePressed(context, settingsProvider, tag),
+                  deleteIcon: const Icon(Icons.close, size: 18),
+                ),
               );
-            },
-          );
-        } else {
-          // Just add new categories without confirmation
-          settingsProvider.setCategories(
-            newCategories,
-            appsProvider: appsProvider,
-          );
-        }
-      },
-      deleteConfirmationMessage: MapEntry(
-        tr('categoryDeleteQuestion'),
-        tr('categoryDeleteWarning'),
-      ),
+            }),
+            IconButton(
+              onPressed: () => _onAddPressed(context, settingsProvider),
+              icon: const Icon(Icons.add),
+              tooltip: tr('add'),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -1532,7 +1790,6 @@ class CategorySelector extends StatelessWidget {
   final Set<String> preselected;
   final WrapAlignment alignment;
   final bool showLabelWhenNotEmpty;
-  final bool editMode;
 
   const CategorySelector({
     super.key,
@@ -1541,34 +1798,26 @@ class CategorySelector extends StatelessWidget {
     this.preselected = const {},
     this.alignment = WrapAlignment.start,
     this.showLabelWhenNotEmpty = true,
-    this.editMode = false,
   });
 
   @override
   Widget build(BuildContext context) {
     var settingsProvider = context.watch<SettingsProvider>();
 
-    // Convert categories Map<String, int> to TagEditor's expected Map<String, MapEntry<int, bool>> format
-    final tagEditorTags = settingsProvider.categories.map(
-      (key, value) => MapEntry(key, MapEntry(value, preselected.contains(key))),
-    );
+    // Convert categories Map<String, int> to List<String> for TagEditor
+    final allTags = settingsProvider.categories.keys.toList();
 
     return TagEditor(
-      tags: tagEditorTags,
+      selectedTags: preselected,
+      allTags: allTags,
       label: tr('categories'),
       singleSelect: singleSelect,
       alignment: alignment,
       showLabelWhenNotEmpty: showLabelWhenNotEmpty,
       showAddButton: false,
-      editMode: editMode,
-      onTagsChanged: (newTags) {
-        // Convert back from TagEditor format to List<String> for callback
-        final selectedCategories = newTags.entries
-            .where((entry) => entry.value.value)
-            .map((entry) => entry.key)
-            .toList();
-
-        onSelected?.call(selectedCategories);
+      onTagsChanged: (newSelectedTags) {
+        // Convert Set<String> to List<String> for callback
+        onSelected?.call(newSelectedTags.toList());
       },
     );
   }
@@ -1650,20 +1899,17 @@ class _AboutDialogState extends State<AboutDialog> {
 
   @override
   Widget build(BuildContext context) {
-    String version = '';
-    String buildNumber = '';
-    try {
-      final pubspecFile = File('pubspec.yaml');
-      final pubspec = Pubspec.parse(pubspecFile.readAsStringSync());
-      final versionString = pubspec.version?.toString() ?? '';
-      final parts = versionString.split('+');
-      version = parts[0];
-      buildNumber = parts.length > 1 ? parts[1] : '';
-    } catch (e) {
-      // Fallback to default values if pubspec parsing fails
-      version = 'Unknown';
-      buildNumber = '';
-    }
+    return FutureBuilder<PackageInfo>(
+      future: PackageInfo.fromPlatform(),
+      builder: (context, snapshot) {
+        String version = 'Unknown';
+        String buildNumber = '';
+        
+        if (snapshot.hasData) {
+          final packageInfo = snapshot.data!;
+          version = packageInfo.version;
+          buildNumber = packageInfo.buildNumber;
+        }
 
     return AlertDialog(
       scrollable: true,
@@ -1856,6 +2102,8 @@ class _AboutDialogState extends State<AboutDialog> {
           child: Text(tr('close')),
         ),
       ],
+    );
+      },
     );
   }
 }

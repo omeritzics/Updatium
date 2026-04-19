@@ -105,7 +105,7 @@ Future<void> loadTranslations() async {
 }
 
 @pragma('vm:entry-point')
-void backgroundFetchHeadlessTask(HeadlessTask task) async {
+void backgroundFetchHeadlessTask(HeadlessEvent task) async {
   String taskId = task.taskId;
   bool isTimeout = task.timeout;
   if (isTimeout) {
@@ -201,6 +201,8 @@ class Updatium extends StatefulWidget {
 
 class _UpdatiumState extends State<Updatium> {
   var existingUpdateInterval = -1;
+  SettingsProvider? _settingsProvider;
+  VoidCallback? _oldLocaleChangedCallback;
 
   @override
   void initState() {
@@ -209,6 +211,17 @@ class _UpdatiumState extends State<Updatium> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       requestNonOptionalPermissions();
     });
+    
+    // Store provider reference to avoid using context in callback
+    _settingsProvider = context.read<SettingsProvider>();
+    
+    // Store old callback and set new one
+    _oldLocaleChangedCallback = WidgetsBinding.instance.platformDispatcher.onLocaleChanged;
+    WidgetsBinding.instance.platformDispatcher.onLocaleChanged = () {
+      if (_settingsProvider?.forcedLocale == null) {
+        _settingsProvider?.resetLocaleSafe(context);
+      }
+    };
   }
 
   Future<void> requestNonOptionalPermissions() async {
@@ -280,6 +293,10 @@ class _UpdatiumState extends State<Updatium> {
 
   @override
   void dispose() {
+    // Restore old locale changed callback to prevent memory leak
+    if (_oldLocaleChangedCallback != null) {
+      WidgetsBinding.instance.platformDispatcher.onLocaleChanged = _oldLocaleChangedCallback;
+    }
     super.dispose();
   }
 
