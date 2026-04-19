@@ -542,7 +542,9 @@ class _AppPageState extends State<AppPage> {
 
                           if (appInMemory?.icon != null) {
                             return Padding(
-                              padding: const EdgeInsetsDirectional.only(end: 12.0),
+                              padding: const EdgeInsetsDirectional.only(
+                                end: 12.0,
+                              ),
                               child: Image.memory(
                                 appInMemory!.icon!,
                                 width: 40,
@@ -552,7 +554,9 @@ class _AppPageState extends State<AppPage> {
                                   return Icon(
                                     Icons.apps,
                                     size: 40,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                   );
                                 },
                               ),
@@ -562,7 +566,9 @@ class _AppPageState extends State<AppPage> {
                           // Load icon asynchronously if not available
                           if (!_iconRequested) {
                             _iconRequested = true;
-                            _iconFuture = appsProvider.updateAppIcon(app.app.id);
+                            _iconFuture = appsProvider.updateAppIcon(
+                              app.app.id,
+                            );
                           }
                           return FutureBuilder(
                             future: _iconFuture,
@@ -736,7 +742,9 @@ class _AppPageState extends State<AppPage> {
                   semanticLabel: tr('remove'),
                   tooltip: tr('remove'),
                   onPressed: () {
-                    appsProvider.removeAppsWithModal(context, [app.app]).then((result) {
+                    appsProvider.removeAppsWithModal(context, [app.app]).then((
+                      result,
+                    ) {
                       if (result == true) {
                         Navigator.of(context).pop();
                       }

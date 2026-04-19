@@ -1668,19 +1668,15 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   ),
                   M3FloatingToolbarAction(
                     icon: Icons.push_pin,
-                    semanticLabel: selectedApps
-                            .where((element) => element.pinned)
-                            .isEmpty
+                    semanticLabel:
+                        selectedApps.where((element) => element.pinned).isEmpty
                         ? tr('pinToTop')
                         : tr('unpinFromTop'),
-                    tooltip: selectedApps
-                            .where((element) => element.pinned)
-                            .isEmpty
+                    tooltip:
+                        selectedApps.where((element) => element.pinned).isEmpty
                         ? tr('pinToTop')
                         : tr('unpinFromTop'),
-                    onPressed: selectedAppIds.isEmpty
-                        ? () {}
-                        : pinSelectedApps,
+                    onPressed: selectedAppIds.isEmpty ? () {} : pinSelectedApps,
                   ),
                   M3FloatingToolbarAction(
                     icon: Icons.more_horiz,
