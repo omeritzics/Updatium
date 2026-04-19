@@ -1452,7 +1452,7 @@ class CategoryTagEditor extends StatelessWidget {
   void _onAddPressed(BuildContext context, SettingsProvider settingsProvider) {
     String categoryName = '';
     Color categoryColor = Theme.of(context).colorScheme.primary;
-    
+
     showDialog<String?>(
       context: context,
       builder: (BuildContext ctx) {
@@ -1491,58 +1491,73 @@ class CategoryTagEditor extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       onTap: () async {
                         final Color colorBeforeDialog = categoryColor;
-                        final result = await ColorPicker(
-                          color: categoryColor,
-                          onColorChanged: (Color color) => categoryColor = color,
-                          actionButtons: const ColorPickerActionButtons(
-                            okButton: true,
-                            closeButton: true,
-                            dialogActionButtons: false,
-                          ),
-                          pickersEnabled: const <ColorPickerType, bool>{
-                            ColorPickerType.both: false,
-                            ColorPickerType.primary: false,
-                            ColorPickerType.accent: false,
-                            ColorPickerType.bw: false,
-                            ColorPickerType.custom: true,
-                            ColorPickerType.wheel: true,
-                          },
-                          pickerTypeLabels: <ColorPickerType, String>{
-                            ColorPickerType.custom: tr('standard'),
-                            ColorPickerType.wheel: tr('custom'),
-                          },
-                          wheelDiameter: 192,
-                          wheelSquareBorderRadius: 32,
-                          width: 48,
-                          height: 48,
-                          borderRadius: 24,
-                          spacing: 8,
-                          runSpacing: 8,
-                          enableShadesSelection: false,
-                          showMaterialName: false,
-                          showColorName: false,
-                          copyPasteBehavior: const ColorPickerCopyPasteBehavior(
-                            longPressMenu: true,
-                          ),
-                        ).showPickerDialog(
-                          context,
-                          transitionBuilder:
-                              (
-                                BuildContext context,
-                                Animation<double> a1,
-                                Animation<double> a2,
-                                Widget widget,
-                              ) {
-                                final curvedValue =
-                                    Curves.easeInOutBack.transform(a1.value) - 1.0;
-                                return Transform(
-                                  alignment: Alignment.center,
-                                  transform: Matrix4.diagonal3Values(curvedValue, curvedValue, 1),
-                                  child: Opacity(opacity: curvedValue, child: widget),
-                                );
+                        final result =
+                            await ColorPicker(
+                              color: categoryColor,
+                              onColorChanged: (Color color) =>
+                                  categoryColor = color,
+                              actionButtons: const ColorPickerActionButtons(
+                                okButton: true,
+                                closeButton: true,
+                                dialogActionButtons: false,
+                              ),
+                              pickersEnabled: const <ColorPickerType, bool>{
+                                ColorPickerType.both: false,
+                                ColorPickerType.primary: false,
+                                ColorPickerType.accent: false,
+                                ColorPickerType.bw: false,
+                                ColorPickerType.custom: true,
+                                ColorPickerType.wheel: true,
                               },
-                          transitionDuration: const Duration(milliseconds: 250),
-                        );
+                              pickerTypeLabels: <ColorPickerType, String>{
+                                ColorPickerType.custom: tr('standard'),
+                                ColorPickerType.wheel: tr('custom'),
+                              },
+                              wheelDiameter: 192,
+                              wheelSquareBorderRadius: 32,
+                              width: 48,
+                              height: 48,
+                              borderRadius: 24,
+                              spacing: 8,
+                              runSpacing: 8,
+                              enableShadesSelection: false,
+                              showMaterialName: false,
+                              showColorName: false,
+                              copyPasteBehavior:
+                                  const ColorPickerCopyPasteBehavior(
+                                    longPressMenu: true,
+                                  ),
+                            ).showPickerDialog(
+                              context,
+                              transitionBuilder:
+                                  (
+                                    BuildContext context,
+                                    Animation<double> a1,
+                                    Animation<double> a2,
+                                    Widget widget,
+                                  ) {
+                                    final curvedValue =
+                                        Curves.easeInOutBack.transform(
+                                          a1.value,
+                                        ) -
+                                        1.0;
+                                    return Transform(
+                                      alignment: Alignment.center,
+                                      transform: Matrix4.diagonal3Values(
+                                        curvedValue,
+                                        curvedValue,
+                                        1,
+                                      ),
+                                      child: Opacity(
+                                        opacity: curvedValue,
+                                        child: widget,
+                                      ),
+                                    );
+                                  },
+                              transitionDuration: const Duration(
+                                milliseconds: 250,
+                              ),
+                            );
                         if (!result) {
                           categoryColor = colorBeforeDialog;
                         }
@@ -1567,7 +1582,9 @@ class CategoryTagEditor extends StatelessWidget {
       },
     ).then((value) {
       if (value != null && value.trim().isNotEmpty) {
-        final newCategories = Map<String, int>.from(settingsProvider.categories);
+        final newCategories = Map<String, int>.from(
+          settingsProvider.categories,
+        );
         if (!newCategories.containsKey(value.trim())) {
           newCategories[value.trim()] = categoryColor.value;
           settingsProvider.setCategories(newCategories);
@@ -1582,8 +1599,11 @@ class CategoryTagEditor extends StatelessWidget {
     String oldName,
   ) {
     String newName = oldName;
-    Color categoryColor = Color(settingsProvider.categories[oldName] ?? Theme.of(context).colorScheme.primary.value);
-    
+    Color categoryColor = Color(
+      settingsProvider.categories[oldName] ??
+          Theme.of(context).colorScheme.primary.value,
+    );
+
     showDialog<String?>(
       context: context,
       builder: (BuildContext ctx) {
@@ -1622,58 +1642,73 @@ class CategoryTagEditor extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       onTap: () async {
                         final Color colorBeforeDialog = categoryColor;
-                        final result = await ColorPicker(
-                          color: categoryColor,
-                          onColorChanged: (Color color) => categoryColor = color,
-                          actionButtons: const ColorPickerActionButtons(
-                            okButton: true,
-                            closeButton: true,
-                            dialogActionButtons: false,
-                          ),
-                          pickersEnabled: const <ColorPickerType, bool>{
-                            ColorPickerType.both: false,
-                            ColorPickerType.primary: false,
-                            ColorPickerType.accent: false,
-                            ColorPickerType.bw: false,
-                            ColorPickerType.custom: true,
-                            ColorPickerType.wheel: true,
-                          },
-                          pickerTypeLabels: <ColorPickerType, String>{
-                            ColorPickerType.custom: tr('standard'),
-                            ColorPickerType.wheel: tr('custom'),
-                          },
-                          wheelDiameter: 192,
-                          wheelSquareBorderRadius: 32,
-                          width: 48,
-                          height: 48,
-                          borderRadius: 24,
-                          spacing: 8,
-                          runSpacing: 8,
-                          enableShadesSelection: false,
-                          showMaterialName: false,
-                          showColorName: false,
-                          copyPasteBehavior: const ColorPickerCopyPasteBehavior(
-                            longPressMenu: true,
-                          ),
-                        ).showPickerDialog(
-                          context,
-                          transitionBuilder:
-                              (
-                                BuildContext context,
-                                Animation<double> a1,
-                                Animation<double> a2,
-                                Widget widget,
-                              ) {
-                                final curvedValue =
-                                    Curves.easeInOutBack.transform(a1.value) - 1.0;
-                                return Transform(
-                                  alignment: Alignment.center,
-                                  transform: Matrix4.diagonal3Values(curvedValue, curvedValue, 1),
-                                  child: Opacity(opacity: curvedValue, child: widget),
-                                );
+                        final result =
+                            await ColorPicker(
+                              color: categoryColor,
+                              onColorChanged: (Color color) =>
+                                  categoryColor = color,
+                              actionButtons: const ColorPickerActionButtons(
+                                okButton: true,
+                                closeButton: true,
+                                dialogActionButtons: false,
+                              ),
+                              pickersEnabled: const <ColorPickerType, bool>{
+                                ColorPickerType.both: false,
+                                ColorPickerType.primary: false,
+                                ColorPickerType.accent: false,
+                                ColorPickerType.bw: false,
+                                ColorPickerType.custom: true,
+                                ColorPickerType.wheel: true,
                               },
-                          transitionDuration: const Duration(milliseconds: 250),
-                        );
+                              pickerTypeLabels: <ColorPickerType, String>{
+                                ColorPickerType.custom: tr('standard'),
+                                ColorPickerType.wheel: tr('custom'),
+                              },
+                              wheelDiameter: 192,
+                              wheelSquareBorderRadius: 32,
+                              width: 48,
+                              height: 48,
+                              borderRadius: 24,
+                              spacing: 8,
+                              runSpacing: 8,
+                              enableShadesSelection: false,
+                              showMaterialName: false,
+                              showColorName: false,
+                              copyPasteBehavior:
+                                  const ColorPickerCopyPasteBehavior(
+                                    longPressMenu: true,
+                                  ),
+                            ).showPickerDialog(
+                              context,
+                              transitionBuilder:
+                                  (
+                                    BuildContext context,
+                                    Animation<double> a1,
+                                    Animation<double> a2,
+                                    Widget widget,
+                                  ) {
+                                    final curvedValue =
+                                        Curves.easeInOutBack.transform(
+                                          a1.value,
+                                        ) -
+                                        1.0;
+                                    return Transform(
+                                      alignment: Alignment.center,
+                                      transform: Matrix4.diagonal3Values(
+                                        curvedValue,
+                                        curvedValue,
+                                        1,
+                                      ),
+                                      child: Opacity(
+                                        opacity: curvedValue,
+                                        child: widget,
+                                      ),
+                                    );
+                                  },
+                              transitionDuration: const Duration(
+                                milliseconds: 250,
+                              ),
+                            );
                         if (!result) {
                           categoryColor = colorBeforeDialog;
                         }
@@ -1698,7 +1733,9 @@ class CategoryTagEditor extends StatelessWidget {
       },
     ).then((value) {
       if (value != null && value.trim().isNotEmpty) {
-        final newCategories = Map<String, int>.from(settingsProvider.categories);
+        final newCategories = Map<String, int>.from(
+          settingsProvider.categories,
+        );
         newCategories.remove(oldName);
         newCategories[value.trim()] = categoryColor.value;
         settingsProvider.setCategories(newCategories);
@@ -1724,7 +1761,9 @@ class CategoryTagEditor extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                final newCategories = Map<String, int>.from(settingsProvider.categories);
+                final newCategories = Map<String, int>.from(
+                  settingsProvider.categories,
+                );
                 newCategories.remove(categoryName);
                 settingsProvider.setCategories(newCategories);
                 Navigator.pop(ctx);
@@ -1759,7 +1798,10 @@ class CategoryTagEditor extends StatelessWidget {
           runSpacing: 4,
           children: [
             ...allTags.map((tag) {
-              final categoryColor = Color(settingsProvider.categories[tag] ?? Theme.of(context).colorScheme.primary.value);
+              final categoryColor = Color(
+                settingsProvider.categories[tag] ??
+                    Theme.of(context).colorScheme.primary.value,
+              );
               return InkWell(
                 onTap: () => _onEditPressed(context, settingsProvider, tag),
                 borderRadius: BorderRadius.circular(8),
@@ -1767,7 +1809,8 @@ class CategoryTagEditor extends StatelessWidget {
                   label: Text(tag),
                   backgroundColor: categoryColor.withValues(alpha: 0.2),
                   side: BorderSide(color: categoryColor, width: 1),
-                  onDeleted: () => _onDeletePressed(context, settingsProvider, tag),
+                  onDeleted: () =>
+                      _onDeletePressed(context, settingsProvider, tag),
                   deleteIcon: const Icon(Icons.close, size: 18),
                 ),
               );
@@ -1904,205 +1947,220 @@ class _AboutDialogState extends State<AboutDialog> {
       builder: (context, snapshot) {
         String version = 'Unknown';
         String buildNumber = '';
-        
+
         if (snapshot.hasData) {
           final packageInfo = snapshot.data!;
           version = packageInfo.version;
           buildNumber = packageInfo.buildNumber;
         }
 
-    return AlertDialog(
-      scrollable: true,
-      title: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Theme.of(context).colorScheme.primaryContainer,
-            ),
-            child: Icon(
-              Icons.info_rounded,
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-              size: 28,
-            ),
-          ),
-          horizontalGap16,
-          Text(tr('about')),
-        ],
-      ),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: Theme.of(context).colorScheme.surfaceContainerHighest,
-            ),
-            child: Column(
-              children: [
-                Image.asset('assets/graphics/icon.png', width: 80, height: 80),
-                gap16,
-                Text(
-                  'Updatium',
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+        return AlertDialog(
+          scrollable: true,
+          title: Row(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Theme.of(context).colorScheme.primaryContainer,
                 ),
-                gap8,
-                GestureDetector(
-                  onTap: _onVersionTapped,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 4,
-                      horizontal: 8,
+                child: Icon(
+                  Icons.info_rounded,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  size: 28,
+                ),
+              ),
+              horizontalGap16,
+              Text(tr('about')),
+            ],
+          ),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                ),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/graphics/icon.png',
+                      width: 80,
+                      height: 80,
                     ),
-                    child: Text(
-                      '${tr('version')} $version ($buildNumber)',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    gap16,
+                    Text(
+                      'Updatium',
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    gap8,
+                    GestureDetector(
+                      onTap: _onVersionTapped,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 4,
+                          horizontal: 8,
+                        ),
+                        child: Text(
+                          '${tr('version')} $version ($buildNumber)',
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
+                              ),
+                        ),
+                      ),
+                    ),
+                    gap8,
+                    Text(
+                      tr('appDescription'),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
-                    ),
-                  ),
-                ),
-                gap8,
-                Text(
-                  tr('appDescription'),
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-          gap24,
-          Text(
-            tr('developedBy'),
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-          gap8,
-          TextButton.icon(
-            onPressed: () {
-              launchUrlString(
-                'https://github.com/omeritzics',
-                mode: LaunchMode.externalApplication,
-              );
-            },
-            icon: const Icon(Icons.link_rounded, size: 18),
-            label: Text('Omer I.S. (@omeritzics)'),
-            style: TextButton.styleFrom(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.zero,
-            ),
-          ),
-          gap16,
-          Text(tr('sourceCode'), style: Theme.of(context).textTheme.titleSmall),
-          gap8,
-          TextButton.icon(
-            onPressed: () {
-              launchUrlString(
-                'https://github.com/omeritzics/Updatium',
-                mode: LaunchMode.externalApplication,
-              );
-            },
-            icon: const Icon(Icons.code_rounded, size: 18),
-            label: Text('GitHub'),
-            style: TextButton.styleFrom(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.zero,
-            ),
-          ),
-          gap16,
-          Text(tr('license'), style: Theme.of(context).textTheme.titleSmall),
-          gap8,
-          TextButton.icon(
-            onPressed: () {
-              launchUrlString(
-                'https://github.com/omeritzics/Updatium/blob/main/LICENSE.md',
-                mode: LaunchMode.externalApplication,
-              );
-            },
-            icon: const Icon(Icons.description_rounded, size: 18),
-            label: Text('GPL-3.0'),
-            style: TextButton.styleFrom(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.zero,
-            ),
-          ),
-          gap24,
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Theme.of(context).colorScheme.surfaceContainerLow,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  tr('quickLinks'),
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
-                ),
-                gap12,
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextButton.icon(
-                        onPressed: () {
-                          launchUrlString(
-                            'https://github.com/omeritzics/Updatium/wiki',
-                            mode: LaunchMode.externalApplication,
-                          );
-                        },
-                        icon: const Icon(Icons.menu_book_rounded, size: 18),
-                        label: Text(tr('wiki')),
-                        style: TextButton.styleFrom(
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: TextButton.icon(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext ctx) {
-                              return const LogsDialog();
-                            },
-                          );
-                        },
-                        icon: const Icon(Icons.bug_report_outlined, size: 18),
-                        label: Text(tr('appLogs')),
-                        style: TextButton.styleFrom(
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                        ),
-                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              gap24,
+              Text(
+                tr('developedBy'),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              gap8,
+              TextButton.icon(
+                onPressed: () {
+                  launchUrlString(
+                    'https://github.com/omeritzics',
+                    mode: LaunchMode.externalApplication,
+                  );
+                },
+                icon: const Icon(Icons.link_rounded, size: 18),
+                label: Text('Omer I.S. (@omeritzics)'),
+                style: TextButton.styleFrom(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+              gap16,
+              Text(
+                tr('sourceCode'),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              gap8,
+              TextButton.icon(
+                onPressed: () {
+                  launchUrlString(
+                    'https://github.com/omeritzics/Updatium',
+                    mode: LaunchMode.externalApplication,
+                  );
+                },
+                icon: const Icon(Icons.code_rounded, size: 18),
+                label: Text('GitHub'),
+                style: TextButton.styleFrom(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+              gap16,
+              Text(
+                tr('license'),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              gap8,
+              TextButton.icon(
+                onPressed: () {
+                  launchUrlString(
+                    'https://github.com/omeritzics/Updatium/blob/main/LICENSE.md',
+                    mode: LaunchMode.externalApplication,
+                  );
+                },
+                icon: const Icon(Icons.description_rounded, size: 18),
+                label: Text('GPL-3.0'),
+                style: TextButton.styleFrom(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+              gap24,
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Theme.of(context).colorScheme.surfaceContainerLow,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      tr('quickLinks'),
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    gap12,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextButton.icon(
+                            onPressed: () {
+                              launchUrlString(
+                                'https://github.com/omeritzics/Updatium/wiki',
+                                mode: LaunchMode.externalApplication,
+                              );
+                            },
+                            icon: const Icon(Icons.menu_book_rounded, size: 18),
+                            label: Text(tr('wiki')),
+                            style: TextButton.styleFrom(
+                              alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: TextButton.icon(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext ctx) {
+                                  return const LogsDialog();
+                                },
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.bug_report_outlined,
+                              size: 18,
+                            ),
+                            label: Text(tr('appLogs')),
+                            style: TextButton.styleFrom(
+                              alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(tr('close')),
-        ),
-      ],
-    );
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(tr('close')),
+            ),
+          ],
+        );
       },
     );
   }

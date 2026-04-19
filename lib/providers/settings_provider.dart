@@ -303,7 +303,7 @@ class SettingsProvider with ChangeNotifier {
       context.resetLocale();
       return;
     }
-    
+
     // Try language-only match (e.g., 'en-US' → 'en')
     var languageOnly = Locale(context.deviceLocale.languageCode);
     if (context.supportedLocales.contains(languageOnly)) {
@@ -311,7 +311,7 @@ class SettingsProvider with ChangeNotifier {
       context.deleteSaveLocale();
       return;
     }
-    
+
     // Fallback to default
     context.setLocale(context.fallbackLocale!);
     context.deleteSaveLocale();

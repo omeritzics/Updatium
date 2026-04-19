@@ -211,12 +211,13 @@ class _UpdatiumState extends State<Updatium> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       requestNonOptionalPermissions();
     });
-    
+
     // Store provider reference to avoid using context in callback
     _settingsProvider = context.read<SettingsProvider>();
-    
+
     // Store old callback and set new one
-    _oldLocaleChangedCallback = WidgetsBinding.instance.platformDispatcher.onLocaleChanged;
+    _oldLocaleChangedCallback =
+        WidgetsBinding.instance.platformDispatcher.onLocaleChanged;
     WidgetsBinding.instance.platformDispatcher.onLocaleChanged = () {
       if (_settingsProvider?.forcedLocale == null) {
         _settingsProvider?.resetLocaleSafe(context);
@@ -295,7 +296,8 @@ class _UpdatiumState extends State<Updatium> {
   void dispose() {
     // Restore old locale changed callback to prevent memory leak
     if (_oldLocaleChangedCallback != null) {
-      WidgetsBinding.instance.platformDispatcher.onLocaleChanged = _oldLocaleChangedCallback;
+      WidgetsBinding.instance.platformDispatcher.onLocaleChanged =
+          _oldLocaleChangedCallback;
     }
     super.dispose();
   }
