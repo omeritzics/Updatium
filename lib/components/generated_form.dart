@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:hsluv/hsluv.dart';
 import 'package:simple_localization/simple_localization.dart';
@@ -383,7 +384,9 @@ class _GeneratedFormState extends State<GeneratedForm> {
           return DropdownButtonFormField<String>(
             initialValue: values[formItem.key] ?? formItem.opts?.first.key,
             decoration: InputDecoration(
-              labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
+              labelText: formItem.key == 'appSourceURL'
+                  ? '${formItem.label}${formItem.required ? ' *' : ''}'
+                  : formItem.label,
               border: const OutlineInputBorder(),
             ),
             items: formItem.opts?.map((e2) {
@@ -393,7 +396,10 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 enabled: enabled,
                 child: Opacity(
                   opacity: enabled ? 1 : 0.5,
-                  child: Text(e2.value),
+                  child: Directionality(
+                    textDirection: Directionality.of(context),
+                    child: Text(e2.value),
+                  ),
                 ),
               );
             }).toList(),

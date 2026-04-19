@@ -608,6 +608,13 @@ class _UpdatiumState extends State<Updatium> {
               useMaterial3: true,
               colorScheme: scheme,
               fontFamily: getPrimaryFontForLocale(context.locale),
+              fontFamilyFallback: const [
+                'Inter',
+                'GoogleSansFlex',
+                'NotoSansCJK',
+                'NotoSansHebrew',
+                'NotoSansArabic',
+              ],
 
               // Expressive Typography
               textTheme: textTheme,
