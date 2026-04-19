@@ -11,7 +11,7 @@
     "unexpectedError": "Uventet fejl",
     "ok": "Okay",
     "and": "og",
-    "githubPATLabel": "GitHub Personlig Adgangstoken (øger hastighedsgrænse)",
+    "githubPATLabel": "GitHub Personlig Adgangstoken",
     "includePrereleases": "Inkluder forudgivelser",
     "fallbackToOlderReleases": "Fallback til ældre udgivelser",
     "filterReleaseTitlesByRegEx": "Filtrer udgivelsestitler efter regulært udtryk",

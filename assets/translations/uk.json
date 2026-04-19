@@ -11,7 +11,7 @@
     "unexpectedError": "Неочікувана помилка",
     "ok": "Добре",
     "and": "та",
-    "githubPATLabel": "Персональний ключ доступу GitHub (збільшує обмеження на швидкість)",
+    "githubPATLabel": "Персональний ключ доступу GitHub",
     "includePrereleases": "Включити попередні видання",
     "fallbackToOlderReleases": "Повернутися до старіших видань",
     "filterReleaseTitlesByRegEx": "Фільтрувати заголовки видань за допомогою регулярного виразу",

@@ -11,7 +11,7 @@
     "unexpectedError": "שגיאה לא צפויה",
     "ok": "אישור",
     "and": "וגם",
-    "githubPATLabel": "אסימון גישה אישי אל GitHub (מרחיב את מגבלת השימוש)",
+    "githubPATLabel": "אסימון גישה אישי אל GitHub",
     "includePrereleases": "לכלול גרסאות קדם־שחרור",
     "fallbackToOlderReleases": "נסיגה לגרסאות ישנות יותר",
     "filterReleaseTitlesByRegEx": "סינון כותרות מהדורות לפי ביטוי רגולרי",

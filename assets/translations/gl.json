@@ -11,7 +11,7 @@
     "unexpectedError": "Erro non agardado",
     "ok": "OK",
     "and": "e",
-    "githubPATLabel": "Token persoal de acceso a GitHub (aumenta a taxa límite)",
+    "githubPATLabel": "Token persoal de acceso a GitHub",
     "includePrereleases": "Incluír prepublicacións",
     "fallbackToOlderReleases": "Apoiarse en publicacións máis antigas",
     "filterReleaseTitlesByRegEx": "Filtrar título das publicacións con expresión regulares",

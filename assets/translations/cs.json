@@ -11,7 +11,7 @@
     "unexpectedError": "Neočekávaná chyba",
     "ok": "OK",
     "and": "a",
-    "githubPATLabel": "Osobní přístupový token GitHub (zvyšuje limit požadavků)",
+    "githubPATLabel": "Osobní přístupový token GitHub",
     "includePrereleases": "Zahrnout předběžná vydání",
     "fallbackToOlderReleases": "Přechod na starší verze",
     "filterReleaseTitlesByRegEx": "Filtrovat názvy verzí podle regulárního výrazu",

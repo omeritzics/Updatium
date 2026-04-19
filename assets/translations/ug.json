@@ -11,7 +11,7 @@
     "unexpectedError": "توساتتىن خاتالىق كۆرۈلدى",
     "ok": "جەزملەش",
     "and": "ۋە",
-    "githubPATLabel": "GitHub شەخسىي زىيارەت كىنىشكىسى (سۈرئەت چەكلىمىسىنى ئاشۇرىدۇ)",
+    "githubPATLabel": "GitHub شەخسىي زىيارەت كىنىشكىسى",
     "includePrereleases": "سىناق نەشرلىرىنى ئۆز ئىچىگە ئالسۇن",
     "fallbackToOlderReleases": "كونا نەشرىنى زاپاس ئىشلەتسۇن",
     "filterReleaseTitlesByRegEx": "نەشر ئىسمىنى دائىملىق ئىپادە (RegEx) ئارقىلىق سۈزۈش",

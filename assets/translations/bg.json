@@ -11,7 +11,7 @@
     "unexpectedError": "Неочаквана грешка",
     "ok": "Добре",
     "and": "и",
-    "githubPATLabel": "Личен токен за достъп до GitHub (увеличава лимита на заявки)",
+    "githubPATLabel": "Личен токен за достъп до GitHub",
     "includePrereleases": "Включване на предварителни издания",
     "fallbackToOlderReleases": "Връщане към по- стари издания",
     "filterReleaseTitlesByRegEx": "Филтриране на заглавията на изданията с регулярен израз",

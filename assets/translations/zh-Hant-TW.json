@@ -11,7 +11,7 @@
     "unexpectedError": "意外錯誤",
     "ok": "確定",
     "and": "和",
-    "githubPATLabel": "GitHub 個人存取權杖（放寬速率限制）",
+    "githubPATLabel": "GitHub 個人存取權杖",
     "includePrereleases": "包含預先釋出版本",
     "fallbackToOlderReleases": "回退到舊版本",
     "filterReleaseTitlesByRegEx": "用正則表達式過濾版本發佈標題",

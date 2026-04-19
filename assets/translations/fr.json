@@ -11,7 +11,7 @@
     "unexpectedError": "Erreur inattendue",
     "ok": "OK",
     "and": "et",
-    "githubPATLabel": "Jeton d'accès personnel GitHub (augmente la limite de débit)",
+    "githubPATLabel": "Jeton d'accès personnel GitHub",
     "includePrereleases": "Inclure les versions préliminaires",
     "fallbackToOlderReleases": "Revenir aux anciennes versions",
     "filterReleaseTitlesByRegEx": "Filtrer les titres de version par expression régulière",

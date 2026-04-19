@@ -11,7 +11,7 @@
     "unexpectedError": "Errore imprevisto",
     "ok": "Va bene",
     "and": "e",
-    "githubPATLabel": "GitHub Personal Access Token (aumenta limite di traffico)",
+    "githubPATLabel": "GitHub Personal Access Token",
     "includePrereleases": "Includi prerelease",
     "fallbackToOlderReleases": "Ripiega su release precedenti",
     "filterReleaseTitlesByRegEx": "Filtra release con espressioni regolari",

@@ -11,7 +11,7 @@
     "unexpectedError": "Lỗi không mong đợi",
     "ok": "OK",
     "and": "và",
-    "githubPATLabel": "Token truy cập cá nhân GitHub (Cải thiện tốc độ giới hạn)",
+    "githubPATLabel": "Token truy cập cá nhân GitHub",
     "includePrereleases": "Bao gồm các bản phát hành trước",
     "fallbackToOlderReleases": "Dự phòng về bản phát hành cũ hơn",
     "filterReleaseTitlesByRegEx": "Lọc tiêu đề bản phát hành theo biểu thức chính quy",

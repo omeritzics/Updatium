@@ -11,7 +11,7 @@
     "unexpectedError": "예기치 않은 오류",
     "ok": "확인",
     "and": "그리고",
-    "githubPATLabel": "GitHub 개인 액세스 토큰 (속도 제한 증가)",
+    "githubPATLabel": "GitHub 개인 액세스 토큰",
     "includePrereleases": "사전 릴리스 포함",
     "fallbackToOlderReleases": "이전 릴리스로 대체",
     "filterReleaseTitlesByRegEx": "정규 표현식으로 릴리스 제목 필터링",

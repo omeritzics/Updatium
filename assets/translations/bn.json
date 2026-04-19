@@ -11,7 +11,7 @@
     "unexpectedError": "অপ্রত্যাশিত ত্রুটি",
     "ok": "ঠিক আছে",
     "and": "এবং",
-    "githubPATLabel": "GitHub পার্সোনাল অ্যাক্সেস টোকেন (রেট লিমিট বাড়াতে সাহায্য করে)",
+    "githubPATLabel": "GitHub পার্সোনাল অ্যাক্সেস টোকেন",
     "includePrereleases": "প্রি-রিলিজগুলো অন্তর্ভুক্ত করুন",
     "fallbackToOlderReleases": "পুরনো রিলিজে ফিরে যান",
     "filterReleaseTitlesByRegEx": "রেগুলার এক্সপ্রেশন দিয়ে রিলিজ টাইটেল ফিল্টার করুন",

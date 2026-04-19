@@ -11,7 +11,7 @@
     "unexpectedError": "Unexpected error",
     "ok": "Okay",
     "and": "and",
-    "githubPATLabel": "GitHub personal access token (increases rate limit)",
+    "githubPATLabel": "GitHub personal access token",
     "includePrereleases": "Include prereleases",
     "fallbackToOlderReleases": "Fallback to older releases",
     "filterReleaseTitlesByRegEx": "Filter release titles by regular expression",

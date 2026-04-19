@@ -11,7 +11,7 @@
     "unexpectedError": "Unerwarteter Fehler",
     "ok": "OK",
     "and": "und",
-    "githubPATLabel": "Persönlicher Zugangstoken für GitHub (erhöht das Ratenlimit)",
+    "githubPATLabel": "Persönlicher Zugangstoken für GitHub",
     "includePrereleases": "Vorabversionen einbeziehen",
     "fallbackToOlderReleases": "Fallback auf ältere Versionen",
     "filterReleaseTitlesByRegEx": "Release-Titel nach regulärem Ausdruck\nfiltern",

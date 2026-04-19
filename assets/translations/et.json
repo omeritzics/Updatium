@@ -11,7 +11,7 @@
     "unexpectedError": "Ootamatu viga",
     "ok": "Olgu",
     "and": "ja",
-    "githubPATLabel": "GitHub'i isiklik juurdepääsutunnus (suurendab piirangut)",
+    "githubPATLabel": "GitHub'i isiklik juurdepääsutunnus",
     "includePrereleases": "Kaasa eelversioonid",
     "fallbackToOlderReleases": "Varuvariant vanematele väljaannetele",
     "filterReleaseTitlesByRegEx": "Filtreeri väljaannete pealkirju regulaaravaldisega",

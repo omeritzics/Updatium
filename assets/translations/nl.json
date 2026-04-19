@@ -11,7 +11,7 @@
     "unexpectedError": "Onverwachte fout",
     "ok": "Oké",
     "and": "en",
-    "githubPATLabel": "GitHub Personal Access Token\n(Verhoogt limiet aantal verzoeken)",
+    "githubPATLabel": "GitHub Personal Access Token",
     "includePrereleases": "Inclusief pre-releases",
     "fallbackToOlderReleases": "Terugvallen op oudere releases",
     "filterReleaseTitlesByRegEx": "Release-titels filteren met reguliere expressies.",

@@ -578,7 +578,12 @@ class _UpdatiumState extends State<Updatium> {
               colorScheme: scheme,
               fontFamily: settingsProvider.useSystemFont
                   ? 'SystemFont'
-                  : 'Inter',
+                  : 'GoogleSansFlex',
+              fontFamilyFallback: const [
+                'NotoSansCJK',
+                'NotoSansHebrew',
+                'NotoSansArabic',
+              ],
 
               // Expressive Typography
               textTheme: textTheme,

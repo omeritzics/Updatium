@@ -11,7 +11,7 @@
     "unexpectedError": "अप्रत्याशित त्रुटि",
     "ok": "ठीक है",
     "and": "और",
-    "githubPATLabel": "GitHub पर्सनल एक्सेस टोकन (रेट लिमिट बढ़ाता है)",
+    "githubPATLabel": "GitHub पर्सनल एक्सेस टोकन",
     "includePrereleases": "प्री-रिलीज़ शामिल करें",
     "fallbackToOlderReleases": "पुरानी रिलीज़ पर वापस जाएँ",
     "filterReleaseTitlesByRegEx": "नियमित अभिव्यक्ति (RegEx) द्वारा रिलीज़ शीर्षक फ़िल्टर करें",

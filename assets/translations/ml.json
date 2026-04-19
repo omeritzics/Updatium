@@ -11,7 +11,7 @@
     "unexpectedError": "പ്രതീക്ഷിക്കാത്ത പിശക്",
     "ok": "ശരി",
     "and": "കൂടാതെ",
-    "githubPATLabel": "GitHub പേഴ്സണൽ ആക്സസ് ടോക്കൺ (നിരക്ക് പരിധി വർദ്ധിപ്പിക്കുന്നു)",
+    "githubPATLabel": "GitHub പേഴ്സണൽ ആക്സസ് ടോക്കൺ",
     "includePrereleases": "പ്രീ-റിലീസുകൾ ഉൾപ്പെടുത്തുക",
     "fallbackToOlderReleases": "പഴയ റിലീസുകളിലേക്ക് മടങ്ങുക",
     "filterReleaseTitlesByRegEx": "റിലീസ് ശീർഷകങ്ങൾ റെഗുലർ എക്സ്പ്രഷൻ ഉപയോഗിച്ച് ഫിൽട്ടർ ചെയ്യുക",

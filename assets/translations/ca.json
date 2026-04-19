@@ -11,7 +11,7 @@
     "unexpectedError": "Error inesperat",
     "ok": "Accepta",
     "and": "i",
-    "githubPATLabel": "Token d'accés personal a GitHub (augmenta el límit d'accés)",
+    "githubPATLabel": "Token d'accés personal a GitHub",
     "includePrereleases": "Inclou les versions preliminars",
     "fallbackToOlderReleases": "Torna a les versions anteriors",
     "filterReleaseTitlesByRegEx": "Filtra el títol de la versió per una expressió regular",

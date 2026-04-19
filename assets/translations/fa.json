@@ -11,7 +11,7 @@
     "unexpectedError": "خطای غیرمنتظره",
     "ok": "باشه",
     "and": "و",
-    "githubPATLabel": "توکن دسترسی شخصی گیت هاب(محدودیت نرخ را افزایش میدهد)",
+    "githubPATLabel": "توکن دسترسی شخصی گیت هاب",
     "includePrereleases": "شامل نسخه های اولیه",
     "fallbackToOlderReleases": "بازگشت به نسخه های قدیمی تر",
     "filterReleaseTitlesByRegEx": "عناوین انتشار را با بیان منظم فیلتر کنید",

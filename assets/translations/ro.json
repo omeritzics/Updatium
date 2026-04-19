@@ -11,7 +11,7 @@
     "unexpectedError": "Eroare neașteptată",
     "ok": "OK",
     "and": "și",
-    "githubPATLabel": "Token de acces personal GitHub (crește limita de rate)",
+    "githubPATLabel": "Token de acces personal GitHub",
     "includePrereleases": "Include versiuni pre-lansare",
     "fallbackToOlderReleases": "Revenire la versiuni mai vechi",
     "filterReleaseTitlesByRegEx": "Filtrează titlurile lansărilor după expresie regulată",

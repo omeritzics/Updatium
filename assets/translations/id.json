@@ -11,7 +11,7 @@
     "unexpectedError": "Kesalahan tidak terduga",
     "ok": "Oke",
     "and": "dan",
-    "githubPATLabel": "Token Akses Pribadi GitHub (tingkatkan batasan tarif)",
+    "githubPATLabel": "Token Akses Pribadi GitHub",
     "includePrereleases": "Sertakan pra-rilis",
     "fallbackToOlderReleases": "Alternatif kembali ke rilis lama",
     "filterReleaseTitlesByRegEx": "Filter judul rilis dengan ekspresi reguler",

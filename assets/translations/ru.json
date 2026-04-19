@@ -11,7 +11,7 @@
     "unexpectedError": "Неожиданная ошибка",
     "ok": "OK",
     "and": "и",
-    "githubPATLabel": "Персональный токен доступа GitHub\n(увеличивает лимит запросов)",
+    "githubPATLabel": "Персональный токен доступа GitHub",
     "includePrereleases": "Включать предварительные выпуски",
     "fallbackToOlderReleases": "Откатываться к предыдущей версии",
     "filterReleaseTitlesByRegEx": "Фильтровать заголовки выпусков\n(регулярное выражение)",

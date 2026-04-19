@@ -11,7 +11,7 @@
     "unexpectedError": "خطأ غير متوقع",
     "ok": "موافق",
     "and": "و",
-    "githubPATLabel": "رمز الوصول الشخصي لـ GitHub (يزيد من الحد المسموح)",
+    "githubPATLabel": "رمز الوصول الشخصي لـ GitHub",
     "includePrereleases": "تضمين الإصدارات الأولية",
     "fallbackToOlderReleases": "الرجوع إلى الإصدارات الأقدم",
     "filterReleaseTitlesByRegEx": "تصفية عناوين الإصدارات باستخدام تعبير نمطي",

@@ -11,7 +11,7 @@
     "unexpectedError": "Error inesperado",
     "ok": "Aceptar",
     "and": "y",
-    "githubPATLabel": "Token de acceso personal a GitHub\n(reduce tiempos de espera)",
+    "githubPATLabel": "Token de acceso personal a GitHub",
     "includePrereleases": "Incluir versiones preliminares",
     "fallbackToOlderReleases": "Retroceder a versiones previas",
     "filterReleaseTitlesByRegEx": "Filtrar por título de versión",

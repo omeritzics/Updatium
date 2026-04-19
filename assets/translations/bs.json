@@ -11,7 +11,7 @@
     "unexpectedError": "Neočekivana greška",
     "ok": "Dobro",
     "and": "i",
-    "githubPATLabel": "GitHub token za lični pristup (eng. PAT, povećava ograničenje stope)",
+    "githubPATLabel": "GitHub token za lični pristup",
     "includePrereleases": "Uključi preliminarna izdanja",
     "fallbackToOlderReleases": "Povratak na starija izdanja",
     "filterReleaseTitlesByRegEx": "Filtrirajte naslove izdanja prema regularnom izrazu",

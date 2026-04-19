@@ -152,6 +152,18 @@ flutter:
     - family: Inter
       fonts:
         - asset: assets/fonts/Inter-Variable.ttf
+    - family: GoogleSansFlex
+      fonts:
+        - asset: assets/fonts/GoogleSansFlex-Variable.ttf
+    - family: NotoSansCJK
+      fonts:
+        - asset: assets/fonts/NotoSansCJK-Regular.ttf
+    - family: NotoSansHebrew
+      fonts:
+        - asset: assets/fonts/NotoSansHebrew-Regular.ttf
+    - family: NotoSansArabic
+      fonts:
+        - asset: assets/fonts/NotoSansArabic-Regular.ttf
           
 dev_dependencies:
   flutter_test:
