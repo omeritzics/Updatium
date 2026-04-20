@@ -464,6 +464,35 @@ class _UpdatiumState extends State<Updatium> {
 
           if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
 
+          // Determine primary font based on locale
+          String getPrimaryFontForLocale(Locale locale) {
+            if (settingsProvider.useSystemFont) {
+              return 'SystemFont';
+            }
+
+            // CJK languages
+            if (locale.languageCode == 'zh' ||
+                locale.languageCode == 'ja' ||
+                locale.languageCode == 'ko') {
+              return 'NotoSansCJK';
+            }
+
+            // Hebrew
+            if (locale.languageCode == 'he') {
+              return 'NotoSansHebrew';
+            }
+
+            // Arabic
+            if (locale.languageCode == 'ar' ||
+                locale.languageCode == 'fa' ||
+                locale.languageCode == 'ug') {
+              return 'NotoSansArabic';
+            }
+
+            // Default to Google Sans Flex for other languages
+            return 'GoogleSansFlex';
+          }
+
           // Shared theme component generator with Material Design Expressive
           ThemeData createTheme(ColorScheme scheme, bool isDark) {
             // Define text theme as local variable for reusability
@@ -694,35 +723,6 @@ class _UpdatiumState extends State<Updatium> {
                 ],
               ),
             );
-
-            // Determine primary font based on locale
-            String getPrimaryFontForLocale(Locale locale) {
-              if (settingsProvider.useSystemFont) {
-                return 'SystemFont';
-              }
-
-              // CJK languages
-              if (locale.languageCode == 'zh' ||
-                  locale.languageCode == 'ja' ||
-                  locale.languageCode == 'ko') {
-                return 'NotoSansCJK';
-              }
-
-              // Hebrew
-              if (locale.languageCode == 'he') {
-                return 'NotoSansHebrew';
-              }
-
-              // Arabic
-              if (locale.languageCode == 'ar' ||
-                  locale.languageCode == 'fa' ||
-                  locale.languageCode == 'ug') {
-                return 'NotoSansArabic';
-              }
-
-              // Default to Google Sans Flex for other languages
-              return 'GoogleSansFlex';
-            }
 
             return ThemeData(
               useMaterial3: true,
