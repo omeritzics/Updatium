@@ -694,11 +694,13 @@ class _AppPageState extends State<AppPage> {
                 width: (() {
                   final actionCount = [
                     if (app.app.installedVersion != null) 1, // open button
-                    if (source != null &&
+                    if (!updating &&
+                        source != null &&
                         source.combinedAppSpecificSettingFormItems.isNotEmpty)
                       1, // edit button
-                    if (app.app.apkUrls.isNotEmpty == true ||
-                        app.app.otherAssetUrls.isNotEmpty == true)
+                    if (!updating &&
+                        (app.app.apkUrls.isNotEmpty == true ||
+                            app.app.otherAssetUrls.isNotEmpty == true))
                       1, // download assets button
                     1, // delete button always present
                   ].length;
@@ -716,22 +718,22 @@ class _AppPageState extends State<AppPage> {
                           pm.openApp(app.app.id);
                         },
                       ),
-                    if (source != null &&
+                    if (!updating &&
+                        source != null &&
                         source.combinedAppSpecificSettingFormItems.isNotEmpty)
                       M3FloatingToolbarAction(
                         icon: Icons.edit,
                         semanticLabel: tr('additionalOptions'),
                         tooltip: tr('additionalOptions'),
-                        onPressed: updating
-                            ? () {}
-                            : () {
-                                showAdditionalOptionsDialog().then(
-                                  handleAdditionalOptionChanges,
-                                );
-                              },
+                        onPressed: () {
+                          showAdditionalOptionsDialog().then(
+                            handleAdditionalOptionChanges,
+                          );
+                        },
                       ),
-                    if (app.app.apkUrls.isNotEmpty == true ||
-                        app.app.otherAssetUrls.isNotEmpty == true)
+                    if (!updating &&
+                        (app.app.apkUrls.isNotEmpty == true ||
+                            app.app.otherAssetUrls.isNotEmpty == true))
                       M3FloatingToolbarAction(
                         icon: Icons.archive,
                         semanticLabel: tr(
@@ -742,17 +744,15 @@ class _AppPageState extends State<AppPage> {
                           'downloadX',
                           args: [lowerCaseIfEnglish(tr('releaseAsset'))],
                         ),
-                        onPressed: updating
-                            ? () {}
-                            : () async {
-                                try {
-                                  await appsProvider.downloadAppAssets([
-                                    app.app.id,
-                                  ], context);
-                                } catch (e) {
-                                  showError(e, context);
-                                }
-                              },
+                        onPressed: () async {
+                          try {
+                            await appsProvider.downloadAppAssets([
+                              app.app.id,
+                            ], context);
+                          } catch (e) {
+                            showError(e, context);
+                          }
+                        },
                       ),
                     M3FloatingToolbarAction(
                       icon: Icons.delete,

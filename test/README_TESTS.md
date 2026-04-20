@@ -5,9 +5,11 @@ This document describes the comprehensive test suite created for the changed fil
 ## Test Files Created
 
 ### 1. `test/translations_test.dart`
+
 Comprehensive validation tests for all translation JSON files.
 
 **Test Groups:**
+
 - **Translation Files Validation** (11 tests)
   - Verifies translations directory exists and contains files
   - Validates all JSON files are parseable
@@ -29,9 +31,11 @@ Comprehensive validation tests for all translation JSON files.
 **Total: 13 tests**
 
 ### 2. `test/config_files_test.dart`
+
 Validation tests for configuration files and project structure.
 
 **Test Groups:**
+
 - **Configuration Files Validation** (9 tests)
   - README.md existence and content validation
   - README.md markdown structure validation
@@ -66,6 +70,7 @@ Validation tests for configuration files and project structure.
 ### Files Tested
 
 #### Translation Files (17 files)
+
 - ✅ assets/translations/ar.json
 - ✅ assets/translations/bs.json
 - ✅ assets/translations/ca.json
@@ -85,6 +90,7 @@ Validation tests for configuration files and project structure.
 - ✅ assets/translations/it.json
 
 #### Configuration Files (8 files)
+
 - ✅ README.md
 - ✅ .qodo.toml
 - ✅ .github/ISSUE_TEMPLATE/bug_report.md
@@ -95,16 +101,19 @@ Validation tests for configuration files and project structure.
 - ✅ pubspec.yaml
 
 #### Files Not Requiring Unit Tests
+
 - ⚠️ .flutter (directory, not a testable file)
 
 ## Running the Tests
 
 ### Run All Tests
+
 ```bash
 flutter test
 ```
 
 ### Run Specific Test Suites
+
 ```bash
 # Run translation tests only
 flutter test test/translations_test.dart
@@ -114,6 +123,7 @@ flutter test test/config_files_test.dart
 ```
 
 ### Run with Verbose Output
+
 ```bash
 flutter test --reporter expanded
 ```
@@ -141,16 +151,19 @@ flutter test --reporter expanded
 ## Test Quality Features
 
 ### Comprehensive Coverage
+
 - Tests validate both structure and content
 - Edge cases covered (empty values, duplicate keys, encoding issues)
 - Cross-file consistency checks
 
 ### Actionable Failures
+
 - Clear error messages indicate exactly what failed and where
 - Specific file names and keys mentioned in failures
 - Suggestions for fixing common issues
 
 ### Maintainability
+
 - Tests are grouped logically by concern
 - Common setup shared via `setUpAll`
 - Test names clearly describe what is being validated
@@ -158,6 +171,7 @@ flutter test --reporter expanded
 ## Expected Test Results
 
 All tests should pass, validating:
+
 - ✅ 17 translation JSON files are valid and consistent
 - ✅ 3 GitHub workflow files are properly configured
 - ✅ Build configuration is correct

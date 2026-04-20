@@ -1571,7 +1571,11 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   width: (() {
                     final actionCount = [
                       1, // select all button
-                      1, // download button
+                      if (!(appsProvider.areDownloadsRunning() ||
+                              (existingUpdateIdsAllOrSelected.isEmpty &&
+                                  newInstallIdsAllOrSelected.isEmpty &&
+                                  trackOnlyUpdateIdsAllOrSelected.isEmpty)))
+                        1, // download button
                       if (selectedAppIds.isNotEmpty) 1, // share button
                       if (selectedAppIds.isNotEmpty) 1, // delete button
                       if (selectedAppIds.isNotEmpty) 1, // categorize button
@@ -1584,7 +1588,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   child: M3FloatingToolbar(
                     actions: [
                       M3FloatingToolbarAction(
-                        icon: Icons.select_all,
+                        icon: selectedAppIds.length == listedApps.length
+                            ? Icons.deselect
+                            : Icons.select_all,
                         label: selectedAppIds.isEmpty
                             ? listedApps.length.toString()
                             : selectedAppIds.length.toString(),
