@@ -491,7 +491,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       children: [
                         ExpansionTile(
                           leading: Icon(
-                            Icons.system_update_rounded,
+                            Icons.update,
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           title: Text(
@@ -983,7 +983,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         gap24,
                         ExpansionTile(
                           leading: Icon(
-                            Icons.source_rounded,
+                            Icons.cloud_download,
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           title: Text(
