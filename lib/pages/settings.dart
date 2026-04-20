@@ -1879,6 +1879,67 @@ class CategorySelector extends StatelessWidget {
   }
 }
 
+class LicenseDialog extends StatelessWidget {
+  const LicenseDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      scrollable: true,
+      title: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            child: Icon(
+              Icons.description_rounded,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+              size: 28,
+            ),
+          ),
+          horizontalGap16,
+          Text(tr('license')),
+        ],
+      ),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: FutureBuilder<String>(
+          future: rootBundle.loadString('LICENSE.md'),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return SelectableText(
+                snapshot.data!,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontFamily: 'monospace',
+                  height: 1.5,
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Text(
+                tr('error'),
+                style: Theme.of(context).textTheme.bodyMedium,
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(tr('close')),
+        ),
+      ],
+    );
+  }
+}
+
 class AboutDialog extends StatefulWidget {
   const AboutDialog({super.key});
 
@@ -2090,9 +2151,11 @@ class _AboutDialogState extends State<AboutDialog> {
               gap8,
               TextButton.icon(
                 onPressed: () {
-                  launchUrlString(
-                    'https://github.com/omeritzics/Updatium/blob/main/LICENSE.md',
-                    mode: LaunchMode.externalApplication,
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext ctx) {
+                      return const LicenseDialog();
+                    },
                   );
                 },
                 icon: const Icon(Icons.description_rounded, size: 18),
