@@ -1492,78 +1492,76 @@ class CategoryTagEditor extends StatelessWidget {
                   trailing: InkWell(
                     borderRadius: BorderRadius.circular(20),
                     onTap: () async {
-                        final Color colorBeforeDialog = categoryColor;
-                        final result =
-                            await ColorPicker(
-                              color: categoryColor,
-                              onColorChanged: (Color color) =>
-                                  categoryColor = color,
-                              actionButtons: const ColorPickerActionButtons(
-                                okButton: true,
-                                closeButton: true,
-                                dialogActionButtons: false,
-                              ),
-                              pickersEnabled: const <ColorPickerType, bool>{
-                                ColorPickerType.both: false,
-                                ColorPickerType.primary: false,
-                                ColorPickerType.accent: false,
-                                ColorPickerType.bw: false,
-                                ColorPickerType.custom: true,
-                                ColorPickerType.wheel: true,
-                              },
-                              pickerTypeLabels: <ColorPickerType, String>{
-                                ColorPickerType.custom: tr('standard'),
-                                ColorPickerType.wheel: tr('custom'),
-                              },
-                              wheelDiameter: 192,
-                              wheelSquareBorderRadius: 32,
-                              width: 48,
-                              height: 48,
-                              borderRadius: 24,
-                              spacing: 8,
-                              runSpacing: 8,
-                              enableShadesSelection: false,
-                              showMaterialName: false,
-                              showColorName: false,
-                              copyPasteBehavior:
-                                  const ColorPickerCopyPasteBehavior(
-                                    longPressMenu: true,
-                                  ),
-                            ).showPickerDialog(
-                              context,
-                              transitionBuilder:
-                                  (
-                                    BuildContext context,
-                                    Animation<double> a1,
-                                    Animation<double> a2,
-                                    Widget widget,
-                                  ) {
-                                    final curvedValue =
-                                        Curves.easeInOutBack.transform(
-                                          a1.value,
-                                        ) -
-                                        1.0;
-                                    return Transform(
-                                      alignment: Alignment.center,
-                                      transform: Matrix4.diagonal3Values(
-                                        curvedValue,
-                                        curvedValue,
-                                        1,
-                                      ),
-                                      child: Opacity(
-                                        opacity: curvedValue,
-                                        child: widget,
-                                      ),
-                                    );
-                                  },
-                              transitionDuration: const Duration(
-                                milliseconds: 250,
-                              ),
-                            );
-                        if (!result) {
-                          categoryColor = colorBeforeDialog;
-                        }
-                      },
+                      final Color colorBeforeDialog = categoryColor;
+                      final result =
+                          await ColorPicker(
+                            color: categoryColor,
+                            onColorChanged: (Color color) =>
+                                categoryColor = color,
+                            actionButtons: const ColorPickerActionButtons(
+                              okButton: true,
+                              closeButton: true,
+                              dialogActionButtons: false,
+                            ),
+                            pickersEnabled: const <ColorPickerType, bool>{
+                              ColorPickerType.both: false,
+                              ColorPickerType.primary: false,
+                              ColorPickerType.accent: false,
+                              ColorPickerType.bw: false,
+                              ColorPickerType.custom: true,
+                              ColorPickerType.wheel: true,
+                            },
+                            pickerTypeLabels: <ColorPickerType, String>{
+                              ColorPickerType.custom: tr('standard'),
+                              ColorPickerType.wheel: tr('custom'),
+                            },
+                            wheelDiameter: 192,
+                            wheelSquareBorderRadius: 32,
+                            width: 48,
+                            height: 48,
+                            borderRadius: 24,
+                            spacing: 8,
+                            runSpacing: 8,
+                            enableShadesSelection: false,
+                            showMaterialName: false,
+                            showColorName: false,
+                            copyPasteBehavior:
+                                const ColorPickerCopyPasteBehavior(
+                                  longPressMenu: true,
+                                ),
+                          ).showPickerDialog(
+                            context,
+                            transitionBuilder:
+                                (
+                                  BuildContext context,
+                                  Animation<double> a1,
+                                  Animation<double> a2,
+                                  Widget widget,
+                                ) {
+                                  final curvedValue =
+                                      Curves.easeInOutBack.transform(a1.value) -
+                                      1.0;
+                                  return Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.diagonal3Values(
+                                      curvedValue,
+                                      curvedValue,
+                                      1,
+                                    ),
+                                    child: Opacity(
+                                      opacity: curvedValue,
+                                      child: widget,
+                                    ),
+                                  );
+                                },
+                            transitionDuration: const Duration(
+                              milliseconds: 250,
+                            ),
+                          );
+                      if (!result) {
+                        categoryColor = colorBeforeDialog;
+                      }
+                    },
                     child: Container(
                       width: 40,
                       height: 40,
@@ -1616,7 +1614,9 @@ class CategoryTagEditor extends StatelessWidget {
       settingsProvider.categories[oldName] ??
           Theme.of(context).colorScheme.primary.value,
     );
-    final TextEditingController nameController = TextEditingController(text: oldName);
+    final TextEditingController nameController = TextEditingController(
+      text: oldName,
+    );
 
     showDialog<String?>(
       context: context,
@@ -1645,78 +1645,76 @@ class CategoryTagEditor extends StatelessWidget {
                   trailing: InkWell(
                     borderRadius: BorderRadius.circular(20),
                     onTap: () async {
-                        final Color colorBeforeDialog = categoryColor;
-                        final result =
-                            await ColorPicker(
-                              color: categoryColor,
-                              onColorChanged: (Color color) =>
-                                  categoryColor = color,
-                              actionButtons: const ColorPickerActionButtons(
-                                okButton: true,
-                                closeButton: true,
-                                dialogActionButtons: false,
-                              ),
-                              pickersEnabled: const <ColorPickerType, bool>{
-                                ColorPickerType.both: false,
-                                ColorPickerType.primary: false,
-                                ColorPickerType.accent: false,
-                                ColorPickerType.bw: false,
-                                ColorPickerType.custom: true,
-                                ColorPickerType.wheel: true,
-                              },
-                              pickerTypeLabels: <ColorPickerType, String>{
-                                ColorPickerType.custom: tr('standard'),
-                                ColorPickerType.wheel: tr('custom'),
-                              },
-                              wheelDiameter: 192,
-                              wheelSquareBorderRadius: 32,
-                              width: 48,
-                              height: 48,
-                              borderRadius: 24,
-                              spacing: 8,
-                              runSpacing: 8,
-                              enableShadesSelection: false,
-                              showMaterialName: false,
-                              showColorName: false,
-                              copyPasteBehavior:
-                                  const ColorPickerCopyPasteBehavior(
-                                    longPressMenu: true,
-                                  ),
-                            ).showPickerDialog(
-                              context,
-                              transitionBuilder:
-                                  (
-                                    BuildContext context,
-                                    Animation<double> a1,
-                                    Animation<double> a2,
-                                    Widget widget,
-                                  ) {
-                                    final curvedValue =
-                                        Curves.easeInOutBack.transform(
-                                          a1.value,
-                                        ) -
-                                        1.0;
-                                    return Transform(
-                                      alignment: Alignment.center,
-                                      transform: Matrix4.diagonal3Values(
-                                        curvedValue,
-                                        curvedValue,
-                                        1,
-                                      ),
-                                      child: Opacity(
-                                        opacity: curvedValue,
-                                        child: widget,
-                                      ),
-                                    );
-                                  },
-                              transitionDuration: const Duration(
-                                milliseconds: 250,
-                              ),
-                            );
-                        if (!result) {
-                          categoryColor = colorBeforeDialog;
-                        }
-                      },
+                      final Color colorBeforeDialog = categoryColor;
+                      final result =
+                          await ColorPicker(
+                            color: categoryColor,
+                            onColorChanged: (Color color) =>
+                                categoryColor = color,
+                            actionButtons: const ColorPickerActionButtons(
+                              okButton: true,
+                              closeButton: true,
+                              dialogActionButtons: false,
+                            ),
+                            pickersEnabled: const <ColorPickerType, bool>{
+                              ColorPickerType.both: false,
+                              ColorPickerType.primary: false,
+                              ColorPickerType.accent: false,
+                              ColorPickerType.bw: false,
+                              ColorPickerType.custom: true,
+                              ColorPickerType.wheel: true,
+                            },
+                            pickerTypeLabels: <ColorPickerType, String>{
+                              ColorPickerType.custom: tr('standard'),
+                              ColorPickerType.wheel: tr('custom'),
+                            },
+                            wheelDiameter: 192,
+                            wheelSquareBorderRadius: 32,
+                            width: 48,
+                            height: 48,
+                            borderRadius: 24,
+                            spacing: 8,
+                            runSpacing: 8,
+                            enableShadesSelection: false,
+                            showMaterialName: false,
+                            showColorName: false,
+                            copyPasteBehavior:
+                                const ColorPickerCopyPasteBehavior(
+                                  longPressMenu: true,
+                                ),
+                          ).showPickerDialog(
+                            context,
+                            transitionBuilder:
+                                (
+                                  BuildContext context,
+                                  Animation<double> a1,
+                                  Animation<double> a2,
+                                  Widget widget,
+                                ) {
+                                  final curvedValue =
+                                      Curves.easeInOutBack.transform(a1.value) -
+                                      1.0;
+                                  return Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.diagonal3Values(
+                                      curvedValue,
+                                      curvedValue,
+                                      1,
+                                    ),
+                                    child: Opacity(
+                                      opacity: curvedValue,
+                                      child: widget,
+                                    ),
+                                  );
+                                },
+                            transitionDuration: const Duration(
+                              milliseconds: 250,
+                            ),
+                          );
+                      if (!result) {
+                        categoryColor = colorBeforeDialog;
+                      }
+                    },
                     child: Container(
                       width: 40,
                       height: 40,
