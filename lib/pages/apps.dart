@@ -658,11 +658,17 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           child: Text(tr('update')),
         );
       } else {
-        // Show checkmark icon when app is already up-to-date
-        return Icon(
-          Icons.check_circle_outline,
-          color: Theme.of(context).colorScheme.primary,
-          size: isCompact ? 20 : 24,
+        return FilledButton.tonal(
+          onPressed: null,
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
+            foregroundColor: WidgetStateProperty.all(Colors.grey),
+            visualDensity: isCompact ? VisualDensity.compact : null,
+            minimumSize: WidgetStateProperty.all(
+              isCompact ? const Size(60, 32) : null,
+            ),
+          ),
+          child: Text(tr('updated')),
         );
       }
     }
@@ -1561,136 +1567,117 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               bottom: 16,
               child: Align(
                 alignment: Alignment.center,
-                child: SizedBox(
-                  width: (() {
-                    final actionCount = [
-                      1, // select all button
-                      if (!(appsProvider.areDownloadsRunning() ||
-                          (existingUpdateIdsAllOrSelected.isEmpty &&
-                              newInstallIdsAllOrSelected.isEmpty &&
-                              trackOnlyUpdateIdsAllOrSelected.isEmpty)))
-                        1, // download button
-                      if (selectedAppIds.isNotEmpty) 1, // share button
-                      if (selectedAppIds.isNotEmpty) 1, // delete button
-                      if (selectedAppIds.isNotEmpty) 1, // categorize button
-                      if (selectedAppIds.isNotEmpty) 1, // pin button
-                      if (selectedAppIds.isNotEmpty) 1, // more button
-                    ].length;
-                    return ((actionCount * 56) + ((actionCount - 1) * 8) + 32)
-                        .toDouble();
-                  })(),
-                  child: M3FloatingToolbar(
-                    actions: [
+                child: M3FloatingToolbar(
+                  actions: [
+                    M3FloatingToolbarAction(
+                      icon: selectedAppIds.length == listedApps.length
+                          ? Icons.deselect
+                          : Icons.select_all,
+                      label: selectedAppIds.isEmpty
+                          ? listedApps.length.toString()
+                          : selectedAppIds.length.toString(),
+                      semanticLabel: selectedAppIds.isEmpty
+                          ? tr('installUpdateApps')
+                          : tr('installUpdateSelectedApps'),
+                      tooltip: selectedAppIds.isEmpty
+                          ? tr('installUpdateApps')
+                          : tr('installUpdateSelectedApps'),
+                      onPressed: selectedAppIds.isEmpty
+                          ? () {
+                              selectThese(
+                                listedApps.map((e) => e.app).toList(),
+                              );
+                            }
+                          : () {
+                              clearSelected();
+                            },
+                    ),
+                    if (!(appsProvider.areDownloadsRunning() ||
+                        (existingUpdateIdsAllOrSelected.isEmpty &&
+                            newInstallIdsAllOrSelected.isEmpty &&
+                            trackOnlyUpdateIdsAllOrSelected.isEmpty)))
                       M3FloatingToolbarAction(
-                        icon: selectedAppIds.length == listedApps.length
-                            ? Icons.deselect
-                            : Icons.select_all,
-                        label: selectedAppIds.isEmpty
-                            ? listedApps.length.toString()
-                            : selectedAppIds.length.toString(),
+                        icon: Icons.file_download,
                         semanticLabel: selectedAppIds.isEmpty
                             ? tr('installUpdateApps')
                             : tr('installUpdateSelectedApps'),
                         tooltip: selectedAppIds.isEmpty
                             ? tr('installUpdateApps')
                             : tr('installUpdateSelectedApps'),
-                        onPressed: selectedAppIds.isEmpty
-                            ? () {
-                                selectThese(
-                                  listedApps.map((e) => e.app).toList(),
-                                );
-                              }
-                            : () {
-                                clearSelected();
-                              },
+                        onPressed: getMassObtainFunction(),
                       ),
-                      if (!(appsProvider.areDownloadsRunning() ||
-                          (existingUpdateIdsAllOrSelected.isEmpty &&
-                              newInstallIdsAllOrSelected.isEmpty &&
-                              trackOnlyUpdateIdsAllOrSelected.isEmpty)))
-                        M3FloatingToolbarAction(
-                          icon: Icons.file_download,
-                          semanticLabel: selectedAppIds.isEmpty
-                              ? tr('installUpdateApps')
-                              : tr('installUpdateSelectedApps'),
-                          tooltip: selectedAppIds.isEmpty
-                              ? tr('installUpdateApps')
-                              : tr('installUpdateSelectedApps'),
-                          onPressed: getMassObtainFunction(),
-                        ),
-                      if (selectedAppIds.isNotEmpty)
-                        M3FloatingToolbarAction(
-                          icon: Icons.share,
-                          semanticLabel:
-                              '${tr('share')} - ${tr('updatiumExport')}',
-                          tooltip: '${tr('share')} - ${tr('updatiumExport')}',
-                          onPressed: () {
-                            var encoder = const JsonEncoder.withIndent("    ");
-                            var exportJSON = encoder.convert(
-                              appsProvider.generateExportJSON(
-                                appIds: selectedApps.map((e) => e.id).toList(),
-                                overrideExportSettings: 0,
-                              ),
-                            );
-                            String fn =
-                                '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
-                            XFile f = XFile.fromData(
-                              Uint8List.fromList(utf8.encode(exportJSON)),
-                              mimeType: 'application/json',
-                              name: fn,
-                            );
-                            SharePlus.instance.share(ShareParams(files: [f]));
-                          },
-                        ),
-                      if (selectedAppIds.isNotEmpty)
-                        M3FloatingToolbarAction(
-                          icon: Icons.delete,
-                          semanticLabel: tr('removeSelectedApps'),
-                          tooltip: tr('removeSelectedApps'),
-                          onPressed: () {
-                            appsProvider.removeAppsWithModal(
-                              context,
-                              selectedApps.toList(),
-                            );
-                          },
-                        ),
-                      if (selectedAppIds.isNotEmpty)
-                        M3FloatingToolbarAction(
-                          icon: Icons.category,
-                          semanticLabel: tr('categorize'),
-                          tooltip: tr('categorize'),
-                          onPressed: () {
-                            launchCategorizeDialog()();
-                          },
-                        ),
-                      if (selectedAppIds.isNotEmpty)
-                        M3FloatingToolbarAction(
-                          icon: Icons.push_pin,
-                          semanticLabel:
-                              selectedApps
-                                  .where((element) => element.pinned)
-                                  .isEmpty
-                              ? tr('pinToTop')
-                              : tr('unpinFromTop'),
-                          tooltip:
-                              selectedApps
-                                  .where((element) => element.pinned)
-                                  .isEmpty
-                              ? tr('pinToTop')
-                              : tr('unpinFromTop'),
-                          onPressed: pinSelectedApps,
-                        ),
-                      if (selectedAppIds.isNotEmpty)
-                        M3FloatingToolbarAction(
-                          icon: Icons.more_horiz,
-                          semanticLabel: tr('more'),
-                          tooltip: tr('more'),
-                          onPressed: () {
-                            showMoreOptionsDialog();
-                          },
-                        ),
-                    ],
-                  ),
+                    if (selectedAppIds.isNotEmpty)
+                      M3FloatingToolbarAction(
+                        icon: Icons.share,
+                        semanticLabel:
+                            '${tr('share')} - ${tr('updatiumExport')}',
+                        tooltip: '${tr('share')} - ${tr('updatiumExport')}',
+                        onPressed: () {
+                          var encoder = const JsonEncoder.withIndent("    ");
+                          var exportJSON = encoder.convert(
+                            appsProvider.generateExportJSON(
+                              appIds: selectedApps.map((e) => e.id).toList(),
+                              overrideExportSettings: 0,
+                            ),
+                          );
+                          String fn =
+                              '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
+                          XFile f = XFile.fromData(
+                            Uint8List.fromList(utf8.encode(exportJSON)),
+                            mimeType: 'application/json',
+                            name: fn,
+                          );
+                          SharePlus.instance.share(ShareParams(files: [f]));
+                        },
+                      ),
+                    if (selectedAppIds.isNotEmpty)
+                      M3FloatingToolbarAction(
+                        icon: Icons.delete,
+                        semanticLabel: tr('removeSelectedApps'),
+                        tooltip: tr('removeSelectedApps'),
+                        onPressed: () {
+                          appsProvider.removeAppsWithModal(
+                            context,
+                            selectedApps.toList(),
+                          );
+                        },
+                      ),
+                    if (selectedAppIds.isNotEmpty)
+                      M3FloatingToolbarAction(
+                        icon: Icons.category,
+                        semanticLabel: tr('categorize'),
+                        tooltip: tr('categorize'),
+                        onPressed: () {
+                          launchCategorizeDialog()();
+                        },
+                      ),
+                    if (selectedAppIds.isNotEmpty)
+                      M3FloatingToolbarAction(
+                        icon: Icons.push_pin,
+                        semanticLabel:
+                            selectedApps
+                                .where((element) => element.pinned)
+                                .isEmpty
+                            ? tr('pinToTop')
+                            : tr('unpinFromTop'),
+                        tooltip:
+                            selectedApps
+                                .where((element) => element.pinned)
+                                .isEmpty
+                            ? tr('pinToTop')
+                            : tr('unpinFromTop'),
+                        onPressed: pinSelectedApps,
+                      ),
+                    if (selectedAppIds.isNotEmpty)
+                      M3FloatingToolbarAction(
+                        icon: Icons.more_horiz,
+                        semanticLabel: tr('more'),
+                        tooltip: tr('more'),
+                        onPressed: () {
+                          showMoreOptionsDialog();
+                        },
+                      ),
+                  ],
                 ),
               ),
             ),

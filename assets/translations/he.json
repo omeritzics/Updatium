@@ -126,8 +126,8 @@
     "followSystemThemeExplanation": "שימוש בערכת נושא כמו המערכת אפשרי רק בזכות יישומי צד־שלישי",
     "useBlackTheme": "שימוש בצבע שחור מוחלט לערכת הנושא הכהה",
     "appSortBy": "מיון יישומים לפי",
-    "authorName": "מפתחים/\u200Fשם",
-    "nameAuthor": "שם/\u200Fמפתחים",
+    "authorName": "מפתחים/‏שם",
+    "nameAuthor": "שם/‏מפתחים",
     "asAdded": "כפי שנוספו",
     "appSortOrder": "סדר מיון היישומים",
     "ascending": "עולה",
@@ -507,5 +507,11 @@
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "נא לכבות את המצב הבטוח תחילה",
     "gotIt": "הבנתי",
-    "version": "גרסה"
+    "version": "גרסה",
+    "open": "Open",
+    "added": "Added",
+    "fileExists": "File already exists",
+    "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
+    "fileName": "File name",
+    "downloadCancelled": "Download cancelled"
 }

@@ -302,6 +302,83 @@ void deleteFile(File file) {
   }
 }
 
+String generateUniqueFileName(String baseName, String ext, String destDir) {
+  String fileName = '$baseName.$ext';
+  int counter = 1;
+  while (File('$destDir/$fileName').existsSync()) {
+    fileName = '$baseName($counter).$ext';
+    counter++;
+  }
+  return fileName;
+}
+
+Future<String> determineFileExtension(
+  String url,
+  Map<String, String>? headers, {
+  bool allowInsecure = false,
+}) async {
+  var reqHeaders = headers ?? {};
+  var req = http.Request('GET', Uri.parse(url));
+  req.headers.addAll(reqHeaders);
+  var headersClient = IOClient(createHttpClient(allowInsecure));
+  http.StreamedResponse headersResponse = await headersClient.send(req);
+  var resHeaders = headersResponse.headers;
+  headersClient.close();
+
+  String ext = resHeaders['content-disposition']?.split('.').last ?? 'apk';
+  if (ext.endsWith('"') || ext.endsWith("other")) {
+    ext = ext.substring(0, ext.length - 1);
+  }
+  if ((source_provider.hasSupportedApkExtension(
+            Uri.tryParse(url)?.path ?? url,
+          ) ||
+          ext == 'attachment') &&
+      ext != 'apk') {
+    ext = 'apk';
+  }
+  return ext;
+}
+
+Future<String?> promptForFileName(
+  BuildContext context,
+  String suggestedName,
+) async {
+  final controller = TextEditingController(text: suggestedName);
+  return showDialog<String>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(tr('fileExists')),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(tr('fileExistsPrompt')),
+            const SizedBox(height: 16),
+            TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                labelText: tr('fileName'),
+                border: const OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, null),
+            child: Text(tr('cancel')),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, controller.text),
+            child: Text(tr('download')),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 Future<File> downloadFile(
   String url,
   String fileName,
@@ -665,6 +742,45 @@ class AppsProvider with ChangeNotifier {
         downloadUrl,
         forAPKDownload: true,
       );
+
+      // Determine file extension and check for conflicts
+      String ext;
+      if (source.urlsAlwaysHaveExtension) {
+        ext = app.apkUrls[app.preferredApkIndex].key.split('.').last;
+      } else {
+        ext = await determineFileExtension(
+          downloadUrl,
+          headers,
+          allowInsecure: app.additionalSettings['allowInsecure'] == true,
+        );
+      }
+
+      // Check for existing file and prompt for rename if needed
+      String baseFileName = source.urlsAlwaysHaveExtension
+          ? fileNameNoExt.substring(0, fileNameNoExt.lastIndexOf('.'))
+          : fileNameNoExt;
+      String finalFileName = source.urlsAlwaysHaveExtension
+          ? fileNameNoExt
+          : '$baseFileName.$ext';
+
+      if (context != null &&
+          File('${APKDir.path}/$finalFileName').existsSync() &&
+          useExisting) {
+        String suggestedName = generateUniqueFileName(baseFileName, ext, APKDir.path);
+        String? userFileName = await promptForFileName(context, suggestedName);
+        if (userFileName == null) {
+          throw UpdatiumError(tr('downloadCancelled'));
+        }
+        // Update fileNameNoExt based on user input
+        if (source.urlsAlwaysHaveExtension) {
+          fileNameNoExt = userFileName;
+        } else {
+          fileNameNoExt = userFileName.contains('.')
+              ? userFileName.substring(0, userFileName.lastIndexOf('.'))
+              : userFileName;
+        }
+      }
+
       var downloadedFile = await downloadFileWithRetry(
         downloadUrl,
         fileNameNoExt,

@@ -489,5 +489,11 @@
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
     "gotIt": "我知道了",
-    "version": "Version"
+    "version": "Version",
+    "open": "Open",
+    "added": "Added",
+    "fileExists": "File already exists",
+    "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
+    "fileName": "File name",
+    "downloadCancelled": "Download cancelled"
 }

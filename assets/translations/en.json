@@ -494,5 +494,9 @@
   "gotIt": "Got it",
   "version": "Version",
   "open": "Open",
-  "added": "Added"
+  "added": "Added",
+  "fileExists": "File already exists",
+  "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
+  "fileName": "File name",
+  "downloadCancelled": "Download cancelled"
 }
