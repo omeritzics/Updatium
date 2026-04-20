@@ -1908,7 +1908,7 @@ class LicenseDialog extends StatelessWidget {
       content: SizedBox(
         width: double.maxFinite,
         child: FutureBuilder<String>(
-          future: rootBundle.loadString('LICENSE.md'),
+          future: rootBundle.loadString('LICENSE.txt'),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return SelectableText(
