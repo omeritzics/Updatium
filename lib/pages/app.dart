@@ -742,19 +742,19 @@ class _AppPageState extends State<AppPage> {
                     semanticLabel: tr('remove'),
                     tooltip: tr('remove'),
                     onPressed: () {
-                      appsProvider
-                          .removeAppsWithModal(context, [app.app])
-                          .then((result) {
-                            if (result == true) {
-                              Navigator.of(context).pop();
-                            }
-                          });
+                      appsProvider.removeAppsWithModal(context, [app.app]).then(
+                        (result) {
+                          if (result == true) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      );
                     },
                   ),
-                  ],
-                ),
+                ],
               ),
             ),
+          ),
         ],
       ),
     );

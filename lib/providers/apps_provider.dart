@@ -766,7 +766,11 @@ class AppsProvider with ChangeNotifier {
       if (context != null &&
           File('${APKDir.path}/$finalFileName').existsSync() &&
           useExisting) {
-        String suggestedName = generateUniqueFileName(baseFileName, ext, APKDir.path);
+        String suggestedName = generateUniqueFileName(
+          baseFileName,
+          ext,
+          APKDir.path,
+        );
         String? userFileName = await promptForFileName(context, suggestedName);
         if (userFileName == null) {
           throw UpdatiumError(tr('downloadCancelled'));
