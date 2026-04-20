@@ -1605,9 +1605,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                               },
                       ),
                       if (!(appsProvider.areDownloadsRunning() ||
-                              (existingUpdateIdsAllOrSelected.isEmpty &&
-                                  newInstallIdsAllOrSelected.isEmpty &&
-                                  trackOnlyUpdateIdsAllOrSelected.isEmpty)))
+                          (existingUpdateIdsAllOrSelected.isEmpty &&
+                              newInstallIdsAllOrSelected.isEmpty &&
+                              trackOnlyUpdateIdsAllOrSelected.isEmpty)))
                         M3FloatingToolbarAction(
                           icon: Icons.file_download,
                           semanticLabel: selectedAppIds.isEmpty
