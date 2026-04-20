@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Installationsstatus for alle valgte apps nulstilles.\n\nDette kan hjælpe, når en forkert app-version vises i Updatium grundet mislykkede opdateringer eller andre problemer.",
     "customLinkMessage": "Disse links virker på enheder med Updatium installeret",
     "shareAppConfigLinks": "Del app-konfiguration som HTML-link",
-    "shareSelectedAppURLs": "Del valgte app-URL'er",
     "resetInstallStatus": "Nulstil installationsstatus",
     "more": "Mere",
     "removeOutdatedFilter": "Fjern forældet app-filter",

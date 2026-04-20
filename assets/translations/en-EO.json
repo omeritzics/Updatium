@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Instaladostato de ĉiuj selektitaj apoj estas rekomencota.\n\nTio povas utili kiam la versio de la montrata application en Updatium estas malĝusta kaŭze de malsukcesaj ĝidatigoj aŭ aliaj problemoj.",
     "customLinkMessage": "Tiuj ligiloj funkcias en disponaĵoj kun Updatium instalita",
     "shareAppConfigLinks": "Diskonigi la apo-agordojn kiel HTML ligilo",
-    "shareSelectedAppURLs": "Diskonigi la selektitajn apo-URLjn",
     "resetInstallStatus": "Rekomenci la instaladostaton de la apoj",
     "more": "Pli",
     "removeOutdatedFilter": "Forigi la filtron de malmodernaj apoj",

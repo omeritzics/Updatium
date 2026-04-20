@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "নির্বাচিত অ্যাপগুলোর ইনস্টল স্ট্যাটাস রিসেট করা হবে।\n\nব্যর্থ আপডেট বা অন্য সমস্যার কারণে Updatium-এ ভুল ভার্সন দেখালে এটি সাহায্য করতে পারে।",
     "customLinkMessage": "এই লিঙ্কগুলো শুধুমাত্র Updatium ইনস্টল করা ডিভাইসে কাজ করে",
     "shareAppConfigLinks": "অ্যাপ কনফিগারেশন HTML লিঙ্ক হিসেবে শেয়ার করুন",
-    "shareSelectedAppURLs": "নির্বাচিত অ্যাপ URL শেয়ার করুন",
     "resetInstallStatus": "ইনস্টল স্ট্যাটাস রিসেট করুন",
     "more": "আরও",
     "removeOutdatedFilter": "পুরনো অ্যাপ ফিল্টার সরান",

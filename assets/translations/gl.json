@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Vaise restablecer o estado de instalación de todas as app seleccionadas.\n\nIsto pode ser de axuda cando a versión da app mostrada en Obtanium non é correcta debido a actualizacións que fallaron ou outros problemas.",
     "customLinkMessage": "Estas ligazóns funcionan en dispositivos onde Obtanium está instalada",
     "shareAppConfigLinks": "Compartir a configuración da app como ligazón HTML",
-    "shareSelectedAppURLs": "Compartir o URL das apps seleccionadas",
     "resetInstallStatus": "Restablecer estado de instalación",
     "more": "Máis",
     "removeOutdatedFilter": "Retirar o filtro de app desactualizada",

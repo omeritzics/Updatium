@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "מצב ההתקנה יתאפס לכל היישומים הנבחרים.\n\nThis can help when the app version shown in Updatium is incorrect due to failed updates or other issues.",
     "customLinkMessage": "הקישורים האלה עובדים במכשירים שבהם מותקן היישום Updatium",
     "shareAppConfigLinks": "שיתוף תצורת היישום בתור קישור HTML",
-    "shareSelectedAppURLs": "שיתוף כתובות היישומים שנבחרו",
     "resetInstallStatus": "איפוס מצב התקנה",
     "more": "עוד",
     "removeOutdatedFilter": "סינון להסרת יישומים שאינם מעודכנים",

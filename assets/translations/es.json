@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Se reiniciará el estado de instalación de las aplicaciones seleccionadas.\n\nPuede ser de útil cuando la versión de la aplicación mostrada en Updatium es incorrecta por actualizaciones fallidas u otros motivos.",
     "customLinkMessage": "Estos enlaces funcionan en dispositivos con Updatium instalado",
     "shareAppConfigLinks": "Compartir configuración de la app como enlace HTML",
-    "shareSelectedAppURLs": "Compartir URL de las apps seleccionadas",
     "resetInstallStatus": "Reiniciar estado de instalación",
     "more": "Más",
     "removeOutdatedFilter": "Eliminar filtro de aplicaciones desactualizado",

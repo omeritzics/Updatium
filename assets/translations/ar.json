@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "سيتم إعادة تعيين حالة التثبيت لأي تطبيقات محددة.\n\nقد يساعد هذا عندما يكون إصدار التطبيق المعروض في Updatium غير صحيح بسبب فشل التحديثات أو مشاكل أخرى.",
     "customLinkMessage": "هذه الروابط تعمل على الأجهزة التي بها Updatium مثبتًا",
     "shareAppConfigLinks": "مشاركة تكوين التطبيق كرابط HTML",
-    "shareSelectedAppURLs": "مشاركة روابط التطبيقات المحددة",
     "resetInstallStatus": "إعادة تعيين حالة التثبيت",
     "more": "المزيد",
     "removeOutdatedFilter": "أزل تصفية التطبيقات غير المحدثة",

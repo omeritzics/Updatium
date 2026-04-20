@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Trạng thái cài đặt của mọi Ứng dụng đã chọn sẽ được đặt lại.\n\nĐiều này có thể hữu ích khi phiên bản Ứng dụng hiển thị trong Updatium không chính xác do cập nhật không thành công hoặc các sự cố khác.",
     "customLinkMessage": "Các liên kết này hoạt động trên các thiết bị có cài đặt Updatium",
     "shareAppConfigLinks": "Chia sẻ cấu hình ứng dụng dưới dạng liên kết HTML",
-    "shareSelectedAppURLs": "Chia sẻ URL ứng dụng đã chọn",
     "resetInstallStatus": "Đặt lại trạng thái cài đặt",
     "more": "Nhiều hơn",
     "removeOutdatedFilter": "Xóa bộ lọc ứng dụng lỗi thời",

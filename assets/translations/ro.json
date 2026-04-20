@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Starea de instalare a oricăror aplicații selectate va fi resetată.\n\nAcest lucru poate ajuta atunci când versiunea aplicației afișată în Updatium este incorectă din cauza actualizărilor eșuate sau a altor probleme.",
     "customLinkMessage": "Aceste linkuri funcționează pe dispozitivele cu Updatium instalat",
     "shareAppConfigLinks": "Distribuiți configurația aplicației ca link HTML",
-    "shareSelectedAppURLs": "Distribuiți URL-urile aplicațiilor selectate",
     "resetInstallStatus": "Resetează starea de instalare",
     "more": "Mai mult",
     "removeOutdatedFilter": "Elimină filtrul de aplicații neactualizate",

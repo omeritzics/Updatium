@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "任何選取應用程式的安裝狀態將被重設。\n\n這可以在由於更新失敗或其他問題導致 Updatium 顯示的應用程式版本不正確時有所幫助。",
     "customLinkMessage": "這些連結適用於已安裝 Updatium 的裝置",
     "shareAppConfigLinks": "分享應用程式設定為 HTML 連結",
-    "shareSelectedAppURLs": "分享選取的應用程式 URL",
     "resetInstallStatus": "重設安裝狀態",
     "more": "更多",
     "removeOutdatedFilter": "移除過時應用程式過濾",

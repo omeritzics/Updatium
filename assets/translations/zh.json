@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "选中应用的安装状态将会被重置。\n\n当更新安装失败或其他问题导致 Updatium 中的应用版本显示错误时，可以尝试通过此方法解决。",
     "customLinkMessage": "分享链接仅适用于已安装 Updatium 的设备",
     "shareAppConfigLinks": "通过链接分享应用配置",
-    "shareSelectedAppURLs": "分享选中应用的 URL",
     "resetInstallStatus": "重置安装状态",
     "more": "更多",
     "removeOutdatedFilter": "删除失效的应用筛选",

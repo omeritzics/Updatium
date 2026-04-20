@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Stav instalace vybraných aplikací bude resetován.\n\nTo může být užitečné, pokud je verze aplikace zobrazená v aplikaci Updatium nesprávná z důvodu neúspěšných aktualizací nebo jiných problémů.",
     "customLinkMessage": "Tyto odkazy fungují na zařízeních s nainstalovaným Updatium",
     "shareAppConfigLinks": "Sdílet konfiguraci aplikace jako odkaz HTML",
-    "shareSelectedAppURLs": "Sdílet adresy URL vybraných aplikací",
     "resetInstallStatus": "Obnovit stav instalace",
     "more": "Více",
     "removeOutdatedFilter": "Odstranit filtr neaktuálních aplikací",

@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "選択したアプリのインストール状態がリセットされます。\n\nアップデートに失敗した場合など、Updatiumに表示されるアプリのバージョンが正しくない場合に役立ちます。",
     "customLinkMessage": "これらのリンクはUpdatiumがインストールされたデバイスで動作します",
     "shareAppConfigLinks": "アプリの設定をHTMLリンクとして共有する",
-    "shareSelectedAppURLs": "選択したアプリのURLを共有する",
     "resetInstallStatus": "インストール状態をリセットする",
     "more": "その他",
     "removeOutdatedFilter": "アップデートが存在するアプリのフィルターを解除",

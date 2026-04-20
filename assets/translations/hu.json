@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "A kiválasztott alkalmazások telepítési állapota visszaáll.\n\nEz akkor segíthet, ha az Updatiumban megjelenített alkalmazás-verzió hibás, a frissítések vagy egyéb problémák miatt.",
     "customLinkMessage": "Ezek a hivatkozások a telepített Updatiummal rendelkező eszközökön működnek",
     "shareAppConfigLinks": "Alkalmazás-konfiguráció megosztása HTML-hivatkozásként",
-    "shareSelectedAppURLs": "Kiválasztott alkalmazás hivatkozásának megosztása",
     "resetInstallStatus": "Telepítési állapot visszaállítása",
     "more": "További",
     "removeOutdatedFilter": "Elavult alkalmazás-szűrő eltávolítása",

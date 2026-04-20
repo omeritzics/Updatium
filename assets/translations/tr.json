@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Seçilen uygulamaların yükleme durumu sıfırlanacaktır.\n\nBu işlem, başarısız güncellemeler veya başka sorunlar nedeniyle Updatium'da gösterilen uygulama sürümü yanlış olduğunda yardımcı olabilir.",
     "customLinkMessage": "Bu bağlantılar Updatium yüklü cihazlarda çalışır",
     "shareAppConfigLinks": "Uygulama yapılandırmasını HTML bağlantısı olarak paylaş",
-    "shareSelectedAppURLs": "Seçili uygulama bağlantılarını (URL) paylaş",
     "resetInstallStatus": "Yükleme durumunu sıfırla",
     "more": "Daha fazla",
     "removeOutdatedFilter": "Güncel olmayan uygulama filtresini kaldır",

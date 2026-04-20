@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "चयनित ऐप्स की इंस्टॉल स्थिति रीसेट कर दी जाएगी।\n\nयह तब मदद कर सकता है जब विफल अपडेट या अन्य समस्याओं के कारण Updatium में दिखाया गया ऐप वर्शन गलत हो।",
     "customLinkMessage": "ये लिंक उन डिवाइस पर काम करते हैं जिनमें Updatium इंस्टॉल है",
     "shareAppConfigLinks": "HTML लिंक के रूप में ऐप कॉन्फ़िगरेशन साझा करें",
-    "shareSelectedAppURLs": "चयनित ऐप URL साझा करें",
     "resetInstallStatus": "इंस्टॉल स्थिति रीसेट करें",
     "more": "अधिक",
     "removeOutdatedFilter": "पुराने ऐप फ़िल्टर को हटाएँ",

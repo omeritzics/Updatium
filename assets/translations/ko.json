@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "선택한 앱의 설치 상태가 재설정됩니다.\n\n이것은 실패한 업데이트나 기타 문제로 인해 Updatium에 표시된 앱 버전이 잘못된 경우에 도움이 될 수 있습니다.",
     "customLinkMessage": "이 링크는 Updatium이 설치된 장치에서 작동합니다",
     "shareAppConfigLinks": "앱 구성 HTML 링크로 공유",
-    "shareSelectedAppURLs": "선택한 앱 URL 공유",
     "resetInstallStatus": "설치 상태 재설정",
     "more": "더보기",
     "removeOutdatedFilter": "구식 앱 필터 제거",

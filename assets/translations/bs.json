@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Status instalacije bilo koje odabrane aplikacije će se resetovati.\n\nTo može pomoći kada je verzija aplikacije prikazana u Updatiumu netačna zbog neuspjelih ažuriranja ili drugih problema.",
     "customLinkMessage": "Ove veze rade na uređajima s instaliranim Updatiumom",
     "shareAppConfigLinks": "Podijelite konfiguraciju aplikacije kao HTML vezu",
-    "shareSelectedAppURLs": "Podijeli odabrane URL-ove aplikacija",
     "resetInstallStatus": "Resetujte status instalacije",
     "more": "Više",
     "removeOutdatedFilter": "Uklonite zastarjeli filter aplikacija",

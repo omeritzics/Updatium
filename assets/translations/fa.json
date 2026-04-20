@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "وضعیت نصب برنامه‌های انتخاب‌شده بازنشانی می‌شود.\n\nاگر نسخه برنامه نشان‌داده‌شده در Updatium به دلیل به‌روزرسانی‌های ناموفق یا مشکلات دیگر نادرست باشد، می‌تواند کمک کند.",
     "customLinkMessage": "این پیوندها بر روی دستگاه هایی با Updatium نصب شده کار می کنند",
     "shareAppConfigLinks": "اشتراک گذاری پیکربندی برنامه به عنوان پیوند HTML",
-    "shareSelectedAppURLs": "اشتراک گذاری آدرس اینترنتی برنامه های انتخاب شده",
     "resetInstallStatus": "بازنشانی وضعیت نصب",
     "more": "بیشتر",
     "removeOutdatedFilter": "فیلتر برنامه قدیمی را حذف کنید",

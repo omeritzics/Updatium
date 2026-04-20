@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Status pemasangan dari aplikasi terpilih akan diatur ulang.\n\nHal ini bisa membantu saat versi aplikasi yang ditampilkan di Updatium salah akibat pembaruan yang gagal atau masalah lainnya.",
     "customLinkMessage": "Tautan ini berfungsi pada perangkat yang terpasang Updatium",
     "shareAppConfigLinks": "Bagikan konfigurasi aplikasi sebagai tautan HTML",
-    "shareSelectedAppURLs": "Bagikan URL aplikasi terpilih",
     "resetInstallStatus": "Atur ulang status pemasangan",
     "more": "Lebih banyak",
     "removeOutdatedFilter": "Hapus filter aplikasi yang usang",

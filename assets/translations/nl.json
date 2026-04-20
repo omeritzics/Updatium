@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "De installatiestatus van alle geselecteerde apps zal worden hersteld.\n\nDit kan helpen wanneer de versie van de app die in Updatium wordt weergegeven onjuist is vanwege mislukte updates of andere problemen.",
     "customLinkMessage": "Deze koppelingen werken op apparaten waarop Updatium is geïnstalleerd",
     "shareAppConfigLinks": "App-configuratie delen als HTML-link",
-    "shareSelectedAppURLs": "Geselecteerde app-URL's delen",
     "resetInstallStatus": "Installatiestatus herstellen",
     "more": "Meer",
     "removeOutdatedFilter": "Verouderde apps-filter verwijderen",

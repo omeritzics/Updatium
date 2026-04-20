@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Installationsstatusen för de markerade apparna kommer återställas.\n\n Detta kan hjälpa när appversionen visad i Obtanium är fel på grund av misslyckade uppdateringar eller andra orsaker.",
     "customLinkMessage": "Dessa länkar fungerar på enheter med Updatium installerat",
     "shareAppConfigLinks": "Dela appkonfiguration som HTML-länk",
-    "shareSelectedAppURLs": "Dela Valda Appars URL:er",
     "resetInstallStatus": "Återställ Installationstatus",
     "more": "Mer",
     "removeOutdatedFilter": "Ta bort Utgånga App-filtret",

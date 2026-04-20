@@ -81,7 +81,6 @@
     "installStatusOfXWillBeResetExplanation": "Kõikide valitud äpide installimise olek lähtestatakse.\n\nSee võib aidata, kui Updatiumis näidatav äpi versioon on vale nurkunud uuenduste või muude probleemide tõttu.",
     "customLinkMessage": "Need lingid töötavad seadmetel, kuhu on installitud Updatium",
     "shareAppConfigLinks": "Jaga äpi konfiguratsiooni HTML-lingina",
-    "shareSelectedAppURLs": "Jaga valitud äpide URL-e",
     "resetInstallStatus": "Lähtesta installimise olek",
     "more": "Rohkem",
     "removeOutdatedFilter": "Eemalda aegunud äppide filter",
