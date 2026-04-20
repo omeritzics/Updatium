@@ -658,17 +658,11 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           child: Text(tr('update')),
         );
       } else {
-        return FilledButton.tonal(
-          onPressed: null,
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
-            foregroundColor: WidgetStateProperty.all(Colors.grey),
-            visualDensity: isCompact ? VisualDensity.compact : null,
-            minimumSize: WidgetStateProperty.all(
-              isCompact ? const Size(60, 32) : null,
-            ),
-          ),
-          child: Text(tr('updated')),
+        // Show checkmark icon when app is already up-to-date
+        return Icon(
+          Icons.check_circle_outline,
+          color: Theme.of(context).colorScheme.primary,
+          size: isCompact ? 20 : 24,
         );
       }
     }
