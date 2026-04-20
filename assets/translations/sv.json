@@ -454,7 +454,7 @@
     "disclaimer": "Ansvarsfriskrivning",
     "disclaimerText": "Denna applikation distribuerar, är värd för eller verifierar inga av de externa applikationerna. Användaren bär det fulla ansvaret för säkerheten och lagligheten för eventuell programvara som installeras genom detta verktyg.\n\nhttps://github.com/omeritzics/Updatium är den enda officiella platsen att ladda ner Updatium - det avrådes starkt från att ladda ner den från andra platser eftersom nedladdning från icke-officiella källor inte är säker.",
     "privacy": "Integritet",
-    "privacyText": "Denna app är integritetsfokuserad och samlar inte in personlig data.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "Acceptera och fortsätt",
     "decline": "Avvisa",
     "delete": "Delete",

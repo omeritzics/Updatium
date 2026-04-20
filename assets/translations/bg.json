@@ -454,7 +454,7 @@
     "disclaimer": "Отказ от отговорност",
     "disclaimerText": "Това приложение не разпространява, хоства или проверява никакви външни приложения. Потребителят носи пълна отговорност за сигурността и законността на всяко софтуер, инсталиран чрез този инструмент.\n\nhttps://github.com/omeritzics/Updatium е единственият официален източник за изтегляне на Updatium - силно се препоръчва да не се изтегля от други места, тъй като неофициалните източници са несигурни.",
     "privacy": "Приватност",
-    "privacyText": "Това приложение е фокусирано върху приватността и не събира лични данни.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "Приемам и продължавам",
     "decline": "Отказ",
     "delete": "Изтриване",

@@ -454,7 +454,7 @@
     "disclaimer": "免責聲明",
     "disclaimerText": "此應用程式不分發、託管或驗證任何外部應用程式。使用者對透過此工具安裝的任何軟體的安全性和合法性承擔全部責任。\n\nhttps://github.com/omeritzics/Updatium 是下載 Updatium 的唯一官方地點 - 強烈建議不要從其他地方下載，因為從非官方來源下載是不安全的。",
     "privacy": "隱私",
-    "privacyText": "此應用程式注重隱私，不收集個人資料。",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "接受並繼續",
     "decline": "拒絕",
     "delete": "Delete",

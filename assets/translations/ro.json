@@ -454,7 +454,7 @@
     "disclaimer": "Renunțare",
     "disclaimerText": "Această aplicație nu distribuie, găzduiește sau verifică niciuna dintre aplicațiile externe. Utilizatorul poartă întreaga responsabilitate pentru siguranța și legalitatea oricărui software instalat prin acest instrument.\n\nhttps://github.com/omeritzics/Updatium este singurul loc oficial pentru a descărca Updatium - este foarte descurajat să îl descărcați din altă parte deoarece sursele neoficiale sunt nesigure.",
     "privacy": "Confidențialitate",
-    "privacyText": "Această aplicație este axată pe confidențialitate și nu colectează date personale.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "Acceptă și Continuă",
     "decline": "Refuză",
     "delete": "Delete",

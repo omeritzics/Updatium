@@ -454,7 +454,7 @@
     "disclaimer": "Sorumluluk Reddi",
     "disclaimerText": "Bu uygulama, dış uygulamaların hiçbirini dağıtmaz, barındırmaz veya doğrulamaz. Bu araç aracılığıyla yüklenen herhangi bir yazılımın güvenliği ve yasallığı konusunda tüm sorumluluk kullanıcıya aittir.\n\nhttps://github.com/omeritzics/Updatium, Updatium'u indirmek için tek resmi yerdir; resmi olmayan kaynaklar güvensiz olduğundan, uygulamayı başka bir yerden indirmek kesinlikle önerilmez.",
     "privacy": "Gizlilik",
-    "privacyText": "Bu uygulama gizlilik odaklıdır ve kişisel veri toplamaz.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "Kabul Et ve Devam Et",
     "decline": "Reddet",
     "delete": "Delete",

@@ -454,7 +454,7 @@
     "disclaimer": "면책 조항",
     "disclaimerText": "이 애플리케이션은 외부 애플리케이션을 배포, 호스팅 또는 검증하지 않습니다. 사용자는 이 도구를 통해 설치된 모든 소프트웨어의 안전성과 합법성에 대한 전적인 책임을 집니다.\n\nhttps://github.com/omeritzics/Updatium은 Updatium을 다운로드하는 유일한 공식 장소입니다 - 비공식 소스에서 다운로드하는 것은 안전하지 않으므로 다른 곳에서 다운로드하는 것은 강력히 권장되지 않습니다.",
     "privacy": "개인정보 보호",
-    "privacyText": "이 앱은 개인정보 보호를 중심으로 하며 개인 데이터를 수집하지 않습니다.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "동의하고 계속",
     "decline": "거부",
     "delete": "Delete",

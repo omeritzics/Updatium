@@ -454,7 +454,7 @@
     "disclaimer": "Ansvarsfraskrivelse",
     "disclaimerText": "Denne applikation distribuerer, hoster eller verificerer ingen af de eksterne applikationer. Brugeren bærer det fulde ansvar for sikkerheden og lovligheden af enhver software installeret via dette værktøj.\n\nhttps://github.com/omeritzics/Updatium er det eneste officielle sted at downloade Updatium - det frarådes kraftigt at downloade det andre steder, da download fra uofficielle kilder ikke er sikkert.",
     "privacy": "Privatliv",
-    "privacyText": "Denne app er privatlivsfokuseret og indsamler ikke personlige data.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "Accepter og fortsæt",
     "decline": "Afvis",
     "delete": "Delete",

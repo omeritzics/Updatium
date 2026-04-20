@@ -454,7 +454,7 @@
     "disclaimer": "免責事項",
     "disclaimerText": "このアプリケーションは外部アプリケーションを配布、ホスト、または検証しません。ユーザーはこのツールを通じてインストールされたソフトウェアの安全性と合法性について全責任を負います。\n\nhttps://github.com/omeritzics/Updatium はUpdatiumをダウンロードする唯一の公式場所です - 非公式のソースからダウンロードすることは安全ではないため、他の場所からダウンロードすることは強くお勧めしません。",
     "privacy": "プライバシー",
-    "privacyText": "このアプリはプライバシー重視で、個人データを収集しません。",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "同意して続行",
     "decline": "拒否",
     "delete": "Delete",

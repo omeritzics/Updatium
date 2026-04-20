@@ -454,7 +454,7 @@
     "disclaimer": "Відмова від відповідальності",
     "disclaimerText": "Цей додаток не розповсюджує, не розміщує та не перевіряє жодні зовнішні додатки. Користувач несе повну відповідальність за безпеку та законність будь-якого програмного забезпечення, встановленого через цей інструмент.\n\nhttps://github.com/omeritzics/Updatium - це єдине офіційне місце для завантаження Updatium - наполегливо не рекомендується завантажувати його з інших місць, оскільки завантаження з неофіційних джерел небезпечне.",
     "privacy": "Конфіденційність",
-    "privacyText": "Цей додаток орієнтований на конфіденційність і не збирає особисті дані.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "Прийняти та продовжити",
     "decline": "Відхилити",
     "delete": "Delete",

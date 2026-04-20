@@ -454,7 +454,7 @@
     "disclaimer": "দাবিত্যাগ (Disclaimer)",
     "disclaimerText": "এই অ্যাপ্লিকেশনটি কোনো এক্সটার্নাল অ্যাপ বিতরণ, হোস্ট বা যাচাই করে না। এই টুলের মাধ্যমে ইনস্টল করা যেকোনো সফটওয়্যারের নিরাপত্তা ও বৈধতার দায়ভার সম্পূর্ণ ব্যবহারকারীর।\n\nUpdatium ডাউনলোডের একমাত্র অফিসিয়াল জায়গা হলো https://github.com/omeritzics/Updatium।",
     "privacy": "গোপনীয়তা",
-    "privacyText": "এই অ্যাপটি গোপনীয়তা-কেন্দ্রিক এবং কোনো ব্যক্তিগত তথ্য সংগ্রহ করে না।",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "সম্মত এবং চালিয়ে যান",
     "decline": "প্রত্যাখ্যান",
     "delete": "Delete",

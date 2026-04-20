@@ -454,7 +454,7 @@
     "disclaimer": "Odgovornost",
     "disclaimerText": "Ova aplikacija ne distribuira, ne hostuje niti verifikuje nijednu od eksternih aplikacija. Korisnik snosi punu odgovornost za bezbednost i zakonitost bilo kog softvera instaliranog putem ovog alata.\n\nhttps://github.com/omeritzics/Updatium je jedino zvanično mjesto za preuzimanje Updatiuma - strogo se preporučuje da se ne preuzima s drugih mjesta jer je preuzimanje iz nezvaničnih izvora nesigurno.",
     "privacy": "Privatnost",
-    "privacyText": "Ova aplikacija je fokusirana na privatnost i ne prikuplja lične podatke.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "Prihvatam i Nastavim",
     "decline": "Odbij",
     "delete": "Delete",

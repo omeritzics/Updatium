@@ -454,7 +454,7 @@
     "disclaimer": "Avís",
     "disclaimerText": "Aquesta aplicació no distribueix, allotja ni verifica cap de les aplicacions externes. L'usuari assumeix la plena responsabilitat per la seguretat i legalitat de qualsevol programari instal·lat a través d'aquesta eina.\n\nhttps://github.com/omeritzics/Updatium és l'únic lloc oficial per descarregar Updatium - es desaconsellable descarregar-lo d'altres llocs ja que la descàrrega des de fonts no oficials no és segura.",
     "privacy": "Privacitat",
-    "privacyText": "Aquesta aplicació està centrada en la privacitat i no recull dades personals.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "Acceptar i continuar",
     "decline": "Rebutjar",
     "delete": "Delete",

@@ -454,7 +454,7 @@
     "disclaimer": "سلب مسئولیت",
     "disclaimerText": "این برنامه هیچ یک از برنامه‌های خارجی را توزیع، میزبانی یا تأیید نمی‌کند. کاربر مسئولیت کامل امنیت و قانونی بودن هر نرم‌افزاری که از طریق این ابزار نصب می‌شود را بر عهده دارد.\n\nhttps://github.com/omeritzics/Updatium تنها مکان رسمی برای دانلود Updatium است - به شدت توصیه می‌شود آن را از جاهای دیگر دانلود نکنید زیرا دانلود از منابع غیررسمی ناامن است.",
     "privacy": "حریم خصوصی",
-    "privacyText": "این برنامه متمرکز بر حریم خصوصی است و داده‌های شخصی جمع‌آوری نمی‌کند.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "پذیرش و ادامه",
     "decline": "رد کردن",
     "delete": "Delete",

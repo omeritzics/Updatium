@@ -454,7 +454,7 @@
     "disclaimer": "Descargo de responsabilidad",
     "disclaimerText": "Esta aplicación no distribuye, aloja ni verifica ninguna de las aplicaciones externas. El usuario asume toda la responsabilidad sobre la seguridad y legalidad de cualquier software instalado a través de esta herramienta.\n\nhttps://github.com/omeritzics/Updatium es el único lugar oficial para descargar Updatium - es muy desaconsejable descargarlo de otros lugares ya que las fuentes no oficiales pueden ser inseguras.",
     "privacy": "Privacidad",
-    "privacyText": "Esta aplicación está centrada en la privacidad y no recopila datos personales.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "Aceptar y continuar",
     "decline": "Rechazar",
     "delete": "Delete",

@@ -454,7 +454,7 @@
     "disclaimer": "अस्वीकरण",
     "disclaimerText": "यह एप्लिकेशन किसी भी बाहरी एप्लिकेशन को वितरित, होस्ट या सत्यापित नहीं करता है। इस टूल के माध्यम से इंस्टॉल किए गए किसी भी सॉफ़्टवेयर की सुरक्षा और वैधता के लिए उपयोगकर्ता पूरी तरह से जिम्मेदार है।\n\nUpdatium डाउनलोड करने के लिए https://github.com/omeritzics/Updatium ही एकमात्र आधिकारिक स्थान है - इसे कहीं और से डाउनलोड करना हतोत्साहित किया जाता है क्योंकि अनौपचारिक स्रोत असुरक्षित होते हैं।",
     "privacy": "गोपनीयता",
-    "privacyText": "यह ऐप गोपनीयता-केंद्रित है और व्यक्तिगत डेटा एकत्र नहीं करता है।",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "स्वीकार करें और जारी रखें",
     "decline": "अस्वीकार करें",
     "delete": "Delete",

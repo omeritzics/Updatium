@@ -454,7 +454,7 @@
     "disclaimer": "Felelősségkorlátozás",
     "disclaimerText": "Ez az alkalmazás nem terjeszti, nem hosztolja és nem ellenőrzi a külső alkalmazások egyikét sem. A felhasználó viseli a teljes felelősséget az ezen eszközzel telepített bármely szoftver biztonságáért és jogszerűségéért.\n\nhttps://github.com/omeritzics/Updatium az Updatium letöltésének egyetlen hivatalos helye - erősen nem javasolt más helyekről letölteni, mivel a nem hivatalos forrásokból történő letöltés nem biztonságos.",
     "privacy": "Adatvédelem",
-    "privacyText": "Ez az alkalmazás adatvédelem-központú és nem gyűjt személyes adatokat.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "Elfogadás és folytatás",
     "decline": "Elutasítás",
     "delete": "Delete",

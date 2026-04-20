@@ -454,7 +454,7 @@
     "disclaimer": "നിരാകരണം",
     "disclaimerText": "ഈ അപ്ലിക്കേഷൻ ബാഹ്യ അപ്ലിക്കേഷനുകൾ വിതരണം ചെയ്യുന്നില്ല, ഹോസ്റ്റ് ചെയ്യുന്നില്ല, അല്ലെങ്കിൽ പരിശോധിക്കുന്നില്ല. ഈ ടൂൾ ഉപയോഗിച്ച് ഇൻസ്റ്റാൾ ചെയ്യുന്ന ഏത് സോഫ്റ്റ്‌വെയറിന്റെയും സുരക്ഷയ്ക്കും നിയമപരമായ കാര്യങ്ങൾക്കും ഉപയോക്താവ് പൂർണ്ണമായും ഉത്തരവാദിത്തം വഹിക്കുന്നു.",
     "privacy": "സ്വകാര്യത",
-    "privacyText": "ഈ ആപ്പ് സ്വകാര്യം പരിഗണിക്കുന്നതും വ്യക്തിഗത ഡാറ്റ ശേഖരിക്കുന്നതുമല്ല.",
+    "privacyText": "Updatium does not collect any information about you. However, third party providers may collect and store information about you.",
     "acceptAndContinue": "അംഗീകരിച്ച് തുടരുക",
     "decline": "നിരസിക്കുക",
     "delete": "Delete",
