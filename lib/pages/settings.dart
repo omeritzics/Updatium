@@ -1924,9 +1924,7 @@ class LicenseDialog extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               );
             }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ),
