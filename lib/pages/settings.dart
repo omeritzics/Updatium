@@ -1539,7 +1539,9 @@ class CategoryTagEditor extends StatelessWidget {
                                     Widget widget,
                                   ) {
                                     final curvedValue =
-                                        Curves.easeInOutBack.transform(a1.value) -
+                                        Curves.easeInOutBack.transform(
+                                          a1.value,
+                                        ) -
                                         1.0;
                                     return Transform(
                                       alignment: Alignment.center,
@@ -1695,7 +1697,9 @@ class CategoryTagEditor extends StatelessWidget {
                                     Widget widget,
                                   ) {
                                     final curvedValue =
-                                        Curves.easeInOutBack.transform(a1.value) -
+                                        Curves.easeInOutBack.transform(
+                                          a1.value,
+                                        ) -
                                         1.0;
                                     return Transform(
                                       alignment: Alignment.center,
