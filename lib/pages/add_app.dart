@@ -864,13 +864,31 @@ class AddAppPageState extends State<AddAppPage> {
                 },
               );
             },
-            child: Text(
-              tr('supportedSources'),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                decoration: TextDecoration.underline,
-                fontStyle: FontStyle.italic,
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                  ),
+                  child: Icon(
+                    Icons.info_rounded,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    size: 14,
+                  ),
+                ),
+                horizontalGap8,
+                Text(
+                  tr('supportedSources'),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
