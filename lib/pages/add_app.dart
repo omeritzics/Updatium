@@ -800,8 +800,13 @@ class AddAppPageState extends State<AddAppPage> {
       ],
     );
 
-    Widget getSourcesListWidget() => Padding(
+    Widget getSourcesListWidget() => Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
+      ),
       child: Wrap(
         direction: Axis.horizontal,
         alignment: WrapAlignment.spaceBetween,
@@ -867,25 +872,15 @@ class AddAppPageState extends State<AddAppPage> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: 20,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                  ),
-                  child: Icon(
-                    Icons.info_rounded,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    size: 14,
-                  ),
+                Icon(
+                  Icons.info_outline,
+                  size: 18,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 horizontalGap8,
                 Text(
                   tr('supportedSources'),
                   style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline,
                   ),
                 ),
               ],
