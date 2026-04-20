@@ -1317,11 +1317,15 @@ void showError(dynamic e, BuildContext context) {
 }
 
 // FreeDroidWarn integration
-const _freedroidWarnChannel = MethodChannel('io.github.omeritzics.updatium/freedroid_warn');
+const _freedroidWarnChannel = MethodChannel(
+  'io.github.omeritzics.updatium/freedroid_warn',
+);
 
 Future<bool> _shouldShowWarning() async {
   try {
-    final result = await _freedroidWarnChannel.invokeMethod<bool>('shouldShowWarning');
+    final result = await _freedroidWarnChannel.invokeMethod<bool>(
+      'shouldShowWarning',
+    );
     return result ?? false;
   } catch (e) {
     return false;
@@ -1330,9 +1334,12 @@ Future<bool> _shouldShowWarning() async {
 
 Future<Map<String, String>> _getWarningStrings() async {
   try {
-    final result = await _freedroidWarnChannel.invokeMethod<Map<dynamic, dynamic>>('getWarningStrings');
+    final result = await _freedroidWarnChannel
+        .invokeMethod<Map<dynamic, dynamic>>('getWarningStrings');
     if (result != null) {
-      return result.map((key, value) => MapEntry(key.toString(), value.toString()));
+      return result.map(
+        (key, value) => MapEntry(key.toString(), value.toString()),
+      );
     }
     return {};
   } catch (e) {
@@ -1342,7 +1349,9 @@ Future<Map<String, String>> _getWarningStrings() async {
 
 Future<bool> _saveWarningVersion() async {
   try {
-    final result = await _freedroidWarnChannel.invokeMethod<bool>('saveWarningVersion');
+    final result = await _freedroidWarnChannel.invokeMethod<bool>(
+      'saveWarningVersion',
+    );
     return result ?? false;
   } catch (e) {
     return false;
@@ -1373,7 +1382,9 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
         ),
         TextButton(
           onPressed: () async {
-            final uri = Uri.parse('https://github.com/woheller69/FreeDroidWarn?tab=readme-ov-file#solutions');
+            final uri = Uri.parse(
+              'https://github.com/woheller69/FreeDroidWarn?tab=readme-ov-file#solutions',
+            );
             if (await canLaunchUrl(uri)) {
               await launchUrl(uri, mode: LaunchMode.externalApplication);
             }
