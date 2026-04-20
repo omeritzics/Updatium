@@ -1209,17 +1209,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       });
     }
 
-    pinSelectedApps() {
-      var pinStatus = selectedApps.where((element) => element.pinned).isEmpty;
-      appsProvider.saveApps(
-        selectedApps.map((e) {
-          e.pinned = pinStatus;
-          return e;
-        }).toList(),
-      );
-      Navigator.of(context).pop();
-    }
-
     showMoreOptionsDialog() {
       return showDialog(
         context: context,
@@ -1588,9 +1577,15 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 listedApps.map((e) => e.app).toList(),
                               );
                             }
-                          : () {
-                              clearSelected();
-                            },
+                          : selectedAppIds.length == listedApps.length
+                              ? () {
+                                  clearSelected();
+                                }
+                              : () {
+                                  selectThese(
+                                    listedApps.map((e) => e.app).toList(),
+                                  );
+                                },
                     ),
                     if (!(appsProvider.areDownloadsRunning() ||
                         (existingUpdateIdsAllOrSelected.isEmpty &&
@@ -1655,18 +1650,22 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       M3FloatingToolbarAction(
                         icon: Icons.push_pin,
                         semanticLabel:
-                            selectedApps
-                                .where((element) => element.pinned)
-                                .isEmpty
-                            ? tr('pinToTop')
-                            : tr('unpinFromTop'),
+                            selectedApps.every((element) => element.pinned)
+                            ? tr('unpinFromTop')
+                            : tr('pinToTop'),
                         tooltip:
-                            selectedApps
-                                .where((element) => element.pinned)
-                                .isEmpty
-                            ? tr('pinToTop')
-                            : tr('unpinFromTop'),
-                        onPressed: pinSelectedApps,
+                            selectedApps.every((element) => element.pinned)
+                            ? tr('unpinFromTop')
+                            : tr('pinToTop'),
+                        onPressed: () {
+                          var allPinned = selectedApps.every((element) => element.pinned);
+                          appsProvider.saveApps(
+                            selectedApps.map((e) {
+                              e.pinned = !allPinned;
+                              return e;
+                            }).toList(),
+                          );
+                        },
                       ),
                     if (selectedAppIds.isNotEmpty)
                       M3FloatingToolbarAction(
