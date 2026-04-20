@@ -1578,14 +1578,14 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                               );
                             }
                           : selectedAppIds.length == listedApps.length
-                              ? () {
-                                  clearSelected();
-                                }
-                              : () {
-                                  selectThese(
-                                    listedApps.map((e) => e.app).toList(),
-                                  );
-                                },
+                          ? () {
+                              clearSelected();
+                            }
+                          : () {
+                              selectThese(
+                                listedApps.map((e) => e.app).toList(),
+                              );
+                            },
                     ),
                     if (!(appsProvider.areDownloadsRunning() ||
                         (existingUpdateIdsAllOrSelected.isEmpty &&
@@ -1653,12 +1653,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             selectedApps.every((element) => element.pinned)
                             ? tr('unpinFromTop')
                             : tr('pinToTop'),
-                        tooltip:
-                            selectedApps.every((element) => element.pinned)
+                        tooltip: selectedApps.every((element) => element.pinned)
                             ? tr('unpinFromTop')
                             : tr('pinToTop'),
                         onPressed: () {
-                          var allPinned = selectedApps.every((element) => element.pinned);
+                          var allPinned = selectedApps.every(
+                            (element) => element.pinned,
+                          );
                           appsProvider.saveApps(
                             selectedApps.map((e) {
                               e.pinned = !allPinned;
