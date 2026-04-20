@@ -695,9 +695,11 @@ class _AppPageState extends State<AppPage> {
                   final actionCount = [
                     if (app.app.installedVersion != null) 1, // open button
                     if (source != null &&
-                        source.combinedAppSpecificSettingFormItems.isNotEmpty) 1, // edit button
+                        source.combinedAppSpecificSettingFormItems.isNotEmpty)
+                      1, // edit button
                     if (app.app.apkUrls.isNotEmpty == true ||
-                        app.app.otherAssetUrls.isNotEmpty == true) 1, // download assets button
+                        app.app.otherAssetUrls.isNotEmpty == true)
+                      1, // download assets button
                     1, // delete button always present
                   ].length;
                   return ((actionCount * 56) + ((actionCount - 1) * 8) + 32)
