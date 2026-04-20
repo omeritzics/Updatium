@@ -1489,20 +1489,9 @@ class CategoryTagEditor extends StatelessWidget {
                     tr('selectX', args: [tr('color').toLowerCase()]),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  trailing: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: categoryColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Theme.of(context).colorScheme.outline,
-                        width: 1,
-                      ),
-                    ),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(20),
-                      onTap: () async {
+                  trailing: InkWell(
+                    borderRadius: BorderRadius.circular(20),
+                    onTap: () async {
                         final Color colorBeforeDialog = categoryColor;
                         final result =
                             await ColorPicker(
@@ -1575,6 +1564,17 @@ class CategoryTagEditor extends StatelessWidget {
                           categoryColor = colorBeforeDialog;
                         }
                       },
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: categoryColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.outline,
+                          width: 1,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -1640,20 +1640,9 @@ class CategoryTagEditor extends StatelessWidget {
                     tr('selectX', args: [tr('color').toLowerCase()]),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  trailing: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: categoryColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Theme.of(context).colorScheme.outline,
-                        width: 1,
-                      ),
-                    ),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(20),
-                      onTap: () async {
+                  trailing: InkWell(
+                    borderRadius: BorderRadius.circular(20),
+                    onTap: () async {
                         final Color colorBeforeDialog = categoryColor;
                         final result =
                             await ColorPicker(
@@ -1726,6 +1715,17 @@ class CategoryTagEditor extends StatelessWidget {
                           categoryColor = colorBeforeDialog;
                         }
                       },
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: categoryColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.outline,
+                          width: 1,
+                        ),
+                      ),
                     ),
                   ),
                 ),
