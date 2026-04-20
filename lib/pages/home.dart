@@ -98,6 +98,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           return;
         }
       }
+
+      // Show FreeDroidWarn dialog if needed
+      await showFreeDroidWarnDialog(context);
     });
   }
 

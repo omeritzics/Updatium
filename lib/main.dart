@@ -21,6 +21,7 @@ import 'package:simple_localization/src/simple_localization_controller.dart';
 import 'package:simple_localization/src/localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('en'), 'English'),
@@ -1313,4 +1314,85 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
 
 void showError(dynamic e, BuildContext context) {
   showMessage(e, context, isError: true);
+}
+
+// FreeDroidWarn integration
+const _freedroidWarnChannel = MethodChannel('io.github.omeritzics.updatium/freedroid_warn');
+
+Future<bool> _shouldShowWarning() async {
+  try {
+    final result = await _freedroidWarnChannel.invokeMethod<bool>('shouldShowWarning');
+    return result ?? false;
+  } catch (e) {
+    return false;
+  }
+}
+
+Future<Map<String, String>> _getWarningStrings() async {
+  try {
+    final result = await _freedroidWarnChannel.invokeMethod<Map<dynamic, dynamic>>('getWarningStrings');
+    if (result != null) {
+      return result.map((key, value) => MapEntry(key.toString(), value.toString()));
+    }
+    return {};
+  } catch (e) {
+    return {};
+  }
+}
+
+Future<bool> _saveWarningVersion() async {
+  try {
+    final result = await _freedroidWarnChannel.invokeMethod<bool>('saveWarningVersion');
+    return result ?? false;
+  } catch (e) {
+    return false;
+  }
+}
+
+Future<void> showFreeDroidWarnDialog(BuildContext context) async {
+  final shouldShow = await _shouldShowWarning();
+  if (!shouldShow || !context.mounted) return;
+
+  final strings = await _getWarningStrings();
+  if (strings.isEmpty || !context.mounted) return;
+
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => AlertDialog(
+      content: Text(strings['message'] ?? ''),
+      actions: [
+        TextButton(
+          onPressed: () async {
+            final uri = Uri.parse('https://keepandroidopen.org');
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            }
+          },
+          child: Text(strings['moreInfo'] ?? 'Details'),
+        ),
+        TextButton(
+          onPressed: () async {
+            final uri = Uri.parse('https://github.com/woheller69/FreeDroidWarn?tab=readme-ov-file#solutions');
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            }
+          },
+          child: Text(
+            strings['solution'] ?? 'Solution',
+            style: const TextStyle(color: Colors.red),
+          ),
+        ),
+        TextButton(
+          onPressed: () async {
+            await _saveWarningVersion();
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
 }
