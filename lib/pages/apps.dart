@@ -955,12 +955,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       );
     }
 
-    void Function() getMassObtainFunction() {
+    void Function()? getMassObtainFunction() {
       return appsProvider.areDownloadsRunning() ||
               (existingUpdateIdsAllOrSelected.isEmpty &&
                   newInstallIdsAllOrSelected.isEmpty &&
                   trackOnlyUpdateIdsAllOrSelected.isEmpty)
-          ? () {}
+          ? null
           : () {
               HapticFeedback.heavyImpact();
               List<GeneratedFormItem> formItems = [];
@@ -1643,7 +1643,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         semanticLabel: tr('removeSelectedApps'),
                         tooltip: tr('removeSelectedApps'),
                         onPressed: selectedAppIds.isEmpty
-                            ? () {}
+                            ? null
                             : () {
                                 appsProvider.removeAppsWithModal(
                                   context,
@@ -1656,7 +1656,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         semanticLabel: tr('categorize'),
                         tooltip: tr('categorize'),
                         onPressed: selectedAppIds.isEmpty
-                            ? () {}
+                            ? null
                             : () {
                                 launchCategorizeDialog()();
                               },
@@ -1676,7 +1676,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             ? tr('pinToTop')
                             : tr('unpinFromTop'),
                         onPressed: selectedAppIds.isEmpty
-                            ? () {}
+                            ? null
                             : pinSelectedApps,
                       ),
                       M3FloatingToolbarAction(
@@ -1684,7 +1684,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         semanticLabel: tr('more'),
                         tooltip: tr('more'),
                         onPressed: selectedAppIds.isEmpty
-                            ? () {}
+                            ? null
                             : () {
                                 showMoreOptionsDialog();
                               },
