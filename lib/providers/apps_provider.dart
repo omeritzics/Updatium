@@ -328,7 +328,9 @@ Future<File> downloadFile(
   if (ext.endsWith('"') || ext.endsWith("other")) {
     ext = ext.substring(0, ext.length - 1);
   }
-  if ((source_provider.hasSupportedApkExtension(Uri.tryParse(url)?.path ?? url) ||
+  if ((source_provider.hasSupportedApkExtension(
+            Uri.tryParse(url)?.path ?? url,
+          ) ||
           ext == 'attachment') &&
       ext != 'apk') {
     ext = 'apk';
