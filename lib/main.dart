@@ -646,9 +646,17 @@ class _UpdatiumState extends State<Updatium> {
                       : scheme.onSecondaryContainer,
                   elevation: isDark ? 2 : 1,
                   shadowColor: isDark ? Colors.black26 : Colors.black12,
-                  textStyle: const TextStyle(
+                  textStyle: TextStyle(
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.1,
+                    fontFamily: getPrimaryFontForLocale(context.locale),
+                    fontFamilyFallback: const [
+                      'Inter',
+                      'GoogleSansFlex',
+                      'NotoSansCJK',
+                      'NotoSansHebrew',
+                      'NotoSansArabic',
+                    ],
                   ),
                 ),
               ),
@@ -665,6 +673,16 @@ class _UpdatiumState extends State<Updatium> {
                     horizontal: 28,
                     vertical: 14,
                   ),
+                  textStyle: TextStyle(
+                    fontFamily: getPrimaryFontForLocale(context.locale),
+                    fontFamilyFallback: const [
+                      'Inter',
+                      'GoogleSansFlex',
+                      'NotoSansCJK',
+                      'NotoSansHebrew',
+                      'NotoSansArabic',
+                    ],
+                  ),
                 ),
               ),
 
@@ -677,6 +695,16 @@ class _UpdatiumState extends State<Updatium> {
                     horizontal: 28,
                     vertical: 14,
                   ),
+                  textStyle: TextStyle(
+                    fontFamily: getPrimaryFontForLocale(context.locale),
+                    fontFamilyFallback: const [
+                      'Inter',
+                      'GoogleSansFlex',
+                      'NotoSansCJK',
+                      'NotoSansHebrew',
+                      'NotoSansArabic',
+                    ],
+                  ),
                 ),
               ),
 
@@ -687,6 +715,16 @@ class _UpdatiumState extends State<Updatium> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 10,
+                  ),
+                  textStyle: TextStyle(
+                    fontFamily: getPrimaryFontForLocale(context.locale),
+                    fontFamilyFallback: const [
+                      'Inter',
+                      'GoogleSansFlex',
+                      'NotoSansCJK',
+                      'NotoSansHebrew',
+                      'NotoSansArabic',
+                    ],
                   ),
                 ),
               ),
@@ -809,6 +847,14 @@ class _UpdatiumState extends State<Updatium> {
                   fontWeight: FontWeight.w600,
                   letterSpacing: -0.5,
                   height: 1.27,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
                 actionsIconTheme: IconThemeData(
@@ -834,12 +880,28 @@ class _UpdatiumState extends State<Updatium> {
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   letterSpacing: 0.15,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
                 subtitleTextStyle: TextStyle(
                   color: scheme.onSurfaceVariant,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0.25,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
               ),
 
