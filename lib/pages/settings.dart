@@ -1616,6 +1616,7 @@ class CategoryTagEditor extends StatelessWidget {
       settingsProvider.categories[oldName] ??
           Theme.of(context).colorScheme.primary.value,
     );
+    final TextEditingController nameController = TextEditingController(text: oldName);
 
     showDialog<String?>(
       context: context,
@@ -1629,6 +1630,7 @@ class CategoryTagEditor extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextField(
+                  controller: nameController,
                   autofocus: true,
                   decoration: InputDecoration(labelText: tr('name')),
                   onChanged: (value) => newName = value,
