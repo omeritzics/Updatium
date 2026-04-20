@@ -2,7 +2,7 @@ import 'package:simple_localization/simple_localization.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class DirectAPKLink extends AppSource {
   HTML html = HTML();
@@ -42,7 +42,7 @@ class DirectAPKLink extends AppSource {
       return url;
     }
     RegExp standardUrlRegExA = RegExp(
-      '.+\\.(${source_utils.supportedApkExtensions[0].substring(1)}|${source_utils.supportedApkExtensions[1].substring(1)})\$',
+      '.+\\.(${source_provider.supportedApkExtensions[0].substring(1)}|${source_provider.supportedApkExtensions[1].substring(1)})\$',
       caseSensitive: false,
     );
     var match = standardUrlRegExA.firstMatch(url);

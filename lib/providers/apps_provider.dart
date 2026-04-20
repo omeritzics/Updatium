@@ -31,7 +31,7 @@ import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
@@ -328,7 +328,7 @@ Future<File> downloadFile(
   if (ext.endsWith('"') || ext.endsWith("other")) {
     ext = ext.substring(0, ext.length - 1);
   }
-  if ((source_utils.hasSupportedApkExtension(Uri.tryParse(url)?.path ?? url) ||
+  if ((source_provider.hasSupportedApkExtension(Uri.tryParse(url)?.path ?? url) ||
           ext == 'attachment') &&
       ext != 'apk') {
     ext = 'apk';
@@ -693,13 +693,13 @@ class AppsProvider with ChangeNotifier {
         notificationsProvider?.notify(notif);
       }
       PackageInfo? newInfo;
-      var isAPK = source_utils.endsWithExtension(
+      var isAPK = source_provider.endsWithExtension(
         downloadedFile.path,
-        source_utils.supportedApkExtensions[0],
+        source_provider.supportedApkExtensions[0],
       );
-      var isXAPK = source_utils.endsWithExtension(
+      var isXAPK = source_provider.endsWithExtension(
         downloadedFile.path,
-        source_utils.supportedApkExtensions[1],
+        source_provider.supportedApkExtensions[1],
       );
       Directory? apkDir;
       if (isAPK) {
@@ -713,7 +713,7 @@ class AppsProvider with ChangeNotifier {
         apkDir = Directory(apkDirPath);
         var apks = apkDir
             .listSync()
-            .where((e) => source_utils.hasSupportedApkExtension(e.path))
+            .where((e) => source_provider.hasSupportedApkExtension(e.path))
             .whereType<File>()
             .toList();
 
@@ -1017,7 +1017,7 @@ class AppsProvider with ChangeNotifier {
           in dir.extracted
               .listSync(recursive: true, followLinks: false)
               .whereType<File>()) {
-        if (source_utils.hasSupportedApkExtension(file.path)) {
+        if (source_provider.hasSupportedApkExtension(file.path)) {
           APKFiles.add(file);
         } else if (file.path.toLowerCase().endsWith('.obb')) {
           await moveObbFile(file, dir.appId);
@@ -1554,7 +1554,7 @@ class AppsProvider with ChangeNotifier {
                 app.additionalSettings,
                 fileUrl.value,
                 forAPKDownload:
-                    source_utils.hasSupportedApkExtension(fileUrl.key)
+                    source_provider.hasSupportedApkExtension(fileUrl.key)
                     ? true
                     : false,
               ),

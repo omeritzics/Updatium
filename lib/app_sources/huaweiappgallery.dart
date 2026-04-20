@@ -1,7 +1,7 @@
 import 'package:simple_localization/simple_localization.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class HuaweiAppGallery extends AppSource {
   HuaweiAppGallery() {
@@ -100,7 +100,7 @@ class HuaweiAppGallery extends AppSource {
     ).parse(relDateStrAdj.join(''));
     return APKDetails(
       relDateStr,
-      [MapEntry('$appId${source_utils.supportedApkExtensions[0]}', dlUrl)],
+      [MapEntry('$appId${source_provider.supportedApkExtensions[0]}', dlUrl)],
       AppNames(name, appId),
       releaseDate: relDate,
     );

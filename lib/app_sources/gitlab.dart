@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:simple_localization/simple_localization.dart';
@@ -181,22 +181,22 @@ class GitLab extends AppSource {
           .where(
             (s) =>
                 s.key.isNotEmpty &&
-                (source_utils.hasSupportedApkExtension(s.key) ||
-                    source_utils.hasSupportedApkExtension(s.value)),
+                (source_provider.hasSupportedApkExtension(s.key) ||
+                    source_provider.hasSupportedApkExtension(s.value)),
           )
           .toList();
       var uploadedAPKsFromDescription = ((e['description'] ?? '') as String)
           .split('](')
           .join('\n')
-          .split('${source_utils.supportedApkExtensions[0]})')
-          .join('${source_utils.supportedApkExtensions[0]}\n')
-          .split('${source_utils.supportedApkExtensions[1]})')
-          .join('${source_utils.supportedApkExtensions[1]}\n')
+          .split('${source_provider.supportedApkExtensions[0]})')
+          .join('${source_provider.supportedApkExtensions[0]}\n')
+          .split('${source_provider.supportedApkExtensions[1]})')
+          .join('${source_provider.supportedApkExtensions[1]}\n')
           .split('\n')
           .where(
             (s) =>
                 s.startsWith('/uploads/') &&
-                source_utils.supportedApkExtensions.any(
+                source_provider.supportedApkExtensions.any(
                   (ext) => s.endsWith(ext.substring(1)),
                 ),
           )

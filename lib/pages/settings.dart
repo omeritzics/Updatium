@@ -294,7 +294,7 @@ class _SettingsPageState extends State<SettingsPage> {
             [
               const MapEntry('authorName', 'authorName'),
               const MapEntry('nameAuthor', 'nameAuthor'),
-              const MapEntry('added', 'added'),
+              const MapEntry('asAdded', 'asAdded'),
               const MapEntry('releaseDate', 'releaseDate'),
             ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
             label: tr('appSortBy'),

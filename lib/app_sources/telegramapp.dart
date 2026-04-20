@@ -2,7 +2,7 @@ import 'package:simple_localization/simple_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class TelegramApp extends AppSource {
   TelegramApp() {
@@ -37,7 +37,7 @@ class TelegramApp extends AppSource {
       String? apkUrl = 'https://telegram.org/dl/android/apk';
       return APKDetails(version, [
         MapEntry<String, String>(
-          'telegram-$version${source_utils.supportedApkExtensions[0]}',
+          'telegram-$version${source_provider.supportedApkExtensions[0]}',
           apkUrl,
         ),
       ], AppNames('Telegram', 'Telegram'));
