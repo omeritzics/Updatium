@@ -1572,9 +1572,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     final actionCount = [
                       1, // select all button
                       if (!(appsProvider.areDownloadsRunning() ||
-                              (existingUpdateIdsAllOrSelected.isEmpty &&
-                                  newInstallIdsAllOrSelected.isEmpty &&
-                                  trackOnlyUpdateIdsAllOrSelected.isEmpty)))
+                          (existingUpdateIdsAllOrSelected.isEmpty &&
+                              newInstallIdsAllOrSelected.isEmpty &&
+                              trackOnlyUpdateIdsAllOrSelected.isEmpty)))
                         1, // download button
                       if (selectedAppIds.isNotEmpty) 1, // share button
                       if (selectedAppIds.isNotEmpty) 1, // delete button
