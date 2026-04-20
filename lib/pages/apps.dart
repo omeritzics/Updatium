@@ -955,12 +955,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       );
     }
 
-    void Function()? getMassObtainFunction() {
+    void Function() getMassObtainFunction() {
       return appsProvider.areDownloadsRunning() ||
               (existingUpdateIdsAllOrSelected.isEmpty &&
                   newInstallIdsAllOrSelected.isEmpty &&
                   trackOnlyUpdateIdsAllOrSelected.isEmpty)
-          ? null
+          ? () {}
           : () {
               HapticFeedback.heavyImpact();
               List<GeneratedFormItem> formItems = [];
@@ -1604,16 +1604,20 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 clearSelected();
                               },
                       ),
-                      M3FloatingToolbarAction(
-                        icon: Icons.file_download,
-                        semanticLabel: selectedAppIds.isEmpty
-                            ? tr('installUpdateApps')
-                            : tr('installUpdateSelectedApps'),
-                        tooltip: selectedAppIds.isEmpty
-                            ? tr('installUpdateApps')
-                            : tr('installUpdateSelectedApps'),
-                        onPressed: getMassObtainFunction(),
-                      ),
+                      if (!(appsProvider.areDownloadsRunning() ||
+                              (existingUpdateIdsAllOrSelected.isEmpty &&
+                                  newInstallIdsAllOrSelected.isEmpty &&
+                                  trackOnlyUpdateIdsAllOrSelected.isEmpty)))
+                        M3FloatingToolbarAction(
+                          icon: Icons.file_download,
+                          semanticLabel: selectedAppIds.isEmpty
+                              ? tr('installUpdateApps')
+                              : tr('installUpdateSelectedApps'),
+                          tooltip: selectedAppIds.isEmpty
+                              ? tr('installUpdateApps')
+                              : tr('installUpdateSelectedApps'),
+                          onPressed: getMassObtainFunction(),
+                        ),
                       if (selectedAppIds.isNotEmpty)
                         M3FloatingToolbarAction(
                           icon: Icons.share,
@@ -1638,57 +1642,53 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             SharePlus.instance.share(ShareParams(files: [f]));
                           },
                         ),
-                      M3FloatingToolbarAction(
-                        icon: Icons.delete,
-                        semanticLabel: tr('removeSelectedApps'),
-                        tooltip: tr('removeSelectedApps'),
-                        onPressed: selectedAppIds.isEmpty
-                            ? null
-                            : () {
-                                appsProvider.removeAppsWithModal(
-                                  context,
-                                  selectedApps.toList(),
-                                );
-                              },
-                      ),
-                      M3FloatingToolbarAction(
-                        icon: Icons.category,
-                        semanticLabel: tr('categorize'),
-                        tooltip: tr('categorize'),
-                        onPressed: selectedAppIds.isEmpty
-                            ? null
-                            : () {
-                                launchCategorizeDialog()();
-                              },
-                      ),
-                      M3FloatingToolbarAction(
-                        icon: Icons.push_pin,
-                        semanticLabel:
-                            selectedApps
-                                .where((element) => element.pinned)
-                                .isEmpty
-                            ? tr('pinToTop')
-                            : tr('unpinFromTop'),
-                        tooltip:
-                            selectedApps
-                                .where((element) => element.pinned)
-                                .isEmpty
-                            ? tr('pinToTop')
-                            : tr('unpinFromTop'),
-                        onPressed: selectedAppIds.isEmpty
-                            ? null
-                            : pinSelectedApps,
-                      ),
-                      M3FloatingToolbarAction(
-                        icon: Icons.more_horiz,
-                        semanticLabel: tr('more'),
-                        tooltip: tr('more'),
-                        onPressed: selectedAppIds.isEmpty
-                            ? null
-                            : () {
-                                showMoreOptionsDialog();
-                              },
-                      ),
+                      if (selectedAppIds.isNotEmpty)
+                        M3FloatingToolbarAction(
+                          icon: Icons.delete,
+                          semanticLabel: tr('removeSelectedApps'),
+                          tooltip: tr('removeSelectedApps'),
+                          onPressed: () {
+                            appsProvider.removeAppsWithModal(
+                              context,
+                              selectedApps.toList(),
+                            );
+                          },
+                        ),
+                      if (selectedAppIds.isNotEmpty)
+                        M3FloatingToolbarAction(
+                          icon: Icons.category,
+                          semanticLabel: tr('categorize'),
+                          tooltip: tr('categorize'),
+                          onPressed: () {
+                            launchCategorizeDialog()();
+                          },
+                        ),
+                      if (selectedAppIds.isNotEmpty)
+                        M3FloatingToolbarAction(
+                          icon: Icons.push_pin,
+                          semanticLabel:
+                              selectedApps
+                                  .where((element) => element.pinned)
+                                  .isEmpty
+                              ? tr('pinToTop')
+                              : tr('unpinFromTop'),
+                          tooltip:
+                              selectedApps
+                                  .where((element) => element.pinned)
+                                  .isEmpty
+                              ? tr('pinToTop')
+                              : tr('unpinFromTop'),
+                          onPressed: pinSelectedApps,
+                        ),
+                      if (selectedAppIds.isNotEmpty)
+                        M3FloatingToolbarAction(
+                          icon: Icons.more_horiz,
+                          semanticLabel: tr('more'),
+                          tooltip: tr('more'),
+                          onPressed: () {
+                            showMoreOptionsDialog();
+                          },
+                        ),
                     ],
                   ),
                 ),
