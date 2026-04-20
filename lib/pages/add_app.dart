@@ -878,11 +878,7 @@ class AddAppPageState extends State<AddAppPage> {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 horizontalGap8,
-                Text(
-                  tr('supportedSources'),
-                  style: const TextStyle(
-                  ),
-                ),
+                Text(tr('supportedSources'), style: const TextStyle()),
               ],
             ),
           ),
