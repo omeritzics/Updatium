@@ -10,7 +10,7 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:docman/docman.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:updatium/components/generated_form.dart';
 
@@ -157,10 +157,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
       setState(() {
         importInProgress = true;
       });
-      FilePicker.pickFiles()
+      DocMan.pick.files(limit: 1)
           .then((result) {
-            if (result != null) {
-              String data = File(result.files.single.path!).readAsStringSync();
+            if (result.isNotEmpty) {
+              String data = File(result.first.path).readAsStringSync();
               try {
                 jsonDecode(data);
               } catch (e) {
@@ -199,14 +199,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
       setState(() {
         importInProgress = true;
       });
-      FilePicker.pickFiles()
+      DocMan.pick.files(limit: 1)
           .then((result) {
-            if (result != null) {
+            if (result.isNotEmpty) {
               urlListImport(
                 overrideInitValid: true,
                 initValue: RegExp('https?://[^"]+')
                     .allMatches(
-                      File(result.files.single.path!).readAsStringSync(),
+                      File(result.first.path).readAsStringSync(),
                     )
                     .map((e) => e.input.substring(e.start, e.end))
                     .toSet()

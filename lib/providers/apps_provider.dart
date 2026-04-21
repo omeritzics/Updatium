@@ -181,6 +181,7 @@ Future<File> downloadFileWithRetry(
   int retries = 3,
   bool allowInsecure = false,
   LogsProvider? logs,
+  String? preFetchedExt,
 }) async {
   try {
     return await downloadFile(
@@ -193,6 +194,7 @@ Future<File> downloadFileWithRetry(
       headers: headers,
       allowInsecure: allowInsecure,
       logs: logs,
+      preFetchedExt: preFetchedExt,
     );
   } catch (e) {
     if (retries > 0 &&
@@ -210,6 +212,7 @@ Future<File> downloadFileWithRetry(
         retries: (retries - 1),
         allowInsecure: allowInsecure,
         logs: logs,
+        preFetchedExt: preFetchedExt,
       );
     } else {
       rethrow;
@@ -312,33 +315,6 @@ String generateUniqueFileName(String baseName, String ext, String destDir) {
   return fileName;
 }
 
-Future<String> determineFileExtension(
-  String url,
-  Map<String, String>? headers, {
-  bool allowInsecure = false,
-}) async {
-  var reqHeaders = headers ?? {};
-  var req = http.Request('GET', Uri.parse(url));
-  req.headers.addAll(reqHeaders);
-  var headersClient = IOClient(createHttpClient(allowInsecure));
-  http.StreamedResponse headersResponse = await headersClient.send(req);
-  var resHeaders = headersResponse.headers;
-  headersClient.close();
-
-  String ext = resHeaders['content-disposition']?.split('.').last ?? 'apk';
-  if (ext.endsWith('"') || ext.endsWith("other")) {
-    ext = ext.substring(0, ext.length - 1);
-  }
-  if ((source_provider.hasSupportedApkExtension(
-            Uri.tryParse(url)?.path ?? url,
-          ) ||
-          ext == 'attachment') &&
-      ext != 'apk') {
-    ext = 'apk';
-  }
-  return ext;
-}
-
 Future<String?> promptForFileName(
   BuildContext context,
   String suggestedName,
@@ -389,28 +365,61 @@ Future<File> downloadFile(
   Map<String, String>? headers,
   bool allowInsecure = false,
   LogsProvider? logs,
+  String? preFetchedExt,
 }) async {
   // Send the initial request but cancel it as soon as you have the headers
   var reqHeaders = headers ?? {};
   var req = http.Request('GET', Uri.parse(url));
   req.headers.addAll(reqHeaders);
   var headersClient = IOClient(createHttpClient(allowInsecure));
-  http.StreamedResponse headersResponse = await headersClient.send(req);
-  var resHeaders = headersResponse.headers;
+  http.StreamedResponse headersResponse;
+  var resHeaders;
+  
+  try {
+    headersResponse = await headersClient.send(req);
+    resHeaders = headersResponse.headers;
+  } finally {
+    headersClient.close();
+  }
 
   // Use the headers to decide what the file extension is, and
   // whether it supports partial downloads (range request), and
   // what the total size of the file is (if provided)
-  String ext = resHeaders['content-disposition']?.split('.').last ?? 'apk';
-  if (ext.endsWith('"') || ext.endsWith("other")) {
-    ext = ext.substring(0, ext.length - 1);
-  }
-  if ((source_provider.hasSupportedApkExtension(
-            Uri.tryParse(url)?.path ?? url,
-          ) ||
-          ext == 'attachment') &&
-      ext != 'apk') {
-    ext = 'apk';
+  String ext;
+  if (preFetchedExt != null) {
+    ext = preFetchedExt;
+  } else {
+    // Parse file extension from content-disposition header
+    ext = 'apk'; // default
+    String? contentDisposition = resHeaders['content-disposition'];
+    if (contentDisposition != null) {
+      // Extract filename from content-disposition
+      RegExp filenameRegex = RegExp(r'filename\s*=\s*"?([^";]+)"?');
+      Match? match = filenameRegex.firstMatch(contentDisposition);
+      if (match != null) {
+        String filename = match.group(1) ?? '';
+        // Get extension from filename
+        int lastDotIndex = filename.lastIndexOf('.');
+        if (lastDotIndex > 0 && lastDotIndex < filename.length - 1) {
+          ext = filename.substring(lastDotIndex + 1);
+        }
+      } else {
+        // Fallback to simple split if regex fails
+        ext = contentDisposition.split('.').last;
+        if (ext.endsWith('"') || ext.endsWith("other")) {
+          ext = ext.substring(0, ext.length - 1);
+        }
+      }
+    }
+    
+    // Normalize extension
+    if ((source_provider.hasSupportedApkExtension(
+              Uri.tryParse(url)?.path ?? url,
+            ) ||
+            ext == 'attachment') &&
+        ext != 'apk') {
+      ext = 'apk';
+    }
   }
   fileName = fileNameHasExt
       ? fileName
@@ -748,11 +757,53 @@ class AppsProvider with ChangeNotifier {
       if (source.urlsAlwaysHaveExtension) {
         ext = app.apkUrls[app.preferredApkIndex].key.split('.').last;
       } else {
-        ext = await determineFileExtension(
-          downloadUrl,
-          headers,
-          allowInsecure: app.additionalSettings['allowInsecure'] == true,
+        // Get file extension from headers
+        var reqHeaders = headers ?? {};
+        var req = http.Request('GET', Uri.parse(downloadUrl));
+        req.headers.addAll(reqHeaders);
+        var headersClient = IOClient(
+          createHttpClient(app.additionalSettings['allowInsecure'] == true),
         );
+        http.StreamedResponse headersResponse;
+        var resHeaders;
+        try {
+          headersResponse = await headersClient.send(req);
+          resHeaders = headersResponse.headers;
+        } finally {
+          headersClient.close();
+        }
+
+        // Parse file extension from content-disposition header
+        ext = 'apk'; // default
+        String? contentDisposition = resHeaders['content-disposition'];
+        if (contentDisposition != null) {
+          // Extract filename from content-disposition
+          RegExp filenameRegex = RegExp(r'filename\s*=\s*"?([^";]+)"?');
+          Match? match = filenameRegex.firstMatch(contentDisposition);
+          if (match != null) {
+            String filename = match.group(1) ?? '';
+            // Get extension from filename
+            int lastDotIndex = filename.lastIndexOf('.');
+            if (lastDotIndex > 0 && lastDotIndex < filename.length - 1) {
+              ext = filename.substring(lastDotIndex + 1);
+            }
+          } else {
+            // Fallback to simple split if regex fails
+            ext = contentDisposition.split('.').last;
+            if (ext.endsWith('"') || ext.endsWith("other")) {
+              ext = ext.substring(0, ext.length - 1);
+            }
+          }
+        }
+        
+        // Normalize extension
+        if ((source_provider.hasSupportedApkExtension(
+                  Uri.tryParse(downloadUrl)?.path ?? downloadUrl,
+                ) ||
+                ext == 'attachment') &&
+            ext != 'apk') {
+          ext = 'apk';
+        }
       }
 
       // Check for existing file and prompt for rename if needed
@@ -763,26 +814,58 @@ class AppsProvider with ChangeNotifier {
           ? fileNameNoExt
           : '$baseFileName.$ext';
 
+      File existingFile = File('${APKDir.path}/$finalFileName');
       if (context != null &&
-          File('${APKDir.path}/$finalFileName').existsSync() &&
+          existingFile.existsSync() &&
           useExisting) {
-        String suggestedName = generateUniqueFileName(
-          baseFileName,
-          ext,
-          APKDir.path,
-        );
-        String? userFileName = await promptForFileName(context, suggestedName);
-        if (userFileName == null) {
-          throw UpdatiumError(tr('downloadCancelled'));
+        // Check if existing file is the correct version by parsing the APK
+        bool isCorrectVersion = false;
+        try {
+          PackageInfo? existingInfo = await pm.getPackageArchiveInfo(
+            archiveFilePath: existingFile.path,
+          );
+          if (existingInfo != null) {
+            // Get the expected version from the app's latest version
+            String expectedVersion = app.latestVersion;
+            String? existingVersion = existingInfo.versionName;
+            
+            // Compare versions using reconcileVersionDifferences for robust comparison
+            if (existingVersion != null) {
+              var versionMatch = reconcileVersionDifferences(
+                expectedVersion,
+                existingVersion,
+              );
+              // If versions share a common format and are equal, or exact match
+              isCorrectVersion = (versionMatch?.key == true) || 
+                               (existingVersion == expectedVersion);
+            }
+          }
+        } catch (e) {
+          // If we can't parse the existing APK, treat it as incorrect version
+          isCorrectVersion = false;
         }
-        // Update fileNameNoExt based on user input
-        if (source.urlsAlwaysHaveExtension) {
-          fileNameNoExt = userFileName;
-        } else {
-          fileNameNoExt = userFileName.contains('.')
-              ? userFileName.substring(0, userFileName.lastIndexOf('.'))
-              : userFileName;
+
+        if (!isCorrectVersion) {
+          // File exists but is a different version, prompt for rename
+          String suggestedName = generateUniqueFileName(
+            baseFileName,
+            ext,
+            APKDir.path,
+          );
+          String? userFileName = await promptForFileName(context, suggestedName);
+          if (userFileName == null) {
+            throw UpdatiumError(tr('downloadCancelled'));
+          }
+          // Update fileNameNoExt based on user input
+          if (source.urlsAlwaysHaveExtension) {
+            fileNameNoExt = userFileName;
+          } else {
+            fileNameNoExt = userFileName.contains('.')
+                ? userFileName.substring(0, userFileName.lastIndexOf('.'))
+                : userFileName;
+          }
         }
+        // If isCorrectVersion is true, we'll use the existing file (downloadFile handles this)
       }
 
       var downloadedFile = await downloadFileWithRetry(
@@ -806,6 +889,7 @@ class AppsProvider with ChangeNotifier {
         useExisting: useExisting,
         allowInsecure: app.additionalSettings['allowInsecure'] == true,
         logs: logs,
+        preFetchedExt: source.urlsAlwaysHaveExtension ? null : ext,
       );
       // Set to 90 for remaining steps, will make null in 'finally'
       if (apps[app.id] != null) {
