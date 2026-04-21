@@ -28,7 +28,7 @@ class WhatsAppApp extends AppSource {
       var http = parse(res.body);
       var version = '';
       String? apkUrl;
-      
+
       // Look for the APK download link in the page
       var apkLink = http.querySelector('a[href*=".apk"]');
       if (apkLink != null) {
@@ -42,18 +42,21 @@ class WhatsAppApp extends AppSource {
           }
         }
       }
-      
+
       // If no APK link found, use the known CDN URL pattern
       if (apkUrl == null) {
-        apkUrl = 'https://scontent.whatsapp.net/v/t61.25591-34/10000000_2369797936868259_1705562541720575021_n.apk/WhatsApp.apk';
+        apkUrl =
+            'https://scontent.whatsapp.net/v/t61.25591-34/10000000_2369797936868259_1705562541720575021_n.apk/WhatsApp.apk';
       }
-      
+
       // Try to extract version from the page content
-      var versionElement = http.querySelector('.version-number, [data-version]');
+      var versionElement = http.querySelector(
+        '.version-number, [data-version]',
+      );
       if (versionElement != null) {
         version = versionElement.text.trim();
       }
-      
+
       // If version not found, try to extract from the APK URL
       if (version.isEmpty) {
         var versionMatch = RegExp(r'(\d+\.\d+\.\d+)').firstMatch(apkUrl);
@@ -61,7 +64,7 @@ class WhatsAppApp extends AppSource {
           version = versionMatch.group(1) ?? '';
         }
       }
-      
+
       // Final fallback - if still no version, use the version code from URL
       if (version.isEmpty) {
         var versionCodeMatch = RegExp(r'_(\d+)_').firstMatch(apkUrl);
@@ -69,11 +72,11 @@ class WhatsAppApp extends AppSource {
           version = versionCodeMatch.group(1) ?? '';
         }
       }
-      
+
       if (version.isEmpty) {
         throw NoVersionError();
       }
-      
+
       return APKDetails(version, [
         MapEntry<String, String>(
           'WhatsApp-$version${source_provider.supportedApkExtensions[0]}',

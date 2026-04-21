@@ -141,7 +141,8 @@ class _AppPageState extends State<AppPage> {
       bool installed = app.app.installedVersion != null;
       versionLines = '${tr('latestVersion')}: ${app.app.latestVersion}';
       if (installed) {
-        versionLines += '\n${tr('installedVersion')}: ${app.app.installedVersion}';
+        versionLines +=
+            '\n${tr('installedVersion')}: ${app.app.installedVersion}';
       }
       String infoLines = tr(
         'lastUpdateCheckX',
