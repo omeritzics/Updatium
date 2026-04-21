@@ -1686,7 +1686,11 @@ class AppsProvider with ChangeNotifier {
         );
         String downloadedFilePath = '$downloadPath/${fileUrl.key}';
         notificationsProvider.notify(
-          DownloadedNotification(fileUrl.key, fileUrl.value, downloadedFilePath),
+          DownloadedNotification(
+            fileUrl.key,
+            fileUrl.value,
+            downloadedFilePath,
+          ),
         );
       } catch (e) {
         errors.add(fileUrl.key, e);

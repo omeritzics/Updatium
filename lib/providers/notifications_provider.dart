@@ -235,7 +235,8 @@ class NotificationsProvider {
 
   void _handleNotificationResponse(NotificationResponse response) {
     // Check if this is a FILE_DOWNLOADED notification
-    if (response.payload != null && response.payload!.startsWith('FILE_DOWNLOADED:')) {
+    if (response.payload != null &&
+        response.payload!.startsWith('FILE_DOWNLOADED:')) {
       // For FILE_DOWNLOADED notifications, show a snackbar instead of opening the file
       final filePath = response.payload!.substring('FILE_DOWNLOADED:'.length);
       _showDownloadedSnackbar(filePath);
@@ -276,7 +277,9 @@ class NotificationsProvider {
     } catch (e) {
       // If launching fails, show an error message
       if (globalNavigatorKey.currentState?.context != null) {
-        ScaffoldMessenger.of(globalNavigatorKey.currentState!.context).showSnackBar(
+        ScaffoldMessenger.of(
+          globalNavigatorKey.currentState!.context,
+        ).showSnackBar(
           SnackBar(
             content: Text('Failed to open file manager'),
             duration: Duration(seconds: 2),
