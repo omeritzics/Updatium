@@ -5,7 +5,7 @@ import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/main.dart';
-import 'package:updatium/mass_app_sources/githubstars.dart';
+import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';

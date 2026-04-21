@@ -185,7 +185,7 @@
     "none": "Nada",
     "all": "Todo",
     "never": "Nunca",
-    "latestVersionX": "Última: {}",
+    "latestVersion": "Última: {}",
     "installedVersionX": "Instalada: {}",
     "lastUpdateCheckX": "Última comprobación: {}",
     "remove": "Retirar",

@@ -185,7 +185,7 @@
     "none": "Geen",
     "all": "Alle",
     "never": "Nooit",
-    "latestVersionX": "Laatste versie: {}",
+    "latestVersion": "Laatste versie: {}",
     "installedVersionX": "Geïnstalleerde versie: {}",
     "lastUpdateCheckX": "Laatste updatecontrole: {}",
     "remove": "Verwijderen",

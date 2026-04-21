@@ -185,7 +185,7 @@
     "none": "无",
     "all": "全部",
     "never": "从未",
-    "latestVersionX": "最新版本：{}",
+    "latestVersion": "最新版本：{}",
     "installedVersionX": "当前版本：{}",
     "lastUpdateCheckX": "上次更新检查：{}",
     "remove": "删除",

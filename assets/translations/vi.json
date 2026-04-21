@@ -185,7 +185,7 @@
     "none": "Không",
     "all": "Tất cả",
     "never": "Không bao giờ",
-    "latestVersionX": "Phiên bản mới nhất: {}",
+    "latestVersion": "Phiên bản mới nhất: {}",
     "installedVersionX": "Phiên bản đã cài đặt: {}",
     "lastUpdateCheckX": "Kiểm tra cập nhật lần cuối: {}",
     "remove": "Loại bỏ",

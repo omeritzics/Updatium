@@ -185,7 +185,7 @@
     "none": "ഒന്നുമില്ല",
     "all": "All",
     "never": "ഒരിക്കലുമില്ല",
-    "latestVersionX": "ഏറ്റവും പുതിയത്: {}",
+    "latestVersion": "ഏറ്റവും പുതിയത്: {}",
     "installedVersionX": "ഇൻസ്റ്റാൾ ചെയ്തത്: {}",
     "lastUpdateCheckX": "അവസാന അപ്‌ഡേറ്റ് പരിശോധന: {}",
     "remove": "നീക്കം ചെയ്യുക",

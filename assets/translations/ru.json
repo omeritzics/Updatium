@@ -185,7 +185,7 @@
     "none": "Отсутствует",
     "all": "Все",
     "never": "Никогда",
-    "latestVersionX": "Последняя версия: {}",
+    "latestVersion": "Последняя версия: {}",
     "installedVersionX": "Установленная версия: {}",
     "lastUpdateCheckX": "Последняя проверка: {}",
     "remove": "Удалить",

@@ -185,7 +185,7 @@
     "none": "なし",
     "all": "すべて",
     "never": "しない",
-    "latestVersionX": "最新: {}",
+    "latestVersion": "最新: {}",
     "installedVersionX": "インストール済み: {}",
     "lastUpdateCheckX": "最終アップデート確認: {}",
     "remove": "削除",

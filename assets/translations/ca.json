@@ -185,7 +185,7 @@
     "none": "Cap",
     "all": "Tot",
     "never": "Mai",
-    "latestVersionX": "Última versió: {}",
+    "latestVersion": "Última versió: {}",
     "installedVersionX": "Versió instal·lada: {}",
     "lastUpdateCheckX": "Última comprovació d'actualització: {}",
     "remove": "Suprimeix",
