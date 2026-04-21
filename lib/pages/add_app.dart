@@ -807,16 +807,19 @@ class AddAppPageState extends State<AddAppPage> {
         borderRadius: BorderRadius.circular(12),
         color: Theme.of(context).colorScheme.surfaceContainerLow,
       ),
-      child: Wrap(
-        direction: Axis.horizontal,
-        alignment: WrapAlignment.spaceBetween,
-        spacing: 12,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap: () {
+          Text(
+            tr('supportedSources'),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          gap8,
+          TextButton.icon(
+            onPressed: () {
               showDialog(
                 context: context,
-                builder: (context) {
+                builder: (BuildContext ctx) {
                   return AlertDialog(
                     scrollable: true,
                     contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
@@ -861,7 +864,7 @@ class AddAppPageState extends State<AddAppPage> {
                     ),
                     actions: [
                       TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: () => Navigator.of(ctx).pop(),
                         child: Text(tr('ok')),
                       ),
                     ],
@@ -869,17 +872,11 @@ class AddAppPageState extends State<AddAppPage> {
                 },
               );
             },
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.info_outline,
-                  size: 18,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                horizontalGap8,
-                Text(tr('supportedSources'), style: const TextStyle()),
-              ],
+            icon: const Icon(Icons.info_outline, size: 18),
+            label: Text(tr('view')),
+            style: TextButton.styleFrom(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.zero,
             ),
           ),
         ],

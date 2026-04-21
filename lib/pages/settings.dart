@@ -1476,7 +1476,6 @@ class CategoryTagEditor extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextField(
-                  autofocus: true,
                   decoration: InputDecoration(labelText: tr('name')),
                   onChanged: (value) => categoryName = value,
                 ),
@@ -1505,7 +1504,7 @@ class CategoryTagEditor extends StatelessWidget {
                               ),
                               pickersEnabled: const <ColorPickerType, bool>{
                                 ColorPickerType.both: false,
-                                ColorPickerType.primary: false,
+                                ColorPickerType.primary: true,
                                 ColorPickerType.accent: false,
                                 ColorPickerType.bw: false,
                                 ColorPickerType.custom: true,
