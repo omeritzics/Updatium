@@ -30,6 +30,7 @@ import 'package:updatium/app_sources/sourceforge.dart';
 import 'package:updatium/app_sources/sourcehut.dart';
 import 'package:updatium/app_sources/telegramapp.dart';
 import 'package:updatium/app_sources/tencent.dart';
+import 'package:updatium/app_sources/whatsapp.dart';
 import 'package:updatium/app_sources/uptodown.dart';
 import 'package:updatium/app_sources/vivoappstore.dart';
 import 'package:updatium/components/generated_form.dart';
@@ -1275,6 +1276,7 @@ class SourceProvider {
     Jenkins(),
     APKMirror(),
     TelegramApp(),
+    WhatsAppApp(),
     NeutronCode(),
     DirectAPKLink(),
     HTML(), // This should ALWAYS be the last option as they are tried in order

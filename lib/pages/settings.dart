@@ -1476,6 +1476,7 @@ class CategoryTagEditor extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextField(
+                  autofocus: true,
                   decoration: InputDecoration(labelText: tr('name')),
                   onChanged: (value) => categoryName = value,
                 ),

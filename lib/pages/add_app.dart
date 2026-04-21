@@ -800,88 +800,70 @@ class AddAppPageState extends State<AddAppPage> {
       ],
     );
 
-    Widget getSourcesListWidget() => Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Theme.of(context).colorScheme.surfaceContainerLow,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            tr('supportedSources'),
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-          gap8,
-          TextButton.icon(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext ctx) {
-                  return AlertDialog(
-                    scrollable: true,
-                    contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-                    title: Text(tr('supportedSources')),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ...sourceProvider.sources.map(
-                          (e) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: GestureDetector(
-                              onTap: e.hosts.isNotEmpty
-                                  ? () {
-                                      launchUrlString(
-                                        'https://${e.hosts[0]}',
-                                        mode: LaunchMode.externalApplication,
-                                      );
-                                    }
-                                  : null,
-                              child: Text(
-                                '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
-                                style: TextStyle(
-                                  decoration: e.hosts.isNotEmpty
-                                      ? TextDecoration.underline
-                                      : TextDecoration.none,
-                                ),
+    Widget getSourcesListWidget() => TextButton.icon(
+      onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext ctx) {
+                return AlertDialog(
+                  scrollable: true,
+                  contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+                  title: Text(tr('supportedSources')),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ...sourceProvider.sources.map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: GestureDetector(
+                            onTap: e.hosts.isNotEmpty
+                                ? () {
+                                    launchUrlString(
+                                      'https://${e.hosts[0]}',
+                                      mode: LaunchMode.externalApplication,
+                                    );
+                                  }
+                                : null,
+                            child: Text(
+                              '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
+                              style: TextStyle(
+                                decoration: e.hosts.isNotEmpty
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
                               ),
                             ),
                           ),
                         ),
-                        gap16,
-                        Text(
-                          '${tr('note')}:',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          tr('selfHostedNote', args: [tr('overrideSource')]),
-                        ),
-                      ],
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(),
-                        child: Text(tr('ok')),
+                      ),
+                      gap16,
+                      Text(
+                        '${tr('note')}:',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        tr('selfHostedNote', args: [tr('overrideSource')]),
                       ),
                     ],
-                  );
-                },
-              );
-            },
-            icon: const Icon(Icons.info_outline, size: 18),
-            label: Text(tr('view')),
-            style: TextButton.styleFrom(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.zero,
-            ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(),
+                      child: Text(tr('ok')),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          icon: const Icon(Icons.info_outline, size: 18),
+          label: Text(tr('supportedSources')),
+          style: TextButton.styleFrom(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.zero,
           ),
-        ],
-      ),
-    );
+        );
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,

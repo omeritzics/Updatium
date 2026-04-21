@@ -139,17 +139,9 @@ class _AppPageState extends State<AppPage> {
     getInfoColumn() {
       String versionLines = '';
       bool installed = app.app.installedVersion != null;
-      bool upToDate = app.app.installedVersion == app.app.latestVersion;
+      versionLines = '${tr('latestVersion')}: ${app.app.latestVersion}';
       if (installed) {
-        versionLines = '${app.app.installedVersion} ${tr('installedVersion')}';
-        if (upToDate) {
-          versionLines += '/${tr('latest')}';
-        }
-      } else {
-        versionLines = tr('notInstalled');
-      }
-      if (!upToDate) {
-        versionLines += '\n${app.app.latestVersion} ${tr('latest')}';
+        versionLines += '\n${tr('installedVersion')}: ${app.app.installedVersion}';
       }
       String infoLines = tr(
         'lastUpdateCheckX',
@@ -177,6 +169,7 @@ class _AppPageState extends State<AppPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 gap24,
                 Text(
