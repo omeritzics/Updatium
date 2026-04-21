@@ -511,5 +511,6 @@
     "fileExists": "File already exists",
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
-    "downloadCancelled": "Download cancelled"
+    "downloadCancelled": "Download cancelled",
+    "showInFileManager": "Show in file manager"
 }

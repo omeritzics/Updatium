@@ -4,6 +4,8 @@
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
 
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -155,7 +157,7 @@ class DownloadNotification extends UpdatiumNotification {
 }
 
 class DownloadedNotification extends UpdatiumNotification {
-  DownloadedNotification(String fileName, String downloadUrl)
+  DownloadedNotification(String fileName, String downloadUrl, String filePath)
     : super(
         downloadUrl.hashCode,
         tr('downloadedX', args: [fileName]),
@@ -164,6 +166,7 @@ class DownloadedNotification extends UpdatiumNotification {
         tr('downloadedXNotifChannel', args: [tr('app')]),
         tr('downloadedX', args: [tr('app')]),
         Importance.defaultImportance,
+        payload: 'FILE_DOWNLOADED:$filePath',
       );
 }
 
@@ -213,7 +216,7 @@ class NotificationsProvider {
             android: AndroidInitializationSettings('ic_notification'),
           ),
           onDidReceiveNotificationResponse: (NotificationResponse response) {
-            _showNotificationPayload(response.payload);
+            _handleNotificationResponse(response);
           },
         ) ??
         false;
@@ -223,10 +226,63 @@ class NotificationsProvider {
     final NotificationAppLaunchDetails? launchDetails = await notifications
         .getNotificationAppLaunchDetails();
     if (launchDetails?.didNotificationLaunchApp ?? false) {
-      _showNotificationPayload(
-        launchDetails!.notificationResponse?.payload,
-        doublePop: true,
+      final response = launchDetails!.notificationResponse;
+      if (response != null) {
+        _handleNotificationResponse(response);
+      }
+    }
+  }
+
+  void _handleNotificationResponse(NotificationResponse response) {
+    // Check if this is a FILE_DOWNLOADED notification
+    if (response.payload != null && response.payload!.startsWith('FILE_DOWNLOADED:')) {
+      // For FILE_DOWNLOADED notifications, show a snackbar instead of opening the file
+      final filePath = response.payload!.substring('FILE_DOWNLOADED:'.length);
+      _showDownloadedSnackbar(filePath);
+    } else {
+      // For other notifications, show the payload in an alert dialog
+      _showNotificationPayload(response.payload);
+    }
+  }
+
+  void _showDownloadedSnackbar(String filePath) {
+    if (globalNavigatorKey.currentState?.context != null) {
+      final context = globalNavigatorKey.currentState!.context;
+      final fileName = filePath.split('/').last;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(tr('downloadedX', args: [fileName])),
+          action: SnackBarAction(
+            label: tr('showInFileManager'),
+            onPressed: () {
+              _showInFileManager(filePath);
+            },
+          ),
+        ),
       );
+    }
+  }
+
+  void _showInFileManager(String filePath) {
+    // Use AndroidIntent to show the file in file manager
+    try {
+      final intent = AndroidIntent(
+        action: 'android.intent.action.VIEW',
+        data: 'file://$filePath',
+        type: '*/*',
+        flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+      );
+      intent.launch();
+    } catch (e) {
+      // If launching fails, show an error message
+      if (globalNavigatorKey.currentState?.context != null) {
+        ScaffoldMessenger.of(globalNavigatorKey.currentState!.context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to open file manager'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
     }
   }
 

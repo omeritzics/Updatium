@@ -1684,8 +1684,9 @@ class AppsProvider with ChangeNotifier {
           allowInsecure: app.additionalSettings['allowInsecure'] == true,
           logs: logs,
         );
+        String downloadedFilePath = '$downloadPath/${fileUrl.key}';
         notificationsProvider.notify(
-          DownloadedNotification(fileUrl.key, fileUrl.value),
+          DownloadedNotification(fileUrl.key, fileUrl.value, downloadedFilePath),
         );
       } catch (e) {
         errors.add(fileUrl.key, e);
