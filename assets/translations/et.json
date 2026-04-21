@@ -185,7 +185,7 @@
     "none": "Pole",
     "all": "Kõik",
     "never": "Mitte kunagi",
-    "latestVersion": "Viimane: {}",
+    "latestVersion": "Viimane",
     "installedVersionX": "Installitud: {}",
     "lastUpdateCheckX": "Viimane uuenduste kontroll: {}",
     "remove": "Eemalda",

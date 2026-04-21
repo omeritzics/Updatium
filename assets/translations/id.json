@@ -185,7 +185,7 @@
     "none": "Tidak ada",
     "all": "Semua",
     "never": "Tidak pernah",
-    "latestVersion": "Terbaru: {}",
+    "latestVersion": "Terbaru",
     "installedVersionX": "Terpasang: {}",
     "lastUpdateCheckX": "Terakhir memeriksa pembaruan: {}",
     "remove": "Hapus",

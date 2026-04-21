@@ -185,7 +185,7 @@
     "none": "कोई नहीं",
     "all": "सभी",
     "never": "कभी नहीं",
-    "latestVersion": "नवीनतम: {}",
+    "latestVersion": "नवीनतम",
     "installedVersionX": "इंस्टॉल किया गया: {}",
     "lastUpdateCheckX": "पिछली अपडेट जाँच: {}",
     "remove": "हटाएँ",

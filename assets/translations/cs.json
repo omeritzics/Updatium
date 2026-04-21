@@ -185,7 +185,7 @@
     "none": "Žádný",
     "all": "Všechny",
     "never": "Nikdy",
-    "latestVersion": "Nejnovější verze: {}",
+    "latestVersion": "Nejnovější verze",
     "installedVersionX": "Nainstalovaná verze: {}",
     "lastUpdateCheckX": "Poslední kontrola aktualizací: {}",
     "remove": "Odebrat",

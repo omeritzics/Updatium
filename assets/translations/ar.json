@@ -185,7 +185,7 @@
     "none": "لا شيء",
     "all": "الكل",
     "never": "أبدًا",
-    "latestVersion": "الأحدث: {}",
+    "latestVersion": "الأحدث",
     "installedVersionX": "المثبت: {}",
     "lastUpdateCheckX": "آخر تحقق من التحديثات: {}",
     "remove": "أزل",

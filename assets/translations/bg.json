@@ -185,7 +185,7 @@
     "none": "Няма",
     "all": "Всички",
     "never": "Никога",
-    "latestVersion": "Последна: {}",
+    "latestVersion": "Последна",
     "installedVersionX": "Инсталирана: {}",
     "lastUpdateCheckX": "Последна проверка за актуализация: {}",
     "remove": "Премахване",

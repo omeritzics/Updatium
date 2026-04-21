@@ -185,7 +185,7 @@
     "none": "Ingen",
     "all": "Alla",
     "never": "Aldrig",
-    "latestVersion": "Senaste Version: {}",
+    "latestVersion": "Senaste Version",
     "installedVersionX": "Installerad Version: {}",
     "lastUpdateCheckX": "Senaste uppdateringskoll: {}",
     "remove": "Ta bort",

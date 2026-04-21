@@ -185,7 +185,7 @@
     "none": "없음",
     "all": "모두",
     "never": "절대",
-    "latestVersion": "최신: {}",
+    "latestVersion": "최신",
     "installedVersionX": "설치됨: {}",
     "lastUpdateCheckX": "마지막 업데이트 확인: {}",
     "remove": "제거",

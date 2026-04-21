@@ -185,7 +185,7 @@
     "none": "Semmi",
     "all": "Összes",
     "never": "Soha",
-    "latestVersion": "Legújabb verzió: {}",
+    "latestVersion": "Legújabb verzió",
     "installedVersionX": "Telepített verzió: {}",
     "lastUpdateCheckX": "Frissítések utoljára ellenőrizve: {}",
     "remove": "Eltávolítás",

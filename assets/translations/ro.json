@@ -185,7 +185,7 @@
     "none": "Niciunul",
     "all": "Toate",
     "never": "Niciodată",
-    "latestVersion": "Cea mai recentă: {}",
+    "latestVersion": "Cea mai recentă",
     "installedVersionX": "Instalat: {}",
     "lastUpdateCheckX": "Ultima verificare actualizare: {}",
     "remove": "Elimină",

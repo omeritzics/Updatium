@@ -185,7 +185,7 @@
     "none": "Ingen",
     "all": "Alle",
     "never": "Aldrig",
-    "latestVersion": "Seneste: {}",
+    "latestVersion": "Seneste",
     "installedVersionX": "Installeret: {}",
     "lastUpdateCheckX": "Sidste opdateringstjek: {}",
     "remove": "Fjern",
