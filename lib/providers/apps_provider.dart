@@ -374,7 +374,7 @@ Future<File> downloadFile(
   var headersClient = IOClient(createHttpClient(allowInsecure));
   http.StreamedResponse headersResponse;
   var resHeaders;
-  
+
   try {
     headersResponse = await headersClient.send(req);
     resHeaders = headersResponse.headers;
@@ -411,7 +411,7 @@ Future<File> downloadFile(
         }
       }
     }
-    
+
     // Normalize extension
     if ((source_provider.hasSupportedApkExtension(
               Uri.tryParse(url)?.path ?? url,
@@ -795,7 +795,7 @@ class AppsProvider with ChangeNotifier {
             }
           }
         }
-        
+
         // Normalize extension
         if ((source_provider.hasSupportedApkExtension(
                   Uri.tryParse(downloadUrl)?.path ?? downloadUrl,
@@ -815,9 +815,7 @@ class AppsProvider with ChangeNotifier {
           : '$baseFileName.$ext';
 
       File existingFile = File('${APKDir.path}/$finalFileName');
-      if (context != null &&
-          existingFile.existsSync() &&
-          useExisting) {
+      if (context != null && existingFile.existsSync() && useExisting) {
         // Check if existing file is the correct version by parsing the APK
         bool isCorrectVersion = false;
         try {
@@ -828,7 +826,7 @@ class AppsProvider with ChangeNotifier {
             // Get the expected version from the app's latest version
             String expectedVersion = app.latestVersion;
             String? existingVersion = existingInfo.versionName;
-            
+
             // Compare versions using reconcileVersionDifferences for robust comparison
             if (existingVersion != null) {
               var versionMatch = reconcileVersionDifferences(
@@ -836,8 +834,9 @@ class AppsProvider with ChangeNotifier {
                 existingVersion,
               );
               // If versions share a common format and are equal, or exact match
-              isCorrectVersion = (versionMatch?.key == true) || 
-                               (existingVersion == expectedVersion);
+              isCorrectVersion =
+                  (versionMatch?.key == true) ||
+                  (existingVersion == expectedVersion);
             }
           }
         } catch (e) {
@@ -852,7 +851,10 @@ class AppsProvider with ChangeNotifier {
             ext,
             APKDir.path,
           );
-          String? userFileName = await promptForFileName(context, suggestedName);
+          String? userFileName = await promptForFileName(
+            context,
+            suggestedName,
+          );
           if (userFileName == null) {
             throw UpdatiumError(tr('downloadCancelled'));
           }

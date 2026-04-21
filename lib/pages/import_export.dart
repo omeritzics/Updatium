@@ -157,7 +157,8 @@ class _ImportExportPageState extends State<ImportExportPage> {
       setState(() {
         importInProgress = true;
       });
-      DocMan.pick.files(limit: 1)
+      DocMan.pick
+          .files(limit: 1)
           .then((result) {
             if (result.isNotEmpty) {
               String data = File(result.first.path).readAsStringSync();
@@ -199,15 +200,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
       setState(() {
         importInProgress = true;
       });
-      DocMan.pick.files(limit: 1)
+      DocMan.pick
+          .files(limit: 1)
           .then((result) {
             if (result.isNotEmpty) {
               urlListImport(
                 overrideInitValid: true,
                 initValue: RegExp('https?://[^"]+')
-                    .allMatches(
-                      File(result.first.path).readAsStringSync(),
-                    )
+                    .allMatches(File(result.first.path).readAsStringSync())
                     .map((e) => e.input.substring(e.start, e.end))
                     .toSet()
                     .toList()
