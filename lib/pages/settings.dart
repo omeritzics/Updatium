@@ -1473,10 +1473,13 @@ class CategoryTagEditor extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
-                    InkWell(
-                      borderRadius: BorderRadius.circular(20),
-                      onTap: () async {
-                        final Color colorBeforeDialog = categoryColor;
+                    Focus(
+                      canRequestFocus: false,
+                      skipTraversal: true,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(20),
+                        onTap: () async {
+                          final Color colorBeforeDialog = categoryColor;
                         final result =
                             await ColorPicker(
                               color: categoryColor,
@@ -1559,6 +1562,7 @@ class CategoryTagEditor extends StatelessWidget {
                             width: 1,
                           ),
                         ),
+                      ),
                       ),
                     ),
                   ],
