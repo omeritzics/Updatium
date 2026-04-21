@@ -395,7 +395,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
     var sourceSpecificFields = sourceProvider.sources.map((e) {
       if (e.sourceConfigSettingFormItems.isNotEmpty) {
-
         final columnContent = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
