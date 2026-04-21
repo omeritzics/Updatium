@@ -395,9 +395,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
     var sourceSpecificFields = sourceProvider.sources.map((e) {
       if (e.sourceConfigSettingFormItems.isNotEmpty) {
-        final isGitHubOrGitLab =
-            e.runtimeType.toString() == 'GitHub' ||
-            e.runtimeType.toString() == 'GitLab';
 
         final columnContent = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -451,21 +448,9 @@ class _SettingsPageState extends State<SettingsPage> {
             }).toList(),
           ],
         );
-
-        if (isGitHubOrGitLab) {
-          return columnContent;
-        } else {
-          return Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Theme.of(context).colorScheme.surfaceContainerLow,
-            ),
-            child: columnContent,
-          );
-        }
+        return columnContent;
       } else {
-        return Container();
+        return const SizedBox.shrink();
       }
     });
 
