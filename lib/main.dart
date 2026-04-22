@@ -418,20 +418,20 @@ class _UpdatiumState extends State<Updatium> {
             // Ensure surface container colors have proper opacity for switch visibility
             lightColorScheme = lightColorScheme.copyWith(
               surfaceContainerHighest: lightColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.12),
+                  .withValues(alpha: 0.17),
               surfaceContainerHigh: lightColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.09),
+                  .withValues(alpha: 0.12),
               surfaceContainer: lightColorScheme.surfaceContainer.withValues(
-                alpha: 0.06,
+                alpha: 0.08,
               ),
             );
             darkColorScheme = darkColorScheme.copyWith(
               surfaceContainerHighest: darkColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.12),
+                  .withValues(alpha: 0.17),
               surfaceContainerHigh: darkColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.09),
+                  .withValues(alpha: 0.12),
               surfaceContainer: darkColorScheme.surfaceContainer.withValues(
-                alpha: 0.06,
+                alpha: 0.08,
               ),
             );
           } else {
@@ -449,9 +449,9 @@ class _UpdatiumState extends State<Updatium> {
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
-              surfaceContainerHighest: Colors.white.withValues(alpha: 0.12),
-              surfaceContainerHigh: Colors.white.withValues(alpha: 0.09),
-              surfaceContainer: Colors.white.withValues(alpha: 0.06),
+              surfaceContainerHighest: Colors.white.withValues(alpha: 0.17),
+              surfaceContainerHigh: Colors.white.withValues(alpha: 0.12),
+              surfaceContainer: Colors.white.withValues(alpha: 0.08),
               surfaceContainerLow: Colors.white.withValues(alpha: 0.04),
               surfaceContainerLowest: Colors.white.withValues(alpha: 0.02),
               surfaceDim: Colors.black,
