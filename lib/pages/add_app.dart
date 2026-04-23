@@ -49,7 +49,8 @@ class AddAppPageState extends State<AddAppPage> {
   List<String> pickedCategories = [];
   int urlInputKey = 0;
   SourceProvider sourceProvider = SourceProvider();
-  final TextEditingController _sourceOverrideController = TextEditingController();
+  final TextEditingController _sourceOverrideController =
+      TextEditingController();
 
   String? _regExValidator(String? value) {
     if (value == null || value.isEmpty) {

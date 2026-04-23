@@ -143,13 +143,14 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _cleanupUnusedControllers() {
-    var activeKeys = SourceProvider()
-        .sources
+    var activeKeys = SourceProvider().sources
         .where((e) => e.sourceConfigSettingFormItems.isNotEmpty)
         .expand((e) => e.sourceConfigSettingFormItems.map((item) => item.key))
         .toSet();
     // Clean up both controllers and focus nodes together to prevent mismatches
-    var keysToRemove = _textControllers.keys.where((key) => !activeKeys.contains(key)).toSet();
+    var keysToRemove = _textControllers.keys
+        .where((key) => !activeKeys.contains(key))
+        .toSet();
     for (var key in keysToRemove) {
       _textControllers[key]?.dispose();
       _textControllers.remove(key);
@@ -461,9 +462,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 final String currentValue =
                     settingsProvider.getSettingString(formItem.key) ?? '';
                 if (!_textControllers.containsKey(formItem.key)) {
-                  _textControllers[formItem.key] = TextEditingController(text: currentValue);
+                  _textControllers[formItem.key] = TextEditingController(
+                    text: currentValue,
+                  );
                   _focusNodes[formItem.key] = FocusNode();
-                } else if (_textControllers[formItem.key]!.text != currentValue) {
+                } else if (_textControllers[formItem.key]!.text !=
+                    currentValue) {
                   // Only update if not focused to avoid overwriting user input
                   if (!_focusNodes[formItem.key]!.hasFocus) {
                     _textControllers[formItem.key]!.text = currentValue;
