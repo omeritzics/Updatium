@@ -1451,7 +1451,9 @@ class CategoryTagEditor extends StatelessWidget {
       confirmButtonText: tr('add'),
     ).then((result) {
       if (result != null && result.name.isNotEmpty) {
-        final newCategories = Map<String, int>.from(settingsProvider.categories);
+        final newCategories = Map<String, int>.from(
+          settingsProvider.categories,
+        );
         if (!newCategories.containsKey(result.name)) {
           newCategories[result.name] = result.color.value;
           settingsProvider.setCategories(newCategories);
@@ -1478,7 +1480,9 @@ class CategoryTagEditor extends StatelessWidget {
       confirmButtonText: tr('save'),
     ).then((result) {
       if (result != null && result.name.isNotEmpty) {
-        final newCategories = Map<String, int>.from(settingsProvider.categories);
+        final newCategories = Map<String, int>.from(
+          settingsProvider.categories,
+        );
         newCategories.remove(oldName);
         newCategories[result.name] = result.color.value;
         settingsProvider.setCategories(newCategories);

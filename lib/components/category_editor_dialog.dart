@@ -28,7 +28,8 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.initialName ?? '');
-    _selectedColor = widget.initialColor ?? Theme.of(context).colorScheme.primary;
+    _selectedColor =
+        widget.initialColor ?? Theme.of(context).colorScheme.primary;
   }
 
   @override
@@ -39,52 +40,63 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
 
   Future<void> _showColorPicker() async {
     final Color colorBeforeDialog = _selectedColor;
-    final result = await ColorPicker(
-      color: _selectedColor,
-      onColorChanged: (Color color) => setState(() => _selectedColor = color),
-      actionButtons: const ColorPickerActionButtons(
-        okButton: true,
-        closeButton: true,
-        dialogActionButtons: false,
-      ),
-      pickersEnabled: const <ColorPickerType, bool>{
-        ColorPickerType.both: false,
-        ColorPickerType.primary: true,
-        ColorPickerType.accent: false,
-        ColorPickerType.bw: false,
-        ColorPickerType.custom: true,
-        ColorPickerType.wheel: true,
-      },
-      pickerTypeLabels: <ColorPickerType, String>{
-        ColorPickerType.custom: tr('standard'),
-        ColorPickerType.wheel: tr('custom'),
-      },
-      wheelDiameter: 192,
-      wheelSquareBorderRadius: 32,
-      width: 48,
-      height: 48,
-      borderRadius: 24,
-      spacing: 8,
-      runSpacing: 8,
-      enableShadesSelection: false,
-      showMaterialName: false,
-      showColorName: false,
-      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
-        longPressMenu: true,
-      ),
-    ).showPickerDialog(
-      context,
-      transitionBuilder: (BuildContext context, Animation<double> a1,
-          Animation<double> a2, Widget widget) {
-        final curvedValue = Curves.easeInCubic.transform(a1.value);
-        return Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.diagonal3Values(curvedValue, curvedValue, 1),
-          child: Opacity(opacity: curvedValue, child: widget),
+    final result =
+        await ColorPicker(
+          color: _selectedColor,
+          onColorChanged: (Color color) =>
+              setState(() => _selectedColor = color),
+          actionButtons: const ColorPickerActionButtons(
+            okButton: true,
+            closeButton: true,
+            dialogActionButtons: false,
+          ),
+          pickersEnabled: const <ColorPickerType, bool>{
+            ColorPickerType.both: false,
+            ColorPickerType.primary: true,
+            ColorPickerType.accent: false,
+            ColorPickerType.bw: false,
+            ColorPickerType.custom: true,
+            ColorPickerType.wheel: true,
+          },
+          pickerTypeLabels: <ColorPickerType, String>{
+            ColorPickerType.custom: tr('standard'),
+            ColorPickerType.wheel: tr('custom'),
+          },
+          wheelDiameter: 192,
+          wheelSquareBorderRadius: 32,
+          width: 48,
+          height: 48,
+          borderRadius: 24,
+          spacing: 8,
+          runSpacing: 8,
+          enableShadesSelection: false,
+          showMaterialName: false,
+          showColorName: false,
+          copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+            longPressMenu: true,
+          ),
+        ).showPickerDialog(
+          context,
+          transitionBuilder:
+              (
+                BuildContext context,
+                Animation<double> a1,
+                Animation<double> a2,
+                Widget widget,
+              ) {
+                final curvedValue = Curves.easeInCubic.transform(a1.value);
+                return Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.diagonal3Values(
+                    curvedValue,
+                    curvedValue,
+                    1,
+                  ),
+                  child: Opacity(opacity: curvedValue, child: widget),
+                );
+              },
+          transitionDuration: const Duration(milliseconds: 250),
         );
-      },
-      transitionDuration: const Duration(milliseconds: 250),
-    );
 
     if (!result) {
       setState(() => _selectedColor = colorBeforeDialog);
@@ -144,7 +156,10 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
         TextButton(
           onPressed: () => Navigator.pop(
             context,
-            _CategoryResult(name: _nameController.text.trim(), color: _selectedColor),
+            _CategoryResult(
+              name: _nameController.text.trim(),
+              color: _selectedColor,
+            ),
           ),
           child: Text(widget.confirmButtonText),
         ),
