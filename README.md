@@ -73,7 +73,9 @@ On Obtainium:
 3. Tap on "Obtainium export"
 
 On Updatium:
+
 4. Tap on Add App -> Import/Export -> Updatium import.
+
 5. Locate Obtainium export file, tap on it, and confirm. Welcome to Updatium :)
 
 ### Q: How can I help?
