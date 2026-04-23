@@ -773,20 +773,27 @@ class _SettingsPageState extends State<SettingsPage> {
                               children: [
                                 Flexible(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(tr('autoDeleteApkAfterInstall')),
                                       Text(
-                                        tr('autoDeleteApkAfterInstallDescription'),
-                                        style: Theme.of(context).textTheme.labelSmall,
+                                        tr(
+                                          'autoDeleteApkAfterInstallDescription',
+                                        ),
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.labelSmall,
                                       ),
                                     ],
                                   ),
                                 ),
                                 Switch(
-                                  value: settingsProvider.autoDeleteApkAfterInstall,
+                                  value: settingsProvider
+                                      .autoDeleteApkAfterInstall,
                                   onChanged: (value) {
-                                    settingsProvider.autoDeleteApkAfterInstall = value;
+                                    settingsProvider.autoDeleteApkAfterInstall =
+                                        value;
                                   },
                                 ),
                               ],

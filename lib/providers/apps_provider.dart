@@ -659,7 +659,9 @@ class AppsProvider with ChangeNotifier {
           APKDir.createSync();
         }
         // Clean up unused icon cache directory
-        var iconCacheDir = Directory('${(await getAppStorageDir()).path}/icons');
+        var iconCacheDir = Directory(
+          '${(await getAppStorageDir()).path}/icons',
+        );
         if (iconCacheDir.existsSync()) {
           try {
             iconCacheDir.deleteSync(recursive: true);
