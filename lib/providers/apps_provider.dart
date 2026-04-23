@@ -352,7 +352,10 @@ Future<String?> promptForFileName(
         ],
       );
     },
-  );
+  ).then((result) {
+    controller.dispose();
+    return result;
+  });
 }
 
 Future<File> downloadFile(

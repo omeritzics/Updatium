@@ -277,6 +277,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
   List<List<Widget>> rows = [];
   String? initKey;
   int forceUpdateKeyCount = 0;
+  final List<TextEditingController> _controllers = [];
+  bool _isDisposed = false;
 
   // If any value changes, call this to update the parent with value and validity
   void someValueChanged({bool isBuilding = false, bool forceInvalid = false}) {
@@ -296,7 +298,13 @@ class _GeneratedFormState extends State<GeneratedForm> {
   }
 
   void initForm() {
+    if (_isDisposed) return;
     initKey = widget.key.toString();
+    // Dispose old controllers before creating new ones
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    _controllers.clear();
     // Initialize form values as all empty
     values.clear();
     for (var row in widget.items) {
@@ -312,6 +320,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
         if (formItem is GeneratedFormTextField) {
           final formFieldKey = GlobalKey<FormFieldState>();
           var ctrl = TextEditingController(text: values[formItem.key]);
+          _controllers.add(ctrl);
           return TypeAheadField<String>(
             controller: ctrl,
             builder: (context, controller, focusNode) {
@@ -434,6 +443,16 @@ class _GeneratedFormState extends State<GeneratedForm> {
   void initState() {
     super.initState();
     initForm();
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    _controllers.clear();
+    super.dispose();
   }
 
   @override

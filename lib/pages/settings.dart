@@ -65,6 +65,8 @@ class _SettingsPageState extends State<SettingsPage> {
       };
   late ScrollController scrollController;
   bool _scrollPositionRestored = false;
+  final Map<String, TextEditingController> _textControllers = {};
+  final Map<String, FocusNode> _focusNodes = {};
 
   void initUpdateIntervalInterpolator() {
     List<InterpolationNode> nodes = [];
@@ -122,12 +124,38 @@ class _SettingsPageState extends State<SettingsPage> {
       final settingsProvider = context.read<SettingsProvider>();
       settingsProvider.settingsScrollPosition = scrollController.offset;
     });
+    // Clean up unused controllers on initialization
+    _cleanupUnusedControllers();
   }
 
   @override
   void dispose() {
     scrollController.dispose();
+    for (var controller in _textControllers.values) {
+      controller.dispose();
+    }
+    _textControllers.clear();
+    for (var focusNode in _focusNodes.values) {
+      focusNode.dispose();
+    }
+    _focusNodes.clear();
     super.dispose();
+  }
+
+  void _cleanupUnusedControllers() {
+    var activeKeys = SourceProvider()
+        .sources
+        .where((e) => e.sourceConfigSettingFormItems.isNotEmpty)
+        .expand((e) => e.sourceConfigSettingFormItems.map((item) => item.key))
+        .toSet();
+    // Clean up both controllers and focus nodes together to prevent mismatches
+    var keysToRemove = _textControllers.keys.where((key) => !activeKeys.contains(key)).toSet();
+    for (var key in keysToRemove) {
+      _textControllers[key]?.dispose();
+      _textControllers.remove(key);
+      _focusNodes[key]?.dispose();
+      _focusNodes.remove(key);
+    }
   }
 
   @override
@@ -137,6 +165,8 @@ class _SettingsPageState extends State<SettingsPage> {
     if (settingsProvider.prefs == null) settingsProvider.initializeSettings();
     initUpdateIntervalInterpolator();
     processIntervalSliderValue(settingsProvider.updateIntervalSliderVal);
+    // Clean up unused controllers in case sources changed dynamically
+    _cleanupUnusedControllers();
 
     // Restore scroll position on first build
     if (!_scrollPositionRestored) {
@@ -430,10 +460,20 @@ class _SettingsPageState extends State<SettingsPage> {
                 // Text field type
                 final String currentValue =
                     settingsProvider.getSettingString(formItem.key) ?? '';
+                if (!_textControllers.containsKey(formItem.key)) {
+                  _textControllers[formItem.key] = TextEditingController(text: currentValue);
+                  _focusNodes[formItem.key] = FocusNode();
+                } else if (_textControllers[formItem.key]!.text != currentValue) {
+                  // Only update if not focused to avoid overwriting user input
+                  if (!_focusNodes[formItem.key]!.hasFocus) {
+                    _textControllers[formItem.key]!.text = currentValue;
+                  }
+                }
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: TextField(
-                    controller: TextEditingController(text: currentValue),
+                    controller: _textControllers[formItem.key],
+                    focusNode: _focusNodes[formItem.key],
                     decoration: InputDecoration(
                       labelText: formItem.key,
                       border: const OutlineInputBorder(),

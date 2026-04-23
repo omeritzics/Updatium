@@ -94,6 +94,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           );
         },
       ).then((value) {
+        controller.dispose();
         if (value != null && value.isNotEmpty) {
           var urls = value.trim().split('\n');
           setState(() {
@@ -284,7 +285,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   ],
                 );
               },
-            );
+            ).then((_) {
+              for (var controller in controllers.values) {
+                controller.dispose();
+              }
+            });
             if (values != null) {
               setState(() {
                 importInProgress = true;
