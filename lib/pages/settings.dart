@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/main.dart';
-import 'package:updatium/components/tag_editor.dart';
 import 'package:updatium/components/generated_form.dart';
+import 'package:updatium/components/category_editor_dialog.dart';
 import 'package:updatium/pages/safe_mode_dialog.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/native_provider.dart';
@@ -1445,150 +1445,15 @@ class CategoryTagEditor extends StatelessWidget {
   });
 
   void _onAddPressed(BuildContext context, SettingsProvider settingsProvider) {
-    String categoryName = '';
-    Color categoryColor = Theme.of(context).colorScheme.primary;
-
-    showDialog<String?>(
-      context: context,
-      builder: (BuildContext ctx) {
-        return AlertDialog(
-          title: Text(tr('addCategory')),
-          content: SizedBox(
-            width: 300,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextField(
-                  autofocus: true,
-                  decoration: InputDecoration(labelText: tr('name')),
-                  onChanged: (value) => categoryName = value,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        tr('selectX', args: [tr('color').toLowerCase()]),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    Focus(
-                      canRequestFocus: false,
-                      skipTraversal: true,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () async {
-                          final Color colorBeforeDialog = categoryColor;
-                          final result =
-                              await ColorPicker(
-                                color: categoryColor,
-                                onColorChanged: (Color color) =>
-                                    categoryColor = color,
-                                actionButtons: const ColorPickerActionButtons(
-                                  okButton: true,
-                                  closeButton: true,
-                                  dialogActionButtons: false,
-                                ),
-                                pickersEnabled: const <ColorPickerType, bool>{
-                                  ColorPickerType.both: false,
-                                  ColorPickerType.primary: true,
-                                  ColorPickerType.accent: false,
-                                  ColorPickerType.bw: false,
-                                  ColorPickerType.custom: true,
-                                  ColorPickerType.wheel: true,
-                                },
-                                pickerTypeLabels: <ColorPickerType, String>{
-                                  ColorPickerType.custom: tr('standard'),
-                                  ColorPickerType.wheel: tr('custom'),
-                                },
-                                wheelDiameter: 192,
-                                wheelSquareBorderRadius: 32,
-                                width: 48,
-                                height: 48,
-                                borderRadius: 24,
-                                spacing: 8,
-                                runSpacing: 8,
-                                enableShadesSelection: false,
-                                showMaterialName: false,
-                                showColorName: false,
-                                copyPasteBehavior:
-                                    const ColorPickerCopyPasteBehavior(
-                                      longPressMenu: true,
-                                    ),
-                              ).showPickerDialog(
-                                context,
-                                transitionBuilder:
-                                    (
-                                      BuildContext context,
-                                      Animation<double> a1,
-                                      Animation<double> a2,
-                                      Widget widget,
-                                    ) {
-                                      final curvedValue =
-                                          Curves.easeInOutBack.transform(
-                                            a1.value,
-                                          ) -
-                                          1.0;
-                                      return Transform(
-                                        alignment: Alignment.center,
-                                        transform: Matrix4.diagonal3Values(
-                                          curvedValue,
-                                          curvedValue,
-                                          1,
-                                        ),
-                                        child: Opacity(
-                                          opacity: curvedValue,
-                                          child: widget,
-                                        ),
-                                      );
-                                    },
-                                transitionDuration: const Duration(
-                                  milliseconds: 250,
-                                ),
-                              );
-                          if (!result) {
-                            categoryColor = colorBeforeDialog;
-                          }
-                        },
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: categoryColor,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.outline,
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: Text(tr('cancel')),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, categoryName),
-              child: Text(tr('add')),
-            ),
-          ],
-        );
-      },
-    ).then((value) {
-      if (value != null && value.trim().isNotEmpty) {
-        final newCategories = Map<String, int>.from(
-          settingsProvider.categories,
-        );
-        if (!newCategories.containsKey(value.trim())) {
-          newCategories[value.trim()] = categoryColor.value;
+    showCategoryEditorDialog(
+      context,
+      title: tr('addCategory'),
+      confirmButtonText: tr('add'),
+    ).then((result) {
+      if (result != null && result.name.isNotEmpty) {
+        final newCategories = Map<String, int>.from(settingsProvider.categories);
+        if (!newCategories.containsKey(result.name)) {
+          newCategories[result.name] = result.color.value;
           settingsProvider.setCategories(newCategories);
         }
       }
@@ -1600,153 +1465,22 @@ class CategoryTagEditor extends StatelessWidget {
     SettingsProvider settingsProvider,
     String oldName,
   ) {
-    String newName = oldName;
-    Color categoryColor = Color(
+    final initialColor = Color(
       settingsProvider.categories[oldName] ??
           Theme.of(context).colorScheme.primary.value,
     );
-    final TextEditingController nameController = TextEditingController(
-      text: oldName,
-    );
 
-    showDialog<String?>(
-      context: context,
-      builder: (BuildContext ctx) {
-        return AlertDialog(
-          title: Text(tr('editCategory')),
-          content: SizedBox(
-            width: 300,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextField(
-                  controller: nameController,
-                  autofocus: true,
-                  decoration: InputDecoration(labelText: tr('name')),
-                  onChanged: (value) => newName = value,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        tr('selectX', args: [tr('color').toLowerCase()]),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    InkWell(
-                      borderRadius: BorderRadius.circular(20),
-                      onTap: () async {
-                        final Color colorBeforeDialog = categoryColor;
-                        final result =
-                            await ColorPicker(
-                              color: categoryColor,
-                              onColorChanged: (Color color) =>
-                                  categoryColor = color,
-                              actionButtons: const ColorPickerActionButtons(
-                                okButton: true,
-                                closeButton: true,
-                                dialogActionButtons: false,
-                              ),
-                              pickersEnabled: const <ColorPickerType, bool>{
-                                ColorPickerType.both: false,
-                                ColorPickerType.primary: false,
-                                ColorPickerType.accent: false,
-                                ColorPickerType.bw: false,
-                                ColorPickerType.custom: true,
-                                ColorPickerType.wheel: true,
-                              },
-                              pickerTypeLabels: <ColorPickerType, String>{
-                                ColorPickerType.custom: tr('standard'),
-                                ColorPickerType.wheel: tr('custom'),
-                              },
-                              wheelDiameter: 192,
-                              wheelSquareBorderRadius: 32,
-                              width: 48,
-                              height: 48,
-                              borderRadius: 24,
-                              spacing: 8,
-                              runSpacing: 8,
-                              enableShadesSelection: false,
-                              showMaterialName: false,
-                              showColorName: false,
-                              copyPasteBehavior:
-                                  const ColorPickerCopyPasteBehavior(
-                                    longPressMenu: true,
-                                  ),
-                            ).showPickerDialog(
-                              context,
-                              transitionBuilder:
-                                  (
-                                    BuildContext context,
-                                    Animation<double> a1,
-                                    Animation<double> a2,
-                                    Widget widget,
-                                  ) {
-                                    final curvedValue =
-                                        Curves.easeInOutBack.transform(
-                                          a1.value,
-                                        ) -
-                                        1.0;
-                                    return Transform(
-                                      alignment: Alignment.center,
-                                      transform: Matrix4.diagonal3Values(
-                                        curvedValue,
-                                        curvedValue,
-                                        1,
-                                      ),
-                                      child: Opacity(
-                                        opacity: curvedValue,
-                                        child: widget,
-                                      ),
-                                    );
-                                  },
-                              transitionDuration: const Duration(
-                                milliseconds: 250,
-                              ),
-                            );
-                        if (!result) {
-                          categoryColor = colorBeforeDialog;
-                        }
-                      },
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: categoryColor,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.outline,
-                            width: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: Text(tr('cancel')),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, newName),
-              child: Text(tr('save')),
-            ),
-          ],
-        );
-      },
-    ).then((value) {
-      if (value != null && value.trim().isNotEmpty) {
-        final newCategories = Map<String, int>.from(
-          settingsProvider.categories,
-        );
+    showCategoryEditorDialog(
+      context,
+      initialName: oldName,
+      initialColor: initialColor,
+      title: tr('editCategory'),
+      confirmButtonText: tr('save'),
+    ).then((result) {
+      if (result != null && result.name.isNotEmpty) {
+        final newCategories = Map<String, int>.from(settingsProvider.categories);
         newCategories.remove(oldName);
-        newCategories[value.trim()] = categoryColor.value;
+        newCategories[result.name] = result.color.value;
         settingsProvider.setCategories(newCategories);
       }
     });
@@ -1855,22 +1589,46 @@ class CategorySelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var settingsProvider = context.watch<SettingsProvider>();
-
-    // Convert categories Map<String, int> to List<String> for TagEditor
     final allTags = settingsProvider.categories.keys.toList();
 
-    return TagEditor(
-      selectedTags: preselected,
-      allTags: allTags,
-      label: tr('categories'),
-      singleSelect: singleSelect,
-      alignment: alignment,
-      showLabelWhenNotEmpty: showLabelWhenNotEmpty,
-      showAddButton: false,
-      onTagsChanged: (newSelectedTags) {
-        // Convert Set<String> to List<String> for callback
-        onSelected?.call(newSelectedTags.toList());
-      },
+    return Column(
+      crossAxisAlignment: alignment == WrapAlignment.center
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.stretch,
+      children: [
+        if (allTags.isNotEmpty && showLabelWhenNotEmpty) ...[
+          Text(tr('categories'), style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: 8),
+        ],
+        Wrap(
+          alignment: alignment,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 4,
+          children: allTags.map((tag) {
+            return FilterChip(
+              label: Text(tag),
+              selected: preselected.contains(tag),
+              onSelected: (selected) {
+                final newSelected = Set<String>.from(preselected);
+                if (singleSelect) {
+                  newSelected.clear();
+                  if (selected) {
+                    newSelected.add(tag);
+                  }
+                } else {
+                  if (selected) {
+                    newSelected.add(tag);
+                  } else {
+                    newSelected.remove(tag);
+                  }
+                }
+                onSelected?.call(newSelected.toList());
+              },
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 }
