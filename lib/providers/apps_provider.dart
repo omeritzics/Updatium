@@ -626,7 +626,6 @@ class AppsProvider with ChangeNotifier {
   late Stream<FGBGType>? foregroundStream;
   late StreamSubscription<FGBGType>? foregroundSubscription;
   late Directory APKDir;
-  late Directory iconsCacheDir;
   late SettingsProvider settingsProvider = SettingsProvider();
 
   Iterable<AppInMemory> getAppValues() => apps.values.map((a) => a.deepCopy());
@@ -645,21 +644,29 @@ class AppsProvider with ChangeNotifier {
       var cacheDirs = await getExternalCacheDirectories();
       if (cacheDirs?.isNotEmpty ?? false) {
         APKDir = cacheDirs!.first;
-        iconsCacheDir = Directory('${cacheDirs.first.path}/icons');
-        if (!iconsCacheDir.existsSync()) {
-          iconsCacheDir.createSync();
+        // Clean up unused icon cache directory
+        var iconCacheDir = Directory('${cacheDirs.first.path}/icons');
+        if (iconCacheDir.existsSync()) {
+          try {
+            iconCacheDir.deleteSync(recursive: true);
+          } catch (e) {
+            // Ignore deletion errors
+          }
         }
-        // Icon cache initialization removed - service no longer available
       } else {
         APKDir = Directory('${(await getAppStorageDir()).path}/apks');
         if (!APKDir.existsSync()) {
           APKDir.createSync();
         }
-        iconsCacheDir = Directory('${(await getAppStorageDir()).path}/icons');
-        if (!iconsCacheDir.existsSync()) {
-          iconsCacheDir.createSync();
+        // Clean up unused icon cache directory
+        var iconCacheDir = Directory('${(await getAppStorageDir()).path}/icons');
+        if (iconCacheDir.existsSync()) {
+          try {
+            iconCacheDir.deleteSync(recursive: true);
+          } catch (e) {
+            // Ignore deletion errors
+          }
         }
-        // Icon cache initialization removed - service no longer available
       }
       if (!isBg) {
         // Load Apps into memory (in background processes, this is done later instead of in the constructor)
@@ -1267,7 +1274,9 @@ class AppsProvider with ChangeNotifier {
               : [],
         );
         somethingInstalled = somethingInstalled || wasInstalled;
-        dir.file.delete(recursive: true);
+        if (settingsProvider.autoDeleteApkAfterInstall) {
+          dir.file.delete(recursive: true);
+        }
       } catch (e) {
         logs.add('Could not install APKs from ${dir.type}: ${e.toString()}');
         errors.add(dir.appId, e, appName: apps[dir.appId]?.name);
@@ -1350,7 +1359,9 @@ class AppsProvider with ChangeNotifier {
       installed = true;
       apps[file.appId]!.app.installedVersion =
           apps[file.appId]!.app.latestVersion;
-      file.file.delete(recursive: true);
+      if (settingsProvider.autoDeleteApkAfterInstall) {
+        file.file.delete(recursive: true);
+      }
     }
     await saveApps([apps[file.appId]!.app]);
     return installed;
@@ -2088,36 +2099,6 @@ class AppsProvider with ChangeNotifier {
     }
     loadingApps = false;
     notifyListeners();
-
-    // Start icon pre-fetching after apps are loaded
-    _startIconPrefetching();
-  }
-
-  /// Start icon pre-fetching in background after metadata sync
-  void _startIconPrefetching() {
-    // Run in background to avoid blocking UI
-    Future.microtask(() async {
-      try {
-        // Only start pre-fetching if there are apps with remote icon URLs
-        final appsWithRemoteIcons = apps.values
-            .where(
-              (appInMemory) =>
-                  appInMemory.app.remoteIconUrl != null &&
-                  appInMemory.app.remoteIconUrl!.isNotEmpty,
-            )
-            .length;
-
-        if (appsWithRemoteIcons > 0) {
-          LogsProvider().add(
-            'Starting background icon pre-fetching for $appsWithRemoteIcons apps',
-          );
-
-          // Icon prefetching removed - service no longer available
-        }
-      } catch (e) {
-        LogsProvider().add('Error starting icon pre-fetching: $e');
-      }
-    });
   }
 
   Future<void> updateAppIcon(String? appId) async {
@@ -2178,59 +2159,6 @@ class AppsProvider with ChangeNotifier {
     }
 
     return fallbackIcon;
-  }
-
-  /// Check if an icon is available for the given app
-  Future<bool> isIconCached(String appId, String? remoteIconUrl) async {
-    return apps[appId]?.installedInfo?.applicationInfo?.getAppIcon() != null;
-  }
-
-  /// Clear icon cache (no-op - service removed)
-  Future<void> clearIconCache() async {
-    // Icon cache service removed - no operation
-  }
-
-  /// Get icon cache statistics (no-op - service removed)
-  Future<Map<String, dynamic>> getIconCacheStats() async {
-    return {};
-  }
-
-  /// Start icon pre-fetching manually (no-op - service removed)
-  Future<void> startIconPrefetching({
-    int topCount = 40,
-    bool forceRefresh = false,
-  }) async {
-    // Icon prefetcher service removed - no operation
-  }
-
-  /// Get icon pre-fetching status (no-op - service removed)
-  String getIconPrefetchingStatus() {
-    return 'disabled';
-  }
-
-  /// Pause icon pre-fetching (no-op - service removed)
-  void pauseIconPrefetching() {
-    // Icon prefetcher service removed - no operation
-  }
-
-  /// Resume icon pre-fetching (no-op - service removed)
-  void resumeIconPrefetching() {
-    // Icon prefetcher service removed - no operation
-  }
-
-  /// Stop icon pre-fetching (no-op - service removed)
-  void stopIconPrefetching() {
-    // Icon prefetcher service removed - no operation
-  }
-
-  /// Get icon pre-fetching progress stream (no-op - service removed)
-  Stream<String> getIconPrefetchingProgress() {
-    return Stream.empty();
-  }
-
-  /// Get icon pre-fetching result stream (no-op - service removed)
-  Stream<String> getIconPrefetchingResults() {
-    return Stream.empty();
   }
 
   Future<void> saveApps(
