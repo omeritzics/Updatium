@@ -64,5 +64,17 @@ A: One word - antisemitism. While Obtainium is a really powerful tool, its devel
 ### Q: Does Updatium encourage piracy?
 A: Absolutely not! Updatium is highly against piracy and modded applications.
 
+### Q: How do I migrate from Obtainium?
+A: It's easy to update to Updatium form Obtainium, by following these steps:
+
+On Obtainium:
+1. Tap on Import/Export -> Pick export directory.
+2. Choose a directory path and confirm.
+3. Tap on "Obtainium export"
+
+On Updatium:
+4. Tap on Add App -> Import/Export -> Updatium import.
+5. Locate Obtainium export file, tap on it, and confirm. Welcome to Updatium :)
+
 ### Q: How can I help?
 A: There are many ways you can. Simply open an issue on the project's GitHub and introduce yourself. Your contribution doesn't have to be code - it could also be bug reporting, translating the app into new languages (or improving existing translations), design proposals and ideas. Starring Updatium and sharing it to people who you think may like it can also help Updatium grow. Thank you for your support :)
