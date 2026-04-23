@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:simple_localization/simple_localization.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class VivoAppStore extends AppSource {
   static const appDetailUrl =
@@ -71,7 +71,7 @@ class VivoAppStore extends AppSource {
     var uploadTime = json['upload_time'].toString();
     var apkUrl = json['download_url'].toString();
     var apkName =
-        '${packageName}_$versionCode${source_utils.supportedApkExtensions[0]}';
+        '${packageName}_$versionCode${source_provider.supportedApkExtensions[0]}';
     return APKDetails(
       versionName,
       [MapEntry(apkName, apkUrl)],

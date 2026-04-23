@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="label">Updatium</string>
+    <string name="device_admin_label">Updatium Device Admin</string>
+    <string name="device_admin_description">Prevents uninstallation of Updatium when Safe Mode is enabled</string>
 </resources>

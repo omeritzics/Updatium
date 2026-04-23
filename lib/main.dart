@@ -11,7 +11,7 @@ import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:dynamic_color/dynamic_color.dart';
+import 'package:dynamic_system_colors/dynamic_system_colors.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:simple_localization/simple_localization.dart';
@@ -21,6 +21,7 @@ import 'package:simple_localization/src/simple_localization_controller.dart';
 import 'package:simple_localization/src/localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('en'), 'English'),
@@ -64,6 +65,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('bn'), 'বাংলা'),
   MapEntry(Locale('ro'), 'Română'),
   MapEntry(Locale('ug'), 'ئۇيغۇرچە'),
+  MapEntry(Locale('hy'), 'Հայերեն'),
 ];
 const fallbackLocale = Locale('en');
 const localeDir = 'assets/translations';
@@ -104,7 +106,7 @@ Future<void> loadTranslations() async {
 }
 
 @pragma('vm:entry-point')
-void backgroundFetchHeadlessTask(HeadlessTask task) async {
+void backgroundFetchHeadlessTask(HeadlessEvent task) async {
   String taskId = task.taskId;
   bool isTimeout = task.timeout;
   if (isTimeout) {
@@ -200,6 +202,8 @@ class Updatium extends StatefulWidget {
 
 class _UpdatiumState extends State<Updatium> {
   var existingUpdateInterval = -1;
+  SettingsProvider? _settingsProvider;
+  VoidCallback? _oldLocaleChangedCallback;
 
   @override
   void initState() {
@@ -208,6 +212,18 @@ class _UpdatiumState extends State<Updatium> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       requestNonOptionalPermissions();
     });
+
+    // Store provider reference to avoid using context in callback
+    _settingsProvider = context.read<SettingsProvider>();
+
+    // Store old callback and set new one
+    _oldLocaleChangedCallback =
+        WidgetsBinding.instance.platformDispatcher.onLocaleChanged;
+    WidgetsBinding.instance.platformDispatcher.onLocaleChanged = () {
+      if (_settingsProvider?.forcedLocale == null) {
+        _settingsProvider?.resetLocaleSafe(context);
+      }
+    };
   }
 
   Future<void> requestNonOptionalPermissions() async {
@@ -279,6 +295,11 @@ class _UpdatiumState extends State<Updatium> {
 
   @override
   void dispose() {
+    // Restore old locale changed callback to prevent memory leak
+    if (_oldLocaleChangedCallback != null) {
+      WidgetsBinding.instance.platformDispatcher.onLocaleChanged =
+          _oldLocaleChangedCallback;
+    }
     super.dispose();
   }
 
@@ -368,10 +389,12 @@ class _UpdatiumState extends State<Updatium> {
       }
 
       // Sync local and device locale if needed
-      if (!supportedLocales.map((e) => e.key).contains(context.locale) ||
-          (settingsProvider.forcedLocale == null &&
-              context.deviceLocale != context.locale)) {
+      if (!supportedLocales.map((e) => e.key).contains(context.locale)) {
         settingsProvider.resetLocaleSafe(context);
+      } else if (settingsProvider.forcedLocale != null &&
+          context.locale != settingsProvider.forcedLocale) {
+        // Apply forced locale if it's set but not currently active
+        context.setLocale(settingsProvider.forcedLocale!);
       }
     }
 
@@ -392,6 +415,25 @@ class _UpdatiumState extends State<Updatium> {
               settingsProvider.useMaterialYou) {
             lightColorScheme = lightDynamic;
             darkColorScheme = darkDynamic;
+            // Ensure surface container colors have proper opacity for switch visibility
+            lightColorScheme = lightColorScheme.copyWith(
+              surfaceContainerHighest: lightColorScheme.surfaceContainerHighest
+                  .withValues(alpha: 0.17),
+              surfaceContainerHigh: lightColorScheme.surfaceContainerHigh
+                  .withValues(alpha: 0.12),
+              surfaceContainer: lightColorScheme.surfaceContainer.withValues(
+                alpha: 0.08,
+              ),
+            );
+            darkColorScheme = darkColorScheme.copyWith(
+              surfaceContainerHighest: darkColorScheme.surfaceContainerHighest
+                  .withValues(alpha: 0.17),
+              surfaceContainerHigh: darkColorScheme.surfaceContainerHigh
+                  .withValues(alpha: 0.12),
+              surfaceContainer: darkColorScheme.surfaceContainer.withValues(
+                alpha: 0.08,
+              ),
+            );
           } else {
             lightColorScheme = ColorScheme.fromSeed(
               seedColor: settingsProvider.themeColor,
@@ -407,9 +449,9 @@ class _UpdatiumState extends State<Updatium> {
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
-              surfaceContainerHighest: Colors.white.withValues(alpha: 0.12),
-              surfaceContainerHigh: Colors.white.withValues(alpha: 0.09),
-              surfaceContainer: Colors.white.withValues(alpha: 0.06),
+              surfaceContainerHighest: Colors.white.withValues(alpha: 0.17),
+              surfaceContainerHigh: Colors.white.withValues(alpha: 0.12),
+              surfaceContainer: Colors.white.withValues(alpha: 0.08),
               surfaceContainerLow: Colors.white.withValues(alpha: 0.04),
               surfaceContainerLowest: Colors.white.withValues(alpha: 0.02),
               surfaceDim: Colors.black,
@@ -423,6 +465,35 @@ class _UpdatiumState extends State<Updatium> {
 
           if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
 
+          // Determine primary font based on locale
+          String getPrimaryFontForLocale(Locale locale) {
+            if (settingsProvider.useSystemFont) {
+              return 'SystemFont';
+            }
+
+            // CJK languages
+            if (locale.languageCode == 'zh' ||
+                locale.languageCode == 'ja' ||
+                locale.languageCode == 'ko') {
+              return 'NotoSansCJK';
+            }
+
+            // Hebrew
+            if (locale.languageCode == 'he') {
+              return 'NotoSansHebrew';
+            }
+
+            // Arabic
+            if (locale.languageCode == 'ar' ||
+                locale.languageCode == 'fa' ||
+                locale.languageCode == 'ug') {
+              return 'NotoSansArabic';
+            }
+
+            // Default to Google Sans Flex for other languages
+            return 'GoogleSansFlex';
+          }
+
           // Shared theme component generator with Material Design Expressive
           ThemeData createTheme(ColorScheme scheme, bool isDark) {
             // Define text theme as local variable for reusability
@@ -433,6 +504,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: -0.25,
                 height: 1.12,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               displayMedium: TextStyle(
                 fontSize: 45,
@@ -440,6 +519,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0,
                 height: 1.16,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               displaySmall: TextStyle(
                 fontSize: 36,
@@ -447,6 +534,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0,
                 height: 1.22,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               headlineLarge: TextStyle(
                 fontSize: 32,
@@ -454,6 +549,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0,
                 height: 1.25,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               headlineMedium: TextStyle(
                 fontSize: 28,
@@ -461,6 +564,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0,
                 height: 1.29,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               headlineSmall: TextStyle(
                 fontSize: 24,
@@ -468,6 +579,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0,
                 height: 1.33,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               titleLarge: TextStyle(
                 fontSize: 22,
@@ -475,6 +594,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0,
                 height: 1.27,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               titleMedium: TextStyle(
                 fontSize: 16,
@@ -482,6 +609,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0.15,
                 height: 1.5,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               titleSmall: TextStyle(
                 fontSize: 14,
@@ -489,6 +624,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0.1,
                 height: 1.43,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               bodyLarge: TextStyle(
                 fontSize: 16,
@@ -496,6 +639,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0.5,
                 height: 1.5,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               bodyMedium: TextStyle(
                 fontSize: 14,
@@ -503,6 +654,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0.25,
                 height: 1.5,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               bodySmall: TextStyle(
                 fontSize: 12,
@@ -510,6 +669,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0.4,
                 height: 1.33,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               labelLarge: TextStyle(
                 fontSize: 14,
@@ -517,6 +684,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0.1,
                 height: 1.43,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               labelMedium: TextStyle(
                 fontSize: 12,
@@ -524,6 +699,14 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0.5,
                 height: 1.33,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
               labelSmall: TextStyle(
                 fontSize: 11,
@@ -531,15 +714,28 @@ class _UpdatiumState extends State<Updatium> {
                 letterSpacing: 0.5,
                 height: 1.27,
                 color: scheme.onSurface,
+                fontFamily: getPrimaryFontForLocale(context.locale),
+                fontFamilyFallback: const [
+                  'Inter',
+                  'GoogleSansFlex',
+                  'NotoSansCJK',
+                  'NotoSansHebrew',
+                  'NotoSansArabic',
+                ],
               ),
             );
 
             return ThemeData(
               useMaterial3: true,
               colorScheme: scheme,
-              fontFamily: settingsProvider.useSystemFont
-                  ? 'SystemFont'
-                  : 'Inter',
+              fontFamily: getPrimaryFontForLocale(context.locale),
+              fontFamilyFallback: const [
+                'Inter',
+                'GoogleSansFlex',
+                'NotoSansCJK',
+                'NotoSansHebrew',
+                'NotoSansArabic',
+              ],
 
               // Expressive Typography
               textTheme: textTheme,
@@ -571,9 +767,17 @@ class _UpdatiumState extends State<Updatium> {
                       : scheme.onSecondaryContainer,
                   elevation: isDark ? 2 : 1,
                   shadowColor: isDark ? Colors.black26 : Colors.black12,
-                  textStyle: const TextStyle(
+                  textStyle: TextStyle(
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.1,
+                    fontFamily: getPrimaryFontForLocale(context.locale),
+                    fontFamilyFallback: const [
+                      'Inter',
+                      'GoogleSansFlex',
+                      'NotoSansCJK',
+                      'NotoSansHebrew',
+                      'NotoSansArabic',
+                    ],
                   ),
                 ),
               ),
@@ -590,9 +794,15 @@ class _UpdatiumState extends State<Updatium> {
                     horizontal: 28,
                     vertical: 14,
                   ),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
+                  textStyle: TextStyle(
+                    fontFamily: getPrimaryFontForLocale(context.locale),
+                    fontFamilyFallback: const [
+                      'Inter',
+                      'GoogleSansFlex',
+                      'NotoSansCJK',
+                      'NotoSansHebrew',
+                      'NotoSansArabic',
+                    ],
                   ),
                 ),
               ),
@@ -606,9 +816,15 @@ class _UpdatiumState extends State<Updatium> {
                     horizontal: 28,
                     vertical: 14,
                   ),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
+                  textStyle: TextStyle(
+                    fontFamily: getPrimaryFontForLocale(context.locale),
+                    fontFamilyFallback: const [
+                      'Inter',
+                      'GoogleSansFlex',
+                      'NotoSansCJK',
+                      'NotoSansHebrew',
+                      'NotoSansArabic',
+                    ],
                   ),
                 ),
               ),
@@ -621,9 +837,15 @@ class _UpdatiumState extends State<Updatium> {
                     horizontal: 20,
                     vertical: 10,
                   ),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
+                  textStyle: TextStyle(
+                    fontFamily: getPrimaryFontForLocale(context.locale),
+                    fontFamilyFallback: const [
+                      'Inter',
+                      'GoogleSansFlex',
+                      'NotoSansCJK',
+                      'NotoSansHebrew',
+                      'NotoSansArabic',
+                    ],
                   ),
                 ),
               ),
@@ -655,14 +877,38 @@ class _UpdatiumState extends State<Updatium> {
                 hintStyle: TextStyle(
                   color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
                   fontWeight: FontWeight.w400,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
                 labelStyle: TextStyle(
                   color: scheme.onSurfaceVariant,
                   fontWeight: FontWeight.w400,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
                 floatingLabelStyle: TextStyle(
                   color: scheme.primary,
                   fontWeight: FontWeight.w500,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
               ),
 
@@ -722,9 +968,17 @@ class _UpdatiumState extends State<Updatium> {
                   horizontal: 24,
                   vertical: 16,
                 ),
-                extendedTextStyle: const TextStyle(
+                extendedTextStyle: TextStyle(
                   fontWeight: FontWeight.w500,
                   letterSpacing: 0.1,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
                 foregroundColor: scheme.onPrimary,
                 backgroundColor: scheme.primary,
@@ -746,6 +1000,14 @@ class _UpdatiumState extends State<Updatium> {
                   fontWeight: FontWeight.w600,
                   letterSpacing: -0.5,
                   height: 1.27,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
                 actionsIconTheme: IconThemeData(
@@ -771,12 +1033,28 @@ class _UpdatiumState extends State<Updatium> {
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   letterSpacing: 0.15,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
                 subtitleTextStyle: TextStyle(
                   color: scheme.onSurfaceVariant,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0.25,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
               ),
 
@@ -816,11 +1094,27 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
                 secondaryLabelStyle: TextStyle(
                   color: scheme.onSecondaryContainer,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12,
@@ -836,13 +1130,29 @@ class _UpdatiumState extends State<Updatium> {
                 backgroundColor: scheme.surface,
                 selectedItemColor: scheme.onSecondaryContainer,
                 unselectedItemColor: scheme.onSurfaceVariant,
-                selectedLabelStyle: const TextStyle(
+                selectedLabelStyle: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
-                unselectedLabelStyle: const TextStyle(
+                unselectedLabelStyle: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
                 type: BottomNavigationBarType.fixed,
                 elevation: isDark ? 3 : 8,
@@ -854,16 +1164,23 @@ class _UpdatiumState extends State<Updatium> {
 
               // Material Design 3 2024 Expressive Centered Slider Theme - preserve M3 Expressive transparency
               sliderTheme: SliderThemeData(
-                year2023: false,
                 trackHeight: 8,
                 thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
                 overlayShape: const RoundSliderOverlayShape(overlayRadius: 28),
                 valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-                valueIndicatorTextStyle: const TextStyle(
+                valueIndicatorTextStyle: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0.25,
                   height: 1.5,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ).copyWith(color: scheme.onPrimary),
                 showValueIndicator: ShowValueIndicator.onDrag,
                 activeTrackColor: scheme.primary,
@@ -887,9 +1204,7 @@ class _UpdatiumState extends State<Updatium> {
                   }
                   return scheme.surfaceContainerHighest;
                 }),
-                trackOutlineColor: WidgetStateProperty.resolveWith((states) {
-                  return Colors.transparent;
-                }),
+                trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
 
@@ -908,6 +1223,14 @@ class _UpdatiumState extends State<Updatium> {
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0,
                   height: 1.33,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
                 contentTextStyle: TextStyle(
                   color: scheme.onSurface,
@@ -915,6 +1238,14 @@ class _UpdatiumState extends State<Updatium> {
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0.5,
                   height: 1.5,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
                 ),
               ),
             );
@@ -983,4 +1314,96 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
 
 void showError(dynamic e, BuildContext context) {
   showMessage(e, context, isError: true);
+}
+
+// FreeDroidWarn integration
+const _freedroidWarnChannel = MethodChannel(
+  'io.github.omeritzics.updatium/freedroid_warn',
+);
+
+Future<bool> _shouldShowWarning() async {
+  try {
+    final result = await _freedroidWarnChannel.invokeMethod<bool>(
+      'shouldShowWarning',
+    );
+    return result ?? false;
+  } catch (e) {
+    return false;
+  }
+}
+
+Future<Map<String, String>> _getWarningStrings() async {
+  try {
+    final result = await _freedroidWarnChannel
+        .invokeMethod<Map<dynamic, dynamic>>('getWarningStrings');
+    if (result != null) {
+      return result.map(
+        (key, value) => MapEntry(key.toString(), value.toString()),
+      );
+    }
+    return {};
+  } catch (e) {
+    return {};
+  }
+}
+
+Future<bool> _saveWarningVersion() async {
+  try {
+    final result = await _freedroidWarnChannel.invokeMethod<bool>(
+      'saveWarningVersion',
+    );
+    return result ?? false;
+  } catch (e) {
+    return false;
+  }
+}
+
+Future<void> showFreeDroidWarnDialog(BuildContext context) async {
+  final shouldShow = await _shouldShowWarning();
+  if (!shouldShow || !context.mounted) return;
+
+  final strings = await _getWarningStrings();
+  if (strings.isEmpty || !context.mounted) return;
+
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => AlertDialog(
+      content: Text(strings['message'] ?? ''),
+      actions: [
+        TextButton(
+          onPressed: () async {
+            final uri = Uri.parse('https://keepandroidopen.org');
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            }
+          },
+          child: Text(strings['moreInfo'] ?? 'Details'),
+        ),
+        TextButton(
+          onPressed: () async {
+            final uri = Uri.parse(
+              'https://github.com/woheller69/FreeDroidWarn?tab=readme-ov-file#solutions',
+            );
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            }
+          },
+          child: Text(
+            strings['solution'] ?? 'Solution',
+            style: const TextStyle(color: Colors.red),
+          ),
+        ),
+        TextButton(
+          onPressed: () async {
+            await _saveWarningVersion();
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
 }

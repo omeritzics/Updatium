@@ -49,8 +49,6 @@ class AddAppPageState extends State<AddAppPage> {
   List<String> pickedCategories = [];
   int urlInputKey = 0;
   SourceProvider sourceProvider = SourceProvider();
-  bool _advancedExpanded = false;
-  Map<String, dynamic> _advancedSettings = {'zippedApkFilterRegEx': ''};
 
   String? _regExValidator(String? value) {
     if (value == null || value.isEmpty) {
@@ -701,109 +699,6 @@ class AddAppPageState extends State<AddAppPage> {
       ],
     );
 
-    Widget getAdvancedSection() => Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        gap24,
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(
-                context,
-              ).colorScheme.outline.withValues(alpha: 0.3),
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: ExpansionPanelList(
-            expansionCallback: (int index, bool isExpanded) {
-              setState(() {
-                _advancedExpanded = isExpanded;
-              });
-            },
-            children: [
-              ExpansionPanel(
-                headerBuilder: (BuildContext context, bool isExpanded) {
-                  return ListTile(
-                    title: Text(
-                      tr('advanced'),
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
-                },
-                body: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: GeneratedForm(
-                    key: const Key('advancedSettings'),
-                    items: [
-                      [
-                        GeneratedFormTextField(
-                          'apkFilterRegEx',
-                          label: tr('filterAPKsByRegEx'),
-                          required: false,
-                          additionalValidators: [
-                            (value) => _regExValidator(value),
-                          ],
-                        ),
-                      ],
-                      [
-                        GeneratedFormSwitch(
-                          'invertAPKFilter',
-                          label:
-                              '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
-                          defaultValue: false,
-                        ),
-                      ],
-                      [
-                        GeneratedFormTextField(
-                          'zippedApkFilterRegEx',
-                          label: tr('zippedApkFilterRegEx'),
-                          required: false,
-                          additionalValidators: [
-                            (value) => _regExValidator(value),
-                          ],
-                        ),
-                      ],
-                      [
-                        GeneratedFormSwitch(
-                          'shizukuPretendToBeGooglePlay',
-                          label: tr('shizukuPretendToBeGooglePlay'),
-                          defaultValue: false,
-                        ),
-                      ],
-                      [
-                        GeneratedFormSwitch(
-                          'allowInsecure',
-                          label: tr('allowInsecure'),
-                          defaultValue: false,
-                        ),
-                      ],
-                    ],
-                    onValueChanges: (values, valid, isBuilding) {
-                      if (!isBuilding) {
-                        setState(() {
-                          _advancedSettings = values;
-                          // Only merge non-empty advanced settings into additional settings
-                          _advancedSettings.forEach((key, value) {
-                            if (value != null && value.toString().isNotEmpty) {
-                              additionalSettings[key] = value;
-                            }
-                          });
-                        });
-                      }
-                    },
-                  ),
-                ),
-                isExpanded: _advancedExpanded,
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-
     Widget getAdditionalOptsCol() => Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -905,86 +800,76 @@ class AddAppPageState extends State<AddAppPage> {
       ],
     );
 
-    Widget getSourcesListWidget() => Padding(
-      padding: const EdgeInsets.all(16),
-      child: Wrap(
-        direction: Axis.horizontal,
-        alignment: WrapAlignment.spaceBetween,
-        spacing: 12,
-        children: [
-          GestureDetector(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    scrollable: true,
-                    contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-                    title: Text(tr('supportedSources')),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ...sourceProvider.sources.map(
-                          (e) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: GestureDetector(
-                              onTap: e.hosts.isNotEmpty
-                                  ? () {
-                                      launchUrlString(
-                                        'https://${e.hosts[0]}',
-                                        mode: LaunchMode.externalApplication,
-                                      );
-                                    }
-                                  : null,
-                              child: Text(
-                                '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
-                                style: TextStyle(
-                                  decoration: e.hosts.isNotEmpty
-                                      ? TextDecoration.underline
-                                      : TextDecoration.none,
-                                ),
+    Widget getSourcesListWidget() => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        TextButton.icon(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext ctx) {
+                return AlertDialog(
+                  scrollable: true,
+                  contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+                  title: Text(tr('supportedSources')),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ...sourceProvider.sources.map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: GestureDetector(
+                            onTap: e.hosts.isNotEmpty
+                                ? () {
+                                    launchUrlString(
+                                      'https://${e.hosts[0]}',
+                                      mode: LaunchMode.externalApplication,
+                                    );
+                                  }
+                                : null,
+                            child: Text(
+                              '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
+                              style: TextStyle(
+                                decoration: e.hosts.isNotEmpty
+                                    ? TextDecoration.underline
+                                    : TextDecoration.none,
                               ),
                             ),
                           ),
                         ),
-                        gap16,
-                        Text(
-                          '${tr('note')}:',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          tr('selfHostedNote', args: [tr('overrideSource')]),
-                        ),
-                      ],
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: Text(tr('ok')),
                       ),
+                      gap16,
+                      Text(
+                        '${tr('note')}:',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(tr('selfHostedNote', args: [tr('overrideSource')])),
                     ],
-                  );
-                },
-              );
-            },
-            child: Text(
-              tr('supportedSources'),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                decoration: TextDecoration.underline,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(),
+                      child: Text(tr('ok')),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          icon: const Icon(Icons.info_outline, size: 18),
+          label: Text(tr('supportedSources')),
+          style: TextButton.styleFrom(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.zero,
           ),
-        ],
-      ),
+        ),
+      ],
     );
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      bottomNavigationBar: pickedSource == null ? getSourcesListWidget() : null,
       body: CustomScrollView(
         shrinkWrap: true,
         slivers: <Widget>[
@@ -1000,6 +885,7 @@ class AddAppPageState extends State<AddAppPage> {
                   gap16,
                   if (pickedSource != null) getHTMLSourceOverrideDropdown(),
                   if (shouldShowSearchBar()) getSearchBarRow(),
+                  if (pickedSource == null) getSourcesListWidget(),
                   if (pickedSource != null)
                     FutureBuilder(
                       builder: (ctx, val) {
@@ -1013,7 +899,75 @@ class AddAppPageState extends State<AddAppPage> {
                       future: pickedSource?.getSourceNote(),
                     ),
                   if (pickedSource != null) getAdditionalOptsCol(),
-                  if (pickedSource != null) getAdvancedSection(),
+                  if (pickedSource != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        gap24,
+                        Text(
+                          tr('advanced'),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        gap16,
+                        GeneratedForm(
+                          key: const Key('advancedSettings'),
+                          items: [
+                            [
+                              GeneratedFormTextField(
+                                'apkFilterRegEx',
+                                label: tr('filterAPKsByRegEx'),
+                                required: false,
+                                additionalValidators: [
+                                  (value) => _regExValidator(value),
+                                ],
+                              ),
+                            ],
+                            [
+                              GeneratedFormSwitch(
+                                'invertAPKFilter',
+                                label:
+                                    '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+                                defaultValue: false,
+                              ),
+                            ],
+                            [
+                              GeneratedFormTextField(
+                                'zippedApkFilterRegEx',
+                                label: tr('zippedApkFilterRegEx'),
+                                required: false,
+                                additionalValidators: [
+                                  (value) => _regExValidator(value),
+                                ],
+                              ),
+                            ],
+                            [
+                              GeneratedFormSwitch(
+                                'shizukuPretendToBeGooglePlay',
+                                label: tr('shizukuPretendToBeGooglePlay'),
+                                defaultValue: false,
+                              ),
+                            ],
+                            [
+                              GeneratedFormSwitch(
+                                'allowInsecure',
+                                label: tr('allowInsecure'),
+                                defaultValue: false,
+                              ),
+                            ],
+                          ],
+                          onValueChanges: (values, valid, isBuilding) {
+                            if (!isBuilding) {
+                              setState(() {
+                                additionalSettings.addAll(values);
+                              });
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),

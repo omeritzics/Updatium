@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:bcrypt/bcrypt.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/main.dart';
@@ -72,7 +73,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   set themeColor(Color themeColor) {
-    prefs?.setInt('themeColor', themeColor.toARGB32());
+    prefs?.setInt('themeColor', themeColor.value);
     notifyListeners();
   }
 
@@ -202,15 +203,6 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool get hideNonInstalled {
-    return prefs?.getBool('hideNonInstalled') ?? false;
-  }
-
-  set hideNonInstalled(bool show) {
-    prefs?.setBool('hideNonInstalled', show);
-    notifyListeners();
-  }
-
   bool get groupByCategory {
     return prefs?.getBool('groupByCategory') ?? false;
   }
@@ -306,12 +298,23 @@ class SettingsProvider with ChangeNotifier {
       a.length == b.length && a.union(b).length == a.length;
 
   void resetLocaleSafe(BuildContext context) {
+    // Try exact match first
     if (context.supportedLocales.contains(context.deviceLocale)) {
       context.resetLocale();
-    } else {
-      context.setLocale(context.fallbackLocale!);
-      context.deleteSaveLocale();
+      return;
     }
+
+    // Try language-only match (e.g., 'en-US' → 'en')
+    var languageOnly = Locale(context.deviceLocale.languageCode);
+    if (context.supportedLocales.contains(languageOnly)) {
+      context.setLocale(languageOnly);
+      context.deleteSaveLocale();
+      return;
+    }
+
+    // Fallback to default
+    context.setLocale(context.fallbackLocale!);
+    context.deleteSaveLocale();
   }
 
   bool get removeOnExternalUninstall {
@@ -411,7 +414,6 @@ class SettingsProvider with ChangeNotifier {
     var uriString = prefs?.getString('exportDir');
     if (uriString != null) {
       Uri? uri = Uri.parse(uriString);
-      // DocMan functionality removed - just return the URI
       return uri;
     } else {
       return null;
@@ -419,11 +421,23 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Future<void> pickExportDir({bool remove = false}) async {
-    // DocMan functionality removed
-    if (!remove) {
-      // SAF picker functionality removed
+    if (remove) {
+      prefs?.remove('exportDir');
+      notifyListeners();
+      return;
     }
-    // DocMan permission release functionality removed
+
+    // Use SAF directory picker to get content URI for DocumentFile
+    try {
+      const platform = MethodChannel('io.github.omeritzics.updatium/saf');
+      final String? uri = await platform.invokeMethod('openDirectoryTree');
+      if (uri != null) {
+        prefs?.setString('exportDir', uri);
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint('Error picking directory: $e');
+    }
   }
 
   bool get autoExportOnChanges {
@@ -436,7 +450,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   bool get onlyCheckInstalledOrTrackOnlyApps {
-    return prefs?.getBool('onlyCheckInstalledOrTrackOnlyApps') ?? false;
+    return prefs?.getBool('onlyCheckInstalledOrTrackOnlyApps') ?? true;
   }
 
   set onlyCheckInstalledOrTrackOnlyApps(bool val) {
@@ -583,6 +597,69 @@ class SettingsProvider with ChangeNotifier {
 
   set safeModeTapCount(int val) {
     prefs?.setInt('safeModeTapCount', val);
+    notifyListeners();
+  }
+
+  bool get preferApkOverXapk {
+    return prefs?.getBool('preferApkOverXapk') ?? true;
+  }
+
+  set preferApkOverXapk(bool val) {
+    prefs?.setBool('preferApkOverXapk', val);
+    notifyListeners();
+  }
+
+  bool get updatesSectionExpanded {
+    return prefs?.getBool('updatesSectionExpanded') ?? false;
+  }
+
+  set updatesSectionExpanded(bool val) {
+    prefs?.setBool('updatesSectionExpanded', val);
+    notifyListeners();
+  }
+
+  bool get sourceSpecificSectionExpanded {
+    return prefs?.getBool('sourceSpecificSectionExpanded') ?? false;
+  }
+
+  set sourceSpecificSectionExpanded(bool val) {
+    prefs?.setBool('sourceSpecificSectionExpanded', val);
+    notifyListeners();
+  }
+
+  bool get appearanceSectionExpanded {
+    return prefs?.getBool('appearanceSectionExpanded') ?? false;
+  }
+
+  set appearanceSectionExpanded(bool val) {
+    prefs?.setBool('appearanceSectionExpanded', val);
+    notifyListeners();
+  }
+
+  bool get categoriesSectionExpanded {
+    return prefs?.getBool('categoriesSectionExpanded') ?? false;
+  }
+
+  set categoriesSectionExpanded(bool val) {
+    prefs?.setBool('categoriesSectionExpanded', val);
+    notifyListeners();
+  }
+
+  double get settingsScrollPosition {
+    return prefs?.getDouble('settingsScrollPosition') ?? 0.0;
+  }
+
+  set settingsScrollPosition(double val) {
+    prefs?.setDouble('settingsScrollPosition', val);
+    notifyListeners();
+  }
+
+  bool get preventUninstallation {
+    return prefs?.getBool('preventUninstallation') ?? false;
+  }
+
+  set preventUninstallation(bool val) {
+    prefs?.setBool('preventUninstallation', val);
     notifyListeners();
   }
 }

@@ -5,11 +5,12 @@ import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/main.dart';
+import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:docman/docman.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:updatium/components/generated_form.dart';
 
@@ -156,10 +157,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
       setState(() {
         importInProgress = true;
       });
-      FilePicker.pickFiles()
+      DocMan.pick
+          .files(limit: 1)
           .then((result) {
-            if (result != null) {
-              String data = File(result.files.single.path!).readAsStringSync();
+            if (result.isNotEmpty) {
+              String data = File(result.first.path).readAsStringSync();
               try {
                 jsonDecode(data);
               } catch (e) {
@@ -170,7 +172,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 appsProvider.apps.forEach((key, value) {
                   for (var c in value.app.categories ?? []) {
                     if (!cats.containsKey(c)) {
-                      cats[c] = generateRandomLightColor().toARGB32();
+                      cats[c] = generateRandomLightColor().value;
                     }
                   }
                 });
@@ -198,15 +200,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
       setState(() {
         importInProgress = true;
       });
-      FilePicker.pickFiles()
+      DocMan.pick
+          .files(limit: 1)
           .then((result) {
-            if (result != null) {
+            if (result.isNotEmpty) {
               urlListImport(
                 overrideInitValid: true,
                 initValue: RegExp('https?://[^"]+')
-                    .allMatches(
-                      File(result.files.single.path!).readAsStringSync(),
-                    )
+                    .allMatches(File(result.first.path).readAsStringSync())
                     .map((e) => e.input.substring(e.start, e.end))
                     .toSet()
                     .toList()
@@ -501,37 +502,46 @@ class _ImportExportPageState extends State<ImportExportPage> {
                             label: Text(tr('importFromURLList')),
                           ),
                         ),
-                        gap8,
-                        Semantics(
-                          button: true,
-                          label: tr('importFromURLsInFile'),
-                          hint: 'Import apps by reading URLs from a text file',
-                          excludeSemantics: true,
-                          child: FilledButton.icon(
-                            onPressed: importInProgress ? null : runUrlImport,
-                            icon: const Icon(Icons.link),
-                            label: Text(tr('importFromURLsInFile')),
+                        if (!settingsProvider.safeMode) ...[
+                          gap8,
+                          Semantics(
+                            button: true,
+                            label: tr('importFromURLsInFile'),
+                            hint:
+                                'Import apps by reading URLs from a text file',
+                            excludeSemantics: true,
+                            child: FilledButton.icon(
+                              onPressed: importInProgress ? null : runUrlImport,
+                              icon: const Icon(Icons.link),
+                              label: Text(tr('importFromURLsInFile')),
+                            ),
                           ),
-                        ),
+                        ],
                       ],
                     ),
-                  ...sourceProvider.massUrlSources.map(
-                    (source) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        gap8,
-                        FilledButton.icon(
-                          onPressed: importInProgress
-                              ? null
-                              : () {
-                                  runMassSourceImport(source);
-                                },
-                          icon: const Icon(Icons.cloud_download),
-                          label: Text(tr('importX', args: [source.name])),
+                  ...sourceProvider.massUrlSources
+                      .where(
+                        (source) =>
+                            !(source is GitHubStars &&
+                                settingsProvider.safeMode),
+                      )
+                      .map(
+                        (source) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            gap8,
+                            FilledButton.icon(
+                              onPressed: importInProgress
+                                  ? null
+                                  : () {
+                                      runMassSourceImport(source);
+                                    },
+                              icon: const Icon(Icons.cloud_download),
+                              label: Text(tr('importX', args: [source.name])),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
                   const Spacer(),
                   const Divider(height: 32),
                   Text(

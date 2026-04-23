@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:provider/provider.dart';
+import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/services/device_admin_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 void showSafeModeEnableDialog(BuildContext context) {
@@ -100,6 +103,13 @@ void showSafeModeEnableDialog(BuildContext context) {
                   tr('safeModeSetupDescription'),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
+                const SizedBox(height: 12),
+                Text(
+                  tr('safeModeDisableHint'),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: passwordController,
@@ -189,6 +199,10 @@ void showSafeModeDisableDialog(BuildContext context) {
                 await settingsProvider.clearSafeModePassword();
                 settingsProvider.safeModeHintShown = false;
                 settingsProvider.safeModeTapCount = 0;
+
+                // Disable uninstall protection when Safe Mode is disabled
+                await DeviceAdminService.disableUninstallProtection();
+                settingsProvider.preventUninstallation = false;
 
                 if (context.mounted) {
                   passwordController.dispose();
@@ -361,8 +375,12 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
 
   @override
   Widget build(BuildContext context) {
-    const version = '26.3.0';
-    const buildNumber = '26020419';
+    final pubspecFile = File('pubspec.yaml');
+    final pubspec = Pubspec.parse(pubspecFile.readAsStringSync());
+    final versionString = pubspec.version?.toString() ?? '';
+    final parts = versionString.split('+');
+    final version = parts[0];
+    final buildNumber = parts.length > 1 ? parts[1] : '';
 
     return AlertDialog(
       scrollable: true,
@@ -415,7 +433,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
                       horizontal: 8,
                     ),
                     child: Text(
-                      'Version $version ($buildNumber)',
+                      '${tr('version')} $version ($buildNumber)',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),

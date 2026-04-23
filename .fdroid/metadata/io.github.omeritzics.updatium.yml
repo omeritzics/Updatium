@@ -23,7 +23,7 @@ RepoType: git
 Repo: https://github.com/omeritzics/Updatium.git
 
 Builds:
-  - versionName: 26.3.0
+  - versionName: 26.4.0
     versionCode: 26020419
     commit: main
     submodules: true
@@ -40,7 +40,7 @@ Builds:
 
 AutoUpdateMode: None
 UpdateCheckMode: Tags
-CurrentVersion: 26.3.0
-CurrentVersionCode: 26020419
+CurrentVersion: 26.4.0
+CurrentVersionCode: 2604141
 
 # Note: APK size optimized with ProGuard and resource shrinking for IzzyOnDroid 30MB limit

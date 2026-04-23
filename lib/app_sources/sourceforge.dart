@@ -2,7 +2,7 @@ import 'package:simple_localization/simple_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class SourceForge extends AppSource {
   SourceForge() {
@@ -99,7 +99,7 @@ class SourceForge extends AppSource {
 
       var apkUrlListAllReleases = allDownloadLinks
           .where(
-            (element) => source_utils.supportedApkExtensions.any(
+            (element) => source_provider.supportedApkExtensions.any(
               (ext) => element.toLowerCase().endsWith('$ext/download'),
             ),
           )

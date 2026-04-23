@@ -2,7 +2,7 @@ import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:simple_localization/simple_localization.dart';
 
 class SourceHut extends AppSource {
@@ -89,7 +89,7 @@ class SourceHut extends AppSource {
             parse(res2.body)
                 .querySelectorAll('a')
                 .map((e) => e.attributes['href'] ?? '')
-                .where((e) => source_utils.hasSupportedApkExtension(e))
+                .where((e) => source_provider.hasSupportedApkExtension(e))
                 .map((e) => ensureAbsoluteUrl(e, standardUri))
                 .toList(),
           );

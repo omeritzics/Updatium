@@ -9,7 +9,7 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GitHub extends AppSource {
@@ -72,7 +72,7 @@ class GitHub extends AppSource {
           GestureDetector(
             onTap: () {
               launchUrlString(
-                'https://github.com/sky22333/hubproxy',
+                'https://github.com/omeritzics/Updatium',
                 mode: LaunchMode.externalApplication,
               );
             },
@@ -337,7 +337,7 @@ class GitHub extends AppSource {
           (release['assets'] as List<dynamic>?)?.map((e) {
             var ext = '.${e['name'].toString().toLowerCase().split('.').last}';
             var url =
-                !(source_utils.supportedApkExtensions.contains(ext) ||
+                !(source_provider.supportedApkExtensions.contains(ext) ||
                     (includeZips && ext == '.zip'))
                 ? (e['browser_download_url'] ?? e['url'])
                 : (e['url'] ?? e['browser_download_url']);
@@ -481,7 +481,7 @@ class GitHub extends AppSource {
         var apkAssetsWithUrls = allAssetsWithUrls.where((element) {
           var ext =
               '.${(element['final_url'] as MapEntry<String, String>).key.toLowerCase().split('.').last}';
-          return source_utils.supportedApkExtensions.contains(ext) ||
+          return source_provider.supportedApkExtensions.contains(ext) ||
               (includeZips && ext == '.zip');
         }).toList();
 

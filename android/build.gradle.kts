@@ -25,6 +25,20 @@ subprojects {
         if (project.hasProperty("android")) {
             val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
             android.compileSdkVersion(36)
+            
+            // Fix namespace issue for packages that don't specify it
+            if (android is com.android.build.gradle.LibraryExtension) {
+                if (android.namespace == null) {
+                    val manifestFile = file("${project.projectDir}/src/main/AndroidManifest.xml")
+                    if (manifestFile.exists()) {
+                        val manifestContent = manifestFile.readText()
+                        val packageMatch = Regex("package=\"([^\"]+)\"").find(manifestContent)
+                        if (packageMatch != null) {
+                            android.namespace = packageMatch.groupValues[1]
+                        }
+                    }
+                }
+            }
         }
     }
 

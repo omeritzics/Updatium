@@ -383,7 +383,9 @@ class _GeneratedFormState extends State<GeneratedForm> {
           return DropdownButtonFormField<String>(
             initialValue: values[formItem.key] ?? formItem.opts?.first.key,
             decoration: InputDecoration(
-              labelText: '${formItem.label}${formItem.required ? ' *' : ''}',
+              labelText: formItem.key == 'appSourceURL'
+                  ? '${formItem.label}${formItem.required ? ' *' : ''}'
+                  : formItem.label,
               border: const OutlineInputBorder(),
             ),
             items: formItem.opts?.map((e2) {
@@ -393,7 +395,10 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 enabled: enabled,
                 child: Opacity(
                   opacity: enabled ? 1 : 0.5,
-                  child: Text(e2.value),
+                  child: Directionality(
+                    textDirection: Directionality.of(context),
+                    child: Text(e2.value),
+                  ),
                 ),
               );
             }).toList(),
@@ -509,7 +514,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                         .where((element) => element.value.value)
                         .isNotEmpty;
                     temp[label] = MapEntry(
-                      generateRandomLightColor().toARGB32(),
+                      generateRandomLightColor().value,
                       !(someSelected && singleSelect),
                     );
                     values[fieldKey] = temp;
@@ -563,7 +568,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 label: Text(e2.key),
                                 backgroundColor: Color(
                                   e2.value.key,
-                                ).withAlpha(50),
+                                ).withValues(alpha: 0.2),
                                 selectedColor: Color(e2.value.key),
                                 visualDensity: VisualDensity.compact,
                                 selected: e2.value.value,
@@ -635,8 +640,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 // generate new color, ensure it is not the same
                                 int newColor = oldEntry.value.key;
                                 while (oldEntry.value.key == newColor) {
-                                  newColor = generateRandomLightColor()
-                                      .toARGB32();
+                                  newColor = generateRandomLightColor().value;
                                 }
                                 // Update entry with new color, remain selected
                                 temp.update(

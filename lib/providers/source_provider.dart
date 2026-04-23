@@ -30,10 +30,11 @@ import 'package:updatium/app_sources/sourceforge.dart';
 import 'package:updatium/app_sources/sourcehut.dart';
 import 'package:updatium/app_sources/telegramapp.dart';
 import 'package:updatium/app_sources/tencent.dart';
+import 'package:updatium/app_sources/whatsapp.dart';
 import 'package:updatium/app_sources/uptodown.dart';
 import 'package:updatium/app_sources/vivoappstore.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/mass_app_sources/githubstars.dart';
+import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
@@ -560,6 +561,28 @@ Future<List<MapEntry<String, String>>> filterApksByArch(
         break;
       }
     }
+  }
+  return apkUrls;
+}
+
+List<MapEntry<String, String>> preferApkOverXapk(
+  List<MapEntry<String, String>> apkUrls,
+) {
+  if (apkUrls.length > 1) {
+    var apks = apkUrls
+        .where((e) => e.key.toLowerCase().endsWith('.apk'))
+        .toList();
+    var xapks = apkUrls
+        .where((e) => e.key.toLowerCase().endsWith('.xapk'))
+        .toList();
+    var others = apkUrls
+        .where(
+          (e) =>
+              !e.key.toLowerCase().endsWith('.apk') &&
+              !e.key.toLowerCase().endsWith('.xapk'),
+        )
+        .toList();
+    return [...apks, ...xapks, ...others];
   }
   return apkUrls;
 }
@@ -1253,6 +1276,7 @@ class SourceProvider {
     Jenkins(),
     APKMirror(),
     TelegramApp(),
+    WhatsAppApp(),
     NeutronCode(),
     DirectAPKLink(),
     HTML(), // This should ALWAYS be the last option as they are tried in order
@@ -1380,6 +1404,11 @@ class SourceProvider {
     }
     if (additionalSettings['autoApkFilterByArch'] == true) {
       apk.apkUrls = await filterApksByArch(apk.apkUrls);
+    }
+    var sp = SettingsProvider();
+    await sp.initializeSettings();
+    if (sp.preferApkOverXapk) {
+      apk.apkUrls = preferApkOverXapk(apk.apkUrls);
     }
     var name = currentApp != null ? currentApp.name.trim() : '';
     name = name.isNotEmpty ? name : apk.names.name;

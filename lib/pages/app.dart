@@ -2,6 +2,8 @@ import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
+import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
 
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/apps.dart';
@@ -39,40 +41,44 @@ class AppPage extends StatefulWidget {
 class _AppPageState extends State<AppPage> {
   AppInMemory? prevApp;
   bool updating = false;
+  bool _iconRequested = false;
+  Future<void>? _iconFuture;
 
   @override
   void initState() {
     super.initState();
   }
 
+  Future<void> getUpdate(String id, {bool resetVersion = false}) async {
+    var appsProvider = context.read<AppsProvider>();
+    try {
+      setState(() {
+        updating = true;
+      });
+      await appsProvider.checkUpdate(id);
+      if (resetVersion) {
+        appsProvider.apps[id]?.app.additionalSettings['versionDetection'] =
+            true;
+        if (appsProvider.apps[id]?.app.installedVersion != null) {
+          appsProvider.apps[id]?.app.installedVersion =
+              appsProvider.apps[id]?.app.latestVersion;
+        }
+        appsProvider.saveApps([appsProvider.apps[id]!.app]);
+      }
+    } catch (err) {
+      // ignore: use_build_context_synchronously
+      showError(err, context);
+    } finally {
+      setState(() {
+        updating = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
-    getUpdate(String id, {bool resetVersion = false}) async {
-      try {
-        setState(() {
-          updating = true;
-        });
-        await appsProvider.checkUpdate(id);
-        if (resetVersion) {
-          appsProvider.apps[id]?.app.additionalSettings['versionDetection'] =
-              true;
-          if (appsProvider.apps[id]?.app.installedVersion != null) {
-            appsProvider.apps[id]?.app.installedVersion =
-                appsProvider.apps[id]?.app.latestVersion;
-          }
-          appsProvider.saveApps([appsProvider.apps[id]!.app]);
-        }
-      } catch (err) {
-        // ignore: use_build_context_synchronously
-        showError(err, context);
-      } finally {
-        setState(() {
-          updating = false;
-        });
-      }
-    }
 
     bool areDownloadsRunning = appsProvider.areDownloadsRunning();
 
@@ -84,43 +90,66 @@ class _AppPageState extends State<AppPage> {
             overrideSource: app.app.overrideSource,
           )
         : null;
+
+    // Handle null app case - show loading or error
+    if (app == null) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (appsProvider.loadingApps)
+                const CircularProgressIndicator()
+              else
+                Column(
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      size: 64,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      tr('appNotFound'),
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      widget.appId,
+                      style: Theme.of(context).textTheme.bodySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ),
+      );
+    }
     if (!areDownloadsRunning &&
         prevApp == null &&
-        app != null &&
         settingsProvider.checkUpdateOnDetailPage) {
       prevApp = app;
       getUpdate(app.app.id);
     }
-    var trackOnly = app?.app.additionalSettings['trackOnly'] == true;
+    var trackOnly = app.app.additionalSettings['trackOnly'] == true;
 
-    bool isVersionDetectionStandard =
-        app?.app.additionalSettings['versionDetection'] == true;
-
-    bool installedVersionIsEstimate = app?.app != null
-        ? isVersionPseudo(app!.app)
-        : false;
+    bool installedVersionIsEstimate = isVersionPseudo(app.app);
 
     getInfoColumn() {
       String versionLines = '';
-      bool installed = app?.app.installedVersion != null;
-      bool upToDate = app?.app.installedVersion == app?.app.latestVersion;
+      bool installed = app.app.installedVersion != null;
+      versionLines = '${tr('latestVersion')}: ${app.app.latestVersion}';
       if (installed) {
-        versionLines = '${app?.app.installedVersion} ${tr('installed')}';
-        if (upToDate) {
-          versionLines += '/${tr('latest')}';
-        }
-      } else {
-        versionLines = tr('notInstalled');
-      }
-      if (!upToDate) {
-        versionLines += '\n${app?.app.latestVersion} ${tr('latest')}';
+        versionLines +=
+            '\n${tr('installedVersion')}: ${app.app.installedVersion}';
       }
       String infoLines = tr(
         'lastUpdateCheckX',
         args: [
-          app?.app.lastUpdateCheck == null
+          app.app.lastUpdateCheck == null
               ? tr('never')
-              : '${app?.app.lastUpdateCheck?.toLocal()}',
+              : '${app.app.lastUpdateCheck?.toLocal()}',
         ],
       );
       if (trackOnly) {
@@ -129,11 +158,11 @@ class _AppPageState extends State<AppPage> {
       if (installedVersionIsEstimate) {
         infoLines = '${tr('pseudoVersionInUse')}\n$infoLines';
       }
-      if ((app?.app.apkUrls.length ?? 0) > 0) {
+      if (app.app.apkUrls.length > 0) {
         infoLines =
-            '$infoLines\n${app?.app.apkUrls.length == 1 ? app?.app.apkUrls[0].key : plural('apk', app?.app.apkUrls.length ?? 0)}';
+            '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : plural('apk', app.app.apkUrls.length)}';
       }
-      var changeLogFn = app != null ? getChangeLogFn(context, app.app) : null;
+      var changeLogFn = getChangeLogFn(context, app.app);
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -141,6 +170,7 @@ class _AppPageState extends State<AppPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 gap24,
                 Text(
@@ -150,13 +180,13 @@ class _AppPageState extends State<AppPage> {
                     context,
                   ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
                 ),
-                changeLogFn != null || app?.app.releaseDate != null
+                changeLogFn != null || app.app.releaseDate != null
                     ? GestureDetector(
                         onTap: changeLogFn,
                         child: Text(
-                          app?.app.releaseDate == null
+                          app.app.releaseDate == null
                               ? tr('changes')
-                              : app!.app.releaseDate!.toLocal().toString(),
+                              : app.app.releaseDate!.toLocal().toString(),
                           textAlign: TextAlign.start,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -186,15 +216,15 @@ class _AppPageState extends State<AppPage> {
           ),
 
           /* Certificate Hashes */
-          if (app != null && app.certificateHashes.isNotEmpty)
+          if (app.certificateHashes.isNotEmpty)
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 gap24,
                 Text(
-                  "${plural('certificateHash', app.certificateHashes.length)}"
+                  "${plural('certificateHash', app.certificateHashes.length)}:"
                   "${app.hasMultipleSigners ? " (${tr('multipleSigners')})" : ""}",
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.start,
                   style: const TextStyle(fontSize: 12),
                 ),
                 Column(
@@ -214,9 +244,9 @@ class _AppPageState extends State<AppPage> {
                         ),
                         child: Text(
                           hash,
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.start,
                           style: const TextStyle(fontSize: 12),
-                          maxLines: 1,
+                          maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -229,16 +259,14 @@ class _AppPageState extends State<AppPage> {
           gap24,
           CategorySelector(
             alignment: WrapAlignment.center,
-            preselected: app?.app.categories?.toSet() ?? {},
+            preselected: app.app.categories?.toSet() ?? {},
             onSelected: (categories) {
-              if (app != null) {
-                app.app.categories = categories;
-                appsProvider.saveApps([app.app]);
-              }
+              app.app.categories = categories;
+              appsProvider.saveApps([app.app]);
             },
           ),
-          if (app?.app.additionalSettings['about'] is String &&
-              app?.app.additionalSettings['about'].isNotEmpty)
+          if (app.app.additionalSettings['about'] is String &&
+              app.app.additionalSettings['about'].isNotEmpty)
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -247,7 +275,7 @@ class _AppPageState extends State<AppPage> {
                   onLongPress: () {
                     Clipboard.setData(
                       ClipboardData(
-                        text: app?.app.additionalSettings['about'] ?? '',
+                        text: app.app.additionalSettings['about'] ?? '',
                       ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -263,7 +291,7 @@ class _AppPageState extends State<AppPage> {
                       ),
                       textAlign: WrapAlignment.center,
                     ),
-                    data: app?.app.additionalSettings['about'],
+                    data: app.app.additionalSettings['about'],
                     onTapLink: (text, href, title) {
                       if (href != null) {
                         launchUrlString(
@@ -294,15 +322,10 @@ class _AppPageState extends State<AppPage> {
         SizedBox(height: settingsProvider.highlightTouchTargets ? 4 : 8),
         GestureDetector(
           onTap: () {
-            if (app?.app.url != null) {
-              launchUrlString(
-                app?.app.url ?? '',
-                mode: LaunchMode.externalApplication,
-              );
-            }
+            launchUrlString(app.app.url, mode: LaunchMode.externalApplication);
           },
           onLongPress: () {
-            Clipboard.setData(ClipboardData(text: app?.app.url ?? ''));
+            Clipboard.setData(ClipboardData(text: app.app.url));
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text(tr('copiedToClipboard'))));
@@ -325,10 +348,12 @@ class _AppPageState extends State<AppPage> {
                                       Brightness.light
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).primaryColorLight)
-                              .withAlpha(
-                                Theme.of(context).brightness == Brightness.light
-                                    ? 20
-                                    : 40,
+                              .withValues(
+                                alpha:
+                                    Theme.of(context).brightness ==
+                                        Brightness.light
+                                    ? 20 / 255
+                                    : 40 / 255,
                               );
                         }()
                       : null,
@@ -338,9 +363,9 @@ class _AppPageState extends State<AppPage> {
                     : const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
                 margin: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                 child: Tooltip(
-                  message: app?.app.url ?? '',
+                  message: app.app.url,
                   child: Text(
-                    app?.app.url ?? '',
+                    app.app.url,
                     textAlign: TextAlign.start,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -355,15 +380,15 @@ class _AppPageState extends State<AppPage> {
           ),
         ),
         Text(
-          app?.app.id ?? '',
+          app.app.id,
           textAlign: TextAlign.start,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
-        // Extra bottom padding to clear the floating toolbar + FAB
-        const SizedBox(height: 120),
+        // Extra bottom padding to clear the docked toolbar
+        const SizedBox(height: 96),
       ],
     );
 
@@ -376,8 +401,8 @@ class _AppPageState extends State<AppPage> {
             row,
           ) {
             row = row.map((e) {
-              if (app?.app.additionalSettings[e.key] != null) {
-                e.defaultValue = app?.app.additionalSettings[e.key];
+              if (app.app.additionalSettings[e.key] != null) {
+                e.defaultValue = app.app.additionalSettings[e.key];
               }
               return e;
             }).toList();
@@ -409,7 +434,7 @@ class _AppPageState extends State<AppPage> {
     }
 
     handleAdditionalOptionChanges(Map<String, dynamic>? values) {
-      if (app != null && values != null) {
+      if (values != null) {
         Map<String, dynamic> originalSettings = app.app.additionalSettings;
         app.app.additionalSettings = values;
         if (source?.enforceTrackOnly == true) {
@@ -449,324 +474,282 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
+    getInstallOrUpdateButton() => ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        elevation: 2,
+        shadowColor: Theme.of(context).colorScheme.shadow,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      onPressed:
+          !updating &&
+              (app.app.installedVersion == null ||
+                  app.app.installedVersion != app.app.latestVersion) &&
+              !areDownloadsRunning
+          ? () async {
+              try {
+                var successMessage = app.app.installedVersion == null
+                    ? tr('installed')
+                    : tr('appsUpdated');
+                HapticFeedback.heavyImpact();
+                var res = await appsProvider.downloadAndInstallLatestApps([
+                  app.app.id,
+                ], globalNavigatorKey.currentContext);
+                if (res.isNotEmpty && !trackOnly) {
+                  // ignore: use_build_context_synchronously
+                  showMessage(successMessage, context);
+                }
+                if (res.isNotEmpty && mounted) {
+                  Navigator.of(context).pop();
+                }
+              } catch (e) {
+                // ignore: use_build_context_synchronously
+                showError(e, context);
+              }
+            }
+          : null,
+      child: Text(
+        app.app.installedVersion == null
+            ? !trackOnly
+                  ? tr('install')
+                  : tr('markInstalled')
+            : !trackOnly
+            ? tr('update')
+            : tr('markUpdated'),
+      ),
+    );
+
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: Row(
-        mainAxisSize: MainAxisSize.min,
+      body: Stack(
         children: [
-          // ── Floating Toolbar pill (secondary actions) ──────────────────
-          Card(
-            elevation: 3,
-            shape: const StadiumBorder(),
-            color: Theme.of(context).colorScheme.surfaceContainerHigh,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Show certificate hashes dialog (conditional)
-                  if (app != null && app.certificateHashes.isNotEmpty)
-                    IconButton(
-                      icon: const Icon(Icons.tag),
-                      tooltip: tr('certificateHash'),
-                      onPressed: () => showDialog<void>(
-                        context: context,
-                        builder: (ctx) => AlertDialog(
-                          title: Text(
-                            '${plural('certificateHash', app.certificateHashes.length)}'
-                            '${app.hasMultipleSigners ? ' (${tr('multipleSigners')})' : ''}',
-                          ),
-                          content: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: app.certificateHashes
-                                  .map(
-                                    (hash) => Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 6,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: SelectableText(
-                                              hash,
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                fontFamily: 'monospace',
-                                              ),
-                                            ),
-                                          ),
-                                          IconButton(
-                                            icon: const Icon(
-                                              Icons.copy,
-                                              size: 16,
-                                            ),
-                                            onPressed: () {
-                                              Clipboard.setData(
-                                                ClipboardData(text: hash),
-                                              );
-                                              ScaffoldMessenger.of(
-                                                ctx,
-                                              ).showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                    tr('copiedToClipboard'),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            tooltip: tr('copy'),
-                                            padding: const EdgeInsets.all(4),
-                                            constraints: const BoxConstraints(),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.of(ctx).pop(),
-                              child: Text(tr('ok')),
+          RefreshIndicator(
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar.large(
+                  pinned: true,
+                  title: Row(
+                    children: [
+                      Consumer<AppsProvider>(
+                        builder: (ctx, appsProvider, child) {
+                          final appInMemory = appsProvider.apps[app.app.id];
+
+                          if (appInMemory?.icon != null) {
+                            return Padding(
+                              padding: const EdgeInsetsDirectional.only(
+                                end: 12.0,
+                              ),
+                              child: Image.memory(
+                                appInMemory!.icon!,
+                                width: 40,
+                                height: 40,
+                                gaplessPlayback: true,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Icon(
+                                    Icons.apps,
+                                    size: 40,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                  );
+                                },
+                              ),
+                            );
+                          }
+
+                          // Load icon asynchronously if not available
+                          if (!_iconRequested) {
+                            _iconRequested = true;
+                            _iconFuture = appsProvider.updateAppIcon(
+                              app.app.id,
+                            );
+                          }
+                          return FutureBuilder(
+                            future: _iconFuture,
+                            builder: (ctx, snapshot) {
+                              final updatedAppInMemory =
+                                  appsProvider.apps[app.app.id];
+
+                              if (updatedAppInMemory?.icon != null) {
+                                return Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                    end: 12.0,
+                                  ),
+                                  child: Image.memory(
+                                    updatedAppInMemory!.icon!,
+                                    width: 40,
+                                    height: 40,
+                                    gaplessPlayback: true,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Icon(
+                                        Icons.apps,
+                                        size: 40,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
+                                      );
+                                    },
+                                  ),
+                                );
+                              }
+
+                              // Fallback icon while loading
+                              return Padding(
+                                padding: const EdgeInsetsDirectional.only(
+                                  end: 16.0,
+                                ),
+                                child: Icon(
+                                  Icons.apps,
+                                  size: 40,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(app.name),
+                            Text(
+                              tr('byX', args: [app.author]),
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurfaceVariant,
+                                  ),
                             ),
                           ],
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      getFullInfoColumn(),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                          16,
+                          16,
+                          16,
+                          32,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(width: 16.0),
+                            Expanded(child: getInstallOrUpdateButton()),
+                            const SizedBox(width: 16.0),
+                          ],
+                        ),
+                      ),
+                      if (app.downloadProgress != null)
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                            16,
+                            0,
+                            16,
+                            32,
+                          ),
+                          child: LinearProgressIndicator(
+                            value: app.downloadProgress! >= 0
+                                ? app.downloadProgress! / 100
+                                : null,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainerHighest,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            onRefresh: () async {
+              await getUpdate(app.app.id);
+            },
+          ),
+          Positioned(
+            left: 16,
+            right: 16,
+            bottom: 16,
+            child: Align(
+              alignment: Alignment.center,
+              child: M3FloatingToolbar(
+                actions: [
+                  if (app.app.installedVersion != null)
+                    M3FloatingToolbarAction(
+                      icon: Icons.open_in_new,
+                      semanticLabel: tr('open'),
+                      tooltip: tr('open'),
+                      onPressed: () {
+                        pm.openApp(app.app.id);
+                      },
                     ),
-                  // Download assets (conditional)
-                  if (app?.app.apkUrls.isNotEmpty == true ||
-                      app?.app.otherAssetUrls.isNotEmpty == true)
-                    IconButton(
-                      icon: const Icon(Icons.file_download_outlined),
+                  if (!updating &&
+                      source != null &&
+                      source.combinedAppSpecificSettingFormItems.isNotEmpty)
+                    M3FloatingToolbarAction(
+                      icon: Icons.edit,
+                      semanticLabel: tr('additionalOptions'),
+                      tooltip: tr('additionalOptions'),
+                      onPressed: () {
+                        showAdditionalOptionsDialog().then(
+                          handleAdditionalOptionChanges,
+                        );
+                      },
+                    ),
+                  if (!updating &&
+                      (app.app.apkUrls.isNotEmpty == true ||
+                          app.app.otherAssetUrls.isNotEmpty == true))
+                    M3FloatingToolbarAction(
+                      icon: Icons.archive,
+                      semanticLabel: tr(
+                        'downloadX',
+                        args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+                      ),
                       tooltip: tr(
                         'downloadX',
                         args: [lowerCaseIfEnglish(tr('releaseAsset'))],
                       ),
-                      onPressed: app?.app == null || updating
-                          ? null
-                          : () async {
-                              try {
-                                await appsProvider.downloadAppAssets([
-                                  app!.app.id,
-                                ], context);
-                              } catch (e) {
-                                showError(e, context);
-                              }
-                            },
-                    ),
-                  // Edit / additional options (conditional)
-                  if (source != null &&
-                      source.combinedAppSpecificSettingFormItems.isNotEmpty)
-                    IconButton(
-                      icon: const Icon(Icons.edit_outlined),
-                      tooltip: tr('additionalOptions'),
-                      onPressed: updating
-                          ? null
-                          : () => showAdditionalOptionsDialog().then(
-                              handleAdditionalOptionChanges,
-                            ),
-                    ),
-                  // Remove (conditional)
-                  if (app?.app.installedVersion != null &&
-                      app?.app.installedVersion != app?.app.latestVersion &&
-                      !isVersionDetectionStandard &&
-                      !trackOnly)
-                    IconButton(
-                      icon: const Icon(Icons.delete_outline),
-                      tooltip: tr('remove'),
-                      color: Theme.of(context).colorScheme.error,
-                      onPressed: updating
-                          ? null
-                          : () => appsProvider
-                                .removeAppsWithModal(
-                                  context,
-                                  app != null ? [app.app] : [],
-                                )
-                                .then((result) {
-                                  if (result == true) {
-                                    Navigator.of(context).pop();
-                                  }
-                                }),
-                    ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          // ── FAB – primary action (Install / Update) ────────────────────
-          FloatingActionButton.extended(
-            heroTag: 'app_details_fab',
-            onPressed:
-                !updating &&
-                    (app?.app.installedVersion == null ||
-                        app?.app.installedVersion != app?.app.latestVersion) &&
-                    !areDownloadsRunning
-                ? () async {
-                    try {
-                      var successMessage = app?.app.installedVersion == null
-                          ? tr('installed')
-                          : tr('appsUpdated');
-                      HapticFeedback.heavyImpact();
-                      var res = await appsProvider.downloadAndInstallLatestApps(
-                        app?.app.id != null ? [app!.app.id] : [],
-                        globalNavigatorKey.currentContext,
-                      );
-                      if (res.isNotEmpty && !trackOnly) {
-                        // ignore: use_build_context_synchronously
-                        showMessage(successMessage, context);
-                      }
-                      if (res.isNotEmpty && mounted) {
-                        Navigator.of(context).pop();
-                      }
-                    } catch (e) {
-                      // ignore: use_build_context_synchronously
-                      showError(e, context);
-                    }
-                  }
-                : null,
-            icon: Icon(
-              app?.app.installedVersion == null
-                  ? Icons.install_mobile
-                  : Icons.system_update,
-            ),
-            label: Text(
-              app?.app.installedVersion == null
-                  ? !trackOnly
-                        ? tr('install')
-                        : tr('markInstalled')
-                  : !trackOnly
-                  ? tr('update')
-                  : tr('markUpdated'),
-            ),
-          ),
-        ],
-      ),
-      body: RefreshIndicator(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar.large(
-              pinned: true,
-              title: Row(
-                children: [
-                  if (app != null)
-                    Consumer<AppsProvider>(
-                      builder: (ctx, appsProvider, child) {
-                        final appInMemory = appsProvider.apps[app.app.id];
-
-                        if (appInMemory?.icon != null) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 12.0),
-                            child: Image.memory(
-                              appInMemory!.icon!,
-                              width: 40,
-                              height: 40,
-                              gaplessPlayback: true,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Icon(
-                                  Icons.apps,
-                                  size: 40,
-                                  color: Theme.of(context).colorScheme.primary,
-                                );
-                              },
-                            ),
-                          );
+                      onPressed: () async {
+                        try {
+                          await appsProvider.downloadAppAssets([
+                            app.app.id,
+                          ], context);
+                        } catch (e) {
+                          showError(e, context);
                         }
-
-                        // Load icon asynchronously if not available
-                        return FutureBuilder(
-                          future: appsProvider.updateAppIcon(app.app.id),
-                          builder: (ctx, snapshot) {
-                            final updatedAppInMemory =
-                                appsProvider.apps[app.app.id];
-
-                            if (updatedAppInMemory?.icon != null) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 12.0),
-                                child: Image.memory(
-                                  updatedAppInMemory!.icon!,
-                                  width: 40,
-                                  height: 40,
-                                  gaplessPlayback: true,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Icon(
-                                      Icons.apps,
-                                      size: 40,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.primary,
-                                    );
-                                  },
-                                ),
-                              );
-                            }
-
-                            // Fallback icon while loading
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 16.0),
-                              child: Icon(
-                                Icons.apps,
-                                size: 40,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            );
-                          },
-                        );
                       },
                     ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(app?.name ?? tr('app')),
-                        if (app?.author != null)
-                          Text(
-                            'By ${app?.author}',
-                            style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurfaceVariant,
-                                ),
-                          ),
-                      ],
-                    ),
+                  M3FloatingToolbarAction(
+                    icon: Icons.delete,
+                    semanticLabel: tr('remove'),
+                    tooltip: tr('remove'),
+                    onPressed: () {
+                      appsProvider.removeAppsWithModal(context, [app.app]).then(
+                        (result) {
+                          if (result == true) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      );
+                    },
                   ),
                 ],
               ),
             ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  getFullInfoColumn(),
-                  if (app?.downloadProgress != null)
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                      child: LinearProgressIndicator(
-                        value: app!.downloadProgress! >= 0
-                            ? app.downloadProgress! / 100
-                            : null,
-                        backgroundColor: Theme.of(
-                          context,
-                        ).colorScheme.surfaceContainerHighest,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        onRefresh: () async {
-          if (app != null) {
-            getUpdate(app.app.id);
-          }
-        },
+          ),
+        ],
       ),
     );
   }

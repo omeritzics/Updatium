@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class Jenkins extends AppSource {
   Jenkins() {
@@ -58,7 +58,7 @@ class Jenkins extends AppSource {
           .where(
             (url) =>
                 url.value.isNotEmpty &&
-                source_utils.hasSupportedApkExtension(url.key),
+                source_provider.hasSupportedApkExtension(url.key),
           )
           .toList();
       return APKDetails(

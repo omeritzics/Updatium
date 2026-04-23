@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 String ensureAbsoluteUrl(String ambiguousUrl, Uri referenceAbsoluteUrl) {
   try {
@@ -187,7 +187,7 @@ Future<List<MapEntry<String, String>>> grabLinksCommon(
       } catch (e) {
         // Some links may not have valid encoding
       }
-      return source_utils.hasSupportedApkExtension(
+      return source_provider.hasSupportedApkExtension(
         Uri.parse((filterLinkByText ? element.value : link).trim()).path,
       );
     }).toList();

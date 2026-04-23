@@ -29,7 +29,7 @@ import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/source_provider.dart' as source_utils;
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
@@ -177,6 +177,7 @@ Future<File> downloadFileWithRetry(
   int retries = 3,
   bool allowInsecure = false,
   LogsProvider? logs,
+  String? preFetchedExt,
 }) async {
   try {
     return await downloadFile(
@@ -189,9 +190,12 @@ Future<File> downloadFileWithRetry(
       headers: headers,
       allowInsecure: allowInsecure,
       logs: logs,
+      preFetchedExt: preFetchedExt,
     );
   } catch (e) {
-    if (retries > 0 && e is http.ClientException) {
+    if (retries > 0 &&
+        (e is http.ClientException ||
+            e.toString().contains('Connection closed'))) {
       await Future.delayed(const Duration(seconds: 5));
       return await downloadFileWithRetry(
         url,
@@ -204,6 +208,7 @@ Future<File> downloadFileWithRetry(
         retries: (retries - 1),
         allowInsecure: allowInsecure,
         logs: logs,
+        preFetchedExt: preFetchedExt,
       );
     } else {
       rethrow;
@@ -296,6 +301,56 @@ void deleteFile(File file) {
   }
 }
 
+String generateUniqueFileName(String baseName, String ext, String destDir) {
+  String fileName = '$baseName.$ext';
+  int counter = 1;
+  while (File('$destDir/$fileName').existsSync()) {
+    fileName = '$baseName($counter).$ext';
+    counter++;
+  }
+  return fileName;
+}
+
+Future<String?> promptForFileName(
+  BuildContext context,
+  String suggestedName,
+) async {
+  final controller = TextEditingController(text: suggestedName);
+  return showDialog<String>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(tr('fileExists')),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(tr('fileExistsPrompt')),
+            const SizedBox(height: 16),
+            TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                labelText: tr('fileName'),
+                border: const OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, null),
+            child: Text(tr('cancel')),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, controller.text),
+            child: Text(tr('download')),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 Future<File> downloadFile(
   String url,
   String fileName,
@@ -306,26 +361,61 @@ Future<File> downloadFile(
   Map<String, String>? headers,
   bool allowInsecure = false,
   LogsProvider? logs,
+  String? preFetchedExt,
 }) async {
   // Send the initial request but cancel it as soon as you have the headers
   var reqHeaders = headers ?? {};
   var req = http.Request('GET', Uri.parse(url));
   req.headers.addAll(reqHeaders);
   var headersClient = IOClient(createHttpClient(allowInsecure));
-  http.StreamedResponse headersResponse = await headersClient.send(req);
-  var resHeaders = headersResponse.headers;
+  http.StreamedResponse headersResponse;
+  var resHeaders;
+
+  try {
+    headersResponse = await headersClient.send(req);
+    resHeaders = headersResponse.headers;
+  } finally {
+    headersClient.close();
+  }
 
   // Use the headers to decide what the file extension is, and
   // whether it supports partial downloads (range request), and
   // what the total size of the file is (if provided)
-  String ext = resHeaders['content-disposition']?.split('.').last ?? 'apk';
-  if (ext.endsWith('"') || ext.endsWith("other")) {
-    ext = ext.substring(0, ext.length - 1);
-  }
-  if ((source_utils.hasSupportedApkExtension(Uri.tryParse(url)?.path ?? url) ||
-          ext == 'attachment') &&
-      ext != 'apk') {
-    ext = 'apk';
+  String ext;
+  if (preFetchedExt != null) {
+    ext = preFetchedExt;
+  } else {
+    // Parse file extension from content-disposition header
+    ext = 'apk'; // default
+    String? contentDisposition = resHeaders['content-disposition'];
+    if (contentDisposition != null) {
+      // Extract filename from content-disposition
+      RegExp filenameRegex = RegExp(r'filename\s*=\s*"?([^";]+)"?');
+      Match? match = filenameRegex.firstMatch(contentDisposition);
+      if (match != null) {
+        String filename = match.group(1) ?? '';
+        // Get extension from filename
+        int lastDotIndex = filename.lastIndexOf('.');
+        if (lastDotIndex > 0 && lastDotIndex < filename.length - 1) {
+          ext = filename.substring(lastDotIndex + 1);
+        }
+      } else {
+        // Fallback to simple split if regex fails
+        ext = contentDisposition.split('.').last;
+        if (ext.endsWith('"') || ext.endsWith("other")) {
+          ext = ext.substring(0, ext.length - 1);
+        }
+      }
+    }
+
+    // Normalize extension
+    if ((source_provider.hasSupportedApkExtension(
+              Uri.tryParse(url)?.path ?? url,
+            ) ||
+            ext == 'attachment') &&
+        ext != 'apk') {
+      ext = 'apk';
+    }
   }
   fileName = fileNameHasExt
       ? fileName
@@ -696,6 +786,125 @@ class AppsProvider with ChangeNotifier {
         downloadUrl,
         forAPKDownload: true,
       );
+
+      // Determine file extension and check for conflicts
+      String ext;
+      if (source.urlsAlwaysHaveExtension) {
+        ext = app.apkUrls[app.preferredApkIndex].key.split('.').last;
+      } else {
+        // Get file extension from headers
+        var reqHeaders = headers ?? {};
+        var req = http.Request('GET', Uri.parse(downloadUrl));
+        req.headers.addAll(reqHeaders);
+        var headersClient = IOClient(
+          createHttpClient(app.additionalSettings['allowInsecure'] == true),
+        );
+        http.StreamedResponse headersResponse;
+        var resHeaders;
+        try {
+          headersResponse = await headersClient.send(req);
+          resHeaders = headersResponse.headers;
+        } finally {
+          headersClient.close();
+        }
+
+        // Parse file extension from content-disposition header
+        ext = 'apk'; // default
+        String? contentDisposition = resHeaders['content-disposition'];
+        if (contentDisposition != null) {
+          // Extract filename from content-disposition
+          RegExp filenameRegex = RegExp(r'filename\s*=\s*"?([^";]+)"?');
+          Match? match = filenameRegex.firstMatch(contentDisposition);
+          if (match != null) {
+            String filename = match.group(1) ?? '';
+            // Get extension from filename
+            int lastDotIndex = filename.lastIndexOf('.');
+            if (lastDotIndex > 0 && lastDotIndex < filename.length - 1) {
+              ext = filename.substring(lastDotIndex + 1);
+            }
+          } else {
+            // Fallback to simple split if regex fails
+            ext = contentDisposition.split('.').last;
+            if (ext.endsWith('"') || ext.endsWith("other")) {
+              ext = ext.substring(0, ext.length - 1);
+            }
+          }
+        }
+
+        // Normalize extension
+        if ((source_provider.hasSupportedApkExtension(
+                  Uri.tryParse(downloadUrl)?.path ?? downloadUrl,
+                ) ||
+                ext == 'attachment') &&
+            ext != 'apk') {
+          ext = 'apk';
+        }
+      }
+
+      // Check for existing file and prompt for rename if needed
+      String baseFileName = source.urlsAlwaysHaveExtension
+          ? fileNameNoExt.substring(0, fileNameNoExt.lastIndexOf('.'))
+          : fileNameNoExt;
+      String finalFileName = source.urlsAlwaysHaveExtension
+          ? fileNameNoExt
+          : '$baseFileName.$ext';
+
+      File existingFile = File('${APKDir.path}/$finalFileName');
+      if (context != null && existingFile.existsSync() && useExisting) {
+        // Check if existing file is the correct version by parsing the APK
+        bool isCorrectVersion = false;
+        try {
+          PackageInfo? existingInfo = await pm.getPackageArchiveInfo(
+            archiveFilePath: existingFile.path,
+          );
+          if (existingInfo != null) {
+            // Get the expected version from the app's latest version
+            String expectedVersion = app.latestVersion;
+            String? existingVersion = existingInfo.versionName;
+
+            // Compare versions using reconcileVersionDifferences for robust comparison
+            if (existingVersion != null) {
+              var versionMatch = reconcileVersionDifferences(
+                expectedVersion,
+                existingVersion,
+              );
+              // If versions share a common format and are equal, or exact match
+              isCorrectVersion =
+                  (versionMatch?.key == true) ||
+                  (existingVersion == expectedVersion);
+            }
+          }
+        } catch (e) {
+          // If we can't parse the existing APK, treat it as incorrect version
+          isCorrectVersion = false;
+        }
+
+        if (!isCorrectVersion) {
+          // File exists but is a different version, prompt for rename
+          String suggestedName = generateUniqueFileName(
+            baseFileName,
+            ext,
+            APKDir.path,
+          );
+          String? userFileName = await promptForFileName(
+            context,
+            suggestedName,
+          );
+          if (userFileName == null) {
+            throw UpdatiumError(tr('downloadCancelled'));
+          }
+          // Update fileNameNoExt based on user input
+          if (source.urlsAlwaysHaveExtension) {
+            fileNameNoExt = userFileName;
+          } else {
+            fileNameNoExt = userFileName.contains('.')
+                ? userFileName.substring(0, userFileName.lastIndexOf('.'))
+                : userFileName;
+          }
+        }
+        // If isCorrectVersion is true, we'll use the existing file (downloadFile handles this)
+      }
+
       var downloadedFile = await downloadFileWithRetry(
         downloadUrl,
         fileNameNoExt,
@@ -717,6 +926,7 @@ class AppsProvider with ChangeNotifier {
         useExisting: useExisting,
         allowInsecure: app.additionalSettings['allowInsecure'] == true,
         logs: logs,
+        preFetchedExt: source.urlsAlwaysHaveExtension ? null : ext,
       );
       // Set to 90 for remaining steps, will make null in 'finally'
       if (apps[app.id] != null) {
@@ -726,13 +936,13 @@ class AppsProvider with ChangeNotifier {
         notificationsProvider?.notify(notif);
       }
       PackageInfo? newInfo;
-      var isAPK = source_utils.endsWithExtension(
+      var isAPK = source_provider.endsWithExtension(
         downloadedFile.path,
-        source_utils.supportedApkExtensions[0],
+        source_provider.supportedApkExtensions[0],
       );
-      var isXAPK = source_utils.endsWithExtension(
+      var isXAPK = source_provider.endsWithExtension(
         downloadedFile.path,
-        source_utils.supportedApkExtensions[1],
+        source_provider.supportedApkExtensions[1],
       );
       Directory? apkDir;
       if (isAPK) {
@@ -746,7 +956,7 @@ class AppsProvider with ChangeNotifier {
         apkDir = Directory(apkDirPath);
         var apks = apkDir
             .listSync()
-            .where((e) => source_utils.hasSupportedApkExtension(e.path))
+            .where((e) => source_provider.hasSupportedApkExtension(e.path))
             .whereType<File>()
             .toList();
 
@@ -789,6 +999,25 @@ class AppsProvider with ChangeNotifier {
           } catch (e) {
             if (i == selectedApks.length - 1) {
               rethrow;
+            }
+          }
+        }
+
+        // Fallback: if selected APKs failed, try all APKs in the directory
+        // This handles cases where app.id is a temp ID and base APK wasn't selected
+        if (newInfo == null) {
+          for (var i = 0; i < apks.length; i++) {
+            try {
+              newInfo = await pm.getPackageArchiveInfo(
+                archiveFilePath: apks[i].path,
+              );
+              if (newInfo != null) {
+                break;
+              }
+            } catch (e) {
+              if (i == apks.length - 1) {
+                rethrow;
+              }
             }
           }
         }
@@ -1021,7 +1250,6 @@ class AppsProvider with ChangeNotifier {
   Future<bool> installApkDir(
     DownloadedDir dir,
     BuildContext? firstTimeWithContext, {
-    bool needsBGWorkaround = false,
     bool shizukuPretendToBeGooglePlay = false,
   }) async {
     var somethingInstalled = false;
@@ -1032,7 +1260,7 @@ class AppsProvider with ChangeNotifier {
           in dir.extracted
               .listSync(recursive: true, followLinks: false)
               .whereType<File>()) {
-        if (source_utils.hasSupportedApkExtension(file.path)) {
+        if (source_provider.hasSupportedApkExtension(file.path)) {
           APKFiles.add(file);
         } else if (file.path.toLowerCase().endsWith('.obb')) {
           await moveObbFile(file, dir.appId);
@@ -1065,7 +1293,6 @@ class AppsProvider with ChangeNotifier {
         var wasInstalled = await installApk(
           DownloadedApk(dir.appId, selectedApks[0]),
           firstTimeWithContext,
-          needsBGWorkaround: needsBGWorkaround,
           shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
           additionalAPKs: selectedApks.length > 1
               ? selectedApks
@@ -1156,7 +1383,6 @@ class AppsProvider with ChangeNotifier {
   Future<bool> installApk(
     DownloadedApk file,
     BuildContext? firstTimeWithContext, {
-    bool needsBGWorkaround = false,
     bool shizukuPretendToBeGooglePlay = false,
     List<DownloadedApk> additionalAPKs = const [],
   }) async {
@@ -1218,18 +1444,6 @@ class AppsProvider with ChangeNotifier {
         newInfo.versionCode! < appInfo.versionCode! &&
         !(await canDowngradeApps())) {
       throw DowngradeError(appInfo.versionCode!, newInfo.versionCode!);
-    }
-    if (needsBGWorkaround) {
-      // The below 'await' will never return if we are in a background process
-      // To work around this, we should assume the install will be successful
-      // So we update the app's installed version first as we will never get to the later code
-      // We can't conditionally get rid of the 'await' as this causes install fails (BG process times out) - see #896
-      // TODO: When background process issue (#896) is fixed, update this function and the calls to it accordingly
-      apps[file.appId]!.app.installedVersion =
-          apps[file.appId]!.app.latestVersion;
-      await saveApps([
-        apps[file.appId]!.app,
-      ], attemptToCorrectInstallStatus: false);
     }
     int? code;
     if (!settingsProvider.useShizuku) {
@@ -1453,45 +1667,24 @@ class AppsProvider with ChangeNotifier {
         var contextIfNewInstall = apps[id]?.installedInfo == null
             ? context
             : null;
-        bool needBGWorkaround =
-            willBeSilent && context == null && !settingsProvider.useShizuku;
         bool shizukuPretendToBeGooglePlay =
             settingsProvider.shizukuPretendToBeGooglePlay ||
             apps[id]!.app.additionalSettings['shizukuPretendToBeGooglePlay'] ==
                 true;
         if (downloadedFile != null) {
-          if (needBGWorkaround) {
-            // ignore: use_build_context_synchronously
-            installApk(
-              downloadedFile,
-              contextIfNewInstall,
-              needsBGWorkaround: true,
-              shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
-            );
-          } else {
-            // ignore: use_build_context_synchronously
-            sayInstalled = await installApk(
-              downloadedFile,
-              contextIfNewInstall,
-              shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
-            );
-          }
+          // ignore: use_build_context_synchronously
+          sayInstalled = await installApk(
+            downloadedFile,
+            contextIfNewInstall,
+            shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
+          );
         } else {
-          if (needBGWorkaround) {
-            // ignore: use_build_context_synchronously
-            installApkDir(
-              downloadedDir!,
-              contextIfNewInstall,
-              needsBGWorkaround: true,
-            );
-          } else {
-            // ignore: use_build_context_synchronously
-            sayInstalled = await installApkDir(
-              downloadedDir!,
-              contextIfNewInstall,
-              shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
-            );
-          }
+          // ignore: use_build_context_synchronously
+          sayInstalled = await installApkDir(
+            downloadedDir!,
+            contextIfNewInstall,
+            shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
+          );
         }
         if (willBeSilent && context == null) {
           if (!settingsProvider.useShizuku) {
@@ -1689,7 +1882,7 @@ class AppsProvider with ChangeNotifier {
                 app.additionalSettings,
                 fileUrl.value,
                 forAPKDownload:
-                    source_utils.hasSupportedApkExtension(fileUrl.key)
+                    source_provider.hasSupportedApkExtension(fileUrl.key)
                     ? true
                     : false,
               ),
@@ -1697,8 +1890,13 @@ class AppsProvider with ChangeNotifier {
           allowInsecure: app.additionalSettings['allowInsecure'] == true,
           logs: logs,
         );
+        String downloadedFilePath = '$downloadPath/${fileUrl.key}';
         notificationsProvider.notify(
-          DownloadedNotification(fileUrl.key, fileUrl.value),
+          DownloadedNotification(
+            fileUrl.key,
+            fileUrl.value,
+            downloadedFilePath,
+          ),
         );
       } catch (e) {
         errors.add(fileUrl.key, e);
@@ -2369,7 +2567,7 @@ class AppsProvider with ChangeNotifier {
     apps.forEach((key, value) {
       for (var c in value.app.categories ?? []) {
         if (!cats.containsKey(c)) {
-          cats[c] = settingsProvider.themeColor.toARGB32();
+          cats[c] = settingsProvider.themeColor.value;
         }
       }
     });
