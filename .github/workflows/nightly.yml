@@ -56,6 +56,7 @@ jobs:
         with:
           commit_message: "style: auto-fix linting and formatting issues"
           branch: ${{ github.ref_name }}
+          push_options: --force
           
       - name: Generate Version
         id: version
