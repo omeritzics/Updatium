@@ -378,7 +378,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: PageTransitionSwitcher(
           duration: Duration(
-            milliseconds: settingsProvider.disablePageTransitions ? 0 : 300,
+            milliseconds: settingsProvider.disablePageTransitions ? 0 : 200,
           ),
           reverse: settingsProvider.reversePageTransitions
               ? !isReversing
@@ -410,7 +410,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             selectedIndex: selectedIndexHistory.isEmpty
                 ? 0
                 : selectedIndexHistory.last,
-            animationDuration: const Duration(milliseconds: 300),
+            animationDuration: const Duration(milliseconds: 200),
             labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
             onDestinationSelected: (int index) async {
               HapticFeedback.selectionClick();

@@ -1058,7 +1058,6 @@ class _UpdatiumState extends State<Updatium> {
                 builders: {
                   TargetPlatform.android:
                       PredictiveBackPageTransitionsBuilder(),
-                  TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
                 },
               ),
 
@@ -1070,15 +1069,7 @@ class _UpdatiumState extends State<Updatium> {
               ),
 
               // Expressive Touch Feedback
-              splashFactory: InkSplash.splashFactory,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-
-              // Expressive Divider
-              dividerTheme: DividerThemeData(
-                color: scheme.outlineVariant,
-                thickness: 1,
-                space: 1,
-              ),
 
               // Expressive Chip Theme - preserve M3 Expressive transparency
               chipTheme: ChipThemeData(
