@@ -195,9 +195,6 @@ class _AppPageState extends State<AppPage> {
                                 decoration: changeLogFn != null
                                     ? TextDecoration.underline
                                     : null,
-                                fontStyle: changeLogFn != null
-                                    ? FontStyle.italic
-                                    : null,
                               ),
                         ),
                       )
@@ -211,7 +208,7 @@ class _AppPageState extends State<AppPage> {
             child: Text(
               infoLines,
               textAlign: TextAlign.start,
-              style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
+              style: const TextStyle(fontSize: 12),
             ),
           ),
 
@@ -371,7 +368,6 @@ class _AppPageState extends State<AppPage> {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       decoration: TextDecoration.underline,
-                      fontStyle: FontStyle.italic,
                     ),
                   ),
                 ),
