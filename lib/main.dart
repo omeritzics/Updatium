@@ -415,25 +415,6 @@ class _UpdatiumState extends State<Updatium> {
               settingsProvider.useMaterialYou) {
             lightColorScheme = lightDynamic;
             darkColorScheme = darkDynamic;
-            // Ensure surface container colors have proper opacity for switch visibility
-            lightColorScheme = lightColorScheme.copyWith(
-              surfaceContainerHighest: lightColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.20),
-              surfaceContainerHigh: lightColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.15),
-              surfaceContainer: lightColorScheme.surfaceContainer.withValues(
-                alpha: 0.10,
-              ),
-            );
-            darkColorScheme = darkColorScheme.copyWith(
-              surfaceContainerHighest: darkColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.20),
-              surfaceContainerHigh: darkColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.15),
-              surfaceContainer: darkColorScheme.surfaceContainer.withValues(
-                alpha: 0.10,
-              ),
-            );
           } else {
             lightColorScheme = ColorScheme.fromSeed(
               seedColor: settingsProvider.themeColor,
