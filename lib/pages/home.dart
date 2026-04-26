@@ -226,17 +226,59 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
     }
 
+    interpretObtainiumLink(Uri uri) async {
+      isLinkActivity = true;
+      var action = uri.host;
+      var data = uri.path.length > 1 ? uri.path.substring(1) : "";
+      try {
+        if (action == 'add') {
+          // Ensure apps are loaded
+          AppsProvider appsProvider = context.read<AppsProvider>();
+          while (appsProvider.loadingApps) {
+            await Future.delayed(const Duration(milliseconds: 10));
+          }
+
+          // See if we already have this app
+          String standardizedUrl = SourceProvider()
+              .getSource(data)
+              .standardizeUrl(data);
+
+          AppInMemory? existingApp = appsProvider.apps.values
+              .where((AppInMemory a) => a.app.url == standardizedUrl)
+              .firstOrNull;
+
+          if (existingApp != null) {
+            await goToExistingApp(existingApp.app.id);
+          } else {
+            await goToAddApp(data);
+          }
+        } else {
+          throw UpdatiumError(tr('unknown'));
+        }
+      } catch (e) {
+        showError(e, context);
+      }
+    }
+
     // Check initial link if app was in cold state (terminated)
     final appLink = await _appLinks.getInitialLink();
     var initLinked = false;
     if (appLink != null) {
-      await interpretLink(appLink);
+      if (appLink.scheme == 'obtainium') {
+        await interpretObtainiumLink(appLink);
+      } else {
+        await interpretLink(appLink);
+      }
       initLinked = true;
     }
     // Handle link when app is in warm state (front or background)
     _linkSubscription = _appLinks.uriLinkStream.listen((uri) async {
       if (!initLinked) {
-        await interpretLink(uri);
+        if (uri.scheme == 'obtainium') {
+          await interpretObtainiumLink(uri);
+        } else {
+          await interpretLink(uri);
+        }
       } else {
         initLinked = false;
       }
