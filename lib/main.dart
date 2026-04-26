@@ -418,20 +418,20 @@ class _UpdatiumState extends State<Updatium> {
             // Ensure surface container colors have proper opacity for switch visibility
             lightColorScheme = lightColorScheme.copyWith(
               surfaceContainerHighest: lightColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.12),
+                  .withValues(alpha: 0.17),
               surfaceContainerHigh: lightColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.08),
+                  .withValues(alpha: 0.12),
               surfaceContainer: lightColorScheme.surfaceContainer.withValues(
-                alpha: 0.05,
+                alpha: 0.08,
               ),
             );
             darkColorScheme = darkColorScheme.copyWith(
               surfaceContainerHighest: darkColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.12),
+                  .withValues(alpha: 0.17),
               surfaceContainerHigh: darkColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.08),
+                  .withValues(alpha: 0.12),
               surfaceContainer: darkColorScheme.surfaceContainer.withValues(
-                alpha: 0.05,
+                alpha: 0.08,
               ),
             );
           } else {
@@ -736,6 +736,11 @@ class _UpdatiumState extends State<Updatium> {
                 'NotoSansHebrew',
                 'NotoSansArabic',
               ],
+
+              
+              // Keyboard/TV navigation support
+              focusColor: scheme.primary.withValues(alpha: 0.2),
+              highlightColor: scheme.primary.withValues(alpha: 0.1),
 
               // Expressive Typography
               textTheme: textTheme,
@@ -1269,6 +1274,20 @@ class _UpdatiumState extends State<Updatium> {
               shortcuts: <LogicalKeySet, Intent>{
                 LogicalKeySet(LogicalKeyboardKey.select):
                     const ActivateIntent(),
+                LogicalKeySet(LogicalKeyboardKey.enter):
+                    const ActivateIntent(),
+                LogicalKeySet(LogicalKeyboardKey.arrowUp):
+                    const DirectionalFocusIntent(TraversalDirection.up),
+                LogicalKeySet(LogicalKeyboardKey.arrowDown):
+                    const DirectionalFocusIntent(TraversalDirection.down),
+                LogicalKeySet(LogicalKeyboardKey.arrowLeft):
+                    const DirectionalFocusIntent(TraversalDirection.left),
+                LogicalKeySet(LogicalKeyboardKey.arrowRight):
+                    const DirectionalFocusIntent(TraversalDirection.right),
+                LogicalKeySet(LogicalKeyboardKey.tab):
+                    const NextFocusIntent(),
+                LogicalKeySet(LogicalKeyboardKey.escape):
+                    const DismissIntent(),
               },
               child: const HomePage(),
             ),
