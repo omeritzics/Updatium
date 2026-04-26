@@ -708,7 +708,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         child: Semantics(
           button: true,
           label: app.pinned
-              ? tr('pinnedApp', args: [appInfo.name, tr('byX', args: [appInfo.author])])
+              ? tr(
+                  'pinnedApp',
+                  args: [
+                    appInfo.name,
+                    tr('byX', args: [appInfo.author]),
+                  ],
+                )
               : '${appInfo.name}, ${tr('byX', args: [appInfo.author])}',
           value: isInstalled
               ? (hasUpdate ? tr('updateAvailable') : tr('upToDate'))
@@ -757,9 +763,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 2),
                       // Author name
@@ -784,7 +789,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 if (appInfo.downloadProgress! >= 0)
                                   Text(
                                     '${appInfo.downloadProgress!.toInt()}%',
-                                    style: Theme.of(context).textTheme.bodySmall,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall,
                                   ),
                                 const SizedBox(height: 4),
                                 SizedBox(
@@ -832,7 +839,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         child: Semantics(
           button: true,
           label: app.pinned
-              ? tr('pinnedApp', args: [appInfo.name, tr('byX', args: [appInfo.author])])
+              ? tr(
+                  'pinnedApp',
+                  args: [
+                    appInfo.name,
+                    tr('byX', args: [appInfo.author]),
+                  ],
+                )
               : '${appInfo.name}, ${tr('byX', args: [appInfo.author])}',
           value: isInstalled
               ? (hasUpdate ? tr('updateAvailable') : tr('upToDate'))
@@ -859,7 +872,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: app.pinned ? FontWeight.w600 : FontWeight.w500,
+                      fontWeight: app.pinned
+                          ? FontWeight.w600
+                          : FontWeight.w500,
                     ),
                   ),
                 ),
