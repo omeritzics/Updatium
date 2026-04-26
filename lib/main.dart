@@ -737,7 +737,6 @@ class _UpdatiumState extends State<Updatium> {
                 'NotoSansArabic',
               ],
 
-              
               // Keyboard/TV navigation support
               focusColor: scheme.primary.withValues(alpha: 0.2),
               highlightColor: scheme.primary.withValues(alpha: 0.1),
@@ -1274,8 +1273,7 @@ class _UpdatiumState extends State<Updatium> {
               shortcuts: <LogicalKeySet, Intent>{
                 LogicalKeySet(LogicalKeyboardKey.select):
                     const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.enter):
-                    const ActivateIntent(),
+                LogicalKeySet(LogicalKeyboardKey.enter): const ActivateIntent(),
                 LogicalKeySet(LogicalKeyboardKey.arrowUp):
                     const DirectionalFocusIntent(TraversalDirection.up),
                 LogicalKeySet(LogicalKeyboardKey.arrowDown):
@@ -1284,10 +1282,8 @@ class _UpdatiumState extends State<Updatium> {
                     const DirectionalFocusIntent(TraversalDirection.left),
                 LogicalKeySet(LogicalKeyboardKey.arrowRight):
                     const DirectionalFocusIntent(TraversalDirection.right),
-                LogicalKeySet(LogicalKeyboardKey.tab):
-                    const NextFocusIntent(),
-                LogicalKeySet(LogicalKeyboardKey.escape):
-                    const DismissIntent(),
+                LogicalKeySet(LogicalKeyboardKey.tab): const NextFocusIntent(),
+                LogicalKeySet(LogicalKeyboardKey.escape): const DismissIntent(),
               },
               child: const HomePage(),
             ),
