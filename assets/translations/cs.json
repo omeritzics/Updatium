@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{} vyžaduje další pověření (v nastavení)",
     "checkOnStart": "Zkontrolovat aktualizace při spuštění",
     "safeMode": "Bezpečný režim",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Přidání aplikace je v bezpečném režimu zakázáno",
     "tryInferAppIdFromCode": "Pokusit se určit ID aplikace ze zdrojového kódu",
     "removeOnExternalUninstall": "Automaticky odstranit externě odinstalované aplikace",

@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{}-ന് അധിക ക്രെഡൻഷ്യലുകൾ ആവശ്യമാണ് (ക്രമീകരണങ്ങളിൽ)",
     "checkOnStart": "തുടങ്ങുമ്പോൾ അപ്‌ഡേറ്റുകൾക്കായി പരിശോധിക്കുക",
     "safeMode": "സുരക്ഷിത മോഡ്",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "അപ്പ് ചേർക്കൽ സുരക്ഷിത മോഡിൽ പ്രവർത്തനരഹിതമാണ്",
     "tryInferAppIdFromCode": "സോഴ്സ് കോഡിൽ നിന്ന് ആപ്പ് ഐഡി അനുമാനിക്കാൻ ശ്രമിക്കുക",
     "removeOnExternalUninstall": "പുറത്ത് നിന്ന് അൺഇൻസ്റ്റാൾ ചെയ്ത ആപ്പുകൾ സ്വയമേവ നീക്കം ചെയ്യുക",

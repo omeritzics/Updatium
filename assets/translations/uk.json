@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{} потребує додаткових облікових даних (у налаштуваннях)",
     "checkOnStart": "Перевірити наявність оновлень при запуску",
     "safeMode": "Безпечний режим",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Додавання додатка вимкнено в безпечному режимі",
     "tryInferAppIdFromCode": "Спробувати вивести ідентифікатор застосунку з вихідного коду",
     "removeOnExternalUninstall": "Автоматично видаляти застосунки, які було видалено зовнішнім чином",

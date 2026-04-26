@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{} এর জন্য অতিরিক্ত তথ্য প্রয়োজন (সেটিংসে দেখুন)",
     "checkOnStart": "অ্যাপ চালুর সময় আপডেট চেক করুন",
     "safeMode": "সেফ মোড",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "সেফ মোডে অ্যাপ যোগ করা নিষ্ক্রিয়",
     "tryInferAppIdFromCode": "সোর্স কোড থেকে অ্যাপ ID অনুমান করার চেষ্টা করুন",
     "removeOnExternalUninstall": "বাইরে থেকে আনইনস্টল করা অ্যাপ স্বয়ংক্রিয়ভাবে সরান",

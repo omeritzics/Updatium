@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{} memerlukan kredensial tambahan (dalam pengaturan)",
     "checkOnStart": "Periksa pembaruan saat proses memulai",
     "safeMode": "Mode Aman",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Tambah Aplikasi dinonaktifkan dalam Mode Aman",
     "tryInferAppIdFromCode": "Coba menebak ID aplikasi dari kode sumber",
     "removeOnExternalUninstall": "Hapus otomatis aplikasi yang dicopot pemasangannya dari luar",

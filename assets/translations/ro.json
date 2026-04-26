@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{} necesită credențiale suplimentare (în Setări)",
     "checkOnStart": "Verifică actualizări la pornire",
     "safeMode": "Mod Sigur",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Adaugă Aplicație este dezactivat în Mod Sigur",
     "tryInferAppIdFromCode": "Încearcă să deduci ID-ul aplicației din codul sursă",
     "removeOnExternalUninstall": "Elimină automat aplicațiile dezinstalate extern",

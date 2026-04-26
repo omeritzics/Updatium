@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "A(z) {} alkalmazásnak további hitelesítő adatokra van szüksége (a beállításokban)",
     "checkOnStart": "Frissítések ellenőrzése az alkalmazás megnyitásakor",
     "safeMode": "Biztonságos mód",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Alkalmazás hozzáadása le van tiltva biztonságos módban",
     "tryInferAppIdFromCode": "Alkalmazás azonosítójának kikövetkeztetése a forráskódból, ha lehetséges",
     "removeOnExternalUninstall": "Külsőleg eltávolított alkalmazások automatikus eltávolítása",

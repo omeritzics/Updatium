@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{}: Isso requer credenciais adicionais (em Configurações)",
     "checkOnStart": "Verificar se há atualizações ao iniciar",
     "safeMode": "Modo de segurança",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Adicionar aplicativo está desativado no modo de segurança",
     "tryInferAppIdFromCode": "Tentar inferir o ID do aplicativo a partir do código-fonte",
     "removeOnExternalUninstall": "Remover automaticamente aplicações desinstaladas externamente",

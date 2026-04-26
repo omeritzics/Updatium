@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{}: Za ovo su potrebni dodatni akreditivi (u Postavkama)",
     "checkOnStart": "Provjerite ima li novosti pri pokretanju",
     "safeMode": "Sigurnosni režim",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Dodavanje aplikacija je onemogućeno u sigurnosnom režimu",
     "tryInferAppIdFromCode": "Pokušati otkriti ID aplikacije iz izvornog koda",
     "removeOnExternalUninstall": "Automatski ukloni eksterno deinstalirane aplikacije",

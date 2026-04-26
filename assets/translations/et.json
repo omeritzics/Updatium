@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{} vajab lisandmed (seadetes)",
     "checkOnStart": "Kontrolli uuendusi käivitamisel",
     "safeMode": "Turvarežiim",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Rakenduse lisamine on turvarežiimis keelatud",
     "tryInferAppIdFromCode": "Proovi tuletada appi ID lähtekoodist",
     "removeOnExternalUninstall": "Eemalda automaatselt väliselt desinstallitud äpid",

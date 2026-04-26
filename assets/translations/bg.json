@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{} изисква допълнителни идентификационни данни (в Настройки)",
     "checkOnStart": "Проверка за актуализации при стартиране",
     "safeMode": "Безопасен режим",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Добавянето на приложение е деактивирано в Безопасен режим",
     "tryInferAppIdFromCode": "Опит за извод на ID на приложението от изходния код",
     "removeOnExternalUninstall": "Автоматично премахване на външно деинсталирани приложения",

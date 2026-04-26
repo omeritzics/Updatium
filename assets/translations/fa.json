@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{}: این به اعتبارنامه های اضافی نیاز دارد (در تنظیمات)",
     "checkOnStart": "بررسی در شروع",
     "safeMode": "حالت امن",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "افزودن برنامه در حالت امن غیرفعال است",
     "tryInferAppIdFromCode": "شناسه برنامه را از کد منبع استنباط کنید",
     "removeOnExternalUninstall": "حذف خودکار برنامه های حذف نصب شده خارجی",

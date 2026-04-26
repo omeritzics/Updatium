@@ -282,7 +282,7 @@
     "requiresCredentialsInSettings": "{} bezonas kromajn informojn (en Agordoj)",
     "checkOnStart": "Serĉi ĝisdatigojn starte",
     "safeMode": "Sekura reĝimo",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "Aldoni apo estas malaktiva en sekura reĝimo",
     "tryInferAppIdFromCode": "Provi dedukti la identigilon de la apo el la fontkodo",
     "removeOnExternalUninstall": "Aŭtomate forigi ekstere malinstalitajn apojn",

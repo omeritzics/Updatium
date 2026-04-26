@@ -285,7 +285,7 @@
     "requiresCredentialsInSettings": "ל־{} נחוצים פרטי זיהוי נוספים (בהגדרות)",
     "checkOnStart": "בדיקת עדכונים בעת הפעלת היישום",
     "safeMode": "מצב בטוח",
-    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to go to the settings page and open the About dialog, and then tap on the version number 500+ times",
+    "safeModeDescription": "Prevent unwanted changes to the app list by hiding the \"Add App\" page. To disable it, you'll have to open the About dialog, and then tap on the version number 500+ times",
     "safeModeAddAppDisabled": "הוספת אפליקציה מושבתת במצב בטוח",
     "tryInferAppIdFromCode": "ניסיון הסקת מזהה אפליקציה מקוד המקור",
     "removeOnExternalUninstall": "להסיר אוטומטית מהרשימה יישומים שהוסרו מחוץ ליישום",
