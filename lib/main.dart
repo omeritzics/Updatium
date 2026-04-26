@@ -453,7 +453,7 @@ class _UpdatiumState extends State<Updatium> {
               surfaceContainerHigh: Colors.white.withValues(alpha: 0.15),
               surfaceContainer: Colors.white.withValues(alpha: 0.10),
               surfaceContainerLow: Colors.white.withValues(alpha: 0.06),
-              surfaceContainerLowest: Colors.white.withValues(alpha: 0.03),
+              surfaceContainerLowest: Colors.white.withValues(alpha: 0.04),
               surfaceDim: Colors.black,
               surfaceBright: Colors.white.withValues(alpha: 0.06),
               onSurface: Colors.white.withValues(alpha: 0.95),

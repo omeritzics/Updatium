@@ -72,6 +72,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
   late List<MapEntry<String, String>>? opts;
   List<String>? disabledOptKeys;
   late bool required;
+  late int max;
 
   GeneratedFormDropdown(
     super.key,
@@ -81,6 +82,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
     String super.defaultValue = '',
     this.disabledOptKeys,
     this.required = true,
+    this.max = 1000,
     List<String? Function(String? value)> super.additionalValidators = const [],
   });
 
@@ -101,6 +103,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
           ? List.from(disabledOptKeys!)
           : null,
       required: required,
+      max: max,
       additionalValidators: List.from(additionalValidators),
     );
   }
@@ -412,6 +415,18 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 ),
               );
             }).toList(),
+            selectedItemBuilder: (context) {
+              return formItem.opts!.map((e2) {
+                const displayLimit = 50;
+                var displayText = e2.value.length > displayLimit
+                    ? '${e2.value.substring(0, displayLimit)}...'
+                    : e2.value;
+                return Directionality(
+                  textDirection: Directionality.of(context),
+                  child: Text(displayText),
+                );
+              }).toList();
+            },
             onChanged: (value) {
               if (value != null) {
                 setState(() {
@@ -419,6 +434,21 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   someValueChanged();
                 });
               }
+            },
+            validator: (value) {
+              if (formItem.required && (value == null || value.trim().isEmpty)) {
+                return '${formItem.label} ${tr('requiredInBrackets')}';
+              }
+              if (value != null && value.length > formItem.max) {
+                return '${formItem.label} must be at most ${formItem.max} characters';
+              }
+              for (var validator in formItem.additionalValidators) {
+                String? result = validator(value);
+                if (result != null) {
+                  return result;
+                }
+              }
+              return null;
             },
           );
         } else if (formItem is GeneratedFormSubForm) {
