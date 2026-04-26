@@ -2298,7 +2298,10 @@ class AppsProvider with ChangeNotifier {
     );
   }
 
-  Future<List<App>?> removeAppsWithModal(BuildContext context, List<App> apps) async {
+  Future<List<App>?> removeAppsWithModal(
+    BuildContext context,
+    List<App> apps,
+  ) async {
     var showUninstallOption = apps
         .where(
           (a) =>

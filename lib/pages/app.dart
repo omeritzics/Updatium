@@ -736,7 +736,8 @@ class _AppPageState extends State<AppPage> {
                     semanticLabel: tr('remove'),
                     tooltip: tr('remove'),
                     onPressed: () async {
-                      final removedApps = await appsProvider.removeAppsWithModal(context, [app.app]);
+                      final removedApps = await appsProvider
+                          .removeAppsWithModal(context, [app.app]);
                       if (removedApps != null && removedApps.isNotEmpty) {
                         if (mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
