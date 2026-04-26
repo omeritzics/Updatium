@@ -1630,11 +1630,28 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         icon: Icons.delete,
                         semanticLabel: tr('removeSelectedApps'),
                         tooltip: tr('removeSelectedApps'),
-                        onPressed: () {
-                          appsProvider.removeAppsWithModal(
+                        onPressed: () async {
+                          final removedApps = await appsProvider.removeAppsWithModal(
                             context,
                             selectedApps.toList(),
                           );
+                          if (removedApps != null && removedApps.isNotEmpty) {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    plural('appRemoved', removedApps.length),
+                                  ),
+                                  action: SnackBarAction(
+                                    label: tr('undo'),
+                                    onPressed: () {
+                                      appsProvider.undoRestoreApps(removedApps);
+                                    },
+                                  ),
+                                ),
+                              );
+                            }
+                          }
                         },
                       ),
                     if (selectedAppIds.isNotEmpty)

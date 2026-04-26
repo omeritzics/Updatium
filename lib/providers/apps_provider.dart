@@ -2248,12 +2248,16 @@ class AppsProvider with ChangeNotifier {
     }
   }
 
-  Future<void> removeApps(List<String> appIds) async {
+  Future<List<App>> removeApps(List<String> appIds) async {
+    List<App> removedApps = [];
     var apkFiles = APKDir.listSync();
     await Future.wait(
       appIds.map((appId) async {
         File file = File('${(await getAppsDir()).path}/$appId.json');
         if (file.existsSync()) {
+          // Read the app data before deletion for undo functionality
+          String jsonString = file.readAsStringSync();
+          removedApps.add(App.fromJson(jsonDecode(jsonString)));
           deleteFile(file);
         }
         apkFiles
@@ -2279,9 +2283,22 @@ class AppsProvider with ChangeNotifier {
         }),
       );
     }
+    return removedApps;
   }
 
-  Future<bool> removeAppsWithModal(BuildContext context, List<App> apps) async {
+  Future<void> undoRestoreApps(List<App> appsToRestore) async {
+    await saveApps(appsToRestore);
+    notifyListeners();
+    // Export safely without blocking, handle errors gracefully
+    unawaited(
+      export(isAuto: true).catchError((e) {
+        // Log export errors but don't crash the app
+        return null;
+      }),
+    );
+  }
+
+  Future<List<App>?> removeAppsWithModal(BuildContext context, List<App> apps) async {
     var showUninstallOption = apps
         .where(
           (a) =>
@@ -2361,12 +2378,13 @@ class AppsProvider with ChangeNotifier {
         }
         await saveApps(apps, attemptToCorrectInstallStatus: false);
       }
+      List<App>? removedApps;
       if (remove) {
-        await removeApps(apps.map((e) => e.id).toList());
+        removedApps = await removeApps(apps.map((e) => e.id).toList());
       }
-      return uninstall || remove;
+      return removedApps;
     }
-    return false;
+    return null;
   }
 
   Future<void> openAppSettings(String appId) async {

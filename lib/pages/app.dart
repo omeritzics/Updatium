@@ -735,14 +735,24 @@ class _AppPageState extends State<AppPage> {
                     icon: Icons.delete,
                     semanticLabel: tr('remove'),
                     tooltip: tr('remove'),
-                    onPressed: () {
-                      appsProvider.removeAppsWithModal(context, [app.app]).then(
-                        (result) {
-                          if (result == true) {
-                            Navigator.of(context).pop();
-                          }
-                        },
-                      );
+                    onPressed: () async {
+                      final removedApps = await appsProvider.removeAppsWithModal(context, [app.app]);
+                      if (removedApps != null && removedApps.isNotEmpty) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(tr('appRemoved')),
+                              action: SnackBarAction(
+                                label: tr('undo'),
+                                onPressed: () {
+                                  appsProvider.undoRestoreApps(removedApps);
+                                },
+                              ),
+                            ),
+                          );
+                          Navigator.of(context).pop();
+                        }
+                      }
                     },
                   ),
                 ],
