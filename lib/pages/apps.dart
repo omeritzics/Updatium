@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -1785,7 +1786,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       ),
                     if (selectedAppIds.isNotEmpty)
                       M3FloatingToolbarAction(
-                        icon: Icons.push_pin,
+                        icon: selectedApps.every((element) => element.pinned)
+                            ? Symbols.keep_off
+                            : Icons.push_pin,
                         semanticLabel:
                             selectedApps.every((element) => element.pinned)
                             ? tr('unpinFromTop')
