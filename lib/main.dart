@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +73,11 @@ const localeDir = 'assets/translations';
 var fdroid = false;
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
+
+bool isLocaleRTL(Locale locale) {
+  const rtlLanguages = {'ar', 'he', 'fa', 'ug', 'ur', 'yi', 'ps', 'sd'};
+  return rtlLanguages.contains(locale.languageCode);
+}
 
 Future<void> loadTranslations() async {
   // See easy_localization/issues/210
@@ -1236,37 +1242,42 @@ class _UpdatiumState extends State<Updatium> {
             );
           }
 
-          return MaterialApp(
-            title: 'Updatium',
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            navigatorKey: globalNavigatorKey,
-            debugShowCheckedModeBanner: false,
-            theme: createTheme(lightColorScheme, false),
-            darkTheme: createTheme(darkColorScheme, true),
-            themeMode: settingsProvider.theme == ThemeSettings.dark
-                ? ThemeMode.dark
-                : (settingsProvider.theme == ThemeSettings.light
-                      ? ThemeMode.light
-                      : ThemeMode.system),
-            home: Shortcuts(
-              shortcuts: <LogicalKeySet, Intent>{
-                LogicalKeySet(LogicalKeyboardKey.select):
-                    const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.enter): const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.arrowUp):
-                    const DirectionalFocusIntent(TraversalDirection.up),
-                LogicalKeySet(LogicalKeyboardKey.arrowDown):
-                    const DirectionalFocusIntent(TraversalDirection.down),
-                LogicalKeySet(LogicalKeyboardKey.arrowLeft):
-                    const DirectionalFocusIntent(TraversalDirection.left),
-                LogicalKeySet(LogicalKeyboardKey.arrowRight):
-                    const DirectionalFocusIntent(TraversalDirection.right),
-                LogicalKeySet(LogicalKeyboardKey.tab): const NextFocusIntent(),
-                LogicalKeySet(LogicalKeyboardKey.escape): const DismissIntent(),
-              },
-              child: const HomePage(),
+          return Directionality(
+            textDirection: isLocaleRTL(context.locale) 
+                ? ui.TextDirection.rtl 
+                : ui.TextDirection.ltr,
+            child: MaterialApp(
+              title: 'Updatium',
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              navigatorKey: globalNavigatorKey,
+              debugShowCheckedModeBanner: false,
+              theme: createTheme(lightColorScheme, false),
+              darkTheme: createTheme(darkColorScheme, true),
+              themeMode: settingsProvider.theme == ThemeSettings.dark
+                  ? ThemeMode.dark
+                  : (settingsProvider.theme == ThemeSettings.light
+                        ? ThemeMode.light
+                        : ThemeMode.system),
+              home: Shortcuts(
+                shortcuts: <LogicalKeySet, Intent>{
+                  LogicalKeySet(LogicalKeyboardKey.select):
+                      const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.enter): const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.arrowUp):
+                      const DirectionalFocusIntent(TraversalDirection.up),
+                  LogicalKeySet(LogicalKeyboardKey.arrowDown):
+                      const DirectionalFocusIntent(TraversalDirection.down),
+                  LogicalKeySet(LogicalKeyboardKey.arrowLeft):
+                      const DirectionalFocusIntent(TraversalDirection.left),
+                  LogicalKeySet(LogicalKeyboardKey.arrowRight):
+                      const DirectionalFocusIntent(TraversalDirection.right),
+                  LogicalKeySet(LogicalKeyboardKey.tab): const NextFocusIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.escape): const DismissIntent(),
+                },
+                child: const HomePage(),
+              ),
             ),
           );
         },
