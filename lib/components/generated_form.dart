@@ -436,7 +436,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
               }
             },
             validator: (value) {
-              if (formItem.required && (value == null || value.trim().isEmpty)) {
+              if (formItem.required &&
+                  (value == null || value.trim().isEmpty)) {
                 return '${formItem.label} ${tr('requiredInBrackets')}';
               }
               if (value != null && value.length > formItem.max) {
