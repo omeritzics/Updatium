@@ -263,8 +263,8 @@ class _UpdatiumState extends State<Updatium> {
           eventAction: ForegroundTaskEventAction.repeat(900000),
           autoRunOnBoot: true,
           autoRunOnMyPackageReplaced: true,
-          allowWakeLock: true,
-          allowWifiLock: true,
+          allowWakeLock: false,
+          allowWifiLock: false,
         ),
       );
     }
