@@ -168,6 +168,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   DateTime? refreshingSince;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
   final Set<int> _expandedCategories = <int>{};
+  final Map<String, FocusNode> _appFocusNodes = {};
 
   // Helper function to preserve transparency regardless of theme overrides
   Color preserveTransparency(Color baseColor, double alpha) {
@@ -227,6 +228,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   void dispose() {
     _tabController.dispose();
     scrollController.dispose();
+    for (var focusNode in _appFocusNodes.values) {
+      focusNode.dispose();
+    }
+    _appFocusNodes.clear();
     super.dispose();
   }
 
@@ -699,6 +704,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       final isTrackOnly = app.additionalSettings['trackOnly'] == true;
       final isSelected = selectedAppIds.contains(app.id);
 
+      // Get or create FocusNode for this app
+      if (!_appFocusNodes.containsKey(app.id)) {
+        _appFocusNodes[app.id] = FocusNode();
+      }
+      final focusNode = _appFocusNodes[app.id]!;
+
       return Card(
         margin: const EdgeInsets.symmetric(vertical: 4),
         color: isSelected
@@ -722,6 +733,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               : tr('notInstalled'),
           onTapHint: tr('openAppDetails'),
           child: InkWell(
+            focusNode: focusNode,
             borderRadius: BorderRadius.circular(12),
             onTap: () => _handleAppTap(app),
             onLongPress: () => toggleAppSelected(app),
@@ -835,6 +847,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       final isTrackOnly = app.additionalSettings['trackOnly'] == true;
       final isSelected = selectedAppIds.contains(app.id);
 
+      // Get or create FocusNode for this app
+      if (!_appFocusNodes.containsKey(app.id)) {
+        _appFocusNodes[app.id] = FocusNode();
+      }
+      final focusNode = _appFocusNodes[app.id]!;
+
       return Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         child: Semantics(
@@ -853,6 +871,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               : tr('notInstalled'),
           onTapHint: tr('openAppDetails'),
           child: ListTile(
+            focusNode: focusNode,
             selected: isSelected,
             selectedTileColor: Theme.of(
               context,
@@ -1573,16 +1592,17 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Stack(
-        children: [
-          RefreshIndicator(
-            onRefresh: refresh,
-            child: Scrollbar(
-              interactive: true,
-              controller: scrollController,
-              child: CustomScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
+      body: FocusScope(
+        child: Stack(
+          children: [
+            RefreshIndicator(
+              onRefresh: refresh,
+              child: Scrollbar(
+                interactive: true,
                 controller: scrollController,
+                child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: scrollController,
                 slivers: <Widget>[
                   SliverAppBar.large(
                     pinned: true,
@@ -1823,8 +1843,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   void openAppById(String appId) {
     AppsProvider appsProvider = context.read<AppsProvider>();
