@@ -28,8 +28,6 @@ const gap16 = SizedBox(height: 16);
 const gap24 = SizedBox(height: 24);
 const gap32 = SizedBox(height: 32);
 
-const _textOverflow = TextOverflow.ellipsis;
-
 const horizontalGap8 = SizedBox(width: 8);
 const horizontalGap12 = SizedBox(width: 12);
 const horizontalGap16 = SizedBox(width: 16);
@@ -1440,15 +1438,7 @@ class _LogsDialogState extends State<LogsDialog> {
                     items: days.map((day) {
                       return DropdownMenuItem<int>(
                         value: day,
-                        child: Directionality(
-                          textDirection: Directionality.of(context),
-                          child: Flexible(
-                            child: Text(
-                              plural('day', day),
-                              overflow: _textOverflow,
-                            ),
-                          ),
-                        ),
+                        child: Text(plural('day', day)),
                       );
                     }).toList(),
                     onChanged: (int? value) {

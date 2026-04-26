@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-const _textOverflow = TextOverflow.ellipsis;
-
 abstract class GeneratedFormItem {
   late String key;
   late String label;
@@ -409,9 +407,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   opacity: enabled ? 1 : 0.5,
                   child: Directionality(
                     textDirection: Directionality.of(context),
-                    child: Flexible(
-                      child: Text(e2.value, overflow: _textOverflow),
-                    ),
+                    child: Text(e2.value),
                   ),
                 ),
               );
