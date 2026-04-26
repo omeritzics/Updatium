@@ -244,7 +244,7 @@ class _UpdatiumState extends State<Updatium> {
     }
   }
 
-  void initForegroundService() {
+  void initForegroundService([int intervalMinutes = 15]) {
     // Initialize foreground service if not already initialized
     // ignore: invalid_use_of_visible_for_testing_member
     if (!FlutterForegroundTask.isInitialized) {
@@ -260,7 +260,7 @@ class _UpdatiumState extends State<Updatium> {
           playSound: false,
         ),
         foregroundTaskOptions: ForegroundTaskOptions(
-          eventAction: ForegroundTaskEventAction.repeat(900000),
+          eventAction: ForegroundTaskEventAction.repeat(intervalMinutes * 60000),
           autoRunOnBoot: true,
           autoRunOnMyPackageReplaced: true,
           allowWakeLock: false,
@@ -270,8 +270,8 @@ class _UpdatiumState extends State<Updatium> {
     }
   }
 
-  Future<ServiceRequestResult?> startForegroundService(bool restart) async {
-    initForegroundService();
+  Future<ServiceRequestResult?> startForegroundService(bool restart, [int? intervalMinutes]) async {
+    initForegroundService(intervalMinutes ?? 15);
     if (await FlutterForegroundTask.isRunningService) {
       if (restart) {
         return FlutterForegroundTask.restartService();
@@ -349,7 +349,7 @@ class _UpdatiumState extends State<Updatium> {
     } else {
       if (settingsProvider.useFGService) {
         BackgroundFetch.stop();
-        startForegroundService(false);
+        startForegroundService(false, settingsProvider.updateInterval);
       } else {
         stopForegroundService();
         BackgroundFetch.start();
