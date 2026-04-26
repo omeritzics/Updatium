@@ -46,7 +46,9 @@ jobs:
         run: flutter pub get
         
       - name: Auto-fix linting issues
-        run: git pull && dart fix --apply
+        run: |
+          git config pull.rebase false
+          git pull && dart fix --apply
 
       - name: Format code
         run: dart format .
