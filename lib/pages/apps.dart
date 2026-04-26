@@ -632,43 +632,58 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       bool isCompact = false,
     }) {
       if (!isInstalled) {
-        return FilledButton.tonal(
-          onPressed: appsProvider.areDownloadsRunning()
-              ? null
-              : () => _installApp(app),
-          style: ButtonStyle(
-            visualDensity: isCompact ? VisualDensity.compact : null,
-            minimumSize: WidgetStateProperty.all(
-              isCompact ? const Size(60, 32) : null,
+        return Semantics(
+          button: true,
+          label: tr('install'),
+          enabled: !appsProvider.areDownloadsRunning(),
+          child: FilledButton.tonal(
+            onPressed: appsProvider.areDownloadsRunning()
+                ? null
+                : () => _installApp(app),
+            style: ButtonStyle(
+              visualDensity: isCompact ? VisualDensity.compact : null,
+              minimumSize: WidgetStateProperty.all(
+                isCompact ? const Size(60, 32) : null,
+              ),
             ),
+            child: Text(tr('install')),
           ),
-          child: Text(tr('install')),
         );
       } else if (hasUpdate) {
-        return FilledButton.tonal(
-          onPressed: appsProvider.areDownloadsRunning()
-              ? null
-              : () => _installApp(app),
-          style: ButtonStyle(
-            visualDensity: isCompact ? VisualDensity.compact : null,
-            minimumSize: WidgetStateProperty.all(
-              isCompact ? const Size(60, 32) : null,
+        return Semantics(
+          button: true,
+          label: tr('update'),
+          enabled: !appsProvider.areDownloadsRunning(),
+          child: FilledButton.tonal(
+            onPressed: appsProvider.areDownloadsRunning()
+                ? null
+                : () => _installApp(app),
+            style: ButtonStyle(
+              visualDensity: isCompact ? VisualDensity.compact : null,
+              minimumSize: WidgetStateProperty.all(
+                isCompact ? const Size(60, 32) : null,
+              ),
             ),
+            child: Text(tr('update')),
           ),
-          child: Text(tr('update')),
         );
       } else {
-        return FilledButton.tonal(
-          onPressed: null,
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
-            foregroundColor: WidgetStateProperty.all(Colors.grey),
-            visualDensity: isCompact ? VisualDensity.compact : null,
-            minimumSize: WidgetStateProperty.all(
-              isCompact ? const Size(60, 32) : null,
+        return Semantics(
+          button: true,
+          label: tr('updated'),
+          enabled: false,
+          child: FilledButton.tonal(
+            onPressed: null,
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
+              foregroundColor: WidgetStateProperty.all(Colors.grey),
+              visualDensity: isCompact ? VisualDensity.compact : null,
+              minimumSize: WidgetStateProperty.all(
+                isCompact ? const Size(60, 32) : null,
+              ),
             ),
+            child: Text(tr('updated')),
           ),
-          child: Text(tr('updated')),
         );
       }
     }
@@ -690,96 +705,113 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 context,
               ).colorScheme.primaryContainer.withValues(alpha: 0.3)
             : null,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () => _handleAppTap(app),
-          onLongPress: () => toggleAppSelected(app),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // App icon with status indicators
-                    Stack(
-                      children: [
-                        SizedBox(
-                          height: 56,
-                          width: 56,
-                          child: getAppIcon(index),
+        child: Semantics(
+          button: true,
+          label: app.pinned
+              ? tr('pinnedApp', args: [appInfo.name, tr('byX', args: [appInfo.author])])
+              : '${appInfo.name}, ${tr('byX', args: [appInfo.author])}',
+          value: isInstalled
+              ? (hasUpdate ? tr('updateAvailable') : tr('upToDate'))
+              : tr('notInstalled'),
+          onTapHint: tr('openAppDetails'),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(12),
+            onTap: () => _handleAppTap(app),
+            onLongPress: () => toggleAppSelected(app),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // App icon with status indicators
+                      Stack(
+                        children: [
+                          SizedBox(
+                            height: 56,
+                            width: 56,
+                            child: getAppIcon(index),
+                          ),
+                          if (app.pinned)
+                            Positioned(
+                              top: -4,
+                              left: -4,
+                              child: Semantics(
+                                label: tr('pinned'),
+                                child: Icon(
+                                  Icons.push_pin,
+                                  size: 16,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      // App name
+                      Text(
+                        appInfo.name,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
-                        if (app.pinned)
-                          Positioned(
-                            top: -4,
-                            left: -4,
-                            child: Icon(
-                              Icons.push_pin,
-                              size: 16,
-                              color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(height: 2),
+                      // Author name
+                      Text(
+                        tr('byX', args: [appInfo.author]),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: 8),
+                      // Action button or progress indicator
+                      if (appInfo.downloadProgress != null)
+                        Semantics(
+                          label: tr('downloadProgress'),
+                          value: '${appInfo.downloadProgress!.toInt()}%',
+                          child: SizedBox(
+                            width: 60,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (appInfo.downloadProgress! >= 0)
+                                  Text(
+                                    '${appInfo.downloadProgress!.toInt()}%',
+                                    style: Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                const SizedBox(height: 4),
+                                SizedBox(
+                                  width: 40,
+                                  height: 4,
+                                  child: LinearProgressIndicator(
+                                    value: appInfo.downloadProgress! >= 0
+                                        ? appInfo.downloadProgress! / 100
+                                        : null,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    // App name
-                    Text(
-                      appInfo.name,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    // Author name
-                    Text(
-                      tr('byX', args: [appInfo.author]),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    const SizedBox(height: 8),
-                    // Action button or progress indicator
-                    if (appInfo.downloadProgress != null)
-                      SizedBox(
-                        width: 60,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            if (appInfo.downloadProgress! >= 0)
-                              Text(
-                                '${appInfo.downloadProgress!.toInt()}%',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            const SizedBox(height: 4),
-                            SizedBox(
-                              width: 40,
-                              height: 4,
-                              child: LinearProgressIndicator(
-                                value: appInfo.downloadProgress! >= 0
-                                    ? appInfo.downloadProgress! / 100
-                                    : null,
-                              ),
-                            ),
-                          ],
+                        )
+                      else if (!isTrackOnly)
+                        _buildActionButton(
+                          app,
+                          isInstalled,
+                          hasUpdate,
+                          isCompact: true,
                         ),
-                      )
-                    else if (!isTrackOnly)
-                      _buildActionButton(
-                        app,
-                        isInstalled,
-                        hasUpdate,
-                        isCompact: true,
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
@@ -797,79 +829,99 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
       return Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        child: ListTile(
-          selected: isSelected,
-          selectedTileColor: Theme.of(
-            context,
-          ).colorScheme.primaryContainer.withValues(alpha: 0.3),
-          leading: SizedBox(
-            height: 48,
-            width: 48,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: getAppIcon(index),
-            ),
-          ),
-          title: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  appInfo.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: app.pinned ? FontWeight.w600 : FontWeight.w500,
-                  ),
-                ),
+        child: Semantics(
+          button: true,
+          label: app.pinned
+              ? tr('pinnedApp', args: [appInfo.name, tr('byX', args: [appInfo.author])])
+              : '${appInfo.name}, ${tr('byX', args: [appInfo.author])}',
+          value: isInstalled
+              ? (hasUpdate ? tr('updateAvailable') : tr('upToDate'))
+              : tr('notInstalled'),
+          onTapHint: tr('openAppDetails'),
+          child: ListTile(
+            selected: isSelected,
+            selectedTileColor: Theme.of(
+              context,
+            ).colorScheme.primaryContainer.withValues(alpha: 0.3),
+            leading: SizedBox(
+              height: 48,
+              width: 48,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: getAppIcon(index),
               ),
-              if (app.pinned)
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Icon(
-                    Icons.push_pin,
-                    size: 16,
-                    color: Theme.of(context).colorScheme.primary,
+            ),
+            title: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    appInfo.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: app.pinned ? FontWeight.w600 : FontWeight.w500,
+                    ),
                   ),
                 ),
-            ],
-          ),
-          subtitle: Text(
-            tr('byX', args: [appInfo.author]),
-            maxLines: 1,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          trailing: appInfo.downloadProgress != null
-              ? SizedBox(
-                  width: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (appInfo.downloadProgress! >= 0)
-                        Text(
-                          '${appInfo.downloadProgress!.toInt()}%',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      const SizedBox(height: 4),
-                      SizedBox(
-                        width: 40,
-                        height: 4,
-                        child: LinearProgressIndicator(
-                          value: appInfo.downloadProgress! >= 0
-                              ? appInfo.downloadProgress! / 100
-                              : null,
-                        ),
+                if (app.pinned)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Semantics(
+                      label: tr('pinned'),
+                      child: Icon(
+                        Icons.push_pin,
+                        size: 16,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
-                    ],
+                    ),
                   ),
-                )
-              : isTrackOnly
-              ? Icon(
-                  Icons.check_circle_outline,
-                  color: Theme.of(context).colorScheme.primary,
-                )
-              : _buildActionButton(app, isInstalled, hasUpdate),
-          onTap: () => _handleAppTap(app),
-          onLongPress: () => toggleAppSelected(app),
+              ],
+            ),
+            subtitle: Text(
+              tr('byX', args: [appInfo.author]),
+              maxLines: 1,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            trailing: appInfo.downloadProgress != null
+                ? Semantics(
+                    label: tr('downloadProgress'),
+                    value: '${appInfo.downloadProgress!.toInt()}%',
+                    child: SizedBox(
+                      width: 60,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (appInfo.downloadProgress! >= 0)
+                            Text(
+                              '${appInfo.downloadProgress!.toInt()}%',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          const SizedBox(height: 4),
+                          SizedBox(
+                            width: 40,
+                            height: 4,
+                            child: LinearProgressIndicator(
+                              value: appInfo.downloadProgress! >= 0
+                                  ? appInfo.downloadProgress! / 100
+                                  : null,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : isTrackOnly
+                ? Semantics(
+                    label: tr('trackOnly'),
+                    child: Icon(
+                      Icons.check_circle_outline,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  )
+                : _buildActionButton(app, isInstalled, hasUpdate),
+            onTap: () => _handleAppTap(app),
+            onLongPress: () => toggleAppSelected(app),
+          ),
         ),
       );
     }
@@ -1426,9 +1478,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           );
         }
       } else {
-        // Flat View
         if (settingsProvider.useGridView) {
-          final spacing = 6.0;
+          final spacing = 8.0;
 
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

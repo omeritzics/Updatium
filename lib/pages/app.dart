@@ -657,15 +657,19 @@ class _AppPageState extends State<AppPage> {
                             16,
                             32,
                           ),
-                          child: LinearProgressIndicator(
-                            value: app.downloadProgress! >= 0
-                                ? app.downloadProgress! / 100
-                                : null,
-                            backgroundColor: Theme.of(
-                              context,
-                            ).colorScheme.surfaceContainerHighest,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Theme.of(context).colorScheme.primary,
+                          child: Semantics(
+                            label: tr('downloadProgress'),
+                            value: '${app.downloadProgress!.toInt()}%',
+                            child: LinearProgressIndicator(
+                              value: app.downloadProgress! >= 0
+                                  ? app.downloadProgress! / 100
+                                  : null,
+                              backgroundColor: Theme.of(
+                                context,
+                              ).colorScheme.surfaceContainerHighest,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).colorScheme.primary,
+                              ),
                             ),
                           ),
                         ),
