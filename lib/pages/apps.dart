@@ -1096,11 +1096,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         args: [plural('apps', totalApps).toLowerCase()],
                       ),
                     ),
-                    content: GeneratedForm(
-                      items: formItems.map((e) => [e]).toList(),
-                      onValueChanges: (vals, valid, isBuilding) {
-                        localValues = vals;
-                      },
+                    content: SingleChildScrollView(
+                      child: GeneratedForm(
+                        items: formItems.map((e) => [e]).toList(),
+                        onValueChanges: (vals, valid, isBuilding) {
+                          localValues = vals;
+                        },
+                      ),
                     ),
                     actions: [
                       Semantics(
@@ -1213,21 +1215,33 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           }
           if (cont) {
             // ignore: use_build_context_synchronously
+            Set<String> selectedCategories = !showPrompt ? preselected ?? {} : {};
             await showDialog<void>(
               context: context,
               builder: (BuildContext ctx) {
                 return AlertDialog(
                   title: Text(tr('categorize')),
-                  content: CategorySelector(
-                    preselected: !showPrompt ? preselected ?? {} : {},
-                    showLabelWhenNotEmpty: false,
+                  content: SingleChildScrollView(
+                    child: CategorySelector(
+                      preselected: selectedCategories,
+                      showLabelWhenNotEmpty: false,
+                      onSelected: (categories) {
+                        selectedCategories = categories.toSet();
+                      },
+                    ),
                   ),
                   actions: [
                     Semantics(
                       button: true,
                       label: tr('continue'),
                       child: TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(),
+                        onPressed: () {
+                          for (var app in selectedApps) {
+                            app.categories = selectedCategories.toList();
+                          }
+                          appsProvider.saveApps(selectedApps.toList());
+                          Navigator.of(ctx).pop();
+                        },
                         child: Text(tr('continue')),
                       ),
                     ),
@@ -1445,6 +1459,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   preselected: filter.categoryFilter,
                   onSelected: (categories) {
                     filter.categoryFilter = categories.toSet();
+                    localValues['categoryFilter'] = categories.toSet();
                   },
                 ),
               ],
