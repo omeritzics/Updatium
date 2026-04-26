@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+const _textOverflow = TextOverflow.ellipsis;
+
 abstract class GeneratedFormItem {
   late String key;
   late String label;
@@ -391,6 +393,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
           }
           return DropdownButtonFormField<String>(
             initialValue: values[formItem.key] ?? formItem.opts?.first.key,
+            isExpanded: true,
             decoration: InputDecoration(
               labelText: formItem.key == 'appSourceURL'
                   ? '${formItem.label}${formItem.required ? ' *' : ''}'
@@ -406,8 +409,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   opacity: enabled ? 1 : 0.5,
                   child: Directionality(
                     textDirection: Directionality.of(context),
-                    child: Expanded(
-                      child: Text(e2.value, overflow: TextOverflow.ellipsis),
+                    child: Flexible(
+                      child: Text(e2.value, overflow: _textOverflow),
                     ),
                   ),
                 ),
