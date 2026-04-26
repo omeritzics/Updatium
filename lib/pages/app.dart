@@ -480,7 +480,7 @@ class _AppPageState extends State<AppPage> {
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         elevation: 2,
         shadowColor: Theme.of(context).colorScheme.shadow,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       ),
       onPressed:
           !updating &&

@@ -418,20 +418,20 @@ class _UpdatiumState extends State<Updatium> {
             // Ensure surface container colors have proper opacity for switch visibility
             lightColorScheme = lightColorScheme.copyWith(
               surfaceContainerHighest: lightColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.17),
+                  .withValues(alpha: 0.20),
               surfaceContainerHigh: lightColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.12),
+                  .withValues(alpha: 0.15),
               surfaceContainer: lightColorScheme.surfaceContainer.withValues(
-                alpha: 0.08,
+                alpha: 0.10,
               ),
             );
             darkColorScheme = darkColorScheme.copyWith(
               surfaceContainerHighest: darkColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.17),
+                  .withValues(alpha: 0.20),
               surfaceContainerHigh: darkColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.12),
+                  .withValues(alpha: 0.15),
               surfaceContainer: darkColorScheme.surfaceContainer.withValues(
-                alpha: 0.08,
+                alpha: 0.10,
               ),
             );
           } else {
@@ -449,17 +449,17 @@ class _UpdatiumState extends State<Updatium> {
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
-              surfaceContainerHighest: Colors.white.withValues(alpha: 0.17),
-              surfaceContainerHigh: Colors.white.withValues(alpha: 0.12),
-              surfaceContainer: Colors.white.withValues(alpha: 0.08),
-              surfaceContainerLow: Colors.white.withValues(alpha: 0.04),
-              surfaceContainerLowest: Colors.white.withValues(alpha: 0.02),
+              surfaceContainerHighest: Colors.white.withValues(alpha: 0.20),
+              surfaceContainerHigh: Colors.white.withValues(alpha: 0.15),
+              surfaceContainer: Colors.white.withValues(alpha: 0.10),
+              surfaceContainerLow: Colors.white.withValues(alpha: 0.06),
+              surfaceContainerLowest: Colors.white.withValues(alpha: 0.03),
               surfaceDim: Colors.black,
-              surfaceBright: Colors.white.withValues(alpha: 0.05),
+              surfaceBright: Colors.white.withValues(alpha: 0.06),
               onSurface: Colors.white.withValues(alpha: 0.95),
               onSurfaceVariant: Colors.white.withValues(alpha: 0.7),
               outline: Colors.white.withValues(alpha: 0.25),
-              outlineVariant: Colors.white.withValues(alpha: 0.12),
+              outlineVariant: Colors.white.withValues(alpha: 0.15),
             );
           }
 
@@ -521,8 +521,8 @@ class _UpdatiumState extends State<Updatium> {
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
-                  'Inter',
                   'GoogleSansFlex',
+                  'Inter',
                   'NotoSansCJK',
                   'NotoSansHebrew',
                   'NotoSansArabic',
@@ -969,8 +969,8 @@ class _UpdatiumState extends State<Updatium> {
                 ),
                 elevation: isDark ? 6 : 8,
                 extendedPadding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 16,
+                  horizontal: 32,
+                  vertical: 20,
                 ),
                 extendedTextStyle: TextStyle(
                   fontWeight: FontWeight.w500,
