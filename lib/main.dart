@@ -1070,7 +1070,7 @@ class _UpdatiumState extends State<Updatium> {
               ),
 
               // Expressive Touch Feedback
-              splashFactory: InkRipple.splashFactory,
+              splashFactory: InkSplash.splashFactory,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
 
               // Expressive Divider
