@@ -1243,8 +1243,8 @@ class _UpdatiumState extends State<Updatium> {
           }
 
           return Directionality(
-            textDirection: isLocaleRTL(context.locale) 
-                ? ui.TextDirection.rtl 
+            textDirection: isLocaleRTL(context.locale)
+                ? ui.TextDirection.rtl
                 : ui.TextDirection.ltr,
             child: MaterialApp(
               title: 'Updatium',
@@ -1264,7 +1264,8 @@ class _UpdatiumState extends State<Updatium> {
                 shortcuts: <LogicalKeySet, Intent>{
                   LogicalKeySet(LogicalKeyboardKey.select):
                       const ActivateIntent(),
-                  LogicalKeySet(LogicalKeyboardKey.enter): const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.enter):
+                      const ActivateIntent(),
                   LogicalKeySet(LogicalKeyboardKey.arrowUp):
                       const DirectionalFocusIntent(TraversalDirection.up),
                   LogicalKeySet(LogicalKeyboardKey.arrowDown):
@@ -1273,8 +1274,10 @@ class _UpdatiumState extends State<Updatium> {
                       const DirectionalFocusIntent(TraversalDirection.left),
                   LogicalKeySet(LogicalKeyboardKey.arrowRight):
                       const DirectionalFocusIntent(TraversalDirection.right),
-                  LogicalKeySet(LogicalKeyboardKey.tab): const NextFocusIntent(),
-                  LogicalKeySet(LogicalKeyboardKey.escape): const DismissIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.tab):
+                      const NextFocusIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.escape):
+                      const DismissIntent(),
                 },
                 child: const HomePage(),
               ),

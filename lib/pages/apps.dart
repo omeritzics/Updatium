@@ -1215,7 +1215,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           }
           if (cont) {
             // ignore: use_build_context_synchronously
-            Set<String> selectedCategories = !showPrompt ? preselected ?? {} : {};
+            Set<String> selectedCategories = !showPrompt
+                ? preselected ?? {}
+                : {};
             await showDialog<void>(
               context: context,
               builder: (BuildContext ctx) {
