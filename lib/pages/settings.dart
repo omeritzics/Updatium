@@ -1438,7 +1438,13 @@ class _LogsDialogState extends State<LogsDialog> {
                     items: days.map((day) {
                       return DropdownMenuItem<int>(
                         value: day,
-                        child: Text(plural('day', day)),
+                        child: Directionality(
+                          textDirection: Directionality.of(context),
+                          child: Text(
+                            plural('day', day),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       );
                     }).toList(),
                     onChanged: (int? value) {
@@ -1520,8 +1526,14 @@ class CategoryTagEditor extends StatelessWidget {
   });
 
   void _onAddPressed(BuildContext context, SettingsProvider settingsProvider) {
+    final random = DateTime.now().millisecondsSinceEpoch;
+    final initialColor = Color(
+      (random & 0xFFFFFF) | 0xFF000000,
+    );
+
     showCategoryEditorDialog(
       context,
+      initialColor: initialColor,
       title: tr('addCategory'),
       confirmButtonText: tr('add'),
     ).then((result) {
@@ -1685,8 +1697,30 @@ class CategorySelector extends StatelessWidget {
           spacing: 8,
           runSpacing: 4,
           children: allTags.map((tag) {
+            final colorValue = settingsProvider.categories[tag];
+            final categoryColor = colorValue != null ? Color(colorValue) : null;
             return FilterChip(
-              label: Text(tag),
+              label: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (categoryColor != null) ...[
+                    Container(
+                      width: 12,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        color: categoryColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.outline,
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                  ],
+                  Text(tag),
+                ],
+              ),
               selected: preselected.contains(tag),
               onSelected: (selected) {
                 final newSelected = Set<String>.from(preselected);

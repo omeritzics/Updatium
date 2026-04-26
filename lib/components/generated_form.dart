@@ -406,7 +406,10 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   opacity: enabled ? 1 : 0.5,
                   child: Directionality(
                     textDirection: Directionality.of(context),
-                    child: Text(e2.value),
+                    child: Text(
+                      e2.value,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               );
