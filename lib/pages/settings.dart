@@ -1527,9 +1527,7 @@ class CategoryTagEditor extends StatelessWidget {
 
   void _onAddPressed(BuildContext context, SettingsProvider settingsProvider) {
     final random = DateTime.now().millisecondsSinceEpoch;
-    final initialColor = Color(
-      (random & 0xFFFFFF) | 0xFF000000,
-    );
+    final initialColor = Color((random & 0xFFFFFF) | 0xFF000000);
 
     showCategoryEditorDialog(
       context,
