@@ -1699,31 +1699,15 @@ class CategorySelector extends StatelessWidget {
           spacing: 8,
           runSpacing: 4,
           children: allTags.map((tag) {
-            final colorValue = settingsProvider.categories[tag];
-            final categoryColor = colorValue != null ? Color(colorValue) : null;
+            final categoryColor = Color(
+              settingsProvider.categories[tag] ??
+                  Theme.of(context).colorScheme.primary.value,
+            );
             return FilterChip(
-              label: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (categoryColor != null) ...[
-                    Container(
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: categoryColor,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.outline,
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                  ],
-                  Text(tag),
-                ],
-              ),
+              label: Text(tag),
               selected: preselected.contains(tag),
+              backgroundColor: categoryColor.withValues(alpha: 0.2),
+              side: BorderSide(color: categoryColor, width: 1),
               onSelected: (selected) {
                 final newSelected = Set<String>.from(preselected);
                 if (singleSelect) {
