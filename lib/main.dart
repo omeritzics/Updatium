@@ -260,7 +260,9 @@ class _UpdatiumState extends State<Updatium> {
           playSound: false,
         ),
         foregroundTaskOptions: ForegroundTaskOptions(
-          eventAction: ForegroundTaskEventAction.repeat(intervalMinutes * 60000),
+          eventAction: ForegroundTaskEventAction.repeat(
+            intervalMinutes * 60000,
+          ),
           autoRunOnBoot: true,
           autoRunOnMyPackageReplaced: true,
           allowWakeLock: false,
@@ -270,7 +272,10 @@ class _UpdatiumState extends State<Updatium> {
     }
   }
 
-  Future<ServiceRequestResult?> startForegroundService(bool restart, [int? intervalMinutes]) async {
+  Future<ServiceRequestResult?> startForegroundService(
+    bool restart, [
+    int? intervalMinutes,
+  ]) async {
     initForegroundService(intervalMinutes ?? 15);
     if (await FlutterForegroundTask.isRunningService) {
       if (restart) {
