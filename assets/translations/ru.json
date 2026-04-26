@@ -92,6 +92,7 @@
     "resetInstallStatus": "Сбросить статус установки",
     "more": "Ещё",
     "removeOutdatedFilter": "Удалить фильтр для устаревших приложений",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "Показывать только устаревшие приложения",
     "filter": "Фильтр",

@@ -92,6 +92,7 @@
     "resetInstallStatus": "Ripristina lo stato d'installazione",
     "more": "Altro",
     "removeOutdatedFilter": "Rimuovi il filtro per le app non aggiornate",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "Mostra solo le app non aggiornate",
     "filter": "Filtri",

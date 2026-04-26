@@ -92,6 +92,7 @@
     "resetInstallStatus": "Yükleme durumunu sıfırla",
     "more": "Daha fazla",
     "removeOutdatedFilter": "Güncel olmayan uygulama filtresini kaldır",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "Sadece güncel olmayan uygulamaları göster",
     "filter": "Filtre",

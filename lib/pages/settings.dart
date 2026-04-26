@@ -1647,10 +1647,14 @@ class CategoryTagEditor extends StatelessWidget {
                 ),
               );
             }),
-            IconButton(
-              onPressed: () => _onAddPressed(context, settingsProvider),
-              icon: const Icon(Icons.add),
-              tooltip: tr('add'),
+            Semantics(
+              button: true,
+              label: tr('add'),
+              child: IconButton(
+                onPressed: () => _onAddPressed(context, settingsProvider),
+                icon: const Icon(Icons.add),
+                tooltip: tr('add'),
+              ),
             ),
           ],
         ),

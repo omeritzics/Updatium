@@ -92,6 +92,7 @@
     "resetInstallStatus": "重置安装状态",
     "more": "更多",
     "removeOutdatedFilter": "删除失效的应用筛选",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "只显示待更新应用",
     "filter": "筛选",

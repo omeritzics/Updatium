@@ -1103,13 +1103,21 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       },
                     ),
                     actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(null),
-                        child: Text(tr('cancel')),
+                      Semantics(
+                        button: true,
+                        label: tr('cancel'),
+                        child: TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(null),
+                          child: Text(tr('cancel')),
+                        ),
                       ),
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(localValues),
-                        child: Text(tr('ok')),
+                      Semantics(
+                        button: true,
+                        label: tr('ok'),
+                        child: TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(localValues),
+                          child: Text(tr('ok')),
+                        ),
                       ),
                     ],
                   );
@@ -1181,13 +1189,21 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       title: Text(tr('categorize')),
                       content: Text(tr('selectedCategorizeWarning')),
                       actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(ctx).pop(false),
-                          child: Text(tr('cancel')),
+                        Semantics(
+                          button: true,
+                          label: tr('cancel'),
+                          child: TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(false),
+                            child: Text(tr('cancel')),
+                          ),
                         ),
-                        TextButton(
-                          onPressed: () => Navigator.of(ctx).pop(true),
-                          child: Text(tr('ok')),
+                        Semantics(
+                          button: true,
+                          label: tr('ok'),
+                          child: TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(true),
+                            child: Text(tr('ok')),
+                          ),
                         ),
                       ],
                     );
@@ -1207,9 +1223,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     showLabelWhenNotEmpty: false,
                   ),
                   actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(ctx).pop(),
-                      child: Text(tr('continue')),
+                    Semantics(
+                      button: true,
+                      label: tr('continue'),
+                      child: TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(),
+                        child: Text(tr('continue')),
+                      ),
                     ),
                   ],
                 );
@@ -1243,30 +1263,38 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               ),
             ),
             actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(tr('no')),
+              Semantics(
+                button: true,
+                label: tr('no'),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(tr('no')),
+                ),
               ),
-              TextButton(
-                onPressed: () {
-                  HapticFeedback.selectionClick();
-                  appsProvider.saveApps(
-                    selectedApps.map((a) {
-                      if (a.installedVersion != null &&
-                          !appsProvider.isVersionDetectionPossible(
-                            appsProvider.apps[a.id],
-                          )) {
-                        a.installedVersion = a.latestVersion;
-                      }
-                      return a;
-                    }).toList(),
-                  );
+              Semantics(
+                button: true,
+                label: tr('yes'),
+                child: TextButton(
+                  onPressed: () {
+                    HapticFeedback.selectionClick();
+                    appsProvider.saveApps(
+                      selectedApps.map((a) {
+                        if (a.installedVersion != null &&
+                            !appsProvider.isVersionDetectionPossible(
+                              appsProvider.apps[a.id],
+                            )) {
+                          a.installedVersion = a.latestVersion;
+                        }
+                        return a;
+                      }).toList(),
+                    );
 
-                  Navigator.of(context).pop();
-                },
-                child: Text(tr('yes')),
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(tr('yes')),
+                ),
               ),
             ],
           );
@@ -1287,13 +1315,18 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  TextButton(
-                    onPressed: appsProvider.areDownloadsRunning()
-                        ? null
-                        : showMassMarkDialog,
-                    child: Text(
-                      tr('markSelectedAppsUpdated'),
-                      textAlign: TextAlign.center,
+                  Semantics(
+                    button: true,
+                    label: tr('markSelectedAppsUpdated'),
+                    enabled: !appsProvider.areDownloadsRunning(),
+                    child: TextButton(
+                      onPressed: appsProvider.areDownloadsRunning()
+                          ? null
+                          : showMassMarkDialog,
+                      child: Text(
+                        tr('markSelectedAppsUpdated'),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ],
@@ -1391,13 +1424,21 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               ],
             ),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(null),
-                child: Text(tr('cancel')),
+              Semantics(
+                button: true,
+                label: tr('cancel'),
+                child: TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(null),
+                  child: Text(tr('cancel')),
+                ),
               ),
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(localValues),
-                child: Text(tr('ok')),
+              Semantics(
+                button: true,
+                label: tr('ok'),
+                child: TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(localValues),
+                  child: Text(tr('ok')),
+                ),
               ),
             ],
           );
@@ -1560,47 +1601,59 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             neutralFilter,
                             settingsProvider,
                           );
-                          return IconButton(
-                            color: Theme.of(context).colorScheme.primary,
-                            style: const ButtonStyle(
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            tooltip: isFilterOff
+                          return Semantics(
+                            button: true,
+                            label: isFilterOff
                                 ? tr('filterApps')
-                                : '${tr('filter')} - ${tr('remove')}',
-                            onPressed: isFilterOff
-                                ? showFilterDialog
-                                : () {
-                                    setState(() {
-                                      filter = AppsFilter();
-                                    });
-                                  },
-                            icon: Icon(
-                              isFilterOff
-                                  ? Icons.search_rounded
-                                  : Icons.search_off_rounded,
+                                : tr('removeFilter'),
+                            child: IconButton(
+                              color: Theme.of(context).colorScheme.primary,
+                              style: const ButtonStyle(
+                                visualDensity: VisualDensity.compact,
+                              ),
+                              tooltip: isFilterOff
+                                  ? tr('filterApps')
+                                  : '${tr('filter')} - ${tr('remove')}',
+                              onPressed: isFilterOff
+                                  ? showFilterDialog
+                                  : () {
+                                      setState(() {
+                                        filter = AppsFilter();
+                                      });
+                                    },
+                              icon: Icon(
+                                isFilterOff
+                                    ? Icons.search_rounded
+                                    : Icons.search_off_rounded,
+                              ),
                             ),
                           );
                         },
                       ),
                       Consumer<SettingsProvider>(
                         builder: (context, settingsProvider, child) {
-                          return IconButton(
-                            color: Theme.of(context).colorScheme.primary,
-                            style: const ButtonStyle(
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            tooltip: settingsProvider.useGridView
+                          return Semantics(
+                            button: true,
+                            label: settingsProvider.useGridView
                                 ? tr('listView')
                                 : tr('gridView'),
-                            onPressed: () {
-                              settingsProvider.useGridView =
-                                  !settingsProvider.useGridView;
-                            },
-                            icon: Icon(
-                              settingsProvider.useGridView
-                                  ? Icons.view_list_rounded
-                                  : Icons.grid_view_rounded,
+                            child: IconButton(
+                              color: Theme.of(context).colorScheme.primary,
+                              style: const ButtonStyle(
+                                visualDensity: VisualDensity.compact,
+                              ),
+                              tooltip: settingsProvider.useGridView
+                                  ? tr('listView')
+                                  : tr('gridView'),
+                              onPressed: () {
+                                settingsProvider.useGridView =
+                                    !settingsProvider.useGridView;
+                              },
+                              icon: Icon(
+                                settingsProvider.useGridView
+                                    ? Icons.view_list_rounded
+                                    : Icons.grid_view_rounded,
+                              ),
                             ),
                           );
                         },

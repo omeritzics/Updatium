@@ -92,6 +92,7 @@
     "resetInstallStatus": "Reiniciar estado de instalación",
     "more": "Más",
     "removeOutdatedFilter": "Eliminar filtro de aplicaciones desactualizado",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "Mostrar solo aplicaciones desactualizadas",
     "filter": "Filtrar",

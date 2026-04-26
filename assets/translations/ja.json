@@ -92,6 +92,7 @@
     "resetInstallStatus": "インストール状態をリセットする",
     "more": "その他",
     "removeOutdatedFilter": "アップデートが存在するアプリのフィルターを解除",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "アップデートが存在するアプリのみ表示する",
     "filter": "フィルター",

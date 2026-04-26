@@ -92,6 +92,7 @@
     "resetInstallStatus": "Restableix l'estat de la instal·lació",
     "more": "Més",
     "removeOutdatedFilter": "Elimina el filtre d'aplicacions desactualitzades",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "Mostra només les aplicacions desactualitzades",
     "filter": "Filtra",

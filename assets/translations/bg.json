@@ -92,6 +92,7 @@
     "resetInstallStatus": "Нулиране на статуса на инсталация",
     "more": "Повече",
     "removeOutdatedFilter": "Премахване на филтър за остарели приложения",
+    "removeFilter": "Remove filter",
     "save": "Запазване",
     "showOutdatedOnly": "Показване само на остарелите приложения",
     "filter": "Филтър",

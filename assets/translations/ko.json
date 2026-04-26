@@ -92,6 +92,7 @@
     "resetInstallStatus": "설치 상태 재설정",
     "more": "더보기",
     "removeOutdatedFilter": "구식 앱 필터 제거",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "구식 앱만 표시",
     "filter": "필터",

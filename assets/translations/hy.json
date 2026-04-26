@@ -92,6 +92,7 @@
     "resetInstallStatus": "Reset install status",
     "more": "More",
     "removeOutdatedFilter": "Remove out-of-date app filter",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "Show out-of-date apps only",
     "filter": "Filter",

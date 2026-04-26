@@ -92,6 +92,7 @@
     "resetInstallStatus": "重設安裝狀態",
     "more": "更多",
     "removeOutdatedFilter": "移除過時應用程式過濾",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "僅顯示過時的應用程式",
     "filter": "過濾",

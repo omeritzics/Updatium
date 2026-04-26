@@ -92,6 +92,7 @@
     "resetInstallStatus": "Telepítési állapot visszaállítása",
     "more": "További",
     "removeOutdatedFilter": "Elavult alkalmazás-szűrő eltávolítása",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "Csak az elavult alkalmazások megjelenítése",
     "filter": "Szűrő",

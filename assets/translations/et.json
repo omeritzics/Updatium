@@ -92,6 +92,7 @@
     "resetInstallStatus": "Lähtesta installimise olek",
     "more": "Rohkem",
     "removeOutdatedFilter": "Eemalda aegunud äppide filter",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "Näita ainult aegunud äppe",
     "filter": "Filter",

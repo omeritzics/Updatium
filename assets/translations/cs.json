@@ -92,6 +92,7 @@
     "resetInstallStatus": "Obnovit stav instalace",
     "more": "Více",
     "removeOutdatedFilter": "Odstranit filtr neaktuálních aplikací",
+    "removeFilter": "Remove filter",
     "save": "Save",
     "showOutdatedOnly": "Zobrazovat pouze zastaralé aplikace",
     "filter": "Filtr",
