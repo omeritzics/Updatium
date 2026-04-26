@@ -2055,10 +2055,7 @@ class _AboutDialogState extends State<AboutDialog> {
                               },
                             );
                           },
-                          icon: const Icon(
-                            Icons.bug_report_outlined,
-                            size: 18,
-                          ),
+                          icon: const Icon(Icons.bug_report_outlined, size: 18),
                           label: Text(tr('appLogs')),
                           style: TextButton.styleFrom(
                             alignment: Alignment.centerLeft,
