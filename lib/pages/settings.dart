@@ -2029,43 +2029,40 @@ class _AboutDialogState extends State<AboutDialog> {
                     ),
                     gap12,
                     Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Expanded(
-                          child: TextButton.icon(
-                            onPressed: () {
-                              launchUrlString(
-                                'https://github.com/omeritzics/Updatium/wiki',
-                                mode: LaunchMode.externalApplication,
-                              );
-                            },
-                            icon: const Icon(Icons.menu_book_rounded, size: 18),
-                            label: Text(tr('wiki')),
-                            style: TextButton.styleFrom(
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                            ),
+                        TextButton.icon(
+                          onPressed: () {
+                            launchUrlString(
+                              'https://github.com/omeritzics/Updatium/wiki',
+                              mode: LaunchMode.externalApplication,
+                            );
+                          },
+                          icon: const Icon(Icons.menu_book_rounded, size: 18),
+                          label: Text(tr('wiki')),
+                          style: TextButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(vertical: 8),
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Expanded(
-                          child: TextButton.icon(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext ctx) {
-                                  return const LogsDialog();
-                                },
-                              );
-                            },
-                            icon: const Icon(
-                              Icons.bug_report_outlined,
-                              size: 18,
-                            ),
-                            label: Text(tr('appLogs')),
-                            style: TextButton.styleFrom(
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                            ),
+                        TextButton.icon(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext ctx) {
+                                return const LogsDialog();
+                              },
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.bug_report_outlined,
+                            size: 18,
+                          ),
+                          label: Text(tr('appLogs')),
+                          style: TextButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(vertical: 8),
                           ),
                         ),
                       ],
