@@ -492,7 +492,7 @@
     "safeModeEnabled": "Bezpečný režim je povolen",
     "safeModeDisabled": "Bezpečný režim je zakázán",
     "safeModeDisable": "Zakázat bezpečný režim",
-    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Správa bezpečného režimu",
     "safeModeSetupDescription": "Nastavte heslo pro povolení bezpečného režimu. Jakmile je povolen, bezpečný režim zabraňuje přidávání nových aplikací a lze jej zakázat pouze pomocí hesla.",
     "safeModeToggleDescription": "Zadejte své heslo pro zapnutí nebo vypnutí bezpečného režimu.",
@@ -509,7 +509,7 @@
     "safeModeTapsRemaining": "{count} zbývajících klepnutí pro zakázání bezpečného režimu",
     "safeModeEnabledHint": "Bezpečný režim je povolen. Klepněte několikrát na číslo verze v Nastaveních pro zakázání.",
     "preventUninstallation": "Prevent uninstallation",
-    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
 

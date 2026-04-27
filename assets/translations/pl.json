@@ -509,7 +509,7 @@
     "safeModeEnabled": "Tryb bezpieczeństwa jest włączony",
     "safeModeDisabled": "Tryb bezpieczeństwa jest wyłączony",
     "safeModeDisable": "Wyłącz tryb bezpieczeństwa",
-    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Administracja trybu bezpieczeństwa",
     "safeModeSetupDescription": "Ustaw hasło, aby włączyć tryb bezpieczeństwa. Po włączeniu trybu bezpieczeństwa nie można dodawać nowych aplikacji i można go wyłączyć tylko za pomocą hasła.",
     "safeModeToggleDescription": "Wprowadź hasło, aby włączyć lub wyłączyć tryb bezpieczeństwa.",
@@ -526,7 +526,7 @@
     "safeModeTapsRemaining": "{count} dotknięć pozostało do wyłączenia trybu bezpieczeństwa",
     "safeModeEnabledHint": "Tryb bezpieczeństwa włączony. Dotknij numeru wersji w Ustawieniach wiele razy, aby wyłączyć.",
     "preventUninstallation": "Prevent uninstallation",
-    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
 

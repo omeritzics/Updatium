@@ -479,7 +479,7 @@
     "safeModeEnabled": "Güvenli Mod Etkin",
     "safeModeDisabled": "Güvenli Mod Devre Dışı",
     "safeModeDisable": "Güvenli Mod'u Devre Dışı Bırak",
-    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Güvenli Mod Yönetimi",
     "safeModeSetupDescription": "Güvenli Mod'u etkinleştirmek için bir parola ayarlayın. Etkinleştirildikten sonra, Güvenli Mod yeni uygulamaların eklenmesini engeller ve yalnızca parola ile devre dışı bırakılabilir.",
     "safeModeToggleDescription": "Güvenli Mod'u açmak veya kapatmak için parolanızı girin.",
@@ -496,7 +496,7 @@
     "safeModeTapsRemaining": "{count} dokunma kaldı, Güvenli Mod'u devre dışı bırakmak için",
     "safeModeEnabledHint": "Güvenli Mod etkinleştirildi. Ayarlardaki sürüm numarasına birçoğuna dokunarak devre dışı bırakın.",
     "preventUninstallation": "Prevent uninstallation",
-    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
 

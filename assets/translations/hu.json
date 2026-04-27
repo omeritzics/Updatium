@@ -479,7 +479,7 @@
     "safeModeEnabled": "Biztonságos mód engedélyezve",
     "safeModeDisabled": "Biztonságos mód letiltva",
     "safeModeDisable": "Biztonságos mód letiltása",
-    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Biztonságos mód adminisztráció",
     "safeModeSetupDescription": "Állítson be egy jelszót a biztonságos mód engedélyezéséhez. Miután engedélyezte, a biztonságos mód megakadályozza az új alkalmazások hozzáadását, és csak a jelszóval lehet letiltani.",
     "safeModeToggleDescription": "Adja meg a jelszót a biztonságos mód be- vagy kikapcsolásához.",
@@ -496,7 +496,7 @@
     "safeModeTapsRemaining": "{count} koppintás maradt a biztonságos mód letiltásához",
     "safeModeEnabledHint": "A biztonságos mód engedélyezve. Koppintson többször a verziószámra a Beállításokban a letiltáshoz.",
     "preventUninstallation": "Prevent uninstallation",
-    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
 

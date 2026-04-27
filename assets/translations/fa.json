@@ -479,7 +479,7 @@
     "safeModeEnabled": "حالت امن فعال شده است",
     "safeModeDisabled": "حالت امن غیرفعال شده است",
     "safeModeDisable": "غیرفعال کردن حالت امن",
-    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "مدیریت حالت امن",
     "safeModeSetupDescription": "رمز عبور را برای فعال کردن حالت امن تنظیم کنید. پس از فعال شدن، حالت امن از اضافه کردن برنامه های جدید جلوگیری می کند و تنها با رمز عبور می توان آن را غیرفعال کرد.",
     "safeModeToggleDescription": "رمز عبور خود را وارد کنید تا حالت امن را فعال یا غیرفعال کنید.",
@@ -496,7 +496,7 @@
     "safeModeTapsRemaining": "{count} ضربه دیگر تا غیرفعال شدن حالت امن",
     "safeModeEnabledHint": "حالت امن فعال شد. برای غیرفعال کردن، چند بار روی شماره نسخه در تنظیمات ضربه بزنید.",
     "preventUninstallation": "Prevent uninstallation",
-    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
 

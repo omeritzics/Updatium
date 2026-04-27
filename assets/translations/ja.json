@@ -479,7 +479,7 @@
     "safeModeEnabled": "セーフモードが有効化されています",
     "safeModeDisabled": "セーフモードが無効化されています",
     "safeModeDisable": "セーフモードを無効にする",
-    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "セーフモード管理",
     "safeModeSetupDescription": "セーフモードを有効にするためにパスワードを設定してください。有効化後、セーフモードは新しいアプリの追加を防ぎ、パスワードでのみ無効化できます。",
     "safeModeToggleDescription": "パスワードを入力してセーフモードをオン/オフに切り替えてください。",
@@ -496,7 +496,7 @@
     "safeModeTapsRemaining": "{count} 回タップしてセーフモードを無効にする",
     "safeModeEnabledHint": "セーフモードが有効になっています。設定でバージョンコードをタップして無効にしてください",
     "preventUninstallation": "Prevent uninstallation",
-    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
 

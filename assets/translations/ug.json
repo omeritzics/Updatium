@@ -479,7 +479,7 @@
     "safeModeEnabled": "بىخەتەر ھالەت قوزغىتىلدى",
     "safeModeDisabled": "بىخەتەر ھالەت چەكلەندى",
     "safeModeDisable": "بىخەتەر ھالەتنى چەكلەش",
-    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "بىخەتەر ھالەت باشقۇرۇش",
     "safeModeSetupDescription": "بىخەتەر ھالەتنى قوزغىتىش ئۈچۈن پارول بەلگىلەڭ.",
     "safeModeToggleDescription": "بىخەتەر ھالەتنى ئۆزگەرتىش ئۈچۈن پارول كىرگۈزۈڭ.",
@@ -496,7 +496,7 @@
     "safeModeTapsRemaining": "بىخەتەر ھالەتنى چەكلەش ئۈچۈن يەنە {count} قېتىم بېسىڭ",
     "safeModeEnabledHint": "بىخەتەر ھالەت قوزغىتىلدى. تەڭشەكتىكى نەشر نومۇرىنى كۆپ قېتىم بېسىپ چەكلەڭ.",
     "preventUninstallation": "Prevent uninstallation",
-    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
 

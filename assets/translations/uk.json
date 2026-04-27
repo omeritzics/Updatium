@@ -479,7 +479,7 @@
     "safeModeEnabled": "Безпечний режим увімкнено",
     "safeModeDisabled": "Безпечний режим вимкнено",
     "safeModeDisable": "Вимкнути безпечний режим",
-    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Адміністрування безпечного режиму",
     "safeModeSetupDescription": "Встановіть пароль для увімкнення безпечного режиму. Після увімкнення безпечного режиму додавання нових додатків буде заблоковано, і його можна буде вимкнути лише за допомогою пароля.",
     "safeModeToggleDescription": "Введіть свій пароль, щоб увімкнути або вимкнути безпечний режим.",
@@ -496,7 +496,7 @@
     "safeModeTapsRemaining": "{count} натискань залишилося для вимкнення безпечного режиму",
     "safeModeEnabledHint": "Безпечний режим увімкнено. Натисніть на номер версії в Налаштуваннях багаторазово, щоб вимкнути.",
     "preventUninstallation": "Prevent uninstallation",
-    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
 

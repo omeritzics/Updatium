@@ -479,7 +479,7 @@
     "safeModeEnabled": "Moda Ewle çalak e",
     "safeModeDisabled": "Moda Ewle neçalak e",
     "safeModeDisable": "Moda Ewle neçalak bike",
-    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Rêveberiya Moda Ewle",
     "safeModeSetupDescription": "Kelîmeya serê were saz bike ji bo çalakkirina Moda Ewle. Pi çalakkirinê, Moda Ewle sepanên nû zêdekirinê qedexe dike û tenê bi kelîmeya serê dikare were neçalak kirin.",
     "safeModeToggleDescription": "Kelîmeya serê binivîse ji bo guhertina Moda Ewle.",
@@ -496,7 +496,7 @@
     "safeModeTapsRemaining": "{count} tapên mayî hene ji bo neçalakkirina Moda Ewle",
     "safeModeEnabledHint": "Moda Ewle çalak bû. Li ser hejmara versiyonê di De rê de pir car bikin ji bo neçalakkirinê.",
     "preventUninstallation": "Prevent uninstallation",
-    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
 

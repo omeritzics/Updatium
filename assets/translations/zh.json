@@ -479,7 +479,7 @@
     "safeModeEnabled": "安全模式已启用",
     "safeModeDisabled": "安全模式已禁用",
     "safeModeDisable": "禁用安全模式",
-    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "安全模式管理",
     "safeModeSetupDescription": "设置密码以启用安全模式。启用后，安全模式将阻止添加新应用，仅可通过密码禁用。",
     "safeModeToggleDescription": "输入密码以启用或禁用安全模式。",
@@ -496,7 +496,7 @@
     "safeModeTapsRemaining": "剩余 {count} 次点击以禁用安全模式",
     "safeModeEnabledHint": "安全模式已启用。点击设置中的版本号多次以禁用。",
     "preventUninstallation": "Prevent uninstallation",
-    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
 

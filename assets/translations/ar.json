@@ -495,7 +495,7 @@
     "safeModeEnabled": "Safe Mode is enabled",
     "safeModeDisabled": "Safe Mode is disabled",
     "safeModeDisable": "Disable Safe Mode",
-    "safeModeDisableHint": "Tap many times on the version number in Settings to disable Safe Mode",
+    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Safe Mode Administration",
     "safeModeSetupDescription": "Set a password to enable Safe Mode. Once enabled, Safe Mode prevents adding new apps and can only be disabled with the password.",
     "safeModeToggleDescription": "Enter your password to toggle Safe Mode on or off.",
@@ -512,7 +512,7 @@
     "safeModeTapsRemaining": "{count} taps remaining to disable Safe Mode",
     "safeModeEnabledHint": "Safe Mode enabled. Tap on the version number in the Settings many times to disable.",
     "preventUninstallation": "Prevent uninstallation",
-    "preventUninstallationDescription": "Prevents Updatium from being uninstalled without first disabling Safe Mode",
+    "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
 
