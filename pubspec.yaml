@@ -91,7 +91,6 @@ dependencies:
   flutter_foreground_task: ^9.2.0
   flutter_markdown_plus: ^1.0.7
   path: any
-  material_symbols_icons: ^4.2928.1
 flutter_launcher_icons:
   android: "ic_launcher"
   image_path: "assets/graphics/icon.png"

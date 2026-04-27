@@ -481,8 +481,8 @@ class _UpdatiumState extends State<Updatium> {
               return 'NotoSansArabic';
             }
 
-            // Default to Google Sans Flex for other languages
-            return 'GoogleSansFlex';
+            // Default to Inter for other languages
+            return 'Inter';
           }
 
           // Shared theme component generator with Material Design Expressive
@@ -493,7 +493,6 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: getPrimaryFontForLocale(context.locale),
               fontFamilyFallback: const [
                 'Inter',
-                'GoogleSansFlex',
                 'NotoSansCJK',
                 'NotoSansHebrew',
                 'NotoSansArabic',
