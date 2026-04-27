@@ -691,7 +691,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 // generate new color, ensure it is not the same
                                 int newColor = oldEntry.value.key;
                                 while (oldEntry.value.key == newColor) {
-                                  newColor = generateRandomLightColor().toARGB32();
+                                  newColor = generateRandomLightColor()
+                                      .toARGB32();
                                 }
                                 // Update entry with new color, remain selected
                                 temp.update(
