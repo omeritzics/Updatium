@@ -443,7 +443,7 @@ class _UpdatiumState extends State<Updatium> {
               // NOTE: LET'S SEE WHETHER FLUTTER'S DEFAULT CONFIGS ARE BETTER FOR THE AMOLED THEME
               // surfaceContainerHighest: Colors.white.withValues(alpha: 0.20),
               // surfaceContainerHigh: Colors.white.withValues(alpha: 0.16),
-              surfaceContainer: Colors.black,
+              surfaceContainer: Colors.white.withValues(alpha: 0.15),
               surfaceContainerLow: Colors.black,
               surfaceDim: Colors.black,
               surfaceBright: Colors.black,
@@ -503,60 +503,6 @@ class _UpdatiumState extends State<Updatium> {
               focusColor: scheme.primary.withValues(alpha: 0.2),
               highlightColor: scheme.primary.withValues(alpha: 0.1),
 
-              // Material 3 Outlined Text Fields
-              inputDecorationTheme: InputDecorationTheme(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.outline),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.primary, width: 2),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.error, width: 2),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.error, width: 2),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-                hintStyle: TextStyle(
-                  color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
-                  fontWeight: FontWeight.w400,
-                ),
-                labelStyle: TextStyle(
-                  color: scheme.onSurfaceVariant,
-                  fontWeight: FontWeight.w400,
-                ),
-                floatingLabelStyle: TextStyle(
-                  color: scheme.primary,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-
-              // Material 3 Extended Floating Action Button
-              floatingActionButtonTheme: FloatingActionButtonThemeData(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                ),
-                extendedPadding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                  vertical: 20,
-                ),
-                extendedTextStyle: TextStyle(fontWeight: FontWeight.w500),
-                foregroundColor: scheme.onPrimary,
-                backgroundColor: scheme.primary,
-                iconSize: 24,
-              ),
-
               // Minimal AppBar Theme for font and color consistency
               appBarTheme: AppBarTheme(
                 backgroundColor: scheme.surface,
@@ -565,6 +511,7 @@ class _UpdatiumState extends State<Updatium> {
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
                   fontWeight: FontWeight.w600,
+                  fontSize: 32,
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
               ),
