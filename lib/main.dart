@@ -512,7 +512,7 @@ class _UpdatiumState extends State<Updatium> {
                   fontWeight: FontWeight.w600,
                   fontSize: 32,
                 ),
-                iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
+                iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),
 
               // Expressive List Tiles

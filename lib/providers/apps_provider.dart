@@ -644,30 +644,28 @@ class AppsProvider with ChangeNotifier {
     });
     () async {
       await settingsProvider.initializeSettings();
+      APKDir = Directory('${(await getAppStorageDir()).path}/apks');
+      if (!APKDir.existsSync()) {
+        APKDir.createSync();
+      }
+      // Clean up unused icon cache directory
+      var iconCacheDir = Directory(
+        '${(await getAppStorageDir()).path}/icons',
+      );
+      if (iconCacheDir.existsSync()) {
+        try {
+          iconCacheDir.deleteSync(recursive: true);
+        } catch (e) {
+          // Ignore deletion errors
+        }
+      }
+      // Clean up old external cache directory to reduce cache usage
       var cacheDirs = await getExternalCacheDirectories();
       if (cacheDirs?.isNotEmpty ?? false) {
-        APKDir = cacheDirs!.first;
-        // Clean up unused icon cache directory
-        var iconCacheDir = Directory('${cacheDirs.first.path}/icons');
-        if (iconCacheDir.existsSync()) {
+        var oldCacheDir = cacheDirs!.first;
+        if (oldCacheDir.existsSync()) {
           try {
-            iconCacheDir.deleteSync(recursive: true);
-          } catch (e) {
-            // Ignore deletion errors
-          }
-        }
-      } else {
-        APKDir = Directory('${(await getAppStorageDir()).path}/apks');
-        if (!APKDir.existsSync()) {
-          APKDir.createSync();
-        }
-        // Clean up unused icon cache directory
-        var iconCacheDir = Directory(
-          '${(await getAppStorageDir()).path}/icons',
-        );
-        if (iconCacheDir.existsSync()) {
-          try {
-            iconCacheDir.deleteSync(recursive: true);
+            oldCacheDir.deleteSync(recursive: true);
           } catch (e) {
             // Ignore deletion errors
           }
