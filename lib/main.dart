@@ -437,20 +437,19 @@ class _UpdatiumState extends State<Updatium> {
           }
 
           // Apply pure black surface for AMOLED black theme
-          // Apply semi-transparent surface colors for AMOLED black theme
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
-              surfaceContainerHighest: Colors.white.withValues(alpha: 0.15),
-              surfaceContainerHigh: Colors.white.withValues(alpha: 0.12),
-              surfaceContainer: Colors.white.withValues(alpha: 0.10),
-              surfaceContainerLow: Colors.white.withValues(alpha: 0.05),
+              surfaceContainerHighest: Colors.white.withValues(alpha: 0.20),
+              surfaceContainerHigh: Colors.white.withValues(alpha: 0.16),
+              surfaceContainer: Colors.white.withValues(alpha: 0.12),
+              surfaceContainerLow: Colors.black,
               surfaceDim: Colors.black,
-              surfaceBright: Colors.white.withValues(alpha: 0.05),
+              surfaceBright: Colors.black,
               onSurface: Colors.white,
               onSurfaceVariant: Colors.white.withValues(alpha: 0.6),
-              outline: Colors.white.withValues(alpha: 0.20),
-              outlineVariant: Colors.white.withValues(alpha: 0.12),
+              outline: Colors.white.withValues(alpha: 0.5),
+              outlineVariant: Colors.white.withValues(alpha: 0.25),
             );
           }
 
