@@ -24,6 +24,7 @@
     "color": "നിറം",
     "standard": "സാധാരണ",
     "custom": "ഇഷ്‌ടാനുസൃതം",
+    "primary": "Primary",
     "useMaterialYou": "Material You നിറങ്ങൾ ഉപയോഗിക്കുക",
     "githubStarredRepos": "GitHub സ്റ്റാർ ചെയ്ത റെപ്പോസിറ്ററികൾ",
     "gettingAppInfo": "Getting app info",
@@ -499,8 +500,8 @@
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
-
-
+    "autoDeleteApkAfterInstall": "Auto-delete APK after installation",
+    "autoDeleteApkAfterInstallDescription": "Automatically delete APK files after successful installation to save storage space",
     "gotIt": "മനസ്സില്ല",
     "version": "Version",
     "open": "Open",

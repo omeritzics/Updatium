@@ -23,6 +23,7 @@ class CategoryEditorDialog extends StatefulWidget {
 class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
   late TextEditingController _nameController;
   late Color _selectedColor;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -107,18 +108,30 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(widget.title),
-      content: SizedBox(
-        width: 300,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: _nameController,
-              autofocus: true,
-              decoration: InputDecoration(labelText: tr('name')),
-            ),
-            const SizedBox(height: 16),
+      content: Form(
+        key: _formKey,
+        child: SizedBox(
+          width: 300,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _nameController,
+                autofocus: true,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                decoration: InputDecoration(
+                  labelText: tr('name'),
+                  border: const OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return '${tr('name')} ${tr('requiredInBrackets')}';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
@@ -148,19 +161,24 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
           ],
         ),
       ),
-      actions: [
+    ),
+    actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(tr('cancel')),
         ),
         TextButton(
-          onPressed: () => Navigator.pop(
-            context,
-            _CategoryResult(
-              name: _nameController.text.trim(),
-              color: _selectedColor,
-            ),
-          ),
+          onPressed: () {
+            if (_formKey.currentState?.validate() ?? false) {
+              Navigator.pop(
+                context,
+                _CategoryResult(
+                  name: _nameController.text.trim(),
+                  color: _selectedColor,
+                ),
+              );
+            }
+          },
           child: Text(widget.confirmButtonText),
         ),
       ],

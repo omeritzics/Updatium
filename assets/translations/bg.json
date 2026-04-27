@@ -24,6 +24,7 @@
     "color": "Цвят",
     "standard": "Стандартен",
     "custom": "Персонализиран",
+    "primary": "Primary",
     "useMaterialYou": "Използване на Material You цветове",
     "githubStarredRepos": "Репозитории със звезда в GitHub",
     "gettingAppInfo": "Получаване на информация за приложението",
@@ -499,8 +500,8 @@
     "preventUninstallationDescription": "Предотвратява деинсталирането на Updatium без първо да деактивирате Безопасен режим",
     "deviceAdminRequired": "Разрешение за администратор на устройството се изисква за предотвратяване на деинсталиране",
     "turnOffSafeModeFirst": "Моля, първо изключете Безопасен режим",
-
-
+    "autoDeleteApkAfterInstall": "Auto-delete APK after installation",
+    "autoDeleteApkAfterInstallDescription": "Automatically delete APK files after successful installation to save storage space",
     "gotIt": "Разбрах",
     "version": "Version",
     "open": "Open",

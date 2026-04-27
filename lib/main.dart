@@ -510,7 +510,7 @@ class _UpdatiumState extends State<Updatium> {
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
                   fontWeight: FontWeight.w600,
-                  fontSize: 32,
+                  fontSize: 24,
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),

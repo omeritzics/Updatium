@@ -24,6 +24,7 @@
   "color": "Color",
   "standard": "Standard",
   "custom": "Custom",
+  "primary": "Primary",
   "useMaterialYou": "Use Material You colors",
   "githubStarredRepos": "GitHub starred repositories",
   "gettingAppInfo": "Getting app info",

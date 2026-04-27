@@ -284,13 +284,6 @@ class _SettingsPageState extends State<SettingsPage> {
               });
             }
           },
-          child: Icon(
-            Icons.palette,
-            color: settingsProvider.themeColor.computeLuminance() > 0.5
-                ? Colors.black
-                : Colors.white,
-            size: 20,
-          ),
         ),
       ),
     );

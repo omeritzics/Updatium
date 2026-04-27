@@ -24,6 +24,7 @@
     "color": "Warna",
     "standard": "Standar",
     "custom": "Kustom",
+    "primary": "Primary",
     "useMaterialYou": "Gunakan warna Material You",
     "githubStarredRepos": "Repositori berbintang GitHub",
     "gettingAppInfo": "Getting app info",
@@ -499,8 +500,8 @@
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
-
-
+    "autoDeleteApkAfterInstall": "Auto-delete APK after installation",
+    "autoDeleteApkAfterInstallDescription": "Automatically delete APK files after successful installation to save storage space",
     "gotIt": "Got it",
     "version": "Version",
     "open": "Open",

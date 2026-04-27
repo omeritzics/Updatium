@@ -24,6 +24,7 @@
     "color": "Cor",
     "standard": "Estándar",
     "custom": "Persoal",
+    "primary": "Primary",
     "useMaterialYou": "Usar cores Material You",
     "githubStarredRepos": "Repositorios GitHub con estrela",
     "gettingAppInfo": "Getting app info",
@@ -499,8 +500,8 @@
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
     "turnOffSafeModeFirst": "Please turn off Safe Mode first",
-
-
+    "autoDeleteApkAfterInstall": "Auto-delete APK after installation",
+    "autoDeleteApkAfterInstallDescription": "Automatically delete APK files after successful installation to save storage space",
     "gotIt": "Entendido",
     "version": "Version",
     "open": "Open",
