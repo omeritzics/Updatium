@@ -551,9 +551,7 @@ class _UpdatiumState extends State<Updatium> {
                   horizontal: 32,
                   vertical: 20,
                 ),
-                extendedTextStyle: TextStyle(
-                  fontWeight: FontWeight.w500,
-                ),
+                extendedTextStyle: TextStyle(fontWeight: FontWeight.w500),
                 foregroundColor: scheme.onPrimary,
                 backgroundColor: scheme.primary,
                 iconSize: 24,
