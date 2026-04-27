@@ -230,6 +230,7 @@
     "update": "Обновить",
     "updated": "Обновлено",
     "markUpdated": "Отметить обновлённым",
+    "download": "Download",
     "additionalOptions": "Дополнительные настройки",
     "disableVersionDetection": "Отключить определение версии",
     "noVersionDetectionExplanation": "Эта настройка должна использоваться только для приложений, где определение версии не работает корректно",

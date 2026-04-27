@@ -230,6 +230,7 @@
     "update": "Opdater",
     "updated": "Opdateret",
     "markUpdated": "Markér som opdateret",
+    "download": "Download",
     "additionalOptions": "Flere indstillinger",
     "disableVersionDetection": "Deaktivér versionsregistrering",
     "noVersionDetectionExplanation": "Denne indstilling bør kun bruges til apps, hvor versionsregistrering ikke virker korrekt.",

@@ -230,6 +230,7 @@
     "update": "업데이트",
     "updated": "업데이트됨",
     "markUpdated": "업데이트됨으로 표시",
+    "download": "Download",
     "additionalOptions": "추가 옵션",
     "disableVersionDetection": "버전 감지 비활성화",
     "noVersionDetectionExplanation": "이 옵션은 버전 감지가 올바르게 작동하지 않는 앱에만 사용해야 합니다.",

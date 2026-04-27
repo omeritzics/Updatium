@@ -230,6 +230,7 @@
     "update": "Actualizează",
     "updated": "Actualizat",
     "markUpdated": "Marchează ca actualizat",
+    "download": "Download",
     "additionalOptions": "Opțiuni suplimentare",
     "disableVersionDetection": "Dezactivează detectarea versiunii",
     "noVersionDetectionExplanation": "Această opțiune ar trebui folosită doar pentru aplicațiile unde detectarea versiunii nu funcționează corect.",

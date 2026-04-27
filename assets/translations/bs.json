@@ -230,6 +230,7 @@
     "update": "Nadogradi",
     "updated": "Ažurirano",
     "markUpdated": "Označi kao ažurirano",
+    "download": "Download",
     "additionalOptions": "Dodatne opcije",
     "disableVersionDetection": "Onemogući detekciju verzije",
     "noVersionDetectionExplanation": "Ova opcija bi se trebala koristiti samo za aplikacije gdje detekcija verzije ne radi ispravno.",

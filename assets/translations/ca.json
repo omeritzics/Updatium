@@ -230,6 +230,7 @@
     "update": "Actualitza",
     "updated": "Actualitzat",
     "markUpdated": "Marca com a actualitzada",
+    "download": "Download",
     "additionalOptions": "Opcions addicionals",
     "disableVersionDetection": "Desactiva la detecció de versions",
     "noVersionDetectionExplanation": "Només has d'usar aquesta opció en les aplicacions en què la detecció de versions no funcioni correctament.",

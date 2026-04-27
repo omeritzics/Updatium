@@ -230,6 +230,7 @@
     "update": "アップデート",
     "updated": "更新済み",
     "markUpdated": "アップデート済みとしてマークする",
+    "download": "Download",
     "additionalOptions": "追加のオプション",
     "disableVersionDetection": "バージョン検出を無効にする",
     "noVersionDetectionExplanation": "このオプションは、バージョン検出が正しく機能しないアプリにのみ使用する必要があります。",

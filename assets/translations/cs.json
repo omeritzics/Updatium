@@ -230,6 +230,7 @@
     "update": "Aktualizovat",
     "updated": "Aktualizováno",
     "markUpdated": "Označit jako aktuální",
+    "download": "Download",
     "additionalOptions": "Další možnosti",
     "disableVersionDetection": "Deaktivovat detekci verze",
     "noVersionDetectionExplanation": "Tato možnost by měla být použita pouze u aplikace, kde detekce verzí nefunguje správně.",

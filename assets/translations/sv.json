@@ -230,6 +230,7 @@
     "update": "Uppdatera",
     "updated": "Uppdaterad",
     "markUpdated": "Märk Uppdaterad",
+    "download": "Download",
     "additionalOptions": "Ytterligare Alternativ",
     "disableVersionDetection": "Inaktivera versionsdetektering",
     "noVersionDetectionExplanation": "Det här alternativet bör endast användas för appar där versionsidentifiering inte fungerar korrekt.",

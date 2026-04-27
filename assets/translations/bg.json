@@ -230,6 +230,7 @@
     "update": "Актуализация",
     "updated": "Актуализирано",
     "markUpdated": "Маркиране като актуализирано",
+    "download": "Download",
     "additionalOptions": "Допълнителни опции",
     "disableVersionDetection": "Деактивиране на откриването на версията",
     "noVersionDetectionExplanation": "Тази опция трябва да се използва само за приложения, при които откриването на версията не работи правилно.",

@@ -230,6 +230,7 @@
     "update": "Оновити",
     "updated": "Оновлено",
     "markUpdated": "Позначити як оновлене",
+    "download": "Download",
     "additionalOptions": "Додаткові опції",
     "disableVersionDetection": "Вимкнути визначення версії",
     "noVersionDetectionExplanation": "Цю опцію слід використовувати лише для застосунків, де визначення версії працює неправильно.",

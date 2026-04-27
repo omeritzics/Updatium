@@ -230,6 +230,7 @@
     "update": "Frissítés",
     "updated": "Frissített",
     "markUpdated": "Frissítettnek jelölés",
+    "download": "Download",
     "additionalOptions": "További beállítások",
     "disableVersionDetection": "Verziófelismerés letiltása",
     "noVersionDetectionExplanation": "Ezt a beállítást csak olyan alkalmazásoknál szabad használni, ahol a verziófelismerés nem működik megfelelően.",

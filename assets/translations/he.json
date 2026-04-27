@@ -230,6 +230,7 @@
     "update": "עדכון",
     "updated": "מעודכן",
     "markUpdated": "סימון כמעודכן",
+    "download": "Download",
     "additionalOptions": "אפשרויות נוספות",
     "disableVersionDetection": "השבתת זיהוי גרסה",
     "noVersionDetectionExplanation": "This option should only be used for apps where version detection does not work correctly.",

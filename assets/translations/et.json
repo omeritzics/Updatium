@@ -230,6 +230,7 @@
     "update": "Uuenda",
     "updated": "Uuendatud",
     "markUpdated": "Märgi uuendatuks",
+    "download": "Download",
     "additionalOptions": "Lisavalikud",
     "disableVersionDetection": "Keela versiooni tuvastamine",
     "noVersionDetectionExplanation": "Seda valikut tuleks kasutada ainult äppide puhul, kus versiooni tuvastamine ei tööta korrektselt.",

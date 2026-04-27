@@ -230,6 +230,7 @@
     "update": "حدِّث",
     "updated": "مُحدَّث",
     "markUpdated": "علِّم كمحدث",
+    "download": "Download",
     "additionalOptions": "خيارات إضافية",
     "disableVersionDetection": "عطّل اكتشاف الإصدار",
     "noVersionDetectionExplanation": "يجب استخدام هذا الخيار فقط للتطبيقات التي لا يعمل فيها اكتشاف الإصدار بشكل صحيح.",

@@ -230,6 +230,7 @@
     "update": "Atualizar",
     "updated": "Atualizado",
     "markUpdated": "Marcar como atualizado",
+    "download": "Download",
     "additionalOptions": "Opções adicionais",
     "disableVersionDetection": "Desativar detecção de versão",
     "noVersionDetectionExplanation": "Esta opção deve ser usada apenas por aplicações onde a deteção de versão não funciona corretamente.",

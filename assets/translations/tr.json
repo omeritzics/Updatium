@@ -230,6 +230,7 @@
     "update": "Güncelle",
     "updated": "Güncellendi",
     "markUpdated": "Güncel olarak işaretle",
+    "download": "Download",
     "additionalOptions": "Ek seçenekler",
     "disableVersionDetection": "Sürüm algılamayı devre dışı bırak",
     "noVersionDetectionExplanation": "Bu seçenek yalnızca sürüm algılamanın doğru çalışmadığı uygulamalar için kullanılmalıdır.",

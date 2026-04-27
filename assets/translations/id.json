@@ -230,6 +230,7 @@
     "update": "perbarui",
     "updated": "Telah diperbarui",
     "markUpdated": "Tandai diperbarui",
+    "download": "Download",
     "additionalOptions": "Opsi tambahan",
     "disableVersionDetection": "Nonaktifkan pendeteksi versi",
     "noVersionDetectionExplanation": "Opsi ini hanya boleh digunakan untuk aplikasi dengan pendeteksi versi yang tidak berfungsi dengan benar.",

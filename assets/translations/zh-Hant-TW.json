@@ -230,6 +230,7 @@
     "update": "更新",
     "updated": "已更新",
     "markUpdated": "標記為已更新",
+    "download": "Download",
     "additionalOptions": "額外選項",
     "disableVersionDetection": "停用版本偵測",
     "noVersionDetectionExplanation": "此選項僅應用於版本偵測無法正確工作的應用程式。",
