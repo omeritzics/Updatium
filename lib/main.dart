@@ -486,13 +486,12 @@ class _UpdatiumState extends State<Updatium> {
           }
 
           // Shared theme component generator with Material Design Expressive
-          ThemeData createTheme(ColorScheme scheme, bool isDark) {
+          ThemeData createTheme(ColorScheme scheme) {
             // Define text theme as local variable for reusability
             final textTheme = TextTheme(
               displayLarge: TextStyle(
                 fontSize: 57,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
                 height: 1.12,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -507,7 +506,6 @@ class _UpdatiumState extends State<Updatium> {
               displayMedium: TextStyle(
                 fontSize: 45,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
                 height: 1.16,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -522,7 +520,6 @@ class _UpdatiumState extends State<Updatium> {
               displaySmall: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
                 height: 1.22,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -537,7 +534,6 @@ class _UpdatiumState extends State<Updatium> {
               headlineLarge: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
                 height: 1.25,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -552,7 +548,6 @@ class _UpdatiumState extends State<Updatium> {
               headlineMedium: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
                 height: 1.29,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -567,7 +562,6 @@ class _UpdatiumState extends State<Updatium> {
               headlineSmall: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
                 height: 1.33,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -582,7 +576,6 @@ class _UpdatiumState extends State<Updatium> {
               titleLarge: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.0,
                 height: 1.27,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -597,7 +590,6 @@ class _UpdatiumState extends State<Updatium> {
               titleMedium: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.2,
                 height: 1.5,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -612,7 +604,6 @@ class _UpdatiumState extends State<Updatium> {
               titleSmall: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.15,
                 height: 1.43,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -627,7 +618,6 @@ class _UpdatiumState extends State<Updatium> {
               bodyLarge: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.5,
                 height: 1.5,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -642,7 +632,6 @@ class _UpdatiumState extends State<Updatium> {
               bodyMedium: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.3,
                 height: 1.5,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -657,7 +646,6 @@ class _UpdatiumState extends State<Updatium> {
               bodySmall: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.4,
                 height: 1.4,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -672,7 +660,6 @@ class _UpdatiumState extends State<Updatium> {
               labelLarge: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.15,
                 height: 1.43,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -687,7 +674,6 @@ class _UpdatiumState extends State<Updatium> {
               labelMedium: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.5,
                 height: 1.4,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -702,7 +688,6 @@ class _UpdatiumState extends State<Updatium> {
               labelSmall: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.5,
                 height: 1.3,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
@@ -745,11 +730,8 @@ class _UpdatiumState extends State<Updatium> {
                   ),
                   backgroundColor: scheme.secondaryContainer,
                   foregroundColor: scheme.onSecondaryContainer,
-                  elevation: isDark ? 2 : 1,
-                  shadowColor: isDark ? Colors.black26 : Colors.black12,
                   textStyle: TextStyle(
                     fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
                     fontFamily: getPrimaryFontForLocale(context.locale),
                     fontFamilyFallback: const [
                       'Inter',
@@ -766,10 +748,6 @@ class _UpdatiumState extends State<Updatium> {
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
-                  elevation: isDark ? 3 : 2,
-                  shadowColor: isDark
-                      ? Colors.black38
-                      : Colors.black.withValues(alpha: 0.2),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 28,
                     vertical: 14,
@@ -943,14 +921,12 @@ class _UpdatiumState extends State<Updatium> {
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(16)),
                 ),
-                elevation: isDark ? 6 : 8,
                 extendedPadding: const EdgeInsets.symmetric(
                   horizontal: 32,
                   vertical: 20,
                 ),
                 extendedTextStyle: TextStyle(
                   fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'Inter',
@@ -965,14 +941,10 @@ class _UpdatiumState extends State<Updatium> {
                 iconSize: 24,
               ),
 
-              // Expressive App Bar
+              // Minimal AppBar Theme for font and color consistency
               appBarTheme: AppBarTheme(
                 backgroundColor: scheme.surface,
                 foregroundColor: scheme.onSurface,
-                elevation: 0,
-                scrolledUnderElevation: 1,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
-                surfaceTintColor: scheme.surfaceTint,
                 centerTitle: true,
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
@@ -987,10 +959,6 @@ class _UpdatiumState extends State<Updatium> {
                   ],
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
-                actionsIconTheme: IconThemeData(
-                  color: scheme.onSurface,
-                  size: 24,
-                ),
               ),
 
               // Expressive List Tiles
@@ -1009,7 +977,6 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  letterSpacing: 0.15,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'Inter',
@@ -1023,7 +990,6 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurfaceVariant,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  letterSpacing: 0.25,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'Inter',
@@ -1123,7 +1089,6 @@ class _UpdatiumState extends State<Updatium> {
                   ],
                 ),
                 type: BottomNavigationBarType.fixed,
-                elevation: isDark ? 3 : 8,
                 landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
               ),
 
@@ -1139,7 +1104,6 @@ class _UpdatiumState extends State<Updatium> {
                 valueIndicatorTextStyle: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  letterSpacing: 0.25,
                   height: 1.5,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
@@ -1162,8 +1126,6 @@ class _UpdatiumState extends State<Updatium> {
               dialogTheme: DialogThemeData(
                 backgroundColor: scheme.surface,
                 surfaceTintColor: scheme.surfaceTint,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
-                elevation: isDark ? 6 : 8,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(28),
                 ),
@@ -1171,7 +1133,6 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontSize: 24,
                   fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
                   height: 1.33,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
@@ -1186,7 +1147,6 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
-                  letterSpacing: 0.5,
                   height: 1.5,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
@@ -1212,8 +1172,8 @@ class _UpdatiumState extends State<Updatium> {
               locale: context.locale,
               navigatorKey: globalNavigatorKey,
               debugShowCheckedModeBanner: false,
-              theme: createTheme(lightColorScheme, false),
-              darkTheme: createTheme(darkColorScheme, true),
+              theme: createTheme(lightColorScheme),
+              darkTheme: createTheme(darkColorScheme),
               themeMode: settingsProvider.theme == ThemeSettings.dark
                   ? ThemeMode.dark
                   : (settingsProvider.theme == ThemeSettings.light
