@@ -540,9 +540,6 @@ class _UpdatiumState extends State<Updatium> {
                 ),
               ),
 
-              // Progress Indicators
-              progressIndicatorTheme: const ProgressIndicatorThemeData(),
-
               // Page Transitions
               pageTransitionsTheme: const PageTransitionsTheme(
                 builders: {
