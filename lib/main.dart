@@ -448,7 +448,7 @@ class _UpdatiumState extends State<Updatium> {
               surfaceDim: Colors.black,
               surfaceBright: Colors.black,
               onSurface: Colors.white,
-              onSurfaceVariant: Colors.white.withValues(alpha: 0.02),
+              onSurfaceVariant: Colors.white.withValues(alpha: 0.90),
               // outline: Colors.white.withValues(alpha: 0.5),
               // outlineVariant: Colors.white.withValues(alpha: 0.25),
             );
