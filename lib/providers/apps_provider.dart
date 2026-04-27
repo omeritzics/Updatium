@@ -913,7 +913,9 @@ class AppsProvider with ChangeNotifier {
           downloadedFile.deleteSync();
         }
         // Also delete .part file if exists
-        var partFile = File('${APKDir.path}/$fileNameNoExt${source.urlsAlwaysHaveExtension ? '' : '.$ext'}.part');
+        var partFile = File(
+          '${APKDir.path}/$fileNameNoExt${source.urlsAlwaysHaveExtension ? '' : '.$ext'}.part',
+        );
         if (partFile.existsSync()) {
           partFile.deleteSync();
         }

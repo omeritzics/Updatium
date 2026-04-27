@@ -662,5 +662,4 @@ class SettingsProvider with ChangeNotifier {
     prefs?.setBool('preventUninstallation', val);
     notifyListeners();
   }
-
 }
