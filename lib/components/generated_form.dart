@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:hsluv/hsluv.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 abstract class GeneratedFormItem {
@@ -611,16 +613,19 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   ...(values[fieldKey] as Map<String, MapEntry<int, bool>>?)
                           ?.entries
                           .map((e2) {
+                            final settingsProvider = Provider.of<SettingsProvider>(context);
+                            final categoryColor = Color(
+                              settingsProvider.categories[e2.key] ??
+                                  Theme.of(context).colorScheme.primary.toARGB32(),
+                            );
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 4,
                               ),
                               child: ChoiceChip(
                                 label: Text(e2.key),
-                                backgroundColor: Color(
-                                  e2.value.key,
-                                ).withValues(alpha: 0.2),
-                                selectedColor: Color(e2.value.key),
+                                backgroundColor: categoryColor.withValues(alpha: 0.2),
+                                selectedColor: categoryColor,
                                 visualDensity: VisualDensity.compact,
                                 selected: e2.value.value,
                                 onSelected: (value) {

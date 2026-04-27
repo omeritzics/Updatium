@@ -880,7 +880,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ),
                 if (app.pinned)
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: const EdgeInsets.only(left: 6),
                     child: Semantics(
                       label: tr('pinned'),
                       child: Icon(
@@ -974,10 +974,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           child: ExpansionTile(
             key: ValueKey(
               'category_grid_${listedCategories[index] ?? "null"}_$index',
-            ),
-            leading: Icon(
-              Icons.category_rounded,
-              color: Theme.of(context).colorScheme.primary,
             ),
             title: Text(
               capFirstChar(listedCategories[index] ?? tr('noCategory')),
@@ -1547,10 +1543,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   child: ExpansionTile(
                     key: ValueKey(
                       'category_${listedCategories[index] ?? "null"}_$index',
-                    ),
-                    leading: Icon(
-                      Icons.category_rounded,
-                      color: Theme.of(context).colorScheme.primary,
                     ),
                     title: Text(
                       capFirstChar(listedCategories[index] ?? tr('noCategory')),

@@ -1603,7 +1603,6 @@ class CategoryTagEditor extends StatelessWidget {
                 child: Chip(
                   label: Text(tag),
                   backgroundColor: categoryColor.withValues(alpha: 0.2),
-                  side: BorderSide(color: categoryColor, width: 1),
                   onDeleted: () =>
                       _onDeletePressed(context, settingsProvider, tag),
                   deleteIcon: const Icon(Icons.close, size: 18),
