@@ -746,6 +746,7 @@ class _UpdatiumState extends State<Updatium> {
                 surfaceTintColor: scheme.surfaceTint,
                 shadowColor: isDark ? Colors.black26 : Colors.black12,
               ),
+
               // Expressive FilledButton with tonal styling - preserve M3 Expressive transparency
               filledButtonTheme: FilledButtonThemeData(
                 style: FilledButton.styleFrom(
@@ -754,12 +755,8 @@ class _UpdatiumState extends State<Updatium> {
                     horizontal: 28,
                     vertical: 14,
                   ),
-                  backgroundColor: isDark
-                      ? scheme.secondaryContainer
-                      : scheme.secondaryContainer,
-                  foregroundColor: isDark
-                      ? scheme.onSecondaryContainer
-                      : scheme.onSecondaryContainer,
+                  backgroundColor: scheme.secondaryContainer,
+                  foregroundColor: scheme.onSecondaryContainer,
                   elevation: isDark ? 2 : 1,
                   shadowColor: isDark ? Colors.black26 : Colors.black12,
                   textStyle: TextStyle(
@@ -991,10 +988,7 @@ class _UpdatiumState extends State<Updatium> {
                 centerTitle: true,
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
-                  fontSize: 22,
                   fontWeight: FontWeight.w600,
-                  letterSpacing: -0.5,
-                  height: 1.27,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'Inter',
@@ -1174,24 +1168,6 @@ class _UpdatiumState extends State<Updatium> {
                 thumbColor: scheme.primary,
                 overlayColor: scheme.primary.withValues(alpha: 0.2),
                 valueIndicatorColor: scheme.primary,
-              ),
-
-              // Material Design 3 Switch Theme - preserve M3 Expressive transparency
-              switchTheme: SwitchThemeData(
-                thumbColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return scheme.primary;
-                  }
-                  return scheme.outline;
-                }),
-                trackColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return scheme.primary.withValues(alpha: 0.5);
-                  }
-                  return scheme.surfaceContainerHighest;
-                }),
-                trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
 
               // Dialog Theme for AMOLED black theme compatibility
