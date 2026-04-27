@@ -132,37 +132,37 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
                 },
               ),
               const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    tr('selectX', args: [tr('color').toLowerCase()]),
-                    style: Theme.of(context).textTheme.bodyMedium,
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      tr('selectX', args: [tr('color').toLowerCase()]),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
-                ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: _showColorPicker,
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: _selectedColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Theme.of(context).colorScheme.outline,
-                        width: 1,
+                  InkWell(
+                    borderRadius: BorderRadius.circular(20),
+                    onTap: _showColorPicker,
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: _selectedColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.outline,
+                          width: 1,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-    actions: [
+      actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(tr('cancel')),
