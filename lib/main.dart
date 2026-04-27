@@ -443,12 +443,12 @@ class _UpdatiumState extends State<Updatium> {
               // NOTE: LET'S SEE WHETHER FLUTTER'S DEFAULT CONFIGS ARE BETTER FOR THE AMOLED THEME
               // surfaceContainerHighest: Colors.white.withValues(alpha: 0.20),
               // surfaceContainerHigh: Colors.white.withValues(alpha: 0.16),
-              surfaceContainer: Colors.white.withValues(alpha: 0.15),
+              surfaceContainer: Colors.white.withValues(alpha: 0.08),
               surfaceContainerLow: Colors.black,
               surfaceDim: Colors.black,
               surfaceBright: Colors.black,
               onSurface: Colors.white,
-              // onSurfaceVariant: Colors.white.withValues(alpha: 0.6),
+              onSurfaceVariant: Colors.white.withValues(alpha: 0.02),
               // outline: Colors.white.withValues(alpha: 0.5),
               // outlineVariant: Colors.white.withValues(alpha: 0.25),
             );
