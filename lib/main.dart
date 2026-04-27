@@ -519,7 +519,7 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive List Tiles
               listTileTheme: ListTileThemeData(
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
+                  horizontal: 18,
                   vertical: 8,
                 ),
                 shape: RoundedRectangleBorder(
