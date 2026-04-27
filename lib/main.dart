@@ -443,7 +443,7 @@ class _UpdatiumState extends State<Updatium> {
               // NOTE: LET'S SEE WHETHER FLUTTER'S DEFAULT CONFIGS ARE BETTER FOR THE AMOLED THEME
               // surfaceContainerHighest: Colors.white.withValues(alpha: 0.20),
               // surfaceContainerHigh: Colors.white.withValues(alpha: 0.16),
-              // surfaceContainer: Colors.white.withValues(alpha: 0.12),
+              surfaceContainer: Colors.white.withValues(alpha: 0.10),
               surfaceContainerLow: Colors.black,
               surfaceDim: Colors.black,
               surfaceBright: Colors.black,
@@ -734,18 +734,6 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Typography
               textTheme: textTheme,
-
-              // Expressive Card Design - preserve M3 Expressive transparency
-              cardTheme: CardThemeData(
-                elevation: isDark ? 2 : 1,
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                surfaceTintColor: scheme.surfaceTint,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
-              ),
 
               // Expressive FilledButton with tonal styling - preserve M3 Expressive transparency
               filledButtonTheme: FilledButtonThemeData(
