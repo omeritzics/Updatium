@@ -613,10 +613,13 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   ...(values[fieldKey] as Map<String, MapEntry<int, bool>>?)
                           ?.entries
                           .map((e2) {
-                            final settingsProvider = Provider.of<SettingsProvider>(context);
+                            final settingsProvider =
+                                Provider.of<SettingsProvider>(context);
                             final categoryColor = Color(
                               settingsProvider.categories[e2.key] ??
-                                  Theme.of(context).colorScheme.primary.toARGB32(),
+                                  Theme.of(
+                                    context,
+                                  ).colorScheme.primary.toARGB32(),
                             );
                             return Padding(
                               padding: const EdgeInsets.symmetric(
@@ -624,7 +627,9 @@ class _GeneratedFormState extends State<GeneratedForm> {
                               ),
                               child: ChoiceChip(
                                 label: Text(e2.key),
-                                backgroundColor: categoryColor.withValues(alpha: 0.2),
+                                backgroundColor: categoryColor.withValues(
+                                  alpha: 0.2,
+                                ),
                                 selectedColor: categoryColor,
                                 visualDensity: VisualDensity.compact,
                                 selected: e2.value.value,
