@@ -200,7 +200,7 @@ Future<File> downloadFileWithRetry(
     if (retries > 0 &&
         (e is http.ClientException ||
             e.toString().contains('Connection closed'))) {
-      await Future.delayed(const Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 10));
       return await downloadFileWithRetry(
         url,
         fileName,
@@ -882,29 +882,43 @@ class AppsProvider with ChangeNotifier {
         // If isCorrectVersion is true, we'll use the existing file (downloadFile handles this)
       }
 
-      var downloadedFile = await downloadFileWithRetry(
-        downloadUrl,
-        fileNameNoExt,
-        source.urlsAlwaysHaveExtension,
-        headers: headers,
-        (double? progress) {
-          int? prog = progress?.ceil();
-          if (apps[app.id] != null) {
-            apps[app.id]!.downloadProgress = progress;
-            notifyListeners();
-          }
-          notif = DownloadNotification(app.finalName, prog ?? 100);
-          if (prog != null && prevProg != prog) {
-            notificationsProvider?.notify(notif);
-          }
-          prevProg = prog;
-        },
-        APKDir.path,
-        useExisting: useExisting,
-        allowInsecure: app.additionalSettings['allowInsecure'] == true,
-        logs: logs,
-        preFetchedExt: source.urlsAlwaysHaveExtension ? null : ext,
-      );
+      File? downloadedFile;
+      try {
+        downloadedFile = await downloadFileWithRetry(
+          downloadUrl,
+          fileNameNoExt,
+          source.urlsAlwaysHaveExtension,
+          headers: headers,
+          (double? progress) {
+            int? prog = progress?.ceil();
+            if (apps[app.id] != null) {
+              apps[app.id]!.downloadProgress = progress;
+              notifyListeners();
+            }
+            notif = DownloadNotification(app.finalName, prog ?? 100);
+            if (prog != null && prevProg != prog) {
+              notificationsProvider?.notify(notif);
+            }
+            prevProg = prog;
+          },
+          APKDir.path,
+          useExisting: useExisting,
+          allowInsecure: app.additionalSettings['allowInsecure'] == true,
+          logs: logs,
+          preFetchedExt: source.urlsAlwaysHaveExtension ? null : ext,
+        );
+      } catch (e) {
+        // Delete partial APK file if download was cancelled or failed
+        if (downloadedFile != null && downloadedFile.existsSync()) {
+          downloadedFile.deleteSync();
+        }
+        // Also delete .part file if exists
+        var partFile = File('${APKDir.path}/$fileNameNoExt${source.urlsAlwaysHaveExtension ? '' : '.$ext'}.part');
+        if (partFile.existsSync()) {
+          partFile.deleteSync();
+        }
+        rethrow;
+      }
       // Set to 90 for remaining steps, will make null in 'finally'
       if (apps[app.id] != null) {
         apps[app.id]!.downloadProgress = -1;
@@ -1228,6 +1242,7 @@ class AppsProvider with ChangeNotifier {
     DownloadedDir dir,
     BuildContext? firstTimeWithContext, {
     bool shizukuPretendToBeGooglePlay = false,
+    bool forceDelete = false,
   }) async {
     var somethingInstalled = false;
     try {
@@ -1277,9 +1292,10 @@ class AppsProvider with ChangeNotifier {
                     .map((a) => DownloadedApk(dir.appId, a))
                     .toList()
               : [],
+          forceDelete: forceDelete,
         );
         somethingInstalled = somethingInstalled || wasInstalled;
-        if (settingsProvider.autoDeleteApkAfterInstall) {
+        if (forceDelete) {
           dir.file.delete(recursive: true);
         }
       } catch (e) {
@@ -1300,6 +1316,7 @@ class AppsProvider with ChangeNotifier {
     BuildContext? firstTimeWithContext, {
     bool shizukuPretendToBeGooglePlay = false,
     List<DownloadedApk> additionalAPKs = const [],
+    bool forceDelete = false,
   }) async {
     if (firstTimeWithContext != null &&
         settingsProvider.beforeNewInstallsShareToAppVerifier &&
@@ -1364,7 +1381,7 @@ class AppsProvider with ChangeNotifier {
       installed = true;
       apps[file.appId]!.app.installedVersion =
           apps[file.appId]!.app.latestVersion;
-      if (settingsProvider.autoDeleteApkAfterInstall) {
+      if (forceDelete) {
         file.file.delete(recursive: true);
       }
     }
@@ -1574,6 +1591,7 @@ class AppsProvider with ChangeNotifier {
             downloadedFile,
             contextIfNewInstall,
             shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
+            forceDelete: true,
           );
         } else {
           // ignore: use_build_context_synchronously
@@ -1581,6 +1599,7 @@ class AppsProvider with ChangeNotifier {
             downloadedDir!,
             contextIfNewInstall,
             shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
+            forceDelete: true,
           );
         }
         if (willBeSilent && context == null) {

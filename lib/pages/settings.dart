@@ -815,37 +815,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(tr('autoDeleteApkAfterInstall')),
-                                      Text(
-                                        tr(
-                                          'autoDeleteApkAfterInstallDescription',
-                                        ),
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.labelSmall,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Switch(
-                                  value: settingsProvider
-                                      .autoDeleteApkAfterInstall,
-                                  onChanged: (value) {
-                                    settingsProvider.autoDeleteApkAfterInstall =
-                                        value;
-                                  },
-                                ),
-                              ],
-                            ),
-                            gap16,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
                                 Flexible(child: Text(tr('checkOnStart'))),
                                 Switch(
                                   value: settingsProvider.checkOnStart,

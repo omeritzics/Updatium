@@ -663,12 +663,4 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool get autoDeleteApkAfterInstall {
-    return prefs?.getBool('autoDeleteApkAfterInstall') ?? true;
-  }
-
-  set autoDeleteApkAfterInstall(bool val) {
-    prefs?.setBool('autoDeleteApkAfterInstall', val);
-    notifyListeners();
-  }
 }
