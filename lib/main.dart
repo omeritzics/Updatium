@@ -877,7 +877,7 @@ class _UpdatiumState extends State<Updatium> {
               ),
 
               // Material Design 3 2024 Progress Indicators
-              progressIndicatorTheme: const ProgressIndicatorThemeData()
+              progressIndicatorTheme: const ProgressIndicatorThemeData(),
             );
           }
 
