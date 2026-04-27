@@ -147,9 +147,6 @@ flutter:
     - family: Inter
       fonts:
         - asset: assets/fonts/Inter-Variable.ttf
-    - family: GoogleSansFlex
-      fonts:
-        - asset: assets/fonts/GoogleSansFlex-Variable.ttf
     - family: NotoSansCJK
       fonts:
         - asset: assets/fonts/NotoSansCJK-Regular.ttf

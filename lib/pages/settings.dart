@@ -1015,10 +1015,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     style: TextStyle(
                                       color: settingsProvider.useShizuku
                                           ? null
-                                          : Theme.of(context)
-                                                .colorScheme
-                                                .onSurface
-                                                .withValues(alpha: 0.6),
+                                          : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                                     ),
                                   ),
                                 ),
@@ -1534,7 +1531,7 @@ class CategoryTagEditor extends StatelessWidget {
           settingsProvider.categories,
         );
         if (!newCategories.containsKey(result.name)) {
-          newCategories[result.name] = result.color.value;
+          newCategories[result.name] = result.color.toARGB32();
           settingsProvider.setCategories(newCategories);
         }
       }
@@ -1548,7 +1545,7 @@ class CategoryTagEditor extends StatelessWidget {
   ) {
     final initialColor = Color(
       settingsProvider.categories[oldName] ??
-          Theme.of(context).colorScheme.primary.value,
+          Theme.of(context).colorScheme.primary.toARGB32(),
     );
 
     showCategoryEditorDialog(
@@ -1563,7 +1560,7 @@ class CategoryTagEditor extends StatelessWidget {
           settingsProvider.categories,
         );
         newCategories.remove(oldName);
-        newCategories[result.name] = result.color.value;
+        newCategories[result.name] = result.color.toARGB32();
         settingsProvider.setCategories(newCategories);
       }
     });
@@ -1626,7 +1623,7 @@ class CategoryTagEditor extends StatelessWidget {
             ...allTags.map((tag) {
               final categoryColor = Color(
                 settingsProvider.categories[tag] ??
-                    Theme.of(context).colorScheme.primary.value,
+                    Theme.of(context).colorScheme.primary.toARGB32(),
               );
               return InkWell(
                 onTap: () => _onEditPressed(context, settingsProvider, tag),
@@ -1695,7 +1692,7 @@ class CategorySelector extends StatelessWidget {
           children: allTags.map((tag) {
             final categoryColor = Color(
               settingsProvider.categories[tag] ??
-                  Theme.of(context).colorScheme.primary.value,
+                  Theme.of(context).colorScheme.primary.toARGB32(),
             );
             return FilterChip(
               label: Text(tag),

@@ -2403,7 +2403,7 @@ class AppsProvider with ChangeNotifier {
     apps.forEach((key, value) {
       for (var c in value.app.categories ?? []) {
         if (!cats.containsKey(c)) {
-          cats[c] = settingsProvider.themeColor.value;
+          cats[c] = settingsProvider.themeColor.toARGB32();
         }
       }
     });
