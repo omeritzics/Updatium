@@ -443,7 +443,7 @@ class _UpdatiumState extends State<Updatium> {
               // NOTE: LET'S SEE WHETHER FLUTTER'S DEFAULT CONFIGS ARE BETTER FOR THE AMOLED THEME
               // surfaceContainerHighest: Colors.white.withValues(alpha: 0.20),
               // surfaceContainerHigh: Colors.white.withValues(alpha: 0.16),
-              surfaceContainer: Colors.white.withValues(alpha: 0.10),
+              surfaceContainer: Colors.black,
               surfaceContainerLow: Colors.black,
               surfaceDim: Colors.black,
               surfaceBright: Colors.black,
@@ -487,220 +487,6 @@ class _UpdatiumState extends State<Updatium> {
 
           // Shared theme component generator with Material Design Expressive
           ThemeData createTheme(ColorScheme scheme) {
-            // Define text theme as local variable for reusability
-            final textTheme = TextTheme(
-              displayLarge: TextStyle(
-                fontSize: 57,
-                fontWeight: FontWeight.w400,
-                height: 1.12,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              displayMedium: TextStyle(
-                fontSize: 45,
-                fontWeight: FontWeight.w400,
-                height: 1.16,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'GoogleSansFlex',
-                  'Inter',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              displaySmall: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.w400,
-                height: 1.22,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              headlineLarge: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w400,
-                height: 1.25,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              headlineMedium: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w400,
-                height: 1.29,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              headlineSmall: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w400,
-                height: 1.33,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              titleLarge: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w500,
-                height: 1.27,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              titleMedium: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                height: 1.5,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              titleSmall: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                height: 1.43,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              bodyLarge: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 1.5,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              bodyMedium: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                height: 1.5,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              bodySmall: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                height: 1.4,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              labelLarge: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                height: 1.43,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              labelMedium: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                height: 1.4,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              labelSmall: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-                height: 1.3,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-            );
-
             return ThemeData(
               useMaterial3: true,
               colorScheme: scheme,
@@ -716,9 +502,6 @@ class _UpdatiumState extends State<Updatium> {
               // Keyboard/TV navigation support
               focusColor: scheme.primary.withValues(alpha: 0.2),
               highlightColor: scheme.primary.withValues(alpha: 0.1),
-
-              // Expressive Typography
-              textTheme: textTheme,
 
               // Material 3 Outlined Text Fields
               inputDecorationTheme: InputDecorationTheme(
@@ -748,38 +531,14 @@ class _UpdatiumState extends State<Updatium> {
                 hintStyle: TextStyle(
                   color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
                   fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
                 ),
                 labelStyle: TextStyle(
                   color: scheme.onSurfaceVariant,
                   fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
                 ),
                 floatingLabelStyle: TextStyle(
                   color: scheme.primary,
                   fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
                 ),
               ),
 
@@ -794,14 +553,6 @@ class _UpdatiumState extends State<Updatium> {
                 ),
                 extendedTextStyle: TextStyle(
                   fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
                 ),
                 foregroundColor: scheme.onPrimary,
                 backgroundColor: scheme.primary,
@@ -816,14 +567,6 @@ class _UpdatiumState extends State<Updatium> {
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
                   fontWeight: FontWeight.w600,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
               ),
@@ -844,40 +587,24 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
                 ),
                 subtitleTextStyle: TextStyle(
                   color: scheme.onSurfaceVariant,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
                 ),
               ),
 
-              // Expressive Page Transitions
+              // Progress Indicators
+              progressIndicatorTheme: const ProgressIndicatorThemeData(),
+
+              // Page Transitions
               pageTransitionsTheme: const PageTransitionsTheme(
                 builders: {
                   TargetPlatform.android:
                       PredictiveBackPageTransitionsBuilder(),
                 },
               ),
-
-              // Material Design 3 2024 Progress Indicators
-              progressIndicatorTheme: const ProgressIndicatorThemeData(),
             );
           }
 
