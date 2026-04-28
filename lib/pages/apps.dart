@@ -749,7 +749,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 label: tr('pinned'),
                                 child: Icon(
                                   Icons.push_pin,
-                                  size: 16,
+                                  size: 14,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
@@ -782,7 +782,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           label: tr('downloadProgress'),
                           value: '${appInfo.downloadProgress!.toInt()}%',
                           child: SizedBox(
-                            width: 60,
+                            width: 80,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -885,7 +885,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       label: tr('pinned'),
                       child: Icon(
                         Icons.push_pin,
-                        size: 16,
+                        size: 14,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
@@ -902,7 +902,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     label: tr('downloadProgress'),
                     value: '${appInfo.downloadProgress!.toInt()}%',
                     child: SizedBox(
-                      width: 60,
+                      width: 80,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -997,7 +997,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 190,
+                  maxCrossAxisExtent: 185,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
                   childAspectRatio: 0.65,

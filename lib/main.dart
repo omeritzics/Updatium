@@ -502,7 +502,7 @@ class _UpdatiumState extends State<Updatium> {
               focusColor: scheme.primary.withValues(alpha: 0.2),
               highlightColor: scheme.primary.withValues(alpha: 0.1),
 
-              // Minimal AppBar Theme for font and color consistency
+              // AppBar
               appBarTheme: AppBarTheme(
                 backgroundColor: scheme.surface,
                 foregroundColor: scheme.onSurface,
@@ -511,15 +511,22 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
-                ),
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                    fontFamilyFallback: const [
+                      'Inter',
+                      'GoogleSansFlex',
+                      'NotoSansCJK',
+                      'NotoSansHebrew',
+                      'NotoSansArabic',
+                ]),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),
 
               // Expressive List Tiles
               listTileTheme: ListTileThemeData(
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 18,
-                  vertical: 8,
+                  horizontal: 16,
+                  vertical: 6,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
