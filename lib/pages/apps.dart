@@ -547,21 +547,21 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: LinearProgressIndicator(
-              value: appsProvider.loadingApps
-                  ? null
-                  : appsProvider
-                            .getAppValues()
-                            .where(
-                              (element) =>
-                                  !(element.app.lastUpdateCheck?.isBefore(
-                                        refreshingSince!,
-                                      ) ??
-                                      true),
-                            )
-                            .length /
-                        (appsProvider.apps.isNotEmpty
-                            ? appsProvider.apps.length
-                            : 1),
+                value: appsProvider.loadingApps
+                    ? null
+                    : appsProvider
+                              .getAppValues()
+                              .where(
+                                (element) =>
+                                    !(element.app.lastUpdateCheck?.isBefore(
+                                          refreshingSince!,
+                                        ) ??
+                                        true),
+                              )
+                              .length /
+                          (appsProvider.apps.isNotEmpty
+                              ? appsProvider.apps.length
+                              : 1),
               ),
             ),
           ),
