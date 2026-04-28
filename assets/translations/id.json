@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} akan dihapus dari Updatium tetapi tetap terpasang di perangkat.",
     "removeSelectedAppsQuestion": "Hapus aplikasi terpilih?",
     "removeSelectedApps": "Hapus aplikasi terpilih",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Perbarui {}",
     "installX": "Pasang {}",
     "markXTrackOnlyAsUpdated": "Tandai {}\n(Pelacakan Saja)\nsudah diperbarui",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Kesalahan dalam memeriksa pembaruan",
     "errorCheckingUpdatesNotifDescription": "Notifikasi yang ditampilkan saat pemeriksaan pembaruan latar belakang gagal",
     "appsRemoved": "Aplikasi dihapus",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Memberi tahu pengguna bahwa aplikasi dihapus karena kesalahan saat memuatnya",
     "xWasRemovedDueToErrorY": "{} dihapus karena kesalahan berikut: {}",
     "completeAppInstallation": "Selesaikan pemasangan aplikasi",

@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} eemaldatakse Updatiumist, kuid jääb seadmesse installituks.",
     "removeSelectedAppsQuestion": "Eemalda valitud äpid?",
     "removeSelectedApps": "Eemalda valitud äpid",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Uuenda {}",
     "installX": "Installi {}",
     "markXTrackOnlyAsUpdated": "Märgi {}\n(ainult jälgimine)\nuuendatuks",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Viga uuenduste kontrollimisel",
     "errorCheckingUpdatesNotifDescription": "Teavitus, mis ilmub, kui taustauuenduste kontrollimine ebaõnnestub",
     "appsRemoved": "Äpid eemaldatud",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Teavitab kasutajat, et üks või rohkem äppi eemaldati nende laadimisel tekkinud vigade tõttu",
     "xWasRemovedDueToErrorY": "{} eemaldati järgmise vea tõttu: {}",
     "completeAppInstallation": "Lõpeta äpi installimine",

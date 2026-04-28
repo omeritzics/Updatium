@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "Verà effettuata la rimozione di {}, ma non la disinstallazione.",
     "removeSelectedAppsQuestion": "Rimuovere le app selezionate?",
     "removeSelectedApps": "Rimuovi le app selezionate",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Aggiorna {}",
     "installX": "Installa {}",
     "markXTrackOnlyAsUpdated": "Contrassegna {}\n(Solo-Monitoraggio)\ncome aggiornata",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Controllo degli errori per gli aggiornamenti",
     "errorCheckingUpdatesNotifDescription": "Una notifica che mostra quando il controllo degli aggiornamenti in secondo piano fallisce",
     "appsRemoved": "App rimosse",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Notifica all'utente che una o più app sono state rimosse a causa di errori durante il caricamento",
     "xWasRemovedDueToErrorY": "{} è stata rimosso a causa di questo errore: {}",
     "completeAppInstallation": "Completa l'installazione dell'app",

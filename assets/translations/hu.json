@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "A(z) {} el lesz távolítva az Updatiumból, de továbbra is telepítve marad az eszközön.",
     "removeSelectedAppsQuestion": "Biztosan eltávolítja a kiválasztott alkalmazásokat?",
     "removeSelectedApps": "Kiválasztott alkalmazások eltávolítása",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "{} frissítése",
     "installX": "{} telepítése",
     "markXTrackOnlyAsUpdated": "Megjelölés: {}\n(Csak nyomon követés)\nFrissítettként",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Hiba a frissítések ellenőrzésekor",
     "errorCheckingUpdatesNotifDescription": "Értesítés, amely akkor jelenik meg, amikor a frissítések ellenőrzése a háttérben nem sikerül",
     "appsRemoved": "Alkalmazások eltávolítva",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Értesíti a felhasználót, hogy egy vagy több alkalmazás egy betöltés közbeni hiba miatt el lesz(nek) távolítva",
     "xWasRemovedDueToErrorY": "A(z) {} el lett távolítva a következő hiba miatt: {}",
     "completeAppInstallation": "Teljes alkalmazástelepítés",

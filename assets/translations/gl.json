@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "Vaise retirar {} de Updatium pero seguirá instalada no dispositivo.",
     "removeSelectedAppsQuestion": "Retirar as apps seleccionadas?",
     "removeSelectedApps": "Retirar apps seleccionadas",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Actualizar {}",
     "installX": "Instalar {}",
     "markXTrackOnlyAsUpdated": "Marcar {}\n(só-seguimento)\ncomo actualizada",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Erro ao comprobar as actualizacións",
     "errorCheckingUpdatesNotifDescription": "Unha notificación que se mostra cando falla a actualización en segundo plano",
     "appsRemoved": "Apps retiradas",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Informa á usuaria de que se retiraron unha ou varias apps debido a erros ao cargalas",
     "xWasRemovedDueToErrorY": "Retirouse {} debido a este erro: {}",
     "completeAppInstallation": "Instalación completa da app",

@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} će biti uklonjen iz Updatiuma, ali će ostati instaliran na uređaju.",
     "removeSelectedAppsQuestion": "Želite li ukloniti odabrane aplikacije?",
     "removeSelectedApps": "Ukloni odabrane aplikacije",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Nadogradi {}",
     "installX": "Instaliraj {}",
     "markXTrackOnlyAsUpdated": "Označi {}\n(samo za praćenje)\nkao ažurirano",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Greška pri provjeri ažuriranja",
     "errorCheckingUpdatesNotifDescription": "Obavijest koja se prikazuje kada provjera sigurnosnog ažuriranja ne uspije",
     "appsRemoved": "Aplikacije su uklonjene",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Obavještava korisnika da je jedna ili više aplikacija uklonjeno zbog grešaka prilikom učitavanja",
     "xWasRemovedDueToErrorY": "{} je uklonjen zbog ove greške: {}",
     "completeAppInstallation": "Dovršite instalaciju aplikacije",

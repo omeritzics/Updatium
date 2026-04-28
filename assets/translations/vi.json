@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} sẽ bị xóa khỏi Updatium nhưng vẫn còn cài đặt trên thiết bị.",
     "removeSelectedAppsQuestion": "Xóa ứng dụng đã chọn?",
     "removeSelectedApps": "Xóa ứng dụng đã chọn",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Cập nhật {}",
     "installX": "Cài đặt {}",
     "markXTrackOnlyAsUpdated": "Đánh dấu {}\n(Chỉ theo dõi)\nnhư là đã cập nhật",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Lỗi kiểm tra bản cập nhật",
     "errorCheckingUpdatesNotifDescription": "Thông báo hiển thị khi kiểm tra cập nhật nền không thành công",
     "appsRemoved": "Ứng dụng đã loại bỏ",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Thông báo cho người dùng rằng một hoặc nhiều Ứng dụng đã bị loại bỏ do lỗi khi tải chúng",
     "xWasRemovedDueToErrorY": "{} đã bị loại bỏ do lỗi này: {}",
     "completeAppInstallation": "Hoàn tất cài đặt ứng dụng",

@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} از Updatium حذف می‌شود اما روی دستگاه نصب می‌ماند.",
     "removeSelectedAppsQuestion": "برنامه های انتخابی حذف شود؟",
     "removeSelectedApps": "حذف برنامه های انتخاب شده",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "به روز رسانی {}",
     "installX": "نصب {}",
     "markXTrackOnlyAsUpdated": "علامت {}\n(فقط ردیابی)\nبروز شده",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "خطا در بررسی به‌روزرسانی‌ها",
     "errorCheckingUpdatesNotifDescription": "اعلانی که وقتی بررسی به‌روزرسانی پس‌زمینه ناموفق است نشان می‌دهد",
     "appsRemoved": "برنامه ها حذف شدند",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "به کاربر اطلاع می دهد که یک یا چند برنامه به دلیل خطا در هنگام بارگیری حذف شده است",
     "xWasRemovedDueToErrorY": "{} به دلیل این خطا حذف شد: {}",
     "completeAppInstallation": "نصب کامل برنامه",

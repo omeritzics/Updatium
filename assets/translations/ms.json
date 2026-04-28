@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} will be removed from Updatium but remain installed on device.",
     "removeSelectedAppsQuestion": "Remove selected apps?",
     "removeSelectedApps": "Remove selected apps",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Update {}",
     "installX": "Install {}",
     "markXTrackOnlyAsUpdated": "Mark {}\n(track-only)\nas updated",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Error checking for updates",
     "errorCheckingUpdatesNotifDescription": "A notification that shows when background update checking fails",
     "appsRemoved": "Apps removed",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Notifies the user that one or more apps were removed due to errors while loading them",
     "xWasRemovedDueToErrorY": "{} was removed due to this error: {}",
     "completeAppInstallation": "Complete app installation",

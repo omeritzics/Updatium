@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} को Updatium से हटा दिया जाएगा लेकिन डिवाइस पर इंस्टॉल रहेगा।",
     "removeSelectedAppsQuestion": "चुने गए ऐप्स हटाएँ?",
     "removeSelectedApps": "चुने गए ऐप्स हटाएँ",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "{} अपडेट करें",
     "installX": "{} इंस्टॉल करें",
     "markXTrackOnlyAsUpdated": "{}\n(केवल-ट्रैक)\nको अपडेटेड के रूप में चिह्नित करें",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "अपडेट की जाँच करने में त्रुटि",
     "errorCheckingUpdatesNotifDescription": "एक अधिसूचना जो पृष्ठभूमि अपडेट जाँच विफल होने पर दिखाई देती है",
     "appsRemoved": "ऐप्स हटा दिए गए",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "उपयोगकर्ता को सूचित करता है कि लोड करते समय त्रुटियों के कारण एक या अधिक ऐप्स हटा दिए गए थे",
     "xWasRemovedDueToErrorY": "{} को इस त्रुटि के कारण हटा दिया गया था: {}",
     "completeAppInstallation": "ऐप इंस्टॉलेशन पूरा करें",

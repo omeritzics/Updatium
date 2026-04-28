@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} kommer tas bort från Updatium men kommer vara fortsatt installerad på enheten.",
     "removeSelectedAppsQuestion": "Ta bort markerade Appar?",
     "removeSelectedApps": "Ta bort markerade Appar",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Uppdatera {}",
     "installX": "Installera {}",
     "markXTrackOnlyAsUpdated": "Märk {}\n(Följ-Endast)\nsom Uppdaterad",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Fel vid uppdateringskoll",
     "errorCheckingUpdatesNotifDescription": "En aviserings som visar när bakgrundsuppdateringarkollar misslyckas",
     "appsRemoved": "Appar borttagna",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Aviserar användaren när en eller fler Appar togs bort på grund av fel när de laddades",
     "xWasRemovedDueToErrorY": "{} togs bort på grund av detta felet: {}",
     "completeAppInstallation": "Gör klar appinstallation",

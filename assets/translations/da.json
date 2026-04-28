@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} fjernes fra Updatium, men forbliver installeret på enheden.",
     "removeSelectedAppsQuestion": "Fjern valgte apps?",
     "removeSelectedApps": "Fjern valgte apps",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Opdater {}",
     "installX": "Installer {}",
     "markXTrackOnlyAsUpdated": "Markér {}\n(Følg Kun)\nsom opdateret",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Fejl ved tjek for opdateringer",
     "errorCheckingUpdatesNotifDescription": "En meddelelse, der vises, opdateringstjek i baggrunden mislykkes",
     "appsRemoved": "Apps fjernet",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Underretter brugeren om, at en eller flere apps blev fjernet grundet fejl under indlæsning af dem",
     "xWasRemovedDueToErrorY": "{} blev fjernet grundet denne fejl: {}",
     "completeAppInstallation": "Færdiggør app-installation",

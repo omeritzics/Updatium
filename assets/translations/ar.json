@@ -74,6 +74,11 @@
     "xWillBeRemovedButRemainInstalled": "سيتم إزالة {} من Updatium لكنه سيظل مثبتًا على الجهاز.",
     "removeSelectedAppsQuestion": "إزالة التطبيقات المحددة؟",
     "removeSelectedApps": "أزل التطبيقات المحددة",
+    "appRemoved": {
+        "one": "Removed one app",
+        "two": "Removed {} apps"
+        "other": "Removed {} apps"
+    },
     "updateX": "حدِّث {}",
     "installX": "ثبِّت {}",
     "markXTrackOnlyAsUpdated": "علِّم {}\n(للتعقب فقط)\nكمحدث",
@@ -179,6 +184,7 @@
     "errorCheckingUpdates": "خطأ في التحقق من التحديثات",
     "errorCheckingUpdatesNotifDescription": "إشعار يظهر عند فشل التحقق من التحديثات في الخلفية",
     "appsRemoved": "تمت إزالة التطبيقات",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "يخطر المستخدم بأنه تمت إزالة واحد أو أكثر من التطبيقات بسبب أخطاء أثناء تحميلها",
     "xWasRemovedDueToErrorY": "تمت إزالة {} بسبب هذا الخطأ: {}",
     "completeAppInstallation": "إكمال تثبيت التطبيق",

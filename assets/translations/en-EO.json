@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} estas farigota de Updatium sed restos instalata en la disponaĵo.",
     "removeSelectedAppsQuestion": "Farigi la selektitajn apojn?",
     "removeSelectedApps": "Farigi la selektitajn apojn",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Ĝisdatigi {}",
     "installX": "Instali {}",
     "markXTrackOnlyAsUpdated": "Marki {}\n(Nur sekvita)\nkiel ĝisdata",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Eraro serĉante ĝisdatigojn",
     "errorCheckingUpdatesNotifDescription": "Sciigas al la uzanto, kiam la serĉo de fonaj ĝisdatigoj malsukcesas.",
     "appsRemoved": "Forigitaj Apoj",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Sciigas al la uzanto, ke unu aŭ pluraj apoj estas forigitaj kaŭze de eraroj dum ilia ŝarĝado.",
     "xWasRemovedDueToErrorY": "{} estas forigita kaŭze de tiu eraro: {}",
     "completeAppInstallation": "Kompleta instalado de la apo",

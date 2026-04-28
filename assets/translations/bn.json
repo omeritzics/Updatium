@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} Updatium থেকে সরানো হবে কিন্তু ডিভাইসে ইনস্টল করা থাকবে।",
     "removeSelectedAppsQuestion": "নির্বাচিত অ্যাপগুলো কি সরিয়ে ফেলবেন?",
     "removeSelectedApps": "নির্বাচিত অ্যাপ সরান",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "{} আপডেট করুন",
     "installX": "{} ইনস্টল করুন",
     "markXTrackOnlyAsUpdated": "{}\n(ট্র্যাক-অনলি)\nআপডেটেড হিসেবে চিহ্নিত করুন",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "আপডেট চেক করতে ত্রুটি",
     "errorCheckingUpdatesNotifDescription": "ব্যাকগ্রাউন্ড আপডেট চেক ব্যর্থ হলে একটি বিজ্ঞপ্তি দেখায়",
     "appsRemoved": "অ্যাপ সরানো হয়েছে",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "লোড করার সময় ত্রুটির কারণে অ্যাপ সরানো হলে ব্যবহারকারীকে জানায়",
     "xWasRemovedDueToErrorY": "{} সরানো হয়েছে এই ত্রুটির কারণে: {}",
     "completeAppInstallation": "অ্যাপ ইনস্টলেশন সম্পন্ন করুন",

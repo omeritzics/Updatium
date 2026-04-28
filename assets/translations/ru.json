@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} будет удалено из Updatium, но останется на устройстве",
     "removeSelectedAppsQuestion": "Удалить выбранные приложения?",
     "removeSelectedApps": "Удалить выбранные приложения",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Обновить {}",
     "installX": "Установить {}",
     "markXTrackOnlyAsUpdated": "Отметить {}\n(только для отслеживания)\nкак обновлённое",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Ошибка при проверке обновлений",
     "errorCheckingUpdatesNotifDescription": "Уведомление о завершении проверки обновлений в фоновом режиме с ошибкой",
     "appsRemoved": "Приложение удалено",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Уведомление об удалении одного или несколько приложений из-за ошибок при их загрузке",
     "xWasRemovedDueToErrorY": "{} удалено из-за ошибки: {}",
     "completeAppInstallation": "Завершение установки приложения",

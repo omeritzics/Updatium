@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{}는 Updatium에서 제거되지만 장치에 설치된 상태로 남아 있습니다.",
     "removeSelectedAppsQuestion": "선택한 앱을 제거하시겠습니까?",
     "removeSelectedApps": "선택한 앱 제거",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "{} 업데이트",
     "installX": "{} 설치",
     "markXTrackOnlyAsUpdated": "{}\n(추적 전용)\n업데이트됨으로 표시",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "업데이트 확인 오류",
     "errorCheckingUpdatesNotifDescription": "백그라운드 업데이트 확인이 실패할 때 표시되는 알림",
     "appsRemoved": "앱 제거됨",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "로드 중 오류로 인해 하나 이상의 앱이 제거되었음을 사용자에게 알립니다",
     "xWasRemovedDueToErrorY": "{}가 다음 오류로 인해 제거되었습니다: {}",
     "completeAppInstallation": "앱 설치 완료",

@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} será removido do Updatium mas continuará instalado no dispositivo.",
     "removeSelectedAppsQuestion": "Remover os apps selecionados?",
     "removeSelectedApps": "Remover apps selecionados",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Atualizar {}",
     "installX": "Instalar {}",
     "markXTrackOnlyAsUpdated": "Marcar {}\n(somente rastreamento)\ncomo atualizado",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Ocorreu um erro ao buscar atualizações",
     "errorCheckingUpdatesNotifDescription": "Uma notificação que mostra quando a busca de atualizações em segundo plano falha",
     "appsRemoved": "Apps removidos",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Notifica o usuário que um ou mais apps foram removidos devido a erros ao carregá-los",
     "xWasRemovedDueToErrorY": "{} for removido devido ao erro: {}",
     "completeAppInstallation": "Concluir instalação do app",

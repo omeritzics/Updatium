@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} はUpdatiumから削除されますが、デバイスにはインストールされたままです。",
     "removeSelectedAppsQuestion": "選択したアプリを削除しますか？",
     "removeSelectedApps": "選択したアプリを削除する",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "{} をアップデートする",
     "installX": "{} をインストールする",
     "markXTrackOnlyAsUpdated": "{}\n(追跡のみ)\nをアップデート済みとしてマークする",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "アップデート確認中のエラー",
     "errorCheckingUpdatesNotifDescription": "バックグラウンドでのアップデート確認に失敗した際に表示される通知",
     "appsRemoved": "削除されたアプリ",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "アプリの読み込み中にエラーが発生したため、1つまたは複数のアプリが削除されたことをユーザーに通知する",
     "xWasRemovedDueToErrorY": "次のエラーのため、{} は削除されました: {}",
     "completeAppInstallation": "アプリのインストールを完了する",

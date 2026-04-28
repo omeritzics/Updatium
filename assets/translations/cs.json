@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "Aplikace {} bude odstraněna z aplikace Updatium, ale zůstane nainstalována v zařízení.",
     "removeSelectedAppsQuestion": "Odstranit vybrané aplikace?",
     "removeSelectedApps": "Odstranit vybrané aplikace",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Aktualizovat {}",
     "installX": "Instalovat {}",
     "markXTrackOnlyAsUpdated": "Označit aplikaci {}\n(pouze sledování)\njako aktualizovanou",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Chyba kontroly aktualizací",
     "errorCheckingUpdatesNotifDescription": "Zobrazit oznámení při neúspěšné kontrole aktualizací na pozadí",
     "appsRemoved": "Odstraněné aplikace",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Oznámit, že jedna nebo více aplikací bylo odstraněno z důvodu chyb při načítání",
     "xWasRemovedDueToErrorY": "{} byla odstraněna z důvodu následující chyby: {}",
     "completeAppInstallation": "Dokončit instalaci aplikace",

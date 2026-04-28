@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} zal worden gewist uit Updatium, maar blijft geïnstalleerd op het apparaat.",
     "removeSelectedAppsQuestion": "Geselecteerde apps verwijderen?",
     "removeSelectedApps": "Geselecteerde apps verwijderen",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "{} bijwerken",
     "installX": "{} installeren",
     "markXTrackOnlyAsUpdated": "{}\n(Alleen volgen)\nmarkeren als bijgewerkt",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Fout bij het controleren op updates",
     "errorCheckingUpdatesNotifDescription": "Een melding die verschijnt wanneer de achtergrondcontrole op updates mislukt",
     "appsRemoved": "Apps verwijderd",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Stelt de gebruiker op de hoogte dat een of meer apps zijn verwijderd vanwege fouten tijdens het laden",
     "xWasRemovedDueToErrorY": "{} is verwijderd vanwege de fout: {}",
     "completeAppInstallation": "App-installatie voltooien",

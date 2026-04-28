@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "“{}”将从 Updatium 中删除，但仍安装在您的设备中。",
     "removeSelectedAppsQuestion": "是否删除选中的应用？",
     "removeSelectedApps": "删除选中的应用",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "更新 {}",
     "installX": "安装 {}",
     "markXTrackOnlyAsUpdated": "将“{}”\n（仅追踪）\n标记为已更新",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "检查更新出错",
     "errorCheckingUpdatesNotifDescription": "当后台检查更新失败时显示的通知",
     "appsRemoved": "应用已删除",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "当应用因加载出错而被删除时发送通知",
     "xWasRemovedDueToErrorY": "“{}”由于以下错误被删除：{}",
     "completeAppInstallation": "完成应用安装",

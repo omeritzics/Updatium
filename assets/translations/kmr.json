@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} dê ji Updatium were rakirin lê li ser cîhazê maye.",
     "removeSelectedAppsQuestion": "Sepanên hilbijartî rakirin?",
     "removeSelectedApps": "Sepanên hilbijartî rakirin",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "{} rojane bike",
     "installX": "{} saz bike",
     "markXTrackOnlyAsUpdated": "{} nîshan bike\n(tenê ji bo trackingê)\nwek rojane",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Çewtî di kontrola rojanekirinê de",
     "errorCheckingUpdatesNotifDescription": "Agahdarî ku xuya dibe gava kontrola rojanekirinê li paqijî têk diçe",
     "appsRemoved": "Sepan hatin rakirin",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Bikarhêner dide zanîn ku yek an zêdetir sepan ji ber çewtiyan dema barkirinê hatin rakirin",
     "xWasRemovedDueToErrorY": "{} ji ber vê çewtiyê hat rakirin: {}",
     "completeAppInstallation": "Sazkirina sepanê temam bike",

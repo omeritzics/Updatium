@@ -74,6 +74,11 @@
     "xWillBeRemovedButRemainInstalled": "היישום {} יוסר מ־Updatium אך יישאר מותקן במכשיר.",
     "removeSelectedAppsQuestion": "להסיר את היישומים שנבחרו?",
     "removeSelectedApps": "הסרת היישומים שנבחרו",
+    "appRemoved": {
+        "one": "הוסר יישום אחד",
+        "two": "הוסרו שני יישומים",
+        "other": "הוסרו {} יישומים"
+    },
     "updateX": "עדכון {}",
     "installX": "התקנת {}",
     "markXTrackOnlyAsUpdated": "סימון {}\n(למעקב עדכונים בלבד)\nכמעודכן",
@@ -179,6 +184,7 @@
     "errorCheckingUpdates": "שגיאה בעת  בדיקת עדכונים",
     "errorCheckingUpdatesNotifDescription": "התראה שמופיעה כאשר נכשלת בדיקת העדכונים ברקע",
     "appsRemoved": "הוסרו יישומים",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "התראה למשתמש על עצם כך שהוסר יישום אחד או יותר בשל שגיאות במהלך טעינתו",
     "xWasRemovedDueToErrorY": "היישום {} הוסר בשל שגיאה זו: {}",
     "completeAppInstallation": "השלמת התקנת היישום",

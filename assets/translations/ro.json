@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} va fi eliminat din Updatium dar va rămâne instalat pe dispozitiv.",
     "removeSelectedAppsQuestion": "Eliminați aplicațiile selectate?",
     "removeSelectedApps": "Eliminați aplicațiile selectate",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "Actualizează {}",
     "installX": "Instalează {}",
     "markXTrackOnlyAsUpdated": "Marchează {}\n(doar pentru urmărire)\nca actualizat",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Eroare la verificarea actualizărilor",
     "errorCheckingUpdatesNotifDescription": "O notificare care apare când verificarea actualizărilor în fundal eșuează",
     "appsRemoved": "Aplicații eliminate",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Notifică utilizatorul că una sau mai multe aplicații au fost eliminate din cauza erorilor la încărcarea lor",
     "xWasRemovedDueToErrorY": "{} a fost eliminat din cauza acestei erori: {}",
     "completeAppInstallation": "Finalizați instalarea aplicației",

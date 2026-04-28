@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} ئەپ Updatium دىن چىقىرىۋېتىلىدۇ، ئەمما ئۈسكۈنىدە قاچىلانغان ھالەتتە قالىدۇ.",
     "removeSelectedAppsQuestion": "تاللانغان ئەپلەرنى چىقىرىۋېتەمسىز؟",
     "removeSelectedApps": "تاللانغان ئەپلەرنى چىقىرىۋېتىش",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "{} نى يېڭىلاش",
     "installX": "{} نى قاچىلاش",
     "markXTrackOnlyAsUpdated": "{} نى\n(پەقەت ئىز قوغلىنىدىغان)\nيېڭىلاندى دەپ بەلگە قويۇش",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "يېڭىلاش تەكشۈرۈشتە خاتالىق كۆرۈلدى",
     "errorCheckingUpdatesNotifDescription": "ئارقا كۆرۈنۈشتە يېڭىلاش تەكشۈرۈش مەغلۇپ بولغاندا كۆرۈنىدۇ",
     "appsRemoved": "ئەپلەر چىقىرىۋېتىلدى",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "خاتالىق تۈپەيلى چىقىرىۋېتىلگەن ئەپلەرنى ئۇقتۇرىدۇ",
     "xWasRemovedDueToErrorY": "{} تۆۋەندىكى خاتالىق سەۋەبىدىن چىقىرىۋېتىلدى: {}",
     "completeAppInstallation": "ئەپ قاچىلاشنى تاماملاڭ",

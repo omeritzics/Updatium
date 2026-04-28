@@ -74,6 +74,10 @@
     "xWillBeRemovedButRemainInstalled": "{} Updatium'dan kaldırılacak ancak cihazda yüklü kalmaya devam edecek.",
     "removeSelectedAppsQuestion": "Seçili uygulamalar kaldırılsın mı?",
     "removeSelectedApps": "Seçili uygulamaları kaldır",
+    "appRemoved": {
+        "one": "Removed one app",
+        "other": "Removed {} apps"
+    },
     "updateX": "{} güncelle",
     "installX": "{} yükle",
     "markXTrackOnlyAsUpdated": "{}\n(sadece takip)\nuygulamasını güncel olarak işaretle",
@@ -179,6 +183,7 @@
     "errorCheckingUpdates": "Güncellemeler kontrol edilirken hata oluştu",
     "errorCheckingUpdatesNotifDescription": "Arka planda güncelleme kontrolü başarısız olduğunda gösterilen bir bildirim",
     "appsRemoved": "Uygulamalar kaldırıldı",
+    "undo": "Undo",
     "appsRemovedNotifDescription": "Kullanıcıya, yüklenirken oluşan hatalar nedeniyle bir veya daha fazla uygulamanın kaldırıldığını bildirir",
     "xWasRemovedDueToErrorY": "{} bu hata nedeniyle kaldırıldı: {}",
     "completeAppInstallation": "Uygulama yüklemesini tamamla",
