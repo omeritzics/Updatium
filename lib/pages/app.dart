@@ -188,12 +188,11 @@ class _AppPageState extends State<AppPage> {
                         textAlign: TextAlign.start,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelSmall!
-                            .copyWith(
-                              decoration: changeLogFn != null
-                                  ? TextDecoration.underline
-                                  : null,
-                            ),
+                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                          decoration: changeLogFn != null
+                              ? TextDecoration.underline
+                              : null,
+                        ),
                       ),
                     )
                   : const SizedBox.shrink(),
@@ -637,31 +636,31 @@ class _AppPageState extends State<AppPage> {
                             ],
                           ),
                         ),
-                      if (app.downloadProgress != null)
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                            bottom: 32,
-                          ),
-                          child: Semantics(
-                            label: tr('downloadProgress'),
-                            value: '${app.downloadProgress!.toInt()}%',
-                            child: LinearProgressIndicator(
-                              value: app.downloadProgress! >= 0
-                                  ? app.downloadProgress! / 100
-                                  : null,
-                              backgroundColor: Theme.of(
-                                context,
-                              ).colorScheme.surfaceContainerHighest,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Theme.of(context).colorScheme.primary,
+                        if (app.downloadProgress != null)
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                              bottom: 32,
+                            ),
+                            child: Semantics(
+                              label: tr('downloadProgress'),
+                              value: '${app.downloadProgress!.toInt()}%',
+                              child: LinearProgressIndicator(
+                                value: app.downloadProgress! >= 0
+                                    ? app.downloadProgress! / 100
+                                    : null,
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.surfaceContainerHighest,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Theme.of(context).colorScheme.primary,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
               ],
             ),
             onRefresh: () async {
