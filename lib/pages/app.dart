@@ -256,6 +256,7 @@ class _AppPageState extends State<AppPage> {
           gap24,
           CategorySelector(
             alignment: WrapAlignment.start,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             preselected: app.app.categories?.toSet() ?? {},
             onSelected: (categories) {
               app.app.categories = categories;
@@ -355,9 +356,7 @@ class _AppPageState extends State<AppPage> {
                         }()
                       : null,
                 ),
-                padding: settingsProvider.highlightTouchTargets
-                    ? const EdgeInsetsDirectional.fromSTEB(12, 8, 12, 8)
-                    : const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 4),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Tooltip(
                   message: app.app.url,
                   child: Text(
@@ -532,8 +531,11 @@ class _AppPageState extends State<AppPage> {
 
                           if (appInMemory?.icon != null) {
                             return Padding(
-                              padding: const EdgeInsetsDirectional.only(
-                                end: 12.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                16.0,
+                                8.0,
+                                16.0,
+                                8.0,
                               ),
                               child: Image.memory(
                                 appInMemory!.icon!,

@@ -1641,10 +1641,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 ? tr('filterApps')
                                 : tr('removeFilter'),
                             child: IconButton(
-                              color: Theme.of(context).colorScheme.primary,
-                              style: const ButtonStyle(
-                                visualDensity: VisualDensity.compact,
-                              ),
                               tooltip: isFilterOff
                                   ? tr('filterApps')
                                   : '${tr('filter')} - ${tr('remove')}',
@@ -1672,10 +1668,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 ? tr('listView')
                                 : tr('gridView'),
                             child: IconButton(
-                              color: Theme.of(context).colorScheme.primary,
-                              style: const ButtonStyle(
-                                visualDensity: VisualDensity.compact,
-                              ),
                               tooltip: settingsProvider.useGridView
                                   ? tr('listView')
                                   : tr('gridView'),
