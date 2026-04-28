@@ -1595,7 +1595,7 @@ class CategoryTagEditor extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
                 child: Chip(
                   label: Text(tag),
-                  backgroundColor: categoryColor.withValues(alpha: 0.2),
+                  backgroundColor: categoryColor.withValues(alpha: 0.4),
                   onDeleted: () =>
                       _onDeletePressed(context, settingsProvider, tag),
                   deleteIcon: const Icon(Icons.close, size: 18),
@@ -1661,8 +1661,7 @@ class CategorySelector extends StatelessWidget {
             return FilterChip(
               label: Text(tag),
               selected: preselected.contains(tag),
-              backgroundColor: categoryColor.withValues(alpha: 0.2),
-              side: BorderSide(color: categoryColor, width: 1),
+              backgroundColor: categoryColor.withValues(alpha: 0.4),
               onSelected: (selected) {
                 final newSelected = Set<String>.from(preselected);
                 if (singleSelect) {
