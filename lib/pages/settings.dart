@@ -1595,6 +1595,7 @@ class CategoryTagEditor extends StatelessWidget {
                 child: Chip(
                   label: Text(tag),
                   backgroundColor: categoryColor.withValues(alpha: 0.4),
+                  side: BorderSide(color: categoryColor, width: 1),
                   visualDensity: VisualDensity.compact,
                   onDeleted: () =>
                       _onDeletePressed(context, settingsProvider, tag),
@@ -1663,6 +1664,7 @@ class CategorySelector extends StatelessWidget {
               selected: preselected.contains(tag),
               backgroundColor: categoryColor.withValues(alpha: 0.4),
               selectedColor: categoryColor,
+              side: BorderSide(color: categoryColor, width: 1),
               visualDensity: VisualDensity.compact,
               onSelected: (selected) {
                 final newSelected = Set<String>.from(preselected);

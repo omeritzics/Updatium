@@ -6,8 +6,6 @@
 
 Update your Android apps directly from the APK source. Updatium is a customizable Android app catalogue that allows you to update your apps directly from their APK sources, and to receive notifications when updates are available.
 
-## [Testers needed. Click here for more information.](https://github.com/omeritzics/Updatium/discussions/296)
-
 ## Features
 
 ### Currently supported App sources

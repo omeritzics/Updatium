@@ -622,58 +622,49 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                   ).colorScheme.primary.toARGB32(),
                             );
                             return ChoiceChip(
-                              label: Text(e2.key),
-                              backgroundColor: categoryColor.withValues(
-                                alpha: 0.4,
-                              ),
-                              selectedColor: categoryColor,
-                              visualDensity: VisualDensity.compact,
-                              selected: e2.value.value,
-                              onSelected: (value) {
-                                setState(() {
-                                  (values[fieldKey]
-                                      as Map<String, MapEntry<int, bool>>)[e2
-                                      .key] = MapEntry(
+                                label: Text(e2.key),
+                                backgroundColor: categoryColor.withValues(alpha: 0.4),
+                                side: BorderSide(color: categoryColor, width: 1),
+                                selectedColor: categoryColor,
+                                visualDensity: VisualDensity.compact,
+                                showCheckmark: true,
+                                selected: e2.value.value,
+                                onSelected: (value) {
+                                  setState(() {
                                     (values[fieldKey]
-                                            as Map<
-                                              String,
-                                              MapEntry<int, bool>
-                                            >)[e2.key]!
-                                        .key,
-                                    value,
-                                  );
-                                  if ((widget.items[r][e]
-                                              as GeneratedFormTagInput)
-                                          .singleSelect &&
-                                      value == true) {
-                                    for (var key
-                                        in (values[fieldKey]
-                                                as Map<
-                                                  String,
-                                                  MapEntry<int, bool>
-                                                >)
-                                            .keys) {
-                                      if (key != e2.key) {
-                                        (values[fieldKey]
-                                            as Map<
-                                              String,
-                                              MapEntry<int, bool>
-                                            >)[key] = MapEntry(
-                                          (values[fieldKey]
+                                        as Map<String, MapEntry<int, bool>>)[e2
+                                        .key] = MapEntry(
+                                      (values[fieldKey]
+                                              as Map<
+                                                String,
+                                                MapEntry<int, bool>
+                                              >)[e2.key]!
+                                          .key,
+                                      value,
+                                    );
+                                    if ((widget.items[r][e]
+                                                as GeneratedFormTagInput)
+                                            .singleSelect &&
+                                        value == true) {
+                                      for (var key
+                                          in (values[fieldKey]
                                                   as Map<
                                                     String,
                                                     MapEntry<int, bool>
-                                                  >)[key]!
-                                              .key,
-                                          false,
-                                        );
+                                                  >)
+                                              .keys) {
+                                        if (key != e2.key) {
+                                          (values[fieldKey]
+                                              as Map<String, MapEntry<int, bool>>)[key] =
+                                              MapEntry((values[fieldKey]
+                                              as Map<String, MapEntry<int, bool>>)[key]!.key, false,);
+                                        }
                                       }
                                     }
-                                  }
-                                  someValueChanged();
-                                });
-                              },
-                            );
+                                    someValueChanged();
+                                  });
+                                },
+                              );
                           }) ??
                       [const SizedBox.shrink()],
                   (values[fieldKey] as Map<String, MapEntry<int, bool>>?)

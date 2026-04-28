@@ -78,7 +78,6 @@ dependencies:
   flutter_typeahead: ^6.0.0
   battery_plus: ^7.0.0
   flutter_charset_detector: ^5.0.0
-  keyboard_detection: ^0.8.1
   pubspec_parse: ^1.4.0
   m3_floating_toolbar: ^0.1.0
 
