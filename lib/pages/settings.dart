@@ -13,6 +13,7 @@ import 'package:updatium/components/category_chip.dart';
 import 'package:updatium/pages/safe_mode_dialog.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/native_provider.dart';
+import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
@@ -1521,12 +1522,25 @@ class CategoryTagEditor extends StatelessWidget {
       confirmButtonText: tr('save'),
     ).then((result) {
       if (result != null && result.name.isNotEmpty) {
-        final newCategories = Map<String, int>.from(
-          settingsProvider.categories,
-        );
-        newCategories.remove(oldName);
-        newCategories[result.name] = result.color.toARGB32();
-        settingsProvider.setCategories(newCategories);
+        final appsProvider = context.read<AppsProvider>();
+        final newColorValue = result.color.toARGB32();
+        if (result.name != oldName) {
+          // Name changed: atomically rename in both the categories map
+          // and every app that references the old category name.
+          settingsProvider.renameCategory(
+            oldName,
+            result.name,
+            newColorValue,
+            appsProvider: appsProvider,
+          );
+        } else {
+          // Only the color changed – a simple map update is sufficient.
+          final newCategories = Map<String, int>.from(
+            settingsProvider.categories,
+          );
+          newCategories[oldName] = newColorValue;
+          settingsProvider.setCategories(newCategories);
+        }
       }
     });
   }

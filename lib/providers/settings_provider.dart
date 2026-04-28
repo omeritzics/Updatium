@@ -272,6 +272,37 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  /// Renames a category from [oldName] to [newName], updating both the
+  /// categories map and all apps that reference the old name.
+  void renameCategory(
+    String oldName,
+    String newName,
+    int colorValue, {
+    required AppsProvider appsProvider,
+  }) {
+    final newCategories = Map<String, int>.from(categories);
+    newCategories.remove(oldName);
+    newCategories[newName] = colorValue;
+
+    // Propagate the rename to every app that has the old category name
+    final List<App> changedApps = appsProvider
+        .getAppValues()
+        .where((a) => a.app.categories?.contains(oldName) == true)
+        .map((a) {
+          final idx = a.app.categories!.indexOf(oldName);
+          a.app.categories![idx] = newName;
+          return a.app;
+        })
+        .toList();
+
+    if (changedApps.isNotEmpty) {
+      appsProvider.saveApps(changedApps);
+    }
+
+    prefs?.setString('categories', jsonEncode(newCategories));
+    notifyListeners();
+  }
+
   Locale? get forcedLocale {
     var flSegs = prefs?.getString('forcedLocale')?.split('-');
     var fl = flSegs != null && flSegs.isNotEmpty
