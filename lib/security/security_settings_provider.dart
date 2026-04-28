@@ -68,6 +68,11 @@ class SecuritySettingsProvider {
   // Update Interval Settings
   int getUpdateInterval() => _prefs.getInt(_keyUpdateInterval) ?? 24; // hours
   Future<void> setUpdateInterval(int hours) async {
+    if (hours < 1) {
+      throw ArgumentError(
+        'Update interval must be at least 1 hour, got $hours',
+      );
+    }
     await _prefs.setInt(_keyUpdateInterval, hours);
     // Update in-memory config and reapply to scanner
     _config = YARAConfig(

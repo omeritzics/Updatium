@@ -357,7 +357,7 @@ class YARAScanner {
             // Verify the rule file if we have a source URL
             if (sourceUrl.isNotEmpty) {
               try {
-                await _verifyRuleFile(sourceUrl, content);
+                await _verifyRuleFileWithLocalManifest(sourceUrl, content);
               } catch (e) {
                 errorCount++;
                 _logs.add(
@@ -465,6 +465,89 @@ class YARAScanner {
     }
   }
 
+  /// Verify YARA rule file against local manifest first, fallback to remote
+  Future<bool> _verifyRuleFileWithLocalManifest(String source, String content) async {
+    try {
+      // Calculate SHA256 hash of the content
+      final contentBytes = utf8.encode(content);
+      final contentHash = sha256.convert(contentBytes).toString();
+
+      // Try to load local manifest first
+      final manifestUrl = _getManifestUrl(source);
+      if (manifestUrl == null) {
+        _logs.add(
+          'No manifest URL available for $source - skipping verification',
+        );
+        return true; // Allow if no manifest available
+      }
+
+      // Build local manifest path
+      final fileName = source.split('/').last;
+      final localManifestPath = path.join(
+        config.rulesDirectory,
+        'yara_rules_manifest.json',
+      );
+      final localManifestFile = File(localManifestPath);
+
+      // Try to verify against local manifest
+      if (await localManifestFile.exists()) {
+        try {
+          final localManifestContent = await localManifestFile.readAsString();
+          final manifestData = jsonDecode(localManifestContent);
+          final manifest = YARARuleManifest.fromJson(manifestData);
+
+          // Get the expected hash for this file
+          final expectedHash = manifest.fileHashes[fileName];
+
+          if (expectedHash != null) {
+            // Verify hash against local manifest
+            if (contentHash == expectedHash) {
+              _logs.add('Rule verification passed (local manifest): $fileName');
+              return true;
+            } else {
+              throw YARARuleVerificationError(
+                source: source,
+                reason: 'Hash mismatch with local manifest: expected $expectedHash, got $contentHash',
+              );
+            }
+          }
+          // If file not in local manifest, fall through to remote verification
+        } catch (e) {
+          // If local verification fails, log and try remote
+          _logs.add(
+            'Local manifest verification failed for $fileName, attempting remote verification: ${e.toString()}',
+          );
+        }
+      }
+
+      // Fallback to remote verification only if local manifest is missing or failed
+      // This allows offline devices to skip verification when local manifest is unavailable
+      try {
+        return await _verifyRuleFile(source, content);
+      } catch (e) {
+        // If remote verification also fails and we don't have a local manifest, skip the rule
+        if (!await localManifestFile.exists()) {
+          _logs.add(
+            'Remote verification failed and no local manifest available for $fileName - skipping rule',
+          );
+          throw YARARuleVerificationError(
+            source: source,
+            reason: 'No local manifest and remote verification failed: ${e.toString()}',
+          );
+        }
+        rethrow;
+      }
+    } catch (e) {
+      if (e is YARARuleVerificationError) {
+        rethrow;
+      }
+      throw YARARuleVerificationError(
+        source: source,
+        reason: 'Verification failed: ${e.toString()}',
+      );
+    }
+  }
+
   /// Get manifest URL for a given rule source
   String? _getManifestUrl(String source) {
     // For GitHub raw content, construct manifest URL
@@ -473,9 +556,9 @@ class YARAScanner {
       final segments = uri.pathSegments;
       if (segments.length >= 4) {
         // Extract owner, repo, and commit from path like /Yara-Rules/rules/commit/file.yar
-        final owner = segments[1];
-        final repo = segments[2];
-        final commit = segments[3];
+        final owner = segments[0];
+        final repo = segments[1];
+        final commit = segments[2];
 
         return 'https://raw.githubusercontent.com/$owner/$repo/$commit/yara_rules_manifest.json';
       }
