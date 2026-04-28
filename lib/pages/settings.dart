@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/components/category_editor_dialog.dart';
+import 'package:updatium/components/category_chip.dart';
 import 'package:updatium/pages/safe_mode_dialog.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/native_provider.dart';
@@ -1594,7 +1594,7 @@ class CategoryTagEditor extends StatelessWidget {
                 onTap: () => _onEditPressed(context, settingsProvider, tag),
                 child: Chip(
                   label: Text(tag),
-                  backgroundColor: categoryColor.withValues(alpha: 0.4),
+                  backgroundColor: categoryColor.withValues(alpha: 0.3),
                   side: BorderSide(color: categoryColor, width: 1),
                   visualDensity: VisualDensity.compact,
                   onDeleted: () =>
@@ -1659,13 +1659,10 @@ class CategorySelector extends StatelessWidget {
               settingsProvider.categories[tag] ??
                   Theme.of(context).colorScheme.primary.toARGB32(),
             );
-            return FilterChip(
-              label: Text(tag),
+            return CategoryChip(
+              label: tag,
               selected: preselected.contains(tag),
-              backgroundColor: categoryColor.withValues(alpha: 0.4),
-              selectedColor: categoryColor,
-              side: BorderSide(color: categoryColor, width: 1),
-              visualDensity: VisualDensity.compact,
+              categoryColor: categoryColor,
               onSelected: (selected) {
                 final newSelected = Set<String>.from(preselected);
                 if (singleSelect) {
@@ -1707,7 +1704,7 @@ class LicenseDialog extends StatelessWidget {
               color: Theme.of(context).colorScheme.primaryContainer,
             ),
             child: Icon(
-              Icons.description_rounded,
+              Icons.description.rounded,
               color: Theme.of(context).colorScheme.onPrimaryContainer,
               size: 28,
             ),

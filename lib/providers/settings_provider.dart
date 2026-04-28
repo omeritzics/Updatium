@@ -402,7 +402,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   bool get highlightTouchTargets {
-    return prefs?.getBool('highlightTouchTargets') ?? false;
+    return prefs?.getBool('highlightTouchTargets') ?? true;
   }
 
   set highlightTouchTargets(bool val) {

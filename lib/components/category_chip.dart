@@ -2,6 +2,38 @@ import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 
+/// Reusable category chip widget for consistent category selection display
+class CategoryChip extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final Color categoryColor;
+  final ValueChanged<bool>? onSelected;
+  final bool showCheckmark;
+
+  const CategoryChip({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.categoryColor,
+    this.onSelected,
+    this.showCheckmark = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ChoiceChip(
+      label: Text(label),
+      selected: selected,
+      backgroundColor: categoryColor.withValues(alpha: 0.3),
+      selectedColor: categoryColor,
+      side: BorderSide(color: categoryColor, width: 1),
+      visualDensity: VisualDensity.compact,
+      showCheckmark: showCheckmark,
+      onSelected: onSelected,
+    );
+  }
+}
+
 class CategoryEditorDialog extends StatefulWidget {
   final String? initialName;
   final Color? initialColor;

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/components/category_chip.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 abstract class GeneratedFormItem {
@@ -621,16 +622,11 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                     context,
                                   ).colorScheme.primary.toARGB32(),
                             );
-                            return ChoiceChip(
-                              label: Text(e2.key),
-                              backgroundColor: categoryColor.withValues(
-                                alpha: 0.4,
-                              ),
-                              side: BorderSide(color: categoryColor, width: 1),
-                              selectedColor: categoryColor,
-                              visualDensity: VisualDensity.compact,
-                              showCheckmark: true,
+                            return CategoryChip(
+                              label: e2.key,
                               selected: e2.value.value,
+                              categoryColor: categoryColor,
+                              showCheckmark: true,
                               onSelected: (value) {
                                 setState(() {
                                   (values[fieldKey]

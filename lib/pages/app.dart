@@ -255,7 +255,7 @@ class _AppPageState extends State<AppPage> {
 
           gap24,
           CategorySelector(
-            alignment: WrapAlignment.center,
+            alignment: WrapAlignment.start,
             preselected: app.app.categories?.toSet() ?? {},
             onSelected: (categories) {
               app.app.categories = categories;
@@ -316,7 +316,9 @@ class _AppPageState extends State<AppPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(height: settingsProvider.highlightTouchTargets ? 4 : 8),
+        SizedBox(height: settingsProvider.highlightTouchTargets
+        ? 4
+        : 8),
         GestureDetector(
           onTap: () {
             launchUrlString(app.app.url, mode: LaunchMode.externalApplication);

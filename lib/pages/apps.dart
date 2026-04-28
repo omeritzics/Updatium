@@ -990,17 +990,16 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 }
               });
             },
-            tilePadding: const EdgeInsets.symmetric(horizontal: 16),
-            childrenPadding: const EdgeInsets.all(16),
+            tilePadding: const EdgeInsets.symmetric(horizontal: 8),
             children: [
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 185,
+                  maxCrossAxisExtent: 180,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
-                  childAspectRatio: 0.65,
+                  childAspectRatio: 0.7,
                 ),
                 itemCount: filteredEntries.length,
                 itemBuilder: (BuildContext context, int index) {
