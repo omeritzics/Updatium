@@ -621,11 +621,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                     context,
                                   ).colorScheme.primary.toARGB32(),
                             );
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 4,
-                              ),
-                              child: ChoiceChip(
+                            return ChoiceChip(
                                 label: Text(e2.key),
                                 backgroundColor: categoryColor.withValues(
                                   alpha: 0.4,
@@ -677,8 +673,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                     someValueChanged();
                                   });
                                 },
-                              ),
-                            );
+                              );
                           }) ??
                       [const SizedBox.shrink()],
                   (values[fieldKey] as Map<String, MapEntry<int, bool>>?)

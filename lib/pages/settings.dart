@@ -1592,10 +1592,10 @@ class CategoryTagEditor extends StatelessWidget {
               );
               return InkWell(
                 onTap: () => _onEditPressed(context, settingsProvider, tag),
-                borderRadius: BorderRadius.circular(8),
                 child: Chip(
                   label: Text(tag),
                   backgroundColor: categoryColor.withValues(alpha: 0.4),
+                  visualDensity: VisualDensity.compact,
                   onDeleted: () =>
                       _onDeletePressed(context, settingsProvider, tag),
                   deleteIcon: const Icon(Icons.close, size: 18),
@@ -1662,6 +1662,8 @@ class CategorySelector extends StatelessWidget {
               label: Text(tag),
               selected: preselected.contains(tag),
               backgroundColor: categoryColor.withValues(alpha: 0.4),
+              selectedColor: categoryColor,
+              visualDensity: VisualDensity.compact,
               onSelected: (selected) {
                 final newSelected = Set<String>.from(preselected);
                 if (singleSelect) {
