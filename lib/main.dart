@@ -512,13 +512,14 @@ class _UpdatiumState extends State<Updatium> {
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
                   fontFamily: getPrimaryFontForLocale(context.locale),
-                    fontFamilyFallback: const [
-                      'Inter',
-                      'GoogleSansFlex',
-                      'NotoSansCJK',
-                      'NotoSansHebrew',
-                      'NotoSansArabic',
-                ]),
+                  fontFamilyFallback: const [
+                    'Inter',
+                    'GoogleSansFlex',
+                    'NotoSansCJK',
+                    'NotoSansHebrew',
+                    'NotoSansArabic',
+                  ],
+                ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),
 
