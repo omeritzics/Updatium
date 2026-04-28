@@ -14,15 +14,15 @@ Update your Android apps directly from the APK source. Updatium is a customizabl
 
 | Open Source (General) | Other (General) | Other (App-specific) |
 | :------------------- | :-------------- | :------------------ |
-| ![GitHub favicon](https://www.google.com/s2/favicons?sz=32&domain=github.com) [GitHub](https://github.com/) | ![APKPure favicon](https://www.google.com/s2/favicons?sz=32&domain=apkpure.com) [APKPure](https://apkpure.net/) | ![Neutron Code favicon](https://www.google.com/s2/favicons?sz=32&domain=neutroncode.com) [Neutron Code](https://neutroncode.com/) |
-| ![GitLab favicon](https://www.google.com/s2/favicons?sz=32&domain=gitlab.com) [GitLab](https://gitlab.com/) | ![Aptoide favicon](https://icons.duckduckgo.com/ip3/aptoide.com.ico) [Aptoide](https://aptoide.com/) | 🏗️ Jenkins Jobs |
-| ![Forgejo favicon](https://www.google.com/s2/favicons?sz=32&domain=forgejo.org) [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/)) | ![Uptodown favicon](https://www.google.com/s2/favicons?sz=32&domain=uptodown.com) [Uptodown](https://uptodown.com/) | 📦 Direct APK Link |
-| ![F-Droid favicon](https://icons.duckduckgo.com/ip3/f-droid.org.ico) [F-Droid](https://f-droid.org/) | ![Huawei AppGallery favicon](https://www.google.com/s2/favicons?sz=32&domain=huawei.com) [Huawei AppGallery](https://appgallery.huawei.com/) | 🌐 HTML page fallback |
-| 🧩 Third Party F-Droid Repos | ![Tencent App Store favicon](https://www.google.com/s2/favicons?sz=32&domain=sj.qq.com) [Tencent App Store](https://sj.qq.com/) | ![WhatsApp favicon](https://www.google.com/s2/favicons?sz=32&domain=whatsapp.com) [WhatsApp](https://whatsapp.com/) |
-| ![IzzyOnDroid favicon](https://www.google.com/s2/favicons?sz=32&domain=android.izzysoft.de) [IzzyOnDroid](https://android.izzysoft.de/) | ![vivo App Store favicon](https://www.google.com/s2/favicons?sz=32&domain=vivo.com.cn) [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) | |
-| ![SourceHut favicon](https://icons.duckduckgo.com/ip3/sourcehut.org.ico) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=32&domain=rustore.ru) [RuStore](https://rustore.ru/) | |
-| | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=32&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
-| | ![APKMirror favicon](https://icons.duckduckgo.com/ip3/apkmirror.com.ico) [APKMirror](https://apkmirror.com/) | |
+| ![GitHub favicon](https://www.google.com/s2/favicons?sz=16&domain=github.com) [GitHub](https://github.com/) | ![APKPure favicon](https://www.google.com/s2/favicons?sz=16&domain=apkpure.com) [APKPure](https://apkpure.net/) | ![Neutron Code favicon](https://www.google.com/s2/favicons?sz=16&domain=neutroncode.com) [Neutron Code](https://neutroncode.com/) |
+| ![GitLab favicon](https://www.google.com/s2/favicons?sz=16&domain=gitlab.com) [GitLab](https://gitlab.com/) | ![Aptoide favicon](https://www.google.com/s2/favicons?sz=16&domain=aptoide.com) [Aptoide](https://aptoide.com/) | 🏗️ Jenkins Jobs |
+| ![Forgejo favicon](https://www.google.com/s2/favicons?sz=16&domain=forgejo.org) [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/)) | ![Uptodown favicon](https://www.google.com/s2/favicons?sz=16&domain=uptodown.com) [Uptodown](https://uptodown.com/) | 📦 Direct APK Link |
+| ![F-Droid favicon](https://www.google.com/s2/favicons?sz=16&domain=f-droid.org) [F-Droid](https://f-droid.org/) | ![Huawei AppGallery favicon](https://www.google.com/s2/favicons?sz=16&domain=huawei.com) [Huawei AppGallery](https://appgallery.huawei.com/) | 🌐 HTML page fallback |
+| 🧩 Third Party F-Droid Repos | ![Tencent App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=sj.qq.com) [Tencent App Store](https://sj.qq.com/) | ![WhatsApp favicon](https://www.google.com/s2/favicons?sz=16&domain=whatsapp.com) [WhatsApp](https://whatsapp.com/) |
+| ![IzzyOnDroid favicon](https://www.google.com/s2/favicons?sz=16&domain=android.izzysoft.de) [IzzyOnDroid](https://android.izzysoft.de/) | ![vivo App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=vivo.com.cn) [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) | |
+| ![SourceHut favicon](https://www.google.com/s2/favicons?sz=16&domain=sourcehut.org) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=16&domain=rustore.ru) [RuStore](https://rustore.ru/) | |
+| | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
+| | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror](https://apkmirror.com/) | |
 
 ### Improved Design
 
