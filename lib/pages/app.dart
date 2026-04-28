@@ -316,9 +316,7 @@ class _AppPageState extends State<AppPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(height: settingsProvider.highlightTouchTargets
-        ? 4
-        : 8),
+        SizedBox(height: settingsProvider.highlightTouchTargets ? 4 : 8),
         GestureDetector(
           onTap: () {
             launchUrlString(app.app.url, mode: LaunchMode.externalApplication);
