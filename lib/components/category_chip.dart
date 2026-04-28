@@ -21,8 +21,12 @@ class CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final onPrimary = Theme.of(context).colorScheme.onPrimary;
     return ChoiceChip(
-      label: Text(label),
+      label: Text(
+        label,
+        style: TextStyle(color: onPrimary),
+      ),
       selected: selected,
       backgroundColor: categoryColor.withValues(alpha: 0.3),
       selectedColor: categoryColor,
