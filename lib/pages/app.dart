@@ -357,7 +357,7 @@ class _AppPageState extends State<AppPage> {
                 ),
                 padding: settingsProvider.highlightTouchTargets
                     ? const EdgeInsetsDirectional.fromSTEB(12, 8, 12, 8)
-                    : const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
+                    : const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 4),
                 child: Tooltip(
                   message: app.app.url,
                   child: Text(
@@ -374,6 +374,7 @@ class _AppPageState extends State<AppPage> {
             ],
           ),
         ),
+        const SizedBox(height: 4),
         Text(
           app.app.id,
           textAlign: TextAlign.start,
