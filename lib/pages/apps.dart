@@ -634,43 +634,58 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       bool isCompact = false,
     }) {
       if (!isInstalled) {
-        return FilledButton.tonal(
-          onPressed: appsProvider.areDownloadsRunning()
-              ? null
-              : () => _installApp(app),
-          style: ButtonStyle(
-            visualDensity: isCompact ? VisualDensity.compact : null,
-            minimumSize: WidgetStateProperty.all(
-              isCompact ? const Size(60, 32) : null,
+        return Semantics(
+          button: true,
+          label: tr('install'),
+          enabled: !appsProvider.areDownloadsRunning(),
+          child: FilledButton.tonal(
+            onPressed: appsProvider.areDownloadsRunning()
+                ? null
+                : () => _installApp(app),
+            style: ButtonStyle(
+              visualDensity: isCompact ? VisualDensity.compact : null,
+              minimumSize: WidgetStateProperty.all(
+                isCompact ? const Size(60, 32) : null,
+              ),
             ),
+            child: Text(tr('install')),
           ),
-          child: Text(tr('install')),
         );
       } else if (hasUpdate) {
-        return FilledButton.tonal(
-          onPressed: appsProvider.areDownloadsRunning()
-              ? null
-              : () => _installApp(app),
-          style: ButtonStyle(
-            visualDensity: isCompact ? VisualDensity.compact : null,
-            minimumSize: WidgetStateProperty.all(
-              isCompact ? const Size(60, 32) : null,
+        return Semantics(
+          button: true,
+          label: tr('update'),
+          enabled: !appsProvider.areDownloadsRunning(),
+          child: FilledButton.tonal(
+            onPressed: appsProvider.areDownloadsRunning()
+                ? null
+                : () => _installApp(app),
+            style: ButtonStyle(
+              visualDensity: isCompact ? VisualDensity.compact : null,
+              minimumSize: WidgetStateProperty.all(
+                isCompact ? const Size(60, 32) : null,
+              ),
             ),
+            child: Text(tr('update')),
           ),
-          child: Text(tr('update')),
         );
       } else {
-        return FilledButton.tonal(
-          onPressed: null,
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
-            foregroundColor: WidgetStateProperty.all(Colors.grey),
-            visualDensity: isCompact ? VisualDensity.compact : null,
-            minimumSize: WidgetStateProperty.all(
-              isCompact ? const Size(60, 32) : null,
+        return Semantics(
+          button: true,
+          label: tr('updated'),
+          enabled: false,
+          child: FilledButton.tonal(
+            onPressed: null,
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
+              foregroundColor: WidgetStateProperty.all(Colors.grey),
+              visualDensity: isCompact ? VisualDensity.compact : null,
+              minimumSize: WidgetStateProperty.all(
+                isCompact ? const Size(60, 32) : null,
+              ),
             ),
+            child: Text(tr('updated')),
           ),
-          child: Text(tr('updated')),
         );
       }
     }
@@ -692,96 +707,120 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 context,
               ).colorScheme.primaryContainer.withValues(alpha: 0.3)
             : null,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () => _handleAppTap(app),
-          onLongPress: () => toggleAppSelected(app),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // App icon with status indicators
-                    Stack(
-                      children: [
-                        SizedBox(
-                          height: 56,
-                          width: 56,
-                          child: getAppIcon(index),
-                        ),
-                        if (app.pinned)
-                          Positioned(
-                            top: -4,
-                            left: -4,
-                            child: Icon(
-                              Icons.push_pin,
-                              size: 16,
-                              color: Theme.of(context).colorScheme.primary,
+        child: Semantics(
+          button: true,
+          label: app.pinned
+              ? tr(
+                  'pinnedApp',
+                  args: [
+                    appInfo.name,
+                    tr('byX', args: [appInfo.author]),
+                  ],
+                )
+              : '${appInfo.name}, ${tr('byX', args: [appInfo.author])}',
+          value: isInstalled
+              ? (hasUpdate ? tr('updateAvailable') : tr('upToDate'))
+              : tr('notInstalled'),
+          onTapHint: tr('openAppDetails'),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(12),
+            onTap: () => _handleAppTap(app),
+            onLongPress: () => toggleAppSelected(app),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // App icon with status indicators
+                      Stack(
+                        children: [
+                          SizedBox(
+                            height: 56,
+                            width: 56,
+                            child: getAppIcon(index),
+                          ),
+                          if (app.pinned)
+                            Positioned(
+                              top: -4,
+                              left: -4,
+                              child: Semantics(
+                                label: tr('pinned'),
+                                child: Icon(
+                                  Icons.push_pin,
+                                  size: 14,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      // App name
+                      Text(
+                        appInfo.name,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 2),
+                      // Author name
+                      Text(
+                        tr('byX', args: [appInfo.author]),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: 8),
+                      // Action button or progress indicator
+                      if (appInfo.downloadProgress != null)
+                        Semantics(
+                          label: tr('downloadProgress'),
+                          value: '${appInfo.downloadProgress!.toInt()}%',
+                          child: SizedBox(
+                            width: 80,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (appInfo.downloadProgress! >= 0)
+                                  Text(
+                                    '${appInfo.downloadProgress!.toInt()}%',
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall,
+                                  ),
+                                const SizedBox(height: 4),
+                                SizedBox(
+                                  width: 40,
+                                  height: 4,
+                                  child: LinearProgressIndicator(
+                                    value: appInfo.downloadProgress! >= 0
+                                        ? appInfo.downloadProgress! / 100
+                                        : null,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    // App name
-                    Text(
-                      appInfo.name,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    // Author name
-                    Text(
-                      tr('byX', args: [appInfo.author]),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    const SizedBox(height: 8),
-                    // Action button or progress indicator
-                    if (appInfo.downloadProgress != null)
-                      SizedBox(
-                        width: 60,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            if (appInfo.downloadProgress! >= 0)
-                              Text(
-                                '${appInfo.downloadProgress!.toInt()}%',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            const SizedBox(height: 4),
-                            SizedBox(
-                              width: 40,
-                              height: 4,
-                              child: LinearProgressIndicator(
-                                value: appInfo.downloadProgress! >= 0
-                                    ? appInfo.downloadProgress! / 100
-                                    : null,
-                              ),
-                            ),
-                          ],
+                        )
+                      else if (!isTrackOnly)
+                        _buildActionButton(
+                          app,
+                          isInstalled,
+                          hasUpdate,
+                          isCompact: true,
                         ),
-                      )
-                    else if (!isTrackOnly)
-                      _buildActionButton(
-                        app,
-                        isInstalled,
-                        hasUpdate,
-                        isCompact: true,
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
@@ -799,79 +838,107 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
       return Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        child: ListTile(
-          selected: isSelected,
-          selectedTileColor: Theme.of(
-            context,
-          ).colorScheme.primaryContainer.withValues(alpha: 0.3),
-          leading: SizedBox(
-            height: 48,
-            width: 48,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: getAppIcon(index),
-            ),
-          ),
-          title: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  appInfo.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: app.pinned ? FontWeight.w600 : FontWeight.w500,
-                  ),
-                ),
+        child: Semantics(
+          button: true,
+          label: app.pinned
+              ? tr(
+                  'pinnedApp',
+                  args: [
+                    appInfo.name,
+                    tr('byX', args: [appInfo.author]),
+                  ],
+                )
+              : '${appInfo.name}, ${tr('byX', args: [appInfo.author])}',
+          value: isInstalled
+              ? (hasUpdate ? tr('updateAvailable') : tr('upToDate'))
+              : tr('notInstalled'),
+          onTapHint: tr('openAppDetails'),
+          child: ListTile(
+            selected: isSelected,
+            selectedTileColor: Theme.of(
+              context,
+            ).colorScheme.primaryContainer.withValues(alpha: 0.3),
+            leading: SizedBox(
+              height: 48,
+              width: 48,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: getAppIcon(index),
               ),
-              if (app.pinned)
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Icon(
-                    Icons.push_pin,
-                    size: 16,
-                    color: Theme.of(context).colorScheme.primary,
+            ),
+            title: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    appInfo.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: app.pinned
+                          ? FontWeight.w600
+                          : FontWeight.w500,
+                    ),
                   ),
                 ),
-            ],
-          ),
-          subtitle: Text(
-            tr('byX', args: [appInfo.author]),
-            maxLines: 1,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          trailing: appInfo.downloadProgress != null
-              ? SizedBox(
-                  width: 60,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (appInfo.downloadProgress! >= 0)
-                        Text(
-                          '${appInfo.downloadProgress!.toInt()}%',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      const SizedBox(height: 4),
-                      SizedBox(
-                        width: 40,
-                        height: 4,
-                        child: LinearProgressIndicator(
-                          value: appInfo.downloadProgress! >= 0
-                              ? appInfo.downloadProgress! / 100
-                              : null,
-                        ),
+                if (app.pinned)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 6),
+                    child: Semantics(
+                      label: tr('pinned'),
+                      child: Icon(
+                        Icons.push_pin,
+                        size: 14,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
-                    ],
+                    ),
                   ),
-                )
-              : isTrackOnly
-              ? Icon(
-                  Icons.check_circle_outline,
-                  color: Theme.of(context).colorScheme.primary,
-                )
-              : _buildActionButton(app, isInstalled, hasUpdate),
-          onTap: () => _handleAppTap(app),
-          onLongPress: () => toggleAppSelected(app),
+              ],
+            ),
+            subtitle: Text(
+              tr('byX', args: [appInfo.author]),
+              maxLines: 1,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            trailing: appInfo.downloadProgress != null
+                ? Semantics(
+                    label: tr('downloadProgress'),
+                    value: '${appInfo.downloadProgress!.toInt()}%',
+                    child: SizedBox(
+                      width: 80,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (appInfo.downloadProgress! >= 0)
+                            Text(
+                              '${appInfo.downloadProgress!.toInt()}%',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          const SizedBox(height: 4),
+                          SizedBox(
+                            width: 40,
+                            height: 4,
+                            child: LinearProgressIndicator(
+                              value: appInfo.downloadProgress! >= 0
+                                  ? appInfo.downloadProgress! / 100
+                                  : null,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : isTrackOnly
+                ? Semantics(
+                    label: tr('trackOnly'),
+                    child: Icon(
+                      Icons.check_circle_outline,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  )
+                : _buildActionButton(app, isInstalled, hasUpdate),
+            onTap: () => _handleAppTap(app),
+            onLongPress: () => toggleAppSelected(app),
+          ),
         ),
       );
     }
@@ -910,10 +977,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             key: ValueKey(
               'category_grid_${listedCategories[index] ?? "null"}_$index',
             ),
-            leading: Icon(
-              Icons.category_rounded,
-              color: Theme.of(context).colorScheme.primary,
-            ),
             title: Text(
               capFirstChar(listedCategories[index] ?? tr('noCategory')),
               style: const TextStyle(fontWeight: FontWeight.bold),
@@ -929,17 +992,16 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 }
               });
             },
-            tilePadding: const EdgeInsets.symmetric(horizontal: 16),
-            childrenPadding: const EdgeInsets.all(16),
+            tilePadding: const EdgeInsets.symmetric(horizontal: 8),
             children: [
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 190,
+                  maxCrossAxisExtent: 180,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
-                  childAspectRatio: 0.65,
+                  childAspectRatio: 0.7,
                 ),
                 itemCount: filteredEntries.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -1031,20 +1093,30 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         args: [plural('apps', totalApps).toLowerCase()],
                       ),
                     ),
-                    content: GeneratedForm(
-                      items: formItems.map((e) => [e]).toList(),
-                      onValueChanges: (vals, valid, isBuilding) {
-                        localValues = vals;
-                      },
+                    content: SingleChildScrollView(
+                      child: GeneratedForm(
+                        items: formItems.map((e) => [e]).toList(),
+                        onValueChanges: (vals, valid, isBuilding) {
+                          localValues = vals;
+                        },
+                      ),
                     ),
                     actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(null),
-                        child: Text(tr('cancel')),
+                      Semantics(
+                        button: true,
+                        label: tr('cancel'),
+                        child: TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(null),
+                          child: Text(tr('cancel')),
+                        ),
                       ),
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(localValues),
-                        child: Text(tr('ok')),
+                      Semantics(
+                        button: true,
+                        label: tr('ok'),
+                        child: TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(localValues),
+                          child: Text(tr('ok')),
+                        ),
                       ),
                     ],
                   );
@@ -1116,13 +1188,21 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       title: Text(tr('categorize')),
                       content: Text(tr('selectedCategorizeWarning')),
                       actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(ctx).pop(false),
-                          child: Text(tr('cancel')),
+                        Semantics(
+                          button: true,
+                          label: tr('cancel'),
+                          child: TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(false),
+                            child: Text(tr('cancel')),
+                          ),
                         ),
-                        TextButton(
-                          onPressed: () => Navigator.of(ctx).pop(true),
-                          child: Text(tr('ok')),
+                        Semantics(
+                          button: true,
+                          label: tr('ok'),
+                          child: TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(true),
+                            child: Text(tr('ok')),
+                          ),
                         ),
                       ],
                     );
@@ -1132,19 +1212,37 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           }
           if (cont) {
             // ignore: use_build_context_synchronously
+            Set<String> selectedCategories = !showPrompt
+                ? preselected ?? {}
+                : {};
             await showDialog<void>(
               context: context,
               builder: (BuildContext ctx) {
                 return AlertDialog(
                   title: Text(tr('categorize')),
-                  content: CategorySelector(
-                    preselected: !showPrompt ? preselected ?? {} : {},
-                    showLabelWhenNotEmpty: false,
+                  content: SingleChildScrollView(
+                    child: CategorySelector(
+                      preselected: selectedCategories,
+                      showLabelWhenNotEmpty: false,
+                      onSelected: (categories) {
+                        selectedCategories = categories.toSet();
+                      },
+                    ),
                   ),
                   actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(ctx).pop(),
-                      child: Text(tr('continue')),
+                    Semantics(
+                      button: true,
+                      label: tr('continue'),
+                      child: TextButton(
+                        onPressed: () {
+                          for (var app in selectedApps) {
+                            app.categories = selectedCategories.toList();
+                          }
+                          appsProvider.saveApps(selectedApps.toList());
+                          Navigator.of(ctx).pop();
+                        },
+                        child: Text(tr('continue')),
+                      ),
                     ),
                   ],
                 );
@@ -1178,30 +1276,38 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               ),
             ),
             actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(tr('no')),
+              Semantics(
+                button: true,
+                label: tr('no'),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(tr('no')),
+                ),
               ),
-              TextButton(
-                onPressed: () {
-                  HapticFeedback.selectionClick();
-                  appsProvider.saveApps(
-                    selectedApps.map((a) {
-                      if (a.installedVersion != null &&
-                          !appsProvider.isVersionDetectionPossible(
-                            appsProvider.apps[a.id],
-                          )) {
-                        a.installedVersion = a.latestVersion;
-                      }
-                      return a;
-                    }).toList(),
-                  );
+              Semantics(
+                button: true,
+                label: tr('yes'),
+                child: TextButton(
+                  onPressed: () {
+                    HapticFeedback.selectionClick();
+                    appsProvider.saveApps(
+                      selectedApps.map((a) {
+                        if (a.installedVersion != null &&
+                            !appsProvider.isVersionDetectionPossible(
+                              appsProvider.apps[a.id],
+                            )) {
+                          a.installedVersion = a.latestVersion;
+                        }
+                        return a;
+                      }).toList(),
+                    );
 
-                  Navigator.of(context).pop();
-                },
-                child: Text(tr('yes')),
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(tr('yes')),
+                ),
               ),
             ],
           );
@@ -1222,13 +1328,44 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  TextButton(
-                    onPressed: appsProvider.areDownloadsRunning()
-                        ? null
-                        : showMassMarkDialog,
-                    child: Text(
-                      tr('markSelectedAppsUpdated'),
-                      textAlign: TextAlign.center,
+                  Semantics(
+                    button: true,
+                    label: tr('markSelectedAppsUpdated'),
+                    enabled: !appsProvider.areDownloadsRunning(),
+                    child: TextButton(
+                      onPressed: appsProvider.areDownloadsRunning()
+                          ? null
+                          : showMassMarkDialog,
+                      child: Text(
+                        tr('markSelectedAppsUpdated'),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  Semantics(
+                    button: true,
+                    label: selectedApps.every((element) => element.pinned)
+                        ? tr('unpinFromTop')
+                        : tr('pinToTop'),
+                    child: TextButton(
+                      onPressed: () {
+                        var allPinned = selectedApps.every(
+                          (element) => element.pinned,
+                        );
+                        appsProvider.saveApps(
+                          selectedApps.map((e) {
+                            e.pinned = !allPinned;
+                            return e;
+                          }).toList(),
+                        );
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        selectedApps.every((element) => element.pinned)
+                            ? tr('unpinFromTop')
+                            : tr('pinToTop'),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ],
@@ -1321,18 +1458,27 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   preselected: filter.categoryFilter,
                   onSelected: (categories) {
                     filter.categoryFilter = categories.toSet();
+                    localValues['categoryFilter'] = categories.toSet();
                   },
                 ),
               ],
             ),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(null),
-                child: Text(tr('cancel')),
+              Semantics(
+                button: true,
+                label: tr('cancel'),
+                child: TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(null),
+                  child: Text(tr('cancel')),
+                ),
               ),
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(localValues),
-                child: Text(tr('ok')),
+              Semantics(
+                button: true,
+                label: tr('ok'),
+                child: TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(localValues),
+                  child: Text(tr('ok')),
+                ),
               ),
             ],
           );
@@ -1399,10 +1545,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     key: ValueKey(
                       'category_${listedCategories[index] ?? "null"}_$index',
                     ),
-                    leading: Icon(
-                      Icons.category_rounded,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
                     title: Text(
                       capFirstChar(listedCategories[index] ?? tr('noCategory')),
                       style: const TextStyle(fontWeight: FontWeight.bold),
@@ -1428,9 +1570,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           );
         }
       } else {
-        // Flat View
         if (settingsProvider.useGridView) {
-          final spacing = 6.0;
+          final spacing = 8.0;
 
           return SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -1455,7 +1596,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
-                  vertical: 4,
+                  vertical: 2,
                 ),
                 child: getSingleAppHorizTile(index),
               );
@@ -1496,47 +1637,51 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             neutralFilter,
                             settingsProvider,
                           );
-                          return IconButton(
-                            color: Theme.of(context).colorScheme.primary,
-                            style: const ButtonStyle(
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            tooltip: isFilterOff
+                          return Semantics(
+                            button: true,
+                            label: isFilterOff
                                 ? tr('filterApps')
-                                : '${tr('filter')} - ${tr('remove')}',
-                            onPressed: isFilterOff
-                                ? showFilterDialog
-                                : () {
-                                    setState(() {
-                                      filter = AppsFilter();
-                                    });
-                                  },
-                            icon: Icon(
-                              isFilterOff
-                                  ? Icons.search_rounded
-                                  : Icons.search_off_rounded,
+                                : tr('removeFilter'),
+                            child: IconButton(
+                              tooltip: isFilterOff
+                                  ? tr('filterApps')
+                                  : '${tr('filter')} - ${tr('remove')}',
+                              onPressed: isFilterOff
+                                  ? showFilterDialog
+                                  : () {
+                                      setState(() {
+                                        filter = AppsFilter();
+                                      });
+                                    },
+                              icon: Icon(
+                                isFilterOff
+                                    ? Icons.search_rounded
+                                    : Icons.search_off_rounded,
+                              ),
                             ),
                           );
                         },
                       ),
                       Consumer<SettingsProvider>(
                         builder: (context, settingsProvider, child) {
-                          return IconButton(
-                            color: Theme.of(context).colorScheme.primary,
-                            style: const ButtonStyle(
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            tooltip: settingsProvider.useGridView
+                          return Semantics(
+                            button: true,
+                            label: settingsProvider.useGridView
                                 ? tr('listView')
                                 : tr('gridView'),
-                            onPressed: () {
-                              settingsProvider.useGridView =
-                                  !settingsProvider.useGridView;
-                            },
-                            icon: Icon(
-                              settingsProvider.useGridView
-                                  ? Icons.view_list_rounded
-                                  : Icons.grid_view_rounded,
+                            child: IconButton(
+                              tooltip: settingsProvider.useGridView
+                                  ? tr('listView')
+                                  : tr('gridView'),
+                              onPressed: () {
+                                settingsProvider.useGridView =
+                                    !settingsProvider.useGridView;
+                              },
+                              icon: Icon(
+                                settingsProvider.useGridView
+                                    ? Icons.view_list_rounded
+                                    : Icons.grid_view_rounded,
+                              ),
                             ),
                           );
                         },
@@ -1632,11 +1777,29 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         icon: Icons.delete,
                         semanticLabel: tr('removeSelectedApps'),
                         tooltip: tr('removeSelectedApps'),
-                        onPressed: () {
-                          appsProvider.removeAppsWithModal(
-                            context,
-                            selectedApps.toList(),
-                          );
+                        onPressed: () async {
+                          final removedApps = await appsProvider
+                              .removeAppsWithModal(
+                                context,
+                                selectedApps.toList(),
+                              );
+                          if (removedApps != null && removedApps.isNotEmpty) {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    plural('appRemoved', removedApps.length),
+                                  ),
+                                  action: SnackBarAction(
+                                    label: tr('undo'),
+                                    onPressed: () {
+                                      appsProvider.undoRestoreApps(removedApps);
+                                    },
+                                  ),
+                                ),
+                              );
+                            }
+                          }
                         },
                       ),
                     if (selectedAppIds.isNotEmpty)
@@ -1646,28 +1809,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         tooltip: tr('categorize'),
                         onPressed: () {
                           launchCategorizeDialog()();
-                        },
-                      ),
-                    if (selectedAppIds.isNotEmpty)
-                      M3FloatingToolbarAction(
-                        icon: Icons.push_pin,
-                        semanticLabel:
-                            selectedApps.every((element) => element.pinned)
-                            ? tr('unpinFromTop')
-                            : tr('pinToTop'),
-                        tooltip: selectedApps.every((element) => element.pinned)
-                            ? tr('unpinFromTop')
-                            : tr('pinToTop'),
-                        onPressed: () {
-                          var allPinned = selectedApps.every(
-                            (element) => element.pinned,
-                          );
-                          appsProvider.saveApps(
-                            selectedApps.map((e) {
-                              e.pinned = !allPinned;
-                              return e;
-                            }).toList(),
-                          );
                         },
                       ),
                     if (selectedAppIds.isNotEmpty)

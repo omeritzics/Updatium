@@ -49,6 +49,8 @@ class AddAppPageState extends State<AddAppPage> {
   List<String> pickedCategories = [];
   int urlInputKey = 0;
   SourceProvider sourceProvider = SourceProvider();
+  final TextEditingController _sourceOverrideController =
+      TextEditingController();
 
   String? _regExValidator(String? value) {
     if (value == null || value.isEmpty) {
@@ -60,6 +62,43 @@ class AddAppPageState extends State<AddAppPage> {
       return tr('invalidRegEx');
     }
     return null;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _updateSourceOverrideController();
+  }
+
+  @override
+  void dispose() {
+    _sourceOverrideController.dispose();
+    super.dispose();
+  }
+
+  void _updateSourceOverrideController() {
+    if (pickedSourceOverride == null || pickedSourceOverride == '') {
+      _sourceOverrideController.text = tr('none');
+      return;
+    }
+    if (sourceProvider.sources.isEmpty) {
+      _sourceOverrideController.text = tr('none');
+      return;
+    }
+    AppSource? selectedSource;
+    try {
+      selectedSource = sourceProvider.sources.firstWhere(
+        (s) => s.runtimeType.toString() == pickedSourceOverride,
+      );
+    } catch (e) {
+      // No matching source found
+      selectedSource = null;
+    }
+    if (selectedSource != null) {
+      _sourceOverrideController.text = selectedSource.name;
+    } else {
+      _sourceOverrideController.text = tr('none');
+    }
   }
 
   void linkFn(String input) {
@@ -90,6 +129,9 @@ class AddAppPageState extends State<AddAppPage> {
         bool overrideChanged =
             pickedSourceOverride != previousPickedSourceOverride;
         previousPickedSourceOverride = pickedSourceOverride;
+        if (overrideChanged) {
+          _updateSourceOverrideController();
+        }
         if (updateUrlInput) {
           urlInputKey++;
         }
@@ -580,28 +622,8 @@ class AddAppPageState extends State<AddAppPage> {
             Expanded(
               child: MenuAnchor(
                 builder: (context, controller, child) {
-                  final selectedSource = sourceProvider.sources
-                      .where(
-                        (s) =>
-                            s.allowOverride ||
-                            (pickedSource != null &&
-                                pickedSource.runtimeType == s.runtimeType),
-                      )
-                      .firstWhere(
-                        (s) =>
-                            s.runtimeType.toString() ==
-                            (pickedSourceOverride ?? ''),
-                        orElse: () => sourceProvider.sources.first,
-                      );
-
                   return TextField(
-                    controller: TextEditingController(
-                      text:
-                          pickedSourceOverride == null ||
-                              pickedSourceOverride == ''
-                          ? tr('none')
-                          : selectedSource.name,
-                    ),
+                    controller: _sourceOverrideController,
                     readOnly: true,
                     decoration: InputDecoration(
                       labelText: tr('overrideSource'),

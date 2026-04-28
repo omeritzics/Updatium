@@ -73,7 +73,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   set themeColor(Color themeColor) {
-    prefs?.setInt('themeColor', themeColor.value);
+    prefs?.setInt('themeColor', themeColor.toARGB32());
     notifyListeners();
   }
 
@@ -96,7 +96,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   int get updateInterval {
-    return prefs?.getInt('updateInterval') ?? 360;
+    return prefs?.getInt('updateInterval') ?? 720;
   }
 
   set updateInterval(int min) {
@@ -105,7 +105,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   double get updateIntervalSliderVal {
-    return prefs?.getDouble('updateIntervalSliderVal') ?? 6.0;
+    return prefs?.getDouble('updateIntervalSliderVal') ?? 7.0;
   }
 
   set updateIntervalSliderVal(double val) {
@@ -402,7 +402,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   bool get highlightTouchTargets {
-    return prefs?.getBool('highlightTouchTargets') ?? false;
+    return prefs?.getBool('highlightTouchTargets') ?? true;
   }
 
   set highlightTouchTargets(bool val) {

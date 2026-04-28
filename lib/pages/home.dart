@@ -130,6 +130,156 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> initDeepLinks() async {
     // AppLinks functionality removed
+    _appLinks = AppLinks();
+
+    goToAddApp(String data) async {
+      final settingsProvider = context.read<SettingsProvider>();
+      if (settingsProvider.safeMode) {
+        showError(UpdatiumError(tr('safeModeAddAppDisabled')), context);
+        return;
+      }
+      switchToPage(1);
+      final pages = getPages(settingsProvider);
+      while ((pages[1].widget.key as GlobalKey<AddAppPageState>?)
+              ?.currentState ==
+          null) {
+        await Future.delayed(const Duration(microseconds: 1));
+      }
+      (pages[1].widget.key as GlobalKey<AddAppPageState>?)?.currentState
+          ?.linkFn(data);
+    }
+
+    goToExistingApp(String appId) async {
+      // Go to Apps page
+      switchToPage(0);
+      final settingsProvider = context.read<SettingsProvider>();
+      final pages = getPages(settingsProvider);
+      while ((pages[0].widget.key as GlobalKey<AppsPageState>?)?.currentState ==
+          null) {
+        await Future.delayed(const Duration(microseconds: 1));
+      }
+
+      // Navigate to the app
+      (pages[0].widget.key as GlobalKey<AppsPageState>?)?.currentState
+          ?.openAppById(appId);
+    }
+
+    interpretLink(Uri uri) async {
+      isLinkActivity = true;
+      var action = uri.host;
+      var data = uri.path.length > 1 ? uri.path.substring(1) : "";
+      try {
+        if (action == 'add') {
+          // Ensure apps are loaded
+          AppsProvider appsProvider = context.read<AppsProvider>();
+          while (appsProvider.loadingApps) {
+            await Future.delayed(const Duration(milliseconds: 10));
+          }
+
+          // See if we already have this app
+          String standardizedUrl = SourceProvider()
+              .getSource(data)
+              .standardizeUrl(data);
+
+          AppInMemory? existingApp = appsProvider.apps.values
+              .where((AppInMemory a) => a.app.url == standardizedUrl)
+              .firstOrNull;
+
+          if (existingApp != null) {
+            await goToExistingApp(existingApp.app.id);
+          } else {
+            await goToAddApp(data);
+          }
+        } else if (action == 'app' || action == 'apps') {
+          var dataStr = Uri.decodeComponent(data);
+          if (await showDialog(
+                context: context,
+                builder: (BuildContext ctx) {
+                  return _ImportDialog(action: action, dataStr: dataStr);
+                },
+              ) ==
+              true) {
+            // ignore: use_build_context_synchronously
+            var appsProvider = context.read<AppsProvider>();
+            var result = await appsProvider.import(
+              action == 'app'
+                  ? '{ "apps": [$dataStr] }'
+                  : '{ "apps": $dataStr }',
+            );
+            // ignore: use_build_context_synchronously
+            showMessage(
+              tr(
+                'importedX',
+                args: [plural('apps', result.key.length).toLowerCase()],
+              ),
+              context,
+            );
+          }
+        } else {
+          throw UpdatiumError(tr('unknown'));
+        }
+      } catch (e) {
+        showError(e, context);
+      }
+    }
+
+    interpretObtainiumLink(Uri uri) async {
+      isLinkActivity = true;
+      var action = uri.host;
+      var data = uri.path.length > 1 ? uri.path.substring(1) : "";
+      try {
+        if (action == 'add') {
+          // Ensure apps are loaded
+          AppsProvider appsProvider = context.read<AppsProvider>();
+          while (appsProvider.loadingApps) {
+            await Future.delayed(const Duration(milliseconds: 10));
+          }
+
+          // See if we already have this app
+          String standardizedUrl = SourceProvider()
+              .getSource(data)
+              .standardizeUrl(data);
+
+          AppInMemory? existingApp = appsProvider.apps.values
+              .where((AppInMemory a) => a.app.url == standardizedUrl)
+              .firstOrNull;
+
+          if (existingApp != null) {
+            await goToExistingApp(existingApp.app.id);
+          } else {
+            await goToAddApp(data);
+          }
+        } else {
+          throw UpdatiumError(tr('unknown'));
+        }
+      } catch (e) {
+        showError(e, context);
+      }
+    }
+
+    // Check initial link if app was in cold state (terminated)
+    final appLink = await _appLinks.getInitialLink();
+    var initLinked = false;
+    if (appLink != null) {
+      if (appLink.scheme == 'obtainium') {
+        await interpretObtainiumLink(appLink);
+      } else {
+        await interpretLink(appLink);
+      }
+      initLinked = true;
+    }
+    // Handle link when app is in warm state (front or background)
+    _linkSubscription = _appLinks.uriLinkStream.listen((uri) async {
+      if (!initLinked) {
+        if (uri.scheme == 'obtainium') {
+          await interpretObtainiumLink(uri);
+        } else {
+          await interpretLink(uri);
+        }
+      } else {
+        initLinked = false;
+      }
+    });
   }
 
   void setIsReversing(int targetIndex) {
@@ -225,7 +375,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: PageTransitionSwitcher(
           duration: Duration(
-            milliseconds: settingsProvider.disablePageTransitions ? 0 : 300,
+            milliseconds: settingsProvider.disablePageTransitions ? 0 : 200,
           ),
           reverse: settingsProvider.reversePageTransitions
               ? !isReversing
@@ -257,7 +407,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             selectedIndex: selectedIndexHistory.isEmpty
                 ? 0
                 : selectedIndexHistory.last,
-            animationDuration: const Duration(milliseconds: 300),
+            animationDuration: const Duration(milliseconds: 200),
             labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
             onDestinationSelected: (int index) async {
               HapticFeedback.selectionClick();

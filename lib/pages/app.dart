@@ -164,55 +164,45 @@ class _AppPageState extends State<AppPage> {
       }
       var changeLogFn = getChangeLogFn(context, app.app);
       return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                gap24,
-                Text(
-                  versionLines,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-                ),
-                changeLogFn != null || app.app.releaseDate != null
-                    ? GestureDetector(
-                        onTap: changeLogFn,
-                        child: Text(
-                          app.app.releaseDate == null
-                              ? tr('changes')
-                              : app.app.releaseDate!.toLocal().toString(),
-                          textAlign: TextAlign.start,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall!
-                              .copyWith(
-                                decoration: changeLogFn != null
-                                    ? TextDecoration.underline
-                                    : null,
-                                fontStyle: changeLogFn != null
-                                    ? FontStyle.italic
-                                    : null,
-                              ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              gap24,
+              Text(
+                versionLines,
+                textAlign: TextAlign.start,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+              ),
+              changeLogFn != null || app.app.releaseDate != null
+                  ? GestureDetector(
+                      onTap: changeLogFn,
+                      child: Text(
+                        app.app.releaseDate == null
+                            ? tr('changes')
+                            : app.app.releaseDate!.toLocal().toString(),
+                        textAlign: TextAlign.start,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                          decoration: changeLogFn != null
+                              ? TextDecoration.underline
+                              : null,
                         ),
-                      )
-                    : const SizedBox.shrink(),
-                gap24,
-              ],
-            ),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              gap24,
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              infoLines,
-              textAlign: TextAlign.start,
-              style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
-            ),
+          Text(
+            infoLines,
+            textAlign: TextAlign.start,
+            style: const TextStyle(fontSize: 12),
           ),
 
           /* Certificate Hashes */
@@ -258,7 +248,7 @@ class _AppPageState extends State<AppPage> {
 
           gap24,
           CategorySelector(
-            alignment: WrapAlignment.center,
+            alignment: WrapAlignment.start,
             preselected: app.app.categories?.toSet() ?? {},
             onSelected: (categories) {
               app.app.categories = categories;
@@ -289,7 +279,7 @@ class _AppPageState extends State<AppPage> {
                       blockquoteDecoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
                       ),
-                      textAlign: WrapAlignment.center,
+                      textAlign: WrapAlignment.start,
                     ),
                     data: app.app.additionalSettings['about'],
                     onTapLink: (text, href, title) {
@@ -358,10 +348,7 @@ class _AppPageState extends State<AppPage> {
                         }()
                       : null,
                 ),
-                padding: settingsProvider.highlightTouchTargets
-                    ? const EdgeInsetsDirectional.fromSTEB(12, 8, 12, 8)
-                    : const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
-                margin: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Tooltip(
                   message: app.app.url,
                   child: Text(
@@ -371,7 +358,6 @@ class _AppPageState extends State<AppPage> {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       decoration: TextDecoration.underline,
-                      fontStyle: FontStyle.italic,
                     ),
                   ),
                 ),
@@ -379,6 +365,7 @@ class _AppPageState extends State<AppPage> {
             ],
           ),
         ),
+        const SizedBox(height: 4),
         Text(
           app.app.id,
           textAlign: TextAlign.start,
@@ -480,7 +467,7 @@ class _AppPageState extends State<AppPage> {
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         elevation: 2,
         shadowColor: Theme.of(context).colorScheme.shadow,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       ),
       onPressed:
           !updating &&
@@ -536,8 +523,11 @@ class _AppPageState extends State<AppPage> {
 
                           if (appInMemory?.icon != null) {
                             return Padding(
-                              padding: const EdgeInsetsDirectional.only(
-                                end: 12.0,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                16.0,
+                                8.0,
+                                16.0,
+                                8.0,
                               ),
                               child: Image.memory(
                                 appInMemory!.icon!,
@@ -630,46 +620,45 @@ class _AppPageState extends State<AppPage> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      getFullInfoColumn(),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                          16,
-                          16,
-                          16,
-                          32,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(width: 16.0),
-                            Expanded(child: getInstallOrUpdateButton()),
-                            const SizedBox(width: 16.0),
-                          ],
-                        ),
-                      ),
-                      if (app.downloadProgress != null)
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        getFullInfoColumn(),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                            16,
-                            0,
-                            16,
-                            32,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(width: 16.0),
+                              Expanded(child: getInstallOrUpdateButton()),
+                              const SizedBox(width: 16.0),
+                            ],
                           ),
-                          child: LinearProgressIndicator(
-                            value: app.downloadProgress! >= 0
-                                ? app.downloadProgress! / 100
-                                : null,
-                            backgroundColor: Theme.of(
-                              context,
-                            ).colorScheme.surfaceContainerHighest,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Theme.of(context).colorScheme.primary,
+                        ),
+                        if (app.downloadProgress != null)
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                              bottom: 32,
+                            ),
+                            child: Semantics(
+                              label: tr('downloadProgress'),
+                              value: '${app.downloadProgress!.toInt()}%',
+                              child: LinearProgressIndicator(
+                                value: app.downloadProgress! >= 0
+                                    ? app.downloadProgress! / 100
+                                    : null,
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.surfaceContainerHighest,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -735,14 +724,25 @@ class _AppPageState extends State<AppPage> {
                     icon: Icons.delete,
                     semanticLabel: tr('remove'),
                     tooltip: tr('remove'),
-                    onPressed: () {
-                      appsProvider.removeAppsWithModal(context, [app.app]).then(
-                        (result) {
-                          if (result == true) {
-                            Navigator.of(context).pop();
-                          }
-                        },
-                      );
+                    onPressed: () async {
+                      final removedApps = await appsProvider
+                          .removeAppsWithModal(context, [app.app]);
+                      if (removedApps != null && removedApps.isNotEmpty) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(tr('appRemoved')),
+                              action: SnackBarAction(
+                                label: tr('undo'),
+                                onPressed: () {
+                                  appsProvider.undoRestoreApps(removedApps);
+                                },
+                              ),
+                            ),
+                          );
+                          Navigator.of(context).pop();
+                        }
+                      }
                     },
                   ),
                 ],

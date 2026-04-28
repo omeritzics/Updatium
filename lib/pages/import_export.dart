@@ -94,6 +94,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           );
         },
       ).then((value) {
+        controller.dispose();
         if (value != null && value.isNotEmpty) {
           var urls = value.trim().split('\n');
           setState(() {
@@ -172,7 +173,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 appsProvider.apps.forEach((key, value) {
                   for (var c in value.app.categories ?? []) {
                     if (!cats.containsKey(c)) {
-                      cats[c] = generateRandomLightColor().value;
+                      cats[c] = generateRandomLightColor().toARGB32();
                     }
                   }
                 });
@@ -240,51 +241,56 @@ class _ImportExportPageState extends State<ImportExportPage> {
               for (var arg in source.requiredArgs) arg: TextEditingController(),
             };
 
-            var values = await showDialog<Map<String, String>?>(
-              context: context,
-              builder: (BuildContext ctx) {
-                return AlertDialog(
-                  title: Text(tr('importX', args: [source.name])),
-                  content: Form(
-                    key: formKey,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: source.requiredArgs.map((arg) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: TextFormField(
-                            controller: controllers[arg],
-                            decoration: InputDecoration(
-                              labelText: arg,
-                              border: const OutlineInputBorder(),
-                            ),
-                            validator: (v) => v == null || v.isEmpty
-                                ? tr('requiredInBrackets')
-                                : null,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(ctx).pop(null),
-                      child: Text(tr('cancel')),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        if (formKey.currentState?.validate() == true) {
-                          Navigator.of(
-                            ctx,
-                          ).pop(controllers.map((k, v) => MapEntry(k, v.text)));
-                        }
-                      },
-                      child: Text(tr('continue')),
-                    ),
-                  ],
-                );
-              },
-            );
+            var values =
+                await showDialog<Map<String, String>?>(
+                  context: context,
+                  builder: (BuildContext ctx) {
+                    return AlertDialog(
+                      title: Text(tr('importX', args: [source.name])),
+                      content: Form(
+                        key: formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: source.requiredArgs.map((arg) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: TextFormField(
+                                controller: controllers[arg],
+                                decoration: InputDecoration(
+                                  labelText: arg,
+                                  border: const OutlineInputBorder(),
+                                ),
+                                validator: (v) => v == null || v.isEmpty
+                                    ? tr('requiredInBrackets')
+                                    : null,
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(null),
+                          child: Text(tr('cancel')),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            if (formKey.currentState?.validate() == true) {
+                              Navigator.of(ctx).pop(
+                                controllers.map((k, v) => MapEntry(k, v.text)),
+                              );
+                            }
+                          },
+                          child: Text(tr('continue')),
+                        ),
+                      ],
+                    );
+                  },
+                ).then((_) {
+                  for (var controller in controllers.values) {
+                    controller.dispose();
+                  }
+                });
             if (values != null) {
               setState(() {
                 importInProgress = true;

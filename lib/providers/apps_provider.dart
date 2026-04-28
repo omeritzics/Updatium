@@ -196,7 +196,7 @@ Future<File> downloadFileWithRetry(
     if (retries > 0 &&
         (e is http.ClientException ||
             e.toString().contains('Connection closed'))) {
-      await Future.delayed(const Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 10));
       return await downloadFileWithRetry(
         url,
         fileName,
@@ -348,7 +348,10 @@ Future<String?> promptForFileName(
         ],
       );
     },
-  );
+  ).then((result) {
+    controller.dispose();
+    return result;
+  });
 }
 
 Future<File> downloadFile(
@@ -661,7 +664,6 @@ class AppsProvider with ChangeNotifier {
   late Stream<FGBGType>? foregroundStream;
   late StreamSubscription<FGBGType>? foregroundSubscription;
   late Directory APKDir;
-  late Directory iconsCacheDir;
   late SettingsProvider settingsProvider = SettingsProvider();
 
   Iterable<AppInMemory> getAppValues() => apps.values.map((a) => a.deepCopy());
@@ -677,24 +679,30 @@ class AppsProvider with ChangeNotifier {
     });
     () async {
       await settingsProvider.initializeSettings();
+      APKDir = Directory('${(await getAppStorageDir()).path}/apks');
+      if (!APKDir.existsSync()) {
+        APKDir.createSync();
+      }
+      // Clean up unused icon cache directory
+      var iconCacheDir = Directory('${(await getAppStorageDir()).path}/icons');
+      if (iconCacheDir.existsSync()) {
+        try {
+          iconCacheDir.deleteSync(recursive: true);
+        } catch (e) {
+          // Ignore deletion errors
+        }
+      }
+      // Clean up old external cache directory to reduce cache usage
       var cacheDirs = await getExternalCacheDirectories();
       if (cacheDirs?.isNotEmpty ?? false) {
-        APKDir = cacheDirs!.first;
-        iconsCacheDir = Directory('${cacheDirs.first.path}/icons');
-        if (!iconsCacheDir.existsSync()) {
-          iconsCacheDir.createSync();
+        var oldCacheDir = cacheDirs!.first;
+        if (oldCacheDir.existsSync()) {
+          try {
+            oldCacheDir.deleteSync(recursive: true);
+          } catch (e) {
+            // Ignore deletion errors
+          }
         }
-        // Icon cache initialization removed - service no longer available
-      } else {
-        APKDir = Directory('${(await getAppStorageDir()).path}/apks');
-        if (!APKDir.existsSync()) {
-          APKDir.createSync();
-        }
-        iconsCacheDir = Directory('${(await getAppStorageDir()).path}/icons');
-        if (!iconsCacheDir.existsSync()) {
-          iconsCacheDir.createSync();
-        }
-        // Icon cache initialization removed - service no longer available
       }
       if (!isBg) {
         // Load Apps into memory (in background processes, this is done later instead of in the constructor)
@@ -905,29 +913,45 @@ class AppsProvider with ChangeNotifier {
         // If isCorrectVersion is true, we'll use the existing file (downloadFile handles this)
       }
 
-      var downloadedFile = await downloadFileWithRetry(
-        downloadUrl,
-        fileNameNoExt,
-        source.urlsAlwaysHaveExtension,
-        headers: headers,
-        (double? progress) {
-          int? prog = progress?.ceil();
-          if (apps[app.id] != null) {
-            apps[app.id]!.downloadProgress = progress;
-            notifyListeners();
-          }
-          notif = DownloadNotification(app.finalName, prog ?? 100);
-          if (prog != null && prevProg != prog) {
-            notificationsProvider?.notify(notif);
-          }
-          prevProg = prog;
-        },
-        APKDir.path,
-        useExisting: useExisting,
-        allowInsecure: app.additionalSettings['allowInsecure'] == true,
-        logs: logs,
-        preFetchedExt: source.urlsAlwaysHaveExtension ? null : ext,
-      );
+      File? downloadedFile;
+      try {
+        downloadedFile = await downloadFileWithRetry(
+          downloadUrl,
+          fileNameNoExt,
+          source.urlsAlwaysHaveExtension,
+          headers: headers,
+          (double? progress) {
+            int? prog = progress?.ceil();
+            if (apps[app.id] != null) {
+              apps[app.id]!.downloadProgress = progress;
+              notifyListeners();
+            }
+            notif = DownloadNotification(app.finalName, prog ?? 100);
+            if (prog != null && prevProg != prog) {
+              notificationsProvider?.notify(notif);
+            }
+            prevProg = prog;
+          },
+          APKDir.path,
+          useExisting: useExisting,
+          allowInsecure: app.additionalSettings['allowInsecure'] == true,
+          logs: logs,
+          preFetchedExt: source.urlsAlwaysHaveExtension ? null : ext,
+        );
+      } catch (e) {
+        // Delete partial APK file if download was cancelled or failed
+        if (downloadedFile != null && downloadedFile.existsSync()) {
+          downloadedFile.deleteSync();
+        }
+        // Also delete .part file if exists
+        var partFile = File(
+          '${APKDir.path}/$fileNameNoExt${source.urlsAlwaysHaveExtension ? '' : '.$ext'}.part',
+        );
+        if (partFile.existsSync()) {
+          partFile.deleteSync();
+        }
+        rethrow;
+      }
       // Set to 90 for remaining steps, will make null in 'finally'
       if (apps[app.id] != null) {
         apps[app.id]!.downloadProgress = -1;
@@ -1251,6 +1275,7 @@ class AppsProvider with ChangeNotifier {
     DownloadedDir dir,
     BuildContext? firstTimeWithContext, {
     bool shizukuPretendToBeGooglePlay = false,
+    bool forceDelete = false,
   }) async {
     var somethingInstalled = false;
     try {
@@ -1300,9 +1325,12 @@ class AppsProvider with ChangeNotifier {
                     .map((a) => DownloadedApk(dir.appId, a))
                     .toList()
               : [],
+          forceDelete: forceDelete,
         );
         somethingInstalled = somethingInstalled || wasInstalled;
-        dir.file.delete(recursive: true);
+        if (forceDelete) {
+          dir.file.delete(recursive: true);
+        }
       } catch (e) {
         logs.add('Could not install APKs from ${dir.type}: ${e.toString()}');
         errors.add(dir.appId, e, appName: apps[dir.appId]?.name);
@@ -1385,6 +1413,7 @@ class AppsProvider with ChangeNotifier {
     BuildContext? firstTimeWithContext, {
     bool shizukuPretendToBeGooglePlay = false,
     List<DownloadedApk> additionalAPKs = const [],
+    bool forceDelete = false,
   }) async {
     if (firstTimeWithContext != null &&
         settingsProvider.beforeNewInstallsShareToAppVerifier &&
@@ -1469,7 +1498,9 @@ class AppsProvider with ChangeNotifier {
       installed = true;
       apps[file.appId]!.app.installedVersion =
           apps[file.appId]!.app.latestVersion;
-      file.file.delete(recursive: true);
+      if (forceDelete) {
+        file.file.delete(recursive: true);
+      }
     }
     await saveApps([apps[file.appId]!.app]);
     return installed;
@@ -1677,6 +1708,7 @@ class AppsProvider with ChangeNotifier {
             downloadedFile,
             contextIfNewInstall,
             shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
+            forceDelete: true,
           );
         } else {
           // ignore: use_build_context_synchronously
@@ -1684,6 +1716,7 @@ class AppsProvider with ChangeNotifier {
             downloadedDir!,
             contextIfNewInstall,
             shizukuPretendToBeGooglePlay: shizukuPretendToBeGooglePlay,
+            forceDelete: true,
           );
         }
         if (willBeSilent && context == null) {
@@ -2206,36 +2239,6 @@ class AppsProvider with ChangeNotifier {
     }
     loadingApps = false;
     notifyListeners();
-
-    // Start icon pre-fetching after apps are loaded
-    _startIconPrefetching();
-  }
-
-  /// Start icon pre-fetching in background after metadata sync
-  void _startIconPrefetching() {
-    // Run in background to avoid blocking UI
-    Future.microtask(() async {
-      try {
-        // Only start pre-fetching if there are apps with remote icon URLs
-        final appsWithRemoteIcons = apps.values
-            .where(
-              (appInMemory) =>
-                  appInMemory.app.remoteIconUrl != null &&
-                  appInMemory.app.remoteIconUrl!.isNotEmpty,
-            )
-            .length;
-
-        if (appsWithRemoteIcons > 0) {
-          LogsProvider().add(
-            'Starting background icon pre-fetching for $appsWithRemoteIcons apps',
-          );
-
-          // Icon prefetching removed - service no longer available
-        }
-      } catch (e) {
-        LogsProvider().add('Error starting icon pre-fetching: $e');
-      }
-    });
   }
 
   Future<void> updateAppIcon(String? appId) async {
@@ -2296,59 +2299,6 @@ class AppsProvider with ChangeNotifier {
     }
 
     return fallbackIcon;
-  }
-
-  /// Check if an icon is available for the given app
-  Future<bool> isIconCached(String appId, String? remoteIconUrl) async {
-    return apps[appId]?.installedInfo?.applicationInfo?.getAppIcon() != null;
-  }
-
-  /// Clear icon cache (no-op - service removed)
-  Future<void> clearIconCache() async {
-    // Icon cache service removed - no operation
-  }
-
-  /// Get icon cache statistics (no-op - service removed)
-  Future<Map<String, dynamic>> getIconCacheStats() async {
-    return {};
-  }
-
-  /// Start icon pre-fetching manually (no-op - service removed)
-  Future<void> startIconPrefetching({
-    int topCount = 40,
-    bool forceRefresh = false,
-  }) async {
-    // Icon prefetcher service removed - no operation
-  }
-
-  /// Get icon pre-fetching status (no-op - service removed)
-  String getIconPrefetchingStatus() {
-    return 'disabled';
-  }
-
-  /// Pause icon pre-fetching (no-op - service removed)
-  void pauseIconPrefetching() {
-    // Icon prefetcher service removed - no operation
-  }
-
-  /// Resume icon pre-fetching (no-op - service removed)
-  void resumeIconPrefetching() {
-    // Icon prefetcher service removed - no operation
-  }
-
-  /// Stop icon pre-fetching (no-op - service removed)
-  void stopIconPrefetching() {
-    // Icon prefetcher service removed - no operation
-  }
-
-  /// Get icon pre-fetching progress stream (no-op - service removed)
-  Stream<String> getIconPrefetchingProgress() {
-    return Stream.empty();
-  }
-
-  /// Get icon pre-fetching result stream (no-op - service removed)
-  Stream<String> getIconPrefetchingResults() {
-    return Stream.empty();
   }
 
   Future<void> saveApps(
@@ -2433,12 +2383,16 @@ class AppsProvider with ChangeNotifier {
     }
   }
 
-  Future<void> removeApps(List<String> appIds) async {
+  Future<List<App>> removeApps(List<String> appIds) async {
+    List<App> removedApps = [];
     var apkFiles = APKDir.listSync();
     await Future.wait(
       appIds.map((appId) async {
         File file = File('${(await getAppsDir()).path}/$appId.json');
         if (file.existsSync()) {
+          // Read the app data before deletion for undo functionality
+          String jsonString = file.readAsStringSync();
+          removedApps.add(App.fromJson(jsonDecode(jsonString)));
           deleteFile(file);
         }
         apkFiles
@@ -2464,9 +2418,25 @@ class AppsProvider with ChangeNotifier {
         }),
       );
     }
+    return removedApps;
   }
 
-  Future<bool> removeAppsWithModal(BuildContext context, List<App> apps) async {
+  Future<void> undoRestoreApps(List<App> appsToRestore) async {
+    await saveApps(appsToRestore);
+    notifyListeners();
+    // Export safely without blocking, handle errors gracefully
+    unawaited(
+      export(isAuto: true).catchError((e) {
+        // Log export errors but don't crash the app
+        return null;
+      }),
+    );
+  }
+
+  Future<List<App>?> removeAppsWithModal(
+    BuildContext context,
+    List<App> apps,
+  ) async {
     var showUninstallOption = apps
         .where(
           (a) =>
@@ -2546,12 +2516,13 @@ class AppsProvider with ChangeNotifier {
         }
         await saveApps(apps, attemptToCorrectInstallStatus: false);
       }
+      List<App>? removedApps;
       if (remove) {
-        await removeApps(apps.map((e) => e.id).toList());
+        removedApps = await removeApps(apps.map((e) => e.id).toList());
       }
-      return uninstall || remove;
+      return removedApps;
     }
-    return false;
+    return null;
   }
 
   Future<void> openAppSettings(String appId) async {
@@ -2567,7 +2538,7 @@ class AppsProvider with ChangeNotifier {
     apps.forEach((key, value) {
       for (var c in value.app.categories ?? []) {
         if (!cats.containsKey(c)) {
-          cats[c] = settingsProvider.themeColor.value;
+          cats[c] = settingsProvider.themeColor.toARGB32();
         }
       }
     });

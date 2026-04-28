@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/main.dart';
-import 'package:updatium/components/tag_editor.dart';
 import 'package:updatium/components/generated_form.dart';
+import 'package:updatium/components/category_chip.dart';
 import 'package:updatium/pages/safe_mode_dialog.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/native_provider.dart';
@@ -65,6 +65,8 @@ class _SettingsPageState extends State<SettingsPage> {
       };
   late ScrollController scrollController;
   bool _scrollPositionRestored = false;
+  final Map<String, TextEditingController> _textControllers = {};
+  final Map<String, FocusNode> _focusNodes = {};
 
   void initUpdateIntervalInterpolator() {
     List<InterpolationNode> nodes = [];
@@ -122,12 +124,39 @@ class _SettingsPageState extends State<SettingsPage> {
       final settingsProvider = context.read<SettingsProvider>();
       settingsProvider.settingsScrollPosition = scrollController.offset;
     });
+    // Clean up unused controllers on initialization
+    _cleanupUnusedControllers();
   }
 
   @override
   void dispose() {
     scrollController.dispose();
+    for (var controller in _textControllers.values) {
+      controller.dispose();
+    }
+    _textControllers.clear();
+    for (var focusNode in _focusNodes.values) {
+      focusNode.dispose();
+    }
+    _focusNodes.clear();
     super.dispose();
+  }
+
+  void _cleanupUnusedControllers() {
+    var activeKeys = SourceProvider().sources
+        .where((e) => e.sourceConfigSettingFormItems.isNotEmpty)
+        .expand((e) => e.sourceConfigSettingFormItems.map((item) => item.key))
+        .toSet();
+    // Clean up both controllers and focus nodes together to prevent mismatches
+    var keysToRemove = _textControllers.keys
+        .where((key) => !activeKeys.contains(key))
+        .toSet();
+    for (var key in keysToRemove) {
+      _textControllers[key]?.dispose();
+      _textControllers.remove(key);
+      _focusNodes[key]?.dispose();
+      _focusNodes.remove(key);
+    }
   }
 
   @override
@@ -137,6 +166,8 @@ class _SettingsPageState extends State<SettingsPage> {
     if (settingsProvider.prefs == null) settingsProvider.initializeSettings();
     initUpdateIntervalInterpolator();
     processIntervalSliderValue(settingsProvider.updateIntervalSliderVal);
+    // Clean up unused controllers in case sources changed dynamically
+    _cleanupUnusedControllers();
 
     // Restore scroll position on first build
     if (!_scrollPositionRestored) {
@@ -253,13 +284,6 @@ class _SettingsPageState extends State<SettingsPage> {
               });
             }
           },
-          child: Icon(
-            Icons.palette,
-            color: settingsProvider.themeColor.computeLuminance() > 0.5
-                ? Colors.black
-                : Colors.white,
-            size: 20,
-          ),
         ),
       ),
     );
@@ -430,10 +454,23 @@ class _SettingsPageState extends State<SettingsPage> {
                 // Text field type
                 final String currentValue =
                     settingsProvider.getSettingString(formItem.key) ?? '';
+                if (!_textControllers.containsKey(formItem.key)) {
+                  _textControllers[formItem.key] = TextEditingController(
+                    text: currentValue,
+                  );
+                  _focusNodes[formItem.key] = FocusNode();
+                } else if (_textControllers[formItem.key]!.text !=
+                    currentValue) {
+                  // Only update if not focused to avoid overwriting user input
+                  if (!_focusNodes[formItem.key]!.hasFocus) {
+                    _textControllers[formItem.key]!.text = currentValue;
+                  }
+                }
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: TextField(
-                    controller: TextEditingController(text: currentValue),
+                    controller: _textControllers[formItem.key],
+                    focusNode: _focusNodes[formItem.key],
                     decoration: InputDecoration(
                       labelText: formItem.key,
                       border: const OutlineInputBorder(),
@@ -1445,150 +1482,21 @@ class CategoryTagEditor extends StatelessWidget {
   });
 
   void _onAddPressed(BuildContext context, SettingsProvider settingsProvider) {
-    String categoryName = '';
-    Color categoryColor = Theme.of(context).colorScheme.primary;
+    final random = DateTime.now().millisecondsSinceEpoch;
+    final initialColor = Color((random & 0xFFFFFF) | 0xFF000000);
 
-    showDialog<String?>(
-      context: context,
-      builder: (BuildContext ctx) {
-        return AlertDialog(
-          title: Text(tr('addCategory')),
-          content: SizedBox(
-            width: 300,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextField(
-                  autofocus: true,
-                  decoration: InputDecoration(labelText: tr('name')),
-                  onChanged: (value) => categoryName = value,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        tr('selectX', args: [tr('color').toLowerCase()]),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    Focus(
-                      canRequestFocus: false,
-                      skipTraversal: true,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () async {
-                          final Color colorBeforeDialog = categoryColor;
-                          final result =
-                              await ColorPicker(
-                                color: categoryColor,
-                                onColorChanged: (Color color) =>
-                                    categoryColor = color,
-                                actionButtons: const ColorPickerActionButtons(
-                                  okButton: true,
-                                  closeButton: true,
-                                  dialogActionButtons: false,
-                                ),
-                                pickersEnabled: const <ColorPickerType, bool>{
-                                  ColorPickerType.both: false,
-                                  ColorPickerType.primary: true,
-                                  ColorPickerType.accent: false,
-                                  ColorPickerType.bw: false,
-                                  ColorPickerType.custom: true,
-                                  ColorPickerType.wheel: true,
-                                },
-                                pickerTypeLabels: <ColorPickerType, String>{
-                                  ColorPickerType.custom: tr('standard'),
-                                  ColorPickerType.wheel: tr('custom'),
-                                },
-                                wheelDiameter: 192,
-                                wheelSquareBorderRadius: 32,
-                                width: 48,
-                                height: 48,
-                                borderRadius: 24,
-                                spacing: 8,
-                                runSpacing: 8,
-                                enableShadesSelection: false,
-                                showMaterialName: false,
-                                showColorName: false,
-                                copyPasteBehavior:
-                                    const ColorPickerCopyPasteBehavior(
-                                      longPressMenu: true,
-                                    ),
-                              ).showPickerDialog(
-                                context,
-                                transitionBuilder:
-                                    (
-                                      BuildContext context,
-                                      Animation<double> a1,
-                                      Animation<double> a2,
-                                      Widget widget,
-                                    ) {
-                                      final curvedValue =
-                                          Curves.easeInOutBack.transform(
-                                            a1.value,
-                                          ) -
-                                          1.0;
-                                      return Transform(
-                                        alignment: Alignment.center,
-                                        transform: Matrix4.diagonal3Values(
-                                          curvedValue,
-                                          curvedValue,
-                                          1,
-                                        ),
-                                        child: Opacity(
-                                          opacity: curvedValue,
-                                          child: widget,
-                                        ),
-                                      );
-                                    },
-                                transitionDuration: const Duration(
-                                  milliseconds: 250,
-                                ),
-                              );
-                          if (!result) {
-                            categoryColor = colorBeforeDialog;
-                          }
-                        },
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: categoryColor,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.outline,
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: Text(tr('cancel')),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, categoryName),
-              child: Text(tr('add')),
-            ),
-          ],
-        );
-      },
-    ).then((value) {
-      if (value != null && value.trim().isNotEmpty) {
+    showCategoryEditorDialog(
+      context,
+      initialColor: initialColor,
+      title: tr('addCategory'),
+      confirmButtonText: tr('add'),
+    ).then((result) {
+      if (result != null && result.name.isNotEmpty) {
         final newCategories = Map<String, int>.from(
           settingsProvider.categories,
         );
-        if (!newCategories.containsKey(value.trim())) {
-          newCategories[value.trim()] = categoryColor.value;
+        if (!newCategories.containsKey(result.name)) {
+          newCategories[result.name] = result.color.toARGB32();
           settingsProvider.setCategories(newCategories);
         }
       }
@@ -1600,153 +1508,24 @@ class CategoryTagEditor extends StatelessWidget {
     SettingsProvider settingsProvider,
     String oldName,
   ) {
-    String newName = oldName;
-    Color categoryColor = Color(
+    final initialColor = Color(
       settingsProvider.categories[oldName] ??
-          Theme.of(context).colorScheme.primary.value,
-    );
-    final TextEditingController nameController = TextEditingController(
-      text: oldName,
+          Theme.of(context).colorScheme.primary.toARGB32(),
     );
 
-    showDialog<String?>(
-      context: context,
-      builder: (BuildContext ctx) {
-        return AlertDialog(
-          title: Text(tr('editCategory')),
-          content: SizedBox(
-            width: 300,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextField(
-                  controller: nameController,
-                  autofocus: true,
-                  decoration: InputDecoration(labelText: tr('name')),
-                  onChanged: (value) => newName = value,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        tr('selectX', args: [tr('color').toLowerCase()]),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    InkWell(
-                      borderRadius: BorderRadius.circular(20),
-                      onTap: () async {
-                        final Color colorBeforeDialog = categoryColor;
-                        final result =
-                            await ColorPicker(
-                              color: categoryColor,
-                              onColorChanged: (Color color) =>
-                                  categoryColor = color,
-                              actionButtons: const ColorPickerActionButtons(
-                                okButton: true,
-                                closeButton: true,
-                                dialogActionButtons: false,
-                              ),
-                              pickersEnabled: const <ColorPickerType, bool>{
-                                ColorPickerType.both: false,
-                                ColorPickerType.primary: false,
-                                ColorPickerType.accent: false,
-                                ColorPickerType.bw: false,
-                                ColorPickerType.custom: true,
-                                ColorPickerType.wheel: true,
-                              },
-                              pickerTypeLabels: <ColorPickerType, String>{
-                                ColorPickerType.custom: tr('standard'),
-                                ColorPickerType.wheel: tr('custom'),
-                              },
-                              wheelDiameter: 192,
-                              wheelSquareBorderRadius: 32,
-                              width: 48,
-                              height: 48,
-                              borderRadius: 24,
-                              spacing: 8,
-                              runSpacing: 8,
-                              enableShadesSelection: false,
-                              showMaterialName: false,
-                              showColorName: false,
-                              copyPasteBehavior:
-                                  const ColorPickerCopyPasteBehavior(
-                                    longPressMenu: true,
-                                  ),
-                            ).showPickerDialog(
-                              context,
-                              transitionBuilder:
-                                  (
-                                    BuildContext context,
-                                    Animation<double> a1,
-                                    Animation<double> a2,
-                                    Widget widget,
-                                  ) {
-                                    final curvedValue =
-                                        Curves.easeInOutBack.transform(
-                                          a1.value,
-                                        ) -
-                                        1.0;
-                                    return Transform(
-                                      alignment: Alignment.center,
-                                      transform: Matrix4.diagonal3Values(
-                                        curvedValue,
-                                        curvedValue,
-                                        1,
-                                      ),
-                                      child: Opacity(
-                                        opacity: curvedValue,
-                                        child: widget,
-                                      ),
-                                    );
-                                  },
-                              transitionDuration: const Duration(
-                                milliseconds: 250,
-                              ),
-                            );
-                        if (!result) {
-                          categoryColor = colorBeforeDialog;
-                        }
-                      },
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: categoryColor,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.outline,
-                            width: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: Text(tr('cancel')),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, newName),
-              child: Text(tr('save')),
-            ),
-          ],
-        );
-      },
-    ).then((value) {
-      if (value != null && value.trim().isNotEmpty) {
+    showCategoryEditorDialog(
+      context,
+      initialName: oldName,
+      initialColor: initialColor,
+      title: tr('editCategory'),
+      confirmButtonText: tr('save'),
+    ).then((result) {
+      if (result != null && result.name.isNotEmpty) {
         final newCategories = Map<String, int>.from(
           settingsProvider.categories,
         );
         newCategories.remove(oldName);
-        newCategories[value.trim()] = categoryColor.value;
+        newCategories[result.name] = result.color.toARGB32();
         settingsProvider.setCategories(newCategories);
       }
     });
@@ -1809,25 +1588,29 @@ class CategoryTagEditor extends StatelessWidget {
             ...allTags.map((tag) {
               final categoryColor = Color(
                 settingsProvider.categories[tag] ??
-                    Theme.of(context).colorScheme.primary.value,
+                    Theme.of(context).colorScheme.primary.toARGB32(),
               );
               return InkWell(
                 onTap: () => _onEditPressed(context, settingsProvider, tag),
-                borderRadius: BorderRadius.circular(8),
                 child: Chip(
                   label: Text(tag),
-                  backgroundColor: categoryColor.withValues(alpha: 0.2),
+                  backgroundColor: categoryColor.withValues(alpha: 0.3),
                   side: BorderSide(color: categoryColor, width: 1),
+                  visualDensity: VisualDensity.compact,
                   onDeleted: () =>
                       _onDeletePressed(context, settingsProvider, tag),
                   deleteIcon: const Icon(Icons.close, size: 18),
                 ),
               );
             }),
-            IconButton(
-              onPressed: () => _onAddPressed(context, settingsProvider),
-              icon: const Icon(Icons.add),
-              tooltip: tr('add'),
+            Semantics(
+              button: true,
+              label: tr('add'),
+              child: IconButton(
+                onPressed: () => _onAddPressed(context, settingsProvider),
+                icon: const Icon(Icons.add),
+                tooltip: tr('add'),
+              ),
             ),
           ],
         ),
@@ -1855,22 +1638,51 @@ class CategorySelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var settingsProvider = context.watch<SettingsProvider>();
-
-    // Convert categories Map<String, int> to List<String> for TagEditor
     final allTags = settingsProvider.categories.keys.toList();
 
-    return TagEditor(
-      selectedTags: preselected,
-      allTags: allTags,
-      label: tr('categories'),
-      singleSelect: singleSelect,
-      alignment: alignment,
-      showLabelWhenNotEmpty: showLabelWhenNotEmpty,
-      showAddButton: false,
-      onTagsChanged: (newSelectedTags) {
-        // Convert Set<String> to List<String> for callback
-        onSelected?.call(newSelectedTags.toList());
-      },
+    return Column(
+      crossAxisAlignment: alignment == WrapAlignment.center
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.stretch,
+      children: [
+        if (allTags.isNotEmpty && showLabelWhenNotEmpty) ...[
+          Text(tr('categories'), style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: 8),
+        ],
+        Wrap(
+          alignment: alignment,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 4,
+          children: allTags.map((tag) {
+            final categoryColor = Color(
+              settingsProvider.categories[tag] ??
+                  Theme.of(context).colorScheme.primary.toARGB32(),
+            );
+            return CategoryChip(
+              label: tag,
+              selected: preselected.contains(tag),
+              categoryColor: categoryColor,
+              onSelected: (selected) {
+                final newSelected = Set<String>.from(preselected);
+                if (singleSelect) {
+                  newSelected.clear();
+                  if (selected) {
+                    newSelected.add(tag);
+                  }
+                } else {
+                  if (selected) {
+                    newSelected.add(tag);
+                  } else {
+                    newSelected.remove(tag);
+                  }
+                }
+                onSelected?.call(newSelected.toList());
+              },
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 }
@@ -2178,43 +1990,37 @@ class _AboutDialogState extends State<AboutDialog> {
                     ),
                     gap12,
                     Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Expanded(
-                          child: TextButton.icon(
-                            onPressed: () {
-                              launchUrlString(
-                                'https://github.com/omeritzics/Updatium/wiki',
-                                mode: LaunchMode.externalApplication,
-                              );
-                            },
-                            icon: const Icon(Icons.menu_book_rounded, size: 18),
-                            label: Text(tr('wiki')),
-                            style: TextButton.styleFrom(
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                            ),
+                        TextButton.icon(
+                          onPressed: () {
+                            launchUrlString(
+                              'https://github.com/omeritzics/Updatium/wiki',
+                              mode: LaunchMode.externalApplication,
+                            );
+                          },
+                          icon: const Icon(Icons.menu_book_rounded, size: 18),
+                          label: Text(tr('wiki')),
+                          style: TextButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(vertical: 8),
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Expanded(
-                          child: TextButton.icon(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext ctx) {
-                                  return const LogsDialog();
-                                },
-                              );
-                            },
-                            icon: const Icon(
-                              Icons.bug_report_outlined,
-                              size: 18,
-                            ),
-                            label: Text(tr('appLogs')),
-                            style: TextButton.styleFrom(
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                            ),
+                        TextButton.icon(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext ctx) {
+                                return const LogsDialog();
+                              },
+                            );
+                          },
+                          icon: const Icon(Icons.bug_report_outlined, size: 18),
+                          label: Text(tr('appLogs')),
+                          style: TextButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(vertical: 8),
                           ),
                         ),
                       ],

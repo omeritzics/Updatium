@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +73,11 @@ const localeDir = 'assets/translations';
 var fdroid = false;
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
+
+bool isLocaleRTL(Locale locale) {
+  const rtlLanguages = {'ar', 'he', 'fa', 'ug', 'ur', 'yi', 'ps', 'sd'};
+  return rtlLanguages.contains(locale.languageCode);
+}
 
 Future<void> loadTranslations() async {
   // See easy_localization/issues/210
@@ -238,7 +244,7 @@ class _UpdatiumState extends State<Updatium> {
     }
   }
 
-  void initForegroundService() {
+  void initForegroundService([int intervalMinutes = 15]) {
     // Initialize foreground service if not already initialized
     // ignore: invalid_use_of_visible_for_testing_member
     if (!FlutterForegroundTask.isInitialized) {
@@ -254,18 +260,23 @@ class _UpdatiumState extends State<Updatium> {
           playSound: false,
         ),
         foregroundTaskOptions: ForegroundTaskOptions(
-          eventAction: ForegroundTaskEventAction.repeat(900000),
+          eventAction: ForegroundTaskEventAction.repeat(
+            intervalMinutes * 60000,
+          ),
           autoRunOnBoot: true,
           autoRunOnMyPackageReplaced: true,
-          allowWakeLock: true,
-          allowWifiLock: true,
+          allowWakeLock: false,
+          allowWifiLock: false,
         ),
       );
     }
   }
 
-  Future<ServiceRequestResult?> startForegroundService(bool restart) async {
-    initForegroundService();
+  Future<ServiceRequestResult?> startForegroundService(
+    bool restart, [
+    int? intervalMinutes,
+  ]) async {
+    initForegroundService(intervalMinutes ?? 15);
     if (await FlutterForegroundTask.isRunningService) {
       if (restart) {
         return FlutterForegroundTask.restartService();
@@ -343,7 +354,7 @@ class _UpdatiumState extends State<Updatium> {
     } else {
       if (settingsProvider.useFGService) {
         BackgroundFetch.stop();
-        startForegroundService(false);
+        startForegroundService(false, settingsProvider.updateInterval);
       } else {
         stopForegroundService();
         BackgroundFetch.start();
@@ -415,25 +426,6 @@ class _UpdatiumState extends State<Updatium> {
               settingsProvider.useMaterialYou) {
             lightColorScheme = lightDynamic;
             darkColorScheme = darkDynamic;
-            // Ensure surface container colors have proper opacity for switch visibility
-            lightColorScheme = lightColorScheme.copyWith(
-              surfaceContainerHighest: lightColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.17),
-              surfaceContainerHigh: lightColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.12),
-              surfaceContainer: lightColorScheme.surfaceContainer.withValues(
-                alpha: 0.08,
-              ),
-            );
-            darkColorScheme = darkColorScheme.copyWith(
-              surfaceContainerHighest: darkColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.17),
-              surfaceContainerHigh: darkColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.12),
-              surfaceContainer: darkColorScheme.surfaceContainer.withValues(
-                alpha: 0.08,
-              ),
-            );
           } else {
             lightColorScheme = ColorScheme.fromSeed(
               seedColor: settingsProvider.themeColor,
@@ -445,21 +437,20 @@ class _UpdatiumState extends State<Updatium> {
           }
 
           // Apply pure black surface for AMOLED black theme
-          // Apply semi-transparent surface colors for AMOLED black theme
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
-              surfaceContainerHighest: Colors.white.withValues(alpha: 0.17),
-              surfaceContainerHigh: Colors.white.withValues(alpha: 0.12),
+              // NOTE: LET'S SEE WHETHER FLUTTER'S DEFAULT CONFIGS ARE BETTER FOR THE AMOLED THEME
+              // surfaceContainerHighest: Colors.white.withValues(alpha: 0.20),
+              // surfaceContainerHigh: Colors.white.withValues(alpha: 0.16),
               surfaceContainer: Colors.white.withValues(alpha: 0.08),
-              surfaceContainerLow: Colors.white.withValues(alpha: 0.04),
-              surfaceContainerLowest: Colors.white.withValues(alpha: 0.02),
+              surfaceContainerLow: Colors.black,
               surfaceDim: Colors.black,
-              surfaceBright: Colors.white.withValues(alpha: 0.05),
-              onSurface: Colors.white.withValues(alpha: 0.95),
-              onSurfaceVariant: Colors.white.withValues(alpha: 0.7),
-              outline: Colors.white.withValues(alpha: 0.25),
-              outlineVariant: Colors.white.withValues(alpha: 0.12),
+              surfaceBright: Colors.black,
+              onSurface: Colors.white,
+              onSurfaceVariant: Colors.white.withValues(alpha: 0.90),
+              // outline: Colors.white.withValues(alpha: 0.5),
+              // outlineVariant: Colors.white.withValues(alpha: 0.25),
             );
           }
 
@@ -490,516 +481,36 @@ class _UpdatiumState extends State<Updatium> {
               return 'NotoSansArabic';
             }
 
-            // Default to Google Sans Flex for other languages
-            return 'GoogleSansFlex';
+            // Default to Inter for other languages
+            return 'Inter';
           }
 
           // Shared theme component generator with Material Design Expressive
-          ThemeData createTheme(ColorScheme scheme, bool isDark) {
-            // Define text theme as local variable for reusability
-            final textTheme = TextTheme(
-              displayLarge: TextStyle(
-                fontSize: 57,
-                fontWeight: FontWeight.w400,
-                letterSpacing: -0.25,
-                height: 1.12,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              displayMedium: TextStyle(
-                fontSize: 45,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-                height: 1.16,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              displaySmall: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-                height: 1.22,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              headlineLarge: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-                height: 1.25,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              headlineMedium: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-                height: 1.29,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              headlineSmall: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-                height: 1.33,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              titleLarge: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0,
-                height: 1.27,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              titleMedium: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.15,
-                height: 1.5,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              titleSmall: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.1,
-                height: 1.43,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              bodyLarge: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0.5,
-                height: 1.5,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              bodyMedium: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0.25,
-                height: 1.5,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              bodySmall: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0.4,
-                height: 1.33,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              labelLarge: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.1,
-                height: 1.43,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              labelMedium: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.5,
-                height: 1.33,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-              labelSmall: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.5,
-                height: 1.27,
-                color: scheme.onSurface,
-                fontFamily: getPrimaryFontForLocale(context.locale),
-                fontFamilyFallback: const [
-                  'Inter',
-                  'GoogleSansFlex',
-                  'NotoSansCJK',
-                  'NotoSansHebrew',
-                  'NotoSansArabic',
-                ],
-              ),
-            );
-
+          ThemeData createTheme(ColorScheme scheme) {
             return ThemeData(
               useMaterial3: true,
               colorScheme: scheme,
               fontFamily: getPrimaryFontForLocale(context.locale),
               fontFamilyFallback: const [
                 'Inter',
-                'GoogleSansFlex',
                 'NotoSansCJK',
                 'NotoSansHebrew',
                 'NotoSansArabic',
               ],
 
-              // Expressive Typography
-              textTheme: textTheme,
+              // Keyboard/TV navigation support
+              focusColor: scheme.primary.withValues(alpha: 0.2),
+              highlightColor: scheme.primary.withValues(alpha: 0.1),
 
-              // Expressive Card Design - preserve M3 Expressive transparency
-              cardTheme: CardThemeData(
-                elevation: isDark ? 2 : 1,
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                surfaceTintColor: scheme.surfaceTint,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
-              ),
-              // Expressive FilledButton with tonal styling - preserve M3 Expressive transparency
-              filledButtonTheme: FilledButtonThemeData(
-                style: FilledButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 14,
-                  ),
-                  backgroundColor: isDark
-                      ? scheme.secondaryContainer
-                      : scheme.secondaryContainer,
-                  foregroundColor: isDark
-                      ? scheme.onSecondaryContainer
-                      : scheme.onSecondaryContainer,
-                  elevation: isDark ? 2 : 1,
-                  shadowColor: isDark ? Colors.black26 : Colors.black12,
-                  textStyle: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
-                    fontFamily: getPrimaryFontForLocale(context.locale),
-                    fontFamilyFallback: const [
-                      'Inter',
-                      'GoogleSansFlex',
-                      'NotoSansCJK',
-                      'NotoSansHebrew',
-                      'NotoSansArabic',
-                    ],
-                  ),
-                ),
-              ),
-
-              // Expressive ElevatedButton with subtle shadows - preserve M3 Expressive transparency
-              elevatedButtonTheme: ElevatedButtonThemeData(
-                style: ElevatedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  elevation: isDark ? 3 : 2,
-                  shadowColor: isDark
-                      ? Colors.black38
-                      : Colors.black.withValues(alpha: 0.2),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 14,
-                  ),
-                  textStyle: TextStyle(
-                    fontFamily: getPrimaryFontForLocale(context.locale),
-                    fontFamilyFallback: const [
-                      'Inter',
-                      'GoogleSansFlex',
-                      'NotoSansCJK',
-                      'NotoSansHebrew',
-                      'NotoSansArabic',
-                    ],
-                  ),
-                ),
-              ),
-
-              // Expressive OutlinedButton
-              outlinedButtonTheme: OutlinedButtonThemeData(
-                style: OutlinedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  side: BorderSide(color: scheme.outline, width: 1.5),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28,
-                    vertical: 14,
-                  ),
-                  textStyle: TextStyle(
-                    fontFamily: getPrimaryFontForLocale(context.locale),
-                    fontFamilyFallback: const [
-                      'Inter',
-                      'GoogleSansFlex',
-                      'NotoSansCJK',
-                      'NotoSansHebrew',
-                      'NotoSansArabic',
-                    ],
-                  ),
-                ),
-              ),
-
-              // Expressive TextButton
-              textButtonTheme: TextButtonThemeData(
-                style: TextButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
-                  ),
-                  textStyle: TextStyle(
-                    fontFamily: getPrimaryFontForLocale(context.locale),
-                    fontFamilyFallback: const [
-                      'Inter',
-                      'GoogleSansFlex',
-                      'NotoSansCJK',
-                      'NotoSansHebrew',
-                      'NotoSansArabic',
-                    ],
-                  ),
-                ),
-              ),
-              // Material 3 Outlined Text Fields
-              inputDecorationTheme: InputDecorationTheme(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.outline),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.primary, width: 2),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.error, width: 2),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: scheme.error, width: 2),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-                hintStyle: TextStyle(
-                  color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
-                ),
-                labelStyle: TextStyle(
-                  color: scheme.onSurfaceVariant,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
-                ),
-                floatingLabelStyle: TextStyle(
-                  color: scheme.primary,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
-                ),
-              ),
-
-              // Material 3 Menu Theme
-              dropdownMenuTheme: DropdownMenuThemeData(
-                menuStyle: MenuStyle(
-                  backgroundColor: WidgetStateProperty.all(
-                    scheme.surfaceContainer,
-                  ),
-                  surfaceTintColor: WidgetStateProperty.all(scheme.surfaceTint),
-                  elevation: WidgetStateProperty.all(3),
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  padding: WidgetStateProperty.all(EdgeInsets.zero),
-                ),
-                inputDecorationTheme: InputDecorationTheme(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(color: scheme.outline),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4),
-                    borderSide: BorderSide(color: scheme.primary, width: 2),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  hintStyle: TextStyle(
-                    color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
-                    fontWeight: FontWeight.w400,
-                  ),
-                  labelStyle: TextStyle(
-                    color: scheme.onSurfaceVariant,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  floatingLabelStyle: TextStyle(
-                    color: scheme.primary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-
-              // Material 3 Extended Floating Action Button
-              floatingActionButtonTheme: FloatingActionButtonThemeData(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                ),
-                elevation: isDark ? 6 : 8,
-                extendedPadding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 16,
-                ),
-                extendedTextStyle: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
-                ),
-                foregroundColor: scheme.onPrimary,
-                backgroundColor: scheme.primary,
-                iconSize: 24,
-              ),
-
-              // Expressive App Bar
+              // AppBar
               appBarTheme: AppBarTheme(
                 backgroundColor: scheme.surface,
                 foregroundColor: scheme.onSurface,
-                elevation: 0,
-                scrolledUnderElevation: 1,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
-                surfaceTintColor: scheme.surfaceTint,
                 centerTitle: true,
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
-                  fontSize: 22,
                   fontWeight: FontWeight.w600,
-                  letterSpacing: -0.5,
-                  height: 1.27,
+                  fontSize: 24,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'Inter',
@@ -1009,18 +520,14 @@ class _UpdatiumState extends State<Updatium> {
                     'NotoSansArabic',
                   ],
                 ),
-                iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
-                actionsIconTheme: IconThemeData(
-                  color: scheme.onSurface,
-                  size: 24,
-                ),
+                iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),
 
               // Expressive List Tiles
               listTileTheme: ListTileThemeData(
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 8,
+                  horizontal: 16,
+                  vertical: 6,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -1032,245 +539,63 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  letterSpacing: 0.15,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
                 ),
                 subtitleTextStyle: TextStyle(
                   color: scheme.onSurfaceVariant,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  letterSpacing: 0.25,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
                 ),
               ),
 
-              // Expressive Page Transitions
+              // Page Transitions
               pageTransitionsTheme: const PageTransitionsTheme(
                 builders: {
                   TargetPlatform.android:
                       PredictiveBackPageTransitionsBuilder(),
-                  TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
                 },
-              ),
-
-              // Expressive Text Selection
-              textSelectionTheme: TextSelectionThemeData(
-                selectionColor: scheme.primary.withValues(alpha: 0.3),
-                selectionHandleColor: scheme.primary,
-                cursorColor: scheme.primary,
-              ),
-
-              // Expressive Touch Feedback
-              splashFactory: InkRipple.splashFactory,
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-
-              // Expressive Divider
-              dividerTheme: DividerThemeData(
-                color: scheme.outlineVariant,
-                thickness: 1,
-                space: 1,
-              ),
-
-              // Expressive Chip Theme - preserve M3 Expressive transparency
-              chipTheme: ChipThemeData(
-                backgroundColor: scheme.surface.withValues(alpha: 0.1),
-                selectedColor: scheme.secondaryContainer,
-                disabledColor: scheme.surface,
-                labelStyle: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
-                ),
-                secondaryLabelStyle: TextStyle(
-                  color: scheme.onSecondaryContainer,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-
-              // Expressive Bottom Navigation Bar
-              bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                backgroundColor: scheme.surface,
-                selectedItemColor: scheme.onSecondaryContainer,
-                unselectedItemColor: scheme.onSurfaceVariant,
-                selectedLabelStyle: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
-                ),
-                unselectedLabelStyle: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
-                ),
-                type: BottomNavigationBarType.fixed,
-                elevation: isDark ? 3 : 8,
-                landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-              ),
-
-              // Material Design 3 2024 Progress Indicators
-              progressIndicatorTheme: const ProgressIndicatorThemeData(),
-
-              // Material Design 3 2024 Expressive Centered Slider Theme - preserve M3 Expressive transparency
-              sliderTheme: SliderThemeData(
-                trackHeight: 8,
-                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
-                overlayShape: const RoundSliderOverlayShape(overlayRadius: 28),
-                valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-                valueIndicatorTextStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.25,
-                  height: 1.5,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
-                ).copyWith(color: scheme.onPrimary),
-                showValueIndicator: ShowValueIndicator.onDrag,
-                activeTrackColor: scheme.primary,
-                inactiveTrackColor: scheme.surfaceContainerHighest,
-                thumbColor: scheme.primary,
-                overlayColor: scheme.primary.withValues(alpha: 0.2),
-                valueIndicatorColor: scheme.primary,
-              ),
-
-              // Material Design 3 Switch Theme - preserve M3 Expressive transparency
-              switchTheme: SwitchThemeData(
-                thumbColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return scheme.primary;
-                  }
-                  return scheme.outline;
-                }),
-                trackColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return scheme.primary.withValues(alpha: 0.5);
-                  }
-                  return scheme.surfaceContainerHighest;
-                }),
-                trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-
-              // Dialog Theme for AMOLED black theme compatibility
-              dialogTheme: DialogThemeData(
-                backgroundColor: scheme.surface,
-                surfaceTintColor: scheme.surfaceTint,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
-                elevation: isDark ? 6 : 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28),
-                ),
-                titleTextStyle: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.33,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
-                ),
-                contentTextStyle: TextStyle(
-                  color: scheme.onSurface,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0.5,
-                  height: 1.5,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
-                ),
               ),
             );
           }
 
-          return MaterialApp(
-            title: 'Updatium',
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            navigatorKey: globalNavigatorKey,
-            debugShowCheckedModeBanner: false,
-            theme: createTheme(lightColorScheme, false),
-            darkTheme: createTheme(darkColorScheme, true),
-            themeMode: settingsProvider.theme == ThemeSettings.dark
-                ? ThemeMode.dark
-                : (settingsProvider.theme == ThemeSettings.light
-                      ? ThemeMode.light
-                      : ThemeMode.system),
-            home: Shortcuts(
-              shortcuts: <LogicalKeySet, Intent>{
-                LogicalKeySet(LogicalKeyboardKey.select):
-                    const ActivateIntent(),
-              },
-              child: const HomePage(),
+          return Directionality(
+            textDirection: isLocaleRTL(context.locale)
+                ? ui.TextDirection.rtl
+                : ui.TextDirection.ltr,
+            child: MaterialApp(
+              title: 'Updatium',
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              navigatorKey: globalNavigatorKey,
+              debugShowCheckedModeBanner: false,
+              theme: createTheme(lightColorScheme),
+              darkTheme: createTheme(darkColorScheme),
+              themeMode: settingsProvider.theme == ThemeSettings.dark
+                  ? ThemeMode.dark
+                  : (settingsProvider.theme == ThemeSettings.light
+                        ? ThemeMode.light
+                        : ThemeMode.system),
+              home: Shortcuts(
+                shortcuts: <LogicalKeySet, Intent>{
+                  LogicalKeySet(LogicalKeyboardKey.select):
+                      const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.enter):
+                      const ActivateIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.arrowUp):
+                      const DirectionalFocusIntent(TraversalDirection.up),
+                  LogicalKeySet(LogicalKeyboardKey.arrowDown):
+                      const DirectionalFocusIntent(TraversalDirection.down),
+                  LogicalKeySet(LogicalKeyboardKey.arrowLeft):
+                      const DirectionalFocusIntent(TraversalDirection.left),
+                  LogicalKeySet(LogicalKeyboardKey.arrowRight):
+                      const DirectionalFocusIntent(TraversalDirection.right),
+                  LogicalKeySet(LogicalKeyboardKey.tab):
+                      const NextFocusIntent(),
+                  LogicalKeySet(LogicalKeyboardKey.escape):
+                      const DismissIntent(),
+                },
+                child: const HomePage(),
+              ),
             ),
           );
         },
@@ -1389,10 +714,7 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
               await launchUrl(uri, mode: LaunchMode.externalApplication);
             }
           },
-          child: Text(
-            strings['solution'] ?? 'Solution',
-            style: const TextStyle(color: Colors.red),
-          ),
+          child: Text(strings['solution'] ?? 'Solution'),
         ),
         TextButton(
           onPressed: () async {

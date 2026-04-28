@@ -3,7 +3,10 @@ import 'dart:math';
 import 'package:hsluv/hsluv.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/components/category_chip.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 abstract class GeneratedFormItem {
@@ -72,6 +75,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
   late List<MapEntry<String, String>>? opts;
   List<String>? disabledOptKeys;
   late bool required;
+  late int max;
 
   GeneratedFormDropdown(
     super.key,
@@ -81,6 +85,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
     String super.defaultValue = '',
     this.disabledOptKeys,
     this.required = true,
+    this.max = 1000,
     List<String? Function(String? value)> super.additionalValidators = const [],
   });
 
@@ -101,6 +106,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
           ? List.from(disabledOptKeys!)
           : null,
       required: required,
+      max: max,
       additionalValidators: List.from(additionalValidators),
     );
   }
@@ -277,6 +283,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
   List<List<Widget>> rows = [];
   String? initKey;
   int forceUpdateKeyCount = 0;
+  final List<TextEditingController> _controllers = [];
+  bool _isDisposed = false;
 
   // If any value changes, call this to update the parent with value and validity
   void someValueChanged({bool isBuilding = false, bool forceInvalid = false}) {
@@ -296,7 +304,13 @@ class _GeneratedFormState extends State<GeneratedForm> {
   }
 
   void initForm() {
+    if (_isDisposed) return;
     initKey = widget.key.toString();
+    // Dispose old controllers before creating new ones
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    _controllers.clear();
     // Initialize form values as all empty
     values.clear();
     for (var row in widget.items) {
@@ -312,6 +326,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
         if (formItem is GeneratedFormTextField) {
           final formFieldKey = GlobalKey<FormFieldState>();
           var ctrl = TextEditingController(text: values[formItem.key]);
+          _controllers.add(ctrl);
           return TypeAheadField<String>(
             controller: ctrl,
             builder: (context, controller, focusNode) {
@@ -382,6 +397,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
           }
           return DropdownButtonFormField<String>(
             initialValue: values[formItem.key] ?? formItem.opts?.first.key,
+            isExpanded: true,
             decoration: InputDecoration(
               labelText: formItem.key == 'appSourceURL'
                   ? '${formItem.label}${formItem.required ? ' *' : ''}'
@@ -402,6 +418,18 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 ),
               );
             }).toList(),
+            selectedItemBuilder: (context) {
+              return formItem.opts!.map((e2) {
+                const displayLimit = 50;
+                var displayText = e2.value.length > displayLimit
+                    ? '${e2.value.substring(0, displayLimit)}...'
+                    : e2.value;
+                return Directionality(
+                  textDirection: Directionality.of(context),
+                  child: Text(displayText),
+                );
+              }).toList();
+            },
             onChanged: (value) {
               if (value != null) {
                 setState(() {
@@ -409,6 +437,22 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   someValueChanged();
                 });
               }
+            },
+            validator: (value) {
+              if (formItem.required &&
+                  (value == null || value.trim().isEmpty)) {
+                return '${formItem.label} ${tr('requiredInBrackets')}';
+              }
+              if (value != null && value.length > formItem.max) {
+                return '${formItem.label} must be at most ${formItem.max} characters';
+              }
+              for (var validator in formItem.additionalValidators) {
+                String? result = validator(value);
+                if (result != null) {
+                  return result;
+                }
+              }
+              return null;
             },
           );
         } else if (formItem is GeneratedFormSubForm) {
@@ -434,6 +478,16 @@ class _GeneratedFormState extends State<GeneratedForm> {
   void initState() {
     super.initState();
     initForm();
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    _controllers.clear();
+    super.dispose();
   }
 
   @override
@@ -514,7 +568,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                         .where((element) => element.value.value)
                         .isNotEmpty;
                     temp[label] = MapEntry(
-                      generateRandomLightColor().value,
+                      generateRandomLightColor().toARGB32(),
                       !(someSelected && singleSelect),
                     );
                     values[fieldKey] = temp;
@@ -560,63 +614,63 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   ...(values[fieldKey] as Map<String, MapEntry<int, bool>>?)
                           ?.entries
                           .map((e2) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 4,
-                              ),
-                              child: ChoiceChip(
-                                label: Text(e2.key),
-                                backgroundColor: Color(
-                                  e2.value.key,
-                                ).withValues(alpha: 0.2),
-                                selectedColor: Color(e2.value.key),
-                                visualDensity: VisualDensity.compact,
-                                selected: e2.value.value,
-                                onSelected: (value) {
-                                  setState(() {
+                            final settingsProvider =
+                                Provider.of<SettingsProvider>(context);
+                            final categoryColor = Color(
+                              settingsProvider.categories[e2.key] ??
+                                  Theme.of(
+                                    context,
+                                  ).colorScheme.primary.toARGB32(),
+                            );
+                            return CategoryChip(
+                              label: e2.key,
+                              selected: e2.value.value,
+                              categoryColor: categoryColor,
+                              showCheckmark: true,
+                              onSelected: (value) {
+                                setState(() {
+                                  (values[fieldKey]
+                                      as Map<String, MapEntry<int, bool>>)[e2
+                                      .key] = MapEntry(
                                     (values[fieldKey]
-                                        as Map<String, MapEntry<int, bool>>)[e2
-                                        .key] = MapEntry(
-                                      (values[fieldKey]
-                                              as Map<
-                                                String,
-                                                MapEntry<int, bool>
-                                              >)[e2.key]!
-                                          .key,
-                                      value,
-                                    );
-                                    if ((widget.items[r][e]
-                                                as GeneratedFormTagInput)
-                                            .singleSelect &&
-                                        value == true) {
-                                      for (var key
-                                          in (values[fieldKey]
+                                            as Map<
+                                              String,
+                                              MapEntry<int, bool>
+                                            >)[e2.key]!
+                                        .key,
+                                    value,
+                                  );
+                                  if ((widget.items[r][e]
+                                              as GeneratedFormTagInput)
+                                          .singleSelect &&
+                                      value == true) {
+                                    for (var key
+                                        in (values[fieldKey]
+                                                as Map<
+                                                  String,
+                                                  MapEntry<int, bool>
+                                                >)
+                                            .keys) {
+                                      if (key != e2.key) {
+                                        (values[fieldKey]
+                                            as Map<
+                                              String,
+                                              MapEntry<int, bool>
+                                            >)[key] = MapEntry(
+                                          (values[fieldKey]
                                                   as Map<
                                                     String,
                                                     MapEntry<int, bool>
-                                                  >)
-                                              .keys) {
-                                        if (key != e2.key) {
-                                          (values[fieldKey]
-                                              as Map<
-                                                String,
-                                                MapEntry<int, bool>
-                                              >)[key] = MapEntry(
-                                            (values[fieldKey]
-                                                    as Map<
-                                                      String,
-                                                      MapEntry<int, bool>
-                                                    >)[key]!
-                                                .key,
-                                            false,
-                                          );
-                                        }
+                                                  >)[key]!
+                                              .key,
+                                          false,
+                                        );
                                       }
                                     }
-                                    someValueChanged();
-                                  });
-                                },
-                              ),
+                                  }
+                                  someValueChanged();
+                                });
+                              },
                             );
                           }) ??
                       [const SizedBox.shrink()],
@@ -640,7 +694,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 // generate new color, ensure it is not the same
                                 int newColor = oldEntry.value.key;
                                 while (oldEntry.value.key == newColor) {
-                                  newColor = generateRandomLightColor().value;
+                                  newColor = generateRandomLightColor()
+                                      .toARGB32();
                                 }
                                 // Update entry with new color, remain selected
                                 temp.update(
