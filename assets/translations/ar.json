@@ -61,6 +61,7 @@
     "rulesUpdatedSuccessfully": "تم تحديث تعريفات البرامج الضارة بنجاح",
     "rulesUpdateFailed": "فشل تحديث تعريفات البرامج الضارة",
     "quarantineViewComingSoon": "عرض الحجر الصحي قريبًا",
+    "securityScanBlocked": "تم حظر التثبيت لأن فحص الأمان فشل أو اكتشف تهديدًا",
     "xIsTrackOnly": "{} للتعقب فقط",
     "source": "المصدر",
     "app": "التطبيق",
