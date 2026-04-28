@@ -360,7 +360,6 @@ class _AppPageState extends State<AppPage> {
                 padding: settingsProvider.highlightTouchTargets
                     ? const EdgeInsetsDirectional.fromSTEB(12, 8, 12, 8)
                     : const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
-                margin: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                 child: Tooltip(
                   message: app.app.url,
                   child: Text(
