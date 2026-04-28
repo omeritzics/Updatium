@@ -1633,7 +1633,7 @@ class CategoryTagEditor extends StatelessWidget {
   }
 }
 
-class CategorySelector extends StatelessWidget {
+class CategorySelector extends StatefulWidget {
   final void Function(List<String> categories)? onSelected;
   final bool singleSelect;
   final Set<String> preselected;
@@ -1650,21 +1650,34 @@ class CategorySelector extends StatelessWidget {
   });
 
   @override
+  State<CategorySelector> createState() => _CategorySelectorState();
+}
+
+class _CategorySelectorState extends State<CategorySelector> {
+  late Set<String> _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = Set<String>.from(widget.preselected);
+  }
+
+  @override
   Widget build(BuildContext context) {
     var settingsProvider = context.watch<SettingsProvider>();
     final allTags = settingsProvider.categories.keys.toList();
 
     return Column(
-      crossAxisAlignment: alignment == WrapAlignment.center
+      crossAxisAlignment: widget.alignment == WrapAlignment.center
           ? CrossAxisAlignment.center
           : CrossAxisAlignment.stretch,
       children: [
-        if (allTags.isNotEmpty && showLabelWhenNotEmpty) ...[
+        if (allTags.isNotEmpty && widget.showLabelWhenNotEmpty) ...[
           Text(tr('categories'), style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(height: 8),
         ],
         Wrap(
-          alignment: alignment,
+          alignment: widget.alignment,
           crossAxisAlignment: WrapCrossAlignment.center,
           spacing: 8,
           runSpacing: 4,
@@ -1675,23 +1688,24 @@ class CategorySelector extends StatelessWidget {
             );
             return CategoryChip(
               label: tag,
-              selected: preselected.contains(tag),
+              selected: _selected.contains(tag),
               categoryColor: categoryColor,
               onSelected: (selected) {
-                final newSelected = Set<String>.from(preselected);
-                if (singleSelect) {
-                  newSelected.clear();
-                  if (selected) {
-                    newSelected.add(tag);
-                  }
-                } else {
-                  if (selected) {
-                    newSelected.add(tag);
+                setState(() {
+                  if (widget.singleSelect) {
+                    _selected.clear();
+                    if (selected) {
+                      _selected.add(tag);
+                    }
                   } else {
-                    newSelected.remove(tag);
+                    if (selected) {
+                      _selected.add(tag);
+                    } else {
+                      _selected.remove(tag);
+                    }
                   }
-                }
-                onSelected?.call(newSelected.toList());
+                });
+                widget.onSelected?.call(_selected.toList());
               },
             );
           }).toList(),
