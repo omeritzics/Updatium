@@ -1594,7 +1594,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               return Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
-                  vertical: 4,
+                  vertical: 2,
                 ),
                 child: getSingleAppHorizTile(index),
               );

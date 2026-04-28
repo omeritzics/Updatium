@@ -164,52 +164,46 @@ class _AppPageState extends State<AppPage> {
       }
       var changeLogFn = getChangeLogFn(context, app.app);
       return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                gap24,
-                Text(
-                  versionLines,
-                  textAlign: TextAlign.start,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-                ),
-                changeLogFn != null || app.app.releaseDate != null
-                    ? GestureDetector(
-                        onTap: changeLogFn,
-                        child: Text(
-                          app.app.releaseDate == null
-                              ? tr('changes')
-                              : app.app.releaseDate!.toLocal().toString(),
-                          textAlign: TextAlign.start,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall!
-                              .copyWith(
-                                decoration: changeLogFn != null
-                                    ? TextDecoration.underline
-                                    : null,
-                              ),
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                gap24,
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              gap24,
+              Text(
+                versionLines,
+                textAlign: TextAlign.start,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+              ),
+              changeLogFn != null || app.app.releaseDate != null
+                  ? GestureDetector(
+                      onTap: changeLogFn,
+                      child: Text(
+                        app.app.releaseDate == null
+                            ? tr('changes')
+                            : app.app.releaseDate!.toLocal().toString(),
+                        textAlign: TextAlign.start,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelSmall!
+                            .copyWith(
+                              decoration: changeLogFn != null
+                                  ? TextDecoration.underline
+                                  : null,
+                            ),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              gap24,
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              infoLines,
-              textAlign: TextAlign.start,
-              style: const TextStyle(fontSize: 12),
-            ),
+          Text(
+            infoLines,
+            textAlign: TextAlign.start,
+            style: const TextStyle(fontSize: 12),
           ),
 
           /* Certificate Hashes */
@@ -256,7 +250,6 @@ class _AppPageState extends State<AppPage> {
           gap24,
           CategorySelector(
             alignment: WrapAlignment.start,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
             preselected: app.app.categories?.toSet() ?? {},
             onSelected: (categories) {
               app.app.categories = categories;
@@ -287,7 +280,7 @@ class _AppPageState extends State<AppPage> {
                       blockquoteDecoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
                       ),
-                      textAlign: WrapAlignment.center,
+                      textAlign: WrapAlignment.start,
                     ),
                     data: app.app.additionalSettings['about'],
                     onTapLink: (text, href, title) {
@@ -628,32 +621,26 @@ class _AppPageState extends State<AppPage> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      getFullInfoColumn(),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                          16,
-                          16,
-                          16,
-                          32,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        getFullInfoColumn(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(width: 16.0),
+                              Expanded(child: getInstallOrUpdateButton()),
+                              const SizedBox(width: 16.0),
+                            ],
+                          ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(width: 16.0),
-                            Expanded(child: getInstallOrUpdateButton()),
-                            const SizedBox(width: 16.0),
-                          ],
-                        ),
-                      ),
                       if (app.downloadProgress != null)
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                            16,
-                            0,
-                            16,
-                            32,
+                          padding: const EdgeInsetsDirectional.only(
+                            bottom: 32,
                           ),
                           child: Semantics(
                             label: tr('downloadProgress'),
@@ -674,6 +661,7 @@ class _AppPageState extends State<AppPage> {
                     ],
                   ),
                 ),
+              ),
               ],
             ),
             onRefresh: () async {
