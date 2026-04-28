@@ -82,7 +82,7 @@ A: Absolutely not! Updatium is highly against piracy and modded applications.
 
 ### Q: How do I migrate from Obtainium?
 
-A: It's easy to update to Updatium form Obtainium, by following these steps:
+A: It's easy to update to Updatium from Obtainium, by following these steps:
 
 On Obtainium:
 
@@ -93,7 +93,6 @@ On Obtainium:
 On Updatium:
 
 1. Tap on Add App -> Import/Export -> Updatium import.
-
 2. Locate Obtainium export file, tap on it, and confirm. Welcome to Updatium :)
 
 ### Q: How can I help?
