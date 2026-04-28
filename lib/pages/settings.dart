@@ -1704,7 +1704,7 @@ class LicenseDialog extends StatelessWidget {
               color: Theme.of(context).colorScheme.primaryContainer,
             ),
             child: Icon(
-              Icons.description.rounded,
+              Icons.description_rounded,
               color: Theme.of(context).colorScheme.onPrimaryContainer,
               size: 28,
             ),
