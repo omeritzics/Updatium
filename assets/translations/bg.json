@@ -505,8 +505,6 @@
     "preventUninstallationDescription": "Предотвратява деинсталирането на Updatium без първо да деактивирате Безопасен режим",
     "deviceAdminRequired": "Разрешение за администратор на устройството се изисква за предотвратяване на деинсталиране",
     "turnOffSafeModeFirst": "Моля, първо изключете Безопасен режим",
-    "autoDeleteApkAfterInstall": "Auto-delete APK after installation",
-    "autoDeleteApkAfterInstallDescription": "Automatically delete APK files after successful installation to save storage space",
     "gotIt": "Разбрах",
     "version": "Version",
     "open": "Open",
