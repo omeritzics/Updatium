@@ -7,21 +7,17 @@ import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:simple_localization/simple_localization.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart';
-import 'package:flutter/material.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:updatium/app_sources/apkcombo.dart';
 import 'package:updatium/app_sources/apkmirror.dart';
 import 'package:updatium/app_sources/apkpure.dart';
-import 'package:updatium/app_sources/bitbucket.dart';
-import 'package:updatium/app_sources/openapk.dart';
 import 'package:updatium/app_sources/aptoide.dart';
 import 'package:updatium/app_sources/codeberg.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
-import 'package:updatium/app_sources/gitea.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/app_sources/huaweiappgallery.dart';
@@ -30,7 +26,6 @@ import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/app_sources/jenkins.dart';
 import 'package:updatium/app_sources/neutroncode.dart';
 import 'package:updatium/app_sources/rustore.dart';
-import 'package:updatium/app_sources/signal.dart';
 import 'package:updatium/app_sources/sourceforge.dart';
 import 'package:updatium/app_sources/sourcehut.dart';
 import 'package:updatium/app_sources/telegramapp.dart';
@@ -38,13 +33,76 @@ import 'package:updatium/app_sources/tencent.dart';
 import 'package:updatium/app_sources/whatsapp.dart';
 import 'package:updatium/app_sources/uptodown.dart';
 import 'package:updatium/app_sources/vivoappstore.dart';
-import 'package:updatium/app_sources/vlc.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:android_package_installer/android_package_installer.dart';
+import 'package:updatium/services/slang-converter.dart';
+
+/// Cache entry for ETag-based conditional requests
+class _ETagCacheEntry {
+  final String etag;
+  final Response response;
+  final DateTime cachedAt;
+
+  _ETagCacheEntry(this.etag, this.response, this.cachedAt);
+
+  bool get isExpired =>
+      DateTime.now().difference(cachedAt) > const Duration(minutes: 5);
+}
+
+/// Simple in-memory cache for API responses with ETag support
+class _ETagResponseCache {
+  final Map<String, _ETagCacheEntry> _cache = {};
+
+  String _cacheKey(String url, Map<String, dynamic>? additionalSettings) {
+    // Include relevant settings that might affect the response
+    final settingsHash = additionalSettings?.toString().hashCode ?? 0;
+    return '$url:${settingsHash.toString()}';
+  }
+
+  String? getETag(String url, Map<String, dynamic>? additionalSettings) {
+    final key = _cacheKey(url, additionalSettings);
+    final entry = _cache[key];
+    if (entry == null || entry.isExpired) {
+      _cache.remove(key);
+      return null;
+    }
+    return entry.etag;
+  }
+
+  Response? getCachedResponse(
+    String url,
+    Map<String, dynamic>? additionalSettings,
+  ) {
+    final key = _cacheKey(url, additionalSettings);
+    final entry = _cache[key];
+    if (entry == null || entry.isExpired) {
+      _cache.remove(key);
+      return null;
+    }
+    return entry.response;
+  }
+
+  void store(
+    String url,
+    Map<String, dynamic>? additionalSettings,
+    String etag,
+    Response response,
+  ) {
+    final key = _cacheKey(url, additionalSettings);
+    _cache[key] = _ETagCacheEntry(etag, response, DateTime.now());
+  }
+
+  void clear() {
+    _cache.clear();
+  }
+}
+
+// Global ETag cache instance
+final _etagCache = _ETagResponseCache();
 
 class AppNames {
   late String author;
@@ -524,7 +582,7 @@ String preStandardizeUrl(String url) {
 String noAPKFound = tr('noAPKFound');
 
 List<String> getLinksFromParsedHTML(
-  dom.Document dom,
+  Document dom,
   RegExp hrefPattern,
   String prependToLinks,
 ) => dom
@@ -697,7 +755,7 @@ abstract class AppSource {
   List<String> excludeCommonSettingKeys = [];
   bool urlsAlwaysHaveExtension = false;
   bool allowIncludeZips = false;
-  bool openSource = false;
+  bool trusted = false;
 
   AppSource() {
     name = runtimeType.toString();
@@ -761,10 +819,19 @@ abstract class AppSource {
       additionalSettingsPlusSourceConfig,
     );
     var method = postBody == null ? 'GET' : 'POST';
-    var requestHeaders = await getRequestHeaders(
-      additionalSettingsPlusSourceConfig,
-      url,
-    );
+    var requestHeaders =
+        await getRequestHeaders(additionalSettingsPlusSourceConfig, url) ?? {};
+
+    // ETag-based conditional request optimization
+    // Only for GET requests to API endpoints (not for APK downloads)
+    String? cachedETag;
+    if (method == 'GET' && !_isDownloadUrl(url)) {
+      cachedETag = _etagCache.getETag(url, additionalSettings);
+      if (cachedETag != null) {
+        requestHeaders['If-None-Match'] = cachedETag;
+      }
+    }
+
     var streamedResponseUrlWithResponseAndClient =
         await sourceRequestStreamResponse(
           method,
@@ -780,6 +847,38 @@ abstract class AppSource {
       streamedResponseUrlWithResponseAndClient.key.toString(),
       streamedResponseUrlWithResponseAndClient.value.value,
     );
+
+    // Handle 304 Not Modified - return cached response
+    if (response.statusCode == 304 && cachedETag != null) {
+      var cachedResponse = _etagCache.getCachedResponse(
+        url,
+        additionalSettings,
+      );
+      if (cachedResponse != null) {
+        return cachedResponse;
+      }
+      // If cache miss despite 304, continue with normal handling
+    }
+
+    // Cache successful GET responses with ETag
+    if (method == 'GET' && response.statusCode == 200 && !_isDownloadUrl(url)) {
+      var etag = response.headers['etag'];
+      if (etag != null && etag.isNotEmpty) {
+        _etagCache.store(url, additionalSettings, etag, response);
+      }
+    }
+
+    return response;
+  }
+
+  /// Check if URL is likely an APK/asset download (not an API call)
+  bool _isDownloadUrl(String url) {
+    var lower = url.toLowerCase();
+    return lower.endsWith('.apk') ||
+        lower.endsWith('.xapk') ||
+        lower.endsWith('.zip') ||
+        lower.contains('/download/') ||
+        lower.contains('browser_download_url');
   }
 
   void runOnAddAppInputChange(String inputUrl) {
@@ -1263,23 +1362,17 @@ bool isVersionPseudo(App app) =>
         app.additionalSettings['versionDetection'] != true);
 
 class SourceProvider {
-  // Cache for compiled regex patterns to avoid recreating them on every call
-  final Map<String, RegExp> _regexCache = {};
-
   // Add more source classes here so they are available via the service
   List<AppSource> get sources => [
     GitHub(),
     GitLab(),
-    Bitbucket(),
     Codeberg(),
-    Gitea(),
     FDroid(),
     FDroidRepo(),
     IzzyOnDroid(),
     SourceHut(),
     APKCombo(),
     APKPure(),
-    OpenAPK(),
     Aptoide(),
     Uptodown(),
     HuaweiAppGallery(),
@@ -1292,8 +1385,6 @@ class SourceProvider {
     WhatsAppApp(),
     NeutronCode(),
     DirectAPKLink(),
-    Signal(),
-    VLC(),
     HTML(), // This should ALWAYS be the last option as they are tried in order
   ];
 
@@ -1400,10 +1491,16 @@ class SourceProvider {
   /// Helper method to extract app names from a standard URL
   /// Assumes format: https://host/author/name or similar
   /// If nameIndex is null, joins all parts from authorIndex+1 onwards
-  AppNames getAppNamesFromUrl(String standardUrl, {int authorIndex = 0, int? nameIndex}) {
+  AppNames getAppNamesFromUrl(
+    String standardUrl, {
+    int authorIndex = 0,
+    int? nameIndex,
+  }) {
     String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
     List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
-    String name = nameIndex != null ? names[nameIndex] : names.sublist(authorIndex + 1).join('/');
+    String name = nameIndex != null
+        ? names[nameIndex]
+        : names.sublist(authorIndex + 1).join('/');
     return AppNames(names[authorIndex], name);
   }
 
@@ -1687,8 +1784,7 @@ class SourceOverrideDropdown extends StatefulWidget {
   });
 
   @override
-  State<SourceOverrideDropdown> createState() =>
-      _SourceOverrideDropdownState();
+  State<SourceOverrideDropdown> createState() => _SourceOverrideDropdownState();
 }
 
 class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
@@ -1711,11 +1807,11 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
 
   void _updateController() {
     if (widget.selectedOverride == null || widget.selectedOverride == '') {
-      widget.controller.text = tr('none');
+      widget.controller.text = t('none');
       return;
     }
     if (sourceProvider.sources.isEmpty) {
-      widget.controller.text = tr('none');
+      widget.controller.text = t('none');
       return;
     }
     AppSource? selectedSource;
@@ -1729,7 +1825,7 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
     if (selectedSource != null) {
       widget.controller.text = selectedSource.name;
     } else {
-      widget.controller.text = tr('none');
+      widget.controller.text = t('none');
     }
   }
 
@@ -1746,7 +1842,7 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
                     controller: widget.controller,
                     readOnly: true,
                     decoration: InputDecoration(
-                      labelText: tr('overrideSource'),
+                      labelText: t('overrideSource'),
                       suffixIcon: const Icon(Icons.arrow_drop_down),
                     ),
                     onTap: () {
@@ -1763,14 +1859,15 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
                     onPressed: () {
                       widget.onSelectionChanged(null);
                     },
-                    child: Text(tr('none')),
+                    child: Text(t('none')),
                   ),
                   ...sourceProvider.sources
                       .where(
                         (s) =>
                             s.allowOverride ||
                             (widget.pickedSource != null &&
-                                widget.pickedSource.runtimeType == s.runtimeType),
+                                widget.pickedSource.runtimeType ==
+                                    s.runtimeType),
                       )
                       .map(
                         (s) => MenuItemButton(

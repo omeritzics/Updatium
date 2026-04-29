@@ -14,7 +14,7 @@ class FDroid extends AppSource {
     name = tr('fdroid');
     naiveStandardVersionDetection = true;
     canSearch = true;
-    openSource = true;
+    trusted = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(
@@ -39,18 +39,24 @@ class FDroid extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    return SourceProvider().standardizeUrlWithRegex(
-      url,
-      '^https?://(www\\.)?${getSourceRegex(hosts)}(/+[^/]+)?/+packages/+[^/]+',
-      sourceName: name,
-      transform: (matched, match) {
-        var uri = Uri.parse(matched);
-        if (uri.pathSegments.length > 2 && uri.pathSegments[0] != 'packages') {
-          return 'https://${uri.host}/packages/${uri.pathSegments.last}';
-        }
-        return matched;
-      },
+    RegExp standardUrlRegExB = RegExp(
+      '^https?://(www\\.)?${getSourceRegex(hosts)}/+[^/]+/+packages/+[^/]+',
+      caseSensitive: false,
     );
+    RegExpMatch? match = standardUrlRegExB.firstMatch(url);
+    if (match != null) {
+      url =
+          'https://${Uri.parse(match.group(0)!).host}/packages/${Uri.parse(url).pathSegments.where((s) => s.trim().isNotEmpty).last}';
+    }
+    RegExp standardUrlRegExA = RegExp(
+      '^https?://(www\\.)?${getSourceRegex(hosts)}/+packages/+[^/]+',
+      caseSensitive: false,
+    );
+    match = standardUrlRegExA.firstMatch(url);
+    if (match == null) {
+      throw InvalidURLError(name);
+    }
+    return match.group(0)!;
   }
 
   @override
@@ -259,12 +265,10 @@ class FDroid extends AppSource {
     List<String> apkUrls = releaseChoices
         .map((e) => '${apkUrlPrefix}_${e['versionCode']}.apk')
         .toList();
-    // Extract author from API response or fall back to source name
-    String author = response['authorName'] ?? sourceName;
     return APKDetails(
       version,
       getApkUrlsFromUrls(apkUrls.toSet().toList()),
-      AppNames(author, Uri.parse(standardUrl).pathSegments.last),
+      AppNames(sourceName, Uri.parse(standardUrl).pathSegments.last),
     );
   }
 }
