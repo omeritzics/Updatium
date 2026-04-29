@@ -194,6 +194,7 @@
     "checkingForUpdatesNotifDescription": "Временное уведомление, которое появляется при проверке обновлений",
     "pleaseAllowInstallPerm": "Пожалуйста, разрешите Updatium устанавливать приложения",
     "trackOnly": "Только отслеживать",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "Ошибка {}",
     "versionCorrectionDisabled": "Коррекция версий отключена (плагин, кажется, не работает)",
     "unknown": "Неизвестно",
@@ -373,6 +374,7 @@
     "invertRegEx": "Инвертировать регулярное выражение",
     "note": "Примечание",
     "selfHostedNote": "Выпадающий список «{}» можно использовать для доступа к самостоятельно размещённым/настроенным экземплярам любого источника.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "Не удалось разобрать APK (несовместимая или неполная загрузка)",
     "beforeNewInstallsShareToAppVerifier": "Делиться новыми приложениями с AppVerifier (если доступно)",
     "appVerifierInstructionToast": "Поделитесь с AppVerifier, а затем вернитесь сюда, когда будете готовы.",
@@ -525,5 +527,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

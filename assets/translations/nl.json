@@ -194,6 +194,7 @@
     "checkingForUpdatesNotifDescription": "Tijdelijke melding die verschijnt tijdens het controleren op updates",
     "pleaseAllowInstallPerm": "Toestaan dat Updatium apps installeert",
     "trackOnly": "'Alleen volgen'",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "Foutmelding {}",
     "versionCorrectionDisabled": "Versiecorrectie uitgeschakeld (de plug-in lijkt niet te werken)",
     "unknown": "Onbekend",
@@ -373,6 +374,7 @@
     "invertRegEx": "Reguliere expressie omkeren",
     "note": "Opmerking",
     "selfHostedNote": "De \"{}\" dropdown kan gebruikt worden om zelf gehoste/aangepaste instanties van elke bron te bereiken.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "De APK kon niet worden verwerkt (incompatibele of gedeeltelijke download)",
     "beforeNewInstallsShareToAppVerifier": "Nieuwe Apps delen met AppVerifier (indien beschikbaar)",
     "appVerifierInstructionToast": "Deel het met AppVerifier en keer daarna hier terug.",
@@ -513,5 +515,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

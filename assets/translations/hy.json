@@ -194,6 +194,7 @@
     "checkingForUpdatesNotifDescription": "Transient notification that appears when checking for updates",
     "pleaseAllowInstallPerm": "Please allow Updatium to install apps",
     "trackOnly": "Track-only",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "Error {}",
     "versionCorrectionDisabled": "Version correction disabled (plugin doesn't seem to work)",
     "unknown": "Unknown",
@@ -373,6 +374,7 @@
     "invertRegEx": "Invert regular expression",
     "note": "Note",
     "selfHostedNote": "The \"{}\" dropdown can be used to reach self-hosted/custom instances of any source.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "The APK could not be parsed (incompatible or partial download)",
     "beforeNewInstallsShareToAppVerifier": "Share new apps with AppVerifier (if available)",
     "appVerifierInstructionToast": "Share to AppVerifier, then return here when ready.",
@@ -513,5 +515,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }
