@@ -229,7 +229,6 @@ class _AppPageState extends State<AppPage> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
                           vertical: 4,
                         ),
                         child: Text(
@@ -348,7 +347,6 @@ class _AppPageState extends State<AppPage> {
                         }()
                       : null,
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Tooltip(
                   message: app.app.url,
                   child: Text(
@@ -461,12 +459,10 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => ElevatedButton(
-      style: ElevatedButton.styleFrom(
+    getInstallOrUpdateButton() => FilledButton(
+      style: FilledButton.styleFrom(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        elevation: 2,
-        shadowColor: Theme.of(context).colorScheme.shadow,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       ),
       onPressed:
@@ -508,8 +504,10 @@ class _AppPageState extends State<AppPage> {
     );
 
     return Scaffold(
-      body: Stack(
-        children: [
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Stack(
+          children: [
           RefreshIndicator(
             child: CustomScrollView(
               slivers: [
@@ -523,11 +521,8 @@ class _AppPageState extends State<AppPage> {
 
                           if (appInMemory?.icon != null) {
                             return Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0,
-                                8.0,
-                                16.0,
-                                8.0,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8.0,
                               ),
                               child: Image.memory(
                                 appInMemory!.icon!,
@@ -562,9 +557,7 @@ class _AppPageState extends State<AppPage> {
 
                               if (updatedAppInMemory?.icon != null) {
                                 return Padding(
-                                  padding: const EdgeInsetsDirectional.only(
-                                    end: 12.0,
-                                  ),
+                                  padding: EdgeInsets.zero,
                                   child: Image.memory(
                                     updatedAppInMemory!.icon!,
                                     width: 40,
@@ -585,9 +578,7 @@ class _AppPageState extends State<AppPage> {
 
                               // Fallback icon while loading
                               return Padding(
-                                padding: const EdgeInsetsDirectional.only(
-                                  end: 16.0,
-                                ),
+                                padding: EdgeInsets.zero,
                                 child: Icon(
                                   Icons.apps,
                                   size: 40,
@@ -598,6 +589,7 @@ class _AppPageState extends State<AppPage> {
                           );
                         },
                       ),
+                      horizontalGap16,
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -620,20 +612,14 @@ class _AppPageState extends State<AppPage> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
+                  child: Column(
                       children: [
                         getFullInfoColumn(),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(width: 16.0),
                               Expanded(child: getInstallOrUpdateButton()),
-                              const SizedBox(width: 16.0),
-                            ],
                           ),
                         ),
                         if (app.downloadProgress != null)
@@ -668,8 +654,8 @@ class _AppPageState extends State<AppPage> {
             },
           ),
           Positioned(
-            left: 16,
-            right: 16,
+            left: 0,
+            right: 0,
             bottom: 16,
             child: Align(
               alignment: Alignment.center,
@@ -751,6 +737,7 @@ class _AppPageState extends State<AppPage> {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

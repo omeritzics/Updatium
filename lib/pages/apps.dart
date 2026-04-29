@@ -1578,7 +1578,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverGrid(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 175,
+                maxCrossAxisExtent: 160,
                 crossAxisSpacing: spacing,
                 mainAxisSpacing: spacing,
                 childAspectRatio: 0.65,
