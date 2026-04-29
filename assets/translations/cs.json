@@ -194,6 +194,7 @@
     "checkingForUpdatesNotifDescription": "Dočasné oznámení zobrazené při kontrole aktualizací",
     "pleaseAllowInstallPerm": "Povolte prosím aplikaci Updatium instalovat aplikace",
     "trackOnly": "Pouze sledovat",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "Chyba {}",
     "versionCorrectionDisabled": "Oprava verze zakázána (zásuvný modul zřejmě nefunguje)",
     "unknown": "Neznám",
@@ -373,6 +374,7 @@
     "invertRegEx": "Invertovat regulární výraz",
     "note": "Poznámka",
     "selfHostedNote": "Rozbalovací seznam „{}“ lze použít pro přístup k vlastním instancím libovolného zdroje.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "APK nelze analyzovat (nekompatibilní nebo částečné stažení)",
     "beforeNewInstallsShareToAppVerifier": "Sdílet nové aplikace s aplikací AppVerifier (pokud je k dispozici)",
     "appVerifierInstructionToast": "Sdílejte do aplikace AppVerifier a po dokončení se sem vraťte.",
@@ -526,5 +528,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

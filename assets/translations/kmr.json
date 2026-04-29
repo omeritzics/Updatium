@@ -194,6 +194,7 @@
     "checkingForUpdatesNotifDescription": "Agahdariya derbasbar a dema kontrola rojanekirinê de xuya dibe",
     "pleaseAllowInstallPerm": "Ji kerema xwe re destûrê bidin Updatium ku sepanan saz bike",
     "trackOnly": "Tenê ji bo trackingê",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "Çewtî {}",
     "versionCorrectionDisabled": "Rêzberkirina guhertoyê neçalak (plugin xuya nake xebitîn)",
     "unknown": "Nenas",
@@ -373,6 +374,7 @@
     "invertRegEx": "Rêzika birêkûpêlkî berev bike",
     "note": "Not",
     "selfHostedNote": "Menuya dropdown \"{}\" dikare were bikar anîn ji bo gihiztina mînakên xweser/bi xwe hatin hilandin yên her çavkaniyekê.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "APK nehat parzekirin (nagire an daxistina parti)",
     "beforeNewInstallsShareToAppVerifier": "Sepanên nû li AppVerifier parve bike (ger hebe)",
     "appVerifierInstructionToast": "Li AppVerifier parve bike, pañê vegere vir gava amade bû.",
@@ -513,5 +515,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

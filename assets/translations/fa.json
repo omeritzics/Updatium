@@ -194,6 +194,7 @@
     "checkingForUpdatesNotifDescription": "اعلان گذرا که هنگام بررسی به روز رسانی ظاهر می شود",
     "pleaseAllowInstallPerm": "لطفاً به Updatium اجازه دهید برنامه‌ها را نصب کند",
     "trackOnly": "فقط ردیابی",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "خطا {}",
     "versionCorrectionDisabled": "تصحیح نسخه غیرفعال شد (به نظر می رسد افزونه کار نمی کند)",
     "unknown": "ناشناخته",
@@ -373,6 +374,7 @@
     "invertRegEx": "معکوس کردن عبارت منظم",
     "note": "یادداشت",
     "selfHostedNote": "از منوی کرکره ای \"{}\" می توان برای دسترسی به نمونه های خود میزبانی/سفارشی از هر منبعی استفاده کرد.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "APK قابل تجزیه نیست (دانلود ناسازگار یا جزئی)",
     "beforeNewInstallsShareToAppVerifier": "اشتراک‌گذاری برنامه‌های جدید با AppVerifier (در صورت وجود)",
     "appVerifierInstructionToast": "در AppVerifier به اشتراک بگذارید، سپس پس از آماده شدن به اینجا برگردید.",
@@ -513,5 +515,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

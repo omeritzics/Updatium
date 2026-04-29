@@ -194,6 +194,7 @@
     "checkingForUpdatesNotifDescription": "Notificación temporal que aparece al buscar actualizaciones",
     "pleaseAllowInstallPerm": "Permita que Updatium instale aplicaciones",
     "trackOnly": "Solo para seguimiento",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "Error {}",
     "versionCorrectionDisabled": "Corrección de versiones desactivada (el plugin parece no funcionar)",
     "unknown": "Desconocido",
@@ -373,6 +374,7 @@
     "invertRegEx": "Invertir expresión regular",
     "note": "Nota",
     "selfHostedNote": "El desplegable «{}» puede usarse para acceder a instancias autoalojadas/personalizadas de cualquier fuente.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "No se ha podido analizar el APK (incompatible o descarga parcial)",
     "beforeNewInstallsShareToAppVerifier": "Compartir apps nuevas con AppVerifier (si está instalado)",
     "appVerifierInstructionToast": "Comparta con AppVerifier y vuelva aquí cuando esté listo.",
@@ -513,5 +515,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }
