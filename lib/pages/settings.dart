@@ -2266,6 +2266,21 @@ class _AboutDialogState extends State<AboutDialog> {
                             padding: const EdgeInsets.symmetric(vertical: 8),
                           ),
                         ),
+                        const SizedBox(width: 8),
+                        TextButton.icon(
+                          onPressed: () {
+                            showLicensePage(
+                              context: context,
+                              applicationName: 'Updatium',
+                            );
+                          },
+                          icon: const Icon(Icons.code_rounded, size: 18),
+                          label: Text(tr('usedOpenSourcePackages')),
+                          style: TextButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                          ),
+                        ),
                       ],
                     ),
                   ],
