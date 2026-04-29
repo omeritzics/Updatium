@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
@@ -13,7 +14,6 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:updatium/services/slang-converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Material 3 spacing tokens
@@ -38,11 +38,11 @@ class AddAppPage extends StatefulWidget {
 class AddAppPageState extends State<AddAppPage> {
   bool gettingAppInfo = false;
   bool searching = false;
-  bool cameFromSearch = false;
 
   String userInput = '';
   String searchQuery = '';
   String? pickedSourceOverride;
+  String? previousPickedSourceOverride;
   AppSource? pickedSource;
   Map<String, dynamic> additionalSettings = {};
   bool additionalSettingsValid = true;
@@ -60,7 +60,7 @@ class AddAppPageState extends State<AddAppPage> {
     try {
       RegExp(value);
     } catch (e) {
-      return t('invalidRegEx');
+      return tr('invalidRegEx');
     }
     return null;
   }
@@ -68,12 +68,38 @@ class AddAppPageState extends State<AddAppPage> {
   @override
   void initState() {
     super.initState();
+    _updateSourceOverrideController();
   }
 
   @override
   void dispose() {
     _sourceOverrideController.dispose();
     super.dispose();
+  }
+
+  void _updateSourceOverrideController() {
+    if (pickedSourceOverride == null || pickedSourceOverride == '') {
+      _sourceOverrideController.text = tr('none');
+      return;
+    }
+    if (sourceProvider.sources.isEmpty) {
+      _sourceOverrideController.text = tr('none');
+      return;
+    }
+    AppSource? selectedSource;
+    try {
+      selectedSource = sourceProvider.sources.firstWhere(
+        (s) => s.runtimeType.toString() == pickedSourceOverride,
+      );
+    } catch (e) {
+      // No matching source found
+      selectedSource = null;
+    }
+    if (selectedSource != null) {
+      _sourceOverrideController.text = selectedSource.name;
+    } else {
+      _sourceOverrideController.text = tr('none');
+    }
   }
 
   void linkFn(String input) {
@@ -101,6 +127,12 @@ class AddAppPageState extends State<AddAppPage> {
         if (overrideSource != null) {
           pickedSourceOverride = overrideSource;
         }
+        bool overrideChanged =
+            pickedSourceOverride != previousPickedSourceOverride;
+        previousPickedSourceOverride = pickedSourceOverride;
+        if (overrideChanged) {
+          _updateSourceOverrideController();
+        }
         if (updateUrlInput) {
           urlInputKey++;
         }
@@ -119,6 +151,7 @@ class AddAppPageState extends State<AddAppPage> {
           }
         }
         if (pickedSource?.runtimeType != source?.runtimeType ||
+            overrideChanged ||
             (prevHost != null && prevHost != source?.hosts[0])) {
           pickedSource = source;
           pickedSource?.runOnAddAppInputChange(userInput);
@@ -164,7 +197,7 @@ class AddAppPageState extends State<AddAppPage> {
                 tr(
                   'xIsTrackOnly',
                   args: [
-                    pickedSource!.enforceTrackOnly ? t('source') : t('app'),
+                    pickedSource!.enforceTrackOnly ? tr('source') : tr('app'),
                   ],
                 ),
               ),
@@ -173,12 +206,12 @@ class AddAppPageState extends State<AddAppPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${pickedSource!.enforceTrackOnly ? t('appsFromSourceAreTrackOnly') : t('youPickedTrackOnly')}\n\n${t('trackOnlyAppDescription')}',
+                    '${pickedSource!.enforceTrackOnly ? tr('appsFromSourceAreTrackOnly') : tr('youPickedTrackOnly')}\n\n${tr('trackOnlyAppDescription')}',
                   ),
                   gap16,
                   GeneratedForm(
                     items: [
-                      [GeneratedFormSwitch('hide', label: t('dontShowAgain'))],
+                      [GeneratedFormSwitch('hide', label: tr('dontShowAgain'))],
                     ],
                     onValueChanges: (vals, valid, isBuilding) {
                       localValues = vals;
@@ -189,11 +222,11 @@ class AddAppPageState extends State<AddAppPage> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(ctx).pop(null),
-                  child: Text(t('cancel')),
+                  child: Text(tr('cancel')),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(ctx).pop(localValues),
-                  child: Text(t('ok')),
+                  child: Text(tr('ok')),
                 ),
               ],
             );
@@ -217,16 +250,16 @@ class AddAppPageState extends State<AddAppPage> {
                 context: context,
                 builder: (BuildContext ctx) {
                   return AlertDialog(
-                    title: Text(t('releaseDateAsVersion')),
-                    content: Text(t('releaseDateAsVersionExplanation')),
+                    title: Text(tr('releaseDateAsVersion')),
+                    content: Text(tr('releaseDateAsVersionExplanation')),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(ctx).pop(null),
-                        child: Text(t('cancel')),
+                        child: Text(tr('cancel')),
                       ),
                       TextButton(
                         onPressed: () => Navigator.of(ctx).pop(true),
-                        child: Text(t('ok')),
+                        child: Text(tr('ok')),
                       ),
                     ],
                   );
@@ -262,11 +295,9 @@ class AddAppPageState extends State<AddAppPage> {
               app,
               context,
               false,
-              progressIndicatorStep: 1,
-              progressIndicatorTotal: cameFromSearch ? 3 : 2,
             );
             if (apkUrl == null) {
-              throw UpdatiumError(t('cancelled'));
+              throw UpdatiumError(tr('cancelled'));
             }
             app.preferredApkIndex = app.apkUrls
                 .map((e) => e.value)
@@ -288,7 +319,7 @@ class AddAppPageState extends State<AddAppPage> {
             app.id = downloadedFile?.appId ?? downloadedDir!.appId;
           }
           if (appsProvider.apps.containsKey(app.id)) {
-            throw UpdatiumError(t('appAlreadyAdded'));
+            throw UpdatiumError(tr('appAlreadyAdded'));
           }
           if (app.additionalSettings['trackOnly'] == true ||
               app.additionalSettings['versionDetection'] != true) {
@@ -300,14 +331,7 @@ class AddAppPageState extends State<AddAppPage> {
         if (app != null) {
           Navigator.push(
             globalNavigatorKey.currentContext ?? context,
-            MaterialPageRoute(
-              builder: (context) => AppPage(
-                appId: app!.id,
-                flowType: cameFromSearch
-                    ? AppAddFlowType.search
-                    : AppAddFlowType.url,
-              ),
-            ),
+            MaterialPageRoute(builder: (context) => AppPage(appId: app!.id)),
           );
         }
       } catch (e) {
@@ -331,7 +355,7 @@ class AddAppPageState extends State<AddAppPage> {
               [
                 GeneratedFormTextField(
                   'appSourceURL',
-                  label: t('appSourceURL'),
+                  label: tr('appSourceURL'),
                   defaultValue: userInput,
                   additionalValidators: [
                     (value) {
@@ -347,7 +371,7 @@ class AddAppPageState extends State<AddAppPage> {
                             ? e
                             : e is UpdatiumError
                             ? e.toString()
-                            : t('error');
+                            : tr('error');
                       }
                       return null;
                     },
@@ -363,22 +387,22 @@ class AddAppPageState extends State<AddAppPage> {
         horizontalGap16,
         gettingAppInfo
             ? Semantics(
-                label: t('gettingAppInfo'),
+                label: tr('gettingAppInfo'),
                 child: const CircularProgressIndicator(),
               )
             : Semantics(
                 button: true,
-                label: t('add'),
+                label: tr('add'),
                 hint: doingSomething
-                    ? t('pleaseWaitOperationInProgress')
+                    ? 'Please wait, operation in progress'
                     : pickedSource == null
-                    ? t('selectSourceFirst')
+                    ? 'Select a source first'
                     : (pickedSource!
                               .combinedAppSpecificSettingFormItems
                               .isNotEmpty &&
                           !additionalSettingsValid)
-                    ? t('completeAdditionalSettingsFirst')
-                    : t('addAppToCollection'),
+                    ? 'Complete additional settings first'
+                    : 'Add this app to your collection',
                 excludeSemantics: true,
                 child: M3EFilledButton(
                   onPressed:
@@ -393,7 +417,7 @@ class AddAppPageState extends State<AddAppPage> {
                           HapticFeedback.selectionClick();
                           addApp();
                         },
-                  child: Text(t('add')),
+                  child: Text(tr('add')),
                 ),
               ),
       ],
@@ -453,7 +477,7 @@ class AddAppPageState extends State<AddAppPage> {
                                               16,
                                             ),
                                         title: Text(
-                                          t('searchX', args: [e.name]),
+                                          tr('searchX', args: [e.name]),
                                         ),
                                         content: SizedBox(
                                           width: double.maxFinite,
@@ -465,7 +489,7 @@ class AddAppPageState extends State<AddAppPage> {
                                                 GeneratedFormTextField(
                                                   'url',
                                                   label: e.hosts.isNotEmpty
-                                                      ? t('overrideSource')
+                                                      ? tr('overrideSource')
                                                       : plural(
                                                           'url',
                                                           1,
@@ -488,13 +512,13 @@ class AddAppPageState extends State<AddAppPage> {
                                           TextButton(
                                             onPressed: () =>
                                                 Navigator.of(ctx).pop(null),
-                                            child: Text(t('cancel')),
+                                            child: Text(tr('cancel')),
                                           ),
                                           TextButton(
                                             onPressed: () => Navigator.of(
                                               ctx,
                                             ).pop(localValues),
-                                            child: Text(t('ok')),
+                                            child: Text(tr('ok')),
                                           ),
                                         ],
                                       );
@@ -542,7 +566,7 @@ class AddAppPageState extends State<AddAppPage> {
             si++;
           }
           if (res.isEmpty) {
-            throw UpdatiumError(t('noResults'));
+            throw UpdatiumError(tr('noResults'));
           }
           List<String>? selectedUrls = res.isEmpty
               ? []
@@ -559,9 +583,6 @@ class AddAppPageState extends State<AddAppPage> {
                 );
           if (selectedUrls != null && selectedUrls.isNotEmpty) {
             var sourceName = res[selectedUrls[0]]?.key;
-            setState(() {
-              cameFromSearch = true;
-            });
             changeUserInput(
               selectedUrls[0],
               true,
@@ -585,16 +606,63 @@ class AddAppPageState extends State<AddAppPage> {
         pickedSource == null &&
         userInput.isEmpty;
 
-    Widget getHTMLSourceOverrideDropdown() => SourceOverrideDropdown(
-      selectedOverride: pickedSourceOverride,
-      pickedSource: pickedSource,
-      onSelectionChanged: (selection) {
-        setState(() {
-          pickedSourceOverride = selection;
-        });
-        changeUserInput(userInput, true, false);
-      },
-      controller: _sourceOverrideController,
+    Widget getHTMLSourceOverrideDropdown() => Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: MenuAnchor(
+                builder: (context, controller, child) {
+                  return TextField(
+                    controller: _sourceOverrideController,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      labelText: tr('overrideSource'),
+                      suffixIcon: const Icon(Icons.arrow_drop_down),
+                    ),
+                    onTap: () {
+                      if (controller.isOpen) {
+                        controller.close();
+                      } else {
+                        controller.open();
+                      }
+                    },
+                  );
+                },
+                menuChildren: [
+                  MenuItemButton(
+                    onPressed: () {
+                      setState(() {
+                        pickedSourceOverride = null;
+                      });
+                      changeUserInput(userInput, true, false);
+                    },
+                    child: Text(tr('none')),
+                  ),
+                  ...sourceProvider.sources
+                      .where(
+                        (s) =>
+                            s.allowOverride ||
+                            (pickedSource != null &&
+                                pickedSource.runtimeType == s.runtimeType),
+                      )
+                      .map(
+                        (s) => MenuItemButton(
+                          onPressed: () {
+                            setState(() {
+                              pickedSourceOverride = s.runtimeType.toString();
+                            });
+                            changeUserInput(userInput, true, false);
+                          },
+                          child: Text(s.name),
+                        ),
+                      ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
 
     Widget getSearchBarRow() => Row(
@@ -605,7 +673,7 @@ class AddAppPageState extends State<AddAppPage> {
               [
                 GeneratedFormTextField(
                   'searchSomeSources',
-                  label: t('searchSomeSourcesLabel'),
+                  label: tr('searchSomeSourcesLabel'),
                   required: false,
                 ),
               ],
@@ -622,15 +690,15 @@ class AddAppPageState extends State<AddAppPage> {
         horizontalGap16,
         searching
             ? Semantics(
-                label: t('searching'),
+                label: tr('searching'),
                 child: const CircularProgressIndicator(),
               )
             : Semantics(
                 button: true,
-                label: t('search'),
+                label: tr('search'),
                 hint: searchQuery.isEmpty
-                    ? t('enterSearchTermsFirst')
-                    : t('searchForApps'),
+                    ? 'Enter search terms first'
+                    : 'Search for apps',
                 excludeSemantics: true,
                 child: M3EFilledButton(
                   onPressed: searchQuery.isEmpty || doingSomething
@@ -638,7 +706,7 @@ class AddAppPageState extends State<AddAppPage> {
                       : () {
                           runSearch();
                         },
-                  child: Text(t('search')),
+                  child: Text(tr('search')),
                 ),
               ),
       ],
@@ -649,7 +717,7 @@ class AddAppPageState extends State<AddAppPage> {
       children: [
         gap16,
         Text(
-          t('additionalOptsFor', args: [pickedSource?.name ?? t('source')]),
+          tr('additionalOptsFor', args: [pickedSource?.name ?? tr('source')]),
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
@@ -693,7 +761,7 @@ class AddAppPageState extends State<AddAppPage> {
               [
                 GeneratedFormSwitch(
                   'inferAppIdIfOptional',
-                  label: t('tryInferAppIdFromCode'),
+                  label: tr('tryInferAppIdFromCode'),
                   defaultValue: inferAppIdIfOptional,
                 ),
               ],
@@ -715,7 +783,7 @@ class AddAppPageState extends State<AddAppPage> {
               [
                 GeneratedFormTextField(
                   'appId',
-                  label: '${t('appId')} - ${t('custom')}',
+                  label: '${tr('appId')} - ${tr('custom')}',
                   required: false,
                   additionalValidators: [
                     (value) {
@@ -726,7 +794,7 @@ class AddAppPageState extends State<AddAppPage> {
                         r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
                       ).hasMatch(value);
                       if (!isValid) {
-                        return t('invalidInput');
+                        return tr('invalidInput');
                       }
                       return null;
                     },
@@ -756,7 +824,7 @@ class AddAppPageState extends State<AddAppPage> {
                 return AlertDialog(
                   scrollable: true,
                   contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-                  title: Text(t('supportedSources')),
+                  title: Text(tr('supportedSources')),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -777,24 +845,29 @@ class AddAppPageState extends State<AddAppPage> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  '${e.name}${e.enforceTrackOnly ? ' ${t('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${t('searchableInBrackets')}' : ''}',
+                                  '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
                                   style: TextStyle(
                                     decoration: e.hosts.isNotEmpty
                                         ? TextDecoration.underline
                                         : TextDecoration.none,
                                   ),
                                 ),
-                                if (e.openSource) ...[
+                                if (e.trusted) ...[
                                   const SizedBox(width: 4),
                                   Icon(
-                                    Icons.workspace_premium,
+                                    Icons.verified,
                                     size: 14,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.primary,
-                                    semanticLabel: t('openSource'),
+                                    color: Theme.of(context).colorScheme.primary,
                                   ),
                                   const SizedBox(width: 2),
+                                  Text(
+                                    tr('trusted'),
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Theme.of(context).colorScheme.primary,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ],
                               ],
                             ),
@@ -803,23 +876,23 @@ class AddAppPageState extends State<AddAppPage> {
                       ),
                       gap16,
                       Text(
-                        '${t('note')}:',
+                        '${tr('note')}:',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 4),
-                      Text(t('selfHostedNote', args: [t('overrideSource')])),
+                      Text(tr('selfHostedNote', args: [tr('overrideSource')])),
                       gap8,
                       Row(
                         children: [
                           Icon(
-                            Icons.workspace_premium,
+                            Icons.verified,
                             size: 14,
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
-                              t('openSourceNote'),
+                              tr('trustedSourceNote'),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
@@ -830,7 +903,7 @@ class AddAppPageState extends State<AddAppPage> {
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(),
-                      child: Text(t('ok')),
+                      child: Text(tr('ok')),
                     ),
                   ],
                 );
@@ -838,7 +911,7 @@ class AddAppPageState extends State<AddAppPage> {
             );
           },
           icon: const Icon(Icons.info_outline, size: 18),
-          label: Text(t('supportedSources')),
+          label: Text(tr('supportedSources')),
           style: TextButton.styleFrom(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.zero,
@@ -921,11 +994,26 @@ class AddAppPageState extends State<AddAppPage> {
           slivers: <Widget>[
             SliverAppBar.large(
               pinned: true,
-              title: Text(t('addApp')),
+              title: Text(tr('addApp')),
               leading: IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
               ),
+              bottom: (pickedSource != null || cameFromSearch)
+                  ? PreferredSize(
+                      preferredSize: const Size.fromHeight(4),
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween(
+                          begin: 0,
+                          end: cameFromSearch ? 2 / 3 : 1 / 2,
+                        ),
+                        duration: const Duration(milliseconds: 500),
+                        builder: (context, value, child) {
+                          return LinearProgressIndicator(value: value);
+                        },
+                      ),
+                    )
+                  : null,
             ),
             SliverToBoxAdapter(
               child: Padding(
@@ -958,7 +1046,7 @@ class AddAppPageState extends State<AddAppPage> {
                         children: [
                           gap24,
                           Text(
-                            t('advanced'),
+                            tr('advanced'),
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.bold,
@@ -971,7 +1059,7 @@ class AddAppPageState extends State<AddAppPage> {
                               [
                                 GeneratedFormTextField(
                                   'apkFilterRegEx',
-                                  label: t('filterAPKsByRegEx'),
+                                  label: tr('filterAPKsByRegEx'),
                                   required: false,
                                   additionalValidators: [
                                     (value) => _regExValidator(value),
@@ -982,14 +1070,14 @@ class AddAppPageState extends State<AddAppPage> {
                                 GeneratedFormSwitch(
                                   'invertAPKFilter',
                                   label:
-                                      '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
+                                      '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
                                   defaultValue: false,
                                 ),
                               ],
                               [
                                 GeneratedFormTextField(
                                   'zippedApkFilterRegEx',
-                                  label: t('zippedApkFilterRegEx'),
+                                  label: tr('zippedApkFilterRegEx'),
                                   required: false,
                                   additionalValidators: [
                                     (value) => _regExValidator(value),
@@ -999,14 +1087,14 @@ class AddAppPageState extends State<AddAppPage> {
                               [
                                 GeneratedFormSwitch(
                                   'shizukuPretendToBeGooglePlay',
-                                  label: t('shizukuPretendToBeGooglePlay'),
+                                  label: tr('shizukuPretendToBeGooglePlay'),
                                   defaultValue: false,
                                 ),
                               ],
                               [
                                 GeneratedFormSwitch(
                                   'allowInsecure',
-                                  label: t('allowInsecure'),
+                                  label: tr('allowInsecure'),
                                   defaultValue: false,
                                 ),
                               ],
@@ -1047,7 +1135,7 @@ class AddAppPageState extends State<AddAppPage> {
             );
           },
           icon: const Icon(Icons.import_export),
-          label: Text(t('importExport')),
+          label: Text(tr('importExport')),
           extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
           elevation: 3,
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,

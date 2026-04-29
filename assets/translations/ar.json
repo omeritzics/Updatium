@@ -76,8 +76,8 @@
     "removeSelectedApps": "أزل التطبيقات المحددة",
     "appRemoved": {
         "one": "Removed one app",
-        "two": "Removed {count} apps",
-        "other": "Removed {count} apps"
+        "two": "Removed {} apps",
+        "other": "Removed {} apps"
     },
     "updateX": "حدِّث {}",
     "installX": "ثبِّت {}",
@@ -152,13 +152,6 @@
     "appearance": "المظهر",
     "pinUpdates": "تدبيس التحديثات في أعلى قائمة التطبيقات",
     "updates": "التحديثات",
-    "dnsServiceProvider": "DNS Service",
-    "dnsServiceProviderDescription": "Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.",
-    "System Default": "System Default",
-    "Cloudflare DNS": "Cloudflare DNS",
-    "Quad9 DNS": "Quad9 DNS",
-    "OpenDNS": "OpenDNS",
-    "Mullvad DNS": "Mullvad DNS",
     "sourceSpecific": "خاص بالمصدر",
     "appSource": "مصدر التطبيق",
     "appSourceHint": "Open app source repository",
@@ -203,7 +196,6 @@
     "pleaseAllowInstallPerm": "يرجى السماح لـ Updatium بتثبيت التطبيقات",
     "trackOnly": "للتعقب فقط",
     "trusted": "Trusted",
-    "openSource": "Open-source",
     "errorWithHttpStatusCode": "خطأ {}",
     "versionCorrectionDisabled": "تعطيل تصحيح الإصدار (يبدو أن الملحق لا يعمل)",
     "unknown": "غير معروف",
@@ -223,19 +215,14 @@
     "reposHaveMultipleApps": "قد تحتوي المستودعات على عدة تطبيقات",
     "fdroidThirdPartyRepo": "مستودع F-Droid طرف ثالث",
     "gitlab": "GitLab",
-    "bitbucket": "Bitbucket",
     "github": "GitHub",
     "codeberg": "Forgejo (Codeberg)",
-    "gitea": "Gitea",
     "izzyondroid": "IzzyOnDroid",
     "sourcehut": "SourceHut",
-    "signal": "Signal",
     "mullvad": "Mullvad",
-    "vlc": "VLC",
     "sourceforge": "SourceForge",
     "apkcombo": "APKCombo",
     "apkpure": "APKPure",
-    "openapk": "OpenAPK",
     "aptoide": "Aptoide",
     "uptodown": "Uptodown",
     "huaweiappgallery": "Huawei App Gallery",
@@ -300,8 +287,6 @@
     "dontShowAPKOriginWarnings": "عدم إظهار تحذيرات مصدر APK",
     "moveNonInstalledAppsToBottom": "نقل التطبيقات غير المثبتة إلى أسفل قائمة التطبيقات",
     "gitlabPATLabel": "رمز الوصول الشخصي لـ GitLab",
-    "bitbucketAPITokenLabel": "Bitbucket API token (email:token)",
-    "giteaTokenLabel": "Gitea access token",
     "about": "حول",
     "requiresCredentialsInSettings": "{} يحتاج إلى بيانات اعتماد إضافية (في الإعدادات)",
     "checkOnStart": "التحقق من التحديثات عند البدء",
@@ -368,8 +353,6 @@
     "onlyCheckInstalledOrTrackOnlyApps": "التحقق فقط من التطبيقات المثبتة أو للتعقب فقط",
     "supportFixedAPKURL": "دعم روابط APK الثابتة",
     "selectX": "اختر {}",
-    "showSystemApps": "Show system apps",
-    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "السماح بالتنزيل المتوازي",
     "useShizuku": "استخدم Shizuku أو Sui للتثبيت",
     "shizukuBinderNotFound": "خدمة Shizuku غير قيد التشغيل",
@@ -392,7 +375,7 @@
     "invertRegEx": "اعكس التعبير النمطي",
     "note": "ملاحظة",
     "selfHostedNote": "يمكن استخدام القائمة المنسدلة \"{}\" للوصول إلى نسخ مخصصة/مستضافة ذاتيًا لأي مصدر.",
-    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "تعذر تحليل ملف APK (تنزيل غير متوافق أو غير مكتمل)",
     "beforeNewInstallsShareToAppVerifier": "مشاركة التطبيقات الجديدة مع AppVerifier (إذا كان متاحًا)",
     "appVerifierInstructionToast": "شارك مع AppVerifier، ثم عد هنا عندما تكون جاهزًا.",
@@ -426,44 +409,44 @@
         "other": "إزالة التطبيقات؟"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {count} دقيقة",
-        "two": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {count} دقيقتين",
-        "other": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {count} دقائق"
+        "one": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {} دقيقة",
+        "two": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {} دقيقتين",
+        "other": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {} دقائق"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "واجه التحقق من التحديثات في الخلفية {error}، سيتم جدولة محاولة أخرى بعد {count} دقيقة",
-        "two": "واجه التحقق من التحديثات في الخلفية {error}، سيتم جدولة محاولة أخرى بعد {count} دقيقتين",
-        "other": "واجه التحقق من التحديثات في الخلفية {error}، سيتم جدولة محاولة أخرى بعد {count} دقائق"
+        "one": "واجه التحقق من التحديثات في الخلفية {}، سيتم جدولة محاولة أخرى بعد {} دقيقة",
+        "two": "واجه التحقق من التحديثات في الخلفية {}، سيتم جدولة محاولة أخرى بعد {} دقيقتين",
+        "other": "واجه التحقق من التحديثات في الخلفية {}، سيتم جدولة محاولة أخرى بعد {} دقائق"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "وجد التحقق من التحديثات في الخلفية {count} تحديث - سيتم إخطار المستخدم إذا لزم الأمر",
-        "two": "وجد التحقق من التحديثات في الخلفية {count} تحديثين - سيتم إخطار المستخدم إذا لزم الأمر",
-        "other": "وجد التحقق من التحديثات في الخلفية {count} تحديثات - سيتم إخطار المستخدم إذا لزم الأمر"
+        "one": "وجد التحقق من التحديثات في الخلفية {} تحديث - سيتم إخطار المستخدم إذا لزم الأمر",
+        "two": "وجد التحقق من التحديثات في الخلفية {} تحديثين - سيتم إخطار المستخدم إذا لزم الأمر",
+        "other": "وجد التحقق من التحديثات في الخلفية {} تحديثات - سيتم إخطار المستخدم إذا لزم الأمر"
     },
     "apps": {
-        "one": "{count} تطبيق",
+        "one": "{} تطبيق",
         "two": "تطبيقان",
-        "other": "{count} تطبيقات"
+        "other": "{} تطبيقات"
     },
     "url": {
-        "one": "{count} رابط",
+        "one": "{} رابط",
         "two": "رابطان",
-        "other": "{count} روابط"
+        "other": "{} روابط"
     },
     "minute": {
-        "one": "{count} دقيقة",
+        "one": "{} دقيقة",
         "two": "دقيقتان",
-        "other": "{count} دقائق"
+        "other": "{} دقائق"
     },
     "hour": {
-        "one": "{count} ساعة",
+        "one": "{} ساعة",
         "two": "ساعتان",
-        "other": "{count} ساعات"
+        "other": "{} ساعات"
     },
     "day": {
-        "one": "{count} يوم",
+        "one": "{} يوم",
         "two": "يومان",
-        "other": "{count} أيام"
+        "other": "{} أيام"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "مُسح {n} سجل (قبل = {before}, بعد = {after})",
@@ -471,29 +454,29 @@
         "other": "مُسح {n} سجلات (قبل = {before}, بعد = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{app} وتطبيق واحد آخر لديه تحديثات.",
-        "two": "{app} وتطبيقان آخران لديهما تحديثات.",
-        "other": "{app} و{count} تطبيقات أخرى لديها تحديثات."
+        "one": "{} وتطبيق واحد آخر لديه تحديثات.",
+        "two": "{} وتطبيقان آخران لديهما تحديثات.",
+        "other": "{} و{} تطبيقات أخرى لديها تحديثات."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{app} وتطبيق واحد آخر حُدث.",
-        "two": "{app} وتطبيقان آخران حُدثا.",
-        "other": "{app} و{count} تطبيقات أخرى حُدثت."
+        "one": "{} وتطبيق واحد آخر حُدث.",
+        "two": "{} وتطبيقان آخران حُدثا.",
+        "other": "{} و{} تطبيقات أخرى حُدثت."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "فشل تحديث {app} وتطبيق واحد آخر.",
-        "two": "فشل تحديث {app} وتطبيقان آخران.",
-        "other": "فشل تحديث {app} و{count} تطبيقات أخرى."
+        "one": "فشل تحديث {} وتطبيق واحد آخر.",
+        "two": "فشل تحديث {} وتطبيقان آخران.",
+        "other": "فشل تحديث {} و{} تطبيقات أخرى."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{app} وتطبيق واحد آخر قد حُدث.",
-        "two": "{app} وتطبيقان آخران قد حُدثا.",
-        "other": "{app} و{count} تطبيقات أخرى قد حُدثت."
+        "one": "{} وتطبيق واحد آخر قد حُدث.",
+        "two": "{} وتطبيقان آخران قد حُدثا.",
+        "other": "{} و{} تطبيقات أخرى قد حُدثت."
     },
     "apk": {
-        "one": "{count} APK",
+        "one": "{} APK",
         "two": "APKان",
-        "other": "{count} APKs"
+        "other": "{} APKs"
     },
     "certificateHash": {
         "one": "بصمة الشهادة",

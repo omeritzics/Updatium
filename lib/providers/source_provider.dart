@@ -7,20 +7,17 @@ import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:html/dom.dart' as dom;
+import 'package:simple_localization/simple_localization.dart';
+import 'package:html/dom.dart';
 import 'package:http/http.dart';
-import 'package:flutter/material.dart';
 import 'package:updatium/app_sources/apkcombo.dart';
 import 'package:updatium/app_sources/apkmirror.dart';
 import 'package:updatium/app_sources/apkpure.dart';
-import 'package:updatium/app_sources/bitbucket.dart';
-import 'package:updatium/app_sources/openapk.dart';
 import 'package:updatium/app_sources/aptoide.dart';
 import 'package:updatium/app_sources/codeberg.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
-import 'package:updatium/app_sources/gitea.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/app_sources/huaweiappgallery.dart';
@@ -29,7 +26,6 @@ import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/app_sources/jenkins.dart';
 import 'package:updatium/app_sources/neutroncode.dart';
 import 'package:updatium/app_sources/rustore.dart';
-import 'package:updatium/app_sources/signal.dart';
 import 'package:updatium/app_sources/sourceforge.dart';
 import 'package:updatium/app_sources/sourcehut.dart';
 import 'package:updatium/app_sources/telegramapp.dart';
@@ -37,77 +33,12 @@ import 'package:updatium/app_sources/tencent.dart';
 import 'package:updatium/app_sources/whatsapp.dart';
 import 'package:updatium/app_sources/uptodown.dart';
 import 'package:updatium/app_sources/vivoappstore.dart';
-import 'package:updatium/app_sources/vlc.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:android_package_installer/android_package_installer.dart';
-import 'package:updatium/services/slang-converter.dart';
-
-/// Cache entry for ETag-based conditional requests
-class _ETagCacheEntry {
-  final String etag;
-  final Response response;
-  final DateTime cachedAt;
-
-  _ETagCacheEntry(this.etag, this.response, this.cachedAt);
-
-  bool get isExpired =>
-      DateTime.now().difference(cachedAt) > const Duration(minutes: 5);
-}
-
-/// Simple in-memory cache for API responses with ETag support
-class _ETagResponseCache {
-  final Map<String, _ETagCacheEntry> _cache = {};
-
-  String _cacheKey(String url, Map<String, dynamic>? additionalSettings) {
-    // Include relevant settings that might affect the response
-    final settingsHash = additionalSettings?.toString().hashCode ?? 0;
-    return '$url:${settingsHash.toString()}';
-  }
-
-  String? getETag(String url, Map<String, dynamic>? additionalSettings) {
-    final key = _cacheKey(url, additionalSettings);
-    final entry = _cache[key];
-    if (entry == null || entry.isExpired) {
-      _cache.remove(key);
-      return null;
-    }
-    return entry.etag;
-  }
-
-  Response? getCachedResponse(
-    String url,
-    Map<String, dynamic>? additionalSettings,
-  ) {
-    final key = _cacheKey(url, additionalSettings);
-    final entry = _cache[key];
-    if (entry == null || entry.isExpired) {
-      _cache.remove(key);
-      return null;
-    }
-    return entry.response;
-  }
-
-  void store(
-    String url,
-    Map<String, dynamic>? additionalSettings,
-    String etag,
-    Response response,
-  ) {
-    final key = _cacheKey(url, additionalSettings);
-    _cache[key] = _ETagCacheEntry(etag, response, DateTime.now());
-  }
-
-  void clear() {
-    _cache.clear();
-  }
-}
-
-// Global ETag cache instance
-final _etagCache = _ETagResponseCache();
 
 class AppNames {
   late String author;
@@ -504,7 +435,7 @@ class App {
       json['installedVersion'] == null
           ? null
           : json['installedVersion'] as String,
-      (json['latestVersion'] ?? t('unknown')) as String,
+      (json['latestVersion'] ?? tr('unknown')) as String,
       assumed2DlistToStringMapList(
         jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
       ),
@@ -584,10 +515,10 @@ String preStandardizeUrl(String url) {
   return url;
 }
 
-String noAPKFound = t('noAPKFound');
+String noAPKFound = tr('noAPKFound');
 
 List<String> getLinksFromParsedHTML(
-  dom.Document dom,
+  Document dom,
   RegExp hrefPattern,
   String prependToLinks,
 ) => dom
@@ -760,7 +691,7 @@ abstract class AppSource {
   List<String> excludeCommonSettingKeys = [];
   bool urlsAlwaysHaveExtension = false;
   bool allowIncludeZips = false;
-  bool openSource = false;
+  bool trusted = false;
 
   AppSource() {
     name = runtimeType.toString();
@@ -824,19 +755,10 @@ abstract class AppSource {
       additionalSettingsPlusSourceConfig,
     );
     var method = postBody == null ? 'GET' : 'POST';
-    var requestHeaders =
-        await getRequestHeaders(additionalSettingsPlusSourceConfig, url) ?? {};
-
-    // ETag-based conditional request optimization
-    // Only for GET requests to API endpoints (not for APK downloads)
-    String? cachedETag;
-    if (method == 'GET' && !_isDownloadUrl(url)) {
-      cachedETag = _etagCache.getETag(url, additionalSettings);
-      if (cachedETag != null) {
-        requestHeaders['If-None-Match'] = cachedETag;
-      }
-    }
-
+    var requestHeaders = await getRequestHeaders(
+      additionalSettingsPlusSourceConfig,
+      url,
+    );
     var streamedResponseUrlWithResponseAndClient =
         await sourceRequestStreamResponse(
           method,
@@ -846,45 +768,12 @@ abstract class AppSource {
           followRedirects: followRedirects,
           postBody: postBody,
         );
-
-    var response = await httpClientResponseStreamToFinalResponse(
+    return await httpClientResponseStreamToFinalResponse(
       streamedResponseUrlWithResponseAndClient.value.key,
       method,
       streamedResponseUrlWithResponseAndClient.key.toString(),
       streamedResponseUrlWithResponseAndClient.value.value,
     );
-
-    // Handle 304 Not Modified - return cached response
-    if (response.statusCode == 304 && cachedETag != null) {
-      var cachedResponse = _etagCache.getCachedResponse(
-        url,
-        additionalSettings,
-      );
-      if (cachedResponse != null) {
-        return cachedResponse;
-      }
-      // If cache miss despite 304, continue with normal handling
-    }
-
-    // Cache successful GET responses with ETag
-    if (method == 'GET' && response.statusCode == 200 && !_isDownloadUrl(url)) {
-      var etag = response.headers['etag'];
-      if (etag != null && etag.isNotEmpty) {
-        _etagCache.store(url, additionalSettings, etag, response);
-      }
-    }
-
-    return response;
-  }
-
-  /// Check if URL is likely an APK/asset download (not an API call)
-  bool _isDownloadUrl(String url) {
-    var lower = url.toLowerCase();
-    return lower.endsWith('.apk') ||
-        lower.endsWith('.xapk') ||
-        lower.endsWith('.zip') ||
-        lower.contains('/download/') ||
-        lower.contains('browser_download_url');
   }
 
   void runOnAddAppInputChange(String inputUrl) {
@@ -909,139 +798,11 @@ abstract class AppSource {
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
-    [GeneratedFormTextField('appName', label: t('appName'), required: false)],
-    [
-      GeneratedFormTextField(
-        'appAuthor',
-        label: t('appAuthor'),
-        required: false,
-      ),
-    ],
-    [GeneratedFormTextField('about', label: t('about'), required: false)],
-    [GeneratedFormSwitch('trackOnly', label: t('trackOnly'))],
-    [
-      GeneratedFormSwitch(
-        'versionDetection',
-        label: t('versionDetectionExplanation'),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'useVersionCodeAsOSVersion',
-        label: t('useVersionCodeAsOSVersion'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'autoApkFilterByArch',
-        label: t('autoApkFilterByArch'),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'shizukuPretendToBeGooglePlay',
-        label: t('shizukuPretendToBeGooglePlay'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'allowInsecure',
-        label: t('allowInsecure'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'exemptFromBackgroundUpdates',
-        label: t('exemptFromBackgroundUpdates'),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'skipUpdateNotifications',
-        label: t('skipUpdateNotifications'),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'refreshBeforeDownload',
-        label: t('refreshBeforeDownload'),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'fallbackToOlderReleases',
-        label: t('fallbackToOlderReleases'),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'trySelectingSuggestedVersionCode',
-        label: t('trySelectingSuggestedVersionCode'),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'includePrereleases',
-        label: t('includePrereleases'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'stayOneVersionBehind',
-        label: t('stayOneVersionBehind'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'useFirstApkOfVersion',
-        label: t('useFirstApkOfVersion'),
-      ),
-    ],
-    [GeneratedFormSwitch('verifyLatestTag', label: t('verifyLatestTag'))],
-    [
-      GeneratedFormDropdown(
-        'sortMethodChoice',
-        [
-          MapEntry('date', t('releaseDate')),
-          MapEntry('smartname', t('smartname')),
-          MapEntry('none', t('none')),
-          MapEntry(
-            'smartname-datefallback',
-            '${t('smartname')} x ${t('releaseDate')}',
-          ),
-          MapEntry('name', t('name')),
-        ],
-        label: t('sortMethod'),
-        defaultValue: 'date',
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'useLatestAssetDateAsReleaseDate',
-        label: t('useLatestAssetDateAsReleaseDate'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'releaseTitleAsVersion',
-        label: t('releaseTitleAsVersion'),
-        defaultValue: false,
-      ),
-    ],
+    [GeneratedFormSwitch('trackOnly', label: tr('trackOnly'))],
     [
       GeneratedFormTextField(
         'versionExtractionRegEx',
-        label: t('trimVersionString'),
+        label: tr('trimVersionString'),
         required: false,
         additionalValidators: [(value) => regExValidator(value)],
       ),
@@ -1049,15 +810,29 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'matchGroupToUse',
-        label: t('matchGroupToUseForX', args: [t('trimVersionString')]),
+        label: tr('matchGroupToUseForX', args: [tr('trimVersionString')]),
         required: false,
         hint: '\$0',
       ),
     ],
     [
+      GeneratedFormSwitch(
+        'versionDetection',
+        label: tr('versionDetectionExplanation'),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'useVersionCodeAsOSVersion',
+        label: tr('useVersionCodeAsOSVersion'),
+        defaultValue: false,
+      ),
+    ],
+    [
       GeneratedFormTextField(
         'apkFilterRegEx',
-        label: t('filterAPKsByRegEx'),
+        label: tr('filterAPKsByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -1069,14 +844,63 @@ abstract class AppSource {
     [
       GeneratedFormSwitch(
         'invertAPKFilter',
-        label: '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
+        label: '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
         defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'autoApkFilterByArch',
+        label: tr('autoApkFilterByArch'),
+        defaultValue: true,
+      ),
+    ],
+    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
+    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
+    [
+      GeneratedFormSwitch(
+        'shizukuPretendToBeGooglePlay',
+        label: tr('shizukuPretendToBeGooglePlay'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'allowInsecure',
+        label: tr('allowInsecure'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'exemptFromBackgroundUpdates',
+        label: tr('exemptFromBackgroundUpdates'),
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'skipUpdateNotifications',
+        label: tr('skipUpdateNotifications'),
+      ),
+    ],
+    [GeneratedFormTextField('about', label: tr('about'), required: false)],
+    [
+      GeneratedFormSwitch(
+        'refreshBeforeDownload',
+        label: tr('refreshBeforeDownload'),
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'fallbackToOlderReleases',
+        label: tr('fallbackToOlderReleases'),
+        defaultValue: true,
       ),
     ],
     [
       GeneratedFormTextField(
         'filterReleaseTitlesByRegEx',
-        label: t('filterReleaseTitlesByRegEx'),
+        label: tr('filterReleaseTitlesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -1088,13 +912,72 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'filterReleaseNotesByRegEx',
-        label: t('filterReleaseNotesByRegEx'),
+        label: tr('filterReleaseNotesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
             return regExValidator(value);
           },
         ],
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'trySelectingSuggestedVersionCode',
+        label: tr('trySelectingSuggestedVersionCode'),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'includePrereleases',
+        label: tr('includePrereleases'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'stayOneVersionBehind',
+        label: tr('stayOneVersionBehind'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'useFirstApkOfVersion',
+        label: tr('useFirstApkOfVersion'),
+      ),
+    ],
+    [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
+    [
+      GeneratedFormDropdown(
+        'sortMethodChoice',
+        [
+          MapEntry('date', tr('releaseDate')),
+          MapEntry('smartname', tr('smartname')),
+          MapEntry('none', tr('none')),
+          MapEntry(
+            'smartname-datefallback',
+            '${tr('smartname')} x ${tr('releaseDate')}',
+          ),
+          MapEntry('name', tr('name')),
+        ],
+        label: tr('sortMethod'),
+        defaultValue: 'date',
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'useLatestAssetDateAsReleaseDate',
+        label: tr('useLatestAssetDateAsReleaseDate'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'releaseTitleAsVersion',
+        label: tr('releaseTitleAsVersion'),
+        defaultValue: false,
       ),
     ],
   ];
@@ -1126,7 +1009,8 @@ abstract class AppSource {
               [
                 GeneratedFormSwitch(
                   'releaseDateAsVersion',
-                  label: '${t('releaseDateAsVersion')} (${t('pseudoVersion')})',
+                  label:
+                      '${tr('releaseDateAsVersion')} (${tr('pseudoVersion')})',
                   defaultValue: false,
                 ),
               ],
@@ -1149,14 +1033,14 @@ abstract class AppSource {
         [
           GeneratedFormSwitch(
             'includeZips',
-            label: t('includeZips'),
+            label: tr('includeZips'),
             defaultValue: false,
           ),
         ],
         [
           GeneratedFormTextField(
             'zippedApkFilterRegEx',
-            label: t('zippedApkFilterRegEx'),
+            label: tr('zippedApkFilterRegEx'),
             required: false,
             additionalValidators: [
               (value) {
@@ -1254,7 +1138,7 @@ UpdatiumError getUpdatiumHttpError(Response res) {
             res.reasonPhrase != null &&
             res.reasonPhrase!.isNotEmpty)
         ? res.reasonPhrase!
-        : t('errorWithHttpStatusCode', args: [res.statusCode.toString()]),
+        : tr('errorWithHttpStatusCode', args: [res.statusCode.toString()]),
   );
 }
 
@@ -1271,21 +1155,21 @@ String? regExValidator(String? value) {
   try {
     RegExp(value);
   } catch (e) {
-    return t('invalidRegEx');
+    return tr('invalidRegEx');
   }
   return null;
 }
 
 String? intValidator(String? value, {bool positive = false}) {
   if (value == null) {
-    return t('invalidInput');
+    return tr('invalidInput');
   }
   var num = int.tryParse(value);
   if (num == null) {
-    return t('invalidInput');
+    return tr('invalidInput');
   }
   if (positive && num <= 0) {
-    return t('invalidInput');
+    return tr('invalidInput');
   }
   return null;
 }
@@ -1364,7 +1248,7 @@ List<MapEntry<String, String>> filterApks(
   return apkUrls;
 }
 
-bool isEnglish() => t('and') == 'and'; // Quick hack, find a better way
+bool isEnglish() => tr('and') == 'and'; // Quick hack, find a better way
 String lowerCaseIfEnglish(String str) => isEnglish() ? str.toLowerCase() : str;
 
 bool isVersionPseudo(App app) =>
@@ -1373,23 +1257,17 @@ bool isVersionPseudo(App app) =>
         app.additionalSettings['versionDetection'] != true);
 
 class SourceProvider {
-  // Cache for compiled regex patterns to avoid recreating them on every call
-  final Map<String, RegExp> _regexCache = {};
-
   // Add more source classes here so they are available via the service
   List<AppSource> get sources => [
     GitHub(),
     GitLab(),
-    Bitbucket(),
     Codeberg(),
-    Gitea(),
     FDroid(),
     FDroidRepo(),
     IzzyOnDroid(),
     SourceHut(),
     APKCombo(),
     APKPure(),
-    OpenAPK(),
     Aptoide(),
     Uptodown(),
     HuaweiAppGallery(),
@@ -1402,8 +1280,6 @@ class SourceProvider {
     WhatsAppApp(),
     NeutronCode(),
     DirectAPKLink(),
-    Signal(),
-    VLC(),
     HTML(), // This should ALWAYS be the last option as they are tried in order
   ];
 
@@ -1476,51 +1352,6 @@ class SourceProvider {
       }
     }
     return false;
-  }
-
-  /// Helper method for common URL standardization pattern
-  /// Matches URL against a regex pattern and returns the matched portion
-  /// Throws InvalidURLError if no match is found
-  /// If transform is provided, applies transformation to the matched URL
-  String standardizeUrlWithRegex(
-    String url,
-    String pattern, {
-    String? sourceName,
-    String Function(String, RegExpMatch)? transform,
-  }) {
-    // Use cached regex if available, otherwise compile and cache it
-    RegExp standardUrlRegEx = _regexCache.putIfAbsent(
-      pattern,
-      () => RegExp(pattern, caseSensitive: false),
-    );
-    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
-    if (match == null) {
-      if (sourceName != null) {
-        throw InvalidURLError(sourceName);
-      }
-      throw UnsupportedURLError();
-    }
-    String result = match.group(0)!;
-    if (transform != null) {
-      result = transform(result, match);
-    }
-    return result;
-  }
-
-  /// Helper method to extract app names from a standard URL
-  /// Assumes format: https://host/author/name or similar
-  /// If nameIndex is null, joins all parts from authorIndex+1 onwards
-  AppNames getAppNamesFromUrl(
-    String standardUrl, {
-    int authorIndex = 0,
-    int? nameIndex,
-  }) {
-    String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
-    List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
-    String name = nameIndex != null
-        ? names[nameIndex]
-        : names.sublist(authorIndex + 1).join('/');
-    return AppNames(names[authorIndex], name);
   }
 
   String generateTempID(
@@ -1644,7 +1475,7 @@ class SourceProvider {
     for (var url in urls) {
       try {
         if (alreadyAddedUrls.contains(url)) {
-          throw UpdatiumError(t('appAlreadyAdded'));
+          throw UpdatiumError(tr('appAlreadyAdded'));
         }
         var source = sourceOverride ?? getSource(url);
         apps.add(
@@ -1683,37 +1514,37 @@ class RateLimitError extends UpdatiumError {
 
 class InvalidURLError extends UpdatiumError {
   InvalidURLError(String sourceName)
-    : super(t('invalidURLForSource', args: [sourceName]));
+    : super(tr('invalidURLForSource', args: [sourceName]));
 }
 
 class CredsNeededError extends UpdatiumError {
   CredsNeededError(String sourceName)
-    : super(t('requiresCredentialsInSettings', args: [sourceName]));
+    : super(tr('requiresCredentialsInSettings', args: [sourceName]));
 }
 
 class NoReleasesError extends UpdatiumError {
   NoReleasesError({String? note})
     : super(
-        '${t('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
+        '${tr('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
       );
 }
 
 class NoAPKError extends UpdatiumError {
-  NoAPKError() : super(t('noAPKFound'));
+  NoAPKError() : super(tr('noAPKFound'));
 }
 
 class NoVersionError extends UpdatiumError {
-  NoVersionError() : super(t('noVersionFound'));
+  NoVersionError() : super(tr('noVersionFound'));
 }
 
 class UnsupportedURLError extends UpdatiumError {
-  UnsupportedURLError() : super(t('urlMatchesNoSource'));
+  UnsupportedURLError() : super(tr('urlMatchesNoSource'));
 }
 
 class DowngradeError extends UpdatiumError {
   DowngradeError(int currentVersionCode, int newVersionCode)
     : super(
-        '${t('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
+        '${tr('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
       );
 }
 
@@ -1723,11 +1554,11 @@ class InstallError extends UpdatiumError {
 }
 
 class IDChangedError extends UpdatiumError {
-  IDChangedError(String newId) : super('${t('appIdMismatch')} - $newId');
+  IDChangedError(String newId) : super('${tr('appIdMismatch')} - $newId');
 }
 
 class NotImplementedError extends UpdatiumError {
-  NotImplementedError() : super(t('functionNotImplemented'));
+  NotImplementedError() : super(tr('functionNotImplemented'));
 }
 
 class MultiAppMultiError extends UpdatiumError {
@@ -1735,7 +1566,7 @@ class MultiAppMultiError extends UpdatiumError {
   Map<String, List<String>> idsByErrorString = {};
   Map<String, String> appIdNames = {};
 
-  MultiAppMultiError() : super(t('placeholder'), unexpected: true);
+  MultiAppMultiError() : super(tr('placeholder'), unexpected: true);
 
   void add(String appId, dynamic error, {String? appName}) {
     if (error is SocketException) {
@@ -1771,7 +1602,7 @@ class MultiAppMultiError extends UpdatiumError {
 String list2FriendlyString(List<String> list) {
   var isUsingEnglish = isEnglish();
   return list.length == 2
-      ? '${list[0]} ${t('and')} ${list[1]}'
+      ? '${list[0]} ${tr('and')} ${list[1]}'
       : list
             .asMap()
             .entries
@@ -1785,123 +1616,4 @@ String list2FriendlyString(List<String> list) {
                       : ', '),
             )
             .join('');
-}
-
-/// Reusable widget for selecting a source override
-class SourceOverrideDropdown extends StatefulWidget {
-  final String? selectedOverride;
-  final AppSource? pickedSource;
-  final Function(String?) onSelectionChanged;
-  final TextEditingController controller;
-
-  const SourceOverrideDropdown({
-    super.key,
-    required this.selectedOverride,
-    required this.pickedSource,
-    required this.onSelectionChanged,
-    required this.controller,
-  });
-
-  @override
-  State<SourceOverrideDropdown> createState() => _SourceOverrideDropdownState();
-}
-
-class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
-  late SourceProvider sourceProvider;
-
-  @override
-  void initState() {
-    super.initState();
-    sourceProvider = SourceProvider();
-    _updateController();
-  }
-
-  @override
-  void didUpdateWidget(SourceOverrideDropdown oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.selectedOverride != widget.selectedOverride) {
-      _updateController();
-    }
-  }
-
-  void _updateController() {
-    if (widget.selectedOverride == null || widget.selectedOverride == '') {
-      widget.controller.text = t('none');
-      return;
-    }
-    if (sourceProvider.sources.isEmpty) {
-      widget.controller.text = t('none');
-      return;
-    }
-    AppSource? selectedSource;
-    try {
-      selectedSource = sourceProvider.sources.firstWhere(
-        (s) => s.runtimeType.toString() == widget.selectedOverride,
-      );
-    } catch (e) {
-      selectedSource = null;
-    }
-    if (selectedSource != null) {
-      widget.controller.text = selectedSource.name;
-    } else {
-      widget.controller.text = t('none');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: MenuAnchor(
-                builder: (context, controller, child) {
-                  return TextField(
-                    controller: widget.controller,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      labelText: t('overrideSource'),
-                      suffixIcon: const Icon(Icons.arrow_drop_down),
-                    ),
-                    onTap: () {
-                      if (controller.isOpen) {
-                        controller.close();
-                      } else {
-                        controller.open();
-                      }
-                    },
-                  );
-                },
-                menuChildren: [
-                  MenuItemButton(
-                    onPressed: () {
-                      widget.onSelectionChanged(null);
-                    },
-                    child: Text(t('none')),
-                  ),
-                  ...sourceProvider.sources
-                      .where(
-                        (s) =>
-                            s.allowOverride ||
-                            (widget.pickedSource != null &&
-                                widget.pickedSource.runtimeType ==
-                                    s.runtimeType),
-                      )
-                      .map(
-                        (s) => MenuItemButton(
-                          onPressed: () {
-                            widget.onSelectionChanged(s.runtimeType.toString());
-                          },
-                          child: Text(s.name),
-                        ),
-                      ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
 }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:updatium/services/slang-converter.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
@@ -11,15 +11,15 @@ import 'package:updatium/providers/source_provider.dart';
 class FDroid extends AppSource {
   FDroid() {
     hosts = ['f-droid.org'];
-    name = t('fdroid');
+    name = tr('fdroid');
     naiveStandardVersionDetection = true;
     canSearch = true;
-    openSource = true;
+    trusted = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(
           'filterVersionsByRegEx',
-          label: 'filterVersionsByRegEx'.t(),
+          label: tr('filterVersionsByRegEx'),
           required: false,
           additionalValidators: [
             (value) {
@@ -31,7 +31,7 @@ class FDroid extends AppSource {
       [
         GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
-          label: 'autoSelectHighestVersionCode'.t(),
+          label: tr('autoSelectHighestVersionCode'),
         ),
       ],
     ];
@@ -39,18 +39,24 @@ class FDroid extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    return SourceProvider().standardizeUrlWithRegex(
-      url,
-      '^https?://(www\\.)?${getSourceRegex(hosts)}(/+[^/]+)?/+packages/+[^/]+',
-      sourceName: name,
-      transform: (matched, match) {
-        var uri = Uri.parse(matched);
-        if (uri.pathSegments.length > 2 && uri.pathSegments[0] != 'packages') {
-          return 'https://${uri.host}/packages/${uri.pathSegments.last}';
-        }
-        return matched;
-      },
+    RegExp standardUrlRegExB = RegExp(
+      '^https?://(www\\.)?${getSourceRegex(hosts)}/+[^/]+/+packages/+[^/]+',
+      caseSensitive: false,
     );
+    RegExpMatch? match = standardUrlRegExB.firstMatch(url);
+    if (match != null) {
+      url =
+          'https://${Uri.parse(match.group(0)!).host}/packages/${Uri.parse(url).pathSegments.where((s) => s.trim().isNotEmpty).last}';
+    }
+    RegExp standardUrlRegExA = RegExp(
+      '^https?://(www\\.)?${getSourceRegex(hosts)}/+packages/+[^/]+',
+      caseSensitive: false,
+    );
+    match = standardUrlRegExA.firstMatch(url);
+    if (match == null) {
+      throw InvalidURLError(name);
+    }
+    return match.group(0)!;
   }
 
   @override
@@ -155,7 +161,7 @@ class FDroid extends AppSource {
           urlsWithDescriptions[url] = [
             e.querySelector('.package-name')?.text.trim() ?? '',
             e.querySelector('.package-summary')?.text.trim() ??
-                'noDescription'.t(),
+                tr('noDescription'),
           ];
         }
       });
@@ -259,12 +265,10 @@ class FDroid extends AppSource {
     List<String> apkUrls = releaseChoices
         .map((e) => '${apkUrlPrefix}_${e['versionCode']}.apk')
         .toList();
-    // Extract author from API response or fall back to source name
-    String author = response['authorName'] ?? sourceName;
     return APKDetails(
       version,
       getApkUrlsFromUrls(apkUrls.toSet().toList()),
-      AppNames(author, Uri.parse(standardUrl).pathSegments.last),
+      AppNames(sourceName, Uri.parse(standardUrl).pathSegments.last),
     );
   }
 }

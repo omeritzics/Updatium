@@ -8,21 +8,21 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GitLab extends AppSource {
   GitLab({bool hostChanged = false}) {
-    name = t('gitlab');
+    name = tr('gitlab');
     hosts = ['gitlab.com'];
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
-    openSource = true;
+    trusted = true;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        'gitlabPATLabel'.t(),
-        label: 'gitlabPATLabel'.t(),
+        tr('gitlabPATLabel'),
+        label: tr('gitlabPATLabel'),
         password: true,
         required: false,
         belowWidgets: [
@@ -35,7 +35,7 @@ class GitLab extends AppSource {
               );
             },
             child: Text(
-              'about'.t(),
+              tr('about'),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -52,14 +52,18 @@ class GitLab extends AppSource {
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     var urlSegments = url.split('/');
     var cutOffIndex = urlSegments.indexWhere((s) => s == '-');
-    var processedUrl = urlSegments
+    url = urlSegments
         .sublist(0, cutOffIndex <= 0 ? null : cutOffIndex)
         .join('/');
-    return SourceProvider().standardizeUrlWithRegex(
-      processedUrl,
-      '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+(/[^((\\b/\\b)|(\\b/-/\\b))]+){1,20}',
-      sourceName: name,
+    RegExp standardUrlRegEx = RegExp(
+      '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+(/[^((\b/\b)|(\b/-/\b))]+){1,20}',
+      caseSensitive: false,
     );
+    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
+    if (match == null) {
+      throw InvalidURLError(name);
+    }
+    return match.group(0)!;
   }
 
   Future<String?> getPATIfAny(Map<String, dynamic> additionalSettings) async {
@@ -88,7 +92,7 @@ class GitLab extends AppSource {
     for (var element in json) {
       results['https://${hosts[0]}/${element['path_with_namespace']}'] = [
         element['name_with_namespace'],
-        element['description'] ?? 'noDescription'.t(),
+        element['description'] ?? tr('noDescription'),
       ];
     }
     return results;
