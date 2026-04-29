@@ -453,72 +453,82 @@ class AddAppPageState extends State<AddAppPage> {
           settingsProvider.searchDeselected = sourceStrings.keys
               .where((s) => !searchSources.contains(s))
               .toList();
-          List<MapEntry<String, Map<String, List<String>>>>
-          results = (await Future.wait<MapEntry<String, Map<String, List<String>>>?>(
-            sourceProvider.sources
-                .where((e) => searchSources.contains(e.name))
-                .map((e) async {
-                  try {
-                    Map<String, dynamic>? querySettings = {};
-                    if (e.includeAdditionalOptsInMainSearch) {
-                      querySettings = await showDialog<Map<String, dynamic>?>(
-                        context: context,
-                        builder: (BuildContext ctx) {
-                          Map<String, dynamic> localValues = {};
-                          return AlertDialog(
-                            scrollable: true,
-                            contentPadding: const EdgeInsets.fromLTRB(
-                              24,
-                              16,
-                              24,
-                              16,
-                            ),
-                            title: Text(tr('searchX', args: [e.name])),
-                            content: SizedBox(
-                              width: double.maxFinite,
-                              child: GeneratedForm(
-                                items: [
-                                  ...e.searchQuerySettingFormItems.map(
-                                    (e) => [e],
-                                  ),
-                                  [
-                                    GeneratedFormTextField(
-                                      'url',
-                                      label: e.hosts.isNotEmpty
-                                          ? tr('overrideSource')
-                                          : plural('url', 1).substring(2),
-                                      autoCompleteOptions: [
-                                        ...(e.hosts.isNotEmpty
-                                            ? [e.hosts[0]]
-                                            : []),
-                                        ...appsProvider.apps.values
-                                            .where(
-                                              (a) =>
-                                                  sourceProvider
-                                                      .getSource(
-                                                        a.app.url,
-                                                        overrideSource: a
-                                                            .app
-                                                            .overrideSource,
-                                                      )
-                                                      .runtimeType ==
-                                                  e.runtimeType,
-                                            )
-                                            .map((a) {
-                                              var uri = Uri.parse(a.app.url);
-                                              return '${uri.origin}${uri.path}';
-                                            }),
-                                      ],
-                                      defaultValue: e.hosts.isNotEmpty
-                                          ? e.hosts[0]
-                                          : '',
-                                      required: true,
-                                    ),
-                                  ],
-                                ],
-                                onValueChanges: (vals, valid, isBuilding) {
-                                  localValues = vals;
-                                },
+          List<MapEntry<String, Map<String, List<String>>>> results =
+              (await Future.wait<MapEntry<String, Map<String, List<String>>>?>(
+                    sourceProvider.sources
+                        .where((e) => searchSources.contains(e.name))
+                        .map((e) async {
+                          try {
+                            Map<String, dynamic>? querySettings = {};
+                            if (e.includeAdditionalOptsInMainSearch) {
+                              querySettings =
+                                  await showDialog<Map<String, dynamic>?>(
+                                    context: context,
+                                    builder: (BuildContext ctx) {
+                                      Map<String, dynamic> localValues = {};
+                                      return AlertDialog(
+                                        scrollable: true,
+                                        contentPadding:
+                                            const EdgeInsets.fromLTRB(
+                                              24,
+                                              16,
+                                              24,
+                                              16,
+                                            ),
+                                        title: Text(
+                                          tr('searchX', args: [e.name]),
+                                        ),
+                                        content: SizedBox(
+                                          width: double.maxFinite,
+                                          child: GeneratedForm(
+                                            items: [
+                                              ...e.searchQuerySettingFormItems
+                                                  .map((e) => [e]),
+                                              [
+                                                GeneratedFormTextField(
+                                                  'url',
+                                                  label: e.hosts.isNotEmpty
+                                                      ? tr('overrideSource')
+                                                      : plural(
+                                                          'url',
+                                                          1,
+                                                        ).substring(2),
+                                                  defaultValue:
+                                                      e.hosts.isNotEmpty
+                                                      ? e.hosts[0]
+                                                      : '',
+                                                  required: true,
+                                                ),
+                                              ],
+                                            ],
+                                            onValueChanges:
+                                                (vals, valid, isBuilding) {
+                                                  localValues = vals;
+                                                },
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(ctx).pop(null),
+                                            child: Text(tr('cancel')),
+                                          ),
+                                          TextButton(
+                                            onPressed: () => Navigator.of(
+                                              ctx,
+                                            ).pop(localValues),
+                                            child: Text(tr('ok')),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                            }
+                            return MapEntry(
+                              e.runtimeType.toString(),
+                              await e.search(
+                                searchQuery,
+                                querySettings: querySettings ?? {},
                               ),
                             ),
                             actions: [
@@ -850,13 +860,35 @@ class AddAppPageState extends State<AddAppPage> {
                                     );
                                   }
                                 : null,
-                            child: Text(
-                              '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
-                              style: TextStyle(
-                                decoration: e.hosts.isNotEmpty
-                                    ? TextDecoration.underline
-                                    : TextDecoration.none,
-                              ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
+                                  style: TextStyle(
+                                    decoration: e.hosts.isNotEmpty
+                                        ? TextDecoration.underline
+                                        : TextDecoration.none,
+                                  ),
+                                ),
+                                if (e.trusted) ...[
+                                  const SizedBox(width: 4),
+                                  Icon(
+                                    Icons.verified,
+                                    size: 14,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                  const SizedBox(width: 2),
+                                  Text(
+                                    tr('trusted'),
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Theme.of(context).colorScheme.primary,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ],
                             ),
                           ),
                         ),
@@ -868,6 +900,23 @@ class AddAppPageState extends State<AddAppPage> {
                       ),
                       const SizedBox(height: 4),
                       Text(tr('selfHostedNote', args: [tr('overrideSource')])),
+                      gap8,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.verified,
+                            size: 14,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              tr('trustedSourceNote'),
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   actions: [
@@ -887,65 +936,187 @@ class AddAppPageState extends State<AddAppPage> {
             padding: EdgeInsets.zero,
           ),
         ),
+        horizontalGap8,
+        TextButton.icon(
+          onPressed: () async {
+            final installedApps = await getAllInstalledInfo();
+            if (!context.mounted) return;
+
+            showDialog(
+              context: context,
+              builder: (BuildContext ctx) {
+                return AlertDialog(
+                  contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+                  title: Text(t('installedApps')),
+                  content: SizedBox(
+                    width: double.maxFinite,
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: installedApps.length,
+                      itemBuilder: (context, index) {
+                        final app = installedApps[index];
+                        return FutureBuilder<String>(
+                          future:
+                              app.applicationInfo?.getAppLabel().then(
+                                (label) =>
+                                    label ?? app.packageName ?? 'Unknown',
+                              ) ??
+                              Future.value(app.packageName ?? 'Unknown'),
+                          builder: (context, snapshot) {
+                            final appName = snapshot.data ?? 'Unknown';
+                            return ListTile(
+                              dense: true,
+                              title: Text(appName),
+                              subtitle: Text(app.packageName ?? ''),
+                              onTap: () {
+                                Navigator.of(ctx).pop();
+                                // Pre-fill the URL input with the package name
+                                changeUserInput(
+                                  app.packageName ?? '',
+                                  true,
+                                  false,
+                                  updateUrlInput: true,
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(),
+                      child: Text(t('ok')),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          icon: const Icon(Icons.apps, size: 18),
+          label: Text(t('installedApps')),
+          style: TextButton.styleFrom(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.zero,
+          ),
+        ),
       ],
     );
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: CustomScrollView(
-        shrinkWrap: true,
-        slivers: <Widget>[
-          SliverAppBar.large(pinned: true, title: Text(tr('addApp'))),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  getUrlInputRow(),
-                  gap16,
-                  if (pickedSource != null) getHTMLSourceOverrideDropdown(),
-                  if (shouldShowSearchBar()) getSearchBarRow(),
-                  if (pickedSource == null) getSourcesListWidget(),
-                  if (pickedSource != null)
-                    FutureBuilder(
-                      builder: (ctx, val) {
-                        return val.data != null && val.data!.isNotEmpty
-                            ? Text(
-                                val.data!,
-                                style: Theme.of(context).textTheme.bodySmall,
-                              )
-                            : const SizedBox();
-                      },
-                      future: pickedSource?.getSourceNote(),
-                    ),
-                  if (pickedSource != null) getAdditionalOptsCol(),
-                  if (pickedSource != null)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        gap24,
-                        Text(
-                          tr('advanced'),
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
+    return Dialog.fullscreen(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        body: CustomScrollView(
+          shrinkWrap: true,
+          slivers: <Widget>[
+            SliverAppBar.large(
+              pinned: true,
+              title: Text(tr('addApp')),
+              leading: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              bottom: (pickedSource != null || cameFromSearch)
+                  ? PreferredSize(
+                      preferredSize: const Size.fromHeight(4),
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween(
+                          begin: 0,
+                          end: cameFromSearch ? 2 / 3 : 1 / 2,
                         ),
-                        gap16,
-                        GeneratedForm(
-                          key: const Key('advancedSettings'),
-                          items: [
-                            [
-                              GeneratedFormTextField(
-                                'apkFilterRegEx',
-                                label: tr('filterAPKsByRegEx'),
-                                required: false,
-                                additionalValidators: [
-                                  (value) => _regExValidator(value),
-                                ],
-                              ),
+                        duration: const Duration(milliseconds: 500),
+                        builder: (context, value, child) {
+                          return LinearProgressIndicator(value: value);
+                        },
+                      ),
+                    )
+                  : null,
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    getUrlInputRow(),
+                    gap16,
+                    if (pickedSource != null) getHTMLSourceOverrideDropdown(),
+                    if (shouldShowSearchBar()) getSearchBarRow(),
+                    if (pickedSource == null) getSourcesListWidget(),
+                    if (pickedSource != null)
+                      FutureBuilder(
+                        builder: (ctx, val) {
+                          return val.data != null && val.data!.isNotEmpty
+                              ? Text(
+                                  val.data!,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                )
+                              : const SizedBox();
+                        },
+                        future: pickedSource?.getSourceNote(),
+                      ),
+                    if (pickedSource != null) getAdditionalOptsCol(),
+                    if (pickedSource != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          gap24,
+                          Text(
+                            tr('advanced'),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          gap16,
+                          GeneratedForm(
+                            key: const Key('advancedSettings'),
+                            items: [
+                              [
+                                GeneratedFormTextField(
+                                  'apkFilterRegEx',
+                                  label: tr('filterAPKsByRegEx'),
+                                  required: false,
+                                  additionalValidators: [
+                                    (value) => _regExValidator(value),
+                                  ],
+                                ),
+                              ],
+                              [
+                                GeneratedFormSwitch(
+                                  'invertAPKFilter',
+                                  label:
+                                      '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+                                  defaultValue: false,
+                                ),
+                              ],
+                              [
+                                GeneratedFormTextField(
+                                  'zippedApkFilterRegEx',
+                                  label: tr('zippedApkFilterRegEx'),
+                                  required: false,
+                                  additionalValidators: [
+                                    (value) => _regExValidator(value),
+                                  ],
+                                ),
+                              ],
+                              [
+                                GeneratedFormSwitch(
+                                  'shizukuPretendToBeGooglePlay',
+                                  label: tr('shizukuPretendToBeGooglePlay'),
+                                  defaultValue: false,
+                                ),
+                              ],
+                              [
+                                GeneratedFormSwitch(
+                                  'allowInsecure',
+                                  label: tr('allowInsecure'),
+                                  defaultValue: false,
+                                ),
+                              ],
                             ],
                             [
                               GeneratedFormSwitch(
@@ -993,34 +1164,34 @@ class AddAppPageState extends State<AddAppPage> {
                 ],
               ),
             ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  const ImportExportPage(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                    return SharedAxisTransition(
-                      animation: animation,
-                      secondaryAnimation: secondaryAnimation,
-                      transitionType: SharedAxisTransitionType.vertical,
-                      child: child,
-                    );
-                  },
-            ),
-          );
-        },
-        icon: const Icon(Icons.import_export),
-        label: Text(tr('importExport')),
-        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
-        elevation: 3,
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+          ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const ImportExportPage(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                      return SharedAxisTransition(
+                        animation: animation,
+                        secondaryAnimation: secondaryAnimation,
+                        transitionType: SharedAxisTransitionType.vertical,
+                        child: child,
+                      );
+                    },
+              ),
+            );
+          },
+          icon: const Icon(Icons.import_export),
+          label: Text(tr('importExport')),
+          extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
+          elevation: 3,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        ),
       ),
     );
   }

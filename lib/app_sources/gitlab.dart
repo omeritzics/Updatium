@@ -18,7 +18,7 @@ class GitLab extends AppSource {
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
-    openSource = true;
+    trusted = true;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
         tr('gitlabPATLabel'),
@@ -52,14 +52,18 @@ class GitLab extends AppSource {
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     var urlSegments = url.split('/');
     var cutOffIndex = urlSegments.indexWhere((s) => s == '-');
-    var processedUrl = urlSegments
+    url = urlSegments
         .sublist(0, cutOffIndex <= 0 ? null : cutOffIndex)
         .join('/');
-    return SourceProvider().standardizeUrlWithRegex(
-      processedUrl,
-      '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+(/[^((\\b/\\b)|(\\b/-/\\b))]+){1,20}',
-      sourceName: name,
+    RegExp standardUrlRegEx = RegExp(
+      '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+(/[^((\b/\b)|(\b/-/\b))]+){1,20}',
+      caseSensitive: false,
     );
+    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
+    if (match == null) {
+      throw InvalidURLError(name);
+    }
+    return match.group(0)!;
   }
 
   Future<String?> getPATIfAny(Map<String, dynamic> additionalSettings) async {
