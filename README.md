@@ -30,6 +30,7 @@ Based on Material Design 3 Expressive guidelines.
 
 - Better accessability for screen readers.
 - Grid View.
+- Safe Mode (allows you to block unwanted changes to the application catalogue).
 
 ### Localization
 
@@ -58,7 +59,7 @@ Do not download Updatium from unofficial sources (such as Appteka), since these 
 
 | ![Apps Page](./assets/screenshots/1.apps.png) | ![Dark Theme](./assets/screenshots/2.dark_theme.png) | ![Material You](./assets/screenshots/3.material_you.png) |
 | ------------------------------------------------------ | ----------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| ![App Page](./assets/screenshots/4.app.png) | | |
+| ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/graphics/screenshots/5.app_opts.png) | ![Grid View](./assets/graphics/screenshots/6.grid_view.png) |
 
 ## Limitations
 
