@@ -194,6 +194,7 @@
     "checkingForUpdatesNotifDescription": "Notificare tranzitorie care apare la verificarea actualizărilor",
     "pleaseAllowInstallPerm": "Vă rugăm să permiteți Updatium să instaleze aplicații",
     "trackOnly": "Doar pentru urmărire",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "Eroare {}",
     "versionCorrectionDisabled": "Corecția versiunii dezactivată (plugin-ul nu pare să funcționeze)",
     "unknown": "Necunoscut",
@@ -373,6 +374,7 @@
     "invertRegEx": "Inversează expresia regulată",
     "note": "Notă",
     "selfHostedNote": "Meniul dropdown \"{}\" poate fi folosit pentru a ajunge la instanțe auto-găzduite/personalizate ale oricărei surse.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "APK-ul nu a putut fi parsat (incompatibil sau descărcare parțială)",
     "beforeNewInstallsShareToAppVerifier": "Distribuiți aplicațiile noi către AppVerifier (dacă este disponibil)",
     "appVerifierInstructionToast": "Distribuiți către AppVerifier, apoi reveniți aici când sunteți gata.",
@@ -513,5 +515,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

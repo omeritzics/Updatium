@@ -691,6 +691,7 @@ abstract class AppSource {
   List<String> excludeCommonSettingKeys = [];
   bool urlsAlwaysHaveExtension = false;
   bool allowIncludeZips = false;
+  bool trusted = false;
 
   AppSource() {
     name = runtimeType.toString();

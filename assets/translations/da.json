@@ -194,6 +194,7 @@
     "checkingForUpdatesNotifDescription": "Kortvarig meddelelse ved tjek for opdateringer",
     "pleaseAllowInstallPerm": "Tillad venligst Updatium at installere apps",
     "trackOnly": "Følg Kun",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "Fejl {}",
     "versionCorrectionDisabled": "Versionskorrektion deaktiveret (plugin ser ikke ud til at virke)",
     "unknown": "Ukendt",
@@ -373,6 +374,7 @@
     "invertRegEx": "Inverter regulært udtryk",
     "note": "Bemærk",
     "selfHostedNote": "Rullemenuen \"{}\" kan bruges til at nå selvhostede/brugerdefinerede instanser af enhver kilde.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "APK'en kunne ikke analyseres (inkompatibel eller delvis hentning)",
     "beforeNewInstallsShareToAppVerifier": "Del nye apps med AppVerifier (hvis tilgængelig)",
     "appVerifierInstructionToast": "Del til AppVerifier, og vend tilbage, når du er klar.",
@@ -513,5 +515,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

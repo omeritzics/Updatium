@@ -76,7 +76,7 @@
     "removeSelectedApps": "أزل التطبيقات المحددة",
     "appRemoved": {
         "one": "Removed one app",
-        "two": "Removed {} apps"
+        "two": "Removed {} apps",
         "other": "Removed {} apps"
     },
     "updateX": "حدِّث {}",
@@ -195,6 +195,7 @@
     "checkingForUpdatesNotifDescription": "إشعار مؤقت يظهر عند التحقق من التحديثات",
     "pleaseAllowInstallPerm": "يرجى السماح لـ Updatium بتثبيت التطبيقات",
     "trackOnly": "للتعقب فقط",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "خطأ {}",
     "versionCorrectionDisabled": "تعطيل تصحيح الإصدار (يبدو أن الملحق لا يعمل)",
     "unknown": "غير معروف",
@@ -374,6 +375,7 @@
     "invertRegEx": "اعكس التعبير النمطي",
     "note": "ملاحظة",
     "selfHostedNote": "يمكن استخدام القائمة المنسدلة \"{}\" للوصول إلى نسخ مخصصة/مستضافة ذاتيًا لأي مصدر.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "تعذر تحليل ملف APK (تنزيل غير متوافق أو غير مكتمل)",
     "beforeNewInstallsShareToAppVerifier": "مشاركة التطبيقات الجديدة مع AppVerifier (إذا كان متاحًا)",
     "appVerifierInstructionToast": "شارك مع AppVerifier، ثم عد هنا عندما تكون جاهزًا.",
@@ -530,5 +532,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }
