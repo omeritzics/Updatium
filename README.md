@@ -30,6 +30,7 @@ Based on Material Design 3 Expressive guidelines.
 
 - Better accessability for screen readers.
 - Grid View.
+- Safe Mode (allows you to block unwanted changes to the application catalogue).
 
 ### Localization
 
