@@ -11,6 +11,7 @@ class SourceHut extends AppSource {
     name = tr('sourcehut');
     showReleaseDateAsVersionToggle = true;
     additionalSourceAppSpecificSettingFormItems = [];
+    trusted = true;
   }
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {

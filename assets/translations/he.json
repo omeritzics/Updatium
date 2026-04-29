@@ -195,6 +195,7 @@
     "checkingForUpdatesNotifDescription": "Transient notification that appears when checking for updates",
     "pleaseAllowInstallPerm": "נא לאפשר ל־Updatium להתקין יישומים",
     "trackOnly": "למעקב עדכונים בלבד",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "שגיאה {}",
     "versionCorrectionDisabled": " תיקון הגרסה מושבת (נראה שהתוסף לא עובד)",
     "unknown": "לא ידוע",
@@ -377,6 +378,7 @@
     "invertRegEx": "היפוך ביטוי רגולרי",
     "note": "הערה",
     "selfHostedNote": "הרשימה הנפתחת \"{}\" מאפשרת למשוך קבצים מעותקים מותאמים אישית/באירוח עצמי של כל מקור שהוא.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "לא היה ניתן לפענח את קובץ ה־APK (בשל חוסר תאימות או הורדה חלקית)",
     "beforeNewInstallsShareToAppVerifier": "שיתוף יישומים חדשים עם AppVerifier (אם זמין)",
     "appVerifierInstructionToast": "שיתוף עם AppVerifier, ואז חזרה לכאן כשהיישום מוכן.",
@@ -532,5 +534,6 @@
     "fileExistsPrompt": "כבר קיים קובץ בשם זה. נא להקליד שם חדש לקובץ שיוּרד:",
     "fileName": "שם הקובץ",
     "downloadCancelled": "ההורדה בוטלה",
-    "showInFileManager": "הצגה במנהל הקבצים"
+    "showInFileManager": "הצגה במנהל הקבצים",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

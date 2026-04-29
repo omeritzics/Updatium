@@ -194,6 +194,7 @@
     "checkingForUpdatesNotifDescription": "Thông báo tạm thời xuất hiện khi kiểm tra bản cập nhật",
     "pleaseAllowInstallPerm": "Vui lòng cho phép Updatium cài đặt Ứng dụng",
     "trackOnly": "Chỉ theo dõi",
+    "trusted": "Trusted",
     "errorWithHttpStatusCode": "Lỗi {}",
     "versionCorrectionDisabled": "Tính năng sửa phiên bản bị vô hiệu hóa (plugin dường như không hoạt động)",
     "unknown": "Không xác định",
@@ -373,6 +374,7 @@
     "invertRegEx": "Đảo ngược biểu thức chính quy",
     "note": "Ghi chú",
     "selfHostedNote": "Trình đơn thả xuống \"{}\" có thể được dùng để tiếp cận các phiên bản tự lưu trữ/tùy chỉnh của bất kỳ nguồn nào.",
+    "trustedSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
     "badDownload": "Không thể phân tích cú pháp APK (tải xuống một phần hoặc không tương thích)",
     "beforeNewInstallsShareToAppVerifier": "Chia sẻ ứng dụng mới với AppVerifier (nếu có)",
     "appVerifierInstructionToast": "Chia sẻ lên AppVerifier, sau đó quay lại đây khi sẵn sàng.",
@@ -513,5 +515,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }
