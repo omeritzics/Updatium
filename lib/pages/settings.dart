@@ -806,6 +806,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ],
                               ),
                             gap16,
+                            if (settingsProvider.safeMode &&
+                                settingsProvider.preventUninstallation)
+                            gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1358,7 +1361,7 @@ class _LogsDialogState extends State<LogsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var logsProvider = context.read<LogsProvider>();
+    var logsProvider = context.watch<LogsProvider>();
     void filterLogs(int days) {
       logsProvider
           .get(after: DateTime.now().subtract(Duration(days: days)))
@@ -2046,6 +2049,21 @@ class _AboutDialogState extends State<AboutDialog> {
                           },
                           icon: const Icon(Icons.bug_report_outlined, size: 18),
                           label: Text(tr('appLogs')),
+                          style: TextButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        TextButton.icon(
+                          onPressed: () {
+                            showLicensePage(
+                              context: context,
+                              applicationName: 'Updatium',
+                            );
+                          },
+                          icon: const Icon(Icons.code_rounded, size: 18),
+                          label: Text(tr('usedOpenSourcePackages')),
                           style: TextButton.styleFrom(
                             alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.symmetric(vertical: 8),
