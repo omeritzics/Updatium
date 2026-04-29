@@ -866,14 +866,18 @@ class AddAppPageState extends State<AddAppPage> {
                                   Icon(
                                     Icons.verified,
                                     size: 14,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                   ),
                                   const SizedBox(width: 2),
                                   Text(
                                     tr('trusted'),
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
