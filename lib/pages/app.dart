@@ -509,6 +509,9 @@ class _AppPageState extends State<AppPage> {
         child: Stack(
           children: [
           RefreshIndicator(
+            onRefresh: () async {
+              await getUpdate(app.app.id);
+            },
             child: CustomScrollView(
               slivers: [
                 SliverAppBar.large(
@@ -613,45 +616,43 @@ class _AppPageState extends State<AppPage> {
                 ),
                 SliverToBoxAdapter(
                   child: Column(
-                      children: [
-                        getFullInfoColumn(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                              Expanded(child: getInstallOrUpdateButton()),
-                          ),
+                    children: [
+                      getFullInfoColumn(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(child: getInstallOrUpdateButton()),
+                          ],
                         ),
-                        if (app.downloadProgress != null)
-                          Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                              bottom: 32,
-                            ),
-                            child: Semantics(
-                              label: tr('downloadProgress'),
-                              value: '${app.downloadProgress!.toInt()}%',
-                              child: LinearProgressIndicator(
-                                value: app.downloadProgress! >= 0
-                                    ? app.downloadProgress! / 100
-                                    : null,
-                                backgroundColor: Theme.of(
-                                  context,
-                                ).colorScheme.surfaceContainerHighest,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Theme.of(context).colorScheme.primary,
-                                ),
+                      ),
+                      if (app.downloadProgress != null)
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                            bottom: 32,
+                          ),
+                          child: Semantics(
+                            label: tr('downloadProgress'),
+                            value: '${app.downloadProgress!.toInt()}%',
+                            child: LinearProgressIndicator(
+                              value: app.downloadProgress! >= 0
+                                  ? app.downloadProgress! / 100
+                                  : null,
+                              backgroundColor: Theme.of(
+                                context,
+                              ).colorScheme.surfaceContainerHighest,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ),
-                      ],
-                    ),
+                        ),
+                    ],
                   ),
                 ),
               ],
             ),
-            onRefresh: () async {
-              await getUpdate(app.app.id);
-            },
           ),
           Positioned(
             left: 0,
