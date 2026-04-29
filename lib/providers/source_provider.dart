@@ -798,23 +798,9 @@ abstract class AppSource {
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
+    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
+    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
     [GeneratedFormSwitch('trackOnly', label: tr('trackOnly'))],
-    [
-      GeneratedFormTextField(
-        'versionExtractionRegEx',
-        label: tr('trimVersionString'),
-        required: false,
-        additionalValidators: [(value) => regExValidator(value)],
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'matchGroupToUse',
-        label: tr('matchGroupToUseForX', args: [tr('trimVersionString')]),
-        required: false,
-        hint: '\$0',
-      ),
-    ],
     [
       GeneratedFormSwitch(
         'versionDetection',
@@ -830,33 +816,12 @@ abstract class AppSource {
       ),
     ],
     [
-      GeneratedFormTextField(
-        'apkFilterRegEx',
-        label: tr('filterAPKsByRegEx'),
-        required: false,
-        additionalValidators: [
-          (value) {
-            return regExValidator(value);
-          },
-        ],
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'invertAPKFilter',
-        label: '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
-        defaultValue: false,
-      ),
-    ],
-    [
       GeneratedFormSwitch(
         'autoApkFilterByArch',
         label: tr('autoApkFilterByArch'),
         defaultValue: true,
       ),
     ],
-    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
-    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
     [
       GeneratedFormSwitch(
         'shizukuPretendToBeGooglePlay',
@@ -895,30 +860,6 @@ abstract class AppSource {
         'fallbackToOlderReleases',
         label: tr('fallbackToOlderReleases'),
         defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'filterReleaseTitlesByRegEx',
-        label: tr('filterReleaseTitlesByRegEx'),
-        required: false,
-        additionalValidators: [
-          (value) {
-            return regExValidator(value);
-          },
-        ],
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'filterReleaseNotesByRegEx',
-        label: tr('filterReleaseNotesByRegEx'),
-        required: false,
-        additionalValidators: [
-          (value) {
-            return regExValidator(value);
-          },
-        ],
       ),
     ],
     [
@@ -978,6 +919,65 @@ abstract class AppSource {
         'releaseTitleAsVersion',
         label: tr('releaseTitleAsVersion'),
         defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'versionExtractionRegEx',
+        label: tr('trimVersionString'),
+        required: false,
+        additionalValidators: [(value) => regExValidator(value)],
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'matchGroupToUse',
+        label: tr('matchGroupToUseForX', args: [tr('trimVersionString')]),
+        required: false,
+        hint: '\$0',
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'apkFilterRegEx',
+        label: tr('filterAPKsByRegEx'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'invertAPKFilter',
+        label: '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'filterReleaseTitlesByRegEx',
+        label: tr('filterReleaseTitlesByRegEx'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'filterReleaseNotesByRegEx',
+        label: tr('filterReleaseNotesByRegEx'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
       ),
     ],
   ];
