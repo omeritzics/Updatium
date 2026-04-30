@@ -26,7 +26,7 @@ jobs:
           swap-storage: false
 
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
@@ -34,7 +34,7 @@ jobs:
         run: sudo apt-get install default-jre -y
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@main
         with:
           channel: stable
           cache: true
@@ -54,7 +54,7 @@ jobs:
         run: dart format .
 
       - name: Commit and Push changes
-        uses: stefanzweifel/git-auto-commit-action@v7
+        uses: stefanzweifel/git-auto-commit-action@main
         with:
           commit_message: "style: auto-fix linting and formatting issues"
           branch: ${{ github.ref_name }}
@@ -140,7 +140,7 @@ jobs:
           cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/updatium-nightly-arm64-v8a.apk
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@main
         with:
           name: Updatium-Nightly-APK
           path: |
@@ -148,7 +148,7 @@ jobs:
             build/outputs/updatium-nightly-arm64-v8a.apk
 
       - name: Create Release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@main
         with:
           tag_name: nightly
           name: "Updatium Nightly"
