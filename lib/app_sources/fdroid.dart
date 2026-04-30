@@ -14,6 +14,7 @@ class FDroid extends AppSource {
     name = tr('fdroid');
     naiveStandardVersionDetection = true;
     canSearch = true;
+    openSource = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(
@@ -38,24 +39,18 @@ class FDroid extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    RegExp standardUrlRegExB = RegExp(
-      '^https?://(www\\.)?${getSourceRegex(hosts)}/+[^/]+/+packages/+[^/]+',
-      caseSensitive: false,
+    return SourceProvider().standardizeUrlWithRegex(
+      url,
+      '^https?://(www\\.)?${getSourceRegex(hosts)}(/+[^/]+)?/+packages/+[^/]+',
+      sourceName: name,
+      transform: (matched, match) {
+        var uri = Uri.parse(matched);
+        if (uri.pathSegments.length > 2 && uri.pathSegments[0] != 'packages') {
+          return 'https://${uri.host}/packages/${uri.pathSegments.last}';
+        }
+        return matched;
+      },
     );
-    RegExpMatch? match = standardUrlRegExB.firstMatch(url);
-    if (match != null) {
-      url =
-          'https://${Uri.parse(match.group(0)!).host}/packages/${Uri.parse(url).pathSegments.where((s) => s.trim().isNotEmpty).last}';
-    }
-    RegExp standardUrlRegExA = RegExp(
-      '^https?://(www\\.)?${getSourceRegex(hosts)}/+packages/+[^/]+',
-      caseSensitive: false,
-    );
-    match = standardUrlRegExA.firstMatch(url);
-    if (match == null) {
-      throw InvalidURLError(name);
-    }
-    return match.group(0)!;
   }
 
   @override
