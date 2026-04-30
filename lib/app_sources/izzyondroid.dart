@@ -17,20 +17,8 @@ class IzzyOnDroid extends AppSource {
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     return SourceProvider().standardizeUrlWithRegex(
       url,
-      '^https?://apt.${getSourceRegex(hosts)}/fdroid/index/apk/[^/]+',
+      '^https?://(apt|android)\\.${getSourceRegex(hosts)}/(fdroid/index|repo)/apk/[^/]+',
       sourceName: name,
-      transform: (matched, match) {
-        // Check if URL matches the android. pattern first
-        RegExp regExA = RegExp(
-          '^https?://android.${getSourceRegex(hosts)}/repo/apk/[^/]+',
-          caseSensitive: false,
-        );
-        var matchA = regExA.firstMatch(url);
-        if (matchA != null) {
-          return matchA.group(0)!;
-        }
-        return matched;
-      },
     );
   }
 
