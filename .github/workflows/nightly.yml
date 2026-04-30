@@ -15,15 +15,17 @@ jobs:
 
     steps:
       - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: true
-          android: false
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
+      - run: sudo apt-get purge php* llvm* -y
+      
+        // uses: jlumbroso/free-disk-space@main
+        // with:
+        //  tool-cache: true
+        //  android: false
+        //  dotnet: true
+        //  haskell: true
+        //  large-packages: true
+        //  docker-images: true
+        //  swap-storage: true
 
       - name: Checkout Code
         uses: actions/checkout@v6
