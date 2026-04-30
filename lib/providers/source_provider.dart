@@ -1258,6 +1258,9 @@ bool isVersionPseudo(App app) =>
         app.additionalSettings['versionDetection'] != true);
 
 class SourceProvider {
+  // Cache for compiled regex patterns to avoid recreating them on every call
+  final Map<String, RegExp> _regexCache = {};
+
   // Add more source classes here so they are available via the service
   List<AppSource> get sources => [
     GitHub(),
@@ -1365,7 +1368,11 @@ class SourceProvider {
     String? sourceName,
     String Function(String, RegExpMatch)? transform,
   }) {
-    RegExp standardUrlRegEx = RegExp(pattern, caseSensitive: false);
+    // Use cached regex if available, otherwise compile and cache it
+    RegExp standardUrlRegEx = _regexCache.putIfAbsent(
+      pattern,
+      () => RegExp(pattern, caseSensitive: false),
+    );
     RegExpMatch? match = standardUrlRegEx.firstMatch(url);
     if (match == null) {
       if (sourceName != null) {
