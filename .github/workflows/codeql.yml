@@ -71,7 +71,7 @@ jobs:
           cache: true
 
       - name: Setup Java
-        run: sudo apt install default-jre -y
+        run: sudo apt-get install default-jre -y
 
       - name: Install dependencies
         run: flutter pub get

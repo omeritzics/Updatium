@@ -14,16 +14,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: true
-          android: false
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
+      - name: Free Disk Space
+        run: sudo apt-get purge php8* llvm* clang* mysql* azure-cli firefox google* libgl* powershell xvfb libclang* libm* libgh* python3* -y
 
       - name: Checkout Code
         uses: actions/checkout@v6
@@ -31,7 +23,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Java
-        run: sudo apt install default-jre -y
+        run: sudo apt-get install default-jre -y
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
