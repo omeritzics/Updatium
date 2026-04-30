@@ -375,7 +375,7 @@
     "invertRegEx": "Obrni regularni izraz",
     "note": "Zabelješke",
     "selfHostedNote": "\"{}\" padajući meni se može koristiti da dosegnete vlastite/prilagođene instance bilo kojeg izvora.",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK ne može biti raščlanjen (nekomaptibilno ili delimično preuzimanje)",
     "beforeNewInstallsShareToAppVerifier": "Dijeli nove aplikacije sa AppVerifier-om (ako je dostupno)",
     "appVerifierInstructionToast": "Dijeli sa AppVerifier-om, zatim se vratite kada ste spremni.",

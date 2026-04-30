@@ -375,7 +375,7 @@
     "invertRegEx": "Обръщане на регулярен израз",
     "note": "Бележка",
     "selfHostedNote": "Падащото меню \"{}\" може да се използва за достигане на само- хоствани/персонализирани инстанции на всеки източник.",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK не може да бъде анализиран (несъвместим или частично изтегляне)",
     "beforeNewInstallsShareToAppVerifier": "Споделяне на нови приложения с AppVerifier (ако е налично)",
     "appVerifierInstructionToast": "Споделете с AppVerifier, след което се върнете тук, когато сте готови.",

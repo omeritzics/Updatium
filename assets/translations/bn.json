@@ -375,7 +375,7 @@
     "invertRegEx": "রেগুলার এক্সপ্রেশন উল্টে দিন",
     "note": "দ্রষ্টব্য",
     "selfHostedNote": "\"{}\" ড্রপডাউনটি যে কোনো সোর্সের সেলফ-হোস্টেড বা কাস্টম ইনস্ট্যান্স ব্যবহারের জন্য ব্যবহার করা যেতে পারে।",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK টি পার্স করা যায়নি (অসংগতিপূর্ণ বা আংশিক ডাউনলোড)",
     "beforeNewInstallsShareToAppVerifier": "নতুন অ্যাপ ইনস্টলের আগে AppVerifier এর সাথে শেয়ার করুন (যদি থাকে)",
     "appVerifierInstructionToast": "AppVerifier-এ শেয়ার করুন, তারপর প্রস্তুত হলে এখানে ফিরে আসুন।",

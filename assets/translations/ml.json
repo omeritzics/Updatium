@@ -375,7 +375,7 @@
     "invertRegEx": "റെഗുലർ എക്സ്പ്രഷൻ വിപരീതമാക്കുക",
     "note": "ശ്രദ്ധിക്കുക",
     "selfHostedNote": "ഏത് ഉറവിടത്തിന്റെയും സെൽഫ്-ഹോസ്റ്റ് ചെയ്ത/കസ്റ്റം ഇൻസ്റ്റൻസുകളിലേക്ക് എത്താൻ \"{}\" ഡ്രോപ്പ്ഡൗൺ ഉപയോഗിക്കാം.",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK പാഴ്സ് ചെയ്യാൻ കഴിഞ്ഞില്ല (അനുയോജ്യമല്ലാത്തതോ ഭാഗികമായ ഡൗൺലോഡോ)",
     "beforeNewInstallsShareToAppVerifier": "പുതിയ ആപ്പുകൾ AppVerifier-ലേക്ക് പങ്കിടുക (ലഭ്യമെങ്കിൽ)",
     "appVerifierInstructionToast": "AppVerifier-ലേക്ക് പങ്കിടുക, തുടർന്ന് തയ്യാറാകുമ്പോൾ ഇവിടെ തിരിച്ചെത്തുക.",

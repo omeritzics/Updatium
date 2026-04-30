@@ -375,7 +375,7 @@
     "invertRegEx": "Invertovat regulární výraz",
     "note": "Poznámka",
     "selfHostedNote": "Rozbalovací seznam „{}“ lze použít pro přístup k vlastním instancím libovolného zdroje.",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK nelze analyzovat (nekompatibilní nebo částečné stažení)",
     "beforeNewInstallsShareToAppVerifier": "Sdílet nové aplikace s aplikací AppVerifier (pokud je k dispozici)",
     "appVerifierInstructionToast": "Sdílejte do aplikace AppVerifier a po dokončení se sem vraťte.",

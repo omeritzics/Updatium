@@ -375,7 +375,7 @@
     "invertRegEx": "Invertera reguljärt uttryck",
     "note": "Anmärkning",
     "selfHostedNote": "Rullgardinsmenyn \"{}\" kan användas för att nå självhostade/anpassade instanser av valfri källa.",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK kunde inte analyseras (inkompatibel eller partiell nedladdning)",
     "beforeNewInstallsShareToAppVerifier": "Dela nya appar med AppVerifier (om tillgängligt)",
     "appVerifierInstructionToast": "Dela till AppVerifier och återvänd sedan hit när du är klar.",

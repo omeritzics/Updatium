@@ -375,7 +375,7 @@
     "invertRegEx": "正規表現を反転",
     "note": "注",
     "selfHostedNote": "ドロップダウン\"{}\"を使用すると、あらゆるソースのセルフホスト/カスタムインスタンスにアクセスできます。",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK を解析できませんでした（互換性がないか、部分的にダウンロードされています）。",
     "beforeNewInstallsShareToAppVerifier": "AppVerifierで新しいアプリを共有する（利用可能な場合）",
     "appVerifierInstructionToast": "AppVerifierに共有し、準備ができたらここに戻ってください。",

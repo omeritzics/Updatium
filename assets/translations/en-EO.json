@@ -375,7 +375,7 @@
     "invertRegEx": "Inversigi la regula esprimo",
     "note": "Noto",
     "selfHostedNote": "La malvolvanta listo \"{}\" povas esti uzata por aliri al memgastigataj/agordata instancoj el ajna fonto.",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "La APK ne povis esti analizita (neakordigebla aŭ nekompleta elŝuto)",
     "beforeNewInstallsShareToAppVerifier": "Diskonigi novajn aplikaĵojn kun AppVerifier (se havebla)",
     "appVerifierInstructionToast": "Diskonigu kun AppVerifier, poste revenu ĉi tie kiam preta.",

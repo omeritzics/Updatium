@@ -375,7 +375,7 @@
     "invertRegEx": "नियमित अभिव्यक्ति को उल्टा (Invert) करें",
     "note": "नोट",
     "selfHostedNote": "\"{}\" ड्रॉपडाउन का उपयोग किसी भी स्रोत के स्व-होस्ट किए गए/कस्टम इंस्टेंस तक पहुँचने के लिए किया जा सकता है।",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK को पार्स नहीं किया जा सका (असंगत या अधूरा डाउनलोड)",
     "beforeNewInstallsShareToAppVerifier": "नए ऐप्स को AppVerifier के साथ साझा करें (यदि उपलब्ध हो)",
     "appVerifierInstructionToast": "AppVerifier पर साझा करें, फिर तैयार होने पर यहाँ वापस आएँ।",

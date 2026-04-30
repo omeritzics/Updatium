@@ -375,7 +375,7 @@
     "invertRegEx": "Reguliere expressie omkeren",
     "note": "Opmerking",
     "selfHostedNote": "De \"{}\" dropdown kan gebruikt worden om zelf gehoste/aangepaste instanties van elke bron te bereiken.",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "De APK kon niet worden verwerkt (incompatibele of gedeeltelijke download)",
     "beforeNewInstallsShareToAppVerifier": "Nieuwe Apps delen met AppVerifier (indien beschikbaar)",
     "appVerifierInstructionToast": "Deel het met AppVerifier en keer daarna hier terug.",

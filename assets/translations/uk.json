@@ -375,7 +375,7 @@
     "invertRegEx": "Інвертувати регулярний вираз",
     "note": "Примітка",
     "selfHostedNote": "Випадаючий список \"{}\" може використовуватися для доступу до власних/призначених для самостійного використання екземплярів будь-якого джерела.",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK не вдалося розпарсити (несумісний або часткове завантаження)",
     "beforeNewInstallsShareToAppVerifier": "Діліться новими додатками з AppVerifier (якщо доступно)",
     "appVerifierInstructionToast": "Надішліть на AppVerifier, а потім поверніться сюди, коли будете готові.",

@@ -375,7 +375,7 @@
     "invertRegEx": "Invertir expresión regular",
     "note": "Nota",
     "selfHostedNote": "O menú despregable \"{}\" pode usarse para acadar instancias persoais de calquera orixe.",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "Non se puido procesar o APK (non compatible ou parcialmente descargado)",
     "beforeNewInstallsShareToAppVerifier": "Compartir novas apps con AppVerifier (se está dispoñible)",
     "appVerifierInstructionToast": "Compartir con AppVerifier, e volver aquí ao finalizar.",

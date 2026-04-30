@@ -375,7 +375,7 @@
     "invertRegEx": "دائىملىق ئىپادىنى ئەكسىچە قىلىش",
     "note": "ئەسكەرتىش",
     "selfHostedNote": "\"{}\" تىزىملىكى ئارقىلىق شەخسىي مۇلازىمېتىردىكى مەنبەلەرنى زىيارەت قىلغىلى بولىدۇ.",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK نى ئانالىز قىلغىلى بولمىدى (ماس كەلمەيدۇ ياكى تولۇق چۈشمىگەن)",
     "beforeNewInstallsShareToAppVerifier": "يېڭى ئەپلەرنى قاچىلاشتىن بۇرۇن AppVerifier غا يوللاش",
     "appVerifierInstructionToast": "AppVerifier غا يوللاڭ، تەييار بولغاندا بۇ يەرگە قايتىڭ.",

@@ -379,7 +379,7 @@
     "invertRegEx": "היפוך ביטוי רגולרי",
     "note": "הערה",
     "selfHostedNote": "הרשימה הנפתחת \"{}\" מאפשרת למשוך קבצים מעותקים מותאמים אישית/באירוח עצמי של כל מקור שהוא.",
-    "openSourceNote": "Open-source software platforms are marked as Trusted, as the code of most applications from these sites is fully transparent, which makes them more trustable.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "לא היה ניתן לפענח את קובץ ה־APK (בשל חוסר תאימות או הורדה חלקית)",
     "beforeNewInstallsShareToAppVerifier": "שיתוף יישומים חדשים עם AppVerifier (אם זמין)",
     "appVerifierInstructionToast": "שיתוף עם AppVerifier, ואז חזרה לכאן כשהיישום מוכן.",
