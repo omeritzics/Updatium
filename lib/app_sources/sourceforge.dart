@@ -12,30 +12,31 @@ class SourceForge extends AppSource {
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     var sourceRegex = getSourceRegex(hosts);
-    RegExp standardUrlRegExC = RegExp(
-      '^https?://(www\\.)?$sourceRegex/p/.+',
-      caseSensitive: false,
-    );
-    RegExpMatch? match = standardUrlRegExC.firstMatch(url);
-    if (match != null) {
-      url =
-          'https://${Uri.parse(match.group(0)!).host}/projects/${url.substring(Uri.parse(match.group(0)!).host.length + '/projects/'.length + 1)}';
-    }
-    RegExp standardUrlRegExB = RegExp(
-      '^https?://(www\\.)?$sourceRegex/projects/[^/]+',
-    );
-    match = standardUrlRegExB.firstMatch(url);
-    if (match != null && match.group(0) == url) {
-      url = '$url/files';
-    }
-    RegExp standardUrlRegExA = RegExp(
+    return SourceProvider().standardizeUrlWithRegex(
+      url,
       '^https?://(www\\.)?$sourceRegex/projects/[^/]+/files(/.+)?',
+      sourceName: name,
+      transform: (matched, match) {
+        // Check if URL matches the /p/ pattern first
+        RegExp regExC = RegExp(
+          '^https?://(www\\.)?$sourceRegex/p/.+',
+          caseSensitive: false,
+        );
+        var matchC = regExC.firstMatch(url);
+        if (matchC != null) {
+          return 'https://${Uri.parse(matchC.group(0)!).host}/projects/${url.substring(Uri.parse(matchC.group(0)!).host.length + '/projects/'.length + 1)}';
+        }
+        // Check if it's just /projects/ without /files
+        RegExp regExB = RegExp(
+          '^https?://(www\\.)?$sourceRegex/projects/[^/]+',
+        );
+        var matchB = regExB.firstMatch(url);
+        if (matchB != null && matchB.group(0) == url) {
+          return '$url/files';
+        }
+        return matched;
+      },
     );
-    match = standardUrlRegExA.firstMatch(url);
-    if (match == null) {
-      throw InvalidURLError(name);
-    }
-    return match.group(0)!;
   }
 
   @override
