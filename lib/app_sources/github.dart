@@ -20,7 +20,7 @@ class GitHub extends AppSource {
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
     allowIncludeZips = true;
-    trusted = true;
+    openSource = true;
 
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
@@ -182,15 +182,11 @@ class GitHub extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    RegExp standardUrlRegEx = RegExp(
+    return SourceProvider().standardizeUrlWithRegex(
+      url,
       '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+/[^/]+',
-      caseSensitive: false,
+      sourceName: name,
     );
-    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
-    if (match == null) {
-      throw InvalidURLError(name);
-    }
-    return match.group(0)!;
   }
 
   @override
@@ -615,9 +611,7 @@ class GitHub extends AppSource {
   }
 
   AppNames getAppNames(String standardUrl) {
-    String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
-    List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
-    return AppNames(names[0], names.sublist(1).join('/'));
+    return SourceProvider().getAppNamesFromUrl(standardUrl, nameIndex: null);
   }
 
   Future<Map<String, List<String>>> searchCommon(

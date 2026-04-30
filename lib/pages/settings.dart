@@ -2193,8 +2193,9 @@ class _AboutDialogState extends State<AboutDialog> {
                       ),
                     ),
                     gap12,
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
                       children: [
                         TextButton.icon(
                           onPressed: () {
@@ -2210,7 +2211,6 @@ class _AboutDialogState extends State<AboutDialog> {
                             padding: const EdgeInsets.symmetric(vertical: 8),
                           ),
                         ),
-                        const SizedBox(width: 8),
                         TextButton.icon(
                           onPressed: () {
                             showDialog(
@@ -2227,7 +2227,6 @@ class _AboutDialogState extends State<AboutDialog> {
                             padding: const EdgeInsets.symmetric(vertical: 8),
                           ),
                         ),
-                        const SizedBox(width: 8),
                         TextButton.icon(
                           onPressed: () {
                             showDialog(

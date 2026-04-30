@@ -25,24 +25,24 @@ class APKPure extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    RegExp standardUrlRegExB = RegExp(
-      '^https?://m.${getSourceRegex(hosts)}(/+[^/]{2})?/+[^/]+/+[^/]+',
-      caseSensitive: false,
-    );
-    RegExpMatch? match = standardUrlRegExB.firstMatch(url);
-    if (match != null) {
-      var uri = Uri.parse(url);
-      url = 'https://${uri.host.substring(2)}${uri.path}';
-    }
-    RegExp standardUrlRegExA = RegExp(
+    return SourceProvider().standardizeUrlWithRegex(
+      url,
       '^https?://(www\\.)?${getSourceRegex(hosts)}(/+[^/]{2})?/+[^/]+/+[^/]+',
-      caseSensitive: false,
+      sourceName: name,
+      transform: (matched, match) {
+        // Check if URL matches the m. pattern first
+        RegExp regExB = RegExp(
+          '^https?://m.${getSourceRegex(hosts)}(/+[^/]{2})?/+[^/]+/+[^/]+',
+          caseSensitive: false,
+        );
+        var matchB = regExB.firstMatch(url);
+        if (matchB != null) {
+          var uri = Uri.parse(url);
+          return 'https://${uri.host.substring(2)}${uri.path}';
+        }
+        return matched;
+      },
     );
-    match = standardUrlRegExA.firstMatch(url);
-    if (match == null) {
-      throw InvalidURLError(name);
-    }
-    return match.group(0)!;
   }
 
   @override
