@@ -781,26 +781,16 @@ class AddAppPageState extends State<AddAppPage> {
                                         : TextDecoration.none,
                                   ),
                                 ),
-                                if (e.trusted) ...[
+                                if (e.openSource) ...[
                                   const SizedBox(width: 4),
                                   Icon(
-                                    Icons.verified,
+                                    Icons.workspace_premium,
                                     size: 14,
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.primary,
                                   ),
                                   const SizedBox(width: 2),
-                                  Text(
-                                    tr('trusted'),
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.primary,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
                                 ],
                               ],
                             ),
@@ -818,14 +808,14 @@ class AddAppPageState extends State<AddAppPage> {
                       Row(
                         children: [
                           Icon(
-                            Icons.verified,
+                            Icons.workspace_premium,
                             size: 14,
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
-                              tr('trustedSourceNote'),
+                              tr('openSourceNote'),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),

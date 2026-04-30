@@ -14,7 +14,7 @@ class FDroid extends AppSource {
     name = tr('fdroid');
     naiveStandardVersionDetection = true;
     canSearch = true;
-    trusted = true;
+    openSource = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(

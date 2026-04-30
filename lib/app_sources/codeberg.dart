@@ -11,7 +11,7 @@ class Codeberg extends AppSource {
         gh.additionalSourceAppSpecificSettingFormItems;
     canSearch = true;
     searchQuerySettingFormItems = gh.searchQuerySettingFormItems;
-    trusted = true;
+    openSource = true;
   }
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {

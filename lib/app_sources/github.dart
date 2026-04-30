@@ -20,7 +20,7 @@ class GitHub extends AppSource {
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
     allowIncludeZips = true;
-    trusted = true;
+    openSource = true;
 
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(

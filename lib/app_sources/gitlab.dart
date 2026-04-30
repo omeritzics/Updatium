@@ -18,7 +18,7 @@ class GitLab extends AppSource {
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
-    trusted = true;
+    openSource = true;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
         tr('gitlabPATLabel'),
