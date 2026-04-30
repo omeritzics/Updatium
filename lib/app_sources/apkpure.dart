@@ -27,17 +27,11 @@ class APKPure extends AppSource {
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     return SourceProvider().standardizeUrlWithRegex(
       url,
-      '^https?://(www\\.)?${getSourceRegex(hosts)}(/+[^/]{2})?/+[^/]+/+[^/]+',
+      '^https?://(www\\.|m\\.)?${getSourceRegex(hosts)}(/+[^/]{2})?/+[^/]+/+[^/]+',
       sourceName: name,
       transform: (matched, match) {
-        // Check if URL matches the m. pattern first
-        RegExp regExB = RegExp(
-          '^https?://m.${getSourceRegex(hosts)}(/+[^/]{2})?/+[^/]+/+[^/]+',
-          caseSensitive: false,
-        );
-        var matchB = regExB.firstMatch(url);
-        if (matchB != null) {
-          var uri = Uri.parse(url);
+        if (matched.contains('://m.')) {
+          var uri = Uri.parse(matched);
           return 'https://${uri.host.substring(2)}${uri.path}';
         }
         return matched;
