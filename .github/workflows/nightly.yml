@@ -15,7 +15,15 @@ jobs:
 
     steps:
       - name: Free Disk Space
-        run: sudo apt-get purge php8* llvm* clang* mysql* azure-cli firefox google* libgl* powershell xvfb libclang* libmy* *sql* libgh* python3* -y
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: false
+          dotnet: false
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: false
 
       - name: Checkout Code
         uses: actions/checkout@v6

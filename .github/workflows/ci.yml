@@ -17,8 +17,16 @@ jobs:
 
     steps:
       - name: Free Disk Space (Ubuntu)
-        run: sudo apt-get purge php8* llvm* clang* *sql* azure-cli firefox google* libgl* meson* powershell xvfb libclang* libmy* libgh* python3* -y
-
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: false
+          dotnet: false
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: false
+      
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
