@@ -21,7 +21,8 @@ class SourceForge extends AppSource {
         if (uri.pathSegments.first == 'p') {
           return 'https://${uri.host}/projects/${uri.pathSegments.sublist(1).join('/')}';
         }
-        if (uri.pathSegments.length == 2 && uri.pathSegments.first == 'projects') {
+        if (uri.pathSegments.length == 2 &&
+            uri.pathSegments.first == 'projects') {
           return '$matched/files';
         }
         return matched;
