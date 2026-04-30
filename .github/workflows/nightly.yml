@@ -15,8 +15,8 @@ jobs:
 
     steps:
       - name: Free Disk Space (Ubuntu)
-      - run: sudo apt-get purge php* llvm* -y
-      
+        run: sudo apt-get purge php* llvm* -y
+
         // uses: jlumbroso/free-disk-space@main
         // with:
         //  tool-cache: true
