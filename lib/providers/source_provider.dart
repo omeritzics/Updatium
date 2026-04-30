@@ -1383,10 +1383,16 @@ class SourceProvider {
   /// Helper method to extract app names from a standard URL
   /// Assumes format: https://host/author/name or similar
   /// If nameIndex is null, joins all parts from authorIndex+1 onwards
-  AppNames getAppNamesFromUrl(String standardUrl, {int authorIndex = 0, int? nameIndex}) {
+  AppNames getAppNamesFromUrl(
+    String standardUrl, {
+    int authorIndex = 0,
+    int? nameIndex,
+  }) {
     String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
     List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
-    String name = nameIndex != null ? names[nameIndex] : names.sublist(authorIndex + 1).join('/');
+    String name = nameIndex != null
+        ? names[nameIndex]
+        : names.sublist(authorIndex + 1).join('/');
     return AppNames(names[authorIndex], name);
   }
 
@@ -1670,8 +1676,7 @@ class SourceOverrideDropdown extends StatefulWidget {
   });
 
   @override
-  State<SourceOverrideDropdown> createState() =>
-      _SourceOverrideDropdownState();
+  State<SourceOverrideDropdown> createState() => _SourceOverrideDropdownState();
 }
 
 class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
@@ -1753,7 +1758,8 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
                         (s) =>
                             s.allowOverride ||
                             (widget.pickedSource != null &&
-                                widget.pickedSource.runtimeType == s.runtimeType),
+                                widget.pickedSource.runtimeType ==
+                                    s.runtimeType),
                       )
                       .map(
                         (s) => MenuItemButton(

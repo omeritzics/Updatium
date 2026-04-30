@@ -74,7 +74,6 @@ class AddAppPageState extends State<AddAppPage> {
     super.dispose();
   }
 
-
   void linkFn(String input) {
     try {
       if (input.isEmpty) {
