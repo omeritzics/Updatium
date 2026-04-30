@@ -194,6 +194,8 @@
     "checkingForUpdatesNotifDescription": "يېڭىلانما تەكشۈرۈۋاتقاندا كۆرۈنىدىغان ۋاقىتلىق ئۇقتۇرۇش",
     "pleaseAllowInstallPerm": "Updatium نىڭ ئەپ قاچىلىشىغا رۇخسەت قىلىڭ",
     "trackOnly": "پەقەت ئىز قوغلاش",
+    "trusted": "Trusted",
+    "openSource": "Open-source",
     "errorWithHttpStatusCode": "خاتالىق: {}",
     "versionCorrectionDisabled": "نەشرىنى تۈزىتىش چەكلەنگەن",
     "unknown": "نامەلۇم",
@@ -373,6 +375,7 @@
     "invertRegEx": "دائىملىق ئىپادىنى ئەكسىچە قىلىش",
     "note": "ئەسكەرتىش",
     "selfHostedNote": "\"{}\" تىزىملىكى ئارقىلىق شەخسىي مۇلازىمېتىردىكى مەنبەلەرنى زىيارەت قىلغىلى بولىدۇ.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK نى ئانالىز قىلغىلى بولمىدى (ماس كەلمەيدۇ ياكى تولۇق چۈشمىگەن)",
     "beforeNewInstallsShareToAppVerifier": "يېڭى ئەپلەرنى قاچىلاشتىن بۇرۇن AppVerifier غا يوللاش",
     "appVerifierInstructionToast": "AppVerifier غا يوللاڭ، تەييار بولغاندا بۇ يەرگە قايتىڭ.",
@@ -513,5 +516,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

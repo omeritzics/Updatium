@@ -225,6 +225,8 @@
     "checkingForUpdatesNotifDescription": "Dumtempa sciigo kiu aperas dum la serĉo de ĝisdatigoj",
     "pleaseAllowInstallPerm": "Bonvolu permesi al Updatium instali apojn",
     "trackOnly": "Nur sekvita",
+    "trusted": "Trusted",
+    "openSource": "Open-source",
     "errorWithHttpStatusCode": "Eraro {}",
     "versionCorrectionDisabled": "Versiokorekto malaktivigita (ŝajnas, ke la kromaĵo ne funkcias)",
     "unknown": "Nekonata",
@@ -404,6 +406,7 @@
     "invertRegEx": "Inversigi la regula esprimo",
     "note": "Noto",
     "selfHostedNote": "La malvolvanta listo \"{}\" povas esti uzata por aliri al memgastigataj/agordata instancoj el ajna fonto.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "La APK ne povis esti analizita (neakordigebla aŭ nekompleta elŝuto)",
     "beforeNewInstallsShareToAppVerifier": "Diskonigi novajn aplikaĵojn kun AppVerifier (se havebla)",
     "appVerifierInstructionToast": "Diskonigu kun AppVerifier, poste revenu ĉi tie kiam preta.",
@@ -544,5 +547,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

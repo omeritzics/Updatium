@@ -38,10 +38,7 @@ jobs:
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '21'
+        run: sudo apt install default-jre -y
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2

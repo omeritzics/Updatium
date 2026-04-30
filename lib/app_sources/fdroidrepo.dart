@@ -11,6 +11,7 @@ class FDroidRepo extends AppSource {
     includeAdditionalOptsInMainSearch = true;
     neverAutoSelect = true;
     showReleaseDateAsVersionToggle = true;
+    openSource = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(

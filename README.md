@@ -30,6 +30,7 @@ Based on Material Design 3 Expressive guidelines.
 
 - Better accessability for screen readers.
 - Grid View.
+- Safe Mode (allows you to block unwanted changes to the application catalogue).
 
 ### Localization
 
@@ -58,7 +59,7 @@ Do not download Updatium from unofficial sources (such as Appteka), since these 
 
 | ![Apps Page](./assets/screenshots/1.apps.png) | ![Dark Theme](./assets/screenshots/2.dark_theme.png) | ![Material You](./assets/screenshots/3.material_you.png) |
 | ------------------------------------------------------ | ----------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| ![App Page](./assets/screenshots/4.app.png) | | |
+| ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/screenshots/5.app_opts.png) | ![Grid View](./assets/screenshots/6.grid_view.png) |
 
 ## Limitations
 
@@ -95,4 +96,4 @@ On Updatium:
 
 ### Q: How can I help?
 
-A: There are many ways you can. Simply open an issue on the project's GitHub and introduce yourself. Your contribution doesn't have to be code - it could also be bug reporting, translating the app into new languages (or improving existing translations), design proposals and ideas. Starring Updatium and sharing it to people who you think may like it can also help Updatium grow. Thank you for your support :)
+A: There are many ways you can. Your contribution doesn't have to be code - it could also be bug reporting, translating the app into new languages (or improving existing translations), design proposals and ideas. To start, you can simply open a new thread on the Discussions page of this GitHub project and introduce yourself. Starring Updatium and sharing it to people who you think may like it will also help Updatium grow. Thank you for your support :)

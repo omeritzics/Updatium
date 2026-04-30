@@ -228,10 +228,7 @@ class _AppPageState extends State<AppPage> {
                         );
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 24,
-                          vertical: 4,
-                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 4),
                         child: Text(
                           hash,
                           textAlign: TextAlign.start,
@@ -348,7 +345,6 @@ class _AppPageState extends State<AppPage> {
                         }()
                       : null,
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Tooltip(
                   message: app.app.url,
                   child: Text(
@@ -461,12 +457,10 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => ElevatedButton(
-      style: ElevatedButton.styleFrom(
+    getInstallOrUpdateButton() => FilledButton(
+      style: FilledButton.styleFrom(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        elevation: 2,
-        shadowColor: Theme.of(context).colorScheme.shadow,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       ),
       onPressed:
@@ -508,120 +502,120 @@ class _AppPageState extends State<AppPage> {
     );
 
     return Scaffold(
-      body: Stack(
-        children: [
-          RefreshIndicator(
-            child: CustomScrollView(
-              slivers: [
-                SliverAppBar.large(
-                  pinned: true,
-                  title: Row(
-                    children: [
-                      Consumer<AppsProvider>(
-                        builder: (ctx, appsProvider, child) {
-                          final appInMemory = appsProvider.apps[app.app.id];
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Stack(
+          children: [
+            RefreshIndicator(
+              onRefresh: () async {
+                await getUpdate(app.app.id);
+              },
+              child: CustomScrollView(
+                slivers: [
+                  SliverAppBar.large(
+                    pinned: true,
+                    title: Row(
+                      children: [
+                        Consumer<AppsProvider>(
+                          builder: (ctx, appsProvider, child) {
+                            final appInMemory = appsProvider.apps[app.app.id];
 
-                          if (appInMemory?.icon != null) {
-                            return Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0,
-                                8.0,
-                                16.0,
-                                8.0,
-                              ),
-                              child: Image.memory(
-                                appInMemory!.icon!,
-                                width: 40,
-                                height: 40,
-                                gaplessPlayback: true,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Icon(
+                            if (appInMemory?.icon != null) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0,
+                                ),
+                                child: Image.memory(
+                                  appInMemory!.icon!,
+                                  width: 40,
+                                  height: 40,
+                                  gaplessPlayback: true,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Icon(
+                                      Icons.apps,
+                                      size: 40,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
+                                    );
+                                  },
+                                ),
+                              );
+                            }
+
+                            // Load icon asynchronously if not available
+                            if (!_iconRequested) {
+                              _iconRequested = true;
+                              _iconFuture = appsProvider.updateAppIcon(
+                                app.app.id,
+                              );
+                            }
+                            return FutureBuilder(
+                              future: _iconFuture,
+                              builder: (ctx, snapshot) {
+                                final updatedAppInMemory =
+                                    appsProvider.apps[app.app.id];
+
+                                if (updatedAppInMemory?.icon != null) {
+                                  return Padding(
+                                    padding: EdgeInsets.zero,
+                                    child: Image.memory(
+                                      updatedAppInMemory!.icon!,
+                                      width: 40,
+                                      height: 40,
+                                      gaplessPlayback: true,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                            return Icon(
+                                              Icons.apps,
+                                              size: 40,
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.primary,
+                                            );
+                                          },
+                                    ),
+                                  );
+                                }
+
+                                // Fallback icon while loading
+                                return Padding(
+                                  padding: EdgeInsets.zero,
+                                  child: Icon(
                                     Icons.apps,
                                     size: 40,
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.primary,
-                                  );
-                                },
-                              ),
-                            );
-                          }
-
-                          // Load icon asynchronously if not available
-                          if (!_iconRequested) {
-                            _iconRequested = true;
-                            _iconFuture = appsProvider.updateAppIcon(
-                              app.app.id,
-                            );
-                          }
-                          return FutureBuilder(
-                            future: _iconFuture,
-                            builder: (ctx, snapshot) {
-                              final updatedAppInMemory =
-                                  appsProvider.apps[app.app.id];
-
-                              if (updatedAppInMemory?.icon != null) {
-                                return Padding(
-                                  padding: const EdgeInsetsDirectional.only(
-                                    end: 12.0,
-                                  ),
-                                  child: Image.memory(
-                                    updatedAppInMemory!.icon!,
-                                    width: 40,
-                                    height: 40,
-                                    gaplessPlayback: true,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Icon(
-                                        Icons.apps,
-                                        size: 40,
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.primary,
-                                      );
-                                    },
                                   ),
                                 );
-                              }
-
-                              // Fallback icon while loading
-                              return Padding(
-                                padding: const EdgeInsetsDirectional.only(
-                                  end: 16.0,
-                                ),
-                                child: Icon(
-                                  Icons.apps,
-                                  size: 40,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(app.name),
-                            Text(
-                              tr('byX', args: [app.author]),
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurfaceVariant,
-                                  ),
-                            ),
-                          ],
+                              },
+                            );
+                          },
                         ),
-                      ),
-                    ],
+                        horizontalGap16,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(app.name),
+                              Text(
+                                tr('byX', args: [app.author]),
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurfaceVariant,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                  SliverToBoxAdapter(
                     child: Column(
                       children: [
                         getFullInfoColumn(),
@@ -630,9 +624,7 @@ class _AppPageState extends State<AppPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const SizedBox(width: 16.0),
                               Expanded(child: getInstallOrUpdateButton()),
-                              const SizedBox(width: 16.0),
                             ],
                           ),
                         ),
@@ -660,96 +652,93 @@ class _AppPageState extends State<AppPage> {
                       ],
                     ),
                   ),
-                ),
-              ],
-            ),
-            onRefresh: () async {
-              await getUpdate(app.app.id);
-            },
-          ),
-          Positioned(
-            left: 16,
-            right: 16,
-            bottom: 16,
-            child: Align(
-              alignment: Alignment.center,
-              child: M3FloatingToolbar(
-                actions: [
-                  if (app.app.installedVersion != null)
-                    M3FloatingToolbarAction(
-                      icon: Icons.open_in_new,
-                      semanticLabel: tr('open'),
-                      tooltip: tr('open'),
-                      onPressed: () {
-                        pm.openApp(app.app.id);
-                      },
-                    ),
-                  if (!updating &&
-                      source != null &&
-                      source.combinedAppSpecificSettingFormItems.isNotEmpty)
-                    M3FloatingToolbarAction(
-                      icon: Icons.edit,
-                      semanticLabel: tr('additionalOptions'),
-                      tooltip: tr('additionalOptions'),
-                      onPressed: () {
-                        showAdditionalOptionsDialog().then(
-                          handleAdditionalOptionChanges,
-                        );
-                      },
-                    ),
-                  if (!updating &&
-                      (app.app.apkUrls.isNotEmpty == true ||
-                          app.app.otherAssetUrls.isNotEmpty == true))
-                    M3FloatingToolbarAction(
-                      icon: Icons.archive,
-                      semanticLabel: tr(
-                        'downloadX',
-                        args: [lowerCaseIfEnglish(tr('releaseAsset'))],
-                      ),
-                      tooltip: tr(
-                        'downloadX',
-                        args: [lowerCaseIfEnglish(tr('releaseAsset'))],
-                      ),
-                      onPressed: () async {
-                        try {
-                          await appsProvider.downloadAppAssets([
-                            app.app.id,
-                          ], context);
-                        } catch (e) {
-                          showError(e, context);
-                        }
-                      },
-                    ),
-                  M3FloatingToolbarAction(
-                    icon: Icons.delete,
-                    semanticLabel: tr('remove'),
-                    tooltip: tr('remove'),
-                    onPressed: () async {
-                      final removedApps = await appsProvider
-                          .removeAppsWithModal(context, [app.app]);
-                      if (removedApps != null && removedApps.isNotEmpty) {
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(tr('appRemoved')),
-                              action: SnackBarAction(
-                                label: tr('undo'),
-                                onPressed: () {
-                                  appsProvider.undoRestoreApps(removedApps);
-                                },
-                              ),
-                            ),
-                          );
-                          Navigator.of(context).pop();
-                        }
-                      }
-                    },
-                  ),
                 ],
               ),
             ),
-          ),
-        ],
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 16,
+              child: Align(
+                alignment: Alignment.center,
+                child: M3FloatingToolbar(
+                  actions: [
+                    if (app.app.installedVersion != null)
+                      M3FloatingToolbarAction(
+                        icon: Icons.open_in_new,
+                        semanticLabel: tr('open'),
+                        tooltip: tr('open'),
+                        onPressed: () {
+                          pm.openApp(app.app.id);
+                        },
+                      ),
+                    if (!updating &&
+                        source != null &&
+                        source.combinedAppSpecificSettingFormItems.isNotEmpty)
+                      M3FloatingToolbarAction(
+                        icon: Icons.edit,
+                        semanticLabel: tr('additionalOptions'),
+                        tooltip: tr('additionalOptions'),
+                        onPressed: () {
+                          showAdditionalOptionsDialog().then(
+                            handleAdditionalOptionChanges,
+                          );
+                        },
+                      ),
+                    if (!updating &&
+                        (app.app.apkUrls.isNotEmpty == true ||
+                            app.app.otherAssetUrls.isNotEmpty == true))
+                      M3FloatingToolbarAction(
+                        icon: Icons.archive,
+                        semanticLabel: tr(
+                          'downloadX',
+                          args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+                        ),
+                        tooltip: tr(
+                          'downloadX',
+                          args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+                        ),
+                        onPressed: () async {
+                          try {
+                            await appsProvider.downloadAppAssets([
+                              app.app.id,
+                            ], context);
+                          } catch (e) {
+                            showError(e, context);
+                          }
+                        },
+                      ),
+                    M3FloatingToolbarAction(
+                      icon: Icons.delete,
+                      semanticLabel: tr('remove'),
+                      tooltip: tr('remove'),
+                      onPressed: () async {
+                        final removedApps = await appsProvider
+                            .removeAppsWithModal(context, [app.app]);
+                        if (removedApps != null && removedApps.isNotEmpty) {
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(tr('appRemoved')),
+                                action: SnackBarAction(
+                                  label: tr('undo'),
+                                  onPressed: () {
+                                    appsProvider.undoRestoreApps(removedApps);
+                                  },
+                                ),
+                              ),
+                            );
+                            Navigator.of(context).pop();
+                          }
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

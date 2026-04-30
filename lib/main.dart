@@ -27,7 +27,14 @@ import 'package:url_launcher/url_launcher.dart';
 List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('en'), 'English'),
   MapEntry(Locale('zh'), '简体中文'),
-  MapEntry(Locale('zh', 'Hant_TW'), '臺灣話'),
+  MapEntry(
+    Locale.fromSubtags(
+      languageCode: 'zh',
+      scriptCode: 'Hant',
+      countryCode: 'TW',
+    ),
+    '臺灣話',
+  ),
   MapEntry(Locale('it'), 'Italiano'),
   MapEntry(Locale('ja'), '日本語'),
   MapEntry(Locale('he'), 'עברית'),
@@ -491,12 +498,14 @@ class _UpdatiumState extends State<Updatium> {
               useMaterial3: true,
               colorScheme: scheme,
               fontFamily: getPrimaryFontForLocale(context.locale),
-              fontFamilyFallback: const [
-                'Inter',
-                'NotoSansCJK',
-                'NotoSansHebrew',
-                'NotoSansArabic',
-              ],
+              fontFamilyFallback: settingsProvider.useSystemFont
+                  ? null
+                  : const [
+                      'Inter',
+                      'NotoSansCJK',
+                      'NotoSansHebrew',
+                      'NotoSansArabic',
+                    ],
 
               // Keyboard/TV navigation support
               focusColor: scheme.primary.withValues(alpha: 0.2),
@@ -512,13 +521,15 @@ class _UpdatiumState extends State<Updatium> {
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
                   fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
+                  fontFamilyFallback: settingsProvider.useSystemFont
+                      ? null
+                      : const [
+                          'Inter',
+                          'GoogleSansFlex',
+                          'NotoSansCJK',
+                          'NotoSansHebrew',
+                          'NotoSansArabic',
+                        ],
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),

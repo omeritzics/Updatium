@@ -546,22 +546,25 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           ),
         if (refreshingSince != null || appsProvider.loadingApps)
           SliverToBoxAdapter(
-            child: LinearProgressIndicator(
-              value: appsProvider.loadingApps
-                  ? null
-                  : appsProvider
-                            .getAppValues()
-                            .where(
-                              (element) =>
-                                  !(element.app.lastUpdateCheck?.isBefore(
-                                        refreshingSince!,
-                                      ) ??
-                                      true),
-                            )
-                            .length /
-                        (appsProvider.apps.isNotEmpty
-                            ? appsProvider.apps.length
-                            : 1),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: LinearProgressIndicator(
+                value: appsProvider.loadingApps
+                    ? null
+                    : appsProvider
+                              .getAppValues()
+                              .where(
+                                (element) =>
+                                    !(element.app.lastUpdateCheck?.isBefore(
+                                          refreshingSince!,
+                                        ) ??
+                                        true),
+                              )
+                              .length /
+                          (appsProvider.apps.isNotEmpty
+                              ? appsProvider.apps.length
+                              : 1),
+              ),
             ),
           ),
       ];
@@ -1573,19 +1576,22 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         if (settingsProvider.useGridView) {
           final spacing = 8.0;
 
-          return SliverGrid(
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 190,
-              crossAxisSpacing: spacing,
-              mainAxisSpacing: spacing,
-              childAspectRatio: 0.65,
+          return SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 160,
+                crossAxisSpacing: spacing,
+                mainAxisSpacing: spacing,
+                childAspectRatio: 0.65,
+              ),
+              delegate: SliverChildBuilderDelegate((
+                BuildContext context,
+                int index,
+              ) {
+                return getSingleAppGridTile(index);
+              }, childCount: listedApps.length),
             ),
-            delegate: SliverChildBuilderDelegate((
-              BuildContext context,
-              int index,
-            ) {
-              return getSingleAppGridTile(index);
-            }, childCount: listedApps.length),
           );
         } else {
           return SliverList(
@@ -1624,6 +1630,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     automaticallyImplyLeading: false,
                     bottom: TabBar(
                       controller: _tabController,
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 12),
                       tabs: [
                         Tab(text: tr('all')),
                         Tab(text: tr('installed')),

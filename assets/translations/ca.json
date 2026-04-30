@@ -225,6 +225,8 @@
     "checkingForUpdatesNotifDescription": "Notificació temporal que apareix en cercar actualitzacions",
     "pleaseAllowInstallPerm": "Permet que Updatium instal·li aplicacions",
     "trackOnly": "Només per a seguiment",
+    "trusted": "Trusted",
+    "openSource": "Open-source",
     "errorWithHttpStatusCode": "Error {}",
     "versionCorrectionDisabled": "Correcció de versions desactivada (el plugin sembla que no funciona)",
     "unknown": "Desconegut",
@@ -404,6 +406,7 @@
     "invertRegEx": "Inverteix l'expressió regular",
     "note": "Nota",
     "selfHostedNote": "El desplegable «{}» es pot usar per accedir a instàncies autoallotjades/personalitzades de qualsevol font.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "L'APK no s'ha pogut analitzar (incompatible o descàrrega parcial)",
     "beforeNewInstallsShareToAppVerifier": "Comparteix les aplicacions noves amb AppVerifier (si està instal·lat)",
     "appVerifierInstructionToast": "Comparteix amb AppVerifier i torna aquí quan estigui fet.",
@@ -544,5 +547,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

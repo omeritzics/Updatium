@@ -225,6 +225,8 @@
     "checkingForUpdatesNotifDescription": "檢查更新時顯示的暫時性通知",
     "pleaseAllowInstallPerm": "請允許 Updatium 安裝應用程式",
     "trackOnly": "僅追蹤",
+    "trusted": "Trusted",
+    "openSource": "Open-source",
     "errorWithHttpStatusCode": "錯誤 {}",
     "versionCorrectionDisabled": "版本校正已停用（外掛程式似乎無法正常工作）",
     "unknown": "未知",
@@ -404,6 +406,7 @@
     "invertRegEx": "反轉正則表達式",
     "note": "備註",
     "selfHostedNote": "可使用「{}」下拉選單來存取任何來源的自行託管/自訂執行個體。",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "無法解析 APK（不相容或下載不完整）",
     "beforeNewInstallsShareToAppVerifier": "將新應用程式分享到 AppVerifier（如果可用）",
     "appVerifierInstructionToast": "分享至 AppVerifier，然後準備好時回到此處。",
@@ -544,5 +547,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

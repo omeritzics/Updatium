@@ -13,6 +13,7 @@ import 'package:updatium/components/category_chip.dart';
 import 'package:updatium/pages/safe_mode_dialog.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/native_provider.dart';
+import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
@@ -1521,12 +1522,25 @@ class CategoryTagEditor extends StatelessWidget {
       confirmButtonText: tr('save'),
     ).then((result) {
       if (result != null && result.name.isNotEmpty) {
-        final newCategories = Map<String, int>.from(
-          settingsProvider.categories,
-        );
-        newCategories.remove(oldName);
-        newCategories[result.name] = result.color.toARGB32();
-        settingsProvider.setCategories(newCategories);
+        final appsProvider = context.read<AppsProvider>();
+        final newColorValue = result.color.toARGB32();
+        if (result.name != oldName) {
+          // Name changed: atomically rename in both the categories map
+          // and every app that references the old category name.
+          settingsProvider.renameCategory(
+            oldName,
+            result.name,
+            newColorValue,
+            appsProvider: appsProvider,
+          );
+        } else {
+          // Only the color changed – a simple map update is sufficient.
+          final newCategories = Map<String, int>.from(
+            settingsProvider.categories,
+          );
+          newCategories[oldName] = newColorValue;
+          settingsProvider.setCategories(newCategories);
+        }
       }
     });
   }
@@ -1619,7 +1633,7 @@ class CategoryTagEditor extends StatelessWidget {
   }
 }
 
-class CategorySelector extends StatelessWidget {
+class CategorySelector extends StatefulWidget {
   final void Function(List<String> categories)? onSelected;
   final bool singleSelect;
   final Set<String> preselected;
@@ -1636,21 +1650,34 @@ class CategorySelector extends StatelessWidget {
   });
 
   @override
+  State<CategorySelector> createState() => _CategorySelectorState();
+}
+
+class _CategorySelectorState extends State<CategorySelector> {
+  late Set<String> _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = Set<String>.from(widget.preselected);
+  }
+
+  @override
   Widget build(BuildContext context) {
     var settingsProvider = context.watch<SettingsProvider>();
     final allTags = settingsProvider.categories.keys.toList();
 
     return Column(
-      crossAxisAlignment: alignment == WrapAlignment.center
+      crossAxisAlignment: widget.alignment == WrapAlignment.center
           ? CrossAxisAlignment.center
           : CrossAxisAlignment.stretch,
       children: [
-        if (allTags.isNotEmpty && showLabelWhenNotEmpty) ...[
+        if (allTags.isNotEmpty && widget.showLabelWhenNotEmpty) ...[
           Text(tr('categories'), style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(height: 8),
         ],
         Wrap(
-          alignment: alignment,
+          alignment: widget.alignment,
           crossAxisAlignment: WrapCrossAlignment.center,
           spacing: 8,
           runSpacing: 4,
@@ -1661,23 +1688,24 @@ class CategorySelector extends StatelessWidget {
             );
             return CategoryChip(
               label: tag,
-              selected: preselected.contains(tag),
+              selected: _selected.contains(tag),
               categoryColor: categoryColor,
               onSelected: (selected) {
-                final newSelected = Set<String>.from(preselected);
-                if (singleSelect) {
-                  newSelected.clear();
-                  if (selected) {
-                    newSelected.add(tag);
-                  }
-                } else {
-                  if (selected) {
-                    newSelected.add(tag);
+                setState(() {
+                  if (widget.singleSelect) {
+                    _selected.clear();
+                    if (selected) {
+                      _selected.add(tag);
+                    }
                   } else {
-                    newSelected.remove(tag);
+                    if (selected) {
+                      _selected.add(tag);
+                    } else {
+                      _selected.remove(tag);
+                    }
                   }
-                }
-                onSelected?.call(newSelected.toList());
+                });
+                widget.onSelected?.call(_selected.toList());
               },
             );
           }).toList(),
@@ -1733,6 +1761,182 @@ class LicenseDialog extends StatelessWidget {
               );
             }
             return const Center(child: CircularProgressIndicator());
+          },
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(tr('close')),
+        ),
+      ],
+    );
+  }
+}
+
+class OpenSourcePackagesDialog extends StatelessWidget {
+  const OpenSourcePackagesDialog({super.key});
+
+  static const List<Map<String, String>> dependencies = [
+    {'name': 'path_provider', 'url': 'https://pub.dev/packages/path_provider'},
+    {'name': 'flutter_fgbg', 'url': 'https://pub.dev/packages/flutter_fgbg'},
+    {
+      'name': 'flutter_local_notifications',
+      'url': 'https://pub.dev/packages/flutter_local_notifications',
+    },
+    {'name': 'provider', 'url': 'https://pub.dev/packages/provider'},
+    {'name': 'http', 'url': 'https://pub.dev/packages/http'},
+    {
+      'name': 'dynamic_system_colors',
+      'url': 'https://pub.dev/packages/dynamic_system_colors',
+    },
+    {
+      'name': 'material_color_utilities',
+      'url': 'https://pub.dev/packages/material_color_utilities',
+    },
+    {'name': 'html', 'url': 'https://pub.dev/packages/html'},
+    {
+      'name': 'shared_preferences',
+      'url': 'https://pub.dev/packages/shared_preferences',
+    },
+    {'name': 'url_launcher', 'url': 'https://pub.dev/packages/url_launcher'},
+    {
+      'name': 'permission_handler',
+      'url': 'https://pub.dev/packages/permission_handler',
+    },
+    {'name': 'fluttertoast', 'url': 'https://pub.dev/packages/fluttertoast'},
+    {
+      'name': 'device_info_plus',
+      'url': 'https://pub.dev/packages/device_info_plus',
+    },
+    {
+      'name': 'package_info_plus',
+      'url': 'https://pub.dev/packages/package_info_plus',
+    },
+    {'name': 'animations', 'url': 'https://pub.dev/packages/animations'},
+    {
+      'name': 'android_package_installer',
+      'url': 'https://pub.dev/packages/android_package_installer',
+    },
+    {
+      'name': 'android_package_manager',
+      'url': 'https://pub.dev/packages/android_package_manager',
+    },
+    {'name': 'share_plus', 'url': 'https://pub.dev/packages/share_plus'},
+    {'name': 'sqflite', 'url': 'https://pub.dev/packages/sqflite'},
+    {
+      'name': 'simple_localization',
+      'url': 'https://github.com/omeritzics/simple_localization',
+    },
+    {
+      'name': 'android_intent_plus',
+      'url': 'https://pub.dev/packages/android_intent_plus',
+    },
+    {
+      'name': 'flutter_archive',
+      'url': 'https://pub.dev/packages/flutter_archive',
+    },
+    {'name': 'hsluv', 'url': 'https://pub.dev/packages/hsluv'},
+    {
+      'name': 'connectivity_plus',
+      'url': 'https://pub.dev/packages/connectivity_plus',
+    },
+    {'name': 'docman', 'url': 'https://pub.dev/packages/docman'},
+    {'name': 'crypto', 'url': 'https://pub.dev/packages/crypto'},
+    {'name': 'bcrypt', 'url': 'https://pub.dev/packages/bcrypt'},
+    {'name': 'app_links', 'url': 'https://pub.dev/packages/app_links'},
+    {
+      'name': 'background_fetch',
+      'url': 'https://pub.dev/packages/background_fetch',
+    },
+    {'name': 'equations', 'url': 'https://pub.dev/packages/equations'},
+    {
+      'name': 'flex_color_picker',
+      'url': 'https://pub.dev/packages/flex_color_picker',
+    },
+    {
+      'name': 'android_system_font',
+      'url': 'https://github.com/re7gog/android_system_font',
+    },
+    {
+      'name': 'shizuku_apk_installer',
+      'url': 'https://github.com/re7gog/shizuku_apk_installer',
+    },
+    {'name': 'markdown', 'url': 'https://pub.dev/packages/markdown'},
+    {
+      'name': 'flutter_typeahead',
+      'url': 'https://pub.dev/packages/flutter_typeahead',
+    },
+    {'name': 'battery_plus', 'url': 'https://pub.dev/packages/battery_plus'},
+    {
+      'name': 'flutter_charset_detector',
+      'url': 'https://pub.dev/packages/flutter_charset_detector',
+    },
+    {'name': 'pubspec_parse', 'url': 'https://pub.dev/packages/pubspec_parse'},
+    {
+      'name': 'm3_floating_toolbar',
+      'url': 'https://pub.dev/packages/m3_floating_toolbar',
+    },
+    {
+      'name': 'flutter_foreground_task',
+      'url': 'https://pub.dev/packages/flutter_foreground_task',
+    },
+    {
+      'name': 'flutter_markdown_plus',
+      'url': 'https://pub.dev/packages/flutter_markdown_plus',
+    },
+    {'name': 'path', 'url': 'https://pub.dev/packages/path'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      scrollable: true,
+      title: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            child: Icon(
+              Icons.code_rounded,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+              size: 28,
+            ),
+          ),
+          horizontalGap16,
+          Text(tr('usedOpenSourcePackages')),
+        ],
+      ),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: dependencies.length,
+          itemBuilder: (context, index) {
+            final dep = dependencies[index];
+            return ListTile(
+              dense: true,
+              contentPadding: EdgeInsets.zero,
+              title: Text(
+                dep['name']!,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              trailing: Icon(
+                Icons.open_in_new,
+                size: 16,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              onTap: () {
+                launchUrlString(
+                  dep['url']!,
+                  mode: LaunchMode.externalApplication,
+                );
+              },
+            );
           },
         ),
       ),
@@ -1989,8 +2193,9 @@ class _AboutDialogState extends State<AboutDialog> {
                       ),
                     ),
                     gap12,
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
                       children: [
                         TextButton.icon(
                           onPressed: () {
@@ -2006,7 +2211,6 @@ class _AboutDialogState extends State<AboutDialog> {
                             padding: const EdgeInsets.symmetric(vertical: 8),
                           ),
                         ),
-                        const SizedBox(width: 8),
                         TextButton.icon(
                           onPressed: () {
                             showDialog(
@@ -2018,6 +2222,22 @@ class _AboutDialogState extends State<AboutDialog> {
                           },
                           icon: const Icon(Icons.bug_report_outlined, size: 18),
                           label: Text(tr('appLogs')),
+                          style: TextButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                          ),
+                        ),
+                        TextButton.icon(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext ctx) {
+                                return const OpenSourcePackagesDialog();
+                              },
+                            );
+                          },
+                          icon: const Icon(Icons.code_rounded, size: 18),
+                          label: Text(tr('usedOpenSourcePackages')),
                           style: TextButton.styleFrom(
                             alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.symmetric(vertical: 8),

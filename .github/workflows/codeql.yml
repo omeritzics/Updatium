@@ -71,10 +71,7 @@ jobs:
           cache: true
 
       - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '21'
+        run: sudo apt install default-jre -y
 
       - name: Install dependencies
         run: flutter pub get

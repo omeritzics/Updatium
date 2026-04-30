@@ -11,18 +11,15 @@ class Codeberg extends AppSource {
         gh.additionalSourceAppSpecificSettingFormItems;
     canSearch = true;
     searchQuerySettingFormItems = gh.searchQuerySettingFormItems;
+    openSource = true;
   }
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    RegExp standardUrlRegEx = RegExp(
+    return SourceProvider().standardizeUrlWithRegex(
+      url,
       '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+/[^/]+',
-      caseSensitive: false,
+      sourceName: name,
     );
-    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
-    if (match == null) {
-      throw InvalidURLError(name);
-    }
-    return match.group(0)!;
   }
 
   String? changeLogPageFromStandardUrl(String standardUrl) =>
@@ -37,9 +34,7 @@ class Codeberg extends AppSource {
   }
 
   AppNames getAppNames(String standardUrl) {
-    String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
-    List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
-    return AppNames(names[0], names[1]);
+    return SourceProvider().getAppNamesFromUrl(standardUrl);
   }
 
   @override

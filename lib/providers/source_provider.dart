@@ -8,8 +8,9 @@ import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:simple_localization/simple_localization.dart';
-import 'package:html/dom.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart';
+import 'package:flutter/material.dart';
 import 'package:updatium/app_sources/apkcombo.dart';
 import 'package:updatium/app_sources/apkmirror.dart';
 import 'package:updatium/app_sources/apkpure.dart';
@@ -518,7 +519,7 @@ String preStandardizeUrl(String url) {
 String noAPKFound = tr('noAPKFound');
 
 List<String> getLinksFromParsedHTML(
-  Document dom,
+  dom.Document dom,
   RegExp hrefPattern,
   String prependToLinks,
 ) => dom
@@ -691,6 +692,7 @@ abstract class AppSource {
   List<String> excludeCommonSettingKeys = [];
   bool urlsAlwaysHaveExtension = false;
   bool allowIncludeZips = false;
+  bool openSource = false;
 
   AppSource() {
     name = runtimeType.toString();
@@ -797,23 +799,9 @@ abstract class AppSource {
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
+    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
+    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
     [GeneratedFormSwitch('trackOnly', label: tr('trackOnly'))],
-    [
-      GeneratedFormTextField(
-        'versionExtractionRegEx',
-        label: tr('trimVersionString'),
-        required: false,
-        additionalValidators: [(value) => regExValidator(value)],
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'matchGroupToUse',
-        label: tr('matchGroupToUseForX', args: [tr('trimVersionString')]),
-        required: false,
-        hint: '\$0',
-      ),
-    ],
     [
       GeneratedFormSwitch(
         'versionDetection',
@@ -829,33 +817,12 @@ abstract class AppSource {
       ),
     ],
     [
-      GeneratedFormTextField(
-        'apkFilterRegEx',
-        label: tr('filterAPKsByRegEx'),
-        required: false,
-        additionalValidators: [
-          (value) {
-            return regExValidator(value);
-          },
-        ],
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'invertAPKFilter',
-        label: '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
-        defaultValue: false,
-      ),
-    ],
-    [
       GeneratedFormSwitch(
         'autoApkFilterByArch',
         label: tr('autoApkFilterByArch'),
         defaultValue: true,
       ),
     ],
-    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
-    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
     [
       GeneratedFormSwitch(
         'shizukuPretendToBeGooglePlay',
@@ -894,30 +861,6 @@ abstract class AppSource {
         'fallbackToOlderReleases',
         label: tr('fallbackToOlderReleases'),
         defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'filterReleaseTitlesByRegEx',
-        label: tr('filterReleaseTitlesByRegEx'),
-        required: false,
-        additionalValidators: [
-          (value) {
-            return regExValidator(value);
-          },
-        ],
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'filterReleaseNotesByRegEx',
-        label: tr('filterReleaseNotesByRegEx'),
-        required: false,
-        additionalValidators: [
-          (value) {
-            return regExValidator(value);
-          },
-        ],
       ),
     ],
     [
@@ -977,6 +920,65 @@ abstract class AppSource {
         'releaseTitleAsVersion',
         label: tr('releaseTitleAsVersion'),
         defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'versionExtractionRegEx',
+        label: tr('trimVersionString'),
+        required: false,
+        additionalValidators: [(value) => regExValidator(value)],
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'matchGroupToUse',
+        label: tr('matchGroupToUseForX', args: [tr('trimVersionString')]),
+        required: false,
+        hint: '\$0',
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'apkFilterRegEx',
+        label: tr('filterAPKsByRegEx'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'invertAPKFilter',
+        label: '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'filterReleaseTitlesByRegEx',
+        label: tr('filterReleaseTitlesByRegEx'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'filterReleaseNotesByRegEx',
+        label: tr('filterReleaseNotesByRegEx'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
       ),
     ],
   ];
@@ -1256,6 +1258,9 @@ bool isVersionPseudo(App app) =>
         app.additionalSettings['versionDetection'] != true);
 
 class SourceProvider {
+  // Cache for compiled regex patterns to avoid recreating them on every call
+  final Map<String, RegExp> _regexCache = {};
+
   // Add more source classes here so they are available via the service
   List<AppSource> get sources => [
     GitHub(),
@@ -1351,6 +1356,51 @@ class SourceProvider {
       }
     }
     return false;
+  }
+
+  /// Helper method for common URL standardization pattern
+  /// Matches URL against a regex pattern and returns the matched portion
+  /// Throws InvalidURLError if no match is found
+  /// If transform is provided, applies transformation to the matched URL
+  String standardizeUrlWithRegex(
+    String url,
+    String pattern, {
+    String? sourceName,
+    String Function(String, RegExpMatch)? transform,
+  }) {
+    // Use cached regex if available, otherwise compile and cache it
+    RegExp standardUrlRegEx = _regexCache.putIfAbsent(
+      pattern,
+      () => RegExp(pattern, caseSensitive: false),
+    );
+    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
+    if (match == null) {
+      if (sourceName != null) {
+        throw InvalidURLError(sourceName);
+      }
+      throw UnsupportedURLError();
+    }
+    String result = match.group(0)!;
+    if (transform != null) {
+      result = transform(result, match);
+    }
+    return result;
+  }
+
+  /// Helper method to extract app names from a standard URL
+  /// Assumes format: https://host/author/name or similar
+  /// If nameIndex is null, joins all parts from authorIndex+1 onwards
+  AppNames getAppNamesFromUrl(
+    String standardUrl, {
+    int authorIndex = 0,
+    int? nameIndex,
+  }) {
+    String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
+    List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
+    String name = nameIndex != null
+        ? names[nameIndex]
+        : names.sublist(authorIndex + 1).join('/');
+    return AppNames(names[authorIndex], name);
   }
 
   String generateTempID(
@@ -1615,4 +1665,123 @@ String list2FriendlyString(List<String> list) {
                       : ', '),
             )
             .join('');
+}
+
+/// Reusable widget for selecting a source override
+class SourceOverrideDropdown extends StatefulWidget {
+  final String? selectedOverride;
+  final AppSource? pickedSource;
+  final Function(String?) onSelectionChanged;
+  final TextEditingController controller;
+
+  const SourceOverrideDropdown({
+    super.key,
+    required this.selectedOverride,
+    required this.pickedSource,
+    required this.onSelectionChanged,
+    required this.controller,
+  });
+
+  @override
+  State<SourceOverrideDropdown> createState() => _SourceOverrideDropdownState();
+}
+
+class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
+  late SourceProvider sourceProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    sourceProvider = SourceProvider();
+    _updateController();
+  }
+
+  @override
+  void didUpdateWidget(SourceOverrideDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selectedOverride != widget.selectedOverride) {
+      _updateController();
+    }
+  }
+
+  void _updateController() {
+    if (widget.selectedOverride == null || widget.selectedOverride == '') {
+      widget.controller.text = tr('none');
+      return;
+    }
+    if (sourceProvider.sources.isEmpty) {
+      widget.controller.text = tr('none');
+      return;
+    }
+    AppSource? selectedSource;
+    try {
+      selectedSource = sourceProvider.sources.firstWhere(
+        (s) => s.runtimeType.toString() == widget.selectedOverride,
+      );
+    } catch (e) {
+      selectedSource = null;
+    }
+    if (selectedSource != null) {
+      widget.controller.text = selectedSource.name;
+    } else {
+      widget.controller.text = tr('none');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: MenuAnchor(
+                builder: (context, controller, child) {
+                  return TextField(
+                    controller: widget.controller,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      labelText: tr('overrideSource'),
+                      suffixIcon: const Icon(Icons.arrow_drop_down),
+                    ),
+                    onTap: () {
+                      if (controller.isOpen) {
+                        controller.close();
+                      } else {
+                        controller.open();
+                      }
+                    },
+                  );
+                },
+                menuChildren: [
+                  MenuItemButton(
+                    onPressed: () {
+                      widget.onSelectionChanged(null);
+                    },
+                    child: Text(tr('none')),
+                  ),
+                  ...sourceProvider.sources
+                      .where(
+                        (s) =>
+                            s.allowOverride ||
+                            (widget.pickedSource != null &&
+                                widget.pickedSource.runtimeType ==
+                                    s.runtimeType),
+                      )
+                      .map(
+                        (s) => MenuItemButton(
+                          onPressed: () {
+                            widget.onSelectionChanged(s.runtimeType.toString());
+                          },
+                          child: Text(s.name),
+                        ),
+                      ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 }

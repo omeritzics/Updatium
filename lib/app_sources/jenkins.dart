@@ -12,12 +12,11 @@ class Jenkins extends AppSource {
     showReleaseDateAsVersionToggle = true;
   }
   String trimJobUrl(String url) {
-    RegExp standardUrlRegEx = RegExp('.*/job/[^/]+');
-    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
-    if (match == null) {
-      throw InvalidURLError(name);
-    }
-    return match.group(0)!;
+    return SourceProvider().standardizeUrlWithRegex(
+      url,
+      '.*/job/[^/]+',
+      sourceName: name,
+    );
   }
 
   @override

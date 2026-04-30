@@ -13,15 +13,11 @@ class Aptoide extends AppSource {
   }
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    RegExp standardUrlRegEx = RegExp(
+    return SourceProvider().standardizeUrlWithRegex(
+      url,
       '^https?://([^\\.]+\\.){2,}${getSourceRegex(hosts)}',
-      caseSensitive: false,
+      sourceName: name,
     );
-    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
-    if (match == null) {
-      throw InvalidURLError(name);
-    }
-    return match.group(0)!;
   }
 
   Future<String?> tryInferringAppId(

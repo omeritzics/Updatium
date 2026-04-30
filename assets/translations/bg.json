@@ -194,6 +194,8 @@
     "checkingForUpdatesNotifDescription": "Временно известие, което се появява при проверка за актуализации",
     "pleaseAllowInstallPerm": "Моля, разрешете на Updatium да инсталира приложения",
     "trackOnly": "Само за проследяване",
+    "trusted": "Trusted",
+    "openSource": "Open-source",
     "errorWithHttpStatusCode": "Грешка {}",
     "versionCorrectionDisabled": "Корекцията на версията е деактивирана (плъгинът не работи)",
     "unknown": "Неизвестно",
@@ -373,6 +375,7 @@
     "invertRegEx": "Обръщане на регулярен израз",
     "note": "Бележка",
     "selfHostedNote": "Падащото меню \"{}\" може да се използва за достигане на само- хоствани/персонализирани инстанции на всеки източник.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK не може да бъде анализиран (несъвместим или частично изтегляне)",
     "beforeNewInstallsShareToAppVerifier": "Споделяне на нови приложения с AppVerifier (ако е налично)",
     "appVerifierInstructionToast": "Споделете с AppVerifier, след което се върнете тук, когато сте готови.",
@@ -513,5 +516,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

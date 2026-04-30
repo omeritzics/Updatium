@@ -225,6 +225,8 @@
     "checkingForUpdatesNotifDescription": "Ajutine teavitus, mis ilmub uuendusi kontrollides",
     "pleaseAllowInstallPerm": "Palun lubage Updatiumil äppe installida",
     "trackOnly": "Ainult jälgimine",
+    "trusted": "Trusted",
+    "openSource": "Open-source",
     "errorWithHttpStatusCode": "Viga {}",
     "versionCorrectionDisabled": "Versiooni parandamine keelatud (plugin näib ei töötavat)",
     "unknown": "Tundmatu",
@@ -404,6 +406,7 @@
     "invertRegEx": "Pööra regulaaravaldis ümber",
     "note": "Märkus",
     "selfHostedNote": "\"{}\" rippmenüüd saab kasutada iseseisvate/kohandatud allikate instantsidele juurdepääsuks.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK-d ei suudetud parsida (ühildumatu või osaline allalaadimine)",
     "beforeNewInstallsShareToAppVerifier": "Jaga uusi äppe AppVerifier-iga (kui saadaval)",
     "appVerifierInstructionToast": "Jaga AppVerifier-iga, naaske siia, kui olete valmis.",
@@ -544,5 +547,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

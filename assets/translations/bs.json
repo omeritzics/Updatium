@@ -225,6 +225,8 @@
     "checkingForUpdatesNotifDescription": "Privremeno obavještenje koje se pojavljuje prilikom provjere ažuriranja",
     "pleaseAllowInstallPerm": "Dozvolite Updatiumu da instalira aplikacije",
     "trackOnly": "Samo za praćenje",
+    "trusted": "Trusted",
+    "openSource": "Open-source",
     "errorWithHttpStatusCode": "Greška {}",
     "versionCorrectionDisabled": "Ispravka verzije je onemogućena (izgleda da plugin ne radi)",
     "unknown": "Nepoznato",
@@ -404,6 +406,7 @@
     "invertRegEx": "Obrni regularni izraz",
     "note": "Zabelješke",
     "selfHostedNote": "\"{}\" padajući meni se može koristiti da dosegnete vlastite/prilagođene instance bilo kojeg izvora.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK ne može biti raščlanjen (nekomaptibilno ili delimično preuzimanje)",
     "beforeNewInstallsShareToAppVerifier": "Dijeli nove aplikacije sa AppVerifier-om (ako je dostupno)",
     "appVerifierInstructionToast": "Dijeli sa AppVerifier-om, zatim se vratite kada ste spremni.",
@@ -544,5 +547,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }

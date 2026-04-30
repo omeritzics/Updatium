@@ -12,30 +12,22 @@ class SourceForge extends AppSource {
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     var sourceRegex = getSourceRegex(hosts);
-    RegExp standardUrlRegExC = RegExp(
-      '^https?://(www\\.)?$sourceRegex/p/.+',
-      caseSensitive: false,
+    return SourceProvider().standardizeUrlWithRegex(
+      url,
+      '^https?://(www\\.)?$sourceRegex/(projects/[^/]+/files|p)/.+',
+      sourceName: name,
+      transform: (matched, match) {
+        var uri = Uri.parse(matched);
+        if (uri.pathSegments.first == 'p') {
+          return 'https://${uri.host}/projects/${uri.pathSegments.sublist(1).join('/')}';
+        }
+        if (uri.pathSegments.length == 2 &&
+            uri.pathSegments.first == 'projects') {
+          return '$matched/files';
+        }
+        return matched;
+      },
     );
-    RegExpMatch? match = standardUrlRegExC.firstMatch(url);
-    if (match != null) {
-      url =
-          'https://${Uri.parse(match.group(0)!).host}/projects/${url.substring(Uri.parse(match.group(0)!).host.length + '/projects/'.length + 1)}';
-    }
-    RegExp standardUrlRegExB = RegExp(
-      '^https?://(www\\.)?$sourceRegex/projects/[^/]+',
-    );
-    match = standardUrlRegExB.firstMatch(url);
-    if (match != null && match.group(0) == url) {
-      url = '$url/files';
-    }
-    RegExp standardUrlRegExA = RegExp(
-      '^https?://(www\\.)?$sourceRegex/projects/[^/]+/files(/.+)?',
-    );
-    match = standardUrlRegExA.firstMatch(url);
-    if (match == null) {
-      throw InvalidURLError(name);
-    }
-    return match.group(0)!;
   }
 
   @override

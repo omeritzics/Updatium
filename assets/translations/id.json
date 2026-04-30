@@ -225,6 +225,8 @@
     "checkingForUpdatesNotifDescription": "Notifikasi sementara yang ditampilkan saat memeriksa pembaruan",
     "pleaseAllowInstallPerm": "Harap izinkan Updatium untuk memasang aplikasi",
     "trackOnly": "Pelacakan Saja",
+    "trusted": "Trusted",
+    "openSource": "Open-source",
     "errorWithHttpStatusCode": "Kesalahan {}",
     "versionCorrectionDisabled": "Koreksi versi dinonaktifkan (sepertinya plugin tidak berfungsi)",
     "unknown": "Tidak diketahui",
@@ -404,6 +406,7 @@
     "invertRegEx": "Balikkan ekspresi reguler",
     "note": "Catatan",
     "selfHostedNote": "Dropdown \"{}\" bisa digunakan untuk menjangkau instansi yang dihosting sendiri/kustom dari sumber mana pun.",
+    "openSourceNote": "Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.",
     "badDownload": "APK tidak dapat diurai (tidak kompatibel atau diunduh sebagian)",
     "beforeNewInstallsShareToAppVerifier": "Bagikan aplikasi baru dengan AppVerifier (jika tersedia)",
     "appVerifierInstructionToast": "Bagikan ke AppVerifier, lalu kembali ke sini jika sudah siap.",
@@ -544,5 +547,6 @@
     "fileExistsPrompt": "A file with this name already exists. Please enter a new name for the downloaded file:",
     "fileName": "File name",
     "downloadCancelled": "Download cancelled",
-    "showInFileManager": "Show in file manager"
+    "showInFileManager": "Show in file manager",
+    "usedOpenSourcePackages": "Used open-source packages"
 }
