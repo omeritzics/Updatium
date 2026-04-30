@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Free Disk Space
-        run: sudo apt-get purge php8* llvm* clang* mysql* azure-cli firefox google* libgl* powershell xvfb libclang* libm* libg* python3* -y
+        run: sudo apt-get purge php8* llvm* clang* mysql* azure-cli firefox google* libgl* powershell xvfb libclang* libm* libgh* python3* -y
 
       - name: Checkout Code
         uses: actions/checkout@v6
