@@ -51,7 +51,7 @@ jobs:
         run: dart format .
 
       - name: Commit and Push changes
-        uses: stefanzweifel/git-auto-commit-action@main
+        uses: stefanzweifel/git-auto-commit-action@master
         with:
           commit_message: "style: auto-fix linting and formatting issues"
           branch: ${{ github.ref_name }}
@@ -142,7 +142,7 @@ jobs:
           path: build/app/outputs/flutter-apk/*.apk
 
       - name: Create Release
-        uses: softprops/action-gh-release@main
+        uses: softprops/action-gh-release@master
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           name: "Updatium ${{ steps.version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
