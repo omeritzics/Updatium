@@ -41,7 +41,6 @@ class AddAppPageState extends State<AddAppPage> {
   String userInput = '';
   String searchQuery = '';
   String? pickedSourceOverride;
-  String? previousPickedSourceOverride;
   AppSource? pickedSource;
   Map<String, dynamic> additionalSettings = {};
   bool additionalSettingsValid = true;
@@ -67,7 +66,6 @@ class AddAppPageState extends State<AddAppPage> {
   @override
   void initState() {
     super.initState();
-    _updateSourceOverrideController();
   }
 
   @override
@@ -76,30 +74,6 @@ class AddAppPageState extends State<AddAppPage> {
     super.dispose();
   }
 
-  void _updateSourceOverrideController() {
-    if (pickedSourceOverride == null || pickedSourceOverride == '') {
-      _sourceOverrideController.text = tr('none');
-      return;
-    }
-    if (sourceProvider.sources.isEmpty) {
-      _sourceOverrideController.text = tr('none');
-      return;
-    }
-    AppSource? selectedSource;
-    try {
-      selectedSource = sourceProvider.sources.firstWhere(
-        (s) => s.runtimeType.toString() == pickedSourceOverride,
-      );
-    } catch (e) {
-      // No matching source found
-      selectedSource = null;
-    }
-    if (selectedSource != null) {
-      _sourceOverrideController.text = selectedSource.name;
-    } else {
-      _sourceOverrideController.text = tr('none');
-    }
-  }
 
   void linkFn(String input) {
     try {
@@ -126,12 +100,6 @@ class AddAppPageState extends State<AddAppPage> {
         if (overrideSource != null) {
           pickedSourceOverride = overrideSource;
         }
-        bool overrideChanged =
-            pickedSourceOverride != previousPickedSourceOverride;
-        previousPickedSourceOverride = pickedSourceOverride;
-        if (overrideChanged) {
-          _updateSourceOverrideController();
-        }
         if (updateUrlInput) {
           urlInputKey++;
         }
@@ -150,7 +118,6 @@ class AddAppPageState extends State<AddAppPage> {
           }
         }
         if (pickedSource?.runtimeType != source?.runtimeType ||
-            overrideChanged ||
             (prevHost != null && prevHost != source?.hosts[0])) {
           pickedSource = source;
           pickedSource?.runOnAddAppInputChange(userInput);
@@ -615,63 +582,16 @@ class AddAppPageState extends State<AddAppPage> {
         pickedSource == null &&
         userInput.isEmpty;
 
-    Widget getHTMLSourceOverrideDropdown() => Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: MenuAnchor(
-                builder: (context, controller, child) {
-                  return TextField(
-                    controller: _sourceOverrideController,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      labelText: tr('overrideSource'),
-                      suffixIcon: const Icon(Icons.arrow_drop_down),
-                    ),
-                    onTap: () {
-                      if (controller.isOpen) {
-                        controller.close();
-                      } else {
-                        controller.open();
-                      }
-                    },
-                  );
-                },
-                menuChildren: [
-                  MenuItemButton(
-                    onPressed: () {
-                      setState(() {
-                        pickedSourceOverride = null;
-                      });
-                      changeUserInput(userInput, true, false);
-                    },
-                    child: Text(tr('none')),
-                  ),
-                  ...sourceProvider.sources
-                      .where(
-                        (s) =>
-                            s.allowOverride ||
-                            (pickedSource != null &&
-                                pickedSource.runtimeType == s.runtimeType),
-                      )
-                      .map(
-                        (s) => MenuItemButton(
-                          onPressed: () {
-                            setState(() {
-                              pickedSourceOverride = s.runtimeType.toString();
-                            });
-                            changeUserInput(userInput, true, false);
-                          },
-                          child: Text(s.name),
-                        ),
-                      ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
+    Widget getHTMLSourceOverrideDropdown() => SourceOverrideDropdown(
+      selectedOverride: pickedSourceOverride,
+      pickedSource: pickedSource,
+      onSelectionChanged: (selection) {
+        setState(() {
+          pickedSourceOverride = selection;
+        });
+        changeUserInput(userInput, true, false);
+      },
+      controller: _sourceOverrideController,
     );
 
     Widget getSearchBarRow() => Row(

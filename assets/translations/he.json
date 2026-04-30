@@ -402,7 +402,7 @@
     "foregroundServiceExplanation": "שימוש בשירות חזיתי לבדיקת העדכונים (אמין יותר, צורך יותר חשמל)",
     "fgServiceNotice": "התראה זו נחוצה לבדיקת העדכונים ברקע (ניתן להסתיר אותה בהגדרות מערכת ההפעלה)",
     "excludeSecrets": "החרגת פרטים סודיים",
-    "GHReqPrefix": "דוגמה לבקשות מ־GitHub: ‚omeritzics/Updatium’",
+    "GHReqPrefix": "דוגמה לבקשות מ־GitHub: ‏‚omeritzics/Updatium’",
     "includeZips": "לכלול קובצי ZIP",
     "zippedApkFilterRegEx": "סינון קובצי APK בתוך קובץ ZIP",
     "multipleSigners": "חותמים מרובים",

@@ -41,15 +41,11 @@ class DirectAPKLink extends AppSource {
     if (!forSelection) {
       return url;
     }
-    RegExp standardUrlRegExA = RegExp(
+    return SourceProvider().standardizeUrlWithRegex(
+      url,
       '.+\\.(${source_provider.supportedApkExtensions[0].substring(1)}|${source_provider.supportedApkExtensions[1].substring(1)})\$',
-      caseSensitive: false,
+      sourceName: name,
     );
-    var match = standardUrlRegExA.firstMatch(url);
-    if (match == null) {
-      throw InvalidURLError(name);
-    }
-    return match.group(0)!;
   }
 
   @override
