@@ -33,7 +33,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Java
-        run: sudo apt install default-jre -y
+        run: sudo apt-get install default-jre -y
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2

@@ -38,7 +38,7 @@ jobs:
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Setup Java
-        run: sudo apt install default-jre -y
+        run: sudo apt-get install default-jre -y
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
