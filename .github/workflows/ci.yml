@@ -9,9 +9,16 @@ permissions:
   pull-requests: write
 
 jobs:
-  build:
-    runs-on: ubuntu-24.04
+  build_artifact:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
     steps:
+      - name: Free Disk Space (Ubuntu)
+        run: sudo apt-get purge php8* llvm* clang* mysql* azure-cli firefox google* libgl* powershell xvfb libclang* libm* libg* python3* -y
+
       - name: Checkout Code
         uses: actions/checkout@v6
         with:
@@ -21,24 +28,6 @@ jobs:
       - name: Get Commit SHA
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
-      - name: Cache Flutter dependencies
-        uses: actions/cache@main
-        with:
-          path: |
-            ~/.pub-cache
-            /opt/flutter
-          key: flutter-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
-          restore-keys: |
-            flutter-${{ runner.os }}-
-
-      - name: Cache Gradle dependencies
-        uses: actions/cache@main
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
 
       - name: Setup Java
         run: sudo apt-get install default-jre -y
@@ -66,7 +55,7 @@ jobs:
           sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle || true
           
           # Build the debug APK for the normal flavor
-          flutter build apk --debug --flavor normal --no-pub --tree-shake-icons
+          flutter build apk --debug --flavor normal
           
           mkdir -p build/outputs/artifacts/
           cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
@@ -80,8 +69,8 @@ jobs:
 
   auto_reject_on_failure:
     runs-on: ubuntu-latest
-    needs: build
-    if: failure() && github.event_name == 'pull_request' && needs.build.result == 'failure'
+    needs: build_artifact
+    if: failure() && github.event_name == 'pull_request' && needs.build_artifact.result == 'failure'
     permissions:
       pull-requests: write
       contents: read
@@ -108,7 +97,7 @@ jobs:
             );
             
             // Double-check that the build actually failed by checking job status
-            const buildStatus = '${{ needs.build.result }}';
+            const buildStatus = '${{ needs.build_artifact.result }}';
             console.log(`Build artifact result: ${buildStatus}`);
             
             if (!existingReview && buildStatus === 'failure') {
@@ -127,8 +116,8 @@ jobs:
 
   auto_approve_on_success:
     runs-on: ubuntu-latest
-    needs: build
-    if: success() && github.event_name == 'pull_request' && needs.build.result == 'success'
+    needs: build_artifact
+    if: success() && github.event_name == 'pull_request' && needs.build_artifact.result == 'success'
     permissions:
       pull-requests: write
       contents: read
@@ -155,7 +144,7 @@ jobs:
             );
 
             // Double-check that build actually succeeded
-            const buildStatus = '${{ needs.build.result }}';
+            const buildStatus = '${{ needs.build_artifact.result }}';
             console.log(`Build artifact result: ${buildStatus}`);
 
             for (const review of ciReviews) {
