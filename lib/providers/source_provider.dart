@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:updatium/app_sources/apkcombo.dart';
 import 'package:updatium/app_sources/apkmirror.dart';
 import 'package:updatium/app_sources/apkpure.dart';
+import 'package:updatium/app_sources/openapk.dart';
 import 'package:updatium/app_sources/aptoide.dart';
 import 'package:updatium/app_sources/codeberg.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
@@ -1272,6 +1273,7 @@ class SourceProvider {
     SourceHut(),
     APKCombo(),
     APKPure(),
+    OpenAPK(),
     Aptoide(),
     Uptodown(),
     HuaweiAppGallery(),
