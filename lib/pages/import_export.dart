@@ -784,7 +784,7 @@ class _SelectionModalState extends State<SelectionModal> {
         body: Column(
           children: [
             LinearProgressIndicator(
-              value: 2 / 3,
+              value: 1 / 3,
               backgroundColor: Theme.of(
                 context,
               ).colorScheme.surfaceContainerHighest,
@@ -795,7 +795,7 @@ class _SelectionModalState extends State<SelectionModal> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    tr('selectApps'),
+                    tr('addApp'),
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   Text(

@@ -18,6 +18,7 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:updatium/services/device_admin_service.dart';
+import 'package:updatium/services/dns_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
@@ -997,6 +998,48 @@ class _SettingsPageState extends State<SettingsPage> {
                                       : null,
                                 ),
                               ],
+                            ),
+                            gap16,
+                            GeneratedForm(
+                              items: [
+                                [
+                                  GeneratedFormDropdown(
+                                    'dnsProvider',
+                                    [
+                                      const MapEntry('system', 'System Default'),
+                                      const MapEntry('cloudflare', 'Cloudflare DNS'),
+                                      const MapEntry('quad9', 'Quad9 DNS'),
+                                      const MapEntry('opendns', 'OpenDNS'),
+                                      const MapEntry('mullvad', 'Mullvad DNS'),
+                                    ]
+                                    .map(
+                                      (e) => MapEntry(e.key, tr(e.value)),
+                                    )
+                                    .toList(),
+                                    label: tr('dnsServiceProvider'),
+                                    defaultValue: settingsProvider.dnsServiceProvider.name,
+                                    required: true,
+                                  ),
+                                ],
+                              ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding && valid) {
+                                  final newProvider = DNSServiceProvider.values
+                                      .firstWhere(
+                                        (e) => e.name == values['dnsProvider'],
+                                      );
+                                  settingsProvider.dnsServiceProvider = newProvider;
+                                  // Reinitialize DNS service with new provider
+                                  DNSService().initializeFromSettings(settingsProvider);
+                                }
+                              },
+                            ),
+                            gap8,
+                            Text(
+                              tr('dnsServiceProviderDescription'),
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ],
                         ),
