@@ -61,31 +61,31 @@ class OpenAPK extends AppSource {
       throw getUpdatiumHttpError(res);
     }
     var html = parse(res.body);
-    
+
     // Look for the main download button
     var downloadElement = html.querySelector('a[href*="/apk/download"]');
     if (downloadElement == null) {
       throw NoAPKError();
     }
-    
+
     String? downloadUrl = downloadElement.attributes['href'];
     if (downloadUrl == null) {
       throw NoAPKError();
     }
-    
+
     // Convert relative URL to absolute if needed
     if (downloadUrl.startsWith('/')) {
       downloadUrl = 'https://www.openapk.net$downloadUrl';
     }
-    
+
     // Extract version info from the page
     String? version = html.querySelector('span.text-primary')?.text.trim();
     String? appId = await tryInferringAppId(standardUrl);
-    
-    String fileName = appId != null && version != null 
+
+    String fileName = appId != null && version != null
         ? '$appId-$version.apk'
         : 'app.apk';
-    
+
     return [MapEntry(fileName, downloadUrl)];
   }
 
@@ -112,35 +112,43 @@ class OpenAPK extends AppSource {
     if (appId == null) {
       throw NoVersionError();
     }
-    
+
     var res = await sourceRequest(standardUrl, additionalSettings);
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
     var html = parse(res.body);
-    
+
     // Extract version from the primary version span
     String? version = html.querySelector('span.text-primary')?.text.trim();
     if (version == null || version.isEmpty) {
       // Fallback to specifications section
-      version = html.querySelector('section.specifications .col-4 a[href*="/app/"]')?.text.trim();
+      version = html
+          .querySelector('section.specifications .col-4 a[href*="/app/"]')
+          ?.text
+          .trim();
     }
     if (version == null || version.isEmpty) {
       throw NoVersionError();
     }
-    
+
     // Extract app name from h1
     String? appName = html.querySelector('h1.is-marginless a')?.text.trim();
     if (appName == null || appName.isEmpty) {
       appName = html.querySelector('h1')?.text.trim();
     }
     appName = (appName?.isNotEmpty == true) ? appName! : appId;
-    
+
     // Extract developer/author from specifications
-    String? author = html.querySelector('section.specifications .col-4 span.text-grey')?.text.trim();
+    String? author = html
+        .querySelector('section.specifications .col-4 span.text-grey')
+        ?.text
+        .trim();
     if (author == null || author.isEmpty) {
       // Try to find developer in other locations
-      var developerElements = html.querySelectorAll('section.specifications .col-4');
+      var developerElements = html.querySelectorAll(
+        'section.specifications .col-4',
+      );
       for (var element in developerElements) {
         var boldText = element.querySelector('b')?.text.trim();
         if (boldText?.toLowerCase() == 'developer') {
@@ -150,10 +158,12 @@ class OpenAPK extends AppSource {
       }
     }
     author = (author?.isNotEmpty == true) ? author! : appName;
-    
+
     // Extract release date from specifications
     DateTime? releaseDate;
-    var timeElement = html.querySelector('section.specifications time[datetime]');
+    var timeElement = html.querySelector(
+      'section.specifications time[datetime]',
+    );
     if (timeElement != null) {
       String? dateTimeStr = timeElement.attributes['datetime'];
       if (dateTimeStr != null) {
@@ -169,7 +179,7 @@ class OpenAPK extends AppSource {
         }
       }
     }
-    
+
     return APKDetails(
       version,
       await getApkUrls(standardUrl, additionalSettings),
