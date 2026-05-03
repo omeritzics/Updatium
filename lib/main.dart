@@ -30,7 +30,6 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(
     Locale.fromSubtags(
       languageCode: 'zh',
-      scriptCode: 'Hant',
       countryCode: 'TW',
     ),
     '臺灣話',
