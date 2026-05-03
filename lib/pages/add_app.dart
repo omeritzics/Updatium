@@ -302,7 +302,9 @@ class AddAppPageState extends State<AddAppPage> {
             MaterialPageRoute(
               builder: (context) => AppPage(
                 appId: app!.id,
-                flowType: cameFromSearch ? AppAddFlowType.search : AppAddFlowType.url,
+                flowType: cameFromSearch
+                    ? AppAddFlowType.search
+                    : AppAddFlowType.url,
               ),
             ),
           );

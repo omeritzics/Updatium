@@ -2847,9 +2847,15 @@ class _AppFilePickerState extends State<AppFilePicker> {
     if (widget.pickAnyAsset) {
       urlsToSelectFrom = [...urlsToSelectFrom, ...widget.app.otherAssetUrls];
     }
-    final showProgress = widget.progressIndicatorStep != null && widget.progressIndicatorTotal != null;
-    final progressValue = showProgress ? widget.progressIndicatorStep! / widget.progressIndicatorTotal! : 0.0;
-    final progressText = showProgress ? '${widget.progressIndicatorStep}/${widget.progressIndicatorTotal}' : '';
+    final showProgress =
+        widget.progressIndicatorStep != null &&
+        widget.progressIndicatorTotal != null;
+    final progressValue = showProgress
+        ? widget.progressIndicatorStep! / widget.progressIndicatorTotal!
+        : 0.0;
+    final progressText = showProgress
+        ? '${widget.progressIndicatorStep}/${widget.progressIndicatorTotal}'
+        : '';
 
     return Dialog.fullscreen(
       child: Scaffold(
@@ -2884,7 +2890,9 @@ class _AppFilePickerState extends State<AppFilePicker> {
             if (showProgress)
               LinearProgressIndicator(
                 value: progressValue,
-                backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                backgroundColor: Theme.of(
+                  context,
+                ).colorScheme.surfaceContainerHighest,
               ),
             if (showProgress)
               Padding(
@@ -2912,40 +2920,48 @@ class _AppFilePickerState extends State<AppFilePicker> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     urlsToSelectFrom.length > 1
-                  ? Text(
-                      tr('appHasMoreThanOnePackage', args: [widget.app.finalName]),
-                    )
-                  : const SizedBox.shrink(),
-              const SizedBox(height: 16),
-              RadioGroup<String>(
-                groupValue: fileUrl?.value,
-                onChanged: (String? value) {
-                  setState(() {
-                    fileUrl = urlsToSelectFrom.where((e) => e.value == value).first;
-                  });
-                },
-                child: Column(
-                  children: urlsToSelectFrom
-                      .map(
-                        (u) => RadioListTile<String>(
-                          title: Text(u.key),
-                          value: u.value,
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-              if (widget.archs != null) const SizedBox(height: 16),
-              if (widget.archs != null)
-                Text(
-                  widget.archs!.length == 1
-                      ? tr('deviceSupportsXArch', args: [widget.archs![0]])
-                      : tr('deviceSupportsFollowingArchs') +
-                            list2FriendlyString(
-                              widget.archs!.map((e) => '\'$e\'').toList(),
+                        ? Text(
+                            tr(
+                              'appHasMoreThanOnePackage',
+                              args: [widget.app.finalName],
                             ),
-                  style: const TextStyle(fontSize: 12),
-                ),
+                          )
+                        : const SizedBox.shrink(),
+                    const SizedBox(height: 16),
+                    RadioGroup<String>(
+                      groupValue: fileUrl?.value,
+                      onChanged: (String? value) {
+                        setState(() {
+                          fileUrl = urlsToSelectFrom
+                              .where((e) => e.value == value)
+                              .first;
+                        });
+                      },
+                      child: Column(
+                        children: urlsToSelectFrom
+                            .map(
+                              (u) => RadioListTile<String>(
+                                title: Text(u.key),
+                                value: u.value,
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ),
+                    if (widget.archs != null) const SizedBox(height: 16),
+                    if (widget.archs != null)
+                      Text(
+                        widget.archs!.length == 1
+                            ? tr(
+                                'deviceSupportsXArch',
+                                args: [widget.archs![0]],
+                              )
+                            : tr('deviceSupportsFollowingArchs') +
+                                  list2FriendlyString(
+                                    widget.archs!.map((e) => '\'$e\'').toList(),
+                                  ),
+                        style: const TextStyle(fontSize: 12),
+                      ),
                   ],
                 ),
               ),
