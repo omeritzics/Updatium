@@ -1431,6 +1431,8 @@ class AppsProvider with ChangeNotifier {
     BuildContext? context,
     bool pickAnyAsset, {
     bool evenIfSingleChoice = false,
+    int? progressIndicatorStep,
+    int? progressIndicatorTotal,
   }) async {
     var urlsToSelectFrom = app.apkUrls;
     if (pickAnyAsset) {
@@ -1455,6 +1457,8 @@ class AppsProvider with ChangeNotifier {
             initVal: appFileUrl,
             archs: archs,
             pickAnyAsset: pickAnyAsset,
+            progressIndicatorStep: progressIndicatorStep,
+            progressIndicatorTotal: progressIndicatorTotal,
           );
         },
       );
@@ -2818,12 +2822,16 @@ class AppFilePicker extends StatefulWidget {
     this.initVal,
     this.archs,
     this.pickAnyAsset = false,
+    this.progressIndicatorStep,
+    this.progressIndicatorTotal,
   });
 
   final App app;
   final MapEntry<String, String>? initVal;
   final List<String>? archs;
   final bool pickAnyAsset;
+  final int? progressIndicatorStep;
+  final int? progressIndicatorTotal;
 
   @override
   State<AppFilePicker> createState() => _AppFilePickerState();
@@ -2839,67 +2847,112 @@ class _AppFilePickerState extends State<AppFilePicker> {
     if (widget.pickAnyAsset) {
       urlsToSelectFrom = [...urlsToSelectFrom, ...widget.app.otherAssetUrls];
     }
-    return AlertDialog(
-      scrollable: true,
-      title: Text(
-        widget.pickAnyAsset
-            ? tr('selectX', args: [lowerCaseIfEnglish(tr('releaseAsset'))])
-            : tr('pickAnAPK'),
-      ),
-      content: Column(
-        children: [
-          urlsToSelectFrom.length > 1
-              ? Text(
-                  tr('appHasMoreThanOnePackage', args: [widget.app.finalName]),
-                )
-              : const SizedBox.shrink(),
-          const SizedBox(height: 16),
-          RadioGroup<String>(
-            groupValue: fileUrl?.value,
-            onChanged: (String? value) {
-              setState(() {
-                fileUrl = urlsToSelectFrom.where((e) => e.value == value).first;
-              });
-            },
-            child: Column(
-              children: urlsToSelectFrom
-                  .map(
-                    (u) => RadioListTile<String>(
-                      title: Text(u.key),
-                      value: u.value,
-                    ),
-                  )
-                  .toList(),
-            ),
+    final showProgress = widget.progressIndicatorStep != null && widget.progressIndicatorTotal != null;
+    final progressValue = showProgress ? widget.progressIndicatorStep! / widget.progressIndicatorTotal! : 0.0;
+    final progressText = showProgress ? '${widget.progressIndicatorStep}/${widget.progressIndicatorTotal}' : '';
+
+    return Dialog.fullscreen(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(null),
           ),
-          if (widget.archs != null) const SizedBox(height: 16),
-          if (widget.archs != null)
-            Text(
-              widget.archs!.length == 1
-                  ? tr('deviceSupportsXArch', args: [widget.archs![0]])
-                  : tr('deviceSupportsFollowingArchs') +
-                        list2FriendlyString(
-                          widget.archs!.map((e) => '\'$e\'').toList(),
-                        ),
-              style: const TextStyle(fontSize: 12),
+          title: Text(
+            widget.pickAnyAsset
+                ? tr('selectX', args: [lowerCaseIfEnglish(tr('releaseAsset'))])
+                : tr('pickAnAPK'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(null);
+              },
+              child: Text(tr('cancel')),
             ),
-        ],
+            TextButton(
+              onPressed: () {
+                HapticFeedback.selectionClick();
+                Navigator.of(context).pop(fileUrl);
+              },
+              child: Text(tr('continue')),
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            if (showProgress)
+              LinearProgressIndicator(
+                value: progressValue,
+                backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+              ),
+            if (showProgress)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      tr('confirmAppSelection'),
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    Text(
+                      progressText,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    urlsToSelectFrom.length > 1
+                  ? Text(
+                      tr('appHasMoreThanOnePackage', args: [widget.app.finalName]),
+                    )
+                  : const SizedBox.shrink(),
+              const SizedBox(height: 16),
+              RadioGroup<String>(
+                groupValue: fileUrl?.value,
+                onChanged: (String? value) {
+                  setState(() {
+                    fileUrl = urlsToSelectFrom.where((e) => e.value == value).first;
+                  });
+                },
+                child: Column(
+                  children: urlsToSelectFrom
+                      .map(
+                        (u) => RadioListTile<String>(
+                          title: Text(u.key),
+                          value: u.value,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+              if (widget.archs != null) const SizedBox(height: 16),
+              if (widget.archs != null)
+                Text(
+                  widget.archs!.length == 1
+                      ? tr('deviceSupportsXArch', args: [widget.archs![0]])
+                      : tr('deviceSupportsFollowingArchs') +
+                            list2FriendlyString(
+                              widget.archs!.map((e) => '\'$e\'').toList(),
+                            ),
+                  style: const TextStyle(fontSize: 12),
+                ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop(null);
-          },
-          child: Text(tr('cancel')),
-        ),
-        TextButton(
-          onPressed: () {
-            HapticFeedback.selectionClick();
-            Navigator.of(context).pop(fileUrl);
-          },
-          child: Text(tr('continue')),
-        ),
-      ],
     );
   }
 }

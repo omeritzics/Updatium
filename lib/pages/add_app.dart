@@ -37,6 +37,7 @@ class AddAppPage extends StatefulWidget {
 class AddAppPageState extends State<AddAppPage> {
   bool gettingAppInfo = false;
   bool searching = false;
+  bool cameFromSearch = false;
 
   String userInput = '';
   String searchQuery = '';
@@ -261,6 +262,8 @@ class AddAppPageState extends State<AddAppPage> {
               app,
               context,
               false,
+              progressIndicatorStep: 1,
+              progressIndicatorTotal: cameFromSearch ? 3 : 2,
             );
             if (apkUrl == null) {
               throw UpdatiumError(tr('cancelled'));
@@ -297,7 +300,12 @@ class AddAppPageState extends State<AddAppPage> {
         if (app != null) {
           Navigator.push(
             globalNavigatorKey.currentContext ?? context,
-            MaterialPageRoute(builder: (context) => AppPage(appId: app!.id)),
+            MaterialPageRoute(
+              builder: (context) => AppPage(
+                appId: app!.id,
+                flowType: cameFromSearch ? AppAddFlowType.search : AppAddFlowType.url,
+              ),
+            ),
           );
         }
       } catch (e) {
@@ -559,6 +567,9 @@ class AddAppPageState extends State<AddAppPage> {
                 );
           if (selectedUrls != null && selectedUrls.isNotEmpty) {
             var sourceName = res[selectedUrls[0]]?.key;
+            setState(() {
+              cameFromSearch = true;
+            });
             changeUserInput(
               selectedUrls[0],
               true,

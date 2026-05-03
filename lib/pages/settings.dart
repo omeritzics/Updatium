@@ -517,7 +517,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('updates'),
-                            style: TextStyle(
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: Theme.of(context).colorScheme.primary,
                             ),
@@ -1051,7 +1053,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('sourceSpecific'),
-                            style: TextStyle(
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: Theme.of(context).colorScheme.primary,
                             ),
@@ -1076,7 +1080,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('appearance'),
-                            style: TextStyle(
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: Theme.of(context).colorScheme.primary,
                             ),
@@ -1341,7 +1347,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('categories'),
-                            style: TextStyle(
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: Theme.of(context).colorScheme.primary,
                             ),
