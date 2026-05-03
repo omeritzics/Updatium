@@ -42,6 +42,60 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:android_package_installer/android_package_installer.dart';
 
+/// Cache entry for ETag-based conditional requests
+class _ETagCacheEntry {
+  final String etag;
+  final Response response;
+  final DateTime cachedAt;
+
+  _ETagCacheEntry(this.etag, this.response, this.cachedAt);
+
+  bool get isExpired => DateTime.now().difference(cachedAt) > const Duration(minutes: 5);
+}
+
+/// Simple in-memory cache for API responses with ETag support
+class _ETagResponseCache {
+  final Map<String, _ETagCacheEntry> _cache = {};
+
+  String _cacheKey(String url, Map<String, dynamic>? additionalSettings) {
+    // Include relevant settings that might affect the response
+    final settingsHash = additionalSettings?.toString().hashCode ?? 0;
+    return '$url:${settingsHash.toString()}';
+  }
+
+  String? getETag(String url, Map<String, dynamic>? additionalSettings) {
+    final key = _cacheKey(url, additionalSettings);
+    final entry = _cache[key];
+    if (entry == null || entry.isExpired) {
+      _cache.remove(key);
+      return null;
+    }
+    return entry.etag;
+  }
+
+  Response? getCachedResponse(String url, Map<String, dynamic>? additionalSettings) {
+    final key = _cacheKey(url, additionalSettings);
+    final entry = _cache[key];
+    if (entry == null || entry.isExpired) {
+      _cache.remove(key);
+      return null;
+    }
+    return entry.response;
+  }
+
+  void store(String url, Map<String, dynamic>? additionalSettings, String etag, Response response) {
+    final key = _cacheKey(url, additionalSettings);
+    _cache[key] = _ETagCacheEntry(etag, response, DateTime.now());
+  }
+
+  void clear() {
+    _cache.clear();
+  }
+}
+
+// Global ETag cache instance
+final _etagCache = _ETagResponseCache();
+
 class AppNames {
   late String author;
   late String name;
@@ -760,7 +814,18 @@ abstract class AppSource {
     var requestHeaders = await getRequestHeaders(
       additionalSettingsPlusSourceConfig,
       url,
-    );
+    ) ?? {};
+
+    // ETag-based conditional request optimization
+    // Only for GET requests to API endpoints (not for APK downloads)
+    String? cachedETag;
+    if (method == 'GET' && !_isDownloadUrl(url)) {
+      cachedETag = _etagCache.getETag(url, additionalSettings);
+      if (cachedETag != null) {
+        requestHeaders['If-None-Match'] = cachedETag;
+      }
+    }
+
     var streamedResponseUrlWithResponseAndClient =
         await sourceRequestStreamResponse(
           method,
@@ -770,12 +835,42 @@ abstract class AppSource {
           followRedirects: followRedirects,
           postBody: postBody,
         );
-    return await httpClientResponseStreamToFinalResponse(
+
+    var response = await httpClientResponseStreamToFinalResponse(
       streamedResponseUrlWithResponseAndClient.value.key,
       method,
       streamedResponseUrlWithResponseAndClient.key.toString(),
       streamedResponseUrlWithResponseAndClient.value.value,
     );
+
+    // Handle 304 Not Modified - return cached response
+    if (response.statusCode == 304 && cachedETag != null) {
+      var cachedResponse = _etagCache.getCachedResponse(url, additionalSettings);
+      if (cachedResponse != null) {
+        return cachedResponse;
+      }
+      // If cache miss despite 304, continue with normal handling
+    }
+
+    // Cache successful GET responses with ETag
+    if (method == 'GET' && response.statusCode == 200 && !_isDownloadUrl(url)) {
+      var etag = response.headers['etag'];
+      if (etag != null && etag.isNotEmpty) {
+        _etagCache.store(url, additionalSettings, etag, response);
+      }
+    }
+
+    return response;
+  }
+
+  /// Check if URL is likely an APK/asset download (not an API call)
+  bool _isDownloadUrl(String url) {
+    var lower = url.toLowerCase();
+    return lower.endsWith('.apk') ||
+           lower.endsWith('.xapk') ||
+           lower.endsWith('.zip') ||
+           lower.contains('/download/') ||
+           lower.contains('browser_download_url');
   }
 
   void runOnAddAppInputChange(String inputUrl) {
