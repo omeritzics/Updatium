@@ -1006,18 +1006,29 @@ class _SettingsPageState extends State<SettingsPage> {
                                   GeneratedFormDropdown(
                                     'dnsProvider',
                                     [
-                                      const MapEntry('system', 'System Default'),
-                                      const MapEntry('cloudflare', 'Cloudflare DNS'),
-                                      const MapEntry('quad9', 'Quad9 DNS'),
-                                      const MapEntry('opendns', 'OpenDNS'),
-                                      const MapEntry('mullvad', 'Mullvad DNS'),
-                                    ]
-                                    .map(
-                                      (e) => MapEntry(e.key, tr(e.value)),
-                                    )
-                                    .toList(),
+                                          const MapEntry(
+                                            'system',
+                                            'System Default',
+                                          ),
+                                          const MapEntry(
+                                            'cloudflare',
+                                            'Cloudflare DNS',
+                                          ),
+                                          const MapEntry('quad9', 'Quad9 DNS'),
+                                          const MapEntry('opendns', 'OpenDNS'),
+                                          const MapEntry(
+                                            'mullvad',
+                                            'Mullvad DNS',
+                                          ),
+                                        ]
+                                        .map(
+                                          (e) => MapEntry(e.key, tr(e.value)),
+                                        )
+                                        .toList(),
                                     label: tr('dnsServiceProvider'),
-                                    defaultValue: settingsProvider.dnsServiceProvider.name,
+                                    defaultValue: settingsProvider
+                                        .dnsServiceProvider
+                                        .name,
                                     required: true,
                                   ),
                                 ],
@@ -1028,18 +1039,24 @@ class _SettingsPageState extends State<SettingsPage> {
                                       .firstWhere(
                                         (e) => e.name == values['dnsProvider'],
                                       );
-                                  settingsProvider.dnsServiceProvider = newProvider;
+                                  settingsProvider.dnsServiceProvider =
+                                      newProvider;
                                   // Reinitialize DNS service with new provider
-                                  DNSService().initializeFromSettings(settingsProvider);
+                                  DNSService().initializeFromSettings(
+                                    settingsProvider,
+                                  );
                                 }
                               },
                             ),
                             gap8,
                             Text(
                               tr('dnsServiceProviderDescription'),
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurfaceVariant,
+                                  ),
                             ),
                           ],
                         ),

@@ -2,13 +2,7 @@ import 'package:dns_client/dns_client.dart';
 import 'package:updatium/providers/settings_provider.dart';
 
 /// Supported DNS service providers
-enum DNSProvider {
-  system,
-  cloudflare,
-  quad9,
-  opendns,
-  mullvad,
-}
+enum DNSProvider { system, cloudflare, quad9, opendns, mullvad }
 
 /// Service for DNS resolution operations using dns_client package
 class DNSService {
