@@ -8,6 +8,7 @@ class OpenAPK extends AppSource {
     hosts = ['openapk.net'];
     name = tr('openapk');
     showReleaseDateAsVersionToggle = true;
+    openSource = true;
   }
 
   @override
