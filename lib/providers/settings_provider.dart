@@ -306,10 +306,22 @@ class SettingsProvider with ChangeNotifier {
   }
 
   Locale? get forcedLocale {
-    var flSegs = prefs?.getString('forcedLocale')?.split('-');
-    var fl = flSegs != null && flSegs.isNotEmpty
-        ? Locale(flSegs[0], flSegs.length > 1 ? flSegs[1] : null)
-        : null;
+    var flStr = prefs?.getString('forcedLocale');
+    Locale? fl;
+    if (flStr != null) {
+      var parts = flStr.split('-');
+      if (parts.length >= 3) {
+        fl = Locale.fromSubtags(
+          languageCode: parts[0],
+          scriptCode: parts[1],
+          countryCode: parts[2],
+        );
+      } else if (parts.length == 2) {
+        fl = Locale(parts[0], parts[1]);
+      } else if (parts.length == 1) {
+        fl = Locale(parts[0]);
+      }
+    }
     var set = supportedLocales.where((element) => element.key == fl).isNotEmpty
         ? fl
         : null;
