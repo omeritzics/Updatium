@@ -2881,7 +2881,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
                         list2FriendlyString(
                           widget.archs!.map((e) => '\'$e\'').toList(),
                         ),
-              style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
+              style: const TextStyle(fontSize: 12),
             ),
         ],
       ),
