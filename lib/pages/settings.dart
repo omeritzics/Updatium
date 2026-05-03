@@ -517,12 +517,11 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('updates'),
-                            style: Theme.of(
-                              context,
-                            ).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                           ),
                           initiallyExpanded:
                               settingsProvider.updatesSectionExpanded,
@@ -1070,12 +1069,11 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('sourceSpecific'),
-                            style: Theme.of(
-                              context,
-                            ).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                           ),
                           initiallyExpanded:
                               settingsProvider.sourceSpecificSectionExpanded,
@@ -1097,12 +1095,11 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('appearance'),
-                            style: Theme.of(
-                              context,
-                            ).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                           ),
                           initiallyExpanded:
                               settingsProvider.appearanceSectionExpanded,
@@ -1364,12 +1361,11 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('categories'),
-                            style: Theme.of(
-                              context,
-                            ).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                           ),
                           initiallyExpanded:
                               settingsProvider.categoriesSectionExpanded,
