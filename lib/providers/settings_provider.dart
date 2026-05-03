@@ -25,6 +25,8 @@ enum SortColumnSettings { added, nameAuthor, authorName, releaseDate }
 
 enum SortOrderSettings { ascending, descending }
 
+enum DNSServiceProvider { system, cloudflare, quad9, opendns, mullvad }
+
 class SettingsProvider with ChangeNotifier {
   SharedPreferences? prefs;
   String? defaultAppDir;
@@ -691,6 +693,16 @@ class SettingsProvider with ChangeNotifier {
 
   set preventUninstallation(bool val) {
     prefs?.setBool('preventUninstallation', val);
+    notifyListeners();
+  }
+
+  DNSServiceProvider get dnsServiceProvider {
+    return DNSServiceProvider.values[prefs?.getInt('dnsServiceProvider') ??
+        DNSServiceProvider.system.index];
+  }
+
+  set dnsServiceProvider(DNSServiceProvider provider) {
+    prefs?.setInt('dnsServiceProvider', provider.index);
     notifyListeners();
   }
 }
