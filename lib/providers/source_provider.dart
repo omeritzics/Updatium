@@ -50,7 +50,8 @@ class _ETagCacheEntry {
 
   _ETagCacheEntry(this.etag, this.response, this.cachedAt);
 
-  bool get isExpired => DateTime.now().difference(cachedAt) > const Duration(minutes: 5);
+  bool get isExpired =>
+      DateTime.now().difference(cachedAt) > const Duration(minutes: 5);
 }
 
 /// Simple in-memory cache for API responses with ETag support
@@ -73,7 +74,10 @@ class _ETagResponseCache {
     return entry.etag;
   }
 
-  Response? getCachedResponse(String url, Map<String, dynamic>? additionalSettings) {
+  Response? getCachedResponse(
+    String url,
+    Map<String, dynamic>? additionalSettings,
+  ) {
     final key = _cacheKey(url, additionalSettings);
     final entry = _cache[key];
     if (entry == null || entry.isExpired) {
@@ -83,7 +87,12 @@ class _ETagResponseCache {
     return entry.response;
   }
 
-  void store(String url, Map<String, dynamic>? additionalSettings, String etag, Response response) {
+  void store(
+    String url,
+    Map<String, dynamic>? additionalSettings,
+    String etag,
+    Response response,
+  ) {
     final key = _cacheKey(url, additionalSettings);
     _cache[key] = _ETagCacheEntry(etag, response, DateTime.now());
   }
@@ -811,10 +820,8 @@ abstract class AppSource {
       additionalSettingsPlusSourceConfig,
     );
     var method = postBody == null ? 'GET' : 'POST';
-    var requestHeaders = await getRequestHeaders(
-      additionalSettingsPlusSourceConfig,
-      url,
-    ) ?? {};
+    var requestHeaders =
+        await getRequestHeaders(additionalSettingsPlusSourceConfig, url) ?? {};
 
     // ETag-based conditional request optimization
     // Only for GET requests to API endpoints (not for APK downloads)
@@ -845,7 +852,10 @@ abstract class AppSource {
 
     // Handle 304 Not Modified - return cached response
     if (response.statusCode == 304 && cachedETag != null) {
-      var cachedResponse = _etagCache.getCachedResponse(url, additionalSettings);
+      var cachedResponse = _etagCache.getCachedResponse(
+        url,
+        additionalSettings,
+      );
       if (cachedResponse != null) {
         return cachedResponse;
       }
@@ -867,10 +877,10 @@ abstract class AppSource {
   bool _isDownloadUrl(String url) {
     var lower = url.toLowerCase();
     return lower.endsWith('.apk') ||
-           lower.endsWith('.xapk') ||
-           lower.endsWith('.zip') ||
-           lower.contains('/download/') ||
-           lower.contains('browser_download_url');
+        lower.endsWith('.xapk') ||
+        lower.endsWith('.zip') ||
+        lower.contains('/download/') ||
+        lower.contains('browser_download_url');
   }
 
   void runOnAddAppInputChange(String inputUrl) {
