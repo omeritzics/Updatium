@@ -70,7 +70,6 @@ void showChangeLogDialog(
                   changesUrl,
                   style: const TextStyle(
                     decoration: TextDecoration.underline,
-                    fontStyle: FontStyle.italic,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -1273,7 +1272,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               tr('onlyWorksWithNonVersionDetectApps'),
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
               ),
             ),
             actions: [

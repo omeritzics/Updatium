@@ -554,7 +554,6 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     tr('importedAppsIdDisclaimer'),
                     textAlign: TextAlign.start,
                     style: const TextStyle(
-                      fontStyle: FontStyle.italic,
                       fontSize: 12,
                     ),
                   ),
@@ -621,7 +620,6 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
                 Text(
                   e[1],
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontStyle: FontStyle.italic,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                   maxLines: 3,
@@ -744,42 +742,102 @@ class _SelectionModalState extends State<SelectionModal> {
             );
     }
 
-    return AlertDialog(
-      scrollable: true,
-      title: Text(widget.title ?? tr('pick')),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: TextFormField(
-              controller: _filterController,
-              decoration: InputDecoration(
-                labelText: tr('filter'),
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: _filterController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          setState(() {
-                            _filterController.clear();
-                            filterRegex = '';
-                          });
-                        },
-                      )
-                    : null,
-                border: const OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  filterRegex = value;
-                });
-              },
-              validator: regExValidator,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-            ),
+    return Dialog.fullscreen(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          if (widget.onlyOneSelectionAllowed)
+          title: Text(widget.title ?? tr('pick')),
+          actions: [
+            getSelectAllButton(),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(tr('cancel')),
+            ),
+            TextButton(
+              onPressed: entrySelections.values.every((v) => v == false)
+                  ? null
+                  : () {
+                      Navigator.of(context).pop(
+                        entrySelections.entries
+                            .where((entry) => entry.value)
+                            .map((e) => e.key.key)
+                            .toList(),
+                      );
+                    },
+              child: Text(
+                widget.onlyOneSelectionAllowed
+                    ? tr('pick')
+                    : tr(
+                        'selectX',
+                        args: [
+                          entrySelections.values.where((b) => b).length.toString(),
+                        ],
+                      ),
+              ),
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            LinearProgressIndicator(
+              value: 2 / 3,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    tr('selectApps'),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  Text(
+                    '2/3',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: TextFormField(
+                controller: _filterController,
+                decoration: InputDecoration(
+                  labelText: tr('filter'),
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: _filterController.text.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            setState(() {
+                              _filterController.clear();
+                              filterRegex = '';
+                            });
+                          },
+                        )
+                      : null,
+                  border: const OutlineInputBorder(),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    filterRegex = value;
+                  });
+                },
+                validator: regExValidator,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    if (widget.onlyOneSelectionAllowed)
             RadioGroup<String>(
               groupValue: entrySelections.entries
                   .where((e) => e.value)
@@ -836,7 +894,6 @@ class _SelectionModalState extends State<SelectionModal> {
                               ? '${entry.value[1].substring(0, 128)}...'
                               : entry.value[1],
                           style: const TextStyle(
-                            fontStyle: FontStyle.italic,
                             fontSize: 12,
                           ),
                           maxLines: 3,
@@ -908,7 +965,6 @@ class _SelectionModalState extends State<SelectionModal> {
                           ? '${entry.value[1].substring(0, 128)}...'
                           : entry.value[1],
                       style: const TextStyle(
-                        fontStyle: FontStyle.italic,
                         fontSize: 12,
                       ),
                       maxLines: 3,
@@ -923,37 +979,13 @@ class _SelectionModalState extends State<SelectionModal> {
                 controlAffinity: ListTileControlAffinity.leading,
               );
             }),
-        ],
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      actions: [
-        getSelectAllButton(),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(tr('cancel')),
-        ),
-        TextButton(
-          onPressed: entrySelections.values.every((v) => v == false)
-              ? null
-              : () {
-                  Navigator.of(context).pop(
-                    entrySelections.entries
-                        .where((entry) => entry.value)
-                        .map((e) => e.key.key)
-                        .toList(),
-                  );
-                },
-          child: Text(
-            widget.onlyOneSelectionAllowed
-                ? tr('pick')
-                : tr(
-                    'selectX',
-                    args: [
-                      entrySelections.values.where((b) => b).length.toString(),
-                    ],
-                  ),
-          ),
-        ),
-      ],
     );
   }
 }
