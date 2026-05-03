@@ -29,10 +29,13 @@ const horizontalGap12 = SizedBox(width: 12);
 const horizontalGap16 = SizedBox(width: 16);
 const horizontalGap24 = SizedBox(width: 24);
 
+enum AppAddFlowType { none, search, url }
+
 class AppPage extends StatefulWidget {
-  const AppPage({super.key, required this.appId});
+  const AppPage({super.key, required this.appId, this.flowType = AppAddFlowType.none});
 
   final String appId;
+  final AppAddFlowType flowType;
 
   @override
   State<AppPage> createState() => _AppPageState();
@@ -392,25 +395,130 @@ class _AppPageState extends State<AppPage> {
             return row;
           }).toList();
 
-          return AlertDialog(
-            scrollable: true,
-            title: Text(tr('additionalOptions')),
-            content: GeneratedForm(
-              items: items,
-              onValueChanges: (vals, valid, isBuilding) {
-                localValues = vals;
-              },
+          return Dialog.fullscreen(
+            child: Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => Navigator.of(ctx).pop(null),
+                ),
+                title: Text(tr('editApp')),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(ctx).pop(null),
+                    child: Text(tr('cancel')),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(ctx).pop(localValues),
+                    child: Text(tr('save')),
+                  ),
+                ],
+              ),
+              body: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      tr('basicInfo'),
+                      style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
+                        color: Theme.of(ctx).colorScheme.primary,
+                      ),
+                    ),
+                    gap16,
+                    GeneratedForm(
+                      items: [
+                        [
+                          GeneratedFormTextField(
+                            'appName',
+                            label: tr('appName'),
+                            defaultValue: app.app.name,
+                            required: true,
+                          ),
+                        ],
+                        [
+                          GeneratedFormTextField(
+                            'appAuthor',
+                            label: tr('appAuthor'),
+                            defaultValue: app.app.author,
+                            required: true,
+                          ),
+                        ],
+                        [
+                          GeneratedFormTextField(
+                            'appId',
+                            label: tr('appId'),
+                            defaultValue: app.app.id,
+                            required: true,
+                            additionalValidators: [
+                              (value) {
+                                if (value == null || value.isEmpty) {
+                                  return tr('required');
+                                }
+                                final isValid = RegExp(
+                                  r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+                                ).hasMatch(value);
+                                if (!isValid) {
+                                  return tr('invalidInput');
+                                }
+                                return null;
+                              },
+                            ],
+                          ),
+                        ],
+                        [
+                          GeneratedFormTextField(
+                            'appSourceURL',
+                            label: tr('appSourceURL'),
+                            defaultValue: app.app.url,
+                            required: true,
+                          ),
+                        ],
+                        [
+                          GeneratedFormSwitch(
+                            'pinned',
+                            label: tr('pinned'),
+                            defaultValue: app.app.pinned,
+                          ),
+                        ],
+                      ],
+                      onValueChanges: (vals, valid, isBuilding) {
+                        localValues.addAll(vals);
+                      },
+                    ),
+                    gap24,
+                    Text(
+                      tr('sourceOptions'),
+                      style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
+                        color: Theme.of(ctx).colorScheme.primary,
+                      ),
+                    ),
+                    gap16,
+                    GeneratedForm(
+                      items: items,
+                      onValueChanges: (vals, valid, isBuilding) {
+                        localValues.addAll(vals);
+                      },
+                    ),
+                    gap24,
+                    Text(
+                      tr('categories'),
+                      style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
+                        color: Theme.of(ctx).colorScheme.primary,
+                      ),
+                    ),
+                    gap16,
+                    CategorySelector(
+                      alignment: WrapAlignment.start,
+                      preselected: app.app.categories?.toSet() ?? {},
+                      onSelected: (categories) {
+                        localValues['categories'] = categories;
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(null),
-                child: Text(tr('cancel')),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(localValues),
-                child: Text(tr('ok')),
-              ),
-            ],
           );
         },
       );
@@ -418,8 +526,42 @@ class _AppPageState extends State<AppPage> {
 
     handleAdditionalOptionChanges(Map<String, dynamic>? values) {
       if (values != null) {
-        Map<String, dynamic> originalSettings = app.app.additionalSettings;
-        app.app.additionalSettings = values;
+        // Handle basic app info changes
+        if (values['appName'] != null) {
+          app.app.name = values['appName'];
+        }
+        if (values['appAuthor'] != null) {
+          app.app.author = values['appAuthor'];
+        }
+        if (values['appId'] != null && values['appId'] != app.app.id) {
+          // ID change requires special handling - need to update the map key
+          var newId = values['appId'] as String;
+          if (!appsProvider.apps.containsKey(newId)) {
+            app.app.id = newId;
+            app.app.allowIdChange = true;
+          }
+        }
+        if (values['appSourceURL'] != null) {
+          app.app.url = values['appSourceURL'];
+        }
+        if (values['pinned'] != null) {
+          app.app.pinned = values['pinned'] == true;
+        }
+        if (values['categories'] != null) {
+          app.app.categories = values['categories'] as List<String>;
+        }
+
+        // Handle additional settings
+        Map<String, dynamic> originalSettings = Map.from(app.app.additionalSettings);
+        var sourceItems = source?.combinedAppSpecificSettingFormItems ?? [];
+        for (var row in sourceItems) {
+          for (var item in row) {
+            if (values[item.key] != null) {
+              app.app.additionalSettings[item.key] = values[item.key];
+            }
+          }
+        }
+
         if (source?.enforceTrackOnly == true) {
           app.app.additionalSettings['trackOnly'] = true;
           // ignore: use_build_context_synchronously
