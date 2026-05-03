@@ -259,10 +259,12 @@ class FDroid extends AppSource {
     List<String> apkUrls = releaseChoices
         .map((e) => '${apkUrlPrefix}_${e['versionCode']}.apk')
         .toList();
+    // Extract author from API response or fall back to source name
+    String author = response['authorName'] ?? sourceName;
     return APKDetails(
       version,
       getApkUrlsFromUrls(apkUrls.toSet().toList()),
-      AppNames(sourceName, Uri.parse(standardUrl).pathSegments.last),
+      AppNames(author, Uri.parse(standardUrl).pathSegments.last),
     );
   }
 }
