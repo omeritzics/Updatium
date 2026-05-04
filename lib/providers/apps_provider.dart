@@ -1664,7 +1664,7 @@ class AppsProvider with ChangeNotifier {
           if (!isBinderRunning) {
             throw UpdatiumError(tr('shizukuBinderNotFound'));
           }
-          
+
           bool hasPermission = await shizukuApi.checkPermission() ?? false;
           if (!hasPermission) {
             throw UpdatiumError(tr('cancelled'));

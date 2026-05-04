@@ -923,31 +923,33 @@ class _SettingsPageState extends State<SettingsPage> {
                                   value: settingsProvider.useShizuku,
                                   onChanged: (useShizuku) {
                                     if (useShizuku) {
-                                      ShizukuApi()
-                                          .pingBinder()
-                                          .then((isBinderRunning) async {
-                                            if (isBinderRunning != true) {
-                                              showError(
-                                                UpdatiumError(
-                                                  tr('shizukuBinderNotFound'),
-                                                ),
-                                                context,
-                                              );
-                                              settingsProvider.useShizuku = false;
-                                              return;
-                                            }
-                                            
-                                            bool hasPermission = await ShizukuApi().checkPermission() ?? false;
-                                            settingsProvider.useShizuku = hasPermission;
-                                            if (!hasPermission) {
-                                              showError(
-                                                UpdatiumError(
-                                                  tr('cancelled'),
-                                                ),
-                                                context,
-                                              );
-                                            }
-                                          });
+                                      ShizukuApi().pingBinder().then((
+                                        isBinderRunning,
+                                      ) async {
+                                        if (isBinderRunning != true) {
+                                          showError(
+                                            UpdatiumError(
+                                              tr('shizukuBinderNotFound'),
+                                            ),
+                                            context,
+                                          );
+                                          settingsProvider.useShizuku = false;
+                                          return;
+                                        }
+
+                                        bool hasPermission =
+                                            await ShizukuApi()
+                                                .checkPermission() ??
+                                            false;
+                                        settingsProvider.useShizuku =
+                                            hasPermission;
+                                        if (!hasPermission) {
+                                          showError(
+                                            UpdatiumError(tr('cancelled')),
+                                            context,
+                                          );
+                                        }
+                                      });
                                     } else {
                                       settingsProvider.useShizuku = false;
                                     }

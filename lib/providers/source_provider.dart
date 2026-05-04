@@ -1712,8 +1712,7 @@ class DowngradeError extends UpdatiumError {
 }
 
 class InstallError extends UpdatiumError {
-  InstallError(int code)
-    : super('Installation failed with code: $code');
+  InstallError(int code) : super('Installation failed with code: $code');
 }
 
 class IDChangedError extends UpdatiumError {
