@@ -1843,7 +1843,8 @@ class OpenSourcePackagesDialog extends StatefulWidget {
   const OpenSourcePackagesDialog({super.key});
 
   @override
-  State<OpenSourcePackagesDialog> createState() => _OpenSourcePackagesDialogState();
+  State<OpenSourcePackagesDialog> createState() =>
+      _OpenSourcePackagesDialogState();
 }
 
 class _OpenSourcePackagesDialogState extends State<OpenSourcePackagesDialog> {
@@ -1854,16 +1855,16 @@ class _OpenSourcePackagesDialogState extends State<OpenSourcePackagesDialog> {
       final String pubspecString = await rootBundle.loadString('pubspec.yaml');
       final YamlMap pubspecYaml = loadYaml(pubspecString);
       final YamlMap? dependencies = pubspecYaml['dependencies'] as YamlMap?;
-      
+
       if (dependencies == null) return [];
 
       final List<Map<String, String>> deps = [];
-      
+
       dependencies.forEach((key, value) {
         if (key == 'flutter') return; // Skip flutter SDK
-        
+
         String url = '';
-        
+
         if (value is String) {
           // Simple version constraint
           url = 'https://pub.dev/packages/$key';
@@ -1882,16 +1883,13 @@ class _OpenSourcePackagesDialogState extends State<OpenSourcePackagesDialog> {
           // Default case
           url = 'https://pub.dev/packages/$key';
         }
-        
-        deps.add({
-          'name': key.toString(),
-          'url': url,
-        });
+
+        deps.add({'name': key.toString(), 'url': url});
       });
-      
+
       // Sort by name for consistent ordering
       deps.sort((a, b) => a['name']!.compareTo(b['name']!));
-      
+
       return deps;
     } catch (e) {
       // Fallback to empty list if parsing fails
