@@ -105,7 +105,8 @@ class Gitea extends AppSource {
     for (var element in repos) {
       var fullName = element['full_name'] as String?;
       var name = element['name'] as String? ?? '';
-      var description = element['description'] as String? ?? tr('noDescription');
+      var description =
+          element['description'] as String? ?? tr('noDescription');
       if (fullName != null) {
         results['https://${hosts[0]}/$fullName'] = [name, description];
       }
@@ -136,8 +137,7 @@ class Gitea extends AppSource {
     bool includePrereleases = additionalSettings['includePrereleases'] == true;
 
     // Get releases from Gitea API
-    var url =
-        'https://${hosts[0]}/api/v1/repos/$owner/$repo/releases';
+    var url = 'https://${hosts[0]}/api/v1/repos/$owner/$repo/releases';
     Response res = await sourceRequest(url, additionalSettings);
 
     if (res.statusCode != 200) {
@@ -167,7 +167,8 @@ class Gitea extends AppSource {
       throw NoReleasesError();
     }
 
-    String version = targetRelease['tag_name'] ?? targetRelease['name'] ?? 'unknown';
+    String version =
+        targetRelease['tag_name'] ?? targetRelease['name'] ?? 'unknown';
 
     // Extract APK URLs from release attachments
     List<MapEntry<String, String>> apkUrls = [];
@@ -216,7 +217,8 @@ class Gitea extends AppSource {
 
     // Parse release date
     DateTime? releaseDate;
-    var createdAt = targetRelease['created_at'] ?? targetRelease['published_at'];
+    var createdAt =
+        targetRelease['created_at'] ?? targetRelease['published_at'];
     if (createdAt != null) {
       try {
         releaseDate = DateTime.parse(createdAt as String);
