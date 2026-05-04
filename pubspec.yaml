@@ -80,7 +80,7 @@ dependencies:
   flutter_charset_detector: ^5.0.0
   pubspec_parse: ^1.4.0
   m3_floating_toolbar: ^0.1.0
-  dns_client: any
+  dns_client: ^1.3.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
