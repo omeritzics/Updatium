@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:updatium/app_sources/apkcombo.dart';
 import 'package:updatium/app_sources/apkmirror.dart';
 import 'package:updatium/app_sources/apkpure.dart';
+import 'package:updatium/app_sources/bitbucket.dart';
 import 'package:updatium/app_sources/openapk.dart';
 import 'package:updatium/app_sources/aptoide.dart';
 import 'package:updatium/app_sources/codeberg.dart';
@@ -1266,6 +1267,7 @@ class SourceProvider {
   List<AppSource> get sources => [
     GitHub(),
     GitLab(),
+    Bitbucket(),
     Codeberg(),
     FDroid(),
     FDroidRepo(),
