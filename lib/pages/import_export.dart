@@ -798,12 +798,6 @@ class _SelectionModalState extends State<SelectionModal> {
                     tr('addApp'),
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  Text(
-                    '2/3',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                  ),
                 ],
               ),
             ),
