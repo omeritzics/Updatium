@@ -96,22 +96,6 @@ jobs:
           chmod 600 android/key.properties
           echo "Created keystore properties file with restricted permissions"
 
-      - name: Verify key.properties
-        run: |
-          echo "=== key.properties content ==="
-          cat android/key.properties
-          echo "=== End of key.properties ==="
-          echo "Environment variables check:"
-          echo "KEYSTORE_PASSWORD length: ${{ secrets.KEYSTORE_PASSWORD != '' && secrets.KEYSTORE_PASSWORD != '0' }}"
-          echo "KEY_PASSWORD length: ${{ secrets.KEY_PASSWORD != '' && secrets.KEY_PASSWORD != '0' }}"
-          echo "KEY_ALIAS length: ${{ secrets.KEY_ALIAS != '' && secrets.KEY_ALIAS != '0' }}"
-          echo "KEYSTORE_PASSWORD is set: ${{ secrets.KEYSTORE_PASSWORD != '' }}"
-          echo "KEY_PASSWORD is set: ${{ secrets.KEY_PASSWORD != '' }}"
-          echo "KEY_ALIAS is set: ${{ secrets.KEY_ALIAS != '' }}"
-          echo "KEYSTORE_PASSWORD value: '${{ secrets.KEYSTORE_PASSWORD }}'"
-          echo "KEY_PASSWORD value: '${{ secrets.KEY_PASSWORD }}'"
-          echo "KEY_ALIAS value: '${{ secrets.KEY_ALIAS }}'"
-
       - name: Verify Keystore
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
