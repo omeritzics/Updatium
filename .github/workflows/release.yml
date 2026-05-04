@@ -100,14 +100,15 @@ jobs:
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
+          set -o pipefail
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
-          echo "=== Keystore contents ==="
-          if ! keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null; then
+          if keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null | grep -qi "signature algorithm name"; then
+            echo "Keystore verification successful"
+          else
             echo "ERROR: Keystore verification failed - aborting build"
             exit 1
           fi
-          echo "Keystore verification successful"
 
       - name: Build APKs (Release Mode)
         run: |
