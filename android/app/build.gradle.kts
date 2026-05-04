@@ -1,6 +1,5 @@
 import java.io.FileInputStream
 import java.util.Properties
-import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 
 plugins {
     id("com.android.application")
@@ -49,7 +48,6 @@ android {
         targetSdk = 36
         versionCode = flutterVersionCode.toInt()
         versionName = flutterVersionName
-        useVersionCodeAsOSVersion = true
     }
 
     flavorDimensions += "default"
