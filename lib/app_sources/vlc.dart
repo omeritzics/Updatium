@@ -42,16 +42,16 @@ class VLC extends AppSource {
     }
 
     // Extract all versions and sort them
-    List<String> versions =
-        matches.map((m) => m.group(1)!).toList()..sort((a, b) {
-          var aParts = a.split('.').map(int.parse).toList();
-          var bParts = b.split('.').map(int.parse).toList();
-          for (int i = 0; i < aParts.length && i < bParts.length; i++) {
-            var cmp = bParts[i].compareTo(aParts[i]);
-            if (cmp != 0) return cmp;
-          }
-          return bParts.length.compareTo(aParts.length);
-        });
+    List<String> versions = matches.map((m) => m.group(1)!).toList()
+      ..sort((a, b) {
+        var aParts = a.split('.').map(int.parse).toList();
+        var bParts = b.split('.').map(int.parse).toList();
+        for (int i = 0; i < aParts.length && i < bParts.length; i++) {
+          var cmp = bParts[i].compareTo(aParts[i]);
+          if (cmp != 0) return cmp;
+        }
+        return bParts.length.compareTo(aParts.length);
+      });
 
     var latestVersion = versions.first;
     var versionUrl = '$baseUrl$latestVersion/';
@@ -65,10 +65,7 @@ class VLC extends AppSource {
     var versionBody = versionRes.body;
 
     // Look for APK files - VLC typically has multiple variants
-    var apkRegex = RegExp(
-      r'href="([^"]*\.apk)"',
-      caseSensitive: false,
-    );
+    var apkRegex = RegExp(r'href="([^"]*\.apk)"', caseSensitive: false);
     var apkMatches = apkRegex.allMatches(versionBody);
 
     if (apkMatches.isEmpty) {
@@ -85,9 +82,7 @@ class VLC extends AppSource {
     // Try to get release date from the page
     DateTime? releaseDate;
     try {
-      var dateRegex = RegExp(
-        r'<td[^>]*>\s*([0-9]{4}-[0-9]{2}-[0-9]{2})',
-      );
+      var dateRegex = RegExp(r'<td[^>]*>\s*([0-9]{4}-[0-9]{2}-[0-9]{2})');
       var dateMatch = dateRegex.firstMatch(versionBody);
       if (dateMatch != null) {
         releaseDate = DateTime.parse(dateMatch.group(1)!);
