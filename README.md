@@ -21,9 +21,7 @@ Update your Android apps directly from the APK source. Updatium is a customizabl
 | ![SourceHut favicon](https://www.google.com/s2/favicons?sz=16&domain=sourcehut.org) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=16&domain=rustore.ru) [RuStore](https://rustore.ru/) | |
 | ![OpenAPK favicon](https://www.google.com/s2/favicons?sz=16&domain=openapk.net) [OpenAPK (Nightly builds only)](https://www.openapk.net/) | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
 | ![Bitbucket favicon](https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org) [Bitbucket (Nightly builds only)](https://www.bitbucket.org) | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror](https://apkmirror.com/) | |
-| ![OpenAPK favicon](https://www.google.com/s2/favicons?sz=16&domain=openapk.net) [OpenAPK](https://www.openapk.net/) | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
-| | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror](https://apkmirror.com/) | |
-| ![Gitea favicon](https://www.google.com/s2/favicons?sz=16&domain=try.gitea.io) [Gitea (Nightly builds only)](https://try.gitea.io/) | | |
+| ![Gitea favicon](https://www.google.com/s2/favicons?sz=16&domain=try.gitea.io) [Gitea (Nightly builds only)](https://try.gitea.io/) | |
 
 ### Improved Design
 
