@@ -1,4 +1,4 @@
-name: Build and Release Qama
+name: Build and Release Updatium 'Qama'
 
 permissions:
   contents: write
@@ -12,25 +12,33 @@ on:
         default: false
 
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
-
+    outputs:
+      has_changes: ${{ steps.changes.outputs.has_changes }}
     steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: true
-          android: false
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
-          
       - name: Checkout Code
         uses: actions/checkout@main
         with:
           fetch-depth: 0
+
+      - name: Cache Flutter dependencies
+        uses: actions/cache@main
+        with:
+          path: |
+            ~/.pub-cache
+            /opt/flutter
+          key: flutter-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: |
+            flutter-${{ runner.os }}-
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@main
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
 
       - name: Setup Java
         run: sudo apt install default-jre -y
@@ -44,17 +52,78 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
         
+      - name: Check for code changes
+        id: changes
+        run: |
+          if git diff --quiet HEAD~1 HEAD; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+        
       - name: Auto-fix linting issues
+        if: steps.changes.outputs.has_changes == 'true'
         run: dart fix --apply
 
       - name: Format code
+        if: steps.changes.outputs.has_changes == 'true'
         run: dart format .
 
       - name: Commit and Push changes
+        if: steps.changes.outputs.has_changes == 'true'
         uses: stefanzweifel/git-auto-commit-action@master
         with:
           commit_message: "style: auto-fix linting and formatting issues"
           branch: ${{ github.ref_name }}
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: false
+          dotnet: false
+          haskell: false
+          large-packages: false
+          docker-images: true
+          
+      - name: Checkout Code
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: Cache Flutter dependencies
+        uses: actions/cache@main
+        with:
+          path: |
+            ~/.pub-cache
+            /opt/flutter
+          key: flutter-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: |
+            flutter-${{ runner.os }}-
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@main
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+
+      - name: Setup Java
+        run: sudo apt-get install default-jre -y
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@main
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
           
       - name: Generate Version
         id: version
@@ -96,34 +165,19 @@ jobs:
           chmod 600 android/key.properties
           echo "Created keystore properties file with restricted permissions"
 
-      - name: Verify key.properties
-        run: |
-          echo "=== key.properties content ==="
-          cat android/key.properties
-          echo "=== End of key.properties ==="
-          echo "Environment variables check:"
-          echo "KEYSTORE_PASSWORD length: ${{ secrets.KEYSTORE_PASSWORD != '' && secrets.KEYSTORE_PASSWORD != '0' }}"
-          echo "KEY_PASSWORD length: ${{ secrets.KEY_PASSWORD != '' && secrets.KEY_PASSWORD != '0' }}"
-          echo "KEY_ALIAS length: ${{ secrets.KEY_ALIAS != '' && secrets.KEY_ALIAS != '0' }}"
-          echo "KEYSTORE_PASSWORD is set: ${{ secrets.KEYSTORE_PASSWORD != '' }}"
-          echo "KEY_PASSWORD is set: ${{ secrets.KEY_PASSWORD != '' }}"
-          echo "KEY_ALIAS is set: ${{ secrets.KEY_ALIAS != '' }}"
-          echo "KEYSTORE_PASSWORD value: '${{ secrets.KEYSTORE_PASSWORD }}'"
-          echo "KEY_PASSWORD value: '${{ secrets.KEY_PASSWORD }}'"
-          echo "KEY_ALIAS value: '${{ secrets.KEY_ALIAS }}'"
-
       - name: Verify Keystore
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
+          set -o pipefail
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
-          echo "=== Keystore contents ==="
-          if ! keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null; then
+          if keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null | grep -qi "signature algorithm name"; then
+            echo "Keystore verification successful"
+          else
             echo "ERROR: Keystore verification failed - aborting build"
             exit 1
           fi
-          echo "Keystore verification successful"
 
       - name: Build APKs (Release Mode)
         run: |
