@@ -30,6 +30,7 @@ import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/app_sources/jenkins.dart';
 import 'package:updatium/app_sources/neutroncode.dart';
 import 'package:updatium/app_sources/rustore.dart';
+import 'package:updatium/app_sources/signal.dart';
 import 'package:updatium/app_sources/sourceforge.dart';
 import 'package:updatium/app_sources/sourcehut.dart';
 import 'package:updatium/app_sources/telegramapp.dart';
@@ -37,6 +38,7 @@ import 'package:updatium/app_sources/tencent.dart';
 import 'package:updatium/app_sources/whatsapp.dart';
 import 'package:updatium/app_sources/uptodown.dart';
 import 'package:updatium/app_sources/vivoappstore.dart';
+import 'package:updatium/app_sources/vlc.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -1395,6 +1397,8 @@ class SourceProvider {
     WhatsAppApp(),
     NeutronCode(),
     DirectAPKLink(),
+    Signal(),
+    VLC(),
     HTML(), // This should ALWAYS be the last option as they are tried in order
   ];
 
