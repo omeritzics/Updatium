@@ -57,7 +57,9 @@ class Bitbucket extends AppSource {
     );
   }
 
-  Future<String?> getAPITokenIfAny(Map<String, dynamic> additionalSettings) async {
+  Future<String?> getAPITokenIfAny(
+    Map<String, dynamic> additionalSettings,
+  ) async {
     SettingsProvider settingsProvider = SettingsProvider();
     await settingsProvider.initializeSettings();
     var sourceConfig = await getSourceConfigValues(
@@ -68,13 +70,16 @@ class Bitbucket extends AppSource {
     return creds != null && creds.isNotEmpty ? creds : null;
   }
 
-  Future<Map<String, String>?> getAuthHeaders(Map<String, dynamic> additionalSettings) async {
+  Future<Map<String, String>?> getAuthHeaders(
+    Map<String, dynamic> additionalSettings,
+  ) async {
     String? apiToken = await getAPITokenIfAny(additionalSettings);
     if (apiToken != null && apiToken.isNotEmpty) {
       // Bitbucket API tokens use Basic Auth: email:api_token
       // The format expected is email:api_token base64 encoded
       return {
-        HttpHeaders.authorizationHeader: 'Basic ${base64Encode(utf8.encode(apiToken))}',
+        HttpHeaders.authorizationHeader:
+            'Basic ${base64Encode(utf8.encode(apiToken))}',
       };
     }
     return null;
@@ -96,7 +101,8 @@ class Bitbucket extends AppSource {
     for (var element in repos) {
       var fullName = element['full_name'] as String?;
       var name = element['name'] as String? ?? '';
-      var description = element['description'] as String? ?? tr('noDescription');
+      var description =
+          element['description'] as String? ?? tr('noDescription');
       if (fullName != null) {
         results['https://${hosts[0]}/$fullName'] = [name, description];
       }
@@ -135,7 +141,6 @@ class Bitbucket extends AppSource {
     String repoSlug = names.name;
     bool trackOnly = additionalSettings['trackOnly'] == true;
 
-
     if (!trackOnly) {
       // Try downloads first (similar to GitHub/GitLab releases)
       var downloadsUrl =
@@ -166,15 +171,19 @@ class Bitbucket extends AppSource {
             var latestDownload = apkDownloads.first;
             var version = latestDownload['name'] as String?;
             // Extract version from filename if possible
-            var versionMatch = RegExp(r'(\d+(\.\d+)+)').firstMatch(version ?? '');
-            var extractedVersion = versionMatch?.group(0) ?? version ?? 'unknown';
+            var versionMatch = RegExp(
+              r'(\d+(\.\d+)+)',
+            ).firstMatch(version ?? '');
+            var extractedVersion =
+                versionMatch?.group(0) ?? version ?? 'unknown';
 
             var apkUrls = <MapEntry<String, String>>[];
 
             for (var download in apkDownloads) {
               var name = download['name'] as String? ?? 'unknown';
               var url = download['links']?['self']?['href'] as String? ?? '';
-              if (url.isNotEmpty && source_provider.hasSupportedApkExtension(name)) {
+              if (url.isNotEmpty &&
+                  source_provider.hasSupportedApkExtension(name)) {
                 apkUrls.add(MapEntry(name, url));
               }
             }
@@ -203,10 +212,7 @@ class Bitbucket extends AppSource {
     // Fallback to tags if no downloads or trackOnly mode
     var tagsUrl =
         'https://api.${hosts[0]}/2.0/repositories/$workspace/$repoSlug/refs/tags?sort=-target.date';
-    Response tagsRes = await sourceRequest(
-      tagsUrl,
-      additionalSettings,
-    );
+    Response tagsRes = await sourceRequest(tagsUrl, additionalSettings);
 
     if (tagsRes.statusCode != 200) {
       throw getUpdatiumHttpError(tagsRes);
@@ -249,7 +255,8 @@ class Bitbucket extends AppSource {
   ) async {
     // Bitbucket download links may need auth
     var authHeaders = await getAuthHeaders(additionalSettings);
-    if (authHeaders != null && authHeaders.containsKey(HttpHeaders.authorizationHeader)) {
+    if (authHeaders != null &&
+        authHeaders.containsKey(HttpHeaders.authorizationHeader)) {
       // If URL already has query params, append auth
       var uri = Uri.parse(assetUrl);
       if (uri.queryParameters.isNotEmpty) {
