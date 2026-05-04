@@ -103,9 +103,6 @@ jobs:
           ls -la android/upload-keystore.jks
           file android/upload-keystore.jks
           echo "=== Keystore contents ==="
-          # Use heredoc to handle non-ASCII characters properly
-          keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null || echo "Failed to list keystore contents"
-          echo "=== End keystore contents ==="
           if ! keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null; then
             echo "ERROR: Keystore verification failed - aborting build"
             exit 1
