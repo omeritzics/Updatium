@@ -49,6 +49,7 @@ android {
         targetSdk = 36
         versionCode = flutterVersionCode.toInt()
         versionName = flutterVersionName
+        useVersionCodeAsOSVersion = true
     }
 
     flavorDimensions += "default"
