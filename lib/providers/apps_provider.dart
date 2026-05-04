@@ -1356,9 +1356,7 @@ class AppsProvider with ChangeNotifier {
     int? code;
     if (!settingsProvider.useShizuku) {
       final flutterAppInstaller = FlutterAppInstaller();
-      await flutterAppInstaller.installApk(
-        filePath: file.file.path,
-      );
+      await flutterAppInstaller.installApk(filePath: file.file.path);
       code = 3;
     } else {
       code = await ShizukuApkInstaller().installAPK(
