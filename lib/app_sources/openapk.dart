@@ -9,6 +9,7 @@ class OpenAPK extends AppSource {
     name = tr('openapk');
     showReleaseDateAsVersionToggle = true;
     openSource = true;
+    canSearch = true;
   }
 
   @override
@@ -187,5 +188,42 @@ class OpenAPK extends AppSource {
       AppNames(author, appName),
       releaseDate: releaseDate,
     );
+  }
+
+  @override
+  Future<Map<String, List<String>>> search(
+    String query, {
+    Map<String, dynamic> querySettings = const {},
+  }) async {
+    var searchUrl =
+        'https://${hosts[0]}/search/?q=${Uri.encodeQueryComponent(query)}';
+    var res = await sourceRequest(searchUrl, {});
+    if (res.statusCode != 200) {
+      throw getUpdatiumHttpError(res);
+    }
+    var html = parse(res.body);
+
+    // Extract search results - look for app links in the search results
+    var appLinks = html.querySelectorAll('a[href^="/"]');
+    Map<String, List<String>> results = {};
+
+    for (var link in appLinks) {
+      var href = link.attributes['href'];
+      if (href == null) continue;
+
+      // Filter for app URLs: pattern is /category/app-id/
+      var segments = href.split('/').where((s) => s.isNotEmpty).toList();
+      if (segments.length == 2) {
+        var appUrl = 'https://${hosts[0]}$href';
+        var appName = link.text.trim();
+
+        // Skip if already added or if name is empty
+        if (appName.isNotEmpty && !results.containsKey(appUrl)) {
+          results[appUrl] = [appName, ''];
+        }
+      }
+    }
+
+    return results;
   }
 }
