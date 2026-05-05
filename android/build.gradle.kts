@@ -22,6 +22,7 @@ subprojects {
         project.evaluationDependsOn(":app")
     }
     
+<<<<<<< HEAD
     // Special handling for android_package_manager plugin for AGP 9 compatibility
     if (project.name == "android_package_manager") {
         project.logger.lifecycle("Configuring android_package_manager for AGP 9 compatibility")
@@ -58,6 +59,9 @@ subprojects {
             }
         }
         
+=======
+            
+>>>>>>> 6057f431 (Revert to AGP 8 and remove submodule approach)
         return@subprojects
     }
 }
