@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
+import 'package:yaml/yaml.dart';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/components/generated_form.dart';
@@ -1838,119 +1839,71 @@ class LicenseDialog extends StatelessWidget {
   }
 }
 
-class OpenSourcePackagesDialog extends StatelessWidget {
+class OpenSourcePackagesDialog extends StatefulWidget {
   const OpenSourcePackagesDialog({super.key});
 
-  static const List<Map<String, String>> dependencies = [
-    {'name': 'path_provider', 'url': 'https://pub.dev/packages/path_provider'},
-    {'name': 'flutter_fgbg', 'url': 'https://pub.dev/packages/flutter_fgbg'},
-    {
-      'name': 'flutter_local_notifications',
-      'url': 'https://pub.dev/packages/flutter_local_notifications',
-    },
-    {'name': 'provider', 'url': 'https://pub.dev/packages/provider'},
-    {'name': 'http', 'url': 'https://pub.dev/packages/http'},
-    {
-      'name': 'dynamic_system_colors',
-      'url': 'https://pub.dev/packages/dynamic_system_colors',
-    },
-    {
-      'name': 'material_color_utilities',
-      'url': 'https://pub.dev/packages/material_color_utilities',
-    },
-    {'name': 'html', 'url': 'https://pub.dev/packages/html'},
-    {
-      'name': 'shared_preferences',
-      'url': 'https://pub.dev/packages/shared_preferences',
-    },
-    {'name': 'url_launcher', 'url': 'https://pub.dev/packages/url_launcher'},
-    {
-      'name': 'permission_handler',
-      'url': 'https://pub.dev/packages/permission_handler',
-    },
-    {'name': 'fluttertoast', 'url': 'https://pub.dev/packages/fluttertoast'},
-    {
-      'name': 'device_info_plus',
-      'url': 'https://pub.dev/packages/device_info_plus',
-    },
-    {
-      'name': 'package_info_plus',
-      'url': 'https://pub.dev/packages/package_info_plus',
-    },
-    {'name': 'animations', 'url': 'https://pub.dev/packages/animations'},
-    {
-      'name': 'android_package_installer',
-      'url': 'https://pub.dev/packages/android_package_installer',
-    },
-    {
-      'name': 'android_package_manager',
-      'url': 'https://pub.dev/packages/android_package_manager',
-    },
-    {'name': 'share_plus', 'url': 'https://pub.dev/packages/share_plus'},
-    {'name': 'sqflite', 'url': 'https://pub.dev/packages/sqflite'},
-    {
-      'name': 'simple_localization',
-      'url': 'https://github.com/omeritzics/simple_localization',
-    },
-    {
-      'name': 'android_intent_plus',
-      'url': 'https://pub.dev/packages/android_intent_plus',
-    },
-    {
-      'name': 'flutter_archive',
-      'url': 'https://pub.dev/packages/flutter_archive',
-    },
-    {'name': 'hsluv', 'url': 'https://pub.dev/packages/hsluv'},
-    {
-      'name': 'connectivity_plus',
-      'url': 'https://pub.dev/packages/connectivity_plus',
-    },
-    {'name': 'docman', 'url': 'https://pub.dev/packages/docman'},
-    {'name': 'crypto', 'url': 'https://pub.dev/packages/crypto'},
-    {'name': 'bcrypt', 'url': 'https://pub.dev/packages/bcrypt'},
-    {'name': 'app_links', 'url': 'https://pub.dev/packages/app_links'},
-    {
-      'name': 'background_fetch',
-      'url': 'https://pub.dev/packages/background_fetch',
-    },
-    {'name': 'equations', 'url': 'https://pub.dev/packages/equations'},
-    {
-      'name': 'flex_color_picker',
-      'url': 'https://pub.dev/packages/flex_color_picker',
-    },
-    {
-      'name': 'android_system_font',
-      'url': 'https://github.com/re7gog/android_system_font',
-    },
-    {
-      'name': 'shizuku_apk_installer',
-      'url': 'https://github.com/re7gog/shizuku_apk_installer',
-    },
-    {'name': 'markdown', 'url': 'https://pub.dev/packages/markdown'},
-    {
-      'name': 'flutter_typeahead',
-      'url': 'https://pub.dev/packages/flutter_typeahead',
-    },
-    {'name': 'battery_plus', 'url': 'https://pub.dev/packages/battery_plus'},
-    {
-      'name': 'flutter_charset_detector',
-      'url': 'https://pub.dev/packages/flutter_charset_detector',
-    },
-    {'name': 'pubspec_parse', 'url': 'https://pub.dev/packages/pubspec_parse'},
-    {
-      'name': 'm3_floating_toolbar',
-      'url': 'https://pub.dev/packages/m3_floating_toolbar',
-    },
-    {
-      'name': 'flutter_foreground_task',
-      'url': 'https://pub.dev/packages/flutter_foreground_task',
-    },
-    {
-      'name': 'flutter_markdown_plus',
-      'url': 'https://pub.dev/packages/flutter_markdown_plus',
-    },
-    {'name': 'path', 'url': 'https://pub.dev/packages/path'},
-  ];
+  @override
+  State<OpenSourcePackagesDialog> createState() => _OpenSourcePackagesDialogState();
+}
+
+class _OpenSourcePackagesDialogState extends State<OpenSourcePackagesDialog> {
+  Future<List<Map<String, String>>>? _dependencies;
+
+  Future<List<Map<String, String>>> _loadDependencies() async {
+    try {
+      final String pubspecString = await rootBundle.loadString('pubspec.yaml');
+      final YamlMap pubspecYaml = loadYaml(pubspecString);
+      final YamlMap? dependencies = pubspecYaml['dependencies'] as YamlMap?;
+      
+      if (dependencies == null) return [];
+
+      final List<Map<String, String>> deps = [];
+      
+      dependencies.forEach((key, value) {
+        if (key == 'flutter') return; // Skip flutter SDK
+        
+        String url = '';
+        
+        if (value is String) {
+          // Simple version constraint
+          url = 'https://pub.dev/packages/$key';
+        } else if (value is YamlMap) {
+          // Complex dependency with git or other sources
+          if (value['git'] != null) {
+            final gitUrl = value['git'] as String?;
+            if (gitUrl != null) {
+              url = gitUrl;
+            }
+          } else {
+            // Default to pub.dev for other complex dependencies
+            url = 'https://pub.dev/packages/$key';
+          }
+        } else {
+          // Default case
+          url = 'https://pub.dev/packages/$key';
+        }
+        
+        deps.add({
+          'name': key.toString(),
+          'url': url,
+        });
+      });
+      
+      // Sort by name for consistent ordering
+      deps.sort((a, b) => a['name']!.compareTo(b['name']!));
+      
+      return deps;
+    } catch (e) {
+      // Fallback to empty list if parsing fails
+      return [];
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _dependencies = _loadDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1977,27 +1930,51 @@ class OpenSourcePackagesDialog extends StatelessWidget {
       ),
       content: SizedBox(
         width: double.maxFinite,
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: dependencies.length,
-          itemBuilder: (context, index) {
-            final dep = dependencies[index];
-            return ListTile(
-              dense: true,
-              contentPadding: EdgeInsets.zero,
-              title: Text(
-                dep['name']!,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              trailing: Icon(
-                Icons.open_in_new,
-                size: 16,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              onTap: () {
-                launchUrlString(
-                  dep['url']!,
-                  mode: LaunchMode.externalApplication,
+        child: FutureBuilder<List<Map<String, String>>>(
+          future: _dependencies,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  'Error loading dependencies: ${snapshot.error}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              );
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Center(
+                child: Text(
+                  'No dependencies found',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              );
+            }
+
+            final dependencies = snapshot.data!;
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: dependencies.length,
+              itemBuilder: (context, index) {
+                final dep = dependencies[index];
+                return ListTile(
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(
+                    dep['name']!,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  trailing: Icon(
+                    Icons.open_in_new,
+                    size: 16,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  onTap: () {
+                    launchUrlString(
+                      dep['url']!,
+                      mode: LaunchMode.externalApplication,
+                    );
+                  },
                 );
               },
             );
