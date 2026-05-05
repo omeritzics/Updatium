@@ -21,56 +21,50 @@ subprojects {
         project.evaluationDependsOn(":app")
     }
     
-        
-    val configureAndroid = {
+    // Skip problematic plugins that cause build failures
+    if (project.name == "android_package_manager") {
+        project.logger.lifecycle("Skipping special configuration for android_package_manager to avoid build issues")
+        return@subprojects
+    }
+    
+    // Configure Android extensions before evaluation to avoid timing issues
+    project.beforeEvaluate {
         if (project.hasProperty("android")) {
-            // AGP 9+ compatible approach - use new API when available
             try {
-                val android = project.extensions.getByName("android") as com.android.build.gradle.LibraryExtension
-                android.compileSdk = 36
-                
-                // Fix namespace issue for packages that don't specify it
-                if (android.namespace == null) {
-                    val manifestFile = file("${project.projectDir}/src/main/AndroidManifest.xml")
-                    if (manifestFile.exists()) {
-                        val manifestContent = manifestFile.readText()
-                        val packageMatch = Regex("package=\"([^\"]+)\"").find(manifestContent)
-                        if (packageMatch != null) {
-                            android.namespace = packageMatch.groupValues[1]
-                        }
-                    }
-                }
+                val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
+                android.compileSdkVersion(36)
             } catch (e: Exception) {
-                // Fallback for older AGP versions
+                // Try with newer API
                 try {
-                    val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
-                    android.compileSdkVersion(36)
-                    
-                    if (android is com.android.build.gradle.LibraryExtension) {
-                        if (android.namespace == null) {
-                            val manifestFile = file("${project.projectDir}/src/main/AndroidManifest.xml")
-                            if (manifestFile.exists()) {
-                                val manifestContent = manifestFile.readText()
-                                val packageMatch = Regex("package=\"([^\"]+)\"").find(manifestContent)
-                                if (packageMatch != null) {
-                                    android.namespace = packageMatch.groupValues[1]
-                                }
-                            }
-                        }
-                    }
-                } catch (fallbackException: Exception) {
-                    // Log but don't fail the build
-                    println("Warning: Could not configure Android extension: ${fallbackException.message}")
+                    val android = project.extensions.getByName("android") as com.android.build.gradle.LibraryExtension
+                    android.compileSdk = 36
+                } catch (e2: Exception) {
+                    println("Warning: Could not configure compileSdk for ${project.name}: ${e2.message}")
                 }
             }
         }
     }
-
-    if (project.state.executed) {
-        configureAndroid()
-    } else {
-        project.afterEvaluate {
-            configureAndroid()
+    
+    project.afterEvaluate {
+        if (project.hasProperty("android")) {
+            try {
+                // Fix namespace issue for packages that don't specify it
+                val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
+                if (android is com.android.build.gradle.LibraryExtension) {
+                    if (android.namespace == null) {
+                        val manifestFile = file("${project.projectDir}/src/main/AndroidManifest.xml")
+                        if (manifestFile.exists()) {
+                            val manifestContent = manifestFile.readText()
+                            val packageMatch = Regex("package=\"([^\"]+)\"").find(manifestContent)
+                            if (packageMatch != null) {
+                                android.namespace = packageMatch.groupValues[1]
+                            }
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                println("Warning: Could not configure namespace for ${project.name}: ${e.message}")
+            }
         }
     }
 }
