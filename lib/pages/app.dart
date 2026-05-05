@@ -1,6 +1,7 @@
-import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:expressive_refresh/expressive_refresh.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
@@ -654,7 +655,7 @@ class _AppPageState extends State<AppPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Stack(
           children: [
-            RefreshIndicator(
+            ExpressiveRefreshIndicator(
               onRefresh: () async {
                 await getUpdate(app.app.id);
               },

@@ -82,6 +82,7 @@ dependencies:
   m3_floating_toolbar: ^0.1.0
   dns_client: ^1.3.0
   yaml: ^3.1.2
+  expressive_refresh: ^0.1.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
