@@ -156,9 +156,6 @@ flutter:
       fonts:
         - asset: assets/fonts/NotoSansArabic-Regular.ttf
           
-dependency_overrides:
-  android_package_manager:
-    path: android_package_manager_fix
 
 dev_dependencies:
   flutter_test:
