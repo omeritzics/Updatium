@@ -1,3 +1,6 @@
 [submodule ".flutter"]
 	path = .flutter
 	url = https://github.com/flutter/flutter/
+[submodule "android_package_manager_fix"]
+	path = android_package_manager_fix
+	url = https://github.com/nsNeruno/android_package_manager.git
