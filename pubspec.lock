@@ -12,10 +12,9 @@ packages:
   android_package_manager:
     dependency: "direct main"
     description:
-      name: android_package_manager
-      sha256: "2de859fae7226a7de1c1ff9a2308f1967599408800330501a1ce97927c051153"
-      url: "https://pub.dev"
-    source: hosted
+      path: android_package_manager_fix
+      relative: true
+    source: path
     version: "0.7.1"
   android_system_font:
     dependency: "direct main"
