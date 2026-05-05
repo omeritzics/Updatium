@@ -12,25 +12,33 @@ on:
         default: false
 
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
-
+    outputs:
+      has_changes: ${{ steps.changes.outputs.has_changes }}
     steps:
-      - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: true
-          android: false
-          dotnet: false
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: false
-          
       - name: Checkout Code
         uses: actions/checkout@main
         with:
           fetch-depth: 0
+
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            /opt/flutter
+          key: flutter-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: |
+            flutter-${{ runner.os }}-
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
 
       - name: Setup Java
         run: sudo apt-get install default-jre -y
@@ -44,17 +52,78 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
         
+      - name: Check for code changes
+        id: changes
+        run: |
+          if git diff --quiet HEAD~1 HEAD; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+        
       - name: Auto-fix linting issues
+        if: steps.changes.outputs.has_changes == 'true'
         run: dart fix --apply
 
       - name: Format code
+        if: steps.changes.outputs.has_changes == 'true'
         run: dart format .
 
       - name: Commit and Push changes
+        if: steps.changes.outputs.has_changes == 'true'
         uses: stefanzweifel/git-auto-commit-action@master
         with:
           commit_message: "style: auto-fix linting and formatting issues"
           branch: ${{ github.ref_name }}
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: false
+          dotnet: false
+          haskell: false
+          large-packages: false
+          docker-images: true
+          
+      - name: Checkout Code
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            /opt/flutter
+          key: flutter-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: |
+            flutter-${{ runner.os }}-
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+
+      - name: Setup Java
+        run: sudo apt-get install default-jre -y
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@main
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
           
       - name: Generate Version
         id: version
@@ -112,8 +181,8 @@ jobs:
 
       - name: Build APKs (Release Mode)
         run: |
-          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
-          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
+          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons
+          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@main
@@ -122,6 +191,7 @@ jobs:
           path: build/app/outputs/flutter-apk/*.apk
 
       - name: Create Release
+        if: success() && hashFiles('build/app/outputs/flutter-apk/*.apk') != ''
         uses: softprops/action-gh-release@master
         with:
           tag_name: ${{ steps.version.outputs.tag }}
