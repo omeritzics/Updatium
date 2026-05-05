@@ -26,7 +26,24 @@ subprojects {
     if (project.name == "android_package_manager") {
         project.logger.lifecycle("Configuring android_package_manager for AGP 9 compatibility")
         
-        // Fix manifest package issue by suppressing incorrect package validation
+        // Fix manifest by removing package attribute during build
+        project.tasks.whenTaskAdded { task ->
+            if (task.name == "processReleaseManifest" || task.name == "processDebugManifest") {
+                task.doFirst {
+                    val manifestFile = file("${project.projectDir}/src/main/AndroidManifest.xml")
+                    if (manifestFile.exists()) {
+                        val manifestContent = manifestFile.readText()
+                        val fixedContent = manifestContent.replace(
+                            Regex("""package="[^"]*"""), 
+                            ""
+                        )
+                        manifestFile.writeText(fixedContent)
+                        project.logger.lifecycle("Fixed AndroidManifest.xml for android_package_manager")
+                    }
+                }
+            }
+        }
+        
         project.afterEvaluate {
             if (project.hasProperty("android")) {
                 try {
@@ -34,11 +51,6 @@ subprojects {
                     if (android.namespace == null) {
                         android.namespace = "com.android_package_manager"
                         project.logger.lifecycle("Set namespace for android_package_manager: ${android.namespace}")
-                    }
-                    // Suppress package validation errors for this plugin
-                    android.compileOptions {
-                        sourceCompatibility = JavaVersion.VERSION_1_8
-                        targetCompatibility = JavaVersion.VERSION_1_8
                     }
                 } catch (e: Exception) {
                     println("Warning: Could not configure namespace for android_package_manager: ${e.message}")
