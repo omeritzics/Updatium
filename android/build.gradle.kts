@@ -16,6 +16,7 @@ subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
+
 subprojects {
     if (project.path != ":app") {
         project.evaluationDependsOn(":app")
@@ -45,10 +46,34 @@ subprojects {
         }
     }
     
-    project.afterEvaluate {
+    // Only add afterEvaluate if project hasn't been evaluated yet
+    if (!project.state.executed) {
+        project.afterEvaluate {
+            if (project.hasProperty("android")) {
+                try {
+                    // Fix namespace issue for packages that don't specify it
+                    val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
+                    if (android is com.android.build.gradle.LibraryExtension) {
+                        if (android.namespace == null) {
+                            val manifestFile = file("${project.projectDir}/src/main/AndroidManifest.xml")
+                            if (manifestFile.exists()) {
+                                val manifestContent = manifestFile.readText()
+                                val packageMatch = Regex("package=\"([^\"]+)\"").find(manifestContent)
+                                if (packageMatch != null) {
+                                    android.namespace = packageMatch.groupValues[1]
+                                }
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    println("Warning: Could not configure namespace for ${project.name}: ${e.message}")
+                }
+            }
+        }
+    } else {
+        // Project already evaluated, configure directly
         if (project.hasProperty("android")) {
             try {
-                // Fix namespace issue for packages that don't specify it
                 val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
                 if (android is com.android.build.gradle.LibraryExtension) {
                     if (android.namespace == null) {
