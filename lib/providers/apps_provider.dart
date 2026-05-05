@@ -1476,8 +1476,11 @@ class AppsProvider with ChangeNotifier {
     }
     int? code;
     if (!settingsProvider.useShizuku) {
-      // AndroidPackageInstaller functionality removed
-      code = null;
+      var allAPKs = [file.file.path];
+      allAPKs.addAll(additionalAPKs.map((a) => a.file.path));
+      code = await AndroidPackageInstaller.installApk(
+        apkFilePath: allAPKs.join(','),
+      );
     } else {
       final shizuku = ShizukuApkInstaller();
       code = await shizuku.installAPK(
