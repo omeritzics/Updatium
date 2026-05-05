@@ -18,6 +18,7 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:markdown/markdown.dart' as md;
 
@@ -587,8 +588,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             ),
           );
         },
-        onDoubleTap: () {
-          pm.openApp(listedApps[appIndex].app.id);
+        onDoubleTap: () async {
+          AndroidIntent intent = AndroidIntent(
+            action: 'android.intent.action.MAIN',
+            category: 'android.intent.category.LAUNCHER',
+            package: listedApps[appIndex].app.id,
+          );
+          await intent.launch();
         },
         onLongPress: () {
           Navigator.push(
