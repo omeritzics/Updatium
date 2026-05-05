@@ -27,18 +27,20 @@ subprojects {
         project.logger.lifecycle("Configuring android_package_manager for AGP 9 compatibility")
         
         // Fix manifest by removing package attribute during build
-        project.tasks.whenTaskAdded { task ->
-            if (task.name == "processReleaseManifest" || task.name == "processDebugManifest") {
-                task.doFirst {
-                    val manifestFile = file("${project.projectDir}/src/main/AndroidManifest.xml")
-                    if (manifestFile.exists()) {
-                        val manifestContent = manifestFile.readText()
-                        val fixedContent = manifestContent.replace(
-                            Regex("""package="[^"]*"""), 
-                            ""
-                        )
-                        manifestFile.writeText(fixedContent)
-                        project.logger.lifecycle("Fixed AndroidManifest.xml for android_package_manager")
+        project.afterEvaluate {
+            project.tasks.withType<com.android.build.gradle.tasks.ProcessLibraryManifest>().configureEach { task ->
+                if (task.name.contains("processReleaseManifest") || task.name.contains("processDebugManifest")) {
+                    task.doFirst {
+                        val manifestFile = file("${project.projectDir}/src/main/AndroidManifest.xml")
+                        if (manifestFile.exists()) {
+                            val manifestContent = manifestFile.readText()
+                            val fixedContent = manifestContent.replace(
+                                Regex("""package="[^"]*"""), 
+                                ""
+                            )
+                            manifestFile.writeText(fixedContent)
+                            project.logger.lifecycle("Fixed AndroidManifest.xml for android_package_manager")
+                        }
                     }
                 }
             }
