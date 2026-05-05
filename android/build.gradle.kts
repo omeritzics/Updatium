@@ -33,6 +33,20 @@ subprojects {
             }
         }
     }
+    
+    // Fix namespace issue for android_package_manager specifically
+    if (project.name == "android_package_manager") {
+        project.afterEvaluate {
+            if (project.hasProperty("android")) {
+                try {
+                    val android = project.extensions.getByName("android") as com.android.build.gradle.LibraryExtension
+                    android.namespace = "com.android_package_manager"
+                } catch (e: Exception) {
+                    println("Warning: Could not configure namespace for android_package_manager: ${e.message}")
+                }
+            }
+        }
+    }
 }
 
 tasks.register<Delete>("clean") {
