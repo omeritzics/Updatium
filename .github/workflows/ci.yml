@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Cache Flutter dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@main
         with:
           path: |
             ~/.pub-cache
@@ -30,7 +30,7 @@ jobs:
             flutter-${{ runner.os }}-
 
       - name: Cache Gradle dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@main
         with:
           path: |
             ~/.gradle/caches
@@ -98,7 +98,7 @@ jobs:
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Cache Flutter dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@main
         with:
           path: |
             ~/.pub-cache
@@ -108,7 +108,7 @@ jobs:
             flutter-${{ runner.os }}-
 
       - name: Cache Gradle dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@main
         with:
           path: |
             ~/.gradle/caches
