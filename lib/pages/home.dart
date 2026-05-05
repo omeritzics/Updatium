@@ -129,7 +129,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<void> initDeepLinks() async {
-    // AppLinks functionality removed
     _appLinks = AppLinks();
 
     goToAddApp(String data) async {
