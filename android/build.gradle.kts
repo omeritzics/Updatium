@@ -22,9 +22,36 @@ subprojects {
         project.evaluationDependsOn(":app")
     }
     
-    // Skip problematic plugins that cause build failures
+    // Special handling for android_package_manager plugin
     if (project.name == "android_package_manager") {
-        project.logger.lifecycle("Skipping special configuration for android_package_manager to avoid build issues")
+        project.logger.lifecycle("Configuring namespace for android_package_manager plugin")
+        
+        // Configure namespace for android_package_manager specifically
+        project.beforeEvaluate {
+            if (project.hasProperty("android")) {
+                try {
+                    val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
+                    if (android is com.android.build.gradle.LibraryExtension) {
+                        android.namespace = "android_package_manager.namespace"
+                    }
+                } catch (e: Exception) {
+                    println("Warning: Could not configure namespace for android_package_manager: ${e.message}")
+                }
+            }
+        }
+        
+        // Also try direct configuration if beforeEvaluate is too late
+        if (project.hasProperty("android")) {
+            try {
+                val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
+                if (android is com.android.build.gradle.LibraryExtension) {
+                    android.namespace = "android_package_manager.namespace"
+                }
+            } catch (e: Exception) {
+                println("Warning: Could not configure namespace for android_package_manager (direct): ${e.message}")
+            }
+        }
+        
         return@subprojects
     }
     
