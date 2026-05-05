@@ -19,7 +19,7 @@ pluginManagement {
 
 plugins {
     id("dev.flutter.flutter-plugin-loader") version "1.0.0"
-    id("com.android.application") version "9.0.0" apply false
+    id("com.android.application") version "9.2.0" apply false
 }
 
 include(":app")
