@@ -588,7 +588,7 @@ Future<File> downloadFile(
 Future<List<PackageInfo>> getAllInstalledInfo() async {
   try {
     final pm = AndroidPackageManager();
-    final packages = await pm.getInstalledPackages();
+    final packages = await pm.getInstalledPackages(flags: PackageInfoFlags({PMFlag.getSigningCertificates}));
     return packages ?? [];
   } catch (e) {
     print('Error getting installed apps: $e'); // OK
