@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:expressive_refresh/expressive_refresh.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
@@ -162,7 +163,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   );
   Set<String> selectedAppIds = {};
   DateTime? refreshingSince;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
+  final GlobalKey<ExpressiveRefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey();
   final Set<int> _expandedCategories = <int>{};
 
   // Helper function to preserve transparency regardless of theme overrides
@@ -1608,7 +1610,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
         children: [
-          RefreshIndicator(
+          ExpressiveRefreshIndicator(
             onRefresh: refresh,
             child: Scrollbar(
               interactive: true,
