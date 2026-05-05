@@ -114,8 +114,6 @@ jobs:
         run: |
           flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
           flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
-          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --target-platform android-arm64 --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
-          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --target-platform android-arm64 --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@main

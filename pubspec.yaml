@@ -47,7 +47,7 @@ dependencies:
   device_info_plus: ^13.1.0
   package_info_plus: ^10.1.0
   animations: ^2.1.1
-  android_package_installer: ^0.0.3
+  flutter_app_installer: ^2.0.0
   android_package_manager: ^0.7.1
   share_plus: ^13.1.0
   sqflite: ^2.4.2
