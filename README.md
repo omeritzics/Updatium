@@ -55,7 +55,7 @@ Bahasa Melayu, Română, ئۇيغۇرچە.
 
 [![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
 
-Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware.
+Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware. If you are an administrator of an APK distribution source, please let me know you're intrested in adding Updatium to your website by creating an issue.
 
 ## Screenshots
 
