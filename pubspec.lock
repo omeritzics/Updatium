@@ -974,15 +974,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
-  shizuku_apk_installer:
+  shizuku_api:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: "3ef7f8fbf904848d144304556b0f80c91fee82a5"
-      url: "https://github.com/re7gog/shizuku_apk_installer"
-    source: git
-    version: "1.2.0"
+      name: shizuku_api
+      sha256: "0d77e9dd4aac6b2c1a5fa3af47f3d4489e2606e08864c7b55d0c7cf0bac39fd1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.2"
   simple_localization:
     dependency: "direct main"
     description:

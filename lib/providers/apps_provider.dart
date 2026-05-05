@@ -36,7 +36,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:docman/docman.dart';
-import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
+import 'package:shizuku_api/shizuku_api.dart';
 
 final pm = AndroidPackageManager();
 final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
@@ -1353,19 +1353,22 @@ class AppsProvider with ChangeNotifier {
         !(await canDowngradeApps())) {
       throw DowngradeError(appInfo.versionCode!, newInfo.versionCode!);
     }
-    int? code;
+    int code;
     if (!settingsProvider.useShizuku) {
       final flutterAppInstaller = FlutterAppInstaller();
       await flutterAppInstaller.installApk(filePath: file.file.path);
       code = 3;
     } else {
-      code = await ShizukuApkInstaller().installAPK(
-        file.file.uri.toString(),
-        shizukuPretendToBeGooglePlay ? "com.android.vending" : "",
-      );
+      final shizukuApi = ShizukuApi();
+      String command = 'pm install "${file.file.path}"';
+      if (shizukuPretendToBeGooglePlay) {
+        command += ' --installing-package com.android.vending';
+      }
+      String? result = await shizukuApi.runCommand(command);
+      code = (result != null && result.contains('Success')) ? 0 : 1;
     }
     bool installed = false;
-    if (code != null && code != 0 && code != 3) {
+    if (code != 0 && code != 3) {
       try {
         deleteFile(file.file);
       } catch (e) {
@@ -1656,15 +1659,15 @@ class AppsProvider with ChangeNotifier {
             throw UpdatiumError(tr('cancelled'));
           }
         } else {
-          switch ((await ShizukuApkInstaller().checkPermission())!) {
-            case 'binder_not_found':
-              throw UpdatiumError(tr('shizukuBinderNotFound'));
-            case 'old_shizuku':
-              throw UpdatiumError(tr('shizukuOld'));
-            case 'old_android_with_adb':
-              throw UpdatiumError(tr('shizukuOldAndroidWithADB'));
-            case 'denied':
-              throw UpdatiumError(tr('cancelled'));
+          final shizukuApi = ShizukuApi();
+          bool isBinderRunning = await shizukuApi.pingBinder() ?? false;
+          if (!isBinderRunning) {
+            throw UpdatiumError(tr('shizukuBinderNotFound'));
+          }
+          
+          bool hasPermission = await shizukuApi.checkPermission() ?? false;
+          if (!hasPermission) {
+            throw UpdatiumError(tr('cancelled'));
           }
         }
         if (!willBeSilent && context != null && !settingsProvider.useShizuku) {

@@ -22,7 +22,7 @@ import 'package:updatium/services/device_admin_service.dart';
 import 'package:updatium/services/dns_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
+import 'package:shizuku_api/shizuku_api.dart';
 
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
@@ -923,45 +923,29 @@ class _SettingsPageState extends State<SettingsPage> {
                                   value: settingsProvider.useShizuku,
                                   onChanged: (useShizuku) {
                                     if (useShizuku) {
-                                      ShizukuApkInstaller()
-                                          .checkPermission()
-                                          .then((resCode) {
-                                            settingsProvider.useShizuku =
-                                                resCode?.startsWith(
-                                                  'granted',
-                                                ) ??
-                                                false;
-                                            switch (resCode) {
-                                              case 'services_not_found':
-                                                showError(
-                                                  UpdatiumError(
-                                                    tr('shizukuBinderNotFound'),
-                                                  ),
-                                                  context,
-                                                );
-                                              case 'old_shizuku':
-                                                showError(
-                                                  UpdatiumError(
-                                                    tr('shizukuOld'),
-                                                  ),
-                                                  context,
-                                                );
-                                              case 'old_android_with_adb':
-                                                showError(
-                                                  UpdatiumError(
-                                                    tr(
-                                                      'shizukuOldAndroidWithADB',
-                                                    ),
-                                                  ),
-                                                  context,
-                                                );
-                                              case 'denied':
-                                                showError(
-                                                  UpdatiumError(
-                                                    tr('cancelled'),
-                                                  ),
-                                                  context,
-                                                );
+                                      ShizukuApi()
+                                          .pingBinder()
+                                          .then((isBinderRunning) async {
+                                            if (isBinderRunning != true) {
+                                              showError(
+                                                UpdatiumError(
+                                                  tr('shizukuBinderNotFound'),
+                                                ),
+                                                context,
+                                              );
+                                              settingsProvider.useShizuku = false;
+                                              return;
+                                            }
+                                            
+                                            bool hasPermission = await ShizukuApi().checkPermission() ?? false;
+                                            settingsProvider.useShizuku = hasPermission;
+                                            if (!hasPermission) {
+                                              showError(
+                                                UpdatiumError(
+                                                  tr('cancelled'),
+                                                ),
+                                                context,
+                                              );
                                             }
                                           });
                                     } else {

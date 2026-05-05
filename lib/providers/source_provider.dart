@@ -44,7 +44,6 @@ import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
-import 'package:flutter_app_installer/flutter_app_installer.dart';
 
 /// Cache entry for ETag-based conditional requests
 class _ETagCacheEntry {
@@ -1714,7 +1713,7 @@ class DowngradeError extends UpdatiumError {
 
 class InstallError extends UpdatiumError {
   InstallError(int code)
-    : super(PackageInstallerStatus.byCode(code).name.substring(7));
+    : super('Installation failed with code: $code');
 }
 
 class IDChangedError extends UpdatiumError {

@@ -70,10 +70,7 @@ dependencies:
     git:
       url: https://github.com/re7gog/android_system_font
       ref: master
-  shizuku_apk_installer:
-    git:
-      url: https://github.com/re7gog/shizuku_apk_installer
-      ref: master
+  shizuku_api: ^1.2.2
   markdown: ^7.3.0
   flutter_typeahead: ^6.0.0
   battery_plus: ^7.0.0
