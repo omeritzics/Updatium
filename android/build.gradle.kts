@@ -21,6 +21,7 @@ subprojects {
         project.evaluationDependsOn(":app")
     }
     
+        
     val configureAndroid = {
         if (project.hasProperty("android")) {
             // AGP 9+ compatible approach - use new API when available
