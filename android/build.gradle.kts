@@ -22,25 +22,19 @@ subprojects {
         project.evaluationDependsOn(":app")
     }
     
-    // Configure Android extensions for compatibility
-    project.beforeEvaluate {
-        if (project.hasProperty("android")) {
-            try {
-                val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
-                android.compileSdkVersion(36)
-            } catch (e: Exception) {
-                println("Warning: Could not configure compileSdk for ${project.name}: ${e.message}")
-            }
-        }
-    }
-    
-    // Fix namespace issue for android_package_manager specifically
+    // Special handling for android_package_manager plugin for AGP 9 compatibility
     if (project.name == "android_package_manager") {
+        project.logger.lifecycle("Configuring android_package_manager for AGP 9 compatibility")
+        
+        // Configure namespace for android_package_manager specifically
         project.afterEvaluate {
             if (project.hasProperty("android")) {
                 try {
                     val android = project.extensions.getByName("android") as com.android.build.gradle.LibraryExtension
-                    android.namespace = "com.android_package_manager"
+                    if (android.namespace == null) {
+                        android.namespace = "com.android_package_manager"
+                        project.logger.lifecycle("Set namespace for android_package_manager: ${android.namespace}")
+                    }
                 } catch (e: Exception) {
                     println("Warning: Could not configure namespace for android_package_manager: ${e.message}")
                 }
