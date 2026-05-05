@@ -186,24 +186,29 @@ jobs:
 
       - name: Build APKs
         run: |
-          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons
-          cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/Updatium-Nightly.apk
+          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false --split-per-abi
+          mkdir -p build/outputs
+          # Copy and rename split APKs to maintain original naming convention
+          for apk in build/app/outputs/flutter-apk/app-normal-*-release.apk; do
+            arch=$(basename "$apk" | sed -e 's/app-normal-//' -e 's/-release.apk//')
+            cp "$apk" "build/outputs/Updatium-Nightly-${arch}.apk"
+          done
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@main
         with:
-          name: Updatium-Nightly-APK
+          name: Updatium-Nightly-APKs
           path: |
-            build/outputs/Updatium-Nightly.apk
+            build/outputs/Updatium-Nightly-*.apk
 
       - name: Create Release
-        if: success() && hashFiles('build/outputs/Updatium-Nightly.apk') != ''
+        if: success() && hashFiles('build/outputs/Updatium-Nightly-*.apk') != ''
         uses: softprops/action-gh-release@master
         with:
           tag_name: nightly-build
           name: "Updatium Nightly"
           files: |
-            build/outputs/Updatium-Nightly.apk
+            build/outputs/Updatium-Nightly-*.apk
           prerelease: true
           overwrite: true
         env:
