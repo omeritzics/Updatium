@@ -181,24 +181,34 @@ jobs:
 
       - name: Build APKs (Release Mode)
         run: |
-          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons
-          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons
+          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false --split-per-abi
+          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false --split-per-abi
+          # Copy and rename split APKs to maintain proper naming convention
+          mkdir -p build/outputs
+          for apk in build/app/outputs/flutter-apk/app-normal-*-release.apk; do
+            arch=$(basename "$apk" | sed -e 's/app-normal-//' -e 's/-release.apk//')
+            cp "$apk" "build/outputs/Updatium-${{ steps.version.outputs.version }}-${arch}.apk"
+          done
+          for apk in build/app/outputs/flutter-apk/app-fdroid-*-release.apk; do
+            arch=$(basename "$apk" | sed -e 's/app-fdroid-//' -e 's/-release.apk//')
+            cp "$apk" "build/outputs/Updatium-${{ steps.version.outputs.version }}-fdroid-${arch}.apk"
+          done
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@main
         with:
           name: updatium-v${{ steps.version.outputs.version }}-run${{ github.run_number }}
-          path: build/app/outputs/flutter-apk/*.apk
+          path: build/outputs/Updatium-*.apk
 
       - name: Create Release
-        if: success() && hashFiles('build/app/outputs/flutter-apk/*.apk') != ''
+        if: success() && hashFiles('build/outputs/Updatium-*.apk') != ''
         uses: softprops/action-gh-release@master
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           name: "Updatium ${{ steps.version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
           prerelease: ${{ github.event.inputs.beta == true }}
           draft: true
-          files: build/app/outputs/flutter-apk/*.apk
+          files: build/outputs/Updatium-*.apk
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
