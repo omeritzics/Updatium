@@ -44,7 +44,7 @@ import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
-import 'package:android_package_installer/android_package_installer.dart';
+import 'package:flutter_app_installer/flutter_app_installer.dart';
 
 /// Cache entry for ETag-based conditional requests
 class _ETagCacheEntry {

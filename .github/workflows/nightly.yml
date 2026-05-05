@@ -115,27 +115,22 @@ jobs:
       - name: Build APKs
         run: |
           flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
-          cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/updatium-nightly-universal.apk
-
-          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --target-platform android-arm64 --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
-          cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/updatium-nightly-arm64-v8a.apk
+          cp build/app/outputs/flutter-apk/app-normal-release.apk build/outputs/Updatium-Nightly.apk
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@main
         with:
           name: Updatium-Nightly-APK
           path: |
-            build/outputs/updatium-nightly-universal.apk
-            build/outputs/updatium-nightly-arm64-v8a.apk
+            build/outputs/Updatium-Nightly.apk
 
       - name: Create Release
         uses: softprops/action-gh-release@master
         with:
-          tag_name: nightly
+          tag_name: nightly-build
           name: "Updatium Nightly"
           files: |
-            build/outputs/updatium-nightly-universal.apk
-            build/outputs/updatium-nightly-arm64-v8a.apk
+            build/outputs/Updatium-Nightly.apk
           prerelease: true
           overwrite: true
         env:

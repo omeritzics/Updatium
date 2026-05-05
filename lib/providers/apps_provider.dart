@@ -12,7 +12,7 @@ import 'package:crypto/crypto.dart';
 import 'dart:typed_data';
 
 import 'package:android_intent_plus/flag.dart';
-import 'package:android_package_installer/android_package_installer.dart';
+import 'package:flutter_app_installer/flutter_app_installer.dart';
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -1355,11 +1355,11 @@ class AppsProvider with ChangeNotifier {
     }
     int? code;
     if (!settingsProvider.useShizuku) {
-      var allAPKs = [file.file.path];
-      allAPKs.addAll(additionalAPKs.map((a) => a.file.path));
-      code = await AndroidPackageInstaller.installApk(
-        apkFilePath: allAPKs.join(','),
+      final flutterAppInstaller = FlutterAppInstaller();
+      await flutterAppInstaller.installApk(
+        filePath: file.file.path,
       );
+      code = 3;
     } else {
       code = await ShizukuApkInstaller().installAPK(
         file.file.uri.toString(),

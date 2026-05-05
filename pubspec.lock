@@ -9,14 +9,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
-  android_package_installer:
-    dependency: "direct main"
-    description:
-      name: android_package_installer
-      sha256: "8d402893474e4489f1400f772ef6e37f1ec5561a46fb8257ec6b19fe0280a9e5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
   android_package_manager:
     dependency: "direct main"
     description:
@@ -343,6 +335,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_app_installer:
+    dependency: "direct main"
+    description:
+      name: flutter_app_installer
+      sha256: "7e8e9b70c861d222240cbf4ab04d30f9c1baad32e66f72d71f4dfca7284f53cc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   flutter_archive:
     dependency: "direct main"
     description:
