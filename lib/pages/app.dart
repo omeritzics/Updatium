@@ -16,6 +16,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:provider/provider.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:updatium/components/generated_form.dart';
+import 'package:android_intent_plus/android_intent.dart';
 
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
@@ -817,8 +818,13 @@ class _AppPageState extends State<AppPage> {
                         icon: Icons.open_in_new,
                         semanticLabel: tr('open'),
                         tooltip: tr('open'),
-                        onPressed: () {
-                          pm.openApp(app.app.id);
+                        onPressed: () async {
+                          AndroidIntent intent = AndroidIntent(
+                            action: 'android.intent.action.MAIN',
+                            category: 'android.intent.category.LAUNCHER',
+                            package: app.app.id,
+                          );
+                          await intent.launch();
                         },
                       ),
                     if (!updating &&
