@@ -21,8 +21,6 @@ subprojects {
     if (project.path != ":app") {
         project.evaluationDependsOn(":app")
     }
-    
-    }
 }
 
 tasks.register<Delete>("clean") {
