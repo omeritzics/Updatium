@@ -1713,8 +1713,7 @@ class DowngradeError extends UpdatiumError {
 }
 
 class InstallError extends UpdatiumError {
-  InstallError(int code)
-    : super(PackageInstallerStatus.byCode(code).name.substring(7));
+  InstallError(int code) : super('${tr('installError')} (code: $code)');
 }
 
 class IDChangedError extends UpdatiumError {
