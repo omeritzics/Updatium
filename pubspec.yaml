@@ -49,7 +49,7 @@ dependencies:
   animations: ^2.1.1
   flutter_app_installer: ^2.0.0
   android_package_manager: ^0.7.1
-  installed_apps: ^1.0.0
+  installed_apps: ^2.0.0
   share_plus: ^13.1.0
   sqflite: ^2.4.2
   simple_localization:
