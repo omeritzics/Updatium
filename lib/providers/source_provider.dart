@@ -21,6 +21,7 @@ import 'package:updatium/app_sources/codeberg.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
+import 'package:updatium/app_sources/gitea.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/app_sources/huaweiappgallery.dart';
@@ -1374,6 +1375,7 @@ class SourceProvider {
     GitLab(),
     Bitbucket(),
     Codeberg(),
+    Gitea(),
     FDroid(),
     FDroidRepo(),
     IzzyOnDroid(),
