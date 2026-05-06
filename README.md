@@ -19,8 +19,9 @@ Update your Android apps directly from the APK source. Updatium is a customizabl
 | 🧩 Third Party F-Droid Repos | ![Tencent App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=sj.qq.com) [Tencent App Store](https://sj.qq.com/) | ![WhatsApp favicon](https://www.google.com/s2/favicons?sz=16&domain=whatsapp.com) [WhatsApp](https://whatsapp.com/) |
 | ![IzzyOnDroid favicon](https://www.google.com/s2/favicons?sz=16&domain=android.izzysoft.de) [IzzyOnDroid](https://android.izzysoft.de/) | ![vivo App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=vivo.com.cn) [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) | |
 | ![SourceHut favicon](https://www.google.com/s2/favicons?sz=16&domain=sourcehut.org) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=16&domain=rustore.ru) [RuStore](https://rustore.ru/) | |
-| ![OpenAPK favicon](https://www.google.com/s2/favicons?sz=16&domain=openapk.net) [OpenAPK (Nightly builds only)](https://www.openapk.net/) | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org) [Bitbucket (Nightly builds only)](https://bitbucket.org/) | |
-| ![Bitbucket favicon](https://www.google.com/s2/favicons?sz=16&domain=openapk.net | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror](https://apkmirror.com/) | |
+| ![OpenAPK favicon](https://www.google.com/s2/favicons?sz=16&domain=openapk.net) [OpenAPK (Nightly builds only)](https://www.openapk.net/) | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
+| ![Bitbucket favicon](https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org) [Bitbucket (Nightly builds only)](https://www.bitbucket.org) | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror](https://apkmirror.com/) | |
+| ![Gitea favicon](https://www.google.com/s2/favicons?sz=16&domain=try.gitea.io) [Gitea (Nightly builds only)](https://try.gitea.io/) | |
 
 ### Improved Design
 
@@ -31,7 +32,7 @@ Based on Material Design 3 Expressive guidelines.
 - Better accessability for screen readers.
 - Grid View.
 - Safe Mode (allows you to block unwanted changes to the application catalogue).
-- Use DNS-over-HTTP providers (Nightly builds only).
+- Ability to use DNS-over-HTTP providers (Nightly builds only).
 
 ### Localization
 
@@ -60,7 +61,7 @@ Do not download Updatium from unofficial sources (such as Appteka), since these 
 
 | ![Apps Page](./assets/screenshots/1.apps.png) | ![Dark Theme](./assets/screenshots/2.dark_theme.png) | ![Material You](./assets/screenshots/3.material_you.png) |
 | ------------------------------------------------------ | ----------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/graphics/screenshots/5.app_opts.png) | ![Grid View](./assets/graphics/screenshots/6.grid_view.png) |
+| ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/screenshots/5.app_opts.png) | ![Grid View](./assets/screenshots/6.grid_view.png) |
 
 ## Limitations
 
