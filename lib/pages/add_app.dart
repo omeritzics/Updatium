@@ -655,201 +655,222 @@ class AddAppPageState extends State<AddAppPage> {
     );
 
     void showAdditionalSettingsDialog() async {
-    // Create temporary copies of current settings
-    Map<String, dynamic> tempAdditionalSettings = Map.from(additionalSettings);
-    bool tempAdditionalSettingsValid = additionalSettingsValid;
-    List<String> tempPickedCategories = List.from(pickedCategories);
-    bool tempInferAppIdIfOptional = inferAppIdIfOptional;
-    
-    final result = await showDialog<bool>(
-      context: context,
-      builder: (BuildContext ctx) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Dialog.fullscreen(
-              child: Scaffold(
-                appBar: AppBar(
-                  title: Text(tr('additionalOptsFor', args: [pickedSource?.name ?? tr('source')])),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(ctx).pop(false),
-                      child: Text(tr('cancel')),
+      // Create temporary copies of current settings
+      Map<String, dynamic> tempAdditionalSettings = Map.from(
+        additionalSettings,
+      );
+      bool tempAdditionalSettingsValid = additionalSettingsValid;
+      List<String> tempPickedCategories = List.from(pickedCategories);
+      bool tempInferAppIdIfOptional = inferAppIdIfOptional;
+
+      final result = await showDialog<bool>(
+        context: context,
+        builder: (BuildContext ctx) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return Dialog.fullscreen(
+                child: Scaffold(
+                  appBar: AppBar(
+                    title: Text(
+                      tr(
+                        'additionalOptsFor',
+                        args: [pickedSource?.name ?? tr('source')],
+                      ),
                     ),
-                    TextButton(
-                      onPressed: tempAdditionalSettingsValid 
-                          ? () => Navigator.of(ctx).pop(true)
-                          : null,
-                      child: Text(tr('save')),
-                    ),
-                  ],
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        GeneratedForm(
-                          key: Key(
-                            '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}',
-                          ),
-                          items: [
-                            ...pickedSource!.combinedAppSpecificSettingFormItems,
-                            ...(pickedSourceOverride != null
-                                ? pickedSource!.sourceConfigSettingFormItems.map((e) => [e])
-                                : []),
-                          ],
-                          onValueChanges: (values, valid, isBuilding) {
-                            if (!isBuilding) {
-                              setState(() {
-                                tempAdditionalSettings = values;
-                                tempAdditionalSettingsValid = valid;
-                              });
-                            }
-                          },
-                        ),
-                        gap16,
-                        CategorySelector(
-                          alignment: WrapAlignment.start,
-                          onSelected: (categories) {
-                            tempPickedCategories = categories;
-                          },
-                        ),
-                        if (pickedSource != null && pickedSource!.appIdInferIsOptional) ...[
-                          gap16,
-                          GeneratedForm(
-                            key: const Key('inferAppIdIfOptional'),
-                            items: [
-                              [
-                                GeneratedFormSwitch(
-                                  'inferAppIdIfOptional',
-                                  label: tr('tryInferAppIdFromCode'),
-                                  defaultValue: tempInferAppIdIfOptional,
-                                ),
-                              ],
-                            ],
-                            onValueChanges: (values, valid, isBuilding) {
-                              if (!isBuilding) {
-                                setState(() {
-                                  tempInferAppIdIfOptional = values['inferAppIdIfOptional'];
-                                });
-                              }
-                            },
-                          ),
-                        ],
-                        if (pickedSource != null && pickedSource!.enforceTrackOnly) ...[
-                          gap16,
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(false),
+                        child: Text(tr('cancel')),
+                      ),
+                      TextButton(
+                        onPressed: tempAdditionalSettingsValid
+                            ? () => Navigator.of(ctx).pop(true)
+                            : null,
+                        child: Text(tr('save')),
+                      ),
+                    ],
+                  ),
+                  body: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
                           GeneratedForm(
                             key: Key(
-                              '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-appId',
+                              '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}',
                             ),
                             items: [
-                              [
-                                GeneratedFormTextField(
-                                  'appId',
-                                  label: '${tr('appId')} - ${tr('custom')}',
-                                  required: false,
-                                  defaultValue: tempAdditionalSettings['appId'],
-                                  additionalValidators: [
-                                    (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return null;
-                                      }
-                                      final isValid = RegExp(
-                                        r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-                                      ).hasMatch(value);
-                                      if (!isValid) {
-                                        return tr('invalidInput');
-                                      }
-                                      return null;
-                                    },
-                                  ],
-                                ),
-                              ],
+                              ...pickedSource!
+                                  .combinedAppSpecificSettingFormItems,
+                              ...(pickedSourceOverride != null
+                                  ? pickedSource!.sourceConfigSettingFormItems
+                                        .map((e) => [e])
+                                  : []),
                             ],
                             onValueChanges: (values, valid, isBuilding) {
                               if (!isBuilding) {
                                 setState(() {
-                                  tempAdditionalSettings['appId'] = values['appId'];
+                                  tempAdditionalSettings = values;
+                                  tempAdditionalSettingsValid = valid;
                                 });
                               }
                             },
                           ),
+                          gap16,
+                          CategorySelector(
+                            alignment: WrapAlignment.start,
+                            onSelected: (categories) {
+                              tempPickedCategories = categories;
+                            },
+                          ),
+                          if (pickedSource != null &&
+                              pickedSource!.appIdInferIsOptional) ...[
+                            gap16,
+                            GeneratedForm(
+                              key: const Key('inferAppIdIfOptional'),
+                              items: [
+                                [
+                                  GeneratedFormSwitch(
+                                    'inferAppIdIfOptional',
+                                    label: tr('tryInferAppIdFromCode'),
+                                    defaultValue: tempInferAppIdIfOptional,
+                                  ),
+                                ],
+                              ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding) {
+                                  setState(() {
+                                    tempInferAppIdIfOptional =
+                                        values['inferAppIdIfOptional'];
+                                  });
+                                }
+                              },
+                            ),
+                          ],
+                          if (pickedSource != null &&
+                              pickedSource!.enforceTrackOnly) ...[
+                            gap16,
+                            GeneratedForm(
+                              key: Key(
+                                '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-appId',
+                              ),
+                              items: [
+                                [
+                                  GeneratedFormTextField(
+                                    'appId',
+                                    label: '${tr('appId')} - ${tr('custom')}',
+                                    required: false,
+                                    defaultValue:
+                                        tempAdditionalSettings['appId'],
+                                    additionalValidators: [
+                                      (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return null;
+                                        }
+                                        final isValid = RegExp(
+                                          r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+                                        ).hasMatch(value);
+                                        if (!isValid) {
+                                          return tr('invalidInput');
+                                        }
+                                        return null;
+                                      },
+                                    ],
+                                  ),
+                                ],
+                              ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding) {
+                                  setState(() {
+                                    tempAdditionalSettings['appId'] =
+                                        values['appId'];
+                                  });
+                                }
+                              },
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          },
-        );
-      },
-    );
-    
-    // Apply changes only if user saved
-    if (result == true) {
-      setState(() {
-        additionalSettings = tempAdditionalSettings;
-        additionalSettingsValid = tempAdditionalSettingsValid;
-        pickedCategories = tempPickedCategories;
-        inferAppIdIfOptional = tempInferAppIdIfOptional;
-      });
-    }
-  }
+              );
+            },
+          );
+        },
+      );
 
-  Widget getAdditionalSettingsButton() => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.settings,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              horizontalGap8,
-              Expanded(
-                child: Text(
-                  tr('additionalOptsFor', args: [pickedSource?.name ?? tr('source')]),
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
+      // Apply changes only if user saved
+      if (result == true) {
+        setState(() {
+          additionalSettings = tempAdditionalSettings;
+          additionalSettingsValid = tempAdditionalSettingsValid;
+          pickedCategories = tempPickedCategories;
+          inferAppIdIfOptional = tempInferAppIdIfOptional;
+        });
+      }
+    }
+
+    Widget getAdditionalSettingsButton() => Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.settings,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                horizontalGap8,
+                Expanded(
+                  child: Text(
+                    tr(
+                      'additionalOptsFor',
+                      args: [pickedSource?.name ?? tr('source')],
+                    ),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              Icon(
-                Icons.chevron_right,
-                color: Theme.of(context).colorScheme.primary,
+                Icon(
+                  Icons.chevron_right,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ],
+            ),
+            if (additionalSettings.isNotEmpty) ...[
+              gap8,
+              Text(
+                '${additionalSettings.length} ${tr('additionalSettings')}',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ],
-          ),
-          if (additionalSettings.isNotEmpty) ...[
-            gap8,
-            Text(
-              '${additionalSettings.length} ${tr('additionalSettings')}',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
+            if (pickedCategories.isNotEmpty) ...[
+              gap4,
+              Wrap(
+                spacing: 4,
+                runSpacing: 4,
+                children: pickedCategories
+                    .map(
+                      (category) => Chip(
+                        label: Text(category),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                    )
+                    .toList(),
               ),
-            ),
+            ],
           ],
-          if (pickedCategories.isNotEmpty) ...[
-            gap4,
-            Wrap(
-              spacing: 4,
-              runSpacing: 4,
-              children: pickedCategories.map((category) => Chip(
-                label: Text(category),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              )).toList(),
-            ),
-          ],
-        ],
+        ),
       ),
-    ),
-  );
+    );
 
     Widget getSourcesListWidget() => Row(
       mainAxisSize: MainAxisSize.min,
