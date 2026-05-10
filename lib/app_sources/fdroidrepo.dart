@@ -160,7 +160,8 @@ class FDroidRepo extends AppSource {
       appIdOrName = standardUri.queryParameters['appId'];
     }
     standardUrl = removeQueryParamsFromUrl(standardUrl);
-    bool autoSelectHighestVersionCode = additionalSettings['autoSelectHighestVersionCode'] == true;
+    bool autoSelectHighestVersionCode =
+        additionalSettings['autoSelectHighestVersionCode'] == true;
     bool trySelectingSuggestedVersionCode =
         additionalSettings['trySelectingSuggestedVersionCode'] == true;
     if (appIdOrName == null) {

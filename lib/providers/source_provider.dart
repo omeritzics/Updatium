@@ -665,7 +665,7 @@ List<T> autoSelectHighestVersionCodeFromReleases<T>(
   if (releases.length <= 1) {
     return releases;
   }
-  
+
   // Sort releases by version code in descending order and take the first one
   releases.sort((a, b) => getVersionCode(b).compareTo(getVersionCode(a)));
   return [releases.first];
@@ -1161,9 +1161,11 @@ abstract class AppSource {
         additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
             .map(
               (e) => e
-                  .where((ee) => 
-                      !excludeCommonSettingKeys.contains(ee.key) &&
-                      (ee.key != 'autoSelectHighestVersionCode' || supportsVersionCodeSelection)
+                  .where(
+                    (ee) =>
+                        !excludeCommonSettingKeys.contains(ee.key) &&
+                        (ee.key != 'autoSelectHighestVersionCode' ||
+                            supportsVersionCodeSelection),
                   )
                   .toList(),
             )
