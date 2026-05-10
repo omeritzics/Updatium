@@ -900,7 +900,8 @@ abstract class AppSource {
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
     [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
-    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
+    [GeneratedFormTextField('appAuthor', label: tr('appAuthor'), required: false)],
+    [GeneratedFormTextField('about', label: tr('about'), required: false)],
     [GeneratedFormSwitch('trackOnly', label: tr('trackOnly'))],
     [
       GeneratedFormSwitch(
@@ -949,7 +950,6 @@ abstract class AppSource {
         label: tr('skipUpdateNotifications'),
       ),
     ],
-    [GeneratedFormTextField('about', label: tr('about'), required: false)],
     [
       GeneratedFormSwitch(
         'refreshBeforeDownload',
