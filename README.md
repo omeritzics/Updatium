@@ -98,4 +98,4 @@ On Updatium:
 
 ### Q: How can I help?
 
-A: There are many ways you can. Your contribution doesn't have to be code - it could also be bug reporting, translating the app into new languages (or improving existing translations), design proposals and ideas. To start, you can simply open a new thread on the Discussions page of this GitHub project and introduce yourself. Starring Updatium and sharing it to people who you think may like it will also help Updatium grow. Thank you for your support :)
+A: There are many ways you can help. It doesn't have to be code - it could also be bug reporting, adding new translations (or improving existing ones), design proposals and ideas. In order to start, simply open a new thread on the [Discussions page](https://github.com/omeritzics/Updatium/discussions) and introduce yourself. Starring Updatium and sharing it to people who might like it will also help Updatium grow. Thank you for your support :)
