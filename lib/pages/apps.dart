@@ -998,7 +998,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 180,
+                  maxCrossAxisExtent: 160,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
                   childAspectRatio: 0.7,
