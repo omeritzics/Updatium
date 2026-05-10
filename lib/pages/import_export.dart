@@ -746,14 +746,11 @@ class _SelectionModalState extends State<SelectionModal> {
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
+            semanticLabel: 'Cancel',
           ),
           title: Text(widget.title ?? tr('pick')),
           actions: [
             getSelectAllButton(),
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(tr('cancel')),
-            ),
             TextButton(
               onPressed: entrySelections.values.every((v) => v == false)
                   ? null
