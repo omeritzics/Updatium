@@ -746,7 +746,7 @@ class _SelectionModalState extends State<SelectionModal> {
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
-            semanticLabel: 'Cancel',
+            semanticLabel: tr('cancel'),
           ),
           title: Text(widget.title ?? tr('pick')),
           actions: [
