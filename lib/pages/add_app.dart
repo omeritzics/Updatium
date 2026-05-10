@@ -369,15 +369,15 @@ class AddAppPageState extends State<AddAppPage> {
                 button: true,
                 label: tr('add'),
                 hint: doingSomething
-                    ? 'Please wait, operation in progress'
+                    ? tr('pleaseWaitOperationInProgress')
                     : pickedSource == null
-                    ? 'Select a source first'
+                    ? tr('selectSourceFirst')
                     : (pickedSource!
                               .combinedAppSpecificSettingFormItems
                               .isNotEmpty &&
                           !additionalSettingsValid)
-                    ? 'Complete additional settings first'
-                    : 'Add this app to your collection',
+                    ? tr('completeAdditionalSettingsFirst')
+                    : tr('addAppToCollection'),
                 excludeSemantics: true,
                 child: FilledButton(
                   onPressed:
@@ -638,8 +638,8 @@ class AddAppPageState extends State<AddAppPage> {
                 button: true,
                 label: tr('search'),
                 hint: searchQuery.isEmpty
-                    ? 'Enter search terms first'
-                    : 'Search for apps',
+                    ? tr('enterSearchTermsFirst')
+                    : tr('searchForApps'),
                 excludeSemantics: true,
                 child: FilledButton(
                   onPressed: searchQuery.isEmpty || doingSomething
@@ -801,6 +801,7 @@ class AddAppPageState extends State<AddAppPage> {
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.primary,
+                                    semanticLabel: tr('openSource'),
                                   ),
                                   const SizedBox(width: 2),
                                 ],

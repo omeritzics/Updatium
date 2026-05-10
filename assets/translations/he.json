@@ -550,5 +550,11 @@
     "fileName": "שם הקובץ",
     "downloadCancelled": "ההורדה בוטלה",
     "showInFileManager": "הצגה במנהל הקבצים",
-    "usedOpenSourcePackages": "Used open-source packages"
+    "usedOpenSourcePackages": "Used open-source packages",
+    "pleaseWaitOperationInProgress": "Please wait, operation in progress",
+    "selectSourceFirst": "Select a source first",
+    "completeAdditionalSettingsFirst": "Complete additional settings first",
+    "addAppToCollection": "Add this app to your collection",
+    "enterSearchTermsFirst": "Enter search terms first",
+    "searchForApps": "Search for apps"
 }
