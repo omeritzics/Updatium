@@ -2102,8 +2102,8 @@ class _AboutDialogState extends State<AboutDialog> {
                   children: [
                     Image.asset(
                       'assets/graphics/icon.png',
-                      width: 80,
-                      height: 80,
+                      width: 72,
+                      height: 72,
                     ),
                     gap16,
                     Text(

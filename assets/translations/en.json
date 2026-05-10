@@ -9,7 +9,7 @@
   "placeholder": "Placeholder",
   "someErrors": "Some errors occurred",
   "unexpectedError": "Unexpected error",
-  "ok": "Okay",
+  "ok": "OK",
   "and": "and",
   "githubPATLabel": "GitHub personal access token",
   "includePrereleases": "Include prereleases",
@@ -104,7 +104,7 @@
   "filterApps": "Filter apps",
   "filterDays": "Filter days",
   "appName": "App name",
-  "author": "Author",
+  "appAuthor": "Author",
   "upToDateApps": "Up to date apps",
   "nonInstalledApps": "Non-installed apps",
   "importExport": "Import/export",
@@ -534,5 +534,11 @@
   "fileName": "File name",
   "downloadCancelled": "Download cancelled",
   "showInFileManager": "Show in file manager",
-  "usedOpenSourcePackages": "Used open-source packages"
+  "usedOpenSourcePackages": "Used open-source packages",
+  "pleaseWaitOperationInProgress": "Please wait, operation in progress",
+  "selectSourceFirst": "Select a source first",
+  "completeAdditionalSettingsFirst": "Complete additional settings first",
+  "addAppToCollection": "Add this app to your collection",
+  "enterSearchTermsFirst": "Enter search terms first",
+  "searchForApps": "Search for apps"
 }

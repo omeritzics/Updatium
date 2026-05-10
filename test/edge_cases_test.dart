@@ -420,7 +420,7 @@ void main() {
 
           // URL should not be just a fragment
           if (url.startsWith('#')) {
-            // Fragment links are okay
+            // Fragment links are OK
             continue;
           }
 
