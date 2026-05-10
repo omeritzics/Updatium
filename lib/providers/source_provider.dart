@@ -656,6 +656,21 @@ List<MapEntry<String, String>> preferApkOverXapk(
   return apkUrls;
 }
 
+/// Unified helper function to auto-select the highest version code from a list of releases
+/// Returns a filtered list containing only the release with the highest version code
+List<T> autoSelectHighestVersionCodeFromReleases<T>(
+  List<T> releases,
+  int Function(T) getVersionCode,
+) {
+  if (releases.length <= 1) {
+    return releases;
+  }
+  
+  // Sort releases by version code in descending order and take the first one
+  releases.sort((a, b) => getVersionCode(b).compareTo(getVersionCode(a)));
+  return [releases.first];
+}
+
 String getSourceRegex(List<String> hosts) {
   return '(${hosts.join('|').replaceAll('.', '\\.')})';
 }
@@ -761,6 +776,7 @@ abstract class AppSource {
   bool urlsAlwaysHaveExtension = false;
   bool allowIncludeZips = false;
   bool openSource = false;
+  bool supportsVersionCodeSelection = false;
 
   AppSource() {
     name = runtimeType.toString();
@@ -988,6 +1004,13 @@ abstract class AppSource {
     ],
     [
       GeneratedFormSwitch(
+        'autoSelectHighestVersionCode',
+        label: tr('autoSelectHighestVersionCode'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
         'includePrereleases',
         label: tr('includePrereleases'),
         defaultValue: false,
@@ -1138,7 +1161,10 @@ abstract class AppSource {
         additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
             .map(
               (e) => e
-                  .where((ee) => !excludeCommonSettingKeys.contains(ee.key))
+                  .where((ee) => 
+                      !excludeCommonSettingKeys.contains(ee.key) &&
+                      (ee.key != 'autoSelectHighestVersionCode' || supportsVersionCodeSelection)
+                  )
                   .toList(),
             )
             .where((e) => e.isNotEmpty)

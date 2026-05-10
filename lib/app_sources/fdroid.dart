@@ -15,6 +15,7 @@ class FDroid extends AppSource {
     naiveStandardVersionDetection = true;
     canSearch = true;
     openSource = true;
+    supportsVersionCodeSelection = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(
@@ -26,12 +27,6 @@ class FDroid extends AppSource {
               return regExValidator(value);
             },
           ],
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'autoSelectHighestVersionCode',
-          label: tr('autoSelectHighestVersionCode'),
         ),
       ],
     ];
@@ -244,7 +239,10 @@ class FDroid extends AppSource {
     // For the remaining releases, use the toggles to auto-select one if possible
     if (releaseChoices.length > 1) {
       if (autoSelectHighestVersionCode) {
-        releaseChoices = [releaseChoices.first];
+        releaseChoices = autoSelectHighestVersionCodeFromReleases(
+          releaseChoices.toList(),
+          (release) => release['versionCode'] as int,
+        );
       } else if (trySelectingSuggestedVersionCode &&
           response['suggestedVersionCode'] != null) {
         var suggestedReleases = releaseChoices.where(
