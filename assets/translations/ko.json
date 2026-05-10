@@ -104,7 +104,7 @@
     "filterApps": "앱 필터",
     "filterDays": "Filter days",
     "appName": "앱 이름",
-    "author": "저자",
+    "appAuthor": "Author",
     "upToDateApps": "최신 상태의 앱",
     "nonInstalledApps": "설치되지 않은 앱",
     "importExport": "가져오기/내보내기",

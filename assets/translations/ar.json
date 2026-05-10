@@ -105,7 +105,7 @@
     "filterApps": "تصفية التطبيقات",
     "filterDays": "Filter days",
     "appName": "اسم التطبيق",
-    "author": "المؤلف",
+    "appAuthor": "Author",
     "upToDateApps": "تطبيقات محدثة",
     "nonInstalledApps": "تطبيقات غير مثبتة",
     "importExport": "استيراد/تصدير",

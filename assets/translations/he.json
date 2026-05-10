@@ -105,7 +105,7 @@
     "filterApps": "סינון יישומים",
     "filterDays": "סינון ימים",
     "appName": "שם היישום",
-    "author": "מפתחים",
+    "appAuthor": "Author",
     "upToDateApps": "יישומים מעודכנים",
     "nonInstalledApps": "יישומים לא מותקנים",
     "importExport": "ייבוא/ייצוא",

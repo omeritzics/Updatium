@@ -104,7 +104,7 @@
     "filterApps": "過濾應用程式",
     "filterDays": "Filter days",
     "appName": "應用程式名稱",
-    "author": "作者",
+    "appAuthor": "Author",
     "upToDateApps": "最新的應用程式",
     "nonInstalledApps": "未安裝的應用程式",
     "importExport": "匯入/匯出",

@@ -104,7 +104,7 @@
     "filterApps": "Filter aplikasi",
     "filterDays": "Filter days",
     "appName": "Nama aplikasi",
-    "author": "Pencipta",
+    "appAuthor": "Author",
     "upToDateApps": "Aplikasi terbaru",
     "nonInstalledApps": "Aplikasi tidak terpasang",
     "importExport": "Impor/ekspor",

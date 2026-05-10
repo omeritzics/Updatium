@@ -104,7 +104,7 @@
     "filterApps": "Alkalmazások szűrése",
     "filterDays": "Filter days",
     "appName": "Név",
-    "author": "Szerző",
+    "appAuthor": "Author",
     "upToDateApps": "Naprakész alkalmazások",
     "nonInstalledApps": "Nem telepített alkalmazások",
     "importExport": "Adatmozgatás",

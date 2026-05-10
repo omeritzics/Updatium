@@ -104,7 +104,7 @@
     "filterApps": "Filtrer les applications",
     "filterDays": "Filter days",
     "appName": "Nom de l'application",
-    "author": "Auteur",
+    "appAuthor": "Author",
     "upToDateApps": "Applications à jour",
     "nonInstalledApps": "Applications non installées",
     "importExport": "Import/Export",

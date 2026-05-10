@@ -104,7 +104,7 @@
     "filterApps": "ऐप्स फ़िल्टर करें",
     "filterDays": "Filter days",
     "appName": "ऐप का नाम",
-    "author": "लेखक",
+    "appAuthor": "Author",
     "upToDateApps": "अप-टू-डेट ऐप्स",
     "nonInstalledApps": "गैर-इंस्टॉल किए गए ऐप्स",
     "importExport": "आयात/निर्यात",

@@ -104,7 +104,7 @@
     "filterApps": "Filtrer Apps",
     "filterDays": "Filter days",
     "appName": "Appnavn",
-    "author": "Udvikler",
+    "appAuthor": "Author",
     "upToDateApps": "Opdaterede apps",
     "nonInstalledApps": "Ikke-installerede apps",
     "importExport": "Import/Eksport",

@@ -104,7 +104,7 @@
     "filterApps": "فیلتر کردن برنامه ها",
     "filterDays": "Filter days",
     "appName": "نام برنامه",
-    "author": "سازنده",
+    "appAuthor": "Author",
     "upToDateApps": "برنامه های به روز",
     "nonInstalledApps": "برنامه های نصب نشده",
     "importExport": "وارد کردن/صادر کردن",

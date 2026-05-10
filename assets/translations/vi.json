@@ -104,7 +104,7 @@
     "filterApps": "Lọc ứng dụng",
     "filterDays": "Filter days",
     "appName": "Tên ứng dụng",
-    "author": "Tác giả",
+    "appAuthor": "Author",
     "upToDateApps": "Ứng dụng cập nhật",
     "nonInstalledApps": "Ứng dụng chưa được cài đặt",
     "importExport": "Nhập/Xuất",

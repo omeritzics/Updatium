@@ -104,7 +104,7 @@
     "filterApps": "Фильтровать приложения",
     "filterDays": "Filter days",
     "appName": "Название приложения",
-    "author": "Автор",
+    "appAuthor": "Author",
     "upToDateApps": "Приложения с обновлениями",
     "nonInstalledApps": "Неустановленные приложения",
     "importExport": "Данные",

@@ -104,7 +104,7 @@
     "filterApps": "Uygulamaları filtrele",
     "filterDays": "Filter days",
     "appName": "Uygulama adı",
-    "author": "Geliştirici",
+    "appAuthor": "Author",
     "upToDateApps": "Güncel uygulamalar",
     "nonInstalledApps": "Yüklü olmayan uygulamalar",
     "importExport": "İçe/Dışa aktar",
