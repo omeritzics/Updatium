@@ -7,6 +7,7 @@ class VLC extends AppSource {
     name = tr('vlc');
     hosts = ['get.videolan.org', 'videolan.org'];
     allowOverride = false;
+    openSource = true;
   }
 
   @override
