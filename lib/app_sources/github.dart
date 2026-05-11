@@ -123,15 +123,11 @@ class GitHub extends AppSource {
       'android/app/build.gradle',
       'src/app/build.gradle',
     ];
-    
+
     String? parseAppIdFromGradleContent(String content) {
       try {
         var trimmedLines = utf8
-            .decode(
-              base64.decode(
-                content.split('\n').join(''),
-              ),
-            )
+            .decode(base64.decode(content.split('\n').join('')))
             .split('\n')
             .map((e) => e.trim());
         var appIds = trimmedLines.where(
@@ -140,9 +136,8 @@ class GitHub extends AppSource {
               l.startsWith('applicationId \''),
         );
         appIds = appIds.map(
-          (appId) => appId.split(
-            appId.startsWith('applicationId "') ? '"' : '\'',
-          )[1],
+          (appId) =>
+              appId.split(appId.startsWith('applicationId "') ? '"' : '\'')[1],
         );
         appIds = appIds
             .map((appId) {
@@ -164,9 +159,12 @@ class GitHub extends AppSource {
         return null;
       }
     }
-    
-    String apiUrl = await convertStandardUrlToAPIUrl(standardUrl, additionalSettings);
-    
+
+    String apiUrl = await convertStandardUrlToAPIUrl(
+      standardUrl,
+      additionalSettings,
+    );
+
     for (var path in possibleBuildGradleLocations) {
       try {
         var res = await sourceRequest(
@@ -319,7 +317,8 @@ class GitHub extends AppSource {
     dynamic latestRelease;
     if (verifyLatestTag) {
       var temp = requestUrl.split('?');
-      String latestUrl = '${temp[0]}/latest${temp.length > 1 ? '?${temp.sublist(1).join('?')}' : ''}';
+      String latestUrl =
+          '${temp[0]}/latest${temp.length > 1 ? '?${temp.sublist(1).join('?')}' : ''}';
       Response res = await sourceRequest(latestUrl, additionalSettings);
       if (res.statusCode != 200) {
         if (onHttpErrorCode != null) {

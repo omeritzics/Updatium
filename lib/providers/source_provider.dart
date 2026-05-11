@@ -70,16 +70,23 @@ class _ETagResponseCache {
   }
 
   /// Get existing pending request or null if no pending request
-  Future<Response>? getPendingRequest(String url, Map<String, dynamic>? additionalSettings) {
+  Future<Response>? getPendingRequest(
+    String url,
+    Map<String, dynamic>? additionalSettings,
+  ) {
     final key = _cacheKey(url, additionalSettings);
     return _pendingRequests[key];
   }
 
   /// Store a pending request to prevent duplicates
-  void setPendingRequest(String url, Map<String, dynamic>? additionalSettings, Future<Response> request) {
+  void setPendingRequest(
+    String url,
+    Map<String, dynamic>? additionalSettings,
+    Future<Response> request,
+  ) {
     final key = _cacheKey(url, additionalSettings);
     _pendingRequests[key] = request;
-    
+
     // Clean up when request completes
     request.whenComplete(() => _pendingRequests.remove(key));
   }
@@ -861,7 +868,10 @@ abstract class AppSource {
 
     // Request deduplication for concurrent identical requests
     if (method == 'GET' && !_isDownloadUrl(url)) {
-      final pendingRequest = _etagCache.getPendingRequest(url, additionalSettings);
+      final pendingRequest = _etagCache.getPendingRequest(
+        url,
+        additionalSettings,
+      );
       if (pendingRequest != null) {
         return pendingRequest;
       }
