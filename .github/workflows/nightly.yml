@@ -20,16 +20,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Cache Flutter dependencies
-        uses: actions/cache@main
-        with:
-          path: |
-            ~/.pub-cache
-            /opt/flutter
-          key: flutter-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
-          restore-keys: |
-            flutter-${{ runner.os }}-
-
       - name: Cache Gradle dependencies
         uses: actions/cache@main
         with:
