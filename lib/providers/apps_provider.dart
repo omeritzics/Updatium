@@ -199,8 +199,8 @@ Future<File> downloadFileWithRetry(
     );
   } catch (e) {
     if (retries > 0 &&
-        (e is http.ClientException ||
-            e.toString().contains('Connection closed'))) {
+        e is http.ClientException &&
+        !isCancelationException(e)) {
       await Future.delayed(const Duration(seconds: 10));
       return await downloadFileWithRetry(
         url,
@@ -2507,7 +2507,7 @@ class AppsProvider with ChangeNotifier {
             try {
               newApp = await checkUpdate(appId);
             } catch (e) {
-              if ((e is RateLimitError || e is SocketException) &&
+              if ((e is RateLimitError || (e is SocketException && !isCancelationException(e))) &&
                   throwErrorsForRetry) {
                 rethrow;
               }
@@ -3182,7 +3182,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
             // Next task interval is based on the error with the longest retry time
             int minRetryIntervalForThisApp = err is RateLimitError
                 ? (err.remainingMinutes * 60)
-                : e is http.ClientException
+                : (e is http.ClientException && !isCancelationException(e))
                 ? (15 * 60)
                 : (toCheckApp.value + 1);
             if (minRetryIntervalForThisApp > maxRetryWaitSeconds) {

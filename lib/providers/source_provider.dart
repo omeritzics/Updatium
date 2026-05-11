@@ -162,6 +162,26 @@ class APKDetails {
 // Centralized supported APK file extensions
 const List<String> supportedApkExtensions = ['.apk', '.xapk'];
 
+/// Checks if an exception is likely from a user cancelation rather than a network error
+bool isCancelationException(dynamic exception) {
+  if (exception is http.ClientException) {
+    final message = exception.toString();
+    // Common cancelation patterns in HTTP clients
+    return message.contains('Connection closed') ||
+           message.contains('Connection reset') ||
+           message.contains('Request cancelled') ||
+           message.contains('Request canceled') ||
+           message.contains('Operation cancelled') ||
+           message.contains('Operation canceled');
+  }
+  if (exception is SocketException) {
+    final message = exception.toString();
+    return message.contains('Connection closed') ||
+           message.contains('Connection reset');
+  }
+  return false;
+}
+
 // Check if a filename has a supported APK extension (case-insensitive)
 bool hasSupportedApkExtension(String filename) {
   var lower = filename.toLowerCase();

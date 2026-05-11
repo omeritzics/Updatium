@@ -49,54 +49,9 @@ class GitHub extends AppSource {
           const SizedBox(height: 4),
         ],
       ),
-      GeneratedFormDropdown(
-        'sourceType',
-        [
-          const MapEntry('releases', 'Releases'),
-          const MapEntry('artifacts', 'Actions Artifacts'),
-        ],
-        label: 'Source Type',
-        defaultValue: 'releases',
-      ),
-      GeneratedFormTextField(
-        tr('GHReqPrefix'),
-        label: tr('GHReqPrefix'),
-        hint: 'gh-proxy.org',
-        required: false,
-        additionalValidators: [
-          (value) {
-            try {
-              if (value != null && Uri.parse(value).scheme.isNotEmpty) {
-                throw true;
-              }
-              if (value != null) {
-                Uri.parse('https://${value}/api.github.com');
-              }
-            } catch (e) {
-              return tr('invalidInput');
-            }
-            return null;
-          },
-        ],
-        belowWidgets: [
-          const SizedBox(height: 4),
-          GestureDetector(
-            onTap: () {
-              launchUrlString(
-                'https://github.com/omeritzics/Updatium',
-                mode: LaunchMode.externalApplication,
-              );
-            },
-            child: Text(
-              tr('about'),
-              style: const TextStyle(
-                decoration: TextDecoration.underline,
-                fontSize: 12,
-              ),
-            ),
-          ),
-          const SizedBox(height: 4),
-        ],
+      GeneratedFormSwitch(
+        'downloadFromGitHubActions',
+        label: 'Download from GitHub Actions instead',
       ),
     ];
 
@@ -652,9 +607,9 @@ class GitHub extends AppSource {
     final repo = pathSegments[1];
 
     // Check if we should use artifacts instead of releases
-    final sourceType = additionalSettings['sourceType'] ?? 'releases';
+    final downloadFromGitHubActions = additionalSettings['downloadFromGitHubActions'] == true;
     
-    if (sourceType == 'artifacts') {
+    if (downloadFromGitHubActions) {
       return await getLatestArtifactDetails(
         owner,
         repo,
