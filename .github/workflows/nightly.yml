@@ -43,13 +43,16 @@ jobs:
       - name: Upgrade existing dependencies
         run: flutter pub upgrade
         
-      - name: Check for code changes
+      - name: Check for relevant changes
         id: changes
         run: |
-          if git diff --quiet HEAD~1 HEAD; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-          else
+          # Only build if app code, dependencies, or build files changed
+          if git diff --name-only HEAD~1 HEAD | grep -E '\.(dart|gradle|kt|yml|yaml)$' >/dev/null; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Relevant changes detected - proceeding with build"
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No relevant changes detected - skipping build"
           fi
         
       - name: Auto-fix linting issues
@@ -73,39 +76,24 @@ jobs:
   build:
     needs: prepare
     runs-on: ubuntu-latest
+    if: needs.prepare.outputs.has_changes == 'true'
     steps:
-      - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: false
-          android: false
-          dotnet: false
-          haskell: false
-          large-packages: false
-          docker-images: true
-
       - name: Checkout Code
         uses: actions/checkout@main
         with:
           fetch-depth: 0
 
-      - name: Cache Flutter dependencies
+      - name: Restore dependencies cache
         uses: actions/cache@main
         with:
           path: |
             ~/.pub-cache
-            /opt/flutter
-          key: flutter-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
-          restore-keys: |
-            flutter-${{ runner.os }}-
-
-      - name: Cache Gradle dependencies
-        uses: actions/cache@main
-        with:
-          path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+            /opt/flutter
+          key: deps-${{ runner.os }}-${{ hashFiles('pubspec.lock', '**/*.gradle*') }}
+          restore-keys: |
+            deps-${{ runner.os }}-
 
       - name: Setup Java
         uses: actions/setup-java@main
@@ -190,6 +178,7 @@ jobs:
           name: Updatium-Nightly-APKs
           path: |
             build/outputs/Updatium-Nightly-*.apk
+          retention-days: 7  # Reduce retention to save storage
 
       - name: Create Release
         if: success() && hashFiles('build/outputs/Updatium-Nightly-*.apk') != ''
