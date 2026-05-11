@@ -18,6 +18,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
@@ -2372,9 +2373,6 @@ class AppsProvider with ChangeNotifier {
                   child: Text(tr('cancel')),
                 ),
                 M3ETextButton(
-                  style: M3ETextButton.styleFrom(
-                    foregroundColor: Theme.of(context).colorScheme.error,
-                  ),
                   onPressed: () {
                     HapticFeedback.selectionClick();
                     Navigator.of(ctx).pop({

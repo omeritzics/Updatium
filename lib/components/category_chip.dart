@@ -1,5 +1,6 @@
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 
 /// Reusable category chip widget for consistent category selection display

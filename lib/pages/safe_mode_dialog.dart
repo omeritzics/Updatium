@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:provider/provider.dart';
@@ -466,10 +467,6 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
             },
             icon: const Icon(Icons.link_rounded, size: 18),
             label: Text('Omer I.S. (@omeritzics)'),
-            style: M3ETextButton.styleFrom(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.zero,
-            ),
           ),
           const SizedBox(height: 16),
           Text(tr('sourceCode'), style: Theme.of(context).textTheme.titleSmall),
@@ -483,10 +480,6 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
             },
             icon: const Icon(Icons.link_rounded, size: 18),
             label: Text('GitHub'),
-            style: M3ETextButton.styleFrom(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.zero,
-            ),
           ),
         ],
       ),

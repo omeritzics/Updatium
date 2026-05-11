@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -966,10 +967,6 @@ class AddAppPageState extends State<AddAppPage> {
           },
           icon: const Icon(Icons.info_outline, size: 18),
           label: Text(tr('supportedSources')),
-          style: M3ETextButton.styleFrom(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.zero,
-          ),
         ),
       ],
     );

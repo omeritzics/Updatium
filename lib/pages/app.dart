@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 import 'package:simple_localization/simple_localization.dart';
@@ -607,11 +608,6 @@ class _AppPageState extends State<AppPage> {
     }
 
     getInstallOrUpdateButton() => M3EFilledButton(
-      style: M3EFilledButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-      ),
       onPressed:
           !updating &&
               (app.app.installedVersion == null ||

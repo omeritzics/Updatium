@@ -4,6 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:app_links/app_links.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 
 import 'package:updatium/main.dart';

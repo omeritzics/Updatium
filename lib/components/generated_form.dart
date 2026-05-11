@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:hsluv/hsluv.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -856,9 +857,6 @@ class _GeneratedFormState extends State<GeneratedForm> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       M3ETextButton.icon(
-                        style: M3ETextButton.styleFrom(
-                          foregroundColor: Theme.of(context).colorScheme.error,
-                        ),
                         onPressed: (values[fieldKey].length > 0)
                             ? () {
                                 var temp = List.from(values[fieldKey]);

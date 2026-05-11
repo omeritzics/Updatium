@@ -5,6 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/main.dart';
@@ -2158,10 +2159,6 @@ class _AboutDialogState extends State<AboutDialog> {
                 },
                 icon: const Icon(Icons.link_rounded, size: 18),
                 label: Text('Omer I.S. (@omeritzics)'),
-                style: M3ETextButton.styleFrom(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.zero,
-                ),
               ),
               gap16,
               Text(
@@ -2178,10 +2175,6 @@ class _AboutDialogState extends State<AboutDialog> {
                 },
                 icon: const Icon(Icons.code_rounded, size: 18),
                 label: Text('GitHub'),
-                style: M3ETextButton.styleFrom(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.zero,
-                ),
               ),
               gap16,
               Text(
@@ -2200,10 +2193,6 @@ class _AboutDialogState extends State<AboutDialog> {
                 },
                 icon: const Icon(Icons.description_rounded, size: 18),
                 label: Text('GPL-3.0'),
-                style: M3ETextButton.styleFrom(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.zero,
-                ),
               ),
               gap24,
               Container(
@@ -2236,10 +2225,6 @@ class _AboutDialogState extends State<AboutDialog> {
                           },
                           icon: const Icon(Icons.menu_book_rounded, size: 18),
                           label: Text(tr('wiki')),
-                          style: M3ETextButton.styleFrom(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                          ),
                         ),
                         M3ETextButton.icon(
                           onPressed: () {
@@ -2252,10 +2237,6 @@ class _AboutDialogState extends State<AboutDialog> {
                           },
                           icon: const Icon(Icons.bug_report_outlined, size: 18),
                           label: Text(tr('appLogs')),
-                          style: M3ETextButton.styleFrom(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                          ),
                         ),
                         M3ETextButton.icon(
                           onPressed: () {
@@ -2268,10 +2249,6 @@ class _AboutDialogState extends State<AboutDialog> {
                           },
                           icon: const Icon(Icons.code_rounded, size: 18),
                           label: Text(tr('usedOpenSourcePackages')),
-                          style: M3ETextButton.styleFrom(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                          ),
                         ),
                       ],
                     ),

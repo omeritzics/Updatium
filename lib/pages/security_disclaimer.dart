@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_localization/simple_localization.dart';
@@ -147,10 +148,6 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                             Navigator.of(context).pop(true);
                           }
                         },
-                        style: M3EFilledButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: const StadiumBorder(),
-                        ),
                         child: Text(
                           tr('acceptAndContinue'),
                           style: const TextStyle(
@@ -171,10 +168,6 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           HapticFeedback.lightImpact();
                           SystemNavigator.pop();
                         },
-                        style: M3EOutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: const StadiumBorder(),
-                        ),
                         child: Text(
                           tr('decline'),
                           style: TextStyle(

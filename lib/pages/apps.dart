@@ -639,16 +639,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           button: true,
           label: tr('install'),
           enabled: !appsProvider.areDownloadsRunning(),
-          child: M3EM3EFilledButton.tonal(
+          child: M3EFilledButton.tonal(
             onPressed: appsProvider.areDownloadsRunning()
                 ? null
                 : () => _installApp(app),
-            style: ButtonStyle(
-              visualDensity: isCompact ? VisualDensity.compact : null,
-              minimumSize: WidgetStateProperty.all(
-                isCompact ? const Size(60, 32) : null,
-              ),
-            ),
             child: Text(tr('install')),
           ),
         );
@@ -657,16 +651,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           button: true,
           label: tr('update'),
           enabled: !appsProvider.areDownloadsRunning(),
-          child: M3EM3EFilledButton.tonal(
+          child: M3EFilledButton.tonal(
             onPressed: appsProvider.areDownloadsRunning()
                 ? null
                 : () => _installApp(app),
-            style: ButtonStyle(
-              visualDensity: isCompact ? VisualDensity.compact : null,
-              minimumSize: WidgetStateProperty.all(
-                isCompact ? const Size(60, 32) : null,
-              ),
-            ),
             child: Text(tr('update')),
           ),
         );
@@ -675,16 +663,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           button: true,
           label: tr('updated'),
           enabled: false,
-          child: M3EM3EFilledButton.tonal(
+          child: M3EFilledButton.tonal(
             onPressed: null,
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
-              foregroundColor: WidgetStateProperty.all(Colors.grey),
-              visualDensity: isCompact ? VisualDensity.compact : null,
-              minimumSize: WidgetStateProperty.all(
-                isCompact ? const Size(60, 32) : null,
-              ),
-            ),
             child: Text(tr('updated')),
           ),
         );
