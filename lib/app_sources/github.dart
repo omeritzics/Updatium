@@ -658,27 +658,32 @@ class GitHub extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    final apiUrl = await convertStandardUrlToAPIUrl(standardUrl, additionalSettings);
+    final apiUrl = await convertStandardUrlToAPIUrl(
+      standardUrl,
+      additionalSettings,
+    );
     final artifactsUrl = '$apiUrl/actions/artifacts?per_page=100';
-    
+
     // Get configuration filters
-    final artifactNameFilter = additionalSettings['artifactNameFilter'] as String?;
-    final workflowNameFilter = additionalSettings['workflowNameFilter'] as String?;
+    final artifactNameFilter =
+        additionalSettings['artifactNameFilter'] as String?;
+    final workflowNameFilter =
+        additionalSettings['workflowNameFilter'] as String?;
     final branchFilter = additionalSettings['branchFilter'] as String?;
-    
+
     Response res = await sourceRequest(artifactsUrl, additionalSettings);
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
     }
-    
+
     final artifactsData = jsonDecode(res.body) as Map<String, dynamic>;
     final artifacts = artifactsData['artifacts'] as List<dynamic>? ?? [];
-    
+
     // Filter artifacts based on criteria
     List<dynamic> filteredArtifacts = artifacts.where((artifact) {
       // Skip expired artifacts
       if (artifact['expired'] == true) return false;
-      
+
       // Apply artifact name filter
       if (artifactNameFilter?.isNotEmpty == true) {
         final name = artifact['name'] as String? ?? '';
@@ -688,7 +693,7 @@ class GitHub extends AppSource {
           // Invalid regex, skip filter
         }
       }
-      
+
       // Apply workflow name filter
       if (workflowNameFilter?.isNotEmpty == true) {
         final workflowName = artifact['workflow_run']?['name'] as String? ?? '';
@@ -698,41 +703,46 @@ class GitHub extends AppSource {
           // Invalid regex, skip filter
         }
       }
-      
+
       // Apply branch filter
       if (branchFilter?.isNotEmpty == true) {
-        final branch = artifact['workflow_run']?['head_branch'] as String? ?? '';
+        final branch =
+            artifact['workflow_run']?['head_branch'] as String? ?? '';
         if (branch != branchFilter) return false;
       }
-      
+
       return true;
     }).toList();
-    
+
     if (filteredArtifacts.isEmpty) {
       throw NoReleasesError();
     }
-    
+
     // Sort by creation date (newest first)
     filteredArtifacts.sort((a, b) {
-      final dateA = DateTime.tryParse(a['created_at'] as String? ?? '') ?? DateTime(0);
-      final dateB = DateTime.tryParse(b['created_at'] as String? ?? '') ?? DateTime(0);
+      final dateA =
+          DateTime.tryParse(a['created_at'] as String? ?? '') ?? DateTime(0);
+      final dateB =
+          DateTime.tryParse(b['created_at'] as String? ?? '') ?? DateTime(0);
       return dateB.compareTo(dateA);
     });
-    
+
     final latestArtifact = filteredArtifacts.first;
     final artifactId = latestArtifact['id'] as int;
     final artifactName = latestArtifact['name'] as String? ?? 'Unknown';
-    final createdAt = DateTime.tryParse(latestArtifact['created_at'] as String? ?? '');
-    
+    final createdAt = DateTime.tryParse(
+      latestArtifact['created_at'] as String? ?? '',
+    );
+
     // Get download URL for the artifact
     final downloadUrl = '$apiUrl/actions/artifacts/$artifactId/zip';
-    
+
     // For artifacts, we need to follow redirect to get actual download URL
     final downloadRes = await sourceRequest(downloadUrl, additionalSettings);
     if (downloadRes.statusCode != 302 && downloadRes.statusCode != 200) {
       throw getUpdatiumHttpError(downloadRes);
     }
-    
+
     String finalDownloadUrl;
     if (downloadRes.statusCode == 302) {
       // Follow redirect
@@ -744,16 +754,17 @@ class GitHub extends AppSource {
     } else {
       finalDownloadUrl = downloadUrl;
     }
-    
+
     // Create APK details - artifacts are typically zip files
     final apkUrls = [MapEntry('$artifactName.zip', finalDownloadUrl)];
-    
+
     return APKDetails(
       artifactName,
       apkUrls,
       getAppNames(standardUrl),
       releaseDate: createdAt,
-      changeLog: 'GitHub Actions artifact: ${latestArtifact['workflow_run']?['name'] ?? 'Unknown workflow'}',
+      changeLog:
+          'GitHub Actions artifact: ${latestArtifact['workflow_run']?['name'] ?? 'Unknown workflow'}',
     );
   }
 
