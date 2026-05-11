@@ -1609,9 +1609,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         Text(tr('appsString')),
                         TabBar(
                           controller: _tabController,
-                          labelPadding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                          ),
+                          labelPadding: const EdgeInsets.symmetric(horizontal: 12),
                           tabs: [
                             Tab(text: tr('all')),
                             Tab(text: tr('installed')),
