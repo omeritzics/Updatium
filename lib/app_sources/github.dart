@@ -10,6 +10,7 @@ import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
+import 'package:updatium/services/github_rss.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GitHub extends AppSource {
@@ -611,15 +612,60 @@ class GitHub extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    return await getLatestAPKDetailsCommon2(
-      standardUrl,
-      additionalSettings,
-      (bool useTagUrl) async {
-        return '${await convertStandardUrlToAPIUrl(standardUrl, additionalSettings)}/${useTagUrl ? 'tags' : 'releases'}?per_page=100';
-      },
-      (Response res) {
-        rateLimitErrorCheck(res);
-      },
+    // Extract owner and repo from URL
+    final uri = Uri.parse(standardUrl);
+    final pathSegments = uri.pathSegments;
+    if (pathSegments.length < 2) {
+      throw UpdatiumError('Invalid GitHub URL format');
+    }
+    
+    final owner = pathSegments[0];
+    final repo = pathSegments[1];
+
+    try {
+      // Try RSS feeds first (unlimited, TOS-compliant)
+      final rssData = await GitHubRSS.getLatestRelease(owner, repo, additionalSettings: additionalSettings);
+      if (rssData != null) {
+        return _convertRSSToAPKDetails(rssData, standardUrl);
+      }
+      
+      // Fallback to REST API when RSS fails
+      return await getLatestAPKDetailsCommon2(
+        standardUrl,
+          additionalSettings,
+          (bool useTagUrl) async {
+            return '${await convertStandardUrlToAPIUrl(standardUrl, additionalSettings)}/${useTagUrl ? 'tags' : 'releases'}?per_page=100';
+          },
+          (Response res) {
+            rateLimitErrorCheck(res);
+          },
+      );
+    } catch (e) {
+      // Final fallback: Try GraphQL if PAT available
+      if (e is RateLimitError && additionalSettings['githubPATLabel']?.isNotEmpty == true) {
+        // Could implement GraphQL here as last resort
+        throw RateLimitError(60); // Wait for reset
+      }
+      rethrow;
+    }
+  }
+
+  /// Convert RSS data to APKDetails format
+  APKDetails _convertRSSToAPKDetails(Map<String, dynamic> rssData, String standardUrl) {
+    final downloadUrls = (rssData['downloadUrls'] as List<dynamic>?)
+        ?.map((e) => MapEntry(e.key as String, e.value as String))
+        .toList() ?? [];
+    
+    return APKDetails(
+      rssData['tagName'] ?? rssData['name'] ?? 'Unknown',
+      downloadUrls,
+      getAppNames(standardUrl),
+      releaseDate: rssData['publishedAt'] != null 
+          ? DateTime.parse(rssData['publishedAt']) 
+          : null,
+      changeLog: rssData['body']?.toString().isNotEmpty == true 
+          ? '[RSS] ${rssData['body']}' 
+          : null,
     );
   }
 
