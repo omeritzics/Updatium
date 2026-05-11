@@ -3,7 +3,6 @@ import 'package:xml/xml.dart';
 
 /// TOS-compliant RSS/Atom feed service for GitHub releases
 class GitHubRSS {
-  
   /// Get latest release information from GitHub RSS feed
   static Future<Map<String, dynamic>?> getLatestRelease(
     String owner,
@@ -23,7 +22,7 @@ class GitHubRSS {
         // RSS feed not available for this repo
         return null;
       }
-      
+
       return null;
     } catch (e) {
       return null;
@@ -35,34 +34,31 @@ class GitHubRSS {
     try {
       final document = XmlDocument.parse(rssBody);
       final entries = document.findAllElements('entry');
-      
+
       if (entries.isEmpty) return null;
-      
+
       // Get the first (latest) entry
       final latestEntry = entries.first;
-      
+
       // Extract release information
       final title = latestEntry.findElements('title').first.innerText;
       final published = latestEntry.findElements('published').first.innerText;
       final content = latestEntry.findElements('content').first.innerText;
-      
+
       // Extract download URLs from content
       final downloadUrls = <MapEntry<String, String>>[];
       final links = latestEntry.findAllElements('link');
-      
+
       for (final link in links) {
         final href = link.getAttribute('href');
         final type = link.getAttribute('type');
         final title = link.getAttribute('title');
-        
-        if (href != null && 
-            (type?.contains('application/') == true || 
-             href.endsWith('.apk') || 
-             href.endsWith('.zip'))) {
-          downloadUrls.add(MapEntry(
-            title ?? href.split('/').last,
-            href,
-          ));
+
+        if (href != null &&
+            (type?.contains('application/') == true ||
+                href.endsWith('.apk') ||
+                href.endsWith('.zip'))) {
+          downloadUrls.add(MapEntry(title ?? href.split('/').last, href));
         }
       }
 
@@ -72,9 +68,10 @@ class GitHubRSS {
         'publishedAt': published,
         'body': content.replaceAll(RegExp(r'<[^>]*>'), ''), // Strip HTML
         'downloadUrls': downloadUrls,
-        'isPrerelease': title.toLowerCase().contains('beta') || 
-                         title.toLowerCase().contains('alpha') ||
-                         title.toLowerCase().contains('rc'),
+        'isPrerelease':
+            title.toLowerCase().contains('beta') ||
+            title.toLowerCase().contains('alpha') ||
+            title.toLowerCase().contains('rc'),
         'isDraft': false,
       };
     } catch (e) {
@@ -121,7 +118,7 @@ class GitHubRSS {
         Uri.parse(rssUrl),
         headers: await _getHeaders(additionalSettings),
       );
-      
+
       return response.statusCode == 200;
     } catch (e) {
       return false;
