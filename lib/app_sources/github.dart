@@ -122,50 +122,65 @@ class GitHub extends AppSource {
       'android/app/build.gradle',
       'src/app/build.gradle',
     ];
+    
+    String? parseAppIdFromGradleContent(String content) {
+      try {
+        var trimmedLines = utf8
+            .decode(
+              base64.decode(
+                content.split('\n').join(''),
+              ),
+            )
+            .split('\n')
+            .map((e) => e.trim());
+        var appIds = trimmedLines.where(
+          (l) =>
+              l.startsWith('applicationId "') ||
+              l.startsWith('applicationId \''),
+        );
+        appIds = appIds.map(
+          (appId) => appId.split(
+            appId.startsWith('applicationId "') ? '"' : '\'',
+          )[1],
+        );
+        appIds = appIds
+            .map((appId) {
+              if (appId.startsWith('\${') && appId.endsWith('}')) {
+                appId = trimmedLines
+                    .where(
+                      (l) => l.startsWith(
+                        'def ${appId.substring(2, appId.length - 1)}',
+                      ),
+                    )
+                    .first;
+                appId = appId.split(appId.contains('"') ? '"' : '\'')[1];
+              }
+              return appId;
+            })
+            .where((appId) => appId.isNotEmpty);
+        return appIds.length == 1 ? appIds.first : null;
+      } catch (err) {
+        return null;
+      }
+    }
+    
+    String apiUrl = await convertStandardUrlToAPIUrl(standardUrl, additionalSettings);
+    
     for (var path in possibleBuildGradleLocations) {
       try {
         var res = await sourceRequest(
-          '${await convertStandardUrlToAPIUrl(standardUrl, additionalSettings)}/contents/$path',
+          '$apiUrl/contents$path',
           additionalSettings,
         );
         if (res.statusCode == 200) {
           try {
             var body = jsonDecode(res.body);
-            var trimmedLines = utf8
-                .decode(
-                  base64.decode(
-                    body['content'].toString().split('\n').join(''),
-                  ),
-                )
-                .split('\n')
-                .map((e) => e.trim());
-            var appIds = trimmedLines.where(
-              (l) =>
-                  l.startsWith('applicationId "') ||
-                  l.startsWith('applicationId \''),
-            );
-            appIds = appIds.map(
-              (appId) => appId.split(
-                appId.startsWith('applicationId "') ? '"' : '\'',
-              )[1],
-            );
-            appIds = appIds
-                .map((appId) {
-                  if (appId.startsWith('\${') && appId.endsWith('}')) {
-                    appId = trimmedLines
-                        .where(
-                          (l) => l.startsWith(
-                            'def ${appId.substring(2, appId.length - 1)}',
-                          ),
-                        )
-                        .first;
-                    appId = appId.split(appId.contains('"') ? '"' : '\'')[1];
-                  }
-                  return appId;
-                })
-                .where((appId) => appId.isNotEmpty);
-            if (appIds.length == 1) {
-              return appIds.first;
+            var content = body['content']?.toString() ?? '';
+            if (content.isNotEmpty) {
+              var appId = parseAppIdFromGradleContent(content);
+              if (appId != null) {
+                return appId;
+              }
             }
           } catch (err) {
             LogsProvider().add(
@@ -303,10 +318,8 @@ class GitHub extends AppSource {
     dynamic latestRelease;
     if (verifyLatestTag) {
       var temp = requestUrl.split('?');
-      Response res = await sourceRequest(
-        '${temp[0]}/latest${temp.length > 1 ? '?${temp.sublist(1).join('?')}' : ''}',
-        additionalSettings,
-      );
+      String latestUrl = '${temp[0]}/latest${temp.length > 1 ? '?${temp.sublist(1).join('?')}' : ''}';
+      Response res = await sourceRequest(latestUrl, additionalSettings);
       if (res.statusCode != 200) {
         if (onHttpErrorCode != null) {
           onHttpErrorCode(res);

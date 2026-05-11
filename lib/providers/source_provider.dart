@@ -55,17 +55,33 @@ class _ETagCacheEntry {
   _ETagCacheEntry(this.etag, this.response, this.cachedAt);
 
   bool get isExpired =>
-      DateTime.now().difference(cachedAt) > const Duration(minutes: 5);
+      DateTime.now().difference(cachedAt) > const Duration(minutes: 30);
 }
 
 /// Simple in-memory cache for API responses with ETag support
 class _ETagResponseCache {
   final Map<String, _ETagCacheEntry> _cache = {};
+  final Map<String, Future<Response>> _pendingRequests = {};
 
   String _cacheKey(String url, Map<String, dynamic>? additionalSettings) {
     // Include relevant settings that might affect the response
     final settingsHash = additionalSettings?.toString().hashCode ?? 0;
     return '$url:${settingsHash.toString()}';
+  }
+
+  /// Get existing pending request or null if no pending request
+  Future<Response>? getPendingRequest(String url, Map<String, dynamic>? additionalSettings) {
+    final key = _cacheKey(url, additionalSettings);
+    return _pendingRequests[key];
+  }
+
+  /// Store a pending request to prevent duplicates
+  void setPendingRequest(String url, Map<String, dynamic>? additionalSettings, Future<Response> request) {
+    final key = _cacheKey(url, additionalSettings);
+    _pendingRequests[key] = request;
+    
+    // Clean up when request completes
+    request.whenComplete(() => _pendingRequests.remove(key));
   }
 
   String? getETag(String url, Map<String, dynamic>? additionalSettings) {
@@ -843,6 +859,14 @@ abstract class AppSource {
     var requestHeaders =
         await getRequestHeaders(additionalSettingsPlusSourceConfig, url) ?? {};
 
+    // Request deduplication for concurrent identical requests
+    if (method == 'GET' && !_isDownloadUrl(url)) {
+      final pendingRequest = _etagCache.getPendingRequest(url, additionalSettings);
+      if (pendingRequest != null) {
+        return pendingRequest;
+      }
+    }
+
     // ETag-based conditional request optimization
     // Only for GET requests to API endpoints (not for APK downloads)
     String? cachedETag;
@@ -853,15 +877,29 @@ abstract class AppSource {
       }
     }
 
-    var streamedResponseUrlWithResponseAndClient =
-        await sourceRequestStreamResponse(
+    final requestFuture = sourceRequestStreamResponse(
+      method,
+      url,
+      requestHeaders,
+      additionalSettingsPlusSourceConfig,
+      followRedirects: followRedirects,
+      postBody: postBody,
+    );
+
+    // Store pending request for deduplication
+    if (method == 'GET' && !_isDownloadUrl(url)) {
+      final responseFuture = requestFuture.then(
+        (streamedResponse) => httpClientResponseStreamToFinalResponse(
+          streamedResponse.value.key,
           method,
-          url,
-          requestHeaders,
-          additionalSettingsPlusSourceConfig,
-          followRedirects: followRedirects,
-          postBody: postBody,
-        );
+          streamedResponse.key.toString(),
+          streamedResponse.value.value,
+        ),
+      );
+      _etagCache.setPendingRequest(url, additionalSettings, responseFuture);
+    }
+
+    var streamedResponseUrlWithResponseAndClient = await requestFuture;
 
     var response = await httpClientResponseStreamToFinalResponse(
       streamedResponseUrlWithResponseAndClient.value.key,
