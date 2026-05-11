@@ -542,11 +542,11 @@ class _GeneratedFormState extends State<GeneratedForm> {
                     },
                   ),
                   actions: [
-                    TextButton(
+                    M3ETextButton(
                       onPressed: () => Navigator.of(ctx).pop(null),
                       child: Text(tr('cancel')),
                     ),
-                    TextButton(
+                    M3ETextButton(
                       onPressed: () => Navigator.of(ctx).pop(localValues),
                       child: Text(tr('ok')),
                     ),
@@ -746,12 +746,12 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                       title: Text(message.key),
                                       content: Text(message.value),
                                       actions: [
-                                        TextButton(
+                                        M3ETextButton(
                                           onPressed: () =>
                                               Navigator.of(ctx).pop(false),
                                           child: Text(tr('cancel')),
                                         ),
-                                        TextButton(
+                                        M3ETextButton(
                                           onPressed: () =>
                                               Navigator.of(ctx).pop(true),
                                           child: Text(tr('ok')),
@@ -779,7 +779,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                           true
                       ? Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: TextButton.icon(
+                          child: M3ETextButton.icon(
                             onPressed: onAddPressed,
                             icon: const Icon(Icons.add),
                             label: Text(
@@ -855,8 +855,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextButton.icon(
-                        style: TextButton.styleFrom(
+                      M3ETextButton.icon(
+                        style: M3ETextButton.styleFrom(
                           foregroundColor: Theme.of(context).colorScheme.error,
                         ),
                         onPressed: (values[fieldKey].length > 0)
@@ -885,7 +885,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
               child: Row(
                 children: [
                   Expanded(
-                    child: FilledButton.icon(
+                    child: M3EFilledButton.icon(
                       onPressed: () {
                         values[fieldKey].add(
                           getDefaultValuesFromFormItems(

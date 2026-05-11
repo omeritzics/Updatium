@@ -1487,7 +1487,7 @@ class _LogsDialogState extends State<LogsDialog> {
         ],
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () async {
             var cont =
                 (await showDialog<bool>(
@@ -1497,11 +1497,11 @@ class _LogsDialogState extends State<LogsDialog> {
                       title: Text(tr('appLogs')),
                       content: Text(tr('removeFromUpdatium')),
                       actions: [
-                        TextButton(
+                        M3ETextButton(
                           onPressed: () => Navigator.of(ctx).pop(false),
                           child: Text(tr('cancel')),
                         ),
-                        TextButton(
+                        M3ETextButton(
                           onPressed: () => Navigator.of(ctx).pop(true),
                           child: Text(tr('ok')),
                         ),
@@ -1517,13 +1517,13 @@ class _LogsDialogState extends State<LogsDialog> {
           },
           child: Text(tr('remove')),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(tr('close')),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () {
             SharePlus.instance.share(
               ShareParams(text: logString ?? '', subject: tr('appLogs')),
@@ -1622,11 +1622,11 @@ class CategoryTagEditor extends StatelessWidget {
           title: Text(tr('deleteCategory')),
           content: Text(tr('categoryDeleteWarning')),
           actions: [
-            TextButton(
+            M3ETextButton(
               onPressed: () => Navigator.pop(ctx),
               child: Text(tr('cancel')),
             ),
-            TextButton(
+            M3ETextButton(
               onPressed: () {
                 final newCategories = Map<String, int>.from(
                   settingsProvider.categories,
@@ -1830,7 +1830,7 @@ class LicenseDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(tr('close')),
         ),
@@ -1971,7 +1971,7 @@ class OpenSourcePackagesDialog extends StatelessWidget {
         ),
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(tr('close')),
         ),
@@ -2149,7 +2149,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               gap8,
-              TextButton.icon(
+              M3ETextButton.icon(
                 onPressed: () {
                   launchUrlString(
                     'https://github.com/omeritzics',
@@ -2158,7 +2158,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 },
                 icon: const Icon(Icons.link_rounded, size: 18),
                 label: Text('Omer I.S. (@omeritzics)'),
-                style: TextButton.styleFrom(
+                style: M3ETextButton.styleFrom(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.zero,
                 ),
@@ -2169,7 +2169,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               gap8,
-              TextButton.icon(
+              M3ETextButton.icon(
                 onPressed: () {
                   launchUrlString(
                     'https://github.com/omeritzics/Updatium',
@@ -2178,7 +2178,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 },
                 icon: const Icon(Icons.code_rounded, size: 18),
                 label: Text('GitHub'),
-                style: TextButton.styleFrom(
+                style: M3ETextButton.styleFrom(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.zero,
                 ),
@@ -2189,7 +2189,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               gap8,
-              TextButton.icon(
+              M3ETextButton.icon(
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -2200,7 +2200,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 },
                 icon: const Icon(Icons.description_rounded, size: 18),
                 label: Text('GPL-3.0'),
-                style: TextButton.styleFrom(
+                style: M3ETextButton.styleFrom(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.zero,
                 ),
@@ -2227,7 +2227,7 @@ class _AboutDialogState extends State<AboutDialog> {
                       spacing: 8,
                       runSpacing: 8,
                       children: [
-                        TextButton.icon(
+                        M3ETextButton.icon(
                           onPressed: () {
                             launchUrlString(
                               'https://github.com/omeritzics/Updatium/wiki',
@@ -2236,12 +2236,12 @@ class _AboutDialogState extends State<AboutDialog> {
                           },
                           icon: const Icon(Icons.menu_book_rounded, size: 18),
                           label: Text(tr('wiki')),
-                          style: TextButton.styleFrom(
+                          style: M3ETextButton.styleFrom(
                             alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.symmetric(vertical: 8),
                           ),
                         ),
-                        TextButton.icon(
+                        M3ETextButton.icon(
                           onPressed: () {
                             showDialog(
                               context: context,
@@ -2252,12 +2252,12 @@ class _AboutDialogState extends State<AboutDialog> {
                           },
                           icon: const Icon(Icons.bug_report_outlined, size: 18),
                           label: Text(tr('appLogs')),
-                          style: TextButton.styleFrom(
+                          style: M3ETextButton.styleFrom(
                             alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.symmetric(vertical: 8),
                           ),
                         ),
-                        TextButton.icon(
+                        M3ETextButton.icon(
                           onPressed: () {
                             showDialog(
                               context: context,
@@ -2268,7 +2268,7 @@ class _AboutDialogState extends State<AboutDialog> {
                           },
                           icon: const Icon(Icons.code_rounded, size: 18),
                           label: Text(tr('usedOpenSourcePackages')),
-                          style: TextButton.styleFrom(
+                          style: M3ETextButton.styleFrom(
                             alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.symmetric(vertical: 8),
                           ),
@@ -2281,7 +2281,7 @@ class _AboutDialogState extends State<AboutDialog> {
             ],
           ),
           actions: [
-            TextButton(
+            M3ETextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text(tr('close')),
             ),

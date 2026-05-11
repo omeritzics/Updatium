@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -115,7 +116,7 @@ void showChangeLogDialog(
           ],
         ),
         actions: [
-          TextButton(
+          M3ETextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text(tr('ok')),
           ),
@@ -638,7 +639,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           button: true,
           label: tr('install'),
           enabled: !appsProvider.areDownloadsRunning(),
-          child: FilledButton.tonal(
+          child: M3EM3EFilledButton.tonal(
             onPressed: appsProvider.areDownloadsRunning()
                 ? null
                 : () => _installApp(app),
@@ -656,7 +657,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           button: true,
           label: tr('update'),
           enabled: !appsProvider.areDownloadsRunning(),
-          child: FilledButton.tonal(
+          child: M3EM3EFilledButton.tonal(
             onPressed: appsProvider.areDownloadsRunning()
                 ? null
                 : () => _installApp(app),
@@ -674,7 +675,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           button: true,
           label: tr('updated'),
           enabled: false,
-          child: FilledButton.tonal(
+          child: M3EM3EFilledButton.tonal(
             onPressed: null,
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
@@ -1105,7 +1106,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       Semantics(
                         button: true,
                         label: tr('cancel'),
-                        child: TextButton(
+                        child: M3ETextButton(
                           onPressed: () => Navigator.of(ctx).pop(null),
                           child: Text(tr('cancel')),
                         ),
@@ -1113,7 +1114,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       Semantics(
                         button: true,
                         label: tr('ok'),
-                        child: TextButton(
+                        child: M3ETextButton(
                           onPressed: () => Navigator.of(ctx).pop(localValues),
                           child: Text(tr('ok')),
                         ),
@@ -1191,7 +1192,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         Semantics(
                           button: true,
                           label: tr('cancel'),
-                          child: TextButton(
+                          child: M3ETextButton(
                             onPressed: () => Navigator.of(ctx).pop(false),
                             child: Text(tr('cancel')),
                           ),
@@ -1199,7 +1200,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         Semantics(
                           button: true,
                           label: tr('ok'),
-                          child: TextButton(
+                          child: M3ETextButton(
                             onPressed: () => Navigator.of(ctx).pop(true),
                             child: Text(tr('ok')),
                           ),
@@ -1233,7 +1234,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     Semantics(
                       button: true,
                       label: tr('continue'),
-                      child: TextButton(
+                      child: M3ETextButton(
                         onPressed: () {
                           for (var app in selectedApps) {
                             app.categories = selectedCategories.toList();
@@ -1276,7 +1277,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               Semantics(
                 button: true,
                 label: tr('no'),
-                child: TextButton(
+                child: M3ETextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -1286,7 +1287,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               Semantics(
                 button: true,
                 label: tr('yes'),
-                child: TextButton(
+                child: M3ETextButton(
                   onPressed: () {
                     HapticFeedback.selectionClick();
                     appsProvider.saveApps(
@@ -1329,7 +1330,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     button: true,
                     label: tr('markSelectedAppsUpdated'),
                     enabled: !appsProvider.areDownloadsRunning(),
-                    child: TextButton(
+                    child: M3ETextButton(
                       onPressed: appsProvider.areDownloadsRunning()
                           ? null
                           : showMassMarkDialog,
@@ -1344,7 +1345,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     label: selectedApps.every((element) => element.pinned)
                         ? tr('unpinFromTop')
                         : tr('pinToTop'),
-                    child: TextButton(
+                    child: M3ETextButton(
                       onPressed: () {
                         var allPinned = selectedApps.every(
                           (element) => element.pinned,
@@ -1464,7 +1465,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               Semantics(
                 button: true,
                 label: tr('cancel'),
-                child: TextButton(
+                child: M3ETextButton(
                   onPressed: () => Navigator.of(ctx).pop(null),
                   child: Text(tr('cancel')),
                 ),
@@ -1472,7 +1473,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               Semantics(
                 button: true,
                 label: tr('ok'),
-                child: TextButton(
+                child: M3ETextButton(
                   onPressed: () => Navigator.of(ctx).pop(localValues),
                   child: Text(tr('ok')),
                 ),

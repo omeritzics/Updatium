@@ -187,11 +187,11 @@ class AddAppPageState extends State<AddAppPage> {
                 ],
               ),
               actions: [
-                TextButton(
+                M3ETextButton(
                   onPressed: () => Navigator.of(ctx).pop(null),
                   child: Text(tr('cancel')),
                 ),
-                TextButton(
+                M3ETextButton(
                   onPressed: () => Navigator.of(ctx).pop(localValues),
                   child: Text(tr('ok')),
                 ),
@@ -220,11 +220,11 @@ class AddAppPageState extends State<AddAppPage> {
                     title: Text(tr('releaseDateAsVersion')),
                     content: Text(tr('releaseDateAsVersionExplanation')),
                     actions: [
-                      TextButton(
+                      M3ETextButton(
                         onPressed: () => Navigator.of(ctx).pop(null),
                         child: Text(tr('cancel')),
                       ),
-                      TextButton(
+                      M3ETextButton(
                         onPressed: () => Navigator.of(ctx).pop(true),
                         child: Text(tr('ok')),
                       ),
@@ -380,7 +380,7 @@ class AddAppPageState extends State<AddAppPage> {
                     ? tr('completeAdditionalSettingsFirst')
                     : tr('addAppToCollection'),
                 excludeSemantics: true,
-                child: FilledButton(
+                child: M3EFilledButton(
                   onPressed:
                       doingSomething ||
                           pickedSource == null ||
@@ -499,11 +499,11 @@ class AddAppPageState extends State<AddAppPage> {
                               ),
                             ),
                             actions: [
-                              TextButton(
+                              M3ETextButton(
                                 onPressed: () => Navigator.of(ctx).pop(null),
                                 child: Text(tr('cancel')),
                               ),
-                              TextButton(
+                              M3ETextButton(
                                 onPressed: () =>
                                     Navigator.of(ctx).pop(localValues),
                                 child: Text(tr('ok')),
@@ -642,7 +642,7 @@ class AddAppPageState extends State<AddAppPage> {
                     ? tr('enterSearchTermsFirst')
                     : tr('searchForApps'),
                 excludeSemantics: true,
-                child: FilledButton(
+                child: M3EFilledButton(
                   onPressed: searchQuery.isEmpty || doingSomething
                       ? null
                       : () {
@@ -678,11 +678,11 @@ class AddAppPageState extends State<AddAppPage> {
                       ),
                     ),
                     actions: [
-                      TextButton(
+                      M3ETextButton(
                         onPressed: () => Navigator.of(ctx).pop(false),
                         child: Text(tr('cancel')),
                       ),
-                      TextButton(
+                      M3ETextButton(
                         onPressed: tempAdditionalSettingsValid
                             ? () => Navigator.of(ctx).pop(true)
                             : null,
@@ -875,7 +875,7 @@ class AddAppPageState extends State<AddAppPage> {
     Widget getSourcesListWidget() => Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        TextButton.icon(
+        M3ETextButton.icon(
           onPressed: () {
             showDialog(
               context: context,
@@ -955,7 +955,7 @@ class AddAppPageState extends State<AddAppPage> {
                     ],
                   ),
                   actions: [
-                    TextButton(
+                    M3ETextButton(
                       onPressed: () => Navigator.of(ctx).pop(),
                       child: Text(tr('ok')),
                     ),
@@ -966,7 +966,7 @@ class AddAppPageState extends State<AddAppPage> {
           },
           icon: const Icon(Icons.info_outline, size: 18),
           label: Text(tr('supportedSources')),
-          style: TextButton.styleFrom(
+          style: M3ETextButton.styleFrom(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.zero,
           ),

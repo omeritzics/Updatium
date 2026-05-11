@@ -145,7 +145,7 @@ void showSafeModeEnableDialog(BuildContext context) {
               ],
             ),
             actions: [
-              TextButton(
+              M3ETextButton(
                 onPressed: isLoading
                     ? null
                     : () {
@@ -155,7 +155,7 @@ void showSafeModeEnableDialog(BuildContext context) {
                       },
                 child: Text(tr('cancel')),
               ),
-              FilledButton(
+              M3EFilledButton(
                 onPressed: isLoading ? null : setupPassword,
                 child: isLoading
                     ? const SizedBox(
@@ -271,7 +271,7 @@ void showSafeModeDisableDialog(BuildContext context) {
               ],
             ),
             actions: [
-              TextButton(
+              M3ETextButton(
                 onPressed: isLoading
                     ? null
                     : () {
@@ -280,7 +280,7 @@ void showSafeModeDisableDialog(BuildContext context) {
                       },
                 child: Text(tr('cancel')),
               ),
-              FilledButton(
+              M3EFilledButton(
                 onPressed: isLoading ? null : disableSafeMode,
                 child: isLoading
                     ? const SizedBox(
@@ -457,7 +457,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(height: 8),
-          TextButton.icon(
+          M3ETextButton.icon(
             onPressed: () {
               launchUrlString(
                 'https://github.com/omeritzics',
@@ -466,7 +466,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
             },
             icon: const Icon(Icons.link_rounded, size: 18),
             label: Text('Omer I.S. (@omeritzics)'),
-            style: TextButton.styleFrom(
+            style: M3ETextButton.styleFrom(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.zero,
             ),
@@ -474,7 +474,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
           const SizedBox(height: 16),
           Text(tr('sourceCode'), style: Theme.of(context).textTheme.titleSmall),
           const SizedBox(height: 8),
-          TextButton.icon(
+          M3ETextButton.icon(
             onPressed: () {
               launchUrlString(
                 'https://github.com/omeritzics/Updatium',
@@ -483,7 +483,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
             },
             icon: const Icon(Icons.link_rounded, size: 18),
             label: Text('GitHub'),
-            style: TextButton.styleFrom(
+            style: M3ETextButton.styleFrom(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.zero,
             ),
@@ -491,7 +491,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
         ],
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(tr('close')),
         ),

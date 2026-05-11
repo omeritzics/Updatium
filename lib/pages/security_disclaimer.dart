@@ -139,7 +139,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                     // Accept Button
                     SizedBox(
                       width: double.infinity,
-                      child: FilledButton(
+                      child: M3EFilledButton(
                         onPressed: () async {
                           HapticFeedback.lightImpact();
                           await _saveDisclaimerAccepted();
@@ -147,7 +147,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                             Navigator.of(context).pop(true);
                           }
                         },
-                        style: FilledButton.styleFrom(
+                        style: M3EFilledButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: const StadiumBorder(),
                         ),
@@ -166,12 +166,12 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                     // Decline Button
                     SizedBox(
                       width: double.infinity,
-                      child: OutlinedButton(
+                      child: M3EOutlinedButton(
                         onPressed: () {
                           HapticFeedback.lightImpact();
                           SystemNavigator.pop();
                         },
-                        style: OutlinedButton.styleFrom(
+                        style: M3EOutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: const StadiumBorder(),
                         ),

@@ -512,11 +512,11 @@ class _ImportDialogState extends State<_ImportDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () => Navigator.of(context).pop(null),
           child: Text(tr('cancel')),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () => Navigator.of(context).pop(true),
           child: Text(tr('ok')),
         ),

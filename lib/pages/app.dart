@@ -409,11 +409,11 @@ class _AppPageState extends State<AppPage> {
                 ),
                 title: Text(tr('editApp')),
                 actions: [
-                  TextButton(
+                  M3ETextButton(
                     onPressed: () => Navigator.of(ctx).pop(null),
                     child: Text(tr('cancel')),
                   ),
-                  TextButton(
+                  M3ETextButton(
                     onPressed: () => Navigator.of(ctx).pop(localValues),
                     child: Text(tr('save')),
                   ),
@@ -606,8 +606,8 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => FilledButton(
-      style: FilledButton.styleFrom(
+    getInstallOrUpdateButton() => M3EFilledButton(
+      style: M3EFilledButton.styleFrom(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),

@@ -78,11 +78,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
               ),
             ),
             actions: [
-              TextButton(
+              M3ETextButton(
                 onPressed: () => Navigator.of(ctx).pop(null),
                 child: Text(tr('cancel')),
               ),
-              TextButton(
+              M3ETextButton(
                 onPressed: () {
                   if (formKey.currentState?.validate() == true) {
                     Navigator.of(ctx).pop(controller.text);
@@ -269,11 +269,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         ),
                       ),
                       actions: [
-                        TextButton(
+                        M3ETextButton(
                           onPressed: () => Navigator.of(ctx).pop(null),
                           child: Text(tr('cancel')),
                         ),
-                        TextButton(
+                        M3ETextButton(
                           onPressed: () {
                             if (formKey.currentState?.validate() == true) {
                               Navigator.of(ctx).pop(
@@ -372,7 +372,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   hint:
                                       'Choose a directory to export your apps and settings',
                                   excludeSemantics: true,
-                                  child: FilledButton.icon(
+                                  child: M3EFilledButton.icon(
                                     onPressed:
                                         importInProgress ||
                                             appsProvider.exportInProgress
@@ -397,7 +397,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       ? 'Set export directory first'
                                       : 'Export all your apps and settings to file',
                                   excludeSemantics: true,
-                                  child: FilledButton.icon(
+                                  child: M3EFilledButton.icon(
                                     onPressed:
                                         importInProgress ||
                                             appsProvider.exportInProgress ||
@@ -424,7 +424,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   hint:
                                       'Import apps and settings from a backup file',
                                   excludeSemantics: true,
-                                  child: FilledButton.icon(
+                                  child: M3EFilledButton.icon(
                                     onPressed: importInProgress
                                         ? null
                                         : runUpdatiumImport,
@@ -502,7 +502,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           hint:
                               'Import multiple apps by entering their URLs in a list',
                           excludeSemantics: true,
-                          child: FilledButton.icon(
+                          child: M3EFilledButton.icon(
                             onPressed: importInProgress ? null : urlListImport,
                             icon: const Icon(Icons.list_alt),
                             label: Text(tr('importFromURLList')),
@@ -516,7 +516,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                             hint:
                                 'Import apps by reading URLs from a text file',
                             excludeSemantics: true,
-                            child: FilledButton.icon(
+                            child: M3EFilledButton.icon(
                               onPressed: importInProgress ? null : runUrlImport,
                               icon: const Icon(Icons.link),
                               label: Text(tr('importFromURLsInFile')),
@@ -536,7 +536,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             gap8,
-                            FilledButton.icon(
+                            M3EFilledButton.icon(
                               onPressed: importInProgress
                                   ? null
                                   : () {
@@ -629,7 +629,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
         ],
       ),
       actions: [
-        TextButton.icon(
+        M3ETextButton.icon(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
@@ -730,11 +730,11 @@ class _SelectionModalState extends State<SelectionModal> {
       }
       var noneSelected = entrySelections.values.every((v) => v == false);
       return noneSelected
-          ? TextButton(
+          ? M3ETextButton(
               onPressed: () => setState(selectAll),
               child: Text(tr('selectAll')),
             )
-          : TextButton(
+          : M3ETextButton(
               onPressed: () => setState(() => selectAll(deselect: true)),
               child: Text(tr('deselectX', args: [tr('all')])),
             );
@@ -751,7 +751,7 @@ class _SelectionModalState extends State<SelectionModal> {
           title: Text(widget.title ?? tr('pick')),
           actions: [
             getSelectAllButton(),
-            TextButton(
+            M3ETextButton(
               onPressed: entrySelections.values.every((v) => v == false)
                   ? null
                   : () {

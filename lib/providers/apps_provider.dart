@@ -341,11 +341,11 @@ Future<String?> promptForFileName(
           ],
         ),
         actions: [
-          TextButton(
+          M3ETextButton(
             onPressed: () => Navigator.pop(context, null),
             child: Text(tr('cancel')),
           ),
-          FilledButton(
+          M3EFilledButton(
             onPressed: () => Navigator.pop(context, controller.text),
             child: Text(tr('download')),
           ),
@@ -2367,12 +2367,12 @@ class AppsProvider with ChangeNotifier {
                       ],
                     ),
               actions: [
-                TextButton(
+                M3ETextButton(
                   onPressed: () => Navigator.of(ctx).pop(null),
                   child: Text(tr('cancel')),
                 ),
-                TextButton(
-                  style: TextButton.styleFrom(
+                M3ETextButton(
+                  style: M3ETextButton.styleFrom(
                     foregroundColor: Theme.of(context).colorScheme.error,
                   ),
                   onPressed: () {
@@ -2873,13 +2873,13 @@ class _AppFilePickerState extends State<AppFilePicker> {
                 : tr('pickAnAPK'),
           ),
           actions: [
-            TextButton(
+            M3ETextButton(
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
               child: Text(tr('cancel')),
             ),
-            TextButton(
+            M3ETextButton(
               onPressed: () {
                 HapticFeedback.selectionClick();
                 Navigator.of(context).pop(fileUrl);
@@ -3006,13 +3006,13 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);

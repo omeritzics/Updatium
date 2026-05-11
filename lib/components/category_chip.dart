@@ -205,11 +205,11 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(tr('cancel')),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () {
             if (_formKey.currentState?.validate() ?? false) {
               Navigator.pop(

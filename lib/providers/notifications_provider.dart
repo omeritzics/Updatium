@@ -299,7 +299,7 @@ class NotificationsProvider {
             title: Text(title),
             content: Text(content),
             actions: [
-              TextButton(
+              M3ETextButton(
                 onPressed: () {
                   Navigator.of(context).pop(null);
                   if (doublePop) {

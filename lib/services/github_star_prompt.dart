@@ -52,14 +52,14 @@ class GitHubStarPrompt {
           title: Text('githubStarPromptTitle'.tr()),
           content: Text('githubStarPromptContent'.tr()),
           actions: [
-            TextButton(
+            M3ETextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 await _markPromptAsShown();
               },
               child: Text('githubStarPromptDontShowAgain'.tr()),
             ),
-            FilledButton(
+            M3EFilledButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 await _launchGitHub();

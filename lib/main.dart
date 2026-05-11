@@ -631,7 +631,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
           ),
           content: SelectableText(e.toString()),
           actions: [
-            TextButton(
+            M3ETextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text(tr('ok')),
             ),
@@ -701,7 +701,7 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
     builder: (context) => AlertDialog(
       content: Text(strings['message'] ?? ''),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () async {
             final uri = Uri.parse('https://keepandroidopen.org');
             if (await canLaunchUrl(uri)) {
@@ -710,7 +710,7 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
           },
           child: Text(strings['moreInfo'] ?? 'Details'),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () async {
             final uri = Uri.parse(
               'https://github.com/woheller69/FreeDroidWarn?tab=readme-ov-file#solutions',
@@ -721,7 +721,7 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
           },
           child: Text(strings['solution'] ?? 'Solution'),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () async {
             await _saveWarningVersion();
             if (context.mounted) {
