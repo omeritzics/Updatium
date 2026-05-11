@@ -6,6 +6,7 @@ import 'package:simple_localization/simple_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:app_bar_m3e/app_bar_m3e.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/main.dart';
@@ -499,9 +500,9 @@ class _SettingsPageState extends State<SettingsPage> {
       body: CustomScrollView(
         controller: scrollController,
         slivers: <Widget>[
-          SliverAppBar.large(
+          SliverAppBarM3E(
+            variant: AppBarM3EVariant.large,
             pinned: true,
-            automaticallyImplyLeading: false,
             title: Text(tr('settings')),
           ),
           SliverToBoxAdapter(

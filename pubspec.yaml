@@ -94,6 +94,7 @@ dependencies:
   flutter_markdown_plus: ^1.0.7
   path: any
   m3e_buttons: ^0.0.3
+  app_bar_m3e: ^0.1.2
 flutter_launcher_icons:
   android: "ic_launcher"
   image_path: "assets/graphics/icon.png"

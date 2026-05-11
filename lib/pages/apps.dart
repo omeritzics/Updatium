@@ -9,6 +9,7 @@ import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:app_bar_m3e/app_bar_m3e.dart';
 
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -1600,16 +1601,21 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 physics: const AlwaysScrollableScrollPhysics(),
                 controller: scrollController,
                 slivers: <Widget>[
-                  SliverAppBar.large(
+                  SliverAppBarM3E(
+                    variant: AppBarM3EVariant.large,
                     pinned: true,
-                    automaticallyImplyLeading: false,
-                    bottom: TabBar(
-                      controller: _tabController,
-                      labelPadding: const EdgeInsets.symmetric(horizontal: 12),
-                      tabs: [
-                        Tab(text: tr('all')),
-                        Tab(text: tr('installed')),
-                        Tab(text: tr('notInstalledApps')),
+                    title: Column(
+                      children: [
+                        Text(tr('appsString')),
+                        TabBar(
+                          controller: _tabController,
+                          labelPadding: const EdgeInsets.symmetric(horizontal: 12),
+                          tabs: [
+                            Tab(text: tr('all')),
+                            Tab(text: tr('installed')),
+                            Tab(text: tr('notInstalledApps')),
+                          ],
+                        ),
                       ],
                     ),
                     actions: [
@@ -1669,7 +1675,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         },
                       ),
                     ],
-                    title: Text(tr('appsString')),
                   ),
                   const SliverToBoxAdapter(child: SizedBox(height: 8)),
                   ...getLoadingWidgets(),

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:app_bar_m3e/app_bar_m3e.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/services/githubstars.dart';
@@ -352,7 +353,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar.large(pinned: true, title: Text(tr('importExport'))),
+          SliverAppBarM3E(variant: AppBarM3EVariant.large, pinned: true, title: Text(tr('importExport'))),
           SliverFillRemaining(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),

@@ -6,6 +6,7 @@ import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
+import 'package:app_bar_m3e/app_bar_m3e.dart';
 
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/apps.dart';
@@ -657,7 +658,8 @@ class _AppPageState extends State<AppPage> {
               },
               child: CustomScrollView(
                 slivers: [
-                  SliverAppBar.large(
+                  SliverAppBarM3E(
+                    variant: AppBarM3EVariant.large,
                     pinned: true,
                     title: Row(
                       children: [

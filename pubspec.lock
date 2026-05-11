@@ -42,6 +42,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  app_bar_m3e:
+    dependency: "direct main"
+    description:
+      name: app_bar_m3e
+      sha256: a8cef3d2cfe8d254fac355816ede509e7b437066d9fef8e7ba779a202485bc9f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.2"
   app_links:
     dependency: "direct main"
     description:
@@ -250,6 +258,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  dynamic_color:
+    dependency: transitive
+    description:
+      name: dynamic_color
+      sha256: "43a5a6679649a7731ab860334a5812f2067c2d9ce6452cf069c5e0c25336c17c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.8.1"
   dynamic_system_colors:
     dependency: "direct main"
     description:
@@ -662,6 +678,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.3"
+  m3e_design:
+    dependency: transitive
+    description:
+      name: m3e_design
+      sha256: "15ff0ef4c43553d855c5e866a9aee8231d44919fe2bb354b1259337bdfd659b4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   markdown:
     dependency: "direct main"
     description:

@@ -1,7 +1,10 @@
-import 'package:animations/animations.dart';
 import 'package:simple_localization/simple_localization.dart';
+
 import 'package:flutter/material.dart';
+import 'package:animations/animations.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:app_bar_m3e/app_bar_m3e.dart';
+
 import 'package:flutter/services.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -976,7 +979,7 @@ class AddAppPageState extends State<AddAppPage> {
       body: CustomScrollView(
         shrinkWrap: true,
         slivers: <Widget>[
-          SliverAppBar.large(pinned: true, title: Text(tr('addApp'))),
+          SliverAppBarM3E(variant: AppBarM3EVariant.large, pinned: true, title: Text(tr('addApp'))),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
