@@ -2610,7 +2610,9 @@ class AppsProvider with ChangeNotifier {
       }
       // List and delete auto-export files using docman
       try {
-        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final exportDirString = settingsProvider.prefs?.getString('exportDir');
+        if (exportDirString == null) return null;
+        final docFileResult = await DocumentFile.fromUri(exportDirString);
         final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
           final files = await dirDocFile.listDocuments();
@@ -2645,10 +2647,11 @@ class AppsProvider with ChangeNotifier {
         var encoder = const JsonEncoder.withIndent("    ");
         Map<String, dynamic> finalExport = generateExportJSON();
         // Create export file using docman
-        if (exportDir.toString().isEmpty) {
+        final exportDirString = settingsProvider.prefs?.getString('exportDir');
+        if (exportDirString == null || exportDirString.isEmpty) {
           throw UpdatiumError(tr('exportDirUriEmpty'));
         }
-        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final docFileResult = await DocumentFile.fromUri(exportDirString);
         final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
           final fileName =
