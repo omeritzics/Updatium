@@ -168,16 +168,16 @@ bool isCancelationException(dynamic exception) {
     final message = exception.toString();
     // Common cancelation patterns in HTTP clients
     return message.contains('Connection closed') ||
-           message.contains('Connection reset') ||
-           message.contains('Request cancelled') ||
-           message.contains('Request canceled') ||
-           message.contains('Operation cancelled') ||
-           message.contains('Operation canceled');
+        message.contains('Connection reset') ||
+        message.contains('Request cancelled') ||
+        message.contains('Request canceled') ||
+        message.contains('Operation cancelled') ||
+        message.contains('Operation canceled');
   }
   if (exception is SocketException) {
     final message = exception.toString();
     return message.contains('Connection closed') ||
-           message.contains('Connection reset');
+        message.contains('Connection reset');
   }
   return false;
 }
