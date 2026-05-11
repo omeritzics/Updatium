@@ -62,7 +62,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('ml'), 'മലയാളം'),
   MapEntry(Locale('gl'), 'Galego'),
   MapEntry(Locale('bg'), 'Български'),
-  MapEntry(Locale('kmr'), 'Kurdî (Kurmanjî)'),
+  MapEntry(Locale('ku'), 'Kurdî (Kurmanjî)'),
   MapEntry(Locale('ms'), 'Bahasa Melayu'),
   MapEntry(Locale('bn'), 'বাংলা'),
   MapEntry(Locale('ro'), 'Română'),
@@ -76,7 +76,7 @@ var fdroid = false;
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 
 bool isLocaleRTL(Locale locale) {
-  const rtlLanguages = {'ar', 'he', 'fa', 'ug', 'ur', 'yi', 'ps', 'sd'};
+  const rtlLanguages = {'ar', 'he', 'fa', 'ug', 'ur', 'yi', 'ps', 'sd', 'ku'};
   return rtlLanguages.contains(locale.languageCode);
 }
 
