@@ -2507,8 +2507,7 @@ class AppsProvider with ChangeNotifier {
             try {
               newApp = await checkUpdate(appId);
             } catch (e) {
-              if ((e is RateLimitError ||
-                      (e is SocketException && !isCancelationException(e))) &&
+              if ((e is RateLimitError || (e is SocketException && !isCancelationException(e))) &&
                   throwErrorsForRetry) {
                 rethrow;
               }

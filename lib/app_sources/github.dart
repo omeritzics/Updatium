@@ -607,9 +607,8 @@ class GitHub extends AppSource {
     final repo = pathSegments[1];
 
     // Check if we should use artifacts instead of releases
-    final downloadFromGitHubActions =
-        additionalSettings['downloadFromGitHubActions'] == true;
-
+    final downloadFromGitHubActions = additionalSettings['downloadFromGitHubActions'] == true;
+    
     if (downloadFromGitHubActions) {
       return await getLatestArtifactDetails(
         owner,
