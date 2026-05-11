@@ -2890,8 +2890,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
         ),
         body: Column(
           children: [
-            if (showProgress)
-              LinearProgressIndicatorM3E(value: progressValue),
+            if (showProgress) LinearProgressIndicatorM3E(value: progressValue),
             if (showProgress)
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),

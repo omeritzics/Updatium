@@ -787,9 +787,7 @@ class _SelectionModalState extends State<SelectionModal> {
         ),
         body: Column(
           children: [
-            LinearProgressIndicatorM3E(
-              value: 1 / 3,
-            ),
+            LinearProgressIndicatorM3E(value: 1 / 3),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: Row(
