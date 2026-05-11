@@ -49,6 +49,15 @@ class GitHub extends AppSource {
           const SizedBox(height: 4),
         ],
       ),
+      GeneratedFormDropdown(
+        'sourceType',
+        [
+          const MapEntry('releases', 'Releases'),
+          const MapEntry('artifacts', 'Actions Artifacts'),
+        ],
+        label: 'Source Type',
+        defaultValue: 'releases',
+      ),
       GeneratedFormTextField(
         tr('GHReqPrefix'),
         label: tr('GHReqPrefix'),
@@ -91,7 +100,28 @@ class GitHub extends AppSource {
       ),
     ];
 
-    additionalSourceAppSpecificSettingFormItems = [];
+    additionalSourceAppSpecificSettingFormItems = [
+      [
+        GeneratedFormTextField(
+          'artifactNameFilter',
+          label: 'Artifact Name Filter (Regex)',
+          hint: '.*\\.apk',
+          required: false,
+        ),
+        GeneratedFormTextField(
+          'workflowNameFilter',
+          label: 'Workflow Name Filter (Regex)',
+          hint: '.*build.*',
+          required: false,
+        ),
+        GeneratedFormTextField(
+          'branchFilter',
+          label: 'Branch Filter',
+          hint: 'main',
+          required: false,
+        ),
+      ],
+    ];
 
     canSearch = true;
     searchQuerySettingFormItems = [
@@ -621,6 +651,18 @@ class GitHub extends AppSource {
     final owner = pathSegments[0];
     final repo = pathSegments[1];
 
+    // Check if we should use artifacts instead of releases
+    final sourceType = additionalSettings['sourceType'] ?? 'releases';
+    
+    if (sourceType == 'artifacts') {
+      return await getLatestArtifactDetails(
+        owner,
+        repo,
+        standardUrl,
+        additionalSettings,
+      );
+    }
+
     try {
       // Try RSS feeds first (unlimited, TOS-compliant)
       final rssData = await GitHubRSS.getLatestRelease(
@@ -652,6 +694,112 @@ class GitHub extends AppSource {
       }
       rethrow;
     }
+  }
+
+  /// Get latest artifact details from GitHub Actions
+  Future<APKDetails> getLatestArtifactDetails(
+    String owner,
+    String repo,
+    String standardUrl,
+    Map<String, dynamic> additionalSettings,
+  ) async {
+    final apiUrl = await convertStandardUrlToAPIUrl(standardUrl, additionalSettings);
+    final artifactsUrl = '$apiUrl/actions/artifacts?per_page=100';
+    
+    // Get configuration filters
+    final artifactNameFilter = additionalSettings['artifactNameFilter'] as String?;
+    final workflowNameFilter = additionalSettings['workflowNameFilter'] as String?;
+    final branchFilter = additionalSettings['branchFilter'] as String?;
+    
+    Response res = await sourceRequest(artifactsUrl, additionalSettings);
+    if (res.statusCode != 200) {
+      throw getUpdatiumHttpError(res);
+    }
+    
+    final artifactsData = jsonDecode(res.body) as Map<String, dynamic>;
+    final artifacts = artifactsData['artifacts'] as List<dynamic>? ?? [];
+    
+    // Filter artifacts based on criteria
+    List<dynamic> filteredArtifacts = artifacts.where((artifact) {
+      // Skip expired artifacts
+      if (artifact['expired'] == true) return false;
+      
+      // Apply artifact name filter
+      if (artifactNameFilter?.isNotEmpty == true) {
+        final name = artifact['name'] as String? ?? '';
+        try {
+          if (!RegExp(artifactNameFilter!).hasMatch(name)) return false;
+        } catch (e) {
+          // Invalid regex, skip filter
+        }
+      }
+      
+      // Apply workflow name filter
+      if (workflowNameFilter?.isNotEmpty == true) {
+        final workflowName = artifact['workflow_run']?['name'] as String? ?? '';
+        try {
+          if (!RegExp(workflowNameFilter!).hasMatch(workflowName)) return false;
+        } catch (e) {
+          // Invalid regex, skip filter
+        }
+      }
+      
+      // Apply branch filter
+      if (branchFilter?.isNotEmpty == true) {
+        final branch = artifact['workflow_run']?['head_branch'] as String? ?? '';
+        if (branch != branchFilter) return false;
+      }
+      
+      return true;
+    }).toList();
+    
+    if (filteredArtifacts.isEmpty) {
+      throw NoReleasesError();
+    }
+    
+    // Sort by creation date (newest first)
+    filteredArtifacts.sort((a, b) {
+      final dateA = DateTime.tryParse(a['created_at'] as String? ?? '') ?? DateTime(0);
+      final dateB = DateTime.tryParse(b['created_at'] as String? ?? '') ?? DateTime(0);
+      return dateB.compareTo(dateA);
+    });
+    
+    final latestArtifact = filteredArtifacts.first;
+    final artifactId = latestArtifact['id'] as int;
+    final artifactName = latestArtifact['name'] as String? ?? 'Unknown';
+    final createdAt = DateTime.tryParse(latestArtifact['created_at'] as String? ?? '');
+    
+    // Get download URL for the artifact
+    final downloadUrl = '$apiUrl/actions/artifacts/$artifactId/zip';
+    
+    // For artifacts, we need to follow redirect to get actual download URL
+    final downloadRes = await sourceRequest(downloadUrl, additionalSettings);
+    if (downloadRes.statusCode != 302 && downloadRes.statusCode != 200) {
+      throw getUpdatiumHttpError(downloadRes);
+    }
+    
+    String finalDownloadUrl;
+    if (downloadRes.statusCode == 302) {
+      // Follow redirect
+      final location = downloadRes.headers['location'];
+      if (location == null) {
+        throw UpdatiumError('Artifact download redirect location not found');
+      }
+      finalDownloadUrl = location;
+    } else {
+      finalDownloadUrl = downloadUrl;
+    }
+    
+    // Create APK details - artifacts are typically zip files
+    final apkUrls = [MapEntry('$artifactName.zip', finalDownloadUrl)];
+    
+    return APKDetails(
+      artifactName,
+      apkUrls,
+      getAppNames(standardUrl),
+      releaseDate: createdAt,
+      changeLog: 'GitHub Actions artifact: ${latestArtifact['workflow_run']?['name'] ?? 'Unknown workflow'}',
+    );
   }
 
   /// Convert RSS data to APKDetails format
