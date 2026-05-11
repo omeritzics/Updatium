@@ -1,3 +1,4 @@
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
 
 import 'package:flutter/material.dart';
@@ -368,7 +369,7 @@ class AddAppPageState extends State<AddAppPage> {
         gettingAppInfo
             ? Semantics(
                 label: tr('gettingAppInfo'),
-                child: const CircularProgressIndicator(),
+                child: const CircularProgressIndicatorM3E(),
               )
             : Semantics(
                 button: true,
@@ -637,7 +638,7 @@ class AddAppPageState extends State<AddAppPage> {
         searching
             ? Semantics(
                 label: tr('searching'),
-                child: const CircularProgressIndicator(),
+                child: const CircularProgressIndicatorM3E(),
               )
             : Semantics(
                 button: true,

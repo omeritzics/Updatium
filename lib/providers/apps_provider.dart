@@ -16,6 +16,7 @@ import 'package:android_package_installer/android_package_installer.dart';
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
@@ -2890,12 +2891,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
         body: Column(
           children: [
             if (showProgress)
-              LinearProgressIndicator(
-                value: progressValue,
-                backgroundColor: Theme.of(
-                  context,
-                ).colorScheme.surfaceContainerHighest,
-              ),
+              LinearProgressIndicatorM3E(value: progressValue),
             if (showProgress)
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
@@ -496,7 +497,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   ),
                   if (importInProgress || appsProvider.exportInProgress)
                     const Column(
-                      children: [gap12, LinearProgressIndicator(), gap12],
+                      children: [gap12, LinearProgressIndicatorM3E(), gap12],
                     )
                   else
                     Column(
@@ -786,11 +787,8 @@ class _SelectionModalState extends State<SelectionModal> {
         ),
         body: Column(
           children: [
-            LinearProgressIndicator(
+            LinearProgressIndicatorM3E(
               value: 1 / 3,
-              backgroundColor: Theme.of(
-                context,
-              ).colorScheme.surfaceContainerHighest,
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),

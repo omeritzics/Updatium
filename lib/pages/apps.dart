@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
@@ -547,7 +548,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: LinearProgressIndicator(
+              child: LinearProgressIndicatorM3E(
                 value: appsProvider.loadingApps
                     ? null
                     : appsProvider
@@ -781,7 +782,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 SizedBox(
                                   width: 40,
                                   height: 4,
-                                  child: LinearProgressIndicator(
+                                  child: LinearProgressIndicatorM3E(
                                     value: appInfo.downloadProgress! >= 0
                                         ? appInfo.downloadProgress! / 100
                                         : null,
@@ -899,7 +900,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           SizedBox(
                             width: 40,
                             height: 4,
-                            child: LinearProgressIndicator(
+                            child: LinearProgressIndicatorM3E(
                               value: appInfo.downloadProgress! >= 0
                                   ? appInfo.downloadProgress! / 100
                                   : null,

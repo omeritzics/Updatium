@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
@@ -1827,7 +1828,7 @@ class LicenseDialog extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               );
             }
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicatorM3E());
           },
         ),
       ),
@@ -1968,7 +1969,7 @@ class OpenSourcePackagesDialog extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               );
             }
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicatorM3E());
           },
         ),
       ),

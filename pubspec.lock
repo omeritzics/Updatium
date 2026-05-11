@@ -258,14 +258,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  dynamic_color:
-    dependency: transitive
-    description:
-      name: dynamic_color
-      sha256: "43a5a6679649a7731ab860334a5812f2067c2d9ce6452cf069c5e0c25336c17c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.8.1"
   dynamic_system_colors:
     dependency: "direct main"
     description:
@@ -926,6 +918,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  progress_indicator_m3e:
+    dependency: "direct main"
+    description:
+      name: progress_indicator_m3e
+      sha256: "1a2ca029d14427d31093552a0e916b453f58643b78ef805ce6f4669845ac8f70"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   provider:
     dependency: "direct main"
     description:

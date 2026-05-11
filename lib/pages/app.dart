@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
@@ -109,7 +110,7 @@ class _AppPageState extends State<AppPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (appsProvider.loadingApps)
-                const CircularProgressIndicator()
+                const CircularProgressIndicatorM3E()
               else
                 Column(
                   children: [
@@ -783,16 +784,10 @@ class _AppPageState extends State<AppPage> {
                             child: Semantics(
                               label: tr('downloadProgress'),
                               value: '${app.downloadProgress!.toInt()}%',
-                              child: LinearProgressIndicator(
+                              child: LinearProgressIndicatorM3E(
                                 value: app.downloadProgress! >= 0
                                     ? app.downloadProgress! / 100
                                     : null,
-                                backgroundColor: Theme.of(
-                                  context,
-                                ).colorScheme.surfaceContainerHighest,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Theme.of(context).colorScheme.primary,
-                                ),
                               ),
                             ),
                           ),
