@@ -61,3 +61,12 @@
 -verbose
 
 ##---------------End: proguard configuration for Flutter  ----------
+
+##---------------Begin: Fix for DynamicColorPlugin conflict ----------
+# Exclude conflicting DynamicColorPlugin from dynamic_color package
+# Keep only the one from dynamic_system_colors
+-dontwarn io.material.plugins.dynamic_color.DynamicColorPlugin
+-keep class io.material.plugins.dynamic_color.DynamicColorPlugin {
+    *;
+}
+##---------------End: Fix for DynamicColorPlugin conflict ----------
