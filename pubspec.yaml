@@ -162,6 +162,9 @@ flutter:
       fonts:
         - asset: assets/fonts/NotoSansArabic-Regular.ttf
           
+dependency_overrides:
+  dynamic_color: 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
