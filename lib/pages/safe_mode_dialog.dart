@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
@@ -145,7 +147,7 @@ void showSafeModeEnableDialog(BuildContext context) {
               ],
             ),
             actions: [
-              TextButton(
+              M3ETextButton(
                 onPressed: isLoading
                     ? null
                     : () {
@@ -155,13 +157,13 @@ void showSafeModeEnableDialog(BuildContext context) {
                       },
                 child: Text(tr('cancel')),
               ),
-              FilledButton(
+              M3EFilledButton(
                 onPressed: isLoading ? null : setupPassword,
                 child: isLoading
                     ? const SizedBox(
                         width: 16,
                         height: 16,
-                        child: CircularProgressIndicator(strokeWidth: 2),
+                        child: CircularProgressIndicatorM3E(),
                       )
                     : Text(tr('safeModeEnable')),
               ),
@@ -271,7 +273,7 @@ void showSafeModeDisableDialog(BuildContext context) {
               ],
             ),
             actions: [
-              TextButton(
+              M3ETextButton(
                 onPressed: isLoading
                     ? null
                     : () {
@@ -280,13 +282,13 @@ void showSafeModeDisableDialog(BuildContext context) {
                       },
                 child: Text(tr('cancel')),
               ),
-              FilledButton(
+              M3EFilledButton(
                 onPressed: isLoading ? null : disableSafeMode,
                 child: isLoading
                     ? const SizedBox(
                         width: 16,
                         height: 16,
-                        child: CircularProgressIndicator(strokeWidth: 2),
+                        child: CircularProgressIndicatorM3E(),
                       )
                     : Text(tr('safeModeDisable')),
               ),
@@ -457,7 +459,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(height: 8),
-          TextButton.icon(
+          M3ETextButton.icon(
             onPressed: () {
               launchUrlString(
                 'https://github.com/omeritzics',
@@ -466,15 +468,11 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
             },
             icon: const Icon(Icons.link_rounded, size: 18),
             label: Text('Omer I.S. (@omeritzics)'),
-            style: TextButton.styleFrom(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.zero,
-            ),
           ),
           const SizedBox(height: 16),
           Text(tr('sourceCode'), style: Theme.of(context).textTheme.titleSmall),
           const SizedBox(height: 8),
-          TextButton.icon(
+          M3ETextButton.icon(
             onPressed: () {
               launchUrlString(
                 'https://github.com/omeritzics/Updatium',
@@ -483,15 +481,11 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
             },
             icon: const Icon(Icons.link_rounded, size: 18),
             label: Text('GitHub'),
-            style: TextButton.styleFrom(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.zero,
-            ),
           ),
         ],
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(tr('close')),
         ),

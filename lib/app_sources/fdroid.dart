@@ -15,6 +15,7 @@ class FDroid extends AppSource {
     naiveStandardVersionDetection = true;
     canSearch = true;
     openSource = true;
+    supportsVersionCodeSelection = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(
@@ -28,12 +29,6 @@ class FDroid extends AppSource {
           ],
         ),
       ],
-      [
-        GeneratedFormSwitch(
-          'autoSelectHighestVersionCode',
-          label: tr('autoSelectHighestVersionCode'),
-        ),
-      ],
     ];
   }
 
@@ -41,17 +36,12 @@ class FDroid extends AppSource {
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     return SourceProvider().standardizeUrlWithRegex(
       url,
-      '^https?://(www\\.)?${getSourceRegex(hosts)}/+packages/+[^/]+',
+      '^https?://(www\\.)?${getSourceRegex(hosts)}(/+[^/]+)?/+packages/+[^/]+',
       sourceName: name,
       transform: (matched, match) {
-        // Check if URL matches the longer pattern first
-        RegExp regExB = RegExp(
-          '^https?://(www\\.)?${getSourceRegex(hosts)}/+[^/]+/+packages/+[^/]+',
-          caseSensitive: false,
-        );
-        var matchB = regExB.firstMatch(url);
-        if (matchB != null) {
-          return 'https://${Uri.parse(matchB.group(0)!).host}/packages/${Uri.parse(url).pathSegments.where((s) => s.trim().isNotEmpty).last}';
+        var uri = Uri.parse(matched);
+        if (uri.pathSegments.length > 2 && uri.pathSegments[0] != 'packages') {
+          return 'https://${uri.host}/packages/${uri.pathSegments.last}';
         }
         return matched;
       },
@@ -249,7 +239,10 @@ class FDroid extends AppSource {
     // For the remaining releases, use the toggles to auto-select one if possible
     if (releaseChoices.length > 1) {
       if (autoSelectHighestVersionCode) {
-        releaseChoices = [releaseChoices.first];
+        releaseChoices = autoSelectHighestVersionCodeFromReleases(
+          releaseChoices.toList(),
+          (release) => release['versionCode'] as int,
+        );
       } else if (trySelectingSuggestedVersionCode &&
           response['suggestedVersionCode'] != null) {
         var suggestedReleases = releaseChoices.where(
@@ -264,10 +257,12 @@ class FDroid extends AppSource {
     List<String> apkUrls = releaseChoices
         .map((e) => '${apkUrlPrefix}_${e['versionCode']}.apk')
         .toList();
+    // Extract author from API response or fall back to source name
+    String author = response['authorName'] ?? sourceName;
     return APKDetails(
       version,
       getApkUrlsFromUrls(apkUrls.toSet().toList()),
-      AppNames(sourceName, Uri.parse(standardUrl).pathSegments.last),
+      AppNames(author, Uri.parse(standardUrl).pathSegments.last),
     );
   }
 }

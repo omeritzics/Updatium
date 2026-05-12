@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:app_bar_m3e/app_bar_m3e.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/main.dart';
@@ -18,9 +21,11 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:updatium/services/device_admin_service.dart';
+import 'package:updatium/services/dns_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
+import 'package:pubspec_parse/pubspec_parse.dart';
 
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
@@ -496,9 +501,9 @@ class _SettingsPageState extends State<SettingsPage> {
       body: CustomScrollView(
         controller: scrollController,
         slivers: <Widget>[
-          SliverAppBar.large(
+          SliverAppBarM3E(
+            variant: AppBarM3EVariant.large,
             pinned: true,
-            automaticallyImplyLeading: false,
             title: Text(tr('settings')),
           ),
           SliverToBoxAdapter(
@@ -516,10 +521,11 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('updates'),
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                           ),
                           initiallyExpanded:
                               settingsProvider.updatesSectionExpanded,
@@ -998,6 +1004,65 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ],
                             ),
+                            gap16,
+                            GeneratedForm(
+                              items: [
+                                [
+                                  GeneratedFormDropdown(
+                                    'dnsProvider',
+                                    [
+                                          const MapEntry(
+                                            'system',
+                                            'System Default',
+                                          ),
+                                          const MapEntry(
+                                            'cloudflare',
+                                            'Cloudflare DNS',
+                                          ),
+                                          const MapEntry('quad9', 'Quad9 DNS'),
+                                          const MapEntry('opendns', 'OpenDNS'),
+                                          const MapEntry(
+                                            'mullvad',
+                                            'Mullvad DNS',
+                                          ),
+                                        ]
+                                        .map(
+                                          (e) => MapEntry(e.key, tr(e.value)),
+                                        )
+                                        .toList(),
+                                    label: tr('dnsServiceProvider'),
+                                    defaultValue: settingsProvider
+                                        .dnsServiceProvider
+                                        .name,
+                                    required: true,
+                                  ),
+                                ],
+                              ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding && valid) {
+                                  final newProvider = DNSServiceProvider.values
+                                      .firstWhere(
+                                        (e) => e.name == values['dnsProvider'],
+                                      );
+                                  settingsProvider.dnsServiceProvider =
+                                      newProvider;
+                                  // Reinitialize DNS service with new provider
+                                  DNSService().initializeFromSettings(
+                                    settingsProvider,
+                                  );
+                                }
+                              },
+                            ),
+                            gap8,
+                            Text(
+                              tr('dnsServiceProviderDescription'),
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurfaceVariant,
+                                  ),
+                            ),
                           ],
                         ),
                         gap24,
@@ -1008,10 +1073,11 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('sourceSpecific'),
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                           ),
                           initiallyExpanded:
                               settingsProvider.sourceSpecificSectionExpanded,
@@ -1033,10 +1099,11 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('appearance'),
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                           ),
                           initiallyExpanded:
                               settingsProvider.appearanceSectionExpanded,
@@ -1298,10 +1365,11 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           title: Text(
                             tr('categories'),
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                           ),
                           initiallyExpanded:
                               settingsProvider.categoriesSectionExpanded,
@@ -1422,7 +1490,7 @@ class _LogsDialogState extends State<LogsDialog> {
         ],
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () async {
             var cont =
                 (await showDialog<bool>(
@@ -1432,11 +1500,11 @@ class _LogsDialogState extends State<LogsDialog> {
                       title: Text(tr('appLogs')),
                       content: Text(tr('removeFromUpdatium')),
                       actions: [
-                        TextButton(
+                        M3ETextButton(
                           onPressed: () => Navigator.of(ctx).pop(false),
                           child: Text(tr('cancel')),
                         ),
-                        TextButton(
+                        M3ETextButton(
                           onPressed: () => Navigator.of(ctx).pop(true),
                           child: Text(tr('ok')),
                         ),
@@ -1452,13 +1520,13 @@ class _LogsDialogState extends State<LogsDialog> {
           },
           child: Text(tr('remove')),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
           child: Text(tr('close')),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () {
             SharePlus.instance.share(
               ShareParams(text: logString ?? '', subject: tr('appLogs')),
@@ -1557,11 +1625,11 @@ class CategoryTagEditor extends StatelessWidget {
           title: Text(tr('deleteCategory')),
           content: Text(tr('categoryDeleteWarning')),
           actions: [
-            TextButton(
+            M3ETextButton(
               onPressed: () => Navigator.pop(ctx),
               child: Text(tr('cancel')),
             ),
-            TextButton(
+            M3ETextButton(
               onPressed: () {
                 final newCategories = Map<String, int>.from(
                   settingsProvider.categories,
@@ -1760,12 +1828,12 @@ class LicenseDialog extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyMedium,
               );
             }
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicatorM3E());
           },
         ),
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(tr('close')),
         ),
@@ -1777,116 +1845,67 @@ class LicenseDialog extends StatelessWidget {
 class OpenSourcePackagesDialog extends StatelessWidget {
   const OpenSourcePackagesDialog({super.key});
 
-  static const List<Map<String, String>> dependencies = [
-    {'name': 'path_provider', 'url': 'https://pub.dev/packages/path_provider'},
-    {'name': 'flutter_fgbg', 'url': 'https://pub.dev/packages/flutter_fgbg'},
-    {
-      'name': 'flutter_local_notifications',
-      'url': 'https://pub.dev/packages/flutter_local_notifications',
-    },
-    {'name': 'provider', 'url': 'https://pub.dev/packages/provider'},
-    {'name': 'http', 'url': 'https://pub.dev/packages/http'},
-    {
-      'name': 'dynamic_system_colors',
-      'url': 'https://pub.dev/packages/dynamic_system_colors',
-    },
-    {
-      'name': 'material_color_utilities',
-      'url': 'https://pub.dev/packages/material_color_utilities',
-    },
-    {'name': 'html', 'url': 'https://pub.dev/packages/html'},
-    {
-      'name': 'shared_preferences',
-      'url': 'https://pub.dev/packages/shared_preferences',
-    },
-    {'name': 'url_launcher', 'url': 'https://pub.dev/packages/url_launcher'},
-    {
-      'name': 'permission_handler',
-      'url': 'https://pub.dev/packages/permission_handler',
-    },
-    {'name': 'fluttertoast', 'url': 'https://pub.dev/packages/fluttertoast'},
-    {
-      'name': 'device_info_plus',
-      'url': 'https://pub.dev/packages/device_info_plus',
-    },
-    {
-      'name': 'package_info_plus',
-      'url': 'https://pub.dev/packages/package_info_plus',
-    },
-    {'name': 'animations', 'url': 'https://pub.dev/packages/animations'},
-    {
-      'name': 'android_package_installer',
-      'url': 'https://pub.dev/packages/android_package_installer',
-    },
-    {
-      'name': 'android_package_manager',
-      'url': 'https://pub.dev/packages/android_package_manager',
-    },
-    {'name': 'share_plus', 'url': 'https://pub.dev/packages/share_plus'},
-    {'name': 'sqflite', 'url': 'https://pub.dev/packages/sqflite'},
-    {
-      'name': 'simple_localization',
-      'url': 'https://github.com/omeritzics/simple_localization',
-    },
-    {
-      'name': 'android_intent_plus',
-      'url': 'https://pub.dev/packages/android_intent_plus',
-    },
-    {
-      'name': 'flutter_archive',
-      'url': 'https://pub.dev/packages/flutter_archive',
-    },
-    {'name': 'hsluv', 'url': 'https://pub.dev/packages/hsluv'},
-    {
-      'name': 'connectivity_plus',
-      'url': 'https://pub.dev/packages/connectivity_plus',
-    },
-    {'name': 'docman', 'url': 'https://pub.dev/packages/docman'},
-    {'name': 'crypto', 'url': 'https://pub.dev/packages/crypto'},
-    {'name': 'bcrypt', 'url': 'https://pub.dev/packages/bcrypt'},
-    {'name': 'app_links', 'url': 'https://pub.dev/packages/app_links'},
-    {
-      'name': 'background_fetch',
-      'url': 'https://pub.dev/packages/background_fetch',
-    },
-    {'name': 'equations', 'url': 'https://pub.dev/packages/equations'},
-    {
-      'name': 'flex_color_picker',
-      'url': 'https://pub.dev/packages/flex_color_picker',
-    },
-    {
-      'name': 'android_system_font',
-      'url': 'https://github.com/re7gog/android_system_font',
-    },
-    {
-      'name': 'shizuku_apk_installer',
-      'url': 'https://github.com/re7gog/shizuku_apk_installer',
-    },
-    {'name': 'markdown', 'url': 'https://pub.dev/packages/markdown'},
-    {
-      'name': 'flutter_typeahead',
-      'url': 'https://pub.dev/packages/flutter_typeahead',
-    },
-    {'name': 'battery_plus', 'url': 'https://pub.dev/packages/battery_plus'},
-    {
-      'name': 'flutter_charset_detector',
-      'url': 'https://pub.dev/packages/flutter_charset_detector',
-    },
-    {'name': 'pubspec_parse', 'url': 'https://pub.dev/packages/pubspec_parse'},
-    {
-      'name': 'm3_floating_toolbar',
-      'url': 'https://pub.dev/packages/m3_floating_toolbar',
-    },
-    {
-      'name': 'flutter_foreground_task',
-      'url': 'https://pub.dev/packages/flutter_foreground_task',
-    },
-    {
-      'name': 'flutter_markdown_plus',
-      'url': 'https://pub.dev/packages/flutter_markdown_plus',
-    },
-    {'name': 'path', 'url': 'https://pub.dev/packages/path'},
-  ];
+  Future<List<Map<String, String>>> getDependencies() async {
+    try {
+      final String pubspecString = await rootBundle.loadString('pubspec.yaml');
+      final Pubspec pubspec = Pubspec.parse(pubspecString);
+
+      final List<Map<String, String>> dependencies = [];
+
+      // Get dependencies
+      pubspec.dependencies.forEach((name, dependency) {
+        // Skip flutter sdk as it's not a package
+        if (name != 'flutter') {
+          dependencies.add({
+            'name': name,
+            'url': _getPackageUrl(name, dependency),
+          });
+        }
+      });
+
+      // Get dev_dependencies (include flutter_lints)
+      pubspec.devDependencies.forEach((name, dependency) {
+        // Only include flutter_lints from dev dependencies
+        if (name == 'flutter_lints') {
+          dependencies.add({
+            'name': name,
+            'url': _getPackageUrl(name, dependency),
+          });
+        }
+      });
+
+      // Sort dependencies alphabetically
+      dependencies.sort((a, b) => a['name']!.compareTo(b['name']!));
+
+      return dependencies;
+    } catch (e) {
+      // Fallback to empty list if parsing fails
+      return [];
+    }
+  }
+
+  String _getPackageUrl(String packageName, Dependency dependency) {
+    // Handle git dependencies
+    if (dependency is GitDependency) {
+      return dependency.url.toString();
+    }
+
+    // Handle special cases for known git dependencies
+    const Map<String, String> gitPackages = {
+      'simple_localization':
+          'https://github.com/omeritzics/simple_localization',
+      'android_system_font': 'https://github.com/re7gog/android_system_font',
+      'shizuku_apk_installer':
+          'https://github.com/re7gog/shizuku_apk_installer',
+    };
+
+    if (gitPackages.containsKey(packageName)) {
+      return gitPackages[packageName]!;
+    }
+
+    // Default to pub.dev URL
+    return 'https://pub.dev/packages/$packageName';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1913,35 +1932,49 @@ class OpenSourcePackagesDialog extends StatelessWidget {
       ),
       content: SizedBox(
         width: double.maxFinite,
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: dependencies.length,
-          itemBuilder: (context, index) {
-            final dep = dependencies[index];
-            return ListTile(
-              dense: true,
-              contentPadding: EdgeInsets.zero,
-              title: Text(
-                dep['name']!,
+        child: FutureBuilder<List<Map<String, String>>>(
+          future: getDependencies(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final dependencies = snapshot.data!;
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: dependencies.length,
+                itemBuilder: (context, index) {
+                  final dep = dependencies[index];
+                  return ListTile(
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(
+                      dep['name']!,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    trailing: Icon(
+                      Icons.open_in_new,
+                      size: 16,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    onTap: () {
+                      launchUrlString(
+                        dep['url']!,
+                        mode: LaunchMode.externalApplication,
+                      );
+                    },
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              return Text(
+                'Error loading dependencies: ${snapshot.error}',
                 style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              trailing: Icon(
-                Icons.open_in_new,
-                size: 16,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              onTap: () {
-                launchUrlString(
-                  dep['url']!,
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-            );
+              );
+            }
+            return const Center(child: CircularProgressIndicatorM3E());
           },
         ),
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(tr('close')),
         ),
@@ -2074,8 +2107,8 @@ class _AboutDialogState extends State<AboutDialog> {
                   children: [
                     Image.asset(
                       'assets/graphics/icon.png',
-                      width: 80,
-                      height: 80,
+                      width: 72,
+                      height: 72,
                     ),
                     gap16,
                     Text(
@@ -2119,7 +2152,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               gap8,
-              TextButton.icon(
+              M3ETextButton.icon(
                 onPressed: () {
                   launchUrlString(
                     'https://github.com/omeritzics',
@@ -2128,10 +2161,6 @@ class _AboutDialogState extends State<AboutDialog> {
                 },
                 icon: const Icon(Icons.link_rounded, size: 18),
                 label: Text('Omer I.S. (@omeritzics)'),
-                style: TextButton.styleFrom(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.zero,
-                ),
               ),
               gap16,
               Text(
@@ -2139,7 +2168,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               gap8,
-              TextButton.icon(
+              M3ETextButton.icon(
                 onPressed: () {
                   launchUrlString(
                     'https://github.com/omeritzics/Updatium',
@@ -2148,10 +2177,6 @@ class _AboutDialogState extends State<AboutDialog> {
                 },
                 icon: const Icon(Icons.code_rounded, size: 18),
                 label: Text('GitHub'),
-                style: TextButton.styleFrom(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.zero,
-                ),
               ),
               gap16,
               Text(
@@ -2159,7 +2184,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               gap8,
-              TextButton.icon(
+              M3ETextButton.icon(
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -2170,10 +2195,6 @@ class _AboutDialogState extends State<AboutDialog> {
                 },
                 icon: const Icon(Icons.description_rounded, size: 18),
                 label: Text('GPL-3.0'),
-                style: TextButton.styleFrom(
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.zero,
-                ),
               ),
               gap24,
               Container(
@@ -2197,7 +2218,7 @@ class _AboutDialogState extends State<AboutDialog> {
                       spacing: 8,
                       runSpacing: 8,
                       children: [
-                        TextButton.icon(
+                        M3ETextButton.icon(
                           onPressed: () {
                             launchUrlString(
                               'https://github.com/omeritzics/Updatium/wiki',
@@ -2206,12 +2227,8 @@ class _AboutDialogState extends State<AboutDialog> {
                           },
                           icon: const Icon(Icons.menu_book_rounded, size: 18),
                           label: Text(tr('wiki')),
-                          style: TextButton.styleFrom(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                          ),
                         ),
-                        TextButton.icon(
+                        M3ETextButton.icon(
                           onPressed: () {
                             showDialog(
                               context: context,
@@ -2222,12 +2239,8 @@ class _AboutDialogState extends State<AboutDialog> {
                           },
                           icon: const Icon(Icons.bug_report_outlined, size: 18),
                           label: Text(tr('appLogs')),
-                          style: TextButton.styleFrom(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                          ),
                         ),
-                        TextButton.icon(
+                        M3ETextButton.icon(
                           onPressed: () {
                             showDialog(
                               context: context,
@@ -2238,10 +2251,6 @@ class _AboutDialogState extends State<AboutDialog> {
                           },
                           icon: const Icon(Icons.code_rounded, size: 18),
                           label: Text(tr('usedOpenSourcePackages')),
-                          style: TextButton.styleFrom(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                          ),
                         ),
                       ],
                     ),
@@ -2251,7 +2260,7 @@ class _AboutDialogState extends State<AboutDialog> {
             ],
           ),
           actions: [
-            TextButton(
+            M3ETextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text(tr('close')),
             ),

@@ -1,6 +1,11 @@
-import 'package:animations/animations.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
+
 import 'package:flutter/material.dart';
+import 'package:animations/animations.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:app_bar_m3e/app_bar_m3e.dart';
+
 import 'package:flutter/services.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -21,6 +26,7 @@ const gap12 = SizedBox(height: 12);
 const gap16 = SizedBox(height: 16);
 const gap24 = SizedBox(height: 24);
 const gap32 = SizedBox(height: 32);
+const gap4 = SizedBox(height: 4);
 
 const horizontalGap8 = SizedBox(width: 8);
 const horizontalGap12 = SizedBox(width: 12);
@@ -37,6 +43,7 @@ class AddAppPage extends StatefulWidget {
 class AddAppPageState extends State<AddAppPage> {
   bool gettingAppInfo = false;
   bool searching = false;
+  bool cameFromSearch = false;
 
   String userInput = '';
   String searchQuery = '';
@@ -73,7 +80,6 @@ class AddAppPageState extends State<AddAppPage> {
     _sourceOverrideController.dispose();
     super.dispose();
   }
-
 
   void linkFn(String input) {
     try {
@@ -186,11 +192,11 @@ class AddAppPageState extends State<AddAppPage> {
                 ],
               ),
               actions: [
-                TextButton(
+                M3ETextButton(
                   onPressed: () => Navigator.of(ctx).pop(null),
                   child: Text(tr('cancel')),
                 ),
-                TextButton(
+                M3ETextButton(
                   onPressed: () => Navigator.of(ctx).pop(localValues),
                   child: Text(tr('ok')),
                 ),
@@ -219,11 +225,11 @@ class AddAppPageState extends State<AddAppPage> {
                     title: Text(tr('releaseDateAsVersion')),
                     content: Text(tr('releaseDateAsVersionExplanation')),
                     actions: [
-                      TextButton(
+                      M3ETextButton(
                         onPressed: () => Navigator.of(ctx).pop(null),
                         child: Text(tr('cancel')),
                       ),
-                      TextButton(
+                      M3ETextButton(
                         onPressed: () => Navigator.of(ctx).pop(true),
                         child: Text(tr('ok')),
                       ),
@@ -261,6 +267,8 @@ class AddAppPageState extends State<AddAppPage> {
               app,
               context,
               false,
+              progressIndicatorStep: 1,
+              progressIndicatorTotal: cameFromSearch ? 3 : 2,
             );
             if (apkUrl == null) {
               throw UpdatiumError(tr('cancelled'));
@@ -297,7 +305,14 @@ class AddAppPageState extends State<AddAppPage> {
         if (app != null) {
           Navigator.push(
             globalNavigatorKey.currentContext ?? context,
-            MaterialPageRoute(builder: (context) => AppPage(appId: app!.id)),
+            MaterialPageRoute(
+              builder: (context) => AppPage(
+                appId: app!.id,
+                flowType: cameFromSearch
+                    ? AppAddFlowType.search
+                    : AppAddFlowType.url,
+              ),
+            ),
           );
         }
       } catch (e) {
@@ -354,23 +369,23 @@ class AddAppPageState extends State<AddAppPage> {
         gettingAppInfo
             ? Semantics(
                 label: tr('gettingAppInfo'),
-                child: const CircularProgressIndicator(),
+                child: const CircularProgressIndicatorM3E(),
               )
             : Semantics(
                 button: true,
                 label: tr('add'),
                 hint: doingSomething
-                    ? 'Please wait, operation in progress'
+                    ? tr('pleaseWaitOperationInProgress')
                     : pickedSource == null
-                    ? 'Select a source first'
+                    ? tr('selectSourceFirst')
                     : (pickedSource!
                               .combinedAppSpecificSettingFormItems
                               .isNotEmpty &&
                           !additionalSettingsValid)
-                    ? 'Complete additional settings first'
-                    : 'Add this app to your collection',
+                    ? tr('completeAdditionalSettingsFirst')
+                    : tr('addAppToCollection'),
                 excludeSemantics: true,
-                child: FilledButton(
+                child: M3EFilledButton(
                   onPressed:
                       doingSomething ||
                           pickedSource == null ||
@@ -489,11 +504,11 @@ class AddAppPageState extends State<AddAppPage> {
                               ),
                             ),
                             actions: [
-                              TextButton(
+                              M3ETextButton(
                                 onPressed: () => Navigator.of(ctx).pop(null),
                                 child: Text(tr('cancel')),
                               ),
-                              TextButton(
+                              M3ETextButton(
                                 onPressed: () =>
                                     Navigator.of(ctx).pop(localValues),
                                 child: Text(tr('ok')),
@@ -559,6 +574,9 @@ class AddAppPageState extends State<AddAppPage> {
                 );
           if (selectedUrls != null && selectedUrls.isNotEmpty) {
             var sourceName = res[selectedUrls[0]]?.key;
+            setState(() {
+              cameFromSearch = true;
+            });
             changeUserInput(
               selectedUrls[0],
               true,
@@ -620,16 +638,16 @@ class AddAppPageState extends State<AddAppPage> {
         searching
             ? Semantics(
                 label: tr('searching'),
-                child: const CircularProgressIndicator(),
+                child: const CircularProgressIndicatorM3E(),
               )
             : Semantics(
                 button: true,
                 label: tr('search'),
                 hint: searchQuery.isEmpty
-                    ? 'Enter search terms first'
-                    : 'Search for apps',
+                    ? tr('enterSearchTermsFirst')
+                    : tr('searchForApps'),
                 excludeSemantics: true,
-                child: FilledButton(
+                child: M3EFilledButton(
                   onPressed: searchQuery.isEmpty || doingSomething
                       ? null
                       : () {
@@ -641,111 +659,228 @@ class AddAppPageState extends State<AddAppPage> {
       ],
     );
 
-    Widget getAdditionalOptsCol() => Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        gap16,
-        Text(
-          tr('additionalOptsFor', args: [pickedSource?.name ?? tr('source')]),
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        gap16,
-        GeneratedForm(
-          key: Key(
-            '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}',
-          ),
-          items: [
-            ...pickedSource!.combinedAppSpecificSettingFormItems,
-            ...(pickedSourceOverride != null
-                ? pickedSource!.sourceConfigSettingFormItems.map((e) => [e])
-                : []),
-          ],
-          onValueChanges: (values, valid, isBuilding) {
-            if (!isBuilding) {
-              setState(() {
-                additionalSettings = values;
-                additionalSettingsValid = valid;
-              });
-            }
-          },
-        ),
-        Column(
+    void showAdditionalSettingsDialog() async {
+      // Create temporary copies of current settings
+      Map<String, dynamic> tempAdditionalSettings = Map.from(
+        additionalSettings,
+      );
+      bool tempAdditionalSettingsValid = additionalSettingsValid;
+      List<String> tempPickedCategories = List.from(pickedCategories);
+      bool tempInferAppIdIfOptional = inferAppIdIfOptional;
+
+      final result = await showDialog<bool>(
+        context: context,
+        builder: (BuildContext ctx) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return Dialog.fullscreen(
+                child: Scaffold(
+                  appBar: AppBar(
+                    title: Text(
+                      tr(
+                        'additionalOptsFor',
+                        args: [pickedSource?.name ?? tr('source')],
+                      ),
+                    ),
+                    actions: [
+                      M3ETextButton(
+                        onPressed: () => Navigator.of(ctx).pop(false),
+                        child: Text(tr('cancel')),
+                      ),
+                      M3ETextButton(
+                        onPressed: tempAdditionalSettingsValid
+                            ? () => Navigator.of(ctx).pop(true)
+                            : null,
+                        child: Text(tr('save')),
+                      ),
+                    ],
+                  ),
+                  body: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          GeneratedForm(
+                            key: Key(
+                              '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}',
+                            ),
+                            items: [
+                              ...pickedSource!
+                                  .combinedAppSpecificSettingFormItems,
+                              ...(pickedSourceOverride != null
+                                  ? pickedSource!.sourceConfigSettingFormItems
+                                        .map((e) => [e])
+                                  : []),
+                            ],
+                            onValueChanges: (values, valid, isBuilding) {
+                              if (!isBuilding) {
+                                setState(() {
+                                  tempAdditionalSettings = values;
+                                  tempAdditionalSettingsValid = valid;
+                                });
+                              }
+                            },
+                          ),
+                          gap16,
+                          CategorySelector(
+                            alignment: WrapAlignment.start,
+                            onSelected: (categories) {
+                              tempPickedCategories = categories;
+                            },
+                          ),
+                          if (pickedSource != null &&
+                              pickedSource!.appIdInferIsOptional) ...[
+                            gap16,
+                            GeneratedForm(
+                              key: const Key('inferAppIdIfOptional'),
+                              items: [
+                                [
+                                  GeneratedFormSwitch(
+                                    'inferAppIdIfOptional',
+                                    label: tr('tryInferAppIdFromCode'),
+                                    defaultValue: tempInferAppIdIfOptional,
+                                  ),
+                                ],
+                              ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding) {
+                                  setState(() {
+                                    tempInferAppIdIfOptional =
+                                        values['inferAppIdIfOptional'];
+                                  });
+                                }
+                              },
+                            ),
+                          ],
+                          if (pickedSource != null &&
+                              pickedSource!.enforceTrackOnly) ...[
+                            gap16,
+                            GeneratedForm(
+                              key: Key(
+                                '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-appId',
+                              ),
+                              items: [
+                                [
+                                  GeneratedFormTextField(
+                                    'appId',
+                                    label: '${tr('appId')} - ${tr('custom')}',
+                                    required: false,
+                                    defaultValue:
+                                        tempAdditionalSettings['appId'],
+                                    additionalValidators: [
+                                      (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return null;
+                                        }
+                                        final isValid = RegExp(
+                                          r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+                                        ).hasMatch(value);
+                                        if (!isValid) {
+                                          return tr('invalidInput');
+                                        }
+                                        return null;
+                                      },
+                                    ],
+                                  ),
+                                ],
+                              ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding) {
+                                  setState(() {
+                                    tempAdditionalSettings['appId'] =
+                                        values['appId'];
+                                  });
+                                }
+                              },
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      );
+
+      // Apply changes only if user saved
+      if (result == true) {
+        setState(() {
+          additionalSettings = tempAdditionalSettings;
+          additionalSettingsValid = tempAdditionalSettingsValid;
+          pickedCategories = tempPickedCategories;
+          inferAppIdIfOptional = tempInferAppIdIfOptional;
+        });
+      }
+    }
+
+    Widget getAdditionalSettingsButton() => Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            gap16,
-            CategorySelector(
-              alignment: WrapAlignment.start,
-              onSelected: (categories) {
-                pickedCategories = categories;
-              },
+            Row(
+              children: [
+                Icon(
+                  Icons.settings,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                horizontalGap8,
+                Expanded(
+                  child: Text(
+                    tr(
+                      'additionalOptsFor',
+                      args: [pickedSource?.name ?? tr('source')],
+                    ),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.chevron_right,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ],
             ),
+            if (additionalSettings.isNotEmpty) ...[
+              gap8,
+              Text(
+                '${additionalSettings.length} ${tr('additionalSettings')}',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ],
+            if (pickedCategories.isNotEmpty) ...[
+              gap4,
+              Wrap(
+                spacing: 4,
+                runSpacing: 4,
+                children: pickedCategories
+                    .map(
+                      (category) => Chip(
+                        label: Text(category),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                    )
+                    .toList(),
+              ),
+            ],
           ],
         ),
-        if (pickedSource != null && pickedSource!.appIdInferIsOptional)
-          GeneratedForm(
-            key: const Key('inferAppIdIfOptional'),
-            items: [
-              [
-                GeneratedFormSwitch(
-                  'inferAppIdIfOptional',
-                  label: tr('tryInferAppIdFromCode'),
-                  defaultValue: inferAppIdIfOptional,
-                ),
-              ],
-            ],
-            onValueChanges: (values, valid, isBuilding) {
-              if (!isBuilding) {
-                setState(() {
-                  inferAppIdIfOptional = values['inferAppIdIfOptional'];
-                });
-              }
-            },
-          ),
-        if (pickedSource != null && pickedSource!.enforceTrackOnly)
-          GeneratedForm(
-            key: Key(
-              '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-appId',
-            ),
-            items: [
-              [
-                GeneratedFormTextField(
-                  'appId',
-                  label: '${tr('appId')} - ${tr('custom')}',
-                  required: false,
-                  additionalValidators: [
-                    (value) {
-                      if (value == null || value.isEmpty) {
-                        return null;
-                      }
-                      final isValid = RegExp(
-                        r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-                      ).hasMatch(value);
-                      if (!isValid) {
-                        return tr('invalidInput');
-                      }
-                      return null;
-                    },
-                  ],
-                ),
-              ],
-            ],
-            onValueChanges: (values, valid, isBuilding) {
-              if (!isBuilding) {
-                setState(() {
-                  additionalSettings['appId'] = values['appId'];
-                });
-              }
-            },
-          ),
-      ],
+      ),
     );
 
     Widget getSourcesListWidget() => Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        TextButton.icon(
+        M3ETextButton.icon(
           onPressed: () {
             showDialog(
               context: context,
@@ -789,6 +924,7 @@ class AddAppPageState extends State<AddAppPage> {
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.primary,
+                                    semanticLabel: tr('openSource'),
                                   ),
                                   const SizedBox(width: 2),
                                 ],
@@ -824,7 +960,7 @@ class AddAppPageState extends State<AddAppPage> {
                     ],
                   ),
                   actions: [
-                    TextButton(
+                    M3ETextButton(
                       onPressed: () => Navigator.of(ctx).pop(),
                       child: Text(tr('ok')),
                     ),
@@ -835,10 +971,6 @@ class AddAppPageState extends State<AddAppPage> {
           },
           icon: const Icon(Icons.info_outline, size: 18),
           label: Text(tr('supportedSources')),
-          style: TextButton.styleFrom(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.zero,
-          ),
         ),
       ],
     );
@@ -848,7 +980,11 @@ class AddAppPageState extends State<AddAppPage> {
       body: CustomScrollView(
         shrinkWrap: true,
         slivers: <Widget>[
-          SliverAppBar.large(pinned: true, title: Text(tr('addApp'))),
+          SliverAppBarM3E(
+            variant: AppBarM3EVariant.large,
+            pinned: true,
+            title: Text(tr('addApp')),
+          ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -873,7 +1009,11 @@ class AddAppPageState extends State<AddAppPage> {
                       },
                       future: pickedSource?.getSourceNote(),
                     ),
-                  if (pickedSource != null) getAdditionalOptsCol(),
+                  if (pickedSource != null)
+                    GestureDetector(
+                      onTap: showAdditionalSettingsDialog,
+                      child: getAdditionalSettingsButton(),
+                    ),
                   if (pickedSource != null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,

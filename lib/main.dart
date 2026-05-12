@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/pages/home.dart';
 import 'package:updatium/providers/apps_provider.dart';
@@ -27,7 +28,7 @@ import 'package:url_launcher/url_launcher.dart';
 List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('en'), 'English'),
   MapEntry(Locale('zh'), '简体中文'),
-  MapEntry(Locale('zh', 'Hant_TW'), '臺灣話'),
+  MapEntry(Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'), '臺灣話'),
   MapEntry(Locale('it'), 'Italiano'),
   MapEntry(Locale('ja'), '日本語'),
   MapEntry(Locale('he'), 'עברית'),
@@ -61,7 +62,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('ml'), 'മലയാളം'),
   MapEntry(Locale('gl'), 'Galego'),
   MapEntry(Locale('bg'), 'Български'),
-  MapEntry(Locale('kmr'), 'Kurdî (Kurmanjî)'),
+  // MapEntry(Locale('ku'), 'Kurdî (Kurmanjî)'),
   MapEntry(Locale('ms'), 'Bahasa Melayu'),
   MapEntry(Locale('bn'), 'বাংলা'),
   MapEntry(Locale('ro'), 'Română'),
@@ -75,7 +76,7 @@ var fdroid = false;
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 
 bool isLocaleRTL(Locale locale) {
-  const rtlLanguages = {'ar', 'he', 'fa', 'ug', 'ur', 'yi', 'ps', 'sd'};
+  const rtlLanguages = {'ar', 'he', 'fa', 'ug', 'ur', 'yi', 'ps', 'sd', 'ku'};
   return rtlLanguages.contains(locale.languageCode);
 }
 
@@ -386,6 +387,7 @@ class _UpdatiumState extends State<Updatium> {
                         'versionDetection': true,
                         'apkFilterRegEx': 'fdroid',
                         'invertAPKFilter': true,
+                        'useVersionCodeAsOSVersion': true,
                       },
                       null,
                       false,
@@ -491,12 +493,14 @@ class _UpdatiumState extends State<Updatium> {
               useMaterial3: true,
               colorScheme: scheme,
               fontFamily: getPrimaryFontForLocale(context.locale),
-              fontFamilyFallback: const [
-                'Inter',
-                'NotoSansCJK',
-                'NotoSansHebrew',
-                'NotoSansArabic',
-              ],
+              fontFamilyFallback: settingsProvider.useSystemFont
+                  ? null
+                  : const [
+                      'Inter',
+                      'NotoSansCJK',
+                      'NotoSansHebrew',
+                      'NotoSansArabic',
+                    ],
 
               // Keyboard/TV navigation support
               focusColor: scheme.primary.withValues(alpha: 0.2),
@@ -512,13 +516,15 @@ class _UpdatiumState extends State<Updatium> {
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
                   fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
+                  fontFamilyFallback: settingsProvider.useSystemFont
+                      ? null
+                      : const [
+                          'Inter',
+                          'GoogleSansFlex',
+                          'NotoSansCJK',
+                          'NotoSansHebrew',
+                          'NotoSansArabic',
+                        ],
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),
@@ -626,7 +632,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
           ),
           content: SelectableText(e.toString()),
           actions: [
-            TextButton(
+            M3ETextButton(
               onPressed: () => Navigator.of(context).pop(),
               child: Text(tr('ok')),
             ),
@@ -696,7 +702,7 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
     builder: (context) => AlertDialog(
       content: Text(strings['message'] ?? ''),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () async {
             final uri = Uri.parse('https://keepandroidopen.org');
             if (await canLaunchUrl(uri)) {
@@ -705,7 +711,7 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
           },
           child: Text(strings['moreInfo'] ?? 'Details'),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () async {
             final uri = Uri.parse(
               'https://github.com/woheller69/FreeDroidWarn?tab=readme-ov-file#solutions',
@@ -716,7 +722,7 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
           },
           child: Text(strings['solution'] ?? 'Solution'),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () async {
             await _saveWarningVersion();
             if (context.mounted) {

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:hsluv/hsluv.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -542,11 +543,11 @@ class _GeneratedFormState extends State<GeneratedForm> {
                     },
                   ),
                   actions: [
-                    TextButton(
+                    M3ETextButton(
                       onPressed: () => Navigator.of(ctx).pop(null),
                       child: Text(tr('cancel')),
                     ),
-                    TextButton(
+                    M3ETextButton(
                       onPressed: () => Navigator.of(ctx).pop(localValues),
                       child: Text(tr('ok')),
                     ),
@@ -746,12 +747,12 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                       title: Text(message.key),
                                       content: Text(message.value),
                                       actions: [
-                                        TextButton(
+                                        M3ETextButton(
                                           onPressed: () =>
                                               Navigator.of(ctx).pop(false),
                                           child: Text(tr('cancel')),
                                         ),
-                                        TextButton(
+                                        M3ETextButton(
                                           onPressed: () =>
                                               Navigator.of(ctx).pop(true),
                                           child: Text(tr('ok')),
@@ -779,7 +780,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                           true
                       ? Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: TextButton.icon(
+                          child: M3ETextButton.icon(
                             onPressed: onAddPressed,
                             icon: const Icon(Icons.add),
                             label: Text(
@@ -855,10 +856,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextButton.icon(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Theme.of(context).colorScheme.error,
-                        ),
+                      M3ETextButton.icon(
                         onPressed: (values[fieldKey].length > 0)
                             ? () {
                                 var temp = List.from(values[fieldKey]);
@@ -885,7 +883,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
               child: Row(
                 children: [
                   Expanded(
-                    child: FilledButton.icon(
+                    child: M3EFilledButton.icon(
                       onPressed: () {
                         values[fieldKey].add(
                           getDefaultValuesFromFormItems(

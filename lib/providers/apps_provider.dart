@@ -16,8 +16,10 @@ import 'package:android_package_installer/android_package_installer.dart';
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
@@ -198,8 +200,8 @@ Future<File> downloadFileWithRetry(
     );
   } catch (e) {
     if (retries > 0 &&
-        (e is http.ClientException ||
-            e.toString().contains('Connection closed'))) {
+        e is http.ClientException &&
+        !isCancelationException(e)) {
       await Future.delayed(const Duration(seconds: 10));
       return await downloadFileWithRetry(
         url,
@@ -341,11 +343,11 @@ Future<String?> promptForFileName(
           ],
         ),
         actions: [
-          TextButton(
+          M3ETextButton(
             onPressed: () => Navigator.pop(context, null),
             child: Text(tr('cancel')),
           ),
-          FilledButton(
+          M3EFilledButton(
             onPressed: () => Navigator.pop(context, controller.text),
             child: Text(tr('download')),
           ),
@@ -1431,6 +1433,8 @@ class AppsProvider with ChangeNotifier {
     BuildContext? context,
     bool pickAnyAsset, {
     bool evenIfSingleChoice = false,
+    int? progressIndicatorStep,
+    int? progressIndicatorTotal,
   }) async {
     var urlsToSelectFrom = app.apkUrls;
     if (pickAnyAsset) {
@@ -1455,6 +1459,8 @@ class AppsProvider with ChangeNotifier {
             initVal: appFileUrl,
             archs: archs,
             pickAnyAsset: pickAnyAsset,
+            progressIndicatorStep: progressIndicatorStep,
+            progressIndicatorTotal: progressIndicatorTotal,
           );
         },
       );
@@ -2363,14 +2369,11 @@ class AppsProvider with ChangeNotifier {
                       ],
                     ),
               actions: [
-                TextButton(
+                M3ETextButton(
                   onPressed: () => Navigator.of(ctx).pop(null),
                   child: Text(tr('cancel')),
                 ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Theme.of(context).colorScheme.error,
-                  ),
+                M3ETextButton(
                   onPressed: () {
                     HapticFeedback.selectionClick();
                     Navigator.of(ctx).pop({
@@ -2505,7 +2508,8 @@ class AppsProvider with ChangeNotifier {
             try {
               newApp = await checkUpdate(appId);
             } catch (e) {
-              if ((e is RateLimitError || e is SocketException) &&
+              if ((e is RateLimitError ||
+                      (e is SocketException && !isCancelationException(e))) &&
                   throwErrorsForRetry) {
                 rethrow;
               }
@@ -2606,7 +2610,9 @@ class AppsProvider with ChangeNotifier {
       }
       // List and delete auto-export files using docman
       try {
-        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final exportDirString = settingsProvider.prefs?.getString('exportDir');
+        if (exportDirString == null) return null;
+        final docFileResult = await DocumentFile.fromUri(exportDirString);
         final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
           final files = await dirDocFile.listDocuments();
@@ -2641,10 +2647,11 @@ class AppsProvider with ChangeNotifier {
         var encoder = const JsonEncoder.withIndent("    ");
         Map<String, dynamic> finalExport = generateExportJSON();
         // Create export file using docman
-        if (exportDir.toString().isEmpty) {
+        final exportDirString = settingsProvider.prefs?.getString('exportDir');
+        if (exportDirString == null || exportDirString.isEmpty) {
           throw UpdatiumError(tr('exportDirUriEmpty'));
         }
-        final docFileResult = await DocumentFile.fromUri(exportDir.toString());
+        final docFileResult = await DocumentFile.fromUri(exportDirString);
         final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
           final fileName =
@@ -2818,12 +2825,16 @@ class AppFilePicker extends StatefulWidget {
     this.initVal,
     this.archs,
     this.pickAnyAsset = false,
+    this.progressIndicatorStep,
+    this.progressIndicatorTotal,
   });
 
   final App app;
   final MapEntry<String, String>? initVal;
   final List<String>? archs;
   final bool pickAnyAsset;
+  final int? progressIndicatorStep;
+  final int? progressIndicatorTotal;
 
   @override
   State<AppFilePicker> createState() => _AppFilePickerState();
@@ -2839,67 +2850,122 @@ class _AppFilePickerState extends State<AppFilePicker> {
     if (widget.pickAnyAsset) {
       urlsToSelectFrom = [...urlsToSelectFrom, ...widget.app.otherAssetUrls];
     }
-    return AlertDialog(
-      scrollable: true,
-      title: Text(
-        widget.pickAnyAsset
-            ? tr('selectX', args: [lowerCaseIfEnglish(tr('releaseAsset'))])
-            : tr('pickAnAPK'),
-      ),
-      content: Column(
-        children: [
-          urlsToSelectFrom.length > 1
-              ? Text(
-                  tr('appHasMoreThanOnePackage', args: [widget.app.finalName]),
-                )
-              : const SizedBox.shrink(),
-          const SizedBox(height: 16),
-          RadioGroup<String>(
-            groupValue: fileUrl?.value,
-            onChanged: (String? value) {
-              setState(() {
-                fileUrl = urlsToSelectFrom.where((e) => e.value == value).first;
-              });
-            },
-            child: Column(
-              children: urlsToSelectFrom
-                  .map(
-                    (u) => RadioListTile<String>(
-                      title: Text(u.key),
-                      value: u.value,
-                    ),
-                  )
-                  .toList(),
-            ),
+    final showProgress =
+        widget.progressIndicatorStep != null &&
+        widget.progressIndicatorTotal != null;
+    final progressValue = showProgress
+        ? widget.progressIndicatorStep! / widget.progressIndicatorTotal!
+        : 0.0;
+    final progressText = showProgress
+        ? '${widget.progressIndicatorStep}/${widget.progressIndicatorTotal}'
+        : '';
+
+    return Dialog.fullscreen(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(null),
           ),
-          if (widget.archs != null) const SizedBox(height: 16),
-          if (widget.archs != null)
-            Text(
-              widget.archs!.length == 1
-                  ? tr('deviceSupportsXArch', args: [widget.archs![0]])
-                  : tr('deviceSupportsFollowingArchs') +
-                        list2FriendlyString(
-                          widget.archs!.map((e) => '\'$e\'').toList(),
-                        ),
-              style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
+          title: Text(
+            widget.pickAnyAsset
+                ? tr('selectX', args: [lowerCaseIfEnglish(tr('releaseAsset'))])
+                : tr('pickAnAPK'),
+          ),
+          actions: [
+            M3ETextButton(
+              onPressed: () {
+                Navigator.of(context).pop(null);
+              },
+              child: Text(tr('cancel')),
             ),
-        ],
+            M3ETextButton(
+              onPressed: () {
+                HapticFeedback.selectionClick();
+                Navigator.of(context).pop(fileUrl);
+              },
+              child: Text(tr('continue')),
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            if (showProgress) LinearProgressIndicatorM3E(value: progressValue),
+            if (showProgress)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      tr('confirmAppSelection'),
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    Text(
+                      progressText,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    urlsToSelectFrom.length > 1
+                        ? Text(
+                            tr(
+                              'appHasMoreThanOnePackage',
+                              args: [widget.app.finalName],
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                    const SizedBox(height: 16),
+                    RadioGroup<String>(
+                      groupValue: fileUrl?.value,
+                      onChanged: (String? value) {
+                        setState(() {
+                          fileUrl = urlsToSelectFrom
+                              .where((e) => e.value == value)
+                              .first;
+                        });
+                      },
+                      child: Column(
+                        children: urlsToSelectFrom
+                            .map(
+                              (u) => RadioListTile<String>(
+                                title: Text(u.key),
+                                value: u.value,
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ),
+                    if (widget.archs != null) const SizedBox(height: 16),
+                    if (widget.archs != null)
+                      Text(
+                        widget.archs!.length == 1
+                            ? tr(
+                                'deviceSupportsXArch',
+                                args: [widget.archs![0]],
+                              )
+                            : tr('deviceSupportsFollowingArchs') +
+                                  list2FriendlyString(
+                                    widget.archs!.map((e) => '\'$e\'').toList(),
+                                  ),
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop(null);
-          },
-          child: Text(tr('cancel')),
-        ),
-        TextButton(
-          onPressed: () {
-            HapticFeedback.selectionClick();
-            Navigator.of(context).pop(fileUrl);
-          },
-          child: Text(tr('continue')),
-        ),
-      ],
     );
   }
 }
@@ -2934,13 +3000,13 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        M3ETextButton(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
           child: Text(tr('cancel')),
         ),
-        TextButton(
+        M3ETextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);
@@ -3112,7 +3178,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
             // Next task interval is based on the error with the longest retry time
             int minRetryIntervalForThisApp = err is RateLimitError
                 ? (err.remainingMinutes * 60)
-                : e is http.ClientException
+                : (e is http.ClientException && !isCancelationException(e))
                 ? (15 * 60)
                 : (toCheckApp.value + 1);
             if (minRetryIntervalForThisApp > maxRetryWaitSeconds) {

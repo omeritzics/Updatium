@@ -3,6 +3,7 @@
 
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
@@ -299,7 +300,7 @@ class NotificationsProvider {
             title: Text(title),
             content: Text(content),
             actions: [
-              TextButton(
+              M3ETextButton(
                 onPressed: () {
                   Navigator.of(context).pop(null);
                   if (doublePop) {

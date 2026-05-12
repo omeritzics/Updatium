@@ -17,10 +17,11 @@ Update your Android apps directly from the APK source. Updatium is a customizabl
 | ![Forgejo favicon](https://www.google.com/s2/favicons?sz=16&domain=forgejo.org) [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/)) | ![Uptodown favicon](https://www.google.com/s2/favicons?sz=16&domain=uptodown.com) [Uptodown](https://uptodown.com/) | 📦 Direct APK Link |
 | ![F-Droid favicon](https://www.google.com/s2/favicons?sz=16&domain=f-droid.org) [F-Droid](https://f-droid.org/) | ![Huawei AppGallery favicon](https://www.google.com/s2/favicons?sz=16&domain=huawei.com) [Huawei AppGallery](https://appgallery.huawei.com/) | 🌐 HTML page fallback |
 | 🧩 Third Party F-Droid Repos | ![Tencent App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=sj.qq.com) [Tencent App Store](https://sj.qq.com/) | ![WhatsApp favicon](https://www.google.com/s2/favicons?sz=16&domain=whatsapp.com) [WhatsApp](https://whatsapp.com/) |
-| ![IzzyOnDroid favicon](https://www.google.com/s2/favicons?sz=16&domain=android.izzysoft.de) [IzzyOnDroid](https://android.izzysoft.de/) | ![vivo App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=vivo.com.cn) [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) | |
-| ![SourceHut favicon](https://www.google.com/s2/favicons?sz=16&domain=sourcehut.org) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=16&domain=rustore.ru) [RuStore](https://rustore.ru/) | |
-| | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
-| | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror](https://apkmirror.com/) | |
+| ![IzzyOnDroid favicon](https://www.google.com/s2/favicons?sz=16&domain=android.izzysoft.de) [IzzyOnDroid](https://android.izzysoft.de/) | ![vivo App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=vivo.com.cn) [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) | ![Signal favicon](https://www.google.com/s2/favicons?sz=16&domain=signal.org) [Signal (Nightly builds only)](https://signal.org/) |
+| ![SourceHut favicon](https://www.google.com/s2/favicons?sz=16&domain=sourcehut.org) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=16&domain=rustore.ru) [RuStore](https://rustore.ru/) | ![VLC favicon](https://www.google.com/s2/favicons?sz=16&domain=videolan.org) [VLC (Nightly builds only)](https://www.videolan.org/) |
+| ![OpenAPK favicon](https://www.google.com/s2/favicons?sz=16&domain=openapk.net) [OpenAPK (Nightly builds only)](https://www.openapk.net/) | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
+| ![Bitbucket favicon](https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org) [Bitbucket (Nightly builds only)](https://www.bitbucket.org) | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror](https://apkmirror.com/) | |
+| ![Gitea favicon](https://www.google.com/s2/favicons?sz=16&domain=try.gitea.io) [Gitea (Nightly builds only)](https://try.gitea.io/) | | |
 
 ### Improved Design
 
@@ -31,6 +32,7 @@ Based on Material Design 3 Expressive guidelines.
 - Better accessability for screen readers.
 - Grid View.
 - Safe Mode (allows you to block unwanted changes to the application catalogue).
+- Ability to use DNS-over-HTTP providers (Nightly builds only).
 
 ### Localization
 
@@ -44,7 +46,7 @@ Every language is welcome to Updatium, but your help is needed to make it happen
 語, עברית, हिन्दी, Magyar, Deutsch, فارسی, Français, Español, Polski,
 Русский, Bosanski, Português, Česky, Svenska, Nederlands, Tiếng Việt,
 Türkçe, Українська, Dansk, Eesti, Esperanto, Bahasa Indonesia, বাংলা,
-한국어, Català, العربية, മലയാളം, Galego, Български, Kurdî (Kurmanjî),
+한국어, Català, العربية, മലയാളം, Galego, Български,
 Bahasa Melayu, Română, ئۇيغۇرچە.
 
 ## Download
@@ -53,13 +55,13 @@ Bahasa Melayu, Română, ئۇيغۇرچە.
 
 [![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
 
-Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware.
+Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware. If you are an administrator of an APK distribution source, please let me know you're intrested in adding Updatium to your website by creating an issue.
 
 ## Screenshots
 
 | ![Apps Page](./assets/screenshots/1.apps.png) | ![Dark Theme](./assets/screenshots/2.dark_theme.png) | ![Material You](./assets/screenshots/3.material_you.png) |
 | ------------------------------------------------------ | ----------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/graphics/screenshots/5.app_opts.png) | ![Grid View](./assets/graphics/screenshots/6.grid_view.png) |
+| ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/screenshots/5.app_opts.png) | ![Grid View](./assets/screenshots/6.grid_view.png) |
 
 ## Limitations
 
@@ -96,4 +98,4 @@ On Updatium:
 
 ### Q: How can I help?
 
-A: There are many ways you can. Your contribution doesn't have to be code - it could also be bug reporting, translating the app into new languages (or improving existing translations), design proposals and ideas. To start, you can simply open a new thread on the Discussions page of this GitHub project and introduce yourself. Starring Updatium and sharing it to people who you think may like it will also help Updatium grow. Thank you for your support :)
+A: There are many ways you can help. It doesn't have to be code - it could also be bug reporting, adding new translations (or improving existing ones), design proposals and ideas. In order to start, simply open a new thread on the [Discussions page](https://github.com/omeritzics/Updatium/discussions) and introduce yourself. Starring Updatium and sharing it to people who might like it will also help Updatium grow. Thank you for your support :)

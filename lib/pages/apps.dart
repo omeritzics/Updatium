@@ -2,11 +2,15 @@ import 'package:animations/animations.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:expressive_refresh/expressive_refresh.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:app_bar_m3e/app_bar_m3e.dart';
 
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -68,10 +72,7 @@ void showChangeLogDialog(
                 },
                 child: Text(
                   changesUrl,
-                  style: const TextStyle(
-                    decoration: TextDecoration.underline,
-                    fontStyle: FontStyle.italic,
-                  ),
+                  style: const TextStyle(decoration: TextDecoration.underline),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -117,7 +118,7 @@ void showChangeLogDialog(
           ],
         ),
         actions: [
-          TextButton(
+          M3ETextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text(tr('ok')),
           ),
@@ -165,7 +166,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   );
   Set<String> selectedAppIds = {};
   DateTime? refreshingSince;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
+  final GlobalKey<ExpressiveRefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey();
   final Set<int> _expandedCategories = <int>{};
 
   // Helper function to preserve transparency regardless of theme overrides
@@ -546,7 +548,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: LinearProgressIndicator(
+              child: LinearProgressIndicatorM3E(
                 value: appsProvider.loadingApps
                     ? null
                     : appsProvider
@@ -639,16 +641,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           button: true,
           label: tr('install'),
           enabled: !appsProvider.areDownloadsRunning(),
-          child: FilledButton.tonal(
+          child: M3EFilledButton.tonal(
             onPressed: appsProvider.areDownloadsRunning()
                 ? null
                 : () => _installApp(app),
-            style: ButtonStyle(
-              visualDensity: isCompact ? VisualDensity.compact : null,
-              minimumSize: WidgetStateProperty.all(
-                isCompact ? const Size(60, 32) : null,
-              ),
-            ),
             child: Text(tr('install')),
           ),
         );
@@ -657,16 +653,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           button: true,
           label: tr('update'),
           enabled: !appsProvider.areDownloadsRunning(),
-          child: FilledButton.tonal(
+          child: M3EFilledButton.tonal(
             onPressed: appsProvider.areDownloadsRunning()
                 ? null
                 : () => _installApp(app),
-            style: ButtonStyle(
-              visualDensity: isCompact ? VisualDensity.compact : null,
-              minimumSize: WidgetStateProperty.all(
-                isCompact ? const Size(60, 32) : null,
-              ),
-            ),
             child: Text(tr('update')),
           ),
         );
@@ -675,16 +665,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           button: true,
           label: tr('updated'),
           enabled: false,
-          child: FilledButton.tonal(
+          child: M3EFilledButton.tonal(
             onPressed: null,
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
-              foregroundColor: WidgetStateProperty.all(Colors.grey),
-              visualDensity: isCompact ? VisualDensity.compact : null,
-              minimumSize: WidgetStateProperty.all(
-                isCompact ? const Size(60, 32) : null,
-              ),
-            ),
             child: Text(tr('updated')),
           ),
         );
@@ -800,7 +782,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 SizedBox(
                                   width: 40,
                                   height: 4,
-                                  child: LinearProgressIndicator(
+                                  child: LinearProgressIndicatorM3E(
                                     value: appInfo.downloadProgress! >= 0
                                         ? appInfo.downloadProgress! / 100
                                         : null,
@@ -918,7 +900,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           SizedBox(
                             width: 40,
                             height: 4,
-                            child: LinearProgressIndicator(
+                            child: LinearProgressIndicatorM3E(
                               value: appInfo.downloadProgress! >= 0
                                   ? appInfo.downloadProgress! / 100
                                   : null,
@@ -999,7 +981,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 180,
+                  maxCrossAxisExtent: 160,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
                   childAspectRatio: 0.7,
@@ -1106,7 +1088,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       Semantics(
                         button: true,
                         label: tr('cancel'),
-                        child: TextButton(
+                        child: M3ETextButton(
                           onPressed: () => Navigator.of(ctx).pop(null),
                           child: Text(tr('cancel')),
                         ),
@@ -1114,7 +1096,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       Semantics(
                         button: true,
                         label: tr('ok'),
-                        child: TextButton(
+                        child: M3ETextButton(
                           onPressed: () => Navigator.of(ctx).pop(localValues),
                           child: Text(tr('ok')),
                         ),
@@ -1192,7 +1174,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         Semantics(
                           button: true,
                           label: tr('cancel'),
-                          child: TextButton(
+                          child: M3ETextButton(
                             onPressed: () => Navigator.of(ctx).pop(false),
                             child: Text(tr('cancel')),
                           ),
@@ -1200,7 +1182,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         Semantics(
                           button: true,
                           label: tr('ok'),
-                          child: TextButton(
+                          child: M3ETextButton(
                             onPressed: () => Navigator.of(ctx).pop(true),
                             child: Text(tr('ok')),
                           ),
@@ -1234,7 +1216,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     Semantics(
                       button: true,
                       label: tr('continue'),
-                      child: TextButton(
+                      child: M3ETextButton(
                         onPressed: () {
                           for (var app in selectedApps) {
                             app.categories = selectedCategories.toList();
@@ -1271,16 +1253,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             ),
             content: Text(
               tr('onlyWorksWithNonVersionDetectApps'),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             actions: [
               Semantics(
                 button: true,
                 label: tr('no'),
-                child: TextButton(
+                child: M3ETextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -1290,7 +1269,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               Semantics(
                 button: true,
                 label: tr('yes'),
-                child: TextButton(
+                child: M3ETextButton(
                   onPressed: () {
                     HapticFeedback.selectionClick();
                     appsProvider.saveApps(
@@ -1333,7 +1312,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     button: true,
                     label: tr('markSelectedAppsUpdated'),
                     enabled: !appsProvider.areDownloadsRunning(),
-                    child: TextButton(
+                    child: M3ETextButton(
                       onPressed: appsProvider.areDownloadsRunning()
                           ? null
                           : showMassMarkDialog,
@@ -1348,7 +1327,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     label: selectedApps.every((element) => element.pinned)
                         ? tr('unpinFromTop')
                         : tr('pinToTop'),
-                    child: TextButton(
+                    child: M3ETextButton(
                       onPressed: () {
                         var allPinned = selectedApps.every(
                           (element) => element.pinned,
@@ -1401,7 +1380,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     [
                       GeneratedFormTextField(
                         'author',
-                        label: tr('author'),
+                        label: tr('appAuthor'),
                         required: false,
                         defaultValue: localValues['author'],
                       ),
@@ -1468,7 +1447,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               Semantics(
                 button: true,
                 label: tr('cancel'),
-                child: TextButton(
+                child: M3ETextButton(
                   onPressed: () => Navigator.of(ctx).pop(null),
                   child: Text(tr('cancel')),
                 ),
@@ -1476,7 +1455,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               Semantics(
                 button: true,
                 label: tr('ok'),
-                child: TextButton(
+                child: M3ETextButton(
                   onPressed: () => Navigator.of(ctx).pop(localValues),
                   child: Text(tr('ok')),
                 ),
@@ -1614,7 +1593,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
         children: [
-          RefreshIndicator(
+          ExpressiveRefreshIndicator(
             onRefresh: refresh,
             child: Scrollbar(
               interactive: true,
@@ -1623,16 +1602,23 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 physics: const AlwaysScrollableScrollPhysics(),
                 controller: scrollController,
                 slivers: <Widget>[
-                  SliverAppBar.large(
+                  SliverAppBarM3E(
+                    variant: AppBarM3EVariant.large,
                     pinned: true,
-                    automaticallyImplyLeading: false,
-                    bottom: TabBar(
-                      controller: _tabController,
-                      labelPadding: const EdgeInsets.symmetric(horizontal: 12),
-                      tabs: [
-                        Tab(text: tr('all')),
-                        Tab(text: tr('installed')),
-                        Tab(text: tr('notInstalledApps')),
+                    title: Column(
+                      children: [
+                        Text(tr('appsString')),
+                        TabBar(
+                          controller: _tabController,
+                          labelPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                          ),
+                          tabs: [
+                            Tab(text: tr('all')),
+                            Tab(text: tr('installed')),
+                            Tab(text: tr('notInstalledApps')),
+                          ],
+                        ),
                       ],
                     ),
                     actions: [
@@ -1692,7 +1678,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         },
                       ),
                     ],
-                    title: Text(tr('appsString')),
                   ),
                   const SliverToBoxAdapter(child: SizedBox(height: 8)),
                   ...getLoadingWidgets(),

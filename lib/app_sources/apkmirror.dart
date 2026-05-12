@@ -104,6 +104,10 @@ class APKMirror extends AppSource {
   }
 
   AppNames getAppNames(String standardUrl) {
-    return SourceProvider().getAppNamesFromUrl(standardUrl, authorIndex: 1, nameIndex: 2);
+    return SourceProvider().getAppNamesFromUrl(
+      standardUrl,
+      authorIndex: 1,
+      nameIndex: 2,
+    );
   }
 }

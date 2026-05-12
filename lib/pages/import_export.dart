@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:app_bar_m3e/app_bar_m3e.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/services/githubstars.dart';
@@ -78,11 +81,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
               ),
             ),
             actions: [
-              TextButton(
+              M3ETextButton(
                 onPressed: () => Navigator.of(ctx).pop(null),
                 child: Text(tr('cancel')),
               ),
-              TextButton(
+              M3ETextButton(
                 onPressed: () {
                   if (formKey.currentState?.validate() == true) {
                     Navigator.of(ctx).pop(controller.text);
@@ -269,11 +272,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         ),
                       ),
                       actions: [
-                        TextButton(
+                        M3ETextButton(
                           onPressed: () => Navigator.of(ctx).pop(null),
                           child: Text(tr('cancel')),
                         ),
-                        TextButton(
+                        M3ETextButton(
                           onPressed: () {
                             if (formKey.currentState?.validate() == true) {
                               Navigator.of(ctx).pop(
@@ -351,7 +354,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar.large(pinned: true, title: Text(tr('importExport'))),
+          SliverAppBarM3E(
+            variant: AppBarM3EVariant.large,
+            pinned: true,
+            title: Text(tr('importExport')),
+          ),
           SliverFillRemaining(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -372,7 +379,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   hint:
                                       'Choose a directory to export your apps and settings',
                                   excludeSemantics: true,
-                                  child: FilledButton.icon(
+                                  child: M3EFilledButton.icon(
                                     onPressed:
                                         importInProgress ||
                                             appsProvider.exportInProgress
@@ -397,7 +404,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       ? 'Set export directory first'
                                       : 'Export all your apps and settings to file',
                                   excludeSemantics: true,
-                                  child: FilledButton.icon(
+                                  child: M3EFilledButton.icon(
                                     onPressed:
                                         importInProgress ||
                                             appsProvider.exportInProgress ||
@@ -424,7 +431,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   hint:
                                       'Import apps and settings from a backup file',
                                   excludeSemantics: true,
-                                  child: FilledButton.icon(
+                                  child: M3EFilledButton.icon(
                                     onPressed: importInProgress
                                         ? null
                                         : runUpdatiumImport,
@@ -490,7 +497,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   ),
                   if (importInProgress || appsProvider.exportInProgress)
                     const Column(
-                      children: [gap12, LinearProgressIndicator(), gap12],
+                      children: [gap12, LinearProgressIndicatorM3E(), gap12],
                     )
                   else
                     Column(
@@ -502,7 +509,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           hint:
                               'Import multiple apps by entering their URLs in a list',
                           excludeSemantics: true,
-                          child: FilledButton.icon(
+                          child: M3EFilledButton.icon(
                             onPressed: importInProgress ? null : urlListImport,
                             icon: const Icon(Icons.list_alt),
                             label: Text(tr('importFromURLList')),
@@ -516,7 +523,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                             hint:
                                 'Import apps by reading URLs from a text file',
                             excludeSemantics: true,
-                            child: FilledButton.icon(
+                            child: M3EFilledButton.icon(
                               onPressed: importInProgress ? null : runUrlImport,
                               icon: const Icon(Icons.link),
                               label: Text(tr('importFromURLsInFile')),
@@ -536,7 +543,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             gap8,
-                            FilledButton.icon(
+                            M3EFilledButton.icon(
                               onPressed: importInProgress
                                   ? null
                                   : () {
@@ -553,10 +560,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   Text(
                     tr('importedAppsIdDisclaimer'),
                     textAlign: TextAlign.start,
-                    style: const TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 12,
-                    ),
+                    style: const TextStyle(fontSize: 12),
                   ),
                   gap8,
                 ],
@@ -621,7 +625,6 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
                 Text(
                   e[1],
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontStyle: FontStyle.italic,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                   maxLines: 3,
@@ -633,7 +636,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
         ],
       ),
       actions: [
-        TextButton.icon(
+        M3ETextButton.icon(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
@@ -734,226 +737,249 @@ class _SelectionModalState extends State<SelectionModal> {
       }
       var noneSelected = entrySelections.values.every((v) => v == false);
       return noneSelected
-          ? TextButton(
+          ? M3ETextButton(
               onPressed: () => setState(selectAll),
               child: Text(tr('selectAll')),
             )
-          : TextButton(
+          : M3ETextButton(
               onPressed: () => setState(() => selectAll(deselect: true)),
               child: Text(tr('deselectX', args: [tr('all')])),
             );
     }
 
-    return AlertDialog(
-      scrollable: true,
-      title: Text(widget.title ?? tr('pick')),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: TextFormField(
-              controller: _filterController,
-              decoration: InputDecoration(
-                labelText: tr('filter'),
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: _filterController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          setState(() {
-                            _filterController.clear();
-                            filterRegex = '';
-                          });
-                        },
-                      )
-                    : null,
-                border: const OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  filterRegex = value;
-                });
-              },
-              validator: regExValidator,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-            ),
+    return Dialog.fullscreen(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(),
+            tooltip: tr('cancel'),
           ),
-          if (widget.onlyOneSelectionAllowed)
-            RadioGroup<String>(
-              groupValue: entrySelections.entries
-                  .where((e) => e.value)
-                  .map((e) => e.key.key)
-                  .firstOrNull,
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() => selectOnlyOne(value));
-                }
-              },
-              child: Column(
-                children: filteredEntrySelections.keys.map((entry) {
-                  Widget urlLink = Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        entry.value.isEmpty ? entry.key : entry.value[0],
-                        style: TextStyle(
-                          decoration: widget.titlesAreLinks
-                              ? TextDecoration.underline
-                              : null,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+          title: Text(widget.title ?? tr('pick')),
+          actions: [
+            getSelectAllButton(),
+            M3ETextButton(
+              onPressed: entrySelections.values.every((v) => v == false)
+                  ? null
+                  : () {
+                      Navigator.of(context).pop(
+                        entrySelections.entries
+                            .where((entry) => entry.value)
+                            .map((e) => e.key.key)
+                            .toList(),
+                      );
+                    },
+              child: Text(
+                widget.onlyOneSelectionAllowed
+                    ? tr('pick')
+                    : tr(
+                        'selectX',
+                        args: [
+                          entrySelections.values
+                              .where((b) => b)
+                              .length
+                              .toString(),
+                        ],
                       ),
-                      if (widget.titlesAreLinks)
-                        Text(
-                          Uri.tryParse(entry.key)?.host ?? entry.key,
-                          style: const TextStyle(
-                            decoration: TextDecoration.underline,
-                            fontSize: 12,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                    ],
-                  );
-
-                  if (widget.titlesAreLinks) {
-                    urlLink = GestureDetector(
-                      onTap: () => launchUrlString(
-                        entry.key,
-                        mode: LaunchMode.externalApplication,
-                      ),
-                      child: urlLink,
-                    );
-                  }
-
-                  Widget? descriptionText = entry.value.length <= 1
-                      ? null
-                      : Text(
-                          entry.value[1].length > 128
-                              ? '${entry.value[1].substring(0, 128)}...'
-                              : entry.value[1],
-                          style: const TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 12,
-                          ),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        );
-
-                  return RadioListTile<String>(
-                    title: urlLink,
-                    subtitle: descriptionText,
-                    value: entry.key,
-                  );
-                }).toList(),
               ),
-            )
-          else
-            ...filteredEntrySelections.keys.map((entry) {
-              void selectThis(bool? value) {
-                setState(() {
-                  value ??= false;
-                  if (value! && widget.onlyOneSelectionAllowed) {
-                    selectOnlyOne(entry.key);
-                  } else {
-                    entrySelections[entry] = value!;
-                  }
-                });
-              }
-
-              Widget urlLink = Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            LinearProgressIndicatorM3E(value: 1 / 3),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    entry.value.isEmpty ? entry.key : entry.value[0],
-                    style: TextStyle(
-                      decoration: widget.titlesAreLinks
-                          ? TextDecoration.underline
-                          : null,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                    tr('addApp'),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  if (widget.titlesAreLinks)
-                    Text(
-                      Uri.tryParse(entry.key)?.host ?? entry.key,
-                      style: const TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontSize: 12,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
                 ],
-              );
-
-              if (widget.titlesAreLinks) {
-                urlLink = GestureDetector(
-                  onTap: () => launchUrlString(
-                    entry.key,
-                    mode: LaunchMode.externalApplication,
-                  ),
-                  child: urlLink,
-                );
-              }
-
-              Widget? descriptionText = entry.value.length <= 1
-                  ? null
-                  : Text(
-                      entry.value[1].length > 128
-                          ? '${entry.value[1].substring(0, 128)}...'
-                          : entry.value[1],
-                      style: const TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 12,
-                      ),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    );
-
-              return CheckboxListTile(
-                title: urlLink,
-                subtitle: descriptionText,
-                value: entrySelections[entry],
-                onChanged: selectThis,
-                controlAffinity: ListTileControlAffinity.leading,
-              );
-            }),
-        ],
-      ),
-      actions: [
-        getSelectAllButton(),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(tr('cancel')),
-        ),
-        TextButton(
-          onPressed: entrySelections.values.every((v) => v == false)
-              ? null
-              : () {
-                  Navigator.of(context).pop(
-                    entrySelections.entries
-                        .where((entry) => entry.value)
-                        .map((e) => e.key.key)
-                        .toList(),
-                  );
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: TextFormField(
+                controller: _filterController,
+                decoration: InputDecoration(
+                  labelText: tr('filter'),
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: _filterController.text.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            setState(() {
+                              _filterController.clear();
+                              filterRegex = '';
+                            });
+                          },
+                        )
+                      : null,
+                  border: const OutlineInputBorder(),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    filterRegex = value;
+                  });
                 },
-          child: Text(
-            widget.onlyOneSelectionAllowed
-                ? tr('pick')
-                : tr(
-                    'selectX',
-                    args: [
-                      entrySelections.values.where((b) => b).length.toString(),
-                    ],
-                  ),
-          ),
+                validator: regExValidator,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    if (widget.onlyOneSelectionAllowed)
+                      RadioGroup<String>(
+                        groupValue: entrySelections.entries
+                            .where((e) => e.value)
+                            .map((e) => e.key.key)
+                            .firstOrNull,
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() => selectOnlyOne(value));
+                          }
+                        },
+                        child: Column(
+                          children: filteredEntrySelections.keys.map((entry) {
+                            Widget urlLink = Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  entry.value.isEmpty
+                                      ? entry.key
+                                      : entry.value[0],
+                                  style: TextStyle(
+                                    decoration: widget.titlesAreLinks
+                                        ? TextDecoration.underline
+                                        : null,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                if (widget.titlesAreLinks)
+                                  Text(
+                                    Uri.tryParse(entry.key)?.host ?? entry.key,
+                                    style: const TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      fontSize: 12,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                              ],
+                            );
+
+                            if (widget.titlesAreLinks) {
+                              urlLink = GestureDetector(
+                                onTap: () => launchUrlString(
+                                  entry.key,
+                                  mode: LaunchMode.externalApplication,
+                                ),
+                                child: urlLink,
+                              );
+                            }
+
+                            Widget? descriptionText = entry.value.length <= 1
+                                ? null
+                                : Text(
+                                    entry.value[1].length > 128
+                                        ? '${entry.value[1].substring(0, 128)}...'
+                                        : entry.value[1],
+                                    style: const TextStyle(fontSize: 12),
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                  );
+
+                            return RadioListTile<String>(
+                              title: urlLink,
+                              subtitle: descriptionText,
+                              value: entry.key,
+                            );
+                          }).toList(),
+                        ),
+                      )
+                    else
+                      ...filteredEntrySelections.keys.map((entry) {
+                        void selectThis(bool? value) {
+                          setState(() {
+                            value ??= false;
+                            if (value! && widget.onlyOneSelectionAllowed) {
+                              selectOnlyOne(entry.key);
+                            } else {
+                              entrySelections[entry] = value!;
+                            }
+                          });
+                        }
+
+                        Widget urlLink = Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              entry.value.isEmpty ? entry.key : entry.value[0],
+                              style: TextStyle(
+                                decoration: widget.titlesAreLinks
+                                    ? TextDecoration.underline
+                                    : null,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            if (widget.titlesAreLinks)
+                              Text(
+                                Uri.tryParse(entry.key)?.host ?? entry.key,
+                                style: const TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 12,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                          ],
+                        );
+
+                        if (widget.titlesAreLinks) {
+                          urlLink = GestureDetector(
+                            onTap: () => launchUrlString(
+                              entry.key,
+                              mode: LaunchMode.externalApplication,
+                            ),
+                            child: urlLink,
+                          );
+                        }
+
+                        Widget? descriptionText = entry.value.length <= 1
+                            ? null
+                            : Text(
+                                entry.value[1].length > 128
+                                    ? '${entry.value[1].substring(0, 128)}...'
+                                    : entry.value[1],
+                                style: const TextStyle(fontSize: 12),
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              );
+
+                        return CheckboxListTile(
+                          title: urlLink,
+                          subtitle: descriptionText,
+                          value: entrySelections[entry],
+                          onChanged: selectThis,
+                          controlAffinity: ListTileControlAffinity.leading,
+                        );
+                      }),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

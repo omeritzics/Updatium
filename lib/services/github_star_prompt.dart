@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:simple_localization/simple_localization.dart';
@@ -52,14 +53,14 @@ class GitHubStarPrompt {
           title: Text('githubStarPromptTitle'.tr()),
           content: Text('githubStarPromptContent'.tr()),
           actions: [
-            TextButton(
+            M3ETextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 await _markPromptAsShown();
               },
               child: Text('githubStarPromptDontShowAgain'.tr()),
             ),
-            FilledButton(
+            M3EFilledButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 await _launchGitHub();

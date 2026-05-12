@@ -12,6 +12,7 @@ class FDroidRepo extends AppSource {
     neverAutoSelect = true;
     showReleaseDateAsVersionToggle = true;
     openSource = true;
+    supportsVersionCodeSelection = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(
@@ -19,13 +20,6 @@ class FDroidRepo extends AppSource {
           label: tr('appIdOrName'),
           hint: tr('reposHaveMultipleApps'),
           required: true,
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'pickHighestVersionCode',
-          label: tr('pickHighestVersionCode'),
-          defaultValue: false,
         ),
       ],
     ];
@@ -166,9 +160,10 @@ class FDroidRepo extends AppSource {
       appIdOrName = standardUri.queryParameters['appId'];
     }
     standardUrl = removeQueryParamsFromUrl(standardUrl);
-    bool pickHighestVersionCode = additionalSettings['pickHighestVersionCode'];
+    bool autoSelectHighestVersionCode =
+        additionalSettings['autoSelectHighestVersionCode'] == true;
     bool trySelectingSuggestedVersionCode =
-        additionalSettings['trySelectingSuggestedVersionCode'];
+        additionalSettings['trySelectingSuggestedVersionCode'] == true;
     if (appIdOrName == null) {
       throw UpdatiumError(tr('appWithIdOrNameNotFound'));
     }
@@ -233,13 +228,11 @@ class FDroidRepo extends AppSource {
           .where((e) => e.querySelector('version')?.innerHtml == latestVersion)
           .toList();
     }
-    if (selectedReleases.length > 1 && pickHighestVersionCode) {
-      selectedReleases.sort((e1, e2) {
-        return int.parse(
-          e2.querySelector('versioncode')!.innerHtml,
-        ).compareTo(int.parse(e1.querySelector('versioncode')!.innerHtml));
-      });
-      selectedReleases = [selectedReleases[0]];
+    if (selectedReleases.length > 1 && autoSelectHighestVersionCode) {
+      selectedReleases = autoSelectHighestVersionCodeFromReleases(
+        selectedReleases.toList(),
+        (release) => int.parse(release.querySelector('versioncode')!.innerHtml),
+      );
     }
     String? selectedVersion = selectedReleases[0]
         .querySelector('version')
