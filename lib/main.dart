@@ -62,7 +62,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('ml'), 'മലയാളം'),
   MapEntry(Locale('gl'), 'Galego'),
   MapEntry(Locale('bg'), 'Български'),
-  MapEntry(Locale('ku'), 'Kurdî (Kurmanjî)'),
+  // MapEntry(Locale('ku'), 'Kurdî (Kurmanjî)'),
   MapEntry(Locale('ms'), 'Bahasa Melayu'),
   MapEntry(Locale('bn'), 'বাংলা'),
   MapEntry(Locale('ro'), 'Română'),
