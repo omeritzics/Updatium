@@ -93,7 +93,7 @@ class GitHubActions extends GitHub {
         required: false,
       ),
       GeneratedFormTextField(
-        'workflowNameFilter', 
+        'workflowNameFilter',
         label: tr('workflowNameFilter'),
         hint: 'build-and-test',
         required: false,
@@ -138,14 +138,17 @@ class GitHubActions extends GitHub {
     final repo = pathSegments[1];
 
     // Get filter settings
-    String? artifactNameFilter = additionalSettings['artifactNameFilter'] as String?;
-    String? workflowNameFilter = additionalSettings['workflowNameFilter'] as String?;
+    String? artifactNameFilter =
+        additionalSettings['artifactNameFilter'] as String?;
+    String? workflowNameFilter =
+        additionalSettings['workflowNameFilter'] as String?;
     String? branchFilter = additionalSettings['branchFilter'] as String?;
 
     try {
       // List artifacts for the repository
-      String artifactsUrl = '${await getAPIHost(additionalSettings)}/repos/$owner/$repo/actions/artifacts?per_page=100';
-      
+      String artifactsUrl =
+          '${await getAPIHost(additionalSettings)}/repos/$owner/$repo/actions/artifacts?per_page=100';
+
       if (artifactNameFilter != null && artifactNameFilter.isNotEmpty) {
         artifactsUrl += '&name=${Uri.encodeComponent(artifactNameFilter)}';
       }
@@ -207,22 +210,27 @@ class GitHubActions extends GitHub {
       // Get the latest artifact
       var latestArtifact = filteredArtifacts.first;
       String artifactName = latestArtifact['name'] as String;
-      DateTime createdAt = DateTime.parse(latestArtifact['created_at'] as String);
-      DateTime expiresAt = DateTime.parse(latestArtifact['expires_at'] as String);
+      DateTime createdAt = DateTime.parse(
+        latestArtifact['created_at'] as String,
+      );
+      DateTime expiresAt = DateTime.parse(
+        latestArtifact['expires_at'] as String,
+      );
 
       // The download URL redirects to a temporary URL
       // We'll use the archive_download_url directly
-      String archiveDownloadUrl = latestArtifact['archive_download_url'] as String;
+      String archiveDownloadUrl =
+          latestArtifact['archive_download_url'] as String;
 
       // Create APK URLs list
       List<MapEntry<String, String>> apkUrls = [
-        MapEntry('$artifactName.zip', archiveDownloadUrl)
+        MapEntry('$artifactName.zip', archiveDownloadUrl),
       ];
 
       // Filter APKs if needed
       String? apkFilter = additionalSettings['apkFilterRegEx'] as String?;
       bool invertFilter = additionalSettings['invertAPKFilter'] == true;
-      
+
       if (apkFilter != null && apkFilter.isNotEmpty) {
         apkUrls = filterApks(apkUrls, apkFilter, invertFilter);
       }
@@ -245,15 +253,17 @@ class GitHubActions extends GitHub {
         apkUrls,
         appNames,
         releaseDate: createdAt,
-        changeLog: '[GitHub Actions] Artifact: $artifactName\nCreated: ${createdAt.toIso8601String()}\nExpires: ${expiresAt.toIso8601String()}',
+        changeLog:
+            '[GitHub Actions] Artifact: $artifactName\nCreated: ${createdAt.toIso8601String()}\nExpires: ${expiresAt.toIso8601String()}',
         allAssetUrls: apkUrls,
       );
-
     } catch (e) {
       if (e is RateLimitError) {
         rethrow;
       }
-      LogsProvider().add('Error fetching GitHub Actions artifacts: ${e.toString()}');
+      LogsProvider().add(
+        'Error fetching GitHub Actions artifacts: ${e.toString()}',
+      );
       rethrow;
     }
   }
