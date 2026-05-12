@@ -23,6 +23,7 @@ import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
 import 'package:updatium/app_sources/gitea.dart';
 import 'package:updatium/app_sources/github.dart';
+import 'package:updatium/app_sources/github_actions.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/app_sources/huaweiappgallery.dart';
 import 'package:updatium/app_sources/izzyondroid.dart';
@@ -1476,6 +1477,7 @@ class SourceProvider {
   // Add more source classes here so they are available via the service
   List<AppSource> get sources => [
     GitHub(),
+    GitHubActions(),
     GitLab(),
     Bitbucket(),
     Codeberg(),
