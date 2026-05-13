@@ -47,7 +47,7 @@ Every language is welcome to Updatium, but your help is needed to make it happen
 Русский, Bosanski, Português, Česky, Svenska, Nederlands, Tiếng Việt,
 Türkçe, Українська, Dansk, Eesti, Esperanto, Bahasa Indonesia, বাংলা,
 한국어, Català, العربية, മലയാളം, Galego, Български,
-Bahasa Melayu, Română, ئۇيغۇرچە.
+Bahasa Melayu, Română, ئۇيغۇرچە, Kurdî (Kurmanjî).
 
 ## Download
 
