@@ -129,7 +129,7 @@ jobs:
 
       - name: Strip signing config
         run: |
-          # Strip signing config to build debug APK safely without keystores
+          # Strip signing config to build unsigned APK safely without keystores
           # Handle both .gradle and .gradle.kts files
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle || true
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle.kts || true
@@ -140,18 +140,18 @@ jobs:
           # This replaces the existing applicationId with a unique one for this commit
           sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle || true
           
-          # Build the debug APK for the normal flavor
-          flutter build apk --debug --flavor normal --no-pub --tree-shake-icons
+          # Build the unsigned APK for the normal flavor
+          flutter build apk --profile --flavor normal --no-pub --tree-shake-icons
           
           mkdir -p build/outputs/artifacts/
-          cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
+          cp build/app/outputs/flutter-apk/app-normal-profile.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@main
         with:
           name: Updatium-Commit-${{ steps.vars.outputs.sha_short }}
           path: build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
-          retention-days: 14 # Keep artifacts for 14 days to save space
+          retention-days: 7 # Keep artifacts for 7 days to save space
 
   auto_reject_on_failure:
     runs-on: ubuntu-latest
