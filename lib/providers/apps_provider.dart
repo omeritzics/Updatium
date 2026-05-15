@@ -299,9 +299,7 @@ void deleteFile(File file) {
   try {
     file.deleteSync(recursive: true);
   } on PathAccessException catch (e) {
-    throw UpdatiumError(
-      t('fileDeletionError', args: [e.path ?? t('unknown')]),
-    );
+    throw UpdatiumError(t('fileDeletionError', args: [e.path ?? t('unknown')]));
   }
 }
 
