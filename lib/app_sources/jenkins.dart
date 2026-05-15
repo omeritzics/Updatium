@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class Jenkins extends AppSource {
   Jenkins() {
-    name = tr('jenkins');
+    name = t('jenkins');
     versionDetectionDisallowed = true;
     neverAutoSelect = true;
     showReleaseDateAsVersionToggle = true;

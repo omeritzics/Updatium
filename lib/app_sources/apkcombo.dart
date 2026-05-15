@@ -1,4 +1,4 @@
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
@@ -7,7 +7,7 @@ import 'package:updatium/providers/logs_provider.dart';
 class APKCombo extends AppSource {
   APKCombo() {
     hosts = ['apkcombo.com'];
-    name = tr('apkcombo');
+    name = t('apkcombo');
     showReleaseDateAsVersionToggle = true;
   }
 

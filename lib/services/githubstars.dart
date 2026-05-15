@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class GitHubStars implements MassAppUrlSource {
   @override
-  late String name = tr('githubStarredRepos');
-  late List<String> requiredArgs = [tr('username')];
+  late String name = t('githubStarredRepos');
+  late List<String> requiredArgs = [t('username')];
   Future<Map<String, List<String>>> getOnePageOfUserStarredUrlsWithDescriptions(
     String username,
     int page,
@@ -27,7 +27,7 @@ class GitHubStars implements MassAppUrlSource {
             e['full_name'] as String,
             e['description'] != null
                 ? e['description'] as String
-                : tr('noDescription'),
+                : t('noDescription'),
           ],
         });
       }
@@ -44,7 +44,7 @@ class GitHubStars implements MassAppUrlSource {
     List<String> args,
   ) async {
     if (args.length != requiredArgs.length) {
-      throw UpdatiumError(tr('wrongArgNum'));
+      throw UpdatiumError(t('wrongArgNum'));
     }
     Map<String, List<String>> urlsWithDescriptions = {};
     var page = 1;

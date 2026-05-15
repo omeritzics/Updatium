@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:hsluv/hsluv.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -356,7 +356,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 validator: (value) {
                   if (formItem.required &&
                       (value == null || value.trim().isEmpty)) {
-                    return '${formItem.label} ${tr('requiredInBrackets')}';
+                    return '${formItem.label} ${t('requiredInBrackets')}';
                   }
                   for (var validator in formItem.additionalValidators) {
                     String? result = validator(value);
@@ -393,7 +393,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
           );
         } else if (formItem is GeneratedFormDropdown) {
           if (formItem.opts!.isEmpty) {
-            return Text(tr('dropdownNoOptsError'));
+            return Text(t('dropdownNoOptsError'));
           }
           return DropdownButtonFormField<String>(
             initialValue: values[formItem.key] ?? formItem.opts?.first.key,
@@ -441,7 +441,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
             validator: (value) {
               if (formItem.required &&
                   (value == null || value.trim().isEmpty)) {
-                return '${formItem.label} ${tr('requiredInBrackets')}';
+                return '${formItem.label} ${t('requiredInBrackets')}';
               }
               if (value != null && value.length > formItem.max) {
                 return '${formItem.label} must be at most ${formItem.max} characters';
@@ -535,7 +535,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   title: Text(widget.items[r][e].label),
                   content: GeneratedForm(
                     items: [
-                      [GeneratedFormTextField('label', label: tr('label'))],
+                      [GeneratedFormTextField('label', label: t('label'))],
                     ],
                     onValueChanges: (vals, valid, isBuilding) {
                       localValues = vals;
@@ -544,11 +544,11 @@ class _GeneratedFormState extends State<GeneratedForm> {
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(null),
-                      child: Text(tr('cancel')),
+                      child: Text(t('cancel')),
                     ),
                     TextButton(
                       onPressed: () => Navigator.of(ctx).pop(localValues),
-                      child: Text(tr('ok')),
+                      child: Text(t('ok')),
                     ),
                   ],
                 );
@@ -708,7 +708,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             },
                             icon: const Icon(Icons.format_color_fill_rounded),
                             visualDensity: VisualDensity.compact,
-                            tooltip: tr('color'),
+                            tooltip: t('color'),
                           ),
                         )
                       : const SizedBox.shrink(),
@@ -749,12 +749,12 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.of(ctx).pop(false),
-                                          child: Text(tr('cancel')),
+                                          child: Text(t('cancel')),
                                         ),
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.of(ctx).pop(true),
-                                          child: Text(tr('ok')),
+                                          child: Text(t('ok')),
                                         ),
                                       ],
                                     );
@@ -770,7 +770,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             },
                             icon: const Icon(Icons.remove),
                             visualDensity: VisualDensity.compact,
-                            tooltip: tr('remove'),
+                            tooltip: t('remove'),
                           ),
                         )
                       : const SizedBox.shrink(),
@@ -794,7 +794,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             onPressed: onAddPressed,
                             icon: const Icon(Icons.add),
                             visualDensity: VisualDensity.compact,
-                            tooltip: tr('add'),
+                            tooltip: t('add'),
                           ),
                         ),
                 ],
