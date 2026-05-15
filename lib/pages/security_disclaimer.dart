@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:updatium/providers/logs_provider.dart';
 
 class SecurityDisclaimerScreen extends StatefulWidget {
@@ -73,7 +73,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
 
                     // Title
                     Text(
-                      tr('securityDisclaimerTitle'),
+                      t('securityDisclaimerTitle'),
                       style: Theme.of(context).textTheme.headlineMedium
                           ?.copyWith(
                             fontWeight: FontWeight.bold,
@@ -97,8 +97,8 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           _buildDisclaimerItem(
                             context,
                             Icons.gavel,
-                            tr('license'),
-                            tr('licenseText'),
+                            t('license'),
+                            t('licenseText'),
                           ),
 
                           const SizedBox(height: 16),
@@ -106,8 +106,8 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           _buildDisclaimerItem(
                             context,
                             Icons.warning_amber,
-                            tr('disclaimer'),
-                            tr('disclaimerText'),
+                            t('disclaimer'),
+                            t('disclaimerText'),
                           ),
 
                           const SizedBox(height: 16),
@@ -115,8 +115,8 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           _buildDisclaimerItem(
                             context,
                             Icons.privacy_tip,
-                            tr('privacy'),
-                            tr('privacyText'),
+                            t('privacy'),
+                            t('privacyText'),
                           ),
                         ],
                       ),
@@ -152,7 +152,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           shape: const StadiumBorder(),
                         ),
                         child: Text(
-                          tr('acceptAndContinue'),
+                          t('acceptAndContinue'),
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -176,7 +176,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           shape: const StadiumBorder(),
                         ),
                         child: Text(
-                          tr('decline'),
+                          t('decline'),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,

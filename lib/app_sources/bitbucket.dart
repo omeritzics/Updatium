@@ -7,12 +7,12 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class Bitbucket extends AppSource {
   Bitbucket({bool hostChanged = false}) {
-    name = tr('bitbucket');
+    name = t('bitbucket');
     hosts = ['bitbucket.org'];
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
@@ -20,8 +20,8 @@ class Bitbucket extends AppSource {
     openSource = true;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        tr('bitbucketAPITokenLabel'),
-        label: tr('bitbucketAPITokenLabel'),
+        t('bitbucketAPITokenLabel'),
+        label: t('bitbucketAPITokenLabel'),
         hint: 'email@example.com:token',
         password: true,
         required: false,
@@ -35,7 +35,7 @@ class Bitbucket extends AppSource {
               );
             },
             child: Text(
-              tr('about'),
+              t('about'),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -102,7 +102,7 @@ class Bitbucket extends AppSource {
       var fullName = element['full_name'] as String?;
       var name = element['name'] as String? ?? '';
       var description =
-          element['description'] as String? ?? tr('noDescription');
+          element['description'] as String? ?? t('noDescription');
       if (fullName != null) {
         results['https://${hosts[0]}/$fullName'] = [name, description];
       }

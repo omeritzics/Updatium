@@ -1,7 +1,7 @@
 // Exposes functions that can be used to send notifications to the user
 // Contains a set of pre-defined UpdatiumNotification objects that should be used throughout the app
 
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:android_intent_plus/android_intent.dart';
@@ -41,17 +41,17 @@ class UpdateNotification extends UpdatiumNotification {
   UpdateNotification(List<App> updates, {int? id})
     : super(
         id ?? 2,
-        tr('updatesAvailable'),
+        t('updatesAvailable'),
         '',
         'UPDATES_AVAILABLE',
-        tr('updatesAvailableNotifChannel'),
-        tr('updatesAvailableNotifDescription'),
+        t('updatesAvailableNotifChannel'),
+        t('updatesAvailableNotifDescription'),
         Importance.max,
       ) {
     message = updates.isEmpty
-        ? tr('noNewUpdates')
+        ? t('noNewUpdates')
         : updates.length == 1
-        ? tr('xHasAnUpdate', args: [updates[0].finalName])
+        ? t('xHasAnUpdate', args: [updates[0].finalName])
         : plural(
             'xAndNMoreUpdatesAvailable',
             updates.length - 1,
@@ -64,15 +64,15 @@ class SilentUpdateNotification extends UpdatiumNotification {
   SilentUpdateNotification(List<App> updates, bool succeeded, {int? id})
     : super(
         id ?? 3,
-        succeeded ? tr('appsUpdated') : tr('appsNotUpdated'),
+        succeeded ? t('appsUpdated') : t('appsNotUpdated'),
         '',
         'APPS_UPDATED',
-        tr('appsUpdatedNotifChannel'),
-        tr('appsUpdatedNotifDescription'),
+        t('appsUpdatedNotifChannel'),
+        t('appsUpdatedNotifDescription'),
         Importance.defaultImportance,
       ) {
     message = updates.length == 1
-        ? tr(
+        ? t(
             succeeded ? 'xWasUpdatedToY' : 'xWasNotUpdatedToY',
             args: [updates[0].finalName, updates[0].latestVersion],
           )
@@ -88,15 +88,15 @@ class SilentUpdateAttemptNotification extends UpdatiumNotification {
   SilentUpdateAttemptNotification(List<App> updates, {int? id})
     : super(
         id ?? 3,
-        tr('appsPossiblyUpdated'),
+        t('appsPossiblyUpdated'),
         '',
         'APPS_POSSIBLY_UPDATED',
-        tr('appsPossiblyUpdatedNotifChannel'),
-        tr('appsPossiblyUpdatedNotifDescription'),
+        t('appsPossiblyUpdatedNotifChannel'),
+        t('appsPossiblyUpdatedNotifDescription'),
         Importance.defaultImportance,
       ) {
     message = updates.length == 1
-        ? tr(
+        ? t(
             'xWasPossiblyUpdatedToY',
             args: [updates[0].finalName, updates[0].latestVersion],
           )
@@ -112,13 +112,13 @@ class ErrorCheckingUpdatesNotification extends UpdatiumNotification {
   ErrorCheckingUpdatesNotification(String error, {int? id})
     : super(
         id ?? 5,
-        tr('errorCheckingUpdates'),
+        t('errorCheckingUpdates'),
         error,
         'BG_UPDATE_CHECK_ERROR',
-        tr('errorCheckingUpdatesNotifChannel'),
-        tr('errorCheckingUpdatesNotifDescription'),
+        t('errorCheckingUpdatesNotifChannel'),
+        t('errorCheckingUpdatesNotifDescription'),
         Importance.high,
-        payload: "${tr('errorCheckingUpdates')}\n$error",
+        payload: "${t('errorCheckingUpdates')}\n$error",
       );
 }
 
@@ -126,16 +126,16 @@ class AppsRemovedNotification extends UpdatiumNotification {
   AppsRemovedNotification(List<List<String>> namedReasons)
     : super(
         6,
-        tr('appsRemoved'),
+        t('appsRemoved'),
         '',
         'APPS_REMOVED',
-        tr('appsRemovedNotifChannel'),
-        tr('appsRemovedNotifDescription'),
+        t('appsRemovedNotifChannel'),
+        t('appsRemovedNotifDescription'),
         Importance.max,
       ) {
     message = '';
     for (var r in namedReasons) {
-      message += '${tr('xWasRemovedDueToErrorY', args: [r[0], r[1]])} \n';
+      message += '${t('xWasRemovedDueToErrorY', args: [r[0], r[1]])} \n';
     }
     message = message.trim();
   }
@@ -145,11 +145,11 @@ class DownloadNotification extends UpdatiumNotification {
   DownloadNotification(String appName, int progPercent)
     : super(
         appName.hashCode,
-        tr('downloadingX', args: [appName]),
+        t('downloadingX', args: [appName]),
         '',
         'APP_DOWNLOADING',
-        tr('downloadingXNotifChannel', args: [tr('app')]),
-        tr('downloadNotifDescription'),
+        t('downloadingXNotifChannel', args: [t('app')]),
+        t('downloadNotifDescription'),
         Importance.low,
         onlyAlertOnce: true,
         progPercent: progPercent,
@@ -160,11 +160,11 @@ class DownloadedNotification extends UpdatiumNotification {
   DownloadedNotification(String fileName, String downloadUrl, String filePath)
     : super(
         downloadUrl.hashCode,
-        tr('downloadedX', args: [fileName]),
+        t('downloadedX', args: [fileName]),
         '',
         'FILE_DOWNLOADED',
-        tr('downloadedXNotifChannel', args: [tr('app')]),
-        tr('downloadedX', args: [tr('app')]),
+        t('downloadedXNotifChannel', args: [t('app')]),
+        t('downloadedX', args: [t('app')]),
         Importance.defaultImportance,
         payload: 'FILE_DOWNLOADED:$filePath',
       );
@@ -172,11 +172,11 @@ class DownloadedNotification extends UpdatiumNotification {
 
 final completeInstallationNotification = UpdatiumNotification(
   1,
-  tr('completeAppInstallation'),
-  tr('updatiumMustBeOpenToInstallApps'),
+  t('completeAppInstallation'),
+  t('updatiumMustBeOpenToInstallApps'),
   'COMPLETE_INSTALL',
-  tr('completeAppInstallationNotifChannel'),
-  tr('completeAppInstallationNotifDescription'),
+  t('completeAppInstallationNotifChannel'),
+  t('completeAppInstallationNotifDescription'),
   Importance.max,
 );
 
@@ -184,11 +184,11 @@ class CheckingUpdatesNotification extends UpdatiumNotification {
   CheckingUpdatesNotification(String appName)
     : super(
         4,
-        tr('checkingForUpdates'),
+        t('checkingForUpdates'),
         appName,
         'BG_UPDATE_CHECK',
-        tr('checkingForUpdatesNotifChannel'),
-        tr('checkingForUpdatesNotifDescription'),
+        t('checkingForUpdatesNotifChannel'),
+        t('checkingForUpdatesNotifDescription'),
         Importance.min,
       );
 }
@@ -252,9 +252,9 @@ class NotificationsProvider {
       final fileName = filePath.split('/').last;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(tr('downloadedX', args: [fileName])),
+          content: Text(t('downloadedX', args: [fileName])),
           action: SnackBarAction(
-            label: tr('showInFileManager'),
+            label: t('showInFileManager'),
             onPressed: () {
               _showInFileManager(filePath);
             },
@@ -306,7 +306,7 @@ class NotificationsProvider {
                     Navigator.of(context).pop(null);
                   }
                 },
-                child: Text(tr('ok')),
+                child: Text(t('ok')),
               ),
             ],
           ),
