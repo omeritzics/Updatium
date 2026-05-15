@@ -1739,8 +1739,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     if (selectedAppIds.isNotEmpty)
                       M3FloatingToolbarAction(
                         icon: Icons.share,
-                        semanticLabel:
-                            '${t('share')} - ${t('updatiumExport')}',
+                        semanticLabel: '${t('share')} - ${t('updatiumExport')}',
                         tooltip: '${t('share')} - ${t('updatiumExport')}',
                         onPressed: () {
                           var encoder = const JsonEncoder.withIndent("    ");

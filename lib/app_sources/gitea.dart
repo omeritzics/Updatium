@@ -105,8 +105,7 @@ class Gitea extends AppSource {
     for (var element in repos) {
       var fullName = element['full_name'] as String?;
       var name = element['name'] as String? ?? '';
-      var description =
-          element['description'] as String? ?? t('noDescription');
+      var description = element['description'] as String? ?? t('noDescription');
       if (fullName != null) {
         results['https://${hosts[0]}/$fullName'] = [name, description];
       }

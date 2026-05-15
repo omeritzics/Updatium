@@ -478,8 +478,7 @@ class _ImportDialogState extends State<_ImportDialog> {
         t(
           'importX',
           args: [
-            (widget.action == 'app' ? t('app') : t('appsString'))
-                .toLowerCase(),
+            (widget.action == 'app' ? t('app') : t('appsString')).toLowerCase(),
           ],
         ),
       ),
