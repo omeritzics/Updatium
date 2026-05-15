@@ -11,7 +11,7 @@ import 'package:updatium/providers/source_provider.dart';
 class FDroid extends AppSource {
   FDroid() {
     hosts = ['f-droid.org'];
-    name = t('fdroid');
+    name = 'F-Droid';
     naiveStandardVersionDetection = true;
     canSearch = true;
     openSource = true;

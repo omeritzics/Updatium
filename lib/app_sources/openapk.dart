@@ -1,4 +1,3 @@
-import 'package:updatium/services/slang-converter.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -6,7 +5,7 @@ import 'package:updatium/providers/logs_provider.dart';
 class OpenAPK extends AppSource {
   OpenAPK() {
     hosts = ['openapk.net'];
-    name = t('openapk');
+    name = 'OpenAPK';
     showReleaseDateAsVersionToggle = true;
     openSource = true;
   }

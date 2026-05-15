@@ -1,4 +1,3 @@
-import 'package:updatium/services/slang-converter.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -7,7 +6,7 @@ import 'package:updatium/providers/source_provider.dart' as source_provider;
 class SourceForge extends AppSource {
   SourceForge() {
     hosts = ['sourceforge.net'];
-    name = t('sourceforge');
+    name = 'SourceForge';
   }
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {

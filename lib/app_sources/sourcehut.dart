@@ -8,7 +8,7 @@ import 'package:updatium/services/slang-converter.dart';
 class SourceHut extends AppSource {
   SourceHut() {
     hosts = ['git.sr.ht'];
-    name = t('sourcehut');
+    name = 'SourceHut';
     showReleaseDateAsVersionToggle = true;
     additionalSourceAppSpecificSettingFormItems = [];
     openSource = true;

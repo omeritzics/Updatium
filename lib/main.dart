@@ -514,7 +514,6 @@ class _UpdatiumState extends State<Updatium> {
               appBarTheme: AppBarTheme(
                 backgroundColor: scheme.surface,
                 foregroundColor: scheme.onSurface,
-                centerTitle: true,
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
                   fontWeight: FontWeight.w600,

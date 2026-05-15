@@ -1,4 +1,3 @@
-import 'package:updatium/services/slang-converter.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -7,7 +6,7 @@ import 'package:updatium/providers/source_provider.dart' as source_provider;
 class WhatsAppApp extends AppSource {
   WhatsAppApp() {
     hosts = ['whatsapp.com'];
-    name = t('whatsapp');
+    name = 'WhatsApp';
   }
 
   @override
