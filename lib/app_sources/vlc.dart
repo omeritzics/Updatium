@@ -1,10 +1,10 @@
 import 'package:http/http.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class VLC extends AppSource {
   VLC() {
-    name = tr('vlc');
+    name = t('vlc');
     hosts = ['get.videolan.org', 'videolan.org'];
     allowOverride = false;
     openSource = true;
