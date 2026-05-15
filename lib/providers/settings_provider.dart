@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:bcrypt/bcrypt.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -173,7 +173,7 @@ class SettingsProvider with ChangeNotifier {
     while (!(await Permission.requestInstallPackages.isGranted)) {
       // Explicit request as InstallPlugin request sometimes bugged
       Fluttertoast.showToast(
-        msg: tr('pleaseAllowInstallPerm'),
+        msg: t('pleaseAllowInstallPerm'),
         toastLength: Toast.LENGTH_LONG,
       );
       if ((await Permission.requestInstallPackages.request()) ==

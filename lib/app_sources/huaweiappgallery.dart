@@ -1,11 +1,11 @@
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class HuaweiAppGallery extends AppSource {
   HuaweiAppGallery() {
-    name = tr('huaweiappgallery');
+    name = t('huaweiappgallery');
     hosts = ['appgallery.huawei.com', 'appgallery.cloud.huawei.com'];
     versionDetectionDisallowed = true;
     showReleaseDateAsVersionToggle = true;

@@ -3,11 +3,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -52,7 +54,7 @@ void showChangeLogDialog(
     builder: (BuildContext context) {
       return AlertDialog(
         scrollable: true,
-        title: Text(tr('changes')),
+        title: Text(t('changes')),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -69,9 +71,7 @@ void showChangeLogDialog(
                 },
                 child: Text(
                   changesUrl,
-                  style: const TextStyle(
-                    decoration: TextDecoration.underline,
-                  ),
+                  style: const TextStyle(decoration: TextDecoration.underline),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -119,7 +119,7 @@ void showChangeLogDialog(
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text(tr('ok')),
+            child: Text(t('ok')),
           ),
         ],
       );
@@ -509,9 +509,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     Text(
                       appsProvider.apps.isEmpty
                           ? appsProvider.loadingApps
-                                ? tr('pleaseWait')
-                                : tr('noApps')
-                          : tr('noAppsForFilter'),
+                                ? t('pleaseWait')
+                                : t('noApps')
+                          : t('noAppsForFilter'),
                       style: Theme.of(context).textTheme.headlineMedium,
                       textAlign: TextAlign.center,
                       maxLines: 3,
@@ -522,7 +522,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         padding: const EdgeInsets.only(top: 12),
                         child: Text(
                           () {
-                            final subtext = tr('noAppsSubtext');
+                            final subtext = t('noAppsSubtext');
                             // Hide subtext if translation key is not found (returns the key itself)
                             return subtext == 'noAppsSubtext' ? '' : subtext;
                           }(),
@@ -547,7 +547,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: LinearProgressIndicator(
+              child: LinearProgressIndicatorM3E(
                 value: appsProvider.loadingApps
                     ? null
                     : appsProvider
@@ -638,55 +638,35 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       if (!isInstalled) {
         return Semantics(
           button: true,
-          label: tr('install'),
+          label: t('install'),
           enabled: !appsProvider.areDownloadsRunning(),
-          child: FilledButton.tonal(
+          child: M3EFilledButton.tonal(
             onPressed: appsProvider.areDownloadsRunning()
                 ? null
                 : () => _installApp(app),
-            style: ButtonStyle(
-              visualDensity: isCompact ? VisualDensity.compact : null,
-              minimumSize: WidgetStateProperty.all(
-                isCompact ? const Size(60, 32) : null,
-              ),
-            ),
-            child: Text(tr('install')),
+            child: Text(t('install')),
           ),
         );
       } else if (hasUpdate) {
         return Semantics(
           button: true,
-          label: tr('update'),
+          label: t('update'),
           enabled: !appsProvider.areDownloadsRunning(),
-          child: FilledButton.tonal(
+          child: M3EFilledButton.tonal(
             onPressed: appsProvider.areDownloadsRunning()
                 ? null
                 : () => _installApp(app),
-            style: ButtonStyle(
-              visualDensity: isCompact ? VisualDensity.compact : null,
-              minimumSize: WidgetStateProperty.all(
-                isCompact ? const Size(60, 32) : null,
-              ),
-            ),
-            child: Text(tr('update')),
+            child: Text(t('update')),
           ),
         );
       } else {
         return Semantics(
           button: true,
-          label: tr('updated'),
+          label: t('updated'),
           enabled: false,
-          child: FilledButton.tonal(
+          child: M3EFilledButton.tonal(
             onPressed: null,
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(Colors.grey.shade200),
-              foregroundColor: WidgetStateProperty.all(Colors.grey),
-              visualDensity: isCompact ? VisualDensity.compact : null,
-              minimumSize: WidgetStateProperty.all(
-                isCompact ? const Size(60, 32) : null,
-              ),
-            ),
-            child: Text(tr('updated')),
+            child: Text(t('updated')),
           ),
         );
       }
@@ -712,18 +692,18 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         child: Semantics(
           button: true,
           label: app.pinned
-              ? tr(
+              ? t(
                   'pinnedApp',
                   args: [
                     appInfo.name,
-                    tr('byX', args: [appInfo.author]),
+                    t('byX', args: [appInfo.author]),
                   ],
                 )
-              : '${appInfo.name}, ${tr('byX', args: [appInfo.author])}',
+              : '${appInfo.name}, ${t('byX', args: [appInfo.author])}',
           value: isInstalled
-              ? (hasUpdate ? tr('updateAvailable') : tr('upToDate'))
-              : tr('notInstalled'),
-          onTapHint: tr('openAppDetails'),
+              ? (hasUpdate ? t('updateAvailable') : t('upToDate'))
+              : t('notInstalled'),
+          onTapHint: t('openAppDetails'),
           child: InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: () => _handleAppTap(app),
@@ -750,7 +730,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                               top: -4,
                               left: -4,
                               child: Semantics(
-                                label: tr('pinned'),
+                                label: t('pinned'),
                                 child: Icon(
                                   Icons.push_pin,
                                   size: 14,
@@ -773,7 +753,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       const SizedBox(height: 2),
                       // Author name
                       Text(
-                        tr('byX', args: [appInfo.author]),
+                        t('byX', args: [appInfo.author]),
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -783,7 +763,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       // Action button or progress indicator
                       if (appInfo.downloadProgress != null)
                         Semantics(
-                          label: tr('downloadProgress'),
+                          label: t('downloadProgress'),
                           value: '${appInfo.downloadProgress!.toInt()}%',
                           child: SizedBox(
                             width: 80,
@@ -801,7 +781,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 SizedBox(
                                   width: 40,
                                   height: 4,
-                                  child: LinearProgressIndicator(
+                                  child: LinearProgressIndicatorM3E(
                                     value: appInfo.downloadProgress! >= 0
                                         ? appInfo.downloadProgress! / 100
                                         : null,
@@ -843,18 +823,18 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         child: Semantics(
           button: true,
           label: app.pinned
-              ? tr(
+              ? t(
                   'pinnedApp',
                   args: [
                     appInfo.name,
-                    tr('byX', args: [appInfo.author]),
+                    t('byX', args: [appInfo.author]),
                   ],
                 )
-              : '${appInfo.name}, ${tr('byX', args: [appInfo.author])}',
+              : '${appInfo.name}, ${t('byX', args: [appInfo.author])}',
           value: isInstalled
-              ? (hasUpdate ? tr('updateAvailable') : tr('upToDate'))
-              : tr('notInstalled'),
-          onTapHint: tr('openAppDetails'),
+              ? (hasUpdate ? t('updateAvailable') : t('upToDate'))
+              : t('notInstalled'),
+          onTapHint: t('openAppDetails'),
           child: ListTile(
             selected: isSelected,
             selectedTileColor: Theme.of(
@@ -886,7 +866,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   Padding(
                     padding: const EdgeInsets.only(left: 6),
                     child: Semantics(
-                      label: tr('pinned'),
+                      label: t('pinned'),
                       child: Icon(
                         Icons.push_pin,
                         size: 14,
@@ -897,13 +877,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               ],
             ),
             subtitle: Text(
-              tr('byX', args: [appInfo.author]),
+              t('byX', args: [appInfo.author]),
               maxLines: 1,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             trailing: appInfo.downloadProgress != null
                 ? Semantics(
-                    label: tr('downloadProgress'),
+                    label: t('downloadProgress'),
                     value: '${appInfo.downloadProgress!.toInt()}%',
                     child: SizedBox(
                       width: 80,
@@ -919,7 +899,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           SizedBox(
                             width: 40,
                             height: 4,
-                            child: LinearProgressIndicator(
+                            child: LinearProgressIndicatorM3E(
                               value: appInfo.downloadProgress! >= 0
                                   ? appInfo.downloadProgress! / 100
                                   : null,
@@ -931,7 +911,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   )
                 : isTrackOnly
                 ? Semantics(
-                    label: tr('trackOnly'),
+                    label: t('trackOnly'),
                     child: Icon(
                       Icons.check_circle_outline,
                       color: Theme.of(context).colorScheme.primary,
@@ -980,7 +960,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               'category_grid_${listedCategories[index] ?? "null"}_$index',
             ),
             title: Text(
-              capFirstChar(listedCategories[index] ?? tr('noCategory')),
+              capFirstChar(listedCategories[index] ?? t('noCategory')),
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             trailing: Text(filteredEntries.length.toString()),
@@ -1034,7 +1014,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 formItems.add(
                   GeneratedFormSwitch(
                     'updates',
-                    label: tr(
+                    label: t(
                       'updateX',
                       args: [
                         plural(
@@ -1051,7 +1031,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 formItems.add(
                   GeneratedFormSwitch(
                     'installs',
-                    label: tr(
+                    label: t(
                       'installX',
                       args: [
                         plural(
@@ -1068,7 +1048,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 formItems.add(
                   GeneratedFormSwitch(
                     'trackonlies',
-                    label: tr(
+                    label: t(
                       'markXTrackOnlyAsUpdated',
                       args: [
                         plural('apps', trackOnlyUpdateIdsAllOrSelected.length),
@@ -1090,7 +1070,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       trackOnlyUpdateIdsAllOrSelected.length;
                   return AlertDialog(
                     title: Text(
-                      tr(
+                      t(
                         'changeX',
                         args: [plural('apps', totalApps).toLowerCase()],
                       ),
@@ -1106,18 +1086,18 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     actions: [
                       Semantics(
                         button: true,
-                        label: tr('cancel'),
+                        label: t('cancel'),
                         child: TextButton(
                           onPressed: () => Navigator.of(ctx).pop(null),
-                          child: Text(tr('cancel')),
+                          child: Text(t('cancel')),
                         ),
                       ),
                       Semantics(
                         button: true,
-                        label: tr('ok'),
+                        label: t('ok'),
                         child: TextButton(
                           onPressed: () => Navigator.of(ctx).pop(localValues),
-                          child: Text(tr('ok')),
+                          child: Text(t('ok')),
                         ),
                       ),
                     ],
@@ -1156,7 +1136,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         if (value.isNotEmpty &&
                             shouldInstallUpdates &&
                             mounted) {
-                          showMessage(tr('appsUpdated'), context);
+                          showMessage(t('appsUpdated'), context);
                         }
                       });
                 }
@@ -1187,23 +1167,23 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   context: context,
                   builder: (BuildContext ctx) {
                     return AlertDialog(
-                      title: Text(tr('categorize')),
-                      content: Text(tr('selectedCategorizeWarning')),
+                      title: Text(t('categorize')),
+                      content: Text(t('selectedCategorizeWarning')),
                       actions: [
                         Semantics(
                           button: true,
-                          label: tr('cancel'),
+                          label: t('cancel'),
                           child: TextButton(
                             onPressed: () => Navigator.of(ctx).pop(false),
-                            child: Text(tr('cancel')),
+                            child: Text(t('cancel')),
                           ),
                         ),
                         Semantics(
                           button: true,
-                          label: tr('ok'),
+                          label: t('ok'),
                           child: TextButton(
                             onPressed: () => Navigator.of(ctx).pop(true),
-                            child: Text(tr('ok')),
+                            child: Text(t('ok')),
                           ),
                         ),
                       ],
@@ -1213,7 +1193,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 true;
           }
           if (cont) {
-            // ignore: use_build_context_synchronously
             Set<String> selectedCategories = !showPrompt
                 ? preselected ?? {}
                 : {};
@@ -1221,7 +1200,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               context: context,
               builder: (BuildContext ctx) {
                 return AlertDialog(
-                  title: Text(tr('categorize')),
+                  title: Text(t('categorize')),
                   content: SingleChildScrollView(
                     child: CategorySelector(
                       preselected: selectedCategories,
@@ -1234,7 +1213,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   actions: [
                     Semantics(
                       button: true,
-                      label: tr('continue'),
+                      label: t('continue'),
                       child: TextButton(
                         onPressed: () {
                           for (var app in selectedApps) {
@@ -1243,7 +1222,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           appsProvider.saveApps(selectedApps.toList());
                           Navigator.of(ctx).pop();
                         },
-                        child: Text(tr('continue')),
+                        child: Text(t('continue')),
                       ),
                     ),
                   ],
@@ -1265,31 +1244,29 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         builder: (BuildContext ctx) {
           return AlertDialog(
             title: Text(
-              tr(
+              t(
                 'markXSelectedAppsAsUpdated',
                 args: [selectedAppIds.length.toString()],
               ),
             ),
             content: Text(
-              tr('onlyWorksWithNonVersionDetectApps'),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              t('onlyWorksWithNonVersionDetectApps'),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             actions: [
               Semantics(
                 button: true,
-                label: tr('no'),
+                label: t('no'),
                 child: TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text(tr('no')),
+                  child: Text(t('no')),
                 ),
               ),
               Semantics(
                 button: true,
-                label: tr('yes'),
+                label: t('yes'),
                 child: TextButton(
                   onPressed: () {
                     HapticFeedback.selectionClick();
@@ -1307,7 +1284,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
                     Navigator.of(context).pop();
                   },
-                  child: Text(tr('yes')),
+                  child: Text(t('yes')),
                 ),
               ),
             ],
@@ -1331,14 +1308,14 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 children: [
                   Semantics(
                     button: true,
-                    label: tr('markSelectedAppsUpdated'),
+                    label: t('markSelectedAppsUpdated'),
                     enabled: !appsProvider.areDownloadsRunning(),
                     child: TextButton(
                       onPressed: appsProvider.areDownloadsRunning()
                           ? null
                           : showMassMarkDialog,
                       child: Text(
-                        tr('markSelectedAppsUpdated'),
+                        t('markSelectedAppsUpdated'),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -1346,8 +1323,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   Semantics(
                     button: true,
                     label: selectedApps.every((element) => element.pinned)
-                        ? tr('unpinFromTop')
-                        : tr('pinToTop'),
+                        ? t('unpinFromTop')
+                        : t('pinToTop'),
                     child: TextButton(
                       onPressed: () {
                         var allPinned = selectedApps.every(
@@ -1363,8 +1340,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       },
                       child: Text(
                         selectedApps.every((element) => element.pinned)
-                            ? tr('unpinFromTop')
-                            : tr('pinToTop'),
+                            ? t('unpinFromTop')
+                            : t('pinToTop'),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -1384,7 +1361,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           Map<String, dynamic> localValues = filter.toFormValuesMap();
           return AlertDialog(
             scrollable: true,
-            title: Text(tr('filterApps')),
+            title: Text(t('filterApps')),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -1393,7 +1370,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     [
                       GeneratedFormTextField(
                         'appName',
-                        label: tr('appName'),
+                        label: t('appName'),
                         required: false,
                         defaultValue: localValues['appName'],
                       ),
@@ -1401,7 +1378,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     [
                       GeneratedFormTextField(
                         'author',
-                        label: tr('appAuthor'),
+                        label: t('appAuthor'),
                         required: false,
                         defaultValue: localValues['author'],
                       ),
@@ -1409,7 +1386,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     [
                       GeneratedFormTextField(
                         'appId',
-                        label: tr('appId'),
+                        label: t('appId'),
                         required: false,
                         defaultValue: localValues['appId'],
                       ),
@@ -1417,7 +1394,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     [
                       GeneratedFormTextField(
                         'description',
-                        label: tr('about'),
+                        label: t('about'),
                         required: false,
                         defaultValue: localValues['description'],
                       ),
@@ -1425,24 +1402,24 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     [
                       GeneratedFormSwitch(
                         'upToDateApps',
-                        label: tr('upToDateApps'),
+                        label: t('upToDateApps'),
                         defaultValue: localValues['upToDateApps'],
                       ),
                     ],
                     [
                       GeneratedFormSwitch(
                         'nonInstalledApps',
-                        label: tr('nonInstalledApps'),
+                        label: t('nonInstalledApps'),
                         defaultValue: localValues['nonInstalledApps'],
                       ),
                     ],
                     [
                       GeneratedFormDropdown(
                         'sourceFilter',
-                        label: tr('appSource'),
+                        label: t('appSource'),
                         defaultValue: localValues['sourceFilter'],
                         [
-                          MapEntry('', tr('none')),
+                          MapEntry('', t('none')),
                           ...sourceProvider.sources.map(
                             (e) => MapEntry(e.runtimeType.toString(), e.name),
                           ),
@@ -1467,18 +1444,18 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             actions: [
               Semantics(
                 button: true,
-                label: tr('cancel'),
+                label: t('cancel'),
                 child: TextButton(
                   onPressed: () => Navigator.of(ctx).pop(null),
-                  child: Text(tr('cancel')),
+                  child: Text(t('cancel')),
                 ),
               ),
               Semantics(
                 button: true,
-                label: tr('ok'),
+                label: t('ok'),
                 child: TextButton(
                   onPressed: () => Navigator.of(ctx).pop(localValues),
-                  child: Text(tr('ok')),
+                  child: Text(t('ok')),
                 ),
               ),
             ],
@@ -1547,7 +1524,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       'category_${listedCategories[index] ?? "null"}_$index',
                     ),
                     title: Text(
-                      capFirstChar(listedCategories[index] ?? tr('noCategory')),
+                      capFirstChar(listedCategories[index] ?? t('noCategory')),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     trailing: Text(tiles.length.toString()),
@@ -1625,14 +1602,21 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 slivers: <Widget>[
                   SliverAppBar.large(
                     pinned: true,
-                    automaticallyImplyLeading: false,
-                    bottom: TabBar(
-                      controller: _tabController,
-                      labelPadding: const EdgeInsets.symmetric(horizontal: 12),
-                      tabs: [
-                        Tab(text: tr('all')),
-                        Tab(text: tr('installed')),
-                        Tab(text: tr('notInstalledApps')),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(t('appsString')),
+                        TabBar(
+                          controller: _tabController,
+                          labelPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                          ),
+                          tabs: [
+                            Tab(text: t('all')),
+                            Tab(text: t('installed')),
+                            Tab(text: t('notInstalledApps')),
+                          ],
+                        ),
                       ],
                     ),
                     actions: [
@@ -1645,12 +1629,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           return Semantics(
                             button: true,
                             label: isFilterOff
-                                ? tr('filterApps')
-                                : tr('removeFilter'),
+                                ? t('filterApps')
+                                : t('removeFilter'),
                             child: IconButton(
                               tooltip: isFilterOff
-                                  ? tr('filterApps')
-                                  : '${tr('filter')} - ${tr('remove')}',
+                                  ? t('filterApps')
+                                  : '${t('filter')} - ${t('remove')}',
                               onPressed: isFilterOff
                                   ? showFilterDialog
                                   : () {
@@ -1672,12 +1656,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           return Semantics(
                             button: true,
                             label: settingsProvider.useGridView
-                                ? tr('listView')
-                                : tr('gridView'),
+                                ? t('listView')
+                                : t('gridView'),
                             child: IconButton(
                               tooltip: settingsProvider.useGridView
-                                  ? tr('listView')
-                                  : tr('gridView'),
+                                  ? t('listView')
+                                  : t('gridView'),
                               onPressed: () {
                                 settingsProvider.useGridView =
                                     !settingsProvider.useGridView;
@@ -1692,7 +1676,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         },
                       ),
                     ],
-                    title: Text(tr('appsString')),
                   ),
                   const SliverToBoxAdapter(child: SizedBox(height: 8)),
                   ...getLoadingWidgets(),
@@ -1718,11 +1701,11 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           ? listedApps.length.toString()
                           : selectedAppIds.length.toString(),
                       semanticLabel: selectedAppIds.isEmpty
-                          ? tr('installUpdateApps')
-                          : tr('installUpdateSelectedApps'),
+                          ? t('installUpdateApps')
+                          : t('installUpdateSelectedApps'),
                       tooltip: selectedAppIds.isEmpty
-                          ? tr('installUpdateApps')
-                          : tr('installUpdateSelectedApps'),
+                          ? t('installUpdateApps')
+                          : t('installUpdateSelectedApps'),
                       onPressed: selectedAppIds.isEmpty
                           ? () {
                               selectThese(
@@ -1746,19 +1729,19 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       M3FloatingToolbarAction(
                         icon: Icons.file_download,
                         semanticLabel: selectedAppIds.isEmpty
-                            ? tr('installUpdateApps')
-                            : tr('installUpdateSelectedApps'),
+                            ? t('installUpdateApps')
+                            : t('installUpdateSelectedApps'),
                         tooltip: selectedAppIds.isEmpty
-                            ? tr('installUpdateApps')
-                            : tr('installUpdateSelectedApps'),
+                            ? t('installUpdateApps')
+                            : t('installUpdateSelectedApps'),
                         onPressed: getMassObtainFunction(),
                       ),
                     if (selectedAppIds.isNotEmpty)
                       M3FloatingToolbarAction(
                         icon: Icons.share,
                         semanticLabel:
-                            '${tr('share')} - ${tr('updatiumExport')}',
-                        tooltip: '${tr('share')} - ${tr('updatiumExport')}',
+                            '${t('share')} - ${t('updatiumExport')}',
+                        tooltip: '${t('share')} - ${t('updatiumExport')}',
                         onPressed: () {
                           var encoder = const JsonEncoder.withIndent("    ");
                           var exportJSON = encoder.convert(
@@ -1768,7 +1751,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             ),
                           );
                           String fn =
-                              '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
+                              '${t('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
                           XFile f = XFile.fromData(
                             Uint8List.fromList(utf8.encode(exportJSON)),
                             mimeType: 'application/json',
@@ -1780,8 +1763,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     if (selectedAppIds.isNotEmpty)
                       M3FloatingToolbarAction(
                         icon: Icons.delete,
-                        semanticLabel: tr('removeSelectedApps'),
-                        tooltip: tr('removeSelectedApps'),
+                        semanticLabel: t('removeSelectedApps'),
+                        tooltip: t('removeSelectedApps'),
                         onPressed: () async {
                           final removedApps = await appsProvider
                               .removeAppsWithModal(
@@ -1796,7 +1779,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                     plural('appRemoved', removedApps.length),
                                   ),
                                   action: SnackBarAction(
-                                    label: tr('undo'),
+                                    label: t('undo'),
                                     onPressed: () {
                                       appsProvider.undoRestoreApps(removedApps);
                                     },
@@ -1810,8 +1793,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     if (selectedAppIds.isNotEmpty)
                       M3FloatingToolbarAction(
                         icon: Icons.category,
-                        semanticLabel: tr('categorize'),
-                        tooltip: tr('categorize'),
+                        semanticLabel: t('categorize'),
+                        tooltip: t('categorize'),
                         onPressed: () {
                           launchCategorizeDialog()();
                         },
@@ -1819,8 +1802,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     if (selectedAppIds.isNotEmpty)
                       M3FloatingToolbarAction(
                         icon: Icons.more_horiz,
-                        semanticLabel: tr('more'),
-                        tooltip: tr('more'),
+                        semanticLabel: t('more'),
+                        tooltip: t('more'),
                         onPressed: () {
                           showMoreOptionsDialog();
                         },
