@@ -550,11 +550,11 @@
     "fileName": "שם הקובץ",
     "downloadCancelled": "ההורדה בוטלה",
     "showInFileManager": "הצגה במנהל הקבצים",
-    "usedOpenSourcePackages": "Used open-source packages",
-    "pleaseWaitOperationInProgress": "Please wait, operation in progress",
-    "selectSourceFirst": "Select a source first",
-    "completeAdditionalSettingsFirst": "Complete additional settings first",
-    "addAppToCollection": "Add this app to your collection",
-    "enterSearchTermsFirst": "Enter search terms first",
-    "searchForApps": "Search for apps"
+    "usedOpenSourcePackages": "חבילות קוד פתוח בשימוש",
+    "pleaseWaitOperationInProgress": "נא להמתין, מתבצעת פעולה",
+    "selectSourceFirst": "נא לבחור מקור תחילה",
+    "completeAdditionalSettingsFirst": "נא להשלים את ההגדרות הנוספות תחילה",
+    "addAppToCollection": "הוספת היישום הזה לאוסף",
+    "enterSearchTermsFirst": "נא להקליד מונחים לחיפוש תחילה",
+    "searchForApps": "חיפוש יישומים"
 }
