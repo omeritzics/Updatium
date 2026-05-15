@@ -1,11 +1,11 @@
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class Codeberg extends AppSource {
   GitHub gh = GitHub(hostChanged: true);
   Codeberg() {
-    name = tr('codeberg');
+    name = t('codeberg');
     hosts = ['codeberg.org'];
     additionalSourceAppSpecificSettingFormItems =
         gh.additionalSourceAppSpecificSettingFormItems;

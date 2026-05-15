@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
@@ -369,7 +370,7 @@ class AddAppPageState extends State<AddAppPage> {
                     ? 'Complete additional settings first'
                     : 'Add this app to your collection',
                 excludeSemantics: true,
-                child: FilledButton(
+                child: M3EFilledButton(
                   onPressed:
                       doingSomething ||
                           pickedSource == null ||
@@ -496,43 +497,23 @@ class AddAppPageState extends State<AddAppPage> {
                                 searchQuery,
                                 querySettings: querySettings ?? {},
                               ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.of(ctx).pop(null),
-                                child: Text(tr('cancel')),
-                              ),
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.of(ctx).pop(localValues),
-                                child: Text(tr('ok')),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                    return MapEntry(
-                      e.runtimeType.toString(),
-                      await e.search(
-                        searchQuery,
-                        querySettings: querySettings ?? {},
-                      ),
-                    );
-                  } catch (err) {
-                    if (err is CredsNeededError) {
-                      err.unexpected = true;
-                      showError(err, context);
-                    } else {
-                      LogsProvider().add(
-                        'Search error for ${e.name}: ${err.toString()}',
-                        level: LogLevels.error,
-                      );
-                    }
-                    return null;
-                  }
-                }),
-          )).whereType<MapEntry<String, Map<String, List<String>>>>().toList();
+                            );
+                          } catch (err) {
+                            if (err is CredsNeededError) {
+                              err.unexpected = true;
+                              showError(err, context);
+                            } else {
+                              LogsProvider().add(
+                                'Search error for ${e.name}: ${err.toString()}',
+                                level: LogLevels.error,
+                              );
+                            }
+                            return null;
+                          }
+                        }),
+                  ))
+                  .whereType<MapEntry<String, Map<String, List<String>>>>()
+                  .toList();
 
           // Interleave results instead of simple reduce
           Map<String, MapEntry<String, List<String>>> res = {};
@@ -638,7 +619,7 @@ class AddAppPageState extends State<AddAppPage> {
                     ? 'Enter search terms first'
                     : 'Search for apps',
                 excludeSemantics: true,
-                child: FilledButton(
+                child: M3EFilledButton(
                   onPressed: searchQuery.isEmpty || doingSomething
                       ? null
                       : () {
@@ -926,7 +907,7 @@ class AddAppPageState extends State<AddAppPage> {
           slivers: <Widget>[
             SliverAppBar.large(
               pinned: true,
-              title: Text(t('addApp')),
+              title: Text(tr('addApp')),
               leading: IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
@@ -1016,50 +997,18 @@ class AddAppPageState extends State<AddAppPage> {
                                 ),
                               ],
                             ],
-                            [
-                              GeneratedFormSwitch(
-                                'invertAPKFilter',
-                                label:
-                                    '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
-                                defaultValue: false,
-                              ),
-                            ],
-                            [
-                              GeneratedFormTextField(
-                                'zippedApkFilterRegEx',
-                                label: tr('zippedApkFilterRegEx'),
-                                required: false,
-                                additionalValidators: [
-                                  (value) => _regExValidator(value),
-                                ],
-                              ),
-                            ],
-                            [
-                              GeneratedFormSwitch(
-                                'shizukuPretendToBeGooglePlay',
-                                label: tr('shizukuPretendToBeGooglePlay'),
-                                defaultValue: false,
-                              ),
-                            ],
-                            [
-                              GeneratedFormSwitch(
-                                'allowInsecure',
-                                label: tr('allowInsecure'),
-                                defaultValue: false,
-                              ),
-                            ],
-                          ],
-                          onValueChanges: (values, valid, isBuilding) {
-                            if (!isBuilding) {
-                              setState(() {
-                                additionalSettings.addAll(values);
-                              });
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                ],
+                            onValueChanges: (values, valid, isBuilding) {
+                              if (!isBuilding) {
+                                setState(() {
+                                  additionalSettings.addAll(values);
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
               ),
             ),
           ],

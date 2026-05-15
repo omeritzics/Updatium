@@ -1,4 +1,4 @@
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:html/parser.dart';
 import 'package:updatium/providers/source_provider.dart';
 
@@ -20,7 +20,7 @@ DateTime? parseDateTimeMMMddCommayyyy(String? dateString) {
 class Uptodown extends AppSource {
   Uptodown() {
     hosts = ['uptodown.com'];
-    name = tr('uptodown');
+    name = t('uptodown');
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
@@ -109,7 +109,7 @@ class Uptodown extends AppSource {
     if (appId == null) {
       throw NoReleasesError();
     }
-    String appName = appDetails['name'] ?? tr('app');
+    String appName = appDetails['name'] ?? t('app');
     String author = appDetails['author'] ?? name;
     String? dateStr = appDetails['dateStr'];
     DateTime? relDate;
