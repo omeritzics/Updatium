@@ -1,4 +1,4 @@
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
@@ -7,7 +7,7 @@ import 'package:updatium/providers/source_provider.dart';
 class Mullvad extends AppSource {
   Mullvad() {
     hosts = ['mullvad.net'];
-    name = tr('mullvad');
+    name = t('mullvad');
   }
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {

@@ -1,4 +1,4 @@
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 
@@ -102,8 +102,8 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
             ColorPickerType.wheel: true,
           },
           pickerTypeLabels: <ColorPickerType, String>{
-            ColorPickerType.custom: tr('standard'),
-            ColorPickerType.wheel: tr('custom'),
+            ColorPickerType.custom: t('standard'),
+            ColorPickerType.wheel: t('custom'),
           },
           wheelDiameter: 192,
           wheelSquareBorderRadius: 32,
@@ -163,12 +163,12 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
                 autofocus: true,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 decoration: InputDecoration(
-                  labelText: tr('name'),
+                  labelText: t('name'),
                   border: const OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return '${tr('name')} ${tr('requiredInBrackets')}';
+                    return '${t('name')} ${t('requiredInBrackets')}';
                   }
                   return null;
                 },
@@ -178,7 +178,7 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
                 children: [
                   Expanded(
                     child: Text(
-                      tr('selectX', args: [tr('color').toLowerCase()]),
+                      t('selectX', args: [t('color').toLowerCase()]),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -207,7 +207,7 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(tr('cancel')),
+          child: Text(t('cancel')),
         ),
         TextButton(
           onPressed: () {

@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class Aptoide extends AppSource {
   Aptoide() {
     hosts = ['aptoide.com'];
-    name = tr('aptoide');
+    name = t('aptoide');
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
@@ -65,7 +65,7 @@ class Aptoide extends AppSource {
     Map<String, dynamic> additionalSettings,
   ) async {
     var appDetails = await getAppDetailsJSON(standardUrl, additionalSettings);
-    String appName = appDetails['name'] ?? tr('app');
+    String appName = appDetails['name'] ?? t('app');
     String author = appDetails['developer']?['name'] ?? name;
     String? dateStr = appDetails['updated'];
     String? version = appDetails['file']?['vername'];

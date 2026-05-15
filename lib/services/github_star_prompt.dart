@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 
 /// Service to handle the one-time GitHub star prompt dialog
 class GitHubStarPrompt {
@@ -49,15 +49,15 @@ class GitHubStarPrompt {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('githubStarPromptTitle'.tr()),
-          content: Text('githubStarPromptContent'.tr()),
+          title: Text('githubStarPromptTitle'.t()),
+          content: Text('githubStarPromptContent'.t()),
           actions: [
             TextButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 await _markPromptAsShown();
               },
-              child: Text('githubStarPromptDontShowAgain'.tr()),
+              child: Text('githubStarPromptDontShowAgain'.t()),
             ),
             FilledButton(
               onPressed: () async {
@@ -65,7 +65,7 @@ class GitHubStarPrompt {
                 await _launchGitHub();
                 await _markPromptAsShown();
               },
-              child: Text('githubStarPromptStar'.tr()),
+              child: Text('githubStarPromptStar'.t()),
             ),
           ],
         );

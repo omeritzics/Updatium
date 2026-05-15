@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:updatium/providers/logs_provider.dart';
 
 class SecurityDisclaimerScreen extends StatefulWidget {
@@ -73,7 +74,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
 
                     // Title
                     Text(
-                      tr('securityDisclaimerTitle'),
+                      t('securityDisclaimerTitle'),
                       style: Theme.of(context).textTheme.headlineMedium
                           ?.copyWith(
                             fontWeight: FontWeight.bold,
@@ -97,8 +98,8 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           _buildDisclaimerItem(
                             context,
                             Icons.gavel,
-                            tr('license'),
-                            tr('licenseText'),
+                            t('license'),
+                            t('licenseText'),
                           ),
 
                           const SizedBox(height: 16),
@@ -106,8 +107,8 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           _buildDisclaimerItem(
                             context,
                             Icons.warning_amber,
-                            tr('disclaimer'),
-                            tr('disclaimerText'),
+                            t('disclaimer'),
+                            t('disclaimerText'),
                           ),
 
                           const SizedBox(height: 16),
@@ -115,8 +116,8 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           _buildDisclaimerItem(
                             context,
                             Icons.privacy_tip,
-                            tr('privacy'),
-                            tr('privacyText'),
+                            t('privacy'),
+                            t('privacyText'),
                           ),
                         ],
                       ),
@@ -139,23 +140,23 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                     // Accept Button
                     SizedBox(
                       width: double.infinity,
-                      child: FilledButton(
+                      child: M3EFilledButton(
                         onPressed: () async {
                           HapticFeedback.lightImpact();
+                          if (!mounted) return;
                           await _saveDisclaimerAccepted();
                           if (mounted) {
                             Navigator.of(context).pop(true);
                           }
                         },
-                        style: FilledButton.styleFrom(
+                        child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: const StadiumBorder(),
-                        ),
-                        child: Text(
-                          tr('acceptAndContinue'),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                          child: Text(
+                            t('acceptAndContinue'),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
@@ -166,21 +167,20 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                     // Decline Button
                     SizedBox(
                       width: double.infinity,
-                      child: OutlinedButton(
+                      child: M3EOutlinedButton(
                         onPressed: () {
                           HapticFeedback.lightImpact();
                           SystemNavigator.pop();
                         },
-                        style: OutlinedButton.styleFrom(
+                        child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: const StadiumBorder(),
-                        ),
-                        child: Text(
-                          tr('decline'),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.error,
+                          child: Text(
+                            t('decline'),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: colorScheme.error,
+                            ),
                           ),
                         ),
                       ),

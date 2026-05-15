@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/html.dart';
@@ -14,7 +14,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class GitHub extends AppSource {
   GitHub({hostChanged = false}) {
-    name = tr('github');
+    name = t('github');
     hosts = ['github.com'];
     appIdInferIsOptional = true;
     showReleaseDateAsVersionToggle = true;
@@ -23,8 +23,8 @@ class GitHub extends AppSource {
 
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        tr('githubPATLabel'),
-        label: tr('githubPATLabel'),
+        t('githubPATLabel'),
+        label: t('githubPATLabel'),
         password: true,
         required: false,
         belowWidgets: [
@@ -37,7 +37,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              tr('about'),
+              t('about'),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -48,8 +48,8 @@ class GitHub extends AppSource {
         ],
       ),
       GeneratedFormTextField(
-        tr('GHReqPrefix'),
-        label: tr('GHReqPrefix'),
+        t('GHReqPrefix'),
+        label: t('GHReqPrefix'),
         hint: 'gh-proxy.org',
         required: false,
         additionalValidators: [
@@ -62,7 +62,7 @@ class GitHub extends AppSource {
                 Uri.parse('https://${value}/api.github.com');
               }
             } catch (e) {
-              return tr('invalidInput');
+              return t('invalidInput');
             }
             return null;
           },
@@ -77,7 +77,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              tr('about'),
+              t('about'),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -95,14 +95,14 @@ class GitHub extends AppSource {
     searchQuerySettingFormItems = [
       GeneratedFormTextField(
         'minStarCount',
-        label: tr('minStarCount'),
+        label: t('minStarCount'),
         defaultValue: '0',
         additionalValidators: [
           (value) {
             try {
               int.parse(value ?? '0');
             } catch (e) {
-              return tr('invalidInput');
+              return t('invalidInput');
             }
             return null;
           },
@@ -240,7 +240,7 @@ class GitHub extends AppSource {
   @override
   Future<String?> getSourceNote() async {
     if (!hostChanged && (await getTokenIfAny({})) == null) {
-      return '${tr('githubSourceNote')} ${hostChanged ? tr('addInfoBelow') : tr('addInfoInSettings')}';
+      return '${t('githubSourceNote')} ${hostChanged ? t('addInfoBelow') : t('addInfoInSettings')}';
     }
     return null;
   }
@@ -640,7 +640,7 @@ class GitHub extends AppSource {
               ((e['archived'] == true ? '[ARCHIVED] ' : '') +
                   (e['description'] != null
                       ? e['description'] as String
-                      : tr('noDescription'))),
+                      : t('noDescription'))),
             ],
           });
         }

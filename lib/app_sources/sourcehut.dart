@@ -3,12 +3,12 @@ import 'package:http/http.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 
 class SourceHut extends AppSource {
   SourceHut() {
     hosts = ['git.sr.ht'];
-    name = tr('sourcehut');
+    name = t('sourcehut');
     showReleaseDateAsVersionToggle = true;
     additionalSourceAppSpecificSettingFormItems = [];
   }

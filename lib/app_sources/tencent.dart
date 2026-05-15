@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class Tencent extends AppSource {
   Tencent() {
-    name = tr('tencentAppStore');
+    name = t('tencentAppStore');
     hosts = ['sj.qq.com'];
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
