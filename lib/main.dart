@@ -15,8 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:dynamic_system_colors/dynamic_system_colors.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
-import 'package:simple_localization/simple_localization.dart';
-// ignore: implementation_imports
+import 'package:updatium/services/slang-converter.dart';
 import 'package:simple_localization/src/simple_localization_controller.dart';
 // ignore: implementation_imports
 import 'package:simple_localization/src/localization.dart';
@@ -251,8 +250,8 @@ class _UpdatiumState extends State<Updatium> {
       FlutterForegroundTask.init(
         androidNotificationOptions: AndroidNotificationOptions(
           channelId: 'bg_update',
-          channelName: tr('foregroundService'),
-          channelDescription: tr('foregroundService'),
+          channelName: t('foregroundService'),
+          channelDescription: t('foregroundService'),
           onlyAlertOnce: true,
         ),
         iosNotificationOptions: const IOSNotificationOptions(
@@ -285,8 +284,8 @@ class _UpdatiumState extends State<Updatium> {
       return FlutterForegroundTask.startService(
         serviceTypes: [ForegroundServiceTypes.specialUse],
         serviceId: 666,
-        notificationTitle: tr('foregroundService'),
-        notificationText: tr('fgServiceNotice'),
+        notificationTitle: t('foregroundService'),
+        notificationText: t('fgServiceNotice'),
         notificationIcon: NotificationIcon(
           metaDataName:
               'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
@@ -626,14 +625,14 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
         return AlertDialog(
           title: Text(
             e is MultiAppMultiError
-                ? tr(isError ? 'someErrors' : 'updates')
-                : tr(isError ? 'unexpectedError' : 'unknown'),
+                ? t(isError ? 'someErrors' : 'updates')
+                : t(isError ? 'unexpectedError' : 'unknown'),
           ),
           content: SelectableText(e.toString()),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(tr('ok')),
+              child: Text(t('ok')),
             ),
           ],
         );

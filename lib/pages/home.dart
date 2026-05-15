@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:animations/animations.dart';
 import 'package:app_links/app_links.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -62,18 +62,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<NavigationPageItem> getPages(SettingsProvider settingsProvider) {
     return [
       NavigationPageItem(
-        tr('appsString'),
+        t('appsString'),
         Icons.apps,
         AppsPage(key: _appsPageKey),
       ),
       NavigationPageItem(
-        settingsProvider.safeMode ? tr('importExport') : tr('addApp'),
+        settingsProvider.safeMode ? t('importExport') : t('addApp'),
         settingsProvider.safeMode ? Icons.import_export : Icons.add_circle,
         settingsProvider.safeMode
             ? const ImportExportPage()
             : AddAppPage(key: _addAppPageKey),
       ),
-      NavigationPageItem(tr('settings'), Icons.settings, const SettingsPage()),
+      NavigationPageItem(t('settings'), Icons.settings, const SettingsPage()),
     ];
   }
 
@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     goToAddApp(String data) async {
       final settingsProvider = context.read<SettingsProvider>();
       if (settingsProvider.safeMode) {
-        showError(UpdatiumError(tr('safeModeAddAppDisabled')), context);
+        showError(UpdatiumError(t('safeModeAddAppDisabled')), context);
         return;
       }
       switchToPage(1);
@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             );
             // ignore: use_build_context_synchronously
             showMessage(
-              tr(
+              t(
                 'importedX',
                 args: [plural('apps', result.key.length).toLowerCase()],
               ),
@@ -219,7 +219,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             );
           }
         } else {
-          throw UpdatiumError(tr('unknown'));
+          throw UpdatiumError(t('unknown'));
         }
       } catch (e) {
         showError(e, context);
@@ -253,7 +253,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             await goToAddApp(data);
           }
         } else {
-          throw UpdatiumError(tr('unknown'));
+          throw UpdatiumError(t('unknown'));
         }
       } catch (e) {
         showError(e, context);
@@ -475,10 +475,10 @@ class _ImportDialogState extends State<_ImportDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        tr(
+        t(
           'importX',
           args: [
-            (widget.action == 'app' ? tr('app') : tr('appsString'))
+            (widget.action == 'app' ? t('app') : t('appsString'))
                 .toLowerCase(),
           ],
         ),
@@ -514,11 +514,11 @@ class _ImportDialogState extends State<_ImportDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(null),
-          child: Text(tr('cancel')),
+          child: Text(t('cancel')),
         ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: Text(tr('ok')),
+          child: Text(t('ok')),
         ),
       ],
     );

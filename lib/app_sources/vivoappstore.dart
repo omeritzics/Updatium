@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 
@@ -8,7 +8,7 @@ class VivoAppStore extends AppSource {
   static const appDetailUrl =
       'https://h5coml.vivo.com.cn/h5coml/appdetail_h5/browser_v2/index.html?appId=';
   VivoAppStore() {
-    name = tr('vivoAppStore');
+    name = t('vivoAppStore');
     hosts = ['h5.appstore.vivo.com.cn', 'h5coml.vivo.com.cn'];
     naiveStandardVersionDetection = true;
     canSearch = true;

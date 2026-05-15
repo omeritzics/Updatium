@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:simple_localization/simple_localization.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/services/githubstars.dart';
@@ -50,14 +52,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            title: Text(tr('importFromURLList')),
+            title: Text(t('importFromURLList')),
             contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
             content: Form(
               key: formKey,
               child: TextFormField(
                 controller: controller,
                 decoration: InputDecoration(
-                  labelText: tr('appURLList'),
+                  labelText: t('appURLList'),
                   border: const OutlineInputBorder(),
                 ),
                 maxLines: 7,
@@ -69,7 +71,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       try {
                         sourceProvider.getSource(lines[i]);
                       } catch (e) {
-                        return '${tr('line')} ${i + 1}: $e';
+                        return '${t('line')} ${i + 1}: $e';
                       }
                     }
                   }
@@ -80,7 +82,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(null),
-                child: Text(tr('cancel')),
+                child: Text(t('cancel')),
               ),
               TextButton(
                 onPressed: () {
@@ -88,7 +90,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     Navigator.of(ctx).pop(controller.text);
                   }
                 },
-                child: Text(tr('continue')),
+                child: Text(t('continue')),
               ),
             ],
           );
@@ -105,7 +107,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               .then((errors) {
                 if (errors.isEmpty) {
                   showMessage(
-                    tr(
+                    t(
                       'importedX',
                       args: [plural('apps', urls.length).toLowerCase()],
                     ),
@@ -145,7 +147,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
           )
           .then((String? result) {
             if (result != null) {
-              showMessage(tr('exportedTo', args: [result]), context);
+              showMessage(t('exportedTo', args: [result]), context);
             }
           })
           .catchError((e) {
@@ -166,7 +168,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               try {
                 jsonDecode(data);
               } catch (e) {
-                throw UpdatiumError(tr('invalidInput'));
+                throw UpdatiumError(t('invalidInput'));
               }
               appsProvider.import(data).then((value) {
                 var cats = settingsProvider.categories;
@@ -179,7 +181,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 });
                 appsProvider.addMissingCategories(settingsProvider);
                 showMessage(
-                  '${tr('importedX', args: [plural('apps', value.key.length).toLowerCase()])}${value.value ? ' + ${tr('settings').toLowerCase()}' : ''}',
+                  '${t('importedX', args: [plural('apps', value.key.length).toLowerCase()])}${value.value ? ' + ${t('settings').toLowerCase()}' : ''}',
                   context,
                 );
               });
@@ -246,7 +248,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   context: context,
                   builder: (BuildContext ctx) {
                     return AlertDialog(
-                      title: Text(tr('importX', args: [source.name])),
+                      title: Text(t('importX', args: [source.name])),
                       content: Form(
                         key: formKey,
                         child: Column(
@@ -261,7 +263,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   border: const OutlineInputBorder(),
                                 ),
                                 validator: (v) => v == null || v.isEmpty
-                                    ? tr('requiredInBrackets')
+                                    ? t('requiredInBrackets')
                                     : null,
                               ),
                             );
@@ -271,7 +273,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(ctx).pop(null),
-                          child: Text(tr('cancel')),
+                          child: Text(t('cancel')),
                         ),
                         TextButton(
                           onPressed: () {
@@ -281,7 +283,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               );
                             }
                           },
-                          child: Text(tr('continue')),
+                          child: Text(t('continue')),
                         ),
                       ],
                     );
@@ -298,27 +300,23 @@ class _ImportExportPageState extends State<ImportExportPage> {
               var urlsWithDescriptions = await source.getUrlsWithDescriptions(
                 values.values.map((e) => e.toString()).toList(),
               );
-              var selectedUrls =
-                  // ignore: use_build_context_synchronously
-                  await showDialog<List<String>?>(
-                    context: context,
-                    builder: (BuildContext ctx) {
-                      return SelectionModal(entries: urlsWithDescriptions);
-                    },
-                  );
+              var selectedUrls = await showDialog<List<String>?>(
+                context: context,
+                builder: (BuildContext ctx) {
+                  return SelectionModal(entries: urlsWithDescriptions);
+                },
+              );
               if (selectedUrls != null) {
                 var errors = await appsProvider.addAppsByURL(selectedUrls);
                 if (errors.isEmpty) {
-                  // ignore: use_build_context_synchronously
                   showMessage(
-                    tr(
+                    t(
                       'importedX',
                       args: [plural('apps', selectedUrls.length).toLowerCase()],
                     ),
                     context,
                   );
                 } else {
-                  // ignore: use_build_context_synchronously
                   showDialog(
                     context: context,
                     builder: (BuildContext ctx) {
@@ -351,7 +349,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar.large(pinned: true, title: Text(tr('importExport'))),
+          SliverAppBar.large(pinned: true, title: Text(t('importExport'))),
           SliverFillRemaining(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -368,11 +366,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               Expanded(
                                 child: Semantics(
                                   button: true,
-                                  label: tr('pickExportDir'),
+                                  label: t('pickExportDir'),
                                   hint:
                                       'Choose a directory to export your apps and settings',
                                   excludeSemantics: true,
-                                  child: FilledButton.icon(
+                                  child: M3EFilledButton.icon(
                                     onPressed:
                                         importInProgress ||
                                             appsProvider.exportInProgress
@@ -382,7 +380,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           },
                                     icon: const Icon(Icons.folder_open),
                                     label: Text(
-                                      tr('pickExportDir'),
+                                      t('pickExportDir'),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -392,12 +390,12 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               Expanded(
                                 child: Semantics(
                                   button: true,
-                                  label: tr('updatiumExport'),
+                                  label: t('updatiumExport'),
                                   hint: snapshot.data == null
                                       ? 'Set export directory first'
                                       : 'Export all your apps and settings to file',
                                   excludeSemantics: true,
-                                  child: FilledButton.icon(
+                                  child: M3EFilledButton.icon(
                                     onPressed:
                                         importInProgress ||
                                             appsProvider.exportInProgress ||
@@ -406,7 +404,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                         : runUpdatiumExport,
                                     icon: const Icon(Icons.upload_file),
                                     label: Text(
-                                      tr('updatiumExport'),
+                                      t('updatiumExport'),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -420,17 +418,17 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               Expanded(
                                 child: Semantics(
                                   button: true,
-                                  label: tr('updatiumImport'),
+                                  label: t('updatiumImport'),
                                   hint:
                                       'Import apps and settings from a backup file',
                                   excludeSemantics: true,
-                                  child: FilledButton.icon(
+                                  child: M3EFilledButton.icon(
                                     onPressed: importInProgress
                                         ? null
                                         : runUpdatiumImport,
                                     icon: const Icon(Icons.download),
                                     label: Text(
-                                      tr('updatiumImport'),
+                                      t('updatiumImport'),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -447,7 +445,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                     [
                                       GeneratedFormSwitch(
                                         'autoExportOnChanges',
-                                        label: tr('autoExportOnChanges'),
+                                        label: t('autoExportOnChanges'),
                                         defaultValue: settingsProvider
                                             .autoExportOnChanges,
                                       ),
@@ -456,11 +454,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       GeneratedFormDropdown(
                                         'exportSettings',
                                         [
-                                          MapEntry('0', tr('none')),
-                                          MapEntry('1', tr('excludeSecrets')),
-                                          MapEntry('2', tr('all')),
+                                          MapEntry('0', t('none')),
+                                          MapEntry('1', t('excludeSecrets')),
+                                          MapEntry('2', t('all')),
                                         ],
-                                        label: tr('includeSettings'),
+                                        label: t('includeSettings'),
                                         defaultValue: settingsProvider
                                             .exportSettings
                                             .toString(),
@@ -490,7 +488,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   ),
                   if (importInProgress || appsProvider.exportInProgress)
                     const Column(
-                      children: [gap12, LinearProgressIndicator(), gap12],
+                      children: [gap12, LinearProgressIndicatorM3E(), gap12],
                     )
                   else
                     Column(
@@ -498,28 +496,28 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         gap32,
                         Semantics(
                           button: true,
-                          label: tr('importFromURLList'),
+                          label: t('importFromURLList'),
                           hint:
                               'Import multiple apps by entering their URLs in a list',
                           excludeSemantics: true,
-                          child: FilledButton.icon(
+                          child: M3EFilledButton.icon(
                             onPressed: importInProgress ? null : urlListImport,
                             icon: const Icon(Icons.list_alt),
-                            label: Text(tr('importFromURLList')),
+                            label: Text(t('importFromURLList')),
                           ),
                         ),
                         if (!settingsProvider.safeMode) ...[
                           gap8,
                           Semantics(
                             button: true,
-                            label: tr('importFromURLsInFile'),
+                            label: t('importFromURLsInFile'),
                             hint:
                                 'Import apps by reading URLs from a text file',
                             excludeSemantics: true,
-                            child: FilledButton.icon(
+                            child: M3EFilledButton.icon(
                               onPressed: importInProgress ? null : runUrlImport,
                               icon: const Icon(Icons.link),
-                              label: Text(tr('importFromURLsInFile')),
+                              label: Text(t('importFromURLsInFile')),
                             ),
                           ),
                         ],
@@ -536,14 +534,14 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             gap8,
-                            FilledButton.icon(
+                            M3EFilledButton.icon(
                               onPressed: importInProgress
                                   ? null
                                   : () {
                                       runMassSourceImport(source);
                                     },
                               icon: const Icon(Icons.cloud_download),
-                              label: Text(tr('importX', args: [source.name])),
+                              label: Text(t('importX', args: [source.name])),
                             ),
                           ],
                         ),
@@ -551,7 +549,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   const Spacer(),
                   const Divider(height: 32),
                   Text(
-                    tr('importedAppsIdDisclaimer'),
+                    t('importedAppsIdDisclaimer'),
                     textAlign: TextAlign.start,
                     style: const TextStyle(fontSize: 12),
                   ),
@@ -585,12 +583,12 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text(tr('importErrors')),
+      title: Text(t('importErrors')),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            tr(
+            t(
               'importedXOfYApps',
               args: [
                 (widget.urlsLength - widget.errors.length).toString(),
@@ -601,7 +599,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
           ),
           gap16,
           Text(
-            tr('followingURLsHadErrors'),
+            t('followingURLsHadErrors'),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           ...widget.errors.map((e) {
@@ -634,7 +632,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
             Navigator.of(context).pop(null);
           },
           icon: const Icon(Icons.close),
-          label: Text(tr('ok')),
+          label: Text(t('ok')),
         ),
       ],
     );
@@ -732,11 +730,11 @@ class _SelectionModalState extends State<SelectionModal> {
       return noneSelected
           ? TextButton(
               onPressed: () => setState(selectAll),
-              child: Text(tr('selectAll')),
+              child: Text(t('selectAll')),
             )
           : TextButton(
               onPressed: () => setState(() => selectAll(deselect: true)),
-              child: Text(tr('deselectX', args: [tr('all')])),
+              child: Text(t('deselectX', args: [t('all')])),
             );
     }
 
@@ -746,9 +744,9 @@ class _SelectionModalState extends State<SelectionModal> {
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
-            tooltip: tr('cancel'),
+            tooltip: t('cancel'),
           ),
-          title: Text(widget.title ?? tr('pick')),
+          title: Text(widget.title ?? t('pick')),
           actions: [
             getSelectAllButton(),
             TextButton(
@@ -764,8 +762,8 @@ class _SelectionModalState extends State<SelectionModal> {
                     },
               child: Text(
                 widget.onlyOneSelectionAllowed
-                    ? tr('pick')
-                    : tr(
+                    ? t('pick')
+                    : t(
                         'selectX',
                         args: [
                           entrySelections.values
@@ -780,19 +778,14 @@ class _SelectionModalState extends State<SelectionModal> {
         ),
         body: Column(
           children: [
-            LinearProgressIndicator(
-              value: 1 / 3,
-              backgroundColor: Theme.of(
-                context,
-              ).colorScheme.surfaceContainerHighest,
-            ),
+            LinearProgressIndicatorM3E(value: 1 / 3),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    tr('addApp'),
+                    t('addApp'),
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ],
@@ -803,7 +796,7 @@ class _SelectionModalState extends State<SelectionModal> {
               child: TextFormField(
                 controller: _filterController,
                 decoration: InputDecoration(
-                  labelText: tr('filter'),
+                  labelText: t('filter'),
                   prefixIcon: const Icon(Icons.search),
                   suffixIcon: _filterController.text.isNotEmpty
                       ? IconButton(

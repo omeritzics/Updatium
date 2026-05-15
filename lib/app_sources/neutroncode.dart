@@ -1,4 +1,4 @@
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -6,7 +6,7 @@ import 'package:updatium/providers/source_provider.dart';
 class NeutronCode extends AppSource {
   NeutronCode() {
     hosts = ['neutroncode.com'];
-    name = tr('neutroncode');
+    name = t('neutroncode');
     showReleaseDateAsVersionToggle = true;
   }
   @override

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
-
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/apps.dart';
 import 'package:updatium/pages/settings.dart';
@@ -74,7 +75,6 @@ class _AppPageState extends State<AppPage> {
         appsProvider.saveApps([appsProvider.apps[id]!.app]);
       }
     } catch (err) {
-      // ignore: use_build_context_synchronously
       showError(err, context);
     } finally {
       setState(() {
@@ -107,7 +107,7 @@ class _AppPageState extends State<AppPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (appsProvider.loadingApps)
-                const CircularProgressIndicator()
+                const CircularProgressIndicatorM3E()
               else
                 Column(
                   children: [
@@ -118,7 +118,7 @@ class _AppPageState extends State<AppPage> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      tr('appNotFound'),
+                      t('appNotFound'),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 8),
@@ -147,24 +147,24 @@ class _AppPageState extends State<AppPage> {
     getInfoColumn() {
       String versionLines = '';
       bool installed = app.app.installedVersion != null;
-      versionLines = '${tr('latestVersion')}: ${app.app.latestVersion}';
+      versionLines = '${t('latestVersion')}: ${app.app.latestVersion}';
       if (installed) {
         versionLines +=
-            '\n${tr('installedVersion')}: ${app.app.installedVersion}';
+            '\n${t('installedVersion')}: ${app.app.installedVersion}';
       }
-      String infoLines = tr(
+      String infoLines = t(
         'lastUpdateCheckX',
         args: [
           app.app.lastUpdateCheck == null
-              ? tr('never')
+              ? t('never')
               : '${app.app.lastUpdateCheck?.toLocal()}',
         ],
       );
       if (trackOnly) {
-        infoLines = '${tr('xIsTrackOnly', args: [tr('app')])}\n$infoLines';
+        infoLines = '${t('xIsTrackOnly', args: [t('app')])}\n$infoLines';
       }
       if (installedVersionIsEstimate) {
-        infoLines = '${tr('pseudoVersionInUse')}\n$infoLines';
+        infoLines = '${t('pseudoVersionInUse')}\n$infoLines';
       }
       if (app.app.apkUrls.length > 0) {
         infoLines =
@@ -191,7 +191,7 @@ class _AppPageState extends State<AppPage> {
                       onTap: changeLogFn,
                       child: Text(
                         app.app.releaseDate == null
-                            ? tr('changes')
+                            ? t('changes')
                             : app.app.releaseDate!.toLocal().toString(),
                         textAlign: TextAlign.start,
                         maxLines: 2,
@@ -221,7 +221,7 @@ class _AppPageState extends State<AppPage> {
                 gap24,
                 Text(
                   "${plural('certificateHash', app.certificateHashes.length)}:"
-                  "${app.hasMultipleSigners ? " (${tr('multipleSigners')})" : ""}",
+                  "${app.hasMultipleSigners ? " (${t('multipleSigners')})" : ""}",
                   textAlign: TextAlign.start,
                   style: const TextStyle(fontSize: 12),
                 ),
@@ -232,7 +232,7 @@ class _AppPageState extends State<AppPage> {
                       onLongPress: () {
                         Clipboard.setData(ClipboardData(text: hash));
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(tr('copiedToClipboard'))),
+                          SnackBar(content: Text(t('copiedToClipboard'))),
                         );
                       },
                       child: Padding(
@@ -274,7 +274,7 @@ class _AppPageState extends State<AppPage> {
                       ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(tr('copiedToClipboard'))),
+                      SnackBar(content: Text(t('copiedToClipboard'))),
                     );
                   },
                   child: Markdown(
@@ -323,7 +323,7 @@ class _AppPageState extends State<AppPage> {
             Clipboard.setData(ClipboardData(text: app.app.url));
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text(tr('copiedToClipboard'))));
+            ).showSnackBar(SnackBar(content: Text(t('copiedToClipboard'))));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -407,15 +407,15 @@ class _AppPageState extends State<AppPage> {
                   icon: const Icon(Icons.close),
                   onPressed: () => Navigator.of(ctx).pop(null),
                 ),
-                title: Text(tr('editApp')),
+                title: Text(t('editApp')),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(ctx).pop(null),
-                    child: Text(tr('cancel')),
+                    child: Text(t('cancel')),
                   ),
                   TextButton(
                     onPressed: () => Navigator.of(ctx).pop(localValues),
-                    child: Text(tr('save')),
+                    child: Text(t('save')),
                   ),
                 ],
               ),
@@ -425,7 +425,7 @@ class _AppPageState extends State<AppPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      tr('basicInfo'),
+                      t('basicInfo'),
                       style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
                         color: Theme.of(ctx).colorScheme.primary,
                       ),
@@ -436,7 +436,7 @@ class _AppPageState extends State<AppPage> {
                         [
                           GeneratedFormTextField(
                             'appName',
-                            label: tr('appName'),
+                            label: t('appName'),
                             defaultValue: app.app.name,
                             required: true,
                           ),
@@ -444,7 +444,7 @@ class _AppPageState extends State<AppPage> {
                         [
                           GeneratedFormTextField(
                             'appAuthor',
-                            label: tr('appAuthor'),
+                            label: t('appAuthor'),
                             defaultValue: app.app.author,
                             required: true,
                           ),
@@ -452,19 +452,19 @@ class _AppPageState extends State<AppPage> {
                         [
                           GeneratedFormTextField(
                             'appId',
-                            label: tr('appId'),
+                            label: t('appId'),
                             defaultValue: app.app.id,
                             required: true,
                             additionalValidators: [
                               (value) {
                                 if (value == null || value.isEmpty) {
-                                  return tr('required');
+                                  return t('required');
                                 }
                                 final isValid = RegExp(
                                   r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
                                 ).hasMatch(value);
                                 if (!isValid) {
-                                  return tr('invalidInput');
+                                  return t('invalidInput');
                                 }
                                 return null;
                               },
@@ -474,7 +474,7 @@ class _AppPageState extends State<AppPage> {
                         [
                           GeneratedFormTextField(
                             'appSourceURL',
-                            label: tr('appSourceURL'),
+                            label: t('appSourceURL'),
                             defaultValue: app.app.url,
                             required: true,
                           ),
@@ -482,7 +482,7 @@ class _AppPageState extends State<AppPage> {
                         [
                           GeneratedFormSwitch(
                             'pinned',
-                            label: tr('pinned'),
+                            label: t('pinned'),
                             defaultValue: app.app.pinned,
                           ),
                         ],
@@ -493,7 +493,7 @@ class _AppPageState extends State<AppPage> {
                     ),
                     gap24,
                     Text(
-                      tr('sourceOptions'),
+                      t('sourceOptions'),
                       style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
                         color: Theme.of(ctx).colorScheme.primary,
                       ),
@@ -507,7 +507,7 @@ class _AppPageState extends State<AppPage> {
                     ),
                     gap24,
                     Text(
-                      tr('categories'),
+                      t('categories'),
                       style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
                         color: Theme.of(ctx).colorScheme.primary,
                       ),
@@ -571,8 +571,7 @@ class _AppPageState extends State<AppPage> {
 
         if (source?.enforceTrackOnly == true) {
           app.app.additionalSettings['trackOnly'] = true;
-          // ignore: use_build_context_synchronously
-          showMessage(tr('appsFromSourceAreTrackOnly'), context);
+          showMessage(t('appsFromSourceAreTrackOnly'), context);
         }
         var versionDetectionEnabled =
             app.app.additionalSettings['versionDetection'] == true &&
@@ -606,12 +605,7 @@ class _AppPageState extends State<AppPage> {
       }
     }
 
-    getInstallOrUpdateButton() => FilledButton(
-      style: FilledButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-      ),
+    getInstallOrUpdateButton() => M3EFilledButton(
       onPressed:
           !updating &&
               (app.app.installedVersion == null ||
@@ -620,21 +614,19 @@ class _AppPageState extends State<AppPage> {
           ? () async {
               try {
                 var successMessage = app.app.installedVersion == null
-                    ? tr('installed')
-                    : tr('appsUpdated');
+                    ? t('installed')
+                    : t('appsUpdated');
                 HapticFeedback.heavyImpact();
                 var res = await appsProvider.downloadAndInstallLatestApps([
                   app.app.id,
                 ], globalNavigatorKey.currentContext);
                 if (res.isNotEmpty && !trackOnly) {
-                  // ignore: use_build_context_synchronously
                   showMessage(successMessage, context);
                 }
                 if (res.isNotEmpty && mounted) {
                   Navigator.of(context).pop();
                 }
               } catch (e) {
-                // ignore: use_build_context_synchronously
                 showError(e, context);
               }
             }
@@ -642,11 +634,11 @@ class _AppPageState extends State<AppPage> {
       child: Text(
         app.app.installedVersion == null
             ? !trackOnly
-                  ? tr('install')
-                  : tr('markInstalled')
+                  ? t('install')
+                  : t('markInstalled')
             : !trackOnly
-            ? tr('update')
-            : tr('markUpdated'),
+            ? t('update')
+            : t('markUpdated'),
       ),
     );
 
@@ -750,7 +742,7 @@ class _AppPageState extends State<AppPage> {
                             children: [
                               Text(app.name),
                               Text(
-                                tr('byX', args: [app.author]),
+                                t('byX', args: [app.author]),
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
                                       color: Theme.of(
@@ -783,18 +775,12 @@ class _AppPageState extends State<AppPage> {
                               bottom: 32,
                             ),
                             child: Semantics(
-                              label: tr('downloadProgress'),
+                              label: t('downloadProgress'),
                               value: '${app.downloadProgress!.toInt()}%',
-                              child: LinearProgressIndicator(
+                              child: LinearProgressIndicatorM3E(
                                 value: app.downloadProgress! >= 0
                                     ? app.downloadProgress! / 100
                                     : null,
-                                backgroundColor: Theme.of(
-                                  context,
-                                ).colorScheme.surfaceContainerHighest,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Theme.of(context).colorScheme.primary,
-                                ),
                               ),
                             ),
                           ),
@@ -815,8 +801,8 @@ class _AppPageState extends State<AppPage> {
                     if (app.app.installedVersion != null)
                       M3FloatingToolbarAction(
                         icon: Icons.open_in_new,
-                        semanticLabel: tr('open'),
-                        tooltip: tr('open'),
+                        semanticLabel: t('open'),
+                        tooltip: t('open'),
                         onPressed: () {
                           pm.openApp(app.app.id);
                         },
@@ -826,8 +812,8 @@ class _AppPageState extends State<AppPage> {
                         source.combinedAppSpecificSettingFormItems.isNotEmpty)
                       M3FloatingToolbarAction(
                         icon: Icons.edit,
-                        semanticLabel: tr('additionalOptions'),
-                        tooltip: tr('additionalOptions'),
+                        semanticLabel: t('additionalOptions'),
+                        tooltip: t('additionalOptions'),
                         onPressed: () {
                           showAdditionalOptionsDialog().then(
                             handleAdditionalOptionChanges,
@@ -839,13 +825,13 @@ class _AppPageState extends State<AppPage> {
                             app.app.otherAssetUrls.isNotEmpty == true))
                       M3FloatingToolbarAction(
                         icon: Icons.archive,
-                        semanticLabel: tr(
+                        semanticLabel: t(
                           'downloadX',
-                          args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+                          args: [lowerCaseIfEnglish(t('releaseAsset'))],
                         ),
-                        tooltip: tr(
+                        tooltip: t(
                           'downloadX',
-                          args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+                          args: [lowerCaseIfEnglish(t('releaseAsset'))],
                         ),
                         onPressed: () async {
                           try {
@@ -859,8 +845,8 @@ class _AppPageState extends State<AppPage> {
                       ),
                     M3FloatingToolbarAction(
                       icon: Icons.delete,
-                      semanticLabel: tr('remove'),
-                      tooltip: tr('remove'),
+                      semanticLabel: t('remove'),
+                      tooltip: t('remove'),
                       onPressed: () async {
                         final removedApps = await appsProvider
                             .removeAppsWithModal(context, [app.app]);
@@ -868,9 +854,9 @@ class _AppPageState extends State<AppPage> {
                           if (mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(tr('appRemoved')),
+                                content: Text(t('appRemoved')),
                                 action: SnackBarAction(
-                                  label: tr('undo'),
+                                  label: t('undo'),
                                   onPressed: () {
                                     appsProvider.undoRestoreApps(removedApps);
                                   },

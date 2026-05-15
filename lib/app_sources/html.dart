@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/components/generated_form.dart';
@@ -214,10 +214,10 @@ class HTML extends AppSource {
     return super.combinedAppSpecificSettingFormItems.map((r) {
       return r.map((e) {
         if (e.key == 'versionExtractionRegEx') {
-          e.label = tr('versionExtractionRegEx');
+          e.label = t('versionExtractionRegEx');
         }
         if (e.key == 'matchGroupToUse') {
-          e.label = tr('matchGroupToUse');
+          e.label = t('matchGroupToUse');
         }
         return e;
       }).toList();
@@ -228,7 +228,7 @@ class HTML extends AppSource {
     [
       GeneratedFormTextField(
         'customLinkFilterRegex',
-        label: tr('customLinkFilterRegex'),
+        label: t('customLinkFilterRegex'),
         hint: 'download/(.*/)?(android|apk|mobile)',
         required: false,
         additionalValidators: [
@@ -241,24 +241,24 @@ class HTML extends AppSource {
     [
       GeneratedFormSwitch(
         'versionExtractWholePage',
-        label: tr('versionExtractWholePage'),
+        label: t('versionExtractWholePage'),
       ),
     ],
   ];
   var commonFormItems = [
-    [GeneratedFormSwitch('filterByLinkText', label: tr('filterByLinkText'))],
+    [GeneratedFormSwitch('filterByLinkText', label: t('filterByLinkText'))],
     [
       GeneratedFormSwitch(
         'matchLinksOutsideATags',
-        label: tr('matchLinksOutsideATags'),
+        label: t('matchLinksOutsideATags'),
       ),
     ],
-    [GeneratedFormSwitch('skipSort', label: tr('skipSort'))],
-    [GeneratedFormSwitch('reverseSort', label: tr('takeFirstLink'))],
+    [GeneratedFormSwitch('skipSort', label: t('skipSort'))],
+    [GeneratedFormSwitch('reverseSort', label: t('takeFirstLink'))],
     [
       GeneratedFormSwitch(
         'sortByLastLinkSegment',
-        label: tr('sortByLastLinkSegment'),
+        label: t('sortByLastLinkSegment'),
       ),
     ],
   ];
@@ -266,7 +266,7 @@ class HTML extends AppSource {
     [
       GeneratedFormTextField(
         'customLinkFilterRegex',
-        label: tr('intermediateLinkRegex'),
+        label: t('intermediateLinkRegex'),
         hint: '([0-9]+.)*[0-9]+/\$',
         required: true,
         additionalValidators: [(value) => regExValidator(value)],
@@ -275,19 +275,19 @@ class HTML extends AppSource {
     [
       GeneratedFormSwitch(
         'autoLinkFilterByArch',
-        label: tr('autoLinkFilterByArch'),
+        label: t('autoLinkFilterByArch'),
         defaultValue: false,
       ),
     ],
   ];
   HTML() {
-    name = tr('html');
+    name = t('html');
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormSubForm('intermediateLink', [
           ...intermediateFormItems,
           ...commonFormItems,
-        ], label: tr('intermediateLink')),
+        ], label: t('intermediateLink')),
       ],
       finalStepFormitems[0],
       ...commonFormItems,
@@ -299,7 +299,7 @@ class HTML extends AppSource {
             [
               GeneratedFormTextField(
                 'requestHeader',
-                label: tr('requestHeader'),
+                label: t('requestHeader'),
                 required: false,
                 additionalValidators: [
                   (value) {
@@ -309,7 +309,7 @@ class HTML extends AppSource {
                             .where((e) => e.isNotEmpty)
                             .length <
                         2) {
-                      return tr('invalidInput');
+                      return t('invalidInput');
                     }
                     return null;
                   },
@@ -317,7 +317,7 @@ class HTML extends AppSource {
               ),
             ],
           ],
-          label: tr('requestHeader'),
+          label: t('requestHeader'),
           defaultValue: [
             {
               'requestHeader':
@@ -330,11 +330,11 @@ class HTML extends AppSource {
         GeneratedFormDropdown(
           'defaultPseudoVersioningMethod',
           [
-            MapEntry('partialAPKHash', tr('partialAPKHash')),
-            MapEntry('APKLinkHash', tr('APKLinkHash')),
+            MapEntry('partialAPKHash', t('partialAPKHash')),
+            MapEntry('APKLinkHash', t('APKLinkHash')),
             MapEntry('ETag', 'ETag'),
           ],
-          label: tr('defaultPseudoVersioningMethod'),
+          label: t('defaultPseudoVersioningMethod'),
           defaultValue: 'partialAPKHash',
         ),
       ],
@@ -469,7 +469,7 @@ class HTML extends AppSource {
             : uri.origin;
         return MapEntry('${e.hashCode}-$fileName', e);
       }).toList(),
-      AppNames(uri.host, tr('app')),
+      AppNames(uri.host, t('app')),
     );
   }
 }

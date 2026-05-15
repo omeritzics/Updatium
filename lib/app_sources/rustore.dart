@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter_charset_detector/flutter_charset_detector.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -9,7 +9,7 @@ import 'package:updatium/providers/source_provider.dart';
 class RuStore extends AppSource {
   RuStore() {
     hosts = ['rustore.ru'];
-    name = tr('rustore');
+    name = t('rustore');
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
   }
@@ -59,7 +59,7 @@ class RuStore extends AppSource {
     if (appDetails['appId'] == null) {
       throw NoReleasesError();
     }
-    String appName = appDetails['appName'] ?? tr('app');
+    String appName = appDetails['appName'] ?? t('app');
     String author = appDetails['companyName'] ?? name;
     String? dateStr = appDetails['appVerUpdatedAt'];
     String? version = appDetails['versionName'];
