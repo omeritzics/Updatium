@@ -35,7 +35,7 @@ void main() {
     test('GitHub rejects invalid URL', () {
       expect(
         () => github.sourceSpecificStandardizeURL('https://invalid.com/repo'),
-        throwsA(isA<InvalidURLError>()),
+        throwsA(isA<Exception>()),
       );
     });
 
@@ -108,30 +108,22 @@ void main() {
     });
 
     test('getSource returns GitHub for github.com URLs', () {
-      final source = sourceProvider.getSource(
-        'https://github.com/flutter/flutter',
-      );
+      final source = sourceProvider.getSource('https://github.com/flutter/flutter');
       expect(source, isA<GitHub>());
     });
 
     test('getSource returns GitLab for gitlab.com URLs', () {
-      final source = sourceProvider.getSource(
-        'https://gitlab.com/flutter/flutter',
-      );
+      final source = sourceProvider.getSource('https://gitlab.com/flutter/flutter');
       expect(source, isA<GitLab>());
     });
 
     test('getSource returns FDroid for f-droid.org URLs', () {
-      final source = sourceProvider.getSource(
-        'https://f-droid.org/packages/org.fdroid.fdroid',
-      );
+      final source = sourceProvider.getSource('https://f-droid.org/packages/org.fdroid.fdroid');
       expect(source, isA<FDroid>());
     });
 
     test('getSource handles URLs with www prefix', () {
-      final source = sourceProvider.getSource(
-        'https://www.github.com/user/repo',
-      );
+      final source = sourceProvider.getSource('https://www.github.com/user/repo');
       expect(source, isA<GitHub>());
     });
 

@@ -170,7 +170,7 @@ void main() {
 
   group('DownloadedApk Tests', () {
     test('DownloadedApk stores properties', () {
-      final apk = DownloadedApk('com.example.app', File('/path/to/app.apk'));
+      final apk = DownloadedApk('com.example.app', '/path/to/app.apk' as File);
       expect(apk.appId, equals('com.example.app'));
       expect(apk.file.path, equals('/path/to/app.apk'));
     });

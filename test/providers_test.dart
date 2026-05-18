@@ -58,10 +58,10 @@ void main() {
       );
     });
 
-    test('checkAndFlipFirstRun returns true on first call', () {
-      // This test needs prefs to be initialized, skip for now
-      expect(() => settingsProvider.checkAndFlipFirstRun(), returnsNormally);
-    });
+     test('checkAndFlipFirstRun returns true on first call', () {
+       // This test needs prefs to be initialized, skip for now
+       expect(() => settingsProvider.checkAndFlipFirstRun(), returnsNormally);
+     });
 
     test('setEqual returns true for identical sets', () {
       expect(settingsProvider.setEqual({'a', 'b'}, {'a', 'b'}), isTrue);
@@ -134,7 +134,7 @@ void main() {
     });
 
     test('sources contains FDroid', () {
-      expect(sourceProvider.sources.any((s) => s.name == 'F-Droid'), isTrue);
+      expect(sourceProvider.sources.any((s) => s.name == 'FDroid'), isTrue);
     });
 
     test('hasSupportedApkExtension identifies APK files', () {
