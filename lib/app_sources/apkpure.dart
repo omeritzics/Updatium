@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:updatium/services/slang-converter.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 extension Unique<E, Id> on List<E> {
@@ -16,7 +15,7 @@ extension Unique<E, Id> on List<E> {
 class APKPure extends AppSource {
   APKPure() {
     hosts = ['apkpure.net', 'apkpure.com'];
-    name = t('apkpure');
+    name = 'APKPure';
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;

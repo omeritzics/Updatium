@@ -122,9 +122,27 @@ android {
             versionNameSuffix = "-debug"
         }
     }
+
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("arm64-v8a", "armeabi-v7a")
+            universalApk = false
+        }
+    }
+
+    androidComponents {
+        onVariants { variant ->
+            val abiCodes = mapOf("arm64-v8a" to 1, "armeabi-v7a" to 2)
+            variant.outputs.all { output ->
+                val abiName = output.filters.find { it.filterType == "ABI" }?.value ?: "universal"
+                val abiCode = abiCodes[abiName] ?: 0
+                output.versionCode.set(variant.versionCode.get() * 10 + abiCode)
+            }
+        }
+    }
 }
-
-
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")

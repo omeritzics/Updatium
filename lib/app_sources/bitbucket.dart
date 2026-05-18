@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class Bitbucket extends AppSource {
   Bitbucket({bool hostChanged = false}) {
-    name = t('bitbucket');
+    name = 'Bitbucket';
     hosts = ['bitbucket.org'];
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
