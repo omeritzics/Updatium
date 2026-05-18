@@ -1,12 +1,11 @@
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/services/slang-converter.dart';
 
 class IzzyOnDroid extends AppSource {
   late FDroid fd;
   IzzyOnDroid() {
     hosts = ['izzysoft.de'];
-    name = t('izzyondroid');
+    name = 'IzzyOnDroid';
     openSource = true;
     fd = FDroid();
     additionalSourceAppSpecificSettingFormItems =
