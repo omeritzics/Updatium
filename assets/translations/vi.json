@@ -454,8 +454,8 @@
         "other": "{} ngày"
     },
     "clearedNLogsBeforeXAfterY": {
-        "one": "Đã xóa {n} nhật ký (trước = {trước}, sau = {sau})",
-        "other": "Đã xóa {n} nhật ký (trước = {trước}, sau = {sau})"
+        "one": "Đã xóa {n} nhật ký (trước = {before}, sau = {after})",
+        "other": "Đã xóa {n} nhật ký (trước = {before}, sau = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{} và 1 ứng dụng khác có bản cập nhật.",

@@ -245,8 +245,8 @@ void main() {
         final content = File(file.path).readAsStringSync();
         final fileName = path.basename(file.path);
 
-        // Count occurrences of each key pattern
-        final keyPattern = RegExp(r'"([^"]+)"\s*:');
+        // Count occurrences of each top-level key (nested keys are allowed to repeat across different parent objects)
+        final keyPattern = RegExp(r'^\s*"([^"]+)"\s*:', multiLine: true);
         final matches = keyPattern.allMatches(content);
         final keyCounts = <String, int>{};
 

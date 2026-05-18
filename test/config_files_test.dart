@@ -255,7 +255,7 @@ void main() {
         // Check for Updatium package name
         expect(
           content,
-          contains('com.omeritzics.updatium'),
+          contains('io.github.omeritzics.updatium'),
           reason: 'build.gradle.kts should use correct package name',
         );
       }
