@@ -25,13 +25,16 @@ void main() {
       final englishContent = await englishFile.readAsString();
       englishTranslations = json.decode(englishContent) as Map<String, dynamic>;
 
-       // Get all translation files
-       translationFiles = translationsDir
-           .listSync()
-           .where((file) => file.path.endsWith('.json') && 
-                            !file.path.endsWith('package.json') && 
-                            !file.path.endsWith('package-lock.json'))
-           .toList();
+      // Get all translation files
+      translationFiles = translationsDir
+          .listSync()
+          .where(
+            (file) =>
+                file.path.endsWith('.json') &&
+                !file.path.endsWith('package.json') &&
+                !file.path.endsWith('package-lock.json'),
+          )
+          .toList();
     });
 
     test('translations directory exists and contains files', () {
@@ -311,26 +314,29 @@ void main() {
       );
     });
 
-     test('all translation files use UTF-8 encoding', () {
-       final translationFiles = translationsDir
-           .listSync()
-           .where((file) => file.path.endsWith('.json') && 
-                            !file.path.endsWith('package.json') && 
-                            !file.path.endsWith('package-lock.json'))
-           .toList();
+    test('all translation files use UTF-8 encoding', () {
+      final translationFiles = translationsDir
+          .listSync()
+          .where(
+            (file) =>
+                file.path.endsWith('.json') &&
+                !file.path.endsWith('package.json') &&
+                !file.path.endsWith('package-lock.json'),
+          )
+          .toList();
 
-       for (final file in translationFiles) {
-         final bytes = File(file.path).readAsBytesSync();
-         final fileName = path.basename(file.path);
+      for (final file in translationFiles) {
+        final bytes = File(file.path).readAsBytesSync();
+        final fileName = path.basename(file.path);
 
-         // Try to decode as UTF-8, should not throw
-         expect(
-           () => utf8.decode(bytes),
-           returnsNormally,
-           reason: 'File $fileName should be valid UTF-8',
-         );
-       }
-     });
+        // Try to decode as UTF-8, should not throw
+        expect(
+          () => utf8.decode(bytes),
+          returnsNormally,
+          reason: 'File $fileName should be valid UTF-8',
+        );
+      }
+    });
   });
 
   group('Translation Consistency Tests', () {
@@ -351,44 +357,47 @@ void main() {
       englishTranslations = json.decode(englishContent) as Map<String, dynamic>;
     });
 
-     test('placeholder counts match between English and translations', () {
-       final translationFiles = translationsDir
-           .listSync()
-           .where((file) => file.path.endsWith('.json') && 
-                            !file.path.endsWith('package.json') && 
-                            !file.path.endsWith('package-lock.json'))
-           .toList();
+    test('placeholder counts match between English and translations', () {
+      final translationFiles = translationsDir
+          .listSync()
+          .where(
+            (file) =>
+                file.path.endsWith('.json') &&
+                !file.path.endsWith('package.json') &&
+                !file.path.endsWith('package-lock.json'),
+          )
+          .toList();
 
-       for (final file in translationFiles) {
-         final fileName = path.basename(file.path);
-         if (fileName == 'en.json') continue;
+      for (final file in translationFiles) {
+        final fileName = path.basename(file.path);
+        if (fileName == 'en.json') continue;
 
-         final content = File(file.path).readAsStringSync();
-         final translations = json.decode(content) as Map<String, dynamic>;
+        final content = File(file.path).readAsStringSync();
+        final translations = json.decode(content) as Map<String, dynamic>;
 
-         for (final key in englishTranslations.keys) {
-           if (!translations.containsKey(key)) continue;
+        for (final key in englishTranslations.keys) {
+          if (!translations.containsKey(key)) continue;
 
-           final enValue = englishTranslations[key];
-           final transValue = translations[key];
+          final enValue = englishTranslations[key];
+          final transValue = translations[key];
 
-           if (enValue is String && transValue is String) {
-             final enPlaceholders = RegExp(
-               r'\{[^}]*\}',
-             ).allMatches(enValue).length;
-             final transPlaceholders = RegExp(
-               r'\{[^}]*\}',
-             ).allMatches(transValue).length;
+          if (enValue is String && transValue is String) {
+            final enPlaceholders = RegExp(
+              r'\{[^}]*\}',
+            ).allMatches(enValue).length;
+            final transPlaceholders = RegExp(
+              r'\{[^}]*\}',
+            ).allMatches(transValue).length;
 
-             expect(
-               transPlaceholders,
-               equals(enPlaceholders),
-               reason:
-                   'In $fileName at key "$key": expected $enPlaceholders placeholders, found $transPlaceholders',
-             );
-           }
-         }
-       }
-     });
+            expect(
+              transPlaceholders,
+              equals(enPlaceholders),
+              reason:
+                  'In $fileName at key "$key": expected $enPlaceholders placeholders, found $transPlaceholders',
+            );
+          }
+        }
+      }
+    });
   });
 }
