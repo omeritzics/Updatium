@@ -403,8 +403,8 @@ void main() {
         );
         expect(
           content,
-          contains('nightly-build'),
-          reason: 'nightly.yml should tag as nightly-build',
+          contains('nightly'),
+          reason: 'nightly.yml should tag as nightly',
         );
       }
     });

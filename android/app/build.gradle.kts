@@ -1,6 +1,5 @@
 import java.io.FileInputStream
 import java.util.Properties
-import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 
 plugins {
     id("com.android.application")
@@ -128,7 +127,7 @@ android {
             isEnable = true
             reset()
             include("arm64-v8a", "armeabi-v7a")
-            universalApk = false
+            isUniversalApk = false
         }
     }
 
@@ -136,11 +135,17 @@ android {
         onVariants { variant ->
             val abiCodes = mapOf("arm64-v8a" to 1, "armeabi-v7a" to 2)
             variant.outputs.all { output ->
-                val abiName = output.filters.find { it.filterType == "ABI" }?.value ?: "universal"
+                val abiName = output.filters.find { it.filterType.name == "ABI" }?.identifier ?: "universal"
                 val abiCode = abiCodes[abiName] ?: 0
-                output.versionCode.set(variant.versionCode.get() * 10 + abiCode)
+                output.versionCode.set(variant.versionCode * 10 + abiCode)
             }
-        }
+        }Expected: true
+  Actual: <false>
+File package-lock.json should contain security key "securityDisclaimerTitle"
+
+package:matcher                                     expect
+package:flutter_test/src/widget_tester.dart 473:18  expect
+test/translations_test.dart 289:11                  main.<fn>.<fn>
     }
 }
 

@@ -35,7 +35,7 @@ void main() {
     test('GitHub rejects invalid URL', () {
       expect(
         () => github.sourceSpecificStandardizeURL('https://invalid.com/repo'),
-        throwsA(isA<Exception>()),
+        throwsA(isA<InvalidURLError>()),
       );
     });
 
