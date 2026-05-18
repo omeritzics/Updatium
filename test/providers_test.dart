@@ -58,10 +58,10 @@ void main() {
       );
     });
 
-     test('checkAndFlipFirstRun returns true on first call', () {
-       // This test needs prefs to be initialized, skip for now
-       expect(() => settingsProvider.checkAndFlipFirstRun(), returnsNormally);
-     });
+    test('checkAndFlipFirstRun returns true on first call', () {
+      // This test needs prefs to be initialized, skip for now
+      expect(() => settingsProvider.checkAndFlipFirstRun(), returnsNormally);
+    });
 
     test('setEqual returns true for identical sets', () {
       expect(settingsProvider.setEqual({'a', 'b'}, {'a', 'b'}), isTrue);
