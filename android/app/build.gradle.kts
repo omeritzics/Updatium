@@ -139,13 +139,7 @@ android {
                 val abiCode = abiCodes[abiName] ?: 0
                 output.versionCode.set(variant.versionCode * 10 + abiCode)
             }
-        }Expected: true
-  Actual: <false>
-File package-lock.json should contain security key "securityDisclaimerTitle"
-
-package:matcher                                     expect
-package:flutter_test/src/widget_tester.dart 473:18  expect
-test/translations_test.dart 289:11                  main.<fn>.<fn>
+        }
     }
 }
 
