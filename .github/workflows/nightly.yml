@@ -11,7 +11,7 @@ on:
 
 jobs:
   prepare:
-    runs-on: ubuntu-latest
+    runs-on: debian-latest
     outputs:
       has_changes: ${{ steps.changes.outputs.has_changes }}
     steps:
