@@ -73,6 +73,7 @@ class GitLab extends AppSource {
     return creds != null && creds.isNotEmpty ? creds : null;
   }
 
+  @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
@@ -94,9 +95,11 @@ class GitLab extends AppSource {
     return results;
   }
 
+  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/-/releases';
 
+  @override
   Future<Map<String, String>?> getRequestHeaders(
     Map<String, dynamic> additionalSettings,
     String url, {

@@ -85,6 +85,7 @@ class Bitbucket extends AppSource {
     return null;
   }
 
+  @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
@@ -109,6 +110,7 @@ class Bitbucket extends AppSource {
     return results;
   }
 
+  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/downloads';
 
