@@ -138,6 +138,7 @@ android {
                 val abiName = output.filters.find { it.filterType.name == "ABI" }?.identifier ?: "universal"
                 val abiCode = abiCodes[abiName] ?: 0
                 output.versionCode.set(flutterVersionCode.toInt() * 10 + abiCode)
+                true
             }
         }
     }
