@@ -20,6 +20,7 @@ class APKCombo extends AppSource {
     );
   }
 
+  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
@@ -108,6 +109,7 @@ class APKCombo extends AppSource {
         .toList();
   }
 
+  @override
   Future<String> assetUrlPrefetchModifier(
     String assetUrl,
     String standardUrl,
@@ -186,9 +188,6 @@ class APKCombo extends AppSource {
             releaseDate = DateFormat('yyyy-MM-dd').parse(dateString);
           } catch (isoDateError) {
             // Log all failed date parsing attempts for debugging
-            print(
-              'Failed to parse APKCombo release date "$dateString" with formats: MMMM d, yyyy ($fullMonthError), MMM d, yyyy ($abbrevMonthError), yyyy-MM-dd ($isoDateError)',
-            );
             // releaseDate remains null for graceful degradation
           }
         }

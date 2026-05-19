@@ -376,7 +376,7 @@ Future<File> downloadFile(
   req.headers.addAll(reqHeaders);
   var headersClient = IOClient(createHttpClient(allowInsecure));
   http.StreamedResponse headersResponse;
-  var resHeaders;
+  Map<String, String> resHeaders;
 
   try {
     headersResponse = await headersClient.send(req);
@@ -773,7 +773,7 @@ class AppsProvider with ChangeNotifier {
           createHttpClient(app.additionalSettings['allowInsecure'] == true),
         );
         http.StreamedResponse headersResponse;
-        var resHeaders;
+        Map<String, String> resHeaders;
         try {
           headersResponse = await headersClient.send(req);
           resHeaders = headersResponse.headers;

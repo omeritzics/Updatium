@@ -1,4 +1,5 @@
 import java.io.FileInputStream
+
 import java.util.Properties
 
 plugins {
@@ -30,7 +31,7 @@ android {
     namespace = "io.github.omeritzics.updatium"
     compileSdk = 36
     ndkVersion = "28.2.13676358"
-    
+
     buildFeatures {
         buildConfig = true
     }
@@ -90,7 +91,6 @@ android {
                                      You will need to sign the APKs separately.
 
                             To sign a release build automatically, a keystore properties file is required.
-
                             The following is an example configuration.
                             Create a file named [project]/android/key.properties that contains a reference to your keystore.
                             Don't include the angle brackets (< >). They indicate that the text serves as a placeholder for your values.
@@ -107,7 +107,7 @@ android {
                 }
                 null
             }
-            
+
             // APK size optimizations for F-Droid/IzzyOnDroid (30MB limit)
             isMinifyEnabled = true
             isShrinkResources = true
@@ -122,6 +122,7 @@ android {
         }
     }
 
+    /*
     splits {
         abi {
             isEnable = true
@@ -130,6 +131,7 @@ android {
             isUniversalApk = false
         }
     }
+    */
 
     androidComponents {
         onVariants { variant ->
@@ -138,6 +140,7 @@ android {
                 val abiName = output.filters.find { it.filterType.name == "ABI" }?.identifier ?: "universal"
                 val abiCode = abiCodes[abiName] ?: 0
                 output.versionCode.set(flutterVersionCode.toInt() * 10 + abiCode)
+                true
             }
         }
     }

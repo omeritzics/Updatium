@@ -35,6 +35,7 @@ class APKMirror extends AppSource {
     );
   }
 
+  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/#whatsnew';
 

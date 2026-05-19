@@ -139,9 +139,7 @@ void main() {
 
         // Warn about extra keys (not a failure, might be intentional)
         for (final key in translations.keys) {
-          if (!englishTranslations.containsKey(key)) {
-            print('Note: File $fileName has extra key "$key" not in en.json');
-          }
+          if (!englishTranslations.containsKey(key)) {}
         }
       }
     });

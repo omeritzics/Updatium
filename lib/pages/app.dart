@@ -162,7 +162,7 @@ class _AppPageState extends State<AppPage> {
       if (installedVersionIsEstimate) {
         infoLines = '${t('pseudoVersionInUse')}\n$infoLines';
       }
-      if (app.app.apkUrls.length > 0) {
+      if (app.app.apkUrls.isNotEmpty) {
         infoLines =
             '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : plural('apk', app.app.apkUrls.length)}';
       }
