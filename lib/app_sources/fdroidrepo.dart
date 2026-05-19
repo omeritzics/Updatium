@@ -89,6 +89,7 @@ class FDroidRepo extends AppSource {
     }
   }
 
+  @override
   void runOnAddAppInputChange(String userInput) {
     additionalSourceAppSpecificSettingFormItems =
         additionalSourceAppSpecificSettingFormItems.map((row) {
@@ -109,6 +110,7 @@ class FDroidRepo extends AppSource {
         }).toList();
   }
 
+  @override
   App endOfGetAppChanges(App app) {
     var uri = Uri.parse(app.url);
     String? appId;
