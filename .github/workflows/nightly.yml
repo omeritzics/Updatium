@@ -11,7 +11,7 @@ on:
 
 jobs:
   prepare:
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-latest
     outputs:
       has_changes: ${{ steps.changes.outputs.has_changes }}
     steps:
@@ -38,9 +38,6 @@ jobs:
             ~/.gradle/wrapper
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
 
-      - name: Setup Java
-        run: sudo apt-get install default-jre -y
-
       - name: Setup Flutter
         uses: subosito/flutter-action@main
         with:
@@ -51,7 +48,7 @@ jobs:
         run: flutter pub get
 
       - name: Upgrade existing dependencies
-        run: flutter pub upgrade
+        run: flutter pub upgrade --major-versions
         
       - name: Check for code changes
         id: changes
@@ -118,10 +115,7 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
 
       - name: Setup Java
-        uses: actions/setup-java@main
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+        run: sudo apt-get install default-jre default-jdk -y
 
       - name: Setup Flutter
         uses: subosito/flutter-action@main
