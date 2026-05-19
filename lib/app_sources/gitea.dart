@@ -89,6 +89,7 @@ class Gitea extends AppSource {
     }
   }
 
+  @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
@@ -113,6 +114,7 @@ class Gitea extends AppSource {
     return results;
   }
 
+  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/releases';
 
