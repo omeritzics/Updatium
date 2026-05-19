@@ -95,6 +95,7 @@ dependencies:
   m3e_buttons: ^0.0.3
   progress_indicator_m3e: ^0.1.1
   dynamic_color: ^1.8.1
+  dynamic_system_colors: any
 flutter_launcher_icons:
   android: "ic_launcher"
   image_path: "assets/graphics/icon.png"
