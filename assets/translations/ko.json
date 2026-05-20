@@ -76,7 +76,7 @@
     "removeSelectedApps": "선택한 앱 제거",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "{} 업데이트",
     "installX": "{} 설치",
@@ -422,60 +422,60 @@
         "other": "앱을 제거하시겠습니까?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "요청이 너무 많습니다 (속도 제한) - {}분 후에 다시 시도하세요",
-        "other": "요청이 너무 많습니다 (속도 제한) - {}분 후에 다시 시도하세요"
+        "one": "요청이 너무 많습니다 (속도 제한) - {count}분 후에 다시 시도하세요",
+        "other": "요청이 너무 많습니다 (속도 제한) - {count}분 후에 다시 시도하세요"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "BG 업데이트 확인 중 {} 오류가 발생했습니다. {}분 후에 다시 확인을 예약합니다",
-        "other": "BG 업데이트 확인 중 {} 오류가 발생했습니다. {}분 후에 다시 확인을 예약합니다"
+        "one": "BG 업데이트 확인 중 {error} 오류가 발생했습니다. {count}분 후에 다시 확인을 예약합니다",
+        "other": "BG 업데이트 확인 중 {error} 오류가 발생했습니다. {count}분 후에 다시 확인을 예약합니다"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "BG 업데이트 확인에서 {}개의 업데이트를 발견했습니다 - 필요 시 사용자에게 알립니다",
-        "other": "BG 업데이트 확인에서 {}개의 업데이트를 발견했습니다 - 필요 시 사용자에게 알립니다"
+        "one": "BG 업데이트 확인에서 {count}개의 업데이트를 발견했습니다 - 필요 시 사용자에게 알립니다",
+        "other": "BG 업데이트 확인에서 {count}개의 업데이트를 발견했습니다 - 필요 시 사용자에게 알립니다"
     },
     "apps": {
-        "one": "{} 앱",
-        "other": "{} 앱"
+        "one": "{count} 앱",
+        "other": "{count} 앱"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL"
+        "one": "{count} URL",
+        "other": "{count} URL"
     },
     "minute": {
-        "one": "{} 분",
-        "other": "{} 분"
+        "one": "{count} 분",
+        "other": "{count} 분"
     },
     "hour": {
-        "one": "{} 시간",
-        "other": "{} 시간"
+        "one": "{count} 시간",
+        "other": "{count} 시간"
     },
     "day": {
-        "one": "{} 일",
-        "other": "{} 일"
+        "one": "{count} 일",
+        "other": "{count} 일"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n}개의 로그가 지워졌습니다 (이전 = {before}, 이후 = {after})",
         "other": "{n}개의 로그가 지워졌습니다 (이전 = {before}, 이후 = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} 및 1개의 앱에 업데이트가 있습니다.",
-        "other": "{} 및 {}개의 앱에 업데이트가 있습니다."
+        "one": "{app} 및 1개의 앱에 업데이트가 있습니다.",
+        "other": "{app} 및 {count}개의 앱에 업데이트가 있습니다."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} 및 1개의 앱이 업데이트되었습니다.",
-        "other": "{} 및 {}개의 앱이 업데이트되었습니다."
+        "one": "{app} 및 1개의 앱이 업데이트되었습니다.",
+        "other": "{app} 및 {count}개의 앱이 업데이트되었습니다."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "{} 및 1개의 앱 업데이트에 실패했습니다.",
-        "other": "{} 및 {}개의 앱 업데이트에 실패했습니다."
+        "one": "{app} 및 1개의 앱 업데이트에 실패했습니다.",
+        "other": "{app} 및 {count}개의 앱 업데이트에 실패했습니다."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} 및 1개의 앱이 업데이트되었을 수 있습니다.",
-        "other": "{} 및 {}개의 앱이 업데이트되었을 수 있습니다."
+        "one": "{app} 및 1개의 앱이 업데이트되었을 수 있습니다.",
+        "other": "{app} 및 {count}개의 앱이 업데이트되었을 수 있습니다."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
+        "one": "{count} APK",
+        "other": "{count} APK"
     },
     "certificateHash": {
         "one": "인증서 해시",

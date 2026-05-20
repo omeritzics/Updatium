@@ -76,7 +76,7 @@
     "removeSelectedApps": "Eliminar aplicaciones seleccionadas",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Actualizar {}",
     "installX": "Instalar {}",
@@ -422,60 +422,60 @@
         "other": "¿Eliminar las aplicaciones?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Muchas peticiones (limitado); pruebe de nuevo en {} minuto",
-        "other": "Muchas peticiones (limitado); pruebe de nuevo en {} minutos"
+        "one": "Muchas peticiones (limitado); pruebe de nuevo en {count} minuto",
+        "other": "Muchas peticiones (limitado); pruebe de nuevo en {count} minutos"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "La comprobación de actualizaciones en segundo plano se ha encontrado un {}; se volverá a probar en {} minuto",
-        "other": "La comprobación de actualizaciones en segundo plano se ha encontrado un {}; se volverá a probar en {} minutos"
+        "one": "La comprobación de actualizaciones en segundo plano se ha encontrado un {error}; se volverá a probar en {count} minuto",
+        "other": "La comprobación de actualizaciones en segundo plano se ha encontrado un {error}; se volverá a probar en {count} minutos"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "La comprobación de actualizaciones en segundo plano ha encontrado {} actualización; se le notificará si es necesario",
-        "other": "La comprobación de actualizaciones en segundo plano ha encontrado {} actualizaciones; se le notificará si es necesario"
+        "one": "La comprobación de actualizaciones en segundo plano ha encontrado {count} actualización; se le notificará si es necesario",
+        "other": "La comprobación de actualizaciones en segundo plano ha encontrado {count} actualizaciones; se le notificará si es necesario"
     },
     "apps": {
-        "one": "{} aplicación",
-        "other": "{} aplicaciones"
+        "one": "{count} aplicación",
+        "other": "{count} aplicaciones"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL"
+        "one": "{count} URL",
+        "other": "{count} URL"
     },
     "minute": {
-        "one": "{} minuto",
-        "other": "{} minutos"
+        "one": "{count} minuto",
+        "other": "{count} minutos"
     },
     "hour": {
-        "one": "{} hora",
-        "other": "{} horas"
+        "one": "{count} hora",
+        "other": "{count} horas"
     },
     "day": {
-        "one": "{} día",
-        "other": "{} días"
+        "one": "{count} día",
+        "other": "{count} días"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Eliminado {n} registro (previo a = {before}, posterior a = {after})",
         "other": "Eliminados {n} registros (previos a = {before}, posteriores a = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} y 1 aplicación más tiene actualizaciones.",
-        "other": "{} y {} aplicaciones más tienen actualizaciones."
+        "one": "{app} y 1 aplicación más tiene actualizaciones.",
+        "other": "{app} y {count} aplicaciones más tienen actualizaciones."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} y 1 aplicación más se han actualizado.",
-        "other": "{} y {} aplicaciones más se han actualizado."
+        "one": "{app} y 1 aplicación más se han actualizado.",
+        "other": "{app} y {count} aplicaciones más se han actualizado."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Error al actualizar {} y 1 aplicación más.",
-        "other": "No se han podido actualizar {} y {} aplicaciones más."
+        "one": "Error al actualizar {app} y 1 aplicación más.",
+        "other": "No se han podido actualizar {app} y {count} aplicaciones más."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} y 1 aplicación más podría haber sido actualizada.",
-        "other": "{} y {} aplicaciones más podrían haber sido actualizadas."
+        "one": "{app} y 1 aplicación más podría haber sido actualizada.",
+        "other": "{app} y {count} aplicaciones más podrían haber sido actualizadas."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
+        "one": "{count} APK",
+        "other": "{count} APKs"
     },
     "certificateHash": {
         "one": "Certificado Hash",

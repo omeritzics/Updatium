@@ -76,7 +76,7 @@
     "removeSelectedApps": "移除選取的應用程式",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "更新 {}",
     "installX": "安裝 {}",
@@ -422,60 +422,60 @@
         "other": "移除應用程式？"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "請求過多（速率限制）- {} 分鐘後重試",
-        "other": "請求過多（速率限制）- {} 分鐘後重試"
+        "one": "請求過多（速率限制）- {count} 分鐘後重試",
+        "other": "請求過多（速率限制）- {count} 分鐘後重試"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "背景更新檢查遇到 {}，將在 {} 分鐘後重新檢查",
-        "other": "背景更新檢查遇到 {}，將在 {} 分鐘後重新檢查"
+        "one": "背景更新檢查遇到 {error}，將在 {count} 分鐘後重新檢查",
+        "other": "背景更新檢查遇到 {error}，將在 {count} 分鐘後重新檢查"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "背景更新檢查發現 {} 個更新 - 如果需要將通知使用者",
-        "other": "背景更新檢查發現 {} 個更新 - 如果需要將通知使用者"
+        "one": "背景更新檢查發現 {count} 個更新 - 如果需要將通知使用者",
+        "other": "背景更新檢查發現 {count} 個更新 - 如果需要將通知使用者"
     },
     "apps": {
-        "one": "{} 個應用程式",
-        "other": "{} 個應用程式"
+        "one": "{count} 個應用程式",
+        "other": "{count} 個應用程式"
     },
     "url": {
-        "one": "{} 個 URL",
-        "other": "{} 個 URL"
+        "one": "{count} 個 URL",
+        "other": "{count} 個 URL"
     },
     "minute": {
-        "one": "{} 分鐘",
-        "other": "{} 分鐘"
+        "one": "{count} 分鐘",
+        "other": "{count} 分鐘"
     },
     "hour": {
-        "one": "{} 小時",
-        "other": "{} 小時"
+        "one": "{count} 小時",
+        "other": "{count} 小時"
     },
     "day": {
-        "one": "{} 天",
-        "other": "{} 天"
+        "one": "{count} 天",
+        "other": "{count} 天"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "清除 {n} 個日誌（之前 = {before}，之後 = {after}）",
         "other": "清除 {n} 個日誌（之前 = {before}，之後 = {after}）"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} 和另外 1 個應用程式有更新。",
-        "other": "{} 和另外 {} 個應用程式有更新。"
+        "one": "{app} 和另外 1 個應用程式有更新。",
+        "other": "{app} 和另外 {count} 個應用程式有更新。"
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} 和另外 1 個應用程式已更新。",
-        "other": "{} 和另外 {} 個應用程式已更新。"
+        "one": "{app} 和另外 1 個應用程式已更新。",
+        "other": "{app} 和另外 {count} 個應用程式已更新。"
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "更新 {} 和另外 1 個應用程式失敗。",
-        "other": "更新 {} 和另外 {} 個應用程式失敗。"
+        "one": "更新 {app} 和另外 1 個應用程式失敗。",
+        "other": "更新 {app} 和另外 {count} 個應用程式失敗。"
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} 和另外 1 個應用程式可能已更新。",
-        "other": "{} 和另外 {} 個應用程式可能已更新。"
+        "one": "{app} 和另外 1 個應用程式可能已更新。",
+        "other": "{app} 和另外 {count} 個應用程式可能已更新。"
     },
     "apk": {
-        "one": "{} 個 APK",
-        "other": "{} 個 APK"
+        "one": "{count} 個 APK",
+        "other": "{count} 個 APK"
     },
     "certificateHash": {
         "one": "憑證雜湊",
