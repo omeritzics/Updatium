@@ -76,7 +76,7 @@
     "removeSelectedApps": "Geselecteerde apps verwijderen",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "{} bijwerken",
     "installX": "{} installeren",
@@ -404,60 +404,60 @@
         "other": "Apps verwijderen?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Te veel verzoeken (aantal beperkt) - opnieuw proberen over {} minuut",
-        "other": "Te veel verzoeken (aantal beperkt) - opnieuw proberen over {} minuten"
+        "one": "Te veel verzoeken (aantal beperkt) - opnieuw proberen over {count} minuut",
+        "other": "Te veel verzoeken (aantal beperkt) - opnieuw proberen over {count} minuten"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Achtergrond-updatecontrole heeft een {}, zal een nieuwe controle plannen over {} minuut",
-        "other": "Achtergrond-updatecontrole heeft een {}, zal een nieuwe controle plannen over {} minuten"
+        "one": "Achtergrond-updatecontrole heeft een {error}, zal een nieuwe controle plannen over {count} minuut",
+        "other": "Achtergrond-updatecontrole heeft een {error}, zal een nieuwe controle plannen over {count} minuten"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Achtergrond-updatecontrole heeft {} update gevonden - zal de gebruiker op de hoogte stellen indien nodig",
-        "other": "Achtergrond-updatecontrole heeft {} updates gevonden - zal de gebruiker op de hoogte stellen indien nodig"
+        "one": "Achtergrond-updatecontrole heeft {count} update gevonden - zal de gebruiker op de hoogte stellen indien nodig",
+        "other": "Achtergrond-updatecontrole heeft {count} updates gevonden - zal de gebruiker op de hoogte stellen indien nodig"
     },
     "apps": {
-        "one": "{} app",
-        "other": "{} apps"
+        "one": "{count} app",
+        "other": "{count} apps"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL's"
+        "one": "{count} URL",
+        "other": "{count} URL's"
     },
     "minute": {
-        "one": "{} minuut",
-        "other": "{} minuten"
+        "one": "{count} minuut",
+        "other": "{count} minuten"
     },
     "hour": {
-        "one": "{} uur",
-        "other": "{} uur"
+        "one": "{count} uur",
+        "other": "{count} uur"
     },
     "day": {
-        "one": "{} dag",
-        "other": "{} dagen"
+        "one": "{count} dag",
+        "other": "{count} dagen"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} logboekitem gewist (voor = {before}, na = {after})",
         "other": "{n} logboekitems gewist (voor = {before}, na = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} en nog 1 app hebben updates.",
-        "other": "{} en nog {} apps hebben updates."
+        "one": "{app} en nog 1 app hebben updates.",
+        "other": "{app} en nog {count} apps hebben updates."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} en nog 1 app is bijgewerkt.",
-        "other": "{} en nog {} apps zijn bijgewerkt."
+        "one": "{app} en nog 1 app is bijgewerkt.",
+        "other": "{app} en nog {count} apps zijn bijgewerkt."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Bijwerken mislukt voor {} en nog 1 app.",
-        "other": "Bijwerken mislukt voor {} en nog {} apps."
+        "one": "Bijwerken mislukt voor {app} en nog 1 app.",
+        "other": "Bijwerken mislukt voor {app} en nog {count} apps."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} en nog 1 app zijn mogelijk bijgewerkt.",
-        "other": "{} en nog {} apps zijn mogelijk bijgwerkt."
+        "one": "{app} en nog 1 app zijn mogelijk bijgewerkt.",
+        "other": "{app} en nog {count} apps zijn mogelijk bijgwerkt."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK's"
+        "one": "{count} APK",
+        "other": "{count} APK's"
     },
     "certificateHash": {
         "one": "Certificaat Hash",

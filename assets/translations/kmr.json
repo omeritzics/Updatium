@@ -76,7 +76,7 @@
     "removeSelectedApps": "Sepanên hilbijartî rakirin",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "{} rojane bike",
     "installX": "{} saz bike",
@@ -404,60 +404,60 @@
         "other": "Sepanên rakirin?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Zêde daxwaz (hat sînor kirin) - dîsa {} deqeyê de biceribîne",
-        "other": "Zêde daxwaz (hat sînor kirin) - dîsa {} deqeyan de biceribîne"
+        "one": "Zêde daxwaz (hat sînor kirin) - dîsa {count} deqeyê de biceribîne",
+        "other": "Zêde daxwaz (hat sînor kirin) - dîsa {count} deqeyan de biceribîne"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Kontrola rojanekirinê ya li paqijî rastî {} hat, dê kontrola dubarekirinê di {} deqeyê de plan bike",
-        "other": "Kontrola rojanekirinê ya li paqijî rastî {} hat, dê kontrola dubarekirinê di {} deqeyan de plan bike"
+        "one": "Kontrola rojanekirinê ya li paqijî rastî {error} hat, dê kontrola dubarekirinê di {count} deqeyê de plan bike",
+        "other": "Kontrola rojanekirinê ya li paqijî rastî {error} hat, dê kontrola dubarekirinê di {count} deqeyan de plan bike"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Kontrola rojanekirinê ya li paqijî {} rojanekirin dît - dê bikarhêner agahdar bike heke pêwîst be",
-        "other": "Kontrola rojanekirinê ya li paqijî {} rojanekirin dît - dê bikarhêner agahdar bike heke pêwîst be"
+        "one": "Kontrola rojanekirinê ya li paqijî {count} rojanekirin dît - dê bikarhêner agahdar bike heke pêwîst be",
+        "other": "Kontrola rojanekirinê ya li paqijî {count} rojanekirin dît - dê bikarhêner agahdar bike heke pêwîst be"
     },
     "apps": {
-        "one": "{} Sepan",
-        "other": "{} Sepan"
+        "one": "{count} Sepan",
+        "other": "{count} Sepan"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL"
+        "one": "{count} URL",
+        "other": "{count} URL"
     },
     "minute": {
-        "one": "{} deqe",
-        "other": "{} deqe"
+        "one": "{count} deqe",
+        "other": "{count} deqe"
     },
     "hour": {
-        "one": "{} saet",
-        "other": "{} saet"
+        "one": "{count} saet",
+        "other": "{count} saet"
     },
     "day": {
-        "one": "{} roj",
-        "other": "{} roj"
+        "one": "{count} roj",
+        "other": "{count} roj"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} log hate jêbirin (berê = {before}, pa = {after})",
         "other": "{n} log hatin jêbirin (berê = {before}, pa = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} û sepanek din jî rojanekirin heye.",
-        "other": "{} û {} sepanên din jî rojanekirin heye."
+        "one": "{app} û sepanek din jî rojanekirin heye.",
+        "other": "{app} û {count} sepanên din jî rojanekirin heye."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} û sepanek din jî hat rojanekirin.",
-        "other": "{} û {} sepanên din jî hatin rojanekirin."
+        "one": "{app} û sepanek din jî hat rojanekirin.",
+        "other": "{app} û {count} sepanên din jî hatin rojanekirin."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Rojankirina {} û sepanek din jî têk çû.",
-        "other": "Rojankirina {} û {} sepanên din jî têk çû."
+        "one": "Rojankirina {app} û sepanek din jî têk çû.",
+        "other": "Rojankirina {app} û {count} sepanên din jî têk çû."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} û sepanek din jî dibe ku hat rojanekirin.",
-        "other": "{} û {} sepanên din jî dibe ku hatin rojanekirin."
+        "one": "{app} û sepanek din jî dibe ku hat rojanekirin.",
+        "other": "{app} û {count} sepanên din jî dibe ku hatin rojanekirin."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
+        "one": "{count} APK",
+        "other": "{count} APK"
     },
     "certificateHash": {
         "one": "Hasha Sertîfîkayê",
