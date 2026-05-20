@@ -76,7 +76,7 @@
     "removeSelectedApps": "تاللانغان ئەپلەرنى چىقىرىۋېتىش",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "{} نى يېڭىلاش",
     "installX": "{} نى قاچىلاش",
@@ -404,60 +404,60 @@
         "other": "ئەپلەرنى چىقىرىۋېتەمسىز؟"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "تەلەپ بەك كۆپ - {} مىنۇتتىن كېيىن قايتا سىناڭ",
-        "other": "تەلەپ بەك كۆپ - {} مىنۇتتىن كېيىن قايتا سىناڭ"
+        "one": "تەلەپ بەك كۆپ - {count} مىنۇتتىن كېيىن قايتا سىناڭ",
+        "other": "تەلەپ بەك كۆپ - {count} مىنۇتتىن كېيىن قايتا سىناڭ"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "خاتالىق كۆرۈلدى، {} مىنۇتتىن كېيىن قايتا سىنايدۇ",
-        "other": "خاتالىق كۆرۈلدى، {} مىنۇتتىن كېيىن قايتا سىنايدۇ"
+        "one": "خاتالىق كۆرۈلدى، {error} مىنۇتتىن كېيىن قايتا سىنايدۇ",
+        "other": "خاتالىق كۆرۈلدى، {error} مىنۇتتىن كېيىن قايتا سىنايدۇ"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "ئارقا كۆرۈنۈشتە {} يېڭىلانما تېپىلدى",
-        "other": "ئارقا كۆرۈنۈشتە {} يېڭىلانما تېپىلدى"
+        "one": "ئارقا كۆرۈنۈشتە {count} يېڭىلانما تېپىلدى",
+        "other": "ئارقا كۆرۈنۈشتە {count} يېڭىلانما تېپىلدى"
     },
     "apps": {
-        "one": "{} ئەپ",
-        "other": "{} ئەپ"
+        "one": "{count} ئەپ",
+        "other": "{count} ئەپ"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL"
+        "one": "{count} URL",
+        "other": "{count} URL"
     },
     "minute": {
-        "one": "{} مىنۇت",
-        "other": "{} مىنۇت"
+        "one": "{count} مىنۇت",
+        "other": "{count} مىنۇت"
     },
     "hour": {
-        "one": "{} سائەت",
-        "other": "{} سائەت"
+        "one": "{count} سائەت",
+        "other": "{count} سائەت"
     },
     "day": {
-        "one": "{} كۈن",
-        "other": "{} كۈن"
+        "one": "{count} كۈن",
+        "other": "{count} كۈن"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} خاتىرە تازىلاندى",
         "other": "{n} خاتىرە تازىلاندى"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} ۋە يەنە 1 ئەپنىڭ يېڭىلانمىسى بار.",
-        "other": "{} ۋە يەنە {} ئەپنىڭ يېڭىلانمىسى بار."
+        "one": "{app} ۋە يەنە 1 ئەپنىڭ يېڭىلانمىسى بار.",
+        "other": "{app} ۋە يەنە {count} ئەپنىڭ يېڭىلانمىسى بار."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} ۋە يەنە 1 ئەپ يېڭىلاندى.",
-        "other": "{} ۋە يەنە {} ئەپ يېڭىلاندى."
+        "one": "{app} ۋە يەنە 1 ئەپ يېڭىلاندى.",
+        "other": "{app} ۋە يەنە {count} ئەپ يېڭىلاندى."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "{} ۋە يەنە 1 ئەپنى يېڭىلاش مەغلۇپ بولدى.",
-        "other": "{} ۋە يەنە {} ئەپنى يېڭىلاش مەغلۇپ بولدى."
+        "one": "{app} ۋە يەنە 1 ئەپنى يېڭىلاش مەغلۇپ بولدى.",
+        "other": "{app} ۋە يەنە {count} ئەپنى يېڭىلاش مەغلۇپ بولدى."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} ۋە يەنە 1 ئەپ يېڭىلانغان بولۇشى مۇمكىن.",
-        "other": "{} ۋە يەنە {} ئەپ يېڭىلانغان بولۇشى مۇمكىن."
+        "one": "{app} ۋە يەنە 1 ئەپ يېڭىلانغان بولۇشى مۇمكىن.",
+        "other": "{app} ۋە يەنە {count} ئەپ يېڭىلانغان بولۇشى مۇمكىن."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
+        "one": "{count} APK",
+        "other": "{count} APK"
     },
     "certificateHash": {
         "one": "گۇۋاھنامە خاشى",
