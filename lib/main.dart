@@ -6,6 +6,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart';
+import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/pages/home.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -18,6 +20,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/lib/gen/strings.g.dart';
 import 'package:simple_localization/src/simple_localization_controller.dart';
 import 'package:simple_localization/src/localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
@@ -80,33 +83,21 @@ bool isLocaleRTL(Locale locale) {
 }
 
 Future<void> loadTranslations() async {
-  // See easy_localization/issues/210
-  await SimpleLocalizationController.initEasyLocation();
   var s = SettingsProvider();
   try {
     await s.initializeSettings();
     var forceLocale = s.forcedLocale;
-    final controller = SimpleLocalizationController(
-      saveLocale: true,
-      forceLocale: forceLocale,
-      fallbackLocale: fallbackLocale,
-      supportedLocales: supportedLocales.map((e) => e.key).toList(),
-      assetLoader: RootBundleAssetLoader.fromRootBundle(),
-      useOnlyLangCode: false,
-      useFallbackTranslations: true,
-      path: localeDir,
-      onLoadError: (FlutterError e) {
-        throw e;
-      },
-    );
-    await controller.loadTranslations();
-    Localization.load(
-      controller.locale,
-      translations: controller.translations,
-      fallbackTranslations: controller.fallbackTranslations,
-    );
+
+    if (forceLocale != null) {
+      final appLocale = AppLocaleUtils.parseLocaleParts(
+        languageCode: forceLocale.languageCode,
+        countryCode: forceLocale.countryCode,
+      );
+      LocaleSettings.setLocale(appLocale);
+    } else {
+      await LocaleSettings.useDeviceLocale();
+    }
   } finally {
-    // Clean up the temporary SettingsProvider instance
     s.dispose();
   }
 }
@@ -165,7 +156,8 @@ void main() async {
   } catch (e) {
     // Already added, do nothing (see #375)
   }
-  await SimpleLocalization.ensureInitialized();
+
+  await loadTranslations();
 
   // Enable edge-to-edge mode for Android 10+ (API 29)
   if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
@@ -178,6 +170,20 @@ void main() async {
   final np = NotificationsProvider();
   await np.initialize();
   FlutterForegroundTask.initCommunicationPort();
+
+  runApp(
+    TranslationProvider(
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => AppsProvider()),
+          ChangeNotifierProvider(create: (context) => SettingsProvider()),
+          Provider(create: (context) => np),
+          Provider(create: (context) => LogsProvider()),
+        ],
+        child: const Updatium(),
+      ),
+    ),
+  );
 
   runApp(
     MultiProvider(
@@ -227,7 +233,7 @@ class _UpdatiumState extends State<Updatium> {
         WidgetsBinding.instance.platformDispatcher.onLocaleChanged;
     WidgetsBinding.instance.platformDispatcher.onLocaleChanged = () {
       if (_settingsProvider?.forcedLocale == null) {
-        _settingsProvider?.resetLocaleSafe(context);
+        LocaleSettings.useDeviceLocale();
       }
     };
   }
@@ -400,13 +406,15 @@ class _UpdatiumState extends State<Updatium> {
         }
       }
 
-      // Sync local and device locale if needed
-      if (!supportedLocales.map((e) => e.key).contains(context.locale)) {
-        settingsProvider.resetLocaleSafe(context);
-      } else if (settingsProvider.forcedLocale != null &&
-          context.locale != settingsProvider.forcedLocale) {
-        // Apply forced locale if it's set but not currently active
-        context.setLocale(settingsProvider.forcedLocale!);
+      // Sync local and device locale if needed for slang
+      if (settingsProvider.forcedLocale != null) {
+        final appLocale = AppLocaleUtils.parseLocaleParts(
+          languageCode: settingsProvider.forcedLocale!.languageCode,
+          countryCode: settingsProvider.forcedLocale!.countryCode,
+        );
+        if (LocaleSettings.currentLocale != appLocale) {
+          LocaleSettings.setLocale(appLocale);
+        }
       }
     }
 
@@ -561,15 +569,21 @@ class _UpdatiumState extends State<Updatium> {
             );
           }
 
+          final slangLocale = TranslationProvider.of(context).locale;
+
           return Directionality(
-            textDirection: isLocaleRTL(context.locale)
+            textDirection: isLocaleRTL(slangLocale.flutterLocale)
                 ? ui.TextDirection.rtl
                 : ui.TextDirection.ltr,
             child: MaterialApp(
               title: 'Updatium',
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ]
+              supportedLocales: AppLocaleUtils.supportedLocales,
+              locale: slangLocale.flutterLocale,
               navigatorKey: globalNavigatorKey,
               debugShowCheckedModeBanner: false,
               theme: createTheme(lightColorScheme),

@@ -1,0 +1,1044 @@
+///
+/// Generated file. Do not edit.
+///
+// coverage:ignore-file
+// ignore_for_file: type=lint, unused_import
+// dart format off
+
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
+import 'package:slang/generated.dart';
+import 'strings.g.dart';
+
+// Path: <root>
+class TranslationsVi with BaseTranslations<AppLocale, Translations> implements Translations {
+	/// You can call this constructor and build your own translation instance of this locale.
+	/// Constructing via the enum [AppLocale.build] is preferred.
+	TranslationsVi({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
+		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
+		  $meta = meta ?? TranslationMetadata(
+		    locale: AppLocale.vi,
+		    overrides: overrides ?? {},
+		    cardinalResolver: cardinalResolver,
+		    ordinalResolver: ordinalResolver,
+		  ) {
+		$meta.setFlatMapFunction(_flatMapFunction);
+	}
+
+	/// Metadata for the translations of <vi>.
+	@override final TranslationMetadata<AppLocale, Translations> $meta;
+
+	/// Access flat map
+	@override dynamic operator[](String key) => $meta.getTranslation(key);
+
+	late final TranslationsVi _root = this; // ignore: unused_field
+
+	@override 
+	TranslationsVi $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsVi(meta: meta ?? this.$meta);
+
+	// Translations
+	@override String get invalidURLForSource => 'URL ứng dụng {} không hợp lệ';
+	@override String get noReleaseFound => 'Không thể tìm thấy bản phát hành phù hợp';
+	@override String get noVersionFound => 'Không thể xác định phiên bản phát hành';
+	@override String get urlMatchesNoSource => 'URL không khớp với nguồn đã biết';
+	@override String get cantInstallOlderVersion => 'Không thể cài đặt phiên bản cũ hơn của Ứng dụng';
+	@override String get appIdMismatch => 'ID gói đã tải xuống không khớp với ID ứng dụng hiện tại';
+	@override String get functionNotImplemented => 'Lớp này chưa triển khai chức năng này';
+	@override String get placeholder => 'Giữ chỗ';
+	@override String get someErrors => 'Đã xảy ra một số lỗi';
+	@override String get unexpectedError => 'Lỗi không mong đợi';
+	@override String get ok => 'OK';
+	@override String get and => 'và';
+	@override String get githubPATLabel => 'Token truy cập cá nhân GitHub';
+	@override String get includePrereleases => 'Bao gồm các bản phát hành trước';
+	@override String get fallbackToOlderReleases => 'Dự phòng về bản phát hành cũ hơn';
+	@override String get filterReleaseTitlesByRegEx => 'Lọc tiêu đề bản phát hành theo biểu thức chính quy';
+	@override String get invalidRegEx => 'Biểu thức chính quy không hợp lệ';
+	@override String get noDescription => 'Không có mô tả';
+	@override String get cancel => 'Hủy';
+	@override String get kContinue => 'Tiếp tục';
+	@override String get requiredInBrackets => '(Yêu cầu)';
+	@override String get dropdownNoOptsError => 'LỖI: TẢI XUỐNG PHẢI CÓ ÍT NHẤT MỘT LỰA CHỌN';
+	@override String get color => 'Màu sắc';
+	@override String get standard => 'Mặc định';
+	@override String get custom => 'Tùy chỉnh';
+	@override String get primary => 'Primary';
+	@override String get useMaterialYou => 'Sử dụng màu Material You';
+	@override String get githubStarredRepos => 'Kho lưu trữ có gắn dấu sao GitHub';
+	@override String get gettingAppInfo => 'Getting app info';
+	@override String get username => 'Tên người dùng';
+	@override String get wrongArgNum => 'Số lượng đối số được cung cấp sai';
+	@override String get xIsTrackOnly => '{} là Chỉ theo dõi';
+	@override String get source => 'Nguồn';
+	@override String get app => 'Ứng dụng';
+	@override String get appsFromSourceAreTrackOnly => 'Các ứng dụng từ nguồn này là \'Chỉ theo dõi\'.';
+	@override String get youPickedTrackOnly => 'Bạn đã chọn tùy chọn \'Chỉ theo dõi\'.';
+	@override String get trackOnlyAppDescription => 'Ứng dụng sẽ được theo dõi để cập nhật, nhưng Updatium sẽ không thể tải xuống hoặc cài đặt nó.';
+	@override String get cancelled => 'Đã hủy';
+	@override String get appAlreadyAdded => 'Ứng dụng được thêm rồi';
+	@override String get alreadyUpToDateQuestion => 'Ứng dụng đã được cập nhật?';
+	@override String get addApp => 'Thêm';
+	@override String get appSourceURL => 'URL nguồn ứng dụng';
+	@override String get error => 'Lỗi';
+	@override String get add => 'Thêm';
+	@override String get advanced => 'Advanced';
+	@override String get searchSomeSourcesLabel => 'Tìm kiếm (Chỉ một số nguồn)';
+	@override String get search => 'Tìm kiếm';
+	@override String get searching => 'Searching';
+	@override String get additionalOptsFor => 'Tùy chọn bổ sung cho {}';
+	@override String get supportedSources => 'Nguồn được hỗ trợ';
+	@override String get trackOnlyInBrackets => '(Chỉ theo dõi)';
+	@override String get searchableInBrackets => '(Có thể tìm kiếm)';
+	@override String get appsString => 'Ứng dụng';
+	@override String get categoryX => 'Category: {}';
+	@override String get collapse => 'Collapse';
+	@override String get downloadProgress => 'Download progress';
+	@override String get expand => 'Expand';
+	@override String get noApps => 'Chào mừng!';
+	@override String get noAppsSubtext => 'Bạn có thể thêm ứng dụng đầu tiên bằng cách nhấn vào \'Thêm\' bên dưới.';
+	@override String get noAppsForFilter => 'Không có ứng dụng cho bộ lọc';
+	@override String get byX => 'Bởi {}';
+	@override String get percentProgress => 'Đang tải {}%';
+	@override String get pleaseWait => 'Vui lòng chờ';
+	@override String get updateAvailable => 'Có sẵn bản cập nhật';
+	@override String get notInstalled => 'Chưa cài đặt';
+	@override String get openAppDetails => 'Open app details';
+	@override String get pinned => 'Pinned';
+	@override String get pinnedApp => 'Pinned: {}, {}';
+	@override String get upToDate => 'Up to date';
+	@override String get pseudoVersion => 'phiên bản giả';
+	@override String get selectAll => 'Chọn tất cả';
+	@override String get deselectX => 'Bỏ chọn {}';
+	@override String get xWillBeRemovedButRemainInstalled => '{} sẽ bị xóa khỏi Updatium nhưng vẫn còn cài đặt trên thiết bị.';
+	@override String get removeSelectedAppsQuestion => 'Xóa ứng dụng đã chọn?';
+	@override String get removeSelectedApps => 'Xóa ứng dụng đã chọn';
+	@override String appRemoved({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: 'Removed one app',
+		other: 'Removed {count} apps',
+	);
+	@override String get updateX => 'Cập nhật {}';
+	@override String get installX => 'Cài đặt {}';
+	@override String get markXTrackOnlyAsUpdated => 'Đánh dấu {}\n(Chỉ theo dõi)\nnhư là đã cập nhật';
+	@override String get changeX => 'Thay đổi {}';
+	@override String get installUpdateApps => 'Cài đặt/Cập nhật ứng dụng';
+	@override String get installUpdateSelectedApps => 'Cài đặt/Cập nhật ứng dụng đã chọn';
+	@override String get markXSelectedAppsAsUpdated => 'Đánh dấu {} ứng dụng đã chọn là đã cập nhật?';
+	@override String get no => 'Không';
+	@override String get yes => 'Đúng';
+	@override String get markSelectedAppsUpdated => 'Đánh dấu các ứng dụng đã chọn là đã cập nhật';
+	@override String get pinToTop => 'Ghim đầu trang';
+	@override String get unpinFromTop => 'Bỏ ghim khỏi đầu trang';
+	@override String get resetInstallStatusForSelectedAppsQuestion => 'Đặt lại trạng thái cài đặt cho ứng dụng đã chọn?';
+	@override String get installStatusOfXWillBeResetExplanation => 'Trạng thái cài đặt của mọi Ứng dụng đã chọn sẽ được đặt lại.\n\nĐiều này có thể hữu ích khi phiên bản Ứng dụng hiển thị trong Updatium không chính xác do cập nhật không thành công hoặc các sự cố khác.';
+	@override String get customLinkMessage => 'Các liên kết này hoạt động trên các thiết bị có cài đặt Updatium';
+	@override String get shareAppConfigLinks => 'Chia sẻ cấu hình ứng dụng dưới dạng liên kết HTML';
+	@override String get resetInstallStatus => 'Đặt lại trạng thái cài đặt';
+	@override String get more => 'Nhiều hơn';
+	@override String get removeOutdatedFilter => 'Xóa bộ lọc ứng dụng lỗi thời';
+	@override String get removeFilter => 'Remove filter';
+	@override String get save => 'Save';
+	@override String get showOutdatedOnly => 'Chỉ hiển thị các ứng dụng lỗi thời';
+	@override String get filter => 'Lọc';
+	@override String get filterApps => 'Lọc ứng dụng';
+	@override String get filterDays => 'Filter days';
+	@override String get appName => 'Tên ứng dụng';
+	@override String get author => 'Tác giả';
+	@override String get upToDateApps => 'Ứng dụng cập nhật';
+	@override String get nonInstalledApps => 'Ứng dụng chưa được cài đặt';
+	@override String get importExport => 'Nhập/Xuất';
+	@override String get settings => 'Thiết đặt';
+	@override String get exportedTo => 'Đã xuất sang {}';
+	@override String get updatiumExport => 'Xuất';
+	@override String get failedToExport => 'Failed to export';
+	@override String get exportAlreadyInProgress => 'Export already in progress';
+	@override String get exportDirNotAccessible => 'Export directory is not accessible';
+	@override String get exportDirUriEmpty => 'Export directory URI is empty';
+	@override String get failedToCreateExportFile => 'Failed to create export file';
+	@override String get invalidInput => 'Đầu vào không hợp lệ';
+	@override String get importedX => 'Đã nhập {}';
+	@override String get updatiumImport => 'Nhập';
+	@override String get importFromURLList => 'Nhập từ danh sách URL';
+	@override String get searchQuery => 'Truy vấn tìm kiếm';
+	@override String get appURLList => 'Danh sách URL ứng dụng';
+	@override String get line => 'Hàng';
+	@override String get searchX => 'Tìm kiếm {}';
+	@override String get noResults => 'Không có kết quả nào được tìm thấy';
+	@override String get importX => 'Nhập {}';
+	@override String get importedAppsIdDisclaimer => 'Ứng dụng đã nhập có thể hiển thị không chính xác là "Chưa được cài đặt".\nĐể khắc phục sự cố này, hãy cài đặt lại chúng thông qua Updatium.\nĐiều này sẽ không ảnh hưởng đến dữ liệu Ứng dụng.\n\nChỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba.';
+	@override String get importErrors => 'Lỗi nhập';
+	@override String get importedXOfYApps => '{} trong số {} Ứng dụng đã được nhập.';
+	@override String get followingURLsHadErrors => 'Các URL sau có lỗi:';
+	@override String get selectURL => 'Chọn URL';
+	@override String get selectURLs => 'Chọn URL';
+	@override String get pick => 'Chọn';
+	@override String get theme => 'Chủ đề';
+	@override String get dark => 'Tối';
+	@override String get light => 'Sáng';
+	@override String get followSystem => 'Theo hệ thống';
+	@override String get followSystemThemeExplanation => 'Việc áp dụng chủ đề hệ thống chỉ có thể thực hiện được thông qua việc sử dụng các ứng dụng của bên thứ ba.';
+	@override String get useBlackTheme => 'Nền đen';
+	@override String get appSortBy => 'Sắp xếp ứng dụng';
+	@override String get authorName => 'Tác giả';
+	@override String get nameAuthor => 'Tên';
+	@override String get asAdded => 'Như đã thêm';
+	@override String get appSortOrder => 'Thứ tự sắp xếp';
+	@override String get ascending => 'Tăng dần';
+	@override String get descending => 'Giảm dần';
+	@override String get bgUpdateCheckInterval => 'Thời gian tự động kiểm tra cập nhật';
+	@override String get neverManualOnly => 'Không bao giờ';
+	@override String get appearance => 'Hiển thị';
+	@override String get pinUpdates => 'Chuyển ứng dụng có phiên bản mới lên đầu danh sách';
+	@override String get updates => 'Cập nhật';
+	@override String get dnsServiceProvider => 'DNS Service';
+	@override String get dnsServiceProviderDescription => 'Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.';
+	@override String get System Default => 'System Default';
+	@override String get Cloudflare DNS => 'Cloudflare DNS';
+	@override String get Quad9 DNS => 'Quad9 DNS';
+	@override String get OpenDNS => 'OpenDNS';
+	@override String get Mullvad DNS => 'Mullvad DNS';
+	@override String get sourceSpecific => 'Cài đặt Nguồn';
+	@override String get appSource => 'Nguồn ứng dụng';
+	@override String get appSourceHint => 'Open app source repository';
+	@override String get noLogs => 'Không có nhật ký';
+	@override String get appLogs => 'Nhật ký ứng dụng';
+	@override String get appLogsHint => 'View application logs';
+	@override String get close => 'Đóng';
+	@override String get share => 'Chia sẻ';
+	@override String get appNotFound => 'Không tìm thấy ứng dụng';
+	@override String get networkError => 'Network connection failed';
+	@override String get invalidUrlFormat => 'Invalid URL format';
+	@override String get accessDenied => 'Access denied';
+	@override String get importFailed => 'Import failed';
+	@override String get updatiumExportHyphenatedLowercase => 'updatium-export';
+	@override String get pickAnAPK => 'Chọn một APK';
+	@override String get appHasMoreThanOnePackage => '{} có nhiều gói:';
+	@override String get deviceSupportsXArch => 'Thiết bị của bạn hỗ trợ kiến trúc CPU {}.';
+	@override String get deviceSupportsFollowingArchs => 'Thiết bị của bạn hỗ trợ các kiến trúc CPU sau:';
+	@override String get warning => 'Cảnh báo';
+	@override String get sourceIsXButPackageFromYPrompt => 'Nguồn ứng dụng là \'{}\' nhưng gói phát hành đến từ \'{}\'. Tiếp tục?';
+	@override String get updatesAvailable => 'Cập nhật có sẵn';
+	@override String get updatesAvailableNotifDescription => 'Thông báo cho người dùng rằng có bản cập nhật cho một hoặc nhiều Ứng dụng được theo dõi bởi Updatium';
+	@override String get noNewUpdates => 'Không có bản cập nhật mới.';
+	@override String get xHasAnUpdate => '{} có bản cập nhật.';
+	@override String get appsUpdated => 'Ứng dụng đã cập nhật ';
+	@override String get appsNotUpdated => 'Ứng dụng đã cập nhật không thành công';
+	@override String get appsUpdatedNotifDescription => 'Thông báo cho người dùng rằng các bản cập nhật cho một hoặc nhiều Ứng dụng đã được áp dụng trong nền';
+	@override String get xWasUpdatedToY => '{} đã được cập nhật thành {}.';
+	@override String get xWasNotUpdatedToY => '{} đã cập nhật thành {} không thành công.';
+	@override String get errorCheckingUpdates => 'Lỗi kiểm tra bản cập nhật';
+	@override String get errorCheckingUpdatesNotifDescription => 'Thông báo hiển thị khi kiểm tra cập nhật nền không thành công';
+	@override String get appsRemoved => 'Ứng dụng đã loại bỏ';
+	@override String get undo => 'Undo';
+	@override String get appsRemovedNotifDescription => 'Thông báo cho người dùng rằng một hoặc nhiều Ứng dụng đã bị loại bỏ do lỗi khi tải chúng';
+	@override String get xWasRemovedDueToErrorY => '{} đã bị loại bỏ do lỗi này: {}';
+	@override String get completeAppInstallation => 'Hoàn tất cài đặt ứng dụng';
+	@override String get updatiumMustBeOpenToInstallApps => 'Updatium phải được mở để cài đặt Ứng dụng';
+	@override String get completeAppInstallationNotifDescription => 'Yêu cầu người dùng quay lại Updatium để hoàn tất cài đặt Ứng dụng';
+	@override String get checkingForUpdates => 'Đang kiểm tra cập nhật';
+	@override String get checkForUpdates => 'Check for updates';
+	@override String get checkingForUpdatesNotifDescription => 'Thông báo tạm thời xuất hiện khi kiểm tra bản cập nhật';
+	@override String get pleaseAllowInstallPerm => 'Vui lòng cho phép Updatium cài đặt Ứng dụng';
+	@override String get trackOnly => 'Chỉ theo dõi';
+	@override String get trusted => 'Trusted';
+	@override String get openSource => 'Open-source';
+	@override String get errorWithHttpStatusCode => 'Lỗi {}';
+	@override String get versionCorrectionDisabled => 'Tính năng sửa phiên bản bị vô hiệu hóa (plugin dường như không hoạt động)';
+	@override String get unknown => 'Không xác định';
+	@override String get none => 'Không';
+	@override String get all => 'Tất cả';
+	@override String get never => 'Không bao giờ';
+	@override String get latestVersion => 'Phiên bản mới nhất';
+	@override String get installedVersionX => 'Phiên bản đã cài đặt: {}';
+	@override String get lastUpdateCheckX => 'Kiểm tra cập nhật lần cuối: {}';
+	@override String get remove => 'Loại bỏ';
+	@override String get quickLinks => 'Liên kết nhanh';
+	@override String get yesMarkUpdated => 'Có, Đánh dấu là đã cập nhật';
+	@override String get fdroid => 'F-Droid Chính thức';
+	@override String get appIdOrName => 'ID hoặc tên ứng dụng';
+	@override String get appId => 'ID ứng dụng';
+	@override String get appWithIdOrNameNotFound => 'Không tìm thấy ứng dụng nào có ID hoặc tên đó';
+	@override String get reposHaveMultipleApps => 'Kho có thể chứa nhiều Ứng dụng';
+	@override String get fdroidThirdPartyRepo => 'Kho lưu trữ bên thứ ba F-Droid';
+	@override String get codeberg => 'Forgejo (Codeberg)';
+	@override String get openapk => 'OpenAPK';
+	@override String get huaweiappgallery => 'Huawei App Gallery';
+	@override String get rustore => 'RuStore';
+	@override String get telegramapp => 'Telegram App';
+	@override String get html => 'HTML';
+	@override String get install => 'Cài đặt';
+	@override String get markInstalled => 'Đánh dấu là đã cài đặt';
+	@override String get update => 'Cập nhật';
+	@override String get updated => 'Đã cập nhật';
+	@override String get markUpdated => 'Đánh dấu đã cập nhật';
+	@override String get download => 'Download';
+	@override String get additionalOptions => 'Tùy chọn bổ sung';
+	@override String get disableVersionDetection => 'Tắt tính năng phát hiện phiên bản';
+	@override String get noVersionDetectionExplanation => 'Chỉ nên sử dụng tùy chọn này cho Ứng dụng mà tính năng phát hiện phiên bản không hoạt động chính xác.';
+	@override String get downloadingX => 'Đang tải xuống {}';
+	@override String get downloadX => 'Tải xuống {}';
+	@override String get downloadedX => 'Đã tải xuống {}';
+	@override String get editCategory => 'Edit category';
+	@override String get releaseAsset => 'Tệp phát hành';
+	@override String get downloadNotifDescription => 'Thông báo cho người dùng về tiến trình tải xuống Ứng dụng';
+	@override String get noAPKFound => 'Không tìm thấy APK';
+	@override String get noVersionDetection => 'Không phát hiện phiên bản';
+	@override String get categorize => 'Phân loại';
+	@override String get categories => 'Danh mục';
+	@override String get category => 'Danh mục';
+	@override String get noCategory => 'Không danh mục';
+	@override String get noCategories => 'Không danh mục';
+	@override String get categoryDeleteQuestion => 'Xóa danh mục?';
+	@override String get categoryDeleteWarning => 'Tất cả ứng dụng trong danh mục đã xóa sẽ được đặt thành chưa được phân loại.';
+	@override String get addCategory => 'Thêm thể loại';
+	@override String get label => 'Nhãn';
+	@override String get language => 'Ngôn ngữ';
+	@override String get copiedToClipboard => 'Sao chép vào clipboard';
+	@override String get storagePermissionDenied => 'Quyền lưu trữ bị từ chối';
+	@override String get selectedCategorizeWarning => 'Điều này sẽ thay thế mọi thiết đặt danh mục hiện có cho Ứng dụng đã chọn.';
+	@override String get filterAPKsByRegEx => 'Lọc APK theo biểu thức chính quy';
+	@override String get removeFromUpdatium => 'Loại khỏi Updatium';
+	@override String get uninstallFromDevice => 'Gỡ cài đặt khỏi thiết bị';
+	@override String get onlyWorksWithNonVersionDetectApps => 'Chỉ hoạt động với Ứng dụng đã tắt tính năng phát hiện phiên bản.';
+	@override String get releaseDateAsVersion => 'Sử dụng ngày phát hành làm phiên bản';
+	@override String get releaseTitleAsVersion => 'Sử dụng tiêu đề bản phát hành làm chuỗi phiên bản';
+	@override String get releaseDateAsVersionExplanation => 'Chỉ nên sử dụng tùy chọn này cho Ứng dụng trong đó tính năng phát hiện phiên bản không hoạt động chính xác nhưng đã có ngày phát hành.';
+	@override String get changes => 'Thay đổi';
+	@override String get releaseDate => 'Ngày phát hành';
+	@override String get importFromURLsInFile => 'Nhập từ URL trong Tệp (như OPML)';
+	@override String get versionDetectionExplanation => 'Đối chiếu chuỗi phiên bản với phiên bản được phát hiện từ hệ điều hành';
+	@override String get versionDetection => 'Phát hiện phiên bản';
+	@override String get standardVersionDetection => 'Phát hiện phiên bản tiêu chuẩn';
+	@override String get groupByCategory => 'Nhóm theo danh mục';
+	@override String get listView => 'Chế độ xem danh sách';
+	@override String get gridView => 'Chế độ xem lưới';
+	@override String get autoApkFilterByArch => 'Cố gắng lọc APK theo kiến trúc CPU nếu có thể';
+	@override String get autoLinkFilterByArch => 'Cố gắng lọc các liên kết theo kiến trúc CPU nếu có thể.';
+	@override String get overrideSource => 'Ghi đè nguồn';
+	@override String get dontShowAgain => 'Đừng hiển thị thông tin này nữa';
+	@override String get dontShowTrackOnlyWarnings => 'Không hiển thị cảnh báo \'Chỉ theo dõi\'';
+	@override String get dontShowAPKOriginWarnings => 'Không hiển thị cảnh báo nguồn gốc APK';
+	@override String get moveNonInstalledAppsToBottom => 'Chuyển Ứng dụng chưa được cài đặt xuống cuối danh sách';
+	@override String get gitlabPATLabel => 'Token truy cập cá nhân GitLab';
+	@override String get bitbucketAPITokenLabel => 'Bitbucket API token (email:token)';
+	@override String get giteaTokenLabel => 'Gitea access token';
+	@override String get about => 'Giới thiệu';
+	@override String get requiresCredentialsInSettings => '{}: Điều này cần thông tin xác thực bổ sung (trong Thiết đặt)';
+	@override String get checkOnStart => 'Kiểm tra các bản cập nhật khi khởi động';
+	@override String get safeMode => 'Chế độ an toàn';
+	@override String get safeModeDescription => 'Prevent unwanted changes to the app list by hiding the "Add App" page. To disable it, you\'ll have to open the About dialog, and then tap on the version number 500+ times';
+	@override String get safeModeAddAppDisabled => 'Thêm ứng dụng bị vô hiệu hóa trong chế độ an toàn';
+	@override String get tryInferAppIdFromCode => 'Cố gắng suy ra ID ứng dụng từ mã nguồn';
+	@override String get removeOnExternalUninstall => 'Tự động xóa ứng dụng đã gỡ cài đặt bên ngoài';
+	@override String get pickHighestVersionCode => 'Tự động chọn APK mã phiên bản cao nhất';
+	@override String get checkUpdateOnDetailPage => 'Kiểm tra các bản cập nhật khi mở trang chi tiết Ứng dụng';
+	@override String get disablePageTransitions => 'Tắt hiệu ứng chuyển trang';
+	@override String get reversePageTransitions => 'Hoạt ảnh chuyển đổi trang đảo ngược';
+	@override String get minStarCount => 'Số lượng sao tối thiểu';
+	@override String get addInfoBelow => 'Thêm thông tin này vào bên dưới.';
+	@override String get addInfoInSettings => 'Thêm thông tin này vào Thiết đặt.';
+	@override String get githubSourceNote => 'Có thể tránh được việc giới hạn tốc độ GitHub bằng cách sử dụng khóa API.';
+	@override String get sortByLastLinkSegment => 'Chỉ sắp xếp theo đoạn cuối của liên kết';
+	@override String get filterReleaseNotesByRegEx => 'Lọc ghi chú phát hành theo biểu thức chính quy';
+	@override String get customLinkFilterRegex => 'Bộ lọc liên kết APK tùy chỉnh theo biểu thức chính quy (Mặc định \'.apk$\')';
+	@override String get appsPossiblyUpdated => 'Đã cố gắng cập nhật ứng dụng';
+	@override String get appsPossiblyUpdatedNotifDescription => 'Thông báo cho người dùng rằng các bản cập nhật cho một hoặc nhiều Ứng dụng có khả năng được áp dụng trong nền';
+	@override String get xWasPossiblyUpdatedToY => '{} có thể đã được cập nhật thành {}.';
+	@override String get enableBackgroundUpdates => 'Tự động cập nhật trong nền';
+	@override String get backgroundUpdateReqsExplanation => 'Có thể không thực hiện được cập nhật trong nền cho tất cả ứng dụng.';
+	@override String get backgroundUpdateLimitsExplanation => 'Sự thành công của cài đặt trong nền chỉ có thể được xác định khi mở Updatium.';
+	@override String get verifyLatestTag => 'Xác minh thẻ \'mới nhất\'';
+	@override String get intermediateLinkRegex => 'Lọc tìm liên kết \'Trung cấp\' để truy cập';
+	@override String get filterByLinkText => 'Lọc liên kết theo văn bản liên kết';
+	@override String get matchLinksOutsideATags => 'Khớp các liên kết bên ngoài thẻ <a>';
+	@override String get intermediateLinkNotFound => 'Không tìm thấy liên kết trung gian';
+	@override String get intermediateLink => 'Liên kết trung gian';
+	@override String get exemptFromBackgroundUpdates => 'Miễn cập nhật nền (nếu được bật)';
+	@override String get bgUpdatesOnWiFiOnly => 'Tắt cập nhật nền khi không có Wi-Fi';
+	@override String get bgUpdatesWhileChargingOnly => 'Tắt cập nhật nền khi không sạc pin.';
+	@override String get autoSelectHighestVersionCode => 'Tự động chọn APK mã phiên bản cao nhất';
+	@override String get versionExtractionRegEx => 'Trích xuất phiên bản RegEx';
+	@override String get trimVersionString => 'Cắt chuỗi phiên bản bằng RegEx';
+	@override String get matchGroupToUseForX => 'Nhóm khớp được dùng cho "{}"';
+	@override String get matchGroupToUse => 'Nhóm đối sánh để sử dụng cho Regex trích xuất phiên bản';
+	@override String get highlightTouchTargets => 'Đánh dấu các mục tiêu cảm ứng ít rõ ràng hơn';
+	@override String get pickExportDir => 'Chọn thư mục xuất';
+	@override String get autoExportOnChanges => 'Tự động xuất';
+	@override String get includeSettings => 'Bao gồm thiết đặt';
+	@override String get filterVersionsByRegEx => 'Lọc phiên bản theo biểu thức chính quy';
+	@override String get trySelectingSuggestedVersionCode => 'Thử chọn APK Mã phiên bản được đề xuất';
+	@override String get dontSortReleasesList => 'Giữ lại thứ tự phát hành từ API';
+	@override String get reverseSort => 'Sắp xếp ngược';
+	@override String get takeFirstLink => 'Lấy liên kết đầu tiên';
+	@override String get skipSort => 'Bỏ qua việc sắp xếp';
+	@override String get debugMenu => 'Danh sách gỡ lỗi';
+	@override String get bgTaskStarted => 'Tác vụ nền đã bắt đầu - kiểm tra nhật ký.';
+	@override String get runBgCheckNow => 'Chạy kiểm tra cập nhật nền ngay bây giờ';
+	@override String get versionExtractWholePage => 'Áp dụng Regex trích xuất phiên bản cho toàn bộ trang';
+	@override String get installing => 'Đang cài đặt';
+	@override String get skipUpdateNotifications => 'Bỏ qua thông báo cập nhật';
+	@override String get updatesAvailableNotifChannel => 'Cập nhật có sẵn';
+	@override String get appsUpdatedNotifChannel => 'Đã cập nhật ứng dụng';
+	@override String get appsPossiblyUpdatedNotifChannel => 'Đã cố gắng cập nhật ứng dụng';
+	@override String get errorCheckingUpdatesNotifChannel => 'Lỗi kiểm tra bản cập nhật';
+	@override String get appsRemovedNotifChannel => 'Ứng dụng đã bị loại bỏ';
+	@override String get downloadingXNotifChannel => 'Đang tải xuống {}';
+	@override String get completeAppInstallationNotifChannel => 'Hoàn tất cài đặt ứng dụng';
+	@override String get checkingForUpdatesNotifChannel => 'Đang kiểm tra cập nhật';
+	@override String get onlyCheckInstalledOrTrackOnlyApps => 'Chỉ kiểm tra cập nhật các ứng dụng đã cài đặt và Chỉ theo dõi';
+	@override String get supportFixedAPKURL => 'Hỗ trợ URL APK cố định';
+	@override String get selectX => 'Lựa chọn {}';
+	@override String get parallelDownloads => 'Cho phép tải đa luồng';
+	@override String get useShizuku => 'Sử dụng Shizuku hoặc Sui để cài đặt';
+	@override String get shizukuBinderNotFound => 'Shizuku chưa khởi động';
+	@override String get shizukuOld => 'Phiên bản Shizuku lỗi thời (<11) - hãy cập nhật nó';
+	@override String get shizukuOldAndroidWithADB => 'Shizuku chạy trên Android < 8.1 với ADB - hãy cập nhật Android hoặc thay bằng Sui';
+	@override String get shizukuPretendToBeGooglePlay => 'Đặt Google Play làm nguồn cài đặt (nếu sử dụng Shizuku)';
+	@override String get useSystemFont => 'Sử dụng phông chữ hệ thống';
+	@override String get useVersionCodeAsOSVersion => 'Sử dụng Mã phiên bản ứng dụng làm phiên bản do hệ điều hành phát hiện';
+	@override String get requestHeader => 'Tiêu đề yêu cầu';
+	@override String get useLatestAssetDateAsReleaseDate => 'Sử dụng nội dung tải lên mới nhất làm ngày phát hành';
+	@override String get defaultPseudoVersioningMethod => 'Phương pháp tạo phiên bản giả mặc định';
+	@override String get partialAPKHash => 'Băm APK một phần';
+	@override String get APKLinkHash => 'Băm liên kết APK';
+	@override String get directAPKLink => 'Liên kết APK trực tiếp';
+	@override String get pseudoVersionInUse => 'Phiên bản giả đang được sử dụng';
+	@override String get installedVersion => 'Đã cài đặt';
+	@override String get installed => 'Đã cài đặt';
+	@override String get notInstalledApps => 'Chưa cài đặt';
+	@override String get latest => 'Mới nhất';
+	@override String get invertRegEx => 'Đảo ngược biểu thức chính quy';
+	@override String get note => 'Ghi chú';
+	@override String get selfHostedNote => 'Trình đơn thả xuống "{}" có thể được dùng để tiếp cận các phiên bản tự lưu trữ/tùy chỉnh của bất kỳ nguồn nào.';
+	@override String get openSourceNote => 'Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.';
+	@override String get badDownload => 'Không thể phân tích cú pháp APK (tải xuống một phần hoặc không tương thích)';
+	@override String get beforeNewInstallsShareToAppVerifier => 'Chia sẻ ứng dụng mới với AppVerifier (nếu có)';
+	@override String get appVerifierInstructionToast => 'Chia sẻ lên AppVerifier, sau đó quay lại đây khi sẵn sàng.';
+	@override String get wiki => 'Trợ giúp/Wiki';
+	@override String get wikiHint => 'Open Updatium wiki documentation';
+	@override String get allowInsecure => 'Cho phép các yêu cầu HTTP không an toàn';
+	@override String get stayOneVersionBehind => 'Luôn sử dụng phiên bản cũ hơn một phiên bản so với phiên bản mới nhất.';
+	@override String get useFirstApkOfVersion => 'Tự động chọn tệp APK đầu tiên trong danh sách nhiều tệp APK.';
+	@override String get refreshBeforeDownload => 'Cập nhật thông tin ứng dụng trước khi tải xuống';
+	@override String get tencentAppStore => 'Tencent App Store';
+	@override String get coolApk => 'CoolApk';
+	@override String get vivoAppStore => 'vivo App Store (CN)';
+	@override String get name => 'Tên';
+	@override String get smartname => 'Tên (Thông minh)';
+	@override String get smartPlusDate => 'Smart + Date';
+	@override String get sortMethod => 'Phương thức sắp xếp';
+	@override String get welcome => 'Chào mừng';
+	@override String get batteryOptimizationNote => 'Lưu ý: tải xuống nền có thể hoạt động ổn định hơn nếu bạn tắt tối ưu pin của hệ điều hành cho Updatium.';
+	@override String get fileDeletionError => 'Không thể xóa tệp (hãy thử xóa tệp thủ công rồi thử lại): "{}"';
+	@override String get foregroundService => 'Dịch vụ nền Updatium';
+	@override String get foregroundServiceExplanation => 'Sử dụng dịch vụ nền trước để kiểm tra cập nhật (đáng tin cậy hơn, tiêu tốn nhiều pin hơn)';
+	@override String get fgServiceNotice => 'Thông báo này là bắt buộc để kiểm tra cập nhật nền (có thể ẩn trong cài đặt hệ điều hành).';
+	@override String get excludeSecrets => 'Loại trừ thông tin bí mật';
+	@override String get GHReqPrefix => 'Thực thể \'omeritzics/Updatium\' cho các yêu cầu GitHub';
+	@override String get includeZips => 'Bao gồm các tệp ZIP';
+	@override String get zippedApkFilterRegEx => 'Lọc các tệp APK bên trong tệp ZIP';
+	@override String get multipleSigners => 'Nhiều người ký';
+	@override String removeAppQuestion({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: 'Gỡ ứng dụng?',
+		other: 'Gỡ ứng dụng?',
+	);
+	@override String tooManyRequestsTryAgainInMinutes({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: 'Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {count} phút',
+		other: 'Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {count} phút',
+	);
+	@override String bgUpdateGotErrorRetryInMinutes({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: 'Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {count} phút',
+		other: 'Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {count} phút',
+	);
+	@override String bgCheckFoundUpdatesWillNotifyIfNeeded({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: 'Đang kiểm tra bản cập nhật BG tìm thấy {count} bản cập nhật - sẽ thông báo cho người dùng nếu cần',
+		other: 'Đang kiểm tra bản cập nhật BG tìm thấy {count} bản cập nhật - sẽ thông báo cho người dùng nếu cần',
+	);
+	@override String apps({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: '{count} Ứng dụng',
+		other: '{count} Ứng dụng',
+	);
+	@override String url({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: '{count} URL',
+		other: '{count} URL',
+	);
+	@override String minute({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: '{count} phút',
+		other: '{count} phút',
+	);
+	@override String hour({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: '{count} giờ',
+		other: '{count} giờ',
+	);
+	@override String day({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: '{count} ngày',
+		other: '{count} ngày',
+	);
+	@override String clearedNLogsBeforeXAfterY({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: 'Đã xóa {n} nhật ký (trước = {before}, sau = {after})',
+		other: 'Đã xóa {n} nhật ký (trước = {before}, sau = {after})',
+	);
+	@override String xAndNMoreUpdatesAvailable({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: '{app} và 1 ứng dụng khác có bản cập nhật.',
+		other: '{app} và {count} ứng dụng khác có bản cập nhật.',
+	);
+	@override String xAndNMoreUpdatesInstalled({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: '{app} và 1 ứng dụng khác đã được cập nhật.',
+		other: '{app} và {count} ứng dụng khác đã được cập nhật.',
+	);
+	@override String xAndNMoreUpdatesFailed({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: '{app} và 1 ứng dụng khác đã cập nhật không thành công.',
+		other: '{app} và {count} ứng dụng khác đã cập nhật không thảnh công.',
+	);
+	@override String xAndNMoreUpdatesPossiblyInstalled({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: '{app} và 1 ứng dụng khác có thể đã được cập nhật.',
+		other: '{app} và {count} ứng dụng khác có thể đã được cập nhật.',
+	);
+	@override String apk({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: '{count} APK',
+		other: '{count} APKs',
+	);
+	@override String certificateHash({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n,
+		one: 'Mã băm chứng chỉ',
+		other: 'Mã băm chứng chỉ',
+	);
+	@override String get securityDisclaimerTitle => 'Tuyên bố Từ chối Trách nhiệm Bảo mật và Pháp lý';
+	@override String get license => 'Giấy phép';
+	@override String get licenseText => 'Ứng dụng này được phân phối theo Giấy phép GPL v3.';
+	@override String get disclaimer => 'Tuyên bố từ chối trách nhiệm';
+	@override String get disclaimerText => 'Ứng dụng này không phân phối, lưu trữ hoặc xác minh bất kỳ ứng dụng bên ngoài nào. Người dùng mang toàn bộ trách nhiệm về sự an toàn và tính hợp pháp của bất kỳ phần mềm nào được cài đặt thông qua công cụ này.\n\nhttps://github.com/omeritzics/Updatium là nơi chính thức duy nhất để tải xuống Updatium - rất không khuyến khích tải xuống từ nơi khác vì việc tải xuống từ các nguồn không chính thức không an toàn.';
+	@override String get privacy => 'Quyền riêng tư';
+	@override String get privacyText => 'Updatium does not collect any information about you. However, third party providers may collect and store information about you.';
+	@override String get acceptAndContinue => 'Chấp nhận và tiếp tục';
+	@override String get decline => 'Từ chối';
+	@override String get delete => 'Delete';
+	@override String get deleteCategory => 'Delete category';
+	@override String get githubStarPromptTitle => 'Bạn có thích Updatium không?';
+	@override String get githubStarPromptContent => 'Updatium là một dự án cộng đồng mã nguồn mở tự nguyện do tôi phát triển trong thời gian rảnh rỗi. Nếu bạn muốn hỗ trợ dự án, vui lòng cân nhắc cho nó một ngôi sao trên GitHub để giúp chúng tôi tiếp cận nhiều người dùng và người đóng góp hơn. Bạn sẽ không được nhắc về điều này nữa. Cảm ơn trước! :)';
+	@override String get githubStarPromptStar => 'Cho ngôi sao';
+	@override String get githubStarPromptDontShowAgain => 'Không hiển thị lại';
+	@override String get sourceCode => 'Mã nguồn';
+	@override String get developedBy => 'Phát triển bởi';
+	@override String get appDescription => 'Một danh mục ứng dụng Android có thể tùy chỉnh cho phép bạn cập nhật các ứng dụng trực tiếp từ nguồn APK của chúng.';
+	@override String get safeModeEnabled => 'Safe Mode is enabled';
+	@override String get safeModeDisabled => 'Safe Mode is disabled';
+	@override String get safeModeDisable => 'Disable Safe Mode';
+	@override String get safeModeDisableHint => 'Tap many times on the version number in the About dialog to disable Safe Mode';
+	@override String get safeModeAdmin => 'Safe Mode Administration';
+	@override String get safeModeSetupDescription => 'Set a password to enable Safe Mode. Once enabled, Safe Mode prevents adding new apps and can only be disabled with the password.';
+	@override String get safeModeToggleDescription => 'Enter your password to toggle Safe Mode on or off.';
+	@override String get safeModeSetPassword => 'Set Password';
+	@override String get safeModeConfirmPassword => 'Confirm Password';
+	@override String get safeModeEnterPassword => 'Enter Password';
+	@override String get safeModePasswordHint => 'Minimum 8 characters';
+	@override String get safeModePasswordTooShort => 'Password must be at least 8 characters long';
+	@override String get safeModePasswordMismatch => 'Passwords do not match';
+	@override String get safeModePasswordIncorrect => 'Incorrect password';
+	@override String get safeModePasswordError => 'Error setting password. Please try again.';
+	@override String get safeModeEnable => 'Enable Safe Mode';
+	@override String get safeModeToggle => 'Disable Safe Mode';
+	@override String get safeModeTapsRemaining => '{count} taps remaining to disable Safe Mode';
+	@override String get safeModeEnabledHint => 'Safe Mode enabled. Tap on the version number in the Settings many times to disable.';
+	@override String get preventUninstallation => 'Prevent uninstallation';
+	@override String get preventUninstallationDescription => 'Prevents Updatium from being uninstalled when Safe Mode is on';
+	@override String get deviceAdminRequired => 'Device admin permission is required to prevent uninstallation';
+	@override String get turnOffSafeModeFirst => 'Please turn off Safe Mode first';
+	@override String get gotIt => 'Got it';
+	@override String get version => 'Version';
+	@override String get open => 'Open';
+	@override String get added => 'Added';
+	@override String get fileExists => 'File already exists';
+	@override String get fileExistsPrompt => 'A file with this name already exists. Please enter a new name for the downloaded file:';
+	@override String get fileName => 'File name';
+	@override String get downloadCancelled => 'Download cancelled';
+	@override String get showInFileManager => 'Show in file manager';
+	@override String get usedOpenSourcePackages => 'Used open-source packages';
+	@override String get pleaseWaitOperationInProgress => 'Please wait, operation in progress';
+	@override String get selectSourceFirst => 'Select a source first';
+	@override String get completeAdditionalSettingsFirst => 'Complete additional settings first';
+	@override String get addAppToCollection => 'Add this app to your collection';
+	@override String get enterSearchTermsFirst => 'Enter search terms first';
+	@override String get searchForApps => 'Search for apps';
+}
+
+/// The flat map containing all translations for locale <vi>.
+/// Only for edge cases! For simple maps, use the map function of this library.
+///
+/// The Dart AOT compiler has issues with very large switch statements,
+/// so the map is split into smaller functions (512 entries each).
+extension on TranslationsVi {
+	dynamic _flatMapFunction(String path) {
+		return switch (path) {
+			'invalidURLForSource' => 'URL ứng dụng {} không hợp lệ',
+			'noReleaseFound' => 'Không thể tìm thấy bản phát hành phù hợp',
+			'noVersionFound' => 'Không thể xác định phiên bản phát hành',
+			'urlMatchesNoSource' => 'URL không khớp với nguồn đã biết',
+			'cantInstallOlderVersion' => 'Không thể cài đặt phiên bản cũ hơn của Ứng dụng',
+			'appIdMismatch' => 'ID gói đã tải xuống không khớp với ID ứng dụng hiện tại',
+			'functionNotImplemented' => 'Lớp này chưa triển khai chức năng này',
+			'placeholder' => 'Giữ chỗ',
+			'someErrors' => 'Đã xảy ra một số lỗi',
+			'unexpectedError' => 'Lỗi không mong đợi',
+			'ok' => 'OK',
+			'and' => 'và',
+			'githubPATLabel' => 'Token truy cập cá nhân GitHub',
+			'includePrereleases' => 'Bao gồm các bản phát hành trước',
+			'fallbackToOlderReleases' => 'Dự phòng về bản phát hành cũ hơn',
+			'filterReleaseTitlesByRegEx' => 'Lọc tiêu đề bản phát hành theo biểu thức chính quy',
+			'invalidRegEx' => 'Biểu thức chính quy không hợp lệ',
+			'noDescription' => 'Không có mô tả',
+			'cancel' => 'Hủy',
+			'kContinue' => 'Tiếp tục',
+			'requiredInBrackets' => '(Yêu cầu)',
+			'dropdownNoOptsError' => 'LỖI: TẢI XUỐNG PHẢI CÓ ÍT NHẤT MỘT LỰA CHỌN',
+			'color' => 'Màu sắc',
+			'standard' => 'Mặc định',
+			'custom' => 'Tùy chỉnh',
+			'primary' => 'Primary',
+			'useMaterialYou' => 'Sử dụng màu Material You',
+			'githubStarredRepos' => 'Kho lưu trữ có gắn dấu sao GitHub',
+			'gettingAppInfo' => 'Getting app info',
+			'username' => 'Tên người dùng',
+			'wrongArgNum' => 'Số lượng đối số được cung cấp sai',
+			'xIsTrackOnly' => '{} là Chỉ theo dõi',
+			'source' => 'Nguồn',
+			'app' => 'Ứng dụng',
+			'appsFromSourceAreTrackOnly' => 'Các ứng dụng từ nguồn này là \'Chỉ theo dõi\'.',
+			'youPickedTrackOnly' => 'Bạn đã chọn tùy chọn \'Chỉ theo dõi\'.',
+			'trackOnlyAppDescription' => 'Ứng dụng sẽ được theo dõi để cập nhật, nhưng Updatium sẽ không thể tải xuống hoặc cài đặt nó.',
+			'cancelled' => 'Đã hủy',
+			'appAlreadyAdded' => 'Ứng dụng được thêm rồi',
+			'alreadyUpToDateQuestion' => 'Ứng dụng đã được cập nhật?',
+			'addApp' => 'Thêm',
+			'appSourceURL' => 'URL nguồn ứng dụng',
+			'error' => 'Lỗi',
+			'add' => 'Thêm',
+			'advanced' => 'Advanced',
+			'searchSomeSourcesLabel' => 'Tìm kiếm (Chỉ một số nguồn)',
+			'search' => 'Tìm kiếm',
+			'searching' => 'Searching',
+			'additionalOptsFor' => 'Tùy chọn bổ sung cho {}',
+			'supportedSources' => 'Nguồn được hỗ trợ',
+			'trackOnlyInBrackets' => '(Chỉ theo dõi)',
+			'searchableInBrackets' => '(Có thể tìm kiếm)',
+			'appsString' => 'Ứng dụng',
+			'categoryX' => 'Category: {}',
+			'collapse' => 'Collapse',
+			'downloadProgress' => 'Download progress',
+			'expand' => 'Expand',
+			'noApps' => 'Chào mừng!',
+			'noAppsSubtext' => 'Bạn có thể thêm ứng dụng đầu tiên bằng cách nhấn vào \'Thêm\' bên dưới.',
+			'noAppsForFilter' => 'Không có ứng dụng cho bộ lọc',
+			'byX' => 'Bởi {}',
+			'percentProgress' => 'Đang tải {}%',
+			'pleaseWait' => 'Vui lòng chờ',
+			'updateAvailable' => 'Có sẵn bản cập nhật',
+			'notInstalled' => 'Chưa cài đặt',
+			'openAppDetails' => 'Open app details',
+			'pinned' => 'Pinned',
+			'pinnedApp' => 'Pinned: {}, {}',
+			'upToDate' => 'Up to date',
+			'pseudoVersion' => 'phiên bản giả',
+			'selectAll' => 'Chọn tất cả',
+			'deselectX' => 'Bỏ chọn {}',
+			'xWillBeRemovedButRemainInstalled' => '{} sẽ bị xóa khỏi Updatium nhưng vẫn còn cài đặt trên thiết bị.',
+			'removeSelectedAppsQuestion' => 'Xóa ứng dụng đã chọn?',
+			'removeSelectedApps' => 'Xóa ứng dụng đã chọn',
+			'appRemoved' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: 'Removed one app', other: 'Removed {count} apps', ), 
+			'updateX' => 'Cập nhật {}',
+			'installX' => 'Cài đặt {}',
+			'markXTrackOnlyAsUpdated' => 'Đánh dấu {}\n(Chỉ theo dõi)\nnhư là đã cập nhật',
+			'changeX' => 'Thay đổi {}',
+			'installUpdateApps' => 'Cài đặt/Cập nhật ứng dụng',
+			'installUpdateSelectedApps' => 'Cài đặt/Cập nhật ứng dụng đã chọn',
+			'markXSelectedAppsAsUpdated' => 'Đánh dấu {} ứng dụng đã chọn là đã cập nhật?',
+			'no' => 'Không',
+			'yes' => 'Đúng',
+			'markSelectedAppsUpdated' => 'Đánh dấu các ứng dụng đã chọn là đã cập nhật',
+			'pinToTop' => 'Ghim đầu trang',
+			'unpinFromTop' => 'Bỏ ghim khỏi đầu trang',
+			'resetInstallStatusForSelectedAppsQuestion' => 'Đặt lại trạng thái cài đặt cho ứng dụng đã chọn?',
+			'installStatusOfXWillBeResetExplanation' => 'Trạng thái cài đặt của mọi Ứng dụng đã chọn sẽ được đặt lại.\n\nĐiều này có thể hữu ích khi phiên bản Ứng dụng hiển thị trong Updatium không chính xác do cập nhật không thành công hoặc các sự cố khác.',
+			'customLinkMessage' => 'Các liên kết này hoạt động trên các thiết bị có cài đặt Updatium',
+			'shareAppConfigLinks' => 'Chia sẻ cấu hình ứng dụng dưới dạng liên kết HTML',
+			'resetInstallStatus' => 'Đặt lại trạng thái cài đặt',
+			'more' => 'Nhiều hơn',
+			'removeOutdatedFilter' => 'Xóa bộ lọc ứng dụng lỗi thời',
+			'removeFilter' => 'Remove filter',
+			'save' => 'Save',
+			'showOutdatedOnly' => 'Chỉ hiển thị các ứng dụng lỗi thời',
+			'filter' => 'Lọc',
+			'filterApps' => 'Lọc ứng dụng',
+			'filterDays' => 'Filter days',
+			'appName' => 'Tên ứng dụng',
+			'author' => 'Tác giả',
+			'upToDateApps' => 'Ứng dụng cập nhật',
+			'nonInstalledApps' => 'Ứng dụng chưa được cài đặt',
+			'importExport' => 'Nhập/Xuất',
+			'settings' => 'Thiết đặt',
+			'exportedTo' => 'Đã xuất sang {}',
+			'updatiumExport' => 'Xuất',
+			'failedToExport' => 'Failed to export',
+			'exportAlreadyInProgress' => 'Export already in progress',
+			'exportDirNotAccessible' => 'Export directory is not accessible',
+			'exportDirUriEmpty' => 'Export directory URI is empty',
+			'failedToCreateExportFile' => 'Failed to create export file',
+			'invalidInput' => 'Đầu vào không hợp lệ',
+			'importedX' => 'Đã nhập {}',
+			'updatiumImport' => 'Nhập',
+			'importFromURLList' => 'Nhập từ danh sách URL',
+			'searchQuery' => 'Truy vấn tìm kiếm',
+			'appURLList' => 'Danh sách URL ứng dụng',
+			'line' => 'Hàng',
+			'searchX' => 'Tìm kiếm {}',
+			'noResults' => 'Không có kết quả nào được tìm thấy',
+			'importX' => 'Nhập {}',
+			'importedAppsIdDisclaimer' => 'Ứng dụng đã nhập có thể hiển thị không chính xác là "Chưa được cài đặt".\nĐể khắc phục sự cố này, hãy cài đặt lại chúng thông qua Updatium.\nĐiều này sẽ không ảnh hưởng đến dữ liệu Ứng dụng.\n\nChỉ ảnh hưởng đến URL và phương thức nhập của bên thứ ba.',
+			'importErrors' => 'Lỗi nhập',
+			'importedXOfYApps' => '{} trong số {} Ứng dụng đã được nhập.',
+			'followingURLsHadErrors' => 'Các URL sau có lỗi:',
+			'selectURL' => 'Chọn URL',
+			'selectURLs' => 'Chọn URL',
+			'pick' => 'Chọn',
+			'theme' => 'Chủ đề',
+			'dark' => 'Tối',
+			'light' => 'Sáng',
+			'followSystem' => 'Theo hệ thống',
+			'followSystemThemeExplanation' => 'Việc áp dụng chủ đề hệ thống chỉ có thể thực hiện được thông qua việc sử dụng các ứng dụng của bên thứ ba.',
+			'useBlackTheme' => 'Nền đen',
+			'appSortBy' => 'Sắp xếp ứng dụng',
+			'authorName' => 'Tác giả',
+			'nameAuthor' => 'Tên',
+			'asAdded' => 'Như đã thêm',
+			'appSortOrder' => 'Thứ tự sắp xếp',
+			'ascending' => 'Tăng dần',
+			'descending' => 'Giảm dần',
+			'bgUpdateCheckInterval' => 'Thời gian tự động kiểm tra cập nhật',
+			'neverManualOnly' => 'Không bao giờ',
+			'appearance' => 'Hiển thị',
+			'pinUpdates' => 'Chuyển ứng dụng có phiên bản mới lên đầu danh sách',
+			'updates' => 'Cập nhật',
+			'dnsServiceProvider' => 'DNS Service',
+			'dnsServiceProviderDescription' => 'Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.',
+			'System Default' => 'System Default',
+			'Cloudflare DNS' => 'Cloudflare DNS',
+			'Quad9 DNS' => 'Quad9 DNS',
+			'OpenDNS' => 'OpenDNS',
+			'Mullvad DNS' => 'Mullvad DNS',
+			'sourceSpecific' => 'Cài đặt Nguồn',
+			'appSource' => 'Nguồn ứng dụng',
+			'appSourceHint' => 'Open app source repository',
+			'noLogs' => 'Không có nhật ký',
+			'appLogs' => 'Nhật ký ứng dụng',
+			'appLogsHint' => 'View application logs',
+			'close' => 'Đóng',
+			'share' => 'Chia sẻ',
+			'appNotFound' => 'Không tìm thấy ứng dụng',
+			'networkError' => 'Network connection failed',
+			'invalidUrlFormat' => 'Invalid URL format',
+			'accessDenied' => 'Access denied',
+			'importFailed' => 'Import failed',
+			'updatiumExportHyphenatedLowercase' => 'updatium-export',
+			'pickAnAPK' => 'Chọn một APK',
+			'appHasMoreThanOnePackage' => '{} có nhiều gói:',
+			'deviceSupportsXArch' => 'Thiết bị của bạn hỗ trợ kiến trúc CPU {}.',
+			'deviceSupportsFollowingArchs' => 'Thiết bị của bạn hỗ trợ các kiến trúc CPU sau:',
+			'warning' => 'Cảnh báo',
+			'sourceIsXButPackageFromYPrompt' => 'Nguồn ứng dụng là \'{}\' nhưng gói phát hành đến từ \'{}\'. Tiếp tục?',
+			'updatesAvailable' => 'Cập nhật có sẵn',
+			'updatesAvailableNotifDescription' => 'Thông báo cho người dùng rằng có bản cập nhật cho một hoặc nhiều Ứng dụng được theo dõi bởi Updatium',
+			'noNewUpdates' => 'Không có bản cập nhật mới.',
+			'xHasAnUpdate' => '{} có bản cập nhật.',
+			'appsUpdated' => 'Ứng dụng đã cập nhật ',
+			'appsNotUpdated' => 'Ứng dụng đã cập nhật không thành công',
+			'appsUpdatedNotifDescription' => 'Thông báo cho người dùng rằng các bản cập nhật cho một hoặc nhiều Ứng dụng đã được áp dụng trong nền',
+			'xWasUpdatedToY' => '{} đã được cập nhật thành {}.',
+			'xWasNotUpdatedToY' => '{} đã cập nhật thành {} không thành công.',
+			'errorCheckingUpdates' => 'Lỗi kiểm tra bản cập nhật',
+			'errorCheckingUpdatesNotifDescription' => 'Thông báo hiển thị khi kiểm tra cập nhật nền không thành công',
+			'appsRemoved' => 'Ứng dụng đã loại bỏ',
+			'undo' => 'Undo',
+			'appsRemovedNotifDescription' => 'Thông báo cho người dùng rằng một hoặc nhiều Ứng dụng đã bị loại bỏ do lỗi khi tải chúng',
+			'xWasRemovedDueToErrorY' => '{} đã bị loại bỏ do lỗi này: {}',
+			'completeAppInstallation' => 'Hoàn tất cài đặt ứng dụng',
+			'updatiumMustBeOpenToInstallApps' => 'Updatium phải được mở để cài đặt Ứng dụng',
+			'completeAppInstallationNotifDescription' => 'Yêu cầu người dùng quay lại Updatium để hoàn tất cài đặt Ứng dụng',
+			'checkingForUpdates' => 'Đang kiểm tra cập nhật',
+			'checkForUpdates' => 'Check for updates',
+			'checkingForUpdatesNotifDescription' => 'Thông báo tạm thời xuất hiện khi kiểm tra bản cập nhật',
+			'pleaseAllowInstallPerm' => 'Vui lòng cho phép Updatium cài đặt Ứng dụng',
+			'trackOnly' => 'Chỉ theo dõi',
+			'trusted' => 'Trusted',
+			'openSource' => 'Open-source',
+			'errorWithHttpStatusCode' => 'Lỗi {}',
+			'versionCorrectionDisabled' => 'Tính năng sửa phiên bản bị vô hiệu hóa (plugin dường như không hoạt động)',
+			'unknown' => 'Không xác định',
+			'none' => 'Không',
+			'all' => 'Tất cả',
+			'never' => 'Không bao giờ',
+			'latestVersion' => 'Phiên bản mới nhất',
+			'installedVersionX' => 'Phiên bản đã cài đặt: {}',
+			'lastUpdateCheckX' => 'Kiểm tra cập nhật lần cuối: {}',
+			'remove' => 'Loại bỏ',
+			'quickLinks' => 'Liên kết nhanh',
+			'yesMarkUpdated' => 'Có, Đánh dấu là đã cập nhật',
+			'fdroid' => 'F-Droid Chính thức',
+			'appIdOrName' => 'ID hoặc tên ứng dụng',
+			'appId' => 'ID ứng dụng',
+			'appWithIdOrNameNotFound' => 'Không tìm thấy ứng dụng nào có ID hoặc tên đó',
+			'reposHaveMultipleApps' => 'Kho có thể chứa nhiều Ứng dụng',
+			'fdroidThirdPartyRepo' => 'Kho lưu trữ bên thứ ba F-Droid',
+			'codeberg' => 'Forgejo (Codeberg)',
+			'openapk' => 'OpenAPK',
+			'huaweiappgallery' => 'Huawei App Gallery',
+			'rustore' => 'RuStore',
+			'telegramapp' => 'Telegram App',
+			'html' => 'HTML',
+			'install' => 'Cài đặt',
+			'markInstalled' => 'Đánh dấu là đã cài đặt',
+			'update' => 'Cập nhật',
+			'updated' => 'Đã cập nhật',
+			'markUpdated' => 'Đánh dấu đã cập nhật',
+			'download' => 'Download',
+			'additionalOptions' => 'Tùy chọn bổ sung',
+			'disableVersionDetection' => 'Tắt tính năng phát hiện phiên bản',
+			'noVersionDetectionExplanation' => 'Chỉ nên sử dụng tùy chọn này cho Ứng dụng mà tính năng phát hiện phiên bản không hoạt động chính xác.',
+			'downloadingX' => 'Đang tải xuống {}',
+			'downloadX' => 'Tải xuống {}',
+			'downloadedX' => 'Đã tải xuống {}',
+			'editCategory' => 'Edit category',
+			'releaseAsset' => 'Tệp phát hành',
+			'downloadNotifDescription' => 'Thông báo cho người dùng về tiến trình tải xuống Ứng dụng',
+			'noAPKFound' => 'Không tìm thấy APK',
+			'noVersionDetection' => 'Không phát hiện phiên bản',
+			'categorize' => 'Phân loại',
+			'categories' => 'Danh mục',
+			'category' => 'Danh mục',
+			'noCategory' => 'Không danh mục',
+			'noCategories' => 'Không danh mục',
+			'categoryDeleteQuestion' => 'Xóa danh mục?',
+			'categoryDeleteWarning' => 'Tất cả ứng dụng trong danh mục đã xóa sẽ được đặt thành chưa được phân loại.',
+			'addCategory' => 'Thêm thể loại',
+			'label' => 'Nhãn',
+			'language' => 'Ngôn ngữ',
+			'copiedToClipboard' => 'Sao chép vào clipboard',
+			'storagePermissionDenied' => 'Quyền lưu trữ bị từ chối',
+			'selectedCategorizeWarning' => 'Điều này sẽ thay thế mọi thiết đặt danh mục hiện có cho Ứng dụng đã chọn.',
+			'filterAPKsByRegEx' => 'Lọc APK theo biểu thức chính quy',
+			'removeFromUpdatium' => 'Loại khỏi Updatium',
+			'uninstallFromDevice' => 'Gỡ cài đặt khỏi thiết bị',
+			'onlyWorksWithNonVersionDetectApps' => 'Chỉ hoạt động với Ứng dụng đã tắt tính năng phát hiện phiên bản.',
+			'releaseDateAsVersion' => 'Sử dụng ngày phát hành làm phiên bản',
+			'releaseTitleAsVersion' => 'Sử dụng tiêu đề bản phát hành làm chuỗi phiên bản',
+			'releaseDateAsVersionExplanation' => 'Chỉ nên sử dụng tùy chọn này cho Ứng dụng trong đó tính năng phát hiện phiên bản không hoạt động chính xác nhưng đã có ngày phát hành.',
+			'changes' => 'Thay đổi',
+			'releaseDate' => 'Ngày phát hành',
+			'importFromURLsInFile' => 'Nhập từ URL trong Tệp (như OPML)',
+			'versionDetectionExplanation' => 'Đối chiếu chuỗi phiên bản với phiên bản được phát hiện từ hệ điều hành',
+			'versionDetection' => 'Phát hiện phiên bản',
+			'standardVersionDetection' => 'Phát hiện phiên bản tiêu chuẩn',
+			'groupByCategory' => 'Nhóm theo danh mục',
+			'listView' => 'Chế độ xem danh sách',
+			'gridView' => 'Chế độ xem lưới',
+			'autoApkFilterByArch' => 'Cố gắng lọc APK theo kiến trúc CPU nếu có thể',
+			'autoLinkFilterByArch' => 'Cố gắng lọc các liên kết theo kiến trúc CPU nếu có thể.',
+			'overrideSource' => 'Ghi đè nguồn',
+			'dontShowAgain' => 'Đừng hiển thị thông tin này nữa',
+			'dontShowTrackOnlyWarnings' => 'Không hiển thị cảnh báo \'Chỉ theo dõi\'',
+			'dontShowAPKOriginWarnings' => 'Không hiển thị cảnh báo nguồn gốc APK',
+			'moveNonInstalledAppsToBottom' => 'Chuyển Ứng dụng chưa được cài đặt xuống cuối danh sách',
+			'gitlabPATLabel' => 'Token truy cập cá nhân GitLab',
+			'bitbucketAPITokenLabel' => 'Bitbucket API token (email:token)',
+			'giteaTokenLabel' => 'Gitea access token',
+			'about' => 'Giới thiệu',
+			'requiresCredentialsInSettings' => '{}: Điều này cần thông tin xác thực bổ sung (trong Thiết đặt)',
+			'checkOnStart' => 'Kiểm tra các bản cập nhật khi khởi động',
+			'safeMode' => 'Chế độ an toàn',
+			'safeModeDescription' => 'Prevent unwanted changes to the app list by hiding the "Add App" page. To disable it, you\'ll have to open the About dialog, and then tap on the version number 500+ times',
+			'safeModeAddAppDisabled' => 'Thêm ứng dụng bị vô hiệu hóa trong chế độ an toàn',
+			'tryInferAppIdFromCode' => 'Cố gắng suy ra ID ứng dụng từ mã nguồn',
+			'removeOnExternalUninstall' => 'Tự động xóa ứng dụng đã gỡ cài đặt bên ngoài',
+			'pickHighestVersionCode' => 'Tự động chọn APK mã phiên bản cao nhất',
+			'checkUpdateOnDetailPage' => 'Kiểm tra các bản cập nhật khi mở trang chi tiết Ứng dụng',
+			'disablePageTransitions' => 'Tắt hiệu ứng chuyển trang',
+			'reversePageTransitions' => 'Hoạt ảnh chuyển đổi trang đảo ngược',
+			'minStarCount' => 'Số lượng sao tối thiểu',
+			'addInfoBelow' => 'Thêm thông tin này vào bên dưới.',
+			'addInfoInSettings' => 'Thêm thông tin này vào Thiết đặt.',
+			'githubSourceNote' => 'Có thể tránh được việc giới hạn tốc độ GitHub bằng cách sử dụng khóa API.',
+			'sortByLastLinkSegment' => 'Chỉ sắp xếp theo đoạn cuối của liên kết',
+			'filterReleaseNotesByRegEx' => 'Lọc ghi chú phát hành theo biểu thức chính quy',
+			'customLinkFilterRegex' => 'Bộ lọc liên kết APK tùy chỉnh theo biểu thức chính quy (Mặc định \'.apk$\')',
+			'appsPossiblyUpdated' => 'Đã cố gắng cập nhật ứng dụng',
+			'appsPossiblyUpdatedNotifDescription' => 'Thông báo cho người dùng rằng các bản cập nhật cho một hoặc nhiều Ứng dụng có khả năng được áp dụng trong nền',
+			'xWasPossiblyUpdatedToY' => '{} có thể đã được cập nhật thành {}.',
+			'enableBackgroundUpdates' => 'Tự động cập nhật trong nền',
+			'backgroundUpdateReqsExplanation' => 'Có thể không thực hiện được cập nhật trong nền cho tất cả ứng dụng.',
+			'backgroundUpdateLimitsExplanation' => 'Sự thành công của cài đặt trong nền chỉ có thể được xác định khi mở Updatium.',
+			'verifyLatestTag' => 'Xác minh thẻ \'mới nhất\'',
+			'intermediateLinkRegex' => 'Lọc tìm liên kết \'Trung cấp\' để truy cập',
+			'filterByLinkText' => 'Lọc liên kết theo văn bản liên kết',
+			'matchLinksOutsideATags' => 'Khớp các liên kết bên ngoài thẻ <a>',
+			'intermediateLinkNotFound' => 'Không tìm thấy liên kết trung gian',
+			'intermediateLink' => 'Liên kết trung gian',
+			'exemptFromBackgroundUpdates' => 'Miễn cập nhật nền (nếu được bật)',
+			'bgUpdatesOnWiFiOnly' => 'Tắt cập nhật nền khi không có Wi-Fi',
+			'bgUpdatesWhileChargingOnly' => 'Tắt cập nhật nền khi không sạc pin.',
+			'autoSelectHighestVersionCode' => 'Tự động chọn APK mã phiên bản cao nhất',
+			'versionExtractionRegEx' => 'Trích xuất phiên bản RegEx',
+			'trimVersionString' => 'Cắt chuỗi phiên bản bằng RegEx',
+			'matchGroupToUseForX' => 'Nhóm khớp được dùng cho "{}"',
+			'matchGroupToUse' => 'Nhóm đối sánh để sử dụng cho Regex trích xuất phiên bản',
+			'highlightTouchTargets' => 'Đánh dấu các mục tiêu cảm ứng ít rõ ràng hơn',
+			'pickExportDir' => 'Chọn thư mục xuất',
+			'autoExportOnChanges' => 'Tự động xuất',
+			'includeSettings' => 'Bao gồm thiết đặt',
+			'filterVersionsByRegEx' => 'Lọc phiên bản theo biểu thức chính quy',
+			'trySelectingSuggestedVersionCode' => 'Thử chọn APK Mã phiên bản được đề xuất',
+			'dontSortReleasesList' => 'Giữ lại thứ tự phát hành từ API',
+			'reverseSort' => 'Sắp xếp ngược',
+			'takeFirstLink' => 'Lấy liên kết đầu tiên',
+			'skipSort' => 'Bỏ qua việc sắp xếp',
+			'debugMenu' => 'Danh sách gỡ lỗi',
+			'bgTaskStarted' => 'Tác vụ nền đã bắt đầu - kiểm tra nhật ký.',
+			'runBgCheckNow' => 'Chạy kiểm tra cập nhật nền ngay bây giờ',
+			'versionExtractWholePage' => 'Áp dụng Regex trích xuất phiên bản cho toàn bộ trang',
+			'installing' => 'Đang cài đặt',
+			'skipUpdateNotifications' => 'Bỏ qua thông báo cập nhật',
+			'updatesAvailableNotifChannel' => 'Cập nhật có sẵn',
+			'appsUpdatedNotifChannel' => 'Đã cập nhật ứng dụng',
+			'appsPossiblyUpdatedNotifChannel' => 'Đã cố gắng cập nhật ứng dụng',
+			'errorCheckingUpdatesNotifChannel' => 'Lỗi kiểm tra bản cập nhật',
+			'appsRemovedNotifChannel' => 'Ứng dụng đã bị loại bỏ',
+			'downloadingXNotifChannel' => 'Đang tải xuống {}',
+			'completeAppInstallationNotifChannel' => 'Hoàn tất cài đặt ứng dụng',
+			'checkingForUpdatesNotifChannel' => 'Đang kiểm tra cập nhật',
+			'onlyCheckInstalledOrTrackOnlyApps' => 'Chỉ kiểm tra cập nhật các ứng dụng đã cài đặt và Chỉ theo dõi',
+			'supportFixedAPKURL' => 'Hỗ trợ URL APK cố định',
+			'selectX' => 'Lựa chọn {}',
+			'parallelDownloads' => 'Cho phép tải đa luồng',
+			'useShizuku' => 'Sử dụng Shizuku hoặc Sui để cài đặt',
+			'shizukuBinderNotFound' => 'Shizuku chưa khởi động',
+			'shizukuOld' => 'Phiên bản Shizuku lỗi thời (<11) - hãy cập nhật nó',
+			'shizukuOldAndroidWithADB' => 'Shizuku chạy trên Android < 8.1 với ADB - hãy cập nhật Android hoặc thay bằng Sui',
+			'shizukuPretendToBeGooglePlay' => 'Đặt Google Play làm nguồn cài đặt (nếu sử dụng Shizuku)',
+			'useSystemFont' => 'Sử dụng phông chữ hệ thống',
+			'useVersionCodeAsOSVersion' => 'Sử dụng Mã phiên bản ứng dụng làm phiên bản do hệ điều hành phát hiện',
+			'requestHeader' => 'Tiêu đề yêu cầu',
+			'useLatestAssetDateAsReleaseDate' => 'Sử dụng nội dung tải lên mới nhất làm ngày phát hành',
+			'defaultPseudoVersioningMethod' => 'Phương pháp tạo phiên bản giả mặc định',
+			'partialAPKHash' => 'Băm APK một phần',
+			'APKLinkHash' => 'Băm liên kết APK',
+			'directAPKLink' => 'Liên kết APK trực tiếp',
+			'pseudoVersionInUse' => 'Phiên bản giả đang được sử dụng',
+			'installedVersion' => 'Đã cài đặt',
+			'installed' => 'Đã cài đặt',
+			'notInstalledApps' => 'Chưa cài đặt',
+			'latest' => 'Mới nhất',
+			'invertRegEx' => 'Đảo ngược biểu thức chính quy',
+			'note' => 'Ghi chú',
+			'selfHostedNote' => 'Trình đơn thả xuống "{}" có thể được dùng để tiếp cận các phiên bản tự lưu trữ/tùy chỉnh của bất kỳ nguồn nào.',
+			'openSourceNote' => 'Open-source software is more safe and trustable, as its code is fully transparent and open to peer-review.',
+			'badDownload' => 'Không thể phân tích cú pháp APK (tải xuống một phần hoặc không tương thích)',
+			'beforeNewInstallsShareToAppVerifier' => 'Chia sẻ ứng dụng mới với AppVerifier (nếu có)',
+			'appVerifierInstructionToast' => 'Chia sẻ lên AppVerifier, sau đó quay lại đây khi sẵn sàng.',
+			'wiki' => 'Trợ giúp/Wiki',
+			'wikiHint' => 'Open Updatium wiki documentation',
+			'allowInsecure' => 'Cho phép các yêu cầu HTTP không an toàn',
+			'stayOneVersionBehind' => 'Luôn sử dụng phiên bản cũ hơn một phiên bản so với phiên bản mới nhất.',
+			'useFirstApkOfVersion' => 'Tự động chọn tệp APK đầu tiên trong danh sách nhiều tệp APK.',
+			'refreshBeforeDownload' => 'Cập nhật thông tin ứng dụng trước khi tải xuống',
+			'tencentAppStore' => 'Tencent App Store',
+			'coolApk' => 'CoolApk',
+			'vivoAppStore' => 'vivo App Store (CN)',
+			'name' => 'Tên',
+			'smartname' => 'Tên (Thông minh)',
+			'smartPlusDate' => 'Smart + Date',
+			'sortMethod' => 'Phương thức sắp xếp',
+			'welcome' => 'Chào mừng',
+			'batteryOptimizationNote' => 'Lưu ý: tải xuống nền có thể hoạt động ổn định hơn nếu bạn tắt tối ưu pin của hệ điều hành cho Updatium.',
+			'fileDeletionError' => 'Không thể xóa tệp (hãy thử xóa tệp thủ công rồi thử lại): "{}"',
+			'foregroundService' => 'Dịch vụ nền Updatium',
+			'foregroundServiceExplanation' => 'Sử dụng dịch vụ nền trước để kiểm tra cập nhật (đáng tin cậy hơn, tiêu tốn nhiều pin hơn)',
+			'fgServiceNotice' => 'Thông báo này là bắt buộc để kiểm tra cập nhật nền (có thể ẩn trong cài đặt hệ điều hành).',
+			'excludeSecrets' => 'Loại trừ thông tin bí mật',
+			'GHReqPrefix' => 'Thực thể \'omeritzics/Updatium\' cho các yêu cầu GitHub',
+			'includeZips' => 'Bao gồm các tệp ZIP',
+			'zippedApkFilterRegEx' => 'Lọc các tệp APK bên trong tệp ZIP',
+			'multipleSigners' => 'Nhiều người ký',
+			'removeAppQuestion' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: 'Gỡ ứng dụng?', other: 'Gỡ ứng dụng?', ), 
+			'tooManyRequestsTryAgainInMinutes' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: 'Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {count} phút', other: 'Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {count} phút', ), 
+			'bgUpdateGotErrorRetryInMinutes' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: 'Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {count} phút', other: 'Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {count} phút', ), 
+			'bgCheckFoundUpdatesWillNotifyIfNeeded' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: 'Đang kiểm tra bản cập nhật BG tìm thấy {count} bản cập nhật - sẽ thông báo cho người dùng nếu cần', other: 'Đang kiểm tra bản cập nhật BG tìm thấy {count} bản cập nhật - sẽ thông báo cho người dùng nếu cần', ), 
+			'apps' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: '{count} Ứng dụng', other: '{count} Ứng dụng', ), 
+			'url' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: '{count} URL', other: '{count} URL', ), 
+			'minute' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: '{count} phút', other: '{count} phút', ), 
+			'hour' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: '{count} giờ', other: '{count} giờ', ), 
+			'day' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: '{count} ngày', other: '{count} ngày', ), 
+			'clearedNLogsBeforeXAfterY' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: 'Đã xóa {n} nhật ký (trước = {before}, sau = {after})', other: 'Đã xóa {n} nhật ký (trước = {before}, sau = {after})', ), 
+			'xAndNMoreUpdatesAvailable' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: '{app} và 1 ứng dụng khác có bản cập nhật.', other: '{app} và {count} ứng dụng khác có bản cập nhật.', ), 
+			'xAndNMoreUpdatesInstalled' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: '{app} và 1 ứng dụng khác đã được cập nhật.', other: '{app} và {count} ứng dụng khác đã được cập nhật.', ), 
+			'xAndNMoreUpdatesFailed' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: '{app} và 1 ứng dụng khác đã cập nhật không thành công.', other: '{app} và {count} ứng dụng khác đã cập nhật không thảnh công.', ), 
+			'xAndNMoreUpdatesPossiblyInstalled' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: '{app} và 1 ứng dụng khác có thể đã được cập nhật.', other: '{app} và {count} ứng dụng khác có thể đã được cập nhật.', ), 
+			'apk' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: '{count} APK', other: '{count} APKs', ), 
+			'certificateHash' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('vi'))(n, one: 'Mã băm chứng chỉ', other: 'Mã băm chứng chỉ', ), 
+			'securityDisclaimerTitle' => 'Tuyên bố Từ chối Trách nhiệm Bảo mật và Pháp lý',
+			'license' => 'Giấy phép',
+			'licenseText' => 'Ứng dụng này được phân phối theo Giấy phép GPL v3.',
+			'disclaimer' => 'Tuyên bố từ chối trách nhiệm',
+			'disclaimerText' => 'Ứng dụng này không phân phối, lưu trữ hoặc xác minh bất kỳ ứng dụng bên ngoài nào. Người dùng mang toàn bộ trách nhiệm về sự an toàn và tính hợp pháp của bất kỳ phần mềm nào được cài đặt thông qua công cụ này.\n\nhttps://github.com/omeritzics/Updatium là nơi chính thức duy nhất để tải xuống Updatium - rất không khuyến khích tải xuống từ nơi khác vì việc tải xuống từ các nguồn không chính thức không an toàn.',
+			'privacy' => 'Quyền riêng tư',
+			'privacyText' => 'Updatium does not collect any information about you. However, third party providers may collect and store information about you.',
+			'acceptAndContinue' => 'Chấp nhận và tiếp tục',
+			'decline' => 'Từ chối',
+			'delete' => 'Delete',
+			'deleteCategory' => 'Delete category',
+			'githubStarPromptTitle' => 'Bạn có thích Updatium không?',
+			'githubStarPromptContent' => 'Updatium là một dự án cộng đồng mã nguồn mở tự nguyện do tôi phát triển trong thời gian rảnh rỗi. Nếu bạn muốn hỗ trợ dự án, vui lòng cân nhắc cho nó một ngôi sao trên GitHub để giúp chúng tôi tiếp cận nhiều người dùng và người đóng góp hơn. Bạn sẽ không được nhắc về điều này nữa. Cảm ơn trước! :)',
+			'githubStarPromptStar' => 'Cho ngôi sao',
+			'githubStarPromptDontShowAgain' => 'Không hiển thị lại',
+			'sourceCode' => 'Mã nguồn',
+			'developedBy' => 'Phát triển bởi',
+			'appDescription' => 'Một danh mục ứng dụng Android có thể tùy chỉnh cho phép bạn cập nhật các ứng dụng trực tiếp từ nguồn APK của chúng.',
+			'safeModeEnabled' => 'Safe Mode is enabled',
+			'safeModeDisabled' => 'Safe Mode is disabled',
+			'safeModeDisable' => 'Disable Safe Mode',
+			'safeModeDisableHint' => 'Tap many times on the version number in the About dialog to disable Safe Mode',
+			'safeModeAdmin' => 'Safe Mode Administration',
+			'safeModeSetupDescription' => 'Set a password to enable Safe Mode. Once enabled, Safe Mode prevents adding new apps and can only be disabled with the password.',
+			'safeModeToggleDescription' => 'Enter your password to toggle Safe Mode on or off.',
+			'safeModeSetPassword' => 'Set Password',
+			'safeModeConfirmPassword' => 'Confirm Password',
+			'safeModeEnterPassword' => 'Enter Password',
+			'safeModePasswordHint' => 'Minimum 8 characters',
+			'safeModePasswordTooShort' => 'Password must be at least 8 characters long',
+			'safeModePasswordMismatch' => 'Passwords do not match',
+			'safeModePasswordIncorrect' => 'Incorrect password',
+			'safeModePasswordError' => 'Error setting password. Please try again.',
+			'safeModeEnable' => 'Enable Safe Mode',
+			'safeModeToggle' => 'Disable Safe Mode',
+			'safeModeTapsRemaining' => '{count} taps remaining to disable Safe Mode',
+			'safeModeEnabledHint' => 'Safe Mode enabled. Tap on the version number in the Settings many times to disable.',
+			'preventUninstallation' => 'Prevent uninstallation',
+			'preventUninstallationDescription' => 'Prevents Updatium from being uninstalled when Safe Mode is on',
+			'deviceAdminRequired' => 'Device admin permission is required to prevent uninstallation',
+			'turnOffSafeModeFirst' => 'Please turn off Safe Mode first',
+			'gotIt' => 'Got it',
+			'version' => 'Version',
+			'open' => 'Open',
+			'added' => 'Added',
+			'fileExists' => 'File already exists',
+			'fileExistsPrompt' => 'A file with this name already exists. Please enter a new name for the downloaded file:',
+			'fileName' => 'File name',
+			'downloadCancelled' => 'Download cancelled',
+			'showInFileManager' => 'Show in file manager',
+			'usedOpenSourcePackages' => 'Used open-source packages',
+			'pleaseWaitOperationInProgress' => 'Please wait, operation in progress',
+			'selectSourceFirst' => 'Select a source first',
+			'completeAdditionalSettingsFirst' => 'Complete additional settings first',
+			'addAppToCollection' => 'Add this app to your collection',
+			'enterSearchTermsFirst' => 'Enter search terms first',
+			'searchForApps' => 'Search for apps',
+			_ => null,
+		};
+	}
+}

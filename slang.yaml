@@ -1,0 +1,3 @@
+# slang.yaml
+input_directory: assets/translations
+input_file_pattern: .json
