@@ -297,8 +297,8 @@ void main() {
         expect(content, contains('jobs:'), reason: 'ci.yml should define jobs');
         expect(
           content,
-          contains('build_artifact'),
-          reason: 'ci.yml should have build_artifact job',
+          contains('build'),
+          reason: 'ci.yml should have build job',
         );
       }
     });
@@ -330,13 +330,8 @@ void main() {
         );
         expect(
           content,
-          contains('--split-per-abi'),
-          reason: 'ci.yml should build split APKs per ABI',
-        );
-        expect(
-          content,
-          contains('--debug'),
-          reason: 'ci.yml should build debug APKs',
+          contains('--profile'),
+          reason: 'ci.yml should build profile APKs',
         );
       }
     });

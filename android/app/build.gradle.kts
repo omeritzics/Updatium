@@ -122,14 +122,16 @@ android {
         }
     }
 
+    /*
     splits {
         abi {
-            isEnable = false
+            isEnable = true
             reset()
             include("arm64-v8a", "armeabi-v7a")
             isUniversalApk = false
         }
     }
+    */
 
     androidComponents {
         onVariants { variant ->
