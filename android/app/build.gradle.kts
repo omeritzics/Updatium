@@ -124,7 +124,7 @@ android {
 
     splits {
         abi {
-            isEnable = true
+            isEnable = false
             reset()
             include("arm64-v8a", "armeabi-v7a")
             isUniversalApk = false
