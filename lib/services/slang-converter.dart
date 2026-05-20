@@ -17,8 +17,10 @@ String plural(
   Map<String, String>? namedArgs,
   String? name,
 }) {
-  final newNamedArgs = namedArgs != null ? Map<String, String>.from(namedArgs) : <String, String>{};
-  
+  final newNamedArgs = namedArgs != null
+      ? Map<String, String>.from(namedArgs)
+      : <String, String>{};
+
   // Expose standard count names for Slang compatibility
   newNamedArgs['count'] = value.toString();
   newNamedArgs['n'] = value.toString();
