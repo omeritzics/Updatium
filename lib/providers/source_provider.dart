@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:simple_localization/simple_localization.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +44,7 @@ import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:android_package_installer/android_package_installer.dart';
+import 'package:updatium/services/slang-converter.dart';
 
 /// Cache entry for ETag-based conditional requests
 class _ETagCacheEntry {
@@ -54,7 +54,8 @@ class _ETagCacheEntry {
 
   _ETagCacheEntry(this.etag, this.response, this.cachedAt);
 
-  bool get isExpired => DateTime.now().difference(cachedAt) > const Duration(minutes: 5);
+  bool get isExpired =>
+      DateTime.now().difference(cachedAt) > const Duration(minutes: 5);
 }
 
 /// Simple in-memory cache for API responses with ETag support
@@ -77,7 +78,10 @@ class _ETagResponseCache {
     return entry.etag;
   }
 
-  Response? getCachedResponse(String url, Map<String, dynamic>? additionalSettings) {
+  Response? getCachedResponse(
+    String url,
+    Map<String, dynamic>? additionalSettings,
+  ) {
     final key = _cacheKey(url, additionalSettings);
     final entry = _cache[key];
     if (entry == null || entry.isExpired) {
@@ -87,7 +91,12 @@ class _ETagResponseCache {
     return entry.response;
   }
 
-  void store(String url, Map<String, dynamic>? additionalSettings, String etag, Response response) {
+  void store(
+    String url,
+    Map<String, dynamic>? additionalSettings,
+    String etag,
+    Response response,
+  ) {
     final key = _cacheKey(url, additionalSettings);
     _cache[key] = _ETagCacheEntry(etag, response, DateTime.now());
   }
@@ -495,7 +504,7 @@ class App {
       json['installedVersion'] == null
           ? null
           : json['installedVersion'] as String,
-      (json['latestVersion'] ?? tr('unknown')) as String,
+      (json['latestVersion'] ?? t('unknown')) as String,
       assumed2DlistToStringMapList(
         jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
       ),
@@ -575,7 +584,7 @@ String preStandardizeUrl(String url) {
   return url;
 }
 
-String noAPKFound = tr('noAPKFound');
+String noAPKFound = t('noAPKFound');
 
 List<String> getLinksFromParsedHTML(
   dom.Document dom,
@@ -815,10 +824,8 @@ abstract class AppSource {
       additionalSettingsPlusSourceConfig,
     );
     var method = postBody == null ? 'GET' : 'POST';
-    var requestHeaders = await getRequestHeaders(
-      additionalSettingsPlusSourceConfig,
-      url,
-    ) ?? {};
+    var requestHeaders =
+        await getRequestHeaders(additionalSettingsPlusSourceConfig, url) ?? {};
 
     // ETag-based conditional request optimization
     // Only for GET requests to API endpoints (not for APK downloads)
@@ -849,7 +856,10 @@ abstract class AppSource {
 
     // Handle 304 Not Modified - return cached response
     if (response.statusCode == 304 && cachedETag != null) {
-      var cachedResponse = _etagCache.getCachedResponse(url, additionalSettings);
+      var cachedResponse = _etagCache.getCachedResponse(
+        url,
+        additionalSettings,
+      );
       if (cachedResponse != null) {
         return cachedResponse;
       }
@@ -871,10 +881,10 @@ abstract class AppSource {
   bool _isDownloadUrl(String url) {
     var lower = url.toLowerCase();
     return lower.endsWith('.apk') ||
-           lower.endsWith('.xapk') ||
-           lower.endsWith('.zip') ||
-           lower.contains('/download/') ||
-           lower.contains('browser_download_url');
+        lower.endsWith('.xapk') ||
+        lower.endsWith('.zip') ||
+        lower.contains('/download/') ||
+        lower.contains('browser_download_url');
   }
 
   void runOnAddAppInputChange(String inputUrl) {
@@ -899,133 +909,139 @@ abstract class AppSource {
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
-    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
-    [GeneratedFormTextField('appAuthor', label: tr('appAuthor'), required: false)],
-    [GeneratedFormTextField('about', label: tr('about'), required: false)],
-    [GeneratedFormSwitch('trackOnly', label: tr('trackOnly'))],
+    [GeneratedFormTextField('appName', label: t('appName'), required: false)],
+    [
+      GeneratedFormTextField(
+        'appAuthor',
+        label: t('appAuthor'),
+        required: false,
+      ),
+    ],
+    [GeneratedFormTextField('about', label: t('about'), required: false)],
+    [GeneratedFormSwitch('trackOnly', label: t('trackOnly'))],
     [
       GeneratedFormSwitch(
         'versionDetection',
-        label: tr('versionDetectionExplanation'),
+        label: t('versionDetectionExplanation'),
         defaultValue: true,
       ),
     ],
     [
       GeneratedFormSwitch(
         'useVersionCodeAsOSVersion',
-        label: tr('useVersionCodeAsOSVersion'),
+        label: t('useVersionCodeAsOSVersion'),
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'autoApkFilterByArch',
-        label: tr('autoApkFilterByArch'),
+        label: t('autoApkFilterByArch'),
         defaultValue: true,
       ),
     ],
     [
       GeneratedFormSwitch(
         'shizukuPretendToBeGooglePlay',
-        label: tr('shizukuPretendToBeGooglePlay'),
+        label: t('shizukuPretendToBeGooglePlay'),
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'allowInsecure',
-        label: tr('allowInsecure'),
+        label: t('allowInsecure'),
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'exemptFromBackgroundUpdates',
-        label: tr('exemptFromBackgroundUpdates'),
+        label: t('exemptFromBackgroundUpdates'),
       ),
     ],
     [
       GeneratedFormSwitch(
         'skipUpdateNotifications',
-        label: tr('skipUpdateNotifications'),
+        label: t('skipUpdateNotifications'),
       ),
     ],
     [
       GeneratedFormSwitch(
         'refreshBeforeDownload',
-        label: tr('refreshBeforeDownload'),
+        label: t('refreshBeforeDownload'),
       ),
     ],
     [
       GeneratedFormSwitch(
         'fallbackToOlderReleases',
-        label: tr('fallbackToOlderReleases'),
+        label: t('fallbackToOlderReleases'),
         defaultValue: true,
       ),
     ],
     [
       GeneratedFormSwitch(
         'trySelectingSuggestedVersionCode',
-        label: tr('trySelectingSuggestedVersionCode'),
+        label: t('trySelectingSuggestedVersionCode'),
         defaultValue: true,
       ),
     ],
     [
       GeneratedFormSwitch(
         'includePrereleases',
-        label: tr('includePrereleases'),
+        label: t('includePrereleases'),
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'stayOneVersionBehind',
-        label: tr('stayOneVersionBehind'),
+        label: t('stayOneVersionBehind'),
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'useFirstApkOfVersion',
-        label: tr('useFirstApkOfVersion'),
+        label: t('useFirstApkOfVersion'),
       ),
     ],
-    [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
+    [GeneratedFormSwitch('verifyLatestTag', label: t('verifyLatestTag'))],
     [
       GeneratedFormDropdown(
         'sortMethodChoice',
         [
-          MapEntry('date', tr('releaseDate')),
-          MapEntry('smartname', tr('smartname')),
-          MapEntry('none', tr('none')),
+          MapEntry('date', t('releaseDate')),
+          MapEntry('smartname', t('smartname')),
+          MapEntry('none', t('none')),
           MapEntry(
             'smartname-datefallback',
-            '${tr('smartname')} x ${tr('releaseDate')}',
+            '${t('smartname')} x ${t('releaseDate')}',
           ),
-          MapEntry('name', tr('name')),
+          MapEntry('name', t('name')),
         ],
-        label: tr('sortMethod'),
+        label: t('sortMethod'),
         defaultValue: 'date',
       ),
     ],
     [
       GeneratedFormSwitch(
         'useLatestAssetDateAsReleaseDate',
-        label: tr('useLatestAssetDateAsReleaseDate'),
+        label: t('useLatestAssetDateAsReleaseDate'),
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'releaseTitleAsVersion',
-        label: tr('releaseTitleAsVersion'),
+        label: t('releaseTitleAsVersion'),
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormTextField(
         'versionExtractionRegEx',
-        label: tr('trimVersionString'),
+        label: t('trimVersionString'),
         required: false,
         additionalValidators: [(value) => regExValidator(value)],
       ),
@@ -1033,7 +1049,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'matchGroupToUse',
-        label: tr('matchGroupToUseForX', args: [tr('trimVersionString')]),
+        label: t('matchGroupToUseForX', args: [t('trimVersionString')]),
         required: false,
         hint: '\$0',
       ),
@@ -1041,7 +1057,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'apkFilterRegEx',
-        label: tr('filterAPKsByRegEx'),
+        label: t('filterAPKsByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -1053,14 +1069,14 @@ abstract class AppSource {
     [
       GeneratedFormSwitch(
         'invertAPKFilter',
-        label: '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+        label: '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
         defaultValue: false,
       ),
     ],
     [
       GeneratedFormTextField(
         'filterReleaseTitlesByRegEx',
-        label: tr('filterReleaseTitlesByRegEx'),
+        label: t('filterReleaseTitlesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -1072,7 +1088,7 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'filterReleaseNotesByRegEx',
-        label: tr('filterReleaseNotesByRegEx'),
+        label: t('filterReleaseNotesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -1110,8 +1126,7 @@ abstract class AppSource {
               [
                 GeneratedFormSwitch(
                   'releaseDateAsVersion',
-                  label:
-                      '${tr('releaseDateAsVersion')} (${tr('pseudoVersion')})',
+                  label: '${t('releaseDateAsVersion')} (${t('pseudoVersion')})',
                   defaultValue: false,
                 ),
               ],
@@ -1134,14 +1149,14 @@ abstract class AppSource {
         [
           GeneratedFormSwitch(
             'includeZips',
-            label: tr('includeZips'),
+            label: t('includeZips'),
             defaultValue: false,
           ),
         ],
         [
           GeneratedFormTextField(
             'zippedApkFilterRegEx',
-            label: tr('zippedApkFilterRegEx'),
+            label: t('zippedApkFilterRegEx'),
             required: false,
             additionalValidators: [
               (value) {
@@ -1239,7 +1254,7 @@ UpdatiumError getUpdatiumHttpError(Response res) {
             res.reasonPhrase != null &&
             res.reasonPhrase!.isNotEmpty)
         ? res.reasonPhrase!
-        : tr('errorWithHttpStatusCode', args: [res.statusCode.toString()]),
+        : t('errorWithHttpStatusCode', args: [res.statusCode.toString()]),
   );
 }
 
@@ -1256,21 +1271,21 @@ String? regExValidator(String? value) {
   try {
     RegExp(value);
   } catch (e) {
-    return tr('invalidRegEx');
+    return t('invalidRegEx');
   }
   return null;
 }
 
 String? intValidator(String? value, {bool positive = false}) {
   if (value == null) {
-    return tr('invalidInput');
+    return t('invalidInput');
   }
   var num = int.tryParse(value);
   if (num == null) {
-    return tr('invalidInput');
+    return t('invalidInput');
   }
   if (positive && num <= 0) {
-    return tr('invalidInput');
+    return t('invalidInput');
   }
   return null;
 }
@@ -1349,7 +1364,7 @@ List<MapEntry<String, String>> filterApks(
   return apkUrls;
 }
 
-bool isEnglish() => tr('and') == 'and'; // Quick hack, find a better way
+bool isEnglish() => t('and') == 'and'; // Quick hack, find a better way
 String lowerCaseIfEnglish(String str) => isEnglish() ? str.toLowerCase() : str;
 
 bool isVersionPseudo(App app) =>
@@ -1495,10 +1510,16 @@ class SourceProvider {
   /// Helper method to extract app names from a standard URL
   /// Assumes format: https://host/author/name or similar
   /// If nameIndex is null, joins all parts from authorIndex+1 onwards
-  AppNames getAppNamesFromUrl(String standardUrl, {int authorIndex = 0, int? nameIndex}) {
+  AppNames getAppNamesFromUrl(
+    String standardUrl, {
+    int authorIndex = 0,
+    int? nameIndex,
+  }) {
     String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
     List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
-    String name = nameIndex != null ? names[nameIndex] : names.sublist(authorIndex + 1).join('/');
+    String name = nameIndex != null
+        ? names[nameIndex]
+        : names.sublist(authorIndex + 1).join('/');
     return AppNames(names[authorIndex], name);
   }
 
@@ -1623,7 +1644,7 @@ class SourceProvider {
     for (var url in urls) {
       try {
         if (alreadyAddedUrls.contains(url)) {
-          throw UpdatiumError(tr('appAlreadyAdded'));
+          throw UpdatiumError(t('appAlreadyAdded'));
         }
         var source = sourceOverride ?? getSource(url);
         apps.add(
@@ -1662,37 +1683,37 @@ class RateLimitError extends UpdatiumError {
 
 class InvalidURLError extends UpdatiumError {
   InvalidURLError(String sourceName)
-    : super(tr('invalidURLForSource', args: [sourceName]));
+    : super(t('invalidURLForSource', args: [sourceName]));
 }
 
 class CredsNeededError extends UpdatiumError {
   CredsNeededError(String sourceName)
-    : super(tr('requiresCredentialsInSettings', args: [sourceName]));
+    : super(t('requiresCredentialsInSettings', args: [sourceName]));
 }
 
 class NoReleasesError extends UpdatiumError {
   NoReleasesError({String? note})
     : super(
-        '${tr('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
+        '${t('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
       );
 }
 
 class NoAPKError extends UpdatiumError {
-  NoAPKError() : super(tr('noAPKFound'));
+  NoAPKError() : super(t('noAPKFound'));
 }
 
 class NoVersionError extends UpdatiumError {
-  NoVersionError() : super(tr('noVersionFound'));
+  NoVersionError() : super(t('noVersionFound'));
 }
 
 class UnsupportedURLError extends UpdatiumError {
-  UnsupportedURLError() : super(tr('urlMatchesNoSource'));
+  UnsupportedURLError() : super(t('urlMatchesNoSource'));
 }
 
 class DowngradeError extends UpdatiumError {
   DowngradeError(int currentVersionCode, int newVersionCode)
     : super(
-        '${tr('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
+        '${t('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
       );
 }
 
@@ -1702,11 +1723,11 @@ class InstallError extends UpdatiumError {
 }
 
 class IDChangedError extends UpdatiumError {
-  IDChangedError(String newId) : super('${tr('appIdMismatch')} - $newId');
+  IDChangedError(String newId) : super('${t('appIdMismatch')} - $newId');
 }
 
 class NotImplementedError extends UpdatiumError {
-  NotImplementedError() : super(tr('functionNotImplemented'));
+  NotImplementedError() : super(t('functionNotImplemented'));
 }
 
 class MultiAppMultiError extends UpdatiumError {
@@ -1714,7 +1735,7 @@ class MultiAppMultiError extends UpdatiumError {
   Map<String, List<String>> idsByErrorString = {};
   Map<String, String> appIdNames = {};
 
-  MultiAppMultiError() : super(tr('placeholder'), unexpected: true);
+  MultiAppMultiError() : super(t('placeholder'), unexpected: true);
 
   void add(String appId, dynamic error, {String? appName}) {
     if (error is SocketException) {
@@ -1750,7 +1771,7 @@ class MultiAppMultiError extends UpdatiumError {
 String list2FriendlyString(List<String> list) {
   var isUsingEnglish = isEnglish();
   return list.length == 2
-      ? '${list[0]} ${tr('and')} ${list[1]}'
+      ? '${list[0]} ${t('and')} ${list[1]}'
       : list
             .asMap()
             .entries
@@ -1782,8 +1803,7 @@ class SourceOverrideDropdown extends StatefulWidget {
   });
 
   @override
-  State<SourceOverrideDropdown> createState() =>
-      _SourceOverrideDropdownState();
+  State<SourceOverrideDropdown> createState() => _SourceOverrideDropdownState();
 }
 
 class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
@@ -1806,11 +1826,11 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
 
   void _updateController() {
     if (widget.selectedOverride == null || widget.selectedOverride == '') {
-      widget.controller.text = tr('none');
+      widget.controller.text = t('none');
       return;
     }
     if (sourceProvider.sources.isEmpty) {
-      widget.controller.text = tr('none');
+      widget.controller.text = t('none');
       return;
     }
     AppSource? selectedSource;
@@ -1824,7 +1844,7 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
     if (selectedSource != null) {
       widget.controller.text = selectedSource.name;
     } else {
-      widget.controller.text = tr('none');
+      widget.controller.text = t('none');
     }
   }
 
@@ -1841,7 +1861,7 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
                     controller: widget.controller,
                     readOnly: true,
                     decoration: InputDecoration(
-                      labelText: tr('overrideSource'),
+                      labelText: t('overrideSource'),
                       suffixIcon: const Icon(Icons.arrow_drop_down),
                     ),
                     onTap: () {
@@ -1858,14 +1878,15 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
                     onPressed: () {
                       widget.onSelectionChanged(null);
                     },
-                    child: Text(tr('none')),
+                    child: Text(t('none')),
                   ),
                   ...sourceProvider.sources
                       .where(
                         (s) =>
                             s.allowOverride ||
                             (widget.pickedSource != null &&
-                                widget.pickedSource.runtimeType == s.runtimeType),
+                                widget.pickedSource.runtimeType ==
+                                    s.runtimeType),
                       )
                       .map(
                         (s) => MenuItemButton(

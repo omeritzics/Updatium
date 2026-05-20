@@ -31,7 +31,7 @@ class FDroid extends AppSource {
       [
         GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
-          label: tr('autoSelectHighestVersionCode'),
+          label: t('autoSelectHighestVersionCode'),
         ),
       ],
     ];

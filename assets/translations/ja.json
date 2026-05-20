@@ -76,7 +76,7 @@
     "removeSelectedApps": "選択したアプリを削除する",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "{} をアップデートする",
     "installX": "{} をインストールする",
@@ -404,60 +404,60 @@
         "other": "アプリを削除しますか？"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "リクエストが多すぎます（レート制限）- {} 分後に再試行してください",
-        "other": "リクエストが多すぎます（レート制限）- {} 分後に再試行してください"
+        "one": "リクエストが多すぎます（レート制限）- {count} 分後に再試行してください",
+        "other": "リクエストが多すぎます（レート制限）- {count} 分後に再試行してください"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "バックグラウンドでのアップデート確認で {} の問題が発生, {} 分後に再試行します",
-        "other": "バックグラウンドでのアップデート確認で {} の問題が発生, {} 分後に再試行します"
+        "one": "バックグラウンドでのアップデート確認で {error} の問題が発生, {count} 分後に再試行します",
+        "other": "バックグラウンドでのアップデート確認で {error} の問題が発生, {count} 分後に再試行します"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "バックグラウンドでのアップデート確認で {} 個のアップデートを発見 - 必要に応じてユーザーに通知します",
-        "other": "バックグラウンドでのアップデート確認で {} 個のアップデートを発見 - 必要に応じてユーザーに通知します"
+        "one": "バックグラウンドでのアップデート確認で {count} 個のアップデートを発見 - 必要に応じてユーザーに通知します",
+        "other": "バックグラウンドでのアップデート確認で {count} 個のアップデートを発見 - 必要に応じてユーザーに通知します"
     },
     "apps": {
-        "one": "{} 個のアプリ",
-        "other": "{} 個のアプリ"
+        "one": "{count} 個のアプリ",
+        "other": "{count} 個のアプリ"
     },
     "url": {
-        "one": "{} 個のURL",
-        "other": "{} 個のURL"
+        "one": "{count} 個のURL",
+        "other": "{count} 個のURL"
     },
     "minute": {
-        "one": "{} 分",
-        "other": "{} 分"
+        "one": "{count} 分",
+        "other": "{count} 分"
     },
     "hour": {
-        "one": "{} 時間",
-        "other": "{} 時間"
+        "one": "{count} 時間",
+        "other": "{count} 時間"
     },
     "day": {
-        "one": "{} 日",
-        "other": "{} 日"
+        "one": "{count} 日",
+        "other": "{count} 日"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} 個のログをクリアしました (前 = {before}, 後 = {after})",
         "other": "{n} 個のログをクリアしました (前 = {before}, 後 = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} とさらに 1 個のアプリのアップデートが利用可能です。",
-        "other": "{} とさらに {} 個のアプリのアップデートが利用可能です。"
+        "one": "{app} とさらに 1 個のアプリのアップデートが利用可能です。",
+        "other": "{app} とさらに {count} 個のアプリのアップデートが利用可能です。"
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} とさらに 1 個のアプリがアップデートされました。",
-        "other": "{} とさらに {} 個のアプリがアップデートされました。"
+        "one": "{app} とさらに 1 個のアプリがアップデートされました。",
+        "other": "{app} とさらに {count} 個のアプリがアップデートされました。"
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "{} とさらに 1 個のアプリのアップデートに失敗しました。",
-        "other": "{} とさらに {} 個のアプリのアップデートに失敗しました。"
+        "one": "{app} とさらに 1 個のアプリのアップデートに失敗しました。",
+        "other": "{app} とさらに {count} 個のアプリのアップデートに失敗しました。"
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} とさらに 1 個のアプリがアップデートされた可能性があります。",
-        "other": "{} とさらに {} 個のアプリがアップデートされた可能性があります。"
+        "one": "{app} とさらに 1 個のアプリがアップデートされた可能性があります。",
+        "other": "{app} とさらに {count} 個のアプリがアップデートされた可能性があります。"
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
+        "one": "{count} APK",
+        "other": "{count} APK"
     },
     "certificateHash": {
         "one": "証明書ハッシュ",
