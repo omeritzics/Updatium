@@ -76,7 +76,7 @@
     "removeSelectedApps": "Remove selected apps",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Update {}",
     "installX": "Install {}",
@@ -404,60 +404,60 @@
         "other": "Remove apps?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Too many requests (rate limited) - try again in {} minute",
-        "other": "Too many requests (rate limited) - try again in {} minutes"
+        "one": "Too many requests (rate limited) - try again in {count} minute",
+        "other": "Too many requests (rate limited) - try again in {count} minutes"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "BG update checking encountered a {}, will schedule a retry check in {} minute",
-        "other": "BG update checking encountered a {}, will schedule a retry check in {} minutes"
+        "one": "BG update checking encountered a {error}, will schedule a retry check in {count} minute",
+        "other": "BG update checking encountered a {error}, will schedule a retry check in {count} minutes"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "BG update checking found {} update - will notify user if needed",
-        "other": "BG update checking found {} updates - will notify user if needed"
+        "one": "BG update checking found {count} update - will notify user if needed",
+        "other": "BG update checking found {count} updates - will notify user if needed"
     },
     "apps": {
-        "one": "{} App",
-        "other": "{} Apps"
+        "one": "{count} App",
+        "other": "{count} Apps"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URLs"
+        "one": "{count} URL",
+        "other": "{count} URLs"
     },
     "minute": {
-        "one": "{} minute",
-        "other": "{} minutes"
+        "one": "{count} minute",
+        "other": "{count} minutes"
     },
     "hour": {
-        "one": "{} hour",
-        "other": "{} hours"
+        "one": "{count} hour",
+        "other": "{count} hours"
     },
     "day": {
-        "one": "{} day",
-        "other": "{} days"
+        "one": "{count} day",
+        "other": "{count} days"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Cleared {n} log (before = {before}, after = {after})",
         "other": "Cleared {n} logs (before = {before}, after = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} and 1 more app have updates.",
-        "other": "{} and {} more apps have updates."
+        "one": "{app} and 1 more app have updates.",
+        "other": "{app} and {count} more apps have updates."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} and 1 more app was updated.",
-        "other": "{} and {} more apps were updated."
+        "one": "{app} and 1 more app was updated.",
+        "other": "{app} and {count} more apps were updated."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Failed to update {} and 1 more app.",
-        "other": "Failed to update {} and {} more apps."
+        "one": "Failed to update {app} and 1 more app.",
+        "other": "Failed to update {app} and {count} more apps."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} and 1 more app may have been updated.",
-        "other": "{} and {} more apps may have been updated."
+        "one": "{app} and 1 more app may have been updated.",
+        "other": "{app} and {count} more apps may have been updated."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
+        "one": "{count} APK",
+        "other": "{count} APKs"
     },
     "certificateHash": {
         "one": "Certificate Hash",
