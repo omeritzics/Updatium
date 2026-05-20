@@ -76,7 +76,7 @@
     "removeSelectedApps": "Remover apps selecionados",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Atualizar {}",
     "installX": "Instalar {}",
@@ -404,60 +404,60 @@
         "other": "Remover apps?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Muitas solicitações (limitado) - tente novamente em {} minuto",
-        "other": "Muitas solicitações (limitado) - tente novamente em {} minutos"
+        "one": "Muitas solicitações (limitado) - tente novamente em {count} minuto",
+        "other": "Muitas solicitações (limitado) - tente novamente em {count} minutos"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "A busca de atualizações em segundo plano encontrou um {}, será agendado uma nova tentativa em {} minuto",
-        "other": "A busca de atualizações em segundo plano encontrou um {}, será agendado uma nova tentativa em {} minutos"
+        "one": "A busca de atualizações em segundo plano encontrou um {error}, será agendado uma nova tentativa em {count} minuto",
+        "other": "A busca de atualizações em segundo plano encontrou um {error}, será agendado uma nova tentativa em {count} minutos"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Verificação da atualização do BG encontrada {} atualização - notificará o usuário se necessário",
-        "other": "Verificação de atualização do BG encontrou atualizações {} - notificará o usuário se necessário"
+        "one": "Verificação da atualização do BG encontrada {count} atualização - notificará o usuário se necessário",
+        "other": "Verificação de atualização do BG encontrou atualizações {count} - notificará o usuário se necessário"
     },
     "apps": {
-        "one": "{} app",
-        "other": "{} apps"
+        "one": "{count} app",
+        "other": "{count} apps"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URLs"
+        "one": "{count} URL",
+        "other": "{count} URLs"
     },
     "minute": {
-        "one": "{} minuto",
-        "other": "{} minutos"
+        "one": "{count} minuto",
+        "other": "{count} minutos"
     },
     "hour": {
-        "one": "{} hora",
-        "other": "{} horas"
+        "one": "{count} hora",
+        "other": "{count} horas"
     },
     "day": {
-        "one": "{} dia",
-        "other": "{} dias"
+        "one": "{count} dia",
+        "other": "{count} dias"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Limpou {n} registros (before = {before}, after = {after})",
         "other": "Limpou {n} registros (antes = {before}, depois = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} e mais 1 app têm atualizações.",
-        "other": "{} e mais {} apps têm atualizações."
+        "one": "{app} e mais 1 app têm atualizações.",
+        "other": "{app} e mais {count} apps têm atualizações."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} e mais 1 app foram atualizados.",
-        "other": "{} e mais {} apps foram atualizados."
+        "one": "{app} e mais 1 app foram atualizados.",
+        "other": "{app} e mais {count} apps foram atualizados."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Falha ao atualizar {} e mais 1 app.",
-        "other": "Falha ao atualizar {} e mais {} apps."
+        "one": "Falha ao atualizar {app} e mais 1 app.",
+        "other": "Falha ao atualizar {app} e mais {count} apps."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} e mais 1 app podem ter sido atualizados.",
-        "other": "{} e mais {} apps podem ter sido atualizados."
+        "one": "{app} e mais 1 app podem ter sido atualizados.",
+        "other": "{app} e mais {count} apps podem ter sido atualizados."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
+        "one": "{count} APK",
+        "other": "{count} APKs"
     },
     "certificateHash": {
         "one": "Hash do Certificado",

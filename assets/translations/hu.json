@@ -76,7 +76,7 @@
     "removeSelectedApps": "Kiválasztott alkalmazások eltávolítása",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "{} frissítése",
     "installX": "{} telepítése",
@@ -404,60 +404,60 @@
         "other": "Biztosan eltávolítja az alkalmazásokat?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Túl sok kérés (lekérdezés-korlátozás) – próbálja újra {} perc múlva,\nvagy adjon meg egy GitHub/GitLab API-kulcsot",
-        "other": "Túl sok kérés (lekérdezés-korlátozás) – próbálja újra {} perc múlva,\nvagy adjon meg egy GitHub/GitLab API-kulcsot"
+        "one": "Túl sok kérés (lekérdezés-korlátozás) – próbálja újra {count} perc múlva,\nvagy adjon meg egy GitHub/GitLab API-kulcsot",
+        "other": "Túl sok kérés (lekérdezés-korlátozás) – próbálja újra {count} perc múlva,\nvagy adjon meg egy GitHub/GitLab API-kulcsot"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Frissítések ellenőrzése a háttérben a következőt észlelte: {} - Újrapróbálkozás: {} perc múlva",
-        "other": "Frissítések ellenőrzése a háttérben a következőt észlelte: {} - Újrapróbálkozás: {} perc múlva"
+        "one": "Frissítések ellenőrzése a háttérben a következőt észlelte: {error} - Újrapróbálkozás: {count} perc múlva",
+        "other": "Frissítések ellenőrzése a háttérben a következőt észlelte: {error} - Újrapróbálkozás: {count} perc múlva"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Frissítések ellenőrzése a háttérben {} frissítést talált - szükség esetén értesíti a felhasználót",
-        "other": "Frissítések ellenőrzése a háttérben {} frissítést talált - szükség esetén értesíti a felhasználót"
+        "one": "Frissítések ellenőrzése a háttérben {count} frissítést talált - szükség esetén értesíti a felhasználót",
+        "other": "Frissítések ellenőrzése a háttérben {count} frissítést talált - szükség esetén értesíti a felhasználót"
     },
     "apps": {
-        "one": "{} alkalmazás",
-        "other": "{} alkalmazás"
+        "one": "{count} alkalmazás",
+        "other": "{count} alkalmazás"
     },
     "url": {
-        "one": "{} webcím",
-        "other": "{} webcím"
+        "one": "{count} webcím",
+        "other": "{count} webcím"
     },
     "minute": {
-        "one": "{} perc",
-        "other": "{} perc"
+        "one": "{count} perc",
+        "other": "{count} perc"
     },
     "hour": {
-        "one": "{} óra",
-        "other": "{} óra"
+        "one": "{count} óra",
+        "other": "{count} óra"
     },
     "day": {
-        "one": "{} nap",
-        "other": "{} nap"
+        "one": "{count} nap",
+        "other": "{count} nap"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} napló törölve lett ({after} után, és {before} előtt)",
         "other": "{n} napló törölve lett ({after} után, és {before} előtt)"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "A(z) {} és 1 további alkalmazás frissítést kapott.",
-        "other": "A(z) {} és {} további alkalmazás frissítést kapott."
+        "one": "A(z) {app} és 1 további alkalmazás frissítést kapott.",
+        "other": "A(z) {app} és {count} további alkalmazás frissítést kapott."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "A(z) {} és 1 további alkalmazás frissítve.",
-        "other": "A(z) {} és {} további alkalmazás frissítve."
+        "one": "A(z) {app} és 1 további alkalmazás frissítve.",
+        "other": "A(z) {app} és {count} további alkalmazás frissítve."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Nem sikerült frissíteni a következőt: {}, valamint 1 további alkalmazást.",
-        "other": "Nem sikerült frissíteni a következőt: {}, valamint {} további alkalmazást."
+        "one": "Nem sikerült frissíteni a következőt: {app}, valamint 1 további alkalmazást.",
+        "other": "Nem sikerült frissíteni a következőt: {app}, valamint {count} további alkalmazást."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "A(z) {}, valamint 1 további alkalmazás sikeresen frissítve.",
-        "other": "A(z) {}, valamint {} további alkalmazás sikeresen frissítve."
+        "one": "A(z) {app}, valamint 1 további alkalmazás sikeresen frissítve.",
+        "other": "A(z) {app}, valamint {count} további alkalmazás sikeresen frissítve."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
+        "one": "{count} APK",
+        "other": "{count} APK"
     },
     "certificateHash": {
         "one": "Tanúsítványkivonat",
