@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:simple_localization/simple_localization.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
@@ -506,7 +505,7 @@ class App {
       json['installedVersion'] == null
           ? null
           : json['installedVersion'] as String,
-      (json['latestVersion'] ?? tr('unknown')) as String,
+      (json['latestVersion'] ?? t('unknown')) as String,
       assumed2DlistToStringMapList(
         jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
       ),
@@ -586,7 +585,7 @@ String preStandardizeUrl(String url) {
   return url;
 }
 
-String noAPKFound = tr('noAPKFound');
+String noAPKFound = t('noAPKFound');
 
 List<String> getLinksFromParsedHTML(
   dom.Document dom,
@@ -910,11 +909,139 @@ abstract class AppSource {
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
-    [GeneratedFormSwitch('trackOnly', label: tr('trackOnly'))],
+    [GeneratedFormTextField('appName', label: t('appName'), required: false)],
+    [
+      GeneratedFormTextField(
+        'appAuthor',
+        label: t('appAuthor'),
+        required: false,
+      ),
+    ],
+    [GeneratedFormTextField('about', label: t('about'), required: false)],
+    [GeneratedFormSwitch('trackOnly', label: t('trackOnly'))],
+    [
+      GeneratedFormSwitch(
+        'versionDetection',
+        label: t('versionDetectionExplanation'),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'useVersionCodeAsOSVersion',
+        label: t('useVersionCodeAsOSVersion'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'autoApkFilterByArch',
+        label: t('autoApkFilterByArch'),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'shizukuPretendToBeGooglePlay',
+        label: t('shizukuPretendToBeGooglePlay'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'allowInsecure',
+        label: t('allowInsecure'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'exemptFromBackgroundUpdates',
+        label: t('exemptFromBackgroundUpdates'),
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'skipUpdateNotifications',
+        label: t('skipUpdateNotifications'),
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'refreshBeforeDownload',
+        label: t('refreshBeforeDownload'),
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'fallbackToOlderReleases',
+        label: t('fallbackToOlderReleases'),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'trySelectingSuggestedVersionCode',
+        label: t('trySelectingSuggestedVersionCode'),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'includePrereleases',
+        label: t('includePrereleases'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'stayOneVersionBehind',
+        label: t('stayOneVersionBehind'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'useFirstApkOfVersion',
+        label: t('useFirstApkOfVersion'),
+      ),
+    ],
+    [GeneratedFormSwitch('verifyLatestTag', label: t('verifyLatestTag'))],
+    [
+      GeneratedFormDropdown(
+        'sortMethodChoice',
+        [
+          MapEntry('date', t('releaseDate')),
+          MapEntry('smartname', t('smartname')),
+          MapEntry('none', t('none')),
+          MapEntry(
+            'smartname-datefallback',
+            '${t('smartname')} x ${t('releaseDate')}',
+          ),
+          MapEntry('name', t('name')),
+        ],
+        label: t('sortMethod'),
+        defaultValue: 'date',
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'useLatestAssetDateAsReleaseDate',
+        label: t('useLatestAssetDateAsReleaseDate'),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'releaseTitleAsVersion',
+        label: t('releaseTitleAsVersion'),
+        defaultValue: false,
+      ),
+    ],
     [
       GeneratedFormTextField(
         'versionExtractionRegEx',
-        label: tr('trimVersionString'),
+        label: t('trimVersionString'),
         required: false,
         additionalValidators: [(value) => regExValidator(value)],
       ),
@@ -922,29 +1049,15 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'matchGroupToUse',
-        label: tr('matchGroupToUseForX', args: [tr('trimVersionString')]),
+        label: t('matchGroupToUseForX', args: [t('trimVersionString')]),
         required: false,
         hint: '\$0',
       ),
     ],
     [
-      GeneratedFormSwitch(
-        'versionDetection',
-        label: tr('versionDetectionExplanation'),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'useVersionCodeAsOSVersion',
-        label: tr('useVersionCodeAsOSVersion'),
-        defaultValue: false,
-      ),
-    ],
-    [
       GeneratedFormTextField(
         'apkFilterRegEx',
-        label: tr('filterAPKsByRegEx'),
+        label: t('filterAPKsByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -956,63 +1069,14 @@ abstract class AppSource {
     [
       GeneratedFormSwitch(
         'invertAPKFilter',
-        label: '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+        label: '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
         defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'autoApkFilterByArch',
-        label: tr('autoApkFilterByArch'),
-        defaultValue: true,
-      ),
-    ],
-    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
-    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
-    [
-      GeneratedFormSwitch(
-        'shizukuPretendToBeGooglePlay',
-        label: tr('shizukuPretendToBeGooglePlay'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'allowInsecure',
-        label: tr('allowInsecure'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'exemptFromBackgroundUpdates',
-        label: tr('exemptFromBackgroundUpdates'),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'skipUpdateNotifications',
-        label: tr('skipUpdateNotifications'),
-      ),
-    ],
-    [GeneratedFormTextField('about', label: tr('about'), required: false)],
-    [
-      GeneratedFormSwitch(
-        'refreshBeforeDownload',
-        label: tr('refreshBeforeDownload'),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'fallbackToOlderReleases',
-        label: tr('fallbackToOlderReleases'),
-        defaultValue: true,
       ),
     ],
     [
       GeneratedFormTextField(
         'filterReleaseTitlesByRegEx',
-        label: tr('filterReleaseTitlesByRegEx'),
+        label: t('filterReleaseTitlesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -1024,72 +1088,13 @@ abstract class AppSource {
     [
       GeneratedFormTextField(
         'filterReleaseNotesByRegEx',
-        label: tr('filterReleaseNotesByRegEx'),
+        label: t('filterReleaseNotesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
             return regExValidator(value);
           },
         ],
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'trySelectingSuggestedVersionCode',
-        label: tr('trySelectingSuggestedVersionCode'),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'includePrereleases',
-        label: tr('includePrereleases'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'stayOneVersionBehind',
-        label: tr('stayOneVersionBehind'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'useFirstApkOfVersion',
-        label: tr('useFirstApkOfVersion'),
-      ),
-    ],
-    [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
-    [
-      GeneratedFormDropdown(
-        'sortMethodChoice',
-        [
-          MapEntry('date', tr('releaseDate')),
-          MapEntry('smartname', tr('smartname')),
-          MapEntry('none', tr('none')),
-          MapEntry(
-            'smartname-datefallback',
-            '${tr('smartname')} x ${tr('releaseDate')}',
-          ),
-          MapEntry('name', tr('name')),
-        ],
-        label: tr('sortMethod'),
-        defaultValue: 'date',
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'useLatestAssetDateAsReleaseDate',
-        label: tr('useLatestAssetDateAsReleaseDate'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'releaseTitleAsVersion',
-        label: tr('releaseTitleAsVersion'),
-        defaultValue: false,
       ),
     ],
   ];
@@ -1121,8 +1126,7 @@ abstract class AppSource {
               [
                 GeneratedFormSwitch(
                   'releaseDateAsVersion',
-                  label:
-                      '${tr('releaseDateAsVersion')} (${tr('pseudoVersion')})',
+                  label: '${t('releaseDateAsVersion')} (${t('pseudoVersion')})',
                   defaultValue: false,
                 ),
               ],
@@ -1145,14 +1149,14 @@ abstract class AppSource {
         [
           GeneratedFormSwitch(
             'includeZips',
-            label: tr('includeZips'),
+            label: t('includeZips'),
             defaultValue: false,
           ),
         ],
         [
           GeneratedFormTextField(
             'zippedApkFilterRegEx',
-            label: tr('zippedApkFilterRegEx'),
+            label: t('zippedApkFilterRegEx'),
             required: false,
             additionalValidators: [
               (value) {
@@ -1250,7 +1254,7 @@ UpdatiumError getUpdatiumHttpError(Response res) {
             res.reasonPhrase != null &&
             res.reasonPhrase!.isNotEmpty)
         ? res.reasonPhrase!
-        : tr('errorWithHttpStatusCode', args: [res.statusCode.toString()]),
+        : t('errorWithHttpStatusCode', args: [res.statusCode.toString()]),
   );
 }
 
@@ -1267,21 +1271,21 @@ String? regExValidator(String? value) {
   try {
     RegExp(value);
   } catch (e) {
-    return tr('invalidRegEx');
+    return t('invalidRegEx');
   }
   return null;
 }
 
 String? intValidator(String? value, {bool positive = false}) {
   if (value == null) {
-    return tr('invalidInput');
+    return t('invalidInput');
   }
   var num = int.tryParse(value);
   if (num == null) {
-    return tr('invalidInput');
+    return t('invalidInput');
   }
   if (positive && num <= 0) {
-    return tr('invalidInput');
+    return t('invalidInput');
   }
   return null;
 }
@@ -1360,7 +1364,7 @@ List<MapEntry<String, String>> filterApks(
   return apkUrls;
 }
 
-bool isEnglish() => tr('and') == 'and'; // Quick hack, find a better way
+bool isEnglish() => t('and') == 'and'; // Quick hack, find a better way
 String lowerCaseIfEnglish(String str) => isEnglish() ? str.toLowerCase() : str;
 
 bool isVersionPseudo(App app) =>
@@ -1628,7 +1632,7 @@ class SourceProvider {
     for (var url in urls) {
       try {
         if (alreadyAddedUrls.contains(url)) {
-          throw UpdatiumError(tr('appAlreadyAdded'));
+          throw UpdatiumError(t('appAlreadyAdded'));
         }
         var source = sourceOverride ?? getSource(url);
         apps.add(
@@ -1667,37 +1671,37 @@ class RateLimitError extends UpdatiumError {
 
 class InvalidURLError extends UpdatiumError {
   InvalidURLError(String sourceName)
-    : super(tr('invalidURLForSource', args: [sourceName]));
+    : super(t('invalidURLForSource', args: [sourceName]));
 }
 
 class CredsNeededError extends UpdatiumError {
   CredsNeededError(String sourceName)
-    : super(tr('requiresCredentialsInSettings', args: [sourceName]));
+    : super(t('requiresCredentialsInSettings', args: [sourceName]));
 }
 
 class NoReleasesError extends UpdatiumError {
   NoReleasesError({String? note})
     : super(
-        '${tr('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
+        '${t('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
       );
 }
 
 class NoAPKError extends UpdatiumError {
-  NoAPKError() : super(tr('noAPKFound'));
+  NoAPKError() : super(t('noAPKFound'));
 }
 
 class NoVersionError extends UpdatiumError {
-  NoVersionError() : super(tr('noVersionFound'));
+  NoVersionError() : super(t('noVersionFound'));
 }
 
 class UnsupportedURLError extends UpdatiumError {
-  UnsupportedURLError() : super(tr('urlMatchesNoSource'));
+  UnsupportedURLError() : super(t('urlMatchesNoSource'));
 }
 
 class DowngradeError extends UpdatiumError {
   DowngradeError(int currentVersionCode, int newVersionCode)
     : super(
-        '${tr('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
+        '${t('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
       );
 }
 
@@ -1707,11 +1711,11 @@ class InstallError extends UpdatiumError {
 }
 
 class IDChangedError extends UpdatiumError {
-  IDChangedError(String newId) : super('${tr('appIdMismatch')} - $newId');
+  IDChangedError(String newId) : super('${t('appIdMismatch')} - $newId');
 }
 
 class NotImplementedError extends UpdatiumError {
-  NotImplementedError() : super(tr('functionNotImplemented'));
+  NotImplementedError() : super(t('functionNotImplemented'));
 }
 
 class MultiAppMultiError extends UpdatiumError {
@@ -1719,7 +1723,7 @@ class MultiAppMultiError extends UpdatiumError {
   Map<String, List<String>> idsByErrorString = {};
   Map<String, String> appIdNames = {};
 
-  MultiAppMultiError() : super(tr('placeholder'), unexpected: true);
+  MultiAppMultiError() : super(t('placeholder'), unexpected: true);
 
   void add(String appId, dynamic error, {String? appName}) {
     if (error is SocketException) {
@@ -1755,7 +1759,7 @@ class MultiAppMultiError extends UpdatiumError {
 String list2FriendlyString(List<String> list) {
   var isUsingEnglish = isEnglish();
   return list.length == 2
-      ? '${list[0]} ${tr('and')} ${list[1]}'
+      ? '${list[0]} ${t('and')} ${list[1]}'
       : list
             .asMap()
             .entries
@@ -1810,11 +1814,11 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
 
   void _updateController() {
     if (widget.selectedOverride == null || widget.selectedOverride == '') {
-      widget.controller.text = tr('none');
+      widget.controller.text = t('none');
       return;
     }
     if (sourceProvider.sources.isEmpty) {
-      widget.controller.text = tr('none');
+      widget.controller.text = t('none');
       return;
     }
     AppSource? selectedSource;
@@ -1828,7 +1832,7 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
     if (selectedSource != null) {
       widget.controller.text = selectedSource.name;
     } else {
-      widget.controller.text = tr('none');
+      widget.controller.text = t('none');
     }
   }
 
@@ -1845,7 +1849,7 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
                     controller: widget.controller,
                     readOnly: true,
                     decoration: InputDecoration(
-                      labelText: tr('overrideSource'),
+                      labelText: t('overrideSource'),
                       suffixIcon: const Icon(Icons.arrow_drop_down),
                     ),
                     onTap: () {
@@ -1862,7 +1866,7 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
                     onPressed: () {
                       widget.onSelectionChanged(null);
                     },
-                    child: Text(tr('none')),
+                    child: Text(t('none')),
                   ),
                   ...sourceProvider.sources
                       .where(

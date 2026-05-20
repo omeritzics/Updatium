@@ -76,7 +76,7 @@
     "removeSelectedApps": "Eemalda valitud äpid",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Uuenda {}",
     "installX": "Installi {}",
@@ -422,60 +422,60 @@
         "other": "Eemalda äpid?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Liiga palju päringuid (piirangutatud) - proovige uuesti {} minuti pärast",
-        "other": "Liiga palju päringuid (piirangutatud) - proovige uuesti {} minuti pärast"
+        "one": "Liiga palju päringuid (piirangutatud) - proovige uuesti {count} minuti pärast",
+        "other": "Liiga palju päringuid (piirangutatud) - proovige uuesti {count} minuti pärast"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Taustauuenduste kontrollimisel tekkis {}, kavandatakse uuesti kontroll {} minuti pärast",
-        "other": "Taustauuenduste kontrollimisel tekkis {}, kavandatakse uuesti kontroll {} minuti pärast"
+        "one": "Taustauuenduste kontrollimisel tekkis {error}, kavandatakse uuesti kontroll {count} minuti pärast",
+        "other": "Taustauuenduste kontrollimisel tekkis {error}, kavandatakse uuesti kontroll {count} minuti pärast"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Taustauuenduste kontroll leidis {} uuenduse - teavitab kasutajat vajadusel",
-        "other": "Taustauuenduste kontroll leidis {} uuendust - teavitab kasutajat vajadusel"
+        "one": "Taustauuenduste kontroll leidis {count} uuenduse - teavitab kasutajat vajadusel",
+        "other": "Taustauuenduste kontroll leidis {count} uuendust - teavitab kasutajat vajadusel"
     },
     "apps": {
-        "one": "{} Äpp",
-        "other": "{} Äppi"
+        "one": "{count} Äpp",
+        "other": "{count} Äppi"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL-i"
+        "one": "{count} URL",
+        "other": "{count} URL-i"
     },
     "minute": {
-        "one": "{} minut",
-        "other": "{} minutit"
+        "one": "{count} minut",
+        "other": "{count} minutit"
     },
     "hour": {
-        "one": "{} tund",
-        "other": "{} tundi"
+        "one": "{count} tund",
+        "other": "{count} tundi"
     },
     "day": {
-        "one": "{} päev",
-        "other": "{} päeva"
+        "one": "{count} päev",
+        "other": "{count} päeva"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Kustutatud {n} logi (enne = {before}, pärast = {after})",
         "other": "Kustutatud {n} logi (enne = {before}, pärast = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} ja 1 veel äpp on uuendusi.",
-        "other": "{} ja {} veel äppi on uuendusi."
+        "one": "{app} ja 1 veel äpp on uuendusi.",
+        "other": "{app} ja {count} veel äppi on uuendusi."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} ja 1 veel äpp uuendati.",
-        "other": "{} ja {} veel äppi uuendati."
+        "one": "{app} ja 1 veel äpp uuendati.",
+        "other": "{app} ja {count} veel äppi uuendati."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "{} ja 1 veel äpi uuendamine ebaõnnestus.",
-        "other": "{} ja {} veel äpi uuendamine ebaõnnestus."
+        "one": "{app} ja 1 veel äpi uuendamine ebaõnnestus.",
+        "other": "{app} ja {count} veel äpi uuendamine ebaõnnestus."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} ja 1 veel äpp võidi uuendada.",
-        "other": "{} ja {} veel äppi võidi uuendada."
+        "one": "{app} ja 1 veel äpp võidi uuendada.",
+        "other": "{app} ja {count} veel äppi võidi uuendada."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK-d"
+        "one": "{count} APK",
+        "other": "{count} APK-d"
     },
     "certificateHash": {
         "one": "Sertifikaadi räsi",

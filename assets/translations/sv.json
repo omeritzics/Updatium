@@ -76,7 +76,7 @@
     "removeSelectedApps": "Ta bort markerade Appar",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Uppdatera {}",
     "installX": "Installera {}",
@@ -422,60 +422,60 @@
         "other": "Ta Bort Appar?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "För många förfrågningar (begränsat pris) - försök igen om {} minut",
-        "other": "För många förfrågningar (begränsat pris) - försök igen om {} minuter"
+        "one": "För många förfrågningar (begränsat pris) - försök igen om {count} minut",
+        "other": "För många förfrågningar (begränsat pris) - försök igen om {count} minuter"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "BG-uppdateringskontroll påträffade en {}, kommer att schemalägga ett nytt försök om {} minut",
-        "other": "BG-uppdateringskontroll påträffade en {}, kommer att schemalägga ett nytt försök om {} minuter"
+        "one": "BG-uppdateringskontroll påträffade en {error}, kommer att schemalägga ett nytt försök om {count} minut",
+        "other": "BG-uppdateringskontroll påträffade en {error}, kommer att schemalägga ett nytt försök om {count} minuter"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "BG-uppdateringskontroll hittades {} uppdatering - kommer att meddela användaren om det behövs",
-        "other": "BG-uppdateringskontroll hittades {} uppdateringar - kommer att meddela användaren om det behövs"
+        "one": "BG-uppdateringskontroll hittades {count} uppdatering - kommer att meddela användaren om det behövs",
+        "other": "BG-uppdateringskontroll hittades {count} uppdateringar - kommer att meddela användaren om det behövs"
     },
     "apps": {
-        "one": "{} App",
-        "other": "{} Appar"
+        "one": "{count} App",
+        "other": "{count} Appar"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL:er"
+        "one": "{count} URL",
+        "other": "{count} URL:er"
     },
     "minute": {
-        "one": "{} minut",
-        "other": "{} minuter"
+        "one": "{count} minut",
+        "other": "{count} minuter"
     },
     "hour": {
-        "one": "{} timme",
-        "other": "{} timmar"
+        "one": "{count} timme",
+        "other": "{count} timmar"
     },
     "day": {
-        "one": "{} dag",
-        "other": "{} dagar"
+        "one": "{count} dag",
+        "other": "{count} dagar"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Rensade {n} logg (före = {before}, efter = {after})",
         "other": "Rensade {n} loggar (före = {before}, efter = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} och 1 app till har tillgängliga uppdateringar.",
-        "other": "{} och {} appar till har tillgängliga uppdateringar."
+        "one": "{app} och 1 app till har tillgängliga uppdateringar.",
+        "other": "{app} och {count} appar till har tillgängliga uppdateringar."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} och 1 till app uppdaterades.",
-        "other": "{} och {} appar till uppdaterades."
+        "one": "{app} och 1 till app uppdaterades.",
+        "other": "{app} och {count} appar till uppdaterades."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Misslyckades med att uppdatera {} och ytterligare 1 app.",
-        "other": "Det gick inte att uppdatera {} och {} fler appar."
+        "one": "Misslyckades med att uppdatera {app} och ytterligare 1 app.",
+        "other": "Det gick inte att uppdatera {app} och {count} fler appar."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} och 1 till app kan ha uppdaterats.",
-        "other": "{} och {} appar till kan ha uppdaterats."
+        "one": "{app} och 1 till app kan ha uppdaterats.",
+        "other": "{app} och {count} appar till kan ha uppdaterats."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK:er"
+        "one": "{count} APK",
+        "other": "{count} APK:er"
     },
     "certificateHash": {
         "one": "Certificate Hash",

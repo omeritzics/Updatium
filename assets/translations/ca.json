@@ -76,7 +76,7 @@
     "removeSelectedApps": "Elimina les aplicacions seleccionades",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Actualitza {}",
     "installX": "Instal·la {}",
@@ -422,60 +422,60 @@
         "other": "¿Suprimeixo les aplicacions?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Massa peticions (límit excedit), torna-hi en {} minut",
-        "other": "Massa peticions (límit excedit), torna-hi en {} minuts"
+        "one": "Massa peticions (límit excedit), torna-hi en {count} minut",
+        "other": "Massa peticions (límit excedit), torna-hi en {count} minuts"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "La comprovació d'actualitzacions en segon pla ha trobat un {}, es tornarà a provar en {} minut",
-        "other": "La comprovació d'actualitzacions en segon pla ha trobat un {}, es tornarà a provar en {} minuts"
+        "one": "La comprovació d'actualitzacions en segon pla ha trobat un {error}, es tornarà a provar en {count} minut",
+        "other": "La comprovació d'actualitzacions en segon pla ha trobat un {error}, es tornarà a provar en {count} minuts"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "La comprovació d'actualitzacions en segon pla ha trobat {} actualització, t'ho notificarem si cal",
-        "other": "La comprovació d'actualitzacions en segon pla ha trobat {} actualitzacions, t'ho notificarem si cal"
+        "one": "La comprovació d'actualitzacions en segon pla ha trobat {count} actualització, t'ho notificarem si cal",
+        "other": "La comprovació d'actualitzacions en segon pla ha trobat {count} actualitzacions, t'ho notificarem si cal"
     },
     "apps": {
-        "one": "{} Aplicació",
-        "other": "{} Aplicacions"
+        "one": "{count} Aplicació",
+        "other": "{count} Aplicacions"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URLs"
+        "one": "{count} URL",
+        "other": "{count} URLs"
     },
     "minute": {
-        "one": "{} minut",
-        "other": "{} minuts"
+        "one": "{count} minut",
+        "other": "{count} minuts"
     },
     "hour": {
-        "one": "{} hora",
-        "other": "{} hores"
+        "one": "{count} hora",
+        "other": "{count} hores"
     },
     "day": {
-        "one": "{} dia",
-        "other": "{} dies"
+        "one": "{count} dia",
+        "other": "{count} dies"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Suprimit {n} registre (anterior a = {before}, posterior a = {after})",
         "other": "Suprimits {n} registres (anteriors a = {before}, posteriors a = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} i 1 aplicació més tenen actualitzacions.",
-        "other": "{} i {} aplicacions més tenen actualitzacions."
+        "one": "{app} i 1 aplicació més tenen actualitzacions.",
+        "other": "{app} i {count} aplicacions més tenen actualitzacions."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} i 1 aplicació més s'han actualitzat.",
-        "other": "{} i {} aplicacions més s'han actualitzat."
+        "one": "{app} i 1 aplicació més s'han actualitzat.",
+        "other": "{app} i {count} aplicacions més s'han actualitzat."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Error en actualitzar {} i 1 aplicació més.",
-        "other": "No s'ha pogut actualizar {} i {} aplicacions més."
+        "one": "Error en actualitzar {app} i 1 aplicació més.",
+        "other": "No s'ha pogut actualizar {app} i {count} aplicacions més."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} i 1 aplicació més podrien haver estat actualizades.",
-        "other": "{} i {} aplicacions més podrien haver estat actualitzades."
+        "one": "{app} i 1 aplicació més podrien haver estat actualizades.",
+        "other": "{app} i {count} aplicacions més podrien haver estat actualitzades."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
+        "one": "{count} APK",
+        "other": "{count} APKs"
     },
     "certificateHash": {
         "one": "Suma de certificat",

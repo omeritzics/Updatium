@@ -76,7 +76,7 @@
     "removeSelectedApps": "Eliminați aplicațiile selectate",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Actualizează {}",
     "installX": "Instalează {}",
@@ -422,60 +422,60 @@
         "other": "Eliminați aplicațiile?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Prea multe cereri (limitat la rată) - încercați din nou în {} minut",
-        "other": "Prea multe cereri (limitat la rată) - încercați din nou în {} minute"
+        "one": "Prea multe cereri (limitat la rată) - încercați din nou în {count} minut",
+        "other": "Prea multe cereri (limitat la rată) - încercați din nou în {count} minute"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Verificarea actualizărilor în fundal a întâmpinat un {}, va programa o verificare de reîncercare în {} minut",
-        "other": "Verificarea actualizărilor în fundal a întâmpinat un {}, va programa o verificare de reîncercare în {} minute"
+        "one": "Verificarea actualizărilor în fundal a întâmpinat un {error}, va programa o verificare de reîncercare în {count} minut",
+        "other": "Verificarea actualizărilor în fundal a întâmpinat un {error}, va programa o verificare de reîncercare în {count} minute"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Verificarea actualizărilor în fundal a găsit {} actualizare - va notifica utilizatorul dacă este necesar",
-        "other": "Verificarea actualizărilor în fundal a găsit {} actualizări - va notifica utilizatorul dacă este necesar"
+        "one": "Verificarea actualizărilor în fundal a găsit {count} actualizare - va notifica utilizatorul dacă este necesar",
+        "other": "Verificarea actualizărilor în fundal a găsit {count} actualizări - va notifica utilizatorul dacă este necesar"
     },
     "apps": {
-        "one": "{} Aplicație",
-        "other": "{} Aplicații"
+        "one": "{count} Aplicație",
+        "other": "{count} Aplicații"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL-uri"
+        "one": "{count} URL",
+        "other": "{count} URL-uri"
     },
     "minute": {
-        "one": "{} minut",
-        "other": "{} minute"
+        "one": "{count} minut",
+        "other": "{count} minute"
     },
     "hour": {
-        "one": "{} oră",
-        "other": "{} ore"
+        "one": "{count} oră",
+        "other": "{count} ore"
     },
     "day": {
-        "one": "{} zi",
-        "other": "{} zile"
+        "one": "{count} zi",
+        "other": "{count} zile"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Șters {n} jurnal (înainte = {before}, după = {after})",
         "other": "Șterse {n} jurnale (înainte = {before}, după = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} și încă 1 aplicație mai are actualizări.",
-        "other": "{} și încă {} aplicații mai au actualizări."
+        "one": "{app} și încă 1 aplicație mai are actualizări.",
+        "other": "{app} și încă {count} aplicații mai au actualizări."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} și încă 1 aplicație a fost actualizată.",
-        "other": "{} și încă {} aplicații au fost actualizate."
+        "one": "{app} și încă 1 aplicație a fost actualizată.",
+        "other": "{app} și încă {count} aplicații au fost actualizate."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Eșec la actualizarea {} și încă 1 aplicație.",
-        "other": "Eșec la actualizarea {} și încă {} aplicații."
+        "one": "Eșec la actualizarea {app} și încă 1 aplicație.",
+        "other": "Eșec la actualizarea {app} și încă {count} aplicații."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} și încă 1 aplicație ar putea fi fost actualizată.",
-        "other": "{} și încă {} aplicații ar putea fi fost actualizate."
+        "one": "{app} și încă 1 aplicație ar putea fi fost actualizată.",
+        "other": "{app} și încă {count} aplicații ar putea fi fost actualizate."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK-uri"
+        "one": "{count} APK",
+        "other": "{count} APK-uri"
     },
     "certificateHash": {
         "one": "Hash Certificat",

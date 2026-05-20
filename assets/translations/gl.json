@@ -76,7 +76,7 @@
     "removeSelectedApps": "Retirar apps seleccionadas",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Actualizar {}",
     "installX": "Instalar {}",
@@ -422,60 +422,60 @@
         "other": "Retirar apps?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Demasiadas peticións (taxa limitada) - volver a intentar en {} minuto",
-        "other": "Demasiadas peticións (taxa limitada) - volver a intentar en {} minutos"
+        "one": "Demasiadas peticións (taxa limitada) - volver a intentar en {count} minuto",
+        "other": "Demasiadas peticións (taxa limitada) - volver a intentar en {count} minutos"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "A actualización en segundo plano atopou un {}, programará un reintento en {} minuto",
-        "other": "A actualización en segundo plano atopou un {}, programará un reintento en {} minutos"
+        "one": "A actualización en segundo plano atopou un {error}, programará un reintento en {count} minuto",
+        "other": "A actualización en segundo plano atopou un {error}, programará un reintento en {count} minutos"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "A actualización en segundo plano atopou {} actualización - avisará a usuaria se fose preciso",
-        "other": "A actualización en segundo plano atopou {} actualizacións - avisará á usuaria se fose preciso"
+        "one": "A actualización en segundo plano atopou {count} actualización - avisará a usuaria se fose preciso",
+        "other": "A actualización en segundo plano atopou {count} actualizacións - avisará á usuaria se fose preciso"
     },
     "apps": {
-        "one": "{} App",
-        "other": "{} Apps"
+        "one": "{count} App",
+        "other": "{count} Apps"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URLs"
+        "one": "{count} URL",
+        "other": "{count} URLs"
     },
     "minute": {
-        "one": "{} minuto",
-        "other": "{} minutos"
+        "one": "{count} minuto",
+        "other": "{count} minutos"
     },
     "hour": {
-        "one": "{} hora",
-        "other": "{} horas"
+        "one": "{count} hora",
+        "other": "{count} horas"
     },
     "day": {
-        "one": "{} día",
-        "other": "{} días"
+        "one": "{count} día",
+        "other": "{count} días"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Limpado {n} rexistro (anterior = {before}, posterior = {after})",
         "other": "Limpados {n} rexistros (anterior = {before}, posterior = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} e outra app teñen actualizacións.",
-        "other": "{} e {} apps máis teñen actualizacións."
+        "one": "{app} e outra app teñen actualizacións.",
+        "other": "{app} e {count} apps máis teñen actualizacións."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} e outra actualizáronse.",
-        "other": "{} e outras {} apps actualizáronse."
+        "one": "{app} e outra actualizáronse.",
+        "other": "{app} e outras {count} apps actualizáronse."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Fallou a actualización de {} e outra app.",
-        "other": "Fallou a actualización de {} e {} apps máis."
+        "one": "Fallou a actualización de {app} e outra app.",
+        "other": "Fallou a actualización de {app} e {count} apps máis."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} e outra app poderían ter sido actualizadas.",
-        "other": "{} e {} apps máis poderían ter sido actualizadas."
+        "one": "{app} e outra app poderían ter sido actualizadas.",
+        "other": "{app} e {count} apps máis poderían ter sido actualizadas."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
+        "one": "{count} APK",
+        "other": "{count} APKs"
     },
     "certificateHash": {
         "one": "Certificado hash",

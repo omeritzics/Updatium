@@ -76,7 +76,7 @@
     "removeSelectedApps": "Supprimer les applications sélectionnées",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Mettre à jour {}",
     "installX": "Installer {}",
@@ -422,60 +422,60 @@
         "other": "Supprimer les applications ?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Trop de requêtes (taux limité) - réessayez dans {} minute",
-        "other": "Trop de requêtes (taux limité) - réessayez dans {} minutes"
+        "one": "Trop de requêtes (taux limité) - réessayez dans {count} minute",
+        "other": "Trop de requêtes (taux limité) - réessayez dans {count} minutes"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "La recherche de mise à jour en arrière-plan a rencontré une erreur {}, une nouvelle tentative programmée dans {} minute",
-        "other": "La recherche de mise à jour en arrière-plan a rencontré une erreur {}, une nouvelle tentative programmée dans {} minutes"
+        "one": "La recherche de mise à jour en arrière-plan a rencontré une erreur {error}, une nouvelle tentative programmée dans {count} minute",
+        "other": "La recherche de mise à jour en arrière-plan a rencontré une erreur {error}, une nouvelle tentative programmée dans {count} minutes"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "La recherche de mises à jour en arrière-plan a trouvé {} mise à jour - l'utilisateur sera notifié si nécessaire",
-        "other": "La recherche de mises à jour en arrière-plan a trouvé {} mises à jour - l'utilisateur sera notifié si nécessaire"
+        "one": "La recherche de mises à jour en arrière-plan a trouvé {count} mise à jour - l'utilisateur sera notifié si nécessaire",
+        "other": "La recherche de mises à jour en arrière-plan a trouvé {count} mises à jour - l'utilisateur sera notifié si nécessaire"
     },
     "apps": {
-        "one": "{} Application",
-        "other": "{} Applications"
+        "one": "{count} Application",
+        "other": "{count} Applications"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URLs"
+        "one": "{count} URL",
+        "other": "{count} URLs"
     },
     "minute": {
-        "one": "{} minute",
-        "other": "{} minutes"
+        "one": "{count} minute",
+        "other": "{count} minutes"
     },
     "hour": {
-        "one": "{} heure",
-        "other": "{} heures"
+        "one": "{count} heure",
+        "other": "{count} heures"
     },
     "day": {
-        "one": "{} jour",
-        "other": "{} jours"
+        "one": "{count} jour",
+        "other": "{count} jours"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Nettoyage du journal {n} (avant = {before}, après = {after})",
         "other": "Nettoyage des journaux {n} (avant = {before}, après = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} et 1 autre application ont des mises à jour.",
-        "other": "{} et {} autres applications ont des mises à jour."
+        "one": "{app} et 1 autre application ont des mises à jour.",
+        "other": "{app} et {count} autres applications ont des mises à jour."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} et 1 autre application ont été mises à jour.",
-        "other": "{} et {} autres applications ont été mises à jour."
+        "one": "{app} et 1 autre application ont été mises à jour.",
+        "other": "{app} et {count} autres applications ont été mises à jour."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Échec de la mise à jour de {} et 1 autre application.",
-        "other": "Échec de la mise à jour de {} et {} autres applications."
+        "one": "Échec de la mise à jour de {app} et 1 autre application.",
+        "other": "Échec de la mise à jour de {app} et {count} autres applications."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} et 1 autre application ont peut-être été mises à jour.",
-        "other": "{} et {} autres applications ont peut-être été mises à jour."
+        "one": "{app} et 1 autre application ont peut-être été mises à jour.",
+        "other": "{app} et {count} autres applications ont peut-être été mises à jour."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
+        "one": "{count} APK",
+        "other": "{count} APKs"
     },
     "certificateHash": {
         "one": "Certificat Hash",
