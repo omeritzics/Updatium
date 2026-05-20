@@ -76,7 +76,7 @@
     "removeSelectedApps": "Odstranit vybrané aplikace",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Aktualizovat {}",
     "installX": "Instalovat {}",
@@ -419,44 +419,44 @@
         "other": "Odstranit aplikace?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Příliš mnoho požadavků (limit požadavků) - zkuste to znovu za {} minutu",
-        "few": "Příliš mnoho požadavků (limit požadavků) - zkuste to znovu za {} minuty",
-        "other": "Příliš mnoho požadavků (limit požadavků) - zkuste to znovu za {} minut"
+        "one": "Příliš mnoho požadavků (limit požadavků) - zkuste to znovu za {count} minutu",
+        "few": "Příliš mnoho požadavků (limit požadavků) - zkuste to znovu za {count} minuty",
+        "other": "Příliš mnoho požadavků (limit požadavků) - zkuste to znovu za {count} minut"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Při kontrole aktualizací na pozadí byla zjištěna {}, opakování bude naplánováno za {} minutu",
-        "few": "Při kontrole aktualizací na pozadí byla zjištěna {}, opakování bude naplánováno za {} minuty",
-        "other": "Při kontrole aktualizací na pozadí byla zjištěna {}, opakování bude naplánováno za {} minut"
+        "one": "Při kontrole aktualizací na pozadí byla zjištěna {error}, opakování bude naplánováno za {count} minutu",
+        "few": "Při kontrole aktualizací na pozadí byla zjištěna {error}, opakování bude naplánováno za {count} minuty",
+        "other": "Při kontrole aktualizací na pozadí byla zjištěna {error}, opakování bude naplánováno za {count} minut"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Při kontrole aktualizací na pozadí nalezena {} aktualizace – v případě potřeby bude upozorněn uživatel",
-        "few": "Při kontrole aktualizací na pozadí nalezeny {} aktualizace – v případě potřeby bude upozorněn uživatel",
-        "other": "Při kontrole aktualizací na pozadí nalezeno {} aktualizací – v případě potřeby bude upozorněn uživatel"
+        "one": "Při kontrole aktualizací na pozadí nalezena {count} aktualizace – v případě potřeby bude upozorněn uživatel",
+        "few": "Při kontrole aktualizací na pozadí nalezeny {count} aktualizace – v případě potřeby bude upozorněn uživatel",
+        "other": "Při kontrole aktualizací na pozadí nalezeno {count} aktualizací – v případě potřeby bude upozorněn uživatel"
     },
     "apps": {
-        "one": "{} aplikace",
-        "few": "{} aplikace",
-        "other": "{} aplikací"
+        "one": "{count} aplikace",
+        "few": "{count} aplikace",
+        "other": "{count} aplikací"
     },
     "url": {
-        "one": "{} adresa",
-        "few": "{} adresy",
-        "other": "{} adres"
+        "one": "{count} adresa",
+        "few": "{count} adresy",
+        "other": "{count} adres"
     },
     "minute": {
-        "one": "{} minuta",
-        "few": "{} minuty",
-        "other": "{} minut"
+        "one": "{count} minuta",
+        "few": "{count} minuty",
+        "other": "{count} minut"
     },
     "hour": {
-        "one": "{} hodina",
-        "few": "{} hodiny",
-        "other": "{} hodin"
+        "one": "{count} hodina",
+        "few": "{count} hodiny",
+        "other": "{count} hodin"
     },
     "day": {
-        "one": "{} den",
-        "few": "{} dny",
-        "other": "{} dní"
+        "one": "{count} den",
+        "few": "{count} dny",
+        "other": "{count} dní"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Vymazán {n} záznam (před = {before}, po = {after})",
@@ -464,28 +464,28 @@
         "other": "Vymazáno {n} záznamů (před = {before}, po = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} a 1 další aplikace mají aktualizace.",
-        "few": "{} a {} další aplikace mají aktualizace.",
-        "other": "{} a {} dalších aplikací má aktualizace."
+        "one": "{app} a 1 další aplikace mají aktualizace.",
+        "few": "{app} a {count} další aplikace mají aktualizace.",
+        "other": "{app} a {count} dalších aplikací má aktualizace."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} a 1 další aplikace byly aktualizovány.",
-        "few": "{} a {} další aplikace byly aktualizovány.",
-        "other": "{} a {} dalších aplikací bylo aktualizováno."
+        "one": "{app} a 1 další aplikace byly aktualizovány.",
+        "few": "{app} a {count} další aplikace byly aktualizovány.",
+        "other": "{app} a {count} dalších aplikací bylo aktualizováno."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Nepodařilo se aktualizovat {} a 1 další aplikaci.",
-        "few": "Nepodařilo se aktualizovat {} a {} další aplikace.",
-        "other": "Nepodařilo se aktualizovat {} a {} dalších aplikací."
+        "one": "Nepodařilo se aktualizovat {app} a 1 další aplikaci.",
+        "few": "Nepodařilo se aktualizovat {app} a {count} další aplikace.",
+        "other": "Nepodařilo se aktualizovat {app} a {count} dalších aplikací."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} a 1 další aplikace možná byly aktualizovány.",
-        "few": "{} a {} další aplikace možná byly aktualizovány.",
-        "other": "{} a {} dalších aplikací možná bylo aktualizováno."
+        "one": "{app} a 1 další aplikace možná byly aktualizovány.",
+        "few": "{app} a {count} další aplikace možná byly aktualizovány.",
+        "other": "{app} a {count} dalších aplikací možná bylo aktualizováno."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
+        "one": "{count} APK",
+        "other": "{count} APK"
     },
     "certificateHash": {
         "one": "Haš osvědčení",

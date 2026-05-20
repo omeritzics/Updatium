@@ -76,7 +76,7 @@
     "removeSelectedApps": "Usuń wybrane aplikacje",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Zaktualizuj {}",
     "installX": "Zainstaluj {}",
@@ -421,52 +421,52 @@
         "other": "Usunąć aplikacje?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Zbyt wiele żądań (ograniczona częstotliwość) - spróbuj ponownie za {} minutę",
-        "few": "Zbyt wiele żądań (ograniczona częstotliwość) - spróbuj ponownie za {} minuty",
-        "many": "Zbyt wiele żądań (ograniczona częstotliwość) - spróbuj ponownie za {} minut",
-        "other": "Zbyt wiele żądań (ograniczona częstotliwość) - spróbuj ponownie za {} minuty"
+        "one": "Zbyt wiele żądań (ograniczona częstotliwość) - spróbuj ponownie za {count} minutę",
+        "few": "Zbyt wiele żądań (ograniczona częstotliwość) - spróbuj ponownie za {count} minuty",
+        "many": "Zbyt wiele żądań (ograniczona częstotliwość) - spróbuj ponownie za {count} minut",
+        "other": "Zbyt wiele żądań (ograniczona częstotliwość) - spróbuj ponownie za {count} minuty"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Sprawdzanie aktualizacji w tle napotkało {}, zaplanuje ponowne sprawdzenie za {} minutę",
-        "few": "Sprawdzanie aktualizacji w tle napotkało {}, zaplanuje ponowne sprawdzenie za {} minuty",
-        "many": "Sprawdzanie aktualizacji w tle napotkało {}, zaplanuje ponowne sprawdzenie za {} minut",
-        "other": "Sprawdzanie aktualizacji w tle napotkało {}, zaplanuje ponowne sprawdzenie za {} minuty"
+        "one": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {count} minutę",
+        "few": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {count} minuty",
+        "many": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {count} minut",
+        "other": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {count} minuty"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "W tle znaleziono {} aktualizację - w razie potrzeby użytkownik zostanie o tym powiadomiony",
-        "few": "W tle znaleziono {} aktualizacje - w razie potrzeby użytkownik zostanie o tym powiadomiony",
-        "many": "W tle znaleziono {} aktualizacji - w razie potrzeby użytkownik zostanie o tym powiadomiony",
-        "other": "W tle znaleziono {} aktualizacje - w razie potrzeby użytkownik zostanie o tym powiadomiony"
+        "one": "W tle znaleziono {count} aktualizację - w razie potrzeby użytkownik zostanie o tym powiadomiony",
+        "few": "W tle znaleziono {count} aktualizacje - w razie potrzeby użytkownik zostanie o tym powiadomiony",
+        "many": "W tle znaleziono {count} aktualizacji - w razie potrzeby użytkownik zostanie o tym powiadomiony",
+        "other": "W tle znaleziono {count} aktualizacje - w razie potrzeby użytkownik zostanie o tym powiadomiony"
     },
     "apps": {
-        "one": "{} apkę",
-        "few": "{} apki",
-        "many": "{} apek",
-        "other": "{} apki"
+        "one": "{count} apkę",
+        "few": "{count} apki",
+        "many": "{count} apek",
+        "other": "{count} apki"
     },
     "url": {
-        "one": "{} adres URL",
-        "few": "{} adresy URL",
-        "many": "{} adresów URL",
-        "other": "{} adresy URL"
+        "one": "{count} adres URL",
+        "few": "{count} adresy URL",
+        "many": "{count} adresów URL",
+        "other": "{count} adresy URL"
     },
     "minute": {
-        "one": "{} minuta",
-        "few": "{} minuty",
-        "many": "{} minut",
-        "other": "{} minuty"
+        "one": "{count} minuta",
+        "few": "{count} minuty",
+        "many": "{count} minut",
+        "other": "{count} minuty"
     },
     "hour": {
-        "one": "{} godzina",
-        "few": "{} godziny",
-        "many": "{} godzin",
-        "other": "{} godziny"
+        "one": "{count} godzina",
+        "few": "{count} godziny",
+        "many": "{count} godzin",
+        "other": "{count} godziny"
     },
     "day": {
-        "one": "{} dzień",
-        "few": "{} dni",
-        "many": "{} dni",
-        "other": "{} dni"
+        "one": "{count} dzień",
+        "few": "{count} dni",
+        "many": "{count} dni",
+        "other": "{count} dni"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Wyczyszczono {n} log (przed = {before}, po = {after})",
@@ -475,34 +475,34 @@
         "other": "Wyczyszczono {n} logi (przed = {before}, po = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} i 1 inna apka mają aktualizacje.",
-        "few": "{} i {} inne apki mają aktualizacje.",
-        "many": "{} i {} innych apek ma aktualizacje.",
-        "other": "{} i {} inne apki mają aktualizacje."
+        "one": "{app} i 1 inna apka mają aktualizacje.",
+        "few": "{app} i {count} inne apki mają aktualizacje.",
+        "many": "{app} i {count} innych apek ma aktualizacje.",
+        "other": "{app} i {count} inne apki mają aktualizacje."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "Zaktualizowano {} i 1 inną apkę.",
-        "few": "{} i {} inne apki zostały zaktualizowane.",
-        "many": "{} i {} innych apek zostało zaktualizowanych.",
-        "other": "{} i {} inne apki zostały zaktualizowane."
+        "one": "Zaktualizowano {app} i 1 inną apkę.",
+        "few": "{app} i {count} inne apki zostały zaktualizowane.",
+        "many": "{app} i {count} innych apek zostało zaktualizowanych.",
+        "other": "{app} i {count} inne apki zostały zaktualizowane."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Błąd aktualizacji {} i 1 innej apki.",
-        "few": "Błąd aktualizacji {} i {} innych apek.",
-        "many": "Błąd aktualizacji {} i {} innych apek.",
-        "other": "Błąd aktualizacji {} i {} innych apek."
+        "one": "Błąd aktualizacji {app} i 1 innej apki.",
+        "few": "Błąd aktualizacji {app} i {count} innych apek.",
+        "many": "Błąd aktualizacji {app} i {count} innych apek.",
+        "other": "Błąd aktualizacji {app} i {count} innych apek."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} i 1 inna apka mogły zostać zaktualizowane.",
-        "few": "{} i {} inne apki mogły zostać zaktualizowane.",
-        "many": "{} i {} innych apek mogło zostać zaktualizowanych.",
-        "other": "{} i {} inne apki mogły zostać zaktualizowane."
+        "one": "{app} i 1 inna apka mogły zostać zaktualizowane.",
+        "few": "{app} i {count} inne apki mogły zostać zaktualizowane.",
+        "many": "{app} i {count} innych apek mogło zostać zaktualizowanych.",
+        "other": "{app} i {count} inne apki mogły zostać zaktualizowane."
     },
     "apk": {
-        "one": "{} apk",
-        "few": "{} apki",
-        "many": "{} apek",
-        "other": "{} apki"
+        "one": "{count} apk",
+        "few": "{count} apki",
+        "many": "{count} apek",
+        "other": "{count} apki"
     },
     "certificateHash": {
         "one": "Certyfikat Hash",

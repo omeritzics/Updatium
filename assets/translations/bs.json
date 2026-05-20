@@ -76,7 +76,7 @@
     "removeSelectedApps": "Ukloni odabrane aplikacije",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Nadogradi {}",
     "installX": "Instaliraj {}",
@@ -419,60 +419,60 @@
         "other": "Želite li ukloniti aplikacije?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Previše zahtjeva (ograničena broj zahteva) - pokušajte ponovo za {} minutu",
-        "other": "Previše zahtjeva (ograničena cijena) - pokušajte ponovo za {} min."
+        "one": "Previše zahtjeva (ograničena broj zahteva) - pokušajte ponovo za {count} minutu",
+        "other": "Previše zahtjeva (ograničena cijena) - pokušajte ponovo za {count} min."
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Provjera ažuriranja u pozadini naišla je na {}, zakazuje se ponovni pokušaj za {} minutu",
-        "other": "Provjera ažuriranja u pozadini naišla je na {}, zakazuje se ponovni pokušaj za {} min."
+        "one": "Provjera ažuriranja u pozadini naišla je na {error}, zakazuje se ponovni pokušaj za {count} minutu",
+        "other": "Provjera ažuriranja u pozadini naišla je na {error}, zakazuje se ponovni pokušaj za {count} min."
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Provjera ažuriranja u pozadini je pronašla {} ažuriranje - korisnik će biti obavješten ako je to potrebno",
-        "other": "Provjera ažuriranja u pozadini je pronašla {} ažuriranja - korisnik će biti obavješten ako je to potrebno"
+        "one": "Provjera ažuriranja u pozadini je pronašla {count} ažuriranje - korisnik će biti obavješten ako je to potrebno",
+        "other": "Provjera ažuriranja u pozadini je pronašla {count} ažuriranja - korisnik će biti obavješten ako je to potrebno"
     },
     "apps": {
-        "one": "{} aplikacija",
-        "other": "{} aplikacije"
+        "one": "{count} aplikacija",
+        "other": "{count} aplikacije"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL-ovi"
+        "one": "{count} URL",
+        "other": "{count} URL-ovi"
     },
     "minute": {
-        "one": "{} minuta",
+        "one": "{count} minuta",
         "other": "min."
     },
     "hour": {
-        "one": "{} sat",
-        "other": "{} sat/i"
+        "one": "{count} sat",
+        "other": "{count} sat/i"
     },
     "day": {
-        "one": "{} dan",
-        "other": "{} dana"
+        "one": "{count} dan",
+        "other": "{count} dana"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Izbrisan {n} log (prije = {before}, nakon = {after})",
         "other": "Izbrisano {n} log-ova (prije = {before}, nakon = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} i još 1 aplikacija ima ažuriranja.",
-        "other": "{} i još {} aplikacija imaju ažuriranja."
+        "one": "{app} i još 1 aplikacija ima ažuriranja.",
+        "other": "{app} i još {count} aplikacija imaju ažuriranja."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} i još 1 aplikacija je ažurirana.",
-        "other": "{} i još {} aplikacija je ažurirano."
+        "one": "{app} i još 1 aplikacija je ažurirana.",
+        "other": "{app} i još {count} aplikacija je ažurirano."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Failed to update {} and 1 more app.",
-        "other": "Failed to update {} and {} more apps."
+        "one": "Failed to update {app} and 1 more app.",
+        "other": "Failed to update {app} and {count} more apps."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} i još jedna aplikacija je vjerovatno ažurirana.",
-        "other": "{} i još {} aplikacija su vjerovatno ažurirane."
+        "one": "{app} i još jedna aplikacija je vjerovatno ažurirana.",
+        "other": "{app} i još {count} aplikacija su vjerovatno ažurirane."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK-a"
+        "one": "{count} APK",
+        "other": "{count} APK-a"
     },
     "certificateHash": {
         "one": "Certificate Hash",

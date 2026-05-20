@@ -76,7 +76,7 @@
     "removeSelectedApps": "Xóa ứng dụng đã chọn",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Cập nhật {}",
     "installX": "Cài đặt {}",
@@ -419,60 +419,60 @@
         "other": "Gỡ ứng dụng?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {} phút",
-        "other": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {} phút"
+        "one": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {count} phút",
+        "other": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {count} phút"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Việc kiểm tra bản cập nhật BG gặp phải {}, sẽ lên lịch kiểm tra lại sau {} phút",
-        "other": "Việc kiểm tra bản cập nhật BG gặp phải {}, sẽ lên lịch kiểm tra lại sau {} phút"
+        "one": "Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {count} phút",
+        "other": "Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {count} phút"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Đang kiểm tra bản cập nhật BG tìm thấy {} bản cập nhật - sẽ thông báo cho người dùng nếu cần",
-        "other": "Đang kiểm tra bản cập nhật BG tìm thấy {} bản cập nhật - sẽ thông báo cho người dùng nếu cần"
+        "one": "Đang kiểm tra bản cập nhật BG tìm thấy {count} bản cập nhật - sẽ thông báo cho người dùng nếu cần",
+        "other": "Đang kiểm tra bản cập nhật BG tìm thấy {count} bản cập nhật - sẽ thông báo cho người dùng nếu cần"
     },
     "apps": {
-        "one": "{} Ứng dụng",
-        "other": "{} Ứng dụng"
+        "one": "{count} Ứng dụng",
+        "other": "{count} Ứng dụng"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL"
+        "one": "{count} URL",
+        "other": "{count} URL"
     },
     "minute": {
-        "one": "{} phút",
-        "other": "{} phút"
+        "one": "{count} phút",
+        "other": "{count} phút"
     },
     "hour": {
-        "one": "{} giờ",
-        "other": "{} giờ"
+        "one": "{count} giờ",
+        "other": "{count} giờ"
     },
     "day": {
-        "one": "{} ngày",
-        "other": "{} ngày"
+        "one": "{count} ngày",
+        "other": "{count} ngày"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Đã xóa {n} nhật ký (trước = {trước}, sau = {sau})",
         "other": "Đã xóa {n} nhật ký (trước = {trước}, sau = {sau})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} và 1 ứng dụng khác có bản cập nhật.",
-        "other": "{} và {} ứng dụng khác có bản cập nhật."
+        "one": "{app} và 1 ứng dụng khác có bản cập nhật.",
+        "other": "{app} và {count} ứng dụng khác có bản cập nhật."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} và 1 ứng dụng khác đã được cập nhật.",
-        "other": "{} và {} ứng dụng khác đã được cập nhật."
+        "one": "{app} và 1 ứng dụng khác đã được cập nhật.",
+        "other": "{app} và {count} ứng dụng khác đã được cập nhật."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "{} và 1 ứng dụng khác đã cập nhật không thành công.",
-        "other": "{} và {} ứng dụng khác đã cập nhật không thảnh công."
+        "one": "{app} và 1 ứng dụng khác đã cập nhật không thành công.",
+        "other": "{app} và {count} ứng dụng khác đã cập nhật không thảnh công."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} và 1 ứng dụng khác có thể đã được cập nhật.",
-        "other": "{} và {} ứng dụng khác có thể đã được cập nhật."
+        "one": "{app} và 1 ứng dụng khác có thể đã được cập nhật.",
+        "other": "{app} và {count} ứng dụng khác có thể đã được cập nhật."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APKs"
+        "one": "{count} APK",
+        "other": "{count} APKs"
     },
     "certificateHash": {
         "one": "Mã băm chứng chỉ",

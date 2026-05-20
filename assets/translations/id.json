@@ -76,7 +76,7 @@
     "removeSelectedApps": "Hapus aplikasi terpilih",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Perbarui {}",
     "installX": "Pasang {}",
@@ -419,60 +419,60 @@
         "other": "Hapus aplikasi?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {} menit",
-        "other": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {} menit"
+        "one": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {count} menit",
+        "other": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {count} menit"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Pemeriksaan pembaruan latar belakang menemui {}, akan menjadwalkan pemeriksaan ulang dalam {} menit",
-        "other": "Pemeriksaan pembaruan latar belakang menemui {}, akan menjadwalkan pemeriksaan ulang dalam {} menit"
+        "one": "Pemeriksaan pembaruan latar belakang menemui {error}, akan menjadwalkan pemeriksaan ulang dalam {count} menit",
+        "other": "Pemeriksaan pembaruan latar belakang menemui {error}, akan menjadwalkan pemeriksaan ulang dalam {count} menit"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Pemeriksaan pembaruan latar belakang menemukan {} pembaruan - akan memberi tahu pengguna jika diperlukan",
-        "other": "Pemeriksaan pembaruan latar belakang menemukan {} pembaruan - akan memberi tahu pengguna jika diperlukan"
+        "one": "Pemeriksaan pembaruan latar belakang menemukan {count} pembaruan - akan memberi tahu pengguna jika diperlukan",
+        "other": "Pemeriksaan pembaruan latar belakang menemukan {count} pembaruan - akan memberi tahu pengguna jika diperlukan"
     },
     "apps": {
-        "one": "{} aplikasi",
-        "other": "{} aplikasi"
+        "one": "{count} aplikasi",
+        "other": "{count} aplikasi"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL"
+        "one": "{count} URL",
+        "other": "{count} URL"
     },
     "minute": {
-        "one": "{} menit",
-        "other": "{} menit"
+        "one": "{count} menit",
+        "other": "{count} menit"
     },
     "hour": {
-        "one": "{} jam",
-        "other": "{} jam"
+        "one": "{count} jam",
+        "other": "{count} jam"
     },
     "day": {
-        "one": "{} hari",
-        "other": "{} hari"
+        "one": "{count} hari",
+        "other": "{count} hari"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Menghapus {n} catatan (sebelum = {before}, setelah = {after})",
         "other": "Menghapus {n} catatan (sebelum = {before}, setelah = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} dan 1 aplikasi lainnya memiliki pembaruan.",
-        "other": "{} dan {} aplikasi lainnya memiliki pembaruan."
+        "one": "{app} dan 1 aplikasi lainnya memiliki pembaruan.",
+        "other": "{app} dan {count} aplikasi lainnya memiliki pembaruan."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} dan 1 aplikasi lainnya telah diperbarui.",
-        "other": "{} dan {} aplikasi lainnya telah diperbarui."
+        "one": "{app} dan 1 aplikasi lainnya telah diperbarui.",
+        "other": "{app} dan {count} aplikasi lainnya telah diperbarui."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Gagal memperbarui {} dan 1 aplikasi lainnya.",
-        "other": "Gagal memperbarui {} dan {} aplikasi lainnya."
+        "one": "Gagal memperbarui {app} dan 1 aplikasi lainnya.",
+        "other": "Gagal memperbarui {app} dan {count} aplikasi lainnya."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} dan 1 aplikasi lainnya mungkin telah diperbarui.",
-        "other": "{} dan {} aplikasi lainnya mungkin telah diperbarui."
+        "one": "{app} dan 1 aplikasi lainnya mungkin telah diperbarui.",
+        "other": "{app} dan {count} aplikasi lainnya mungkin telah diperbarui."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
+        "one": "{count} APK",
+        "other": "{count} APK"
     },
     "certificateHash": {
         "one": "Hash Sertifikat",

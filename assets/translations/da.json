@@ -76,7 +76,7 @@
     "removeSelectedApps": "Fjern valgte apps",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Opdater {}",
     "installX": "Installer {}",
@@ -419,60 +419,60 @@
         "other": "Fjern apps?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "For mange anmodninger (begrænset hastighed). Prøv igen om {} minut",
-        "other": "For mange anmodninger (begrænset hastighed). Prøv igen om {} minutter"
+        "one": "For mange anmodninger (begrænset hastighed). Prøv igen om {count} minut",
+        "other": "For mange anmodninger (begrænset hastighed). Prøv igen om {count} minutter"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Baggrundsopdateringstjek stødte på en {}. Planlægger et nyt tjek om {} minut",
-        "other": "Baggrundsopdateringstjek stødte på en {}. Planlægger et nyt tjek om {} minutter"
+        "one": "Baggrundsopdateringstjek stødte på en {error}. Planlægger et nyt tjek om {count} minut",
+        "other": "Baggrundsopdateringstjek stødte på en {error}. Planlægger et nyt tjek om {count} minutter"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Baggrundsopdateringstjek fandt {} opdatering. Underretter brugeren, hvis nødvendigt",
-        "other": "Baggrundsopdateringstjek fandt {} opdateringer. Underretter brugeren, hvis nødvendigt"
+        "one": "Baggrundsopdateringstjek fandt {count} opdatering. Underretter brugeren, hvis nødvendigt",
+        "other": "Baggrundsopdateringstjek fandt {count} opdateringer. Underretter brugeren, hvis nødvendigt"
     },
     "apps": {
-        "one": "{} App",
-        "other": "{} Apps"
+        "one": "{count} App",
+        "other": "{count} Apps"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URL'er"
+        "one": "{count} URL",
+        "other": "{count} URL'er"
     },
     "minute": {
-        "one": "{} minut",
-        "other": "{} minutter"
+        "one": "{count} minut",
+        "other": "{count} minutter"
     },
     "hour": {
-        "one": "{} time",
-        "other": "{} timer"
+        "one": "{count} time",
+        "other": "{count} timer"
     },
     "day": {
-        "one": "{} dag",
-        "other": "{} dage"
+        "one": "{count} dag",
+        "other": "{count} dage"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Ryddet {n} log (før = {before}, efter = {after})",
         "other": "Ryddede {n} logs (før = {before}, efter = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} og 1 anden app har opdateringer.",
-        "other": "{} og {} andre apps har opdateringer."
+        "one": "{app} og 1 anden app har opdateringer.",
+        "other": "{app} og {count} andre apps har opdateringer."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} og 1 anden app blev opdateret.",
-        "other": "{} og {} andre apps blev opdateret."
+        "one": "{app} og 1 anden app blev opdateret.",
+        "other": "{app} og {count} andre apps blev opdateret."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Kunne ikke opdatere {} og 1 anden app.",
-        "other": "Kunne ikke opdatere {} og {} andre apps."
+        "one": "Kunne ikke opdatere {app} og 1 anden app.",
+        "other": "Kunne ikke opdatere {app} og {count} andre apps."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} og 1 anden app blev muligvis opdateret.",
-        "other": "{} og {} andre apps blev muligvis opdateret."
+        "one": "{app} og 1 anden app blev muligvis opdateret.",
+        "other": "{app} og {count} andre apps blev muligvis opdateret."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK'er"
+        "one": "{count} APK",
+        "other": "{count} APK'er"
     },
     "certificateHash": {
         "one": "Certifikathash",

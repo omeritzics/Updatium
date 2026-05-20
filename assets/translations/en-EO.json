@@ -76,7 +76,7 @@
     "removeSelectedApps": "Farigi la selektitajn apojn",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "Ĝisdatigi {}",
     "installX": "Instali {}",
@@ -419,60 +419,60 @@
         "other": "Forigi la aplikaĵojn?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Tro da informmendoj (limigita kvanto) - reprovu en {} minuto",
-        "other": "Tro da informmendoj (limigita kvanto) - reprovu en {} minutoj"
+        "one": "Tro da informmendoj (limigita kvanto) - reprovu en {count} minuto",
+        "other": "Tro da informmendoj (limigita kvanto) - reprovu en {count} minutoj"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "La serĉo de fonaj ĝisdatigoj renkontis al {}, nova programota provo en {} minuto",
-        "other": "La serĉo de fonaj ĝisdatigoj renkontis al {}, nova programota provo en {} minutoj"
+        "one": "La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {count} minuto",
+        "other": "La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {count} minutoj"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "La serĉo de fonaj ĝisdatigoj trovis {} ĝisdatigon - la uzanto estas sciigota se necesa",
-        "other": "La serĉo de fonaj ĝisdatigoj trovis {} ĝisdatigojn - la uzanto estas sciigota se necesa"
+        "one": "La serĉo de fonaj ĝisdatigoj trovis {count} ĝisdatigon - la uzanto estas sciigota se necesa",
+        "other": "La serĉo de fonaj ĝisdatigoj trovis {count} ĝisdatigojn - la uzanto estas sciigota se necesa"
     },
     "apps": {
-        "one": "{} Apo",
-        "other": "{} Apoj"
+        "one": "{count} Apo",
+        "other": "{count} Apoj"
     },
     "url": {
-        "one": "{} URL",
-        "other": "{} URLj"
+        "one": "{count} URL",
+        "other": "{count} URLj"
     },
     "minute": {
-        "one": "{} minuto",
-        "other": "{} minutoj"
+        "one": "{count} minuto",
+        "other": "{count} minutoj"
     },
     "hour": {
-        "one": "{} horo",
-        "other": "{} horoj"
+        "one": "{count} horo",
+        "other": "{count} horoj"
     },
     "day": {
-        "one": "{} tago",
-        "other": "{} tagoj"
+        "one": "{count} tago",
+        "other": "{count} tagoj"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Purigis {n} protokolon (antaŭe = {before}, malantaŭe = {after})",
         "other": "Purigis {n} protokolojn (antaŭe = {before}, malantaŭe = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} kaj 1 alia apo havas ĝisdatigojn.",
-        "other": "{} kaj {} aliaj apoj havas ĝisdatigojn."
+        "one": "{app} kaj 1 alia apo havas ĝisdatigojn.",
+        "other": "{app} kaj {count} aliaj apoj havas ĝisdatigojn."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} kaj 1 alia apo ĝisdatiĝis.",
-        "other": "{} kaj {} aliaj apoj ĝisdatiĝis."
+        "one": "{app} kaj 1 alia apo ĝisdatiĝis.",
+        "other": "{app} kaj {count} aliaj apoj ĝisdatiĝis."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Ne eblas ĝisdatigi {} kaj 1 alian apon.",
-        "other": "Ne eblas ĝisdatigi {} et {} aliajn apojn."
+        "one": "Ne eblas ĝisdatigi {app} kaj 1 alian apon.",
+        "other": "Ne eblas ĝisdatigi {app} et {count} aliajn apojn."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} kaj 1 alia apo eble ĝisdatiĝis.",
-        "other": "{} kaj {} aliaj apoj eble ĝisdatiĝis."
+        "one": "{app} kaj 1 alia apo eble ĝisdatiĝis.",
+        "other": "{app} kaj {count} aliaj apoj eble ĝisdatiĝis."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APKj"
+        "one": "{count} APK",
+        "other": "{count} APKj"
     },
     "certificateHash": {
         "one": "Certificate Hash",

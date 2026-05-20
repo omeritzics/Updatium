@@ -76,7 +76,7 @@
     "removeSelectedApps": "Seçili uygulamaları kaldır",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {} apps"
+        "other": "Removed {count} apps"
     },
     "updateX": "{} güncelle",
     "installX": "{} yükle",
@@ -419,60 +419,60 @@
         "other": "Uygulamalar kaldırılsın mı?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Çok fazla istek (istek sınırı) - {} dakika içinde tekrar deneyin",
-        "other": "Çok fazla istek (istek sınırı) - {} dakika içinde tekrar deneyin"
+        "one": "Çok fazla istek (istek sınırı) - {count} dakika içinde tekrar deneyin",
+        "other": "Çok fazla istek (istek sınırı) - {count} dakika içinde tekrar deneyin"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Arka planda güncelleme kontrolü sırasında {} ile karşılaşıldı, {} dakika içinde yeniden kontrol planlanacak",
-        "other": "Arka planda güncelleme kontrolü sırasında {} ile karşılaşıldı, {} dakika içinde yeniden kontrol planlanacak"
+        "one": "Arka planda güncelleme kontrolü sırasında {error} ile karşılaşıldı, {count} dakika içinde yeniden kontrol planlanacak",
+        "other": "Arka planda güncelleme kontrolü sırasında {error} ile karşılaşıldı, {count} dakika içinde yeniden kontrol planlanacak"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Arka planda güncelleme kontrolünde {} güncelleme bulundu - gerekirse kullanıcıya bildirilecek",
-        "other": "Arka planda güncelleme kontrolünde {} güncelleme bulundu - gerekirse kullanıcıya bildirilecek"
+        "one": "Arka planda güncelleme kontrolünde {count} güncelleme bulundu - gerekirse kullanıcıya bildirilecek",
+        "other": "Arka planda güncelleme kontrolünde {count} güncelleme bulundu - gerekirse kullanıcıya bildirilecek"
     },
     "apps": {
-        "one": "{} Uygulama",
-        "other": "{} Uygulama"
+        "one": "{count} Uygulama",
+        "other": "{count} Uygulama"
     },
     "url": {
-        "one": "{} Bağlantı (URL)",
-        "other": "{} Bağlantı (URL)"
+        "one": "{count} Bağlantı (URL)",
+        "other": "{count} Bağlantı (URL)"
     },
     "minute": {
-        "one": "{} dakika",
-        "other": "{} dakika"
+        "one": "{count} dakika",
+        "other": "{count} dakika"
     },
     "hour": {
-        "one": "{} saat",
-        "other": "{} saat"
+        "one": "{count} saat",
+        "other": "{count} saat"
     },
     "day": {
-        "one": "{} gün",
-        "other": "{} gün"
+        "one": "{count} gün",
+        "other": "{count} gün"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} kayıt temizlendi (önce = {before}, sonra = {after})",
         "other": "{n} kayıt temizlendi (önce = {before}, sonra = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
-        "one": "{} ve 1 uygulamanın daha güncellemesi var.",
-        "other": "{} ve {} uygulamanın daha güncellemesi var."
+        "one": "{app} ve 1 uygulamanın daha güncellemesi var.",
+        "other": "{app} ve {count} uygulamanın daha güncellemesi var."
     },
     "xAndNMoreUpdatesInstalled": {
-        "one": "{} ve 1 uygulama daha güncellendi.",
-        "other": "{} ve {} uygulama daha güncellendi."
+        "one": "{app} ve 1 uygulama daha güncellendi.",
+        "other": "{app} ve {count} uygulama daha güncellendi."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "{} ve 1 uygulama güncellenemedi.",
-        "other": "{} ve {} uygulama güncellenemedi."
+        "one": "{app} ve 1 uygulama güncellenemedi.",
+        "other": "{app} ve {count} uygulama güncellenemedi."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
-        "one": "{} ve 1 uygulama daha güncellenmiş olabilir.",
-        "other": "{} ve {} uygulama daha güncellenmiş olabilir."
+        "one": "{app} ve 1 uygulama daha güncellenmiş olabilir.",
+        "other": "{app} ve {count} uygulama daha güncellenmiş olabilir."
     },
     "apk": {
-        "one": "{} APK",
-        "other": "{} APK"
+        "one": "{count} APK",
+        "other": "{count} APK"
     },
     "certificateHash": {
         "one": "Sertifika Karma Değeri (Hash)",
