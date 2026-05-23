@@ -1,5 +1,6 @@
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
 import 'package:http/http.dart';
+import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 

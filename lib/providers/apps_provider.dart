@@ -36,7 +36,9 @@ import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:docman/docman.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
+
+import '../gen/strings.g.dart';
 
 final pm = AndroidPackageManager();
 final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
@@ -2919,7 +2921,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
                   children: [
                     urlsToSelectFrom.length > 1
                         ? Text(
-                            tr(
+                            t(
                               'appHasMoreThanOnePackage',
                               args: [widget.app.finalName],
                             ),
@@ -2950,10 +2952,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
                     if (widget.archs != null)
                       Text(
                         widget.archs!.length == 1
-                            ? tr(
-                                'deviceSupportsXArch',
-                                args: [widget.archs![0]],
-                              )
+                            ? t('deviceSupportsXArch', args: [widget.archs![0]])
                             : t('deviceSupportsFollowingArchs') +
                                   list2FriendlyString(
                                     widget.archs!.map((e) => '\'$e\'').toList(),
@@ -2992,7 +2991,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
       scrollable: true,
       title: Text(t('warning')),
       content: Text(
-        tr(
+        t(
           'sourceIsXButPackageFromYPrompt',
           args: [
             Uri.parse(widget.sourceUrl).host,

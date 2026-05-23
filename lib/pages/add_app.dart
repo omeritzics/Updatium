@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/components/generated_form.dart';
+import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
 import 'package:updatium/pages/import_export.dart';
@@ -12,7 +13,7 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Material 3 spacing tokens
@@ -160,7 +161,7 @@ class AddAppPageState extends State<AddAppPage> {
               scrollable: true,
               contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
               title: Text(
-                tr(
+                t(
                   'xIsTrackOnly',
                   args: [
                     pickedSource!.enforceTrackOnly ? t('source') : t('app'),
@@ -412,7 +413,7 @@ class AddAppPageState extends State<AddAppPage> {
               context: context,
               builder: (BuildContext ctx) {
                 return SelectionModal(
-                  title: tr(
+                  title: t(
                     'selectX',
                     args: [plural('source', 2).toLowerCase()],
                   ),

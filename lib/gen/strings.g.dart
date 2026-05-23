@@ -6,7 +6,7 @@
 /// Locales: 39
 /// Strings: 18585 (476 per locale)
 ///
-/// Built on 2026-05-20 at 07:28 UTC
+/// Built on 2026-05-20 at 08:16 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
@@ -26,7 +26,7 @@ import 'strings_ca.g.dart' deferred as l_ca;
 import 'strings_cs.g.dart' deferred as l_cs;
 import 'strings_da.g.dart' deferred as l_da;
 import 'strings_de.g.dart' deferred as l_de;
-import 'strings_en_EO.g.dart' deferred as l_en_EO;
+import 'strings_eo.g.dart' deferred as l_eo;
 import 'strings_es.g.dart' deferred as l_es;
 import 'strings_et.g.dart' deferred as l_et;
 import 'strings_fa.g.dart' deferred as l_fa;
@@ -74,7 +74,7 @@ enum AppLocale with BaseAppLocale<AppLocale, Translations> {
 	cs(languageCode: 'cs'),
 	da(languageCode: 'da'),
 	de(languageCode: 'de'),
-	enEo(languageCode: 'en', countryCode: 'EO'),
+	eo(languageCode: 'eo'),
 	es(languageCode: 'es'),
 	et(languageCode: 'et'),
 	fa(languageCode: 'fa'),
@@ -184,9 +184,9 @@ enum AppLocale with BaseAppLocale<AppLocale, Translations> {
 					cardinalResolver: cardinalResolver,
 					ordinalResolver: ordinalResolver,
 				);
-			case AppLocale.enEo:
-				await l_en_EO.loadLibrary();
-				return l_en_EO.TranslationsEnEo(
+			case AppLocale.eo:
+				await l_eo.loadLibrary();
+				return l_eo.TranslationsEo(
 					overrides: overrides,
 					cardinalResolver: cardinalResolver,
 					ordinalResolver: ordinalResolver,
@@ -458,8 +458,8 @@ enum AppLocale with BaseAppLocale<AppLocale, Translations> {
 					cardinalResolver: cardinalResolver,
 					ordinalResolver: ordinalResolver,
 				);
-			case AppLocale.enEo:
-				return l_en_EO.TranslationsEnEo(
+			case AppLocale.eo:
+				return l_eo.TranslationsEo(
 					overrides: overrides,
 					cardinalResolver: cardinalResolver,
 					ordinalResolver: ordinalResolver,

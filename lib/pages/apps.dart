@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
@@ -12,6 +12,7 @@ import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 
 import 'package:updatium/components/generated_form.dart';
+import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
 import 'package:updatium/pages/settings.dart';

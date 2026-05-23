@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
 import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
+import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/apps_provider.dart';

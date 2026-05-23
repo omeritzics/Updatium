@@ -1,6 +1,7 @@
 import 'package:updatium/app_sources/github.dart';
+import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
 
 class Codeberg extends AppSource {
   GitHub gh = GitHub(hostChanged: true);

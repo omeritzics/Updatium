@@ -1,9 +1,10 @@
 import 'dart:math';
 
 import 'package:hsluv/hsluv.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/category_chip.dart';

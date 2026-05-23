@@ -3,11 +3,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class Bitbucket extends AppSource {

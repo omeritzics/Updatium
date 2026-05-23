@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:updatium/services/slang-converter.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/providers/source_provider.dart';
+
+import '../gen/strings.g.dart';
 
 class GitHubStars implements MassAppUrlSource {
   @override

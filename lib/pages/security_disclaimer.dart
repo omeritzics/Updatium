@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
 import 'package:updatium/providers/logs_provider.dart';
+
+import '../gen/strings.g.dart';
 
 class SecurityDisclaimerScreen extends StatefulWidget {
   static const String _disclaimerAcceptedKey = 'security_disclaimer_accepted';

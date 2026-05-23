@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 import 'package:path/path.dart';
 import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/pages/home.dart';
@@ -19,10 +20,7 @@ import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
-import 'package:updatium/services/slang-converter.dart';
-import 'package:updatium/lib/gen/strings.g.dart';
-import 'package:simple_localization/src/simple_localization_controller.dart';
-import 'package:simple_localization/src/localization.dart';
+import 'package:slang/slang.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -53,10 +51,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('uk'), 'Українська'),
   MapEntry(Locale('da'), 'Dansk'),
   MapEntry(Locale('et'), 'Eesti'),
-  MapEntry(
-    Locale('en', 'EO'),
-    'Esperanto',
-  ), // https://github.com/aissat/easy_localization/issues/220#issuecomment-846035493
+  MapEntry(Locale('EO'),'Esperanto'),
   MapEntry(Locale('in'), 'Bahasa Indonesia'),
   MapEntry(Locale('ko'), '한국어'),
   MapEntry(Locale('ca'), 'Català'),
@@ -185,23 +180,6 @@ void main() async {
     ),
   );
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => AppsProvider()),
-        ChangeNotifierProvider(create: (context) => SettingsProvider()),
-        Provider(create: (context) => np),
-        Provider(create: (context) => LogsProvider()),
-      ],
-      child: SimpleLocalization(
-        supportedLocales: supportedLocales.map((e) => e.key).toList(),
-        path: localeDir,
-        fallbackLocale: fallbackLocale,
-        useOnlyLangCode: false,
-        child: const Updatium(),
-      ),
-    ),
-  );
   BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 
@@ -499,7 +477,7 @@ class _UpdatiumState extends State<Updatium> {
             return ThemeData(
               useMaterial3: true,
               colorScheme: scheme,
-              fontFamily: getPrimaryFontForLocale(context.locale),
+              fontFamily: getPrimaryFontForLocale(slangLocale.flutterLocale),
               fontFamilyFallback: settingsProvider.useSystemFont
                   ? null
                   : const [
@@ -521,7 +499,7 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
-                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamily: getPrimaryFontForLocale(slangLocale.flutterLocale),
                   fontFamilyFallback: settingsProvider.useSystemFont
                       ? null
                       : const [

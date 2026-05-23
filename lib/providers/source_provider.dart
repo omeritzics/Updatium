@@ -44,7 +44,9 @@ import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:android_package_installer/android_package_installer.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
+
+import '../gen/strings.g.dart';
 
 /// Cache entry for ETag-based conditional requests
 class _ETagCacheEntry {

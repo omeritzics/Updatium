@@ -1,3 +1,13 @@
 # slang.yaml
 input_directory: assets/translations
 input_file_pattern: .json
+output_directory: lib/gen
+output_file_name: strings.g.dart
+
+# Base locale is English (en)
+base_locale: en
+
+# Translation settings
+translate_var: t
+translate_class: Translations
+translate_locale_class: AppLocale

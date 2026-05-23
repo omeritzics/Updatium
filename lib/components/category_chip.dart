@@ -1,6 +1,7 @@
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:updatium/gen/strings.g.dart';
 
 /// Reusable category chip widget for consistent category selection display
 class CategoryChip extends StatelessWidget {

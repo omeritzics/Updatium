@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:updatium/services/slang-converter.dart';
+import 'package:slang/slang.dart';
 import 'package:flutter_charset_detector/flutter_charset_detector.dart';
 import 'package:http/http.dart';
+import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class RuStore extends AppSource {
