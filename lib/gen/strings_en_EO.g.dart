@@ -11,13 +11,13 @@ import 'package:slang/generated.dart';
 import 'strings.g.dart';
 
 // Path: <root>
-class TranslationsEo with BaseTranslations<AppLocale, Translations> implements Translations {
+class TranslationsEnEo with BaseTranslations<AppLocale, Translations> implements Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
-	TranslationsEo({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
+	TranslationsEnEo({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
 		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
 		  $meta = meta ?? TranslationMetadata(
-		    locale: AppLocale.eo,
+		    locale: AppLocale.enEo,
 		    overrides: overrides ?? {},
 		    cardinalResolver: cardinalResolver,
 		    ordinalResolver: ordinalResolver,
@@ -25,16 +25,16 @@ class TranslationsEo with BaseTranslations<AppLocale, Translations> implements T
 		$meta.setFlatMapFunction(_flatMapFunction);
 	}
 
-	/// Metadata for the translations of <eo>.
+	/// Metadata for the translations of <en-EO>.
 	@override final TranslationMetadata<AppLocale, Translations> $meta;
 
 	/// Access flat map
 	@override dynamic operator[](String key) => $meta.getTranslation(key);
 
-	late final TranslationsEo _root = this; // ignore: unused_field
+	late final TranslationsEnEo _root = this; // ignore: unused_field
 
 	@override 
-	TranslationsEo $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsEo(meta: meta ?? this.$meta);
+	TranslationsEnEo $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsEnEo(meta: meta ?? this.$meta);
 
 	// Translations
 	@override String get invalidURLForSource => 'Nevalida apo-URL {}';
@@ -112,7 +112,7 @@ class TranslationsEo with BaseTranslations<AppLocale, Translations> implements T
 	@override String get xWillBeRemovedButRemainInstalled => '{} estas farigota de Updatium sed restos instalata en la disponaĵo.';
 	@override String get removeSelectedAppsQuestion => 'Farigi la selektitajn apojn?';
 	@override String get removeSelectedApps => 'Farigi la selektitajn apojn';
-	@override String appRemoved({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String appRemoved({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: 'Removed one app',
 		other: 'Removed {count} apps',
 	);
@@ -437,67 +437,67 @@ class TranslationsEo with BaseTranslations<AppLocale, Translations> implements T
 	@override String get includeZips => 'Include ZIP files';
 	@override String get zippedApkFilterRegEx => 'Filter APKs inside ZIP';
 	@override String get multipleSigners => 'Multiple Signers';
-	@override String removeAppQuestion({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String removeAppQuestion({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: 'Forigi la aplikaĵon?',
 		other: 'Forigi la aplikaĵojn?',
 	);
-	@override String tooManyRequestsTryAgainInMinutes({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String tooManyRequestsTryAgainInMinutes({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: 'Tro da informmendoj (limigita kvanto) - reprovu en {count} minuto',
 		other: 'Tro da informmendoj (limigita kvanto) - reprovu en {count} minutoj',
 	);
-	@override String bgUpdateGotErrorRetryInMinutes({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String bgUpdateGotErrorRetryInMinutes({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: 'La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {count} minuto',
 		other: 'La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {count} minutoj',
 	);
-	@override String bgCheckFoundUpdatesWillNotifyIfNeeded({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String bgCheckFoundUpdatesWillNotifyIfNeeded({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: 'La serĉo de fonaj ĝisdatigoj trovis {count} ĝisdatigon - la uzanto estas sciigota se necesa',
 		other: 'La serĉo de fonaj ĝisdatigoj trovis {count} ĝisdatigojn - la uzanto estas sciigota se necesa',
 	);
-	@override String apps({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String apps({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: '{count} Apo',
 		other: '{count} Apoj',
 	);
-	@override String url({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String url({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: '{count} URL',
 		other: '{count} URLj',
 	);
-	@override String minute({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String minute({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: '{count} minuto',
 		other: '{count} minutoj',
 	);
-	@override String hour({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String hour({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: '{count} horo',
 		other: '{count} horoj',
 	);
-	@override String day({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String day({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: '{count} tago',
 		other: '{count} tagoj',
 	);
-	@override String clearedNLogsBeforeXAfterY({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String clearedNLogsBeforeXAfterY({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: 'Purigis {n} protokolon (antaŭe = {before}, malantaŭe = {after})',
 		other: 'Purigis {n} protokolojn (antaŭe = {before}, malantaŭe = {after})',
 	);
-	@override String xAndNMoreUpdatesAvailable({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String xAndNMoreUpdatesAvailable({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: '{app} kaj 1 alia apo havas ĝisdatigojn.',
 		other: '{app} kaj {count} aliaj apoj havas ĝisdatigojn.',
 	);
-	@override String xAndNMoreUpdatesInstalled({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String xAndNMoreUpdatesInstalled({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: '{app} kaj 1 alia apo ĝisdatiĝis.',
 		other: '{app} kaj {count} aliaj apoj ĝisdatiĝis.',
 	);
-	@override String xAndNMoreUpdatesFailed({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String xAndNMoreUpdatesFailed({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: 'Ne eblas ĝisdatigi {app} kaj 1 alian apon.',
 		other: 'Ne eblas ĝisdatigi {app} et {count} aliajn apojn.',
 	);
-	@override String xAndNMoreUpdatesPossiblyInstalled({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String xAndNMoreUpdatesPossiblyInstalled({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: '{app} kaj 1 alia apo eble ĝisdatiĝis.',
 		other: '{app} kaj {count} aliaj apoj eble ĝisdatiĝis.',
 	);
-	@override String apk({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String apk({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: '{count} APK',
 		other: '{count} APKj',
 	);
-	@override String certificateHash({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n,
+	@override String certificateHash({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		one: 'Certificate Hash',
 		other: 'Certificate Hashes',
 	);
@@ -560,12 +560,12 @@ class TranslationsEo with BaseTranslations<AppLocale, Translations> implements T
 	@override String get searchForApps => 'Search for apps';
 }
 
-/// The flat map containing all translations for locale <eo>.
+/// The flat map containing all translations for locale <en-EO>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
 /// The Dart AOT compiler has issues with very large switch statements,
 /// so the map is split into smaller functions (512 entries each).
-extension on TranslationsEo {
+extension on TranslationsEnEo {
 	dynamic _flatMapFunction(String path) {
 		return switch (path) {
 			'invalidURLForSource' => 'Nevalida apo-URL {}',
@@ -643,7 +643,7 @@ extension on TranslationsEo {
 			'xWillBeRemovedButRemainInstalled' => '{} estas farigota de Updatium sed restos instalata en la disponaĵo.',
 			'removeSelectedAppsQuestion' => 'Farigi la selektitajn apojn?',
 			'removeSelectedApps' => 'Farigi la selektitajn apojn',
-			'appRemoved' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: 'Removed one app', other: 'Removed {count} apps', ), 
+			'appRemoved' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Removed one app', other: 'Removed {count} apps', ), 
 			'updateX' => 'Ĝisdatigi {}',
 			'installX' => 'Instali {}',
 			'markXTrackOnlyAsUpdated' => 'Marki {}\n(Nur sekvita)\nkiel ĝisdata',
@@ -965,22 +965,22 @@ extension on TranslationsEo {
 			'includeZips' => 'Include ZIP files',
 			'zippedApkFilterRegEx' => 'Filter APKs inside ZIP',
 			'multipleSigners' => 'Multiple Signers',
-			'removeAppQuestion' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: 'Forigi la aplikaĵon?', other: 'Forigi la aplikaĵojn?', ), 
-			'tooManyRequestsTryAgainInMinutes' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: 'Tro da informmendoj (limigita kvanto) - reprovu en {count} minuto', other: 'Tro da informmendoj (limigita kvanto) - reprovu en {count} minutoj', ), 
-			'bgUpdateGotErrorRetryInMinutes' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: 'La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {count} minuto', other: 'La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {count} minutoj', ), 
-			'bgCheckFoundUpdatesWillNotifyIfNeeded' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: 'La serĉo de fonaj ĝisdatigoj trovis {count} ĝisdatigon - la uzanto estas sciigota se necesa', other: 'La serĉo de fonaj ĝisdatigoj trovis {count} ĝisdatigojn - la uzanto estas sciigota se necesa', ), 
-			'apps' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: '{count} Apo', other: '{count} Apoj', ), 
-			'url' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: '{count} URL', other: '{count} URLj', ), 
-			'minute' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: '{count} minuto', other: '{count} minutoj', ), 
-			'hour' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: '{count} horo', other: '{count} horoj', ), 
-			'day' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: '{count} tago', other: '{count} tagoj', ), 
-			'clearedNLogsBeforeXAfterY' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: 'Purigis {n} protokolon (antaŭe = {before}, malantaŭe = {after})', other: 'Purigis {n} protokolojn (antaŭe = {before}, malantaŭe = {after})', ), 
-			'xAndNMoreUpdatesAvailable' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: '{app} kaj 1 alia apo havas ĝisdatigojn.', other: '{app} kaj {count} aliaj apoj havas ĝisdatigojn.', ), 
-			'xAndNMoreUpdatesInstalled' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: '{app} kaj 1 alia apo ĝisdatiĝis.', other: '{app} kaj {count} aliaj apoj ĝisdatiĝis.', ), 
-			'xAndNMoreUpdatesFailed' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: 'Ne eblas ĝisdatigi {app} kaj 1 alian apon.', other: 'Ne eblas ĝisdatigi {app} et {count} aliajn apojn.', ), 
-			'xAndNMoreUpdatesPossiblyInstalled' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: '{app} kaj 1 alia apo eble ĝisdatiĝis.', other: '{app} kaj {count} aliaj apoj eble ĝisdatiĝis.', ), 
-			'apk' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: '{count} APK', other: '{count} APKj', ), 
-			'certificateHash' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('eo'))(n, one: 'Certificate Hash', other: 'Certificate Hashes', ), 
+			'removeAppQuestion' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Forigi la aplikaĵon?', other: 'Forigi la aplikaĵojn?', ), 
+			'tooManyRequestsTryAgainInMinutes' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Tro da informmendoj (limigita kvanto) - reprovu en {count} minuto', other: 'Tro da informmendoj (limigita kvanto) - reprovu en {count} minutoj', ), 
+			'bgUpdateGotErrorRetryInMinutes' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {count} minuto', other: 'La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {count} minutoj', ), 
+			'bgCheckFoundUpdatesWillNotifyIfNeeded' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'La serĉo de fonaj ĝisdatigoj trovis {count} ĝisdatigon - la uzanto estas sciigota se necesa', other: 'La serĉo de fonaj ĝisdatigoj trovis {count} ĝisdatigojn - la uzanto estas sciigota se necesa', ), 
+			'apps' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '{count} Apo', other: '{count} Apoj', ), 
+			'url' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '{count} URL', other: '{count} URLj', ), 
+			'minute' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '{count} minuto', other: '{count} minutoj', ), 
+			'hour' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '{count} horo', other: '{count} horoj', ), 
+			'day' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '{count} tago', other: '{count} tagoj', ), 
+			'clearedNLogsBeforeXAfterY' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Purigis {n} protokolon (antaŭe = {before}, malantaŭe = {after})', other: 'Purigis {n} protokolojn (antaŭe = {before}, malantaŭe = {after})', ), 
+			'xAndNMoreUpdatesAvailable' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '{app} kaj 1 alia apo havas ĝisdatigojn.', other: '{app} kaj {count} aliaj apoj havas ĝisdatigojn.', ), 
+			'xAndNMoreUpdatesInstalled' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '{app} kaj 1 alia apo ĝisdatiĝis.', other: '{app} kaj {count} aliaj apoj ĝisdatiĝis.', ), 
+			'xAndNMoreUpdatesFailed' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Ne eblas ĝisdatigi {app} kaj 1 alian apon.', other: 'Ne eblas ĝisdatigi {app} et {count} aliajn apojn.', ), 
+			'xAndNMoreUpdatesPossiblyInstalled' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '{app} kaj 1 alia apo eble ĝisdatiĝis.', other: '{app} kaj {count} aliaj apoj eble ĝisdatiĝis.', ), 
+			'apk' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '{count} APK', other: '{count} APKj', ), 
+			'certificateHash' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: 'Certificate Hash', other: 'Certificate Hashes', ), 
 			'securityDisclaimerTitle' => 'Sekureca kaj Jura Malrespondeco',
 			'license' => 'Permesilo',
 			'licenseText' => 'Ĉi tiu aplikaĵo estas distribuita sub la GPL v3 Permesilo.',

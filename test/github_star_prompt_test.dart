@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/services/github_star_prompt.dart';
-import 'package:updatium/gen/strings.g.dart';
+import 'package:simple_localization/simple_localization.dart';
 
 void main() {
   group('GitHubStarPrompt Tests', () {
@@ -71,10 +70,10 @@ void main() {
 
       // Dialog should appear
       expect(find.byType(AlertDialog), findsOneWidget);
-      expect(find.text('githubStarPromptTitle'.t()), findsOneWidget);
+      expect(find.text('githubStarPromptTitle'.tr()), findsOneWidget);
 
       // Tap "Don't show again" button
-      final dontShowButton = find.text('githubStarPromptDontShowAgain'.t());
+      final dontShowButton = find.text('githubStarPromptDontShowAgain'.tr());
       expect(dontShowButton, findsOneWidget);
       await tester.tap(dontShowButton);
       await tester.pumpAndSettle();

@@ -1,4 +1,4 @@
-import 'package:slang/slang.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 

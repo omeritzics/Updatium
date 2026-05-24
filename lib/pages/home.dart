@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:animations/animations.dart';
 import 'package:app_links/app_links.dart';
-import 'package:slang/slang.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:updatium/gen/strings.g.dart';
 
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/add_app.dart';

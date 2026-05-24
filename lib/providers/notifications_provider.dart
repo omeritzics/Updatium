@@ -1,7 +1,7 @@
 // Exposes functions that can be used to send notifications to the user
 // Contains a set of pre-defined UpdatiumNotification objects that should be used throughout the app
 
-import 'package:slang/slang.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:android_intent_plus/android_intent.dart';
@@ -10,8 +10,6 @@ import 'package:android_intent_plus/flag.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
-
-import '../gen/strings.g.dart';
 
 class UpdatiumNotification {
   late int id;

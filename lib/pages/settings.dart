@@ -6,7 +6,6 @@ import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/category_chip.dart';
@@ -19,7 +18,7 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:updatium/services/device_admin_service.dart';
 import 'package:updatium/services/dns_service.dart';
-import 'package:slang/slang.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
@@ -322,7 +321,7 @@ class _SettingsPageState extends State<SettingsPage> {
               const MapEntry('nameAuthor', 'nameAuthor'),
               const MapEntry('asAdded', 'asAdded'),
               const MapEntry('releaseDate', 'releaseDate'),
-            ].map((e) => MapEntry(e.key, t(e.value))).toList(),
+            ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
             label: t('appSortBy'),
             defaultValue: settingsProvider.sortColumn.name,
             required: true,
@@ -346,7 +345,7 @@ class _SettingsPageState extends State<SettingsPage> {
             [
               const MapEntry('ascending', 'ascending'),
               const MapEntry('descending', 'descending'),
-            ].map((e) => MapEntry(e.key, t(e.value))).toList(),
+            ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
             label: t('appSortOrder'),
             defaultValue: settingsProvider.sortOrder.name,
             required: true,
@@ -372,7 +371,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ...supportedLocales.map(
                 (e) => MapEntry(e.key.toString(), e.value),
               ),
-            ].map((e) => MapEntry(e.key, t(e.value))).toList(),
+            ].map((e) => MapEntry(e.key, tr(e.value))).toList(),
             label: t('language'),
             defaultValue: settingsProvider.forcedLocale?.toString() ?? '',
             required: true,
@@ -563,7 +562,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                             children: [
                                               Flexible(
                                                 child: Text(
-                                                  t(
+                                                  tr(
                                                     'foregroundServiceExplanation',
                                                   ),
                                                 ),
@@ -601,7 +600,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                           ),
                                           gap8,
                                           Text(
-                                            t(
+                                            tr(
                                               'backgroundUpdateReqsExplanation',
                                             ),
                                             style: Theme.of(
@@ -609,7 +608,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                             ).textTheme.labelSmall,
                                           ),
                                           Text(
-                                            t(
+                                            tr(
                                               'backgroundUpdateLimitsExplanation',
                                             ),
                                             style: Theme.of(
@@ -629,7 +628,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                                   children: [
                                                     Flexible(
                                                       child: Text(
-                                                        t(
+                                                        tr(
                                                           'bgUpdatesOnWiFiOnly',
                                                         ),
                                                       ),
@@ -653,7 +652,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                                   children: [
                                                     Flexible(
                                                       child: Text(
-                                                        t(
+                                                        tr(
                                                           'bgUpdatesWhileChargingOnly',
                                                         ),
                                                       ),
@@ -757,7 +756,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                       children: [
                                         Text(t('preventUninstallation')),
                                         Text(
-                                          t('preventUninstallationDescription'),
+                                          tr(
+                                            'preventUninstallationDescription',
+                                          ),
                                           style: Theme.of(
                                             context,
                                           ).textTheme.labelSmall,
@@ -878,7 +879,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        t(
+                                        tr(
                                           'beforeNewInstallsShareToAppVerifier',
                                         ),
                                       ),
@@ -948,7 +949,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               case 'old_android_with_adb':
                                                 showError(
                                                   UpdatiumError(
-                                                    t(
+                                                    tr(
                                                       'shizukuOldAndroidWithADB',
                                                     ),
                                                   ),
@@ -1020,7 +1021,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                             'Mullvad DNS',
                                           ),
                                         ]
-                                        .map((e) => MapEntry(e.key, t(e.value)))
+                                        .map(
+                                          (e) => MapEntry(e.key, tr(e.value)),
+                                        )
                                         .toList(),
                                     label: t('dnsServiceProvider'),
                                     defaultValue: settingsProvider
@@ -1122,7 +1125,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                           const MapEntry('light', 'light'),
                                           const MapEntry('dark', 'dark'),
                                         ]
-                                        .map((e) => MapEntry(e.key, t(e.value)))
+                                        .map(
+                                          (e) => MapEntry(e.key, tr(e.value)),
+                                        )
                                         .toList(),
                                     label: t('theme'),
                                     defaultValue: settingsProvider.theme.name,
@@ -2010,7 +2015,7 @@ class _AboutDialogState extends State<AboutDialog> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            t(
+            tr(
               'safeModeTapsRemaining',
             ).replaceAll('{count}', remaining.toString()),
           ),

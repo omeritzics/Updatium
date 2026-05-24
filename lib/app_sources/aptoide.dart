@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:slang/slang.dart';
-import 'package:updatium/gen/strings.g.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class Aptoide extends AppSource {

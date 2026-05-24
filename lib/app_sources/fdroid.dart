@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-import 'package:slang/slang.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/gen/strings.g.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class FDroid extends AppSource {

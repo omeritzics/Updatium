@@ -569,23 +569,7 @@ class TranslationsAr with BaseTranslations<AppLocale, Translations> implements T
 	@override String get addAppToCollection => 'Add this app to your collection';
 	@override String get enterSearchTermsFirst => 'Enter search terms first';
 	@override String get searchForApps => 'Search for apps';
-
-	late final TranslationsDependenciesAr dependencies = TranslationsDependenciesAr._(_root);
 }
-
-// Path: dependencies
-class TranslationsDependenciesAr {
-	TranslationsDependenciesAr._(this._root);
-
-	final TranslationsAr _root; // ignore: unused_field
-
-	// Translations
-
-	/// ar: '^3.0.1'
-	String get translate => '^3.0.1';
-}
-
-/// The flat map containing all translations for locale <ar>.
 
 /// The flat map containing all translations for locale <ar>.
 /// Only for edge cases! For simple maps, use the map function of this library.
@@ -595,7 +579,6 @@ class TranslationsDependenciesAr {
 extension on TranslationsAr {
 	dynamic _flatMapFunction(String path) {
 		return switch (path) {
-			'dependencies.translate' => '^3.0.1',
 			'invalidURLForSource' => 'رابط تطبيق {} غير صالح',
 			'noReleaseFound' => 'تعذر العثور على إصدار مناسب',
 			'noVersionFound' => 'تعذر تحديد إصدار التطبيق',

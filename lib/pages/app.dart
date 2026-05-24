@@ -3,7 +3,7 @@ import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
-import 'package:slang/slang.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
@@ -17,8 +17,6 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:provider/provider.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:updatium/components/generated_form.dart';
-
-import '../gen/strings.g.dart';
 
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
