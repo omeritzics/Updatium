@@ -43,7 +43,7 @@ class WhatsAppApp extends AppSource {
       }
 
       // If no APK link found, use the known CDN URL pattern
-      apkUrl ??= 'https://www.whatsapp.com/android';
+      apkUrl ??= 'https://www.whatsapp.com/android/current/WhatsApp.apk';
 
       // Try to extract version from the page content
       var versionElement = http.querySelector(

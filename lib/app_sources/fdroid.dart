@@ -78,20 +78,33 @@ class FDroid extends AppSource {
       additionalSettings,
       standardUrl,
     );
-    if (!hostChanged) {
-      try {
-        var res = await sourceRequest(
-          'https://gitlab.com/fdroid/fdroiddata/-/raw/master/metadata/$appId.yml',
-          additionalSettings,
-        );
-        var lines = res.body.split('\n');
-        var authorLines = lines.where((l) => l.startsWith('AuthorName: '));
-        if (authorLines.isNotEmpty) {
-          details.names.author = authorLines.first
-              .split(': ')
-              .sublist(1)
-              .join(': ');
+    // Try to fetch author from F-Droid package page
+    try {
+      var res = await sourceRequest(
+        'https://$host/packages/$appId',
+        additionalSettings,
+      );
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        var body = parse(res.body);
+        var authorElement = body.querySelector('a[href^="mailto:"]');
+        if (authorElement != null) {
+          var authorText = authorElement.text.trim();
+          if (authorText.isNotEmpty) {
+            details.names.author = authorText;
+          }
         }
+      }
+    } catch (e) {
+      // Fail silently, keep fallback author
+    }
+    // Try to fetch changelog from GitLab metadata
+    try {
+      var res = await sourceRequest(
+        'https://gitlab.com/fdroid/fdroiddata/-/raw/master/metadata/$appId.yml',
+        additionalSettings,
+      );
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        var lines = res.body.split('\n');
         var changelogUrls = lines
             .where((l) => l.startsWith('Changelog: '))
             .map((e) => e.split(' ').sublist(1).join(' '));
@@ -130,9 +143,9 @@ class FDroid extends AppSource {
         if ((details.changeLog?.length ?? 0) > 2048) {
           details.changeLog = '${details.changeLog!.substring(0, 2048)}...';
         }
-      } catch (e) {
-        // Fail silently
       }
+    } catch (e) {
+      // Fail silently, keep fallback changelog
     }
     return details;
   }

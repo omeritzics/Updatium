@@ -624,7 +624,16 @@ Future<List<MapEntry<String, String>>> filterApksByArch(
     for (var abi in abis) {
       // More precise matching: look for ABI as a separate component in filename
       // Matches patterns like: arm64-v8a, _arm64-v8a, -arm64-v8a, arm64-v8a.apk
-      var abiPattern = RegExp(r'[-_\.]?' + RegExp.escape(abi) + r'[-_\.]');
+      var suffix = '';
+      if (abi.toLowerCase() == 'x86') {
+        suffix = r'(?!_?64)';
+      } else if (abi.toLowerCase() == 'armeabi') {
+        suffix = r'(?!-?v7a)';
+      }
+      var abiPattern = RegExp(
+        r'(^|[-_\.])' + RegExp.escape(abi) + suffix + r'($|[-_\.])',
+        caseSensitive: false,
+      );
       var urls2 = apkUrls
           .where((element) => abiPattern.hasMatch(element.key))
           .toList();
