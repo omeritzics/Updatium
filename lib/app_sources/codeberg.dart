@@ -1,5 +1,6 @@
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
+import 'dart:convert';
 
 class Codeberg extends AppSource {
   Codeberg() {
@@ -44,6 +45,24 @@ class Codeberg extends AppSource {
     String query, {
     Map<String, dynamic> querySettings = const {},
   }) async {
-    return Codeberg().search(query, querySettings: querySettings);
+    // Search Codeberg via explore page
+    var requestUrl =
+        'https://codeberg.org/api/v1/repos/search?q=${Uri.encodeComponent(query)}';
+    var res = await sourceRequest(requestUrl, {});
+    if (res.statusCode == 200) {
+      var html = res.body;
+      var urls = <String, List<String>>{};
+      // Find repository links in the page
+      var linkReg = RegExp(r'href="/([^"/]+/[^"/]+)"');
+      for (var match in linkReg.allMatches(html)) {
+        var path = match.group(1)!;
+        var fullUrl = 'https://codeberg.org/$path';
+        var name = path.split('/').last;
+        urls[fullUrl] = [path, ''];
+      }
+      return urls;
+    } else {
+      throw getUpdatiumHttpError(res);
+    }
   }
 }
