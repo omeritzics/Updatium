@@ -19,10 +19,8 @@ class GitLab extends AppSource {
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
     openSource = true;
-    sourceConfigSettingFormItems = [
-      GeneratedFormTextField(
-        t('gitlabPATLabel'),
-        label: t('gitlabPATLabel'),
+    sourceConfigSettingFormItems = [GeneratedFormTextField(
+        t('gitlabPATLabel'), label: t('gitlabPATLabel'),
         password: true,
         required: false,
         belowWidgets: [

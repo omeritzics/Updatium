@@ -913,96 +913,22 @@ abstract class AppSource {
     [GeneratedFormTextField('appAuthor', label: t('appAuthor'), required: false)],
     [GeneratedFormTextField('about', label: t('about'), required: false)],
     [GeneratedFormSwitch('trackOnly', label: t('trackOnly'))],
-    [
-      GeneratedFormSwitch(
-        'versionDetection',
-        label: t('versionDetectionExplanation'),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'useVersionCodeAsOSVersion',
-        label: t('useVersionCodeAsOSVersion'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'autoApkFilterByArch',
-        label: t('autoApkFilterByArch'),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'shizukuPretendToBeGooglePlay',
-        label: t('shizukuPretendToBeGooglePlay'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'allowInsecure',
-        label: t('allowInsecure'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'exemptFromBackgroundUpdates',
-        label: t('exemptFromBackgroundUpdates'),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'skipUpdateNotifications',
-        label: t('skipUpdateNotifications'),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'refreshBeforeDownload',
-        label: t('refreshBeforeDownload'),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'fallbackToOlderReleases',
-        label: t('fallbackToOlderReleases'),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'trySelectingSuggestedVersionCode',
-        label: t('trySelectingSuggestedVersionCode'),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'includePrereleases',
-        label: t('includePrereleases'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'stayOneVersionBehind',
-        label: t('stayOneVersionBehind'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'useFirstApkOfVersion',
-        label: t('useFirstApkOfVersion'),
-      ),
-    ],
+
+    [GeneratedFormSwitch('versionDetection', label: t('versionDetectionExplanation'), defaultValue: true)],
+    [GeneratedFormSwitch('useVersionCodeAsOSVersion', label: t('useVersionCodeAsOSVersion'), defaultValue: false)],
+    [GeneratedFormSwitch('autoApkFilterByArch', label: t('autoApkFilterByArch'), defaultValue: true)],
+    [GeneratedFormSwitch('shizukuPretendToBeGooglePlay', label: t('shizukuPretendToBeGooglePlay'), defaultValue: false,)],
+    [GeneratedFormSwitch('allowInsecure', label: t('allowInsecure'), defaultValue: false)],
+    [GeneratedFormSwitch('exemptFromBackgroundUpdates', label: t('exemptFromBackgroundUpdates'))],
+    [GeneratedFormSwitch('skipUpdateNotifications', label: t('skipUpdateNotifications'))],
+    [GeneratedFormSwitch('refreshBeforeDownload', label: t('refreshBeforeDownload'))],
+    [GeneratedFormSwitch('fallbackToOlderReleases', label: t('fallbackToOlderReleases'), defaultValue: true)],
+    [GeneratedFormSwitch('trySelectingSuggestedVersionCode', label: t('trySelectingSuggestedVersionCode'), defaultValue: true)],
+    [GeneratedFormSwitch('includePrereleases', label: t('includePrereleases'), defaultValue: false)],
+    [GeneratedFormSwitch('stayOneVersionBehind', label: t('stayOneVersionBehind'), defaultValue: false)],
+    [GeneratedFormSwitch('useFirstApkOfVersion', label: t('useFirstApkOfVersion'))],
     [GeneratedFormSwitch('verifyLatestTag', label: t('verifyLatestTag'))],
-    [
-      GeneratedFormDropdown(
+    [GeneratedFormDropdown(
         'sortMethodChoice',
         [
           MapEntry('date', t('releaseDate')),
@@ -1013,76 +939,38 @@ abstract class AppSource {
             '${t('smartname')} x ${t('releaseDate')}',
           ),
           MapEntry('name', t('name')),
-        ],
-        label: t('sortMethod'),
-        defaultValue: 'date',
-      ),
+        ], label: t('sortMethod'), defaultValue: 'date')],
+    [GeneratedFormSwitch('useLatestAssetDateAsReleaseDate', label: t('useLatestAssetDateAsReleaseDate'), defaultValue: false)],
+    [GeneratedFormSwitch('releaseTitleAsVersion', label: t('releaseTitleAsVersion'), defaultValue: false)],
+    [GeneratedFormTextField('versionExtractionRegEx', label: t('trimVersionString'), required: false, additionalValidators: [(value) => regExValidator(value)]),
     ],
-    [
-      GeneratedFormSwitch(
-        'useLatestAssetDateAsReleaseDate',
-        label: t('useLatestAssetDateAsReleaseDate'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'releaseTitleAsVersion',
-        label: t('releaseTitleAsVersion'),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormTextField('versionExtractionRegEx', label: t('trimVersionString'), required: false, additionalValidators: [(value) => regExValidator(value)]),
-    ],
-    [
-      GeneratedFormTextField(
-        'matchGroupToUse',
-        label: t('matchGroupToUseForX', args: [t('trimVersionString')]),
+    [GeneratedFormTextField(
+        'matchGroupToUse', label: t('matchGroupToUseForX', args: [t('trimVersionString')]),
         required: false,
-        hint: '\$0',
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'apkFilterRegEx',
-        label: t('filterAPKsByRegEx'),
+        hint: '\$0')],
+    [GeneratedFormTextField(
+        'apkFilterRegEx', label: t('filterAPKsByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
             return regExValidator(value);
           },
-        ],
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'invertAPKFilter',
-        label: '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'filterReleaseTitlesByRegEx',
-        label: t('filterReleaseTitlesByRegEx'),
+        ])],
+    [GeneratedFormSwitch('invertAPKFilter', label: '${t('invertRegEx')} (${t('filterAPKsByRegEx')})', defaultValue: false)],
+    [GeneratedFormTextField(
+        'filterReleaseTitlesByRegEx', label: t('filterReleaseTitlesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
             return regExValidator(value);
           },
-        ],
-      ),
-    ],
-    [
-      GeneratedFormTextField('filterReleaseNotesByRegEx', label: t('filterReleaseNotesByRegEx'), required: false,
+        ])],
+    [GeneratedFormTextField('filterReleaseNotesByRegEx', label: t('filterReleaseNotesByRegEx'), required: false,
         additionalValidators: [
           (value) {
             return regExValidator(value);
           },
-        ],
-      ),
-    ],
+        ])],
   ];
 
   // Previous 2 variables combined into one at runtime for convenient usage + additional processing
@@ -1157,13 +1045,11 @@ abstract class AppSource {
     if (versionDetectionDisallowed) {
       overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
         'versionDetection',
-        disabled: true,
-        defaultValue: false,
+        disabled: true, defaultValue: false,
       );
       overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
         'useVersionCodeAsOSVersion',
-        disabled: true,
-        defaultValue: false,
+        disabled: true, defaultValue: false,
       );
     }
     return [

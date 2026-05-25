@@ -19,10 +19,8 @@ class Gitea extends AppSource {
     this.hostChanged = hostChanged;
     allowIncludeZips = true;
     openSource = true;
-    sourceConfigSettingFormItems = [
-      GeneratedFormTextField(
-        t('giteaTokenLabel'),
-        label: t('giteaTokenLabel'),
+    sourceConfigSettingFormItems = [GeneratedFormTextField(
+        t('giteaTokenLabel'), label: t('giteaTokenLabel'),
         password: true,
         required: false,
         belowWidgets: [
