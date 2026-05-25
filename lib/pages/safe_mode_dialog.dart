@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 
-import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:provider/provider.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:updatium/providers/settings_provider.dart';

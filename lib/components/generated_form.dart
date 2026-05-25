@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:hsluv/hsluv.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/providers/source_provider.dart';
