@@ -24,7 +24,6 @@ import 'package:updatium/services/slang_converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
-import 'package:pubspec_parse/pubspec_parse.dart';
 
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
@@ -1855,147 +1854,6 @@ class LicenseDialog extends StatelessWidget {
   }
 }
 
-class OpenSourcePackagesDialog extends StatelessWidget {
-  const OpenSourcePackagesDialog({super.key});
-
-  Future<List<Map<String, String>>> getDependencies() async {
-    try {
-      final String pubspecString = await rootBundle.loadString('pubspec.yaml');
-      final Pubspec pubspec = Pubspec.parse(pubspecString);
-
-      final List<Map<String, String>> dependencies = [];
-
-      // Get dependencies
-      pubspec.dependencies.forEach((name, dependency) {
-        // Skip flutter sdk as it's not a package
-        if (name != 'flutter') {
-          dependencies.add({
-            'name': name,
-            'url': _getPackageUrl(name, dependency),
-          });
-        }
-      });
-
-      // Get dev_dependencies (include flutter_lints)
-      pubspec.devDependencies.forEach((name, dependency) {
-        // Only include flutter_lints from dev dependencies
-        if (name == 'flutter_lints') {
-          dependencies.add({
-            'name': name,
-            'url': _getPackageUrl(name, dependency),
-          });
-        }
-      });
-
-      // Sort dependencies alphabetically
-      dependencies.sort((a, b) => a['name']!.compareTo(b['name']!));
-
-      return dependencies;
-    } catch (e) {
-      // Fallback to empty list if parsing fails
-      return [];
-    }
-  }
-
-  String _getPackageUrl(String packageName, Dependency dependency) {
-    // Handle git dependencies
-    if (dependency is GitDependency) {
-      return dependency.url.toString();
-    }
-
-    // Handle special cases for known git dependencies
-    const Map<String, String> gitPackages = {
-      'simple_localization':
-          'https://github.com/omeritzics/simple_localization',
-      'android_system_font': 'https://github.com/re7gog/android_system_font',
-      'shizuku_apk_installer':
-          'https://github.com/re7gog/shizuku_apk_installer',
-    };
-
-    if (gitPackages.containsKey(packageName)) {
-      return gitPackages[packageName]!;
-    }
-
-    // Default to pub.dev URL
-    return 'https://pub.dev/packages/$packageName';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      scrollable: true,
-      title: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Theme.of(context).colorScheme.primaryContainer,
-            ),
-            child: Icon(
-              Icons.code_rounded,
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-              size: 28,
-            ),
-          ),
-          horizontalGap16,
-          Text(t('usedOpenSourcePackages')),
-        ],
-      ),
-      content: SizedBox(
-        width: double.maxFinite,
-        child: FutureBuilder<List<Map<String, String>>>(
-          future: getDependencies(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final dependencies = snapshot.data!;
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: dependencies.length,
-                itemBuilder: (context, index) {
-                  final dep = dependencies[index];
-                  return ListTile(
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(
-                      dep['name']!,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    trailing: Icon(
-                      Icons.open_in_new,
-                      size: 16,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    onTap: () {
-                      launchUrlString(
-                        dep['url']!,
-                        mode: LaunchMode.externalApplication,
-                      );
-                    },
-                  );
-                },
-              );
-            } else if (snapshot.hasError) {
-              return Text(
-                'Error loading dependencies: ${snapshot.error}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              );
-            }
-            return const Center(child: CircularProgressIndicator());
-          },
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(t('close')),
-        ),
-      ],
-    );
-  }
-}
-
 class AboutDialog extends StatefulWidget {
   const AboutDialog({super.key});
 
@@ -2272,11 +2130,9 @@ class _AboutDialogState extends State<AboutDialog> {
                         ),
                         TextButton.icon(
                           onPressed: () {
-                            showDialog(
+                            showLicensePage(
                               context: context,
-                              builder: (BuildContext ctx) {
-                                return const OpenSourcePackagesDialog();
-                              },
+                              applicationName: 'Updatium',
                             );
                           },
                           icon: const Icon(Icons.code_rounded, size: 18),
