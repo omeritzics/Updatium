@@ -670,7 +670,14 @@ class AddAppPageState extends State<AddAppPage> {
             '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}',
           ),
           items: [
-            ...pickedSource!.combinedAppSpecificSettingFormItems,
+            ...pickedSource!.combinedAppSpecificSettingFormItems.map((row) {
+              return row.map((e) {
+                if (e.key == 'appAuthor' && additionalSettings['appAuthor'] == null) {
+                  e.defaultValue = '';
+                }
+                return e;
+              }).toList();
+            }),
             ...(pickedSourceOverride != null
                 ? pickedSource!.sourceConfigSettingFormItems.map((e) => [e])
                 : []),

@@ -1,16 +1,14 @@
-import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang-converter.dart';
 
 class Codeberg extends AppSource {
-  GitHub gh = GitHub(hostChanged: true);
   Codeberg() {
     name = t('codeberg');
     hosts = ['codeberg.org'];
     additionalSourceAppSpecificSettingFormItems =
-        gh.additionalSourceAppSpecificSettingFormItems;
+        Codeberg().additionalSourceAppSpecificSettingFormItems;
     canSearch = true;
-    searchQuerySettingFormItems = gh.searchQuerySettingFormItems;
+    searchQuerySettingFormItems = Codeberg().searchQuerySettingFormItems;
     openSource = true;
   }
   @override
@@ -31,7 +29,7 @@ class Codeberg extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    return await gh.getLatestAPKDetails(standardUrl, additionalSettings);
+    return await Codeberg().getLatestAPKDetails(standardUrl, additionalSettings);
   }
 
   AppNames getAppNames(String standardUrl) {
@@ -43,6 +41,6 @@ class Codeberg extends AppSource {
     String query, {
     Map<String, dynamic> querySettings = const {},
   }) async {
-    return gh.search(query, querySettings: querySettings);
+    return Codeberg().search(query, querySettings: querySettings);
   }
 }

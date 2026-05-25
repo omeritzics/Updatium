@@ -394,6 +394,8 @@ class _AppPageState extends State<AppPage> {
             row = row.map((e) {
               if (app.app.additionalSettings[e.key] != null) {
                 e.defaultValue = app.app.additionalSettings[e.key];
+              } else if (e.key == 'appAuthor') {
+                e.defaultValue = app.app.author;
               }
               return e;
             }).toList();
@@ -433,22 +435,8 @@ class _AppPageState extends State<AppPage> {
                     gap16,
                     GeneratedForm(
                       items: [
-                        [
-                          GeneratedFormTextField(
-                            'appName',
-                            label: t('appName'),
-                            defaultValue: app.app.name,
-                            required: true,
-                          ),
-                        ],
-                        [
-                          GeneratedFormTextField(
-                            'appAuthor',
-                            label: t('appAuthor'),
-                            defaultValue: app.app.author,
-                            required: true,
-                          ),
-                        ],
+                        [GeneratedFormTextField('appName', label: t('appName'), defaultValue: app.app.name, required: true)],
+                        
                         [
                           GeneratedFormTextField(
                             'appId',
