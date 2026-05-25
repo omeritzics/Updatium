@@ -7,7 +7,7 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class Bitbucket extends AppSource {

@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 
-import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';

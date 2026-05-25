@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';

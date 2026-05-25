@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:bcrypt/bcrypt.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';

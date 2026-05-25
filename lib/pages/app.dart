@@ -3,7 +3,7 @@ import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 
-import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
@@ -398,6 +398,10 @@ class _AppPageState extends State<AppPage> {
                 e.defaultValue = app.app.author;
               } else if (e.key == 'appId') {
                 e.defaultValue = app.app.id;
+              } else if (e.key == 'appName') {
+                e.defaultValue = app.app.name;
+              } else if (e.key == 'appSourceURL') {
+                e.defaultValue = app.app.url;
               }
               return e;
             }).toList();
@@ -428,32 +432,9 @@ class _AppPageState extends State<AppPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      t('basicInfo'),
-                      style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
-                        color: Theme.of(ctx).colorScheme.primary,
-                      ),
-                    ),
                     gap16,
                     GeneratedForm(
                       items: [
-                        [
-                          GeneratedFormTextField(
-                            'appName',
-                            label: t('appName'),
-                            defaultValue: app.app.name,
-                            required: true,
-                          ),
-                        ],
-
-                        [
-                          GeneratedFormTextField(
-                            'appSourceURL',
-                            label: t('appSourceURL'),
-                            defaultValue: app.app.url,
-                            required: true,
-                          ),
-                        ],
                         [
                           GeneratedFormSwitch(
                             'pinned',
@@ -467,12 +448,6 @@ class _AppPageState extends State<AppPage> {
                       },
                     ),
                     gap24,
-                    Text(
-                      t('sourceOptions'),
-                      style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
-                        color: Theme.of(ctx).colorScheme.primary,
-                      ),
-                    ),
                     gap16,
                     GeneratedForm(
                       items: items,
@@ -481,12 +456,6 @@ class _AppPageState extends State<AppPage> {
                       },
                     ),
                     gap24,
-                    Text(
-                      t('categories'),
-                      style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
-                        color: Theme.of(ctx).colorScheme.primary,
-                      ),
-                    ),
                     gap16,
                     CategorySelector(
                       alignment: WrapAlignment.start,
