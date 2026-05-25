@@ -4,7 +4,7 @@ import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 
-import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 class SourceHut extends AppSource {
   SourceHut() {
