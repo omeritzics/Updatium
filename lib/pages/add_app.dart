@@ -678,9 +678,11 @@ class AddAppPageState extends State<AddAppPage> {
                 } else if (e.key == 'appId' &&
                     additionalSettings['appId'] == null) {
                   e.defaultValue = '';
-                } else if (e.key == 'appName' && additionalSettings['appName'] == null) {
+                } else if (e.key == 'appName' &&
+                    additionalSettings['appName'] == null) {
                   e.defaultValue = '';
-                } else if (e.key == 'appSourceURL' && additionalSettings['appSourceURL'] == null) {
+                } else if (e.key == 'appSourceURL' &&
+                    additionalSettings['appSourceURL'] == null) {
                   e.defaultValue = '';
                 }
                 return e;
