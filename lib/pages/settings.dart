@@ -1125,7 +1125,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                           const MapEntry('light', 'light'),
                                           const MapEntry('dark', 'dark'),
                                         ]
-                                        
                                         .map(
                                           (e) => MapEntry(e.key, tr(e.value)),
                                         )
@@ -1134,7 +1133,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     defaultValue: settingsProvider.theme.name,
                                     required: true,
                                   ),
-                                ], 
+                                ],
                               ],
                               onValueChanges: (values, valid, isBuilding) {
                                 if (!isBuilding && valid) {
