@@ -435,8 +435,15 @@ class _AppPageState extends State<AppPage> {
                     gap16,
                     GeneratedForm(
                       items: [
-                        [GeneratedFormTextField('appName', label: t('appName'), defaultValue: app.app.name, required: true)],
-                        
+                        [
+                          GeneratedFormTextField(
+                            'appName',
+                            label: t('appName'),
+                            defaultValue: app.app.name,
+                            required: true,
+                          ),
+                        ],
+
                         [
                           GeneratedFormTextField(
                             'appId',

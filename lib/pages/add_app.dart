@@ -672,7 +672,8 @@ class AddAppPageState extends State<AddAppPage> {
           items: [
             ...pickedSource!.combinedAppSpecificSettingFormItems.map((row) {
               return row.map((e) {
-                if (e.key == 'appAuthor' && additionalSettings['appAuthor'] == null) {
+                if (e.key == 'appAuthor' &&
+                    additionalSettings['appAuthor'] == null) {
                   e.defaultValue = '';
                 }
                 return e;
