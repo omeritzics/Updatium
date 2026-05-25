@@ -13,21 +13,8 @@ class FDroidRepo extends AppSource {
     showReleaseDateAsVersionToggle = true;
     openSource = true;
     additionalSourceAppSpecificSettingFormItems = [
-      [
-        GeneratedFormTextField(
-          'appIdOrName',
-          label: t('appIdOrName'),
-          hint: t('reposHaveMultipleApps'),
-          required: true,
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'pickHighestVersionCode',
-          label: t('pickHighestVersionCode'),
-          defaultValue: false,
-        ),
-      ],
+      [GeneratedFormTextField('appIdOrName', label: t('appIdOrName'), hint: t('reposHaveMultipleApps'), required: true)],
+      [GeneratedFormSwitch('pickHighestVersionCode', label: t('pickHighestVersionCode'), defaultValue: false)],
     ];
   }
 
