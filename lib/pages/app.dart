@@ -34,7 +34,11 @@ const horizontalGap24 = SizedBox(width: 24);
 enum AppAddFlowType { none, search, url }
 
 class AppPage extends StatefulWidget {
-  const AppPage({super.key, required this.appId, this.flowType = AppAddFlowType.none});
+  const AppPage({
+    super.key,
+    required this.appId,
+    this.flowType = AppAddFlowType.none,
+  });
 
   final String appId;
   final AppAddFlowType flowType;
@@ -390,6 +394,10 @@ class _AppPageState extends State<AppPage> {
             row = row.map((e) {
               if (app.app.additionalSettings[e.key] != null) {
                 e.defaultValue = app.app.additionalSettings[e.key];
+              } else if (e.key == 'appAuthor') {
+                e.defaultValue = app.app.author;
+              } else if (e.key == 'appId') {
+                e.defaultValue = app.app.id;
               }
               return e;
             }).toList();
@@ -437,36 +445,7 @@ class _AppPageState extends State<AppPage> {
                             required: true,
                           ),
                         ],
-                        [
-                          GeneratedFormTextField(
-                            'appAuthor',
-                            label: t('appAuthor'),
-                            defaultValue: app.app.author,
-                            required: true,
-                          ),
-                        ],
-                        [
-                          GeneratedFormTextField(
-                            'appId',
-                            label: t('appId'),
-                            defaultValue: app.app.id,
-                            required: true,
-                            additionalValidators: [
-                              (value) {
-                                if (value == null || value.isEmpty) {
-                                  return t('required');
-                                }
-                                final isValid = RegExp(
-                                  r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-                                ).hasMatch(value);
-                                if (!isValid) {
-                                  return t('invalidInput');
-                                }
-                                return null;
-                              },
-                            ],
-                          ),
-                        ],
+
                         [
                           GeneratedFormTextField(
                             'appSourceURL',
@@ -553,7 +532,9 @@ class _AppPageState extends State<AppPage> {
         }
 
         // Handle additional settings
-        Map<String, dynamic> originalSettings = Map.from(app.app.additionalSettings);
+        Map<String, dynamic> originalSettings = Map.from(
+          app.app.additionalSettings,
+        );
         var sourceItems = source?.combinedAppSpecificSettingFormItems ?? [];
         for (var row in sourceItems) {
           for (var item in row) {
