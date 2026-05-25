@@ -9,72 +9,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  prepare:
-    runs-on: ubuntu-latest
-    outputs:
-      has_changes: ${{ steps.changes.outputs.has_changes }}
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@main
-        with:
-          fetch-depth: 0
-
-      - name: Cache Flutter dependencies
-        uses: actions/cache@main
-        with:
-          path: |
-            ~/.pub-cache
-            /opt/flutter
-          key: flutter-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
-          restore-keys: |
-            flutter-${{ runner.os }}-
-
-      - name: Cache Gradle dependencies
-        uses: actions/cache@main
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
-
-      - name: Setup Java
-        run: sudo apt-get install default-jre -y
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@main
-        with:
-          channel: stable
-          cache: true
-
-      - name: Install dependencies
-        run: flutter pub get
-        
-      - name: Check for code changes
-        id: changes
-        run: |
-          if git diff --quiet HEAD~1 HEAD; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-          else
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-          fi
-        
-      - name: Auto-fix linting issues
-        if: steps.changes.outputs.has_changes == 'true'
-        run: dart fix --apply
-
-      - name: Format code
-        if: steps.changes.outputs.has_changes == 'true'
-        run: dart format .
-
-      - name: Commit and Push changes
-        if: steps.changes.outputs.has_changes == 'true'
-        uses: stefanzweifel/git-auto-commit-action@master
-        with:
-          commit_message: "style: auto-fix linting and formatting issues"
-          branch: ${{ github.ref_name }}
-
   build:
-    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space (Ubuntu)
@@ -129,7 +64,7 @@ jobs:
 
       - name: Strip signing config
         run: |
-          # Strip signing config to build unsigned APK safely without keystores
+          # Strip signing config to build debug APK safely without keystores
           # Handle both .gradle and .gradle.kts files
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle || true
           sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle.kts || true
@@ -140,18 +75,18 @@ jobs:
           # This replaces the existing applicationId with a unique one for this commit
           sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle || true
           
-          # Build the unsigned APK for the normal flavor
-          flutter build apk --profile --flavor normal --no-pub --tree-shake-icons
+          # Build the debug APK for the normal flavor
+          flutter build apk --debug --flavor normal --no-pub --tree-shake-icons
           
           mkdir -p build/outputs/artifacts/
-          cp build/app/outputs/flutter-apk/app-normal-profile.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
+          cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v7
         with:
           name: Updatium-Commit-${{ steps.vars.outputs.sha_short }}
           path: build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
-          retention-days: 7 # Keep artifacts for 7 days to save space
+          retention-days: 14 # Keep artifacts for 14 days to save space
 
   auto_reject_on_failure:
     runs-on: ubuntu-latest

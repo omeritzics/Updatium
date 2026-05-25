@@ -17,12 +17,11 @@ Update your Android apps directly from the APK source. Updatium is a customizabl
 | ![Forgejo favicon](https://www.google.com/s2/favicons?sz=16&domain=forgejo.org) [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/)) | ![Uptodown favicon](https://www.google.com/s2/favicons?sz=16&domain=uptodown.com) [Uptodown](https://uptodown.com/) | 📦 Direct APK Link |
 | ![F-Droid favicon](https://www.google.com/s2/favicons?sz=16&domain=f-droid.org) [F-Droid](https://f-droid.org/) | ![Huawei AppGallery favicon](https://www.google.com/s2/favicons?sz=16&domain=huawei.com) [Huawei AppGallery](https://appgallery.huawei.com/) | 🌐 HTML page fallback |
 | 🧩 Third Party F-Droid Repos | ![Tencent App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=sj.qq.com) [Tencent App Store](https://sj.qq.com/) | ![WhatsApp favicon](https://www.google.com/s2/favicons?sz=16&domain=whatsapp.com) [WhatsApp](https://whatsapp.com/) |
-| ![IzzyOnDroid favicon](https://www.google.com/s2/favicons?sz=16&domain=android.izzysoft.de) [IzzyOnDroid](https://android.izzysoft.de/) | ![vivo App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=vivo.com.cn) [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) | |
-| ![SourceHut favicon](https://www.google.com/s2/favicons?sz=16&domain=sourcehut.org) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=16&domain=rustore.ru) [RuStore](https://rustore.ru/) | |
+| ![IzzyOnDroid favicon](https://www.google.com/s2/favicons?sz=16&domain=android.izzysoft.de) [IzzyOnDroid](https://android.izzysoft.de/) | ![vivo App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=vivo.com.cn) [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) | ![Signal favicon](https://www.google.com/s2/favicons?sz=16&domain=signal.org) [Signal (Nightly builds only)](https://signal.org/) |
+| ![SourceHut favicon](https://www.google.com/s2/favicons?sz=16&domain=sourcehut.org) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=16&domain=rustore.ru) [RuStore](https://rustore.ru/) | ![VLC favicon](https://www.google.com/s2/favicons?sz=16&domain=videolan.org) [VLC (Nightly builds only)](https://www.videolan.org/) |
 | ![OpenAPK favicon](https://www.google.com/s2/favicons?sz=16&domain=openapk.net) [OpenAPK (Nightly builds only)](https://www.openapk.net/) | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
 | ![Bitbucket favicon](https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org) [Bitbucket (Nightly builds only)](https://www.bitbucket.org) | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror](https://apkmirror.com/) | |
-| ![Gitea favicon](https://www.google.com/s2/favicons?sz=16&domain=try.gitea.io) [Gitea (Nightly builds only)](https://try.gitea.io/) | | ![Signal favicon](https://www.google.com/s2/favicons?sz=16&domain=signal.org) [Signal](https://signal.org/) |
-| | | ![VLC favicon](https://www.google.com/s2/favicons?sz=16&domain=videolan.org) [VLC](https://www.videolan.org/) |
+| ![Gitea favicon](https://www.google.com/s2/favicons?sz=16&domain=try.gitea.io) [Gitea (Nightly builds only)](https://try.gitea.io/) | | |
 
 ### Improved Design
 
@@ -30,14 +29,15 @@ Based on Material Design 3 Expressive guidelines.
 
 ### Other Additional Features
 
-- Better accessability for screen readers.
+- Better accessibility for screen readers.
 - Grid View.
 - Safe Mode (allows you to block unwanted changes to the application catalogue).
-- Ability to use DNS-over-HTTP providers (Nightly builds only).
+- Ability to use DNS-over-HTTPS providers (Nightly builds only).
+- Editing basic app information after adding it (Nightly builds only).
 
 ### Localization
 
-Updatium currently supports 38 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull with the new translations added to ![here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
+Updatium currently supports 38 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull request with new translations added in the [translations directory](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
 
 If you don't know how to make a pull request, and/or you don't have any experience with Git, you can open an issue ![here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help you with adding your language.
 
@@ -56,7 +56,7 @@ Bahasa Melayu, Română, ئۇيغۇرچە.
 
 [![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
 
-Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware.
+Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware. If you are an administrator of an APK distribution source, please let me know you're interested in adding Updatium to your website by creating an issue.
 
 ## Screenshots
 
@@ -76,7 +76,12 @@ A: Updatium started as a fork of [Obtainium](https://github.com/ImranR98/Obtaini
 
 ### Q: Why fork Obtainium?
 
-A: One word - antisemitism. While Obtainium is a really powerful tool, its developer intended to block people from a specific nation from getting involved into the project. Updatium aims not just to be an update to Obtainium, but also to provide a broad, accepting, welcoming open source community.
+A: One word - antisemitism. While Obtainium is a really powerful tool, its developer intended to block people from a specific nation from getting involved in the project. Updatium aims not just to be an update to Obtainium, but also to provide a broad, accepting, welcoming open source community.
+
+### Q: How is Updatium different from other Obtainium forks?
+
+A: Every fork of Obtainium has a different goal to serve. For example, [Discoverium](https://github.com/cygnusx-1-org/Discoverium) was made to be a catalogue for discovering new open-source apps, while Updatium focuses on providing a better experience managing your already added apps or ready-made imported lists.
+[ObtainX](https://github.com/bikram-agarwal/ObtainX) shares many vision aspects with Updatium, but Updatium is more conservative when it comes to adding new features or trying new redesigns, focusing on a clean, stable and reliable user experience. Also, Updatium is intended for both novice and tech-savvy people.
 
 ### Q: Does Updatium encourage piracy?
 

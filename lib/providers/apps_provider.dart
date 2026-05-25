@@ -1170,8 +1170,8 @@ class AppsProvider with ChangeNotifier {
   // Get device display density bucket (e.g., mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)
   String getDeviceDensityBucket() {
     // Get device pixel ratio from Flutter
-    final pixelRatio =
-        WidgetsBinding.instance.platformDispatcher.views.first.devicePixelRatio;
+    final views = WidgetsBinding.instance.platformDispatcher.views;
+    final pixelRatio = views.isNotEmpty ? views.first.devicePixelRatio : 2.0;
 
     // Map pixel ratio to density buckets
     if (pixelRatio < 1.0) return 'ldpi';
@@ -1193,8 +1193,14 @@ class AppsProvider with ChangeNotifier {
     for (var abi in deviceAbis) {
       // More precise matching: look for ABI as a separate component in filename
       // Matches patterns like: arm64-v8a, _arm64-v8a, -arm64-v8a, arm64-v8a.apk
+      var suffix = '';
+      if (abi.toLowerCase() == 'x86') {
+        suffix = r'(?!_?64)';
+      } else if (abi.toLowerCase() == 'armeabi') {
+        suffix = r'(?!-?v7a)';
+      }
       var abiPattern = RegExp(
-        r'[-_\.]?' + RegExp.escape(abi.toLowerCase()) + r'[-_\.]',
+        r'[-_\.]?' + RegExp.escape(abi.toLowerCase()) + suffix + r'[-_\.]',
       );
       var matchingApks = apkFiles.where((file) {
         var fileName = file.uri.pathSegments.last.toLowerCase();
