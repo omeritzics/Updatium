@@ -675,6 +675,8 @@ class AddAppPageState extends State<AddAppPage> {
                 if (e.key == 'appAuthor' &&
                     additionalSettings['appAuthor'] == null) {
                   e.defaultValue = '';
+                } else if (e.key == 'appId' && additionalSettings['appId'] == null) {
+                  e.defaultValue = '';
                 }
                 return e;
               }).toList();
