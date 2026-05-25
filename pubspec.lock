@@ -130,6 +130,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  button_group_m3e:
+    dependency: "direct main"
+    description:
+      name: button_group_m3e
+      sha256: bb8ce524f87e806c89abb4cd430425de22cd53feeacc122e3b5da45c76ba2246
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
+  button_m3e:
+    dependency: transitive
+    description:
+      name: button_m3e
+      sha256: "6754ddeb9068ad2005bd26d5ceabc41268029465095686d7d228296c2e706909"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.2"
   characters:
     dependency: transitive
     description:
