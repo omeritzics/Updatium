@@ -12,7 +12,7 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Material 3 spacing tokens
@@ -670,7 +670,24 @@ class AddAppPageState extends State<AddAppPage> {
             '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}',
           ),
           items: [
-            ...pickedSource!.combinedAppSpecificSettingFormItems,
+            ...pickedSource!.combinedAppSpecificSettingFormItems.map((row) {
+              return row.map((e) {
+                if (e.key == 'appAuthor' &&
+                    additionalSettings['appAuthor'] == null) {
+                  e.defaultValue = '';
+                } else if (e.key == 'appId' &&
+                    additionalSettings['appId'] == null) {
+                  e.defaultValue = '';
+                } else if (e.key == 'appName' &&
+                    additionalSettings['appName'] == null) {
+                  e.defaultValue = '';
+                } else if (e.key == 'appSourceURL' &&
+                    additionalSettings['appSourceURL'] == null) {
+                  e.defaultValue = '';
+                }
+                return e;
+              }).toList();
+            }),
             ...(pickedSourceOverride != null
                 ? pickedSource!.sourceConfigSettingFormItems.map((e) => [e])
                 : []),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
-import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
-import 'package:updatium/services/slang-converter.dart';
+
+import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
@@ -107,7 +107,7 @@ class _AppPageState extends State<AppPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (appsProvider.loadingApps)
-                const CircularProgressIndicatorM3E()
+                const CircularProgressIndicator()
               else
                 Column(
                   children: [
@@ -394,6 +394,14 @@ class _AppPageState extends State<AppPage> {
             row = row.map((e) {
               if (app.app.additionalSettings[e.key] != null) {
                 e.defaultValue = app.app.additionalSettings[e.key];
+              } else if (e.key == 'appAuthor') {
+                e.defaultValue = app.app.author;
+              } else if (e.key == 'appId') {
+                e.defaultValue = app.app.id;
+              } else if (e.key == 'appName') {
+                e.defaultValue = app.app.name;
+              } else if (e.key == 'appSourceURL') {
+                e.defaultValue = app.app.url;
               }
               return e;
             }).toList();
@@ -407,7 +415,7 @@ class _AppPageState extends State<AppPage> {
                   icon: const Icon(Icons.close),
                   onPressed: () => Navigator.of(ctx).pop(null),
                 ),
-                title: Text(t('editApp')),
+                title: Text(t('additionalOptions')),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(ctx).pop(null),
@@ -424,61 +432,9 @@ class _AppPageState extends State<AppPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      t('basicInfo'),
-                      style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
-                        color: Theme.of(ctx).colorScheme.primary,
-                      ),
-                    ),
                     gap16,
                     GeneratedForm(
                       items: [
-                        [
-                          GeneratedFormTextField(
-                            'appName',
-                            label: t('appName'),
-                            defaultValue: app.app.name,
-                            required: true,
-                          ),
-                        ],
-                        [
-                          GeneratedFormTextField(
-                            'appAuthor',
-                            label: t('appAuthor'),
-                            defaultValue: app.app.author,
-                            required: true,
-                          ),
-                        ],
-                        [
-                          GeneratedFormTextField(
-                            'appId',
-                            label: t('appId'),
-                            defaultValue: app.app.id,
-                            required: true,
-                            additionalValidators: [
-                              (value) {
-                                if (value == null || value.isEmpty) {
-                                  return t('required');
-                                }
-                                final isValid = RegExp(
-                                  r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-                                ).hasMatch(value);
-                                if (!isValid) {
-                                  return t('invalidInput');
-                                }
-                                return null;
-                              },
-                            ],
-                          ),
-                        ],
-                        [
-                          GeneratedFormTextField(
-                            'appSourceURL',
-                            label: t('appSourceURL'),
-                            defaultValue: app.app.url,
-                            required: true,
-                          ),
-                        ],
                         [
                           GeneratedFormSwitch(
                             'pinned',
@@ -492,12 +448,6 @@ class _AppPageState extends State<AppPage> {
                       },
                     ),
                     gap24,
-                    Text(
-                      t('sourceOptions'),
-                      style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
-                        color: Theme.of(ctx).colorScheme.primary,
-                      ),
-                    ),
                     gap16,
                     GeneratedForm(
                       items: items,
@@ -506,12 +456,6 @@ class _AppPageState extends State<AppPage> {
                       },
                     ),
                     gap24,
-                    Text(
-                      t('categories'),
-                      style: Theme.of(ctx).textTheme.titleSmall?.copyWith(
-                        color: Theme.of(ctx).colorScheme.primary,
-                      ),
-                    ),
                     gap16,
                     CategorySelector(
                       alignment: WrapAlignment.start,
@@ -777,7 +721,7 @@ class _AppPageState extends State<AppPage> {
                             child: Semantics(
                               label: t('downloadProgress'),
                               value: '${app.downloadProgress!.toInt()}%',
-                              child: LinearProgressIndicatorM3E(
+                              child: LinearProgressIndicator(
                                 value: app.downloadProgress! >= 0
                                     ? app.downloadProgress! / 100
                                     : null,

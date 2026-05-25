@@ -3,13 +3,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
-import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
-import 'package:updatium/services/slang-converter.dart';
+
+import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:loading_indicator_m3e/loading_indicator_m3e.dart';
 
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -497,26 +498,36 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      Icons.widgets,
-                      size: 80,
-                      color: preserveTransparency(
-                        Theme.of(context).colorScheme.primary,
-                        0.6,
+                    if (appsProvider.loadingApps && appsProvider.apps.isEmpty)
+                      const LoadingIndicatorM3E()
+                    else
+                      Icon(
+                        Icons.widgets,
+                        size: 80,
+                        color: preserveTransparency(
+                          Theme.of(context).colorScheme.primary,
+                          0.6,
+                        ),
                       ),
-                    ),
                     gap24,
-                    Text(
-                      appsProvider.apps.isEmpty
-                          ? appsProvider.loadingApps
-                                ? t('pleaseWait')
-                                : t('noApps')
-                          : t('noAppsForFilter'),
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      textAlign: TextAlign.center,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    if (appsProvider.loadingApps && appsProvider.apps.isEmpty)
+                      Text(
+                        t('pleaseWait'),
+                        style: Theme.of(context).textTheme.headlineMedium,
+                        textAlign: TextAlign.center,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    else
+                      Text(
+                        appsProvider.apps.isEmpty
+                            ? t('noApps')
+                            : t('noAppsForFilter'),
+                        style: Theme.of(context).textTheme.headlineMedium,
+                        textAlign: TextAlign.center,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
@@ -547,7 +558,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: LinearProgressIndicatorM3E(
+              child: LinearProgressIndicator(
                 value: appsProvider.loadingApps
                     ? null
                     : appsProvider
@@ -781,7 +792,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 SizedBox(
                                   width: 40,
                                   height: 4,
-                                  child: LinearProgressIndicatorM3E(
+                                  child: LinearProgressIndicator(
                                     value: appInfo.downloadProgress! >= 0
                                         ? appInfo.downloadProgress! / 100
                                         : null,
@@ -899,7 +910,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           SizedBox(
                             width: 40,
                             height: 4,
-                            child: LinearProgressIndicatorM3E(
+                            child: LinearProgressIndicator(
                               value: appInfo.downloadProgress! >= 0
                                   ? appInfo.downloadProgress! / 100
                                   : null,

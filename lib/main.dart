@@ -21,6 +21,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:updatium/services/slang-converter.dart';
 import 'package:updatium/lib/gen/strings.g.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:simple_localization/src/simple_localization_controller.dart';
 import 'package:simple_localization/src/localization.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';

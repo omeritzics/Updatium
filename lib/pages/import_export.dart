@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
@@ -488,7 +487,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   ),
                   if (importInProgress || appsProvider.exportInProgress)
                     const Column(
-                      children: [gap12, LinearProgressIndicatorM3E(), gap12],
+                      children: [gap12, LinearProgressIndicator(), gap12],
                     )
                   else
                     Column(
@@ -778,7 +777,7 @@ class _SelectionModalState extends State<SelectionModal> {
         ),
         body: Column(
           children: [
-            LinearProgressIndicatorM3E(value: 1 / 3),
+            LinearProgressIndicator(value: 1 / 3),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: Row(

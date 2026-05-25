@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
-import 'package:progress_indicator_m3e/progress_indicator_m3e.dart';
-import 'package:updatium/services/slang-converter.dart';
+
+import 'package:updatium/services/slang_converter.dart';
 import 'package:provider/provider.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -163,7 +163,7 @@ void showSafeModeEnableDialog(BuildContext context) {
                     ? const SizedBox(
                         width: 16,
                         height: 16,
-                        child: CircularProgressIndicatorM3E(),
+                        child: CircularProgressIndicator(),
                       )
                     : Text(t('safeModeEnable')),
               ),
@@ -288,7 +288,7 @@ void showSafeModeDisableDialog(BuildContext context) {
                     ? const SizedBox(
                         width: 16,
                         height: 16,
-                        child: CircularProgressIndicatorM3E(),
+                        child: CircularProgressIndicator(),
                       )
                     : Text(t('safeModeDisable')),
               ),
