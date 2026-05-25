@@ -910,13 +910,7 @@ abstract class AppSource {
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
     [GeneratedFormTextField('appName', label: t('appName'), required: false)],
-    [
-      GeneratedFormTextField(
-        'appAuthor',
-        label: t('appAuthor'),
-        required: false,
-      ),
-    ],
+    [GeneratedFormTextField('appAuthor', label: t('appAuthor'), required: false)],
     [GeneratedFormTextField('about', label: t('about'), required: false)],
     [GeneratedFormSwitch('trackOnly', label: t('trackOnly'))],
     [
@@ -1039,12 +1033,7 @@ abstract class AppSource {
       ),
     ],
     [
-      GeneratedFormTextField(
-        'versionExtractionRegEx',
-        label: t('trimVersionString'),
-        required: false,
-        additionalValidators: [(value) => regExValidator(value)],
-      ),
+      GeneratedFormTextField('versionExtractionRegEx', label: t('trimVersionString'), required: false, additionalValidators: [(value) => regExValidator(value)]),
     ],
     [
       GeneratedFormTextField(
@@ -1086,10 +1075,7 @@ abstract class AppSource {
       ),
     ],
     [
-      GeneratedFormTextField(
-        'filterReleaseNotesByRegEx',
-        label: t('filterReleaseNotesByRegEx'),
-        required: false,
+      GeneratedFormTextField('filterReleaseNotesByRegEx', label: t('filterReleaseNotesByRegEx'), required: false,
         additionalValidators: [
           (value) {
             return regExValidator(value);
