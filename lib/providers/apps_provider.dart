@@ -1141,7 +1141,7 @@ class AppsProvider with ChangeNotifier {
       if (manifestFile.existsSync()) {
         var manifestContent = manifestFile.readAsStringSync();
         var manifest = jsonDecode(manifestContent) as Map<String, dynamic>;
-        
+
         // Validate manifest structure
         if (manifest.containsKey('split_apks')) {
           // Ensure split_apks is a list
@@ -1150,7 +1150,7 @@ class AppsProvider with ChangeNotifier {
             return null;
           }
         }
-        
+
         return manifest;
       }
     } catch (e) {
@@ -1168,8 +1168,9 @@ class AppsProvider with ChangeNotifier {
   // Get device display density bucket (e.g., mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)
   String getDeviceDensityBucket() {
     // Get device pixel ratio from Flutter
-    final pixelRatio = WidgetsBinding.instance.platformDispatcher.views.first.devicePixelRatio;
-    
+    final pixelRatio =
+        WidgetsBinding.instance.platformDispatcher.views.first.devicePixelRatio;
+
     // Map pixel ratio to density buckets
     if (pixelRatio < 1.0) return 'ldpi';
     if (pixelRatio < 1.5) return 'mdpi';
@@ -1190,7 +1191,9 @@ class AppsProvider with ChangeNotifier {
     for (var abi in deviceAbis) {
       // More precise matching: look for ABI as a separate component in filename
       // Matches patterns like: arm64-v8a, _arm64-v8a, -arm64-v8a, arm64-v8a.apk
-      var abiPattern = RegExp(r'[-_\.]?' + RegExp.escape(abi.toLowerCase()) + r'[-_\.]');
+      var abiPattern = RegExp(
+        r'[-_\.]?' + RegExp.escape(abi.toLowerCase()) + r'[-_\.]',
+      );
       var matchingApks = apkFiles.where((file) {
         var fileName = file.uri.pathSegments.last.toLowerCase();
         return abiPattern.hasMatch(fileName);
@@ -1218,11 +1221,19 @@ class AppsProvider with ChangeNotifier {
   // Filter APKs by device display density (for bundled APKs with density splits)
   Future<List<File>> _filterByDensity(List<File> apkFiles) async {
     var deviceDensity = getDeviceDensityBucket();
-    
+
     // Density buckets in order of preference (fallback to lower density if exact match not found)
-    var densityBuckets = ['xxxhdpi', 'xxhdpi', 'xhdpi', 'hdpi', 'mdpi', 'ldpi', 'nodpi'];
+    var densityBuckets = [
+      'xxxhdpi',
+      'xxhdpi',
+      'xhdpi',
+      'hdpi',
+      'mdpi',
+      'ldpi',
+      'nodpi',
+    ];
     var deviceIndex = densityBuckets.indexOf(deviceDensity);
-    
+
     // Try to find APKs matching device density or lower
     for (var i = deviceIndex; i < densityBuckets.length; i++) {
       var density = densityBuckets[i];
@@ -1231,12 +1242,12 @@ class AppsProvider with ChangeNotifier {
         var fileName = file.uri.pathSegments.last.toLowerCase();
         return densityPattern.hasMatch(fileName);
       }).toList();
-      
+
       if (matchingApks.isNotEmpty) {
         return matchingApks;
       }
     }
-    
+
     // If no density-specific APKs found, return all APKs
     return apkFiles;
   }
@@ -1267,44 +1278,46 @@ class AppsProvider with ChangeNotifier {
     // If manifest exists, use it for intelligent selection
     if (manifest != null && manifest.containsKey('split_apks')) {
       var splitApks = manifest['split_apks'] as List;
-      
+
       // Build a map of APK files by their names for quick lookup
       var apkMap = <String, File>{};
       for (var apk in apkFiles) {
         apkMap[apk.uri.pathSegments.last] = apk;
       }
-      
+
       // Select splits based on manifest and device capabilities
       List<File> selectedApks = [];
-      
+
       // Always include base APK if found
       if (baseApk != null) {
         selectedApks.add(baseApk);
       }
-      
+
       // Select architecture-specific splits
       var deviceAbis = await getDeviceAbis();
       var deviceDensity = getDeviceDensityBucket();
-      
+
       int matchedSplits = 0;
       int missingSplits = 0;
-      
+
       for (var split in splitApks) {
         if (split is Map<String, dynamic>) {
           var splitFile = split['file'] as String?;
           var splitAbi = split['abi'] as String?;
           var splitDensity = split['density'] as String?;
-          
+
           if (splitFile != null) {
             if (apkMap.containsKey(splitFile)) {
               var apk = apkMap[splitFile]!;
-              
+
               // Check if this split matches device capabilities
-              bool matchesAbi = splitAbi == null || deviceAbis.contains(splitAbi);
-              bool matchesDensity = splitDensity == null || 
-                  splitDensity == deviceDensity || 
+              bool matchesAbi =
+                  splitAbi == null || deviceAbis.contains(splitAbi);
+              bool matchesDensity =
+                  splitDensity == null ||
+                  splitDensity == deviceDensity ||
                   splitDensity == 'nodpi';
-              
+
               if (matchesAbi && matchesDensity) {
                 if (!selectedApks.contains(apk)) {
                   selectedApks.add(apk);
@@ -1317,15 +1330,19 @@ class AppsProvider with ChangeNotifier {
           }
         }
       }
-      
+
       // Log warnings for incomplete bundles
       if (missingSplits > 0) {
-        logs.add('Warning: XAPK bundle is incomplete - $missingSplits split(s) referenced in manifest are missing');
+        logs.add(
+          'Warning: XAPK bundle is incomplete - $missingSplits split(s) referenced in manifest are missing',
+        );
       }
-      
+
       // If manifest-based selection failed or returned too few APKs, fallback to filename-based filtering
       if (selectedApks.length < 2) {
-        logs.add('Manifest-based selection returned insufficient APKs, falling back to filename-based filtering');
+        logs.add(
+          'Manifest-based selection returned insufficient APKs, falling back to filename-based filtering',
+        );
         var filteredApks = await filterApksByArchitecture(
           baseApk != null ? [baseApk, ...otherApks] : otherApks,
         );
@@ -1338,8 +1355,10 @@ class AppsProvider with ChangeNotifier {
 
         return filteredApks;
       }
-      
-      logs.add('Selected $matchedSplits split APK(s) from manifest for device ABI $deviceAbis and density $deviceDensity');
+
+      logs.add(
+        'Selected $matchedSplits split APK(s) from manifest for device ABI $deviceAbis and density $deviceDensity',
+      );
       return selectedApks;
     }
 
