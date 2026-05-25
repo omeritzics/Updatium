@@ -396,7 +396,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
 
     var intervalSlider = Slider(
-      year2023: false,
       value: settingsProvider.updateIntervalSliderVal,
       max: updateIntervalNodes.length.toDouble(),
       divisions: updateIntervalNodes.length * 20,
@@ -1419,7 +1418,7 @@ class _LogsDialogState extends State<LogsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var logsProvider = context.read<LogsProvider>();
+    var logsProvider = context.watch<LogsProvider>();
     void filterLogs(int days) {
       logsProvider
           .get(after: DateTime.now().subtract(Duration(days: days)))

@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
+
 import 'package:updatium/services/slang_converter.dart';
 import 'package:simple_localization/src/simple_localization_controller.dart';
 import 'package:simple_localization/src/localization.dart';
@@ -54,14 +55,14 @@ List<MapEntry<Locale, String>> supportedLocales = const [
     Locale('en', 'EO'),
     'Esperanto',
   ), // https://github.com/aissat/easy_localization/issues/220#issuecomment-846035493
-  MapEntry(Locale('in'), 'Bahasa Indonesia'),
+  MapEntry(Locale('id'), 'Bahasa Indonesia'),
   MapEntry(Locale('ko'), '한국어'),
   MapEntry(Locale('ca'), 'Català'),
   MapEntry(Locale('ar'), 'العربية'),
   MapEntry(Locale('ml'), 'മലയാളം'),
   MapEntry(Locale('gl'), 'Galego'),
   MapEntry(Locale('bg'), 'Български'),
-  MapEntry(Locale('kmr'), 'Kurdî (Kurmanjî)'),
+  MapEntry(Locale('en', 'KMR'), 'Kurdî (Kurmanjî)'),
   MapEntry(Locale('ms'), 'Bahasa Melayu'),
   MapEntry(Locale('bn'), 'বাংলা'),
   MapEntry(Locale('ro'), 'Română'),
@@ -168,11 +169,19 @@ void main() async {
   await SimpleLocalization.ensureInitialized();
 
   // Enable edge-to-edge mode for Android 10+ (API 29)
-  if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent),
-    );
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  try {
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    if (androidInfo.version.sdkInt >= 29) {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.transparent,
+        ),
+      );
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    }
+  } catch (e) {
+    // Not on Android or DeviceInfoPlugin failed - skip edge-to-edge setup
+    debugPrint('Could not enable edge-to-edge mode: $e');
   }
 
   final np = NotificationsProvider();
@@ -185,7 +194,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => AppsProvider()),
         ChangeNotifierProvider(create: (context) => SettingsProvider()),
         Provider(create: (context) => np),
-        Provider(create: (context) => LogsProvider()),
+        ChangeNotifierProvider(create: (context) => LogsProvider()),
       ],
       child: SimpleLocalization(
         supportedLocales: supportedLocales.map((e) => e.key).toList(),
