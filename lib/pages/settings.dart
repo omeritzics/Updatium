@@ -1128,7 +1128,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                     if (selected) {
                                       setState(() {
                                         _selectedThemeIndex = 0;
-                                        settingsProvider.theme = ThemeSettings.system;
+                                        settingsProvider.theme =
+                                            ThemeSettings.system;
                                       });
                                     }
                                   },
@@ -1141,7 +1142,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                     if (selected) {
                                       setState(() {
                                         _selectedThemeIndex = 1;
-                                        settingsProvider.theme = ThemeSettings.light;
+                                        settingsProvider.theme =
+                                            ThemeSettings.light;
                                       });
                                     }
                                   },
@@ -1154,7 +1156,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                     if (selected) {
                                       setState(() {
                                         _selectedThemeIndex = 2;
-                                        settingsProvider.theme = ThemeSettings.dark;
+                                        settingsProvider.theme =
+                                            ThemeSettings.dark;
                                       });
                                     }
                                   },
@@ -1411,7 +1414,8 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           );
         },
-        icon: const Icon(Icons.info_outline_rounded), label: Text(t('about')),
+        icon: const Icon(Icons.info_outline_rounded),
+        label: Text(t('about')),
         extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
         elevation: 3,
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,

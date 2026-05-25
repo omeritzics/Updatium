@@ -1034,7 +1034,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         ).toLowerCase(),
                       ],
                     ),
-                    defaultValue: true            ),
+                    defaultValue: true,
+                  ),
                 );
               }
               if (newInstallIdsAllOrSelected.isNotEmpty) {

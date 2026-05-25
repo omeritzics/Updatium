@@ -18,8 +18,10 @@ class Bitbucket extends AppSource {
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
     openSource = true;
-    sourceConfigSettingFormItems = [GeneratedFormTextField(
-        t('bitbucketAPITokenLabel'), label: t('bitbucketAPITokenLabel'),
+    sourceConfigSettingFormItems = [
+      GeneratedFormTextField(
+        t('bitbucketAPITokenLabel'),
+        label: t('bitbucketAPITokenLabel'),
         hint: 'email@example.com:token',
         password: true,
         required: false,

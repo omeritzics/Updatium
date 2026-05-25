@@ -22,8 +22,10 @@ class GitHub extends AppSource {
     allowIncludeZips = true;
     openSource = true;
 
-    sourceConfigSettingFormItems = [GeneratedFormTextField(
-        t('githubPATLabel'), label: t('githubPATLabel'),
+    sourceConfigSettingFormItems = [
+      GeneratedFormTextField(
+        t('githubPATLabel'),
+        label: t('githubPATLabel'),
         password: true,
         required: false,
         belowWidgets: [
@@ -47,7 +49,8 @@ class GitHub extends AppSource {
         ],
       ),
       GeneratedFormTextField(
-        t('GHReqPrefix'), label: t('GHReqPrefix'),
+        t('GHReqPrefix'),
+        label: t('GHReqPrefix'),
         hint: 'gh-proxy.org',
         required: false,
         additionalValidators: [
@@ -90,8 +93,11 @@ class GitHub extends AppSource {
     additionalSourceAppSpecificSettingFormItems = [];
 
     canSearch = true;
-    searchQuerySettingFormItems = [GeneratedFormTextField(
-        'minStarCount', label: t('minStarCount'), defaultValue: '0',
+    searchQuerySettingFormItems = [
+      GeneratedFormTextField(
+        'minStarCount',
+        label: t('minStarCount'),
+        defaultValue: '0',
         additionalValidators: [
           (value) {
             try {

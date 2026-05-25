@@ -981,7 +981,8 @@ class AddAppPageState extends State<AddAppPage> {
             ),
           );
         },
-        icon: const Icon(Icons.import_export), label: Text(t('importExport')),
+        icon: const Icon(Icons.import_export),
+        label: Text(t('importExport')),
         extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
         elevation: 3,
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,

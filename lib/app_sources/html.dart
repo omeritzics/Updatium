@@ -225,31 +225,60 @@ class HTML extends AppSource {
   }
 
   var finalStepFormitems = [
-    [GeneratedFormTextField(
-        'customLinkFilterRegex', label: t('customLinkFilterRegex'),
+    [
+      GeneratedFormTextField(
+        'customLinkFilterRegex',
+        label: t('customLinkFilterRegex'),
         hint: 'download/(.*/)?(android|apk|mobile)',
         required: false,
         additionalValidators: [
           (value) {
             return regExValidator(value);
           },
-        ])],
-    [GeneratedFormSwitch('versionExtractWholePage', label: t('versionExtractWholePage'))],
+        ],
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'versionExtractWholePage',
+        label: t('versionExtractWholePage'),
+      ),
+    ],
   ];
   var commonFormItems = [
     [GeneratedFormSwitch('filterByLinkText', label: t('filterByLinkText'))],
-    [GeneratedFormSwitch('matchLinksOutsideATags', label: t('matchLinksOutsideATags'))],
+    [
+      GeneratedFormSwitch(
+        'matchLinksOutsideATags',
+        label: t('matchLinksOutsideATags'),
+      ),
+    ],
     [GeneratedFormSwitch('skipSort', label: t('skipSort'))],
     [GeneratedFormSwitch('reverseSort', label: t('takeFirstLink'))],
-    [GeneratedFormSwitch('sortByLastLinkSegment', label: t('sortByLastLinkSegment'))],
+    [
+      GeneratedFormSwitch(
+        'sortByLastLinkSegment',
+        label: t('sortByLastLinkSegment'),
+      ),
+    ],
   ];
   var intermediateFormItems = [
-    [GeneratedFormTextField(
-        'customLinkFilterRegex', label: t('intermediateLinkRegex'),
+    [
+      GeneratedFormTextField(
+        'customLinkFilterRegex',
+        label: t('intermediateLinkRegex'),
         hint: '([0-9]+.)*[0-9]+/\$',
         required: true,
-        additionalValidators: [(value) => regExValidator(value)])],
-    [GeneratedFormSwitch('autoLinkFilterByArch', label: t('autoLinkFilterByArch'), defaultValue: false)],
+        additionalValidators: [(value) => regExValidator(value)],
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'autoLinkFilterByArch',
+        label: t('autoLinkFilterByArch'),
+        defaultValue: false,
+      ),
+    ],
   ];
   HTML() {
     name = t('html');
