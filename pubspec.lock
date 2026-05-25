@@ -130,22 +130,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  button_group_m3e:
-    dependency: "direct main"
-    description:
-      name: button_group_m3e
-      sha256: bb8ce524f87e806c89abb4cd430425de22cd53feeacc122e3b5da45c76ba2246
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.1"
-  button_m3e:
-    dependency: transitive
-    description:
-      name: button_m3e
-      sha256: "6754ddeb9068ad2005bd26d5ceabc41268029465095686d7d228296c2e706909"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.2"
   characters:
     dependency: transitive
     description:
@@ -1053,14 +1037,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  slider_m3e:
-    dependency: "direct main"
-    description:
-      name: slider_m3e
-      sha256: e4c25e94b46ebf3164f407e9db6cce70aa51b92db5143d720f6e55a2a709aa67
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1"
   source_span:
     dependency: transitive
     description:

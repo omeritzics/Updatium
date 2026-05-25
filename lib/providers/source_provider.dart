@@ -44,7 +44,7 @@ import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:android_package_installer/android_package_installer.dart';
-import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 /// Cache entry for ETag-based conditional requests
 class _ETagCacheEntry {
@@ -622,8 +622,11 @@ Future<List<MapEntry<String, String>>> filterApksByArch(
   if (apkUrls.length > 1) {
     var abis = (await DeviceInfoPlugin().androidInfo).supportedAbis;
     for (var abi in abis) {
+      // More precise matching: look for ABI as a separate component in filename
+      // Matches patterns like: arm64-v8a, _arm64-v8a, -arm64-v8a, arm64-v8a.apk
+      var abiPattern = RegExp(r'[-_\.]?' + RegExp.escape(abi) + r'[-_\.]');
       var urls2 = apkUrls
-          .where((element) => RegExp('.*$abi.*').hasMatch(element.key))
+          .where((element) => abiPattern.hasMatch(element.key))
           .toList();
       if (urls2.isNotEmpty && urls2.length < apkUrls.length) {
         apkUrls = urls2;
@@ -936,6 +939,13 @@ abstract class AppSource {
             return null;
           },
         ],
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'appSourceURL',
+        label: t('appSourceURL'),
+        required: false,
       ),
     ],
     [GeneratedFormTextField('about', label: t('about'), required: false)],
