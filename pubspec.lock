@@ -630,6 +630,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  loading_indicator_m3e:
+    dependency: "direct main"
+    description:
+      name: loading_indicator_m3e
+      sha256: "3fe97385b4f84382c25b901abf88fcee4200e6e78fcd5ed7e037a34d7db53038"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   logging:
     dependency: transitive
     description:
@@ -1029,6 +1037,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  slider_m3e:
+    dependency: "direct main"
+    description:
+      name: slider_m3e
+      sha256: e4c25e94b46ebf3164f407e9db6cce70aa51b92db5143d720f6e55a2a709aa67
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   source_span:
     dependency: transitive
     description:
