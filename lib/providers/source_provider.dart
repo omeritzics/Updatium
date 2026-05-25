@@ -917,6 +917,27 @@ abstract class AppSource {
         required: false,
       ),
     ],
+    [
+      GeneratedFormTextField(
+        'appId',
+        label: t('appId'),
+        required: false,
+        additionalValidators: [
+          (value) {
+            if (value == null || value.isEmpty) {
+              return null;
+            }
+            final isValid = RegExp(
+              r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+            ).hasMatch(value);
+            if (!isValid) {
+              return t('invalidInput');
+            }
+            return null;
+          },
+        ],
+      ),
+    ],
     [GeneratedFormTextField('about', label: t('about'), required: false)],
     [GeneratedFormSwitch('trackOnly', label: t('trackOnly'))],
 
