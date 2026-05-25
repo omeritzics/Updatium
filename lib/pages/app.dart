@@ -396,6 +396,8 @@ class _AppPageState extends State<AppPage> {
                 e.defaultValue = app.app.additionalSettings[e.key];
               } else if (e.key == 'appAuthor') {
                 e.defaultValue = app.app.author;
+              } else if (e.key == 'appId') {
+                e.defaultValue = app.app.id;
               }
               return e;
             }).toList();
@@ -444,28 +446,6 @@ class _AppPageState extends State<AppPage> {
                           ),
                         ],
 
-                        [
-                          GeneratedFormTextField(
-                            'appId',
-                            label: t('appId'),
-                            defaultValue: app.app.id,
-                            required: true,
-                            additionalValidators: [
-                              (value) {
-                                if (value == null || value.isEmpty) {
-                                  return t('required');
-                                }
-                                final isValid = RegExp(
-                                  r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-                                ).hasMatch(value);
-                                if (!isValid) {
-                                  return t('invalidInput');
-                                }
-                                return null;
-                              },
-                            ],
-                          ),
-                        ],
                         [
                           GeneratedFormTextField(
                             'appSourceURL',
