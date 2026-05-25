@@ -1,13 +1,11 @@
 import 'dart:async';
 
-import 'package:button_group_m3e/button_group_m3e.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:slider_m3e/slider_m3e.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/category_chip.dart';
@@ -401,7 +399,8 @@ class _SettingsPageState extends State<SettingsPage> {
       },
     );
 
-    var intervalSlider = SliderM3E(
+    var intervalSlider = Slider(
+      year2023: false,
       value: settingsProvider.updateIntervalSliderVal,
       max: updateIntervalNodes.length.toDouble(),
       divisions: updateIntervalNodes.length * 20,

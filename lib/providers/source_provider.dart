@@ -622,8 +622,11 @@ Future<List<MapEntry<String, String>>> filterApksByArch(
   if (apkUrls.length > 1) {
     var abis = (await DeviceInfoPlugin().androidInfo).supportedAbis;
     for (var abi in abis) {
+      // More precise matching: look for ABI as a separate component in filename
+      // Matches patterns like: arm64-v8a, _arm64-v8a, -arm64-v8a, arm64-v8a.apk
+      var abiPattern = RegExp(r'[-_\.]?' + RegExp.escape(abi) + r'[-_\.]');
       var urls2 = apkUrls
-          .where((element) => RegExp('.*$abi.*').hasMatch(element.key))
+          .where((element) => abiPattern.hasMatch(element.key))
           .toList();
       if (urls2.isNotEmpty && urls2.length < apkUrls.length) {
         apkUrls = urls2;

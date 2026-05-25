@@ -1140,7 +1140,18 @@ class AppsProvider with ChangeNotifier {
       var manifestFile = File('${extractedDir.path}/manifest.json');
       if (manifestFile.existsSync()) {
         var manifestContent = manifestFile.readAsStringSync();
-        return jsonDecode(manifestContent) as Map<String, dynamic>;
+        var manifest = jsonDecode(manifestContent) as Map<String, dynamic>;
+
+        // Validate manifest structure
+        if (manifest.containsKey('split_apks')) {
+          // Ensure split_apks is a list
+          if (manifest['split_apks'] is! List) {
+            logs.add('Invalid XAPK manifest: split_apks is not a list');
+            return null;
+          }
+        }
+
+        return manifest;
       }
     } catch (e) {
       logs.add('Failed to parse XAPK manifest: ${e.toString()}');
@@ -1154,6 +1165,21 @@ class AppsProvider with ChangeNotifier {
     return androidInfo.supportedAbis;
   }
 
+  // Get device display density bucket (e.g., mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)
+  String getDeviceDensityBucket() {
+    // Get device pixel ratio from Flutter
+    final pixelRatio =
+        WidgetsBinding.instance.platformDispatcher.views.first.devicePixelRatio;
+
+    // Map pixel ratio to density buckets
+    if (pixelRatio < 1.0) return 'ldpi';
+    if (pixelRatio < 1.5) return 'mdpi';
+    if (pixelRatio < 2.0) return 'hdpi';
+    if (pixelRatio < 3.0) return 'xhdpi';
+    if (pixelRatio < 4.0) return 'xxhdpi';
+    return 'xxxhdpi';
+  }
+
   // Filter APKs based on device architecture
   Future<List<File>> filterApksByArchitecture(List<File> apkFiles) async {
     if (apkFiles.isEmpty) return apkFiles;
@@ -1163,9 +1189,14 @@ class AppsProvider with ChangeNotifier {
 
     // Try to match APKs with device ABI in order of preference
     for (var abi in deviceAbis) {
+      // More precise matching: look for ABI as a separate component in filename
+      // Matches patterns like: arm64-v8a, _arm64-v8a, -arm64-v8a, arm64-v8a.apk
+      var abiPattern = RegExp(
+        r'[-_\.]?' + RegExp.escape(abi.toLowerCase()) + r'[-_\.]',
+      );
       var matchingApks = apkFiles.where((file) {
         var fileName = file.uri.pathSegments.last.toLowerCase();
-        return fileName.contains(abi.toLowerCase());
+        return abiPattern.hasMatch(fileName);
       }).toList();
 
       if (matchingApks.isNotEmpty) {
@@ -1179,7 +1210,46 @@ class AppsProvider with ChangeNotifier {
       return apkFiles;
     }
 
+    // Apply density filtering if multiple APKs remain (for bundled APKs)
+    if (filteredApks.length > 1) {
+      filteredApks = await _filterByDensity(filteredApks);
+    }
+
     return filteredApks;
+  }
+
+  // Filter APKs by device display density (for bundled APKs with density splits)
+  Future<List<File>> _filterByDensity(List<File> apkFiles) async {
+    var deviceDensity = getDeviceDensityBucket();
+
+    // Density buckets in order of preference (fallback to lower density if exact match not found)
+    var densityBuckets = [
+      'xxxhdpi',
+      'xxhdpi',
+      'xhdpi',
+      'hdpi',
+      'mdpi',
+      'ldpi',
+      'nodpi',
+    ];
+    var deviceIndex = densityBuckets.indexOf(deviceDensity);
+
+    // Try to find APKs matching device density or lower
+    for (var i = deviceIndex; i < densityBuckets.length; i++) {
+      var density = densityBuckets[i];
+      var densityPattern = RegExp(r'[-_\.]?' + density + r'[-_\.]');
+      var matchingApks = apkFiles.where((file) {
+        var fileName = file.uri.pathSegments.last.toLowerCase();
+        return densityPattern.hasMatch(fileName);
+      }).toList();
+
+      if (matchingApks.isNotEmpty) {
+        return matchingApks;
+      }
+    }
+
+    // If no density-specific APKs found, return all APKs
+    return apkFiles;
   }
 
   // Select appropriate APKs for installation from XAPK
@@ -1207,18 +1277,89 @@ class AppsProvider with ChangeNotifier {
 
     // If manifest exists, use it for intelligent selection
     if (manifest != null && manifest.containsKey('split_apks')) {
-      // Filter APKs by device architecture
-      var filteredApks = await filterApksByArchitecture(
-        baseApk != null ? [baseApk, ...otherApks] : otherApks,
-      );
+      var splitApks = manifest['split_apks'] as List;
 
-      // If base APK was found, ensure it's first
-      if (baseApk != null && filteredApks.contains(baseApk)) {
-        filteredApks.remove(baseApk);
-        filteredApks.insert(0, baseApk);
+      // Build a map of APK files by their names for quick lookup
+      var apkMap = <String, File>{};
+      for (var apk in apkFiles) {
+        apkMap[apk.uri.pathSegments.last] = apk;
       }
 
-      return filteredApks;
+      // Select splits based on manifest and device capabilities
+      List<File> selectedApks = [];
+
+      // Always include base APK if found
+      if (baseApk != null) {
+        selectedApks.add(baseApk);
+      }
+
+      // Select architecture-specific splits
+      var deviceAbis = await getDeviceAbis();
+      var deviceDensity = getDeviceDensityBucket();
+
+      int matchedSplits = 0;
+      int missingSplits = 0;
+
+      for (var split in splitApks) {
+        if (split is Map<String, dynamic>) {
+          var splitFile = split['file'] as String?;
+          var splitAbi = split['abi'] as String?;
+          var splitDensity = split['density'] as String?;
+
+          if (splitFile != null) {
+            if (apkMap.containsKey(splitFile)) {
+              var apk = apkMap[splitFile]!;
+
+              // Check if this split matches device capabilities
+              bool matchesAbi =
+                  splitAbi == null || deviceAbis.contains(splitAbi);
+              bool matchesDensity =
+                  splitDensity == null ||
+                  splitDensity == deviceDensity ||
+                  splitDensity == 'nodpi';
+
+              if (matchesAbi && matchesDensity) {
+                if (!selectedApks.contains(apk)) {
+                  selectedApks.add(apk);
+                  matchedSplits++;
+                }
+              }
+            } else {
+              missingSplits++;
+            }
+          }
+        }
+      }
+
+      // Log warnings for incomplete bundles
+      if (missingSplits > 0) {
+        logs.add(
+          'Warning: XAPK bundle is incomplete - $missingSplits split(s) referenced in manifest are missing',
+        );
+      }
+
+      // If manifest-based selection failed or returned too few APKs, fallback to filename-based filtering
+      if (selectedApks.length < 2) {
+        logs.add(
+          'Manifest-based selection returned insufficient APKs, falling back to filename-based filtering',
+        );
+        var filteredApks = await filterApksByArchitecture(
+          baseApk != null ? [baseApk, ...otherApks] : otherApks,
+        );
+
+        // If base APK was found, ensure it's first
+        if (baseApk != null && filteredApks.contains(baseApk)) {
+          filteredApks.remove(baseApk);
+          filteredApks.insert(0, baseApk);
+        }
+
+        return filteredApks;
+      }
+
+      logs.add(
+        'Selected $matchedSplits split APK(s) from manifest for device ABI $deviceAbis and density $deviceDensity',
+      );
+      return selectedApks;
     }
 
     // Fallback: use architecture filtering without manifest
