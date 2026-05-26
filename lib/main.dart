@@ -55,7 +55,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
     Locale('en', 'EO'),
     'Esperanto',
   ), // https://github.com/aissat/easy_localization/issues/220#issuecomment-846035493
-  MapEntry(Locale('in'), 'Bahasa Indonesia'),
+  MapEntry(Locale('id'), 'Bahasa Indonesia'),
   MapEntry(Locale('ko'), '한국어'),
   MapEntry(Locale('ca'), 'Català'),
   MapEntry(Locale('ar'), 'العربية'),
@@ -352,9 +352,9 @@ class _UpdatiumState extends State<Updatium> {
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
-    AppsProvider appsProvider = context.read<AppsProvider>();
-    LogsProvider logs = context.read<LogsProvider>();
-    NotificationsProvider notifs = context.read<NotificationsProvider>();
+    AppsProvider appsProvider = context.watch<AppsProvider>();
+    LogsProvider logs = context.watch<LogsProvider>();
+    NotificationsProvider notifs = context.watch<NotificationsProvider>();
 
     // Toggle between Foreground Service and Background Fetch
     if (settingsProvider.updateInterval == 0) {

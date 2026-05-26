@@ -1419,7 +1419,7 @@ class _LogsDialogState extends State<LogsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var logsProvider = context.read<LogsProvider>();
+    var logsProvider = context.watch<LogsProvider>();
     void filterLogs(int days) {
       logsProvider
           .get(after: DateTime.now().subtract(Duration(days: days)))
