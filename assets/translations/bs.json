@@ -425,7 +425,7 @@
     },
     "minute": {
         "one": "{count} minuta",
-        "other": "min."
+        "other": "{count} min."
     },
     "hour": {
         "one": "{count} sat",
@@ -448,8 +448,8 @@
         "other": "{app} i još {count} aplikacija je ažurirano."
     },
     "xAndNMoreUpdatesFailed": {
-        "one": "Failed to update {app} and 1 more app.",
-        "other": "Failed to update {app} and {count} more apps."
+        "one": "Neuspješno ažuriranje {app} i još 1 aplikacije.",
+        "other": "Neuspješno ažuriranje {app} i još {count} aplikacija."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} i još jedna aplikacija je vjerovatno ažurirana.",

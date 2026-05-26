@@ -449,7 +449,7 @@
     },
     "xAndNMoreUpdatesFailed": {
         "one": "{app} và 1 ứng dụng khác đã cập nhật không thành công.",
-        "other": "{app} và {count} ứng dụng khác đã cập nhật không thảnh công."
+        "other": "{app} và {count} ứng dụng khác đã cập nhật không thành công."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} và 1 ứng dụng khác có thể đã được cập nhật.",

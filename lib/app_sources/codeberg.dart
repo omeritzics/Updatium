@@ -1,15 +1,15 @@
+import 'package:updatium/app_sources/gitea.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
-import 'dart:convert';
 
 class Codeberg extends AppSource {
-  Codeberg() {
+  Gitea() {
     name = t('codeberg');
     hosts = ['codeberg.org'];
     additionalSourceAppSpecificSettingFormItems =
-        Codeberg().additionalSourceAppSpecificSettingFormItems;
+        Gitea().additionalSourceAppSpecificSettingFormItems;
     canSearch = true;
-    searchQuerySettingFormItems = Codeberg().searchQuerySettingFormItems;
+    searchQuerySettingFormItems = Gitea().searchQuerySettingFormItems;
     openSource = true;
   }
   @override
@@ -30,7 +30,7 @@ class Codeberg extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    return await Codeberg().getLatestAPKDetails(
+    return await Gitea().getLatestAPKDetails(
       standardUrl,
       additionalSettings,
     );
@@ -58,7 +58,7 @@ class Codeberg extends AppSource {
         var path = match.group(1)!;
         var fullUrl = 'https://codeberg.org/$path';
         var name = path.split('/').last;
-        urls[fullUrl] = [path, ''];
+        urls[fullUrl] = [path, name];
       }
       return urls;
     } else {

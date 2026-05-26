@@ -453,7 +453,7 @@
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} en nog 1 app zijn mogelijk bijgewerkt.",
-        "other": "{app} en nog {count} apps zijn mogelijk bijgwerkt."
+        "other": "{app} en nog {count} apps zijn mogelijk bijgewerkt."
     },
     "apk": {
         "one": "{count} APK",
