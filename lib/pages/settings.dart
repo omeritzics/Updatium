@@ -1,13 +1,11 @@
 import 'dart:async';
 
-import 'package:button_group_m3e/button_group_m3e.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:slider_m3e/slider_m3e.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/category_chip.dart';
@@ -60,7 +58,6 @@ class _SettingsPageState extends State<SettingsPage> {
     43200,
   ];
   int updateInterval = 0;
-  int _selectedThemeIndex = 0;
   late SplineInterpolation updateIntervalInterpolator;
   String updateIntervalLabel = t('neverManualOnly');
   bool showIntervalLabel = true;
@@ -131,9 +128,6 @@ class _SettingsPageState extends State<SettingsPage> {
     });
     // Clean up unused controllers on initialization
     _cleanupUnusedControllers();
-    // Initialize theme selection index
-    final settingsProvider = context.read<SettingsProvider>();
-    _selectedThemeIndex = settingsProvider.theme.index;
   }
 
   @override
@@ -401,7 +395,8 @@ class _SettingsPageState extends State<SettingsPage> {
       },
     );
 
-    var intervalSlider = SliderM3E(
+    var intervalSlider = Slider(
+      year2023: false,
       value: settingsProvider.updateIntervalSliderVal,
       max: updateIntervalNodes.length.toDouble(),
       divisions: updateIntervalNodes.length * 20,
@@ -1117,51 +1112,37 @@ class _SettingsPageState extends State<SettingsPage> {
                           childrenPadding: const EdgeInsets.all(16),
                           children: [
                             gap16,
-                            ButtonGroupM3E(
-                              actions: [
-                                ButtonGroupM3EAction(
-                                  label: Text(t('followSystem')),
-                                  toggleable: true,
-                                  selected: _selectedThemeIndex == 0,
-                                  onSelectedChange: (selected) {
-                                    if (selected) {
-                                      setState(() {
-                                        _selectedThemeIndex = 0;
-                                        settingsProvider.theme =
-                                            ThemeSettings.system;
-                                      });
-                                    }
-                                  },
-                                ),
-                                ButtonGroupM3EAction(
-                                  label: Text(t('light')),
-                                  toggleable: true,
-                                  selected: _selectedThemeIndex == 1,
-                                  onSelectedChange: (selected) {
-                                    if (selected) {
-                                      setState(() {
-                                        _selectedThemeIndex = 1;
-                                        settingsProvider.theme =
-                                            ThemeSettings.light;
-                                      });
-                                    }
-                                  },
-                                ),
-                                ButtonGroupM3EAction(
-                                  label: Text(t('dark')),
-                                  toggleable: true,
-                                  selected: _selectedThemeIndex == 2,
-                                  onSelectedChange: (selected) {
-                                    if (selected) {
-                                      setState(() {
-                                        _selectedThemeIndex = 2;
-                                        settingsProvider.theme =
-                                            ThemeSettings.dark;
-                                      });
-                                    }
-                                  },
-                                ),
+                            GeneratedForm(
+                              items: [
+                                [
+                                  GeneratedFormDropdown(
+                                    'theme',
+                                    [
+                                          const MapEntry(
+                                            'system',
+                                            'followSystem',
+                                          ),
+                                          const MapEntry('light', 'light'),
+                                          const MapEntry('dark', 'dark'),
+                                        ]
+                                        .map(
+                                          (e) => MapEntry(e.key, tr(e.value)),
+                                        )
+                                        .toList(),
+                                    label: t('theme'),
+                                    defaultValue: settingsProvider.theme.name,
+                                    required: true,
+                                  ),
+                                ],
                               ],
+                              onValueChanges: (values, valid, isBuilding) {
+                                if (!isBuilding && valid) {
+                                  settingsProvider.theme = ThemeSettings.values
+                                      .firstWhere(
+                                        (e) => e.name == values['theme'],
+                                      );
+                                }
+                              },
                             ),
                             gap8,
                             if (settingsProvider.theme == ThemeSettings.system)
