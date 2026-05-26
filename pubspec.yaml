@@ -39,30 +39,30 @@ dependencies:
   http: ^1.6.0
   material_color_utilities: ^0.13.0
   html: ^0.15.6
-  shared_preferences: ^2.5.4
+  shared_preferences: ^2.5.5
   url_launcher: ^6.3.2
   permission_handler: ^12.0.1
-  fluttertoast: ^9.0.0
+  fluttertoast: ^9.1.0
   device_info_plus: ^13.1.0
   package_info_plus: ^10.1.0
-  animations: ^2.1.1
+  animations: ^2.2.0
   android_package_installer: ^0.0.3
   android_package_manager: ^0.7.1
   share_plus: ^13.1.0
-  sqflite: ^2.4.2
+  sqflite: ^2.4.2+1
   simple_localization:
     git:
       url: https://github.com/omeritzics/simple_localization
       ref: develop
   android_intent_plus: ^6.0.0
   flutter_archive: ^6.0.4
-  hsluv: any
-  connectivity_plus: ^7.0.0
+  hsluv: ^1.1.3
+  connectivity_plus: ^7.1.1
   docman: ^1.2.0
   crypto: ^3.0.7
   bcrypt: ^1.2.0
   app_links: ^7.0.0
-  background_fetch: ^1.5.0
+  background_fetch: ^1.7.0
   equations: ^6.0.0
   flex_color_picker: ^3.8.0
   android_system_font:
@@ -73,14 +73,14 @@ dependencies:
     git:
       url: https://github.com/re7gog/shizuku_apk_installer
       ref: master
-  markdown: ^7.3.0
+  markdown: ^7.3.1
   flutter_typeahead: ^6.0.0
   battery_plus: ^7.0.0
   flutter_charset_detector: ^5.0.0
-  pubspec_parse: ^1.4.0
+  pubspec_parse: ^1.5.0
   m3_floating_toolbar: ^0.1.0
-  dns_client: ^1.3.0
-  yaml: ^3.1.2
+  dns_client: ^1.3.1
+  yaml: ^3.1.3
   expressive_refresh: ^0.1.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -89,12 +89,12 @@ dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
-  flutter_foreground_task: ^9.2.0
+  flutter_foreground_task: ^9.2.2
   flutter_markdown_plus: ^1.0.7
-  path: any
+  path: ^1.9.1
   m3e_buttons: ^0.0.3
   progress_indicator_m3e: ^0.1.1
-  loading_indicator_m3e: ^0.1.0
+  loading_indicator_m3e: ^0.1.1
   dynamic_color: ^1.8.1
 flutter_launcher_icons:
   android: "ic_launcher"
