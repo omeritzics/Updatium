@@ -603,7 +603,7 @@ Future<PackageInfo?> getInstalledInfo(
       );
     } catch (e) {
       if (printErr) {
-        print(e); // OK
+        debugPrint(e.toString()); // OK
       }
     }
   }
@@ -672,13 +672,13 @@ class AppsProvider with ChangeNotifier {
         await loadApps();
         // Delete any partial APKs (if safe to do so)
         var cutoff = DateTime.now().subtract(const Duration(days: 7));
-        APKDir.listSync()
-            .where((element) => element.statSync().modified.isBefore(cutoff))
-            .forEach((partialApk) {
-              if (!areDownloadsRunning()) {
-                partialApk.delete(recursive: true);
-              }
-            });
+        var downloadsRunning = areDownloadsRunning();
+        for (var partialApk in APKDir.listSync()
+            .where((element) => element.statSync().modified.isBefore(cutoff))) {
+          if (!downloadsRunning) {
+            await partialApk.delete(recursive: true);
+          }
+        }
       }
     }();
   }
@@ -904,14 +904,14 @@ class AppsProvider with ChangeNotifier {
       } catch (e) {
         // Delete partial APK file if download was cancelled or failed
         if (downloadedFile != null && downloadedFile.existsSync()) {
-          downloadedFile.deleteSync();
+          await downloadedFile.delete();
         }
         // Also delete .part file if exists
         var partFile = File(
           '${APKDir.path}/$fileNameNoExt${source.urlsAlwaysHaveExtension ? '' : '.$ext'}.part',
         );
         if (partFile.existsSync()) {
-          partFile.deleteSync();
+          await partFile.delete();
         }
         rethrow;
       }
@@ -1010,7 +1010,7 @@ class AppsProvider with ChangeNotifier {
         }
       }
       if (newInfo == null) {
-        downloadedFile.delete();
+        await downloadedFile.delete();
         throw UpdatiumError('Could not get ID from APK');
       }
       downloadedFile = await handleAPKIDChange(
@@ -1025,7 +1025,7 @@ class AppsProvider with ChangeNotifier {
         if (fn.startsWith('${app.id}-') &&
             FileSystemEntity.isFileSync(file.path) &&
             file.path != downloadedFile.path) {
-          file.delete(recursive: true);
+          await file.delete(recursive: true);
         }
       }
       if (isAPK) {
@@ -1433,7 +1433,7 @@ class AppsProvider with ChangeNotifier {
         );
         somethingInstalled = somethingInstalled || wasInstalled;
         if (forceDelete) {
-          dir.file.delete(recursive: true);
+          await dir.file.delete(recursive: true);
         }
       } catch (e) {
         logs.add('Could not install APKs from ${dir.type}: ${e.toString()}');
@@ -1443,7 +1443,7 @@ class AppsProvider with ChangeNotifier {
         throw errors;
       }
     } finally {
-      dir.extracted.delete(recursive: true);
+      await dir.extracted.delete(recursive: true);
     }
     return somethingInstalled;
   }
@@ -1519,7 +1519,7 @@ class AppsProvider with ChangeNotifier {
       apps[file.appId]!.app.installedVersion =
           apps[file.appId]!.app.latestVersion;
       if (forceDelete) {
-        file.file.delete(recursive: true);
+        await file.file.delete(recursive: true);
       }
     }
     await saveApps([apps[file.appId]!.app]);
