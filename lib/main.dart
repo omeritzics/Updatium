@@ -168,11 +168,17 @@ void main() async {
   await SimpleLocalization.ensureInitialized();
 
   // Enable edge-to-edge mode for Android 10+ (API 29)
-  if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent),
-    );
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  try {
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    if (androidInfo.version.sdkInt >= 29) {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent),
+      );
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    }
+  } catch (e) {
+    // Not on Android or DeviceInfoPlugin failed - skip edge-to-edge setup
+    debugPrint('Could not enable edge-to-edge mode: $e');
   }
 
   final np = NotificationsProvider();

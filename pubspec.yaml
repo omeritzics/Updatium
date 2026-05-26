@@ -98,7 +98,9 @@ dependencies:
   dynamic_color: ^1.8.1
 flutter_launcher_icons:
   android: "ic_launcher"
+  adaptive_icon_background: "#ffffff"
   image_path: "assets/graphics/icon.png"
+  adaptive_icon_foreground: "assets/graphics/icon-foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
