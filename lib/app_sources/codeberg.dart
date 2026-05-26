@@ -1,6 +1,5 @@
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
-import 'dart:convert';
 
 class Codeberg extends AppSource {
   Codeberg() {
