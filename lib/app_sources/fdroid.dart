@@ -78,62 +78,75 @@ class FDroid extends AppSource {
       additionalSettings,
       standardUrl,
     );
-    if (!hostChanged) {
-      try {
-        var res = await sourceRequest(
-          'https://gitlab.com/fdroid/fdroiddata/-/raw/master/metadata/$appId.yml',
-          additionalSettings,
-        );
-        var lines = res.body.split('\n');
-        var authorLines = lines.where((l) => l.startsWith('AuthorName: '));
-        if (authorLines.isNotEmpty) {
-          details.names.author = authorLines.first
-              .split(': ')
-              .sublist(1)
-              .join(': ');
+    // Try to fetch author from F-Droid package page
+    try {
+      var res = await sourceRequest(
+        'https://$host/packages/$appId',
+        additionalSettings,
+      );
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        var body = parse(res.body);
+        var authorElement = body.querySelector('a[href^="mailto:"]');
+        if (authorElement != null) {
+          var authorText = authorElement.text.trim();
+          if (authorText.isNotEmpty) {
+            details.names.author = authorText;
+          }
         }
+      }
+    } catch (e) {
+      // Fail silently, keep fallback author
+    }
+    // Try to fetch changelog from GitLab metadata
+    try {
+      var res = await sourceRequest(
+        'https://gitlab.com/fdroid/fdroiddata/-/raw/master/metadata/$appId.yml',
+        additionalSettings,
+      );
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        var lines = res.body.split('\n');
         var changelogUrls = lines
             .where((l) => l.startsWith('Changelog: '))
             .map((e) => e.split(' ').sublist(1).join(' '));
         if (changelogUrls.isNotEmpty) {
           details.changeLog = changelogUrls.first;
-          bool isGitHub = false;
-          bool isGitLab = false;
+        bool isGitHub = false;
+        bool isGitLab = false;
+        try {
+          GitHub(
+            hostChanged: true,
+          ).sourceSpecificStandardizeURL(details.changeLog!);
+          isGitHub = true;
+        } catch (e) {
+          //
+        }
+        try {
+          GitLab(
+            hostChanged: true,
+          ).sourceSpecificStandardizeURL(details.changeLog!);
+          isGitLab = true;
+        } catch (e) {
+          //
+        }
+        if ((isGitHub || isGitLab) &&
+            (details.changeLog?.indexOf('/blob/') ?? -1) >= 0) {
           try {
-            GitHub(
-              hostChanged: true,
-            ).sourceSpecificStandardizeURL(details.changeLog!);
-            isGitHub = true;
+            details.changeLog = (await sourceRequest(
+              details.changeLog!.replaceFirst('/blob/', '/raw/'),
+              additionalSettings,
+            )).body;
           } catch (e) {
-            //
-          }
-          try {
-            GitLab(
-              hostChanged: true,
-            ).sourceSpecificStandardizeURL(details.changeLog!);
-            isGitLab = true;
-          } catch (e) {
-            //
-          }
-          if ((isGitHub || isGitLab) &&
-              (details.changeLog?.indexOf('/blob/') ?? -1) >= 0) {
-            try {
-              details.changeLog = (await sourceRequest(
-                details.changeLog!.replaceFirst('/blob/', '/raw/'),
-                additionalSettings,
-              )).body;
-            } catch (e) {
-              // Fail silently
-            }
+            // Fail silently
           }
         }
-        if ((details.changeLog?.length ?? 0) > 2048) {
-          details.changeLog = '${details.changeLog!.substring(0, 2048)}...';
-        }
-      } catch (e) {
-        // Fail silently
+      }
+      if ((details.changeLog?.length ?? 0) > 2048) {
+        details.changeLog = '${details.changeLog!.substring(0, 2048)}...';
       }
     }
+  } catch (e) {
+    // Fail silently, keep fallback changelog
+  }
     return details;
   }
 
