@@ -17,6 +17,8 @@ import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
+
+import 'package:kurdish_localization_plus/flutter_kurdish_localization.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:simple_localization/src/simple_localization_controller.dart';
 import 'package:simple_localization/src/localization.dart';
