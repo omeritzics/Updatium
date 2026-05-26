@@ -356,7 +356,8 @@ class NotificationsProvider {
           channelName,
           channelDescription: channelDescription,
           importance: importance,
-          priority: importanceToPriority[importance] ?? Priority.defaultPriority,
+          priority:
+              importanceToPriority[importance] ?? Priority.defaultPriority,
           groupKey: '$updatiumId.$channelCode',
           progress: progPercent ?? 0,
           maxProgress: 100,

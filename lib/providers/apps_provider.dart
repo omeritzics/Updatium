@@ -673,8 +673,9 @@ class AppsProvider with ChangeNotifier {
         // Delete any partial APKs (if safe to do so)
         var cutoff = DateTime.now().subtract(const Duration(days: 7));
         var downloadsRunning = areDownloadsRunning();
-        for (var partialApk in APKDir.listSync()
-            .where((element) => element.statSync().modified.isBefore(cutoff))) {
+        for (var partialApk in APKDir.listSync().where(
+          (element) => element.statSync().modified.isBefore(cutoff),
+        )) {
           if (!downloadsRunning) {
             await partialApk.delete(recursive: true);
           }

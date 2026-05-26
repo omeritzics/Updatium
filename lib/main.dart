@@ -172,7 +172,9 @@ void main() async {
     final androidInfo = await DeviceInfoPlugin().androidInfo;
     if (androidInfo.version.sdkInt >= 29) {
       SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent),
+        const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.transparent,
+        ),
       );
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     }
