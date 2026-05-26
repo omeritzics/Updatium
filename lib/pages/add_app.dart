@@ -875,7 +875,7 @@ class AddAppPageState extends State<AddAppPage> {
           onPressed: () async {
             final installedApps = await getAllInstalledInfo();
             if (!context.mounted) return;
-            
+
             showDialog(
               context: context,
               builder: (BuildContext ctx) {
@@ -891,7 +891,12 @@ class AddAppPageState extends State<AddAppPage> {
                       itemBuilder: (context, index) {
                         final app = installedApps[index];
                         return FutureBuilder<String>(
-                          future: app.applicationInfo?.getAppLabel().then((label) => label ?? app.packageName ?? 'Unknown') ?? Future.value(app.packageName ?? 'Unknown'),
+                          future:
+                              app.applicationInfo?.getAppLabel().then(
+                                (label) =>
+                                    label ?? app.packageName ?? 'Unknown',
+                              ) ??
+                              Future.value(app.packageName ?? 'Unknown'),
                           builder: (context, snapshot) {
                             final appName = snapshot.data ?? 'Unknown';
                             return ListTile(
@@ -901,7 +906,11 @@ class AddAppPageState extends State<AddAppPage> {
                               onTap: () {
                                 Navigator.of(ctx).pop();
                                 // Pre-fill the URL input with the package name
-                                changeUserInput(app.packageName ?? '', true, false);
+                                changeUserInput(
+                                  app.packageName ?? '',
+                                  true,
+                                  false,
+                                );
                               },
                             );
                           },
