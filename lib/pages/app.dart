@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
@@ -52,10 +53,50 @@ class _AppPageState extends State<AppPage> {
   bool updating = false;
   bool _iconRequested = false;
   Future<void>? _iconFuture;
+  int? _apkFileSize;
 
   @override
   void initState() {
     super.initState();
+    // Fetch APK file size when the app is loaded
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _fetchApkFileSize();
+    });
+  }
+
+  Future<void> _fetchApkFileSize() async {
+    var appsProvider = context.read<AppsProvider>();
+    AppInMemory? app = appsProvider.apps[widget.appId];
+    if (app != null && app.app.apkUrls.isNotEmpty) {
+      final size = await getApkFileSize(app.app.apkUrls[0].value);
+      if (mounted) {
+        setState(() {
+          _apkFileSize = size;
+        });
+      }
+    }
+  }
+
+  Future<int?> getApkFileSize(String url) async {
+    try {
+      final response = await http.head(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final contentLength = response.headers['content-length'];
+        if (contentLength != null) {
+          return int.tryParse(contentLength);
+        }
+      }
+    } catch (e) {
+      // Ignore errors, file size will just not be displayed
+    }
+    return null;
+  }
+
+  String formatFileSize(int bytes) {
+    if (bytes < 1024) return '$bytes B';
+    if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)} KB';
+    if (bytes < 1024 * 1024 * 1024) return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
+    return '${(bytes / (1024 * 1024 * 1024)).toStringAsFixed(1)} GB';
   }
 
   Future<void> getUpdate(String id, {bool resetVersion = false}) async {
@@ -169,6 +210,9 @@ class _AppPageState extends State<AppPage> {
       if (app.app.apkUrls.isNotEmpty) {
         infoLines =
             '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : plural('apk', app.app.apkUrls.length)}';
+      }
+      if (_apkFileSize != null) {
+        infoLines = '$infoLines\n${t('fileSize')}: ${formatFileSize(_apkFileSize!)}';
       }
       var changeLogFn = getChangeLogFn(context, app.app);
       return Column(
