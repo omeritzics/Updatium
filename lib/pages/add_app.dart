@@ -870,6 +870,62 @@ class AddAppPageState extends State<AddAppPage> {
             padding: EdgeInsets.zero,
           ),
         ),
+        horizontalGap8,
+        TextButton.icon(
+          onPressed: () async {
+            final installedApps = await getAllInstalledInfo();
+            if (!context.mounted) return;
+            
+            showDialog(
+              context: context,
+              builder: (BuildContext ctx) {
+                return AlertDialog(
+                  scrollable: true,
+                  contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+                  title: Text(t('installedApps')),
+                  content: SizedBox(
+                    width: double.maxFinite,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: installedApps.length,
+                      itemBuilder: (context, index) {
+                        final app = installedApps[index];
+                        return FutureBuilder<String>(
+                          future: app.applicationInfo?.getAppLabel().then((label) => label ?? app.packageName ?? 'Unknown') ?? Future.value(app.packageName ?? 'Unknown'),
+                          builder: (context, snapshot) {
+                            final appName = snapshot.data ?? 'Unknown';
+                            return ListTile(
+                              dense: true,
+                              title: Text(appName),
+                              subtitle: Text(app.packageName ?? ''),
+                              onTap: () {
+                                Navigator.of(ctx).pop();
+                                // Pre-fill the URL input with the package name
+                                changeUserInput(app.packageName ?? '', true, false);
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(),
+                      child: Text(t('ok')),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          icon: const Icon(Icons.apps, size: 18),
+          label: Text(t('installedApps')),
+          style: TextButton.styleFrom(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.zero,
+          ),
+        ),
       ],
     );
 
