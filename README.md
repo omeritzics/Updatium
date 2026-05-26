@@ -33,6 +33,7 @@ Based on Material Design 3 Expressive guidelines.
 - Grid View.
 - Safe Mode (allows you to block unwanted changes to the application catalogue).
 - Ability to use DNS-over-HTTP providers (Nightly builds only).
+- Editing basic app information after adding it (Nightly builds only).
 
 ### Localization
 
