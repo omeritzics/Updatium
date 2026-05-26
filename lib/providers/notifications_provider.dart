@@ -55,7 +55,7 @@ class UpdateNotification extends UpdatiumNotification {
         : plural(
             'xAndNMoreUpdatesAvailable',
             updates.length - 1,
-            namedArgs: {'app': updates[0].finalName},
+            args: [updates[0].finalName, (updates.length - 1).toString()],
           );
   }
 }
@@ -79,7 +79,7 @@ class SilentUpdateNotification extends UpdatiumNotification {
         : plural(
             succeeded ? 'xAndNMoreUpdatesInstalled' : "xAndNMoreUpdatesFailed",
             updates.length - 1,
-            namedArgs: {'app': updates[0].finalName},
+            args: [updates[0].finalName, (updates.length - 1).toString()],
           );
   }
 }
@@ -103,7 +103,7 @@ class SilentUpdateAttemptNotification extends UpdatiumNotification {
         : plural(
             'xAndNMoreUpdatesPossiblyInstalled',
             updates.length - 1,
-            namedArgs: {'app': updates[0].finalName},
+            args: [updates[0].finalName, (updates.length - 1).toString()],
           );
   }
 }
@@ -133,15 +133,11 @@ class AppsRemovedNotification extends UpdatiumNotification {
         t('appsRemovedNotifDescription'),
         Importance.max,
       ) {
-    if (namedReasons.isEmpty) {
-      message = t('appsRemoved');
-    } else {
-      message = '';
-      for (var r in namedReasons) {
-        message += '${t('xWasRemovedDueToErrorY', args: [r[0], r[1]])} \n';
-      }
-      message = message.trim();
+    message = '';
+    for (var r in namedReasons) {
+      message += '${t('xWasRemovedDueToErrorY', args: [r[0], r[1]])} \n';
     }
+    message = message.trim();
   }
 }
 
@@ -253,7 +249,7 @@ class NotificationsProvider {
   void _showDownloadedSnackbar(String filePath) {
     if (globalNavigatorKey.currentState?.context != null) {
       final context = globalNavigatorKey.currentState!.context;
-      final fileName = filePath.isEmpty ? '' : filePath.split('/').last;
+      final fileName = filePath.split('/').last;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(t('downloadedX', args: [fileName])),
@@ -295,9 +291,8 @@ class NotificationsProvider {
 
   void _showNotificationPayload(String? payload, {bool doublePop = false}) {
     if (payload?.isNotEmpty == true) {
-      var parts = payload!.split('\n');
-      var title = parts.isNotEmpty ? parts.first : '';
-      var content = parts.length > 1 ? parts.sublist(1).join('\n') : '';
+      var title = (payload ?? '\n\n').split('\n').first;
+      var content = (payload ?? '\n\n').split('\n').sublist(1).join('\n');
       globalNavigatorKey.currentState?.push(
         PageRouteBuilder(
           pageBuilder: (context, _, _) => AlertDialog(
@@ -356,8 +351,7 @@ class NotificationsProvider {
           channelName,
           channelDescription: channelDescription,
           importance: importance,
-          priority:
-              importanceToPriority[importance] ?? Priority.defaultPriority,
+          priority: importanceToPriority[importance]!,
           groupKey: '$updatiumId.$channelCode',
           progress: progPercent ?? 0,
           maxProgress: 100,
