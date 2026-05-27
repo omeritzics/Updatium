@@ -880,11 +880,11 @@ class AddAppPageState extends State<AddAppPage> {
               context: context,
               builder: (BuildContext ctx) {
                 return AlertDialog(
-                  scrollable: true,
                   contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
                   title: Text(t('installedApps')),
                   content: SizedBox(
                     width: double.maxFinite,
+                    height: MediaQuery.of(context).size.height * 0.6,
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: installedApps.length,
