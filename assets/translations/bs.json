@@ -425,7 +425,7 @@
     },
     "minute": {
         "one": "{count} minuta",
-        "other": "min."
+        "other": "{count} min."
     },
     "hour": {
         "one": "{count} sat",
