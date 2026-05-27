@@ -1,14 +1,15 @@
+import 'package:updatium/app_sources/gitea.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
 class Codeberg extends AppSource {
-  Codeberg() {
+  Gitea() {
     name = t('codeberg');
     hosts = ['codeberg.org'];
     additionalSourceAppSpecificSettingFormItems =
-        Codeberg().additionalSourceAppSpecificSettingFormItems;
+        Gitea().additionalSourceAppSpecificSettingFormItems;
     canSearch = true;
-    searchQuerySettingFormItems = Codeberg().searchQuerySettingFormItems;
+    searchQuerySettingFormItems = Gitea().searchQuerySettingFormItems;
     openSource = true;
   }
   @override
