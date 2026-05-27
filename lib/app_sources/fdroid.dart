@@ -79,59 +79,67 @@ class FDroid extends AppSource {
       standardUrl,
     );
     // Try to fetch author from GitLab metadata
-    try {
-      var res = await sourceRequest(
-        'https://gitlab.com/fdroid/fdroiddata/-/raw/master/metadata/$appId.yml',
-        additionalSettings,
-      );
-      var lines = res.body.split('\n');
-      var authorLines = lines.where((l) => l.startsWith('AuthorName: '));
-      if (authorLines.isNotEmpty) {
-        details.names.author = authorLines.first
-            .split(': ')
-            .sublist(1)
-            .join(': ');
-      }
-      var changelogUrls = lines
-          .where((l) => l.startsWith('Changelog: '))
-          .map((e) => e.split(' ').sublist(1).join(' '));
-      if (changelogUrls.isNotEmpty) {
-        details.changeLog = changelogUrls.first;
-        bool isGitHub = false;
-        bool isGitLab = false;
-        try {
-          GitHub(
-            hostChanged: true,
-          ).sourceSpecificStandardizeURL(details.changeLog!);
-          isGitHub = true;
-        } catch (e) {
-          //
+        // Try to fetch author from GitLab metadata
+    bool gitLabSuccess = false;
+    if (!hostChanged) {
+      try {
+        var res = await sourceRequest( 
+          'https://gitlab.com/fdroid/fdroiddata/-/raw/master/metadata/$appId.yml',
+          additionalSettings,
+        );
+        var lines = res.body.split('\n');
+        var authorLines = lines.where((l) => l.startsWith('AuthorName: '));
+        if (authorLines.isNotEmpty) {
+          details.names.author = authorLines.first
+              .split(': ')
+              .sublist(1)
+              .join(': ');
         }
-        try {
-          GitLab(
-            hostChanged: true,
-          ).sourceSpecificStandardizeURL(details.changeLog!);
-          isGitLab = true;
-        } catch (e) {
-          //
-        }
-        if ((isGitHub || isGitLab) &&
-            (details.changeLog?.indexOf('/blob/') ?? -1) >= 0) {
+        var changelogUrls = lines
+            .where((l) => l.startsWith('Changelog: '))
+            .map((e) => e.split(' ').sublist(1).join(' '));
+        if (changelogUrls.isNotEmpty) {
+          details.changeLog = changelogUrls.first;
+          bool isGitHub = false;
+          bool isGitLab = false;
           try {
-            details.changeLog = (await sourceRequest(
-              details.changeLog!.replaceFirst('/blob/', '/raw/'),
-              additionalSettings,
-            )).body;
+            GitHub(
+              hostChanged: true,
+            ).sourceSpecificStandardizeURL(details.changeLog!);
+            isGitHub = true;
           } catch (e) {
-            // Fail silently
+            //
+          }
+          try {
+            GitLab(
+              hostChanged: true,
+            ).sourceSpecificStandardizeURL(details.changeLog!);
+            isGitLab = true;
+          } catch (e) {
+            //
+          }
+          if ((isGitHub || isGitLab) &&
+              (details.changeLog?.indexOf('/blob/') ?? -1) >= 0) {
+            try {
+              details.changeLog = (await sourceRequest(
+                details.changeLog!.replaceFirst('/blob/', '/raw/'),
+                additionalSettings,
+              )).body;
+            } catch (e) {
+              // Fail silently
+            }
           }
         }
+        if ((details.changeLog?.length ?? 0) > 2048) {
+          details.changeLog = '${details.changeLog!.substring(0, 2048)}...';
+        }
+        gitLabSuccess = true;
+      } catch (e) {
+        // Fail silently
       }
-      if ((details.changeLog?.length ?? 0) > 2048) {
-        details.changeLog = '${details.changeLog!.substring(0, 2048)}...';
-      }
-    } catch (e) {
-      // If GitLab metadata fails, try to fetch author from F-Droid web page
+    }
+    if (!gitLabSuccess) {
+      // If GitLab metadata fails or host changed, try to fetch author from F-Droid web page
       try {
         var res = await sourceRequest(
           'https://$host/packages/$appId',
@@ -149,8 +157,6 @@ class FDroid extends AppSource {
         // Fail silently, keep fallback author
       }
     }
-    return details;
-  }
 
   @override
   Future<Map<String, List<String>>> search(
