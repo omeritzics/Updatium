@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:android_system_font/android_system_font.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class NativeFeatures {
@@ -13,10 +14,17 @@ class NativeFeatures {
 
   static Future loadSystemFont() async {
     if (_systemFontLoaded) return;
-    var fontLoader = FontLoader('SystemFont');
-    var fontFilePath = await AndroidSystemFont().getFilePath();
-    fontLoader.addFont(_readFileBytes(fontFilePath!));
-    fontLoader.load();
-    _systemFontLoaded = true;
+    try {
+      var fontLoader = FontLoader('SystemFont');
+      var fontFilePath = await AndroidSystemFont().getFilePath();
+      if (fontFilePath != null) {
+        fontLoader.addFont(_readFileBytes(fontFilePath));
+        fontLoader.load();
+        _systemFontLoaded = true;
+      }
+    } catch (e) {
+      // System font loading failed - app will use default font
+      debugPrint('Could not load system font: $e');
+    }
   }
 }
