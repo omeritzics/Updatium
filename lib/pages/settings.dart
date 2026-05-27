@@ -395,9 +395,7 @@ class _SettingsPageState extends State<SettingsPage> {
       },
     );
 
-    var intervalSlider = Slider(
-      year2023: false,
-      value: settingsProvider.updateIntervalSliderVal,
+    var intervalSlider = Slider(\n      value: settingsProvider.updateIntervalSliderVal,
       max: updateIntervalNodes.length.toDouble(),
       divisions: updateIntervalNodes.length * 20,
       label: updateIntervalLabel,
