@@ -1168,8 +1168,7 @@ class AppsProvider with ChangeNotifier {
   // Get device display density bucket (e.g., mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)
   String getDeviceDensityBucket() {
     // Get device pixel ratio from Flutter
-    final pixelRatio =
-        WidgetsBinding.instance.platformDispatcher.views.first.devicePixelRatio;
+    final views = WidgetsBinding.instance.platformDispatcher.views;\n    final pixelRatio = views.isNotEmpty ? views.first.devicePixelRatio : 2.0;
 
     // Map pixel ratio to density buckets
     if (pixelRatio < 1.0) return 'ldpi';
