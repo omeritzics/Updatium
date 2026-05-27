@@ -69,7 +69,11 @@ class _AppPageState extends State<AppPage> {
     var appsProvider = context.read<AppsProvider>();
     AppInMemory? app = appsProvider.apps[widget.appId];
     if (app != null && app.app.apkUrls.isNotEmpty) {
-      final idx = (app.app.preferredApkIndex >= 0 && app.app.preferredApkIndex < app.app.apkUrls.length) ? app.app.preferredApkIndex : 0;
+      final idx =
+          (app.app.preferredApkIndex >= 0 &&
+              app.app.preferredApkIndex < app.app.apkUrls.length)
+          ? app.app.preferredApkIndex
+          : 0;
       final size = await getApkFileSize(app.app.apkUrls[idx].value);
       if (mounted) {
         setState(() {
@@ -83,10 +87,9 @@ class _AppPageState extends State<AppPage> {
     try {
       final updatiumInfo = await getInstalledInfo(updatiumId, printErr: false);
       final userAgent = 'Updatium/${updatiumInfo?.versionName ?? '1.0.0'}';
-      final response = await http.head(
-        Uri.parse(url),
-        headers: {'User-Agent': userAgent},
-      ).timeout(const Duration(seconds: 5));
+      final response = await http
+          .head(Uri.parse(url), headers: {'User-Agent': userAgent})
+          .timeout(const Duration(seconds: 5));
       if (response.statusCode == 200) {
         final contentLength = response.headers['content-length'];
         if (contentLength != null) {

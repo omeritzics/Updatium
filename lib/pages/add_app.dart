@@ -139,7 +139,8 @@ class AddAppPageState extends State<AddAppPage> {
   Widget build(BuildContext context) {
     AppsProvider appsProvider = context.read<AppsProvider>();
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
-    NotificationsProvider notificationsProvider = context.read<NotificationsProvider>();
+    NotificationsProvider notificationsProvider = context
+        .read<NotificationsProvider>();
 
     bool doingSomething = gettingAppInfo || searching;
 
