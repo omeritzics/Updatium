@@ -29,10 +29,7 @@ class Codeberg extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    return await Codeberg().getLatestAPKDetails(
-      standardUrl,
-      additionalSettings,
-    );
+    return await Gitea().getLatestAPKDetails(\n      standardUrl,\n      additionalSettings,\n    );
   }
 
   AppNames getAppNames(String standardUrl) {
