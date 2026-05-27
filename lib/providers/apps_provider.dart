@@ -1191,9 +1191,7 @@ class AppsProvider with ChangeNotifier {
     for (var abi in deviceAbis) {
       // More precise matching: look for ABI as a separate component in filename
       // Matches patterns like: arm64-v8a, _arm64-v8a, -arm64-v8a, arm64-v8a.apk
-      var abiPattern = RegExp(
-        r'[-_\.]?' + RegExp.escape(abi.toLowerCase()) + r'[-_\.]',
-      );
+      var suffix = '';\n      if (abi.toLowerCase() == 'x86') {\n        suffix = r'(?!_?64)';\n      } else if (abi.toLowerCase() == 'armeabi') {\n        suffix = r'(?!-?v7a)';\n      }\n      var abiPattern = RegExp(\n        r'[-_\.]?' + RegExp.escape(abi.toLowerCase()) + suffix + r'[-_\.]',\n      );
       var matchingApks = apkFiles.where((file) {
         var fileName = file.uri.pathSegments.last.toLowerCase();
         return abiPattern.hasMatch(fileName);
