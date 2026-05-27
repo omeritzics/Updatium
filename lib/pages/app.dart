@@ -54,6 +54,7 @@ class _AppPageState extends State<AppPage> {
   bool _iconRequested = false;
   Future<void>? _iconFuture;
   int? _apkFileSize;
+  int? _prevPreferredApkIndex;
 
   @override
   void initState() {
@@ -68,7 +69,8 @@ class _AppPageState extends State<AppPage> {
     var appsProvider = context.read<AppsProvider>();
     AppInMemory? app = appsProvider.apps[widget.appId];
     if (app != null && app.app.apkUrls.isNotEmpty) {
-      final size = await getApkFileSize(app.app.apkUrls[0].value);
+      final idx = (app.app.preferredApkIndex >= 0 && app.app.preferredApkIndex < app.app.apkUrls.length) ? app.app.preferredApkIndex : 0;
+      final size = await getApkFileSize(app.app.apkUrls[idx].value);
       if (mounted) {
         setState(() {
           _apkFileSize = size;
@@ -141,6 +143,14 @@ class _AppPageState extends State<AppPage> {
             overrideSource: app.app.overrideSource,
           )
         : null;
+
+    // Refresh APK size when preferred APK index changes
+    if (app != null && _prevPreferredApkIndex != app.app.preferredApkIndex) {
+      _prevPreferredApkIndex = app.app.preferredApkIndex;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _fetchApkFileSize();
+      });
+    }
 
     // Handle null app case - show loading or error
     if (app == null) {
