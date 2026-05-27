@@ -474,7 +474,7 @@ class SettingsProvider with ChangeNotifier {
 
     // Use SAF directory picker to get content URI for DocumentFile
     try {
-      const platform = MethodChannel('io.github.omeritzics/updatium/saf');
+      const platform = MethodChannel('io.github.omeritzics.updatium/saf');
       final String? uri = await platform.invokeMethod('openDirectoryTree');
       if (uri != null) {
         prefs?.setString('exportDir', uri);

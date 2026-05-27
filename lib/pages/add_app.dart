@@ -139,8 +139,7 @@ class AddAppPageState extends State<AddAppPage> {
   Widget build(BuildContext context) {
     AppsProvider appsProvider = context.read<AppsProvider>();
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
-    NotificationsProvider notificationsProvider = context
-        .read<NotificationsProvider>();
+    NotificationsProvider notificationsProvider = context.read<NotificationsProvider>();
 
     bool doingSomething = gettingAppInfo || searching;
 
@@ -880,11 +879,11 @@ class AddAppPageState extends State<AddAppPage> {
               context: context,
               builder: (BuildContext ctx) {
                 return AlertDialog(
-                  scrollable: true,
                   contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
                   title: Text(t('installedApps')),
                   content: SizedBox(
                     width: double.maxFinite,
+                    height: MediaQuery.of(context).size.height * 0.6,
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: installedApps.length,

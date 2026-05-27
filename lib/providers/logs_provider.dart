@@ -49,7 +49,7 @@ class Log {
   }
 }
 
-class LogsProvider {
+class LogsProvider extends ChangeNotifier {
   LogsProvider({bool runDefaultClear = true}) {
     clear(before: DateTime.now().subtract(const Duration(days: 7)));
   }
@@ -92,6 +92,7 @@ create table if not exists $logTable (
     if (kDebugMode) {
       print(l);
     }
+    notifyListeners();
     return l;
   }
 
@@ -137,6 +138,7 @@ create table if not exists $logTable (
         ),
       );
     }
+    notifyListeners();
     return res;
   }
 }

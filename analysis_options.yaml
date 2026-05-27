@@ -12,7 +12,6 @@ analyzer:
     constant_identifier_names: ignore
     file_names: ignore
     non_constant_identifier_names: ignore
-    use_build_context_synchronously: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:

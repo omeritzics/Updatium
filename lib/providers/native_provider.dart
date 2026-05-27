@@ -14,12 +14,17 @@ class NativeFeatures {
 
   static Future loadSystemFont() async {
     if (_systemFontLoaded) return;
+    // Only attempt on Android platform
+    if (!Platform.isAndroid) {
+      _systemFontLoaded = true;
+      return;
+    }
     try {
       var fontLoader = FontLoader('SystemFont');
       var fontFilePath = await AndroidSystemFont().getFilePath();
       if (fontFilePath != null) {
         fontLoader.addFont(_readFileBytes(fontFilePath));
-        fontLoader.load();
+        await fontLoader.load();
         _systemFontLoaded = true;
       }
     } catch (e) {
