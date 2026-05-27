@@ -910,6 +910,7 @@ class AddAppPageState extends State<AddAppPage> {
                                   app.packageName ?? '',
                                   true,
                                   false,
+                                  updateUrlInput: true,
                                 );
                               },
                             );
