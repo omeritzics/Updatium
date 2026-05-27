@@ -194,7 +194,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => AppsProvider()),
         ChangeNotifierProvider(create: (context) => SettingsProvider()),
         Provider(create: (context) => np),
-        Provider(create: (context) => LogsProvider()),
+        ChangeNotifierProvider(create: (context) => LogsProvider()),
       ],
       child: SimpleLocalization(
         supportedLocales: supportedLocales.map((e) => e.key).toList(),
