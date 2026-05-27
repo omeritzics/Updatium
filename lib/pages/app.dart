@@ -65,8 +65,7 @@ class _AppPageState extends State<AppPage> {
     });
   }
 
-  Future<void> _fetchApkFileSize() async {
-    var appsProvider = context.read<AppsProvider>();
+  Future<void> _fetchApkFileSize() async {\n    if (!mounted) return;\n    var appsProvider = context.read<AppsProvider>();
     AppInMemory? app = appsProvider.apps[widget.appId];
     if (app != null && app.app.apkUrls.isNotEmpty) {
       final idx =
