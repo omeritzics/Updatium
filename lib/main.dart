@@ -352,9 +352,9 @@ class _UpdatiumState extends State<Updatium> {
   @override
   Widget build(BuildContext context) {
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
-    AppsProvider appsProvider = context.watch<AppsProvider>();
-    LogsProvider logs = context.watch<LogsProvider>();
-    NotificationsProvider notifs = context.watch<NotificationsProvider>();
+    AppsProvider appsProvider = context.read<AppsProvider>();
+    LogsProvider logs = context.read<LogsProvider>();
+    NotificationsProvider notifs = context.read<NotificationsProvider>();
 
     // Toggle between Foreground Service and Background Fetch
     if (settingsProvider.updateInterval == 0) {
