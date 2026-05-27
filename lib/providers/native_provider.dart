@@ -24,13 +24,12 @@ class NativeFeatures {
       var fontFilePath = await AndroidSystemFont().getFilePath();
       if (fontFilePath != null) {
         fontLoader.addFont(_readFileBytes(fontFilePath));
-        fontLoader.load();
+        await fontLoader.load();
+        _systemFontLoaded = true;
       }
     } catch (e) {
       // System font loading failed - app will use default font
       debugPrint('Could not load system font: $e');
     }
-    // Mark as loaded after first attempt to prevent retries
-    _systemFontLoaded = true;
   }
 }

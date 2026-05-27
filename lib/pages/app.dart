@@ -81,7 +81,12 @@ class _AppPageState extends State<AppPage> {
 
   Future<int?> getApkFileSize(String url) async {
     try {
-      final response = await http.head(Uri.parse(url));
+      final updatiumInfo = await getInstalledInfo(updatiumId, printErr: false);
+      final userAgent = 'Updatium/${updatiumInfo?.versionName ?? '1.0.0'}';
+      final response = await http.head(
+        Uri.parse(url),
+        headers: {'User-Agent': userAgent},
+      ).timeout(const Duration(seconds: 5));
       if (response.statusCode == 200) {
         final contentLength = response.headers['content-length'];
         if (contentLength != null) {
