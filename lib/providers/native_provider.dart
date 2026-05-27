@@ -25,11 +25,12 @@ class NativeFeatures {
       if (fontFilePath != null) {
         fontLoader.addFont(_readFileBytes(fontFilePath));
         await fontLoader.load();
-        _systemFontLoaded = true;
       }
+      _systemFontLoaded = true;
     } catch (e) {
       // System font loading failed - app will use default font
       debugPrint('Could not load system font: $e');
+      _systemFontLoaded = true;
     }
   }
 }
