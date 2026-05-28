@@ -340,10 +340,9 @@ class AddAppPageState extends State<AddAppPage> {
                       return FutureBuilder<String>(
                         future:
                             app.applicationInfo?.getAppLabel().then(
-                              (label) =>
-                                  label ?? app.packageName ?? 'Unknown',
+                              (label) => label ?? app.packageName ?? 'Unknown',
                             ) ??
-                                Future.value(app.packageName ?? 'Unknown'),
+                            Future.value(app.packageName ?? 'Unknown'),
                         builder: (context, snapshot) {
                           final appName = snapshot.data ?? 'Unknown';
                           return ListTile(
@@ -400,10 +399,7 @@ class AddAppPageState extends State<AddAppPage> {
             context: context,
             builder: (BuildContext ctx) {
               return SelectionModal(
-                title: tr(
-                  'selectX',
-                  args: [plural('source', 2).toLowerCase()],
-                ),
+                title: tr('selectX', args: [plural('source', 2).toLowerCase()]),
                 entries: sourceStrings,
                 selectedByDefault: true,
                 onlyOneSelectionAllowed: false,
@@ -432,16 +428,13 @@ class AddAppPageState extends State<AddAppPage> {
                                     Map<String, dynamic> localValues = {};
                                     return AlertDialog(
                                       scrollable: true,
-                                      contentPadding:
-                                          const EdgeInsets.fromLTRB(
-                                            24,
-                                            16,
-                                            24,
-                                            16,
-                                          ),
-                                      title: Text(
-                                        t('searchX', args: [e.name]),
+                                      contentPadding: const EdgeInsets.fromLTRB(
+                                        24,
+                                        16,
+                                        24,
+                                        16,
                                       ),
+                                      title: Text(t('searchX', args: [e.name])),
                                       content: SizedBox(
                                         width: double.maxFinite,
                                         child: GeneratedForm(
@@ -457,8 +450,7 @@ class AddAppPageState extends State<AddAppPage> {
                                                         'url',
                                                         1,
                                                       ).substring(2),
-                                                defaultValue:
-                                                    e.hosts.isNotEmpty
+                                                defaultValue: e.hosts.isNotEmpty
                                                     ? e.hosts[0]
                                                     : '',
                                                 required: true,
@@ -579,10 +571,7 @@ class AddAppPageState extends State<AddAppPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar.large(
-            pinned: true,
-            title: Text(t('addApp')),
-          ),
+          SliverAppBar.large(pinned: true, title: Text(t('addApp'))),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -686,7 +675,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
     SettingsProvider settingsProvider = context.watch<SettingsProvider>();
     NotificationsProvider notificationsProvider = context
         .read<NotificationsProvider>();
-
 
     Future<bool> getTrackOnlyConfirmationIfNeeded(
       bool userPickedTrackOnly, {
@@ -862,11 +850,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       }
     }
 
-
-
-
-
-
     Widget getAdditionalOptsCol() => Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -971,7 +954,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           ),
       ],
     );
-
 
     return Dialog.fullscreen(
       child: Scaffold(
@@ -1093,7 +1075,8 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                       ),
                     gap24,
                     M3EFilledButton.icon(
-                      onPressed: gettingAppInfo ||
+                      onPressed:
+                          gettingAppInfo ||
                               pickedSource == null ||
                               (pickedSource!
                                       .combinedAppSpecificSettingFormItems
