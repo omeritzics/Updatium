@@ -529,5 +529,6 @@
     "completeAdditionalSettingsFirst": "Complete additional settings first",
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
-    "searchForApps": "Search for apps"
+    "searchForApps": "Search for apps",
+    "installedApps": "Installed apps"
 }
