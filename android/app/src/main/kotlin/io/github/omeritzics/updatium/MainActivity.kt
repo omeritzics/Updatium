@@ -12,7 +12,7 @@ import org.woheller69.freeDroidWarn.R
 
 class MainActivity : FlutterActivity() {
     private val DEVICE_ADMIN_CHANNEL = "io.github.omeritzics.updatium/device_admin"
-    private val SAF_CHANNEL = "io.github.omeritzics/updatium/saf"
+    private val SAF_CHANNEL = "io.github.omeritzics.updatium/saf"
     private val FREEDROID_WARN_CHANNEL = "io.github.omeritzics.updatium/freedroid_warn"
     private val OPEN_DIRECTORY_TREE_REQUEST = 1001
     private lateinit var devicePolicyManager: DevicePolicyManager
