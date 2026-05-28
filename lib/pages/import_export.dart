@@ -777,7 +777,13 @@ class _SelectionModalState extends State<SelectionModal> {
         ),
         body: Column(
           children: [
-            LinearProgressIndicator(value: 1 / 3),
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0, end: 1 / 3),
+              duration: const Duration(milliseconds: 500),
+              builder: (context, value, child) {
+                return LinearProgressIndicator(value: value);
+              },
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: Row(
