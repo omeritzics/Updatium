@@ -1,9 +1,8 @@
-import 'package:updatium/app_sources/gitea.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
 class Codeberg extends AppSource {
-  Gitea() {
+  void Gitea() {
     name = t('codeberg');
     hosts = ['codeberg.org'];
     additionalSourceAppSpecificSettingFormItems =
@@ -12,6 +11,7 @@ class Codeberg extends AppSource {
     searchQuerySettingFormItems = Gitea().searchQuerySettingFormItems;
     openSource = true;
   }
+
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     return SourceProvider().standardizeUrlWithRegex(
@@ -30,10 +30,7 @@ class Codeberg extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    return await Gitea().getLatestAPKDetails(
-      standardUrl,
-      additionalSettings,
-    );
+    return await Gitea().getLatestAPKDetails(standardUrl, additionalSettings);
   }
 
   AppNames getAppNames(String standardUrl) {

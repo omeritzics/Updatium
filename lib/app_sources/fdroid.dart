@@ -110,43 +110,43 @@ class FDroid extends AppSource {
             .map((e) => e.split(' ').sublist(1).join(' '));
         if (changelogUrls.isNotEmpty) {
           details.changeLog = changelogUrls.first;
-        bool isGitHub = false;
-        bool isGitLab = false;
-        try {
-          GitHub(
-            hostChanged: true,
-          ).sourceSpecificStandardizeURL(details.changeLog!);
-          isGitHub = true;
-        } catch (e) {
-          //
-        }
-        try {
-          GitLab(
-            hostChanged: true,
-          ).sourceSpecificStandardizeURL(details.changeLog!);
-          isGitLab = true;
-        } catch (e) {
-          //
-        }
-        if ((isGitHub || isGitLab) &&
-            (details.changeLog?.indexOf('/blob/') ?? -1) >= 0) {
+          bool isGitHub = false;
+          bool isGitLab = false;
           try {
-            details.changeLog = (await sourceRequest(
-              details.changeLog!.replaceFirst('/blob/', '/raw/'),
-              additionalSettings,
-            )).body;
+            GitHub(
+              hostChanged: true,
+            ).sourceSpecificStandardizeURL(details.changeLog!);
+            isGitHub = true;
           } catch (e) {
-            // Fail silently
+            //
+          }
+          try {
+            GitLab(
+              hostChanged: true,
+            ).sourceSpecificStandardizeURL(details.changeLog!);
+            isGitLab = true;
+          } catch (e) {
+            //
+          }
+          if ((isGitHub || isGitLab) &&
+              (details.changeLog?.indexOf('/blob/') ?? -1) >= 0) {
+            try {
+              details.changeLog = (await sourceRequest(
+                details.changeLog!.replaceFirst('/blob/', '/raw/'),
+                additionalSettings,
+              )).body;
+            } catch (e) {
+              // Fail silently
+            }
           }
         }
+        if ((details.changeLog?.length ?? 0) > 2048) {
+          details.changeLog = '${details.changeLog!.substring(0, 2048)}...';
+        }
       }
-      if ((details.changeLog?.length ?? 0) > 2048) {
-        details.changeLog = '${details.changeLog!.substring(0, 2048)}...';
-      }
+    } catch (e) {
+      // Fail silently, keep fallback changelog
     }
-  } catch (e) {
-    // Fail silently, keep fallback changelog
-  }
     return details;
   }
 
