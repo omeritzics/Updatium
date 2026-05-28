@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
@@ -379,7 +380,7 @@ class AddAppPageState extends State<AddAppPage> {
                     ? t('completeAdditionalSettingsFirst')
                     : t('addAppToCollection'),
                 excludeSemantics: true,
-                child: FilledButton(
+                child: M3EFilledButton(
                   onPressed:
                       doingSomething ||
                           pickedSource == null ||
@@ -429,110 +430,100 @@ class AddAppPageState extends State<AddAppPage> {
           settingsProvider.searchDeselected = sourceStrings.keys
               .where((s) => !searchSources.contains(s))
               .toList();
-          List<MapEntry<String, Map<String, List<String>>>>
-          results = (await Future.wait<MapEntry<String, Map<String, List<String>>>?>(
-            sourceProvider.sources
-                .where((e) => searchSources.contains(e.name))
-                .map((e) async {
-                  try {
-                    Map<String, dynamic>? querySettings = {};
-                    if (e.includeAdditionalOptsInMainSearch) {
-                      querySettings = await showDialog<Map<String, dynamic>?>(
-                        context: context,
-                        builder: (BuildContext ctx) {
-                          Map<String, dynamic> localValues = {};
-                          return AlertDialog(
-                            scrollable: true,
-                            contentPadding: const EdgeInsets.fromLTRB(
-                              24,
-                              16,
-                              24,
-                              16,
-                            ),
-                            title: Text(t('searchX', args: [e.name])),
-                            content: SizedBox(
-                              width: double.maxFinite,
-                              child: GeneratedForm(
-                                items: [
-                                  ...e.searchQuerySettingFormItems.map(
-                                    (e) => [e],
-                                  ),
-                                  [
-                                    GeneratedFormTextField(
-                                      'url',
-                                      label: e.hosts.isNotEmpty
-                                          ? t('overrideSource')
-                                          : plural('url', 1).substring(2),
-                                      autoCompleteOptions: [
-                                        ...(e.hosts.isNotEmpty
-                                            ? [e.hosts[0]]
-                                            : []),
-                                        ...appsProvider.apps.values
-                                            .where(
-                                              (a) =>
-                                                  sourceProvider
-                                                      .getSource(
-                                                        a.app.url,
-                                                        overrideSource: a
-                                                            .app
-                                                            .overrideSource,
-                                                      )
-                                                      .runtimeType ==
-                                                  e.runtimeType,
-                                            )
-                                            .map((a) {
-                                              var uri = Uri.parse(a.app.url);
-                                              return '${uri.origin}${uri.path}';
-                                            }),
-                                      ],
-                                      defaultValue: e.hosts.isNotEmpty
-                                          ? e.hosts[0]
-                                          : '',
-                                      required: true,
-                                    ),
-                                  ],
-                                ],
-                                onValueChanges: (vals, valid, isBuilding) {
-                                  localValues = vals;
-                                },
+          List<MapEntry<String, Map<String, List<String>>>> results =
+              (await Future.wait<MapEntry<String, Map<String, List<String>>>?>(
+                    sourceProvider.sources
+                        .where((e) => searchSources.contains(e.name))
+                        .map((e) async {
+                          try {
+                            Map<String, dynamic>? querySettings = {};
+                            if (e.includeAdditionalOptsInMainSearch) {
+                              querySettings =
+                                  await showDialog<Map<String, dynamic>?>(
+                                    context: context,
+                                    builder: (BuildContext ctx) {
+                                      Map<String, dynamic> localValues = {};
+                                      return AlertDialog(
+                                        scrollable: true,
+                                        contentPadding:
+                                            const EdgeInsets.fromLTRB(
+                                              24,
+                                              16,
+                                              24,
+                                              16,
+                                            ),
+                                        title: Text(
+                                          t('searchX', args: [e.name]),
+                                        ),
+                                        content: SizedBox(
+                                          width: double.maxFinite,
+                                          child: GeneratedForm(
+                                            items: [
+                                              ...e.searchQuerySettingFormItems
+                                                  .map((e) => [e]),
+                                              [
+                                                GeneratedFormTextField(
+                                                  'url',
+                                                  label: e.hosts.isNotEmpty
+                                                      ? t('overrideSource')
+                                                      : plural(
+                                                          'url',
+                                                          1,
+                                                        ).substring(2),
+                                                  defaultValue:
+                                                      e.hosts.isNotEmpty
+                                                      ? e.hosts[0]
+                                                      : '',
+                                                  required: true,
+                                                ),
+                                              ],
+                                            ],
+                                            onValueChanges:
+                                                (vals, valid, isBuilding) {
+                                                  localValues = vals;
+                                                },
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(ctx).pop(null),
+                                            child: Text(t('cancel')),
+                                          ),
+                                          TextButton(
+                                            onPressed: () => Navigator.of(
+                                              ctx,
+                                            ).pop(localValues),
+                                            child: Text(t('ok')),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                            }
+                            return MapEntry(
+                              e.runtimeType.toString(),
+                              await e.search(
+                                searchQuery,
+                                querySettings: querySettings ?? {},
                               ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.of(ctx).pop(null),
-                                child: Text(t('cancel')),
-                              ),
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.of(ctx).pop(localValues),
-                                child: Text(t('ok')),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                    return MapEntry(
-                      e.runtimeType.toString(),
-                      await e.search(
-                        searchQuery,
-                        querySettings: querySettings ?? {},
-                      ),
-                    );
-                  } catch (err) {
-                    if (err is CredsNeededError) {
-                      err.unexpected = true;
-                      showError(err, context);
-                    } else {
-                      LogsProvider().add(
-                        'Search error for ${e.name}: ${err.toString()}',
-                        level: LogLevels.error,
-                      );
-                    }
-                    return null;
-                  }
-                }),
-          )).whereType<MapEntry<String, Map<String, List<String>>>>().toList();
+                            );
+                          } catch (err) {
+                            if (err is CredsNeededError) {
+                              err.unexpected = true;
+                              showError(err, context);
+                            } else {
+                              LogsProvider().add(
+                                'Search error for ${e.name}: ${err.toString()}',
+                                level: LogLevels.error,
+                              );
+                            }
+                            return null;
+                          }
+                        }),
+                  ))
+                  .whereType<MapEntry<String, Map<String, List<String>>>>()
+                  .toList();
 
           // Interleave results instead of simple reduce
           Map<String, MapEntry<String, List<String>>> res = {};
@@ -641,7 +632,7 @@ class AddAppPageState extends State<AddAppPage> {
                     ? t('enterSearchTermsFirst')
                     : t('searchForApps'),
                 excludeSemantics: true,
-                child: FilledButton(
+                child: M3EFilledButton(
                   onPressed: searchQuery.isEmpty || doingSomething
                       ? null
                       : () {
@@ -939,137 +930,161 @@ class AddAppPageState extends State<AddAppPage> {
       ],
     );
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: CustomScrollView(
-        shrinkWrap: true,
-        slivers: <Widget>[
-          SliverAppBar.large(pinned: true, title: Text(t('addApp'))),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  getUrlInputRow(),
-                  gap16,
-                  if (pickedSource != null) getHTMLSourceOverrideDropdown(),
-                  if (shouldShowSearchBar()) getSearchBarRow(),
-                  if (pickedSource == null) getSourcesListWidget(),
-                  if (pickedSource != null)
-                    FutureBuilder(
-                      builder: (ctx, val) {
-                        return val.data != null && val.data!.isNotEmpty
-                            ? Text(
-                                val.data!,
-                                style: Theme.of(context).textTheme.bodySmall,
-                              )
-                            : const SizedBox();
-                      },
-                      future: pickedSource?.getSourceNote(),
-                    ),
-                  if (pickedSource != null) getAdditionalOptsCol(),
-                  if (pickedSource != null)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        gap24,
-                        Text(
-                          t('advanced'),
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
+    return Dialog.fullscreen(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        body: CustomScrollView(
+          shrinkWrap: true,
+          slivers: <Widget>[
+            SliverAppBar.large(
+              pinned: true,
+              title: Text(t('addApp')),
+              leading: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              bottom: (pickedSource != null || cameFromSearch)
+                  ? PreferredSize(
+                      preferredSize: const Size.fromHeight(4),
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween(
+                          begin: 0,
+                          end: cameFromSearch ? 2 / 3 : 1 / 2,
+                        ),
+                        duration: const Duration(milliseconds: 500),
+                        builder: (context, value, child) {
+                          return LinearProgressIndicator(value: value);
+                        },
+                      ),
+                    )
+                  : null,
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    getUrlInputRow(),
+                    gap16,
+                    if (pickedSource != null) getHTMLSourceOverrideDropdown(),
+                    if (shouldShowSearchBar()) getSearchBarRow(),
+                    if (pickedSource == null) getSourcesListWidget(),
+                    if (pickedSource != null)
+                      FutureBuilder(
+                        builder: (ctx, val) {
+                          return val.data != null && val.data!.isNotEmpty
+                              ? Text(
+                                  val.data!,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                )
+                              : const SizedBox();
+                        },
+                        future: pickedSource?.getSourceNote(),
+                      ),
+                    if (pickedSource != null) getAdditionalOptsCol(),
+                    if (pickedSource != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          gap24,
+                          Text(
+                            t('advanced'),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        gap16,
-                        GeneratedForm(
-                          key: const Key('advancedSettings'),
-                          items: [
-                            [
-                              GeneratedFormTextField(
-                                'apkFilterRegEx',
-                                label: t('filterAPKsByRegEx'),
-                                required: false,
-                                additionalValidators: [
-                                  (value) => _regExValidator(value),
-                                ],
-                              ),
+                          gap16,
+                          GeneratedForm(
+                            key: const Key('advancedSettings'),
+                            items: [
+                              [
+                                GeneratedFormTextField(
+                                  'apkFilterRegEx',
+                                  label: t('filterAPKsByRegEx'),
+                                  required: false,
+                                  additionalValidators: [
+                                    (value) => _regExValidator(value),
+                                  ],
+                                ),
+                              ],
+                              [
+                                GeneratedFormSwitch(
+                                  'invertAPKFilter',
+                                  label:
+                                      '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
+                                  defaultValue: false,
+                                ),
+                              ],
+                              [
+                                GeneratedFormTextField(
+                                  'zippedApkFilterRegEx',
+                                  label: t('zippedApkFilterRegEx'),
+                                  required: false,
+                                  additionalValidators: [
+                                    (value) => _regExValidator(value),
+                                  ],
+                                ),
+                              ],
+                              [
+                                GeneratedFormSwitch(
+                                  'shizukuPretendToBeGooglePlay',
+                                  label: t('shizukuPretendToBeGooglePlay'),
+                                  defaultValue: false,
+                                ),
+                              ],
+                              [
+                                GeneratedFormSwitch(
+                                  'allowInsecure',
+                                  label: t('allowInsecure'),
+                                  defaultValue: false,
+                                ),
+                              ],
                             ],
-                            [
-                              GeneratedFormSwitch(
-                                'invertAPKFilter',
-                                label:
-                                    '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
-                                defaultValue: false,
-                              ),
-                            ],
-                            [
-                              GeneratedFormTextField(
-                                'zippedApkFilterRegEx',
-                                label: t('zippedApkFilterRegEx'),
-                                required: false,
-                                additionalValidators: [
-                                  (value) => _regExValidator(value),
-                                ],
-                              ),
-                            ],
-                            [
-                              GeneratedFormSwitch(
-                                'shizukuPretendToBeGooglePlay',
-                                label: t('shizukuPretendToBeGooglePlay'),
-                                defaultValue: false,
-                              ),
-                            ],
-                            [
-                              GeneratedFormSwitch(
-                                'allowInsecure',
-                                label: t('allowInsecure'),
-                                defaultValue: false,
-                              ),
-                            ],
-                          ],
-                          onValueChanges: (values, valid, isBuilding) {
-                            if (!isBuilding) {
-                              setState(() {
-                                additionalSettings.addAll(values);
-                              });
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                ],
+                            onValueChanges: (values, valid, isBuilding) {
+                              if (!isBuilding) {
+                                setState(() {
+                                  additionalSettings.addAll(values);
+                                });
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  const ImportExportPage(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                    return SharedAxisTransition(
-                      animation: animation,
-                      secondaryAnimation: secondaryAnimation,
-                      transitionType: SharedAxisTransitionType.vertical,
-                      child: child,
-                    );
-                  },
-            ),
-          );
-        },
-        icon: const Icon(Icons.import_export),
-        label: Text(t('importExport')),
-        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
-        elevation: 3,
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+          ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const ImportExportPage(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                      return SharedAxisTransition(
+                        animation: animation,
+                        secondaryAnimation: secondaryAnimation,
+                        transitionType: SharedAxisTransitionType.vertical,
+                        child: child,
+                      );
+                    },
+              ),
+            );
+          },
+          icon: const Icon(Icons.import_export),
+          label: Text(t('importExport')),
+          extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
+          elevation: 3,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        ),
       ),
     );
   }

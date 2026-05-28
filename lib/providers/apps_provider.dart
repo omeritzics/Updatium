@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -343,7 +344,7 @@ Future<String?> promptForFileName(
             onPressed: () => Navigator.pop(context, null),
             child: Text(t('cancel')),
           ),
-          FilledButton(
+          M3EFilledButton(
             onPressed: () => Navigator.pop(context, controller.text),
             child: Text(t('download')),
           ),
@@ -603,7 +604,7 @@ Future<PackageInfo?> getInstalledInfo(
       );
     } catch (e) {
       if (printErr) {
-        print(e); // OK
+        debugPrint(e.toString());
       }
     }
   }
@@ -631,7 +632,7 @@ class AppsProvider with ChangeNotifier {
 
   Iterable<AppInMemory> getAppValues() => apps.values.map((a) => a.deepCopy());
 
-  AppsProvider({isBg = false}) {
+  AppsProvider({bool isBg = false}) {
     // Subscribe to changes in the app foreground status
     foregroundStream = FGBGEvents.instance.stream.asBroadcastStream();
     foregroundSubscription = foregroundStream?.listen((event) async {
@@ -857,6 +858,7 @@ class AppsProvider with ChangeNotifier {
             ext,
             APKDir.path,
           );
+          // ignore: use_build_context_synchronously
           String? userFileName = await promptForFileName(
             context,
             suggestedName,
@@ -1425,6 +1427,7 @@ class AppsProvider with ChangeNotifier {
       );
 
       try {
+        // ignore: use_build_context_synchronously
         var wasInstalled = await installApk(
           DownloadedApk(dir.appId, selectedApks[0]),
           firstTimeWithContext,
@@ -3168,9 +3171,9 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
 
 /// Background updater function
 ///
-/// @param List<MapEntry<String, int>>? toCheck: The appIds to check for updates (with the number of previous attempts made per appid) (defaults to all apps)
+/// @param `List<MapEntry<String, int>>?` toCheck: The appIds to check for updates (with the number of previous attempts made per appid) (defaults to all apps)
 ///
-/// @param List<String>? toInstall: The appIds to attempt to update (if empty - which is the default - all pending updates are taken)
+/// @param `List<String>?` toInstall: The appIds to attempt to update (if empty - which is the default - all pending updates are taken)
 ///
 /// When toCheck is empty, the function is in "install mode" (else it is in "update mode").
 /// In update mode, all apps in toCheck are checked for updates (in parallel).

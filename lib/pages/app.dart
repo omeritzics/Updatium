@@ -484,10 +484,6 @@ class _AppPageState extends State<AppPage> {
                 title: Text(t('additionalOptions')),
                 actions: [
                   TextButton(
-                    onPressed: () => Navigator.of(ctx).pop(null),
-                    child: Text(t('cancel')),
-                  ),
-                  TextButton(
                     onPressed: () => Navigator.of(ctx).pop(localValues),
                     child: Text(t('save')),
                   ),

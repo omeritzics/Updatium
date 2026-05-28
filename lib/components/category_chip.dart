@@ -214,7 +214,7 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
             if (_formKey.currentState?.validate() ?? false) {
               Navigator.pop(
                 context,
-                _CategoryResult(
+                CategoryResult(
                   name: _nameController.text.trim(),
                   color: _selectedColor,
                 ),
@@ -228,21 +228,21 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
   }
 }
 
-class _CategoryResult {
+class CategoryResult {
   final String name;
   final Color color;
 
-  _CategoryResult({required this.name, required this.color});
+  CategoryResult({required this.name, required this.color});
 }
 
-Future<_CategoryResult?> showCategoryEditorDialog(
+Future<CategoryResult?> showCategoryEditorDialog(
   BuildContext context, {
   String? initialName,
   Color? initialColor,
   required String title,
   required String confirmButtonText,
 }) {
-  return showDialog<_CategoryResult>(
+  return showDialog<CategoryResult>(
     context: context,
     builder: (context) => CategoryEditorDialog(
       initialName: initialName,
