@@ -54,4 +54,22 @@ class DeviceAdminService {
       return false;
     }
   }
+
+  static Future<bool> enableAntiCheat() async {
+    try {
+      final bool result = await _channel.invokeMethod('enableAntiCheat');
+      return result;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static Future<bool> disableAntiCheat() async {
+    try {
+      final bool result = await _channel.invokeMethod('disableAntiCheat');
+      return result;
+    } catch (e) {
+      return false;
+    }
+  }
 }
