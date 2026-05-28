@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "تەكشۈرۈش ئۈچۈن ئالدى كۆرۈنۈش مۇلازىمىتىنى ئىشلىتىش (تېخىمۇ تۇراقلىق، ئەمما توك سەرپىياتى كۆپ)",
     "fgServiceNotice": "بۇ ئۇقتۇرۇش ئارقا كۆرۈنۈش تەكشۈرۈشى ئۈچۈن زۆرۈر",
     "excludeSecrets": "مەخپىي ئۇچۇرلارنى چىقىرىۋېتىش",
-    "GHReqPrefix": "GitHub تەلەپلىرى ئۈچۈن 'omeritzics/Updatium' ئىشلىتىش",
     "includeZips": "ZIP ھۆججەتلىرىنى ئۆز ئىچىگە ئالسۇن",
     "zippedApkFilterRegEx": "ZIP ئىچىدىكى APK لارنى سۈزۈش",
     "multipleSigners": "كۆپ ئىمزا قويغۇچىلار",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Использовать приоритетную службу для проверки обновлений (надёжнее, энергозатратнее)",
     "fgServiceNotice": "Это уведомление необходимо для фоновой проверки обновлений (оно может быть скрыто в настройках ОС)",
     "excludeSecrets": "Исключить секреты",
-    "GHReqPrefix": "Использовать «omeritzics/Updatium» для запросов на GitHub",
     "includeZips": "Включить ZIP-файлы",
     "zippedApkFilterRegEx": "Фильтр APK внутри ZIP",
     "multipleSigners": "Несколько подписей",
@@ -539,5 +538,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

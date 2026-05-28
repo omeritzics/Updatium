@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "अपडेट जाँच के लिए फ़ोरग्राउंड सेवा का उपयोग करें (अधिक विश्वसनीय, अधिक बिजली की खपत करता है)",
     "fgServiceNotice": "पृष्ठभूमि अपडेट जाँच के लिए यह अधिसूचना आवश्यक है (इसे OS सेटिंग्स में छिपाया जा सकता है)",
     "excludeSecrets": "गोपनीय जानकारी (secrets) बाहर रखें",
-    "GHReqPrefix": "GitHub अनुरोधों के लिए 'omeritzics/Updatium' इंस्टेंस",
     "includeZips": "ZIP फ़ाइलें शामिल करें",
     "zippedApkFilterRegEx": "ZIP के अंदर APK फ़िल्टर करें",
     "multipleSigners": "एकाधिक हस्ताक्षरकर्ता (Multiple Signers)",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

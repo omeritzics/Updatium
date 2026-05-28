@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "업데이트 확인을 위해 포그라운드 서비스 사용(안정성 향상, 전력 소비량 증가)",
     "fgServiceNotice": "이 알림은 백그라운드 업데이트 확인에 필요합니다(OS 설정에서 숨길 수 있음).",
     "excludeSecrets": "비밀 제외",
-    "GHReqPrefix": "GitHub 요청을 위한 'omeritzics/Updatium' 인스턴스",
     "includeZips": "ZIP 파일 포함",
     "zippedApkFilterRegEx": "ZIP 내 APK 필터링",
     "multipleSigners": "다수 Signers",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

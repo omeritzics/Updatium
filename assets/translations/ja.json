@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "アップデート確認にフォアグラウンドサービスを使用する（より信頼性が高いが、より電力を消費する）",
     "fgServiceNotice": "この通知は、バックグラウンドでアップデートを確認するために必要です（OSの設定で非表示にできます）。",
     "excludeSecrets": "シークレットを除く",
-    "GHReqPrefix": "GitHub リクエスト用の 'omeritzics/Updatium' インスタンス",
     "includeZips": "ZIPファイルを含む",
     "zippedApkFilterRegEx": "ZIP内のAPKをフィルタリングする",
     "multipleSigners": "複数の署名者",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

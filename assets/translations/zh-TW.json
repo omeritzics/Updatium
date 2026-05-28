@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "使用前景服務進行更新檢查( 更可靠, 消耗更多電源)",
     "fgServiceNotice": "此通知用於背景更新檢查( 可以在 OS 設置中隱藏)",
     "excludeSecrets": "不包括機密內容",
-    "GHReqPrefix": "GitHub 請求的 'omeritzics/Updatium' 實例",
     "includeZips": "包含 ZIP 文件",
     "zippedApkFilterRegEx": "在 ZIP 內過濾 APK",
     "multipleSigners": "多重簽署者",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

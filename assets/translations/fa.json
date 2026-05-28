@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "استفاده از یک سرویس پیش زمینه برای بررسی به روز رسانی (قابل اعتماد تر، مصرف انرژی بیشتر)",
     "fgServiceNotice": "این اعلان برای بررسی به روز رسانی پس زمینه مورد نیاز است (می تواند در تنظیمات OS پنهان شود)",
     "excludeSecrets": "رازهای پنهان",
-    "GHReqPrefix": "مثال “omeritzics/Updatium”",
     "includeZips": "فایل های ZIP",
     "zippedApkFilterRegEx": "فیلتر APK در داخل Zip",
     "multipleSigners": "ثبت نام های متعدد",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

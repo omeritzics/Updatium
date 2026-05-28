@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Gunakan layanan latar depan untuk pemeriksaan pembaruan (lebih dapat diandalkan, menghabiskan lebih banyak daya)",
     "fgServiceNotice": "Pemberitahuan ini diperlukan untuk pemeriksaan pembaruan latar belakang (dapat disembunyikan dalam pengaturan OS)",
     "excludeSecrets": "Mengecualikan rahasia",
-    "GHReqPrefix": "Instance 'omeritzics/Updatium' untuk permintaan GitHub",
     "includeZips": "Menyertakan file ZIP",
     "zippedApkFilterRegEx": "Saring APK di dalam ZIP",
     "multipleSigners": "Tanda Tangan Ganda",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

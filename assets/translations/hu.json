@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Előtér-szolgáltatás használata a frissítések ellenőrzéséhez (megbízhatóbb, de több energiát fogyaszt)",
     "fgServiceNotice": "Ez az értesítés a háttérben történő frissítésellenőrzéshez szükséges (a rendszer beállításaiban elrejthető).",
     "excludeSecrets": "Érzékeny adatok (például: személyes hozzáférési tokenek) kihagyása",
-    "GHReqPrefix": "„omeritzics/Updatium” példány a GitHub lekérdezéséhez",
     "includeZips": "ZIP-fájlok belefoglalása",
     "zippedApkFilterRegEx": "APK-fájlok szűrése a ZIP-fájlon belül",
     "multipleSigners": "Többen is aláírták",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

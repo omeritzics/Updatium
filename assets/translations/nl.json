@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Gebruik een voorgronddienst voor het controleren van updates (betrouwbaarder, verbruikt meer stroom)",
     "fgServiceNotice": "Deze melding is nodig voor het controleren van updates op de achtergrond (kan worden verborgen in de OS-instellingen)",
     "excludeSecrets": "Geheimen uitsluiten",
-    "GHReqPrefix": "'omeritzics/Updatium' instantie voor GitHub verzoeken",
     "includeZips": "ZIP-bestanden opnemen",
     "zippedApkFilterRegEx": "APK's filteren in ZIP",
     "multipleSigners": "Meerdere Ondertekenaars",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

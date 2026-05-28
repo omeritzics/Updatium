@@ -403,7 +403,6 @@
     "foregroundServiceExplanation": "استخدام خدمة مقدمة للتحقق من التحديثات (أكثر موثوقية وتستهلك طاقة أكبر)",
     "fgServiceNotice": "هذا الإخطار مطلوب للتحقق من التحديث في الخلفية (يمكن إخفاؤه في إعدادات نظام التشغيل)",
     "excludeSecrets": "استعبد الأسرار",
-    "GHReqPrefix": "نسخة \"omeritzics/Updatium\" لطلبات GitHub",
     "includeZips": "ضمّن ملفات ZIP",
     "zippedApkFilterRegEx": "تصفية ملفات APK داخل ZIP",
     "multipleSigners": "عدد من الدول الموقعة",
@@ -544,5 +543,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

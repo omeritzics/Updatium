@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Použít službu v popředí pro kontrolu aktualizací (spolehlivější, spotřebovává více energie)",
     "fgServiceNotice": "Toto oznámení je nutné pro kontrolu aktualizací na pozadí (lze jej skrýt v nastavení systému)",
     "excludeSecrets": "Vyloučit tajemství",
-    "GHReqPrefix": "instance 'omeritzics/Updatium' pro požadavky GitHubu",
     "includeZips": "Zahrnout soubory ZIP",
     "zippedApkFilterRegEx": "Filtrování souborů APK uvnitř ZIP",
     "multipleSigners": "Několik signers",
@@ -540,5 +539,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

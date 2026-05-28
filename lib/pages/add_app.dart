@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
@@ -379,7 +380,7 @@ class AddAppPageState extends State<AddAppPage> {
                     ? t('completeAdditionalSettingsFirst')
                     : t('addAppToCollection'),
                 excludeSemantics: true,
-                child: FilledButton(
+                child: M3EFilledButton(
                   onPressed:
                       doingSomething ||
                           pickedSource == null ||
@@ -641,7 +642,7 @@ class AddAppPageState extends State<AddAppPage> {
                     ? t('enterSearchTermsFirst')
                     : t('searchForApps'),
                 excludeSemantics: true,
-                child: FilledButton(
+                child: M3EFilledButton(
                   onPressed: searchQuery.isEmpty || doingSomething
                       ? null
                       : () {

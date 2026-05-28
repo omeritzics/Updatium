@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "അപ്‌ഡേറ്റ് പരിശോധനയ്ക്ക് ഒരു ഫോർഗ്രൗണ്ട് സർവീസ് ഉപയോഗിക്കുക (കൂടുതൽ വിശ്വസനീയം, കൂടുതൽ പവർ ഉപയോഗിക്കുന്നു)",
     "fgServiceNotice": "ബാക്ക്ഗ്രൗണ്ട് അപ്‌ഡേറ്റ് പരിശോധനയ്ക്ക് ഈ അറിയിപ്പ് ആവശ്യമാണ് (ഇത് OS ക്രമീകരണങ്ങളിൽ മറയ്ക്കാം)",
     "excludeSecrets": "രഹസ്യങ്ങൾ ഒഴിവാക്കുക",
-    "GHReqPrefix": "GitHub അഭ്യർത്ഥനകൾക്ക് 'omeritzics/Updatium' ഇൻസ്റ്റൻസ്",
     "includeZips": "ZIP ഫയലുകൾ ഉൾപ്പെടുത്തുക",
     "zippedApkFilterRegEx": "ZIP-നുള്ളിൽ APK-കൾ ഫിൽട്ടർ ചെയ്യുക",
     "multipleSigners": "ഒന്നിലധികം ഒപ്പന്മായികൾ",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

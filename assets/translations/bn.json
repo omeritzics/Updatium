@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "আপডেট চেকিংয়ের জন্য ফোরগ্রাউন্ড সার্ভিস ব্যবহার করুন (অধিক নির্ভরযোগ্য, বেশি চার্জ খরচ হয়)",
     "fgServiceNotice": "ব্যাকগ্রাউন্ড আপডেট চেকিংয়ের জন্য এই বিজ্ঞপ্তির প্রয়োজন (সিস্টেম সেটিংসে এটি লুকানো যেতে পারে)",
     "excludeSecrets": "গোপন তথ্য (secrets) বাদ দিন",
-    "GHReqPrefix": "GitHub রিকোয়েস্টের জন্য 'omeritzics/Updatium' ইনস্ট্যান্স",
     "includeZips": "ZIP ফাইল অন্তর্ভুক্ত করুন",
     "zippedApkFilterRegEx": "ZIP-এর ভেতরে থাকা APK ফিল্টার করুন",
     "multipleSigners": "একাধিক সাইনার (Signers)",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

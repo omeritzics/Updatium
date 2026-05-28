@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Brug en forgrundstjeneste til opdateringskontrol (mere pålidelig, bruger mere strøm)",
     "fgServiceNotice": "Denne meddelelse er nødvendig for baggrundsopdateringskontrol (den kan skjules i OS-indstillingerne).",
     "excludeSecrets": "Udeluk hemmeligheder",
-    "GHReqPrefix": "'omeritzics/Updatium'-instans til GitHub-anmodninger",
     "includeZips": "Inkluder ZIP-filer",
     "zippedApkFilterRegEx": "Filtrer APK'er inde i ZIP",
     "multipleSigners": "Flere signere",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

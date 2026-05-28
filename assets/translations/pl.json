@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Używanie usługi pierwszoplanowej do sprawdzania aktualizacji (bardziej niezawodne, zużywa więcej energii)",
     "fgServiceNotice": "To powiadomienie jest wymagane do sprawdzania aktualizacji w tle (można je ukryć w ustawieniach systemu operacyjnego).",
     "excludeSecrets": "Wyklucz sekrety",
-    "GHReqPrefix": "Instancja \"omeritzics/Updatium\" dla żądań GitHub",
     "includeZips": "Dołączanie plików ZIP",
     "zippedApkFilterRegEx": "Filtrowanie plików APK wewnątrz ZIP",
     "multipleSigners": "Wielu sygnatariuszy",
@@ -557,5 +556,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

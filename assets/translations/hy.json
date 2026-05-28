@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Use a foreground service for update checking (more reliable, consumes more power)",
     "fgServiceNotice": "This notification is required for background update checking (it can be hidden in the OS settings)",
     "excludeSecrets": "Exclude secrets",
-    "GHReqPrefix": "'omeritzics/Updatium' instance for GitHub requests",
     "includeZips": "Include ZIP files",
     "zippedApkFilterRegEx": "Filter APKs inside ZIP",
     "multipleSigners": "Multiple Signers",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

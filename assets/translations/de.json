@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Aktualisierungsprüfung im Vordergrund durchführen (zuverlässiger, verbraucht mehr Strom)",
     "fgServiceNotice": "Diese Benachrichtigung ist für die Prüfung von Updates im Hintergrund erforderlich (sie kann in den Betriebssystemeinstellungen ausgeblendet werden)",
     "excludeSecrets": "Geheimnisse ausschließen",
-    "GHReqPrefix": "omeritzics/Updatium'-Instanz für GitHub-Anfragen",
     "includeZips": "ZIP-Dateien einbeziehen",
     "zippedApkFilterRegEx": "APKs in ZIP filtern",
     "multipleSigners": "Mehrere Zeichen",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Використовуйте службу переднього плану для перевірки оновлень (надійніша, споживає більше енергії)",
     "fgServiceNotice": "Це сповіщення необхідне для фонової перевірки оновлень (його можна приховати в налаштуваннях ОС)",
     "excludeSecrets": "Виключити секрети",
-    "GHReqPrefix": "екземпляр 'omeritzics/Updatium' для запитів на GitHub",
     "includeZips": "Додайте ZIP-файли",
     "zippedApkFilterRegEx": "Фільтруйте APK-файли всередині ZIP",
     "multipleSigners": "Кілька підписників",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

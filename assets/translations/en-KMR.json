@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Ji bo kontrola rojanekirinê xizmetek li pê bi kar bîne (zêdetir pêbawer, zêdetir hêzê dixwe)",
     "fgServiceNotice": "Ev agahdarî ji bo kontrola rojanekirinê ya li paqijî pêwîst e (dikare li setên OS de were veberkirin)",
     "excludeSecrets": "Sîrên derve",
-    "GHReqPrefix": "mînak 'omeritzics/Updatium' ji bo daxwazên GitHub",
     "includeZips": "Pelên ZIP tê de bike",
     "zippedApkFilterRegEx": "APK-ên li hundirê ZIP-yan parzûn bike",
     "multipleSigners": "Sazkarên Pir",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }

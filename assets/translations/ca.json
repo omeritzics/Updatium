@@ -402,7 +402,6 @@
     "foregroundServiceExplanation": "Usa el servei d'Updatium en primer pla per comprovar les actualitzacions (és més fiable però consumeix més bateria)",
     "fgServiceNotice": "Aquesta notificació és necessària per comprovar les actualitzacions en segon pla (la pots ocultar als paràmetres del Sistema Operatiu)",
     "excludeSecrets": "Exclou els secrets",
-    "GHReqPrefix": "exemple per a les peticions de GitHub",
     "includeZips": "Inclou fitxers ZIPName",
     "zippedApkFilterRegEx": "Filtre APKs dins ZIPName",
     "multipleSigners": "Signadors múltiples",
@@ -527,5 +526,6 @@
     "addAppToCollection": "Add this app to your collection",
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
-    "installedApps": "Installed apps"
+    "installedApps": "Installed apps",
+    "fileSize": "File size"
 }
