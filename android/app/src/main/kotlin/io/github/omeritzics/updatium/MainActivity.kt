@@ -79,6 +79,28 @@ class MainActivity : FlutterActivity() {
                         result.success(false)
                     }
                 }
+                "enableAntiCheat" -> {
+                    try {
+                        val prefs = getSharedPreferences("updatium_prefs", Context.MODE_PRIVATE)
+                        val editor = prefs.edit()
+                        editor.putBoolean("safeModeAntiCheat", true)
+                        val success = editor.commit()
+                        result.success(success)
+                    } catch (e: Exception) {
+                        result.error("ENABLE_ANTI_CHEAT_FAILED", "Failed to enable anti-cheat", e.message)
+                    }
+                }
+                "disableAntiCheat" -> {
+                    try {
+                        val prefs = getSharedPreferences("updatium_prefs", Context.MODE_PRIVATE)
+                        val editor = prefs.edit()
+                        editor.putBoolean("safeModeAntiCheat", false)
+                        val success = editor.commit()
+                        result.success(success)
+                    } catch (e: Exception) {
+                        result.error("DISABLE_ANTI_CHEAT_FAILED", "Failed to disable anti-cheat", e.message)
+                    }
+                }
                 else -> result.notImplemented()
             }
         }

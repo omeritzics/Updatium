@@ -712,4 +712,13 @@ class SettingsProvider with ChangeNotifier {
     prefs?.setInt('dnsServiceProvider', provider.index);
     notifyListeners();
   }
+
+  bool get safeModeAntiCheat {
+    return prefs?.getBool('safeModeAntiCheat') ?? false;
+  }
+
+  set safeModeAntiCheat(bool val) {
+    prefs?.setBool('safeModeAntiCheat', val);
+    notifyListeners();
+  }
 }
