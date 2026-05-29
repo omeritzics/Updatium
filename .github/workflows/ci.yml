@@ -50,8 +50,11 @@ jobs:
             ~/.gradle/wrapper
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
 
-      - name: Setup Java
-        run: sudo apt install default-jre -y
+      - name: Setup Java JDK
+        uses: actions/setup-java@v5.2.0
+        with:
+          distribution: semeru
+          java-version: '25'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2

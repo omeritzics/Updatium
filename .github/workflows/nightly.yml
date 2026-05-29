@@ -11,7 +11,7 @@ on:
 
 jobs:
   prepare:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       has_changes: ${{ steps.changes.outputs.has_changes }}
     steps:
@@ -83,16 +83,6 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: false
-          android: false
-          dotnet: false
-          haskell: false
-          large-packages: false
-          docker-images: true
-
       - name: Checkout Code
         uses: actions/checkout@main
         with:
@@ -116,8 +106,11 @@ jobs:
             ~/.gradle/wrapper
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
 
-      - name: Setup Java
-        run: sudo apt-get install default-jre default-jdk -y
+      - name: Setup Java JDK
+        uses: actions/setup-java@v5.2.0
+        with:
+          distribution: temurin
+          java-version: '21'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@main
