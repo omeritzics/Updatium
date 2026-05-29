@@ -38,17 +38,16 @@ Based on Material Design 3 Expressive guidelines.
 
 ### Localization
 
-Updatium currently supports 38 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull request with new translations added in the [translations directory](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
+Updatium currently supports ~38~ 36 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull request with new translations added in the [translations directory](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
 
 If you don't know how to make a pull request, and/or you don't have any experience with Git, you can open an issue ![here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help you with adding your language.
 
 Every language is welcome to Updatium, but your help is needed to make it happen.
 
-- Currently supported locales: English, 简体中文, 臺灣話, Italiano, 日本
-語, עברית, हिन्दी, Magyar, Deutsch, فارسی, Français, Español, Polski,
+- Currently supported locales: English, 简体中文, ~臺灣話~, Italiano, 日本語, עברית, हिन्दी, Magyar, Deutsch, فارسی, Français, Español, Polski,
 Русский, Bosanski, Português, Česky, Svenska, Nederlands, Tiếng Việt,
 Türkçe, Українська, Dansk, Eesti, Esperanto, Bahasa Indonesia, বাংলা,
-한국어, Català, العربية, മലയാളം, Galego, Български, Kurdî (Kurmanjî),
+한국어, Català, العربية, മലയാളം, Galego, Български, ~Kurdî (Kurmanjî)~,
 Bahasa Melayu, Română, ئۇيغۇرچە.
 
 ## Download
@@ -105,4 +104,4 @@ On Updatium:
 
 ### Q: How can I help?
 
-A: There are many ways you can. Your contribution doesn't have to be code - it could also be bug reporting, translating the app into new languages (or improving existing translations), design proposals and ideas. To start, you can simply open a new thread on the Discussions page of this GitHub project and introduce yourself. Starring Updatium and sharing it to people who you think may like it will also help Updatium grow. Thank you for your support :)
+A: There are many ways you can. Your contribution doesn't have to be code - it could also be bug reporting, adding new translations (or improving existing ones), design proposals and ideas. To start, you can simply open a new thread on the [Discussions page](https://github.com/omeritzics/Updatium/discussions) and introduce yourself. Starring Updatium and sharing it to people who you think may like it will also help Updatium grow. Thank you for your support :)
