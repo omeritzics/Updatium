@@ -20,7 +20,16 @@ subprojects {
     if (project.path != ":app") {
         project.evaluationDependsOn(":app")
     }
-    
+
+    // Disable lint for plugins that have Flight Recorder issues
+    if (project.path == ":android_package_manager" || project.path == ":android_package_installer") {
+        tasks.whenTaskAdded {
+            if (name.contains("lint")) {
+                enabled = false
+            }
+        }
+    }
+
     val configureAndroid = {
         if (project.hasProperty("android")) {
             val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
