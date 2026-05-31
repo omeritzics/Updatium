@@ -108,6 +108,9 @@ jobs:
 
       - name: Setup Java JDK
         uses: actions/setup-java@v5.2.0
+        with:
+          distribution: semeru
+          java-version: '25'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@main
