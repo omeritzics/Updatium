@@ -16,7 +16,6 @@ import 'package:docman/docman.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/pages/add_app.dart';
 
-
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
 const gap12 = SizedBox(height: 12);
@@ -197,10 +196,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
             }
           })
           .catchError((e) {
-                if (!context.mounted) return;
-                showError(e, context);
-              })
-              .whenComplete(() {
+            if (!context.mounted) return;
+            showError(e, context);
+          })
+          .whenComplete(() {
             setState(() {
               importInProgress = false;
             });
@@ -236,10 +235,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
             }
           })
           .catchError((e) {
-                if (!context.mounted) return;
-                showError(e, context);
-              })
-              .whenComplete(() {
+            if (!context.mounted) return;
+            showError(e, context);
+          })
+          .whenComplete(() {
             setState(() {
               importInProgress = false;
             });
@@ -343,10 +342,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
             }
           }()
           .catchError((e) {
-                if (!context.mounted) return;
-                showError(e, context);
-              })
-              .whenComplete(() {
+            if (!context.mounted) return;
+            showError(e, context);
+          })
+          .whenComplete(() {
             setState(() {
               importInProgress = false;
             });
@@ -651,4 +650,3 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
     );
   }
 }
-
