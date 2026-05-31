@@ -11,7 +11,7 @@ on:
 
 jobs:
   prepare:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       has_changes: ${{ steps.changes.outputs.has_changes }}
     steps:
