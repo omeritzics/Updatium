@@ -922,13 +922,7 @@ abstract class AppSource {
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
     [GeneratedFormTextField('appName', label: t('appName'), required: false)],
-    [
-      GeneratedFormTextField(
-        'appAuthor',
-        label: t('appAuthor'),
-        required: false,
-      ),
-    ],
+    [GeneratedFormTextField('author', label: t('author'), required: false)],
     [
       GeneratedFormTextField(
         'appId',
