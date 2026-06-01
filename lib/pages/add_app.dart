@@ -42,9 +42,15 @@ class AddAppPageState extends State<AddAppPage> {
   String? pickedSourceOverride;
   AppSource? pickedSource;
   int urlInputKey = 0;
-  SourceProvider sourceProvider = SourceProvider();
+  late SourceProvider sourceProvider;
   final TextEditingController _sourceOverrideController =
       TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    sourceProvider = context.read<SourceProvider>();
+  }
 
   @override
   void dispose() {
@@ -99,6 +105,37 @@ class AddAppPageState extends State<AddAppPage> {
     }
   }
 
+  Future<Map<String, String?>> extractMetadataFromUrl(
+    String url,
+    AppSource? source,
+  ) async {
+    String? appName;
+    String? author;
+    String? appId;
+
+    try {
+      if (source != null) {
+        // Fetch actual app metadata from the source
+        final apkDetails = await source.getLatestAPKDetails(
+          source.standardizeUrl(url),
+          {},
+        );
+        appName = apkDetails.names.name;
+        author = apkDetails.names.author;
+        // appId is not available in APKDetails, will be inferred later
+      }
+    } catch (e) {
+      // If fetching fails, return empty metadata
+    }
+
+    return {
+      'appName': appName,
+      'author': author,
+      'appId': appId,
+      'appSourceURL': url,
+    };
+  }
+
   bool shouldShowSearchBar() =>
       sourceProvider.sources.where((e) => e.canSearch).isNotEmpty &&
       pickedSource == null &&
@@ -148,14 +185,22 @@ class AddAppPageState extends State<AddAppPage> {
           : M3EFilledButton(
               onPressed: searching || pickedSource == null
                   ? null
-                  : () {
+                  : () async {
                       HapticFeedback.selectionClick();
+                      final metadata = await extractMetadataFromUrl(
+                        userInput,
+                        pickedSource,
+                      );
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => AddAppConfirmationPage(
                             initialUrl: userInput,
                             initialSourceOverride: pickedSourceOverride,
+                            initialAppName: metadata['appName'],
+                            initialAuthor: metadata['author'],
+                            initialAppId: metadata['appId'],
+                            initialAppSourceURL: metadata['appSourceURL'],
                           ),
                         ),
                       );
@@ -337,27 +382,25 @@ class AddAppPageState extends State<AddAppPage> {
                     itemCount: nonSystemApps.length,
                     itemBuilder: (context, index) {
                       final app = nonSystemApps[index];
-                      return FutureBuilder<String>(
-                        future:
-                            app.applicationInfo?.getAppLabel().then(
-                              (label) => label ?? app.packageName ?? 'Unknown',
-                            ) ??
-                            Future.value(app.packageName ?? 'Unknown'),
-                        builder: (context, snapshot) {
-                          final appName = snapshot.data ?? 'Unknown';
-                          return ListTile(
-                            dense: true,
-                            title: Text(appName),
-                            subtitle: Text(app.packageName ?? ''),
-                            onTap: () {
-                              Navigator.of(ctx).pop();
-                              changeUserInput(
-                                app.packageName ?? '',
-                                true,
-                                false,
-                                updateUrlInput: true,
-                              );
-                            },
+                      final label = app.applicationInfo != null
+                          ? app.packageName ?? 'Unknown'
+                          : 'Unknown';
+                      return ListTile(
+                        dense: true,
+                        title: Text(label),
+                        subtitle: Text(app.packageName ?? ''),
+                        onTap: () async {
+                          Navigator.of(ctx).pop();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddAppConfirmationPage(
+                                initialUrl: app.packageName ?? '',
+                                initialAppName: label,
+                                initialAppId: app.packageName ?? '',
+                                initialAppSourceURL: '',
+                              ),
+                            ),
                           );
                         },
                       );
@@ -523,20 +566,22 @@ class AddAppPageState extends State<AddAppPage> {
         if (res.isEmpty) {
           throw UpdatiumError(t('noResults'));
         }
-        List<String>? selectedUrls = res.isEmpty
-            ? []
-            : await showDialog<List<String>?>(
-                context: context,
-                builder: (BuildContext ctx) {
-                  return SelectionModal(
-                    entries: res.map((k, v) => MapEntry(k, v.value)),
-                    selectedByDefault: false,
-                    onlyOneSelectionAllowed: true,
-                  );
-                },
-              );
+        List<String>? selectedUrls = await showDialog<List<String>?>(
+          context: context,
+          builder: (BuildContext ctx) {
+            return SelectionModal(
+              entries: res.map((k, v) => MapEntry(k, v.value)),
+              selectedByDefault: false,
+              onlyOneSelectionAllowed: true,
+            );
+          },
+        );
         if (selectedUrls != null && selectedUrls.isNotEmpty) {
           var sourceName = res[selectedUrls[0]]?.key;
+          var source = sourceProvider.sources
+              .where((s) => s.name == sourceName)
+              .firstOrNull;
+
           changeUserInput(
             selectedUrls[0],
             true,
@@ -544,6 +589,12 @@ class AddAppPageState extends State<AddAppPage> {
             updateUrlInput: true,
             overrideSource: sourceName,
           );
+
+          final metadata = await extractMetadataFromUrl(
+            selectedUrls[0],
+            source,
+          );
+
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -551,6 +602,10 @@ class AddAppPageState extends State<AddAppPage> {
                 initialUrl: selectedUrls[0],
                 initialSourceOverride: sourceName,
                 cameFromSearch: true,
+                initialAppName: metadata['appName'],
+                initialAuthor: metadata['author'],
+                initialAppId: metadata['appId'],
+                initialAppSourceURL: metadata['appSourceURL'],
               ),
             ),
           );
@@ -590,6 +645,32 @@ class AddAppPageState extends State<AddAppPage> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  const ImportExportPage(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                    return SharedAxisTransition(
+                      animation: animation,
+                      secondaryAnimation: secondaryAnimation,
+                      transitionType: SharedAxisTransitionType.vertical,
+                      child: child,
+                    );
+                  },
+            ),
+          );
+        },
+        icon: const Icon(Icons.import_export),
+        label: Text(t('importExport')),
+        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
+        elevation: 3,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      ),
     );
   }
 }
@@ -598,12 +679,20 @@ class AddAppConfirmationPage extends StatefulWidget {
   final String? initialUrl;
   final String? initialSourceOverride;
   final bool cameFromSearch;
+  final String? initialAppName;
+  final String? initialAuthor;
+  final String? initialAppId;
+  final String? initialAppSourceURL;
 
   const AddAppConfirmationPage({
     super.key,
     this.initialUrl,
     this.initialSourceOverride,
     this.cameFromSearch = false,
+    this.initialAppName,
+    this.initialAuthor,
+    this.initialAppId,
+    this.initialAppSourceURL,
   });
 
   @override
@@ -612,7 +701,6 @@ class AddAppConfirmationPage extends StatefulWidget {
 
 class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   bool gettingAppInfo = false;
-  bool cameFromSearch = false;
 
   String userInput = '';
   String? pickedSourceOverride;
@@ -621,7 +709,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   bool additionalSettingsValid = true;
   bool inferAppIdIfOptional = true;
   List<String> pickedCategories = [];
-  SourceProvider sourceProvider = SourceProvider();
+  late SourceProvider sourceProvider;
   final TextEditingController _sourceOverrideController =
       TextEditingController();
 
@@ -640,9 +728,9 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   @override
   void initState() {
     super.initState();
+    sourceProvider = context.read<SourceProvider>();
     userInput = widget.initialUrl ?? '';
     pickedSourceOverride = widget.initialSourceOverride;
-    cameFromSearch = widget.cameFromSearch;
     if (userInput.isNotEmpty) {
       try {
         pickedSource = sourceProvider.getSource(
@@ -654,6 +742,21 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                 pickedSource!.combinedAppSpecificSettingFormItems,
               )
             : {};
+
+        // Auto-fill fields with metadata if provided
+        if (widget.initialAppName != null) {
+          additionalSettings['appName'] = widget.initialAppName;
+        }
+        if (widget.initialAuthor != null) {
+          additionalSettings['author'] = widget.initialAuthor;
+        }
+        if (widget.initialAppId != null) {
+          additionalSettings['appId'] = widget.initialAppId;
+        }
+        if (widget.initialAppSourceURL != null) {
+          additionalSettings['appSourceURL'] = widget.initialAppSourceURL;
+        }
+
         additionalSettingsValid = pickedSource != null
             ? !sourceProvider.ifRequiredAppSpecificSettingsExist(pickedSource!)
             : true;
@@ -669,187 +772,194 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    AppsProvider appsProvider = context.read<AppsProvider>();
-    SettingsProvider settingsProvider = context.watch<SettingsProvider>();
-    NotificationsProvider notificationsProvider = context
-        .read<NotificationsProvider>();
-
-    Future<bool> getTrackOnlyConfirmationIfNeeded(
-      bool userPickedTrackOnly, {
-      bool ignoreHideSetting = false,
-    }) async {
-      var useTrackOnly = userPickedTrackOnly || pickedSource!.enforceTrackOnly;
-      if (useTrackOnly &&
-          (!settingsProvider.hideTrackOnlyWarning || ignoreHideSetting)) {
-        // ignore: use_build_context_synchronously
-        var values = await showDialog<Map<String, dynamic>?>(
-          context: context,
-          builder: (BuildContext ctx) {
-            Map<String, dynamic> localValues = {'hide': false};
-            return AlertDialog(
-              scrollable: true,
-              contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-              title: Text(
-                tr(
-                  'xIsTrackOnly',
-                  args: [
-                    pickedSource!.enforceTrackOnly ? t('source') : t('app'),
-                  ],
-                ),
-              ),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${pickedSource!.enforceTrackOnly ? t('appsFromSourceAreTrackOnly') : t('youPickedTrackOnly')}\n\n${t('trackOnlyAppDescription')}',
-                  ),
-                  gap16,
-                  GeneratedForm(
-                    items: [
-                      [GeneratedFormSwitch('hide', label: t('dontShowAgain'))],
-                    ],
-                    onValueChanges: (vals, valid, isBuilding) {
-                      localValues = vals;
-                    },
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(ctx).pop(null),
-                  child: Text(t('cancel')),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.of(ctx).pop(localValues),
-                  child: Text(t('ok')),
-                ),
-              ],
-            );
-          },
-        );
-        if (values != null) {
-          settingsProvider.hideTrackOnlyWarning = values['hide'] == true;
-        }
-        return useTrackOnly && values != null;
-      } else {
-        return true;
-      }
-    }
-
-    getReleaseDateAsVersionConfirmationIfNeeded(
-      bool userPickedTrackOnly,
-    ) async {
-      return (!(additionalSettings['releaseDateAsVersion'] == true &&
-          // ignore: use_build_context_synchronously
-          await showDialog(
-                context: context,
-                builder: (BuildContext ctx) {
-                  return AlertDialog(
-                    title: Text(t('releaseDateAsVersion')),
-                    content: Text(t('releaseDateAsVersionExplanation')),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(null),
-                        child: Text(t('cancel')),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(true),
-                        child: Text(t('ok')),
-                      ),
-                    ],
-                  );
-                },
-              ) ==
-              null));
-    }
-
-    addApp() async {
-      setState(() {
-        gettingAppInfo = true;
-      });
-      try {
-        var userPickedTrackOnly = additionalSettings['trackOnly'] == true;
-        App? app;
-        if ((await getTrackOnlyConfirmationIfNeeded(userPickedTrackOnly)) &&
-            (await getReleaseDateAsVersionConfirmationIfNeeded(
-              userPickedTrackOnly,
-            ))) {
-          var trackOnly = pickedSource!.enforceTrackOnly || userPickedTrackOnly;
-          app = await sourceProvider.getApp(
-            pickedSource!,
-            userInput.trim(),
-            additionalSettings,
-            trackOnlyOverride: trackOnly,
-            sourceIsOverriden: pickedSourceOverride != null,
-            inferAppIdIfOptional: inferAppIdIfOptional,
-          );
-          // Only download the APK here if you need to for the package ID
-          if (isTempId(app) && app.additionalSettings['trackOnly'] != true) {
-            // ignore: use_build_context_synchronously
-            var apkUrl = await appsProvider.confirmAppFileUrl(
-              app,
-              context,
-              false,
-              progressIndicatorStep: 1,
-              progressIndicatorTotal: cameFromSearch ? 3 : 2,
-            );
-            if (apkUrl == null) {
-              throw UpdatiumError(t('cancelled'));
-            }
-            app.preferredApkIndex = app.apkUrls
-                .map((e) => e.value)
-                .toList()
-                .indexOf(apkUrl.value);
-            // ignore: use_build_context_synchronously
-            var downloadedArtifact = await appsProvider.downloadApp(
-              app,
-              globalNavigatorKey.currentContext,
-              notificationsProvider: notificationsProvider,
-            );
-            DownloadedApk? downloadedFile;
-            DownloadedDir? downloadedDir;
-            if (downloadedArtifact is DownloadedApk) {
-              downloadedFile = downloadedArtifact;
-            } else {
-              downloadedDir = downloadedArtifact as DownloadedDir;
-            }
-            app.id = downloadedFile?.appId ?? downloadedDir!.appId;
-          }
-          if (appsProvider.apps.containsKey(app.id)) {
-            throw UpdatiumError(t('appAlreadyAdded'));
-          }
-          if (app.additionalSettings['trackOnly'] == true ||
-              app.additionalSettings['versionDetection'] != true) {
-            app.installedVersion = app.latestVersion;
-          }
-          app.categories = pickedCategories;
-          await appsProvider.saveApps([app], onlyIfExists: false);
-        }
-        if (app != null) {
-          Navigator.push(
-            globalNavigatorKey.currentContext ?? context,
-            MaterialPageRoute(
-              builder: (context) => AppPage(
-                appId: app!.id,
-                flowType: cameFromSearch
-                    ? AppAddFlowType.search
-                    : AppAddFlowType.url,
+  Future<bool> getTrackOnlyConfirmationIfNeeded(
+    bool userPickedTrackOnly,
+    SettingsProvider settingsProvider, {
+    bool ignoreHideSetting = false,
+  }) async {
+    var useTrackOnly = userPickedTrackOnly || pickedSource!.enforceTrackOnly;
+    if (useTrackOnly &&
+        (!settingsProvider.hideTrackOnlyWarning || ignoreHideSetting)) {
+      // ignore: use_build_context_synchronously
+      var values = await showDialog<Map<String, dynamic>?>(
+        context: context,
+        builder: (BuildContext ctx) {
+          Map<String, dynamic> localValues = {'hide': false};
+          return AlertDialog(
+            scrollable: true,
+            contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+            title: Text(
+              tr(
+                'xIsTrackOnly',
+                args: [pickedSource!.enforceTrackOnly ? t('source') : t('app')],
               ),
             ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${pickedSource!.enforceTrackOnly ? t('appsFromSourceAreTrackOnly') : t('youPickedTrackOnly')}\n\n${t('trackOnlyAppDescription')}',
+                ),
+                gap16,
+                GeneratedForm(
+                  items: [
+                    [GeneratedFormSwitch('hide', label: t('dontShowAgain'))],
+                  ],
+                  onValueChanges: (vals, valid, isBuilding) {
+                    localValues = vals;
+                  },
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(null),
+                child: Text(t('cancel')),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(localValues),
+                child: Text(t('ok')),
+              ),
+            ],
           );
-        }
-      } catch (e) {
-        showError(e, context);
-      } finally {
-        setState(() {
-          gettingAppInfo = false;
-        });
+        },
+      );
+      if (values != null) {
+        settingsProvider.hideTrackOnlyWarning = values['hide'] == true;
       }
+      return useTrackOnly && values != null;
+    } else {
+      return true;
     }
+  }
 
+  Future<bool> getReleaseDateAsVersionConfirmationIfNeeded(
+    bool userPickedTrackOnly,
+  ) async {
+    return (!(additionalSettings['releaseDateAsVersion'] == true &&
+        // ignore: use_build_context_synchronously
+        await showDialog(
+              context: context,
+              builder: (BuildContext ctx) {
+                return AlertDialog(
+                  title: Text(t('releaseDateAsVersion')),
+                  content: Text(t('releaseDateAsVersionExplanation')),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(null),
+                      child: Text(t('cancel')),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(ctx).pop(true),
+                      child: Text(t('ok')),
+                    ),
+                  ],
+                );
+              },
+            ) ==
+            null));
+  }
+
+  Future<void> addApp() async {
+    setState(() {
+      gettingAppInfo = true;
+    });
+    try {
+      var userPickedTrackOnly = additionalSettings['trackOnly'] == true;
+      AppsProvider appsProvider = context.read<AppsProvider>();
+      SettingsProvider settingsProvider = context.read<SettingsProvider>();
+      NotificationsProvider notificationsProvider = context
+          .read<NotificationsProvider>();
+      App? app;
+      if ((await getTrackOnlyConfirmationIfNeeded(
+            userPickedTrackOnly,
+            settingsProvider,
+          )) &&
+          (await getReleaseDateAsVersionConfirmationIfNeeded(
+            userPickedTrackOnly,
+          ))) {
+        var trackOnly = pickedSource!.enforceTrackOnly || userPickedTrackOnly;
+        app = await sourceProvider.getApp(
+          pickedSource!,
+          userInput.trim(),
+          additionalSettings,
+          trackOnlyOverride: trackOnly,
+          sourceIsOverriden: pickedSourceOverride != null,
+          inferAppIdIfOptional: inferAppIdIfOptional,
+        );
+        // Only download the APK here if you need to for the package ID
+        if (isTempId(app) && app.additionalSettings['trackOnly'] != true) {
+          // ignore: use_build_context_synchronously
+          var apkUrl = await appsProvider.confirmAppFileUrl(
+            app,
+            context,
+            false,
+            progressIndicatorStep: 1,
+            progressIndicatorTotal: widget.cameFromSearch ? 3 : 2,
+          );
+          if (apkUrl == null) {
+            throw UpdatiumError(t('cancelled'));
+          }
+          app.preferredApkIndex = app.apkUrls
+              .map((e) => e.value)
+              .toList()
+              .indexOf(apkUrl.value);
+          // ignore: use_build_context_synchronously
+          var downloadedArtifact = await appsProvider.downloadApp(
+            app,
+            globalNavigatorKey.currentContext,
+            notificationsProvider: notificationsProvider,
+          );
+          DownloadedApk? downloadedFile;
+          DownloadedDir? downloadedDir;
+          if (downloadedArtifact is DownloadedApk) {
+            downloadedFile = downloadedArtifact;
+          } else if (downloadedArtifact is DownloadedDir) {
+            downloadedDir = downloadedArtifact;
+          } else {
+            throw UpdatiumError(t('invalidDownloadedArtifact'));
+          }
+          final inferredId = downloadedFile?.appId ?? downloadedDir?.appId;
+          if (inferredId == null) {
+            throw UpdatiumError(t('failedToInferAppId'));
+          }
+          app.id = inferredId;
+        }
+        if (appsProvider.apps.containsKey(app.id)) {
+          throw UpdatiumError(t('appAlreadyAdded'));
+        }
+        if (app.additionalSettings['trackOnly'] == true ||
+            app.additionalSettings['versionDetection'] != true) {
+          app.installedVersion = app.latestVersion;
+        }
+        app.categories = pickedCategories;
+        await appsProvider.saveApps([app], onlyIfExists: false);
+      }
+      if (app != null) {
+        Navigator.push(
+          globalNavigatorKey.currentContext ?? context,
+          MaterialPageRoute(
+            builder: (context) => AppPage(
+              appId: app!.id,
+              flowType: widget.cameFromSearch
+                  ? AppAddFlowType.search
+                  : AppAddFlowType.url,
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      showError(e, context);
+    } finally {
+      setState(() {
+        gettingAppInfo = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     Widget getAdditionalOptsCol() => Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -867,15 +977,12 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}',
           ),
           items: [
-            ...pickedSource!.combinedAppSpecificSettingFormItems.map((row) {
-              return row.map((e) {
-                return e;
-              }).toList();
-            }),
+            ...pickedSource!.combinedAppSpecificSettingFormItems,
             ...(pickedSourceOverride != null
                 ? pickedSource!.sourceConfigSettingFormItems.map((e) => [e])
                 : []),
           ],
+          initialValues: additionalSettings,
           onValueChanges: (values, valid, isBuilding) {
             if (!isBuilding) {
               setState(() {
@@ -958,169 +1065,147 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
     return Dialog.fullscreen(
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
-        body: CustomScrollView(
-          shrinkWrap: true,
-          slivers: <Widget>[
-            SliverAppBar.large(
-              pinned: true,
-              title: Text(t('addApp')),
-              leading: IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              bottom: (pickedSource != null || cameFromSearch)
-                  ? PreferredSize(
-                      preferredSize: const Size.fromHeight(4),
-                      child: TweenAnimationBuilder<double>(
-                        tween: Tween(
-                          begin: 0,
-                          end: cameFromSearch ? 2 / 3 : 1 / 2,
-                        ),
-                        duration: const Duration(milliseconds: 500),
-                        builder: (context, value, child) {
-                          return LinearProgressIndicator(value: value);
-                        },
-                      ),
-                    )
-                  : null,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(),
+            tooltip: t('cancel'),
+          ),
+          title: Text(t('addApp')),
+        ),
+        body: Column(
+          children: [
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0, end: 1 / 3),
+              duration: const Duration(milliseconds: 500),
+              builder: (context, value, child) {
+                return LinearProgressIndicator(value: value);
+              },
             ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (pickedSource != null)
-                      FutureBuilder(
-                        builder: (ctx, val) {
-                          return val.data != null && val.data!.isNotEmpty
-                              ? Text(
-                                  val.data!,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                )
-                              : const SizedBox();
-                        },
-                        future: pickedSource?.getSourceNote(),
-                      ),
-                    if (pickedSource != null) getAdditionalOptsCol(),
-                    if (pickedSource != null)
-                      Column(
+            Expanded(
+              child: CustomScrollView(
+                shrinkWrap: true,
+                slivers: <Widget>[
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          gap24,
-                          Text(
-                            t('advanced'),
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold,
+                          if (pickedSource != null)
+                            FutureBuilder(
+                              builder: (ctx, val) {
+                                return val.data != null && val.data!.isNotEmpty
+                                    ? Text(
+                                        val.data!,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.bodySmall,
+                                      )
+                                    : const SizedBox();
+                              },
+                              future: pickedSource?.getSourceNote(),
                             ),
-                          ),
-                          gap16,
-                          GeneratedForm(
-                            key: const Key('advancedSettings'),
-                            items: [
-                              [
-                                GeneratedFormTextField(
-                                  'apkFilterRegEx',
-                                  label: t('filterAPKsByRegEx'),
-                                  required: false,
-                                  additionalValidators: [
-                                    (value) => _regExValidator(value),
+                          if (pickedSource != null) getAdditionalOptsCol(),
+                          if (pickedSource != null)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                gap24,
+                                Text(
+                                  t('advanced'),
+                                  style: TextStyle(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                gap16,
+                                GeneratedForm(
+                                  key: const Key('advancedSettings'),
+                                  items: [
+                                    [
+                                      GeneratedFormTextField(
+                                        'apkFilterRegEx',
+                                        label: t('filterAPKsByRegEx'),
+                                        required: false,
+                                        additionalValidators: [
+                                          (value) => _regExValidator(value),
+                                        ],
+                                      ),
+                                    ],
+                                    [
+                                      GeneratedFormSwitch(
+                                        'invertAPKFilter',
+                                        label:
+                                            '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
+                                        defaultValue: false,
+                                      ),
+                                    ],
+                                    [
+                                      GeneratedFormTextField(
+                                        'zippedApkFilterRegEx',
+                                        label: t('zippedApkFilterRegEx'),
+                                        required: false,
+                                        additionalValidators: [
+                                          (value) => _regExValidator(value),
+                                        ],
+                                      ),
+                                    ],
+                                    [
+                                      GeneratedFormSwitch(
+                                        'shizukuPretendToBeGooglePlay',
+                                        label: t(
+                                          'shizukuPretendToBeGooglePlay',
+                                        ),
+                                        defaultValue: false,
+                                      ),
+                                    ],
+                                    [
+                                      GeneratedFormSwitch(
+                                        'allowInsecure',
+                                        label: t('allowInsecure'),
+                                        defaultValue: false,
+                                      ),
+                                    ],
                                   ],
+                                  onValueChanges: (values, valid, isBuilding) {
+                                    if (!isBuilding) {
+                                      setState(() {
+                                        additionalSettings.addAll(values);
+                                      });
+                                    }
+                                  },
                                 ),
                               ],
-                              [
-                                GeneratedFormSwitch(
-                                  'invertAPKFilter',
-                                  label:
-                                      '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
-                                  defaultValue: false,
-                                ),
-                              ],
-                              [
-                                GeneratedFormTextField(
-                                  'zippedApkFilterRegEx',
-                                  label: t('zippedApkFilterRegEx'),
-                                  required: false,
-                                  additionalValidators: [
-                                    (value) => _regExValidator(value),
-                                  ],
-                                ),
-                              ],
-                              [
-                                GeneratedFormSwitch(
-                                  'shizukuPretendToBeGooglePlay',
-                                  label: t('shizukuPretendToBeGooglePlay'),
-                                  defaultValue: false,
-                                ),
-                              ],
-                              [
-                                GeneratedFormSwitch(
-                                  'allowInsecure',
-                                  label: t('allowInsecure'),
-                                  defaultValue: false,
-                                ),
-                              ],
-                            ],
-                            onValueChanges: (values, valid, isBuilding) {
-                              if (!isBuilding) {
-                                setState(() {
-                                  additionalSettings.addAll(values);
-                                });
-                              }
-                            },
+                            ),
+                          gap24,
+                          M3EFilledButton.icon(
+                            onPressed:
+                                gettingAppInfo ||
+                                    pickedSource == null ||
+                                    (pickedSource!
+                                            .combinedAppSpecificSettingFormItems
+                                            .isNotEmpty &&
+                                        !additionalSettingsValid)
+                                ? null
+                                : () {
+                                    HapticFeedback.selectionClick();
+                                    addApp();
+                                  },
+                            icon: const Icon(Icons.add),
+                            label: Text(t('addAppToCollection')),
                           ),
                         ],
                       ),
-                    gap24,
-                    M3EFilledButton.icon(
-                      onPressed:
-                          gettingAppInfo ||
-                              pickedSource == null ||
-                              (pickedSource!
-                                      .combinedAppSpecificSettingFormItems
-                                      .isNotEmpty &&
-                                  !additionalSettingsValid)
-                          ? null
-                          : () {
-                              HapticFeedback.selectionClick();
-                              addApp();
-                            },
-                      icon: const Icon(Icons.add),
-                      label: Text(t('addAppToCollection')),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const ImportExportPage(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                      return SharedAxisTransition(
-                        animation: animation,
-                        secondaryAnimation: secondaryAnimation,
-                        transitionType: SharedAxisTransitionType.vertical,
-                        child: child,
-                      );
-                    },
-              ),
-            );
-          },
-          icon: const Icon(Icons.import_export),
-          label: Text(t('importExport')),
-          extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
-          elevation: 3,
-          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
         ),
       ),
     );
@@ -1167,8 +1252,23 @@ class _SelectionModalState extends State<SelectionModal> {
       );
     }
     if (widget.selectedByDefault && widget.onlyOneSelectionAllowed) {
-      selectOnlyOne(widget.entries.entries.first.key);
+      final firstEntry = widget.entries.entries.firstOrNull;
+      if (firstEntry != null) {
+        selectOnlyOne(firstEntry.key);
+      }
     }
+  }
+
+  String? _regExValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    }
+    try {
+      RegExp(value);
+    } catch (e) {
+      return t('invalidRegEx');
+    }
+    return null;
   }
 
   @override
@@ -1225,8 +1325,6 @@ class _SelectionModalState extends State<SelectionModal> {
               child: Text(t('deselectX', args: [t('all')])),
             );
     }
-
-    // TODO: Move the following dialog to add_app.dart
 
     return Dialog.fullscreen(
       child: Scaffold(
@@ -1312,7 +1410,7 @@ class _SelectionModalState extends State<SelectionModal> {
                     filterRegex = value;
                   });
                 },
-                validator: regExValidator,
+                validator: _regExValidator,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
             ),

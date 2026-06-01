@@ -10,10 +10,10 @@ import 'package:updatium/components/category_chip.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 abstract class GeneratedFormItem {
-  late String key;
-  late String label;
-  late List<Widget> belowWidgets;
-  late dynamic defaultValue;
+  String key;
+  String label;
+  List<Widget> belowWidgets;
+  dynamic defaultValue;
   List<dynamic> additionalValidators;
   dynamic ensureType(dynamic val);
   GeneratedFormItem clone();
@@ -136,7 +136,7 @@ class GeneratedFormSwitch extends GeneratedFormItem {
       label: label,
       belowWidgets: belowWidgets,
       defaultValue: defaultValue,
-      disabled: false,
+      disabled: disabled,
       additionalValidators: List.from(additionalValidators),
     );
   }
@@ -193,10 +193,12 @@ class GeneratedForm extends StatefulWidget {
     super.key,
     required this.items,
     required this.onValueChanges,
+    this.initialValues,
   });
 
   final List<List<GeneratedFormItem>> items;
   final OnValueChanges onValueChanges;
+  final Map<String, dynamic>? initialValues;
 
   @override
   State<GeneratedForm> createState() => _GeneratedFormState();
@@ -318,6 +320,12 @@ class _GeneratedFormState extends State<GeneratedForm> {
         values[e.key] = e.defaultValue;
       }
     }
+    // Apply initial values if provided
+    if (widget.initialValues != null) {
+      for (var entry in widget.initialValues!.entries) {
+        values[entry.key] = entry.value;
+      }
+    }
 
     // Dynamically create form inputs
     formInputs = widget.items.asMap().entries.map((row) {
@@ -392,7 +400,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
             hideOnEmpty: true,
           );
         } else if (formItem is GeneratedFormDropdown) {
-          if (formItem.opts!.isEmpty) {
+          if (formItem.opts == null || formItem.opts!.isEmpty) {
             return Text(t('dropdownNoOptsError'));
           }
           return DropdownButtonFormField<String>(
