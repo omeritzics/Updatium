@@ -961,6 +961,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   @override
   Widget build(BuildContext context) {
     Widget getAdditionalOptsCol() => Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         gap16,
@@ -1110,6 +1111,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                           if (pickedSource != null) getAdditionalOptsCol(),
                           if (pickedSource != null)
                             Column(
+                              mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 gap24,

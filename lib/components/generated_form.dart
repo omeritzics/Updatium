@@ -953,9 +953,11 @@ class _GeneratedFormState extends State<GeneratedForm> {
     return Form(
       key: _formKey,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           ...rows.map(
             (row) => Row(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [...row.map((e) => e)],
