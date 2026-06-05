@@ -66,8 +66,12 @@ check_java() {
     
     # Set JAVA_HOME to the Java installation directory
     if [ -z "$JAVA_HOME" ]; then
-        local java_home=$(dirname $(dirname $(readlink -f $(which java))))
-        export JAVA_HOME="$java_home"
+        if [ "$(uname)" = "Darwin" ] && [ -x /usr/libexec/java_home ]; then
+            export JAVA_HOME=$(/usr/libexec/java_home)
+        else
+            local java_path=$(readlink -f $(which java) 2>/dev/null || which java)
+            export JAVA_HOME=$(dirname $(dirname "$java_path"))
+        fi
         print_info "JAVA_HOME set to: $JAVA_HOME"
     fi
     
