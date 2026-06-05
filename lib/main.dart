@@ -450,17 +450,12 @@ class _UpdatiumState extends State<Updatium> {
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
-              // NOTE: LET'S SEE WHETHER FLUTTER'S DEFAULT CONFIGS ARE BETTER FOR THE AMOLED THEME
-              // surfaceContainerHighest: Colors.white.withValues(alpha: 0.20),
-              // surfaceContainerHigh: Colors.white.withValues(alpha: 0.16),
               surfaceContainer: Colors.white.withValues(alpha: 0.08),
-              surfaceContainerLow: Colors.black,
+              surfaceContainerLow: Colors.white.withValues(alpha: 0.04),
               surfaceDim: Colors.black,
               surfaceBright: Colors.black,
               onSurface: Colors.white,
               onSurfaceVariant: Colors.white.withValues(alpha: 0.90),
-              // outline: Colors.white.withValues(alpha: 0.5),
-              // outlineVariant: Colors.white.withValues(alpha: 0.25),
             );
           }
 
@@ -527,7 +522,6 @@ class _UpdatiumState extends State<Updatium> {
                       ? null
                       : const [
                           'Inter',
-                          'GoogleSansFlex',
                           'NotoSansCJK',
                           'NotoSansHebrew',
                           'NotoSansArabic',

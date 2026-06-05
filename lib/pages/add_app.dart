@@ -190,29 +190,39 @@ class AddAppPageState extends State<AddAppPage> {
                       setState(() {
                         searching = true;
                       });
-                      final metadata = await extractMetadataFromUrl(
-                        userInput,
-                        pickedSource,
-                      );
-                      if (mounted) {
-                        setState(() {
-                          searching = false;
-                        });
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AddAppConfirmationPage(
-                              initialUrl: userInput,
-                              initialSourceOverride: pickedSourceOverride,
-                              initialAppName: metadata['appName'],
-                              initialAuthor: metadata['author'],
-                              initialAppId: metadata['appId'],
-                              initialAppSourceURL: metadata['appSourceURL'],
-                            ),
-                          ),
+                      try {
+                        final metadata = await extractMetadataFromUrl(
+                          userInput,
+                          pickedSource,
                         );
+                        if (mounted) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddAppConfirmationPage(
+                                initialUrl: userInput,
+                                initialSourceOverride: pickedSourceOverride,
+                                initialAppName: metadata['appName'],
+                                initialAuthor: metadata['author'],
+                                initialAppId: metadata['appId'],
+                                initialAppSourceURL: metadata['appSourceURL'],
+                              ),
+                            ),
+                          );
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          showError(e, context);
+                        }
+                      } finally {
+                        if (mounted) {
+                          setState(() {
+                            searching = false;
+                          });
+                        }
                       }
                     },
+
               child: Text(t('continue')),
             ),
     ],
@@ -436,6 +446,7 @@ class AddAppPageState extends State<AddAppPage> {
   );
 
   Future<void> runSearch({bool filtered = true}) async {
+    if (!mounted) return;
     setState(() {
       searching = true;
     });
@@ -603,28 +614,34 @@ class AddAppPageState extends State<AddAppPage> {
             source,
           );
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddAppConfirmationPage(
-                initialUrl: selectedUrls[0],
-                initialSourceOverride: sourceName,
-                cameFromSearch: true,
-                initialAppName: metadata['appName'],
-                initialAuthor: metadata['author'],
-                initialAppId: metadata['appId'],
-                initialAppSourceURL: metadata['appSourceURL'],
+          if (mounted) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddAppConfirmationPage(
+                  initialUrl: selectedUrls[0],
+                  initialSourceOverride: sourceName,
+                  cameFromSearch: true,
+                  initialAppName: metadata['appName'],
+                  initialAuthor: metadata['author'],
+                  initialAppId: metadata['appId'],
+                  initialAppSourceURL: metadata['appSourceURL'],
+                ),
               ),
-            ),
-          );
+            );
+          }
         }
       }
     } catch (e) {
-      showError(e, context);
+      if (mounted) {
+        showError(e, context);
+      }
     } finally {
-      setState(() {
-        searching = false;
-      });
+      if (mounted) {
+        setState(() {
+          searching = false;
+        });
+      }
     }
   }
 
