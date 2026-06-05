@@ -1088,9 +1088,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                             'Mullvad DNS',
                                           ),
                                         ]
-                                        .map(
-                                          (e) => MapEntry(e.key, t(e.value)),
-                                        )
+                                        .map((e) => MapEntry(e.key, t(e.value)))
                                         .toList(),
                                     label: t('dnsServiceProvider'),
                                     defaultValue: settingsProvider
