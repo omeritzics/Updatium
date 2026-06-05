@@ -44,8 +44,8 @@ class VLC extends AppSource {
     // Extract all versions and sort them
     List<String> versions = matches.map((m) => m.group(1)!).toList()
       ..sort((a, b) {
-        var aParts = a.split('.').map(int.parse).toList();
-        var bParts = b.split('.').map(int.parse).toList();
+        var aParts = a.split('.').map((e) => int.tryParse(e) ?? 0).toList();
+        var bParts = b.split('.').map((e) => int.tryParse(e) ?? 0).toList();
         for (int i = 0; i < aParts.length && i < bParts.length; i++) {
           var cmp = bParts[i].compareTo(aParts[i]);
           if (cmp != 0) return cmp;
