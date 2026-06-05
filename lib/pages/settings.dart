@@ -821,7 +821,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                       children: [
                                         Text(t('safeModeAntiCheat')),
                                         Text(
-                                          tr('safeModeAntiCheatDescription'),
+                                          t('safeModeAntiCheatDescription'),
                                           style: Theme.of(
                                             context,
                                           ).textTheme.labelSmall,
