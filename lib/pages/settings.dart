@@ -1089,7 +1089,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                           ),
                                         ]
                                         .map(
-                                          (e) => MapEntry(e.key, tr(e.value)),
+                                          (e) => MapEntry(e.key, t(e.value)),
                                         )
                                         .toList(),
                                     label: t('dnsServiceProvider'),
