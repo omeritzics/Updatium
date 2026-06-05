@@ -26,7 +26,8 @@ class OpenAPK extends AppSource {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
     try {
-      return Uri.parse(standardUrl).pathSegments.last;
+      final segments = Uri.parse(standardUrl).pathSegments.where((s) => s.isNotEmpty);
+      return segments.isNotEmpty ? segments.last : null;
     } catch (e) {
       // Use structured logging without exposing sensitive URL details or raw exception
       final logsProvider = LogsProvider();
