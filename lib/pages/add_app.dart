@@ -187,23 +187,31 @@ class AddAppPageState extends State<AddAppPage> {
                   ? null
                   : () async {
                       HapticFeedback.selectionClick();
+                      setState(() {
+                        searching = true;
+                      });
                       final metadata = await extractMetadataFromUrl(
                         userInput,
                         pickedSource,
                       );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddAppConfirmationPage(
-                            initialUrl: userInput,
-                            initialSourceOverride: pickedSourceOverride,
-                            initialAppName: metadata['appName'],
-                            initialAuthor: metadata['author'],
-                            initialAppId: metadata['appId'],
-                            initialAppSourceURL: metadata['appSourceURL'],
+                      if (mounted) {
+                        setState(() {
+                          searching = false;
+                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddAppConfirmationPage(
+                              initialUrl: userInput,
+                              initialSourceOverride: pickedSourceOverride,
+                              initialAppName: metadata['appName'],
+                              initialAuthor: metadata['author'],
+                              initialAppId: metadata['appId'],
+                              initialAppSourceURL: metadata['appSourceURL'],
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      }
                     },
               child: Text(t('continue')),
             ),

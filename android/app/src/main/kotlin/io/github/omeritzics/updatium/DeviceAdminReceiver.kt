@@ -34,17 +34,9 @@ class DeviceAdminReceiver : DeviceAdminReceiver() {
         try {
             val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             val packageName = "com.android.settings"
-            
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                activityManager.appTasks.forEach { task ->
-                    if (task.taskInfo.baseActivity?.packageName == packageName) {
-                        activityManager.killBackgroundProcesses(packageName)
-                    }
-                }
-            } else {
-                @Suppress("DEPRECATION")
-                activityManager.killBackgroundProcesses(packageName)
-            }
+            // Note: killBackgroundProcesses only kills background processes and requires 
+            // android.permission.KILL_BACKGROUND_PROCESSES. It won't stop Settings if it's in the foreground.
+            activityManager.killBackgroundProcesses(packageName)
         } catch (e: Exception) {
             // Log error but don't crash
             e.printStackTrace()

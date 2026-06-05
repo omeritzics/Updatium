@@ -240,6 +240,9 @@ class Bitbucket extends AppSource {
 
     // For tags, we can't get APKs directly unless they're in downloads
     // Return track-only info if no APKs found
+    if (!trackOnly) {
+      throw NoAPKError();
+    }
     return APKDetails(
       version,
       [],
