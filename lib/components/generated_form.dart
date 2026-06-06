@@ -957,7 +957,6 @@ class _GeneratedFormState extends State<GeneratedForm> {
         children: [
           ...rows.map(
             (row) => Row(
-              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [...row.map((e) => e)],
