@@ -3,10 +3,6 @@ import 'dart:math';
 import 'package:hsluv/hsluv.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:updatium/providers/source_provider.dart';
-import 'package:updatium/providers/settings_provider.dart';
-import 'package:updatium/components/category_chip.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 abstract class GeneratedFormItem {
@@ -332,7 +328,9 @@ class _GeneratedFormState extends State<GeneratedForm> {
 
   Widget _buildField(GeneratedFormItem formItem) {
     if (formItem is GeneratedFormTextField) {
-      var ctrl = TextEditingController(text: values[formItem.key]?.toString() ?? '');
+      var ctrl = TextEditingController(
+        text: values[formItem.key]?.toString() ?? '',
+      );
       _controllers.add(ctrl);
       return TypeAheadField<String>(
         controller: ctrl,
@@ -356,7 +354,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
               border: const OutlineInputBorder(),
             ),
             validator: (value) {
-              if (formItem.required && (value == null || value.trim().isEmpty)) {
+              if (formItem.required &&
+                  (value == null || value.trim().isEmpty)) {
                 return '${formItem.label} ${t('requiredInBrackets')}';
               }
               for (var validator in formItem.additionalValidators) {
@@ -375,22 +374,26 @@ class _GeneratedFormState extends State<GeneratedForm> {
             someValueChanged();
           });
         },
-        suggestionsCallback: (search) => formItem.autoCompleteOptions
-            ?.where((t) => t.toLowerCase().contains(search.toLowerCase()))
-            .toList() ?? [],
+        suggestionsCallback: (search) =>
+            formItem.autoCompleteOptions
+                ?.where((t) => t.toLowerCase().contains(search.toLowerCase()))
+                .toList() ??
+            [],
       );
     } else if (formItem is GeneratedFormDropdown) {
       return DropdownButtonFormField<String>(
-        value: values[formItem.key] ?? formItem.opts?.first.key,
+        initialValue: values[formItem.key] ?? formItem.opts?.first.key,
         isExpanded: true,
         decoration: InputDecoration(
           labelText: formItem.label,
           border: const OutlineInputBorder(),
         ),
-        items: formItem.opts?.map((e) => DropdownMenuItem<String>(
-          value: e.key,
-          child: Text(e.value),
-        )).toList(),
+        items: formItem.opts
+            ?.map(
+              (e) =>
+                  DropdownMenuItem<String>(value: e.key, child: Text(e.value)),
+            )
+            .toList(),
         onChanged: (value) {
           if (value != null) {
             setState(() {
@@ -401,7 +404,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
         },
       );
     } else if (formItem is GeneratedFormSwitch) {
-       return Padding(
+      return Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Row(
           children: [
@@ -454,4 +457,3 @@ class _GeneratedFormState extends State<GeneratedForm> {
     );
   }
 }
-
