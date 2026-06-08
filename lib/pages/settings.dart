@@ -782,7 +782,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         } else {
                                           // User declined or failed
                                           ScaffoldMessenger.of(
-                                            context,
+                                            context.mounted as BuildContext,
                                           ).showSnackBar(
                                             SnackBar(
                                               content: Text(
@@ -841,7 +841,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               true;
                                         } else {
                                           ScaffoldMessenger.of(
-                                            context,
+                                            context.mounted as BuildContext,
                                           ).showSnackBar(
                                             SnackBar(
                                               content: Text(
@@ -860,7 +860,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               false;
                                         } else {
                                           ScaffoldMessenger.of(
-                                            context,
+                                            context.mounted as BuildContext,
                                           ).showSnackBar(
                                             SnackBar(
                                               content: Text(
@@ -1004,14 +1004,16 @@ class _SettingsPageState extends State<SettingsPage> {
                                                   UpdatiumError(
                                                     t('shizukuBinderNotFound'),
                                                   ),
-                                                  context,
+                                                  context.mounted
+                                                      as BuildContext,
                                                 );
                                               case 'old_shizuku':
                                                 showError(
                                                   UpdatiumError(
                                                     t('shizukuOld'),
                                                   ),
-                                                  context,
+                                                  context.mounted
+                                                      as BuildContext,
                                                 );
                                               case 'old_android_with_adb':
                                                 showError(
@@ -1020,12 +1022,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                                       'shizukuOldAndroidWithADB',
                                                     ),
                                                   ),
-                                                  context,
+                                                  context.mounted
+                                                      as BuildContext,
                                                 );
                                               case 'denied':
                                                 showError(
                                                   UpdatiumError(t('cancelled')),
-                                                  context,
+                                                  context.mounted
+                                                      as BuildContext,
                                                 );
                                             }
                                           });
@@ -1575,7 +1579,7 @@ class _LogsDialogState extends State<LogsDialog> {
                 true;
             if (cont) {
               logsProvider.clear();
-              Navigator.of(context).pop();
+              Navigator.of(context.mounted as BuildContext).pop();
             }
           },
           child: Text(t('remove')),

@@ -86,11 +86,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       final disclaimerAccepted =
           await SecurityDisclaimerScreen.isDisclaimerAccepted();
       if (!disclaimerAccepted) {
-        final accepted = await Navigator.of(context).push<bool>(
-          MaterialPageRoute(
-            builder: (context) => const SecurityDisclaimerScreen(),
-          ),
-        );
+        final accepted = await Navigator.of(context.mounted as BuildContext)
+            .push<bool>(
+              MaterialPageRoute(
+                builder: (context) => const SecurityDisclaimerScreen(),
+              ),
+            );
 
         // If user declined, exit the app
         if (accepted != true) {
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
 
       // Show FreeDroidWarn dialog if needed
-      await showFreeDroidWarnDialog(context);
+      await showFreeDroidWarnDialog(context.mounted as BuildContext);
     });
   }
 
@@ -215,14 +216,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 'importedX',
                 args: [plural('apps', result.key.length).toLowerCase()],
               ),
-              context,
+              context.mounted as BuildContext,
             );
           }
         } else {
           throw UpdatiumError(t('unknown'));
         }
       } catch (e) {
-        showError(e, context);
+        showError(e, context.mounted as BuildContext);
       }
     }
 
@@ -256,7 +257,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           throw UpdatiumError(t('unknown'));
         }
       } catch (e) {
-        showError(e, context);
+        showError(e, context.mounted as BuildContext);
       }
     }
 
