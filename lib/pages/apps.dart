@@ -246,7 +246,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           .checkUpdates()
           .catchError((e) {
             if (mounted) {
-              showError(e is Map ? e['errors'] : e, context);
+              showError(
+                e is Map ? e['errors'] : e,
+                context.mounted as BuildContext,
+              );
             }
             return <App>[];
           })
@@ -634,7 +637,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             app.id,
           ], globalNavigatorKey.currentContext)
           .catchError((e) {
-            showError(e, context);
+            showError(e, context.mounted as BuildContext);
             return <String>[];
           });
     }
@@ -1139,7 +1142,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       )
                       .catchError((e) {
                         if (mounted) {
-                          showError(e, context);
+                          showError(e, context.mounted as BuildContext);
                         }
                         return <String>[];
                       })
@@ -1147,7 +1150,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         if (value.isNotEmpty &&
                             shouldInstallUpdates &&
                             mounted) {
-                          showMessage(t('appsUpdated'), context);
+                          showMessage(
+                            t('appsUpdated'),
+                            context.mounted as BuildContext,
+                          );
                         }
                       });
                 }
@@ -1208,7 +1214,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ? preselected ?? {}
                 : {};
             await showDialog<void>(
-              context: context,
+              context: context.mounted as BuildContext,
               builder: (BuildContext ctx) {
                 return AlertDialog(
                   title: Text(t('categorize')),
@@ -1243,7 +1249,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           }
         } catch (err) {
           if (mounted) {
-            showError(err, context);
+            showError(err, context.mounted as BuildContext);
           }
         }
       };
@@ -1302,7 +1308,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           );
         },
       ).whenComplete(() {
-        Navigator.of(context).pop();
+        Navigator.of(context.mounted as BuildContext).pop();
       });
     }
 
@@ -1783,7 +1789,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                               );
                           if (removedApps != null && removedApps.isNotEmpty) {
                             if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
+                              ScaffoldMessenger.of(
+                                context.mounted as BuildContext,
+                              ).showSnackBar(
                                 SnackBar(
                                   content: Text(
                                     plural('appRemoved', removedApps.length),

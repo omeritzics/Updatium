@@ -146,7 +146,9 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                           if (!mounted) return;
                           await _saveDisclaimerAccepted();
                           if (mounted) {
-                            Navigator.of(context).pop(true);
+                            Navigator.of(
+                              context.mounted as BuildContext,
+                            ).pop(true);
                           }
                         },
                         child: Padding(

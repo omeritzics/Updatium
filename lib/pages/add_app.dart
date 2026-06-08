@@ -324,7 +324,7 @@ class AddAppPageState extends State<AddAppPage> {
           }).toList();
 
           showDialog(
-            context: context,
+            context: context.mounted as BuildContext,
             builder: (BuildContext ctx) {
               return AlertDialog(
                 contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
@@ -490,7 +490,7 @@ class AddAppPageState extends State<AddAppPage> {
                         } catch (err) {
                           if (err is CredsNeededError) {
                             err.unexpected = true;
-                            showError(err, context);
+                            showError(err, context.mounted as BuildContext);
                           } else {
                             LogsProvider().add(
                               'Search error for ${e.name}: ${err.toString()}',
@@ -526,7 +526,7 @@ class AddAppPageState extends State<AddAppPage> {
         List<String>? selectedUrls = res.isEmpty
             ? []
             : await showDialog<List<String>?>(
-                context: context,
+                context: context.mounted as BuildContext,
                 builder: (BuildContext ctx) {
                   return SelectionModal(
                     entries: res.map((k, v) => MapEntry(k, v.value)),
@@ -545,7 +545,7 @@ class AddAppPageState extends State<AddAppPage> {
             overrideSource: sourceName,
           );
           Navigator.push(
-            context,
+            context.mounted as BuildContext,
             MaterialPageRoute(
               builder: (context) => AddAppConfirmationPage(
                 initialUrl: selectedUrls[0],
@@ -557,7 +557,7 @@ class AddAppPageState extends State<AddAppPage> {
         }
       }
     } catch (e) {
-      showError(e, context);
+      showError(e, context.mounted as BuildContext);
     } finally {
       setState(() {
         searching = false;
@@ -791,7 +791,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             // ignore: use_build_context_synchronously
             var apkUrl = await appsProvider.confirmAppFileUrl(
               app,
-              context,
+              context.mounted as BuildContext,
               false,
               progressIndicatorStep: 1,
               progressIndicatorTotal: cameFromSearch ? 3 : 2,
@@ -842,7 +842,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           );
         }
       } catch (e) {
-        showError(e, context);
+        showError(e, context.mounted as BuildContext);
       } finally {
         setState(() {
           gettingAppInfo = false;
@@ -1225,8 +1225,6 @@ class _SelectionModalState extends State<SelectionModal> {
               child: Text(t('deselectX', args: [t('all')])),
             );
     }
-
-    // TODO: Move the following dialog to add_app.dart
 
     return Dialog.fullscreen(
       child: Scaffold(

@@ -129,7 +129,7 @@ class _AppPageState extends State<AppPage> {
         appsProvider.saveApps([appsProvider.apps[id]!.app]);
       }
     } catch (err) {
-      showError(err, context);
+      showError(err, context.mounted as BuildContext);
     } finally {
       setState(() {
         updating = false;
@@ -627,13 +627,13 @@ class _AppPageState extends State<AppPage> {
                   app.app.id,
                 ], globalNavigatorKey.currentContext);
                 if (res.isNotEmpty && !trackOnly) {
-                  showMessage(successMessage, context);
+                  showMessage(successMessage, context.mounted as BuildContext);
                 }
                 if (res.isNotEmpty && mounted) {
-                  Navigator.of(context).pop();
+                  Navigator.of(context.mounted as BuildContext).pop();
                 }
               } catch (e) {
-                showError(e, context);
+                showError(e, context.mounted as BuildContext);
               }
             }
           : null,
@@ -843,9 +843,9 @@ class _AppPageState extends State<AppPage> {
                           try {
                             await appsProvider.downloadAppAssets([
                               app.app.id,
-                            ], context);
+                            ], context.mounted as BuildContext);
                           } catch (e) {
-                            showError(e, context);
+                            showError(e, context.mounted as BuildContext);
                           }
                         },
                       ),
@@ -855,10 +855,15 @@ class _AppPageState extends State<AppPage> {
                       tooltip: t('remove'),
                       onPressed: () async {
                         final removedApps = await appsProvider
-                            .removeAppsWithModal(context, [app.app]);
+                            .removeAppsWithModal(
+                              context.mounted as BuildContext,
+                              [app.app],
+                            );
                         if (removedApps != null && removedApps.isNotEmpty) {
                           if (mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
+                            ScaffoldMessenger.of(
+                              context.mounted as BuildContext,
+                            ).showSnackBar(
                               SnackBar(
                                 content: Text(t('appRemoved')),
                                 action: SnackBarAction(
@@ -869,7 +874,7 @@ class _AppPageState extends State<AppPage> {
                                 ),
                               ),
                             );
-                            Navigator.of(context).pop();
+                            Navigator.of(context.mounted as BuildContext).pop();
                           }
                         }
                       },
