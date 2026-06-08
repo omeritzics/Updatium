@@ -39,6 +39,7 @@ class AddAppPageState extends State<AddAppPage> {
   bool searching = false;
   String userInput = '';
   String searchQuery = '';
+  int searchBarKey = 0;
   String? pickedSourceOverride;
   AppSource? pickedSource;
   int urlInputKey = 0;
@@ -169,12 +170,14 @@ class AddAppPageState extends State<AddAppPage> {
     children: [
       Expanded(
         child: GeneratedForm(
+          key: Key(searchBarKey.toString()),
           items: [
             [
               GeneratedFormTextField(
                 'searchSomeSources',
                 label: t('searchSomeSourcesLabel'),
                 required: false,
+                defaultValue: searchQuery,
               ),
             ],
           ],
@@ -335,33 +338,47 @@ class AddAppPageState extends State<AddAppPage> {
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: nonSystemApps.length,
-                    itemBuilder: (context, index) {
-                      final app = nonSystemApps[index];
-                      return FutureBuilder<String>(
-                        future:
-                            app.applicationInfo?.getAppLabel().then(
-                              (label) => label ?? app.packageName ?? 'Unknown',
-                            ) ??
-                            Future.value(app.packageName ?? 'Unknown'),
-                        builder: (context, snapshot) {
-                          final appName = snapshot.data ?? 'Unknown';
-                          return ListTile(
-                            dense: true,
-                            title: Text(appName),
-                            subtitle: Text(app.packageName ?? ''),
-                            onTap: () {
-                              Navigator.of(ctx).pop();
-                              changeUserInput(
-                                app.packageName ?? '',
-                                true,
-                                false,
-                                updateUrlInput: true,
-                              );
-                            },
-                          );
-                        },
-                      );
-                    },
+                      itemBuilder: (context, index) {
+                        final app = nonSystemApps[index];
+                        return FutureBuilder<Uint8List?>(
+                          future: app.applicationInfo?.getAppIcon(),
+                          builder: (context, iconSnapshot) {
+                            return FutureBuilder<String>(
+                              future:
+                                  app.applicationInfo?.getAppLabel().then(
+                                    (label) => label ?? app.packageName ?? 'Unknown',
+                                  ) ??
+                                  Future.value(app.packageName ?? 'Unknown'),
+                              builder: (context, snapshot) {
+                                final appName = snapshot.data ?? 'Unknown';
+                                return ListTile(
+                                  dense: true,
+                                  leading: iconSnapshot.hasData && iconSnapshot.data != null
+                                      ? Image.memory(
+                                          iconSnapshot.data!,
+                                          width: 40,
+                                          height: 40,
+                                        )
+                                      : const Icon(Icons.apps),
+                                  title: Text(appName),
+                                  subtitle: Text(app.packageName ?? ''),
+                                  onTap: () {
+                                    Navigator.of(ctx).pop();
+                                    setState(() {
+                                      searchQuery = app.packageName ?? '';
+                                      userInput = '';
+                                      pickedSource = null;
+                                      pickedSourceOverride = null;
+                                      searchBarKey++;
+                                    });
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+
                   ),
                 ),
                 actions: [
