@@ -88,13 +88,12 @@ class _AppPageState extends State<AppPage> {
     try {
       final updatiumInfo = await getInstalledInfo(updatiumId, printErr: false);
       final userAgent = 'Updatium/${updatiumInfo?.versionName ?? '1.0.0'}';
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {
-          'User-Agent': userAgent,
-          'Range': 'bytes=0-0',
-        },
-      ).timeout(const Duration(seconds: 5));
+      final response = await http
+          .get(
+            Uri.parse(url),
+            headers: {'User-Agent': userAgent, 'Range': 'bytes=0-0'},
+          )
+          .timeout(const Duration(seconds: 5));
 
       if (response.statusCode == 206) {
         final contentRange = response.headers['content-range'];
