@@ -984,62 +984,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             ),
           ],
         ),
-        if (pickedSource != null && pickedSource!.appIdInferIsOptional)
-          GeneratedForm(
-            key: const Key('inferAppIdIfOptional'),
-            items: [
-              [
-                GeneratedFormSwitch(
-                  'inferAppIdIfOptional',
-                  label: t('tryInferAppIdFromCode'),
-                  defaultValue: inferAppIdIfOptional,
-                ),
-              ],
-            ],
-            onValueChanges: (values, valid, isBuilding) {
-              if (!isBuilding) {
-                setState(() {
-                  inferAppIdIfOptional = values['inferAppIdIfOptional'];
-                });
-              }
-            },
-          ),
-        if (pickedSource != null && pickedSource!.enforceTrackOnly)
-          GeneratedForm(
-            key: Key(
-              '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-appId',
-            ),
-            items: [
-              [
-                GeneratedFormTextField(
-                  'appId',
-                  label: '${t('appId')} - ${t('custom')}',
-                  required: false,
-                  additionalValidators: [
-                    (value) {
-                      if (value == null || value.isEmpty) {
-                        return null;
-                      }
-                      final isValid = RegExp(
-                        r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-                      ).hasMatch(value);
-                      if (!isValid) {
-                        return t('invalidInput');
-                      }
-                      return null;
-                    },
-                  ],
-                ),
-              ],
-            ],
-            onValueChanges: (values, valid, isBuilding) {
-              if (!isBuilding) {
-                setState(() {
-                  additionalSettings['appId'] = values['appId'];
-                });
-              }
-            },
-          ),
       ],
     );
 
@@ -1073,89 +1017,154 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    if (pickedSource != null)
-                      FutureBuilder(
-                        builder: (ctx, val) {
-                          return val.data != null && val.data!.isNotEmpty
-                              ? Text(
-                                  val.data!,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                )
-                              : const SizedBox();
-                        },
-                        future: pickedSource?.getSourceNote(),
-                      ),
-                    if (pickedSource != null) getAdditionalOptsCol(),
-                    if (pickedSource != null)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          gap24,
-                          Text(
-                            t('advanced'),
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          gap16,
-                          GeneratedForm(
-                            key: const Key('advancedSettings'),
-                            items: [
-                              [
-                                GeneratedFormTextField(
-                                  'apkFilterRegEx',
-                                  label: t('filterAPKsByRegEx'),
-                                  required: false,
-                                  additionalValidators: [
-                                    (value) => _regExValidator(value),
-                                  ],
-                                ),
-                              ],
-                              [
-                                GeneratedFormSwitch(
-                                  'invertAPKFilter',
-                                  label:
-                                      '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
-                                  defaultValue: false,
-                                ),
-                              ],
-                              [
-                                GeneratedFormTextField(
-                                  'zippedApkFilterRegEx',
-                                  label: t('zippedApkFilterRegEx'),
-                                  required: false,
-                                  additionalValidators: [
-                                    (value) => _regExValidator(value),
-                                  ],
-                                ),
-                              ],
-                              [
-                                GeneratedFormSwitch(
-                                  'shizukuPretendToBeGooglePlay',
-                                  label: t('shizukuPretendToBeGooglePlay'),
-                                  defaultValue: false,
-                                ),
-                              ],
-                              [
-                                GeneratedFormSwitch(
-                                  'allowInsecure',
-                                  label: t('allowInsecure'),
-                                  defaultValue: false,
-                                ),
-                              ],
-                            ],
-                            onValueChanges: (values, valid, isBuilding) {
-                              if (!isBuilding) {
-                                setState(() {
-                                  additionalSettings.addAll(values);
-                                });
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    gap24,
+                     if (pickedSource != null)
+                       FutureBuilder(
+                         builder: (ctx, val) {
+                           return val.data != null && val.data!.isNotEmpty
+                               ? Text(
+                                   val.data!,
+                                   style: Theme.of(context).textTheme.bodySmall,
+                                 )
+                               : const SizedBox();
+                         },
+                         future: pickedSource?.getSourceNote(),
+                       ),
+                     if (pickedSource != null) getAdditionalOptsCol(),
+                     if (pickedSource != null)
+                       ExpansionTile(
+                         initiallyExpanded: false,
+                         title: Text(
+                           t('advanced'),
+                           style: TextStyle(
+                             color: Theme.of(context).colorScheme.primary,
+                             fontWeight: FontWeight.bold,
+                           ),
+                         ),
+                         children: [
+                           Padding(
+                             padding: const EdgeInsets.only(bottom: 16),
+                             child: Column(
+                               crossAxisAlignment: CrossAxisAlignment.stretch,
+                               children: [
+                                 if (pickedSource!.appIdInferIsOptional)
+                                   GeneratedForm(
+                                     key: const Key('inferAppIdIfOptional'),
+                                     items: [
+                                       [
+                                         GeneratedFormSwitch(
+                                           'inferAppIdIfOptional',
+                                           label: t('tryInferAppIdFromCode'),
+                                           defaultValue: inferAppIdIfOptional,
+                                         ),
+                                       ],
+                                     ],
+                                     onValueChanges: (values, valid, isBuilding) {
+                                       if (!isBuilding) {
+                                         setState(() {
+                                           inferAppIdIfOptional = values['inferAppIdIfOptional'];
+                                         });
+                                       }
+                                     },
+                                   ),
+                                 if (pickedSource!.enforceTrackOnly)
+                                   GeneratedForm(
+                                     key: Key(
+                                       '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-appId',
+                                     ),
+                                     items: [
+                                       [
+                                         GeneratedFormTextField(
+                                           'appId',
+                                           label: '${t('appId')} - ${t('custom')}',
+                                           required: false,
+                                           additionalValidators: [
+                                             (value) {
+                                               if (value == null || value.isEmpty) {
+                                                 return null;
+                                               }
+                                               final isValid = RegExp(
+                                                 r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+                                               ).hasMatch(value);
+                                               if (!isValid) {
+                                                 return t('invalidInput');
+                                               }
+                                               return null;
+                                             },
+                                           ],
+                                         ),
+                                       ],
+                                     ],
+                                     onValueChanges: (values, valid, isBuilding) {
+                                       if (!isBuilding) {
+                                         setState(() {
+                                           additionalSettings['appId'] = values['appId'];
+                                         });
+                                       }
+                                     },
+                                   ),
+                                 gap16,
+                                 GeneratedForm(
+                                   key: const Key('advancedSettings'),
+                                   items: [
+                                     [
+                                       GeneratedFormTextField(
+                                         'apkFilterRegEx',
+                                         label: t('filterAPKsByRegEx'),
+                                         required: false,
+                                         additionalValidators: [
+                                           (value) => _regExValidator(value),
+                                         ],
+                                       ),
+                                     ],
+                                     [
+                                       GeneratedFormSwitch(
+                                         'invertAPKFilter',
+                                         label:
+                                             '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
+                                         defaultValue: false,
+                                       ),
+                                     ],
+                                     [
+                                       GeneratedFormTextField(
+                                         'zippedApkFilterRegEx',
+                                         label: t('zippedApkFilterRegEx'),
+                                         required: false,
+                                         additionalValidators: [
+                                           (value) => _regExValidator(value),
+                                         ],
+                                       ),
+                                     ],
+                                     [
+                                       GeneratedFormSwitch(
+                                         'shizukuPretendToBeGooglePlay',
+                                         label: t('shizukuPretendToBeGooglePlay'),
+                                         defaultValue: false,
+                                       ),
+                                     ],
+                                     [
+                                       GeneratedFormSwitch(
+                                         'allowInsecure',
+                                         label: t('allowInsecure'),
+                                         defaultValue: false,
+                                       ),
+                                     ],
+                                   ],
+                                   onValueChanges: (values, valid, isBuilding) {
+                                     if (!isBuilding) {
+                                       setState(() {
+                                         additionalSettings.addAll(values);
+                                       });
+                                     }
+                                   },
+                                 ),
+                               ],
+                             ),
+                           ),
+                         ],
+                       ),
+                     gap24,
+
+
                     M3EFilledButton.icon(
                       onPressed:
                           gettingAppInfo ||
