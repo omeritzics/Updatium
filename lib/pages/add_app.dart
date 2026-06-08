@@ -39,6 +39,7 @@ class AddAppPageState extends State<AddAppPage> {
   bool searching = false;
   String userInput = '';
   String searchQuery = '';
+  int searchBarKey = 0;
   String? pickedSourceOverride;
   AppSource? pickedSource;
   int urlInputKey = 0;
@@ -169,12 +170,14 @@ class AddAppPageState extends State<AddAppPage> {
     children: [
       Expanded(
         child: GeneratedForm(
+          key: Key(searchBarKey.toString()),
           items: [
             [
               GeneratedFormTextField(
                 'searchSomeSources',
                 label: t('searchSomeSourcesLabel'),
                 required: false,
+                defaultValue: searchQuery,
               ),
             ],
           ],
@@ -335,33 +338,47 @@ class AddAppPageState extends State<AddAppPage> {
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: nonSystemApps.length,
-                    itemBuilder: (context, index) {
-                      final app = nonSystemApps[index];
-                      return FutureBuilder<String>(
-                        future:
-                            app.applicationInfo?.getAppLabel().then(
-                              (label) => label ?? app.packageName ?? 'Unknown',
-                            ) ??
-                            Future.value(app.packageName ?? 'Unknown'),
-                        builder: (context, snapshot) {
-                          final appName = snapshot.data ?? 'Unknown';
-                          return ListTile(
-                            dense: true,
-                            title: Text(appName),
-                            subtitle: Text(app.packageName ?? ''),
-                            onTap: () {
-                              Navigator.of(ctx).pop();
-                              changeUserInput(
-                                app.packageName ?? '',
-                                true,
-                                false,
-                                updateUrlInput: true,
-                              );
-                            },
-                          );
-                        },
-                      );
-                    },
+                      itemBuilder: (context, index) {
+                        final app = nonSystemApps[index];
+                        return FutureBuilder<Uint8List?>(
+                          future: app.applicationInfo?.getAppIcon(),
+                          builder: (context, iconSnapshot) {
+                            return FutureBuilder<String>(
+                              future:
+                                  app.applicationInfo?.getAppLabel().then(
+                                    (label) => label ?? app.packageName ?? 'Unknown',
+                                  ) ??
+                                  Future.value(app.packageName ?? 'Unknown'),
+                              builder: (context, snapshot) {
+                                final appName = snapshot.data ?? 'Unknown';
+                                return ListTile(
+                                  dense: true,
+                                  leading: iconSnapshot.hasData && iconSnapshot.data != null
+                                      ? Image.memory(
+                                          iconSnapshot.data!,
+                                          width: 40,
+                                          height: 40,
+                                        )
+                                      : const Icon(Icons.apps),
+                                  title: Text(appName),
+                                  subtitle: Text(app.packageName ?? ''),
+                                  onTap: () {
+                                    Navigator.of(ctx).pop();
+                                    setState(() {
+                                      searchQuery = app.packageName ?? '';
+                                      userInput = '';
+                                      pickedSource = null;
+                                      pickedSourceOverride = null;
+                                      searchBarKey++;
+                                    });
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+
                   ),
                 ),
                 actions: [
@@ -614,6 +631,9 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   bool gettingAppInfo = false;
   bool cameFromSearch = false;
 
+  App? prefilledApp;
+  int prefillVersion = 0;
+
   String userInput = '';
   String? pickedSourceOverride;
   AppSource? pickedSource;
@@ -660,8 +680,33 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       } catch (e) {
         // Ignore errors during initialization
       }
+      prefillAppInfo();
     }
   }
+
+  Future<void> prefillAppInfo() async {
+    if (userInput.isEmpty || pickedSource == null) return;
+    try {
+      App app = await sourceProvider.getApp(
+        pickedSource!,
+        userInput.trim(),
+        additionalSettings,
+        trackOnlyOverride: true,
+        sourceIsOverriden: pickedSourceOverride != null,
+        inferAppIdIfOptional: inferAppIdIfOptional,
+      );
+      if (mounted) {
+        setState(() {
+          prefilledApp = app;
+          additionalSettings = Map.from(app.additionalSettings);
+          prefillVersion++;
+        });
+      }
+    } catch (e) {
+      // Ignore errors during pre-filling
+    }
+  }
+
 
   @override
   void dispose() {
@@ -864,16 +909,30 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
         gap16,
         GeneratedForm(
           key: Key(
-            '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}',
+            '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-$prefillVersion',
           ),
           items: [
             ...pickedSource!.combinedAppSpecificSettingFormItems.map((row) {
               return row.map((e) {
-                return e;
+                var item = e.clone();
+                if (prefilledApp != null) {
+                  if (prefilledApp!.additionalSettings[item.key] != null) {
+                    item.defaultValue = prefilledApp!.additionalSettings[item.key];
+                  } else if (item.key == 'appAuthor') {
+                    item.defaultValue = prefilledApp!.author;
+                  } else if (item.key == 'appId') {
+                    item.defaultValue = prefilledApp!.id;
+                  } else if (item.key == 'appName') {
+                    item.defaultValue = prefilledApp!.name;
+                  } else if (item.key == 'appSourceURL') {
+                    item.defaultValue = prefilledApp!.url;
+                  }
+                }
+                return item;
               }).toList();
             }),
             ...(pickedSourceOverride != null
-                ? pickedSource!.sourceConfigSettingFormItems.map((e) => [e])
+                ? pickedSource!.sourceConfigSettingFormItems.map((e) => [e.clone()])
                 : []),
           ],
           onValueChanges: (values, valid, isBuilding) {
