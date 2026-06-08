@@ -65,7 +65,7 @@ class Tencent extends AppSource {
         throw NoAPKError();
       }
       var appName = json['appName'];
-      var author = json['author'];
+      var author = json['appAuthor'];
       var apkName =
           Uri.parse(apkUrl).queryParameters['fsname'] ??
           '${appId}_$version.apk';
