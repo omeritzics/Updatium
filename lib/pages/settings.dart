@@ -808,7 +808,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ],
                               ),
                             gap16,
-                            if (settingsProvider.safeMode && settingsProvider.preventUninstallation)
+                            if (settingsProvider.safeMode &&
+                                settingsProvider.preventUninstallation)
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -820,9 +821,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                       children: [
                                         Text(t('safeModeAntiCheat')),
                                         Text(
-                                          tr(
-                                            'safeModeAntiCheatDescription',
-                                          ),
+                                          tr('safeModeAntiCheatDescription'),
                                           style: Theme.of(
                                             context,
                                           ).textTheme.labelSmall,
@@ -831,31 +830,42 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                   ),
                                   Switch(
-                                    value:
-                                        settingsProvider.safeModeAntiCheat,
+                                    value: settingsProvider.safeModeAntiCheat,
                                     onChanged: (value) async {
                                       if (value) {
                                         // Enable anti-cheat
-                                        final success = await DeviceAdminService.enableAntiCheat();
+                                        final success =
+                                            await DeviceAdminService.enableAntiCheat();
                                         if (success) {
-                                          settingsProvider.safeModeAntiCheat = true;
+                                          settingsProvider.safeModeAntiCheat =
+                                              true;
                                         } else {
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
                                             SnackBar(
-                                              content: Text(t('safeModeAntiCheatError')),
+                                              content: Text(
+                                                t('safeModeAntiCheatError'),
+                                              ),
                                               backgroundColor: Colors.red,
                                             ),
                                           );
                                         }
                                       } else {
                                         // Disable anti-cheat
-                                        final success = await DeviceAdminService.disableAntiCheat();
+                                        final success =
+                                            await DeviceAdminService.disableAntiCheat();
                                         if (success) {
-                                          settingsProvider.safeModeAntiCheat = false;
+                                          settingsProvider.safeModeAntiCheat =
+                                              false;
                                         } else {
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
                                             SnackBar(
-                                              content: Text(t('safeModeAntiCheatError')),
+                                              content: Text(
+                                                t('safeModeAntiCheatError'),
+                                              ),
                                               backgroundColor: Colors.red,
                                             ),
                                           );
