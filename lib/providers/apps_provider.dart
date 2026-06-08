@@ -862,7 +862,7 @@ class AppsProvider with ChangeNotifier {
           );
           // ignore: use_build_context_synchronously
           String? userFileName = await promptForFileName(
-            context,
+            context.mounted as BuildContext,
             suggestedName,
           );
           if (userFileName == null) {
@@ -1892,7 +1892,7 @@ class AppsProvider with ChangeNotifier {
         // ignore: use_build_context_synchronously
         MapEntry<String, String>? tempFileUrl = await confirmAppFileUrl(
           apps[id]!.app,
-          context,
+          context.mounted as BuildContext,
           true,
           evenIfSingleChoice: true,
         );
