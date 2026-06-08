@@ -458,18 +458,19 @@ class _AppPageState extends State<AppPage> {
             row,
           ) {
             row = row.map((e) {
-              if (app.app.additionalSettings[e.key] != null) {
-                e.defaultValue = app.app.additionalSettings[e.key];
-              } else if (e.key == 'appAuthor') {
-                e.defaultValue = app.app.author;
-              } else if (e.key == 'appId') {
-                e.defaultValue = app.app.id;
-              } else if (e.key == 'appName') {
-                e.defaultValue = app.app.name;
-              } else if (e.key == 'appSourceURL') {
-                e.defaultValue = app.app.url;
+              var item = e.clone();
+              if (app.app.additionalSettings[item.key] != null) {
+                item.defaultValue = app.app.additionalSettings[item.key];
+              } else if (item.key == 'appAuthor') {
+                item.defaultValue = app.app.author;
+              } else if (item.key == 'appId') {
+                item.defaultValue = app.app.id;
+              } else if (item.key == 'appName') {
+                item.defaultValue = app.app.name;
+              } else if (item.key == 'appSourceURL') {
+                item.defaultValue = app.app.url;
               }
-              return e;
+              return item;
             }).toList();
             return row;
           }).toList();
