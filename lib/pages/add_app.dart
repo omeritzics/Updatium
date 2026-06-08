@@ -28,6 +28,24 @@ const horizontalGap12 = SizedBox(width: 12);
 const horizontalGap16 = SizedBox(width: 16);
 const horizontalGap24 = SizedBox(width: 24);
 
+class AppAddingProgressBar extends StatelessWidget {
+  final int currentStep;
+  final int totalSteps;
+
+  const AppAddingProgressBar({
+    super.key,
+    required this.currentStep,
+    required this.totalSteps,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LinearProgressIndicator(
+      value: currentStep / totalSteps,
+    );
+  }
+}
+
 class AddAppPage extends StatefulWidget {
   const AddAppPage({super.key});
 
@@ -588,7 +606,17 @@ class AddAppPageState extends State<AddAppPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar.large(pinned: true, title: Text(t('addApp'))),
+          SliverAppBar.large(
+            pinned: true, 
+            title: Text(t('addApp')),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(4),
+              child: AppAddingProgressBar(
+                currentStep: 1, 
+                totalSteps: (searching || searchQuery.isNotEmpty) ? 3 : 2,
+              ),
+            ),
+          ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -838,8 +866,9 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               app,
               context.mounted as BuildContext,
               false,
-              progressIndicatorStep: 1,
-              progressIndicatorTotal: cameFromSearch ? 3 : 2,
+               progressIndicatorStep: cameFromSearch ? 3 : 2,
+               progressIndicatorTotal: cameFromSearch ? 3 : 2,
+
             );
             if (apkUrl == null) {
               throw UpdatiumError(t('cancelled'));
@@ -1030,15 +1059,9 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               bottom: (pickedSource != null || cameFromSearch)
                   ? PreferredSize(
                       preferredSize: const Size.fromHeight(4),
-                      child: TweenAnimationBuilder<double>(
-                        tween: Tween(
-                          begin: 0,
-                          end: cameFromSearch ? 2 / 3 : 1 / 2,
-                        ),
-                        duration: const Duration(milliseconds: 500),
-                        builder: (context, value, child) {
-                          return LinearProgressIndicator(value: value);
-                        },
+                      child: AppAddingProgressBar(
+                        currentStep: cameFromSearch ? 3 : 2,
+                        totalSteps: cameFromSearch ? 3 : 2,
                       ),
                     )
                   : null,
@@ -1325,13 +1348,7 @@ class _SelectionModalState extends State<SelectionModal> {
         ),
         body: Column(
           children: [
-            TweenAnimationBuilder<double>(
-              tween: Tween(begin: 0, end: 1 / 3),
-              duration: const Duration(milliseconds: 500),
-              builder: (context, value, child) {
-                return LinearProgressIndicator(value: value);
-              },
-            ),
+            const AppAddingProgressBar(currentStep: 2, totalSteps: 3),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: Row(

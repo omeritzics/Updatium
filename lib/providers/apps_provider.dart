@@ -32,6 +32,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
+import 'package:updatium/pages/add_app.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:share_plus/share_plus.dart';
@@ -2998,9 +2999,6 @@ class _AppFilePickerState extends State<AppFilePicker> {
     final showProgress =
         widget.progressIndicatorStep != null &&
         widget.progressIndicatorTotal != null;
-    final progressValue = showProgress
-        ? widget.progressIndicatorStep! / widget.progressIndicatorTotal!
-        : 0.0;
     final progressText = showProgress
         ? '${widget.progressIndicatorStep}/${widget.progressIndicatorTotal}'
         : '';
@@ -3036,11 +3034,9 @@ class _AppFilePickerState extends State<AppFilePicker> {
         body: Column(
           children: [
             if (showProgress)
-              LinearProgressIndicator(
-                value: progressValue,
-                backgroundColor: Theme.of(
-                  context,
-                ).colorScheme.surfaceContainerHighest,
+              AppAddingProgressBar(
+                currentStep: widget.progressIndicatorStep!,
+                totalSteps: widget.progressIndicatorTotal!,
               ),
             if (showProgress)
               Padding(
