@@ -202,7 +202,7 @@ void main() {
       final json = {
         'id': 'com.example.app',
         'url': 'https://github.com/user/repo',
-        'author': 'user',
+        'appAuthor': 'user',
         'name': 'App',
         'latestVersion': '1.0.0',
         'additionalSettings': '{}',
@@ -219,7 +219,7 @@ void main() {
         final json = {
           'id': 'com.example.app',
           'url': 'https://github.com/user/repo',
-          'author': 'user',
+          'appAuthor': 'user',
           'name': 'App',
           'latestVersion': '1.0.0',
           'additionalSettings': '{}',

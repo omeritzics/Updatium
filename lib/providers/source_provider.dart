@@ -316,7 +316,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // Signal apps from before it was removed should be converted to HTML (#1928)
     if (json['url'] == 'https://signal.org' &&
         json['id'] == 'org.thoughtcrime.securesms' &&
-        json['author'] == 'Signal' &&
+        json['appAuthor'] == 'Signal' &&
         json['name'] == 'Signal' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
@@ -333,7 +333,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // WhatsApp from before it was removed should be converted to HTML (#1943)
     if (json['url'] == 'https://whatsapp.com' &&
         json['id'] == 'com.whatsapp' &&
-        json['author'] == 'Meta' &&
+        json['appAuthor'] == 'Meta' &&
         json['name'] == 'WhatsApp' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
@@ -349,7 +349,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // VLC from before it was removed should be converted to HTML (#1943)
     if (json['url'] == 'https://videolan.org' &&
         json['id'] == 'org.videolan.vlc' &&
-        json['author'] == 'VideoLAN' &&
+        json['appAuthor'] == 'VideoLAN' &&
         json['name'] == 'VLC' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
@@ -499,7 +499,7 @@ class App {
     return App(
       json['id'] as String,
       json['url'] as String,
-      json['author'] as String,
+      json['appAuthor'] as String,
       json['name'] as String,
       json['installedVersion'] == null
           ? null
@@ -539,7 +539,7 @@ class App {
   Map<String, dynamic> toJson() => {
     'id': id,
     'url': url,
-    'author': author,
+    'appAuthor': author,
     'name': name,
     'installedVersion': installedVersion,
     'latestVersion': latestVersion,

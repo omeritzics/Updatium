@@ -226,7 +226,7 @@ class FDroidRepo extends AppSource {
           )
           .toList();
     }
-    String? appAuthorName = foundApps[0].querySelector('author')?.innerHtml;
+    String? appAuthorName = foundApps[0].querySelector('appAuthor')?.innerHtml;
     if (appAuthorName != null) {
       authorName = appAuthorName;
     }
