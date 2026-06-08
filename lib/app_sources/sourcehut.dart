@@ -96,7 +96,7 @@ class SourceHut extends AppSource {
               version,
               apkUrls,
               AppNames(
-                entry.querySelector('author')?.innerHtml.trim() ?? appName,
+                entry.querySelector('appAuthor')?.innerHtml.trim() ?? appName,
                 appName,
               ),
               releaseDate: releaseDate,
