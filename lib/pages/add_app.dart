@@ -614,6 +614,9 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   bool gettingAppInfo = false;
   bool cameFromSearch = false;
 
+  App? prefilledApp;
+  int prefillVersion = 0;
+
   String userInput = '';
   String? pickedSourceOverride;
   AppSource? pickedSource;
@@ -660,8 +663,33 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       } catch (e) {
         // Ignore errors during initialization
       }
+      prefillAppInfo();
     }
   }
+
+  Future<void> prefillAppInfo() async {
+    if (userInput.isEmpty || pickedSource == null) return;
+    try {
+      App app = await sourceProvider.getApp(
+        pickedSource!,
+        userInput.trim(),
+        additionalSettings,
+        trackOnlyOverride: true,
+        sourceIsOverriden: pickedSourceOverride != null,
+        inferAppIdIfOptional: inferAppIdIfOptional,
+      );
+      if (mounted) {
+        setState(() {
+          prefilledApp = app;
+          additionalSettings = Map.from(app.additionalSettings);
+          prefillVersion++;
+        });
+      }
+    } catch (e) {
+      // Ignore errors during pre-filling
+    }
+  }
+
 
   @override
   void dispose() {
@@ -864,16 +892,30 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
         gap16,
         GeneratedForm(
           key: Key(
-            '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}',
+            '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-$prefillVersion',
           ),
           items: [
             ...pickedSource!.combinedAppSpecificSettingFormItems.map((row) {
               return row.map((e) {
-                return e;
+                var item = e.clone();
+                if (prefilledApp != null) {
+                  if (prefilledApp!.additionalSettings[item.key] != null) {
+                    item.defaultValue = prefilledApp!.additionalSettings[item.key];
+                  } else if (item.key == 'appAuthor') {
+                    item.defaultValue = prefilledApp!.author;
+                  } else if (item.key == 'appId') {
+                    item.defaultValue = prefilledApp!.id;
+                  } else if (item.key == 'appName') {
+                    item.defaultValue = prefilledApp!.name;
+                  } else if (item.key == 'appSourceURL') {
+                    item.defaultValue = prefilledApp!.url;
+                  }
+                }
+                return item;
               }).toList();
             }),
             ...(pickedSourceOverride != null
-                ? pickedSource!.sourceConfigSettingFormItems.map((e) => [e])
+                ? pickedSource!.sourceConfigSettingFormItems.map((e) => [e.clone()])
                 : []),
           ],
           onValueChanges: (values, valid, isBuilding) {
