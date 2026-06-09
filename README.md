@@ -93,13 +93,13 @@ A: It's easy to update to Updatium from Obtainium, by following these steps:
 
 On Obtainium:
 
-1. Tap on Import/Export -> Pick export directory.
+1. Tap on Import/Export → Pick export directory.
 2. Choose a directory path and confirm.
 3. Tap on "Obtainium export" and confirm.
 
 On Updatium:
 
-1. Tap on Add App -> Import/Export -> Updatium import.
+1. Tap on Add App → Import/Export → Updatium import.
 2. Locate Obtainium export file, tap on it, and confirm. Welcome to Updatium :)
 
 ### Q: How can I help?
