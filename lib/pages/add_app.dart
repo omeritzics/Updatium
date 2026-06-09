@@ -607,14 +607,17 @@ class AddAppPageState extends State<AddAppPage> {
           SliverAppBar.large(
             pinned: true,
             title: Text(t('addApp')),
-            bottom: (pickedSource != null || searching || searchQuery.isNotEmpty)
+            bottom:
+                (pickedSource != null || searching || searchQuery.isNotEmpty)
                 ? PreferredSize(
                     preferredSize: const Size.fromHeight(8),
                     child: Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: AppAddingProgressBar(
-                        currentStep: 1, 
-                        totalSteps: (searching || searchQuery.isNotEmpty) ? 3 : 2,
+                        currentStep: 1,
+                        totalSteps: (searching || searchQuery.isNotEmpty)
+                            ? 3
+                            : 2,
                       ),
                     ),
                   )
@@ -1196,12 +1199,12 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               ),
             ),
           ],
-         ),
-         // Removed Import/Export button as it should only appear on the main screen.
-       ),
-     );
-    }
+        ),
+        // Removed Import/Export button as it should only appear on the main screen.
+      ),
+    );
   }
+}
 
 class SelectionModal extends StatefulWidget {
   const SelectionModal({
