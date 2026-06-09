@@ -1,11 +1,9 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
-import 'package:updatium/pages/import_export.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
@@ -609,13 +607,18 @@ class AddAppPageState extends State<AddAppPage> {
           SliverAppBar.large(
             pinned: true,
             title: Text(t('addApp')),
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(4),
-              child: AppAddingProgressBar(
-                currentStep: 1,
-                totalSteps: (searching || searchQuery.isNotEmpty) ? 3 : 2,
-              ),
-            ),
+            bottom: (pickedSource != null || searching || searchQuery.isNotEmpty)
+                ? PreferredSize(
+                    preferredSize: const Size.fromHeight(8),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: AppAddingProgressBar(
+                        currentStep: 1, 
+                        totalSteps: (searching || searchQuery.isNotEmpty) ? 3 : 2,
+                      ),
+                    ),
+                  )
+                : null,
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -1193,37 +1196,12 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               ),
             ),
           ],
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const ImportExportPage(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                      return SharedAxisTransition(
-                        animation: animation,
-                        secondaryAnimation: secondaryAnimation,
-                        transitionType: SharedAxisTransitionType.vertical,
-                        child: child,
-                      );
-                    },
-              ),
-            );
-          },
-          icon: const Icon(Icons.import_export),
-          label: Text(t('importExport')),
-          extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
-          elevation: 3,
-          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
-        ),
-      ),
-    );
+         ),
+         // Removed Import/Export button as it should only appear on the main screen.
+       ),
+     );
+    }
   }
-}
 
 class SelectionModal extends StatefulWidget {
   const SelectionModal({
