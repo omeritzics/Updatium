@@ -38,9 +38,7 @@ class AppAddingProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LinearProgressIndicator(
-      value: currentStep / totalSteps,
-    );
+    return LinearProgressIndicator(value: currentStep / totalSteps);
   }
 }
 
@@ -354,47 +352,49 @@ class AddAppPageState extends State<AddAppPage> {
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: nonSystemApps.length,
-                      itemBuilder: (context, index) {
-                        final app = nonSystemApps[index];
-                        return FutureBuilder<Uint8List?>(
-                          future: app.applicationInfo?.getAppIcon(),
-                          builder: (context, iconSnapshot) {
-                            return FutureBuilder<String>(
-                              future:
-                                  app.applicationInfo?.getAppLabel().then(
-                                    (label) => label ?? app.packageName ?? 'Unknown',
-                                  ) ??
-                                  Future.value(app.packageName ?? 'Unknown'),
-                              builder: (context, snapshot) {
-                                final appName = snapshot.data ?? 'Unknown';
-                                return ListTile(
-                                  dense: true,
-                                  leading: iconSnapshot.hasData && iconSnapshot.data != null
-                                      ? Image.memory(
-                                          iconSnapshot.data!,
-                                          width: 40,
-                                          height: 40,
-                                        )
-                                      : const Icon(Icons.apps),
-                                  title: Text(appName),
-                                  subtitle: Text(app.packageName ?? ''),
-                                  onTap: () {
-                                    Navigator.of(ctx).pop();
-                                    setState(() {
-                                      searchQuery = app.packageName ?? '';
-                                      userInput = '';
-                                      pickedSource = null;
-                                      pickedSourceOverride = null;
-                                      searchBarKey++;
-                                    });
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-
+                    itemBuilder: (context, index) {
+                      final app = nonSystemApps[index];
+                      return FutureBuilder<Uint8List?>(
+                        future: app.applicationInfo?.getAppIcon(),
+                        builder: (context, iconSnapshot) {
+                          return FutureBuilder<String>(
+                            future:
+                                app.applicationInfo?.getAppLabel().then(
+                                  (label) =>
+                                      label ?? app.packageName ?? 'Unknown',
+                                ) ??
+                                Future.value(app.packageName ?? 'Unknown'),
+                            builder: (context, snapshot) {
+                              final appName = snapshot.data ?? 'Unknown';
+                              return ListTile(
+                                dense: true,
+                                leading:
+                                    iconSnapshot.hasData &&
+                                        iconSnapshot.data != null
+                                    ? Image.memory(
+                                        iconSnapshot.data!,
+                                        width: 40,
+                                        height: 40,
+                                      )
+                                    : const Icon(Icons.apps),
+                                title: Text(appName),
+                                subtitle: Text(app.packageName ?? ''),
+                                onTap: () {
+                                  Navigator.of(ctx).pop();
+                                  setState(() {
+                                    searchQuery = app.packageName ?? '';
+                                    userInput = '';
+                                    pickedSource = null;
+                                    pickedSourceOverride = null;
+                                    searchBarKey++;
+                                  });
+                                },
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
                 actions: [
@@ -605,7 +605,7 @@ class AddAppPageState extends State<AddAppPage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar.large(
-            pinned: true, 
+            pinned: true,
             title: Text(t('addApp')),
             bottom: (pickedSource != null || searching || searchQuery.isNotEmpty)
                 ? PreferredSize(
@@ -738,7 +738,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
     }
   }
 
-
   @override
   void dispose() {
     _sourceOverrideController.dispose();
@@ -869,9 +868,8 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               app,
               context.mounted as BuildContext,
               false,
-               progressIndicatorStep: cameFromSearch ? 3 : 2,
-               progressIndicatorTotal: cameFromSearch ? 3 : 2,
-
+              progressIndicatorStep: cameFromSearch ? 3 : 2,
+              progressIndicatorTotal: cameFromSearch ? 3 : 2,
             );
             if (apkUrl == null) {
               throw UpdatiumError(t('cancelled'));
@@ -949,7 +947,8 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                 var item = e.clone();
                 if (prefilledApp != null) {
                   if (prefilledApp!.additionalSettings[item.key] != null) {
-                    item.defaultValue = prefilledApp!.additionalSettings[item.key];
+                    item.defaultValue =
+                        prefilledApp!.additionalSettings[item.key];
                   } else if (item.key == 'appAuthor') {
                     item.defaultValue = prefilledApp!.author;
                   } else if (item.key == 'appId') {
@@ -964,7 +963,9 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               }).toList();
             }),
             ...(pickedSourceOverride != null
-                ? pickedSource!.sourceConfigSettingFormItems.map((e) => [e.clone()])
+                ? pickedSource!.sourceConfigSettingFormItems.map(
+                    (e) => [e.clone()],
+                  )
                 : []),
           ],
           onValueChanges: (values, valid, isBuilding) {
@@ -1020,153 +1021,159 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                     if (pickedSource != null)
-                       FutureBuilder(
-                         builder: (ctx, val) {
-                           return val.data != null && val.data!.isNotEmpty
-                               ? Text(
-                                   val.data!,
-                                   style: Theme.of(context).textTheme.bodySmall,
-                                 )
-                               : const SizedBox();
-                         },
-                         future: pickedSource?.getSourceNote(),
-                       ),
-                     if (pickedSource != null) getAdditionalOptsCol(),
-                     if (pickedSource != null)
-                       ExpansionTile(
-                         initiallyExpanded: false,
-                         title: Text(
-                           t('advanced'),
-                           style: TextStyle(
-                             color: Theme.of(context).colorScheme.primary,
-                             fontWeight: FontWeight.bold,
-                           ),
-                         ),
-                         children: [
-                           Padding(
-                             padding: const EdgeInsets.only(bottom: 16),
-                             child: Column(
-                               crossAxisAlignment: CrossAxisAlignment.stretch,
-                               children: [
-                                 if (pickedSource!.appIdInferIsOptional)
-                                   GeneratedForm(
-                                     key: const Key('inferAppIdIfOptional'),
-                                     items: [
-                                       [
-                                         GeneratedFormSwitch(
-                                           'inferAppIdIfOptional',
-                                           label: t('tryInferAppIdFromCode'),
-                                           defaultValue: inferAppIdIfOptional,
-                                         ),
-                                       ],
-                                     ],
-                                     onValueChanges: (values, valid, isBuilding) {
-                                       if (!isBuilding) {
-                                         setState(() {
-                                           inferAppIdIfOptional = values['inferAppIdIfOptional'];
-                                         });
-                                       }
-                                     },
-                                   ),
-                                 if (pickedSource!.enforceTrackOnly)
-                                   GeneratedForm(
-                                     key: Key(
-                                       '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-appId',
-                                     ),
-                                     items: [
-                                       [
-                                         GeneratedFormTextField(
-                                           'appId',
-                                           label: '${t('appId')} - ${t('custom')}',
-                                           required: false,
-                                           additionalValidators: [
-                                             (value) {
-                                               if (value == null || value.isEmpty) {
-                                                 return null;
-                                               }
-                                               final isValid = RegExp(
-                                                 r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-                                               ).hasMatch(value);
-                                               if (!isValid) {
-                                                 return t('invalidInput');
-                                               }
-                                               return null;
-                                             },
-                                           ],
-                                         ),
-                                       ],
-                                     ],
-                                     onValueChanges: (values, valid, isBuilding) {
-                                       if (!isBuilding) {
-                                         setState(() {
-                                           additionalSettings['appId'] = values['appId'];
-                                         });
-                                       }
-                                     },
-                                   ),
-                                 gap16,
-                                 GeneratedForm(
-                                   key: const Key('advancedSettings'),
-                                   items: [
-                                     [
-                                       GeneratedFormTextField(
-                                         'apkFilterRegEx',
-                                         label: t('filterAPKsByRegEx'),
-                                         required: false,
-                                         additionalValidators: [
-                                           (value) => _regExValidator(value),
-                                         ],
-                                       ),
-                                     ],
-                                     [
-                                       GeneratedFormSwitch(
-                                         'invertAPKFilter',
-                                         label:
-                                             '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
-                                         defaultValue: false,
-                                       ),
-                                     ],
-                                     [
-                                       GeneratedFormTextField(
-                                         'zippedApkFilterRegEx',
-                                         label: t('zippedApkFilterRegEx'),
-                                         required: false,
-                                         additionalValidators: [
-                                           (value) => _regExValidator(value),
-                                         ],
-                                       ),
-                                     ],
-                                     [
-                                       GeneratedFormSwitch(
-                                         'shizukuPretendToBeGooglePlay',
-                                         label: t('shizukuPretendToBeGooglePlay'),
-                                         defaultValue: false,
-                                       ),
-                                     ],
-                                     [
-                                       GeneratedFormSwitch(
-                                         'allowInsecure',
-                                         label: t('allowInsecure'),
-                                         defaultValue: false,
-                                       ),
-                                     ],
-                                   ],
-                                   onValueChanges: (values, valid, isBuilding) {
-                                     if (!isBuilding) {
-                                       setState(() {
-                                         additionalSettings.addAll(values);
-                                       });
-                                     }
-                                   },
-                                 ),
-                               ],
-                             ),
-                           ),
-                         ],
-                       ),
-                     gap24,
-
+                    if (pickedSource != null)
+                      FutureBuilder(
+                        builder: (ctx, val) {
+                          return val.data != null && val.data!.isNotEmpty
+                              ? Text(
+                                  val.data!,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                )
+                              : const SizedBox();
+                        },
+                        future: pickedSource?.getSourceNote(),
+                      ),
+                    if (pickedSource != null) getAdditionalOptsCol(),
+                    if (pickedSource != null)
+                      ExpansionTile(
+                        initiallyExpanded: false,
+                        title: Text(
+                          t('advanced'),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                if (pickedSource!.appIdInferIsOptional)
+                                  GeneratedForm(
+                                    key: const Key('inferAppIdIfOptional'),
+                                    items: [
+                                      [
+                                        GeneratedFormSwitch(
+                                          'inferAppIdIfOptional',
+                                          label: t('tryInferAppIdFromCode'),
+                                          defaultValue: inferAppIdIfOptional,
+                                        ),
+                                      ],
+                                    ],
+                                    onValueChanges: (values, valid, isBuilding) {
+                                      if (!isBuilding) {
+                                        setState(() {
+                                          inferAppIdIfOptional =
+                                              values['inferAppIdIfOptional'];
+                                        });
+                                      }
+                                    },
+                                  ),
+                                if (pickedSource!.enforceTrackOnly)
+                                  GeneratedForm(
+                                    key: Key(
+                                      '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-appId',
+                                    ),
+                                    items: [
+                                      [
+                                        GeneratedFormTextField(
+                                          'appId',
+                                          label:
+                                              '${t('appId')} - ${t('custom')}',
+                                          required: false,
+                                          additionalValidators: [
+                                            (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return null;
+                                              }
+                                              final isValid = RegExp(
+                                                r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+                                              ).hasMatch(value);
+                                              if (!isValid) {
+                                                return t('invalidInput');
+                                              }
+                                              return null;
+                                            },
+                                          ],
+                                        ),
+                                      ],
+                                    ],
+                                    onValueChanges:
+                                        (values, valid, isBuilding) {
+                                          if (!isBuilding) {
+                                            setState(() {
+                                              additionalSettings['appId'] =
+                                                  values['appId'];
+                                            });
+                                          }
+                                        },
+                                  ),
+                                gap16,
+                                GeneratedForm(
+                                  key: const Key('advancedSettings'),
+                                  items: [
+                                    [
+                                      GeneratedFormTextField(
+                                        'apkFilterRegEx',
+                                        label: t('filterAPKsByRegEx'),
+                                        required: false,
+                                        additionalValidators: [
+                                          (value) => _regExValidator(value),
+                                        ],
+                                      ),
+                                    ],
+                                    [
+                                      GeneratedFormSwitch(
+                                        'invertAPKFilter',
+                                        label:
+                                            '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
+                                        defaultValue: false,
+                                      ),
+                                    ],
+                                    [
+                                      GeneratedFormTextField(
+                                        'zippedApkFilterRegEx',
+                                        label: t('zippedApkFilterRegEx'),
+                                        required: false,
+                                        additionalValidators: [
+                                          (value) => _regExValidator(value),
+                                        ],
+                                      ),
+                                    ],
+                                    [
+                                      GeneratedFormSwitch(
+                                        'shizukuPretendToBeGooglePlay',
+                                        label: t(
+                                          'shizukuPretendToBeGooglePlay',
+                                        ),
+                                        defaultValue: false,
+                                      ),
+                                    ],
+                                    [
+                                      GeneratedFormSwitch(
+                                        'allowInsecure',
+                                        label: t('allowInsecure'),
+                                        defaultValue: false,
+                                      ),
+                                    ],
+                                  ],
+                                  onValueChanges: (values, valid, isBuilding) {
+                                    if (!isBuilding) {
+                                      setState(() {
+                                        additionalSettings.addAll(values);
+                                      });
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    gap24,
 
                     M3EFilledButton.icon(
                       onPressed:
