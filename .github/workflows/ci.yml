@@ -7,20 +7,6 @@ on:
 permissions:
   contents: write
   pull-requests: write
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: false
-          android: false
-          dotnet: false
-          haskell: false
-          large-packages: false
-          docker-images: true
       
       - name: Checkout Code
         uses: actions/checkout@v6

@@ -168,10 +168,18 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   DateTime? refreshingSince;
   final GlobalKey<ExpressiveRefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey();
+  // ... existing code ...
   final Set<int> _expandedCategories = <int>{};
+  List<AppInMemory> _cachedListedApps = [];
+  String _lastFilterState = '';
+  int _lastTabIndex = -1;
+  SortColumnSettings _lastSortColumn = SortColumnSettings.nameAuthor;
+  SortOrderSettings _lastSortOrder = SortOrderSettings.ascending;
 
   // Helper function to preserve transparency regardless of theme overrides
   Color preserveTransparency(Color baseColor, double alpha) {
+    // ... existing code ...
+
     // Always apply the requested transparency, ensuring it takes priority
     // over any theme-based color overrides
     return baseColor.withValues(alpha: alpha);
@@ -231,11 +239,222 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  List<AppInMemory> _getListedApps(
+    AppsProvider appsProvider,
+    SettingsProvider settingsProvider,
+  ) {
+    // Generate a state key to check if cache is valid
+    String currentFilterState =
+        '${filter.nameFilter}|${filter.authorFilter}|${filter.descriptionFilter}|${filter.idFilter}|${filter.categoryFilter}|${filter.sourceFilter}|${_tabController.index}';
+
+    if (_cachedListedApps.isNotEmpty &&
+        _lastFilterState == currentFilterState &&
+        _lastTabIndex == _tabController.index &&
+        _lastSortColumn == settingsProvider.sortColumn &&
+        _lastSortOrder == settingsProvider.sortOrder &&
+        appsProvider.apps.length == _cachedListedApps.length) {
+      // This is a naive check for apps changes, but since we are in a build method,
+      // we can't easily check if the contents changed without iterating.
+      // However, usually AppsProvider.apps changes size or notifyListeners is called.
+      // For better accuracy, we could use a version counter in AppsProvider.
+      return _cachedListedApps;
+    }
+
+    _lastFilterState = currentFilterState;
+    _lastTabIndex = _tabController.index;
+    _lastSortColumn = settingsProvider.sortColumn;
+    _lastSortOrder = settingsProvider.sortOrder;
+
+    var listedApps = appsProvider.getAppValues().toList();
+
+    // Filter based on tab selection
+    listedApps = listedApps.where((app) {
+      if (_tabController.index == 1 && app.app.installedVersion == null) {
+        return false;
+      }
+      if (_tabController.index == 2 && app.app.installedVersion != null) {
+        return false;
+      }
+      if (app.app.installedVersion == app.app.latestVersion &&
+          !(filter.includeUptodate)) {
+        return false;
+      }
+      if (app.app.installedVersion == null && !(filter.includeNonInstalled)) {
+        return false;
+      }
+      if (filter.nameFilter.isNotEmpty ||
+          filter.authorFilter.isNotEmpty ||
+          filter.descriptionFilter.isNotEmpty) {
+        List<String> nameTokens = filter.nameFilter
+            .split(' ')
+            .where((element) => element.trim().isNotEmpty)
+            .toList();
+        List<String> authorTokens = filter.authorFilter
+            .split(' ')
+            .where((element) => element.trim().isNotEmpty)
+            .toList();
+        List<String> descriptionTokens = filter.descriptionFilter
+            .split(' ')
+            .where((element) => element.trim().isNotEmpty)
+            .toList();
+
+        for (var t in nameTokens) {
+          if (!app.name.toLowerCase().contains(t.toLowerCase())) {
+            return false;
+          }
+        }
+        for (var t in authorTokens) {
+          if (!app.author.toLowerCase().contains(t.toLowerCase())) {
+            return false;
+          }
+        }
+        for (var t in descriptionTokens) {
+          String? appDescription = app.app.additionalSettings['about']
+              ?.toString();
+          if (appDescription == null ||
+              !appDescription.toLowerCase().contains(t.toLowerCase())) {
+            return false;
+          }
+        }
+      }
+      if (filter.idFilter.isNotEmpty) {
+        if (!app.app.id.contains(filter.idFilter)) {
+          return false;
+        }
+      }
+      if (filter.categoryFilter.isNotEmpty &&
+          filter.categoryFilter
+              .intersection(app.app.categories?.toSet() ?? <String>{})
+              .isEmpty) {
+        return false;
+      }
+      if (filter.sourceFilter.isNotEmpty &&
+          sourceProvider
+                  .getSource(
+                    app.app.url,
+                    overrideSource: app.app.overrideSource,
+                  )
+                  .runtimeType
+                  .toString() !=
+              filter.sourceFilter) {
+        return false;
+      }
+      return true;
+    }).toList();
+
+    listedApps.sort((a, b) {
+      int result = 0;
+      if (settingsProvider.sortColumn == SortColumnSettings.authorName) {
+        result = ((a.author + a.name).toLowerCase()).compareTo(
+          (b.author + b.name).toLowerCase(),
+        );
+      } else if (settingsProvider.sortColumn == SortColumnSettings.nameAuthor) {
+        result = ((a.name + a.author).toLowerCase()).compareTo(
+          (b.name + b.author).toLowerCase(),
+        );
+      } else if (settingsProvider.sortColumn ==
+          SortColumnSettings.releaseDate) {
+        final aDate = a.app.releaseDate;
+        final bDate = b.app.releaseDate;
+        final isDescending =
+            settingsProvider.sortOrder == SortOrderSettings.descending;
+        if (aDate == null && bDate == null) {
+          result = ((a.name + a.author).toLowerCase()).compareTo(
+            (b.name + b.author).toLowerCase(),
+          );
+        } else if (aDate == null) {
+          result = isDescending ? -1 : 1;
+        } else if (bDate == null) {
+          result = isDescending ? 1 : -1;
+        } else {
+          result = aDate.compareTo(bDate);
+        }
+      }
+      return result;
+    });
+
+    if (settingsProvider.sortOrder == SortOrderSettings.descending) {
+      listedApps = listedApps.reversed.toList();
+    }
+
+    var existingUpdates = appsProvider.findExistingUpdates(installedOnly: true);
+
+    var existingUpdateIdsAllOrSelected = existingUpdates
+        .where(
+          (element) => selectedAppIds.isEmpty
+              ? listedApps.where((a) => a.app.id == element).isNotEmpty
+              : selectedAppIds.map((e) => e).contains(element),
+        )
+        .toList();
+    var newInstallIdsAllOrSelected = appsProvider
+        .findExistingUpdates(nonInstalledOnly: true)
+        .where(
+          (element) => selectedAppIds.isEmpty
+              ? listedApps.where((a) => a.app.id == element).isNotEmpty
+              : selectedAppIds.map((e) => e).contains(element),
+        )
+        .toList();
+
+    List<String> trackOnlyUpdateIdsAllOrSelected = [];
+    existingUpdateIdsAllOrSelected = existingUpdateIdsAllOrSelected.where((id) {
+      if (appsProvider.apps[id]!.app.additionalSettings['trackOnly'] == true) {
+        trackOnlyUpdateIdsAllOrSelected.add(id);
+        return false;
+      }
+      return true;
+    }).toList();
+    newInstallIdsAllOrSelected = newInstallIdsAllOrSelected.where((id) {
+      if (appsProvider.apps[id]!.app.additionalSettings['trackOnly'] == true) {
+        trackOnlyUpdateIdsAllOrSelected.add(id);
+        return false;
+      }
+      return true;
+    }).toList();
+
+    if (settingsProvider.pinUpdates) {
+      var temp = [];
+      listedApps = listedApps.where((sa) {
+        if (existingUpdates.contains(sa.app.id)) {
+          temp.add(sa);
+          return false;
+        }
+        return true;
+      }).toList();
+      listedApps = [...temp, ...listedApps];
+    }
+
+    if (settingsProvider.buryNonInstalled) {
+      var temp = [];
+      listedApps = listedApps.where((sa) {
+        if (sa.app.installedVersion == null) {
+          temp.add(sa);
+          return false;
+        }
+        return true;
+      }).toList();
+      listedApps = [...listedApps, ...temp];
+    }
+
+    var tempPinned = [];
+    var tempNotPinned = [];
+    for (var a in listedApps) {
+      if (a.app.pinned) {
+        tempPinned.add(a);
+      } else {
+        tempNotPinned.add(a);
+      }
+    }
+    listedApps = [...tempPinned, ...tempNotPinned];
+
+    _cachedListedApps = listedApps;
+    return _cachedListedApps;
+  }
+
   @override
   Widget build(BuildContext context) {
     var appsProvider = context.watch<AppsProvider>();
     var settingsProvider = context.watch<SettingsProvider>();
-    var listedApps = appsProvider.getAppValues().toList();
+    var listedApps = _getListedApps(appsProvider, settingsProvider);
 
     refresh() {
       HapticFeedback.lightImpact();
@@ -1756,8 +1975,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     if (selectedAppIds.isNotEmpty)
                       M3FloatingToolbarAction(
                         icon: Icons.share,
-                        semanticLabel:
-                            '${t('share')} - ${t('updatiumExport')}',
+                        semanticLabel: '${t('share')} - ${t('updatiumExport')}',
                         tooltip: '${t('share')} - ${t('updatiumExport')}',
                         onPressed: () {
                           var encoder = const JsonEncoder.withIndent("    ");
