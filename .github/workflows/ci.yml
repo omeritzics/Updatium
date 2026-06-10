@@ -8,10 +8,6 @@ permissions:
   contents: write
   pull-requests: write
       
-jobs:
-  build:
-    runs-on: ubuntu-24.04
-    steps:
       - name: Checkout Code
         uses: actions/checkout@main
         with:

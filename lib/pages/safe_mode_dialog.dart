@@ -128,12 +128,12 @@ class _SafeModeEnableDialogState extends State<SafeModeEnableDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            t('safeModeDescription'),
+            t('safeModeSetupDescription'),
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(height: 12),
           Text(
-            t('safeModeSetupHint'),
+            t('safeModeDisableHint'),
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
