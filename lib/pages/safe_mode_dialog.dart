@@ -19,7 +19,7 @@ void showSafeModeEnableDialog(BuildContext context) {
 }
 
 class SafeModeEnableDialog extends StatefulWidget {
-  const SafeModeEnableDialog();
+  const SafeModeEnableDialog({super.key});
 
   @override
   State<SafeModeEnableDialog> createState() => _SafeModeEnableDialogState();
@@ -135,8 +135,8 @@ class _SafeModeEnableDialogState extends State<SafeModeEnableDialog> {
           Text(
             t('safeModeDisableHint'),
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: 20),
           TextField(
@@ -200,7 +200,7 @@ void showSafeModeDisableDialog(BuildContext context) {
 }
 
 class SafeModeDisableDialog extends StatefulWidget {
-  const SafeModeDisableDialog();
+  const SafeModeDisableDialog({super.key});
 
   @override
   State<SafeModeDisableDialog> createState() => _SafeModeDisableDialogState();
