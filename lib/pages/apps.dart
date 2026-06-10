@@ -173,7 +173,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   List<AppInMemory> _cachedListedApps = [];
   String _lastFilterState = '';
   int _lastTabIndex = -1;
-  SortColumnSettings _lastSortColumn = SortColumnSettings.name;
+  SortColumnSettings _lastSortColumn = SortColumnSettings.nameAuthor;
   SortOrderSettings _lastSortOrder = SortOrderSettings.ascending;
 
   // Helper function to preserve transparency regardless of theme overrides
