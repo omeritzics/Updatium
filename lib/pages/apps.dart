@@ -178,7 +178,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
   // Helper function to preserve transparency regardless of theme overrides
   Color preserveTransparency(Color baseColor, double alpha) {
-  // ... existing code ...
+    // ... existing code ...
 
     // Always apply the requested transparency, ensuring it takes priority
     // over any theme-based color overrides
@@ -244,9 +244,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     SettingsProvider settingsProvider,
   ) {
     // Generate a state key to check if cache is valid
-    String currentFilterState = 
+    String currentFilterState =
         '${filter.nameFilter}|${filter.authorFilter}|${filter.descriptionFilter}|${filter.idFilter}|${filter.categoryFilter}|${filter.sourceFilter}|${_tabController.index}';
-    
+
     if (_cachedListedApps.isNotEmpty &&
         _lastFilterState == currentFilterState &&
         _lastTabIndex == _tabController.index &&
