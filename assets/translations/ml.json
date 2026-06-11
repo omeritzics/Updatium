@@ -137,6 +137,7 @@
     "dark": "ഇരുണ്ട",
     "light": "ഇളം",
     "followSystem": "സിസ്റ്റം പിന്തുടരുക",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "സിസ്റ്റം തീം പിന്തുടരുന്നത് തേർഡ് പാർട്ടി ആപ്ലിക്കേഷനുകൾ ഉപയോഗിച്ച് മാത്രമേ സാധ്യമാകൂ",
     "useBlackTheme": "തനി കറുപ്പ് തീം ഉപയോഗിക്കുക",
     "appSortBy": "ആപ്പ് അടുക്കേണ്ട രീതി",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "സുരക്ഷിത മോഡ് പ്രവർത്തനക്ഷമമാണ്",
     "safeModeDisabled": "സുരക്ഷിത മോഡ് പ്രവർത്തനരഹിതമാണ്",
     "safeModeDisable": "സുരക്ഷിത മോഡ് പ്രവർത്തനരഹിതമാക്കുക",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "സുരക്ഷിത മോഡ് അഡ്മിനിസ്ട്രേഷൻ",
-    "safeModeSetupDescription": "സുരക്ഷിത മോഡ് പ്രവർത്തനക്ഷമമാക്കാൻ ഒരു രഹസ്യവാക്യം സജ്ജീകരിക്കുക. പ്രവർത്തനക്ഷമമാക്കിയാൽ, സുരക്ഷിത മോഡ് പുതിയ ആപ്പുകൾ ചേർക്കുന്നത് തടയുകയും രഹസ്യവാക്യം ഉപയോഗിച്ച് മാത്രമേ പ്രവർത്തനരഹിതമാക്കാൻ കഴിയൂ.",
+    "safeModeSetupHint": "സുരക്ഷിത മോഡ് പ്രവർത്തനക്ഷമമാക്കാൻ ഒരു രഹസ്യവാക്യം സജ്ജീകരിക്കുക. പ്രവർത്തനക്ഷമമാക്കിയാൽ, സുരക്ഷിത മോഡ് പുതിയ ആപ്പുകൾ ചേർക്കുന്നത് തടയുകയും രഹസ്യവാക്യം ഉപയോഗിച്ച് മാത്രമേ പ്രവർത്തനരഹിതമാക്കാൻ കഴിയൂ.",
     "safeModeToggleDescription": "സുരക്ഷിത മോഡ് ഓണോഫ് ചെയ്യാൻ നിങ്ങളുടെ രഹസ്യവാക്യം നൽകുക.",
     "safeModeSetPassword": "രഹസ്യവാക്യം സജ്ജീകരിക്കുക",
     "safeModeConfirmPassword": "രഹസ്യവാക്യം സ്ഥിരീകരിക്കുക",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

@@ -3065,7 +3065,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
                   children: [
                     urlsToSelectFrom.length > 1
                         ? Text(
-                            tr(
+                            t(
                               'appHasMoreThanOnePackage',
                               args: [widget.app.finalName],
                             ),
@@ -3096,10 +3096,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
                     if (widget.archs != null)
                       Text(
                         widget.archs!.length == 1
-                            ? tr(
-                                'deviceSupportsXArch',
-                                args: [widget.archs![0]],
-                              )
+                            ? t('deviceSupportsXArch', args: [widget.archs![0]])
                             : t('deviceSupportsFollowingArchs') +
                                   list2FriendlyString(
                                     widget.archs!.map((e) => '\'$e\'').toList(),
@@ -3138,7 +3135,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
       scrollable: true,
       title: Text(t('warning')),
       content: Text(
-        tr(
+        t(
           'sourceIsXButPackageFromYPrompt',
           args: [
             Uri.parse(widget.sourceUrl).host,

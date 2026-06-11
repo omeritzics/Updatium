@@ -137,6 +137,7 @@
     "dark": "Întunecat",
     "light": "Luminos",
     "followSystem": "Urmărește sistemul",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "Urmărirea temei sistemului este posibilă doar folosind aplicații terțe",
     "useBlackTheme": "Folosește temă întunecată complet negru",
     "appSortBy": "Sortare aplicații după",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "Modul Sigur este activat",
     "safeModeDisabled": "Modul Sigur este dezactivat",
     "safeModeDisable": "Dezactivează Modul Sigur",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Administrare Mod Sigur",
-    "safeModeSetupDescription": "Setați o parolă pentru a activa Modul Sigur. Odată activat, Modul Sigur împiedică adăugarea de noi aplicații și poate fi dezactivat doar cu parola.",
+    "safeModeSetupHint": "Setați o parolă pentru a activa Modul Sigur. Odată activat, Modul Sigur împiedică adăugarea de noi aplicații și poate fi dezactivat doar cu parola.",
     "safeModeToggleDescription": "Introduceți parola pentru a activa sau dezactiva Modul Sigur.",
     "safeModeSetPassword": "Setați Parolă",
     "safeModeConfirmPassword": "Confirmați Parolă",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }
