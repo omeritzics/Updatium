@@ -137,6 +137,7 @@
     "dark": "Темна",
     "light": "Світла",
     "followSystem": "Дотримуватися системи",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "Зміна теми системи можлива лише за допомогою сторонніх додатків",
     "useBlackTheme": "Використовувати чорну тему (Amoled)",
     "appSortBy": "Сортувати застосунки за",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "Безпечний режим увімкнено",
     "safeModeDisabled": "Безпечний режим вимкнено",
     "safeModeDisable": "Вимкнути безпечний режим",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Адміністрування безпечного режиму",
-    "safeModeSetupDescription": "Встановіть пароль для увімкнення безпечного режиму. Після увімкнення безпечного режиму додавання нових додатків буде заблоковано, і його можна буде вимкнути лише за допомогою пароля.",
+    "safeModeSetupHint": "Встановіть пароль для увімкнення безпечного режиму. Після увімкнення безпечного режиму додавання нових додатків буде заблоковано, і його можна буде вимкнути лише за допомогою пароля.",
     "safeModeToggleDescription": "Введіть свій пароль, щоб увімкнути або вимкнути безпечний режим.",
     "safeModeSetPassword": "Встановити пароль",
     "safeModeConfirmPassword": "Підтвердити пароль",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

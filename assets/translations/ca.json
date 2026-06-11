@@ -137,6 +137,7 @@
     "dark": "Fosc",
     "light": "Clar",
     "followSystem": "Segueix el sistema",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "Seguir el tema del sistema només és possible si uses aplicacions de tercers",
     "useBlackTheme": "Fes servir el negre pur en el tema fosc",
     "appSortBy": "Ordena les aplicacions per",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "Mode segur activat",
     "safeModeDisabled": "Mode segur desactivat",
     "safeModeDisable": "Desactiva el Mode segur",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Administració del Mode segur",
-    "safeModeSetupDescription": "Estableix una contrasenya per activar el Mode segur. Un cop activat, el Mode segur impedeix afegir noves aplicacions i només es pot desactivar amb la contrasenya.",
+    "safeModeSetupHint": "Estableix una contrasenya per activar el Mode segur. Un cop activat, el Mode segur impedeix afegir noves aplicacions i només es pot desactivar amb la contrasenya.",
     "safeModeToggleDescription": "Introduïu la contrasenya per activar o desactivar el Mode segur.",
     "safeModeSetPassword": "Estableix la contrasenya",
     "safeModeConfirmPassword": "Confirma la contrasenya",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

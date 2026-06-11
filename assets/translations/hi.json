@@ -137,6 +137,7 @@
     "dark": "डार्क",
     "light": "लाइट",
     "followSystem": "सिस्टम का पालन करें",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "सिस्टम थीम का पालन केवल तृतीय-पक्ष एप्लिकेशन का उपयोग करके ही संभव है",
     "useBlackTheme": "शुद्ध काले (Pure Black) डार्क थीम का उपयोग करें",
     "appSortBy": "ऐप को इसके अनुसार क्रमबद्ध करें",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "सेफ मोड सक्षम है",
     "safeModeDisabled": "सेफ मोड अक्षम है",
     "safeModeDisable": "सेफ मोड अक्षम करें",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "सेफ मोड प्रशासन",
-    "safeModeSetupDescription": "सेफ मोड सक्षम करने के लिए एक पासवर्ड सेट करें। एक बार सक्षम होने के बाद, सेफ मोड नए ऐप्स जोड़ने से रोकता है और इसे केवल पासवर्ड से ही अक्षम किया जा सकता है।",
+    "safeModeSetupHint": "सेफ मोड सक्षम करने के लिए एक पासवर्ड सेट करें। एक बार सक्षम होने के बाद, सेफ मोड नए ऐप्स जोड़ने से रोकता है और इसे केवल पासवर्ड से ही अक्षम किया जा सकता है।",
     "safeModeToggleDescription": "सेफ मोड को चालू या बंद करने के लिए अपना पासवर्ड दर्ज करें।",
     "safeModeSetPassword": "पासवर्ड सेट करें",
     "safeModeConfirmPassword": "पासवर्ड की पुष्टि करें",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

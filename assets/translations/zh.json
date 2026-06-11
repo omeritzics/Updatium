@@ -137,6 +137,7 @@
     "dark": "深色",
     "light": "浅色",
     "followSystem": "跟随系统",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "跟随系统主题仅在使用第三方应用时有效",
     "useBlackTheme": "使用纯黑深色主题",
     "appSortBy": "排序依据",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "安全模式已启用",
     "safeModeDisabled": "安全模式已禁用",
     "safeModeDisable": "禁用安全模式",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "安全模式管理",
-    "safeModeSetupDescription": "设置密码以启用安全模式。启用后，安全模式将阻止添加新应用，仅可通过密码禁用。",
+    "safeModeSetupHint": "设置密码以启用安全模式。启用后，安全模式将阻止添加新应用，仅可通过密码禁用。",
     "safeModeToggleDescription": "输入密码以启用或禁用安全模式。",
     "safeModeSetPassword": "设置密码",
     "safeModeConfirmPassword": "确认密码",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

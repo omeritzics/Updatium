@@ -137,6 +137,7 @@
     "dark": "Escuro",
     "light": "Claro",
     "followSystem": "Seguir ao sistema",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "Seguir o decorado do sistema só é posible usando aplicacións de terceiras partes",
     "useBlackTheme": "Usar decorado escuro con negro verdadeiro",
     "appSortBy": "Ordear por",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "Modo seguro activado",
     "safeModeDisabled": "Modo seguro desactivado",
     "safeModeDisable": "Desactivar Modo seguro",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Administración do Modo seguro",
-    "safeModeSetupDescription": "Establece un contrasinal para activar o Modo seguro. Unha vez activado, o Modo seguro impide engadir novas apps e só pode ser desactivado co contrasinal.",
+    "safeModeSetupHint": "Establece un contrasinal para activar o Modo seguro. Unha vez activado, o Modo seguro impide engadir novas apps e só pode ser desactivado co contrasinal.",
     "safeModeToggleDescription": "Introduce o teu contrasinal para activar ou desactivar o Modo seguro.",
     "safeModeSetPassword": "Establecer contrasinal",
     "safeModeConfirmPassword": "Confirmar contrasinal",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }
