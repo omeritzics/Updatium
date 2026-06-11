@@ -432,7 +432,7 @@ class AddAppPageState extends State<AddAppPage> {
             context: context,
             builder: (BuildContext ctx) {
               return SelectionModal(
-                title: tr('selectX', args: [plural('source', 2).toLowerCase()]),
+                title: t('selectX', args: [plural('source', 2).toLowerCase()]),
                 entries: sourceStrings,
                 selectedByDefault: true,
                 onlyOneSelectionAllowed: false,
@@ -767,7 +767,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               scrollable: true,
               contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
               title: Text(
-                tr(
+                t(
                   'xIsTrackOnly',
                   args: [
                     pickedSource!.enforceTrackOnly ? t('source') : t('app'),

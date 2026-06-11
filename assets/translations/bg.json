@@ -137,6 +137,7 @@
     "dark": "Тъмна",
     "light": "Светла",
     "followSystem": "Следване на системата",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "Следването на системната тема е възможно само чрез използване на приложения на трети страни",
     "useBlackTheme": "Използване на чисто черна тъмна тема",
     "appSortBy": "Сортиране на приложения по",
@@ -492,7 +493,7 @@
     "safeModeDisable": "Деактивиране на Безопасен режим",
     "safeModeDisableHint": "Натиснете няколко пъти върху номера на версията в Настройки, за да деактивирате Безопасен режим",
     "safeModeAdmin": "Администрация на Безопасен режим",
-    "safeModeSetupDescription": "Задайте парола за активиране на Безопасен режим. След активиране, Безопасният режим предотвратява добавянето на нови приложения и може да бъде деактивиран само с паролата.",
+    "safeModeSetupHint": "Задайте парола за активиране на Безопасен режим. След активиране, Безопасният режим предотвратява добавянето на нови приложения и може да бъде деактивиран само с паролата.",
     "safeModeToggleDescription": "Въведете вашата парола, за да превключите Безопасен режим включен или изключен.",
     "safeModeSetPassword": "Задаване на парола",
     "safeModeConfirmPassword": "Потвърждаване на парола",
@@ -530,5 +531,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

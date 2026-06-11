@@ -137,6 +137,7 @@
     "dark": "Sötét",
     "light": "Világos",
     "followSystem": "Rendszerbeállítás használata",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "A következő rendszertéma csak harmadik féltől származó alkalmazások használatával lehetséges",
     "useBlackTheme": "Teljesen fekete sötét téma használata",
     "appSortBy": "Rendezési szempont",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "Biztonságos mód engedélyezve",
     "safeModeDisabled": "Biztonságos mód letiltva",
     "safeModeDisable": "Biztonságos mód letiltása",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Biztonságos mód adminisztráció",
-    "safeModeSetupDescription": "Állítson be egy jelszót a biztonságos mód engedélyezéséhez. Miután engedélyezte, a biztonságos mód megakadályozza az új alkalmazások hozzáadását, és csak a jelszóval lehet letiltani.",
+    "safeModeDescription": "Állítson be egy jelszót a biztonságos mód engedélyezéséhez. Miután engedélyezte, a biztonságos mód megakadályozza az új alkalmazások hozzáadását, és csak a jelszóval lehet letiltani.",
     "safeModeToggleDescription": "Adja meg a jelszót a biztonságos mód be- vagy kikapcsolásához.",
     "safeModeSetPassword": "Jelszó beállítása",
     "safeModeConfirmPassword": "Jelszó megerősítése",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

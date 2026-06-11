@@ -137,6 +137,7 @@
     "dark": "تاریک",
     "light": "روشن",
     "followSystem": "هماهنگ با سیستم",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "دنبال کردن تم سیستم فقط با استفاده از برنامه های شخص ثالث امکان پذیر است",
     "useBlackTheme": "استفاده از تم تیره سیاه خالص",
     "appSortBy": "مرتب سازی برنامه بر اساس",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "حالت امن فعال شده است",
     "safeModeDisabled": "حالت امن غیرفعال شده است",
     "safeModeDisable": "غیرفعال کردن حالت امن",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "مدیریت حالت امن",
-    "safeModeSetupDescription": "رمز عبور را برای فعال کردن حالت امن تنظیم کنید. پس از فعال شدن، حالت امن از اضافه کردن برنامه های جدید جلوگیری می کند و تنها با رمز عبور می توان آن را غیرفعال کرد.",
+    "safeModeSetupHint": "رمز عبور را برای فعال کردن حالت امن تنظیم کنید. پس از فعال شدن، حالت امن از اضافه کردن برنامه های جدید جلوگیری می کند و تنها با رمز عبور می توان آن را غیرفعال کرد.",
     "safeModeToggleDescription": "رمز عبور خود را وارد کنید تا حالت امن را فعال یا غیرفعال کنید.",
     "safeModeSetPassword": "تنظیم رمز عبور",
     "safeModeConfirmPassword": "تایید رمز عبور",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

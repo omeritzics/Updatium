@@ -137,6 +137,7 @@
     "dark": "Tarî",
     "light": "Ronahî",
     "followSystem": "Li gor pergalê",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "Li gor dirbê pergalê tenê bi sepanên sêyemîn re dibe",
     "useBlackTheme": "Dirbê tarî yê rehet a tevî bi kar bîne",
     "appSortBy": "Rêzkirina sepanan li gor",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "Moda Ewle çalak e",
     "safeModeDisabled": "Moda Ewle neçalak e",
     "safeModeDisable": "Moda Ewle neçalak bike",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Rêveberiya Moda Ewle",
-    "safeModeSetupDescription": "Kelîmeya serê were saz bike ji bo çalakkirina Moda Ewle. Pi çalakkirinê, Moda Ewle sepanên nû zêdekirinê qedexe dike û tenê bi kelîmeya serê dikare were neçalak kirin.",
+    "safeModeSetupHint": "Kelîmeya serê were saz bike ji bo çalakkirina Moda Ewle. Pi çalakkirinê, Moda Ewle sepanên nû zêdekirinê qedexe dike û tenê bi kelîmeya serê dikare were neçalak kirin.",
     "safeModeToggleDescription": "Kelîmeya serê binivîse ji bo guhertina Moda Ewle.",
     "safeModeSetPassword": "Kelîmeya serê saz bike",
     "safeModeConfirmPassword": "Kelîmeya serê pejirîne",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }
