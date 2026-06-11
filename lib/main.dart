@@ -485,11 +485,6 @@ class _UpdatiumState extends State<Updatium> {
               return 'NotoSansCJK';
             }
 
-            // Hebrew
-            if (locale.languageCode == 'he') {
-              return 'NotoSansHebrew';
-            }
-
             // Arabic
             if (locale.languageCode == 'ar' ||
                 locale.languageCode == 'fa' ||
@@ -497,8 +492,8 @@ class _UpdatiumState extends State<Updatium> {
               return 'NotoSansArabic';
             }
 
-            // Default to Inter for other languages
-            return 'Inter';
+            // Default to Google Sans for other languages
+            return 'GoogleSans';
           }
 
           // Shared theme component generator with Material Design Expressive
@@ -510,9 +505,8 @@ class _UpdatiumState extends State<Updatium> {
               fontFamilyFallback: settingsProvider.useSystemFont
                   ? null
                   : const [
-                      'Inter',
+                      'GoogleSans',
                       'NotoSansCJK',
-                      'NotoSansHebrew',
                       'NotoSansArabic',
                     ],
 
@@ -532,10 +526,8 @@ class _UpdatiumState extends State<Updatium> {
                   fontFamilyFallback: settingsProvider.useSystemFont
                       ? null
                       : const [
-                          'Inter',
-                          'GoogleSansFlex',
+                          'GoogleSans',
                           'NotoSansCJK',
-                          'NotoSansHebrew',
                           'NotoSansArabic',
                         ],
                 ),
