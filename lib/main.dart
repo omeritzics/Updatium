@@ -498,12 +498,39 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: getPrimaryFontForLocale(context.locale),
               fontFamilyFallback: settingsProvider.useSystemFont
                   ? null
-                  : const [
-                      'GoogleSans',
-                      'NotoSansCJK',
-                      'NotoSansArabic',
-                    ],
-
+                  : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
+              inputDecorationTheme: InputDecorationTheme(
+                filled: false,
+                labelStyle: const TextStyle(fontWeight: FontWeight.w500),
+                floatingLabelStyle: TextStyle(
+                  color: scheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                  borderSide: BorderSide(color: scheme.primary, width: 2.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                  borderSide: BorderSide(color: scheme.primary, width: 2.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                  borderSide: BorderSide(color: scheme.primary, width: 2.0),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                  borderSide: BorderSide(color: scheme.error, width: 1.0),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                  borderSide: BorderSide(color: scheme.error, width: 2.0),
+                ),
+              ),
               // Keyboard/TV navigation support
               focusColor: scheme.primary.withValues(alpha: 0.2),
               highlightColor: scheme.primary.withValues(alpha: 0.1),
@@ -519,11 +546,7 @@ class _UpdatiumState extends State<Updatium> {
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: settingsProvider.useSystemFont
                       ? null
-                      : const [
-                          'GoogleSans',
-                          'NotoSansCJK',
-                          'NotoSansArabic',
-                        ],
+                      : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),

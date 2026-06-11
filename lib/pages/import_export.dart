@@ -58,10 +58,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               key: formKey,
               child: TextFormField(
                 controller: controller,
-                decoration: InputDecoration(
-                  labelText: t('appURLList'),
-                  border: const OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: t('appURLList')),
                 maxLines: 7,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
@@ -267,10 +264,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: TextFormField(
                                 controller: controllers[arg],
-                                decoration: InputDecoration(
-                                  labelText: arg,
-                                  border: const OutlineInputBorder(),
-                                ),
+                                decoration: InputDecoration(labelText: arg),
                                 validator: (v) => v == null || v.isEmpty
                                     ? t('requiredInBrackets')
                                     : null,

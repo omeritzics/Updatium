@@ -5,6 +5,7 @@ import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
 import 'package:updatium/pages/settings.dart';
+import 'package:updatium/pages/import_export.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -341,7 +342,7 @@ class AddAppPageState extends State<AddAppPage> {
           }).toList();
 
           showDialog(
-            context: context.mounted as BuildContext,
+            context: context,
             builder: (BuildContext ctx) {
               return AlertDialog(
                 contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
@@ -640,6 +641,21 @@ class AddAppPageState extends State<AddAppPage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.import_export),
+        label: Text(t('importExport')),
+        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
+        elevation: 3,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        onPressed: () {
+          HapticFeedback.selectionClick();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ImportExportPage()),
+          );
+        },
       ),
     );
   }
@@ -1086,6 +1102,8 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                                           label:
                                               '${t('appId')} - ${t('custom')}',
                                           required: false,
+                                          defaultValue:
+                                              additionalSettings['appId'] ?? '',
                                           additionalValidators: [
                                             (value) {
                                               if (value == null ||
@@ -1376,7 +1394,6 @@ class _SelectionModalState extends State<SelectionModal> {
                           },
                         )
                       : null,
-                  border: const OutlineInputBorder(),
                 ),
                 onChanged: (value) {
                   setState(() {
