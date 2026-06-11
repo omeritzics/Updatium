@@ -498,11 +498,7 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: getPrimaryFontForLocale(context.locale),
               fontFamilyFallback: settingsProvider.useSystemFont
                   ? null
-                  : const [
-                      'GoogleSans',
-                      'NotoSansCJK',
-                      'NotoSansArabic',
-                    ],
+                  : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
 
               // Keyboard/TV navigation support
               focusColor: scheme.primary.withValues(alpha: 0.2),
@@ -519,11 +515,7 @@ class _UpdatiumState extends State<Updatium> {
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: settingsProvider.useSystemFont
                       ? null
-                      : const [
-                          'GoogleSans',
-                          'NotoSansCJK',
-                          'NotoSansArabic',
-                        ],
+                      : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),
