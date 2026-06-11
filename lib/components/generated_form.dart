@@ -279,11 +279,12 @@ bool validateTextField(TextFormField tf) =>
 class _GeneratedFormState extends State<GeneratedForm> {
   final _formKey = GlobalKey<FormState>();
   Map<String, dynamic> values = {};
-  late List<List<Widget>> formInputs;
+  List<List<Widget>> formInputs = [];
   List<List<Widget>> rows = [];
   String? initKey;
   int forceUpdateKeyCount = 0;
   final Map<String, TextEditingController> _controllers = {};
+  final Map<String, GlobalKey<FormFieldState>> _formKeys = {};
   bool _isDisposed = false;
 
   // If any value changes, call this to update the parent with value and validity
@@ -311,6 +312,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
       controller.dispose();
     }
     _controllers.clear();
+    _formKeys.clear();
     // Initialize form values as all empty
     values.clear();
     for (var row in widget.items) {
@@ -318,6 +320,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
         values[e.key] = e.defaultValue;
         if (e is GeneratedFormTextField) {
           _controllers[e.key] = TextEditingController(text: e.defaultValue);
+          _formKeys[e.key] = GlobalKey<FormFieldState>();
         }
       }
     }
@@ -328,9 +331,11 @@ class _GeneratedFormState extends State<GeneratedForm> {
     return widget.items.asMap().entries.map((row) {
       return row.value.asMap().entries.map((e) {
         var formItem = e.value;
+        String fieldKey = formItem.key;
+
         if (formItem is GeneratedFormTextField) {
-          final formFieldKey = GlobalKey<FormFieldState>();
-          var ctrl = _controllers[formItem.key]!;
+          var ctrl = _controllers[fieldKey]!;
+          var formFieldKey = _formKeys[fieldKey]!;
           return TypeAheadField<String>(
             controller: ctrl,
             builder: (context, controller, focusNode) {
@@ -345,7 +350,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 onChanged: (value) {
                   setState(() {
-                    values[formItem.key] = value;
+                    values[fieldKey] = value;
                     someValueChanged();
                   });
                 },
@@ -362,6 +367,406 @@ class _GeneratedFormState extends State<GeneratedForm> {
                       (value == null || value.trim().isEmpty)) {
                     return '${formItem.label} ${t('requiredInBrackets')}';
                   }
+                  for (var validator in formItem.additionalValidators) {
+                    String? result = validator(value);
+                    if (result != null) {
+                      return result;
+                    }
+                  }
+                  return null;
+                },
+              );
+            },
+            itemBuilder: (context, value) {
+              return ListTile(
+                title: Text(
+                  value,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              );
+            },
+            onSelected: (value) {
+              ctrl.text = value;
+              setState(() {
+                values[fieldKey] = value;
+                someValueChanged();
+              });
+            },
+            suggestionsCallback: (search) {
+              return formItem.autoCompleteOptions
+                  ?.where((t) => t.toLowerCase().contains(search.toLowerCase()))
+                  .toList();
+            },
+            hideOnEmpty: true,
+          );
+        } else if (formItem is GeneratedFormDropdown) {
+          if (formItem.opts!.isEmpty) {
+            return Text(t('dropdownNoOptsError'));
+          }
+          return DropdownButtonFormField<String>(
+            initialValue: values[fieldKey] ?? formItem.opts?.first.key,
+            isExpanded: true,
+            decoration: InputDecoration(
+              labelText: fieldKey == 'appSourceURL'
+                  ? '${formItem.label}${formItem.required ? ' *' : ''}'
+                  : formItem.label,
+              border: const OutlineInputBorder(),
+            ),
+            items: formItem.opts?.map((e2) {
+              var enabled = formItem.disabledOptKeys?.contains(e2.key) != true;
+              return DropdownMenuItem<String>(
+                value: e2.key,
+                enabled: enabled,
+                child: Opacity(
+                  opacity: enabled ? 1 : 0.5,
+                  child: Directionality(
+                    textDirection: Directionality.of(context),
+                    child: Text(e2.value),
+                  ),
+                ),
+              );
+            }).toList(),
+            selectedItemBuilder: (context) {
+              return formItem.opts!.map((e2) {
+                const displayLimit = 50;
+                var displayText = e2.value.length > displayLimit
+                    ? '${e2.value.substring(0, displayLimit)}...'
+                    : e2.value;
+                return Directionality(
+                  textDirection: Directionality.of(context),
+                  child: Text(displayText),
+                );
+              }).toList();
+            },
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  values[fieldKey] = value;
+                  someValueChanged();
+                });
+              }
+            },
+            validator: (value) {
+              if (formItem.required &&
+                  (value == null || value.trim().isEmpty)) {
+                return '${formItem.label} ${t('requiredInBrackets')}';
+              }
+              if (value != null && value.length > formItem.max) {
+                return '${formItem.label} must be at most ${formItem.max} characters';
+              }
+              for (var validator in formItem.additionalValidators) {
+                String? result = validator(value);
+                if (result != null) {
+                  return result;
+                }
+              }
+              return null;
+            },
+          );
+        } else if (formItem is GeneratedFormSwitch) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    formItem.label,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Switch(
+                  value: values[fieldKey],
+                  onChanged: formItem.disabled
+                      ? null
+                      : (value) {
+                          setState(() {
+                            values[fieldKey] = value;
+                            someValueChanged();
+                          });
+                        },
+                ),
+              ],
+            ),
+          );
+        } else if (formItem is GeneratedFormTagInput) {
+          // Using a local function for onAddPressed to keep the build method cleaner
+          // but we still need the logic.
+          return _buildTagInputWidget(context, formItem, fieldKey);
+        } else if (formItem is GeneratedFormSubForm) {
+          values[fieldKey] = [];
+          for (Map<String, dynamic> v
+              in ((formItem.defaultValue ?? []) as List<dynamic>)) {
+            var fullDefaults = getDefaultValuesFromFormItems(formItem.items);
+            for (var element in v.entries) {
+              fullDefaults[element.key] = element.value;
+            }
+            values[fieldKey].add(fullDefaults);
+          }
+          return Container();
+        } else {
+          return Container(); // Some input types added in build
+        }
+      }).toList();
+    }).toList();
+  }
+
+  Widget _buildTagInputWidget(BuildContext context, GeneratedFormTagInput formItem, String fieldKey) {
+    void onAddPressed() {
+      showDialog<Map<String, dynamic>?>(
+        context: context,
+        builder: (BuildContext ctx) {
+          Map<String, dynamic> localValues = {};
+          return AlertDialog(
+            title: Text(formItem.label),
+            content: GeneratedForm(
+              items: [
+                [GeneratedFormTextField('label', label: t('label'))],
+              ],
+              onValueChanges: (vals, valid, isBuilding) {
+                localValues = vals;
+              },
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(null),
+                child: Text(t('cancel')),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(localValues),
+                child: Text(t('ok')),
+              ),
+            ],
+          );
+        },
+      ).then((value) {
+        String? label = value?['label'];
+        if (label != null) {
+          setState(() {
+            var temp =
+                values[fieldKey] as Map<String, MapEntry<int, bool>>?;
+            temp ??= {};
+            if (temp[label] == null) {
+              var singleSelect = formItem.singleSelect;
+              var someSelected = temp.entries
+                  .where((element) => element.value.value)
+                  .isNotEmpty;
+              temp[label] = MapEntry(
+                generateRandomLightColor().toARGB32(),
+                !(someSelected && singleSelect),
+              );
+              values[fieldKey] = temp;
+              someValueChanged();
+            }
+          });
+        }
+      });
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if ((values[fieldKey] as Map<String, MapEntry<int, bool>>?)
+                ?.isNotEmpty ==
+            true &&
+            formItem.showLabelWhenNotEmpty)
+          Column(
+            crossAxisAlignment: formItem.alignment ==
+                WrapAlignment.center
+                ? CrossAxisAlignment.center
+                : CrossAxisAlignment.stretch,
+            children: [
+              Text(formItem.label),
+              const SizedBox(height: 8),
+            ],
+          ),
+        Wrap(
+          alignment: formItem.alignment,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            ...(values[fieldKey] as Map<String, MapEntry<int, bool>>?)
+                ?.entries
+                .map((e2) {
+                  final settingsProvider =
+                      Provider.of<SettingsProvider>(context);
+                  final categoryColor = Color(
+                    settingsProvider.categories[e2.key] ??
+                        Theme.of(
+                          context,
+                        ).colorScheme.primary.toARGB32(),
+                  );
+                  return CategoryChip(
+                    label: e2.key,
+                    selected: e2.value.value,
+                    categoryColor: categoryColor,
+                    showCheckmark: true,
+                    onSelected: (value) {
+                      setState(() {
+                        (values[fieldKey]
+                            as Map<String, MapEntry<int, bool>>)[e2
+                            .key] = MapEntry(
+                          (values[fieldKey]
+                              as Map<
+                                String,
+                                MapEntry<int, bool>
+                              >)[e2.key]!
+                              .key,
+                          value,
+                        );
+                        if (formItem.singleSelect && value == true) {
+                          for (var key
+                              in (values[fieldKey]
+                                      as Map<
+                                        String,
+                                        MapEntry<int, bool>
+                                      >)
+                                  .keys) {
+                            if (key != e2.key) {
+                              (values[fieldKey]
+                                  as Map<
+                                    String,
+                                    MapEntry<int, bool>
+                                  >)[key] = MapEntry(
+                                (values[fieldKey]
+                                    as Map<
+                                      String,
+                                      MapEntry<int, bool>
+                                    >)[key]!
+                                    .key,
+                                false,
+                              );
+                            }
+                          }
+                        }
+                        someValueChanged();
+                      });
+                    },
+                  );
+                }) ??
+            [const SizedBox.shrink()],
+            (values[fieldKey] as Map<String, MapEntry<int, bool>>?)
+                ?.values
+                .where((e) => e.value)
+                .length ==
+                1
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          var temp =
+                              values[fieldKey]
+                                  as Map<String, MapEntry<int, bool>>;
+                          final oldEntry = temp.entries.firstWhere(
+                            (entry) => entry.value.value,
+                          );
+                          int newColor = oldEntry.value.key;
+                          while (oldEntry.value.key == newColor) {
+                            newColor = generateRandomLightColor()
+                                .toARGB32();
+                          }
+                          temp.update(
+                            oldEntry.key,
+                            (old) => MapEntry(newColor, old.value),
+                          );
+                          values[fieldKey] = temp;
+                          someValueChanged();
+                        });
+                      },
+                      icon: const Icon(Icons.format_color_fill_rounded),
+                      visualDensity: VisualDensity.compact,
+                      tooltip: t('color'),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+            (values[fieldKey] as Map<String, MapEntry<int, bool>>?)
+                ?.values
+                .where((e) => e.value)
+                .isNotEmpty ==
+                true
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: IconButton(
+                      onPressed: () {
+                        fn() {
+                          setState(() {
+                            var temp =
+                                values[fieldKey]
+                                    as Map<String, MapEntry<int, bool>>;
+                            temp.removeWhere((key, value) => value.value);
+                            values[fieldKey] = temp;
+                            someValueChanged();
+                          });
+                        }
+                        if (formItem.deleteConfirmationMessage != null) {
+                          var message = formItem.deleteConfirmationMessage!;
+                          showDialog<bool>(
+                            context: context,
+                            builder: (BuildContext ctx) {
+                              return AlertDialog(
+                                title: Text(message.key),
+                                content: Text(message.value),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(ctx).pop(false),
+                                    child: Text(t('cancel')),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(ctx).pop(true),
+                                    child: Text(t('ok')),
+                                  ),
+                                ],
+                              );
+                            },
+                          ).then((confirmed) {
+                            if (confirmed == true) {
+                              fn();
+                            }
+                          });
+                        } else {
+                          fn();
+                        }
+                      },
+                      icon: const Icon(Icons.remove),
+                      visualDensity: VisualDensity.compact,
+                      tooltip: t('remove'),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+            (values[fieldKey] as Map<String, MapEntry<int, bool>>?)
+                ?.isEmpty ==
+                true
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: TextButton.icon(
+                      onPressed: onAddPressed,
+                      icon: const Icon(Icons.add),
+                      label: Text(formItem.label),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: IconButton(
+                      onPressed: onAddPressed,
+                      icon: const Icon(Icons.add),
+                      visualDensity: VisualDensity.compact,
+                      tooltip: t('add'),
+                    ),
+                  ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initForm();
+  }
                   for (var validator in formItem.additionalValidators) {
                     String? result = validator(value);
                     if (result != null) {
@@ -415,10 +820,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 enabled: enabled,
                 child: Opacity(
                   opacity: enabled ? 1 : 0.5,
-                  child: Directionality(
-                    textDirection: Directionality.of(context),
-                    child: Text(e2.value),
-                  ),
+                  child: Text(e2.value),
                 ),
               );
             }).toList(),
@@ -428,10 +830,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 var displayText = e2.value.length > displayLimit
                     ? '${e2.value.substring(0, displayLimit)}...'
                     : e2.value;
-                return Directionality(
-                  textDirection: Directionality.of(context),
-                  child: Text(displayText),
-                );
+                return Text(displayText);
               }).toList();
             },
             onChanged: (value) {
@@ -498,6 +897,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
     if (widget.key.toString() != initKey) {
       initForm();
     }
+    formInputs = _buildFormInputs(context);
     for (var r = 0; r < formInputs.length; r++) {
       for (var e = 0; e < formInputs[r].length; e++) {
         String fieldKey = widget.items[r][e].key;
@@ -581,6 +981,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
               }
             });
           }
+
 
           formInputs[r][e] = Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
