@@ -5,6 +5,7 @@ import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
 import 'package:updatium/pages/settings.dart';
+import 'package:updatium/pages/import_export.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
@@ -331,7 +332,7 @@ class AddAppPageState extends State<AddAppPage> {
       TextButton.icon(
         onPressed: () async {
           final installedApps = await getAllInstalledInfo();
-          if (!context.mounted) return;
+          if (!mounted) return;
 
           // Filter out system apps
           final nonSystemApps = installedApps.where((app) {
@@ -341,7 +342,7 @@ class AddAppPageState extends State<AddAppPage> {
           }).toList();
 
           showDialog(
-            context: context.mounted as BuildContext,
+            context: context,
             builder: (BuildContext ctx) {
               return AlertDialog(
                 contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
@@ -607,14 +608,17 @@ class AddAppPageState extends State<AddAppPage> {
           SliverAppBar.large(
             pinned: true,
             title: Text(t('addApp')),
-            bottom: (pickedSource != null || searching || searchQuery.isNotEmpty)
+            bottom:
+                (pickedSource != null || searching || searchQuery.isNotEmpty)
                 ? PreferredSize(
                     preferredSize: const Size.fromHeight(8),
                     child: Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: AppAddingProgressBar(
-                        currentStep: 1, 
-                        totalSteps: (searching || searchQuery.isNotEmpty) ? 3 : 2,
+                        currentStep: 1,
+                        totalSteps: (searching || searchQuery.isNotEmpty)
+                            ? 3
+                            : 2,
                       ),
                     ),
                   )
@@ -637,6 +641,21 @@ class AddAppPageState extends State<AddAppPage> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.import_export),
+        label: Text(t('importExport')),
+        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
+        elevation: 3,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        onPressed: () {
+          HapticFeedback.selectionClick();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ImportExportPage()),
+          );
+        },
       ),
     );
   }
@@ -1000,6 +1019,23 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             SliverAppBar.large(
               pinned: true,
               title: Text(t('addApp')),
+              actions: [
+                TextButton(
+                  onPressed:
+                      gettingAppInfo ||
+                          pickedSource == null ||
+                          (pickedSource!
+                                  .combinedAppSpecificSettingFormItems
+                                  .isNotEmpty &&
+                              !additionalSettingsValid)
+                      ? null
+                      : () {
+                          HapticFeedback.selectionClick();
+                          addApp();
+                        },
+                  child: Text(t('done')),
+                ),
+              ],
               leading: IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
@@ -1083,6 +1119,8 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                                           label:
                                               '${t('appId')} - ${t('custom')}',
                                           required: false,
+                                          defaultValue:
+                                              additionalSettings['appId'] ?? '',
                                           additionalValidators: [
                                             (value) {
                                               if (value == null ||
@@ -1174,34 +1212,16 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                         ],
                       ),
                     gap24,
-
-                    M3EFilledButton.icon(
-                      onPressed:
-                          gettingAppInfo ||
-                              pickedSource == null ||
-                              (pickedSource!
-                                      .combinedAppSpecificSettingFormItems
-                                      .isNotEmpty &&
-                                  !additionalSettingsValid)
-                          ? null
-                          : () {
-                              HapticFeedback.selectionClick();
-                              addApp();
-                            },
-                      icon: const Icon(Icons.add),
-                      label: Text(t('addAppToCollection')),
-                    ),
                   ],
                 ),
               ),
             ),
           ],
-         ),
-         // Removed Import/Export button as it should only appear on the main screen.
-       ),
-     );
-    }
+        ),
+      ),
+    );
   }
+}
 
 class SelectionModal extends StatefulWidget {
   const SelectionModal({
@@ -1373,7 +1393,6 @@ class _SelectionModalState extends State<SelectionModal> {
                           },
                         )
                       : null,
-                  border: const OutlineInputBorder(),
                 ),
                 onChanged: (value) {
                   setState(() {

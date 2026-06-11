@@ -335,10 +335,7 @@ Future<String?> promptForFileName(
             const SizedBox(height: 16),
             TextField(
               controller: controller,
-              decoration: InputDecoration(
-                labelText: t('fileName'),
-                border: const OutlineInputBorder(),
-              ),
+              decoration: InputDecoration(labelText: t('fileName')),
             ),
           ],
         ),
