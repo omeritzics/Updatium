@@ -283,7 +283,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
   List<List<Widget>> rows = [];
   String? initKey;
   int forceUpdateKeyCount = 0;
-  final List<TextEditingController> _controllers = [];
+  final Map<String, TextEditingController> _controllers = {};
   bool _isDisposed = false;
 
   // If any value changes, call this to update the parent with value and validity
@@ -307,7 +307,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
     if (_isDisposed) return;
     initKey = widget.key.toString();
     // Dispose old controllers before creating new ones
-    for (var controller in _controllers) {
+    for (var controller in _controllers.values) {
       controller.dispose();
     }
     _controllers.clear();
@@ -316,17 +316,21 @@ class _GeneratedFormState extends State<GeneratedForm> {
     for (var row in widget.items) {
       for (var e in row) {
         values[e.key] = e.defaultValue;
+        if (e is GeneratedFormTextField) {
+          _controllers[e.key] = TextEditingController(text: e.defaultValue);
+        }
       }
     }
+    someValueChanged(isBuilding: true);
+  }
 
-    // Dynamically create form inputs
-    formInputs = widget.items.asMap().entries.map((row) {
+  List<List<Widget>> _buildFormInputs(BuildContext context) {
+    return widget.items.asMap().entries.map((row) {
       return row.value.asMap().entries.map((e) {
         var formItem = e.value;
         if (formItem is GeneratedFormTextField) {
           final formFieldKey = GlobalKey<FormFieldState>();
-          var ctrl = TextEditingController(text: values[formItem.key]);
-          _controllers.add(ctrl);
+          var ctrl = _controllers[formItem.key]!;
           return TypeAheadField<String>(
             controller: ctrl,
             builder: (context, controller, focusNode) {
@@ -471,7 +475,6 @@ class _GeneratedFormState extends State<GeneratedForm> {
         }
       }).toList();
     }).toList();
-    someValueChanged(isBuilding: true);
   }
 
   @override
@@ -480,10 +483,11 @@ class _GeneratedFormState extends State<GeneratedForm> {
     initForm();
   }
 
+
   @override
   void dispose() {
     _isDisposed = true;
-    for (var controller in _controllers) {
+    for (var controller in _controllers.values) {
       controller.dispose();
     }
     _controllers.clear();
