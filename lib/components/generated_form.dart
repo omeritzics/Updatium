@@ -483,7 +483,6 @@ class _GeneratedFormState extends State<GeneratedForm> {
     initForm();
   }
 
-
   @override
   void dispose() {
     _isDisposed = true;
