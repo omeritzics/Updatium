@@ -469,11 +469,6 @@ class _UpdatiumState extends State<Updatium> {
               return 'NotoSansCJK';
             }
 
-            // Hebrew
-            if (locale.languageCode == 'he') {
-              return 'NotoSansHebrew';
-            }
-
             // Arabic
             if (locale.languageCode == 'ar' ||
                 locale.languageCode == 'fa' ||
@@ -481,8 +476,8 @@ class _UpdatiumState extends State<Updatium> {
               return 'NotoSansArabic';
             }
 
-            // Default to Inter for other languages
-            return 'Inter';
+            // Default to Google Sans for other languages
+            return 'GoogleSans';
           }
 
           // Shared theme component generator with Material Design Expressive
@@ -491,12 +486,13 @@ class _UpdatiumState extends State<Updatium> {
               useMaterial3: true,
               colorScheme: scheme,
               fontFamily: getPrimaryFontForLocale(context.locale),
-              fontFamilyFallback: const [
-                'Inter',
-                'NotoSansCJK',
-                'NotoSansHebrew',
-                'NotoSansArabic',
-              ],
+              fontFamilyFallback: settingsProvider.useSystemFont
+                  ? null
+                  : const [
+                      'GoogleSans',
+                      'NotoSansCJK',
+                      'NotoSansArabic',
+                    ],
 
               // Keyboard/TV navigation support
               focusColor: scheme.primary.withValues(alpha: 0.2),
@@ -512,13 +508,13 @@ class _UpdatiumState extends State<Updatium> {
                   fontWeight: FontWeight.w600,
                   fontSize: 24,
                   fontFamily: getPrimaryFontForLocale(context.locale),
-                  fontFamilyFallback: const [
-                    'Inter',
-                    'GoogleSansFlex',
-                    'NotoSansCJK',
-                    'NotoSansHebrew',
-                    'NotoSansArabic',
-                  ],
+                  fontFamilyFallback: settingsProvider.useSystemFont
+                      ? null
+                      : const [
+                          'GoogleSans',
+                          'NotoSansCJK',
+                          'NotoSansArabic',
+                        ],
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),
