@@ -341,7 +341,7 @@ class AddAppPageState extends State<AddAppPage> {
           }).toList();
 
           showDialog(
-            context: context.mounted as BuildContext,
+            context: context,
             builder: (BuildContext ctx) {
               return AlertDialog(
                 contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
