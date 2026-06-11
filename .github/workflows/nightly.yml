@@ -156,7 +156,7 @@ jobs:
           tag_name: nightly
           name: "Updatium Nightly"
           files: |
-            build/outputs/Updatium-Nightly-*.apk
+            build/outputs/Updatium-Nightly*.apk
           prerelease: true
           overwrite: true
         env:
