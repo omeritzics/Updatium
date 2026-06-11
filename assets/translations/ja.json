@@ -137,6 +137,7 @@
     "dark": "ダーク",
     "light": "ライト",
     "followSystem": "システムに従う",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "システムテーマへの追従は、サードパーティのアプリケーションを使用することのみで可能です",
     "useBlackTheme": "ピュアブラックダークテーマを使用する",
     "appSortBy": "アプリの並び方",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "セーフモードが有効化されています",
     "safeModeDisabled": "セーフモードが無効化されています",
     "safeModeDisable": "セーフモードを無効にする",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "セーフモード管理",
-    "safeModeSetupDescription": "セーフモードを有効にするためにパスワードを設定してください。有効化後、セーフモードは新しいアプリの追加を防ぎ、パスワードでのみ無効化できます。",
+    "safeModeSetupHint": "セーフモードを有効にするためにパスワードを設定してください。有効化後、セーフモードは新しいアプリの追加を防ぎ、パスワードでのみ無効化できます。",
     "safeModeToggleDescription": "パスワードを入力してセーフモードをオン/オフに切り替えてください。",
     "safeModeSetPassword": "パスワードを設定",
     "safeModeConfirmPassword": "パスワードを確認",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

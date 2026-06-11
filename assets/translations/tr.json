@@ -137,6 +137,7 @@
     "dark": "Koyu",
     "light": "Açık",
     "followSystem": "Sistemi takip et",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "Sistem temasını takip etmek yalnızca üçüncü taraf uygulamalar kullanılarak mümkündür",
     "useBlackTheme": "Tam siyah koyu temayı kullan",
     "appSortBy": "Uygulama sıralama ölçütü",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "Güvenli Mod Etkin",
     "safeModeDisabled": "Güvenli Mod Devre Dışı",
     "safeModeDisable": "Güvenli Mod'u Devre Dışı Bırak",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Güvenli Mod Yönetimi",
-    "safeModeSetupDescription": "Güvenli Mod'u etkinleştirmek için bir parola ayarlayın. Etkinleştirildikten sonra, Güvenli Mod yeni uygulamaların eklenmesini engeller ve yalnızca parola ile devre dışı bırakılabilir.",
+    "safeModeSetupHint": "Güvenli Mod'u etkinleştirmek için bir parola ayarlayın. Etkinleştirildikten sonra, Güvenli Mod yeni uygulamaların eklenmesini engeller ve yalnızca parola ile devre dışı bırakılabilir.",
     "safeModeToggleDescription": "Güvenli Mod'u açmak veya kapatmak için parolanızı girin.",
     "safeModeSetPassword": "Parola Ayarla",
     "safeModeConfirmPassword": "Parolayı Onayla",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

@@ -137,6 +137,7 @@
     "dark": "Ciemny",
     "light": "Jasny",
     "followSystem": "Zgodny z systemem",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "Podążanie za motywem systemowym jest możliwe tylko przy użyciu aplikacji firm trzecich",
     "useBlackTheme": "Użyj czarnego motywu",
     "appSortBy": "Sortuj aplikacje według",
@@ -520,9 +521,8 @@
     "safeModeEnabled": "Tryb bezpieczeństwa jest włączony",
     "safeModeDisabled": "Tryb bezpieczeństwa jest wyłączony",
     "safeModeDisable": "Wyłącz tryb bezpieczeństwa",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Administracja trybu bezpieczeństwa",
-    "safeModeSetupDescription": "Ustaw hasło, aby włączyć tryb bezpieczeństwa. Po włączeniu trybu bezpieczeństwa nie można dodawać nowych aplikacji i można go wyłączyć tylko za pomocą hasła.",
+    "safeModeSetupHint": "Ustaw hasło, aby włączyć tryb bezpieczeństwa. Po włączeniu trybu bezpieczeństwa nie można dodawać nowych aplikacji i można go wyłączyć tylko za pomocą hasła.",
     "safeModeToggleDescription": "Wprowadź hasło, aby włączyć lub wyłączyć tryb bezpieczeństwa.",
     "safeModeSetPassword": "Ustaw hasło",
     "safeModeConfirmPassword": "Potwierdź hasło",
@@ -560,5 +560,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

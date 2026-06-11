@@ -137,6 +137,7 @@
     "dark": "Tmavé",
     "light": "Světlé",
     "followSystem": "Podle systému",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "Používání motivu systému je možné pouze pomocí aplikací třetích stran",
     "useBlackTheme": "Použít čistě černý tmavý motiv",
     "appSortBy": "Seřadit podle",
@@ -503,9 +504,8 @@
     "safeModeEnabled": "Bezpečný režim je povolen",
     "safeModeDisabled": "Bezpečný režim je zakázán",
     "safeModeDisable": "Zakázat bezpečný režim",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "Správa bezpečného režimu",
-    "safeModeSetupDescription": "Nastavte heslo pro povolení bezpečného režimu. Jakmile je povolen, bezpečný režim zabraňuje přidávání nových aplikací a lze jej zakázat pouze pomocí hesla.",
+    "safeModeDescription": "Nastavte heslo pro povolení bezpečného režimu. Jakmile je povolen, bezpečný režim zabraňuje přidávání nových aplikací a lze jej zakázat pouze pomocí hesla.",
     "safeModeToggleDescription": "Zadejte své heslo pro zapnutí nebo vypnutí bezpečného režimu.",
     "safeModeSetPassword": "Nastavit heslo",
     "safeModeConfirmPassword": "Potvrdit heslo",
@@ -543,5 +543,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }

@@ -137,6 +137,7 @@
     "dark": "قاراڭغۇ",
     "light": "يورۇق",
     "followSystem": "سىستېمىغا ئەگىشىش",
+    "systemDefaults": "System defaults",
     "followSystemThemeExplanation": "سىستېما ئۇسلۇبىغا ئەگىشىش پەقەت ئۈچىنچى تەرەپ قوللىنىشچان پروگراممىلىرى ئارقىلىقلا مۇمكىن",
     "useBlackTheme": "ساپ قارا ئۇسلۇبنى ئىشلىتىش",
     "appSortBy": "تەرتىپلەش ئۆلچىمى",
@@ -490,9 +491,8 @@
     "safeModeEnabled": "بىخەتەر ھالەت قوزغىتىلدى",
     "safeModeDisabled": "بىخەتەر ھالەت چەكلەندى",
     "safeModeDisable": "بىخەتەر ھالەتنى چەكلەش",
-    "safeModeDisableHint": "Tap many times on the version number in the About dialog to disable Safe Mode",
     "safeModeAdmin": "بىخەتەر ھالەت باشقۇرۇش",
-    "safeModeSetupDescription": "بىخەتەر ھالەتنى قوزغىتىش ئۈچۈن پارول بەلگىلەڭ.",
+    "safeModeSetupHint": "بىخەتەر ھالەتنى قوزغىتىش ئۈچۈن پارول بەلگىلەڭ.",
     "safeModeToggleDescription": "بىخەتەر ھالەتنى ئۆزگەرتىش ئۈچۈن پارول كىرگۈزۈڭ.",
     "safeModeSetPassword": "پارول بەلگىلەش",
     "safeModeConfirmPassword": "پارولنى جەزملەش",
@@ -530,5 +530,9 @@
     "enterSearchTermsFirst": "Enter search terms first",
     "searchForApps": "Search for apps",
     "installedApps": "Installed apps",
-    "fileSize": "File size"
+    "fileSize": "File size",
+    "openDNS": "OpenDNS",
+    "mullvadDNS": "Mullvad DNS",
+    "quad9": "Quad9 DNS",
+    "cloudflare": "Cloudflare DNS"
 }
