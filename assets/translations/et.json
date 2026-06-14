@@ -218,6 +218,7 @@
     "appWithIdOrNameNotFound": "Selle ID või nimega äppi ei leitud",
     "reposHaveMultipleApps": "Repod võivad sisaldada mitut äppi",
     "fdroidThirdPartyRepo": "F-Droid kolmanda osapoole repo",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",

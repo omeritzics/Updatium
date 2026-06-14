@@ -218,6 +218,7 @@
     "appWithIdOrNameNotFound": "Bu kimliğe (ID) veya ada sahip bir uygulama bulunamadı",
     "reposHaveMultipleApps": "Depolar (Repo) birden fazla uygulama içerebilir",
     "fdroidThirdPartyRepo": "Üçüncü taraf F-Droid deposu",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",

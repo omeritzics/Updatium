@@ -1033,7 +1033,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                           HapticFeedback.selectionClick();
                           addApp();
                         },
-                  child: Text(t('done')),
+                  child: Text(t('add')),
                 ),
               ],
               leading: IconButton(

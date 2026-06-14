@@ -218,6 +218,7 @@
     "appWithIdOrNameNotFound": "ওই ID বা নামে কোনো অ্যাপ পাওয়া যায়নি",
     "reposHaveMultipleApps": "রিপোজিটরিতে একাধিক অ্যাপ থাকতে পারে",
     "fdroidThirdPartyRepo": "F-Droid থার্ড-পার্টি রিপো",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",
