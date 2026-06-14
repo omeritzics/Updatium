@@ -509,7 +509,7 @@
     "safeModeEnabledHint": "Безопасният режим е активиран. Натиснете много пъти върху номера на версията в Настройки, за да го деактивирате.",
     "preventUninstallation": "Предотвратяване на деинсталиране",
     "preventUninstallationDescription": "Предотвратява деинсталирането на Updatium без първо да деактивирате Безопасен режим",
-    "safeModeAntiCheat": "Anti-cheat",
+    "safeModeAntiCheat": "Anti-cheat (experimental)",
     "safeModeAntiCheatDescription": "Force-stops the Settings app and re-enables device admin when device admin is disabled while Safe Mode is enabled",
     "safeModeAntiCheatError": "Failed to enable/disable anti-cheat",
     "deviceAdminRequired": "Разрешение за администратор на устройството се изисква за предотвратяване на деинсталиране",
