@@ -332,7 +332,7 @@ class AddAppPageState extends State<AddAppPage> {
       TextButton.icon(
         onPressed: () async {
           final installedApps = await getAllInstalledInfo();
-          if (!context.mounted) return;
+          if (!mounted) return;
 
           // Filter out system apps
           final nonSystemApps = installedApps.where((app) {
@@ -1019,6 +1019,23 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             SliverAppBar.large(
               pinned: true,
               title: Text(t('addApp')),
+              actions: [
+                TextButton(
+                  onPressed:
+                      gettingAppInfo ||
+                          pickedSource == null ||
+                          (pickedSource!
+                                  .combinedAppSpecificSettingFormItems
+                                  .isNotEmpty &&
+                              !additionalSettingsValid)
+                      ? null
+                      : () {
+                          HapticFeedback.selectionClick();
+                          addApp();
+                        },
+                  child: Text(t('done')),
+                ),
+              ],
               leading: IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
@@ -1195,30 +1212,12 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                         ],
                       ),
                     gap24,
-
-                    M3EFilledButton.icon(
-                      onPressed:
-                          gettingAppInfo ||
-                              pickedSource == null ||
-                              (pickedSource!
-                                      .combinedAppSpecificSettingFormItems
-                                      .isNotEmpty &&
-                                  !additionalSettingsValid)
-                          ? null
-                          : () {
-                              HapticFeedback.selectionClick();
-                              addApp();
-                            },
-                      icon: const Icon(Icons.add),
-                      label: Text(t('addAppToCollection')),
-                    ),
                   ],
                 ),
               ),
             ),
           ],
         ),
-        // Removed Import/Export button as it should only appear on the main screen.
       ),
     );
   }
