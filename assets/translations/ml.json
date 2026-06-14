@@ -365,6 +365,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "ഇൻസ്റ്റാൾ ചെയ്തതും ട്രാക്ക്-മാത്രം ആപ്പുകളും മാത്രം അപ്‌ഡേറ്റുകൾക്കായി പരിശോധിക്കുക",
     "supportFixedAPKURL": "സ്ഥിരമായ APK URL-കളെ പിന്തുണയ്ക്കുക",
     "selectX": "{} തിരഞ്ഞെടുക്കുക",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "പാരലൽ ഡൗൺലോഡുകൾ അനുവദിക്കുക",
     "useShizuku": "ഇൻസ്റ്റാൾ ചെയ്യാൻ ഷിസുകു അല്ലെങ്കിൽ സ്യൂ ഉപയോഗിക്കുക",
     "shizukuBinderNotFound": "ഷിസുകു സേവനം പ്രവർത്തിക്കുന്നില്ല",

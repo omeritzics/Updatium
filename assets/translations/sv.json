@@ -365,6 +365,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Kontrollera bara installerade appar och endast spårbara appar för uppdateringar",
     "supportFixedAPKURL": "Stöd fasta APK-webbadresser",
     "selectX": "Välj {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Tillåt parallella nedladdningar",
     "useShizuku": "Använd Shizuku eller Sui för att installera",
     "shizukuBinderNotFound": "Shizuku is not running",

@@ -365,6 +365,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Comprova les actualitzacions només per a aplicacions instal·lades o en seguiment",
     "supportFixedAPKURL": "Suport per als URLs fixos de l'APK",
     "selectX": "Selecciona {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Permet les descàrregues paralel·les",
     "useShizuku": "Usa Shizuku o Sui per instal·lar",
     "shizukuBinderNotFound": "Shizuku no s'està executant",

@@ -365,6 +365,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Aktualizace kontrolovat pouze u nainstalovaných a sledovaných aplikací",
     "supportFixedAPKURL": "Odhadnout novější verzi na základě prvních třiceti číslic kontrolního součtu adresy URL APK, pokud není podporována jinak",
     "selectX": "Vybrat {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Povolit souběžné stahování",
     "useShizuku": "K instalaci použít Shizuku nebo Sui",
     "shizukuBinderNotFound": "Shizuku neběží",

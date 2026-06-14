@@ -365,6 +365,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Csak a telepített és a csak nyomon követhető alkalmazások frissítéseinek ellenőrzése",
     "supportFixedAPKURL": "Támogatja a rögzített APK-webcímeket",
     "selectX": "{} kiválasztása",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Párhuzamos letöltések engedélyezése",
     "useShizuku": "Shizuku vagy Sui használata a telepítéshez",
     "shizukuBinderNotFound": "A Shizuku szolgáltatás nem fut",
