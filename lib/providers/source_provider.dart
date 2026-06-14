@@ -123,6 +123,7 @@ class APKDetails {
   late DateTime? releaseDate;
   late String? changeLog;
   late String? remoteIconUrl;
+  bool? reproducible;
   late List<MapEntry<String, String>> allAssetUrls;
 
   APKDetails(
@@ -132,6 +133,7 @@ class APKDetails {
     this.releaseDate,
     this.changeLog,
     this.remoteIconUrl,
+    this.reproducible,
     this.allAssetUrls = const [],
   });
 }
@@ -409,6 +411,7 @@ class App {
   late String name;
   String? installedVersion;
   late String latestVersion;
+  bool? reproducible;
   List<MapEntry<String, String>> apkUrls = []; // Key is name, value is URL
   List<MapEntry<String, String>> otherAssetUrls = [];
   late int preferredApkIndex;
@@ -437,6 +440,7 @@ class App {
     this.releaseDate,
     this.changeLog,
     this.remoteIconUrl,
+    this.reproducible,
     this.overrideSource,
     this.allowIdChange = false,
     this.otherAssetUrls = const [],
@@ -477,6 +481,7 @@ class App {
     Map.from(additionalSettings),
     lastUpdateCheck,
     pinned,
+    reproducible: reproducible,
     categories: categories,
     changeLog: changeLog,
     remoteIconUrl: remoteIconUrl,
@@ -514,6 +519,7 @@ class App {
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['lastUpdateCheck']),
       json['pinned'] ?? false,
+      reproducible: json['reproducible'],
       categories: json['categories'] != null
           ? (json['categories'] as List<dynamic>)
                 .map((e) => e.toString())
@@ -543,6 +549,7 @@ class App {
     'name': name,
     'installedVersion': installedVersion,
     'latestVersion': latestVersion,
+    'reproducible': reproducible,
     'apkUrls': jsonEncode(stringMapListTo2DList(apkUrls)),
     'otherAssetUrls': jsonEncode(stringMapListTo2DList(otherAssetUrls)),
     'preferredApkIndex': preferredApkIndex,

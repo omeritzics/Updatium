@@ -218,6 +218,7 @@
     "appWithIdOrNameNotFound": "ആ ഐഡിയിലോ പേരിലോ ആപ്പുകളൊന്നും കണ്ടെത്തിയില്ല",
     "reposHaveMultipleApps": "റെപ്പോകളിൽ ഒന്നിലധികം ആപ്പുകൾ അടങ്ങിയിരിക്കാം",
     "fdroidThirdPartyRepo": "എഫ്-ഡ്രോയിഡ് തേർഡ് പാർട്ടി റെപ്പോ",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",

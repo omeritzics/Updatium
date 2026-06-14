@@ -218,6 +218,7 @@
     "appWithIdOrNameNotFound": "Sepan bi wê ID-ê an navê nehat dîtin",
     "reposHaveMultipleApps": "Depo diken xwedî sepanên pirbin in",
     "fdroidThirdPartyRepo": "Depoya sêyemîn a F-Droid",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",

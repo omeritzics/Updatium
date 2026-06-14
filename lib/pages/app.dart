@@ -251,6 +251,10 @@ class _AppPageState extends State<AppPage> {
         infoLines =
             '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : plural('apk', app.app.apkUrls.length)}';
       }
+      if (app.app.reproducible != null) {
+        infoLines =
+            '$infoLines\n${t('reproducibleBuild')}: ${app.app.reproducible == true ? t('yes') : t('no')}';
+      }
       if (_apkFileSize != null) {
         infoLines =
             '$infoLines\n${t('fileSize')}: ${formatFileSize(_apkFileSize!)}';

@@ -218,6 +218,7 @@
     "appWithIdOrNameNotFound": "Приложение с таким ID или названием не было найдено",
     "reposHaveMultipleApps": "В хранилище несколько приложений",
     "fdroidThirdPartyRepo": "Сторонние репозитории F-Droid",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",

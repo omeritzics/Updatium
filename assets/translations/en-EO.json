@@ -218,6 +218,7 @@
     "appWithIdOrNameNotFound": "Neniu apo estas trovita kun tiu identigilo aŭ nomo",
     "reposHaveMultipleApps": "Deponejoj povas enhavi plurajn apojn",
     "fdroidThirdPartyRepo": "Tria deponejo de F-Droid",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",
