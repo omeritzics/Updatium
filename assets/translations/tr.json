@@ -367,6 +367,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Sadece yüklü ve 'sadece takip' edilen (track-only) uygulamaları güncellemeler için kontrol et",
     "supportFixedAPKURL": "Sabit APK bağlantılarını (URL) destekle",
     "selectX": "{} seç",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Eşzamanlı (Paralel) indirmelere izin ver",
     "useShizuku": "Yüklemek için Shizuku veya Sui kullan",
     "shizukuBinderNotFound": "Shizuku hizmeti çalışmıyor",

@@ -367,6 +367,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Kontrolli uuendusi ainult installitud ja ainult jälgitavate äppide jaoks",
     "supportFixedAPKURL": "Toeta fikseeritud APK URL-e",
     "selectX": "Vali {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Luba paralleelsed allalaadimised",
     "useShizuku": "Kasuta Shizuku või Sui installimiseks",
     "shizukuBinderNotFound": "Shizuku teenus ei tööta",

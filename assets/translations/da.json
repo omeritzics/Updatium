@@ -367,6 +367,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Tjek kun installerede og 'Følg Kun'-apps for opdateringer",
     "supportFixedAPKURL": "Understøt fikserede APK-URL'er",
     "selectX": "Vælg {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Tillad samtidige overførsler",
     "useShizuku": "Brug Shizuku eller Sui til at installere",
     "shizukuBinderNotFound": "Shizuku-tjeneste kører ikke",

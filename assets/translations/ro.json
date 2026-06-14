@@ -367,6 +367,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Verifică actualizări doar pentru aplicațiile instalate și cele doar pentru urmărire",
     "supportFixedAPKURL": "Suportă URL-uri APK fixe",
     "selectX": "Selectează {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Permite descărcări paralele",
     "useShizuku": "Folosește Shizuku sau Sui pentru a instala",
     "shizukuBinderNotFound": "Serviciul Shizuku nu rulează",

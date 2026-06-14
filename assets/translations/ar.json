@@ -354,6 +354,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "التحقق فقط من التطبيقات المثبتة أو للتعقب فقط",
     "supportFixedAPKURL": "دعم روابط APK الثابتة",
     "selectX": "اختر {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "السماح بالتنزيل المتوازي",
     "useShizuku": "استخدم Shizuku أو Sui للتثبيت",
     "shizukuBinderNotFound": "خدمة Shizuku غير قيد التشغيل",

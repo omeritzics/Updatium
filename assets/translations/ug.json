@@ -367,6 +367,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "پەقەت قاچىلانغان ۋە ئىز قوغلىنىدىغان ئەپلەرنىلا تەكشۈرۈش",
     "supportFixedAPKURL": "مۇقىم APK URL ئادرېسلىرىنى قوللاش",
     "selectX": "{} نى تاللاش",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "بىرلا ۋاقىتتا چۈشۈرۈشكە رۇخسەت قىلىش",
     "useShizuku": "قاچىلاش ئۈچۈن Shizuku ياكى Sui ئىشلىتىش",
     "shizukuBinderNotFound": "Shizuku مۇلازىمىتى ئىشلىمەيۋاتىدۇ",

@@ -367,6 +367,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Проверка за актуализации само на инсталирани и приложения само за проследяване",
     "supportFixedAPKURL": "Поддръжка на фиксирани URL адреси за APK",
     "selectX": "Избиране на {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Разрешаване на паралелни изтегляния",
     "useShizuku": "Използване на Shizuku или Sui за инсталиране",
     "shizukuBinderNotFound": "Услугата Shizuku не работи",
