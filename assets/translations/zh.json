@@ -358,6 +358,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "只检查已安装和“仅追踪”的应用",
     "supportFixedAPKURL": "支持固定的 APK 文件链接",
     "selectX": "选择{}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "启用并行下载",
     "useShizuku": "使用 Shizuku 或 Sui 安装",
     "shizukuBinderNotFound": "未发现兼容的 Shizuku 服务",

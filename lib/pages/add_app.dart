@@ -334,76 +334,99 @@ class AddAppPageState extends State<AddAppPage> {
           final installedApps = await getAllInstalledInfo();
           if (!mounted) return;
 
-          // Filter out system apps
-          final nonSystemApps = installedApps.where((app) {
-            final flags = app.applicationInfo?.flags ?? 0;
-            // System apps have the FLAG_SYSTEM bit set (0x00000001)
-            return (flags & 0x00000001) == 0;
-          }).toList();
-
           showDialog(
             context: context,
             builder: (BuildContext ctx) {
-              return AlertDialog(
-                contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-                title: Text(t('installedApps')),
-                content: SizedBox(
-                  width: double.maxFinite,
-                  height: MediaQuery.of(context).size.height * 0.6,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: nonSystemApps.length,
-                    itemBuilder: (context, index) {
-                      final app = nonSystemApps[index];
-                      return FutureBuilder<Uint8List?>(
-                        future: app.applicationInfo?.getAppIcon(),
-                        builder: (context, iconSnapshot) {
-                          return FutureBuilder<String>(
-                            future:
-                                app.applicationInfo?.getAppLabel().then(
-                                  (label) =>
-                                      label ?? app.packageName ?? 'Unknown',
-                                ) ??
-                                Future.value(app.packageName ?? 'Unknown'),
-                            builder: (context, snapshot) {
-                              final appName = snapshot.data ?? 'Unknown';
-                              return ListTile(
-                                dense: true,
-                                leading:
-                                    iconSnapshot.hasData &&
-                                        iconSnapshot.data != null
-                                    ? Image.memory(
-                                        iconSnapshot.data!,
-                                        width: 40,
-                                        height: 40,
-                                      )
-                                    : const Icon(Icons.apps),
-                                title: Text(appName),
-                                subtitle: Text(app.packageName ?? ''),
-                                onTap: () {
-                                  Navigator.of(ctx).pop();
-                                  setState(() {
-                                    searchQuery = app.packageName ?? '';
-                                    userInput = '';
-                                    pickedSource = null;
-                                    pickedSourceOverride = null;
-                                    searchBarKey++;
-                                  });
+              bool showSystemApps = false;
+              return StatefulBuilder(
+                builder: (BuildContext sctx, StateSetter sset) {
+                  final appsToDisplay = installedApps.where((app) {
+                    final flags = app.applicationInfo?.flags ?? 0;
+                    return showSystemApps || (flags & 0x00000001) == 0;
+                  }).toList();
+
+                  return AlertDialog(
+                    contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+                    title: Text(t('installedApps')),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SwitchListTile(
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(
+                            showSystemApps
+                                ? t('hideSystemApps')
+                                : t('showSystemApps'),
+                          ),
+                          value: showSystemApps,
+                          onChanged: (val) => sset(() => showSystemApps = val),
+                        ),
+                        SizedBox(
+                          width: double.maxFinite,
+                          height: MediaQuery.of(context).size.height * 0.6,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: appsToDisplay.length,
+                            itemBuilder: (context, index) {
+                              final app = appsToDisplay[index];
+                              return FutureBuilder<Uint8List?>(
+                                future: app.applicationInfo?.getAppIcon(),
+                                builder: (context, iconSnapshot) {
+                                  return FutureBuilder<String>(
+                                    future:
+                                        app.applicationInfo?.getAppLabel().then(
+                                          (label) =>
+                                              label ??
+                                              app.packageName ??
+                                              'Unknown',
+                                        ) ??
+                                        Future.value(
+                                          app.packageName ?? 'Unknown',
+                                        ),
+                                    builder: (context, snapshot) {
+                                      final appName =
+                                          snapshot.data ?? 'Unknown';
+                                      return ListTile(
+                                        dense: true,
+                                        leading:
+                                            iconSnapshot.hasData &&
+                                                iconSnapshot.data != null
+                                            ? Image.memory(
+                                                iconSnapshot.data!,
+                                                width: 40,
+                                                height: 40,
+                                              )
+                                            : const Icon(Icons.apps),
+                                        title: Text(appName),
+                                        subtitle: Text(app.packageName ?? ''),
+                                        onTap: () {
+                                          Navigator.of(ctx).pop();
+                                          setState(() {
+                                            searchQuery = app.packageName ?? '';
+                                            userInput = '';
+                                            pickedSource = null;
+                                            pickedSourceOverride = null;
+                                            searchBarKey++;
+                                          });
+                                        },
+                                      );
+                                    },
+                                  );
                                 },
                               );
                             },
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(ctx).pop(),
-                    child: Text(t('ok')),
-                  ),
-                ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(),
+                        child: Text(t('ok')),
+                      ),
+                    ],
+                  );
+                },
               );
             },
           );

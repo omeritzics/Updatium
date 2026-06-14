@@ -506,7 +506,7 @@ class _UpdatiumState extends State<Updatium> {
                   ? null
                   : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
               inputDecorationTheme: InputDecorationTheme(
-                filled: false,
+                filled: true,
                 labelStyle: const TextStyle(fontWeight: FontWeight.w500),
                 contentPadding: const EdgeInsets.symmetric(),
               ),
