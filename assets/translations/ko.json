@@ -358,6 +358,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "설치된 앱과 추적 전용 앱만 업데이트 확인",
     "supportFixedAPKURL": "고정 APK URL 지원",
     "selectX": "{} 선택",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "병렬 다운로드 허용",
     "useShizuku": "Shizuku 또는 Sui를 사용하여 설치",
     "shizukuBinderNotFound": "Shizuku 서비스가 실행 중이 아닙니다",
