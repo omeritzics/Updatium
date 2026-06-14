@@ -294,7 +294,6 @@ class _SafeModeDisableDialogState extends State<SafeModeDisableDialog> {
             decoration: InputDecoration(
               labelText: t('safeModeEnterPassword'),
               hintText: t('safeModePasswordHint'),
-              border: const OutlineInputBorder(),
             ),
             enabled: !isLoading,
             onSubmitted: (_) => disableSafeMode(),

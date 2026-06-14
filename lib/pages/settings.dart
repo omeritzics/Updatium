@@ -48,7 +48,6 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   List<int> updateIntervalNodes = [
-    15,
     30,
     60,
     120,
@@ -477,10 +476,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: TextField(
                     controller: _textControllers[formItem.key],
                     focusNode: _focusNodes[formItem.key],
-                    decoration: InputDecoration(
-                      labelText: formItem.key,
-                      border: const OutlineInputBorder(),
-                    ),
+                    decoration: InputDecoration(labelText: formItem.key),
                     onChanged: (value) {
                       settingsProvider.setSettingString(formItem.key, value);
                     },
@@ -1455,6 +1451,12 @@ class _SettingsPageState extends State<SettingsPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.info_outline_rounded),
+        label: Text(t('about')),
+        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
+        elevation: 3,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
         onPressed: () {
           showDialog(
             context: context,
@@ -1463,12 +1465,6 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           );
         },
-        icon: const Icon(Icons.info_outline_rounded),
-        label: Text(t('about')),
-        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
-        elevation: 3,
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
     );
   }
