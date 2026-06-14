@@ -358,6 +358,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Hanya periksa aplikasi yang dipasang dan ditandai 'Pelacakan Saja' untuk pembaruan",
     "supportFixedAPKURL": "Mendukung URL APK tetap",
     "selectX": "Pilih {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Izinkan mengunduh paralel",
     "useShizuku": "Gunakan Shizuku atau Sui untuk memasang",
     "shizukuBinderNotFound": "Layanan Shizuku tidak berjalan",

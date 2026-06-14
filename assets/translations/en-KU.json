@@ -358,6 +358,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Tenê sepanên sazkirî û yên tenê ji bo trackingê kontrol bike",
     "supportFixedAPKURL": "URL-ên APK yên sabît destek bike",
     "selectX": "{} hilbijêre",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Destûrê daxitinên paralel bide",
     "useShizuku": "Ji bo sazkirinê Shizuku an Sui bi kar bîne",
     "shizukuBinderNotFound": "Xizmeta Shizuku naxebitîne",
