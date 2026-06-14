@@ -219,6 +219,7 @@
     "appWithIdOrNameNotFound": "لم يُعثر على تطبيق بهذا المعرّف أو الاسم",
     "reposHaveMultipleApps": "قد تحتوي المستودعات على عدة تطبيقات",
     "fdroidThirdPartyRepo": "مستودع F-Droid طرف ثالث",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",

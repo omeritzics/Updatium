@@ -218,6 +218,7 @@
     "appWithIdOrNameNotFound": "Nu s-a găsit nicio aplicație cu acel ID sau nume",
     "reposHaveMultipleApps": "Repozitorii pot conține aplicații multiple",
     "fdroidThirdPartyRepo": "Repo terță parte F-Droid",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",

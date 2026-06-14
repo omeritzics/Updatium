@@ -218,6 +218,7 @@
     "appWithIdOrNameNotFound": "Es wurde keine App mit dieser ID oder diesem Namen gefunden",
     "reposHaveMultipleApps": "Repos können mehrere Apps enthalten",
     "fdroidThirdPartyRepo": "F-Droid-Drittanbieter-Repo",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",
