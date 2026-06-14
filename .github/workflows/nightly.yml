@@ -2,6 +2,8 @@ name: Nightly Build
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 
 on:
   push:
@@ -142,6 +144,10 @@ jobs:
           flutter build apk --flavor normal --debug --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false
           cp "build/app/outputs/flutter-apk/app-normal-debug.apk" "build/outputs/Updatium-Nightly-Debug.apk"
 
+      - name: Attest Build Provenance
+        uses: actions/attest-build-provenance@main
+        with:
+          subject-path: 'build/app/outputs/flutter-apk/*.apk'
       - name: Upload Artifacts
         uses: actions/upload-artifact@main
         with:
