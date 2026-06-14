@@ -508,7 +508,7 @@
     "safeModeEnabledHint": "A biztonságos mód engedélyezve. Koppintson többször a verziószámra a Beállításokban a letiltáshoz.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
-    "safeModeAntiCheat": "Anti-cheat",
+    "safeModeAntiCheat": "Anti-cheat (experimental)",
     "safeModeAntiCheatDescription": "Automatically disables Safe Mode if device admin privilege is removed",
     "safeModeAntiCheatError": "Failed to enable/disable anti-cheat",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",

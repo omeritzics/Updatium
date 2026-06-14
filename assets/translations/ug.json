@@ -508,7 +508,7 @@
     "safeModeEnabledHint": "بىخەتەر ھالەت قوزغىتىلدى. تەڭشەكتىكى نەشر نومۇرىنى كۆپ قېتىم بېسىپ چەكلەڭ.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
-    "safeModeAntiCheat": "Anti-cheat",
+    "safeModeAntiCheat": "Anti-cheat (experimental)",
     "safeModeAntiCheatDescription": "Force-stops the Settings app and re-enables device admin when device admin is disabled while Safe Mode is enabled",
     "safeModeAntiCheatError": "Failed to enable/disable anti-cheat",
     "deviceAdminRequired": "Device admin permission is required to prevent uninstallation",
