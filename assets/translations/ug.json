@@ -218,6 +218,7 @@
     "appWithIdOrNameNotFound": "بۇ ID ياكى ئىسىمدىكى ئەپ تېپىلمىدى",
     "reposHaveMultipleApps": "ئامبارلاردا بىر قانچە ئەپ بولۇشى مۇمكىن",
     "fdroidThirdPartyRepo": "F-Droid ئۈچۈنچى تەرەپ ئامبىرى",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",

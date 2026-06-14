@@ -274,10 +274,12 @@ class FDroid extends AppSource {
         .toList();
     // Extract author from API response or fall back to source name
     String author = response['authorName'] ?? sourceName;
+    bool? reproducible = response['reproducible'];
     return APKDetails(
       version,
       getApkUrlsFromUrls(apkUrls.toSet().toList()),
       AppNames(author, Uri.parse(standardUrl).pathSegments.last),
+      reproducible: reproducible,
     );
   }
 }

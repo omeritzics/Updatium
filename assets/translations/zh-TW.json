@@ -218,6 +218,7 @@
     "appWithIdOrNameNotFound": "找不到具有該 ID 或名稱的應用程式",
     "reposHaveMultipleApps": "倉庫可能包含多個應用程式",
     "fdroidThirdPartyRepo": "F-Droid 第三方倉庫",
+    "reproducibleBuild": "Reproducible build",
     "gitlab": "GitLab",
     "bitbucket": "Bitbucket",
     "github": "GitHub",
