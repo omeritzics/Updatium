@@ -353,7 +353,11 @@ class AddAppPageState extends State<AddAppPage> {
                       children: [
                         SwitchListTile(
                           contentPadding: EdgeInsets.zero,
-                          title: Text(showSystemApps ? t('hideSystemApps') : t('showSystemApps')),
+                          title: Text(
+                            showSystemApps
+                                ? t('hideSystemApps')
+                                : t('showSystemApps'),
+                          ),
                           value: showSystemApps,
                           onChanged: (val) => sset(() => showSystemApps = val),
                         ),
@@ -372,11 +376,16 @@ class AddAppPageState extends State<AddAppPage> {
                                     future:
                                         app.applicationInfo?.getAppLabel().then(
                                           (label) =>
-                                              label ?? app.packageName ?? 'Unknown',
+                                              label ??
+                                              app.packageName ??
+                                              'Unknown',
                                         ) ??
-                                        Future.value(app.packageName ?? 'Unknown'),
+                                        Future.value(
+                                          app.packageName ?? 'Unknown',
+                                        ),
                                     builder: (context, snapshot) {
-                                      final appName = snapshot.data ?? 'Unknown';
+                                      final appName =
+                                          snapshot.data ?? 'Unknown';
                                       return ListTile(
                                         dense: true,
                                         leading:
