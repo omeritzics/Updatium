@@ -358,6 +358,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Alleen geïnstalleerde apps en 'Alleen volgen' controleren op updates",
     "supportFixedAPKURL": "Vaste APK-URL's ondersteunen",
     "selectX": "{} selecteren",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Parallelle downloads toestaan",
     "useShizuku": "Shizuku of Sui gebruiken om te installeren",
     "shizukuBinderNotFound": "Shizuku is niet actief",

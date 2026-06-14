@@ -358,6 +358,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "فقط برنامه های نصب شده و فقط ردیابی را برای به روز رسانی بررسی کنید",
     "supportFixedAPKURL": "پشتیبانی از URL های APK ثابت",
     "selectX": "انتخاب کنید {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "اجازه دانلود موازی",
     "useShizuku": "برای نصب از Shizuku یا Sui استفاده کنید",
     "shizukuBinderNotFound": "Shizuku در حال اجرا نیست",

@@ -358,6 +358,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Nur mit „Nur nachverfolgen“ markierte und installierte Apps auf Aktualisierungen prüfen",
     "supportFixedAPKURL": "Unterstützung von festen APK-URLs",
     "selectX": "{} wählen",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Parallele Downloads erlauben",
     "useShizuku": "Shizuku oder Sui zur Installation verwenden",
     "shizukuBinderNotFound": "Kompatibler Shizuku-Dienst wurde nicht gefunden",
