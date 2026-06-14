@@ -367,6 +367,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Sprawdzaj tylko zainstalowane i obserwowane aplikacje pod kątem aktualizacji",
     "supportFixedAPKURL": "Obsługuj stałe adresy URL APK",
     "selectX": "Wybierz {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Zezwalaj na równoległe pobierania",
     "useShizuku": "Użyj Shizuku lub Sui, aby zainstalować",
     "shizukuBinderNotFound": "Usługa Shizuku nie działa",

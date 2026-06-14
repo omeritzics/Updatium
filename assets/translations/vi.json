@@ -367,6 +367,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Chỉ kiểm tra cập nhật các ứng dụng đã cài đặt và Chỉ theo dõi",
     "supportFixedAPKURL": "Hỗ trợ URL APK cố định",
     "selectX": "Lựa chọn {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Cho phép tải đa luồng",
     "useShizuku": "Sử dụng Shizuku hoặc Sui để cài đặt",
     "shizukuBinderNotFound": "Shizuku chưa khởi động",

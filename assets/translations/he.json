@@ -371,6 +371,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "בדיקת עדכונים רק ליישומים מותקנים ויישומים למעקב עדכונים בלבד",
     "supportFixedAPKURL": "תמיכה בכתובות קבועות של קובצי APK",
     "selectX": "בחירת {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "לאפשר מספר הורדות במקביל",
     "useShizuku": "שימוש ב־Shizuku או Sui להתקנה",
     "shizukuBinderNotFound": "שירות Shizuku אינו פעיל",

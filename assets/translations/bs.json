@@ -367,6 +367,8 @@
     "onlyCheckInstalledOrTrackOnlyApps": "Isključivo provjerite ažuriranje za instalirane i aplikacije 'samo za praćenje'",
     "supportFixedAPKURL": "Podržite fiksne APK URL-ove",
     "selectX": "Izaberite {}",
+    "showSystemApps": "Show system apps",
+    "hideSystemApps": "Hide system apps",
     "parallelDownloads": "Dozvoli paralelna preuzimanja",
     "useShizuku": "Koristi Shizuku ili Sui za instaliranje",
     "shizukuBinderNotFound": "Shizuku nije pokrenut",
