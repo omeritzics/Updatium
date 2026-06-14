@@ -2,6 +2,8 @@ name: Nightly Build
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 
 on:
   push:
@@ -134,6 +136,10 @@ jobs:
           # Copy and rename the debug APK to maintain original naming convention
           cp *debug.apk "build/outputs/Updatium-Nightly-Debug.apk"
 
+      - name: Attest Build Provenance
+        uses: actions/attest-build-provenance@main
+        with:
+          subject-path: 'build/app/outputs/flutter-apk/*.apk'
       - name: Upload Artifacts
         uses: actions/upload-artifact@main
         with:

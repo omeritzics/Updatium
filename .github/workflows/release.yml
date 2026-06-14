@@ -2,6 +2,8 @@ name: Build and Release Qama
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 
 on:
   workflow_dispatch:
@@ -126,6 +128,11 @@ jobs:
             arch=$(basename "$apk" | sed -e 's/app-fdroid-//' -e 's/-release.apk//')
             cp "$apk" "build/outputs/Updatium-${{ steps.version.outputs.version }}-fdroid-${arch}.apk"
           done
+        
+      - name: Attest Build Provenance
+        uses: actions//attest-build-provenance@main
+        with:
+          subject-path: 'build/app/outputs/flutter-apk/*.apk'
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@main
