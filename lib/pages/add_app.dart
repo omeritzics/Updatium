@@ -161,7 +161,7 @@ class AddAppPageState extends State<AddAppPage> {
       horizontalGap16,
       searching
           ? const CircularProgressIndicator()
-          : M3EFilledButton(
+          : M3EFilledButton.tonal(
               onPressed: searching || pickedSource == null
                   ? null
                   : () {
@@ -208,7 +208,7 @@ class AddAppPageState extends State<AddAppPage> {
       horizontalGap16,
       searching
           ? const CircularProgressIndicator()
-          : M3EFilledButton(
+          : M3EFilledButton.tonal(
               onPressed: searchQuery.isEmpty || searching
                   ? null
                   : () {
@@ -537,6 +537,7 @@ class AddAppPageState extends State<AddAppPage> {
                                   },
                                 );
                           }
+                          if (!mounted) return null;
                           return MapEntry(
                             e.runtimeType.toString(),
                             await e.search(
@@ -547,7 +548,8 @@ class AddAppPageState extends State<AddAppPage> {
                         } catch (err) {
                           if (err is CredsNeededError) {
                             err.unexpected = true;
-                            showError(err, context.mounted as BuildContext);
+                            if (!mounted) return null;
+                            showError(err, context);
                           } else {
                             LogsProvider().add(
                               'Search error for ${e.name}: ${err.toString()}',
@@ -583,7 +585,7 @@ class AddAppPageState extends State<AddAppPage> {
         List<String>? selectedUrls = res.isEmpty
             ? []
             : await showDialog<List<String>?>(
-                context: context.mounted as BuildContext,
+                context: context,
                 builder: (BuildContext ctx) {
                   return SelectionModal(
                     entries: res.map((k, v) => MapEntry(k, v.value)),
@@ -592,6 +594,7 @@ class AddAppPageState extends State<AddAppPage> {
                   );
                 },
               );
+        if (!mounted) return;
         if (selectedUrls != null && selectedUrls.isNotEmpty) {
           var sourceName = res[selectedUrls[0]]?.key;
           changeUserInput(
@@ -602,7 +605,7 @@ class AddAppPageState extends State<AddAppPage> {
             overrideSource: sourceName,
           );
           Navigator.push(
-            context.mounted as BuildContext,
+            context,
             MaterialPageRoute(
               builder: (context) => AddAppConfirmationPage(
                 initialUrl: selectedUrls[0],
@@ -614,7 +617,8 @@ class AddAppPageState extends State<AddAppPage> {
         }
       }
     } catch (e) {
-      showError(e, context.mounted as BuildContext);
+      if (!mounted) return;
+      showError(e, context);
     } finally {
       setState(() {
         searching = false;
@@ -717,18 +721,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   SourceProvider sourceProvider = SourceProvider();
   final TextEditingController _sourceOverrideController =
       TextEditingController();
-
-  String? _regExValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return null;
-    }
-    try {
-      RegExp(value);
-    } catch (e) {
-      return t('invalidRegEx');
-    }
-    return null;
-  }
 
   @override
   void initState() {
@@ -905,14 +897,16 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           );
           // Only download the APK here if you need to for the package ID
           if (isTempId(app) && app.additionalSettings['trackOnly'] != true) {
+            if (!mounted) return;
             // ignore: use_build_context_synchronously
             var apkUrl = await appsProvider.confirmAppFileUrl(
               app,
-              context.mounted as BuildContext,
+              context,
               false,
               progressIndicatorStep: cameFromSearch ? 3 : 2,
               progressIndicatorTotal: cameFromSearch ? 3 : 2,
             );
+
             if (apkUrl == null) {
               throw UpdatiumError(t('cancelled'));
             }
@@ -959,7 +953,8 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           );
         }
       } catch (e) {
-        showError(e, context.mounted as BuildContext);
+        if (!mounted) return;
+        showError(e, context);
       } finally {
         setState(() {
           gettingAppInfo = false;
@@ -1130,97 +1125,11 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                                       }
                                     },
                                   ),
-                                if (pickedSource!.enforceTrackOnly)
-                                  GeneratedForm(
-                                    key: Key(
-                                      '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-appId',
-                                    ),
-                                    items: [
-                                      [
-                                        GeneratedFormTextField(
-                                          'appId',
-                                          label:
-                                              '${t('appId')} - ${t('custom')}',
-                                          required: false,
-                                          defaultValue:
-                                              additionalSettings['appId'] ?? '',
-                                          additionalValidators: [
-                                            (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return null;
-                                              }
-                                              final isValid = RegExp(
-                                                r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-                                              ).hasMatch(value);
-                                              if (!isValid) {
-                                                return t('invalidInput');
-                                              }
-                                              return null;
-                                            },
-                                          ],
-                                        ),
-                                      ],
-                                    ],
-                                    onValueChanges:
-                                        (values, valid, isBuilding) {
-                                          if (!isBuilding) {
-                                            setState(() {
-                                              additionalSettings['appId'] =
-                                                  values['appId'];
-                                            });
-                                          }
-                                        },
-                                  ),
                                 gap16,
                                 GeneratedForm(
                                   key: const Key('advancedSettings'),
-                                  items: [
-                                    [
-                                      GeneratedFormTextField(
-                                        'apkFilterRegEx',
-                                        label: t('filterAPKsByRegEx'),
-                                        required: false,
-                                        additionalValidators: [
-                                          (value) => _regExValidator(value),
-                                        ],
-                                      ),
-                                    ],
-                                    [
-                                      GeneratedFormSwitch(
-                                        'invertAPKFilter',
-                                        label:
-                                            '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
-                                        defaultValue: false,
-                                      ),
-                                    ],
-                                    [
-                                      GeneratedFormTextField(
-                                        'zippedApkFilterRegEx',
-                                        label: t('zippedApkFilterRegEx'),
-                                        required: false,
-                                        additionalValidators: [
-                                          (value) => _regExValidator(value),
-                                        ],
-                                      ),
-                                    ],
-                                    [
-                                      GeneratedFormSwitch(
-                                        'shizukuPretendToBeGooglePlay',
-                                        label: t(
-                                          'shizukuPretendToBeGooglePlay',
-                                        ),
-                                        defaultValue: false,
-                                      ),
-                                    ],
-                                    [
-                                      GeneratedFormSwitch(
-                                        'allowInsecure',
-                                        label: t('allowInsecure'),
-                                        defaultValue: false,
-                                      ),
-                                    ],
-                                  ],
+                                  items: pickedSource!
+                                      .combinedAdvancedSettingFormItems,
                                   onValueChanges: (values, valid, isBuilding) {
                                     if (!isBuilding) {
                                       setState(() {
