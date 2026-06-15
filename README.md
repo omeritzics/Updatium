@@ -80,7 +80,7 @@ A: One word - antisemitism. While Obtainium is a really powerful tool, its devel
 
 ### Q: How is Updatium different from other Obtainium forks?
 
-A: Every fork of Obtainium has a different goal to serve. For example, [Discoverium](https://github.com/cygnusx-1-org/Discoverium) was made to be a catalogue for discovering new open-source apps, while Updatium focuses on providing a better experience managing your already added apps or ready-made imported lists.
+A: Every fork of Obtainium serves a different goal. For example, [Discoverium](https://github.com/cygnusx-1-org/Discoverium) was made to be a catalogue for discovering new open-source apps, while Updatium focuses on providing a better experience managing your already added apps or ready-made imported lists.
 [ObtainX](https://github.com/bikram-agarwal/ObtainX) shares many vision aspects with Updatium, but Updatium is more conservative when it comes to adding new features or trying new redesigns, focusing on a clean, stable and reliable user experience. Also, Updatium is intended for both novice and tech-savvy people.
 
 ### Q: Does Updatium encourage piracy?

@@ -376,7 +376,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   hint:
                                       'Choose a directory to export your apps and settings',
                                   excludeSemantics: true,
-                                  child: M3EFilledButton.icon(
+                                  child: M3EFilledButton.tonalIcon(
                                     onPressed:
                                         importInProgress ||
                                             appsProvider.exportInProgress
@@ -401,7 +401,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       ? 'Set export directory first'
                                       : 'Export all your apps and settings to file',
                                   excludeSemantics: true,
-                                  child: M3EFilledButton.icon(
+                                  child: M3EFilledButton.tonalIcon(
                                     onPressed:
                                         importInProgress ||
                                             appsProvider.exportInProgress ||
@@ -428,7 +428,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                   hint:
                                       'Import apps and settings from a backup file',
                                   excludeSemantics: true,
-                                  child: M3EFilledButton.icon(
+                                  child: M3EFilledButton.tonalIcon(
                                     onPressed: importInProgress
                                         ? null
                                         : runUpdatiumImport,
@@ -506,7 +506,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           hint:
                               'Import multiple apps by entering their URLs in a list',
                           excludeSemantics: true,
-                          child: M3EFilledButton.icon(
+                          child: M3EFilledButton.tonalIcon(
                             onPressed: importInProgress ? null : urlListImport,
                             icon: const Icon(Icons.list_alt),
                             label: Text(t('importFromURLList')),
@@ -520,7 +520,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                             hint:
                                 'Import apps by reading URLs from a text file',
                             excludeSemantics: true,
-                            child: M3EFilledButton.icon(
+                            child: M3EFilledButton.tonalIcon(
                               onPressed: importInProgress ? null : runUrlImport,
                               icon: const Icon(Icons.link),
                               label: Text(t('importFromURLsInFile')),
@@ -540,7 +540,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             gap8,
-                            M3EFilledButton.icon(
+                            M3EFilledButton.tonalIcon(
                               onPressed: importInProgress
                                   ? null
                                   : () {
