@@ -161,7 +161,7 @@ class AddAppPageState extends State<AddAppPage> {
       horizontalGap16,
       searching
           ? const CircularProgressIndicator()
-          : M3EFilledButton(
+          : M3EFilledButton.tonal(
               onPressed: searching || pickedSource == null
                   ? null
                   : () {
@@ -208,7 +208,7 @@ class AddAppPageState extends State<AddAppPage> {
       horizontalGap16,
       searching
           ? const CircularProgressIndicator()
-          : M3EFilledButton(
+          : M3EFilledButton.tonal(
               onPressed: searchQuery.isEmpty || searching
                   ? null
                   : () {
@@ -537,18 +537,22 @@ class AddAppPageState extends State<AddAppPage> {
                                   },
                                 );
                           }
-                          return MapEntry(
-                            e.runtimeType.toString(),
-                            await e.search(
-                              searchQuery,
-                              querySettings: querySettings ?? {},
-                            ),
-                          );
+                           if (!mounted) return null;
+                           return MapEntry(
+                             e.runtimeType.toString(),
+                             await e.search(
+                               searchQuery,
+                               querySettings: querySettings ?? {},
+                             ),
+                           );
+
                         } catch (err) {
-                          if (err is CredsNeededError) {
-                            err.unexpected = true;
-                            showError(err, context.mounted as BuildContext);
-                          } else {
+                           if (err is CredsNeededError) {
+                             err.unexpected = true;
+                             if (!mounted) return null;
+                             showError(err, context);
+                           } else {
+
                             LogsProvider().add(
                               'Search error for ${e.name}: ${err.toString()}',
                               level: LogLevels.error,
@@ -583,7 +587,7 @@ class AddAppPageState extends State<AddAppPage> {
         List<String>? selectedUrls = res.isEmpty
             ? []
             : await showDialog<List<String>?>(
-                context: context.mounted as BuildContext,
+                context: context,
                 builder: (BuildContext ctx) {
                   return SelectionModal(
                     entries: res.map((k, v) => MapEntry(k, v.value)),
@@ -592,6 +596,7 @@ class AddAppPageState extends State<AddAppPage> {
                   );
                 },
               );
+        if (!mounted) return;
         if (selectedUrls != null && selectedUrls.isNotEmpty) {
           var sourceName = res[selectedUrls[0]]?.key;
           changeUserInput(
@@ -602,7 +607,7 @@ class AddAppPageState extends State<AddAppPage> {
             overrideSource: sourceName,
           );
           Navigator.push(
-            context.mounted as BuildContext,
+            context,
             MaterialPageRoute(
               builder: (context) => AddAppConfirmationPage(
                 initialUrl: selectedUrls[0],
@@ -614,7 +619,8 @@ class AddAppPageState extends State<AddAppPage> {
         }
       }
     } catch (e) {
-      showError(e, context.mounted as BuildContext);
+      if (!mounted) return;
+      showError(e, context);
     } finally {
       setState(() {
         searching = false;
@@ -903,16 +909,18 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             sourceIsOverriden: pickedSourceOverride != null,
             inferAppIdIfOptional: inferAppIdIfOptional,
           );
-          // Only download the APK here if you need to for the package ID
-          if (isTempId(app) && app.additionalSettings['trackOnly'] != true) {
-            // ignore: use_build_context_synchronously
-            var apkUrl = await appsProvider.confirmAppFileUrl(
-              app,
-              context.mounted as BuildContext,
-              false,
-              progressIndicatorStep: cameFromSearch ? 3 : 2,
-              progressIndicatorTotal: cameFromSearch ? 3 : 2,
-            );
+            // Only download the APK here if you need to for the package ID
+            if (isTempId(app) && app.additionalSettings['trackOnly'] != true) {
+              if (!mounted) return;
+              // ignore: use_build_context_synchronously
+              var apkUrl = await appsProvider.confirmAppFileUrl(
+                app,
+                context,
+                false,
+                progressIndicatorStep: cameFromSearch ? 3 : 2,
+                progressIndicatorTotal: cameFromSearch ? 3 : 2,
+              );
+
             if (apkUrl == null) {
               throw UpdatiumError(t('cancelled'));
             }
@@ -958,9 +966,11 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             ),
           );
         }
-      } catch (e) {
-        showError(e, context.mounted as BuildContext);
-      } finally {
+       } catch (e) {
+         if (!mounted) return;
+         showError(e, context);
+       } finally {
+
         setState(() {
           gettingAppInfo = false;
         });
