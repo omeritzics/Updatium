@@ -537,22 +537,20 @@ class AddAppPageState extends State<AddAppPage> {
                                   },
                                 );
                           }
-                           if (!mounted) return null;
-                           return MapEntry(
-                             e.runtimeType.toString(),
-                             await e.search(
-                               searchQuery,
-                               querySettings: querySettings ?? {},
-                             ),
-                           );
-
+                          if (!mounted) return null;
+                          return MapEntry(
+                            e.runtimeType.toString(),
+                            await e.search(
+                              searchQuery,
+                              querySettings: querySettings ?? {},
+                            ),
+                          );
                         } catch (err) {
-                           if (err is CredsNeededError) {
-                             err.unexpected = true;
-                             if (!mounted) return null;
-                             showError(err, context);
-                           } else {
-
+                          if (err is CredsNeededError) {
+                            err.unexpected = true;
+                            if (!mounted) return null;
+                            showError(err, context);
+                          } else {
                             LogsProvider().add(
                               'Search error for ${e.name}: ${err.toString()}',
                               level: LogLevels.error,
@@ -909,17 +907,17 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             sourceIsOverriden: pickedSourceOverride != null,
             inferAppIdIfOptional: inferAppIdIfOptional,
           );
-            // Only download the APK here if you need to for the package ID
-            if (isTempId(app) && app.additionalSettings['trackOnly'] != true) {
-              if (!mounted) return;
-              // ignore: use_build_context_synchronously
-              var apkUrl = await appsProvider.confirmAppFileUrl(
-                app,
-                context,
-                false,
-                progressIndicatorStep: cameFromSearch ? 3 : 2,
-                progressIndicatorTotal: cameFromSearch ? 3 : 2,
-              );
+          // Only download the APK here if you need to for the package ID
+          if (isTempId(app) && app.additionalSettings['trackOnly'] != true) {
+            if (!mounted) return;
+            // ignore: use_build_context_synchronously
+            var apkUrl = await appsProvider.confirmAppFileUrl(
+              app,
+              context,
+              false,
+              progressIndicatorStep: cameFromSearch ? 3 : 2,
+              progressIndicatorTotal: cameFromSearch ? 3 : 2,
+            );
 
             if (apkUrl == null) {
               throw UpdatiumError(t('cancelled'));
@@ -966,11 +964,10 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             ),
           );
         }
-       } catch (e) {
-         if (!mounted) return;
-         showError(e, context);
-       } finally {
-
+      } catch (e) {
+        if (!mounted) return;
+        showError(e, context);
+      } finally {
         setState(() {
           gettingAppInfo = false;
         });
