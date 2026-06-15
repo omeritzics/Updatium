@@ -1129,7 +1129,8 @@ abstract class AppSource {
     ],
   ];
 
-  List<List<GeneratedFormItem>> advancedAppSpecificSourceAgnosticSettingFormItems = [
+  List<List<GeneratedFormItem>>
+  advancedAppSpecificSourceAgnosticSettingFormItems = [
     [
       GeneratedFormTextField(
         'appId',
@@ -1170,9 +1171,7 @@ abstract class AppSource {
         'apkFilterRegEx',
         label: t('filterAPKsByRegEx'),
         required: false,
-        additionalValidators: [
-          (value) => regExValidator(value),
-        ],
+        additionalValidators: [(value) => regExValidator(value)],
       ),
     ],
     [
@@ -1196,9 +1195,7 @@ abstract class AppSource {
           'zippedApkFilterRegEx',
           label: t('zippedApkFilterRegEx'),
           required: false,
-          additionalValidators: [
-            (value) => regExValidator(value),
-          ],
+          additionalValidators: [(value) => regExValidator(value)],
         ),
       ]);
     }
