@@ -26,6 +26,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('en'), 'English'),
+  MapEntry(Locale('el'), 'Ελληνικά'),
   MapEntry(Locale('zh'), '简体中文'),
   MapEntry(Locale('zh', 'Hant_TW'), '臺灣話'),
   MapEntry(Locale('it'), 'Italiano'),
@@ -63,10 +64,13 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('bg'), 'Български'),
   MapEntry(Locale('kmr'), 'Kurdî (Kurmanjî)'),
   MapEntry(Locale('ms'), 'Bahasa Melayu'),
+  MapEntry(Locale('nb'), 'Norsk (Bokmål)'),
   MapEntry(Locale('bn'), 'বাংলা'),
   MapEntry(Locale('ro'), 'Română'),
   MapEntry(Locale('ug'), 'ئۇيغۇرچە'),
   MapEntry(Locale('hy'), 'Հայերեն'),
+  MapEntry(Locale('ta'), 'தமிழ்'),
+  MapEntry(Locale('fil'), 'Filipino'),
 ];
 const fallbackLocale = Locale('en');
 const localeDir = 'assets/translations';
