@@ -166,13 +166,13 @@ class AddAppPageState extends State<AddAppPage> {
                   ? null
                   : () {
                       HapticFeedback.selectionClick();
-                       showDialog(
-                         context: context,
-                         builder: (context) => AddAppConfirmationPage(
-                           initialUrl: userInput,
-                           initialSourceOverride: pickedSourceOverride,
-                         ),
-                       );
+                      showDialog(
+                        context: context,
+                        builder: (context) => AddAppConfirmationPage(
+                          initialUrl: userInput,
+                          initialSourceOverride: pickedSourceOverride,
+                        ),
+                      );
                     },
               child: Text(t('continue')),
             ),
@@ -261,7 +261,7 @@ class AddAppPageState extends State<AddAppPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                 '${e.name}: ${e.canSearch ? ' ${t('searchableInBrackets')}' : ''}',
+                                '${e.name}: ${e.canSearch ? ' ${t('searchableInBrackets')}' : ''}',
                                 style: TextStyle(
                                   decoration: e.hosts.isNotEmpty
                                       ? TextDecoration.underline
@@ -603,14 +603,14 @@ class AddAppPageState extends State<AddAppPage> {
             overrideSource: sourceName,
           );
           if (!mounted) return;
-           showDialog(
-             context: context,
-             builder: (context) => AddAppConfirmationPage(
-               initialUrl: selectedUrls[0],
-               initialSourceOverride: sourceName,
-               cameFromSearch: true,
-             ),
-           );
+          showDialog(
+            context: context,
+            builder: (context) => AddAppConfirmationPage(
+              initialUrl: selectedUrls[0],
+              initialSourceOverride: sourceName,
+              cameFromSearch: true,
+            ),
+          );
         }
       }
     } catch (e) {
