@@ -64,7 +64,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<NavigationPageItem> getPages(SettingsProvider settingsProvider) {
     final isSafeMode = settingsProvider.safeMode;
     return [
-      NavigationPageItem(t('appsString'), Icons.apps, AppsPage(key: _appsPageKey)),
+      NavigationPageItem(
+        t('appsString'),
+        Icons.apps,
+        AppsPage(key: _appsPageKey),
+      ),
       NavigationPageItem(
         isSafeMode ? t('importExport') : t('addApp'),
         isSafeMode ? Icons.import_export : Icons.add_circle,
@@ -183,13 +187,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
     switchToPage(1);
     final pages = getPages(settingsProvider);
-    while ((pages[1].widget.key as GlobalKey<AddAppPageState>?)
-            ?.currentState ==
+    while ((pages[1].widget.key as GlobalKey<AddAppPageState>?)?.currentState ==
         null) {
       await Future.delayed(const Duration(microseconds: 1));
     }
-    (pages[1].widget.key as GlobalKey<AddAppPageState>?)?.currentState
-        ?.linkFn(data);
+    (pages[1].widget.key as GlobalKey<AddAppPageState>?)?.currentState?.linkFn(
+      data,
+    );
   }
 
   Future<void> _goToExistingApp(String appId) async {
@@ -222,9 +226,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             true) {
           var appsProvider = context.read<AppsProvider>();
           var result = await appsProvider.import(
-            action == 'app'
-                ? '{ "apps": [$dataStr] }'
-                : '{ "apps": $dataStr }',
+            action == 'app' ? '{ "apps": [$dataStr] }' : '{ "apps": $dataStr }',
           );
           showMessage(
             t(
@@ -353,7 +355,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildBody(List<NavigationPageItem> pages, SettingsProvider settingsProvider) {
+  Widget _buildBody(
+    List<NavigationPageItem> pages,
+    SettingsProvider settingsProvider,
+  ) {
     return PageTransitionSwitcher(
       duration: Duration(
         milliseconds: settingsProvider.disablePageTransitions ? 0 : 200,
@@ -361,18 +366,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       reverse: settingsProvider.reversePageTransitions
           ? !isReversing
           : isReversing,
-      transitionBuilder: (
-        Widget child,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-      ) {
-        return SharedAxisTransition(
-          animation: animation,
-          secondaryAnimation: secondaryAnimation,
-          transitionType: SharedAxisTransitionType.horizontal,
-          child: child,
-        );
-      },
+      transitionBuilder:
+          (
+            Widget child,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) {
+            return SharedAxisTransition(
+              animation: animation,
+              secondaryAnimation: secondaryAnimation,
+              transitionType: SharedAxisTransitionType.horizontal,
+              child: child,
+            );
+          },
       child: pages
           .elementAt(
             selectedIndexHistory.isEmpty ? 0 : selectedIndexHistory.last,
@@ -381,7 +387,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildBottomBar(List<NavigationPageItem> pages, SettingsProvider settingsProvider) {
+  Widget _buildBottomBar(
+    List<NavigationPageItem> pages,
+    SettingsProvider settingsProvider,
+  ) {
     return Semantics(
       label: 'Main navigation',
       hint:

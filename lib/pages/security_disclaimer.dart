@@ -90,9 +90,9 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
     return Text(
       t('securityDisclaimerTitle'),
       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: colorScheme.onSurface,
-          ),
+        fontWeight: FontWeight.bold,
+        color: colorScheme.onSurface,
+      ),
       textAlign: TextAlign.center,
     );
   }
@@ -110,8 +110,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
             padding: const EdgeInsets.only(bottom: 16.0),
             child: _buildDisclaimerItem(item, colorScheme),
           );
-        }).toList()
-          ..removeLast(), // Remove padding from last item
+        }).toList()..removeLast(), // Remove padding from last item
       ),
     );
   }
