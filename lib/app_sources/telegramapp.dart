@@ -7,7 +7,7 @@ import 'package:updatium/providers/source_provider.dart' as source_provider;
 class TelegramApp extends AppSource {
   TelegramApp() {
     hosts = ['telegram.org'];
-    name = t('telegramapp');
+    name = 'telegramapp'.t();
   }
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {

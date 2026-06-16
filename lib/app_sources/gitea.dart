@@ -21,8 +21,8 @@ class Gitea extends AppSource {
     openSource = true;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        t('giteaTokenLabel'),
-        label: t('giteaTokenLabel'),
+        'giteaTokenLabel'.t(),
+        label: 'giteaTokenLabel'.t(),
         password: true,
         required: false,
         belowWidgets: [
@@ -35,7 +35,7 @@ class Gitea extends AppSource {
               );
             },
             child: Text(
-              t('about'),
+              'about'.t(),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -106,7 +106,8 @@ class Gitea extends AppSource {
     for (var element in repos) {
       var fullName = element['full_name'] as String?;
       var name = element['name'] as String? ?? '';
-      var description = element['description'] as String? ?? t('noDescription');
+      var description =
+          element['description'] as String? ?? 'noDescription'.t();
       if (fullName != null) {
         results['https://${hosts[0]}/$fullName'] = [name, description];
       }

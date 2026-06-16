@@ -46,12 +46,12 @@ extract_used_keys() {
       const keys = new Set();
       
       // Match patterns like:
-      // - t('key')
+      // - 'key'.t()
       // - t('key', args: [...])
       // - AppLocalizations.of(context)!.key
       // - AppLocalizations.of(context)!.key(args: [...])
-      // - t('x', args: [plural('key', ...)])
-      // - AppLocalizations.of(context)!.x(plural('key', ...))
+      // - t('x', args: ['key'.plural(...)])
+      // - AppLocalizations.of(context)!.x('key'.plural(...))
       
       const patterns = [
         /tr\(\s*['"`]([^'"`]+)['"`]/g,
