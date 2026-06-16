@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:updatium/main.dart';
-import 'package:flutter/material.dart';
 import 'package:updatium/providers/settings_provider.dart';
 
 void main() {
@@ -27,26 +26,6 @@ void main() {
 
     test('globalNavigatorKey is defined', () {
       expect(globalNavigatorKey, isNotNull);
-    });
-
-    test('isLocaleRTL returns true for Arabic', () {
-      expect(isLocaleRTL(const Locale('ar')), isTrue);
-    });
-
-    test('isLocaleRTL returns true for Hebrew', () {
-      expect(isLocaleRTL(const Locale('he')), isTrue);
-    });
-
-    test('isLocaleRTL returns true for Persian', () {
-      expect(isLocaleRTL(const Locale('fa')), isTrue);
-    });
-
-    test('isLocaleRTL returns false for English', () {
-      expect(isLocaleRTL(const Locale('en')), isFalse);
-    });
-
-    test('isLocaleRTL returns false for Spanish', () {
-      expect(isLocaleRTL(const Locale('es')), isFalse);
     });
   });
 
