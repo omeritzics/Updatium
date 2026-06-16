@@ -68,16 +68,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final isSafeMode = settingsProvider.safeMode;
     return [
       NavigationPageItem(
-        t('appsString'),
+        'appsString'.t(),
         Icons.apps,
         AppsPage(key: _appsPageKey),
       ),
       NavigationPageItem(
-        isSafeMode ? t('importExport') : t('addApp'),
+        isSafeMode ? 'importExport'.t() : 'addApp'.t(),
         isSafeMode ? Icons.import_export : Icons.add_circle,
         isSafeMode ? const ImportExportPage() : AddAppPage(key: _addAppPageKey),
       ),
-      NavigationPageItem(t('settings'), Icons.settings, const SettingsPage()),
+      NavigationPageItem('settings'.t(), Icons.settings, const SettingsPage()),
     ];
   }
 
@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Future<void> _goToAddApp(String data) async {
     final settingsProvider = context.read<SettingsProvider>();
     if (settingsProvider.safeMode) {
-      showError(UpdatiumError(t('safeModeAddAppDisabled')), context);
+      showError(UpdatiumError('safeModeAddAppDisabled'.t()), context);
       return;
     }
     switchToPage(1);
@@ -236,13 +236,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           showMessage(
             t(
               'importedX',
-              args: [plural('apps', result.key.length).toLowerCase()],
+              args: ['apps'.plural(result.key.length).toLowerCase()],
             ),
             context.mounted as BuildContext,
           );
         }
       } else {
-        throw UpdatiumError(t('unknown'));
+        throw UpdatiumError('unknown'.t());
       }
     } catch (e) {
       showError(e, context.mounted as BuildContext);
@@ -257,7 +257,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       if (action == 'add') {
         await _handleAddLink(data);
       } else {
-        throw UpdatiumError(t('unknown'));
+        throw UpdatiumError('unknown'.t());
       }
     } catch (e) {
       showError(e, context.mounted as BuildContext);
@@ -469,7 +469,8 @@ class _ImportDialogState extends State<_ImportDialog> {
         t(
           'importX',
           args: [
-            (widget.action == 'app' ? t('app') : t('appsString')).toLowerCase(),
+            (widget.action == 'app' ? 'app'.t() : 'appsString'.t())
+                .toLowerCase(),
           ],
         ),
       ),
@@ -504,11 +505,11 @@ class _ImportDialogState extends State<_ImportDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(null),
-          child: Text(t('cancel')),
+          child: Text('cancel'.t()),
         ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(true),
-          child: Text(t('ok')),
+          child: Text('ok'.t()),
         ),
       ],
     );

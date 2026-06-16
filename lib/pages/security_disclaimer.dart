@@ -88,7 +88,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
 
   Widget _buildTitle(ColorScheme colorScheme) {
     return Text(
-      t('securityDisclaimerTitle'),
+      'securityDisclaimerTitle'.t(),
       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
         fontWeight: FontWeight.bold,
         color: colorScheme.onSurface,
@@ -170,7 +170,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text(
-                    t('acceptAndContinue'),
+                    'acceptAndContinue'.t(),
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -190,7 +190,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text(
-                    t('decline'),
+                    'decline'.t(),
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

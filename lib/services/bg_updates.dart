@@ -58,8 +58,8 @@ Future<ServiceRequestResult?> startForegroundService(
     return FlutterForegroundTask.startService(
       serviceTypes: [ForegroundServiceTypes.specialUse],
       serviceId: 666,
-      notificationTitle: t('foregroundService'),
-      notificationText: t('fgServiceNotice'),
+      notificationTitle: 'foregroundService'.t(),
+      notificationText: 'fgServiceNotice'.t(),
       notificationIcon: NotificationIcon(
         metaDataName: 'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
       ),
@@ -84,8 +84,8 @@ void initForegroundService([int intervalMinutes = 15]) {
     FlutterForegroundTask.init(
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'bg_update',
-        channelName: t('foregroundService'),
-        channelDescription: t('foregroundService'),
+        channelName: 'foregroundService'.t(),
+        channelDescription: 'foregroundService'.t(),
         onlyAlertOnce: true,
       ),
       iosNotificationOptions: const IOSNotificationOptions(
