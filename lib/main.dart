@@ -71,11 +71,6 @@ var fdroid = false;
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
 
-bool isLocaleRTL(Locale locale) {
-  const rtlLanguages = {'ar', 'he', 'fa', 'ug', 'ur', 'yi', 'ps', 'sd'};
-  return rtlLanguages.contains(locale.languageCode);
-}
-
 Future<void> loadTranslations() async {
   // See easy_localization/issues/210
   await SimpleLocalizationController.initEasyLocation();
