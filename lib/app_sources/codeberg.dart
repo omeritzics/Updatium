@@ -4,7 +4,7 @@ import 'package:updatium/services/slang_converter.dart';
 
 class Codeberg extends AppSource {
   Codeberg() {
-    name = t('codeberg');
+    name = 'codeberg'.t();
     hosts = ['codeberg.org'];
     additionalSourceAppSpecificSettingFormItems =
         Gitea().additionalSourceAppSpecificSettingFormItems;

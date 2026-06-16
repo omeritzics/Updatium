@@ -272,7 +272,7 @@ Future<String> checkPartialDownloadHash(
   var client = IOClient(createHttpClient(allowInsecure));
   var response = await client.send(req);
   if (response.statusCode < 200 || response.statusCode > 299) {
-    throw UpdatiumError(response.reasonPhrase ?? t('unexpectedError'));
+    throw UpdatiumError(response.reasonPhrase ?? 'unexpectedError'.t());
   }
   List<List<int>> bytes = await response.stream.take(bytesToGrab).toList();
   return hashListOfLists(bytes);
@@ -301,7 +301,9 @@ void deleteFile(File file) {
   try {
     file.deleteSync(recursive: true);
   } on PathAccessException catch (e) {
-    throw UpdatiumError(t('fileDeletionError', args: [e.path ?? t('unknown')]));
+    throw UpdatiumError(
+      t('fileDeletionError', args: [e.path ?? 'unknown'.t()]),
+    );
   }
 }
 
@@ -324,27 +326,27 @@ Future<String?> promptForFileName(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text(t('fileExists')),
+        title: Text('fileExists'.t()),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(t('fileExistsPrompt')),
+            Text('fileExistsPrompt'.t()),
             const SizedBox(height: 16),
             TextField(
               controller: controller,
-              decoration: InputDecoration(labelText: t('fileName')),
+              decoration: InputDecoration(labelText: 'fileName'.t()),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, null),
-            child: Text(t('cancel')),
+            child: Text('cancel'.t()),
           ),
           M3EFilledButton(
             onPressed: () => Navigator.pop(context, controller.text),
-            child: Text(t('download')),
+            child: Text('download'.t()),
           ),
         ],
       );
@@ -858,7 +860,7 @@ class AppsProvider with ChangeNotifier {
             suggestedName,
           );
           if (userFileName == null) {
-            throw UpdatiumError(t('downloadCancelled'));
+            throw UpdatiumError('downloadCancelled'.t());
           }
           // Update fileNameNoExt based on user input
           if (source.urlsAlwaysHaveExtension) {
@@ -1466,7 +1468,7 @@ class AppsProvider with ChangeNotifier {
         mimeType: 'application/vnd.android.package-archive',
       );
       Fluttertoast.showToast(
-        msg: t('appVerifierInstructionToast'),
+        msg: 'appVerifierInstructionToast'.t(),
         toastLength: Toast.LENGTH_LONG,
       );
       await SharePlus.instance.share(ShareParams(files: [f]));
@@ -1483,7 +1485,7 @@ class AppsProvider with ChangeNotifier {
       } catch (e) {
         //
       } finally {
-        throw UpdatiumError(t('badDownload'));
+        throw UpdatiumError('badDownload'.t());
       }
     }
     PackageInfo? appInfo = await getInstalledInfo(apps[file.appId]!.app.id);
@@ -1659,7 +1661,7 @@ class AppsProvider with ChangeNotifier {
     // 2. That cannot be installed silently (IF no buildContext was given for interactive install)
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw UpdatiumError(t('appNotFound'));
+        throw UpdatiumError('appNotFound'.t());
       }
       MapEntry<String, String>? apkUrl;
       var trackOnly = apps[id]!.app.additionalSettings['trackOnly'] == true;
@@ -1797,18 +1799,18 @@ class AppsProvider with ChangeNotifier {
         willBeSilent = await canInstallSilently(apps[id]!.app);
         if (!settingsProvider.useShizuku) {
           if (!(await settingsProvider.getInstallPermission(enforce: false))) {
-            throw UpdatiumError(t('cancelled'));
+            throw UpdatiumError('cancelled'.t());
           }
         } else {
           switch ((await ShizukuApkInstaller().checkPermission())!) {
             case 'binder_not_found':
-              throw UpdatiumError(t('shizukuBinderNotFound'));
+              throw UpdatiumError('shizukuBinderNotFound'.t());
             case 'old_shizuku':
-              throw UpdatiumError(t('shizukuOld'));
+              throw UpdatiumError('shizukuOld'.t());
             case 'old_android_with_adb':
-              throw UpdatiumError(t('shizukuOldAndroidWithADB'));
+              throw UpdatiumError('shizukuOldAndroidWithADB'.t());
             case 'denied':
-              throw UpdatiumError(t('cancelled'));
+              throw UpdatiumError('cancelled'.t());
           }
         }
         if (!willBeSilent && context != null && !settingsProvider.useShizuku) {
@@ -1869,7 +1871,7 @@ class AppsProvider with ChangeNotifier {
     List<MapEntry<MapEntry<String, String>, App>> filesToDownload = [];
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw UpdatiumError(t('appNotFound'));
+        throw UpdatiumError('appNotFound'.t());
       }
       MapEntry<String, String>? fileUrl;
       var refreshBeforeDownload =
@@ -2482,14 +2484,14 @@ class AppsProvider with ChangeNotifier {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text(plural('removeAppQuestion', apps.length)),
+              title: Text('removeAppQuestion'.plural(apps.length)),
               content: !showUninstallOption
                   ? null
                   : Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SwitchListTile(
-                          title: Text(t('removeFromUpdatium')),
+                          title: Text('removeFromUpdatium'.t()),
                           value: rmAppEntry,
                           onChanged: (value) {
                             setState(() {
@@ -2498,7 +2500,7 @@ class AppsProvider with ChangeNotifier {
                           },
                         ),
                         SwitchListTile(
-                          title: Text(t('uninstallFromDevice')),
+                          title: Text('uninstallFromDevice'.t()),
                           value: uninstallAppFromDevice,
                           onChanged: (value) {
                             setState(() {
@@ -2511,7 +2513,7 @@ class AppsProvider with ChangeNotifier {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(ctx).pop(null),
-                  child: Text(t('cancel')),
+                  child: Text('cancel'.t()),
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
@@ -2524,7 +2526,7 @@ class AppsProvider with ChangeNotifier {
                       'uninstallApp': uninstallAppFromDevice,
                     });
                   },
-                  child: Text(t('continue')),
+                  child: Text('continue'.t()),
                 ),
               ],
             );
@@ -2737,7 +2739,7 @@ class AppsProvider with ChangeNotifier {
     SettingsProvider? sp,
   }) async {
     if (exportInProgress && !isAuto) {
-      throw UpdatiumError(t('exportAlreadyInProgress'));
+      throw UpdatiumError('exportAlreadyInProgress'.t());
     }
 
     SettingsProvider settingsProvider = sp ?? this.settingsProvider;
@@ -2788,13 +2790,13 @@ class AppsProvider with ChangeNotifier {
         Map<String, dynamic> finalExport = generateExportJSON();
         // Create export file using docman
         if (exportDir.toString().isEmpty) {
-          throw UpdatiumError(t('exportDirUriEmpty'));
+          throw UpdatiumError('exportDirUriEmpty'.t());
         }
         final docFileResult = await DocumentFile.fromUri(exportDir.toString());
         final dirDocFile = await docFileResult?.get();
         if (dirDocFile != null) {
           final fileName =
-              '${t('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
+              '${'updatiumExportHyphenatedLowercase'.t()}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json';
 
           try {
             final result = await dirDocFile.createFile(
@@ -2805,7 +2807,7 @@ class AppsProvider with ChangeNotifier {
             );
 
             if (result == null) {
-              throw UpdatiumError(t('failedToCreateExportFile'));
+              throw UpdatiumError('failedToCreateExportFile'.t());
             }
           } catch (e) {
             // Handle MIME type detection errors specifically
@@ -2821,26 +2823,26 @@ class AppsProvider with ChangeNotifier {
                   ),
                 );
                 if (fallbackResult == null) {
-                  throw UpdatiumError(t('failedToCreateExportFile'));
+                  throw UpdatiumError('failedToCreateExportFile'.t());
                 }
               } catch (fallbackError) {
                 throw UpdatiumError(
-                  '${t('failedToExport')}: MIME type detection error - ${fallbackError.toString()}',
+                  '${'failedToExport'.t()}: MIME type detection error - ${fallbackError.toString()}',
                 );
               }
             } else {
-              throw UpdatiumError('${t('failedToExport')}: ${e.toString()}');
+              throw UpdatiumError('${'failedToExport'.t()}: ${e.toString()}');
             }
           }
         } else {
-          throw UpdatiumError(t('exportDirNotAccessible'));
+          throw UpdatiumError('exportDirNotAccessible'.t());
         }
       } catch (e) {
         if (e is UpdatiumError) {
           rethrow;
         }
         debugPrint('Export error: $e');
-        throw UpdatiumError('${t('failedToExport')}: ${e.toString()}');
+        throw UpdatiumError('${'failedToExport'.t()}: ${e.toString()}');
       } finally {
         exportInProgress = false;
         notifyListeners();
@@ -2916,7 +2918,7 @@ class AppsProvider with ChangeNotifier {
     Map<String, dynamic> errorsMap = results[1];
     for (var app in pps) {
       if (apps.containsKey(app.id)) {
-        errorsMap.addAll({app.id: t('appAlreadyAdded')});
+        errorsMap.addAll({app.id: 'appAlreadyAdded'.t()});
       } else {
         await saveApps([app], onlyIfExists: false);
       }
@@ -2937,18 +2939,18 @@ class AppsProvider with ChangeNotifier {
       // Categorize errors and provide user-friendly messages
       if (errorDetail.contains('timeout') ||
           errorDetail.contains('connection')) {
-        userMessage = t('networkError');
+        userMessage = 'networkError'.t();
       } else if (errorDetail.contains('404') ||
           errorDetail.contains('not found')) {
-        userMessage = t('appNotFound');
+        userMessage = 'appNotFound'.t();
       } else if (errorDetail.contains('parse') ||
           errorDetail.contains('format')) {
-        userMessage = t('invalidUrlFormat');
+        userMessage = 'invalidUrlFormat'.t();
       } else if (errorDetail.contains('permission') ||
           errorDetail.contains('access')) {
-        userMessage = t('accessDenied');
+        userMessage = 'accessDenied'.t();
       } else {
-        userMessage = t('importFailed');
+        userMessage = 'importFailed'.t();
       }
 
       return [e, userMessage];
@@ -3005,22 +3007,22 @@ class _AppFilePickerState extends State<AppFilePicker> {
           ),
           title: Text(
             widget.pickAnyAsset
-                ? t('selectX', args: [lowerCaseIfEnglish(t('releaseAsset'))])
-                : t('pickAnAPK'),
+                ? t('selectX', args: [lowerCaseIfEnglish('releaseAsset'.t())])
+                : 'pickAnAPK'.t(),
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
-              child: Text(t('cancel')),
+              child: Text('cancel'.t()),
             ),
             TextButton(
               onPressed: () {
                 HapticFeedback.selectionClick();
                 Navigator.of(context).pop(fileUrl);
               },
-              child: Text(t('continue')),
+              child: Text('continue'.t()),
             ),
           ],
         ),
@@ -3038,7 +3040,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      t('confirmAppSelection'),
+                      'confirmAppSelection'.t(),
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     Text(
@@ -3090,7 +3092,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
                       Text(
                         widget.archs!.length == 1
                             ? t('deviceSupportsXArch', args: [widget.archs![0]])
-                            : t('deviceSupportsFollowingArchs') +
+                            : 'deviceSupportsFollowingArchs'.t() +
                                   list2FriendlyString(
                                     widget.archs!.map((e) => '\'$e\'').toList(),
                                   ),
@@ -3126,7 +3128,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text(t('warning')),
+      title: Text('warning'.t()),
       content: Text(
         t(
           'sourceIsXButPackageFromYPrompt',
@@ -3141,14 +3143,14 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text(t('cancel')),
+          child: Text('cancel'.t()),
         ),
         TextButton(
           onPressed: () {
             HapticFeedback.selectionClick();
             Navigator.of(context).pop(true);
           },
-          child: Text(t('yes')),
+          child: Text('yes'.t()),
         ),
       ],
     );
@@ -3290,7 +3292,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
     MultiAppMultiError toThrow =
         MultiAppMultiError(); // All errors that will not lead to a retry, just a notification
     CheckingUpdatesNotification notif = CheckingUpdatesNotification(
-      plural('apps', toCheck.length),
+      'apps'.plural(toCheck.length),
     ); // The notif. to show while checking
 
     try {

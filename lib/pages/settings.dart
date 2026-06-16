@@ -62,7 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
   ];
   int updateInterval = 0;
   late SplineInterpolation updateIntervalInterpolator;
-  String updateIntervalLabel = t('neverManualOnly');
+  String updateIntervalLabel = 'neverManualOnly'.t();
   bool showIntervalLabel = true;
   final Map<ColorSwatch<Object>, String> colorsNameMap =
       <ColorSwatch<Object>, String>{
@@ -86,7 +86,7 @@ class _SettingsPageState extends State<SettingsPage> {
   void processIntervalSliderValue(double val) {
     if (val < 0.5) {
       updateInterval = 0;
-      updateIntervalLabel = t('neverManualOnly');
+      updateIntervalLabel = 'neverManualOnly'.t();
       return;
     }
     int valInterpolated = 0;
@@ -97,25 +97,25 @@ class _SettingsPageState extends State<SettingsPage> {
     }
     if (valInterpolated < 60) {
       updateInterval = valInterpolated;
-      updateIntervalLabel = plural('minute', valInterpolated);
+      updateIntervalLabel = 'minute'.plural(valInterpolated);
     } else if (valInterpolated < 8 * 60) {
       int valRounded = (valInterpolated / 15).floor() * 15;
       updateInterval = valRounded;
-      updateIntervalLabel = plural('hour', valRounded ~/ 60);
+      updateIntervalLabel = 'hour'.plural(valRounded ~/ 60);
       int mins = valRounded % 60;
-      if (mins != 0) updateIntervalLabel += " ${plural('minute', mins)}";
+      if (mins != 0) updateIntervalLabel += " ${'minute'.plural(mins)}";
     } else if (valInterpolated < 24 * 60) {
       int valRounded = (valInterpolated / 30).floor() * 30;
       updateInterval = valRounded;
-      updateIntervalLabel = plural('hour', valRounded / 60);
+      updateIntervalLabel = 'hour'.plural(valRounded / 60);
     } else if (valInterpolated < 7 * 24 * 60) {
       int valRounded = (valInterpolated / (12 * 60)).floor() * 12 * 60;
       updateInterval = valRounded;
-      updateIntervalLabel = plural('day', valRounded / (24 * 60));
+      updateIntervalLabel = 'day'.plural(valRounded / (24 * 60));
     } else {
       int valRounded = (valInterpolated / (24 * 60)).floor() * 24 * 60;
       updateInterval = valRounded;
-      updateIntervalLabel = plural('day', valRounded ~/ (24 * 60));
+      updateIntervalLabel = 'day'.plural(valRounded ~/ (24 * 60));
     }
   }
 
@@ -188,7 +188,7 @@ class _SettingsPageState extends State<SettingsPage> {
       builder: (ctx, val) {
         return ((val.data?.version.sdkInt ?? 30) < 29)
             ? Text(
-                t('followSystemThemeExplanation'),
+                'followSystemThemeExplanation'.t(),
                 style: Theme.of(context).textTheme.labelSmall,
               )
             : const SizedBox.shrink();
@@ -215,11 +215,11 @@ class _SettingsPageState extends State<SettingsPage> {
           ColorPickerType.wheel: true,
         },
         pickerTypeLabels: <ColorPickerType, String>{
-          ColorPickerType.custom: t('standard'),
-          ColorPickerType.wheel: t('custom'),
+          ColorPickerType.custom: 'standard'.t(),
+          ColorPickerType.wheel: 'custom'.t(),
         },
         title: Text(
-          t('selectX', args: [t('color').toLowerCase()]),
+          t('selectX', args: ['color'.t().toLowerCase()]),
           style: Theme.of(context).textTheme.titleLarge,
         ),
         wheelDiameter: 192,
@@ -261,7 +261,7 @@ class _SettingsPageState extends State<SettingsPage> {
     var colorPicker = ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       title: Text(
-        t('selectX', args: [t('color').toLowerCase()]),
+        t('selectX', args: ['color'.t().toLowerCase()]),
         style: Theme.of(context).textTheme.titleMedium,
       ),
       subtitle: Text(
@@ -300,7 +300,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SwitchListTile(
-                    title: Text(t('useMaterialYou')),
+                    title: Text('useMaterialYou'.t()),
                     value: settingsProvider.useMaterialYou,
                     onChanged: (value) {
                       settingsProvider.useMaterialYou = value;
@@ -324,7 +324,7 @@ class _SettingsPageState extends State<SettingsPage> {
               const MapEntry('asAdded', 'asAdded'),
               const MapEntry('releaseDate', 'releaseDate'),
             ].map((e) => MapEntry(e.key, t(e.value))).toList(),
-            label: t('appSortBy'),
+            label: 'appSortBy'.t(),
             defaultValue: settingsProvider.sortColumn.name,
             required: true,
           ),
@@ -348,7 +348,7 @@ class _SettingsPageState extends State<SettingsPage> {
               const MapEntry('ascending', 'ascending'),
               const MapEntry('descending', 'descending'),
             ].map((e) => MapEntry(e.key, t(e.value))).toList(),
-            label: t('appSortOrder'),
+            label: 'appSortOrder'.t(),
             defaultValue: settingsProvider.sortOrder.name,
             required: true,
           ),
@@ -374,7 +374,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 (e) => MapEntry(e.key.toString(), e.value),
               ),
             ].map((e) => MapEntry(e.key, t(e.value))).toList(),
-            label: t('language'),
+            label: 'language'.t(),
             defaultValue: settingsProvider.forcedLocale?.toString() ?? '',
             required: true,
           ),
@@ -500,7 +500,7 @@ class _SettingsPageState extends State<SettingsPage> {
           SliverAppBar.large(
             pinned: true,
             automaticallyImplyLeading: false,
-            title: Text(t('settings')),
+            title: Text('settings'.t()),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -516,7 +516,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           title: Text(
-                            t('updates'),
+                            'updates'.t(),
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.w600,
@@ -539,7 +539,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             if (showIntervalLabel)
                               SizedBox(
                                 child: Text(
-                                  "${t('bgUpdateCheckInterval')}: $updateIntervalLabel",
+                                  "${'bgUpdateCheckInterval'.t()}: $updateIntervalLabel",
                                 ),
                               )
                             else
@@ -581,7 +581,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                             children: [
                                               SwitchListTile(
                                                 title: Text(
-                                                  t('enableBackgroundUpdates'),
+                                                  'enableBackgroundUpdates'.t(),
                                                 ),
                                                 value: settingsProvider
                                                     .enableBackgroundUpdates,
@@ -678,9 +678,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(t('safeMode')),
+                                        Text('safeMode'.t()),
                                         Text(
-                                          t('safeModeDescription'),
+                                          'safeModeDescription'.t(),
                                           style: Theme.of(
                                             context,
                                           ).textTheme.labelSmall,
@@ -707,9 +707,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(t('safeMode')),
+                                        Text('safeMode'.t()),
                                         Text(
-                                          t('safeModeEnabled'),
+                                          'safeModeEnabled'.t(),
                                           style: Theme.of(
                                             context,
                                           ).textTheme.labelSmall,
@@ -746,9 +746,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(t('preventUninstallation')),
+                                        Text('preventUninstallation'.t()),
                                         Text(
-                                          t('preventUninstallationDescription'),
+                                          'preventUninstallationDescription'
+                                              .t(),
                                           style: Theme.of(
                                             context,
                                           ).textTheme.labelSmall,
@@ -778,7 +779,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                           ).showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                t('deviceAdminRequired'),
+                                                'deviceAdminRequired'.t(),
                                               ),
                                             ),
                                           );
@@ -790,7 +791,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         ).showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                              t('turnOffSafeModeFirst'),
+                                              'turnOffSafeModeFirst'.t(),
                                             ),
                                           ),
                                         );
@@ -811,9 +812,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             ////      crossAxisAlignment:
                             ////          CrossAxisAlignment.start,
                             ////      children: [
-                            ////        Text(t('safeModeAntiCheat')),
+                            ////        Text('safeModeAntiCheat'.t()),
                             ////        Text(
-                            ////          t('safeModeAntiCheatDescription'),
+                            ////          'safeModeAntiCheatDescription'.t(),
                             ////          style: Theme.of(
                             ////            context,
                             ////          ).textTheme.labelSmall,
@@ -837,7 +838,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ////           ).showSnackBar(
                             ////              SnackBar(
                             ////               content: Text(
-                            ////                 t('safeModeAntiCheatError'),
+                            ////                 'safeModeAntiCheatError'.t(),
                             ////              ),
                             ////             backgroundColor: Theme.of(
                             ////               context,
@@ -858,7 +859,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ////         ).showSnackBar(
                             ////            SnackBar(
                             ////             content: Text(
-                            ////                t('safeModeAntiCheatError'),
+                            ////                'safeModeAntiCheatError'.t(),
                             ////              ),
                             ////              backgroundColor: Theme.of(
                             ////                context,
@@ -875,7 +876,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('checkOnStart')),
+                                  title: Text('checkOnStart'.t()),
                                   value: settingsProvider.checkOnStart,
                                   onChanged: (value) {
                                     settingsProvider.checkOnStart = value;
@@ -887,7 +888,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('checkUpdateOnDetailPage')),
+                                  title: Text('checkUpdateOnDetailPage'.t()),
                                   value:
                                       settingsProvider.checkUpdateOnDetailPage,
                                   onChanged: (value) {
@@ -901,7 +902,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('removeOnExternalUninstall')),
+                                  title: Text('removeOnExternalUninstall'.t()),
                                   value: settingsProvider
                                       .removeOnExternalUninstall,
                                   onChanged: (value) {
@@ -915,7 +916,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('parallelDownloads')),
+                                  title: Text('parallelDownloads'.t()),
                                   value: settingsProvider.parallelDownloads,
                                   onChanged: (value) {
                                     settingsProvider.parallelDownloads = value;
@@ -946,7 +947,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                           );
                                         },
                                         child: Text(
-                                          t('about'),
+                                          'about'.t(),
                                           style: const TextStyle(
                                             decoration:
                                                 TextDecoration.underline,
@@ -973,7 +974,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('useShizuku')),
+                                  title: Text('useShizuku'.t()),
                                   value: settingsProvider.useShizuku,
                                   onChanged: (useShizuku) {
                                     if (useShizuku) {
@@ -989,7 +990,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               case 'services_not_found':
                                                 showError(
                                                   UpdatiumError(
-                                                    t('shizukuBinderNotFound'),
+                                                    'shizukuBinderNotFound'.t(),
                                                   ),
                                                   context.mounted
                                                       as BuildContext,
@@ -997,7 +998,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               case 'old_shizuku':
                                                 showError(
                                                   UpdatiumError(
-                                                    t('shizukuOld'),
+                                                    'shizukuOld'.t(),
                                                   ),
                                                   context.mounted
                                                       as BuildContext,
@@ -1014,7 +1015,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                                 );
                                               case 'denied':
                                                 showError(
-                                                  UpdatiumError(t('cancelled')),
+                                                  UpdatiumError(
+                                                    'cancelled'.t(),
+                                                  ),
                                                   context.mounted
                                                       as BuildContext,
                                                 );
@@ -1032,7 +1035,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               children: [
                                 Flexible(
                                   child: Text(
-                                    t('shizukuPretendToBeGooglePlay'),
+                                    'shizukuPretendToBeGooglePlay'.t(),
                                     style: TextStyle(
                                       color: settingsProvider.useShizuku
                                           ? null
@@ -1081,7 +1084,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         ]
                                         .map((e) => MapEntry(e.key, t(e.value)))
                                         .toList(),
-                                    label: t('dnsServiceProvider'),
+                                    label: 'dnsServiceProvider'.t(),
                                     defaultValue: settingsProvider
                                         .dnsServiceProvider
                                         .name,
@@ -1106,7 +1109,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap8,
                             Text(
-                              t('dnsServiceProviderDescription'),
+                              'dnsServiceProviderDescription'.t(),
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: Theme.of(
@@ -1123,7 +1126,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           title: Text(
-                            t('sourceSpecific'),
+                            'sourceSpecific'.t(),
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.w600,
@@ -1149,7 +1152,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           title: Text(
-                            t('appearance'),
+                            'appearance'.t(),
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.w600,
@@ -1183,7 +1186,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         ]
                                         .map((e) => MapEntry(e.key, t(e.value)))
                                         .toList(),
-                                    label: t('theme'),
+                                    label: 'theme'.t(),
                                     defaultValue: settingsProvider.theme.name,
                                     required: true,
                                   ),
@@ -1208,7 +1211,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   SwitchListTile(
-                                    title: Text(t('useBlackTheme')),
+                                    title: Text('useBlackTheme'.t()),
                                     value: settingsProvider.useBlackTheme,
                                     onChanged: (value) {
                                       settingsProvider.useBlackTheme = value;
@@ -1245,7 +1248,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               SwitchListTile(
-                                                title: Text(t('useSystemFont')),
+                                                title: Text(
+                                                  'useSystemFont'.t(),
+                                                ),
                                                 value: settingsProvider
                                                     .useSystemFont,
                                                 onChanged: (useSystemFont) {
@@ -1275,7 +1280,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('pinUpdates')),
+                                  title: Text('pinUpdates'.t()),
                                   value: settingsProvider.pinUpdates,
                                   onChanged: (value) {
                                     settingsProvider.pinUpdates = value;
@@ -1288,7 +1293,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               children: [
                                 SwitchListTile(
                                   title: Text(
-                                    t('moveNonInstalledAppsToBottom'),
+                                    'moveNonInstalledAppsToBottom'.t(),
                                   ),
                                   value: settingsProvider.buryNonInstalled,
                                   onChanged: (value) {
@@ -1301,7 +1306,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('groupByCategory')),
+                                  title: Text('groupByCategory'.t()),
                                   value: settingsProvider.groupByCategory,
                                   onChanged: (value) {
                                     settingsProvider.groupByCategory = value;
@@ -1313,7 +1318,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('dontShowTrackOnlyWarnings')),
+                                  title: Text('dontShowTrackOnlyWarnings'.t()),
                                   value: settingsProvider.hideTrackOnlyWarning,
                                   onChanged: (value) {
                                     settingsProvider.hideTrackOnlyWarning =
@@ -1326,7 +1331,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('dontShowAPKOriginWarnings')),
+                                  title: Text('dontShowAPKOriginWarnings'.t()),
                                   value: settingsProvider.hideAPKOriginWarning,
                                   onChanged: (value) {
                                     settingsProvider.hideAPKOriginWarning =
@@ -1339,7 +1344,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('disablePageTransitions')),
+                                  title: Text('disablePageTransitions'.t()),
                                   value:
                                       settingsProvider.disablePageTransitions,
                                   onChanged: (value) {
@@ -1353,7 +1358,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('disablePageTransitions')),
+                                  title: Text('disablePageTransitions'.t()),
                                   value:
                                       settingsProvider.reversePageTransitions,
                                   onChanged:
@@ -1371,7 +1376,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               children: [
                                 SwitchListTile(
-                                  title: Text(t('highlightTouchTargets')),
+                                  title: Text('highlightTouchTargets'.t()),
                                   value: settingsProvider.highlightTouchTargets,
                                   onChanged: (value) {
                                     settingsProvider.highlightTouchTargets =
@@ -1389,7 +1394,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           title: Text(
-                            t('categories'),
+                            'categories'.t(),
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
                                   fontWeight: FontWeight.w600,
@@ -1419,7 +1424,7 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.info_outline_rounded),
-        label: Text(t('about')),
+        label: Text('about'.t()),
         extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
         elevation: 3,
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -1458,7 +1463,7 @@ class _LogsDialogState extends State<LogsDialog> {
           .then((value) {
             setState(() {
               String l = value.map((e) => e.toString()).join('\n\n');
-              logString = l.isNotEmpty ? l : t('noLogs');
+              logString = l.isNotEmpty ? l : 'noLogs'.t();
             });
           });
     }
@@ -1469,7 +1474,7 @@ class _LogsDialogState extends State<LogsDialog> {
 
     return AlertDialog(
       scrollable: true,
-      title: Text(t('appLogs')),
+      title: Text('appLogs'.t()),
       content: Column(
         children: [
           Card(
@@ -1481,7 +1486,7 @@ class _LogsDialogState extends State<LogsDialog> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    t('filterDays'),
+                    'filterDays'.t(),
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w600,
@@ -1494,7 +1499,7 @@ class _LogsDialogState extends State<LogsDialog> {
                     items: days.map((day) {
                       return DropdownMenuItem<int>(
                         value: day,
-                        child: Text(plural('day', day)),
+                        child: Text('day'.plural(day)),
                       );
                     }).toList(),
                     onChanged: (int? value) {
@@ -1522,16 +1527,16 @@ class _LogsDialogState extends State<LogsDialog> {
                   context: context,
                   builder: (BuildContext ctx) {
                     return AlertDialog(
-                      title: Text(t('appLogs')),
-                      content: Text(t('removeFromUpdatium')),
+                      title: Text('appLogs'.t()),
+                      content: Text('removeFromUpdatium'.t()),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(ctx).pop(false),
-                          child: Text(t('cancel')),
+                          child: Text('cancel'.t()),
                         ),
                         TextButton(
                           onPressed: () => Navigator.of(ctx).pop(true),
-                          child: Text(t('ok')),
+                          child: Text('ok'.t()),
                         ),
                       ],
                     );
@@ -1543,22 +1548,22 @@ class _LogsDialogState extends State<LogsDialog> {
               Navigator.of(context.mounted as BuildContext).pop();
             }
           },
-          child: Text(t('remove')),
+          child: Text('remove'.t()),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(t('close')),
+          child: Text('close'.t()),
         ),
         TextButton(
           onPressed: () {
             SharePlus.instance.share(
-              ShareParams(text: logString ?? '', subject: t('appLogs')),
+              ShareParams(text: logString ?? '', subject: 'appLogs'.t()),
             );
             Navigator.of(context).pop();
           },
-          child: Text(t('share')),
+          child: Text('share'.t()),
         ),
       ],
     );
@@ -1582,8 +1587,8 @@ class CategoryTagEditor extends StatelessWidget {
     showCategoryEditorDialog(
       context,
       initialColor: initialColor,
-      title: t('addCategory'),
-      confirmButtonText: t('add'),
+      title: 'addCategory'.t(),
+      confirmButtonText: 'add'.t(),
     ).then((result) {
       if (result != null && result.name.isNotEmpty) {
         final newCategories = Map<String, int>.from(
@@ -1611,8 +1616,8 @@ class CategoryTagEditor extends StatelessWidget {
       context,
       initialName: oldName,
       initialColor: initialColor,
-      title: t('editCategory'),
-      confirmButtonText: t('save'),
+      title: 'editCategory'.t(),
+      confirmButtonText: 'save'.t(),
     ).then((result) {
       if (result != null && result.name.isNotEmpty) {
         final appsProvider = context.read<AppsProvider>();
@@ -1647,12 +1652,12 @@ class CategoryTagEditor extends StatelessWidget {
       context: context,
       builder: (BuildContext ctx) {
         return AlertDialog(
-          title: Text(t('deleteCategory')),
-          content: Text(t('categoryDeleteWarning')),
+          title: Text('deleteCategory'.t()),
+          content: Text('categoryDeleteWarning'.t()),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: Text(t('cancel')),
+              child: Text('cancel'.t()),
             ),
             TextButton(
               onPressed: () {
@@ -1663,7 +1668,7 @@ class CategoryTagEditor extends StatelessWidget {
                 settingsProvider.setCategories(newCategories);
                 Navigator.pop(ctx);
               },
-              child: Text(t('delete')),
+              child: Text('delete'.t()),
             ),
           ],
         );
@@ -1683,7 +1688,7 @@ class CategoryTagEditor extends StatelessWidget {
           : CrossAxisAlignment.stretch,
       children: [
         if (allTags.isNotEmpty && showLabelWhenNotEmpty) ...[
-          Text(t('categories'), style: Theme.of(context).textTheme.bodyMedium),
+          Text('categories'.t(), style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(height: 8),
         ],
         Wrap(
@@ -1712,11 +1717,11 @@ class CategoryTagEditor extends StatelessWidget {
             }),
             Semantics(
               button: true,
-              label: t('add'),
+              label: 'add'.t(),
               child: IconButton(
                 onPressed: () => _onAddPressed(context, settingsProvider),
                 icon: const Icon(Icons.add),
-                tooltip: t('add'),
+                tooltip: 'add'.t(),
               ),
             ),
           ],
@@ -1766,7 +1771,7 @@ class _CategorySelectorState extends State<CategorySelector> {
           : CrossAxisAlignment.stretch,
       children: [
         if (allTags.isNotEmpty && widget.showLabelWhenNotEmpty) ...[
-          Text(t('categories'), style: Theme.of(context).textTheme.bodyMedium),
+          Text('categories'.t(), style: Theme.of(context).textTheme.bodyMedium),
           const SizedBox(height: 8),
         ],
         Wrap(
@@ -1831,7 +1836,7 @@ class LicenseDialog extends StatelessWidget {
             ),
           ),
           horizontalGap16,
-          Text(t('license')),
+          Text('license'.t()),
         ],
       ),
       content: SizedBox(
@@ -1849,7 +1854,7 @@ class LicenseDialog extends StatelessWidget {
               );
             } else if (snapshot.hasError) {
               return Text(
-                t('error'),
+                'error'.t(),
                 style: Theme.of(context).textTheme.bodyMedium,
               );
             }
@@ -1860,7 +1865,7 @@ class LicenseDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(t('close')),
+          child: Text('close'.t()),
         ),
       ],
     );
@@ -1973,7 +1978,7 @@ class _AboutDialogState extends State<AboutDialog> {
                 ),
               ),
               horizontalGap16,
-              Text(t('about')),
+              Text('about'.t()),
             ],
           ),
           content: Column(
@@ -2009,7 +2014,7 @@ class _AboutDialogState extends State<AboutDialog> {
                           horizontal: 8,
                         ),
                         child: Text(
-                          '${t('version')} $version ($buildNumber)',
+                          '${'version'.t()} $version ($buildNumber)',
                           style: Theme.of(context).textTheme.bodyMedium
                               ?.copyWith(
                                 color: Theme.of(
@@ -2021,7 +2026,7 @@ class _AboutDialogState extends State<AboutDialog> {
                     ),
                     gap8,
                     Text(
-                      t('appDescription'),
+                      'appDescription'.t(),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -2032,7 +2037,7 @@ class _AboutDialogState extends State<AboutDialog> {
               ),
               gap24,
               Text(
-                t('developedBy'),
+                'developedBy'.t(),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               gap8,
@@ -2052,7 +2057,7 @@ class _AboutDialogState extends State<AboutDialog> {
               ),
               gap16,
               Text(
-                t('sourceCode'),
+                'sourceCode'.t(),
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               gap8,
@@ -2071,7 +2076,10 @@ class _AboutDialogState extends State<AboutDialog> {
                 ),
               ),
               gap16,
-              Text(t('license'), style: Theme.of(context).textTheme.titleSmall),
+              Text(
+                'license'.t(),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
               gap8,
               TextButton.icon(
                 onPressed: () {
@@ -2101,7 +2109,7 @@ class _AboutDialogState extends State<AboutDialog> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      t('quickLinks'),
+                      'quickLinks'.t(),
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
@@ -2119,7 +2127,7 @@ class _AboutDialogState extends State<AboutDialog> {
                             );
                           },
                           icon: const Icon(Icons.menu_book_rounded, size: 18),
-                          label: Text(t('wiki')),
+                          label: Text('wiki'.t()),
                           style: TextButton.styleFrom(
                             alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.symmetric(vertical: 8),
@@ -2135,7 +2143,7 @@ class _AboutDialogState extends State<AboutDialog> {
                             );
                           },
                           icon: const Icon(Icons.bug_report_outlined, size: 18),
-                          label: Text(t('appLogs')),
+                          label: Text('appLogs'.t()),
                           style: TextButton.styleFrom(
                             alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.symmetric(vertical: 8),
@@ -2149,7 +2157,7 @@ class _AboutDialogState extends State<AboutDialog> {
                             );
                           },
                           icon: const Icon(Icons.code_rounded, size: 18),
-                          label: Text(t('usedOpenSourcePackages')),
+                          label: Text('usedOpenSourcePackages'.t()),
                           style: TextButton.styleFrom(
                             alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.symmetric(vertical: 8),
@@ -2165,7 +2173,7 @@ class _AboutDialogState extends State<AboutDialog> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(t('close')),
+              child: Text('close'.t()),
             ),
           ],
         );
