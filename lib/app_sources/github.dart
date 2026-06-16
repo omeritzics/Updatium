@@ -24,8 +24,8 @@ class GitHub extends AppSource {
 
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        t('githubPATLabel'),
-        label: t('githubPATLabel'),
+        'githubPATLabel'.t(),
+        label: 'githubPATLabel'.t(),
         password: true,
         required: false,
         belowWidgets: [
@@ -38,7 +38,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              t('about'),
+              'about'.t(),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -96,14 +96,14 @@ class GitHub extends AppSource {
     searchQuerySettingFormItems = [
       GeneratedFormTextField(
         'minStarCount',
-        label: t('minStarCount'),
+        label: 'minStarCount'.t(),
         defaultValue: '0',
         additionalValidators: [
           (value) {
             try {
               int.parse(value ?? '0');
             } catch (e) {
-              return t('invalidInput');
+              return 'invalidInput'.t();
             }
             return null;
           },
@@ -237,7 +237,7 @@ class GitHub extends AppSource {
   @override
   Future<String?> getSourceNote() async {
     if (!hostChanged && (await getTokenIfAny({})) == null) {
-      return '${t('githubSourceNote')} ${hostChanged ? t('addInfoBelow') : t('addInfoInSettings')}';
+      return '${'githubSourceNote'.t()} ${hostChanged ? 'addInfoBelow'.t() : 'addInfoInSettings'.t()}';
     }
     return null;
   }
@@ -635,7 +635,7 @@ class GitHub extends AppSource {
               ((e['archived'] == true ? '[ARCHIVED] ' : '') +
                   (e['description'] != null
                       ? e['description'] as String
-                      : t('noDescription'))),
+                      : 'noDescription'.t())),
             ],
           });
         }

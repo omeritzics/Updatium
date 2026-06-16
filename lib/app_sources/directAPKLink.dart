@@ -7,7 +7,7 @@ import 'package:updatium/providers/source_provider.dart' as source_provider;
 class DirectAPKLink extends AppSource {
   HTML html = HTML();
   DirectAPKLink() {
-    name = t('directAPKLink');
+    name = 'directAPKLink'.t();
     additionalSourceAppSpecificSettingFormItems = [
       ...html.additionalSourceAppSpecificSettingFormItems.where(
         (element) => element
@@ -18,10 +18,10 @@ class DirectAPKLink extends AppSource {
         GeneratedFormDropdown(
           'defaultPseudoVersioningMethod',
           [
-            MapEntry('partialAPKHash', t('partialAPKHash')),
+            MapEntry('partialAPKHash', 'partialAPKHash'.t()),
             MapEntry('ETag', 'ETag'),
           ],
-          label: t('defaultPseudoVersioningMethod'),
+          label: 'defaultPseudoVersioningMethod'.t(),
           defaultValue: 'partialAPKHash',
         ),
       ],

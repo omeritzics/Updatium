@@ -52,16 +52,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            title: Text(t('importFromURLList')),
+            title: Text('importFromURLList'.t()),
             contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
             content: Form(
               key: formKey,
               child: TextFormField(
                 controller: controller,
-                decoration: InputDecoration(
-                  labelText: t('appURLList'),
-                  border: const OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: 'appURLList'.t()),
                 maxLines: 7,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
@@ -71,7 +68,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       try {
                         sourceProvider.getSource(lines[i]);
                       } catch (e) {
-                        return '${t('line')} ${i + 1}: $e';
+                        return '${'line'.t()} ${i + 1}: $e';
                       }
                     }
                   }
@@ -82,7 +79,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(null),
-                child: Text(t('cancel')),
+                child: Text('cancel'.t()),
               ),
               TextButton(
                 onPressed: () {
@@ -90,7 +87,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                     Navigator.of(ctx).pop(controller.text);
                   }
                 },
-                child: Text(t('continue')),
+                child: Text('continue'.t()),
               ),
             ],
           );
@@ -109,7 +106,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   showMessage(
                     t(
                       'importedX',
-                      args: [plural('apps', urls.length).toLowerCase()],
+                      args: ['apps'.plural(urls.length).toLowerCase()],
                     ),
                     context,
                   );
@@ -168,7 +165,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
               try {
                 jsonDecode(data);
               } catch (e) {
-                throw UpdatiumError(t('invalidInput'));
+                throw UpdatiumError('invalidInput'.t());
               }
               appsProvider.import(data).then((value) {
                 var cats = settingsProvider.categories;
@@ -181,7 +178,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                 });
                 appsProvider.addMissingCategories(settingsProvider);
                 showMessage(
-                  '${t('importedX', args: [plural('apps', value.key.length).toLowerCase()])}${value.value ? ' + ${t('settings').toLowerCase()}' : ''}',
+                  '${t('importedX', args: ['apps'.plural(value.key.length).toLowerCase()])}${value.value ? ' + ${'settings'.t().toLowerCase()}' : ''}',
                   context,
                 );
               });
@@ -258,12 +255,9 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: TextFormField(
                                 controller: controllers[arg],
-                                decoration: InputDecoration(
-                                  labelText: arg,
-                                  border: const OutlineInputBorder(),
-                                ),
+                                decoration: InputDecoration(labelText: arg),
                                 validator: (v) => v == null || v.isEmpty
-                                    ? t('requiredInBrackets')
+                                    ? 'requiredInBrackets'.t()
                                     : null,
                               ),
                             );
@@ -273,7 +267,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(ctx).pop(null),
-                          child: Text(t('cancel')),
+                          child: Text('cancel'.t()),
                         ),
                         TextButton(
                           onPressed: () {
@@ -283,7 +277,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               );
                             }
                           },
-                          child: Text(t('continue')),
+                          child: Text('continue'.t()),
                         ),
                       ],
                     );
@@ -312,7 +306,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   showMessage(
                     t(
                       'importedX',
-                      args: [plural('apps', selectedUrls.length).toLowerCase()],
+                      args: ['apps'.plural(selectedUrls.length).toLowerCase()],
                     ),
                     context,
                   );
@@ -349,7 +343,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar.large(pinned: true, title: Text(t('importExport'))),
+          SliverAppBar.large(pinned: true, title: Text('importExport'.t())),
           SliverFillRemaining(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -366,7 +360,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               Expanded(
                                 child: Semantics(
                                   button: true,
-                                  label: t('pickExportDir'),
+                                  label: 'pickExportDir'.t(),
                                   hint:
                                       'Choose a directory to export your apps and settings',
                                   excludeSemantics: true,
@@ -380,7 +374,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                           },
                                     icon: const Icon(Icons.folder_open),
                                     label: Text(
-                                      t('pickExportDir'),
+                                      'pickExportDir'.t(),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -390,7 +384,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               Expanded(
                                 child: Semantics(
                                   button: true,
-                                  label: t('updatiumExport'),
+                                  label: 'updatiumExport'.t(),
                                   hint: snapshot.data == null
                                       ? 'Set export directory first'
                                       : 'Export all your apps and settings to file',
@@ -404,7 +398,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                         : runUpdatiumExport,
                                     icon: const Icon(Icons.upload_file),
                                     label: Text(
-                                      t('updatiumExport'),
+                                      'updatiumExport'.t(),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -418,7 +412,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                               Expanded(
                                 child: Semantics(
                                   button: true,
-                                  label: t('updatiumImport'),
+                                  label: 'updatiumImport'.t(),
                                   hint:
                                       'Import apps and settings from a backup file',
                                   excludeSemantics: true,
@@ -428,7 +422,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                         : runUpdatiumImport,
                                     icon: const Icon(Icons.download),
                                     label: Text(
-                                      t('updatiumImport'),
+                                      'updatiumImport'.t(),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -445,7 +439,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                     [
                                       GeneratedFormSwitch(
                                         'autoExportOnChanges',
-                                        label: t('autoExportOnChanges'),
+                                        label: 'autoExportOnChanges'.t(),
                                         defaultValue: settingsProvider
                                             .autoExportOnChanges,
                                       ),
@@ -454,11 +448,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                                       GeneratedFormDropdown(
                                         'exportSettings',
                                         [
-                                          MapEntry('0', t('none')),
-                                          MapEntry('1', t('excludeSecrets')),
-                                          MapEntry('2', t('all')),
+                                          MapEntry('0', 'none'.t()),
+                                          MapEntry('1', 'excludeSecrets'.t()),
+                                          MapEntry('2', 'all'.t()),
                                         ],
-                                        label: t('includeSettings'),
+                                        label: 'includeSettings'.t(),
                                         defaultValue: settingsProvider
                                             .exportSettings
                                             .toString(),
@@ -496,28 +490,28 @@ class _ImportExportPageState extends State<ImportExportPage> {
                         gap32,
                         Semantics(
                           button: true,
-                          label: t('importFromURLList'),
+                          label: 'importFromURLList'.t(),
                           hint:
                               'Import multiple apps by entering their URLs in a list',
                           excludeSemantics: true,
                           child: M3EFilledButton.icon(
                             onPressed: importInProgress ? null : urlListImport,
                             icon: const Icon(Icons.list_alt),
-                            label: Text(t('importFromURLList')),
+                            label: Text('importFromURLList'.t()),
                           ),
                         ),
                         if (!settingsProvider.safeMode) ...[
                           gap8,
                           Semantics(
                             button: true,
-                            label: t('importFromURLsInFile'),
+                            label: 'importFromURLsInFile'.t(),
                             hint:
                                 'Import apps by reading URLs from a text file',
                             excludeSemantics: true,
                             child: M3EFilledButton.icon(
                               onPressed: importInProgress ? null : runUrlImport,
                               icon: const Icon(Icons.link),
-                              label: Text(t('importFromURLsInFile')),
+                              label: Text('importFromURLsInFile'.t()),
                             ),
                           ),
                         ],
@@ -549,7 +543,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   const Spacer(),
                   const Divider(height: 32),
                   Text(
-                    t('importedAppsIdDisclaimer'),
+                    'importedAppsIdDisclaimer'.t(),
                     textAlign: TextAlign.start,
                     style: const TextStyle(
                       fontStyle: FontStyle.italic,
@@ -586,7 +580,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text(t('importErrors')),
+      title: Text('importErrors'.t()),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -602,7 +596,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
           ),
           gap16,
           Text(
-            t('followingURLsHadErrors'),
+            'followingURLsHadErrors'.t(),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           ...widget.errors.map((e) {
@@ -636,7 +630,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
             Navigator.of(context).pop(null);
           },
           icon: const Icon(Icons.close),
-          label: Text(t('ok')),
+          label: Text('ok'.t()),
         ),
       ],
     );

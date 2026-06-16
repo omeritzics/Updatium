@@ -5,7 +5,7 @@ import 'package:updatium/providers/source_provider.dart';
 
 class Tencent extends AppSource {
   Tencent() {
-    name = t('tencentAppStore');
+    name = 'tencentAppStore'.t();
     hosts = ['sj.qq.com'];
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;

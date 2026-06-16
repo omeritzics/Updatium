@@ -8,7 +8,7 @@ class VivoAppStore extends AppSource {
   static const appDetailUrl =
       'https://h5coml.vivo.com.cn/h5coml/appdetail_h5/browser_v2/index.html?appId=';
   VivoAppStore() {
-    name = t('vivoAppStore');
+    name = 'vivoAppStore'.t();
     hosts = ['h5.appstore.vivo.com.cn', 'h5coml.vivo.com.cn'];
     naiveStandardVersionDetection = true;
     canSearch = true;
