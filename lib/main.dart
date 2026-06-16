@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
+import 'package:updatium/services/bg_updates.dart';
 
 import 'package:updatium/services/slang_converter.dart';
 import 'package:simple_localization/src/simple_localization_controller.dart';
@@ -110,47 +111,6 @@ Future<void> loadTranslations() async {
     // Clean up the temporary SettingsProvider instance
     s.dispose();
   }
-}
-
-@pragma('vm:entry-point')
-void backgroundFetchHeadlessTask(HeadlessEvent task) async {
-  String taskId = task.taskId;
-  bool isTimeout = task.timeout;
-  if (isTimeout) {
-    debugPrint('BG update task timed out.');
-    BackgroundFetch.finish(taskId);
-    return;
-  }
-  await bgUpdateCheck(taskId, null);
-  BackgroundFetch.finish(taskId);
-}
-
-@pragma('vm:entry-point')
-void startCallback() {
-  FlutterForegroundTask.setTaskHandler(MyTaskHandler());
-}
-
-class MyTaskHandler extends TaskHandler {
-  static const String incrementCountCommand = 'incrementCount';
-
-  @override
-  Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
-    debugPrint('onStart(starter: ${starter.name})');
-    bgUpdateCheck('bg_check', null);
-  }
-
-  @override
-  void onRepeatEvent(DateTime timestamp) {
-    bgUpdateCheck('bg_check', null);
-  }
-
-  @override
-  Future<void> onDestroy(DateTime timestamp, bool isTimeout) async {
-    debugPrint('Foreground service onDestroy(isTimeout: $isTimeout)');
-  }
-
-  @override
-  void onReceiveData(Object data) {}
 }
 
 void main() async {
@@ -502,7 +462,10 @@ class _UpdatiumState extends State<Updatium> {
               inputDecorationTheme: InputDecorationTheme(
                 filled: true,
                 labelStyle: const TextStyle(fontWeight: FontWeight.w500),
-                contentPadding: const EdgeInsets.symmetric(),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 4,
+                  vertical: 4,
+                ),
               ),
               // Keyboard/TV navigation support
               focusColor: scheme.primary.withValues(alpha: 0.2),
