@@ -296,17 +296,12 @@ class _SettingsPageState extends State<SettingsPage> {
     var useMaterialThemeSwitch = FutureBuilder(
       builder: (ctx, val) {
         return ((val.data?.version.sdkInt ?? 0) >= 31)
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SwitchListTile(
-                    title: Text('useMaterialYou'.t()),
-                    value: settingsProvider.useMaterialYou,
-                    onChanged: (value) {
-                      settingsProvider.useMaterialYou = value;
-                    },
-                  ),
-                ],
+            ? SwitchListTile(
+                title: Text('useMaterialYou'.t()),
+                value: settingsProvider.useMaterialYou,
+                onChanged: (value) {
+                  settingsProvider.useMaterialYou = value;
+                },
               )
             : const SizedBox.shrink();
       },
@@ -442,17 +437,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     settingsProvider.getSettingBool(formItem.key) ?? false;
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SwitchListTile(
-                        title: Text(formItem.key),
-                        value: currentValue,
-                        onChanged: (value) {
-                          settingsProvider.setSettingBool(formItem.key, value);
-                        },
-                      ),
-                    ],
+                  child: SwitchListTile(
+                    title: Text(formItem.key),
+                    value: currentValue,
+                    onChanged: (value) {
+                      settingsProvider.setSettingBool(formItem.key, value);
+                    },
                   ),
                 );
               } else {
@@ -555,44 +545,31 @@ class _SettingsPageState extends State<SettingsPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SwitchListTile(
-                                                title: Text(
-                                                  t(
-                                                    'foregroundServiceExplanation',
-                                                  ),
-                                                ),
-                                                value: settingsProvider
-                                                    .useFGService,
-                                                onChanged: (value) {
-                                                  settingsProvider
-                                                          .useFGService =
-                                                      value;
-                                                },
-                                              ),
-                                            ],
+                                          SwitchListTile(
+                                            title: Text(
+                                              t('foregroundServiceExplanation'),
+                                            ),
+                                            value:
+                                                settingsProvider.useFGService,
+                                            onChanged: (value) {
+                                              settingsProvider.useFGService =
+                                                  value;
+                                            },
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SwitchListTile(
-                                                title: Text(
-                                                  'enableBackgroundUpdates'.t(),
-                                                ),
-                                                value: settingsProvider
-                                                    .enableBackgroundUpdates,
-                                                onChanged: (value) {
-                                                  settingsProvider
-                                                          .enableBackgroundUpdates =
-                                                      value;
-                                                },
-                                              ),
-                                            ],
+
+                                          SwitchListTile(
+                                            title: Text(
+                                              'enableBackgroundUpdates'.t(),
+                                            ),
+                                            value: settingsProvider
+                                                .enableBackgroundUpdates,
+                                            onChanged: (value) {
+                                              settingsProvider
+                                                      .enableBackgroundUpdates =
+                                                  value;
+                                            },
                                           ),
+
                                           gap8,
                                           Text(
                                             t(
@@ -616,48 +593,34 @@ class _SettingsPageState extends State<SettingsPage> {
                                             Column(
                                               children: [
                                                 gap16,
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    SwitchListTile(
-                                                      title: Text(
-                                                        t(
-                                                          'bgUpdatesOnWiFiOnly',
-                                                        ),
-                                                      ),
-                                                      value: settingsProvider
-                                                          .bgUpdatesOnWiFiOnly,
-                                                      onChanged: (value) {
-                                                        settingsProvider
-                                                                .bgUpdatesOnWiFiOnly =
-                                                            value;
-                                                      },
-                                                    ),
-                                                  ],
+
+                                                SwitchListTile(
+                                                  title: Text(
+                                                    t('bgUpdatesOnWiFiOnly'),
+                                                  ),
+                                                  value: settingsProvider
+                                                      .bgUpdatesOnWiFiOnly,
+                                                  onChanged: (value) {
+                                                    settingsProvider
+                                                            .bgUpdatesOnWiFiOnly =
+                                                        value;
+                                                  },
                                                 ),
+
                                                 gap16,
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    SwitchListTile(
-                                                      title: Text(
-                                                        t(
-                                                          'bgUpdatesWhileChargingOnly',
-                                                        ),
-                                                      ),
-                                                      value: settingsProvider
-                                                          .bgUpdatesWhileChargingOnly,
-                                                      onChanged: (value) {
-                                                        settingsProvider
-                                                                .bgUpdatesWhileChargingOnly =
-                                                            value;
-                                                      },
+                                                SwitchListTile(
+                                                  title: Text(
+                                                    t(
+                                                      'bgUpdatesWhileChargingOnly',
                                                     ),
-                                                  ],
+                                                  ),
+                                                  value: settingsProvider
+                                                      .bgUpdatesWhileChargingOnly,
+                                                  onChanged: (value) {
+                                                    settingsProvider
+                                                            .bgUpdatesWhileChargingOnly =
+                                                        value;
+                                                  },
                                                 ),
                                               ],
                                             ),
@@ -873,57 +836,45 @@ class _SettingsPageState extends State<SettingsPage> {
                             //  ],
                             // ),
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('checkOnStart'.t()),
-                                  value: settingsProvider.checkOnStart,
-                                  onChanged: (value) {
-                                    settingsProvider.checkOnStart = value;
-                                  },
-                                ),
-                              ],
+                            SwitchListTile(
+                              title: Text('checkOnStart'.t()),
+                              value: settingsProvider.checkOnStart,
+                              onChanged: (value) {
+                                settingsProvider.checkOnStart = value;
+                              },
                             ),
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('checkUpdateOnDetailPage'.t()),
-                                  value:
-                                      settingsProvider.checkUpdateOnDetailPage,
-                                  onChanged: (value) {
-                                    settingsProvider.checkUpdateOnDetailPage =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('checkUpdateOnDetailPage'.t()),
+                              value: settingsProvider.checkUpdateOnDetailPage,
+                              onChanged: (value) {
+                                settingsProvider.checkUpdateOnDetailPage =
+                                    value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('removeOnExternalUninstall'.t()),
-                                  value: settingsProvider
-                                      .removeOnExternalUninstall,
-                                  onChanged: (value) {
-                                    settingsProvider.removeOnExternalUninstall =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('removeOnExternalUninstall'.t()),
+                              value: settingsProvider.removeOnExternalUninstall,
+                              onChanged: (value) {
+                                settingsProvider.removeOnExternalUninstall =
+                                    value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('parallelDownloads'.t()),
-                                  value: settingsProvider.parallelDownloads,
-                                  onChanged: (value) {
-                                    settingsProvider.parallelDownloads = value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('parallelDownloads'.t()),
+                              value: settingsProvider.parallelDownloads,
+                              onChanged: (value) {
+                                settingsProvider.parallelDownloads = value;
+                              },
                             ),
+
                             gap16,
                             Row(
                               children: [
@@ -971,94 +922,72 @@ class _SettingsPageState extends State<SettingsPage> {
                               ],
                             ),
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('useShizuku'.t()),
-                                  value: settingsProvider.useShizuku,
-                                  onChanged: (useShizuku) {
-                                    if (useShizuku) {
-                                      ShizukuApkInstaller()
-                                          .checkPermission()
-                                          .then((resCode) {
-                                            settingsProvider.useShizuku =
-                                                resCode?.startsWith(
-                                                  'granted',
-                                                ) ??
-                                                false;
-                                            switch (resCode) {
-                                              case 'services_not_found':
-                                                showError(
-                                                  UpdatiumError(
-                                                    'shizukuBinderNotFound'.t(),
-                                                  ),
-                                                  context.mounted
-                                                      as BuildContext,
-                                                );
-                                              case 'old_shizuku':
-                                                showError(
-                                                  UpdatiumError(
-                                                    'shizukuOld'.t(),
-                                                  ),
-                                                  context.mounted
-                                                      as BuildContext,
-                                                );
-                                              case 'old_android_with_adb':
-                                                showError(
-                                                  UpdatiumError(
-                                                    t(
-                                                      'shizukuOldAndroidWithADB',
-                                                    ),
-                                                  ),
-                                                  context.mounted
-                                                      as BuildContext,
-                                                );
-                                              case 'denied':
-                                                showError(
-                                                  UpdatiumError(
-                                                    'cancelled'.t(),
-                                                  ),
-                                                  context.mounted
-                                                      as BuildContext,
-                                                );
-                                            }
-                                          });
-                                    } else {
-                                      settingsProvider.useShizuku = false;
+
+                            SwitchListTile(
+                              title: Text('useShizuku'.t()),
+                              value: settingsProvider.useShizuku,
+                              onChanged: (useShizuku) {
+                                if (useShizuku) {
+                                  ShizukuApkInstaller().checkPermission().then((
+                                    resCode,
+                                  ) {
+                                    settingsProvider.useShizuku =
+                                        resCode?.startsWith('granted') ?? false;
+                                    switch (resCode) {
+                                      case 'services_not_found':
+                                        showError(
+                                          UpdatiumError(
+                                            'shizukuBinderNotFound'.t(),
+                                          ),
+                                          context.mounted as BuildContext,
+                                        );
+                                      case 'old_shizuku':
+                                        showError(
+                                          UpdatiumError('shizukuOld'.t()),
+                                          context.mounted as BuildContext,
+                                        );
+                                      case 'old_android_with_adb':
+                                        showError(
+                                          UpdatiumError(
+                                            t('shizukuOldAndroidWithADB'),
+                                          ),
+                                          context.mounted as BuildContext,
+                                        );
+                                      case 'denied':
+                                        showError(
+                                          UpdatiumError('cancelled'.t()),
+                                          context.mounted as BuildContext,
+                                        );
                                     }
-                                  },
-                                ),
-                              ],
+                                  });
+                                } else {
+                                  settingsProvider.useShizuku = false;
+                                }
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    'shizukuPretendToBeGooglePlay'.t(),
-                                    style: TextStyle(
-                                      color: settingsProvider.useShizuku
-                                          ? null
-                                          : Theme.of(context)
-                                                .colorScheme
-                                                .onSurface
-                                                .withValues(alpha: 0.6),
-                                    ),
-                                  ),
+                            Flexible(
+                              child: Text(
+                                'shizukuPretendToBeGooglePlay'.t(),
+                                style: TextStyle(
+                                  color: settingsProvider.useShizuku
+                                      ? null
+                                      : Theme.of(context).colorScheme.onSurface
+                                            .withValues(alpha: 0.6),
                                 ),
-                                Switch(
-                                  //TODO: replace with SwitchListTile
-                                  value: settingsProvider
-                                      .shizukuPretendToBeGooglePlay,
-                                  onChanged: settingsProvider.useShizuku
-                                      ? (value) {
-                                          settingsProvider
-                                                  .shizukuPretendToBeGooglePlay =
-                                              value;
-                                        }
-                                      : null,
-                                ),
-                              ],
+                              ),
+                            ),
+                            SwitchListTile(
+                              value:
+                                  settingsProvider.shizukuPretendToBeGooglePlay,
+                              onChanged: settingsProvider.useShizuku
+                                  ? (value) {
+                                      settingsProvider
+                                              .shizukuPretendToBeGooglePlay =
+                                          value;
+                                    }
+                                  : null,
                             ),
                             gap16,
                             GeneratedForm(
@@ -1206,19 +1135,14 @@ class _SettingsPageState extends State<SettingsPage> {
                               followSystemThemeExplanation,
                             gap16,
                             if (settingsProvider.theme != ThemeSettings.light)
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SwitchListTile(
-                                    title: Text('useBlackTheme'.t()),
-                                    value: settingsProvider.useBlackTheme,
-                                    onChanged: (value) {
-                                      settingsProvider.useBlackTheme = value;
-                                    },
-                                  ),
-                                ],
+                              SwitchListTile(
+                                title: Text('useBlackTheme'.t()),
+                                value: settingsProvider.useBlackTheme,
+                                onChanged: (value) {
+                                  settingsProvider.useBlackTheme = value;
+                                },
                               ),
+
                             gap8,
                             useMaterialThemeSwitch,
                             gap16,
@@ -1243,32 +1167,24 @@ class _SettingsPageState extends State<SettingsPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           gap16,
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SwitchListTile(
-                                                title: Text(
-                                                  'useSystemFont'.t(),
-                                                ),
-                                                value: settingsProvider
-                                                    .useSystemFont,
-                                                onChanged: (useSystemFont) {
-                                                  if (useSystemFont) {
-                                                    NativeFeatures.loadSystemFont()
-                                                        .then((val) {
-                                                          settingsProvider
-                                                                  .useSystemFont =
-                                                              true;
-                                                        });
-                                                  } else {
-                                                    settingsProvider
-                                                            .useSystemFont =
-                                                        false;
-                                                  }
-                                                },
-                                              ),
-                                            ],
+
+                                          SwitchListTile(
+                                            title: Text('useSystemFont'.t()),
+                                            value:
+                                                settingsProvider.useSystemFont,
+                                            onChanged: (useSystemFont) {
+                                              if (useSystemFont) {
+                                                NativeFeatures.loadSystemFont()
+                                                    .then((val) {
+                                                      settingsProvider
+                                                              .useSystemFont =
+                                                          true;
+                                                    });
+                                              } else {
+                                                settingsProvider.useSystemFont =
+                                                    false;
+                                              }
+                                            },
                                           ),
                                         ],
                                       )
@@ -1277,113 +1193,86 @@ class _SettingsPageState extends State<SettingsPage> {
                               future: DeviceInfoPlugin().androidInfo,
                             ),
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('pinUpdates'.t()),
-                                  value: settingsProvider.pinUpdates,
-                                  onChanged: (value) {
-                                    settingsProvider.pinUpdates = value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('pinUpdates'.t()),
+                              value: settingsProvider.pinUpdates,
+                              onChanged: (value) {
+                                settingsProvider.pinUpdates = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text(
-                                    'moveNonInstalledAppsToBottom'.t(),
-                                  ),
-                                  value: settingsProvider.buryNonInstalled,
-                                  onChanged: (value) {
-                                    settingsProvider.buryNonInstalled = value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('moveNonInstalledAppsToBottom'.t()),
+                              value: settingsProvider.buryNonInstalled,
+                              onChanged: (value) {
+                                settingsProvider.buryNonInstalled = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('groupByCategory'.t()),
-                                  value: settingsProvider.groupByCategory,
-                                  onChanged: (value) {
-                                    settingsProvider.groupByCategory = value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('groupByCategory'.t()),
+                              value: settingsProvider.groupByCategory,
+                              onChanged: (value) {
+                                settingsProvider.groupByCategory = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('dontShowTrackOnlyWarnings'.t()),
-                                  value: settingsProvider.hideTrackOnlyWarning,
-                                  onChanged: (value) {
-                                    settingsProvider.hideTrackOnlyWarning =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('dontShowTrackOnlyWarnings'.t()),
+                              value: settingsProvider.hideTrackOnlyWarning,
+                              onChanged: (value) {
+                                settingsProvider.hideTrackOnlyWarning = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('dontShowAPKOriginWarnings'.t()),
-                                  value: settingsProvider.hideAPKOriginWarning,
-                                  onChanged: (value) {
-                                    settingsProvider.hideAPKOriginWarning =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('dontShowAPKOriginWarnings'.t()),
+                              value: settingsProvider.hideAPKOriginWarning,
+                              onChanged: (value) {
+                                settingsProvider.hideAPKOriginWarning = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('disablePageTransitions'.t()),
-                                  value:
-                                      settingsProvider.disablePageTransitions,
-                                  onChanged: (value) {
-                                    settingsProvider.disablePageTransitions =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('disablePageTransitions'.t()),
+                              value: settingsProvider.disablePageTransitions,
+                              onChanged: (value) {
+                                settingsProvider.disablePageTransitions = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('disablePageTransitions'.t()),
-                                  value:
-                                      settingsProvider.reversePageTransitions,
-                                  onChanged:
-                                      settingsProvider.disablePageTransitions
-                                      ? null
-                                      : (value) {
-                                          settingsProvider
-                                                  .reversePageTransitions =
-                                              value;
-                                        },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('disablePageTransitions'.t()),
+                              value: settingsProvider.reversePageTransitions,
+                              onChanged: settingsProvider.disablePageTransitions
+                                  ? null
+                                  : (value) {
+                                      settingsProvider.reversePageTransitions =
+                                          value;
+                                    },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('highlightTouchTargets'.t()),
-                                  value: settingsProvider.highlightTouchTargets,
-                                  onChanged: (value) {
-                                    settingsProvider.highlightTouchTargets =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('highlightTouchTargets'.t()),
+                              value: settingsProvider.highlightTouchTargets,
+                              onChanged: (value) {
+                                settingsProvider.highlightTouchTargets = value;
+                              },
                             ),
                           ],
                         ),
