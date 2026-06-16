@@ -10,7 +10,7 @@ class APKMirror extends AppSource {
   APKMirror() {
     hosts = ['apkmirror.com'];
     name = 'APKMirror';
-    enforceTrackOnly = false;
+    naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
     additionalSourceAppSpecificSettingFormItems = [];
   }
