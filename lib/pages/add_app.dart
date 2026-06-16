@@ -400,7 +400,15 @@ class AddAppPageState extends State<AddAppPage> {
                                         onTap: () {
                                           Navigator.of(ctx).pop();
                                           setState(() {
-                                            searchQuery = app.packageName ?? '';
+                                            searchQuery =
+                                                (app.packageName != null &&
+                                                    app.packageName!.contains(
+                                                      '.',
+                                                    ))
+                                                ? app.packageName!
+                                                      .split('.')
+                                                      .last
+                                                : (app.packageName ?? '');
                                             userInput = '';
                                             pickedSource = null;
                                             pickedSourceOverride = null;
@@ -1020,7 +1028,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
 
     return Dialog.fullscreen(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.surface,
         body: CustomScrollView(
           shrinkWrap: true,
           slivers: <Widget>[

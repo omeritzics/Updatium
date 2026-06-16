@@ -296,17 +296,12 @@ class _SettingsPageState extends State<SettingsPage> {
     var useMaterialThemeSwitch = FutureBuilder(
       builder: (ctx, val) {
         return ((val.data?.version.sdkInt ?? 0) >= 31)
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SwitchListTile(
-                    title: Text('useMaterialYou'.t()),
-                    value: settingsProvider.useMaterialYou,
-                    onChanged: (value) {
-                      settingsProvider.useMaterialYou = value;
-                    },
-                  ),
-                ],
+            ? SwitchListTile(
+                title: Text('useMaterialYou'.t()),
+                value: settingsProvider.useMaterialYou,
+                onChanged: (value) {
+                  settingsProvider.useMaterialYou = value;
+                },
               )
             : const SizedBox.shrink();
       },
@@ -442,17 +437,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     settingsProvider.getSettingBool(formItem.key) ?? false;
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SwitchListTile(
-                        title: Text(formItem.key),
-                        value: currentValue,
-                        onChanged: (value) {
-                          settingsProvider.setSettingBool(formItem.key, value);
-                        },
-                      ),
-                    ],
+                  child: SwitchListTile(
+                    title: Text(formItem.key),
+                    value: currentValue,
+                    onChanged: (value) {
+                      settingsProvider.setSettingBool(formItem.key, value);
+                    },
                   ),
                 );
               } else {
@@ -555,53 +545,41 @@ class _SettingsPageState extends State<SettingsPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SwitchListTile(
-                                                title: Text(
-                                                  t(
-                                                    'foregroundServiceExplanation',
-                                                  ),
-                                                ),
-                                                value: settingsProvider
-                                                    .useFGService,
-                                                onChanged: (value) {
-                                                  settingsProvider
-                                                          .useFGService =
-                                                      value;
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SwitchListTile(
-                                                title: Text(
-                                                  'enableBackgroundUpdates'.t(),
-                                                ),
-                                                value: settingsProvider
-                                                    .enableBackgroundUpdates,
-                                                onChanged: (value) {
-                                                  settingsProvider
-                                                          .enableBackgroundUpdates =
-                                                      value;
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                          gap8,
-                                          Text(
-                                            t(
-                                              'backgroundUpdateReqsExplanation',
+                                          SwitchListTile(
+                                            title: Text(
+                                              t('foregroundServiceExplanation'),
                                             ),
-                                            style: Theme.of(
-                                              context,
-                                            ).textTheme.labelSmall,
+                                            value:
+                                                settingsProvider.useFGService,
+                                            onChanged: (value) {
+                                              settingsProvider.useFGService =
+                                                  value;
+                                            },
                                           ),
+
+                                          SwitchListTile(
+                                            title: Text(
+                                              'enableBackgroundUpdates'.t(),
+                                            ),
+                                            subtitle: Text(
+                                              t(
+                                                'backgroundUpdateReqsExplanation',
+                                              ),
+                                              style: Theme.of(
+                                                context,
+                                              ).textTheme.labelSmall,
+                                            ),
+                                            value: settingsProvider
+                                                .enableBackgroundUpdates,
+                                            onChanged: (value) {
+                                              settingsProvider
+                                                      .enableBackgroundUpdates =
+                                                  value;
+                                            },
+                                          ),
+
+                                          gap8,
+
                                           Text(
                                             t(
                                               'backgroundUpdateLimitsExplanation',
@@ -616,48 +594,34 @@ class _SettingsPageState extends State<SettingsPage> {
                                             Column(
                                               children: [
                                                 gap16,
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    SwitchListTile(
-                                                      title: Text(
-                                                        t(
-                                                          'bgUpdatesOnWiFiOnly',
-                                                        ),
-                                                      ),
-                                                      value: settingsProvider
-                                                          .bgUpdatesOnWiFiOnly,
-                                                      onChanged: (value) {
-                                                        settingsProvider
-                                                                .bgUpdatesOnWiFiOnly =
-                                                            value;
-                                                      },
-                                                    ),
-                                                  ],
+
+                                                SwitchListTile(
+                                                  title: Text(
+                                                    t('bgUpdatesOnWiFiOnly'),
+                                                  ),
+                                                  value: settingsProvider
+                                                      .bgUpdatesOnWiFiOnly,
+                                                  onChanged: (value) {
+                                                    settingsProvider
+                                                            .bgUpdatesOnWiFiOnly =
+                                                        value;
+                                                  },
                                                 ),
+
                                                 gap16,
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    SwitchListTile(
-                                                      title: Text(
-                                                        t(
-                                                          'bgUpdatesWhileChargingOnly',
-                                                        ),
-                                                      ),
-                                                      value: settingsProvider
-                                                          .bgUpdatesWhileChargingOnly,
-                                                      onChanged: (value) {
-                                                        settingsProvider
-                                                                .bgUpdatesWhileChargingOnly =
-                                                            value;
-                                                      },
+                                                SwitchListTile(
+                                                  title: Text(
+                                                    t(
+                                                      'bgUpdatesWhileChargingOnly',
                                                     ),
-                                                  ],
+                                                  ),
+                                                  value: settingsProvider
+                                                      .bgUpdatesWhileChargingOnly,
+                                                  onChanged: (value) {
+                                                    settingsProvider
+                                                            .bgUpdatesWhileChargingOnly =
+                                                        value;
+                                                  },
                                                 ),
                                               ],
                                             ),
@@ -669,34 +633,18 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             if (!settingsProvider.safeMode)
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('safeMode'.t()),
-                                        Text(
-                                          'safeModeDescription'.t(),
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.labelSmall,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Switch(
-                                    //TODO: replace with SwitchListTile
-                                    value: false,
-                                    onChanged: (value) {
-                                      showSafeModeEnableDialog(context);
-                                    },
-                                  ),
-                                ],
+                              SwitchListTile(
+                                title: Text('safeMode'.t()),
+                                subtitle: Text(
+                                  'safeModeDescription'.t(),
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                                value: false,
+                                onChanged: (value) {
+                                  showSafeModeEnableDialog(context);
+                                },
                               ),
+
                             if (settingsProvider.safeMode)
                               Row(
                                 mainAxisAlignment:
@@ -745,20 +693,17 @@ class _SettingsPageState extends State<SettingsPage> {
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: [
-                                        Text('preventUninstallation'.t()),
-                                        Text(
-                                          'preventUninstallationDescription'
-                                              .t(),
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.labelSmall,
-                                        ),
-                                      ],
+                                      children: [],
                                     ),
                                   ),
-                                  Switch(
-                                    //TODO: replace with SwitchListTile
+                                  SwitchListTile(
+                                    title: Text('preventUninstallation'.t()),
+                                    subtitle: Text(
+                                      'preventUninstallationDescription'.t(),
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.labelSmall,
+                                    ),
                                     value:
                                         settingsProvider.preventUninstallation,
                                     onChanged: (value) async {
@@ -768,6 +713,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         // Check if device admin is now enabled
                                         final isEnabled =
                                             await DeviceAdminService.isDeviceAdminEnabled();
+                                        if (!mounted) return;
                                         if (isEnabled) {
                                           settingsProvider
                                                   .preventUninstallation =
@@ -775,7 +721,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         } else {
                                           // User declined or failed
                                           ScaffoldMessenger.of(
-                                            context.mounted as BuildContext,
+                                            context,
                                           ).showSnackBar(
                                             SnackBar(
                                               content: Text(
@@ -801,264 +747,198 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ],
                               ),
                             gap16,
-                            // if (settingsProvider.safeMode &&
-                            //  settingsProvider.preventUninstallation)
-                            //// Row(
-                            ////  mainAxisAlignment:
-                            ////      MainAxisAlignment.spaceBetween,
-                            //// children: [
-                            ////  Flexible(
-                            ////    child: Column(
-                            ////      crossAxisAlignment:
-                            ////          CrossAxisAlignment.start,
-                            ////      children: [
-                            ////        Text('safeModeAntiCheat'.t()),
-                            ////        Text(
-                            ////          'safeModeAntiCheatDescription'.t(),
-                            ////          style: Theme.of(
-                            ////            context,
-                            ////          ).textTheme.labelSmall,
-                            ////        ),
-                            ////      ],
-                            ////    ),
-                            ////  ),
-                            ////    Switch( //TODO: replace with SwitchListTile
-                            ////     value: settingsProvider.safeModeAntiCheat,
-                            ////      onChanged: (value) async {
-                            ////        if (value) {
-                            ////          // Enable anti-cheat
-                            ////          final success =
-                            ////             await DeviceAdminService.enableAntiCheat();
-                            ////          if (success) {
-                            ////           settingsProvider.safeModeAntiCheat =
-                            ////               true;
-                            ////         } else {
-                            ////           ScaffoldMessenger.of(
-                            ////             context.mounted as BuildContext,
-                            ////           ).showSnackBar(
-                            ////              SnackBar(
-                            ////               content: Text(
-                            ////                 'safeModeAntiCheatError'.t(),
-                            ////              ),
-                            ////             backgroundColor: Theme.of(
-                            ////               context,
-                            ////              ).colorScheme.error,
-                            ////            ),
-                            ////          );
-                            ////        }
-                            ////      } else {
-                            ////        // Disable anti-cheat
-                            ////        final success =
-                            ////           await DeviceAdminService.disableAntiCheat();
-                            ////        if (success) {
-                            ////         settingsProvider.safeModeAntiCheat =
-                            ////             false;
-                            ////        } else {
-                            ////         ScaffoldMessenger.of(
-                            ////           context.mounted as BuildContext,
-                            ////         ).showSnackBar(
-                            ////            SnackBar(
-                            ////             content: Text(
-                            ////                'safeModeAntiCheatError'.t(),
-                            ////              ),
-                            ////              backgroundColor: Theme.of(
-                            ////                context,
-                            ////              ).colorScheme.error,
-                            ////           ),
-                            ////          );
-                            ////        }
-                            ////      }
-                            ////    },
-                            ////  ),
-                            //  ],
-                            // ),
+
+                            //if (settingsProvider.safeMode &&
+                            //    settingsProvider.preventUninstallation)
+                            //  SwitchListTile(
+                            //    title: Text('safeModeAntiCheat'.t()),
+                            //    subtitle: Text(
+                            //      'safeModeAntiCheatDescription'.t(),
+                            //      style: Theme.of(context).textTheme.labelSmall,
+                            //  ),
+                            //  value: settingsProvider.safeModeAntiCheat,
+                            //  onChanged: (value) async {
+                            //    if (value) {
+                            //      // Enable anti-cheat
+                            //      final success =
+                            //          await DeviceAdminService.enableAntiCheat();
+                            //      if (success) {
+                            //        settingsProvider.safeModeAntiCheat = true;
+                            //      } else {
+                            //        ScaffoldMessenger.of(
+                            //          context,
+                            //        ).showSnackBar(
+                            //          SnackBar(
+                            //            content: Text(
+                            //              'safeModeAntiCheatError'.t(),
+                            //            ),
+                            //            backgroundColor: Theme.of(
+                            //              context,
+                            //            ).colorScheme.error,
+                            //          ),
+                            //        );
+                            //      }
+                            //    } else {
+                            //      // Disable anti-cheat
+                            //      final success =
+                            //          await DeviceAdminService.disableAntiCheat();
+                            //      if (success) {
+                            //        settingsProvider.safeModeAntiCheat =
+                            //            false;
+                            //      } else {
+                            //        ScaffoldMessenger.of(
+                            //          context,
+                            //        ).showSnackBar(
+                            //          SnackBar(
+                            //            content: Text(
+                            //              'safeModeAntiCheatError'.t(),
+                            //            ),
+                            //            backgroundColor: Theme.of(
+                            //              context,
+                            //            ).colorScheme.error,
+                            //          ),
+                            //        );
+                            //      }
+                            //    }
+                            //  },
+                            //),
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('checkOnStart'.t()),
-                                  value: settingsProvider.checkOnStart,
-                                  onChanged: (value) {
-                                    settingsProvider.checkOnStart = value;
-                                  },
-                                ),
-                              ],
+                            SwitchListTile(
+                              title: Text('checkOnStart'.t()),
+                              value: settingsProvider.checkOnStart,
+                              onChanged: (value) {
+                                settingsProvider.checkOnStart = value;
+                              },
                             ),
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('checkUpdateOnDetailPage'.t()),
-                                  value:
-                                      settingsProvider.checkUpdateOnDetailPage,
-                                  onChanged: (value) {
-                                    settingsProvider.checkUpdateOnDetailPage =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('checkUpdateOnDetailPage'.t()),
+                              value: settingsProvider.checkUpdateOnDetailPage,
+                              onChanged: (value) {
+                                settingsProvider.checkUpdateOnDetailPage =
+                                    value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('removeOnExternalUninstall'.t()),
-                                  value: settingsProvider
-                                      .removeOnExternalUninstall,
-                                  onChanged: (value) {
-                                    settingsProvider.removeOnExternalUninstall =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('removeOnExternalUninstall'.t()),
+                              value: settingsProvider.removeOnExternalUninstall,
+                              onChanged: (value) {
+                                settingsProvider.removeOnExternalUninstall =
+                                    value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('parallelDownloads'.t()),
-                                  value: settingsProvider.parallelDownloads,
-                                  onChanged: (value) {
-                                    settingsProvider.parallelDownloads = value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('parallelDownloads'.t()),
+                              value: settingsProvider.parallelDownloads,
+                              onChanged: (value) {
+                                settingsProvider.parallelDownloads = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                Flexible(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        t(
-                                          'beforeNewInstallsShareToAppVerifier',
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          launchUrlString(
-                                            'https://github.com/soupslurpr/AppVerifier',
-                                            mode:
-                                                LaunchMode.externalApplication,
-                                          );
-                                        },
-                                        child: Text(
-                                          'about'.t(),
-                                          style: const TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            fontSize: 12,
+
+                            SwitchListTile(
+                              title: Text(
+                                'beforeNewInstallsShareToAppVerifier'.t(),
+                              ),
+                              subtitle: GestureDetector(
+                                onTap: () {
+                                  launchUrlString(
+                                    'https://github.com/soupslurpr/AppVerifier',
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                },
+                                child: Text(
+                                  'about'.t(),
+                                  style: const TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                              value: settingsProvider
+                                  .beforeNewInstallsShareToAppVerifier,
+                              onChanged: (value) {
+                                settingsProvider
+                                        .beforeNewInstallsShareToAppVerifier =
+                                    value;
+                              },
+                            ),
+
+                            gap16,
+
+                            SwitchListTile(
+                              title: Text('useShizuku'.t()),
+                              value: settingsProvider.useShizuku,
+                              onChanged: (useShizuku) {
+                                if (useShizuku) {
+                                  ShizukuApkInstaller().checkPermission().then((
+                                    resCode,
+                                  ) {
+                                    if (!mounted) return;
+                                    settingsProvider.useShizuku =
+                                        resCode?.startsWith('granted') ?? false;
+                                    switch (resCode) {
+                                      case 'services_not_found':
+                                        showError(
+                                          UpdatiumError(
+                                            'shizukuBinderNotFound'.t(),
                                           ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Switch(
-                                  //TODO: replace with SwitchListTile
-                                  value: settingsProvider
-                                      .beforeNewInstallsShareToAppVerifier,
-                                  onChanged: (value) {
-                                    settingsProvider
-                                            .beforeNewInstallsShareToAppVerifier =
-                                        value;
-                                  },
-                                ),
-                              ],
-                            ),
-                            gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('useShizuku'.t()),
-                                  value: settingsProvider.useShizuku,
-                                  onChanged: (useShizuku) {
-                                    if (useShizuku) {
-                                      ShizukuApkInstaller()
-                                          .checkPermission()
-                                          .then((resCode) {
-                                            settingsProvider.useShizuku =
-                                                resCode?.startsWith(
-                                                  'granted',
-                                                ) ??
-                                                false;
-                                            switch (resCode) {
-                                              case 'services_not_found':
-                                                showError(
-                                                  UpdatiumError(
-                                                    'shizukuBinderNotFound'.t(),
-                                                  ),
-                                                  context.mounted
-                                                      as BuildContext,
-                                                );
-                                              case 'old_shizuku':
-                                                showError(
-                                                  UpdatiumError(
-                                                    'shizukuOld'.t(),
-                                                  ),
-                                                  context.mounted
-                                                      as BuildContext,
-                                                );
-                                              case 'old_android_with_adb':
-                                                showError(
-                                                  UpdatiumError(
-                                                    t(
-                                                      'shizukuOldAndroidWithADB',
-                                                    ),
-                                                  ),
-                                                  context.mounted
-                                                      as BuildContext,
-                                                );
-                                              case 'denied':
-                                                showError(
-                                                  UpdatiumError(
-                                                    'cancelled'.t(),
-                                                  ),
-                                                  context.mounted
-                                                      as BuildContext,
-                                                );
-                                            }
-                                          });
-                                    } else {
-                                      settingsProvider.useShizuku = false;
+                                          context,
+                                        );
+                                      case 'old_shizuku':
+                                        showError(
+                                          UpdatiumError('shizukuOld'.t()),
+                                          context,
+                                        );
+                                      case 'old_android_with_adb':
+                                        showError(
+                                          UpdatiumError(
+                                            t('shizukuOldAndroidWithADB'),
+                                          ),
+                                          context,
+                                        );
+                                      case 'denied':
+                                        showError(
+                                          UpdatiumError('cancelled'.t()),
+                                          context,
+                                        );
                                     }
-                                  },
-                                ),
-                              ],
+                                  });
+                                } else {
+                                  settingsProvider.useShizuku = false;
+                                }
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    'shizukuPretendToBeGooglePlay'.t(),
-                                    style: TextStyle(
-                                      color: settingsProvider.useShizuku
-                                          ? null
-                                          : Theme.of(context)
-                                                .colorScheme
-                                                .onSurface
-                                                .withValues(alpha: 0.6),
-                                    ),
-                                  ),
+
+                            SwitchListTile(
+                              title: Text(
+                                'shizukuPretendToBeGooglePlay'.t(),
+                                style: TextStyle(
+                                  color: settingsProvider.useShizuku
+                                      ? null
+                                      : Theme.of(context).colorScheme.onSurface
+                                            .withValues(alpha: 0.6),
                                 ),
-                                Switch(
-                                  //TODO: replace with SwitchListTile
-                                  value: settingsProvider
-                                      .shizukuPretendToBeGooglePlay,
-                                  onChanged: settingsProvider.useShizuku
-                                      ? (value) {
-                                          settingsProvider
-                                                  .shizukuPretendToBeGooglePlay =
-                                              value;
-                                        }
-                                      : null,
-                                ),
-                              ],
+                              ),
+                              value:
+                                  settingsProvider.shizukuPretendToBeGooglePlay,
+                              onChanged: settingsProvider.useShizuku
+                                  ? (value) {
+                                      settingsProvider
+                                              .shizukuPretendToBeGooglePlay =
+                                          value;
+                                    }
+                                  : null,
                             ),
                             gap16,
                             GeneratedForm(
@@ -1206,19 +1086,14 @@ class _SettingsPageState extends State<SettingsPage> {
                               followSystemThemeExplanation,
                             gap16,
                             if (settingsProvider.theme != ThemeSettings.light)
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SwitchListTile(
-                                    title: Text('useBlackTheme'.t()),
-                                    value: settingsProvider.useBlackTheme,
-                                    onChanged: (value) {
-                                      settingsProvider.useBlackTheme = value;
-                                    },
-                                  ),
-                                ],
+                              SwitchListTile(
+                                title: Text('useBlackTheme'.t()),
+                                value: settingsProvider.useBlackTheme,
+                                onChanged: (value) {
+                                  settingsProvider.useBlackTheme = value;
+                                },
                               ),
+
                             gap8,
                             useMaterialThemeSwitch,
                             gap16,
@@ -1243,32 +1118,24 @@ class _SettingsPageState extends State<SettingsPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           gap16,
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SwitchListTile(
-                                                title: Text(
-                                                  'useSystemFont'.t(),
-                                                ),
-                                                value: settingsProvider
-                                                    .useSystemFont,
-                                                onChanged: (useSystemFont) {
-                                                  if (useSystemFont) {
-                                                    NativeFeatures.loadSystemFont()
-                                                        .then((val) {
-                                                          settingsProvider
-                                                                  .useSystemFont =
-                                                              true;
-                                                        });
-                                                  } else {
-                                                    settingsProvider
-                                                            .useSystemFont =
-                                                        false;
-                                                  }
-                                                },
-                                              ),
-                                            ],
+
+                                          SwitchListTile(
+                                            title: Text('useSystemFont'.t()),
+                                            value:
+                                                settingsProvider.useSystemFont,
+                                            onChanged: (useSystemFont) {
+                                              if (useSystemFont) {
+                                                NativeFeatures.loadSystemFont()
+                                                    .then((val) {
+                                                      settingsProvider
+                                                              .useSystemFont =
+                                                          true;
+                                                    });
+                                              } else {
+                                                settingsProvider.useSystemFont =
+                                                    false;
+                                              }
+                                            },
                                           ),
                                         ],
                                       )
@@ -1277,113 +1144,86 @@ class _SettingsPageState extends State<SettingsPage> {
                               future: DeviceInfoPlugin().androidInfo,
                             ),
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('pinUpdates'.t()),
-                                  value: settingsProvider.pinUpdates,
-                                  onChanged: (value) {
-                                    settingsProvider.pinUpdates = value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('pinUpdates'.t()),
+                              value: settingsProvider.pinUpdates,
+                              onChanged: (value) {
+                                settingsProvider.pinUpdates = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text(
-                                    'moveNonInstalledAppsToBottom'.t(),
-                                  ),
-                                  value: settingsProvider.buryNonInstalled,
-                                  onChanged: (value) {
-                                    settingsProvider.buryNonInstalled = value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('moveNonInstalledAppsToBottom'.t()),
+                              value: settingsProvider.buryNonInstalled,
+                              onChanged: (value) {
+                                settingsProvider.buryNonInstalled = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('groupByCategory'.t()),
-                                  value: settingsProvider.groupByCategory,
-                                  onChanged: (value) {
-                                    settingsProvider.groupByCategory = value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('groupByCategory'.t()),
+                              value: settingsProvider.groupByCategory,
+                              onChanged: (value) {
+                                settingsProvider.groupByCategory = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('dontShowTrackOnlyWarnings'.t()),
-                                  value: settingsProvider.hideTrackOnlyWarning,
-                                  onChanged: (value) {
-                                    settingsProvider.hideTrackOnlyWarning =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('dontShowTrackOnlyWarnings'.t()),
+                              value: settingsProvider.hideTrackOnlyWarning,
+                              onChanged: (value) {
+                                settingsProvider.hideTrackOnlyWarning = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('dontShowAPKOriginWarnings'.t()),
-                                  value: settingsProvider.hideAPKOriginWarning,
-                                  onChanged: (value) {
-                                    settingsProvider.hideAPKOriginWarning =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('dontShowAPKOriginWarnings'.t()),
+                              value: settingsProvider.hideAPKOriginWarning,
+                              onChanged: (value) {
+                                settingsProvider.hideAPKOriginWarning = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('disablePageTransitions'.t()),
-                                  value:
-                                      settingsProvider.disablePageTransitions,
-                                  onChanged: (value) {
-                                    settingsProvider.disablePageTransitions =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('disablePageTransitions'.t()),
+                              value: settingsProvider.disablePageTransitions,
+                              onChanged: (value) {
+                                settingsProvider.disablePageTransitions = value;
+                              },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('disablePageTransitions'.t()),
-                                  value:
-                                      settingsProvider.reversePageTransitions,
-                                  onChanged:
-                                      settingsProvider.disablePageTransitions
-                                      ? null
-                                      : (value) {
-                                          settingsProvider
-                                                  .reversePageTransitions =
-                                              value;
-                                        },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('disablePageTransitions'.t()),
+                              value: settingsProvider.reversePageTransitions,
+                              onChanged: settingsProvider.disablePageTransitions
+                                  ? null
+                                  : (value) {
+                                      settingsProvider.reversePageTransitions =
+                                          value;
+                                    },
                             ),
+
                             gap16,
-                            Row(
-                              children: [
-                                SwitchListTile(
-                                  title: Text('highlightTouchTargets'.t()),
-                                  value: settingsProvider.highlightTouchTargets,
-                                  onChanged: (value) {
-                                    settingsProvider.highlightTouchTargets =
-                                        value;
-                                  },
-                                ),
-                              ],
+
+                            SwitchListTile(
+                              title: Text('highlightTouchTargets'.t()),
+                              value: settingsProvider.highlightTouchTargets,
+                              onChanged: (value) {
+                                settingsProvider.highlightTouchTargets = value;
+                              },
                             ),
                           ],
                         ),
@@ -1545,7 +1385,9 @@ class _LogsDialogState extends State<LogsDialog> {
                 true;
             if (cont) {
               logsProvider.clear();
-              Navigator.of(context.mounted as BuildContext).pop();
+              if (mounted) {
+                Navigator.of(context).pop();
+              }
             }
           },
           child: Text('remove'.t()),
