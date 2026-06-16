@@ -1,4 +1,7 @@
+import 'package:html/parser.dart';
 import 'package:updatium/app_sources/fdroid.dart';
+import 'package:updatium/app_sources/github.dart';
+import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 class IzzyOnDroid extends FDroid {
