@@ -596,10 +596,6 @@ class _AppPageState extends State<AppPage> {
           }
         }
 
-        if (source?.enforceTrackOnly == true) {
-          app.app.additionalSettings['trackOnly'] = true;
-          showMessage(t('appsFromSourceAreTrackOnly'), context);
-        }
         var versionDetectionEnabled =
             app.app.additionalSettings['versionDetection'] == true &&
             originalSettings['versionDetection'] != true;

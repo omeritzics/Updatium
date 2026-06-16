@@ -767,7 +767,6 @@ abstract class AppSource {
   bool hostChanged = false;
   bool hostIdenticalDespiteAnyChange = false;
   late String name;
-  bool enforceTrackOnly = false;
   bool changeLogIfAnyIsMarkDown = true;
   bool appIdInferIsOptional = false;
   bool allowSubDomains = false;
@@ -944,7 +943,13 @@ abstract class AppSource {
       ),
     ],
     [GeneratedFormTextField('about', label: t('about'), required: false)],
-    [GeneratedFormSwitch('trackOnly', label: t('trackOnly'))],
+    [
+      GeneratedFormSwitch(
+        'trackOnly',
+        label: t('trackOnly'),
+        defaultValue: false,
+      ),
+    ],
 
     [
       GeneratedFormSwitch(
@@ -1185,9 +1190,6 @@ abstract class AppSource {
 
   List<List<GeneratedFormItem>> get combinedAdvancedSettingFormItems {
     var items = <List<GeneratedFormItem>>[];
-    if (enforceTrackOnly) {
-      items.add(advancedAppSpecificSourceAgnosticSettingFormItems[0]);
-    }
     items.addAll(advancedAppSpecificSourceAgnosticSettingFormItems.sublist(1));
     if (allowIncludeZips) {
       items.add([
@@ -1640,9 +1642,6 @@ class SourceProvider {
     bool sourceIsOverriden = false,
     bool inferAppIdIfOptional = false,
   }) async {
-    if (trackOnlyOverride || source.enforceTrackOnly) {
-      additionalSettings['trackOnly'] = true;
-    }
     var trackOnly = additionalSettings['trackOnly'] == true;
     String standardUrl = source.standardizeUrl(url);
     APKDetails apk = await source.getLatestAPKDetails(
