@@ -59,8 +59,8 @@ check_java() {
     local java_version=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}' | cut -d'.' -f1)
     print_info "Java version: $java_version"
     
-    if [ "$java_version" -lt 21 ]; then
-        print_error "Java 21 or higher is required"
+    if [ "$java_version" -lt 17 ]; then
+        print_error "Java 17 or higher is required"
         exit 1
     fi
     
