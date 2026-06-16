@@ -20,8 +20,8 @@ class Bitbucket extends AppSource {
     openSource = true;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        t('bitbucketAPITokenLabel'),
-        label: t('bitbucketAPITokenLabel'),
+        'bitbucketAPITokenLabel'.t(),
+        label: 'bitbucketAPITokenLabel'.t(),
         hint: 'email@example.com:token',
         password: true,
         required: false,
@@ -35,7 +35,7 @@ class Bitbucket extends AppSource {
               );
             },
             child: Text(
-              t('about'),
+              'about'.t(),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -102,7 +102,7 @@ class Bitbucket extends AppSource {
       var fullName = element['full_name'] as String?;
       var name = element['name'] as String? ?? '';
       var description =
-          element['description'] as String? ?? t('noDescription');
+          element['description'] as String? ?? 'noDescription'.t();
       if (fullName != null) {
         results['https://${hosts[0]}/$fullName'] = [name, description];
       }

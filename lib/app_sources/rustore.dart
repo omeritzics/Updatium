@@ -9,7 +9,7 @@ import 'package:updatium/providers/source_provider.dart';
 class RuStore extends AppSource {
   RuStore() {
     hosts = ['rustore.ru'];
-    name = t('rustore');
+    name = 'rustore'.t();
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
   }
@@ -63,7 +63,7 @@ class RuStore extends AppSource {
     if (appDetails['appId'] == null) {
       throw NoReleasesError();
     }
-    String appName = appDetails['appName'] ?? t('app');
+    String appName = appDetails['appName'] ?? 'app'.t();
     String author = appDetails['companyName'] ?? name;
     String? dateStr = appDetails['appVerUpdatedAt'];
     String? version = appDetails['versionName'];

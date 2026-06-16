@@ -21,8 +21,8 @@ class GitLab extends AppSource {
     openSource = true;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        t('gitlabPATLabel'),
-        label: t('gitlabPATLabel'),
+        'gitlabPATLabel'.t(),
+        label: 'gitlabPATLabel'.t(),
         password: true,
         required: false,
         belowWidgets: [
@@ -35,7 +35,7 @@ class GitLab extends AppSource {
               );
             },
             child: Text(
-              t('about'),
+              'about'.t(),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -88,7 +88,7 @@ class GitLab extends AppSource {
     for (var element in json) {
       results['https://${hosts[0]}/${element['path_with_namespace']}'] = [
         element['name_with_namespace'],
-        element['description'] ?? t('noDescription'),
+        element['description'] ?? 'noDescription'.t(),
       ];
     }
     return results;
