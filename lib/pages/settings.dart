@@ -806,77 +806,77 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ],
                               ),
                             gap16,
-                            if (settingsProvider.safeMode &&
-                                settingsProvider.preventUninstallation)
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(t('safeModeAntiCheat')),
-                                        Text(
-                                          t('safeModeAntiCheatDescription'),
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.labelSmall,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Switch(
-                                    value: settingsProvider.safeModeAntiCheat,
-                                    onChanged: (value) async {
-                                      if (value) {
-                                        // Enable anti-cheat
-                                        final success =
-                                            await DeviceAdminService.enableAntiCheat();
-                                        if (success) {
-                                          settingsProvider.safeModeAntiCheat =
-                                              true;
-                                        } else {
-                                          ScaffoldMessenger.of(
-                                            context.mounted as BuildContext,
-                                          ).showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                t('safeModeAntiCheatError'),
-                                              ),
-                                              backgroundColor: Theme.of(
-                                                context,
-                                              ).colorScheme.error,
-                                            ),
-                                          );
-                                        }
-                                      } else {
-                                        // Disable anti-cheat
-                                        final success =
-                                            await DeviceAdminService.disableAntiCheat();
-                                        if (success) {
-                                          settingsProvider.safeModeAntiCheat =
-                                              false;
-                                        } else {
-                                          ScaffoldMessenger.of(
-                                            context.mounted as BuildContext,
-                                          ).showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                t('safeModeAntiCheatError'),
-                                              ),
-                                              backgroundColor: Theme.of(
-                                                context,
-                                              ).colorScheme.error,
-                                            ),
-                                          );
-                                        }
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ),
+                            // if (settingsProvider.safeMode &&
+                            //  settingsProvider.preventUninstallation)
+                            //// Row(
+                            ////  mainAxisAlignment:
+                            ////      MainAxisAlignment.spaceBetween,
+                            //// children: [
+                            ////  Flexible(
+                            ////    child: Column(
+                            ////      crossAxisAlignment:
+                            ////          CrossAxisAlignment.start,
+                            ////      children: [
+                            ////        Text(t('safeModeAntiCheat')),
+                            ////        Text(
+                            ////          t('safeModeAntiCheatDescription'),
+                            ////          style: Theme.of(
+                            ////            context,
+                            ////          ).textTheme.labelSmall,
+                            ////        ),
+                            ////      ],
+                            ////    ),
+                            ////  ),
+                            ////    Switch(
+                            ////     value: settingsProvider.safeModeAntiCheat,
+                            ////      onChanged: (value) async {
+                            ////        if (value) {
+                            ////          // Enable anti-cheat
+                            ////          final success =
+                            ////             await DeviceAdminService.enableAntiCheat();
+                            ////          if (success) {
+                            ////           settingsProvider.safeModeAntiCheat =
+                            ////               true;
+                            ////         } else {
+                            ////           ScaffoldMessenger.of(
+                            ////             context.mounted as BuildContext,
+                            ////           ).showSnackBar(
+                            ////              SnackBar(
+                            ////               content: Text(
+                            ////                 t('safeModeAntiCheatError'),
+                            ////              ),
+                            ////             backgroundColor: Theme.of(
+                            ////               context,
+                            ////              ).colorScheme.error,
+                            ////            ),
+                            ////          );
+                            ////        }
+                            ////      } else {
+                            ////        // Disable anti-cheat
+                            ////        final success =
+                            ////           await DeviceAdminService.disableAntiCheat();
+                            ////        if (success) {
+                            ////         settingsProvider.safeModeAntiCheat =
+                            ////             false;
+                            ////        } else {
+                            ////         ScaffoldMessenger.of(
+                            ////           context.mounted as BuildContext,
+                            ////         ).showSnackBar(
+                            ////            SnackBar(
+                            ////             content: Text(
+                            ////                t('safeModeAntiCheatError'),
+                            ////              ),
+                            ////              backgroundColor: Theme.of(
+                            ////                context,
+                            ////              ).colorScheme.error,
+                            ////           ),
+                            ////          );
+                            ////        }
+                            ////      }
+                            ////    },
+                            ////  ),
+                            //  ],
+                            // ),
                             gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
