@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -71,11 +70,6 @@ const localeDir = 'assets/translations';
 var fdroid = false;
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
-
-bool isLocaleRTL(Locale locale) {
-  const rtlLanguages = {'ar', 'he', 'fa', 'ug', 'ur', 'yi', 'ps', 'sd'};
-  return rtlLanguages.contains(locale.languageCode);
-}
 
 Future<void> loadTranslations() async {
   // See easy_localization/issues/210
@@ -358,22 +352,17 @@ class _UpdatiumState extends State<Updatium> {
                   ? null
                   : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
               inputDecorationTheme: InputDecorationTheme(
-                // filled: true,
-                // labelStyle: const TextStyle(fontWeight: FontWeight.w500),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 6,
-                  vertical: 6,
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: scheme.primary, width: 2.0),
+                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                 ),
               ),
 
-              // Keyboard/TV navigation support
-              focusColor: scheme.primary.withValues(alpha: 0.2),
-              highlightColor: scheme.primary.withValues(alpha: 0.1),
-
               // AppBar
               appBarTheme: AppBarTheme(
-                backgroundColor: scheme.surface,
-                foregroundColor: scheme.onSurface,
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
                   fontWeight: FontWeight.w600,
@@ -383,7 +372,6 @@ class _UpdatiumState extends State<Updatium> {
                       ? null
                       : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
                 ),
-                iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),
 
               // Expressive List Tiles
@@ -420,46 +408,21 @@ class _UpdatiumState extends State<Updatium> {
             );
           }
 
-          return Directionality(
-            textDirection: isLocaleRTL(context.locale)
-                ? ui.TextDirection.rtl
-                : ui.TextDirection.ltr,
-            child: MaterialApp(
-              title: 'Updatium',
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              navigatorKey: globalNavigatorKey,
-              debugShowCheckedModeBanner: false,
-              theme: createTheme(lightColorScheme),
-              darkTheme: createTheme(darkColorScheme),
-              themeMode: settingsProvider.theme == ThemeSettings.dark
-                  ? ThemeMode.dark
-                  : (settingsProvider.theme == ThemeSettings.light
-                        ? ThemeMode.light
-                        : ThemeMode.system),
-              home: Shortcuts(
-                shortcuts: <LogicalKeySet, Intent>{
-                  LogicalKeySet(LogicalKeyboardKey.select):
-                      const ActivateIntent(),
-                  LogicalKeySet(LogicalKeyboardKey.enter):
-                      const ActivateIntent(),
-                  LogicalKeySet(LogicalKeyboardKey.arrowUp):
-                      const DirectionalFocusIntent(TraversalDirection.up),
-                  LogicalKeySet(LogicalKeyboardKey.arrowDown):
-                      const DirectionalFocusIntent(TraversalDirection.down),
-                  LogicalKeySet(LogicalKeyboardKey.arrowLeft):
-                      const DirectionalFocusIntent(TraversalDirection.left),
-                  LogicalKeySet(LogicalKeyboardKey.arrowRight):
-                      const DirectionalFocusIntent(TraversalDirection.right),
-                  LogicalKeySet(LogicalKeyboardKey.tab):
-                      const NextFocusIntent(),
-                  LogicalKeySet(LogicalKeyboardKey.escape):
-                      const DismissIntent(),
-                },
-                child: const HomePage(),
-              ),
-            ),
+          return MaterialApp(
+            title: 'Updatium',
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            navigatorKey: globalNavigatorKey,
+            debugShowCheckedModeBanner: false,
+            theme: createTheme(lightColorScheme),
+            darkTheme: createTheme(darkColorScheme),
+            themeMode: settingsProvider.theme == ThemeSettings.dark
+                ? ThemeMode.dark
+                : (settingsProvider.theme == ThemeSettings.light
+                      ? ThemeMode.light
+                      : ThemeMode.system),
+            home: const HomePage(),
           );
         },
       ),
