@@ -129,7 +129,7 @@ class AddAppPageState extends State<AddAppPage> {
             [
               GeneratedFormTextField(
                 'appSourceURL',
-                label: t('appSourceURL'),
+                label: 'appSourceURL'.t(),
                 defaultValue: userInput,
                 additionalValidators: [
                   (value) {
@@ -145,7 +145,7 @@ class AddAppPageState extends State<AddAppPage> {
                           ? e
                           : e is UpdatiumError
                           ? e.toString()
-                          : t('error');
+                          : 'error'.t();
                     }
                     return null;
                   },
@@ -174,7 +174,7 @@ class AddAppPageState extends State<AddAppPage> {
                         ),
                       );
                     },
-              child: Text(t('continue')),
+              child: Text('continue'.t()),
             ),
     ],
   );
@@ -188,7 +188,7 @@ class AddAppPageState extends State<AddAppPage> {
             [
               GeneratedFormTextField(
                 'searchSomeSources',
-                label: t('searchSomeSourcesLabel'),
+                label: 'searchSomeSourcesLabel'.t(),
                 required: false,
                 defaultValue: searchQuery,
               ),
@@ -212,7 +212,7 @@ class AddAppPageState extends State<AddAppPage> {
                   : () {
                       runSearch();
                     },
-              child: Text(t('search')),
+              child: Text('search'.t()),
             ),
     ],
   );
@@ -240,7 +240,7 @@ class AddAppPageState extends State<AddAppPage> {
               return AlertDialog(
                 scrollable: true,
                 contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-                title: Text(t('supportedSources')),
+                title: Text('supportedSources'.t()),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,7 +261,7 @@ class AddAppPageState extends State<AddAppPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                '${e.name}: ${e.canSearch ? ' ${t('searchableInBrackets')}' : ''}',
+                                '${e.name}: ${e.canSearch ? ' ${'searchableInBrackets'.t()}' : ''}',
                                 style: TextStyle(
                                   decoration: e.hosts.isNotEmpty
                                       ? TextDecoration.underline
@@ -274,7 +274,7 @@ class AddAppPageState extends State<AddAppPage> {
                                   Icons.workspace_premium,
                                   size: 14,
                                   color: Theme.of(context).colorScheme.primary,
-                                  semanticLabel: t('openSource'),
+                                  semanticLabel: 'openSource'.t(),
                                 ),
                                 const SizedBox(width: 2),
                               ],
@@ -285,11 +285,11 @@ class AddAppPageState extends State<AddAppPage> {
                     ),
                     gap16,
                     Text(
-                      '${t('note')}:',
+                      '${'note'.t()}:',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 4),
-                    Text(t('selfHostedNote', args: [t('overrideSource')])),
+                    Text(t('selfHostedNote', args: ['overrideSource'.t()])),
                     gap8,
                     Row(
                       children: [
@@ -301,7 +301,7 @@ class AddAppPageState extends State<AddAppPage> {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            t('openSourceNote'),
+                            'openSourceNote'.t(),
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
@@ -312,7 +312,7 @@ class AddAppPageState extends State<AddAppPage> {
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(ctx).pop(),
-                    child: Text(t('ok')),
+                    child: Text('ok'.t()),
                   ),
                 ],
               );
@@ -320,7 +320,7 @@ class AddAppPageState extends State<AddAppPage> {
           );
         },
         icon: const Icon(Icons.info_outline, size: 18),
-        label: Text(t('supportedSources')),
+        label: Text('supportedSources'.t()),
         style: TextButton.styleFrom(
           alignment: Alignment.centerLeft,
           padding: EdgeInsets.zero,
@@ -345,7 +345,7 @@ class AddAppPageState extends State<AddAppPage> {
 
                   return AlertDialog(
                     contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-                    title: Text(t('installedApps')),
+                    title: Text('installedApps'.t()),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -353,8 +353,8 @@ class AddAppPageState extends State<AddAppPage> {
                           contentPadding: EdgeInsets.zero,
                           title: Text(
                             showSystemApps
-                                ? t('hideSystemApps')
-                                : t('showSystemApps'),
+                                ? 'hideSystemApps'.t()
+                                : 'showSystemApps'.t(),
                           ),
                           value: showSystemApps,
                           onChanged: (val) => sset(() => showSystemApps = val),
@@ -420,7 +420,7 @@ class AddAppPageState extends State<AddAppPage> {
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(ctx).pop(),
-                        child: Text(t('ok')),
+                        child: Text('ok'.t()),
                       ),
                     ],
                   );
@@ -430,7 +430,7 @@ class AddAppPageState extends State<AddAppPage> {
           );
         },
         icon: const Icon(Icons.apps, size: 18),
-        label: Text(t('installedApps')),
+        label: Text('installedApps'.t()),
         style: TextButton.styleFrom(
           alignment: Alignment.centerLeft,
           padding: EdgeInsets.zero,
@@ -454,7 +454,7 @@ class AddAppPageState extends State<AddAppPage> {
             context: context,
             builder: (BuildContext ctx) {
               return SelectionModal(
-                title: t('selectX', args: [plural('source', 2).toLowerCase()]),
+                title: t('selectX', args: ['source'.plural(2).toLowerCase()]),
                 entries: sourceStrings,
                 selectedByDefault: true,
                 onlyOneSelectionAllowed: false,
@@ -500,7 +500,7 @@ class AddAppPageState extends State<AddAppPage> {
                                               GeneratedFormTextField(
                                                 'url',
                                                 label: e.hosts.isNotEmpty
-                                                    ? t('overrideSource')
+                                                    ? 'overrideSource'.t()
                                                     : plural(
                                                         'url',
                                                         1,
@@ -522,13 +522,13 @@ class AddAppPageState extends State<AddAppPage> {
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.of(ctx).pop(null),
-                                          child: Text(t('cancel')),
+                                          child: Text('cancel'.t()),
                                         ),
                                         TextButton(
                                           onPressed: () => Navigator.of(
                                             ctx,
                                           ).pop(localValues),
-                                          child: Text(t('ok')),
+                                          child: Text('ok'.t()),
                                         ),
                                       ],
                                     );
@@ -578,7 +578,7 @@ class AddAppPageState extends State<AddAppPage> {
           si++;
         }
         if (res.isEmpty) {
-          throw UpdatiumError(t('noResults'));
+          throw UpdatiumError('noResults'.t());
         }
         List<String>? selectedUrls = res.isEmpty
             ? []
@@ -630,7 +630,7 @@ class AddAppPageState extends State<AddAppPage> {
         slivers: <Widget>[
           SliverAppBar.large(
             pinned: true,
-            title: Text(t('addApp')),
+            title: Text('addApp'.t()),
             bottom:
                 (pickedSource != null || searching || searchQuery.isNotEmpty)
                 ? PreferredSize(
@@ -667,7 +667,7 @@ class AddAppPageState extends State<AddAppPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.import_export),
-        label: Text(t('importExport')),
+        label: Text('importExport'.t()),
         extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
         elevation: 3,
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
@@ -796,18 +796,18 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             return AlertDialog(
               scrollable: true,
               contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-              title: Text(t('xIsTrackOnly', args: [t('app')])),
+              title: Text(t('xIsTrackOnly', args: ['app'.t()])),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${t('youPickedTrackOnly')}\n\n${t('trackOnlyAppDescription')}',
+                    '${'youPickedTrackOnly'.t()}\n\n${'trackOnlyAppDescription'.t()}',
                   ),
                   gap16,
                   GeneratedForm(
                     items: [
-                      [GeneratedFormSwitch('hide', label: t('dontShowAgain'))],
+                      [GeneratedFormSwitch('hide', label: 'dontShowAgain'.t())],
                     ],
                     onValueChanges: (vals, valid, isBuilding) {
                       localValues = vals;
@@ -818,11 +818,11 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(ctx).pop(null),
-                  child: Text(t('cancel')),
+                  child: Text('cancel'.t()),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(ctx).pop(localValues),
-                  child: Text(t('ok')),
+                  child: Text('ok'.t()),
                 ),
               ],
             );
@@ -846,16 +846,16 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                 context: context,
                 builder: (BuildContext ctx) {
                   return AlertDialog(
-                    title: Text(t('releaseDateAsVersion')),
-                    content: Text(t('releaseDateAsVersionExplanation')),
+                    title: Text('releaseDateAsVersion'.t()),
+                    content: Text('releaseDateAsVersionExplanation'.t()),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(ctx).pop(null),
-                        child: Text(t('cancel')),
+                        child: Text('cancel'.t()),
                       ),
                       TextButton(
                         onPressed: () => Navigator.of(ctx).pop(true),
-                        child: Text(t('ok')),
+                        child: Text('ok'.t()),
                       ),
                     ],
                   );
@@ -897,7 +897,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             );
 
             if (apkUrl == null) {
-              throw UpdatiumError(t('cancelled'));
+              throw UpdatiumError('cancelled'.t());
             }
             app.preferredApkIndex = app.apkUrls
                 .map((e) => e.value)
@@ -920,7 +920,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             app.id = downloadedFile?.appId ?? downloadedDir!.appId;
           }
           if (appsProvider.apps.containsKey(app.id)) {
-            throw UpdatiumError(t('appAlreadyAdded'));
+            throw UpdatiumError('appAlreadyAdded'.t());
           }
           if (app.additionalSettings['trackOnly'] == true ||
               app.additionalSettings['versionDetection'] != true) {
@@ -957,7 +957,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       children: [
         gap16,
         Text(
-          t('additionalOptsFor', args: [pickedSource?.name ?? t('source')]),
+          t('additionalOptsFor', args: [pickedSource?.name ?? 'source'.t()]),
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
@@ -1026,7 +1026,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           slivers: <Widget>[
             SliverAppBar.large(
               pinned: true,
-              title: Text(t('addApp')),
+              title: Text('addApp'.t()),
               actions: [
                 TextButton(
                   onPressed:
@@ -1041,7 +1041,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                           HapticFeedback.selectionClick();
                           addApp();
                         },
-                  child: Text(t('add')),
+                  child: Text('add'.t()),
                 ),
               ],
               leading: IconButton(
@@ -1082,7 +1082,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                       ExpansionTile(
                         initiallyExpanded: false,
                         title: Text(
-                          t('advanced'),
+                          'advanced'.t(),
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
@@ -1101,7 +1101,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                                       [
                                         GeneratedFormSwitch(
                                           'inferAppIdIfOptional',
-                                          label: t('tryInferAppIdFromCode'),
+                                          label: 'tryInferAppIdFromCode'.t(),
                                           defaultValue: inferAppIdIfOptional,
                                         ),
                                       ],
@@ -1236,11 +1236,11 @@ class _SelectionModalState extends State<SelectionModal> {
       return noneSelected
           ? TextButton(
               onPressed: () => setState(selectAll),
-              child: Text(t('selectAll')),
+              child: Text('selectAll'.t()),
             )
           : TextButton(
               onPressed: () => setState(() => selectAll(deselect: true)),
-              child: Text(t('deselectX', args: [t('all')])),
+              child: Text(t('deselectX', args: ['all'.t()])),
             );
     }
 
@@ -1250,9 +1250,9 @@ class _SelectionModalState extends State<SelectionModal> {
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
-            tooltip: t('cancel'),
+            tooltip: 'cancel'.t(),
           ),
-          title: Text(widget.title ?? t('pick')),
+          title: Text(widget.title ?? 'pick'.t()),
           actions: [
             getSelectAllButton(),
             TextButton(
@@ -1268,7 +1268,7 @@ class _SelectionModalState extends State<SelectionModal> {
                     },
               child: Text(
                 widget.onlyOneSelectionAllowed
-                    ? t('pick')
+                    ? 'pick'.t()
                     : t(
                         'selectX',
                         args: [
@@ -1291,7 +1291,7 @@ class _SelectionModalState extends State<SelectionModal> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    t('addApp'),
+                    'addApp'.t(),
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ],
@@ -1302,7 +1302,7 @@ class _SelectionModalState extends State<SelectionModal> {
               child: TextFormField(
                 controller: _filterController,
                 decoration: InputDecoration(
-                  labelText: t('filter'),
+                  labelText: 'filter'.t(),
                   prefixIcon: const Icon(Icons.search),
                   suffixIcon: _filterController.text.isNotEmpty
                       ? IconButton(

@@ -365,7 +365,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 validator: (value) {
                   if (formItem.required &&
                       (value == null || value.trim().isEmpty)) {
-                    return '${formItem.label} ${t('requiredInBrackets')}';
+                    return '${formItem.label} ${'requiredInBrackets'.t()}';
                   }
                   for (var validator in formItem.additionalValidators) {
                     String? result = validator(value);
@@ -402,7 +402,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
           );
         } else if (formItem is GeneratedFormDropdown) {
           if (formItem.opts!.isEmpty) {
-            return Text(t('dropdownNoOptsError'));
+            return Text('dropdownNoOptsError'.t());
           }
           return DropdownButtonFormField<String>(
             initialValue: values[fieldKey] ?? formItem.opts?.first.key,
@@ -450,7 +450,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
             validator: (value) {
               if (formItem.required &&
                   (value == null || value.trim().isEmpty)) {
-                return '${formItem.label} ${t('requiredInBrackets')}';
+                return '${formItem.label} ${'requiredInBrackets'.t()}';
               }
               if (value != null && value.length > formItem.max) {
                 return '${formItem.label} must be at most ${formItem.max} characters';
@@ -522,7 +522,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
             title: Text(formItem.label),
             content: GeneratedForm(
               items: [
-                [GeneratedFormTextField('label', label: t('label'))],
+                [GeneratedFormTextField('label', label: 'label'.t())],
               ],
               onValueChanges: (vals, valid, isBuilding) {
                 localValues = vals;
@@ -531,11 +531,11 @@ class _GeneratedFormState extends State<GeneratedForm> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(null),
-                child: Text(t('cancel')),
+                child: Text('cancel'.t()),
               ),
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(localValues),
-                child: Text(t('ok')),
+                child: Text('ok'.t()),
               ),
             ],
           );
@@ -676,7 +676,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                       },
                       icon: const Icon(Icons.format_color_fill_rounded),
                       visualDensity: VisualDensity.compact,
-                      tooltip: t('color'),
+                      tooltip: 'color'.t(),
                     ),
                   )
                 : const SizedBox.shrink(),
@@ -711,12 +711,12 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.of(ctx).pop(false),
-                                    child: Text(t('cancel')),
+                                    child: Text('cancel'.t()),
                                   ),
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.of(ctx).pop(true),
-                                    child: Text(t('ok')),
+                                    child: Text('ok'.t()),
                                   ),
                                 ],
                               );
@@ -732,7 +732,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                       },
                       icon: const Icon(Icons.remove),
                       visualDensity: VisualDensity.compact,
-                      tooltip: t('remove'),
+                      tooltip: 'remove'.t(),
                     ),
                   )
                 : const SizedBox.shrink(),
@@ -753,7 +753,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                       onPressed: onAddPressed,
                       icon: const Icon(Icons.add),
                       visualDensity: VisualDensity.compact,
-                      tooltip: t('add'),
+                      tooltip: 'add'.t(),
                     ),
                   ),
           ],

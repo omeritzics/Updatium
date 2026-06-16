@@ -102,8 +102,8 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
             ColorPickerType.wheel: true,
           },
           pickerTypeLabels: <ColorPickerType, String>{
-            ColorPickerType.custom: t('standard'),
-            ColorPickerType.wheel: t('custom'),
+            ColorPickerType.custom: 'standard'.t(),
+            ColorPickerType.wheel: 'custom'.t(),
           },
           wheelDiameter: 192,
           wheelSquareBorderRadius: 32,
@@ -163,12 +163,12 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
                 autofocus: true,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 decoration: InputDecoration(
-                  labelText: t('name'),
+                  labelText: 'name'.t(),
                   border: const OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return '${t('name')} ${t('requiredInBrackets')}';
+                    return '${'name'.t()} ${'requiredInBrackets'.t()}';
                   }
                   return null;
                 },
@@ -178,7 +178,7 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
                 children: [
                   Expanded(
                     child: Text(
-                      t('selectX', args: [t('color').toLowerCase()]),
+                      t('selectX', args: ['color'.t().toLowerCase()]),
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
@@ -207,7 +207,7 @@ class _CategoryEditorDialogState extends State<CategoryEditorDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(t('cancel')),
+          child: Text('cancel'.t()),
         ),
         TextButton(
           onPressed: () {

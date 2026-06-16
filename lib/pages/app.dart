@@ -197,7 +197,7 @@ class _AppPageState extends State<AppPage> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      t('appNotFound'),
+                      'appNotFound'.t(),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 8),
@@ -226,36 +226,36 @@ class _AppPageState extends State<AppPage> {
     getInfoColumn() {
       String versionLines = '';
       bool installed = app.app.installedVersion != null;
-      versionLines = '${t('latestVersion')}: ${app.app.latestVersion}';
+      versionLines = '${'latestVersion'.t()}: ${app.app.latestVersion}';
       if (installed) {
         versionLines +=
-            '\n${t('installedVersion')}: ${app.app.installedVersion}';
+            '\n${'installedVersion'.t()}: ${app.app.installedVersion}';
       }
       String infoLines = t(
         'lastUpdateCheckX',
         args: [
           app.app.lastUpdateCheck == null
-              ? t('never')
+              ? 'never'.t()
               : '${app.app.lastUpdateCheck?.toLocal()}',
         ],
       );
       if (trackOnly) {
-        infoLines = '${t('xIsTrackOnly', args: [t('app')])}\n$infoLines';
+        infoLines = '${t('xIsTrackOnly', args: ['app'.t()])}\n$infoLines';
       }
       if (installedVersionIsEstimate) {
-        infoLines = '${t('pseudoVersionInUse')}\n$infoLines';
+        infoLines = '${'pseudoVersionInUse'.t()}\n$infoLines';
       }
       if (app.app.apkUrls.isNotEmpty) {
         infoLines =
-            '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : plural('apk', app.app.apkUrls.length)}';
+            '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : 'apk'.plural(app.app.apkUrls.length)}';
       }
       if (app.app.reproducible != null) {
         infoLines =
-            '$infoLines\n${t('reproducibleBuild')}: ${app.app.reproducible == true ? t('yes') : t('no')}';
+            '$infoLines\n${'reproducibleBuild'.t()}: ${app.app.reproducible == true ? 'yes'.t() : 'no'.t()}';
       }
       if (_apkFileSize != null) {
         infoLines =
-            '$infoLines\n${t('fileSize')}: ${formatFileSize(_apkFileSize!)}';
+            '$infoLines\n${'fileSize'.t()}: ${formatFileSize(_apkFileSize!)}';
       }
       var changeLogFn = getChangeLogFn(context, app.app);
       return Column(
@@ -278,7 +278,7 @@ class _AppPageState extends State<AppPage> {
                       onTap: changeLogFn,
                       child: Text(
                         app.app.releaseDate == null
-                            ? t('changes')
+                            ? 'changes'.t()
                             : app.app.releaseDate!.toLocal().toString(),
                         textAlign: TextAlign.start,
                         maxLines: 2,
@@ -307,8 +307,8 @@ class _AppPageState extends State<AppPage> {
               children: [
                 gap24,
                 Text(
-                  "${plural('certificateHash', app.certificateHashes.length)}:"
-                  "${app.hasMultipleSigners ? " (${t('multipleSigners')})" : ""}",
+                  "${'certificateHash'.plural(app.certificateHashes.length)}:"
+                  "${app.hasMultipleSigners ? " (${'multipleSigners'.t()})" : ""}",
                   textAlign: TextAlign.start,
                   style: const TextStyle(fontSize: 12),
                 ),
@@ -319,7 +319,7 @@ class _AppPageState extends State<AppPage> {
                       onLongPress: () {
                         Clipboard.setData(ClipboardData(text: hash));
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(t('copiedToClipboard'))),
+                          SnackBar(content: Text('copiedToClipboard'.t())),
                         );
                       },
                       child: Padding(
@@ -361,7 +361,7 @@ class _AppPageState extends State<AppPage> {
                       ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(t('copiedToClipboard'))),
+                      SnackBar(content: Text('copiedToClipboard'.t())),
                     );
                   },
                   child: Markdown(
@@ -410,7 +410,7 @@ class _AppPageState extends State<AppPage> {
             Clipboard.setData(ClipboardData(text: app.app.url));
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text(t('copiedToClipboard'))));
+            ).showSnackBar(SnackBar(content: Text('copiedToClipboard'.t())));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -503,11 +503,11 @@ class _AppPageState extends State<AppPage> {
                   icon: const Icon(Icons.close),
                   onPressed: () => Navigator.of(ctx).pop(null),
                 ),
-                title: Text(t('additionalOptions')),
+                title: Text('additionalOptions'.t()),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(ctx).pop(localValues),
-                    child: Text(t('save')),
+                    child: Text('save'.t()),
                   ),
                 ],
               ),
@@ -522,7 +522,7 @@ class _AppPageState extends State<AppPage> {
                         [
                           GeneratedFormSwitch(
                             'pinned',
-                            label: t('pinned'),
+                            label: 'pinned'.t(),
                             defaultValue: app.app.pinned,
                           ),
                         ],
@@ -638,8 +638,8 @@ class _AppPageState extends State<AppPage> {
           ? () async {
               try {
                 var successMessage = app.app.installedVersion == null
-                    ? t('installed')
-                    : t('appsUpdated');
+                    ? 'installed'.t()
+                    : 'appsUpdated'.t();
                 HapticFeedback.heavyImpact();
                 var res = await appsProvider.downloadAndInstallLatestApps([
                   app.app.id,
@@ -658,11 +658,11 @@ class _AppPageState extends State<AppPage> {
       child: Text(
         app.app.installedVersion == null
             ? !trackOnly
-                  ? t('install')
-                  : t('markInstalled')
+                  ? 'install'.t()
+                  : 'markInstalled'.t()
             : !trackOnly
-            ? t('update')
-            : t('markUpdated'),
+            ? 'update'.t()
+            : 'markUpdated'.t(),
       ),
     );
 
@@ -799,7 +799,7 @@ class _AppPageState extends State<AppPage> {
                               bottom: 32,
                             ),
                             child: Semantics(
-                              label: t('downloadProgress'),
+                              label: 'downloadProgress'.t(),
                               value: '${app.downloadProgress!.toInt()}%',
                               child: LinearProgressIndicator(
                                 value: app.downloadProgress! >= 0
@@ -825,8 +825,8 @@ class _AppPageState extends State<AppPage> {
                     if (app.app.installedVersion != null)
                       M3FloatingToolbarAction(
                         icon: Icons.open_in_new,
-                        semanticLabel: t('open'),
-                        tooltip: t('open'),
+                        semanticLabel: 'open'.t(),
+                        tooltip: 'open'.t(),
                         onPressed: () {
                           pm.openApp(app.app.id);
                         },
@@ -836,8 +836,8 @@ class _AppPageState extends State<AppPage> {
                         source.combinedAppSpecificSettingFormItems.isNotEmpty)
                       M3FloatingToolbarAction(
                         icon: Icons.edit,
-                        semanticLabel: t('additionalOptions'),
-                        tooltip: t('additionalOptions'),
+                        semanticLabel: 'additionalOptions'.t(),
+                        tooltip: 'additionalOptions'.t(),
                         onPressed: () {
                           showAdditionalOptionsDialog().then(
                             handleAdditionalOptionChanges,
@@ -851,11 +851,11 @@ class _AppPageState extends State<AppPage> {
                         icon: Icons.archive,
                         semanticLabel: t(
                           'downloadX',
-                          args: [lowerCaseIfEnglish(t('releaseAsset'))],
+                          args: [lowerCaseIfEnglish('releaseAsset'.t())],
                         ),
                         tooltip: t(
                           'downloadX',
-                          args: [lowerCaseIfEnglish(t('releaseAsset'))],
+                          args: [lowerCaseIfEnglish('releaseAsset'.t())],
                         ),
                         onPressed: () async {
                           try {
@@ -869,8 +869,8 @@ class _AppPageState extends State<AppPage> {
                       ),
                     M3FloatingToolbarAction(
                       icon: Icons.delete,
-                      semanticLabel: t('remove'),
-                      tooltip: t('remove'),
+                      semanticLabel: 'remove'.t(),
+                      tooltip: 'remove'.t(),
                       onPressed: () async {
                         final removedApps = await appsProvider
                             .removeAppsWithModal(
@@ -883,9 +883,9 @@ class _AppPageState extends State<AppPage> {
                               context.mounted as BuildContext,
                             ).showSnackBar(
                               SnackBar(
-                                content: Text(t('appRemoved')),
+                                content: Text('appRemoved'.t()),
                                 action: SnackBarAction(
-                                  label: t('undo'),
+                                  label: 'undo'.t(),
                                   onPressed: () {
                                     appsProvider.undoRestoreApps(removedApps);
                                   },
