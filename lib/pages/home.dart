@@ -3,9 +3,12 @@ import 'dart:math';
 
 import 'package:animations/animations.dart';
 import 'package:app_links/app_links.dart';
-import 'package:updatium/services/slang_converter.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:updatium/services/slang_converter.dart';
+import 'package:updatium/services/freedroid_warn_service.dart';
 
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/add_app.dart';
@@ -99,7 +102,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         }
       }
 
-      await showFreeDroidWarnDialog(context.mounted as BuildContext);
+      await FreeDroidWarnService.showWarningDialog(
+        context.mounted as BuildContext,
+      );
     });
   }
 

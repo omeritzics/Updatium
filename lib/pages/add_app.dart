@@ -166,13 +166,11 @@ class AddAppPageState extends State<AddAppPage> {
                   ? null
                   : () {
                       HapticFeedback.selectionClick();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddAppConfirmationPage(
-                            initialUrl: userInput,
-                            initialSourceOverride: pickedSourceOverride,
-                          ),
+                      showDialog(
+                        context: context,
+                        builder: (context) => AddAppConfirmationPage(
+                          initialUrl: userInput,
+                          initialSourceOverride: pickedSourceOverride,
                         ),
                       );
                     },
@@ -263,7 +261,7 @@ class AddAppPageState extends State<AddAppPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                '${e.name}${e.enforceTrackOnly ? ' ${t('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${t('searchableInBrackets')}' : ''}',
+                                '${e.name}: ${e.canSearch ? ' ${t('searchableInBrackets')}' : ''}',
                                 style: TextStyle(
                                   decoration: e.hosts.isNotEmpty
                                       ? TextDecoration.underline
@@ -604,14 +602,13 @@ class AddAppPageState extends State<AddAppPage> {
             updateUrlInput: true,
             overrideSource: sourceName,
           );
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddAppConfirmationPage(
-                initialUrl: selectedUrls[0],
-                initialSourceOverride: sourceName,
-                cameFromSearch: true,
-              ),
+          if (!mounted) return;
+          showDialog(
+            context: context,
+            builder: (context) => AddAppConfirmationPage(
+              initialUrl: selectedUrls[0],
+              initialSourceOverride: sourceName,
+              cameFromSearch: true,
             ),
           );
         }
@@ -629,7 +626,6 @@ class AddAppPageState extends State<AddAppPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar.large(
@@ -789,7 +785,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
       bool userPickedTrackOnly, {
       bool ignoreHideSetting = false,
     }) async {
-      var useTrackOnly = userPickedTrackOnly || pickedSource!.enforceTrackOnly;
+      var useTrackOnly = userPickedTrackOnly;
       if (useTrackOnly &&
           (!settingsProvider.hideTrackOnlyWarning || ignoreHideSetting)) {
         // ignore: use_build_context_synchronously
@@ -800,20 +796,13 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             return AlertDialog(
               scrollable: true,
               contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-              title: Text(
-                t(
-                  'xIsTrackOnly',
-                  args: [
-                    pickedSource!.enforceTrackOnly ? t('source') : t('app'),
-                  ],
-                ),
-              ),
+              title: Text(t('xIsTrackOnly', args: [t('app')])),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${pickedSource!.enforceTrackOnly ? t('appsFromSourceAreTrackOnly') : t('youPickedTrackOnly')}\n\n${t('trackOnlyAppDescription')}',
+                    '${t('youPickedTrackOnly')}\n\n${t('trackOnlyAppDescription')}',
                   ),
                   gap16,
                   GeneratedForm(
@@ -886,7 +875,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             (await getReleaseDateAsVersionConfirmationIfNeeded(
               userPickedTrackOnly,
             ))) {
-          var trackOnly = pickedSource!.enforceTrackOnly || userPickedTrackOnly;
+          var trackOnly = userPickedTrackOnly;
           app = await sourceProvider.getApp(
             pickedSource!,
             userInput.trim(),
@@ -898,7 +887,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           // Only download the APK here if you need to for the package ID
           if (isTempId(app) && app.additionalSettings['trackOnly'] != true) {
             if (!mounted) return;
-            // ignore: use_build_context_synchronously
+            if (!mounted) return;
             var apkUrl = await appsProvider.confirmAppFileUrl(
               app,
               context,
@@ -915,6 +904,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                 .toList()
                 .indexOf(apkUrl.value);
             // ignore: use_build_context_synchronously
+            if (!mounted) return;
             var downloadedArtifact = await appsProvider.downloadApp(
               app,
               globalNavigatorKey.currentContext,
