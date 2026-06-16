@@ -6,7 +6,7 @@ import 'package:updatium/providers/source_provider.dart';
 
 class FDroidRepo extends AppSource {
   FDroidRepo() {
-    name = t('fdroidThirdPartyRepo');
+    name = 'fdroidThirdPartyRepo'.t();
     canSearch = true;
     includeAdditionalOptsInMainSearch = true;
     neverAutoSelect = true;
@@ -16,15 +16,15 @@ class FDroidRepo extends AppSource {
       [
         GeneratedFormTextField(
           'appIdOrName',
-          label: t('appIdOrName'),
-          hint: t('reposHaveMultipleApps'),
+          label: 'appIdOrName'.t(),
+          hint: 'reposHaveMultipleApps'.t(),
           required: true,
         ),
       ],
       [
         GeneratedFormSwitch(
           'pickHighestVersionCode',
-          label: t('pickHighestVersionCode'),
+          label: 'pickHighestVersionCode'.t(),
           defaultValue: false,
         ),
       ],
@@ -170,7 +170,7 @@ class FDroidRepo extends AppSource {
     bool trySelectingSuggestedVersionCode =
         additionalSettings['trySelectingSuggestedVersionCode'];
     if (appIdOrName == null) {
-      throw UpdatiumError(t('appWithIdOrNameNotFound'));
+      throw UpdatiumError('appWithIdOrNameNotFound'.t());
     }
     additionalSettings['appIdOrName'] = appIdOrName;
     var res = await sourceRequestWithURLVariants(
@@ -194,7 +194,7 @@ class FDroidRepo extends AppSource {
       }).toList();
     }
     if (foundApps.isEmpty) {
-      throw UpdatiumError(t('appWithIdOrNameNotFound'));
+      throw UpdatiumError('appWithIdOrNameNotFound'.t());
     }
     var authorName = body.querySelector('repo')?.attributes['name'] ?? name;
     String appId = foundApps[0].attributes['id']!;

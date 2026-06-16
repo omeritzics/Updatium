@@ -1,63 +1,91 @@
 import 'package:simple_localization/simple_localization.dart' as sl;
 export 'package:simple_localization/simple_localization.dart' hide plural;
 
-/// Shorthand for the translation function [tr].
-String t(String key, {List<String>? args}) => sl.tr(key, args: args);
+/// Parameter mapping by key for complex plural keys.
+const Map<String, List<String>> _pluralParamMappings = {
+  'bgUpdateGotErrorRetryInMinutes': ['error', 'count'],
+  'clearedNLogsBeforeXAfterY': ['n', 'before', 'after'],
+};
 
-extension SlangConverterExtension on String {
-  /// Shorthand for the translation extension [.tr()].
-  String t({List<String>? args}) => sl.tr(this, args: args);
+/// 1. Internal global function to avoid naming collisions with the extension
+String _globalTranslate(
+  String key, {
+  List<String>? args,
+  Map<String, dynamic>? namedArgs,
+}) {
+  if (args != null && args.isNotEmpty) {
+    return sl.tr(key, args: args);
+  }
+
+  if (namedArgs != null && namedArgs.isNotEmpty) {
+    final positionalValues = namedArgs.values.map((v) => v.toString()).toList();
+    return sl.tr(key, args: positionalValues);
+  }
+
+  return sl.tr(key);
 }
 
-/// Shorthand and unified bridge for plural translations.
+/// 2. Public global shorthand function
+String t(String key, {List<String>? args, Map<String, dynamic>? namedArgs}) =>
+    _globalTranslate(key, args: args, namedArgs: namedArgs);
+
+/// 3. Extension method updated to safely call the internal global function
+extension SlangConverterExtension on String {
+  String t({List<String>? args, Map<String, dynamic>? namedArgs}) =>
+      _globalTranslate(this, args: args, namedArgs: namedArgs);
+}
+
+/// Plural function remains safe and unchanged
 String plural(
   String key,
   num value, {
   List<String>? args,
-  Map<String, String>? namedArgs,
+  Map<String, dynamic>? namedArgs,
   String? name,
 }) {
-  final newNamedArgs = namedArgs != null
-      ? Map<String, String>.from(namedArgs)
-      : <String, String>{};
+  final newNamedArgs = <String, dynamic>{
+    'count': value,
+    'n': value,
+    ...?namedArgs,
+  };
 
-  // Expose standard count names for Slang compatibility
-  newNamedArgs['count'] = value.toString();
-  newNamedArgs['n'] = value.toString();
-
-  // Smart translation: Map positional args to named parameters based on the key
   if (args != null && args.isNotEmpty) {
-    if (key.startsWith('xAndNMoreUpdates')) {
-      // First arg is the app name, second is the remaining count
+    if (_pluralParamMappings.containsKey(key)) {
+      final paramNames = _pluralParamMappings[key]!;
+      for (int i = 0; i < args.length; i++) {
+        if (i < paramNames.length) {
+          newNamedArgs[paramNames[i]] = args[i];
+        }
+      }
+    } else if (key.startsWith('xAndNMoreUpdates')) {
       newNamedArgs['app'] = args[0];
-      newNamedArgs['count'] = args.length > 1 ? args[1] : value.toString();
-    } else if (key == 'bgUpdateGotErrorRetryInMinutes') {
-      // First arg is the error string, second is the retry count
-      newNamedArgs['error'] = args[0];
-      newNamedArgs['count'] = args.length > 1 ? args[1] : value.toString();
-    } else if (key == 'clearedNLogsBeforeXAfterY') {
-      newNamedArgs['n'] = args[0];
-      if (args.length > 1) newNamedArgs['before'] = args[1];
-      if (args.length > 2) newNamedArgs['after'] = args[2];
+      if (args.length > 1) {
+        newNamedArgs['count'] = args[1];
+      }
     } else {
-      // General fallbacks
       newNamedArgs['app'] = args[0];
       newNamedArgs['error'] = args[0];
       newNamedArgs['param'] = args[0];
+
       for (int i = 0; i < args.length; i++) {
         newNamedArgs['param$i'] = args[i];
       }
     }
   }
 
-  // default placeholder name to 'count' unless specified (like 'n' in logs_provider.dart)
   final resolvedName = name ?? 'count';
+  final finalNamedArgs = newNamedArgs.map((k, v) => MapEntry(k, v.toString()));
 
   return sl.plural(
     key,
     value,
     args: args,
-    namedArgs: newNamedArgs,
+    namedArgs: finalNamedArgs,
     name: resolvedName,
   );
+}
+
+/// Locale Management Bridge
+void setAppLocale(String localeCode) {
+  // Ready for later use.
 }

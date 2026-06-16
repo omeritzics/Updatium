@@ -628,7 +628,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(t('ok')),
+              child: Text('ok'.t()),
             ),
           ],
         );

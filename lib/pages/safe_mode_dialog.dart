@@ -24,13 +24,13 @@ void showSafeModeEnableDialog(BuildContext context) {
         builder: (context, setState) {
           Future<void> setupPassword() async {
             if (passwordController.text.length < 8) {
-              errorMessage = t('safeModePasswordTooShort');
+              errorMessage = 'safeModePasswordTooShort'.t();
               setState(() {});
               return;
             }
 
             if (passwordController.text != confirmPasswordController.text) {
-              errorMessage = t('safeModePasswordMismatch');
+              errorMessage = 'safeModePasswordMismatch'.t();
               setState(() {});
               return;
             }
@@ -51,7 +51,7 @@ void showSafeModeEnableDialog(BuildContext context) {
                   Navigator.of(context).pop(true);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(t('safeModeEnabled')),
+                      content: Text('safeModeEnabled'.t()),
                       backgroundColor: Colors.green,
                     ),
                   );
@@ -60,10 +60,10 @@ void showSafeModeEnableDialog(BuildContext context) {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(t('safeModeEnabledHint')),
+                          content: Text('safeModeEnabledHint'.t()),
                           duration: const Duration(seconds: 5),
                           action: SnackBarAction(
-                            label: t('gotIt'),
+                            label: 'gotIt'.t(),
                             onPressed: () {
                               settingsProvider.safeModeHintShown = true;
                             },
@@ -74,11 +74,11 @@ void showSafeModeEnableDialog(BuildContext context) {
                   });
                 }
               } else {
-                errorMessage = t('safeModePasswordError');
+                errorMessage = 'safeModePasswordError'.t();
                 setState(() {});
               }
             } catch (e) {
-              errorMessage = t('safeModePasswordError');
+              errorMessage = 'safeModePasswordError'.t();
               setState(() {});
             } finally {
               isLoading = false;
@@ -94,7 +94,7 @@ void showSafeModeEnableDialog(BuildContext context) {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(width: 12),
-                Text(t('safeModeEnable')),
+                Text('safeModeEnable'.t()),
               ],
             ),
             content: Column(
@@ -102,12 +102,12 @@ void showSafeModeEnableDialog(BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  t('safeModeSetupDescription'),
+                  'safeModeSetupDescription'.t(),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  t('safeModeDisableHint'),
+                  'safeModeDisableHint'.t(),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
@@ -117,8 +117,8 @@ void showSafeModeEnableDialog(BuildContext context) {
                   controller: passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: t('safeModeSetPassword'),
-                    hintText: t('safeModePasswordHint'),
+                    labelText: 'safeModeSetPassword'.t(),
+                    hintText: 'safeModePasswordHint'.t(),
                     border: const OutlineInputBorder(),
                   ),
                   enabled: !isLoading,
@@ -128,8 +128,8 @@ void showSafeModeEnableDialog(BuildContext context) {
                   controller: confirmPasswordController,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: t('safeModeConfirmPassword'),
-                    hintText: t('safeModePasswordHint'),
+                    labelText: 'safeModeConfirmPassword'.t(),
+                    hintText: 'safeModePasswordHint'.t(),
                     border: const OutlineInputBorder(),
                   ),
                   enabled: !isLoading,
@@ -155,7 +155,7 @@ void showSafeModeEnableDialog(BuildContext context) {
                         confirmPasswordController.dispose();
                         Navigator.of(context).pop();
                       },
-                child: Text(t('cancel')),
+                child: Text('cancel'.t()),
               ),
               M3EFilledButton(
                 onPressed: isLoading ? null : setupPassword,
@@ -165,7 +165,7 @@ void showSafeModeEnableDialog(BuildContext context) {
                         height: 16,
                         child: CircularProgressIndicatorM3E(),
                       )
-                    : Text(t('safeModeEnable')),
+                    : Text('safeModeEnable'.t()),
               ),
             ],
           );
@@ -402,7 +402,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
             ),
           ),
           const SizedBox(width: 16),
-          Text(t('about')),
+          Text('about'.t()),
         ],
       ),
       content: Column(
@@ -435,7 +435,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
                       horizontal: 8,
                     ),
                     child: Text(
-                      '${t('version')} $version ($buildNumber)',
+                      '${'version'.t()} $version ($buildNumber)',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
@@ -444,7 +444,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  t('appDescription'),
+                  'appDescription'.t(),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
@@ -455,8 +455,11 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
           ),
           const SizedBox(height: 24),
           Text(
-            t('developedBy'),
+            
+            'developedBy'.t(),
+           
             style: Theme.of(context).textTheme.titleSmall,
+          ,
           ),
           const SizedBox(height: 8),
           TextButton.icon(
@@ -470,7 +473,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
             label: Text('Omer I.S. (@omeritzics)'),
           ),
           const SizedBox(height: 16),
-          Text(t('sourceCode'), style: Theme.of(context).textTheme.titleSmall),
+          Text('sourceCode'.t(), style: Theme.of(context).textTheme.titleSmall),
           const SizedBox(height: 8),
           TextButton.icon(
             onPressed: () {
@@ -487,7 +490,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(t('close')),
+          child: Text('close'.t()),
         ),
       ],
     );

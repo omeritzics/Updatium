@@ -19,7 +19,7 @@ class FDroid extends AppSource {
       [
         GeneratedFormTextField(
           'filterVersionsByRegEx',
-          label: t('filterVersionsByRegEx'),
+          label: 'filterVersionsByRegEx'.t(),
           required: false,
           additionalValidators: [
             (value) {
@@ -31,7 +31,7 @@ class FDroid extends AppSource {
       [
         GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
-          label: t('autoSelectHighestVersionCode'),
+          label: 'autoSelectHighestVersionCode'.t(),
         ),
       ],
     ];
@@ -160,7 +160,7 @@ class FDroid extends AppSource {
           urlsWithDescriptions[url] = [
             e.querySelector('.package-name')?.text.trim() ?? '',
             e.querySelector('.package-summary')?.text.trim() ??
-                t('noDescription'),
+                'noDescription'.t(),
           ];
         }
       });

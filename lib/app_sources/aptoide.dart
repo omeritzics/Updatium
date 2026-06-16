@@ -61,7 +61,7 @@ class Aptoide extends AppSource {
     Map<String, dynamic> additionalSettings,
   ) async {
     var appDetails = await getAppDetailsJSON(standardUrl, additionalSettings);
-    String appName = appDetails['name'] ?? t('app');
+    String appName = appDetails['name'] ?? 'app'.t();
     String author = appDetails['developer']?['name'] ?? name;
     String? dateStr = appDetails['updated'];
     String? version = appDetails['file']?['vername'];
