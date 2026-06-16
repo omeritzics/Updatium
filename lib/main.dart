@@ -353,11 +353,11 @@ class _UpdatiumState extends State<Updatium> {
                   : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
               inputDecorationTheme: InputDecorationTheme(
                 border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: scheme.primary, width: 2.0),
-                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
               ),
 

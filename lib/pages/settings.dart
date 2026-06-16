@@ -299,8 +299,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: Text(t('useMaterialYou'))),
-                  Switch(
+                  SwitchListTile(
+                    title: Text(t('useMaterialYou')),
                     value: settingsProvider.useMaterialYou,
                     onChanged: (value) {
                       settingsProvider.useMaterialYou = value;
@@ -445,8 +445,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Flexible(child: Text(formItem.key)),
-                      Switch(
+                      SwitchListTile(
+                        title: Text(formItem.key),
                         value: currentValue,
                         onChanged: (value) {
                           settingsProvider.setSettingBool(formItem.key, value);
@@ -559,14 +559,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Flexible(
-                                                child: Text(
+                                              SwitchListTile(
+                                                title: Text(
                                                   t(
                                                     'foregroundServiceExplanation',
                                                   ),
                                                 ),
-                                              ),
-                                              Switch(
                                                 value: settingsProvider
                                                     .useFGService,
                                                 onChanged: (value) {
@@ -581,12 +579,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Flexible(
-                                                child: Text(
+                                              SwitchListTile(
+                                                title: Text(
                                                   t('enableBackgroundUpdates'),
                                                 ),
-                                              ),
-                                              Switch(
                                                 value: settingsProvider
                                                     .enableBackgroundUpdates,
                                                 onChanged: (value) {
@@ -625,14 +621,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Flexible(
-                                                      child: Text(
+                                                    SwitchListTile(
+                                                      title: Text(
                                                         t(
                                                           'bgUpdatesOnWiFiOnly',
                                                         ),
                                                       ),
-                                                    ),
-                                                    Switch(
                                                       value: settingsProvider
                                                           .bgUpdatesOnWiFiOnly,
                                                       onChanged: (value) {
@@ -649,14 +643,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Flexible(
-                                                      child: Text(
+                                                    SwitchListTile(
+                                                      title: Text(
                                                         t(
                                                           'bgUpdatesWhileChargingOnly',
                                                         ),
                                                       ),
-                                                    ),
-                                                    Switch(
                                                       value: settingsProvider
                                                           .bgUpdatesWhileChargingOnly,
                                                       onChanged: (value) {
@@ -881,8 +873,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(child: Text(t('checkOnStart'))),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('checkOnStart')),
                                   value: settingsProvider.checkOnStart,
                                   onChanged: (value) {
                                     settingsProvider.checkOnStart = value;
@@ -894,10 +886,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Text(t('checkUpdateOnDetailPage')),
-                                ),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('checkUpdateOnDetailPage')),
                                   value:
                                       settingsProvider.checkUpdateOnDetailPage,
                                   onChanged: (value) {
@@ -911,10 +901,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Text(t('removeOnExternalUninstall')),
-                                ),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('removeOnExternalUninstall')),
                                   value: settingsProvider
                                       .removeOnExternalUninstall,
                                   onChanged: (value) {
@@ -928,8 +916,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(child: Text(t('parallelDownloads'))),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('parallelDownloads')),
                                   value: settingsProvider.parallelDownloads,
                                   onChanged: (value) {
                                     settingsProvider.parallelDownloads = value;
@@ -987,8 +975,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(child: Text(t('useShizuku'))),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('useShizuku')),
                                   value: settingsProvider.useShizuku,
                                   onChanged: (useShizuku) {
                                     if (useShizuku) {
@@ -1222,8 +1210,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Flexible(child: Text(t('useBlackTheme'))),
-                                  Switch(
+                                  SwitchListTile(
+                                    title: Text(t('useBlackTheme')),
                                     value: settingsProvider.useBlackTheme,
                                     onChanged: (value) {
                                       settingsProvider.useBlackTheme = value;
@@ -1259,10 +1247,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Flexible(
-                                                child: Text(t('useSystemFont')),
-                                              ),
-                                              Switch(
+                                              SwitchListTile(
+                                                title: Text(t('useSystemFont')),
                                                 value: settingsProvider
                                                     .useSystemFont,
                                                 onChanged: (useSystemFont) {
@@ -1292,8 +1278,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(child: Text(t('pinUpdates'))),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('pinUpdates')),
                                   value: settingsProvider.pinUpdates,
                                   onChanged: (value) {
                                     settingsProvider.pinUpdates = value;
@@ -1305,12 +1291,10 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Text(
+                                SwitchListTile(
+                                  title: Text(
                                     t('moveNonInstalledAppsToBottom'),
                                   ),
-                                ),
-                                Switch(
                                   value: settingsProvider.buryNonInstalled,
                                   onChanged: (value) {
                                     settingsProvider.buryNonInstalled = value;
@@ -1322,8 +1306,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(child: Text(t('groupByCategory'))),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('groupByCategory')),
                                   value: settingsProvider.groupByCategory,
                                   onChanged: (value) {
                                     settingsProvider.groupByCategory = value;
@@ -1335,10 +1319,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Text(t('dontShowTrackOnlyWarnings')),
-                                ),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('dontShowTrackOnlyWarnings')),
                                   value: settingsProvider.hideTrackOnlyWarning,
                                   onChanged: (value) {
                                     settingsProvider.hideTrackOnlyWarning =
@@ -1351,10 +1333,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Text(t('dontShowAPKOriginWarnings')),
-                                ),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('dontShowAPKOriginWarnings')),
                                   value: settingsProvider.hideAPKOriginWarning,
                                   onChanged: (value) {
                                     settingsProvider.hideAPKOriginWarning =
@@ -1367,10 +1347,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Text(t('disablePageTransitions')),
-                                ),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('disablePageTransitions')),
                                   value:
                                       settingsProvider.disablePageTransitions,
                                   onChanged: (value) {
@@ -1384,10 +1362,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Text(t('reversePageTransitions')),
-                                ),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('disablePageTransitions')),
                                   value:
                                       settingsProvider.reversePageTransitions,
                                   onChanged:
@@ -1405,10 +1381,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  child: Text(t('highlightTouchTargets')),
-                                ),
-                                Switch(
+                                SwitchListTile(
+                                  title: Text(t('highlightTouchTargets')),
                                   value: settingsProvider.highlightTouchTargets,
                                   onChanged: (value) {
                                     settingsProvider.highlightTouchTargets =
