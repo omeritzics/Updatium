@@ -689,6 +689,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                   ),
                                   Switch(
+                                    //TODO: replace with SwitchListTile
                                     value: false,
                                     onChanged: (value) {
                                       showSafeModeEnableDialog(context);
@@ -756,6 +757,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ),
                                   ),
                                   Switch(
+                                    //TODO: replace with SwitchListTile
                                     value:
                                         settingsProvider.preventUninstallation,
                                     onChanged: (value) async {
@@ -819,7 +821,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ////      ],
                             ////    ),
                             ////  ),
-                            ////    Switch(
+                            ////    Switch( //TODO: replace with SwitchListTile
                             ////     value: settingsProvider.safeModeAntiCheat,
                             ////      onChanged: (value) async {
                             ////        if (value) {
@@ -871,7 +873,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             // ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('checkOnStart')),
@@ -884,7 +885,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('checkUpdateOnDetailPage')),
@@ -899,7 +899,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('removeOnExternalUninstall')),
@@ -914,7 +913,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('parallelDownloads')),
@@ -927,7 +925,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
                                   child: Column(
@@ -961,6 +958,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ),
                                 ),
                                 Switch(
+                                  //TODO: replace with SwitchListTile
                                   value: settingsProvider
                                       .beforeNewInstallsShareToAppVerifier,
                                   onChanged: (value) {
@@ -973,7 +971,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('useShizuku')),
@@ -1032,7 +1029,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Flexible(
                                   child: Text(
@@ -1048,6 +1044,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ),
                                 ),
                                 Switch(
+                                  //TODO: replace with SwitchListTile
                                   value: settingsProvider
                                       .shizukuPretendToBeGooglePlay,
                                   onChanged: settingsProvider.useShizuku
@@ -1276,7 +1273,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('pinUpdates')),
@@ -1289,7 +1285,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(
@@ -1304,7 +1299,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('groupByCategory')),
@@ -1317,7 +1311,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('dontShowTrackOnlyWarnings')),
@@ -1331,7 +1324,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('dontShowAPKOriginWarnings')),
@@ -1345,7 +1337,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('disablePageTransitions')),
@@ -1360,7 +1351,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('disablePageTransitions')),
@@ -1379,7 +1369,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SwitchListTile(
                                   title: Text(t('highlightTouchTargets')),
