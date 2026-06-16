@@ -845,7 +845,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                               content: Text(
                                                 t('safeModeAntiCheatError'),
                                               ),
-                                              backgroundColor: Colors.red,
+                                              backgroundColor: Theme.of(
+                                                context,
+                                              ).colorScheme.error,
                                             ),
                                           );
                                         }
@@ -864,7 +866,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                               content: Text(
                                                 t('safeModeAntiCheatError'),
                                               ),
-                                              backgroundColor: Colors.red,
+                                              backgroundColor: Theme.of(
+                                                context,
+                                              ).colorScheme.error,
                                             ),
                                           );
                                         }

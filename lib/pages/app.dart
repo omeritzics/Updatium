@@ -115,9 +115,7 @@ class _AppPageState extends State<AppPage> {
           }
         }
       }
-    } catch (e) {
-      // Ignore errors, file size will just not be displayed
-    }
+    } catch (e) {}
     return null;
   }
 
@@ -147,7 +145,7 @@ class _AppPageState extends State<AppPage> {
         appsProvider.saveApps([appsProvider.apps[id]!.app]);
       }
     } catch (err) {
-      showError(err, context.mounted as BuildContext);
+      showError(err, context);
     } finally {
       setState(() {
         updating = false;
