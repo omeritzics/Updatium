@@ -1,11 +1,10 @@
-// ignore_for_file: implementation_imports
-
 import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/pages/home.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -15,27 +14,19 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:updatium/services/bg_updates.dart';
 
 import 'package:updatium/services/slang_converter.dart';
 import 'package:simple_localization/src/simple_localization_controller.dart';
 import 'package:simple_localization/src/localization.dart';
-import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:updatium/services/github_star_prompt.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('en'), 'English'),
   MapEntry(Locale('zh'), '简体中文'),
-  MapEntry(
-    Locale.fromSubtags(
-      languageCode: 'zh',
-      countryCode: 'TW',
-    ),
-    '臺灣話',
-  ),
+  // MapEntry(Locale.fromSubtags(languageCode: 'zh', countryCode: 'TW'), '臺灣話'),
   MapEntry(Locale('it'), 'Italiano'),
   MapEntry(Locale('ja'), '日本語'),
   MapEntry(Locale('he'), 'עברית'),
@@ -69,7 +60,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(Locale('ml'), 'മലയാളം'),
   MapEntry(Locale('gl'), 'Galego'),
   MapEntry(Locale('bg'), 'Български'),
-  MapEntry(Locale('en', 'KU'), 'Kurdî'),
+  // MapEntry(Locale('en', 'KU'), 'Kurdî'),
   MapEntry(Locale('ms'), 'Bahasa Melayu'),
   MapEntry(Locale('bn'), 'বাংলা'),
   MapEntry(Locale('ro'), 'Română'),
@@ -129,26 +120,8 @@ void main() async {
     SecurityContext.defaultContext.setTrustedCertificatesBytes(
       data.buffer.asUint8List(),
     );
-  } catch (e) {
-    // Already added, do nothing (see #375)
-  }
+  } catch (e) {}
   await SimpleLocalization.ensureInitialized();
-
-  // Enable edge-to-edge mode for Android 10+ (API 29)
-  try {
-    final androidInfo = await DeviceInfoPlugin().androidInfo;
-    if (androidInfo.version.sdkInt >= 29) {
-      SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(
-          systemNavigationBarColor: Colors.transparent,
-        ),
-      );
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    }
-  } catch (e) {
-    // Not on Android or DeviceInfoPlugin failed - skip edge-to-edge setup
-    debugPrint('Could not enable edge-to-edge mode: $e');
-  }
 
   final np = NotificationsProvider();
   await np.initialize();
@@ -219,66 +192,6 @@ class _UpdatiumState extends State<Updatium> {
     }
   }
 
-  void initForegroundService([int intervalMinutes = 15]) {
-    // Initialize foreground service if not already initialized
-    // ignore: invalid_use_of_visible_for_testing_member
-    if (!FlutterForegroundTask.isInitialized) {
-      FlutterForegroundTask.init(
-        androidNotificationOptions: AndroidNotificationOptions(
-          channelId: 'bg_update',
-          channelName: t('foregroundService'),
-          channelDescription: t('foregroundService'),
-          onlyAlertOnce: true,
-        ),
-        iosNotificationOptions: const IOSNotificationOptions(
-          showNotification: false,
-          playSound: false,
-        ),
-        foregroundTaskOptions: ForegroundTaskOptions(
-          eventAction: ForegroundTaskEventAction.repeat(
-            intervalMinutes * 60000,
-          ),
-          autoRunOnBoot: true,
-          autoRunOnMyPackageReplaced: true,
-          allowWakeLock: false,
-          allowWifiLock: false,
-        ),
-      );
-    }
-  }
-
-  Future<ServiceRequestResult?> startForegroundService(
-    bool restart, [
-    int? intervalMinutes,
-  ]) async {
-    initForegroundService(intervalMinutes ?? 15);
-    if (await FlutterForegroundTask.isRunningService) {
-      if (restart) {
-        return FlutterForegroundTask.restartService();
-      }
-    } else {
-      return FlutterForegroundTask.startService(
-        serviceTypes: [ForegroundServiceTypes.specialUse],
-        serviceId: 666,
-        notificationTitle: t('foregroundService'),
-        notificationText: t('fgServiceNotice'),
-        notificationIcon: NotificationIcon(
-          metaDataName:
-              'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
-        ),
-        callback: startCallback,
-      );
-    }
-    return null;
-  }
-
-  Future<ServiceRequestResult?> stopForegroundService() async {
-    if (await FlutterForegroundTask.isRunningService) {
-      return await FlutterForegroundTask.stopService();
-    }
-    return null;
-  }
-
   @override
   void dispose() {
     // Restore old locale changed callback to prevent memory leak
@@ -321,20 +234,6 @@ class _UpdatiumState extends State<Updatium> {
     AppsProvider appsProvider = context.read<AppsProvider>();
     LogsProvider logs = context.read<LogsProvider>();
     NotificationsProvider notifs = context.read<NotificationsProvider>();
-
-    // Toggle between Foreground Service and Background Fetch
-    if (settingsProvider.updateInterval == 0) {
-      stopForegroundService();
-      BackgroundFetch.stop();
-    } else {
-      if (settingsProvider.useFGService) {
-        BackgroundFetch.stop();
-        startForegroundService(false, settingsProvider.updateInterval);
-      } else {
-        stopForegroundService();
-        BackgroundFetch.start();
-      }
-    }
 
     if (settingsProvider.prefs == null) {
       settingsProvider.initializeSettings();
@@ -469,8 +368,8 @@ class _UpdatiumState extends State<Updatium> {
                 filled: true,
                 labelStyle: const TextStyle(fontWeight: FontWeight.w500),
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 4,
-                  vertical: 4,
+                  horizontal: 6,
+                  vertical: 6,
                 ),
               ),
               // Keyboard/TV navigation support

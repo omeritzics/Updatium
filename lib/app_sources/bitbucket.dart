@@ -195,9 +195,7 @@ class Bitbucket extends AppSource {
             if (createdAt != null) {
               try {
                 releaseDate = DateTime.parse(createdAt as String);
-              } catch (_) {
-                // Ignore parse errors
-              }
+              } catch (_) {}
             }
 
             return APKDetails(
@@ -234,9 +232,7 @@ class Bitbucket extends AppSource {
     if (target != null && target['date'] != null) {
       try {
         releaseDate = DateTime.parse(target['date'] as String);
-      } catch (_) {
-        // Ignore parse errors
-      }
+      } catch (_) {}
     }
 
     // For tags, we can't get APKs directly unless they're in downloads

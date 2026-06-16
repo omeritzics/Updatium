@@ -134,7 +134,7 @@ class GitHub extends AppSource {
           }
         }
       } catch (err) {
-        // Ignore - ID will be extracted from the APK
+        return null;
       }
     }
     return null;

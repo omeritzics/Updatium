@@ -224,9 +224,7 @@ class Gitea extends AppSource {
     if (createdAt != null) {
       try {
         releaseDate = DateTime.parse(createdAt as String);
-      } catch (_) {
-        // Ignore parse errors
-      }
+      } catch (_) {}
     }
 
     String? changeLog = targetRelease['body'] as String?;
