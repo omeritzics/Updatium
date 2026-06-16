@@ -50,7 +50,7 @@ Türkçe, Українська, Dansk, Eesti, Esperanto, Bahasa Indonesia, ব�
 한국어, Català, العربية, മലയാളം, Galego, Български, Bahasa Melayu,
 Română, ئۇيغۇرچە, Norsk (Bokmål), Ελληνικά, Filipino.
 
-* Taiwanese Hokkien (臺灣話) and Northen Kurdish (Kurdî) are not supported yet due to technical limitations.
+`Taiwanese Hokkien (臺灣話) and Northen Kurdish (Kurdî) are not supported yet due to technical limitations.`
 
 ## Download
 
