@@ -21,7 +21,6 @@ class SecurityDisclaimerScreen extends StatefulWidget {
       final prefs = await SharedPreferences.getInstance();
       return prefs.getBool(_disclaimerAcceptedKey) ?? false;
     } catch (e) {
-      // Log structured error without exposing raw exception details
       final logsProvider = LogsProvider();
       await logsProvider.add(
         'Failed to check security disclaimer acceptance from SharedPreferences',
@@ -33,6 +32,12 @@ class SecurityDisclaimerScreen extends StatefulWidget {
 }
 
 class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
+  final List<_DisclaimerItem> _disclaimerItems = [
+    _DisclaimerItem(Icons.gavel, 'license', 'licenseText'),
+    _DisclaimerItem(Icons.warning_amber, 'disclaimer', 'disclaimerText'),
+    _DisclaimerItem(Icons.privacy_tip, 'privacy', 'privacyText'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -42,180 +47,87 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Scrollable Content Area
             Expanded(
               child: SingleChildScrollView(
-                padding: EdgeInsets.only(
-                  left: 24.0,
-                  right: 24.0,
-                  top: 24.0,
-                  bottom: MediaQuery.of(context).padding.bottom + 24.0,
-                ),
+                padding: const EdgeInsets.all(24.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 32),
-
-                    // Security Icon
-                    Container(
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: colorScheme.primaryContainer,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.security,
-                        size: 64,
-                        color: colorScheme.onPrimaryContainer,
-                      ),
-                    ),
-
+                    _buildHeader(colorScheme),
                     const SizedBox(height: 32),
-
-                    // Title
-                    Text(
-                      t('securityDisclaimerTitle'),
-                      style: Theme.of(context).textTheme.headlineMedium
-                          ?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.onSurface,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-
+                    _buildTitle(colorScheme),
                     const SizedBox(height: 24),
-
-                    // Disclaimer Content
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surface.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildDisclaimerItem(
-                            context,
-                            Icons.gavel,
-                            t('license'),
-                            t('licenseText'),
-                          ),
-
-                          const SizedBox(height: 16),
-
-                          _buildDisclaimerItem(
-                            context,
-                            Icons.warning_amber,
-                            t('disclaimer'),
-                            t('disclaimerText'),
-                          ),
-
-                          const SizedBox(height: 16),
-
-                          _buildDisclaimerItem(
-                            context,
-                            Icons.privacy_tip,
-                            t('privacy'),
-                            t('privacyText'),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // Add bottom padding to ensure content doesn't get hidden by buttons
+                    _buildContent(colorScheme),
                     const SizedBox(height: 24),
                   ],
                 ),
               ),
             ),
-
-            // Fixed Action Buttons at Bottom
-            SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Accept Button
-                    SizedBox(
-                      width: double.infinity,
-                      child: M3EFilledButton(
-                        onPressed: () async {
-                          HapticFeedback.lightImpact();
-                          if (!mounted) return;
-                          await _saveDisclaimerAccepted();
-                          if (mounted) {
-                            Navigator.of(
-                              context.mounted as BuildContext,
-                            ).pop(true);
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
-                            t('acceptAndContinue'),
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 12),
-
-                    // Decline Button
-                    SizedBox(
-                      width: double.infinity,
-                      child: M3EOutlinedButton(
-                        onPressed: () {
-                          HapticFeedback.lightImpact();
-                          SystemNavigator.pop();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          child: Text(
-                            t('decline'),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: colorScheme.error,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            _buildActions(colorScheme),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDisclaimerItem(
-    BuildContext context,
-    IconData icon,
-    String title,
-    String content,
-  ) {
-    final colorScheme = Theme.of(context).colorScheme;
+  Widget _buildHeader(ColorScheme colorScheme) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: colorScheme.primaryContainer,
+        shape: BoxShape.circle,
+      ),
+      child: Icon(
+        Icons.security,
+        size: 64,
+        color: colorScheme.onPrimaryContainer,
+      ),
+    );
+  }
 
+  Widget _buildTitle(ColorScheme colorScheme) {
+    return Text(
+      t('securityDisclaimerTitle'),
+      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: colorScheme.onSurface,
+          ),
+      textAlign: TextAlign.center,
+    );
+  }
+
+  Widget _buildContent(ColorScheme colorScheme) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: colorScheme.surface.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: _disclaimerItems.map((item) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: _buildDisclaimerItem(item, colorScheme),
+          );
+        }).toList()
+          ..removeLast(), // Remove padding from last item
+      ),
+    );
+  }
+
+  Widget _buildDisclaimerItem(_DisclaimerItem item, ColorScheme colorScheme) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 20, color: colorScheme.primary),
+        Icon(item.icon, size: 20, color: colorScheme.primary),
         const SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                title,
+                t(item.titleKey),
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: colorScheme.onSurfaceVariant,
@@ -224,7 +136,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                content,
+                t(item.contentKey),
                 style: TextStyle(
                   color: colorScheme.onSurfaceVariant,
                   fontSize: 14,
@@ -238,6 +150,63 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
     );
   }
 
+  Widget _buildActions(ColorScheme colorScheme) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: M3EFilledButton(
+                onPressed: () async {
+                  HapticFeedback.lightImpact();
+                  if (!mounted) return;
+                  await _saveDisclaimerAccepted();
+                  if (mounted) {
+                    Navigator.of(context).pop(true);
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Text(
+                    t('acceptAndContinue'),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: M3EOutlinedButton(
+                onPressed: () {
+                  HapticFeedback.lightImpact();
+                  SystemNavigator.pop();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Text(
+                    t('decline'),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.error,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> _saveDisclaimerAccepted() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -246,7 +215,6 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
         true,
       );
     } catch (e) {
-      // Log structured error without exposing raw exception details
       final logsProvider = LogsProvider();
       await logsProvider.add(
         'Failed to save security disclaimer acceptance to SharedPreferences',
@@ -254,4 +222,12 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
       );
     }
   }
+}
+
+class _DisclaimerItem {
+  final IconData icon;
+  final String titleKey;
+  final String contentKey;
+
+  _DisclaimerItem(this.icon, this.titleKey, this.contentKey);
 }
