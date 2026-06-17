@@ -561,6 +561,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                             title: Text(
                                               'enableBackgroundUpdates'.t(),
                                             ),
+                                            subtitle: Text(
+                                              t(
+                                                'backgroundUpdateReqsExplanation',
+                                              ),
+                                              style: Theme.of(
+                                                context,
+                                              ).textTheme.labelSmall,
+                                            ),
                                             value: settingsProvider
                                                 .enableBackgroundUpdates,
                                             onChanged: (value) {
@@ -571,14 +579,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                           ),
 
                                           gap8,
-                                          Text(
-                                            t(
-                                              'backgroundUpdateReqsExplanation',
-                                            ),
-                                            style: Theme.of(
-                                              context,
-                                            ).textTheme.labelSmall,
-                                          ),
+
                                           Text(
                                             t(
                                               'backgroundUpdateLimitsExplanation',
@@ -632,34 +633,18 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
                             if (!settingsProvider.safeMode)
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('safeMode'.t()),
-                                        Text(
-                                          'safeModeDescription'.t(),
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.labelSmall,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Switch(
-                                    //TODO: replace with SwitchListTile
-                                    value: false,
-                                    onChanged: (value) {
-                                      showSafeModeEnableDialog(context);
-                                    },
-                                  ),
-                                ],
+                              SwitchListTile(
+                                title: Text('safeMode'.t()),
+                                subtitle: Text(
+                                  'safeModeDescription'.t(),
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                                value: false,
+                                onChanged: (value) {
+                                  showSafeModeEnableDialog(context);
+                                },
                               ),
+
                             if (settingsProvider.safeMode)
                               Row(
                                 mainAxisAlignment:
@@ -708,20 +693,17 @@ class _SettingsPageState extends State<SettingsPage> {
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: [
-                                        Text('preventUninstallation'.t()),
-                                        Text(
-                                          'preventUninstallationDescription'
-                                              .t(),
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.labelSmall,
-                                        ),
-                                      ],
+                                      children: [],
                                     ),
                                   ),
-                                  Switch(
-                                    //TODO: replace with SwitchListTile
+                                  SwitchListTile(
+                                    title: Text('preventUninstallation'.t()),
+                                    subtitle: Text(
+                                      'preventUninstallationDescription'.t(),
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.labelSmall,
+                                    ),
                                     value:
                                         settingsProvider.preventUninstallation,
                                     onChanged: (value) async {
@@ -764,77 +746,61 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ],
                               ),
                             gap16,
-                            // if (settingsProvider.safeMode &&
-                            //  settingsProvider.preventUninstallation)
-                            //// Row(
-                            ////  mainAxisAlignment:
-                            ////      MainAxisAlignment.spaceBetween,
-                            //// children: [
-                            ////  Flexible(
-                            ////    child: Column(
-                            ////      crossAxisAlignment:
-                            ////          CrossAxisAlignment.start,
-                            ////      children: [
-                            ////        Text('safeModeAntiCheat'.t()),
-                            ////        Text(
-                            ////          'safeModeAntiCheatDescription'.t(),
-                            ////          style: Theme.of(
-                            ////            context,
-                            ////          ).textTheme.labelSmall,
-                            ////        ),
-                            ////      ],
-                            ////    ),
-                            ////  ),
-                            ////    Switch( //TODO: replace with SwitchListTile
-                            ////     value: settingsProvider.safeModeAntiCheat,
-                            ////      onChanged: (value) async {
-                            ////        if (value) {
-                            ////          // Enable anti-cheat
-                            ////          final success =
-                            ////             await DeviceAdminService.enableAntiCheat();
-                            ////          if (success) {
-                            ////           settingsProvider.safeModeAntiCheat =
-                            ////               true;
-                            ////         } else {
-                            ////           ScaffoldMessenger.of(
-                            ////             context.mounted as BuildContext,
-                            ////           ).showSnackBar(
-                            ////              SnackBar(
-                            ////               content: Text(
-                            ////                 'safeModeAntiCheatError'.t(),
-                            ////              ),
-                            ////             backgroundColor: Theme.of(
-                            ////               context,
-                            ////              ).colorScheme.error,
-                            ////            ),
-                            ////          );
-                            ////        }
-                            ////      } else {
-                            ////        // Disable anti-cheat
-                            ////        final success =
-                            ////           await DeviceAdminService.disableAntiCheat();
-                            ////        if (success) {
-                            ////         settingsProvider.safeModeAntiCheat =
-                            ////             false;
-                            ////        } else {
-                            ////         ScaffoldMessenger.of(
-                            ////           context.mounted as BuildContext,
-                            ////         ).showSnackBar(
-                            ////            SnackBar(
-                            ////             content: Text(
-                            ////                'safeModeAntiCheatError'.t(),
-                            ////              ),
-                            ////              backgroundColor: Theme.of(
-                            ////                context,
-                            ////              ).colorScheme.error,
-                            ////           ),
-                            ////          );
-                            ////        }
-                            ////      }
-                            ////    },
-                            ////  ),
-                            //  ],
-                            // ),
+
+                            //if (settingsProvider.safeMode &&
+                            //    settingsProvider.preventUninstallation)
+                            //  SwitchListTile(
+                            //    title: Text('safeModeAntiCheat'.t()),
+                            //    subtitle: Text(
+                            //      'safeModeAntiCheatDescription'.t(),
+                            //      style: Theme.of(context).textTheme.labelSmall,
+                            //  ),
+                            //  value: settingsProvider.safeModeAntiCheat,
+                            //  onChanged: (value) async {
+                            //    if (value) {
+                            //      // Enable anti-cheat
+                            //      final success =
+                            //          await DeviceAdminService.enableAntiCheat();
+                            //      if (success) {
+                            //        settingsProvider.safeModeAntiCheat = true;
+                            //      } else {
+                            //        ScaffoldMessenger.of(
+                            //          context.mounted as BuildContext,
+                            //        ).showSnackBar(
+                            //          SnackBar(
+                            //            content: Text(
+                            //              'safeModeAntiCheatError'.t(),
+                            //            ),
+                            //            backgroundColor: Theme.of(
+                            //              context,
+                            //            ).colorScheme.error,
+                            //          ),
+                            //        );
+                            //      }
+                            //    } else {
+                            //      // Disable anti-cheat
+                            //      final success =
+                            //          await DeviceAdminService.disableAntiCheat();
+                            //      if (success) {
+                            //        settingsProvider.safeModeAntiCheat =
+                            //            false;
+                            //      } else {
+                            //        ScaffoldMessenger.of(
+                            //          context.mounted as BuildContext,
+                            //        ).showSnackBar(
+                            //          SnackBar(
+                            //            content: Text(
+                            //              'safeModeAntiCheatError'.t(),
+                            //            ),
+                            //            backgroundColor: Theme.of(
+                            //              context,
+                            //            ).colorScheme.error,
+                            //          ),
+                            //        );
+                            //      }
+                            //    }
+                            //  },
+                            //),
                             gap16,
                             SwitchListTile(
                               title: Text('checkOnStart'.t()),
@@ -876,51 +842,35 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
 
                             gap16,
-                            Row(
-                              children: [
-                                Flexible(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        t(
-                                          'beforeNewInstallsShareToAppVerifier',
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          launchUrlString(
-                                            'https://github.com/soupslurpr/AppVerifier',
-                                            mode:
-                                                LaunchMode.externalApplication,
-                                          );
-                                        },
-                                        child: Text(
-                                          'about'.t(),
-                                          style: const TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+
+                            SwitchListTile(
+                              title: Text(
+                                'beforeNewInstallsShareToAppVerifier'.t(),
+                              ),
+                              subtitle: GestureDetector(
+                                onTap: () {
+                                  launchUrlString(
+                                    'https://github.com/soupslurpr/AppVerifier',
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                },
+                                child: Text(
+                                  'about'.t(),
+                                  style: const TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 12,
                                   ),
                                 ),
-                                Switch(
-                                  //TODO: replace with SwitchListTile
-                                  value: settingsProvider
-                                      .beforeNewInstallsShareToAppVerifier,
-                                  onChanged: (value) {
-                                    settingsProvider
-                                            .beforeNewInstallsShareToAppVerifier =
-                                        value;
-                                  },
-                                ),
-                              ],
+                              ),
+                              value: settingsProvider
+                                  .beforeNewInstallsShareToAppVerifier,
+                              onChanged: (value) {
+                                settingsProvider
+                                        .beforeNewInstallsShareToAppVerifier =
+                                    value;
+                              },
                             ),
+
                             gap16,
 
                             SwitchListTile(
@@ -967,8 +917,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
 
                             gap16,
-                            Flexible(
-                              child: Text(
+
+                            SwitchListTile(
+                              title: Text(
                                 'shizukuPretendToBeGooglePlay'.t(),
                                 style: TextStyle(
                                   color: settingsProvider.useShizuku
@@ -977,8 +928,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                             .withValues(alpha: 0.6),
                                 ),
                               ),
-                            ),
-                            SwitchListTile(
                               value:
                                   settingsProvider.shizukuPretendToBeGooglePlay,
                               onChanged: settingsProvider.useShizuku
