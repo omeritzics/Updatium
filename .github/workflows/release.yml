@@ -51,10 +51,8 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
 
       - name: Setup Java JDK
-        uses: actions/setup-java@v5.3.0
-        with:
-          distribution: semeru
-          java-version: '25'
+        run: sudo apt install default-jre default-jdk -y
+        
 
       - name: Setup Flutter
         uses: subosito/flutter-action@main
