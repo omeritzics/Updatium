@@ -90,12 +90,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           await SecurityDisclaimerScreen.isDisclaimerAccepted();
       if (!disclaimerAccepted) {
         if (!context.mounted) return;
-        final accepted = await Navigator.of(context)
-            .push<bool>(
-              MaterialPageRoute(
-                builder: (context) => const SecurityDisclaimerScreen(),
-              ),
-            );
+        final accepted = await Navigator.of(context).push<bool>(
+          MaterialPageRoute(
+            builder: (context) => const SecurityDisclaimerScreen(),
+          ),
+        );
 
         if (accepted != true) {
           SystemNavigator.pop();
@@ -104,9 +103,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
 
       if (!context.mounted) return;
-      await FreeDroidWarnService.showWarningDialog(
-        context,
-      );
+      await FreeDroidWarnService.showWarningDialog(context);
     });
   }
 

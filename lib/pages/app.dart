@@ -877,15 +877,10 @@ class _AppPageState extends State<AppPage> {
                       onPressed: () async {
                         if (!mounted) return;
                         final removedApps = await appsProvider
-                            .removeAppsWithModal(
-                              context,
-                              [app.app],
-                            );
+                            .removeAppsWithModal(context, [app.app]);
                         if (removedApps != null && removedApps.isNotEmpty) {
                           if (mounted) {
-                            ScaffoldMessenger.of(
-                              context,
-                            ).showSnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('appRemoved'.t()),
                                 action: SnackBarAction(
