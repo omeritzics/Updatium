@@ -1278,12 +1278,13 @@ abstract class AppSource {
       var val = hostChanged && !hostIdenticalDespiteAnyChange
           ? additionalSettings[e.key]
           : additionalSettings[e.key] ??
-                (e.runtimeType == GeneratedFormSwitch
+                (e is GeneratedFormSwitch
                     ? settingsProvider.getSettingBool(e.key).toString()
                     : settingsProvider.getSettingString(e.key));
       if (val != null) {
-        if (e.runtimeType == GeneratedFormSwitch) {
+        if (e is GeneratedFormSwitch) {
           val = val.toString();
+        }
         }
         results[e.key] = val;
       }
