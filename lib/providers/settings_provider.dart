@@ -38,6 +38,7 @@ class SettingsProvider with ChangeNotifier {
 
   // Not done in constructor as we want to be able to await it
   Future<void> initializeSettings() async {
+    if (prefs != null) return;
     prefs = await SharedPreferences.getInstance();
     defaultAppDir = (await getAppStorageDir()).path;
     final info = await DeviceInfoPlugin().androidInfo;
