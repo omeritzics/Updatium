@@ -10,6 +10,7 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/pages/edit_page.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:updatium/services/slang_converter.dart';
@@ -1086,59 +1087,22 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                       ),
                     if (pickedSource != null) getAdditionalOptsCol(),
                     if (pickedSource != null)
-                      ExpansionTile(
-                        initiallyExpanded: false,
-                        title: Text(
-                          'advanced'.t(),
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                if (pickedSource!.appIdInferIsOptional)
-                                  GeneratedForm(
-                                    key: const Key('inferAppIdIfOptional'),
-                                    items: [
-                                      [
-                                        GeneratedFormSwitch(
-                                          'inferAppIdIfOptional',
-                                          label: 'tryInferAppIdFromCode'.t(),
-                                          defaultValue: inferAppIdIfOptional,
-                                        ),
-                                      ],
-                                    ],
-                                    onValueChanges: (values, valid, isBuilding) {
-                                      if (!isBuilding) {
-                                        setState(() {
-                                          inferAppIdIfOptional =
-                                              values['inferAppIdIfOptional'];
-                                        });
-                                      }
-                                    },
-                                  ),
-                                gap16,
-                                GeneratedForm(
-                                  key: const Key('advancedSettings'),
-                                  items: pickedSource!
-                                      .combinedAdvancedSettingFormItems,
-                                  onValueChanges: (values, valid, isBuilding) {
-                                    if (!isBuilding) {
-                                      setState(() {
-                                        additionalSettings.addAll(values);
-                                      });
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      AdvancedSettingsTile(
+                        currentInferAppIdIfOptional: inferAppIdIfOptional,
+                        appIdInferIsOptional:
+                            pickedSource!.appIdInferIsOptional,
+                        formItems:
+                            pickedSource!.combinedAdvancedSettingFormItems,
+                        onInferAppIdChanged: (value) {
+                          setState(() {
+                            inferAppIdIfOptional = value;
+                          });
+                        },
+                        onAdvancedSettingsChanged: (values) {
+                          setState(() {
+                            additionalSettings.addAll(values);
+                          });
+                        },
                       ),
                     gap24,
                   ],
