@@ -13,6 +13,9 @@ val newBuildDir: Directory =
 rootProject.layout.buildDirectory.value(newBuildDir)
 
 subprojects {
+    if (project.name == "flutter_archive") {
+        apply(plugin = "org.jetbrains.kotlin.android")
+    }
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
