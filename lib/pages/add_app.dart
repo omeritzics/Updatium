@@ -1086,59 +1086,19 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                       ),
                     if (pickedSource != null) getAdditionalOptsCol(),
                     if (pickedSource != null)
-                      ExpansionTile(
-                        initiallyExpanded: false,
-                        title: Text(
-                          'advanced'.t(),
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                if (pickedSource!.appIdInferIsOptional)
-                                  GeneratedForm(
-                                    key: const Key('inferAppIdIfOptional'),
-                                    items: [
-                                      [
-                                        GeneratedFormSwitch(
-                                          'inferAppIdIfOptional',
-                                          label: 'tryInferAppIdFromCode'.t(),
-                                          defaultValue: inferAppIdIfOptional,
-                                        ),
-                                      ],
-                                    ],
-                                    onValueChanges: (values, valid, isBuilding) {
-                                      if (!isBuilding) {
-                                        setState(() {
-                                          inferAppIdIfOptional =
-                                              values['inferAppIdIfOptional'];
-                                        });
-                                      }
-                                    },
-                                  ),
-                                gap16,
-                                GeneratedForm(
-                                  key: const Key('advancedSettings'),
-                                  items: pickedSource!
-                                      .combinedAdvancedSettingFormItems,
-                                  onValueChanges: (values, valid, isBuilding) {
-                                    if (!isBuilding) {
-                                      setState(() {
-                                        additionalSettings.addAll(values);
-                                      });
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      pickedSource!.buildAdvancedSettingsWidget(
+                        context,
+                        currentInferAppIdIfOptional: inferAppIdIfOptional,
+                        onInferAppIdChanged: (value) {
+                          setState(() {
+                            inferAppIdIfOptional = value;
+                          });
+                        },
+                        onAdvancedSettingsChanged: (values) {
+                          setState(() {
+                            additionalSettings.addAll(values);
+                          });
+                        },
                       ),
                     gap24,
                   ],
