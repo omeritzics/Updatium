@@ -37,7 +37,8 @@ class Apk4Free extends AppSource {
       var fullTitle = titleElement?.text.trim();
 
       if (fullTitle == null || fullTitle.isEmpty) {
-        fullTitle = standardUrl.split('/').last;
+        var segments = standardUrl.split('/').where((s) => s.isNotEmpty).toList();
+        fullTitle = segments.isNotEmpty ? segments.last : 'Apk4Free App';
       } else {
         fullTitle = fullTitle.replaceAll(RegExp(r'\[.*?\]|\{.*?\}'), '');
 
