@@ -171,7 +171,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   // ... existing code ...
   final Set<int> _expandedCategories = <int>{};
 
-
   // Helper function to preserve transparency regardless of theme overrides
   Color preserveTransparency(Color baseColor, double alpha) {
     // ... existing code ...
@@ -250,10 +249,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           .checkUpdates()
           .catchError((e) {
             if (mounted) {
-              showError(
-                e is Map ? e['errors'] : e,
-                context,
-              );
+              showError(e is Map ? e['errors'] : e, context);
             }
             return <App>[];
           })
@@ -1156,10 +1152,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         if (value.isNotEmpty &&
                             shouldInstallUpdates &&
                             mounted) {
-                          showMessage(
-                            'appsUpdated'.t(),
-                            context,
-                          );
+                          showMessage('appsUpdated'.t(), context);
                         }
                       });
                 }
@@ -1799,9 +1792,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                               );
                           if (removedApps != null && removedApps.isNotEmpty) {
                             if (mounted) {
-                              ScaffoldMessenger.of(
-                                context,
-                              ).showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
                                     'appRemoved'.plural(removedApps.length),
