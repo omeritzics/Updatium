@@ -38,6 +38,7 @@ import 'package:updatium/app_sources/whatsapp.dart';
 import 'package:updatium/app_sources/uptodown.dart';
 import 'package:updatium/app_sources/vivoappstore.dart';
 import 'package:updatium/app_sources/vlc.dart';
+import 'package:updatium/pages/edit_page.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -784,24 +785,22 @@ abstract class AppSource {
     name = runtimeType.toString();
   }
 
-  void overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
+  void overrideAdditionalAppSpecificSettingSwitch(
     String key, {
     bool disabled = true,
     bool defaultValue = true,
   }) {
-    additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly =
-        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly.map(
-          (e) {
-            return e.map((e2) {
-              if (e2.key == key) {
-                var item = e2 as GeneratedFormSwitch;
-                item.disabled = disabled;
-                item.defaultValue = defaultValue;
-              }
-              return e2;
-            }).toList();
-          },
-        ).toList();
+    additionalSettingFormItemsNeverUseDirectly =
+        additionalSettingFormItemsNeverUseDirectly.map((e) {
+          return e.map((e2) {
+            if (e2.key == key) {
+              var item = e2 as GeneratedFormSwitch;
+              item.disabled = disabled;
+              item.defaultValue = defaultValue;
+            }
+            return e2;
+          }).toList();
+        }).toList();
   }
 
   String standardizeUrl(String url) {
@@ -925,322 +924,45 @@ abstract class AppSource {
       [];
 
   // Some additional data may be needed for Apps regardless of Source
-  List<List<GeneratedFormItem>>
-  additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
-    [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
-    [
-      GeneratedFormTextField(
-        'appAuthor',
-        label: 'appAuthor'.t(),
-        required: false,
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'appSourceURL',
-        label: 'appSourceURL'.t(),
-        required: false,
-      ),
-    ],
-    [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
-    [
-      GeneratedFormSwitch(
-        'trackOnly',
-        label: 'trackOnly'.t(),
-        defaultValue: false,
-      ),
-    ],
-
-    [
-      GeneratedFormSwitch(
-        'versionDetection',
-        label: 'versionDetectionExplanation'.t(),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'useVersionCodeAsOSVersion',
-        label: 'useVersionCodeAsOSVersion'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'autoApkFilterByArch',
-        label: 'autoApkFilterByArch'.t(),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'exemptFromBackgroundUpdates',
-        label: 'exemptFromBackgroundUpdates'.t(),
-        defaultValue: false,
-      ),
-    ],
-
-    [
-      GeneratedFormSwitch(
-        'useVersionCodeAsOSVersion',
-        label: 'useVersionCodeAsOSVersion'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'autoApkFilterByArch',
-        label: 'autoApkFilterByArch'.t(),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'shizukuPretendToBeGooglePlay',
-        label: 'shizukuPretendToBeGooglePlay'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'allowInsecure',
-        label: 'allowInsecure'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'exemptFromBackgroundUpdates',
-        label: 'exemptFromBackgroundUpdates'.t(),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'skipUpdateNotifications',
-        label: 'skipUpdateNotifications'.t(),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'refreshBeforeDownload',
-        label: 'refreshBeforeDownload'.t(),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'fallbackToOlderReleases',
-        label: 'fallbackToOlderReleases'.t(),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'trySelectingSuggestedVersionCode',
-        label: 'trySelectingSuggestedVersionCode'.t(),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'includePrereleases',
-        label: 'includePrereleases'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'stayOneVersionBehind',
-        label: 'stayOneVersionBehind'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'useFirstApkOfVersion',
-        label: 'useFirstApkOfVersion'.t(),
-      ),
-    ],
-    [GeneratedFormSwitch('verifyLatestTag', label: 'verifyLatestTag'.t())],
-    [
-      GeneratedFormDropdown(
-        'sortMethodChoice',
-        [
-          MapEntry('date', 'releaseDate'.t()),
-          MapEntry('smartname', 'smartname'.t()),
-          MapEntry('none', 'none'.t()),
-          MapEntry(
-            'smartname-datefallback',
-            '${'smartname'.t()} x ${'releaseDate'.t()}',
-          ),
-          MapEntry('name', 'name'.t()),
-        ],
-        label: 'sortMethod'.t(),
-        defaultValue: 'date',
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'useLatestAssetDateAsReleaseDate',
-        label: 'useLatestAssetDateAsReleaseDate'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'releaseTitleAsVersion',
-        label: 'releaseTitleAsVersion'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'versionExtractionRegEx',
-        label: 'trimVersionString'.t(),
-        required: false,
-        additionalValidators: [(value) => regExValidator(value)],
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'matchGroupToUse',
-        label: t('matchGroupToUseForX', args: ['trimVersionString'.t()]),
-        required: false,
-        hint: '\$0',
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'filterReleaseTitlesByRegEx',
-        label: 'filterReleaseTitlesByRegEx'.t(),
-        required: false,
-        additionalValidators: [
-          (value) {
-            return regExValidator(value);
-          },
-        ],
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'filterReleaseNotesByRegEx',
-        label: 'filterReleaseNotesByRegEx'.t(),
-        required: false,
-        additionalValidators: [
-          (value) {
-            return regExValidator(value);
-          },
-        ],
-      ),
-    ],
-  ];
-
-  List<List<GeneratedFormItem>>
-  advancedAppSpecificSourceAgnosticSettingFormItems = [
-    [
-      GeneratedFormTextField(
-        'appId',
-        label: 'appId'.t(),
-        required: false,
-        additionalValidators: [
-          (value) {
-            if (value == null || value.isEmpty) {
-              return null;
-            }
-            final isValid = RegExp(
-              r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-            ).hasMatch(value);
-            if (!isValid) {
-              return 'invalidInput'.t();
-            }
-            return null;
-          },
-        ],
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'shizukuPretendToBeGooglePlay',
-        label: 'shizukuPretendToBeGooglePlay'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'allowInsecure',
-        label: 'allowInsecure'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'apkFilterRegEx',
-        label: 'filterAPKsByRegEx'.t(),
-        required: false,
-        additionalValidators: [(value) => regExValidator(value)],
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'invertAPKFilter',
-        label: '${'invertRegEx'.t()} (${'filterAPKsByRegEx'.t()})',
-        defaultValue: false,
-      ),
-    ],
-  ];
+  List<List<GeneratedFormItem>> additionalSettingFormItemsNeverUseDirectly =
+      cloneFormItems(additionalSettingFormItems);
 
   List<List<GeneratedFormItem>> get combinedAdvancedSettingFormItems {
-    var items = <List<GeneratedFormItem>>[];
-    items.addAll(advancedAppSpecificSourceAgnosticSettingFormItems.sublist(1));
-    if (allowIncludeZips) {
-      items.add([
-        GeneratedFormTextField(
-          'zippedApkFilterRegEx',
-          label: 'zippedApkFilterRegEx'.t(),
-          required: false,
-          additionalValidators: [(value) => regExValidator(value)],
-        ),
-      ]);
-    }
-    return items;
+    return getCombinedAdvancedSettingFormItems(allowIncludeZips);
   }
 
   // Previous 2 variables combined into one at runtime for convenient usage + additional processing
   List<List<GeneratedFormItem>> get combinedAppSpecificSettingFormItems {
     if (showReleaseDateAsVersionToggle == true) {
-      if (additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
-              .indexWhere(
+      if (additionalSettingFormItemsNeverUseDirectly.indexWhere(
+            (List<GeneratedFormItem> e) =>
+                e.indexWhere(
+                  (GeneratedFormItem i) => i.key == 'releaseDateAsVersion',
+                ) >=
+                0,
+          ) <
+          0) {
+        additionalSettingFormItemsNeverUseDirectly.insert(
+          additionalSettingFormItemsNeverUseDirectly.indexWhere(
                 (List<GeneratedFormItem> e) =>
                     e.indexWhere(
-                      (GeneratedFormItem i) => i.key == 'releaseDateAsVersion',
+                      (GeneratedFormItem i) => i.key == 'versionDetection',
                     ) >=
                     0,
-              ) <
-          0) {
-        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
-            .insert(
-              additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
-                      .indexWhere(
-                        (List<GeneratedFormItem> e) =>
-                            e.indexWhere(
-                              (GeneratedFormItem i) =>
-                                  i.key == 'versionDetection',
-                            ) >=
-                            0,
-                      ) +
-                  1,
-              [
-                GeneratedFormSwitch(
-                  'releaseDateAsVersion',
-                  label:
-                      '${'releaseDateAsVersion'.t()} (${'pseudoVersion'.t()})',
-                  defaultValue: false,
-                ),
-              ],
-            );
+              ) +
+              1,
+          [
+            GeneratedFormSwitch(
+              'releaseDateAsVersion',
+              label: '${'releaseDateAsVersion'.t()} (${'pseudoVersion'.t()})',
+              defaultValue: false,
+            ),
+          ],
+        );
       }
     }
-    additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly =
-        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
+    additionalSettingFormItemsNeverUseDirectly =
+        additionalSettingFormItemsNeverUseDirectly
             .map(
               (e) => e
                   .where((ee) => !excludeCommonSettingKeys.contains(ee.key))
@@ -1259,28 +981,16 @@ abstract class AppSource {
             defaultValue: false,
           ),
         ],
-        [
-          GeneratedFormTextField(
-            'zippedApkFilterRegEx',
-            label: 'zippedApkFilterRegEx'.t(),
-            required: false,
-            additionalValidators: [
-              (value) {
-                return regExValidator(value);
-              },
-            ],
-          ),
-        ],
       ]);
     }
 
     if (versionDetectionDisallowed) {
-      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
+      overrideAdditionalAppSpecificSettingSwitch(
         'versionDetection',
         disabled: true,
         defaultValue: false,
       );
-      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
+      overrideAdditionalAppSpecificSettingSwitch(
         'useVersionCodeAsOSVersion',
         disabled: true,
         defaultValue: false,
@@ -1288,7 +998,7 @@ abstract class AppSource {
     }
     return [
       ...additionalSourceAppSpecificSettingFormItems,
-      ...additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly,
+      ...additionalSettingFormItemsNeverUseDirectly,
       ...moreConditionalItems,
     ];
   }
@@ -1339,6 +1049,7 @@ abstract class AppSource {
   bool canSearch = false;
   bool includeAdditionalOptsInMainSearch = false;
   List<GeneratedFormItem> searchQuerySettingFormItems = [];
+
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
@@ -1368,18 +1079,6 @@ abstract class MassAppUrlSource {
   late String name;
   late List<String> requiredArgs;
   Future<Map<String, List<String>>> getUrlsWithDescriptions(List<String> args);
-}
-
-String? regExValidator(String? value) {
-  if (value == null || value.isEmpty) {
-    return null;
-  }
-  try {
-    RegExp(value);
-  } catch (e) {
-    return 'invalidRegEx'.t();
-  }
-  return null;
 }
 
 String? intValidator(String? value, {bool positive = false}) {

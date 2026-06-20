@@ -3,6 +3,7 @@ import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 import 'package:http/http.dart' as http;
+import 'package:updatium/pages/edit_page.dart';
 
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
@@ -474,6 +475,7 @@ class _AppPageState extends State<AppPage> {
         context: context,
         builder: (BuildContext ctx) {
           Map<String, dynamic> localValues = {};
+          bool localInferAppIdIfOptional = true;
           var items = (source?.combinedAppSpecificSettingFormItems ?? []).map((
             row,
           ) {
@@ -495,62 +497,82 @@ class _AppPageState extends State<AppPage> {
             return row;
           }).toList();
 
-          return Dialog.fullscreen(
-            child: Scaffold(
-              appBar: AppBar(
-                leading: IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () => Navigator.of(ctx).pop(null),
-                ),
-                title: Text('additionalOptions'.t()),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(ctx).pop(localValues),
-                    child: Text('save'.t()),
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return Dialog.fullscreen(
+                child: Scaffold(
+                  appBar: AppBar(
+                    leading: IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.of(ctx).pop(null),
+                    ),
+                    title: Text('additionalOptions'.t()),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(localValues),
+                        child: Text('save'.t()),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              body: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    gap16,
-                    GeneratedForm(
-                      items: [
-                        [
-                          GeneratedFormSwitch(
-                            'pinned',
-                            label: 'pinned'.t(),
-                            defaultValue: app.app.pinned,
+                  body: SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        gap16,
+                        GeneratedForm(
+                          items: [
+                            [
+                              GeneratedFormSwitch(
+                                'pinned',
+                                label: 'pinned'.t(),
+                                defaultValue: app.app.pinned,
+                              ),
+                            ],
+                          ],
+                          onValueChanges: (vals, valid, isBuilding) {
+                            localValues.addAll(vals);
+                          },
+                        ),
+                        gap24,
+                        gap16,
+                        GeneratedForm(
+                          items: items,
+                          onValueChanges: (vals, valid, isBuilding) {
+                            localValues.addAll(vals);
+                          },
+                        ),
+                        gap24,
+                        if (source != null)
+                          AdvancedSettingsTile(
+                            currentInferAppIdIfOptional:
+                                localInferAppIdIfOptional,
+                            appIdInferIsOptional: source.appIdInferIsOptional,
+                            formItems: source.combinedAdvancedSettingFormItems,
+                            onInferAppIdChanged: (value) {
+                              setState(() {
+                                localInferAppIdIfOptional = value;
+                              });
+                            },
+                            onAdvancedSettingsChanged: (values) {
+                              localValues.addAll(values);
+                            },
                           ),
-                        ],
+                        gap24,
+                        gap16,
+                        CategorySelector(
+                          alignment: WrapAlignment.start,
+                          preselected: app.app.categories?.toSet() ?? {},
+                          onSelected: (categories) {
+                            localValues['categories'] = categories;
+                          },
+                        ),
                       ],
-                      onValueChanges: (vals, valid, isBuilding) {
-                        localValues.addAll(vals);
-                      },
                     ),
-                    gap24,
-                    gap16,
-                    GeneratedForm(
-                      items: items,
-                      onValueChanges: (vals, valid, isBuilding) {
-                        localValues.addAll(vals);
-                      },
-                    ),
-                    gap24,
-                    gap16,
-                    CategorySelector(
-                      alignment: WrapAlignment.start,
-                      preselected: app.app.categories?.toSet() ?? {},
-                      onSelected: (categories) {
-                        localValues['categories'] = categories;
-                      },
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           );
         },
       );
@@ -589,6 +611,15 @@ class _AppPageState extends State<AppPage> {
         );
         var sourceItems = source?.combinedAppSpecificSettingFormItems ?? [];
         for (var row in sourceItems) {
+          for (var item in row) {
+            if (values[item.key] != null) {
+              app.app.additionalSettings[item.key] = values[item.key];
+            }
+          }
+        }
+
+        var advancedItems = source?.combinedAdvancedSettingFormItems ?? [];
+        for (var row in advancedItems) {
           for (var item in row) {
             if (values[item.key] != null) {
               app.app.additionalSettings[item.key] = values[item.key];
