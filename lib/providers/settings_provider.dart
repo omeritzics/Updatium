@@ -12,6 +12,7 @@ import 'package:updatium/main.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String updatiumTempId = 'omeritzics_updatium_${GitHub().hosts[0]}';
@@ -31,6 +32,7 @@ class SettingsProvider with ChangeNotifier {
   SharedPreferences? prefs;
   String? defaultAppDir;
   bool justStarted = true;
+  bool isTV = false;
 
   String sourceUrl = 'https://github.com/omeritzics/Updatium';
 
@@ -38,6 +40,9 @@ class SettingsProvider with ChangeNotifier {
   Future<void> initializeSettings() async {
     prefs = await SharedPreferences.getInstance();
     defaultAppDir = (await getAppStorageDir()).path;
+    final info = await DeviceInfoPlugin().androidInfo;
+    isTV = info.systemFeatures.contains('android.hardware.type.television') ||
+        info.systemFeatures.contains('android.software.leanback');
     notifyListeners();
   }
 

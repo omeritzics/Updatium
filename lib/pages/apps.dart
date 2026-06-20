@@ -53,76 +53,65 @@ void showChangeLogDialog(
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return AlertDialog(
-        scrollable: true,
-        title: Text('changes'.t()),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(app.latestVersion),
-            const SizedBox(height: 16),
-            if (changesUrl != null) ...[
-              GestureDetector(
-                onTap: () {
-                  launchUrlString(
+      return GeneratedFormModal(
+        title: tr('changes'),
+        items: const [],
+        message: app.latestVersion,
+        additionalWidgets: [
+          changesUrl != null
+              ? GestureDetector(
+                  child: Text(
                     changesUrl,
-                    mode: LaunchMode.externalApplication,
-                  );
-                },
-                child: Text(
-                  changesUrl,
-                  style: const TextStyle(decoration: TextDecoration.underline),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const SizedBox(height: 16),
-            ],
-            appSource.changeLogIfAnyIsMarkDown
-                ? ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.5,
+                    style: const TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontStyle: FontStyle.italic,
                     ),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: Markdown(
-                        styleSheet: MarkdownStyleSheet(
-                          blockquoteDecoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                          ),
-                        ),
-                        data: changeLog,
-                        onTapLink: (text, href, title) {
-                          if (href != null) {
-                            launchUrlString(
-                              href.startsWith('http://') ||
-                                      href.startsWith('https://')
-                                  ? href
-                                  : '${Uri.parse(app.url).origin}/$href',
-                              mode: LaunchMode.externalApplication,
-                            );
-                          }
-                        },
-                        extensionSet: md.ExtensionSet(
-                          md.ExtensionSet.gitHubFlavored.blockSyntaxes,
-                          [
-                            md.EmojiSyntax(),
-                            ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
-                          ],
-                        ),
+                  ),
+                  onTap: () {
+                    launchUrlString(
+                      changesUrl,
+                      mode: LaunchMode.externalApplication,
+                    );
+                  },
+                )
+              : const SizedBox.shrink(),
+          changesUrl != null
+              ? const SizedBox(height: 16)
+              : const SizedBox.shrink(),
+          appSource.changeLogIfAnyIsMarkDown
+              ? SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height - 350,
+                  child: Markdown(
+                    styleSheet: MarkdownStyleSheet(
+                      blockquoteDecoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
                       ),
                     ),
-                  )
-                : Text(changeLog),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text('ok'.t()),
-          ),
+                    data: changeLog,
+                    onTapLink: (text, href, title) {
+                      if (href != null) {
+                        launchUrlString(
+                          href.startsWith('http://') ||
+                                  href.startsWith('https://')
+                              ? href
+                              : '${Uri.parse(app.url).origin}/$href',
+                          mode: LaunchMode.externalApplication,
+                        );
+                      }
+                    },
+                    extensionSet: md.ExtensionSet(
+                      md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+                      [
+                        md.EmojiSyntax(),
+                        ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
+                      ],
+                    ),
+                  ),
+                )
+              : Text(changeLog),
         ],
+        singleNullReturnButton: tr('ok'),
       );
     },
   );
@@ -453,16 +442,19 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       listedApps = [...listedApps, ...temp];
     }
 
+    var tempRenamed = [];
     var tempPinned = [];
     var tempNotPinned = [];
     for (var a in listedApps) {
-      if (a.app.pinned) {
+      if (a.app.hasPendingRepoRename) {
+        tempRenamed.add(a);
+      } else if (a.app.pinned) {
         tempPinned.add(a);
       } else {
         tempNotPinned.add(a);
       }
     }
-    listedApps = [...tempPinned, ...tempNotPinned];
+    listedApps = [...tempRenamed, ...tempPinned, ...tempNotPinned];
 
     List<String?> getListedCategories() {
       var temp = listedApps.map(
@@ -585,24 +577,43 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
     getAppIcon(int appIndex) {
       return GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  AppPage(appId: listedApps[appIndex].app.id),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                    return SharedAxisTransition(
-                      animation: animation,
-                      secondaryAnimation: secondaryAnimation,
-                      transitionType: SharedAxisTransitionType.horizontal,
-                      child: child,
-                    );
-                  },
-            ),
-          );
-        },
+        child: FutureBuilder(
+          future: appsProvider.updateAppIcon(listedApps[appIndex].app.id),
+          builder: (ctx, val) {
+            return listedApps[appIndex].icon != null
+                ? Image.memory(
+                    listedApps[appIndex].icon!,
+                    gaplessPlayback: true,
+                    opacity: AlwaysStoppedAnimation(
+                      listedApps[appIndex].installedInfo == null ? 0.6 : 1,
+                    ),
+                  )
+                : Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.rotationZ(0.31),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Image(
+                            image: const AssetImage(
+                              'assets/graphics/icon_small.png',
+                            ),
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white.withOpacity(0.4)
+                                : Colors.white.withOpacity(0.3),
+                            colorBlendMode: BlendMode.modulate,
+                            gaplessPlayback: true,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+          },
+        ),
         onDoubleTap: () {
           pm.openApp(listedApps[appIndex].app.id);
         },
@@ -618,325 +629,188 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       );
     }
 
-    // Handle app tap navigation
-    void handleAppTap(App app) {
-      if (selectedAppIds.isNotEmpty) {
-        toggleAppSelected(app);
-      } else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AppPage(appId: app.id)),
-        );
-      }
+    getChangesButtonString(int appIndex, bool hasChangeLogFn) {
+      return listedApps[appIndex].app.releaseDate == null
+          ? hasChangeLogFn
+                ? tr('changes')
+                : ''
+          : DateFormat(
+              'yyyy-MM-dd',
+            ).format(listedApps[appIndex].app.releaseDate!.toLocal());
     }
 
-    // Install app helper method
-    void installApp(App app) {
-      appsProvider
-          .downloadAndInstallLatestApps([
-            app.id,
-          ], globalNavigatorKey.currentContext)
-          .catchError((e) {
-            if (mounted) {
-              showError(e, context);
-            }
-            return <String>[];
-          });
-    }
-
-    // Build action button for install/update/updated states
-    Widget buildActionButton(
-      App app,
-      bool isInstalled,
-      bool hasUpdate, {
-      bool isCompact = false,
-    }) {
-      if (!isInstalled) {
-        return Semantics(
-          button: true,
-          label: 'install'.t(),
-          enabled: !appsProvider.areDownloadsRunning(),
-          child: M3EFilledButton.tonal(
-            onPressed: appsProvider.areDownloadsRunning()
-                ? null
-                : () => installApp(app),
-            child: Text('install'.t()),
-          ),
-        );
-      } else if (hasUpdate) {
-        return Semantics(
-          button: true,
-          label: 'update'.t(),
-          enabled: !appsProvider.areDownloadsRunning(),
-          child: M3EFilledButton.tonal(
-            onPressed: appsProvider.areDownloadsRunning()
-                ? null
-                : () => installApp(app),
-            child: Text('update'.t()),
-          ),
-        );
-      } else {
-        return Semantics(
-          button: true,
-          label: 'updated'.t(),
-          enabled: false,
-          child: M3EFilledButton.tonal(
-            onPressed: null,
-            child: Text('updated'.t()),
-          ),
-        );
-      }
-    }
-
-    // Simplified grid tile widget using Material Design 3 components
-    Widget buildGridTile(int index) {
-      final appInfo = listedApps[index];
-      final app = appInfo.app;
-      final isInstalled = app.installedVersion != null;
-      final hasUpdate =
-          isInstalled && app.installedVersion != app.latestVersion;
-      final isTrackOnly = app.additionalSettings['trackOnly'] == true;
-      final isSelected = selectedAppIds.contains(app.id);
-
-      return Card(
-        margin: const EdgeInsets.symmetric(vertical: 4),
-        color: isSelected
-            ? Theme.of(
-                context,
-              ).colorScheme.primaryContainer.withValues(alpha: 0.3)
-            : null,
-        child: Semantics(
-          button: true,
-          label: app.pinned
-              ? t(
-                  'pinnedApp',
-                  args: [
-                    appInfo.name,
-                    t('byX', args: [appInfo.author]),
-                  ],
-                )
-              : '${appInfo.name}, ${t('byX', args: [appInfo.author])}',
-          value: isInstalled
-              ? (hasUpdate ? 'updateAvailable'.t() : 'upToDate'.t())
-              : 'notInstalled'.t(),
-          onTapHint: 'openAppDetails'.t(),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(12),
-            onTap: () => handleAppTap(app),
-            onLongPress: () => toggleAppSelected(app),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+    getSingleAppHorizTile(int index) {
+      var showChangesFn = getChangeLogFn(context, listedApps[index].app);
+      var hasUpdate =
+          listedApps[index].app.installedVersion != null &&
+          listedApps[index].app.installedVersion !=
+              listedApps[index].app.latestVersion;
+      Widget trailingRow = Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          hasUpdate ? getUpdateButton(index) : const SizedBox.shrink(),
+          hasUpdate ? const SizedBox(width: 5) : const SizedBox.shrink(),
+          GestureDetector(
+            onTap: showChangesFn,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color:
+                    settingsProvider.highlightTouchTargets &&
+                        showChangesFn != null
+                    ? (Theme.of(context).brightness == Brightness.light
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).primaryColorLight)
+                          .withAlpha(
+                            Theme.of(context).brightness == Brightness.light
+                                ? 20
+                                : 40,
+                          )
+                    : null,
+              ),
+              padding: settingsProvider.highlightTouchTargets
+                  ? const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0)
+                  : const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      // App icon with status indicators
-                      Stack(
-                        children: [
-                          SizedBox(
-                            height: 56,
-                            width: 56,
-                            child: getAppIcon(index),
-                          ),
-                          if (app.pinned)
-                            Positioned(
-                              top: -4,
-                              left: -4,
-                              child: Semantics(
-                                label: 'pinned'.t(),
-                                child: Icon(
-                                  Icons.push_pin,
-                                  size: 14,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      // App name
-                      Text(
-                        appInfo.name,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 2),
-                      // Author name
-                      Text(
-                        t('byX', args: [appInfo.author]),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                      const SizedBox(height: 8),
-                      // Action button or progress indicator
-                      if (appInfo.downloadProgress != null)
-                        Semantics(
-                          label: 'downloadProgress'.t(),
-                          value: '${appInfo.downloadProgress!.toInt()}%',
-                          child: SizedBox(
-                            width: 80,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                if (appInfo.downloadProgress! >= 0)
-                                  Text(
-                                    '${appInfo.downloadProgress!.toInt()}%',
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.bodySmall,
-                                  ),
-                                const SizedBox(height: 4),
-                                SizedBox(
-                                  width: 40,
-                                  height: 4,
-                                  child: LinearProgressIndicator(
-                                    value: appInfo.downloadProgress! >= 0
-                                        ? appInfo.downloadProgress! / 100
-                                        : null,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      else if (!isTrackOnly)
-                        buildActionButton(
-                          app,
-                          isInstalled,
-                          hasUpdate,
-                          isCompact: true,
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width / 4,
                         ),
+                        child: Text(
+                          getVersionText(index),
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.end,
+                          style: isVersionPseudo(listedApps[index].app)
+                              ? TextStyle(fontStyle: FontStyle.italic)
+                              : null,
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-
-    // Simplified list tile widget using Material Design 3 components
-    Widget buildListTile(int index) {
-      final appInfo = listedApps[index];
-      final app = appInfo.app;
-      final isInstalled = app.installedVersion != null;
-      final hasUpdate =
-          isInstalled && app.installedVersion != app.latestVersion;
-      final isTrackOnly = app.additionalSettings['trackOnly'] == true;
-      final isSelected = selectedAppIds.contains(app.id);
-
-      return Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        child: Semantics(
-          button: true,
-          label: app.pinned
-              ? t(
-                  'pinnedApp',
-                  args: [
-                    appInfo.name,
-                    t('byX', args: [appInfo.author]),
-                  ],
-                )
-              : '${appInfo.name}, ${t('byX', args: [appInfo.author])}',
-          value: isInstalled
-              ? (hasUpdate ? 'updateAvailable'.t() : 'upToDate'.t())
-              : 'notInstalled'.t(),
-          onTapHint: 'openAppDetails'.t(),
-          child: ListTile(
-            selected: isSelected,
-            selectedTileColor: Theme.of(
-              context,
-            ).colorScheme.primaryContainer.withValues(alpha: 0.3),
-            leading: SizedBox(
-              height: 48,
-              width: 48,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: getAppIcon(index),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        getChangesButtonString(index, showChangesFn != null),
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          decoration: showChangesFn != null
+                              ? TextDecoration.underline
+                              : TextDecoration.none,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            title: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    appInfo.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: app.pinned
-                          ? FontWeight.w600
-                          : FontWeight.w500,
-                    ),
-                  ),
-                ),
-                if (app.pinned)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 6),
-                    child: Semantics(
-                      label: 'pinned'.t(),
-                      child: Icon(
-                        Icons.push_pin,
-                        size: 14,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            subtitle: Text(
-              t('byX', args: [appInfo.author]),
-              maxLines: 1,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            trailing: appInfo.downloadProgress != null
-                ? Semantics(
-                    label: 'downloadProgress'.t(),
-                    value: '${appInfo.downloadProgress!.toInt()}%',
-                    child: SizedBox(
-                      width: 80,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (appInfo.downloadProgress! >= 0)
-                            Text(
-                              '${appInfo.downloadProgress!.toInt()}%',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          const SizedBox(height: 4),
-                          SizedBox(
-                            width: 40,
-                            height: 4,
-                            child: LinearProgressIndicator(
-                              value: appInfo.downloadProgress! >= 0
-                                  ? appInfo.downloadProgress! / 100
-                                  : null,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                : isTrackOnly
-                ? Semantics(
-                    label: 'trackOnly'.t(),
-                    child: Icon(
-                      Icons.check_circle_outline,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  )
-                : buildActionButton(app, isInstalled, hasUpdate),
-            onTap: () => handleAppTap(app),
-            onLongPress: () => toggleAppSelected(app),
           ),
+        ],
+      );
+
+      var transparent = Theme.of(
+        context,
+      ).colorScheme.surface.withAlpha(0).value;
+      List<double> stops = [
+        ...listedApps[index].app.categories.asMap().entries.map(
+          (e) =>
+              ((e.key / (listedApps[index].app.categories.length - 1)) -
+              0.0001),
+        ),
+        1,
+      ];
+      if (stops.length == 2) {
+        stops[0] = 0.9999;
+      }
+      return Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            stops: stops,
+            begin: const Alignment(-1, 0),
+            end: const Alignment(-0.97, 0),
+            colors: [
+              ...listedApps[index].app.categories.map(
+                (e) => Color(
+                  settingsProvider.categories[e] ?? transparent,
+                ).withAlpha(255),
+              ),
+              Color(transparent),
+            ],
+          ),
+        ),
+        child: ListTile(
+          tileColor: listedApps[index].app.pinned
+              ? Colors.grey.withOpacity(0.1)
+              : Colors.transparent,
+          selectedTileColor: Theme.of(context).colorScheme.primary.withOpacity(
+            listedApps[index].app.pinned ? 0.2 : 0.1,
+          ),
+          selected: selectedAppIds
+              .map((e) => e)
+              .contains(listedApps[index].app.id),
+          onLongPress: () {
+            toggleAppSelected(listedApps[index].app);
+          },
+          leading: getAppIcon(index),
+          title: Text(
+            maxLines: 1,
+            listedApps[index].name,
+            style: TextStyle(
+              overflow: TextOverflow.ellipsis,
+              fontWeight: listedApps[index].app.pinned
+                  ? FontWeight.bold
+                  : FontWeight.normal,
+            ),
+          ),
+          subtitle: Text(
+            tr('byX', args: [listedApps[index].author]),
+            maxLines: 1,
+            style: TextStyle(
+              overflow: TextOverflow.ellipsis,
+              fontWeight: listedApps[index].app.pinned
+                  ? FontWeight.bold
+                  : FontWeight.normal,
+            ),
+          ),
+          trailing: listedApps[index].downloadProgress != null
+              ? SizedBox(
+                  child: Text(
+                    listedApps[index].downloadProgress! >= 0
+                        ? tr(
+                            'percentProgress',
+                            args: [
+                              listedApps[index].downloadProgress!
+                                  .toInt()
+                                  .toString(),
+                            ],
+                          )
+                        : tr('installing'),
+                    textAlign: (listedApps[index].downloadProgress! >= 0)
+                        ? TextAlign.start
+                        : TextAlign.end,
+                  ),
+                )
+              : trailingRow,
+          onTap: () {
+            if (selectedAppIds.isNotEmpty) {
+              toggleAppSelected(listedApps[index].app);
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      AppPage(appId: listedApps[index].app.id),
+                ),
+              );
+            }
+          },
         ),
       );
     }
