@@ -718,12 +718,17 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       var transparent = Theme.of(
         context,
       ).colorScheme.surface.withAlpha(0).value;
+
+      // Guard against null or insufficient categories
+      final categories = listedApps[index].app.categories;
+      final hasValidCategories = categories != null && categories.length >= 2;
+
       List<double> stops = [
-        ...listedApps[index].app.categories.asMap().entries.map(
-          (e) =>
-              ((e.key / (listedApps[index].app.categories.length - 1)) -
-              0.0001),
-        ),
+        if (hasValidCategories)
+          ...categories.asMap().entries.map(
+            (e) =>
+                ((e.key / (categories.length - 1)) - 0.0001),
+          ),
         1,
       ];
       if (stops.length == 2) {
@@ -731,19 +736,19 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       }
       return Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: hasValidCategories ? LinearGradient(
             stops: stops,
             begin: const Alignment(-1, 0),
             end: const Alignment(-0.97, 0),
             colors: [
-              ...listedApps[index].app.categories.map(
+              ...categories.map(
                 (e) => Color(
                   settingsProvider.categories[e] ?? transparent,
                 ).withAlpha(255),
               ),
               Color(transparent),
             ],
-          ),
+          ) : null,
         ),
         child: ListTile(
           tileColor: listedApps[index].app.pinned
