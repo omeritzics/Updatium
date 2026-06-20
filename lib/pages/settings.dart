@@ -713,6 +713,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         // Check if device admin is now enabled
                                         final isEnabled =
                                             await DeviceAdminService.isDeviceAdminEnabled();
+                                        if (!mounted) return;
                                         if (isEnabled) {
                                           settingsProvider
                                                   .preventUninstallation =
@@ -720,7 +721,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         } else {
                                           // User declined or failed
                                           ScaffoldMessenger.of(
-                                            context.mounted as BuildContext,
+                                            context,
                                           ).showSnackBar(
                                             SnackBar(
                                               content: Text(
@@ -765,7 +766,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             //        settingsProvider.safeModeAntiCheat = true;
                             //      } else {
                             //        ScaffoldMessenger.of(
-                            //          context.mounted as BuildContext,
+                            //          context,
                             //        ).showSnackBar(
                             //          SnackBar(
                             //            content: Text(
@@ -786,7 +787,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             //            false;
                             //      } else {
                             //        ScaffoldMessenger.of(
-                            //          context.mounted as BuildContext,
+                            //          context,
                             //        ).showSnackBar(
                             //          SnackBar(
                             //            content: Text(
@@ -881,6 +882,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ShizukuApkInstaller().checkPermission().then((
                                     resCode,
                                   ) {
+                                    if (!mounted) return;
                                     settingsProvider.useShizuku =
                                         resCode?.startsWith('granted') ?? false;
                                     switch (resCode) {
@@ -889,24 +891,24 @@ class _SettingsPageState extends State<SettingsPage> {
                                           UpdatiumError(
                                             'shizukuBinderNotFound'.t(),
                                           ),
-                                          context.mounted as BuildContext,
+                                          context,
                                         );
                                       case 'old_shizuku':
                                         showError(
                                           UpdatiumError('shizukuOld'.t()),
-                                          context.mounted as BuildContext,
+                                          context,
                                         );
                                       case 'old_android_with_adb':
                                         showError(
                                           UpdatiumError(
                                             t('shizukuOldAndroidWithADB'),
                                           ),
-                                          context.mounted as BuildContext,
+                                          context,
                                         );
                                       case 'denied':
                                         showError(
                                           UpdatiumError('cancelled'.t()),
-                                          context.mounted as BuildContext,
+                                          context,
                                         );
                                     }
                                   });
@@ -1383,7 +1385,9 @@ class _LogsDialogState extends State<LogsDialog> {
                 true;
             if (cont) {
               logsProvider.clear();
-              Navigator.of(context.mounted as BuildContext).pop();
+              if (mounted) {
+                Navigator.of(context).pop();
+              }
             }
           },
           child: Text('remove'.t()),

@@ -89,7 +89,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       final disclaimerAccepted =
           await SecurityDisclaimerScreen.isDisclaimerAccepted();
       if (!disclaimerAccepted) {
-        final accepted = await Navigator.of(context.mounted as BuildContext)
+        if (!context.mounted) return;
+        final accepted = await Navigator.of(context)
             .push<bool>(
               MaterialPageRoute(
                 builder: (context) => const SecurityDisclaimerScreen(),
@@ -102,8 +103,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         }
       }
 
+      if (!context.mounted) return;
       await FreeDroidWarnService.showWarningDialog(
-        context.mounted as BuildContext,
+        context,
       );
     });
   }
@@ -233,19 +235,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           var result = await appsProvider.import(
             action == 'app' ? '{ "apps": [$dataStr] }' : '{ "apps": $dataStr }',
           );
+          if (!context.mounted) return;
           showMessage(
             t(
               'importedX',
               args: ['apps'.plural(result.key.length).toLowerCase()],
             ),
-            context.mounted as BuildContext,
+            context,
           );
         }
       } else {
         throw UpdatiumError('unknown'.t());
       }
     } catch (e) {
-      showError(e, context.mounted as BuildContext);
+      if (!context.mounted) return;
+      showError(e, context);
     }
   }
 
@@ -260,7 +264,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         throw UpdatiumError('unknown'.t());
       }
     } catch (e) {
-      showError(e, context.mounted as BuildContext);
+      if (!context.mounted) return;
+      showError(e, context);
     }
   }
 

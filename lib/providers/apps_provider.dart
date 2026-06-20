@@ -854,9 +854,11 @@ class AppsProvider with ChangeNotifier {
             ext,
             APKDir.path,
           );
-          // ignore: use_build_context_synchronously
+          if (!context.mounted) {
+            throw UpdatiumError('downloadCancelled'.t());
+          }
           String? userFileName = await promptForFileName(
-            context.mounted as BuildContext,
+            context,
             suggestedName,
           );
           if (userFileName == null) {
@@ -1883,10 +1885,10 @@ class AppsProvider with ChangeNotifier {
       }
       if (apps[id]!.app.apkUrls.isNotEmpty ||
           apps[id]!.app.otherAssetUrls.isNotEmpty) {
-        // ignore: use_build_context_synchronously
+        if (!context.mounted) return [];
         MapEntry<String, String>? tempFileUrl = await confirmAppFileUrl(
           apps[id]!.app,
-          context.mounted as BuildContext,
+          context,
           true,
           evenIfSingleChoice: true,
         );
@@ -3317,7 +3319,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
             // Next task interval is based on the error with the longest retry time
             int minRetryIntervalForThisApp = err is RateLimitError
                 ? (err.remainingMinutes * 60)
-                : e is http.ClientException
+                : err is http.ClientException
                 ? (15 * 60)
                 : (toCheckApp.value + 1);
             if (minRetryIntervalForThisApp > maxRetryWaitSeconds) {
