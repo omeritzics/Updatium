@@ -562,9 +562,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               'enableBackgroundUpdates'.t(),
                                             ),
                                             subtitle: Text(
-                                              t(
-                                                'backgroundUpdateReqsExplanation',
-                                              ),
+                                              '${'backgroundUpdateReqsExplanation'.t()} ${'backgroundUpdateLimitsExplanation'.t()}',
                                               style: Theme.of(
                                                 context,
                                               ).textTheme.labelSmall,
@@ -578,16 +576,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                             },
                                           ),
 
-                                          gap8,
-
-                                          Text(
-                                            t(
-                                              'backgroundUpdateLimitsExplanation',
-                                            ),
-                                            style: Theme.of(
-                                              context,
-                                            ).textTheme.labelSmall,
-                                          ),
                                           gap8,
                                           if (settingsProvider
                                               .enableBackgroundUpdates)
