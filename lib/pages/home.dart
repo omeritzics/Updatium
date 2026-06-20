@@ -354,10 +354,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           _handlePop();
         }
       },
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        body: _buildBody(pages, settingsProvider),
-        bottomNavigationBar: _buildBottomBar(pages, settingsProvider),
+      child: Focus(
+        child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          body: _buildBody(pages, settingsProvider),
+          bottomNavigationBar: _buildBottomBar(pages, settingsProvider),
+        ),
       ),
     );
   }
