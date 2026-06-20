@@ -1339,7 +1339,7 @@ abstract class AppSource {
   bool canSearch = false;
   bool includeAdditionalOptsInMainSearch = false;
   List<GeneratedFormItem> searchQuerySettingFormItems = [];
-  
+
   Widget buildAdvancedSettingsWidget(
     BuildContext context, {
     required bool currentInferAppIdIfOptional,
