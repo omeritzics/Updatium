@@ -1523,7 +1523,6 @@ class AppsProvider with ChangeNotifier {
       );
     } else {
       code = await ShizukuApkInstaller().installAPK(
-      code = await ShizukuApkInstaller().installAPK(
         file.file.uri.toString(),
         shizukuPretendToBeGooglePlay ? "com.android.vending" : "",
       );
