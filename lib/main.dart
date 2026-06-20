@@ -385,7 +385,7 @@ class _UpdatiumState extends State<Updatium> {
                   vertical: 8,
                 ),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 selectedTileColor: scheme.surface.withValues(alpha: 0.2),
                 iconColor: scheme.onSurfaceVariant,
@@ -393,12 +393,19 @@ class _UpdatiumState extends State<Updatium> {
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
                   fontSize: 16,
-                  // fontWeight: FontWeight.w500,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: settingsProvider.useSystemFont
+                      ? null
+                      : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
                 ),
                 subtitleTextStyle: TextStyle(
                   color: scheme.onSurfaceVariant,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
+                  fontFamily: getPrimaryFontForLocale(context.locale),
+                  fontFamilyFallback: settingsProvider.useSystemFont
+                      ? null
+                      : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
                 ),
               ),
 
