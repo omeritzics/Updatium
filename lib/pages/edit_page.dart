@@ -2,7 +2,8 @@ import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
-List<List<GeneratedFormItem>> additionalAppSpecificSourceAgnosticSettingFormItems = [
+List<List<GeneratedFormItem>>
+additionalAppSpecificSourceAgnosticSettingFormItems = [
   [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
   [
     GeneratedFormTextField(
