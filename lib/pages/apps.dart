@@ -603,8 +603,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             ),
                             color:
                                 Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white.withOpacity(0.4)
-                                : Colors.white.withOpacity(0.3),
+                                ? Colors.white.withValues(alpha: 0.4)
+                                : Colors.white.withValues(alpha: 0.3),
                             colorBlendMode: BlendMode.modulate,
                             gaplessPlayback: true,
                           ),
@@ -717,7 +717,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
       var transparent = Theme.of(
         context,
-      ).colorScheme.surface.withAlpha(0).value;
+      ).colorScheme.surface.withAlpha(0).toARGB32();
 
       // Guard against null or insufficient categories
       final categories = listedApps[index].app.categories;
@@ -726,8 +726,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       List<double> stops = [
         if (hasValidCategories)
           ...categories.asMap().entries.map(
-            (e) =>
-                ((e.key / (categories.length - 1)) - 0.0001),
+            (e) => ((e.key / (categories.length - 1)) - 0.0001),
           ),
         1,
       ];
@@ -736,26 +735,28 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       }
       return Container(
         decoration: BoxDecoration(
-          gradient: hasValidCategories ? LinearGradient(
-            stops: stops,
-            begin: const Alignment(-1, 0),
-            end: const Alignment(-0.97, 0),
-            colors: [
-              ...categories.map(
-                (e) => Color(
-                  settingsProvider.categories[e] ?? transparent,
-                ).withAlpha(255),
-              ),
-              Color(transparent),
-            ],
-          ) : null,
+          gradient: hasValidCategories
+              ? LinearGradient(
+                  stops: stops,
+                  begin: const Alignment(-1, 0),
+                  end: const Alignment(-0.97, 0),
+                  colors: [
+                    ...categories.map(
+                      (e) => Color(
+                        settingsProvider.categories[e] ?? transparent,
+                      ).withAlpha(255),
+                    ),
+                    Color(transparent),
+                  ],
+                )
+              : null,
         ),
         child: ListTile(
           tileColor: listedApps[index].app.pinned
-              ? Colors.grey.withOpacity(0.1)
+              ? Colors.grey.withValues(alpha: 0.1)
               : Colors.transparent,
-          selectedTileColor: Theme.of(context).colorScheme.primary.withOpacity(
-            listedApps[index].app.pinned ? 0.2 : 0.1,
+          selectedTileColor: Theme.of(context).colorScheme.primary.withValues(
+            alpha: listedApps[index].app.pinned ? 0.2 : 0.1,
           ),
           selected: selectedAppIds
               .map((e) => e)

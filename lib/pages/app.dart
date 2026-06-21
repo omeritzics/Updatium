@@ -430,7 +430,7 @@ class _AppPageState extends State<AppPage> {
         versionLines +=
             '\n${'installedVersion'.t()}: ${app.app.installedVersion}';
       }
-      final lastUpdateCheck = app?.app.lastUpdateCheck?.toLocal();
+      final lastUpdateCheck = app.app.lastUpdateCheck?.toLocal();
       String infoLines = t(
         'lastUpdateCheckX',
         args: [
