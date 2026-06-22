@@ -9,7 +9,6 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/category_chip.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:provider/provider.dart';
 
 abstract class GeneratedFormItem {
   late String key;

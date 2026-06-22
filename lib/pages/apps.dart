@@ -822,10 +822,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       );
     }
 
-    getSingleAppHorizTile(int index) {
-      return buildListTile(index);
-    }
-
     getSingleAppGridTile(int index) {
       return buildGridTile(index);
     }

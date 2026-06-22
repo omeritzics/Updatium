@@ -10,7 +10,6 @@ import 'package:updatium/main.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
-import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:docman/docman.dart';
 

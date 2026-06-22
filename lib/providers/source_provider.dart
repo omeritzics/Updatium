@@ -984,7 +984,7 @@ abstract class AppSource {
         if (item.key == 'versionDetection' ||
             item.key == 'useVersionCodeAsOSVersion') {
           (item as GeneratedFormSwitch).disabled = true;
-          (item as GeneratedFormSwitch).defaultValue = false;
+          (item).defaultValue = false;
         }
       }
     }
