@@ -1,6 +1,7 @@
 import 'package:updatium/app_sources/gitea.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
+import 'package:updatium/app_sources/github.dart' as gh;
 
 class Codeberg extends AppSource {
   Codeberg() {

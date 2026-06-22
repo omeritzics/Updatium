@@ -234,7 +234,7 @@ class GitHub extends AppSource {
     Map<String, dynamic> additionalSettings,
     Map<String, String> sourceConfigSettingValues,
   ) async {
-    if (sourceConfigSettingValues['checkRepoRename'] == "false") {
+    if (sourceConfigSettingValues['checkRepoRename'] != "true") {
       return;
     }
     var uri = Uri.tryParse(standardUrl);
@@ -288,6 +288,11 @@ class GitHub extends AppSource {
     var sourceConfigSettingValues = await getSourceConfigValues(
       additionalSettings,
       settingsProvider,
+    );
+    await checkForRepositoryRename(
+      standardUrl,
+      additionalSettings,
+      sourceConfigSettingValues,
     );
     bool includePrereleases = additionalSettings['includePrereleases'] == true;
     bool fallbackToOlderReleases =

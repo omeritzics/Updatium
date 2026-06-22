@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/services.dart';

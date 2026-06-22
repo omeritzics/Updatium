@@ -1015,7 +1015,6 @@ abstract class AppSource {
         if (e is GeneratedFormSwitch) {
           val = val.toString();
         }
-        }
         results[e.key] = val;
       }
     }
@@ -1525,6 +1524,13 @@ class InstallError extends UpdatiumError {
 
 class IDChangedError extends UpdatiumError {
   IDChangedError(String newId) : super('${'appIdMismatch'.t()} - $newId');
+}
+
+class RepositoryRenamedError extends UpdatiumError {
+  final String oldUrl;
+  final String newUrl;
+  RepositoryRenamedError(this.oldUrl, this.newUrl)
+      : super('repoRenamed'.t(args: [oldUrl, newUrl]));
 }
 
 class NotImplementedError extends UpdatiumError {
