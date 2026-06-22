@@ -930,66 +930,8 @@ abstract class AppSource {
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly =
       cloneFormItems(additionalAppSpecificSourceAgnosticSettingFormItems);
 
-  List<List<GeneratedFormItem>>
-  advancedAppSpecificSourceAgnosticSettingFormItems = [
-    [
-      GeneratedFormTextField(
-        'appId',
-        label: 'appId'.t(),
-        required: false,
-        additionalValidators: [
-          (value) {
-            if (value == null || value.isEmpty) {
-              return null;
-            }
-            final isValid = RegExp(
-              r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-            ).hasMatch(value);
-            if (!isValid) {
-              return 'invalidInput'.t();
-            }
-            return null;
-          },
-        ],
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'shizukuPretendToBeGooglePlay',
-        label: 'shizukuPretendToBeGooglePlay'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'allowInsecure',
-        label: 'allowInsecure'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'invertAPKFilter',
-        label: '${'invertRegEx'.t()} (${'filterAPKsByRegEx'.t()})',
-        defaultValue: false,
-      ),
-    ],
-  ];
-
   List<List<GeneratedFormItem>> get combinedAdvancedSettingFormItems {
-    var items = <List<GeneratedFormItem>>[];
-    items.addAll(advancedAppSpecificSourceAgnosticSettingFormItems.sublist(1));
-    if (allowIncludeZips) {
-      items.add([
-        GeneratedFormTextField(
-          'zippedApkFilterRegEx',
-          label: 'zippedApkFilterRegEx'.t(),
-          required: false,
-          additionalValidators: [(value) => regExValidator(value)],
-        ),
-      ]);
-    }
-    return items;
+    return getCombinedAdvancedSettingFormItems(allowIncludeZips);
   }
 
   // Previous 2 variables combined into one at runtime for convenient usage + additional processing
@@ -1157,18 +1099,6 @@ abstract class MassAppUrlSource {
   late String name;
   late List<String> requiredArgs;
   Future<Map<String, List<String>>> getUrlsWithDescriptions(List<String> args);
-}
-
-String? regExValidator(String? value) {
-  if (value == null || value.isEmpty) {
-    return null;
-  }
-  try {
-    RegExp(value);
-  } catch (e) {
-    return 'invalidRegEx'.t();
-  }
-  return null;
 }
 
 String? intValidator(String? value, {bool positive = false}) {

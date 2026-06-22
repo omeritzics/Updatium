@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
 class AdvancedSettingsTile extends StatelessWidget {
@@ -288,3 +287,86 @@ additionalAppSpecificSourceAgnosticSettingFormItems = [
     ),
   ],
 ];
+
+const List<String> supportedApkExtensions = ['.apk', '.xapk'];
+
+bool hasSupportedApkExtension(String filename) {
+  var lower = filename.toLowerCase();
+  return supportedApkExtensions.any((ext) => lower.endsWith(ext));
+}
+
+String? regExValidator(String? value) {
+  if (value == null || value.isEmpty) {
+    return null;
+  }
+  try {
+    RegExp(value);
+  } catch (e) {
+    return 'invalidRegEx'.t();
+  }
+  return null;
+}
+
+List<List<GeneratedFormItem>>
+advancedAppSpecificSourceAgnosticSettingFormItems = [
+  [
+    GeneratedFormTextField(
+      'appId',
+      label: 'appId'.t(),
+      required: false,
+      additionalValidators: [
+        (value) {
+          if (value == null || value.isEmpty) {
+            return null;
+          }
+          final isValid = RegExp(
+            r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+          ).hasMatch(value);
+          if (!isValid) {
+            return 'invalidInput'.t();
+          }
+          return null;
+        },
+      ],
+    ),
+  ],
+  [
+    GeneratedFormSwitch(
+      'shizukuPretendToBeGooglePlay',
+      label: 'shizukuPretendToBeGooglePlay'.t(),
+      defaultValue: false,
+    ),
+  ],
+  [
+    GeneratedFormSwitch(
+      'allowInsecure',
+      label: 'allowInsecure'.t(),
+      defaultValue: false,
+    ),
+  ],
+  [
+    GeneratedFormSwitch(
+      'invertAPKFilter',
+      label: '${'invertRegEx'.t()} (${'filterAPKsByRegEx'.t()})',
+      defaultValue: false,
+    ),
+  ],
+];
+
+List<List<GeneratedFormItem>> getCombinedAdvancedSettingFormItems(
+  bool allowIncludeZips,
+) {
+  var items = <List<GeneratedFormItem>>[];
+  items.addAll(advancedAppSpecificSourceAgnosticSettingFormItems.sublist(1));
+  if (allowIncludeZips) {
+    items.add([
+      GeneratedFormTextField(
+        'zippedApkFilterRegEx',
+        label: 'zippedApkFilterRegEx'.t(),
+        required: false,
+        additionalValidators: [(value) => regExValidator(value)],
+      ),
+    ]);
+  }
+  return items;
+}
