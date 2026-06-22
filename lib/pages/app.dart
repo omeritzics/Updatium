@@ -3,6 +3,7 @@ import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 import 'package:http/http.dart' as http;
+import 'package:updatium/pages/edit_page.dart';
 
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
@@ -543,10 +544,11 @@ class _AppPageState extends State<AppPage> {
                         ),
                         gap24,
                         if (source != null)
-                          source.buildAdvancedSettingsWidget(
-                            ctx,
+                          AdvancedSettingsTile(
                             currentInferAppIdIfOptional:
                                 localInferAppIdIfOptional,
+                            appIdInferIsOptional: source.appIdInferIsOptional,
+                            formItems: source.combinedAdvancedSettingFormItems,
                             onInferAppIdChanged: (value) {
                               setState(() {
                                 localInferAppIdIfOptional = value;

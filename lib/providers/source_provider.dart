@@ -968,14 +968,6 @@ abstract class AppSource {
       ),
     ],
     [
-      GeneratedFormTextField(
-        'apkFilterRegEx',
-        label: 'filterAPKsByRegEx'.t(),
-        required: false,
-        additionalValidators: [(value) => regExValidator(value)],
-      ),
-    ],
-    [
       GeneratedFormSwitch(
         'invertAPKFilter',
         label: '${'invertRegEx'.t()} (${'filterAPKsByRegEx'.t()})',
@@ -1135,62 +1127,6 @@ abstract class AppSource {
   bool canSearch = false;
   bool includeAdditionalOptsInMainSearch = false;
   List<GeneratedFormItem> searchQuerySettingFormItems = [];
-
-  Widget buildAdvancedSettingsWidget(
-    BuildContext context, {
-    required bool currentInferAppIdIfOptional,
-    required Function(bool) onInferAppIdChanged,
-    required Function(Map<String, dynamic>) onAdvancedSettingsChanged,
-  }) {
-    return ExpansionTile(
-      initiallyExpanded: false,
-      title: Text(
-        'advanced'.t(),
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (appIdInferIsOptional)
-                GeneratedForm(
-                  key: const Key('inferAppIdIfOptional'),
-                  items: [
-                    [
-                      GeneratedFormSwitch(
-                        'inferAppIdIfOptional',
-                        label: 'tryInferAppIdFromCode'.t(),
-                        defaultValue: currentInferAppIdIfOptional,
-                      ),
-                    ],
-                  ],
-                  onValueChanges: (values, valid, isBuilding) {
-                    if (!isBuilding) {
-                      onInferAppIdChanged(values['inferAppIdIfOptional']);
-                    }
-                  },
-                ),
-              const SizedBox(height: 16),
-              GeneratedForm(
-                key: const Key('advancedSettings'),
-                items: combinedAdvancedSettingFormItems,
-                onValueChanges: (values, valid, isBuilding) {
-                  if (!isBuilding) {
-                    onAdvancedSettingsChanged(values);
-                  }
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
 
   Future<Map<String, List<String>>> search(
     String query, {

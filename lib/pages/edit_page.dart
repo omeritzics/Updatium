@@ -1,6 +1,76 @@
+import 'package:flutter/material.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
+
+class AdvancedSettingsTile extends StatelessWidget {
+  final bool currentInferAppIdIfOptional;
+  final bool appIdInferIsOptional;
+  final List<List<GeneratedFormItem>> formItems;
+  final Function(bool) onInferAppIdChanged;
+  final Function(Map<String, dynamic>) onAdvancedSettingsChanged;
+
+  const AdvancedSettingsTile({
+    super.key,
+    required this.currentInferAppIdIfOptional,
+    required this.appIdInferIsOptional,
+    required this.formItems,
+    required this.onInferAppIdChanged,
+    required this.onAdvancedSettingsChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile(
+      initiallyExpanded: false,
+      title: Text(
+        'advanced'.t(),
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (appIdInferIsOptional)
+                GeneratedForm(
+                  key: const Key('inferAppIdIfOptional'),
+                  items: [
+                    [
+                      GeneratedFormSwitch(
+                        'inferAppIdIfOptional',
+                        label: 'tryInferAppIdFromCode'.t(),
+                        defaultValue: currentInferAppIdIfOptional,
+                      ),
+                    ],
+                  ],
+                  onValueChanges: (values, valid, isBuilding) {
+                    if (!isBuilding) {
+                      onInferAppIdChanged(values['inferAppIdIfOptional']);
+                    }
+                  },
+                ),
+              const SizedBox(height: 16),
+              GeneratedForm(
+                key: const Key('advancedSettings'),
+                items: formItems,
+                onValueChanges: (values, valid, isBuilding) {
+                  if (!isBuilding) {
+                    onAdvancedSettingsChanged(values);
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 List<List<GeneratedFormItem>>
 additionalAppSpecificSourceAgnosticSettingFormItems = [
@@ -195,6 +265,14 @@ additionalAppSpecificSourceAgnosticSettingFormItems = [
           return regExValidator(value);
         },
       ],
+    ),
+  ],
+  [
+    GeneratedFormTextField(
+      'apkFilterRegEx',
+      label: 'filterAPKsByRegEx'.t(),
+      required: false,
+      additionalValidators: [(value) => regExValidator(value)],
     ),
   ],
   [
