@@ -1089,8 +1089,10 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                     if (pickedSource != null)
                       AdvancedSettingsTile(
                         currentInferAppIdIfOptional: inferAppIdIfOptional,
-                        appIdInferIsOptional: pickedSource!.appIdInferIsOptional,
-                        formItems: pickedSource!.combinedAdvancedSettingFormItems,
+                        appIdInferIsOptional:
+                            pickedSource!.appIdInferIsOptional,
+                        formItems:
+                            pickedSource!.combinedAdvancedSettingFormItems,
                         onInferAppIdChanged: (value) {
                           setState(() {
                             inferAppIdIfOptional = value;
