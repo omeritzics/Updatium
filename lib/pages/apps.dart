@@ -1397,7 +1397,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     [
                       GeneratedFormTextField(
                         'author',
-                        label: 'appAuthor'.t(),
+                        label: 'author'.t(),
                         required: false,
                         defaultValue: localValues['author'],
                       ),
