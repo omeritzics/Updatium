@@ -166,6 +166,11 @@ List<MapEntry<String, String>> assumed2DlistToStringMapList(
 Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
   var sourceProvider = SourceProvider();
 
+  // Rename legacy 'author' key to 'appAuthor'
+  if (json['appAuthor'] == null && json['author'] != null) {
+    json['appAuthor'] = json['author'];
+  }
+
   // Check if overrideSource points to a removed source and clear it if needed
   if (json['overrideSource'] != null &&
       !sourceProvider.sourceExists(json['overrideSource'])) {
