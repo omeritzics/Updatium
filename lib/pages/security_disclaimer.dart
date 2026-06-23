@@ -105,12 +105,13 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
-        children: _disclaimerItems.map((item) {
+        children: _disclaimerItems.asMap().entries.map((entry) {
+          final isLast = entry.key == _disclaimerItems.length - 1;
           return Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: _buildDisclaimerItem(item, colorScheme),
+            padding: EdgeInsets.only(bottom: isLast ? 0.0 : 16.0),
+            child: _buildDisclaimerItem(entry.value, colorScheme),
           );
-        }).toList()..removeLast(), // Remove padding from last item
+        }).toList(),
       ),
     );
   }
