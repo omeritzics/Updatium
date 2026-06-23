@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:updatium/app_sources/html.dart';
+import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -262,6 +263,21 @@ void main() {
       };
       final app = App.fromJson(Map.from(json));
       expect(app.author, equals('user'));
+    });
+  });
+
+  group('Advanced Settings Form Item Tests', () {
+    List<String> keysOf(List<List<GeneratedFormItem>> items) =>
+        items.expand((row) => row).map((e) => e.key).toList();
+
+    test('appId is reachable via app-specific settings form items', () {
+      expect(keysOf(HTML().combinedAppSpecificSettingFormItems), contains('appId'));
+    });
+
+    test('advanced settings include first item and exclude appId', () {
+      final advancedKeys = keysOf(HTML().combinedAdvancedSettingFormItems);
+      expect(advancedKeys, contains('shizukuPretendToBeGooglePlay'));
+      expect(advancedKeys, isNot(contains('appId')));
     });
   });
 
