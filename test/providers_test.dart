@@ -232,7 +232,7 @@ void main() {
     );
 
     test(
-      'appJSONCompatibilityModifiers renames legacy author to appAuthor',
+      'appJSONCompatibilityModifiers copies legacy author to appAuthor',
       () {
         final json = {
           'id': 'com.example.app',
@@ -246,6 +246,7 @@ void main() {
         };
         final result = appJSONCompatibilityModifiers(Map.from(json));
         expect(result['appAuthor'], equals('user'));
+        expect(result['author'], equals('user'));
       },
     );
 

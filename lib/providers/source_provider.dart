@@ -166,7 +166,7 @@ List<MapEntry<String, String>> assumed2DlistToStringMapList(
 Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
   var sourceProvider = SourceProvider();
 
-  // Rename legacy 'author' key to 'appAuthor'
+  // Copy legacy 'author' key to 'appAuthor' (keep 'author' for downgrade safety)
   if (json['appAuthor'] == null && json['author'] != null) {
     json['appAuthor'] = json['author'];
   }
