@@ -98,6 +98,7 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
   }
 
   Widget _buildContent(ColorScheme colorScheme) {
+    final itemCount = _disclaimerItems.length;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -105,12 +106,13 @@ class _SecurityDisclaimerScreenState extends State<SecurityDisclaimerScreen> {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
-        children: _disclaimerItems.map((item) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: _buildDisclaimerItem(item, colorScheme),
-          );
-        }).toList()..removeLast(), // Remove padding from last item
+        children: [
+          for (var i = 0; i < itemCount; i++)
+            Padding(
+              padding: EdgeInsets.only(bottom: i == itemCount - 1 ? 0.0 : 16.0),
+              child: _buildDisclaimerItem(_disclaimerItems[i], colorScheme),
+            ),
+        ],
       ),
     );
   }

@@ -2,8 +2,6 @@ name: Build and Release Updatium 'Qama'
 
 permissions:
   contents: write
-  id-token: write
-  attestations: write
 
 on:
   workflow_dispatch:
@@ -16,6 +14,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
     steps:
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@main
@@ -51,8 +53,10 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
 
       - name: Setup Java JDK
-        run: sudo apt install default-jre default-jdk -y
-        
+        uses: actions/setup-java@v5.3.0
+        with:
+          distribution: temurin
+          java-version: '21'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@main
@@ -135,7 +139,7 @@ jobs:
           done
         
       - name: Attest Build Provenance
-        uses: actions//attest-build-provenance@main
+        uses: actions/attest-build-provenance@main
         with:
           subject-path: 'build/app/outputs/flutter-apk/*.apk'
 

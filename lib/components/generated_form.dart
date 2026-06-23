@@ -833,6 +833,18 @@ class _GeneratedFormState extends State<GeneratedForm> {
     initForm();
   }
 
+  String _itemsSignature(List<List<GeneratedFormItem>> items) => items
+      .map((row) => row.map((e) => '${e.runtimeType}:${e.key}').join(','))
+      .join('|');
+
+  @override
+  void didUpdateWidget(GeneratedForm oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_itemsSignature(oldWidget.items) != _itemsSignature(widget.items)) {
+      initForm();
+    }
+  }
+
   @override
   void dispose() {
     _isDisposed = true;
