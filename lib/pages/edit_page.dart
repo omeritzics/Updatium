@@ -1,9 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
-List<List<GeneratedFormItem>>
-additionalAppSpecificSourceAgnosticSettingFormItems = [
+List<List<GeneratedFormItem>> additionalSettingFormItems = [
   [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
   [
     GeneratedFormTextField(
@@ -69,20 +68,6 @@ additionalAppSpecificSourceAgnosticSettingFormItems = [
       'autoApkFilterByArch',
       label: 'autoApkFilterByArch'.t(),
       defaultValue: true,
-    ),
-  ],
-  [
-    GeneratedFormSwitch(
-      'shizukuPretendToBeGooglePlay',
-      label: 'shizukuPretendToBeGooglePlay'.t(),
-      defaultValue: false,
-    ),
-  ],
-  [
-    GeneratedFormSwitch(
-      'allowInsecure',
-      label: 'allowInsecure'.t(),
-      defaultValue: false,
     ),
   ],
   [
@@ -169,6 +154,63 @@ additionalAppSpecificSourceAgnosticSettingFormItems = [
       defaultValue: false,
     ),
   ],
+];
+
+const List<String> supportedApkExtensions = ['.apk', '.xapk'];
+
+bool hasSupportedApkExtension(String filename) {
+  var lower = filename.toLowerCase();
+  return supportedApkExtensions.any((ext) => lower.endsWith(ext));
+}
+
+String? regExValidator(String? value) {
+  if (value == null || value.isEmpty) {
+    return null;
+  }
+  try {
+    RegExp(value);
+  } catch (e) {
+    return 'invalidRegEx'.t();
+  }
+  return null;
+}
+
+List<List<GeneratedFormItem>> advancedSpecificSettingFormItems = [
+  [
+    GeneratedFormTextField(
+      'appId',
+      label: 'appId'.t(),
+      required: false,
+      additionalValidators: [
+        (value) {
+          if (value == null || value.isEmpty) {
+            return null;
+          }
+          final isValid = RegExp(
+            r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+          ).hasMatch(value);
+          if (!isValid) {
+            return 'invalidInput'.t();
+          }
+          return null;
+        },
+      ],
+    ),
+  ],
+  [
+    GeneratedFormSwitch(
+      'shizukuPretendToBeGooglePlay',
+      label: 'shizukuPretendToBeGooglePlay'.t(),
+      defaultValue: false,
+    ),
+  ],
+  [
+    GeneratedFormSwitch(
+      'allowInsecure',
+      label: 'allowInsecure'.t(),
+      defaultValue: false,
+    ),
+  ],
   [
     GeneratedFormTextField(
       'versionExtractionRegEx',
@@ -199,6 +241,14 @@ additionalAppSpecificSourceAgnosticSettingFormItems = [
   ],
   [
     GeneratedFormTextField(
+      'apkFilterRegEx',
+      label: 'filterAPKsByRegEx'.t(),
+      required: false,
+      additionalValidators: [(value) => regExValidator(value)],
+    ),
+  ],
+  [
+    GeneratedFormTextField(
       'filterReleaseNotesByRegEx',
       label: 'filterReleaseNotesByRegEx'.t(),
       required: false,
@@ -209,4 +259,84 @@ additionalAppSpecificSourceAgnosticSettingFormItems = [
       ],
     ),
   ],
+  [
+    GeneratedFormSwitch(
+      'invertAPKFilter',
+      label: '${'invertRegEx'.t()} (${'filterAPKsByRegEx'.t()})',
+      defaultValue: false,
+    ),
+  ],
 ];
+
+List<List<GeneratedFormItem>> getCombinedAdvancedSettingFormItems(
+  bool allowIncludeZips,
+) {
+  var items = <List<GeneratedFormItem>>[];
+  items.addAll(advancedSpecificSettingFormItems.sublist(1));
+  if (allowIncludeZips) {
+    items.add([
+      GeneratedFormTextField(
+        'zippedApkFilterRegEx',
+        label: 'zippedApkFilterRegEx'.t(),
+        required: false,
+        additionalValidators: [(value) => regExValidator(value)],
+      ),
+    ]);
+  }
+  return items;
+}
+
+class AdvancedSettingsTile extends StatelessWidget {
+  final bool currentInferAppIdIfOptional;
+  final bool appIdInferIsOptional;
+  final List<List<GeneratedFormItem>> formItems;
+  final Function(bool) onInferAppIdChanged;
+  final Function(Map<String, dynamic>) onAdvancedSettingsChanged;
+
+  const AdvancedSettingsTile({
+    super.key,
+    required this.currentInferAppIdIfOptional,
+    required this.appIdInferIsOptional,
+    required this.formItems,
+    required this.onInferAppIdChanged,
+    required this.onAdvancedSettingsChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile(
+      initiallyExpanded: false,
+      title: Text('advanced'.t()),
+      children: [
+        if (appIdInferIsOptional)
+          GeneratedForm(
+            key: const Key('inferAppIdIfOptional'),
+            items: [
+              [
+                GeneratedFormSwitch(
+                  'inferAppIdIfOptional',
+                  label: 'tryInferAppIdFromCode'.t(),
+                  defaultValue: currentInferAppIdIfOptional,
+                ),
+              ],
+            ],
+            onValueChanges: (values, valid, isBuilding) {
+              if (!isBuilding) {
+                onInferAppIdChanged(values['inferAppIdIfOptional']);
+              }
+            },
+          ),
+        const SizedBox(height: 16),
+        GeneratedForm(
+          key: const Key('advancedSettings'),
+          items: formItems,
+          onValueChanges: (values, valid, isBuilding) {
+            if (!isBuilding) {
+              onAdvancedSettingsChanged(values);
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
