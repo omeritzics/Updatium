@@ -137,7 +137,7 @@ jobs:
           done
         
       - name: Attest Build Provenance
-        uses: actions//attest-build-provenance@main
+        uses: actions/attest-build-provenance@main
         with:
           subject-path: 'build/app/outputs/flutter-apk/*.apk'
 
