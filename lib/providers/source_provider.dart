@@ -1391,7 +1391,8 @@ class SourceProvider {
     name = name.isNotEmpty ? name : apk.names.name;
     App finalApp = App(
       currentApp?.id ??
-          ((additionalSettings['appId'] != null)
+          ((additionalSettings['appId'] != null &&
+                  (additionalSettings['appId'] as String).isNotEmpty)
               ? additionalSettings['appId']
               : null) ??
           (!trackOnly &&
