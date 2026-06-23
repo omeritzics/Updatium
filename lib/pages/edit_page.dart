@@ -18,6 +18,27 @@ List<List<GeneratedFormItem>> additionalSettingFormItems = [
       required: false,
     ),
   ],
+  [
+    GeneratedFormTextField(
+      'appId',
+      label: 'appId'.t(),
+      required: false,
+      additionalValidators: [
+        (value) {
+          if (value == null || value.isEmpty) {
+            return null;
+          }
+          final isValid = RegExp(
+            r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+          ).hasMatch(value);
+          if (!isValid) {
+            return 'invalidInput'.t();
+          }
+          return null;
+        },
+      ],
+    ),
+  ],
   [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
   [
     GeneratedFormSwitch(
@@ -177,27 +198,6 @@ String? regExValidator(String? value) {
 
 List<List<GeneratedFormItem>> advancedSpecificSettingFormItems = [
   [
-    GeneratedFormTextField(
-      'appId',
-      label: 'appId'.t(),
-      required: false,
-      additionalValidators: [
-        (value) {
-          if (value == null || value.isEmpty) {
-            return null;
-          }
-          final isValid = RegExp(
-            r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-          ).hasMatch(value);
-          if (!isValid) {
-            return 'invalidInput'.t();
-          }
-          return null;
-        },
-      ],
-    ),
-  ],
-  [
     GeneratedFormSwitch(
       'shizukuPretendToBeGooglePlay',
       label: 'shizukuPretendToBeGooglePlay'.t(),
@@ -272,7 +272,7 @@ List<List<GeneratedFormItem>> getCombinedAdvancedSettingFormItems(
   bool allowIncludeZips,
 ) {
   var items = <List<GeneratedFormItem>>[];
-  items.addAll(advancedSpecificSettingFormItems.sublist(1));
+  items.addAll(advancedSpecificSettingFormItems);
   if (allowIncludeZips) {
     items.add([
       GeneratedFormTextField(
