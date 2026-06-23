@@ -785,24 +785,22 @@ abstract class AppSource {
     name = runtimeType.toString();
   }
 
-  void overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
+  void overrideAdditionalAppSpecificSettingSwitch(
     String key, {
     bool disabled = true,
     bool defaultValue = true,
   }) {
-    additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly =
-        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly.map(
-          (e) {
-            return e.map((e2) {
-              if (e2.key == key) {
-                var item = e2 as GeneratedFormSwitch;
-                item.disabled = disabled;
-                item.defaultValue = defaultValue;
-              }
-              return e2;
-            }).toList();
-          },
-        ).toList();
+    additionalSettingFormItemsNeverUseDirectly =
+        additionalSettingFormItemsNeverUseDirectly.map((e) {
+          return e.map((e2) {
+            if (e2.key == key) {
+              var item = e2 as GeneratedFormSwitch;
+              item.disabled = disabled;
+              item.defaultValue = defaultValue;
+            }
+            return e2;
+          }).toList();
+        }).toList();
   }
 
   String standardizeUrl(String url) {
@@ -926,117 +924,45 @@ abstract class AppSource {
       [];
 
   // Some additional data may be needed for Apps regardless of Source
-  List<List<GeneratedFormItem>>
-  additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly =
-      cloneFormItems(additionalAppSpecificSourceAgnosticSettingFormItems);
-
-  List<List<GeneratedFormItem>>
-  advancedAppSpecificSourceAgnosticSettingFormItems = [
-    [
-      GeneratedFormTextField(
-        'appId',
-        label: 'appId'.t(),
-        required: false,
-        additionalValidators: [
-          (value) {
-            if (value == null || value.isEmpty) {
-              return null;
-            }
-            final isValid = RegExp(
-              r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-            ).hasMatch(value);
-            if (!isValid) {
-              return 'invalidInput'.t();
-            }
-            return null;
-          },
-        ],
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'shizukuPretendToBeGooglePlay',
-        label: 'shizukuPretendToBeGooglePlay'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'allowInsecure',
-        label: 'allowInsecure'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'apkFilterRegEx',
-        label: 'filterAPKsByRegEx'.t(),
-        required: false,
-        additionalValidators: [(value) => regExValidator(value)],
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'invertAPKFilter',
-        label: '${'invertRegEx'.t()} (${'filterAPKsByRegEx'.t()})',
-        defaultValue: false,
-      ),
-    ],
-  ];
+  List<List<GeneratedFormItem>> additionalSettingFormItemsNeverUseDirectly =
+      cloneFormItems(additionalSettingFormItems);
 
   List<List<GeneratedFormItem>> get combinedAdvancedSettingFormItems {
-    var items = <List<GeneratedFormItem>>[];
-    items.addAll(advancedAppSpecificSourceAgnosticSettingFormItems.sublist(1));
-    if (allowIncludeZips) {
-      items.add([
-        GeneratedFormTextField(
-          'zippedApkFilterRegEx',
-          label: 'zippedApkFilterRegEx'.t(),
-          required: false,
-          additionalValidators: [(value) => regExValidator(value)],
-        ),
-      ]);
-    }
-    return items;
+    return getCombinedAdvancedSettingFormItems(allowIncludeZips);
   }
 
   // Previous 2 variables combined into one at runtime for convenient usage + additional processing
   List<List<GeneratedFormItem>> get combinedAppSpecificSettingFormItems {
     if (showReleaseDateAsVersionToggle == true) {
-      if (additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
-              .indexWhere(
+      if (additionalSettingFormItemsNeverUseDirectly.indexWhere(
+            (List<GeneratedFormItem> e) =>
+                e.indexWhere(
+                  (GeneratedFormItem i) => i.key == 'releaseDateAsVersion',
+                ) >=
+                0,
+          ) <
+          0) {
+        additionalSettingFormItemsNeverUseDirectly.insert(
+          additionalSettingFormItemsNeverUseDirectly.indexWhere(
                 (List<GeneratedFormItem> e) =>
                     e.indexWhere(
-                      (GeneratedFormItem i) => i.key == 'releaseDateAsVersion',
+                      (GeneratedFormItem i) => i.key == 'versionDetection',
                     ) >=
                     0,
-              ) <
-          0) {
-        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
-            .insert(
-              additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
-                      .indexWhere(
-                        (List<GeneratedFormItem> e) =>
-                            e.indexWhere(
-                              (GeneratedFormItem i) =>
-                                  i.key == 'versionDetection',
-                            ) >=
-                            0,
-                      ) +
-                  1,
-              [
-                GeneratedFormSwitch(
-                  'releaseDateAsVersion',
-                  label:
-                      '${'releaseDateAsVersion'.t()} (${'pseudoVersion'.t()})',
-                  defaultValue: false,
-                ),
-              ],
-            );
+              ) +
+              1,
+          [
+            GeneratedFormSwitch(
+              'releaseDateAsVersion',
+              label: '${'releaseDateAsVersion'.t()} (${'pseudoVersion'.t()})',
+              defaultValue: false,
+            ),
+          ],
+        );
       }
     }
-    additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly =
-        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
+    additionalSettingFormItemsNeverUseDirectly =
+        additionalSettingFormItemsNeverUseDirectly
             .map(
               (e) => e
                   .where((ee) => !excludeCommonSettingKeys.contains(ee.key))
@@ -1055,28 +981,16 @@ abstract class AppSource {
             defaultValue: false,
           ),
         ],
-        [
-          GeneratedFormTextField(
-            'zippedApkFilterRegEx',
-            label: 'zippedApkFilterRegEx'.t(),
-            required: false,
-            additionalValidators: [
-              (value) {
-                return regExValidator(value);
-              },
-            ],
-          ),
-        ],
       ]);
     }
 
     if (versionDetectionDisallowed) {
-      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
+      overrideAdditionalAppSpecificSettingSwitch(
         'versionDetection',
         disabled: true,
         defaultValue: false,
       );
-      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
+      overrideAdditionalAppSpecificSettingSwitch(
         'useVersionCodeAsOSVersion',
         disabled: true,
         defaultValue: false,
@@ -1084,7 +998,7 @@ abstract class AppSource {
     }
     return [
       ...additionalSourceAppSpecificSettingFormItems,
-      ...additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly,
+      ...additionalSettingFormItemsNeverUseDirectly,
       ...moreConditionalItems,
     ];
   }
@@ -1136,62 +1050,6 @@ abstract class AppSource {
   bool includeAdditionalOptsInMainSearch = false;
   List<GeneratedFormItem> searchQuerySettingFormItems = [];
 
-  Widget buildAdvancedSettingsWidget(
-    BuildContext context, {
-    required bool currentInferAppIdIfOptional,
-    required Function(bool) onInferAppIdChanged,
-    required Function(Map<String, dynamic>) onAdvancedSettingsChanged,
-  }) {
-    return ExpansionTile(
-      initiallyExpanded: false,
-      title: Text(
-        'advanced'.t(),
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (appIdInferIsOptional)
-                GeneratedForm(
-                  key: const Key('inferAppIdIfOptional'),
-                  items: [
-                    [
-                      GeneratedFormSwitch(
-                        'inferAppIdIfOptional',
-                        label: 'tryInferAppIdFromCode'.t(),
-                        defaultValue: currentInferAppIdIfOptional,
-                      ),
-                    ],
-                  ],
-                  onValueChanges: (values, valid, isBuilding) {
-                    if (!isBuilding) {
-                      onInferAppIdChanged(values['inferAppIdIfOptional']);
-                    }
-                  },
-                ),
-              const SizedBox(height: 16),
-              GeneratedForm(
-                key: const Key('advancedSettings'),
-                items: combinedAdvancedSettingFormItems,
-                onValueChanges: (values, valid, isBuilding) {
-                  if (!isBuilding) {
-                    onAdvancedSettingsChanged(values);
-                  }
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
@@ -1221,18 +1079,6 @@ abstract class MassAppUrlSource {
   late String name;
   late List<String> requiredArgs;
   Future<Map<String, List<String>>> getUrlsWithDescriptions(List<String> args);
-}
-
-String? regExValidator(String? value) {
-  if (value == null || value.isEmpty) {
-    return null;
-  }
-  try {
-    RegExp(value);
-  } catch (e) {
-    return 'invalidRegEx'.t();
-  }
-  return null;
 }
 
 String? intValidator(String? value, {bool positive = false}) {
