@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:updatium/app_sources/html.dart';
+import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -202,7 +203,7 @@ void main() {
       final json = {
         'id': 'com.example.app',
         'url': 'https://github.com/user/repo',
-        'appAuthor': 'user',
+        'author': 'user',
         'name': 'App',
         'latestVersion': '1.0.0',
         'additionalSettings': '{}',
@@ -219,7 +220,7 @@ void main() {
         final json = {
           'id': 'com.example.app',
           'url': 'https://github.com/user/repo',
-          'appAuthor': 'user',
+          'author': 'user',
           'name': 'App',
           'latestVersion': '1.0.0',
           'additionalSettings': '{}',
@@ -230,6 +231,92 @@ void main() {
         expect(result['preferredApkIndex'], equals(0));
       },
     );
+
+    test(
+      'appJSONCompatibilityModifiers migrates legacy appAuthor to author',
+      () {
+        final json = {
+          'id': 'com.example.app',
+          'url': 'https://github.com/user/repo',
+          'appAuthor': 'user',
+          'name': 'App',
+          'latestVersion': '1.0.0',
+          'additionalSettings': '{}',
+          'apkUrls': '[]',
+          'preferredApkIndex': 0,
+        };
+        final result = appJSONCompatibilityModifiers(Map.from(json));
+        expect(result['author'], equals('user'));
+      },
+    );
+
+    test('App.fromJson loads JSON that stores author', () {
+      final json = {
+        'id': 'com.example.app',
+        'url': 'https://github.com/user/repo',
+        'author': 'user',
+        'name': 'App',
+        'latestVersion': '1.0.0',
+        'additionalSettings': '{}',
+        'apkUrls': '[]',
+        'preferredApkIndex': 0,
+      };
+      final app = App.fromJson(Map.from(json));
+      expect(app.author, equals('user'));
+    });
+
+    test('App.fromJson loads legacy JSON that stores appAuthor', () {
+      final json = {
+        'id': 'com.example.app',
+        'url': 'https://github.com/user/repo',
+        'appAuthor': 'user',
+        'name': 'App',
+        'latestVersion': '1.0.0',
+        'additionalSettings': '{}',
+        'apkUrls': '[]',
+        'preferredApkIndex': 0,
+      };
+      final app = App.fromJson(Map.from(json));
+      expect(app.author, equals('user'));
+    });
+  });
+
+  group('Advanced Settings Form Item Tests', () {
+    List<String> keysOf(List<List<GeneratedFormItem>> items) =>
+        items.expand((row) => row).map((e) => e.key).toList();
+
+    test('appId is reachable via app-specific settings form items', () {
+      expect(
+        keysOf(HTML().combinedAppSpecificSettingFormItems),
+        contains('appId'),
+      );
+    });
+
+    test('advanced settings include first item and exclude appId', () {
+      final advancedKeys = keysOf(HTML().combinedAdvancedSettingFormItems);
+      expect(advancedKeys, contains('shizukuPretendToBeGooglePlay'));
+      expect(advancedKeys, isNot(contains('appId')));
+    });
+
+    test('prefilled advanced form items report saved values, not defaults', () {
+      // Regression: the edit dialog must seed advanced form items with the
+      // app's saved additionalSettings. Otherwise the form reports hardcoded
+      // defaults and saving wipes untouched advanced settings.
+      final source = SourceProvider().getSource('https://github.com/user/repo');
+      final savedSettings = <String, dynamic>{
+        'apkFilterRegEx': 'arm64',
+        'shizukuPretendToBeGooglePlay': true,
+      };
+
+      final prefilledAdvanced = prefillAdvancedFormItems(
+        source.combinedAdvancedSettingFormItems,
+        savedSettings,
+      );
+
+      final reported = getDefaultValuesFromFormItems(prefilledAdvanced);
+      expect(reported['apkFilterRegEx'], equals('arm64'));
+      expect(reported['shizukuPretendToBeGooglePlay'], isTrue);
+    });
   });
 
   group('URL Standardization Tests', () {

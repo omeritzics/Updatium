@@ -117,7 +117,9 @@ void main() async {
     SecurityContext.defaultContext.setTrustedCertificatesBytes(
       data.buffer.asUint8List(),
     );
-  } catch (e) {}
+  } catch (e) {
+    //ignore
+  }
   await SimpleLocalization.ensureInitialized();
 
   final np = NotificationsProvider();
@@ -278,6 +280,18 @@ class _UpdatiumState extends State<Updatium> {
           context.locale != settingsProvider.forcedLocale) {
         // Apply forced locale if it's set but not currently active
         context.setLocale(settingsProvider.forcedLocale!);
+      }
+
+      // Toggle between Foreground Service and Background Fetch
+      if (settingsProvider.updateInterval == 0) {
+        stopForegroundService();
+        BackgroundFetch.stop();
+      } else if (settingsProvider.useFGService) {
+        BackgroundFetch.stop();
+        startForegroundService(false, settingsProvider.updateInterval);
+      } else {
+        stopForegroundService();
+        BackgroundFetch.start();
       }
     }
 

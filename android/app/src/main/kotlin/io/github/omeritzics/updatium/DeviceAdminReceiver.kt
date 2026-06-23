@@ -8,11 +8,19 @@ import android.app.ActivityManager
 import android.os.Build
 
 class DeviceAdminReceiver : DeviceAdminReceiver() {
+    /**
+     * Shows feedback when device admin is enabled.
+     */
     override fun onEnabled(context: Context, intent: Intent) {
         super.onEnabled(context, intent)
         Toast.makeText(context, "Device admin enabled", Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     * Handles device-admin disable events.
+     *
+     * When the anti-cheat preference is enabled, stops the Settings app and attempts to restore device-admin activation.
+     */
     override fun onDisabled(context: Context, intent: Intent) {
         super.onDisabled(context, intent)
         
@@ -30,6 +38,11 @@ class DeviceAdminReceiver : DeviceAdminReceiver() {
         }
     }
     
+    /**
+     * Attempts to stop the Settings app process.
+     *
+     * @param context The context used to access system services.
+     */
     private fun forceStopSettingsApp(context: Context) {
         try {
             val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -45,12 +58,17 @@ class DeviceAdminReceiver : DeviceAdminReceiver() {
                 @Suppress("DEPRECATION")
                 activityManager.killBackgroundProcesses(packageName)
             }
-        } catch (e: Exception) {
+        } catch (e: SecurityException) {
             // Log error but don't crash
             e.printStackTrace()
         }
     }
     
+    /**
+     * Reopens the device administrator activation flow when the admin is inactive.
+     *
+     * Starts the device admin add intent for this receiver if it is not currently active.
+     */
     private fun reEnableDeviceAdmin(context: Context) {
         try {
             val devicePolicyManager = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as android.app.admin.DevicePolicyManager

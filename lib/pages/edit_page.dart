@@ -2,20 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/services/slang_converter.dart';
 
-List<List<GeneratedFormItem>> additionalSettingFormItems = [
+List<List<GeneratedFormItem>> buildAdditionalSettingFormItems() => [
   [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
-  [
-    GeneratedFormTextField(
-      'appAuthor',
-      label: 'appAuthor'.t(),
-      required: false,
-    ),
-  ],
+  [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
   [
     GeneratedFormTextField(
       'appSourceURL',
       label: 'appSourceURL'.t(),
       required: false,
+    ),
+  ],
+  [
+    GeneratedFormTextField(
+      'appId',
+      label: 'appId'.t(),
+      required: false,
+      additionalValidators: [
+        (value) {
+          if (value == null || value.isEmpty) {
+            return null;
+          }
+          final isValid = RegExp(
+            r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+          ).hasMatch(value);
+          if (!isValid) {
+            return 'invalidInput'.t();
+          }
+          return null;
+        },
+      ],
     ),
   ],
   [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
@@ -53,27 +68,6 @@ List<List<GeneratedFormItem>> additionalSettingFormItems = [
       'exemptFromBackgroundUpdates',
       label: 'exemptFromBackgroundUpdates'.t(),
       defaultValue: false,
-    ),
-  ],
-
-  [
-    GeneratedFormSwitch(
-      'useVersionCodeAsOSVersion',
-      label: 'useVersionCodeAsOSVersion'.t(),
-      defaultValue: false,
-    ),
-  ],
-  [
-    GeneratedFormSwitch(
-      'autoApkFilterByArch',
-      label: 'autoApkFilterByArch'.t(),
-      defaultValue: true,
-    ),
-  ],
-  [
-    GeneratedFormSwitch(
-      'exemptFromBackgroundUpdates',
-      label: 'exemptFromBackgroundUpdates'.t(),
     ),
   ],
   [
@@ -175,28 +169,7 @@ String? regExValidator(String? value) {
   return null;
 }
 
-List<List<GeneratedFormItem>> advancedSpecificSettingFormItems = [
-  [
-    GeneratedFormTextField(
-      'appId',
-      label: 'appId'.t(),
-      required: false,
-      additionalValidators: [
-        (value) {
-          if (value == null || value.isEmpty) {
-            return null;
-          }
-          final isValid = RegExp(
-            r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-          ).hasMatch(value);
-          if (!isValid) {
-            return 'invalidInput'.t();
-          }
-          return null;
-        },
-      ],
-    ),
-  ],
+List<List<GeneratedFormItem>> buildAdvancedSpecificSettingFormItems() => [
   [
     GeneratedFormSwitch(
       'shizukuPretendToBeGooglePlay',
@@ -272,7 +245,7 @@ List<List<GeneratedFormItem>> getCombinedAdvancedSettingFormItems(
   bool allowIncludeZips,
 ) {
   var items = <List<GeneratedFormItem>>[];
-  items.addAll(advancedSpecificSettingFormItems.sublist(1));
+  items.addAll(buildAdvancedSpecificSettingFormItems());
   if (allowIncludeZips) {
     items.add([
       GeneratedFormTextField(

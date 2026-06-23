@@ -141,7 +141,7 @@ void main() {
         '1.0.0',
         [],
         0,
-        {'appAuthor': 'Custom Author'},
+        {'author': 'Custom Author'},
         null,
         false,
       );

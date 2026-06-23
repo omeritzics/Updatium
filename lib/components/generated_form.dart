@@ -216,6 +216,25 @@ List<List<GeneratedFormItem>> cloneFormItems(
   return clonedItems;
 }
 
+// Clones [items] and seeds each item's defaultValue from [savedValues] so the
+// form reports the app's saved settings instead of hardcoded defaults.
+List<List<GeneratedFormItem>> prefillAdvancedFormItems(
+  List<List<GeneratedFormItem>> items,
+  Map<String, dynamic> savedValues,
+) {
+  return items
+      .map(
+        (row) => row.map((item) {
+          final clonedItem = item.clone();
+          if (savedValues[clonedItem.key] != null) {
+            clonedItem.defaultValue = savedValues[clonedItem.key];
+          }
+          return clonedItem;
+        }).toList(),
+      )
+      .toList();
+}
+
 class GeneratedFormSubForm extends GeneratedFormItem {
   final List<List<GeneratedFormItem>> items;
 
@@ -880,6 +899,18 @@ class _GeneratedFormState extends State<GeneratedForm> {
   void initState() {
     super.initState();
     initForm();
+  }
+
+  String _itemsSignature(List<List<GeneratedFormItem>> items) => items
+      .map((row) => row.map((e) => '${e.runtimeType}:${e.key}').join(','))
+      .join('|');
+
+  @override
+  void didUpdateWidget(GeneratedForm oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_itemsSignature(oldWidget.items) != _itemsSignature(widget.items)) {
+      initForm();
+    }
   }
 
   @override

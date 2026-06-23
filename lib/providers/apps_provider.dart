@@ -22,6 +22,7 @@ import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
+import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
@@ -184,6 +185,7 @@ Future<File> downloadFileWithRetry(
   bool allowInsecure = false,
   LogsProvider? logs,
   String? preFetchedExt,
+  AppSource? source,
 }) async {
   try {
     return await downloadFile(
@@ -197,6 +199,7 @@ Future<File> downloadFileWithRetry(
       allowInsecure: allowInsecure,
       logs: logs,
       preFetchedExt: preFetchedExt,
+      source: source,
     );
   } catch (e) {
     if (retries > 0 &&
@@ -215,6 +218,7 @@ Future<File> downloadFileWithRetry(
         allowInsecure: allowInsecure,
         logs: logs,
         preFetchedExt: preFetchedExt,
+        source: source,
       );
     } else {
       rethrow;
@@ -368,6 +372,7 @@ Future<File> downloadFile(
   bool allowInsecure = false,
   LogsProvider? logs,
   String? preFetchedExt,
+  AppSource? source,
 }) async {
   // Send the initial request but cancel it as soon as you have the headers
   var reqHeaders = headers ?? {};
@@ -518,7 +523,7 @@ Future<File> downloadFile(
   } else if (tempDownloadedFile.existsSync()) {
     deleteFile(tempDownloadedFile);
   }
-  var responseWithClient = await sourceRequestStreamResponse(
+  var responseWithClient = await (source ?? HTML()).sourceRequestStreamResponse(
     'GET',
     url,
     reqHeaders,
@@ -652,7 +657,9 @@ class AppsProvider with ChangeNotifier {
       if (iconCacheDir.existsSync()) {
         try {
           iconCacheDir.deleteSync(recursive: true);
-        } catch (e) {}
+        } catch (e) {
+          //ignore
+        }
       }
       // Clean up old external cache directory to reduce cache usage
       var cacheDirs = await getExternalCacheDirectories();
@@ -661,7 +668,9 @@ class AppsProvider with ChangeNotifier {
         if (oldCacheDir.existsSync()) {
           try {
             oldCacheDir.deleteSync(recursive: true);
-          } catch (e) {}
+          } catch (e) {
+            //ignore
+          }
         }
       }
       if (!isBg) {
@@ -900,6 +909,7 @@ class AppsProvider with ChangeNotifier {
           allowInsecure: app.additionalSettings['allowInsecure'] == true,
           logs: logs,
           preFetchedExt: source.urlsAlwaysHaveExtension ? null : ext,
+          source: source,
         );
       } catch (e) {
         // Delete partial APK file if download was cancelled or failed

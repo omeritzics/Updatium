@@ -80,7 +80,7 @@ class Uptodown extends AppSource {
       MapEntry('version', version),
       MapEntry('appId', appId),
       MapEntry('name', name),
-      MapEntry('appAuthor', author),
+      MapEntry('author', author),
       MapEntry('dateStr', dateStr),
       MapEntry('fileId', fileId),
       MapEntry('extension', extension),
@@ -111,7 +111,7 @@ class Uptodown extends AppSource {
       throw NoReleasesError();
     }
     String appName = appDetails['name'] ?? 'app'.t();
-    String author = appDetails['appAuthor'] ?? name;
+    String author = appDetails['author'] ?? name;
     String? dateStr = appDetails['dateStr'];
     DateTime? relDate;
     if (dateStr != null) {

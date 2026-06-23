@@ -3,8 +3,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
-
-import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
@@ -21,6 +19,7 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:markdown/markdown.dart' as md;
 
@@ -168,7 +167,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   DateTime? refreshingSince;
   final GlobalKey<ExpressiveRefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey();
-  // ... existing code ...
   final Set<int> _expandedCategories = <int>{};
 
   // Helper function to preserve transparency regardless of theme overrides
@@ -1396,10 +1394,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     ],
                     [
                       GeneratedFormTextField(
-                        'appAuthor',
-                        label: 'appAuthor'.t(),
+                        'author',
+                        label: 'author'.t(),
                         required: false,
-                        defaultValue: localValues['appAuthor'],
+                        defaultValue: localValues['author'],
                       ),
                     ],
                     [
@@ -1971,7 +1969,7 @@ class AppsFilter {
   Map<String, dynamic> toFormValuesMap() {
     return {
       'appName': nameFilter,
-      'appAuthor': authorFilter,
+      'author': authorFilter,
       'appId': idFilter,
       'description': descriptionFilter,
       'upToDateApps': includeUptodate,
@@ -1983,7 +1981,7 @@ class AppsFilter {
 
   void setFormValuesFromMap(Map<String, dynamic> values) {
     nameFilter = values['appName']!;
-    authorFilter = values['appAuthor']!;
+    authorFilter = values['author']!;
     idFilter = values['appId']!;
     descriptionFilter = values['description']!;
     includeUptodate = values['upToDateApps'];

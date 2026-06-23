@@ -60,7 +60,7 @@ class _ETagCacheEntry {
 }
 
 /// Simple in-memory cache for API responses with ETag support
-class _ETagResponseCache {
+class ETagResponseCache {
   final Map<String, _ETagCacheEntry> _cache = {};
 
   String _cacheKey(String url, Map<String, dynamic>? additionalSettings) {
@@ -108,7 +108,7 @@ class _ETagResponseCache {
 }
 
 // Global ETag cache instance
-final _etagCache = _ETagResponseCache();
+final _etagCache = ETagResponseCache();
 
 class AppNames {
   late String author;
@@ -165,6 +165,11 @@ List<MapEntry<String, String>> assumed2DlistToStringMapList(
 // This function takes an App JSON and modifies it if needed to conform to the latest (current) version
 Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
   var sourceProvider = SourceProvider();
+
+  // Migrate 'appAuthor' key back to 'author'
+  if (json['author'] == null && json['appAuthor'] != null) {
+    json['author'] = json['appAuthor'];
+  }
 
   // Check if overrideSource points to a removed source and clear it if needed
   if (json['overrideSource'] != null &&
@@ -319,7 +324,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // Signal apps from before it was removed should be converted to HTML (#1928)
     if (json['url'] == 'https://signal.org' &&
         json['id'] == 'org.thoughtcrime.securesms' &&
-        json['appAuthor'] == 'Signal' &&
+        json['author'] == 'Signal' &&
         json['name'] == 'Signal' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
@@ -336,7 +341,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // WhatsApp from before it was removed should be converted to HTML (#1943)
     if (json['url'] == 'https://whatsapp.com' &&
         json['id'] == 'com.whatsapp' &&
-        json['appAuthor'] == 'Meta' &&
+        json['author'] == 'Meta' &&
         json['name'] == 'WhatsApp' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
@@ -352,7 +357,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // VLC from before it was removed should be converted to HTML (#1943)
     if (json['url'] == 'https://videolan.org' &&
         json['id'] == 'org.videolan.vlc' &&
-        json['appAuthor'] == 'VideoLAN' &&
+        json['author'] == 'VideoLAN' &&
         json['name'] == 'VLC' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
@@ -462,8 +467,8 @@ class App {
   }
 
   String? get overrideAuthor =>
-      additionalSettings['appAuthor']?.toString().trim().isNotEmpty == true
-      ? additionalSettings['appAuthor']
+      additionalSettings['author']?.toString().trim().isNotEmpty == true
+      ? additionalSettings['author']
       : null;
 
   String get finalAuthor {
@@ -505,7 +510,7 @@ class App {
     return App(
       json['id'] as String,
       json['url'] as String,
-      json['appAuthor'] as String,
+      json['author'] as String,
       json['name'] as String,
       json['installedVersion'] == null
           ? null
@@ -546,7 +551,7 @@ class App {
   Map<String, dynamic> toJson() => {
     'id': id,
     'url': url,
-    'appAuthor': author,
+    'author': author,
     'name': name,
     'installedVersion': installedVersion,
     'latestVersion': latestVersion,
@@ -689,79 +694,7 @@ HttpClient createHttpClient(bool insecure) {
   return client;
 }
 
-Future<MapEntry<Uri, MapEntry<HttpClient, HttpClientResponse>>>
-sourceRequestStreamResponse(
-  String method,
-  String url,
-  Map<String, String>? requestHeaders,
-  Map<String, dynamic> additionalSettings, {
-  bool followRedirects = true,
-  Object? postBody,
-}) async {
-  var currentUrl = Uri.parse(url);
-  var redirectCount = 0;
-  const maxRedirects = 10;
-  List<Cookie> cookies = [];
-  while (redirectCount < maxRedirects) {
-    var httpClient = createHttpClient(
-      additionalSettings['allowInsecure'] == true,
-    );
-    var request = await httpClient.openUrl(method, currentUrl);
-    if (requestHeaders != null) {
-      requestHeaders.forEach((key, value) {
-        request.headers.set(key, value);
-      });
-    }
-    request.cookies.addAll(cookies);
-    request.followRedirects = false;
-    if (postBody != null) {
-      request.headers.contentType = ContentType.json;
-      request.write(jsonEncode(postBody));
-    }
-    final response = await request.close();
 
-    if (followRedirects &&
-        (response.statusCode >= 300 && response.statusCode <= 399)) {
-      final location = response.headers.value(HttpHeaders.locationHeader);
-      if (location != null) {
-        currentUrl = Uri.parse(ensureAbsoluteUrl(location, currentUrl));
-        redirectCount++;
-        cookies = response.cookies;
-        httpClient.close();
-        continue;
-      }
-    }
-
-    return MapEntry(currentUrl, MapEntry(httpClient, response));
-  }
-  throw UpdatiumError('Too many redirects ($maxRedirects)');
-}
-
-Future<Response> httpClientResponseStreamToFinalResponse(
-  HttpClient httpClient,
-  String method,
-  String url,
-  HttpClientResponse response,
-) async {
-  final bytes = (await response.fold<BytesBuilder>(
-    BytesBuilder(),
-    (b, d) => b..add(d),
-  )).toBytes();
-
-  final headers = <String, String>{};
-  response.headers.forEach((name, values) {
-    headers[name] = values.join(', ');
-  });
-
-  httpClient.close();
-
-  return http.Response.bytes(
-    bytes,
-    response.statusCode,
-    headers: headers,
-    request: http.Request(method, Uri.parse(url)),
-  );
-}
 
 abstract class AppSource {
   List<String> hosts = [];
@@ -821,6 +754,80 @@ abstract class AppSource {
 
   App endOfGetAppChanges(App app) {
     return app;
+  }
+
+  Future<MapEntry<Uri, MapEntry<HttpClient, HttpClientResponse>>>
+  sourceRequestStreamResponse(
+    String method,
+    String url,
+    Map<String, String>? requestHeaders,
+    Map<String, dynamic> additionalSettings, {
+    bool followRedirects = true,
+    Object? postBody,
+  }) async {
+    var currentUrl = Uri.parse(url);
+    var redirectCount = 0;
+    const maxRedirects = 10;
+    List<Cookie> cookies = [];
+    while (redirectCount < maxRedirects) {
+      var httpClient = createHttpClient(
+        additionalSettings['allowInsecure'] == true,
+      );
+      var request = await httpClient.openUrl(method, currentUrl);
+      if (requestHeaders != null) {
+        requestHeaders.forEach((key, value) {
+          request.headers.set(key, value);
+        });
+      }
+      request.cookies.addAll(cookies);
+      request.followRedirects = false;
+      if (postBody != null) {
+        request.headers.contentType = ContentType.json;
+        request.write(jsonEncode(postBody));
+      }
+      final response = await request.close();
+  
+      if (followRedirects &&
+          (response.statusCode >= 300 && response.statusCode <= 399)) {
+        final location = response.headers.value(HttpHeaders.locationHeader);
+        if (location != null) {
+          currentUrl = Uri.parse(ensureAbsoluteUrl(location, currentUrl));
+          redirectCount++;
+          cookies = response.cookies;
+          httpClient.close();
+          continue;
+        }
+      }
+  
+      return MapEntry(currentUrl, MapEntry(httpClient, response));
+    }
+    throw UpdatiumError('Too many redirects ($maxRedirects)');
+  }
+
+  Future<Response> httpClientResponseStreamToFinalResponse(
+    HttpClient httpClient,
+    String method,
+    String url,
+    HttpClientResponse response,
+  ) async {
+    final bytes = (await response.fold<BytesBuilder>(
+      BytesBuilder(),
+      (b, d) => b..add(d),
+    )).toBytes();
+  
+    final headers = <String, String>{};
+    response.headers.forEach((name, values) {
+      headers[name] = values.join(', ');
+    });
+  
+    httpClient.close();
+  
+    return http.Response.bytes(
+      bytes,
+      response.statusCode,
+      headers: headers,
+      request: http.Request(method, Uri.parse(url)),
+    );
   }
 
   Future<Response> sourceRequest(
@@ -923,9 +930,19 @@ abstract class AppSource {
   List<List<GeneratedFormItem>> additionalSourceAppSpecificSettingFormItems =
       [];
 
-  // Some additional data may be needed for Apps regardless of Source
-  List<List<GeneratedFormItem>> additionalSettingFormItemsNeverUseDirectly =
-      cloneFormItems(additionalSettingFormItems);
+  // Some additional data may be needed for Apps regardless of Source.
+  // Built lazily so the translated labels (.t()) are only resolved on first
+  // use (UI time), never during AppSource construction. This keeps background
+  // / headless entrypoints from triggering translation lookups before
+  // localization has been initialized.
+  List<List<GeneratedFormItem>>? _additionalSettingFormItemsNeverUseDirectly;
+  List<List<GeneratedFormItem>>
+  get additionalSettingFormItemsNeverUseDirectly =>
+      _additionalSettingFormItemsNeverUseDirectly ??=
+          buildAdditionalSettingFormItems();
+  set additionalSettingFormItemsNeverUseDirectly(
+    List<List<GeneratedFormItem>> value,
+  ) => _additionalSettingFormItemsNeverUseDirectly = value;
 
   List<List<GeneratedFormItem>> get combinedAdvancedSettingFormItems {
     return getCombinedAdvancedSettingFormItems(allowIncludeZips);
@@ -1386,7 +1403,8 @@ class SourceProvider {
     name = name.isNotEmpty ? name : apk.names.name;
     App finalApp = App(
       currentApp?.id ??
-          ((additionalSettings['appId'] != null)
+          ((additionalSettings['appId'] != null &&
+                  (additionalSettings['appId'] as String).isNotEmpty)
               ? additionalSettings['appId']
               : null) ??
           (!trackOnly &&

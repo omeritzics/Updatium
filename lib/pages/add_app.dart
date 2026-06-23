@@ -939,6 +939,9 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           await appsProvider.saveApps([app], onlyIfExists: false);
         }
         if (app != null) {
+          if (mounted) {
+            Navigator.of(context).pop();
+          }
           Navigator.push(
             globalNavigatorKey.currentContext ?? context,
             MaterialPageRoute(
@@ -955,9 +958,11 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
         if (!mounted) return;
         showError(e, context);
       } finally {
-        setState(() {
-          gettingAppInfo = false;
-        });
+        if (mounted) {
+          setState(() {
+            gettingAppInfo = false;
+          });
+        }
       }
     }
 
@@ -985,7 +990,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                   if (prefilledApp!.additionalSettings[item.key] != null) {
                     item.defaultValue =
                         prefilledApp!.additionalSettings[item.key];
-                  } else if (item.key == 'appAuthor') {
+                  } else if (item.key == 'author') {
                     item.defaultValue = prefilledApp!.author;
                   } else if (item.key == 'appId') {
                     item.defaultValue = prefilledApp!.id;
