@@ -985,7 +985,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                   if (prefilledApp!.additionalSettings[item.key] != null) {
                     item.defaultValue =
                         prefilledApp!.additionalSettings[item.key];
-                  } else if (item.key == 'appAuthor') {
+                  } else if (item.key == 'author') {
                     item.defaultValue = prefilledApp!.author;
                   } else if (item.key == 'appId') {
                     item.defaultValue = prefilledApp!.id;

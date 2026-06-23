@@ -483,7 +483,7 @@ class _AppPageState extends State<AppPage> {
               var item = e.clone();
               if (app.app.additionalSettings[item.key] != null) {
                 item.defaultValue = app.app.additionalSettings[item.key];
-              } else if (item.key == 'appAuthor') {
+              } else if (item.key == 'author') {
                 item.defaultValue = app.app.author;
               } else if (item.key == 'appId') {
                 item.defaultValue = app.app.id;
@@ -584,8 +584,8 @@ class _AppPageState extends State<AppPage> {
         if (values['appName'] != null) {
           app.app.name = values['appName'];
         }
-        if (values['appAuthor'] != null) {
-          app.app.author = values['appAuthor'];
+        if (values['author'] != null) {
+          app.app.author = values['author'];
         }
         if (values['appId'] != null && values['appId'] != app.app.id) {
           // ID change requires special handling - need to update the map key
