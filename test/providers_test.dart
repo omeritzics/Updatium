@@ -271,7 +271,10 @@ void main() {
         items.expand((row) => row).map((e) => e.key).toList();
 
     test('appId is reachable via app-specific settings form items', () {
-      expect(keysOf(HTML().combinedAppSpecificSettingFormItems), contains('appId'));
+      expect(
+        keysOf(HTML().combinedAppSpecificSettingFormItems),
+        contains('appId'),
+      );
     });
 
     test('advanced settings include first item and exclude appId', () {
