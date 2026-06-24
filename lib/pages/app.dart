@@ -496,6 +496,17 @@ class _AppPageState extends State<AppPage> {
             }).toList();
             return row;
           }).toList();
+          var advancedItems = (source?.combinedAdvancedSettingFormItems ?? [])
+              .map((row) {
+                return row.map((e) {
+                  var item = e.clone();
+                  if (app.app.additionalSettings[item.key] != null) {
+                    item.defaultValue = app.app.additionalSettings[item.key];
+                  }
+                  return item;
+                }).toList();
+              })
+              .toList();
 
           return StatefulBuilder(
             builder: (context, setState) {
@@ -548,7 +559,7 @@ class _AppPageState extends State<AppPage> {
                             currentInferAppIdIfOptional:
                                 localInferAppIdIfOptional,
                             appIdInferIsOptional: source.appIdInferIsOptional,
-                            formItems: source.combinedAdvancedSettingFormItems,
+                            formItems: advancedItems,
                             onInferAppIdChanged: (value) {
                               setState(() {
                                 localInferAppIdIfOptional = value;

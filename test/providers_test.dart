@@ -297,6 +297,38 @@ void main() {
       expect(advancedKeys, contains('shizukuPretendToBeGooglePlay'));
       expect(advancedKeys, isNot(contains('appId')));
     });
+
+    test(
+      'prefilled advanced form items report saved values, not defaults',
+      () {
+        // Regression: the edit dialog must seed advanced form items with the
+        // app's saved additionalSettings. Otherwise the form reports hardcoded
+        // defaults and saving wipes untouched advanced settings.
+        final source = SourceProvider().getSource(
+          'https://github.com/user/repo',
+        );
+        final savedSettings = <String, dynamic>{
+          'apkFilterRegEx': 'arm64',
+          'shizukuPretendToBeGooglePlay': true,
+        };
+
+        final prefilledAdvanced = source.combinedAdvancedSettingFormItems
+            .map(
+              (row) => row.map((e) {
+                final item = e.clone();
+                if (savedSettings[item.key] != null) {
+                  item.defaultValue = savedSettings[item.key];
+                }
+                return item;
+              }).toList(),
+            )
+            .toList();
+
+        final reported = getDefaultValuesFromFormItems(prefilledAdvanced);
+        expect(reported['apkFilterRegEx'], equals('arm64'));
+        expect(reported['shizukuPretendToBeGooglePlay'], isTrue);
+      },
+    );
   });
 
   group('URL Standardization Tests', () {
