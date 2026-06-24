@@ -6,8 +6,8 @@ List<List<GeneratedFormItem>> additionalSettingFormItems = [
   [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
   [
     GeneratedFormTextField(
-      'appAuthor',
-      label: 'appAuthor'.t(),
+      'author',
+      label: 'author'.t(),
       required: false,
     ),
   ],

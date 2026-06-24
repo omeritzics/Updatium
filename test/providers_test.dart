@@ -203,7 +203,7 @@ void main() {
       final json = {
         'id': 'com.example.app',
         'url': 'https://github.com/user/repo',
-        'appAuthor': 'user',
+        'author': 'user',
         'name': 'App',
         'latestVersion': '1.0.0',
         'additionalSettings': '{}',
@@ -220,7 +220,7 @@ void main() {
         final json = {
           'id': 'com.example.app',
           'url': 'https://github.com/user/repo',
-          'appAuthor': 'user',
+          'author': 'user',
           'name': 'App',
           'latestVersion': '1.0.0',
           'additionalSettings': '{}',
@@ -233,12 +233,12 @@ void main() {
     );
 
     test(
-      'appJSONCompatibilityModifiers renames legacy author to appAuthor',
+      'appJSONCompatibilityModifiers migrates legacy appAuthor to author',
       () {
         final json = {
           'id': 'com.example.app',
           'url': 'https://github.com/user/repo',
-          'author': 'user',
+          'appAuthor': 'user',
           'name': 'App',
           'latestVersion': '1.0.0',
           'additionalSettings': '{}',
@@ -246,15 +246,30 @@ void main() {
           'preferredApkIndex': 0,
         };
         final result = appJSONCompatibilityModifiers(Map.from(json));
-        expect(result['appAuthor'], equals('user'));
+        expect(result['author'], equals('user'));
       },
     );
 
-    test('App.fromJson loads legacy JSON that stores author', () {
+    test('App.fromJson loads JSON that stores author', () {
       final json = {
         'id': 'com.example.app',
         'url': 'https://github.com/user/repo',
         'author': 'user',
+        'name': 'App',
+        'latestVersion': '1.0.0',
+        'additionalSettings': '{}',
+        'apkUrls': '[]',
+        'preferredApkIndex': 0,
+      };
+      final app = App.fromJson(Map.from(json));
+      expect(app.author, equals('user'));
+    });
+
+    test('App.fromJson loads legacy JSON that stores appAuthor', () {
+      final json = {
+        'id': 'com.example.app',
+        'url': 'https://github.com/user/repo',
+        'appAuthor': 'user',
         'name': 'App',
         'latestVersion': '1.0.0',
         'additionalSettings': '{}',
