@@ -939,6 +939,9 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           await appsProvider.saveApps([app], onlyIfExists: false);
         }
         if (app != null) {
+          if (mounted) {
+            Navigator.of(context).pop();
+          }
           Navigator.push(
             globalNavigatorKey.currentContext ?? context,
             MaterialPageRoute(
@@ -955,9 +958,11 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
         if (!mounted) return;
         showError(e, context);
       } finally {
-        setState(() {
-          gettingAppInfo = false;
-        });
+        if (mounted) {
+          setState(() {
+            gettingAppInfo = false;
+          });
+        }
       }
     }
 
