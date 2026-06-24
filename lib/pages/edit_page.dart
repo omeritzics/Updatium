@@ -4,13 +4,7 @@ import 'package:updatium/services/slang_converter.dart';
 
 List<List<GeneratedFormItem>> additionalSettingFormItems = [
   [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
-  [
-    GeneratedFormTextField(
-      'author',
-      label: 'author'.t(),
-      required: false,
-    ),
-  ],
+  [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
   [
     GeneratedFormTextField(
       'appSourceURL',
