@@ -934,7 +934,8 @@ abstract class AppSource {
   // / headless entrypoints from triggering translation lookups before
   // localization has been initialized.
   List<List<GeneratedFormItem>>? _additionalSettingFormItemsNeverUseDirectly;
-  List<List<GeneratedFormItem>> get additionalSettingFormItemsNeverUseDirectly =>
+  List<List<GeneratedFormItem>>
+  get additionalSettingFormItemsNeverUseDirectly =>
       _additionalSettingFormItemsNeverUseDirectly ??=
           buildAdditionalSettingFormItems();
   set additionalSettingFormItemsNeverUseDirectly(
