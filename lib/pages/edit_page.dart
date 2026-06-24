@@ -70,27 +70,6 @@ List<List<GeneratedFormItem>> buildAdditionalSettingFormItems() => [
       defaultValue: false,
     ),
   ],
-
-  [
-    GeneratedFormSwitch(
-      'useVersionCodeAsOSVersion',
-      label: 'useVersionCodeAsOSVersion'.t(),
-      defaultValue: false,
-    ),
-  ],
-  [
-    GeneratedFormSwitch(
-      'autoApkFilterByArch',
-      label: 'autoApkFilterByArch'.t(),
-      defaultValue: true,
-    ),
-  ],
-  [
-    GeneratedFormSwitch(
-      'exemptFromBackgroundUpdates',
-      label: 'exemptFromBackgroundUpdates'.t(),
-    ),
-  ],
   [
     GeneratedFormSwitch(
       'skipUpdateNotifications',
