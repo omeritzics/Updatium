@@ -496,6 +496,10 @@ class _AppPageState extends State<AppPage> {
             }).toList();
             return row;
           }).toList();
+          final advancedItems = prefillAdvancedFormItems(
+            source?.combinedAdvancedSettingFormItems ?? [],
+            app.app.additionalSettings,
+          );
 
           return StatefulBuilder(
             builder: (context, setState) {
@@ -548,7 +552,7 @@ class _AppPageState extends State<AppPage> {
                             currentInferAppIdIfOptional:
                                 localInferAppIdIfOptional,
                             appIdInferIsOptional: source.appIdInferIsOptional,
-                            formItems: source.combinedAdvancedSettingFormItems,
+                            formItems: advancedItems,
                             onInferAppIdChanged: (value) {
                               setState(() {
                                 localInferAppIdIfOptional = value;
