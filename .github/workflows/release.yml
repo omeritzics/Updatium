@@ -12,6 +12,8 @@ on:
         type: boolean
         description: "Is this a beta release?"
         default: false
+  schedule:
+    - cron: '0 0 */29 * *'  # Run every 29 days at midnight UTC
 
 jobs:
   build:
@@ -133,7 +135,7 @@ jobs:
             arch=$(basename "$apk" | sed -e 's/app-fdroid-//' -e 's/-release.apk//')
             cp "$apk" "build/outputs/Updatium-${{ steps.version.outputs.version }}-fdroid-${arch}.apk"
           done
-        
+          
       - name: Attest Build Provenance
         uses: actions//attest-build-provenance@main
         with:
@@ -154,6 +156,12 @@ jobs:
           prerelease: ${{ github.event.inputs.beta == true }}
           draft: true
           files: build/outputs/Updatium-*.apk
+          body: |
+            ## The meaning of 'Qama'
+            Qama (קמא/ܩܡܐ) means 'first' in Aramaic.
+
+            ## Important note
+            Updatium now moves to a **monthly release schedule**. While we strive for stability, not every release will include major updates. Thank you for your understanding and support!
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
