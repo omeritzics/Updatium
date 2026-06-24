@@ -312,17 +312,10 @@ void main() {
           'shizukuPretendToBeGooglePlay': true,
         };
 
-        final prefilledAdvanced = source.combinedAdvancedSettingFormItems
-            .map(
-              (row) => row.map((e) {
-                final item = e.clone();
-                if (savedSettings[item.key] != null) {
-                  item.defaultValue = savedSettings[item.key];
-                }
-                return item;
-              }).toList(),
-            )
-            .toList();
+        final prefilledAdvanced = prefillAdvancedFormItems(
+          source.combinedAdvancedSettingFormItems,
+          savedSettings,
+        );
 
         final reported = getDefaultValuesFromFormItems(prefilledAdvanced);
         expect(reported['apkFilterRegEx'], equals('arm64'));

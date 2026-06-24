@@ -496,17 +496,10 @@ class _AppPageState extends State<AppPage> {
             }).toList();
             return row;
           }).toList();
-          var advancedItems = (source?.combinedAdvancedSettingFormItems ?? [])
-              .map((row) {
-                return row.map((e) {
-                  var item = e.clone();
-                  if (app.app.additionalSettings[item.key] != null) {
-                    item.defaultValue = app.app.additionalSettings[item.key];
-                  }
-                  return item;
-                }).toList();
-              })
-              .toList();
+          final advancedItems = prefillAdvancedFormItems(
+            source?.combinedAdvancedSettingFormItems ?? [],
+            app.app.additionalSettings,
+          );
 
           return StatefulBuilder(
             builder: (context, setState) {
