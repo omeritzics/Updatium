@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/services/slang_converter.dart';
 
-List<List<GeneratedFormItem>> additionalSettingFormItems = [
+List<List<GeneratedFormItem>> buildAdditionalSettingFormItems() => [
   [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
   [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
   [
@@ -190,7 +190,7 @@ String? regExValidator(String? value) {
   return null;
 }
 
-List<List<GeneratedFormItem>> advancedSpecificSettingFormItems = [
+List<List<GeneratedFormItem>> buildAdvancedSpecificSettingFormItems() => [
   [
     GeneratedFormSwitch(
       'shizukuPretendToBeGooglePlay',
@@ -266,7 +266,7 @@ List<List<GeneratedFormItem>> getCombinedAdvancedSettingFormItems(
   bool allowIncludeZips,
 ) {
   var items = <List<GeneratedFormItem>>[];
-  items.addAll(advancedSpecificSettingFormItems);
+  items.addAll(buildAdvancedSpecificSettingFormItems());
   if (allowIncludeZips) {
     items.add([
       GeneratedFormTextField(
