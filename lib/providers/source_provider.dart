@@ -928,9 +928,18 @@ abstract class AppSource {
   List<List<GeneratedFormItem>> additionalSourceAppSpecificSettingFormItems =
       [];
 
-  // Some additional data may be needed for Apps regardless of Source
-  List<List<GeneratedFormItem>> additionalSettingFormItemsNeverUseDirectly =
-      cloneFormItems(additionalSettingFormItems);
+  // Some additional data may be needed for Apps regardless of Source.
+  // Built lazily so the translated labels (.t()) are only resolved on first
+  // use (UI time), never during AppSource construction. This keeps background
+  // / headless entrypoints from triggering translation lookups before
+  // localization has been initialized.
+  List<List<GeneratedFormItem>>? _additionalSettingFormItemsNeverUseDirectly;
+  List<List<GeneratedFormItem>> get additionalSettingFormItemsNeverUseDirectly =>
+      _additionalSettingFormItemsNeverUseDirectly ??=
+          buildAdditionalSettingFormItems();
+  set additionalSettingFormItemsNeverUseDirectly(
+    List<List<GeneratedFormItem>> value,
+  ) => _additionalSettingFormItemsNeverUseDirectly = value;
 
   List<List<GeneratedFormItem>> get combinedAdvancedSettingFormItems {
     return getCombinedAdvancedSettingFormItems(allowIncludeZips);
