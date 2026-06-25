@@ -375,7 +375,7 @@
     "invertRegEx": "Regulären Ausdruck invertieren",
     "note": "Hinweis",
     "selfHostedNote": "Das „{}“-Drop-down-Menü kann verwendet werden, um selbst gehostete/angepasste Instanzen einer beliebigen Quelle zu erreichen.",
-    "openSourceNote": "Open-Source-Software ist sicherer und vertrauenswürdiger, da ihr Quellcode vollständig transparent ist und offen für überprüfbar ist.",
+    "openSourceNote": "Open-Source-Software ist sicherer und vertrauenswürdiger, da ihr Quellcode vollständig transparent und offen überprüfbar ist.",
     "badDownload": "Die APK konnte nicht gelesen werden (inkompatibler oder unfertiger Download)",
     "beforeNewInstallsShareToAppVerifier": "Neue Apps mit AppVerifier teilen (falls verfügbar)",
     "appVerifierInstructionToast": "Teile die Daten mit AppVerifier und kehre im Anschluss hierher zurück.",
