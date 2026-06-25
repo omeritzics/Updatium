@@ -513,7 +513,7 @@
     "open": "Öffnen",
     "added": "HInzugefügt",
     "fileExists": "Datei existiert bereits",
-    "fileExistsPrompt": Eine Datei mit diesem Namen existiert bereits. Bitte geben Sie einen neuen Namen für die heruntergeladene Datei ein:",
+    "fileExistsPrompt": "Eine Datei mit diesem Namen existiert bereits. Bitte geben Sie einen neuen Namen für die heruntergeladene Datei ein:",
     "fileName": "Dateiname",
     "downloadCancelled": "Download abgebrochen",
     "showInFileManager": "Im Dateimanager anzeigen",
