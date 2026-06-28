@@ -16,20 +16,22 @@ PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BUILD_DIR="${PROJECT_DIR}/build"
 FLUTTER_VERSION_MIN="3.40.0"
 
-# Function to print colored messages
+# print_info prints an informational message in green.
 print_info() {
     echo -e "${GREEN}[INFO]${NC} $1"
 }
 
+# print_error prints an error message with error formatting.
 print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# print_warning prints a warning message with a warning label.
 print_warning() {
     echo -e "${YELLOW}[WARNING]${NC} $1"
 }
 
-# Function to check if Flutter is installed
+# check_flutter verifies that Flutter and Dart are installed and prints the Flutter version.
 check_flutter() {
     print_info "Checking Flutter installation..."
     
@@ -47,7 +49,7 @@ check_flutter() {
     fi
 }
 
-# Function to check Java version
+# check_java verifies that Java 17 or higher is installed and configures JAVA_HOME and Gradle to use it.
 check_java() {
     print_info "Checking Java installation..."
     
@@ -81,21 +83,21 @@ check_java() {
     # in android/settings.gradle.kts, so Gradle will automatically download JDK 21 if needed.
 }
 
-# Function to clean previous builds
+# clean_build removes previous Flutter build artifacts by running flutter clean in the project directory.
 clean_build() {
     print_info "Cleaning previous builds..."
     cd "$PROJECT_DIR"
     flutter clean
 }
 
-# Function to get dependencies
+# get_dependencies fetches the Flutter package dependencies for the project.
 get_dependencies() {
     print_info "Getting Flutter dependencies..."
     cd "$PROJECT_DIR"
     flutter pub get
 }
 
-# Function to build APK
+# build_apk builds an APK for the specified flavor and build type and prints the expected output path.
 build_apk() {
     local flavor=$1
     local build_type=$2
@@ -123,7 +125,8 @@ build_apk() {
     fi
 }
 
-# Function to build App Bundle
+# build_appbundle builds a release Android App Bundle for the specified flavor and prints the expected output path.
+# @param flavor The Flutter build flavor to bundle.
 build_appbundle() {
     local flavor=$1
     
@@ -136,7 +139,7 @@ build_appbundle() {
     print_info "App Bundle built successfully: ${output_dir}/app-$flavor-release.aab"
 }
 
-# Function to build all variants
+# build_all builds the normal and fdroid APK variants in both debug and release modes.
 build_all() {
     print_info "Building all variants..."
     
@@ -152,7 +155,7 @@ build_all() {
     print_info "All variants built successfully"
 }
 
-# Function to display usage
+# usage displays the command-line help and example invocations for the build script.
 usage() {
     echo "Usage: $0 [OPTIONS]"
     echo ""
