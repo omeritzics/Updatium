@@ -43,6 +43,9 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+    /**
+     * Registers the native method channels used by the Flutter engine.
+     */
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         

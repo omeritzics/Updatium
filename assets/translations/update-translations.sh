@@ -31,7 +31,7 @@ show_help() {
     echo "  $0 --remove-unused   # Remove unused translation keys"
 }
 
-# Function to extract used translation keys from Dart files
+# extract_used_keys scans Dart files for translation keys and writes the unique results to used_keys.txt.
 extract_used_keys() {
     echo "🔍 Extracting translation keys from Dart files..."
     
