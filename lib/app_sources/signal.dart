@@ -58,7 +58,9 @@ class Signal extends AppSource {
           }
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      //ignore
+    }
 
     return APKDetails(
       version,

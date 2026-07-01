@@ -117,7 +117,9 @@ void main() async {
     SecurityContext.defaultContext.setTrustedCertificatesBytes(
       data.buffer.asUint8List(),
     );
-  } catch (e) {}
+  } catch (e) {
+    //ignore
+  }
   await SimpleLocalization.ensureInitialized();
 
   final np = NotificationsProvider();

@@ -652,7 +652,9 @@ class AppsProvider with ChangeNotifier {
       if (iconCacheDir.existsSync()) {
         try {
           iconCacheDir.deleteSync(recursive: true);
-        } catch (e) {}
+        } catch (e) {
+          //ignore
+        }
       }
       // Clean up old external cache directory to reduce cache usage
       var cacheDirs = await getExternalCacheDirectories();
@@ -661,7 +663,9 @@ class AppsProvider with ChangeNotifier {
         if (oldCacheDir.existsSync()) {
           try {
             oldCacheDir.deleteSync(recursive: true);
-          } catch (e) {}
+          } catch (e) {
+            //ignore
+          }
         }
       }
       if (!isBg) {

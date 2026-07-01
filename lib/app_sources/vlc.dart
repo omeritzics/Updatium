@@ -87,7 +87,9 @@ class VLC extends AppSource {
       if (dateMatch != null) {
         releaseDate = DateTime.parse(dateMatch.group(1)!);
       }
-    } catch (e) {}
+    } catch (e) {
+      //ignore
+    }
 
     return APKDetails(
       latestVersion,

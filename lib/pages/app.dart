@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
-import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/apps.dart';
+import 'package:updatium/pages/edit_page.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:provider/provider.dart';
 import 'package:markdown/markdown.dart' as md;
@@ -113,7 +115,9 @@ class _AppPageState extends State<AppPage> {
           }
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      //ignore
+    }
     return null;
   }
 
