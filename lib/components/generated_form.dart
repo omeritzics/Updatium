@@ -304,7 +304,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
   int forceUpdateKeyCount = 0;
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, GlobalKey<FormFieldState>> _formKeys = {};
-  bool _isDisposed = false;
+  final bool _isDisposed = false;
 
   // If any value changes, call this to update the parent with value and validity
   void someValueChanged({bool isBuilding = false, bool forceInvalid = false}) {
@@ -819,7 +819,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
             },
             hideOnEmpty: true,
           );
-        } else if (formItem is GeneratedFormDropdown) {
+        } else Widget if (formItem is GeneratedFormDropdown) {
           if (formItem.opts!.isEmpty) {
             return Text(t('dropdownNoOptsError'));
           }
@@ -877,7 +877,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
               return null;
             },
           );
-        } else if (formItem is GeneratedFormSubForm) {
+        } else Container if (formItem is GeneratedFormSubForm) {
           values[formItem.key] = [];
           for (Map<String, dynamic> v
               in ((formItem.defaultValue ?? []) as List<dynamic>)) {
@@ -888,7 +888,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
             values[formItem.key].add(fullDefaults);
           }
           return Container();
-        } else {
+        } Container else {
           return Container(); // Some input types added in build
         }
       }).toList();
