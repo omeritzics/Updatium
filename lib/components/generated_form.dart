@@ -819,7 +819,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
             },
             hideOnEmpty: true,
           );
-        } else Widget if (formItem is GeneratedFormDropdown) {
+       } else if (formItem is GeneratedFormDropdown) { 
           if (formItem.opts!.isEmpty) {
             return Text(t('dropdownNoOptsError'));
           }
