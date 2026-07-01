@@ -58,7 +58,7 @@ class DeviceAdminReceiver : DeviceAdminReceiver() {
                 @Suppress("DEPRECATION")
                 activityManager.killBackgroundProcesses(packageName)
             }
-        } catch (e: Exception) {
+        } catch (e: SecurityException) {
             // Log error but don't crash
             e.printStackTrace()
         }
