@@ -157,7 +157,7 @@ jobs:
 
       - name: Create Release
         if: success() && hashFiles('build/outputs/Updatium-Nightly*.apk') != ''
-        uses: softprops/action-gh-release@master
+        uses: softprops/action-gh-release@v3.0.1
         with:
           tag_name: nightly
           name: "Updatium Nightly"
