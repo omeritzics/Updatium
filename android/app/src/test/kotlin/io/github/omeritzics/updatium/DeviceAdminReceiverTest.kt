@@ -97,12 +97,29 @@ class DeviceAdminReceiverTest {
     // ── onDisabled: anti-cheat enabled ────────────────────────────────────────
 
     @Test
-    fun `onDisabled - antiCheat enabled - does not throw`() {
+    fun `onDisabled - antiCheat enabled - verifies force stop and re-enable admin`() {
         setAntiCheatEnabled(true)
-        // Even though killBackgroundProcesses / startActivity may no-op under Robolectric,
-        // the method must complete without throwing
-        receiver.onDisabled(context, intent)
+        
+        val mockActivityManager = mock<ActivityManager>()
+        val mockDevicePolicyManager = mock<DevicePolicyManager>()
+        
+        // Mock context to return our mocked managers
+        val spyContext = spy(context)
+        whenever(spyContext.getSystemService(Context.ACTIVITY_SERVICE)).thenReturn(mockActivityManager)
+        whenever(spyContext.getSystemService(Context.DEVICE_POLICY_SERVICE)).thenReturn(mockDevicePolicyManager)
+        whenever(mockDevicePolicyManager.isAdminActive(any())).thenReturn(false)
+
+        receiver.onDisabled(spyContext, intent)
+
+        // Verify forceStopSettingsApp was effectively called
+        verify(mockActivityManager).killBackgroundProcesses("com.android.settings")
+        
+        // Verify reEnableDeviceAdmin attempted to start the admin activity
+        // In Robolectric, we can check the next started activity
+        val nextIntent = org.robolectric.Shadows.shadowOf(spyContext).nextStartedActivity
+        assertEquals(android.app.admin.DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN, nextIntent?.action)
     }
+
 
     @Test
     fun `onDisabled - antiCheat enabled - pref remains true after call`() {

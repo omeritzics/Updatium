@@ -60,7 +60,7 @@ class _ETagCacheEntry {
 }
 
 /// Simple in-memory cache for API responses with ETag support
-class _ETagResponseCache {
+class ETagResponseCache {
   final Map<String, _ETagCacheEntry> _cache = {};
 
   String _cacheKey(String url, Map<String, dynamic>? additionalSettings) {
@@ -108,7 +108,7 @@ class _ETagResponseCache {
 }
 
 // Global ETag cache instance
-final _etagCache = _ETagResponseCache();
+final _etagCache = ETagResponseCache();
 
 class AppNames {
   late String author;
@@ -694,79 +694,7 @@ HttpClient createHttpClient(bool insecure) {
   return client;
 }
 
-Future<MapEntry<Uri, MapEntry<HttpClient, HttpClientResponse>>>
-sourceRequestStreamResponse(
-  String method,
-  String url,
-  Map<String, String>? requestHeaders,
-  Map<String, dynamic> additionalSettings, {
-  bool followRedirects = true,
-  Object? postBody,
-}) async {
-  var currentUrl = Uri.parse(url);
-  var redirectCount = 0;
-  const maxRedirects = 10;
-  List<Cookie> cookies = [];
-  while (redirectCount < maxRedirects) {
-    var httpClient = createHttpClient(
-      additionalSettings['allowInsecure'] == true,
-    );
-    var request = await httpClient.openUrl(method, currentUrl);
-    if (requestHeaders != null) {
-      requestHeaders.forEach((key, value) {
-        request.headers.set(key, value);
-      });
-    }
-    request.cookies.addAll(cookies);
-    request.followRedirects = false;
-    if (postBody != null) {
-      request.headers.contentType = ContentType.json;
-      request.write(jsonEncode(postBody));
-    }
-    final response = await request.close();
 
-    if (followRedirects &&
-        (response.statusCode >= 300 && response.statusCode <= 399)) {
-      final location = response.headers.value(HttpHeaders.locationHeader);
-      if (location != null) {
-        currentUrl = Uri.parse(ensureAbsoluteUrl(location, currentUrl));
-        redirectCount++;
-        cookies = response.cookies;
-        httpClient.close();
-        continue;
-      }
-    }
-
-    return MapEntry(currentUrl, MapEntry(httpClient, response));
-  }
-  throw UpdatiumError('Too many redirects ($maxRedirects)');
-}
-
-Future<Response> httpClientResponseStreamToFinalResponse(
-  HttpClient httpClient,
-  String method,
-  String url,
-  HttpClientResponse response,
-) async {
-  final bytes = (await response.fold<BytesBuilder>(
-    BytesBuilder(),
-    (b, d) => b..add(d),
-  )).toBytes();
-
-  final headers = <String, String>{};
-  response.headers.forEach((name, values) {
-    headers[name] = values.join(', ');
-  });
-
-  httpClient.close();
-
-  return http.Response.bytes(
-    bytes,
-    response.statusCode,
-    headers: headers,
-    request: http.Request(method, Uri.parse(url)),
-  );
-}
 
 abstract class AppSource {
   List<String> hosts = [];
@@ -826,6 +754,80 @@ abstract class AppSource {
 
   App endOfGetAppChanges(App app) {
     return app;
+  }
+
+  Future<MapEntry<Uri, MapEntry<HttpClient, HttpClientResponse>>>
+  sourceRequestStreamResponse(
+    String method,
+    String url,
+    Map<String, String>? requestHeaders,
+    Map<String, dynamic> additionalSettings, {
+    bool followRedirects = true,
+    Object? postBody,
+  }) async {
+    var currentUrl = Uri.parse(url);
+    var redirectCount = 0;
+    const maxRedirects = 10;
+    List<Cookie> cookies = [];
+    while (redirectCount < maxRedirects) {
+      var httpClient = createHttpClient(
+        additionalSettings['allowInsecure'] == true,
+      );
+      var request = await httpClient.openUrl(method, currentUrl);
+      if (requestHeaders != null) {
+        requestHeaders.forEach((key, value) {
+          request.headers.set(key, value);
+        });
+      }
+      request.cookies.addAll(cookies);
+      request.followRedirects = false;
+      if (postBody != null) {
+        request.headers.contentType = ContentType.json;
+        request.write(jsonEncode(postBody));
+      }
+      final response = await request.close();
+  
+      if (followRedirects &&
+          (response.statusCode >= 300 && response.statusCode <= 399)) {
+        final location = response.headers.value(HttpHeaders.locationHeader);
+        if (location != null) {
+          currentUrl = Uri.parse(ensureAbsoluteUrl(location, currentUrl));
+          redirectCount++;
+          cookies = response.cookies;
+          httpClient.close();
+          continue;
+        }
+      }
+  
+      return MapEntry(currentUrl, MapEntry(httpClient, response));
+    }
+    throw UpdatiumError('Too many redirects ($maxRedirects)');
+  }
+
+  Future<Response> httpClientResponseStreamToFinalResponse(
+    HttpClient httpClient,
+    String method,
+    String url,
+    HttpClientResponse response,
+  ) async {
+    final bytes = (await response.fold<BytesBuilder>(
+      BytesBuilder(),
+      (b, d) => b..add(d),
+    )).toBytes();
+  
+    final headers = <String, String>{};
+    response.headers.forEach((name, values) {
+      headers[name] = values.join(', ');
+    });
+  
+    httpClient.close();
+  
+    return http.Response.bytes(
+      bytes,
+      response.statusCode,
+      headers: headers,
+      request: http.Request(method, Uri.parse(url)),
+    );
   }
 
   Future<Response> sourceRequest(
