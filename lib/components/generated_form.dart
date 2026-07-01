@@ -888,7 +888,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
             values[formItem.key].add(fullDefaults);
           }
           return Container();
-        } Container else {
+       } else { 
           return Container(); // Some input types added in build
         }
       }).toList();
