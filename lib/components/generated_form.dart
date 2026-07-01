@@ -304,7 +304,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
   int forceUpdateKeyCount = 0;
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, GlobalKey<FormFieldState>> _formKeys = {};
-  final bool _isDisposed = false;
+ bool _isDisposed = false; 
 
   // If any value changes, call this to update the parent with value and validity
   void someValueChanged({bool isBuilding = false, bool forceInvalid = false}) {
