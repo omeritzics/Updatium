@@ -877,7 +877,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
               return null;
             },
           );
-        } else Container if (formItem is GeneratedFormSubForm) {
+       } else if (formItem is GeneratedFormSubForm) { 
           values[formItem.key] = [];
           for (Map<String, dynamic> v
               in ((formItem.defaultValue ?? []) as List<dynamic>)) {
