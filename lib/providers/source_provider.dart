@@ -1321,7 +1321,7 @@ String? extractVersion(
     if (version?.isNotEmpty != true) {
       throw NoVersionError();
     }
-    return version!;
+    return version;
   } else {
     return null;
   }
