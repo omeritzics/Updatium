@@ -22,6 +22,7 @@ class Codeberg extends AppSource {
     );
   }
 
+  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/releases';
 
