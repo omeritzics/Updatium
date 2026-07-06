@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class Bitbucket extends AppSource {
   Bitbucket({bool hostChanged = false}) {
-    name = t('bitbucket');
+    name = 'Bitbucket';
     hosts = ['bitbucket.org'];
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
@@ -85,6 +85,7 @@ class Bitbucket extends AppSource {
     return null;
   }
 
+  @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
@@ -110,6 +111,7 @@ class Bitbucket extends AppSource {
     return results;
   }
 
+  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/downloads';
 
