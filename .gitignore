@@ -56,4 +56,7 @@ TODO.txt
 data
 node_modules/
 .flutter
-.kilo/
+
+
+#Ignore vscode AI rules
+.github/instructions/codacy.instructions.md

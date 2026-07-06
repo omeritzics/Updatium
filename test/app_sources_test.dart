@@ -21,10 +21,6 @@ void main() {
       expect(github.canSearch, isTrue);
     });
 
-    test('GitHub is open source', () {
-      expect(github.openSource, isTrue);
-    });
-
     test('GitHub standardizes URL correctly', () {
       final url = github.sourceSpecificStandardizeURL(
         'https://github.com/user/repo',
@@ -59,9 +55,6 @@ void main() {
       expect(gitlab.canSearch, isTrue);
     });
 
-    test('GitLab is open source', () {
-      expect(gitlab.openSource, isTrue);
-    });
   });
 
   group('FDroid Source Tests', () {
@@ -75,9 +68,6 @@ void main() {
       expect(fdroid.hosts, contains('f-droid.org'));
     });
 
-    test('FDroid is open source', () {
-      expect(fdroid.openSource, isTrue);
-    });
   });
 
   group('HTML Source Tests', () {

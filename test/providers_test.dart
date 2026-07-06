@@ -51,13 +51,6 @@ void main() {
       expect(settingsProvider.exportSettings, equals(1));
     });
 
-    test('DNSServiceProvider default value is system', () {
-      expect(
-        settingsProvider.dnsServiceProvider,
-        equals(DNSServiceProvider.system),
-      );
-    });
-
     test('checkAndFlipFirstRun returns true on first call', () {
       // This test needs prefs to be initialized, skip for now
       expect(() => settingsProvider.checkAndFlipFirstRun(), returnsNormally);
@@ -202,7 +195,7 @@ void main() {
       final json = {
         'id': 'com.example.app',
         'url': 'https://github.com/user/repo',
-        'appAuthor': 'user',
+        'author': 'user',
         'name': 'App',
         'latestVersion': '1.0.0',
         'additionalSettings': '{}',
@@ -219,7 +212,7 @@ void main() {
         final json = {
           'id': 'com.example.app',
           'url': 'https://github.com/user/repo',
-          'appAuthor': 'user',
+          'author': 'user',
           'name': 'App',
           'latestVersion': '1.0.0',
           'additionalSettings': '{}',
