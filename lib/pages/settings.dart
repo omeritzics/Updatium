@@ -484,7 +484,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 );
               }
-            }).toList(),
+            }),
           ],
         );
         return columnContent;
