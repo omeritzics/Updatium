@@ -34,7 +34,11 @@ const horizontalGap24 = SizedBox(width: 24);
 enum AppAddFlowType { none, search, url }
 
 class AppPage extends StatefulWidget {
-  const AppPage({super.key, required this.appId, this.flowType = AppAddFlowType.none});
+  const AppPage({
+    super.key,
+    required this.appId,
+    this.flowType = AppAddFlowType.none,
+  });
 
   final String appId;
   final AppAddFlowType flowType;
@@ -162,7 +166,7 @@ class _AppPageState extends State<AppPage> {
       if (installedVersionIsEstimate) {
         infoLines = '${t('pseudoVersionInUse')}\n$infoLines';
       }
-      if (app.app.apkUrls.length > 0) {
+      if (app.app.apkUrls.isNotEmpty) {
         infoLines =
             '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : plural('apk', app.app.apkUrls.length)}';
       }
@@ -553,7 +557,9 @@ class _AppPageState extends State<AppPage> {
         }
 
         // Handle additional settings
-        Map<String, dynamic> originalSettings = Map.from(app.app.additionalSettings);
+        Map<String, dynamic> originalSettings = Map.from(
+          app.app.additionalSettings,
+        );
         var sourceItems = source?.combinedAppSpecificSettingFormItems ?? [];
         for (var row in sourceItems) {
           for (var item in row) {
