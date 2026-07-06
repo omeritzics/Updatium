@@ -14,15 +14,25 @@ class SourceForge extends AppSource {
     var sourceRegex = getSourceRegex(hosts);
     return SourceProvider().standardizeUrlWithRegex(
       url,
-      '^https?://(www\\.)?$sourceRegex/(projects/[^/]+/files|p)/.+',
+      '^https?://(www\\.)?$sourceRegex/projects/[^/]+/files(/.+)?',
       sourceName: name,
       transform: (matched, match) {
-        var uri = Uri.parse(matched);
-        if (uri.pathSegments.first == 'p') {
-          return 'https://${uri.host}/projects/${uri.pathSegments.sublist(1).join('/')}';
+        // Check if URL matches the /p/ pattern first
+        RegExp regExC = RegExp(
+          '^https?://(www\\.)?$sourceRegex/p/.+',
+          caseSensitive: false,
+        );
+        var matchC = regExC.firstMatch(url);
+        if (matchC != null) {
+          return 'https://${Uri.parse(matchC.group(0)!).host}/projects/${url.substring(Uri.parse(matchC.group(0)!).host.length + '/projects/'.length + 1)}';
         }
-        if (uri.pathSegments.length == 2 && uri.pathSegments.first == 'projects') {
-          return '$matched/files';
+        // Check if it's just /projects/ without /files
+        RegExp regExB = RegExp(
+          '^https?://(www\\.)?$sourceRegex/projects/[^/]+',
+        );
+        var matchB = regExB.firstMatch(url);
+        if (matchB != null && matchB.group(0) == url) {
+          return '$url/files';
         }
         return matched;
       },

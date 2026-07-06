@@ -18,7 +18,7 @@ class GitLab extends AppSource {
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
-    trusted = true;
+    openSource = true;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
         tr('gitlabPATLabel'),
@@ -50,20 +50,29 @@ class GitLab extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    var urlSegments = url.split('/');
-    var cutOffIndex = urlSegments.indexWhere((s) => s == '-');
-    url = urlSegments
-        .sublist(0, cutOffIndex <= 0 ? null : cutOffIndex)
-        .join('/');
-    RegExp standardUrlRegEx = RegExp(
+    return SourceProvider().standardizeUrlWithRegex(
+      url,
       '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+(/[^((\b/\b)|(\b/-/\b))]+){1,20}',
-      caseSensitive: false,
+      sourceName: name,
+      transform: (matched, match) {
+        // Pre-process: cut off URL at '-' character
+        var urlSegments = url.split('/');
+        var cutOffIndex = urlSegments.indexWhere((s) => s == '-');
+        var processedUrl = urlSegments
+            .sublist(0, cutOffIndex <= 0 ? null : cutOffIndex)
+            .join('/');
+        // Re-match with processed URL
+        RegExp regEx = RegExp(
+          '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+(/[^((\b/\b)|(\b/-/\b))]+){1,20}',
+          caseSensitive: false,
+        );
+        var newMatch = regEx.firstMatch(processedUrl);
+        if (newMatch != null) {
+          return newMatch.group(0)!;
+        }
+        return matched;
+      },
     );
-    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
-    if (match == null) {
-      throw InvalidURLError(name);
-    }
-    return match.group(0)!;
   }
 
   Future<String?> getPATIfAny(Map<String, dynamic> additionalSettings) async {
@@ -77,6 +86,7 @@ class GitLab extends AppSource {
     return creds != null && creds.isNotEmpty ? creds : null;
   }
 
+  @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
@@ -98,9 +108,11 @@ class GitLab extends AppSource {
     return results;
   }
 
+  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/-/releases';
 
+  @override
   Future<Map<String, String>?> getRequestHeaders(
     Map<String, dynamic> additionalSettings,
     String url, {

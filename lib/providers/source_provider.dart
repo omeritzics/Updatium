@@ -7,17 +7,22 @@ import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:http/http.dart';
+import 'package:flutter/material.dart';
 import 'package:simple_localization/simple_localization.dart';
 import 'package:updatium/app_sources/apkcombo.dart';
 import 'package:updatium/app_sources/apkmirror.dart';
 import 'package:updatium/app_sources/apkpure.dart';
+import 'package:updatium/app_sources/bitbucket.dart';
+import 'package:updatium/app_sources/openapk.dart';
 import 'package:updatium/app_sources/aptoide.dart';
 import 'package:updatium/app_sources/codeberg.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
+import 'package:updatium/app_sources/gitea.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/app_sources/huaweiappgallery.dart';
@@ -26,6 +31,7 @@ import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/app_sources/jenkins.dart';
 import 'package:updatium/app_sources/neutroncode.dart';
 import 'package:updatium/app_sources/rustore.dart';
+import 'package:updatium/app_sources/signal.dart';
 import 'package:updatium/app_sources/sourceforge.dart';
 import 'package:updatium/app_sources/sourcehut.dart';
 import 'package:updatium/app_sources/telegramapp.dart';
@@ -33,6 +39,7 @@ import 'package:updatium/app_sources/tencent.dart';
 import 'package:updatium/app_sources/whatsapp.dart';
 import 'package:updatium/app_sources/uptodown.dart';
 import 'package:updatium/app_sources/vivoappstore.dart';
+import 'package:updatium/app_sources/vlc.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -582,7 +589,7 @@ String preStandardizeUrl(String url) {
 String noAPKFound = tr('noAPKFound');
 
 List<String> getLinksFromParsedHTML(
-  Document dom,
+  dom.Document dom,
   RegExp hrefPattern,
   String prependToLinks,
 ) => dom
@@ -755,7 +762,7 @@ abstract class AppSource {
   List<String> excludeCommonSettingKeys = [];
   bool urlsAlwaysHaveExtension = false;
   bool allowIncludeZips = false;
-  bool trusted = false;
+  bool openSource = false;
 
   AppSource() {
     name = runtimeType.toString();
@@ -1469,11 +1476,7 @@ class SourceProvider {
     String? sourceName,
     String Function(String, RegExpMatch)? transform,
   }) {
-    // Use cached regex if available, otherwise compile and cache it
-    RegExp standardUrlRegEx = _regexCache.putIfAbsent(
-      pattern,
-      () => RegExp(pattern, caseSensitive: false),
-    );
+    RegExp standardUrlRegEx = RegExp(pattern, caseSensitive: false);
     RegExpMatch? match = standardUrlRegEx.firstMatch(url);
     if (match == null) {
       if (sourceName != null) {
@@ -1807,11 +1810,11 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
 
   void _updateController() {
     if (widget.selectedOverride == null || widget.selectedOverride == '') {
-      widget.controller.text = t('none');
+      widget.controller.text = tr('none');
       return;
     }
     if (sourceProvider.sources.isEmpty) {
-      widget.controller.text = t('none');
+      widget.controller.text = tr('none');
       return;
     }
     AppSource? selectedSource;
@@ -1825,7 +1828,7 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
     if (selectedSource != null) {
       widget.controller.text = selectedSource.name;
     } else {
-      widget.controller.text = t('none');
+      widget.controller.text = tr('none');
     }
   }
 
@@ -1842,7 +1845,7 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
                     controller: widget.controller,
                     readOnly: true,
                     decoration: InputDecoration(
-                      labelText: t('overrideSource'),
+                      labelText: tr('overrideSource'),
                       suffixIcon: const Icon(Icons.arrow_drop_down),
                     ),
                     onTap: () {
@@ -1859,7 +1862,7 @@ class _SourceOverrideDropdownState extends State<SourceOverrideDropdown> {
                     onPressed: () {
                       widget.onSelectionChanged(null);
                     },
-                    child: Text(t('none')),
+                    child: Text(tr('none')),
                   ),
                   ...sourceProvider.sources
                       .where(
