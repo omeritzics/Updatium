@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -1518,8 +1519,7 @@ class _UpdatiumState extends State<Updatium> {
               shortcuts: <LogicalKeySet, Intent>{
                 LogicalKeySet(LogicalKeyboardKey.select):
                     const ActivateIntent(),
-                LogicalKeySet(LogicalKeyboardKey.enter):
-                    const ActivateIntent(),
+                LogicalKeySet(LogicalKeyboardKey.enter): const ActivateIntent(),
                 LogicalKeySet(LogicalKeyboardKey.arrowUp):
                     const DirectionalFocusIntent(TraversalDirection.up),
                 LogicalKeySet(LogicalKeyboardKey.arrowDown):
@@ -1528,10 +1528,8 @@ class _UpdatiumState extends State<Updatium> {
                     const DirectionalFocusIntent(TraversalDirection.left),
                 LogicalKeySet(LogicalKeyboardKey.arrowRight):
                     const DirectionalFocusIntent(TraversalDirection.right),
-                LogicalKeySet(LogicalKeyboardKey.tab):
-                    const NextFocusIntent(),
-                LogicalKeySet(LogicalKeyboardKey.escape):
-                    const DismissIntent(),
+                LogicalKeySet(LogicalKeyboardKey.tab): const NextFocusIntent(),
+                LogicalKeySet(LogicalKeyboardKey.escape): const DismissIntent(),
               },
               child: const HomePage(),
             ),
