@@ -18,6 +18,7 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:updatium/services/device_admin_service.dart';
 import 'package:updatium/services/slang-converter.dart';
+import 'package:updatium/services/dns_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
