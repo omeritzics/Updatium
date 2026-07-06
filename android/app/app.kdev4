@@ -1,0 +1,4 @@
+[Project]
+CreatedFrom=proguard-rules.pro
+Manager=KDevQMakeManager
+Name=app

@@ -128,11 +128,7 @@ void main() {
           // Allow exceptions for keys with underscores in specific cases
           if (key.contains('_') &&
               !key.startsWith('x') &&
-              !key.contains('AndN')) {
-            print(
-              'Note: $fileName has key "$key" with underscore (may be intentional)',
-            );
-          }
+              !key.contains('AndN')) {}
 
           // Keys should not start with numbers
           expect(
@@ -178,11 +174,7 @@ void main() {
 
               // Values should not be identical (defeats purpose of pluralization)
               final values = pluralForms.values.whereType<String>().toSet();
-              if (values.length < 2 && pluralForms.length > 1) {
-                print(
-                  'Note: $fileName key "${entry.key}" has identical plural forms (may be intentional)',
-                );
-              }
+              if (values.length < 2 && pluralForms.length > 1) {}
             }
           }
         }
@@ -198,7 +190,7 @@ void main() {
       for (final file in translationFiles) {
         final content = File(file.path).readAsStringSync();
         final translations = json.decode(content) as Map<String, dynamic>;
-        final fileName = path.basename(file.path);
+        path.basename(file.path);
 
         void checkEscapes(dynamic value, String keyPath) {
           if (value is String) {
@@ -206,11 +198,7 @@ void main() {
             final actualNewlines = '\n'.allMatches(value).length;
 
             // If there are actual newlines, they should be intentional
-            if (actualNewlines > 3) {
-              print(
-                'Note: $fileName at "$keyPath" has $actualNewlines actual newlines',
-              );
-            }
+            if (actualNewlines > 3) {}
           } else if (value is Map) {
             value.forEach((k, v) => checkEscapes(v, '$keyPath.$k'));
           }
@@ -273,11 +261,7 @@ void main() {
               );
 
               // URLs should use https where possible (security best practice)
-              if (url.startsWith('http://') && !url.contains('localhost')) {
-                print(
-                  'Security note: $fileName at "$keyPath" uses HTTP instead of HTTPS: $url',
-                );
-              }
+              if (url.startsWith('http://') && !url.contains('localhost')) {}
             }
           } else if (value is Map) {
             value.forEach((k, v) => checkUrls(v, '$keyPath.$k'));
@@ -315,15 +299,11 @@ void main() {
         if (!file.existsSync()) continue;
 
         final lines = file.readAsLinesSync();
-        final fileName = path.basename(file.path);
+        path.basename(file.path);
 
         for (var i = 0; i < lines.length; i++) {
           final line = lines[i];
-          if (line.length > maxLineLength) {
-            print(
-              'Note: $fileName line ${i + 1} is ${line.length} chars (readability suggestion: under $maxLineLength)',
-            );
-          }
+          if (line.length > maxLineLength) {}
         }
       }
     });
@@ -362,11 +342,7 @@ void main() {
         if (content.contains('2_100_000_000') ||
             content.contains('2100000000')) {
           // Good, it checks against Play Store limit
-        } else {
-          print(
-            'Note: build.gradle.kts might want to validate against Play Store version code limit (2,100,000,000)',
-          );
-        }
+        } else {}
       }
     });
 
@@ -385,15 +361,11 @@ void main() {
         if (!file.existsSync()) continue;
 
         final content = file.readAsStringSync();
-        final fileName = path.basename(file.path);
+        path.basename(file.path);
 
         // File paths with spaces should be quoted
         final pathPattern = RegExp('[^"\']s+[^s:]+/[^s:]+s');
-        if (pathPattern.hasMatch(content)) {
-          print(
-            'Note: $fileName may have unquoted paths with spaces (check for proper quoting)',
-          );
-        }
+        if (pathPattern.hasMatch(content)) {}
       }
     });
 
@@ -429,16 +401,10 @@ void main() {
               !url.startsWith('https://') &&
               !url.startsWith('#') &&
               !url.startsWith('./') &&
-              !url.startsWith('../')) {
-            print(
-              'Note: README.md link may be relative without protocol: $url',
-            );
-          }
+              !url.startsWith('../')) {}
 
           // URLs should not contain spaces (should be encoded as %20)
-          if (url.contains(' ')) {
-            print('Warning: README.md URL contains unencoded space: $url');
-          }
+          if (url.contains(' ')) {}
         }
 
         // Check for broken image links
@@ -452,11 +418,7 @@ void main() {
           if (!imagePath.startsWith('http://') &&
               !imagePath.startsWith('https://')) {
             final imageFile = File(path.join(projectRoot.path, imagePath));
-            if (!imageFile.existsSync()) {
-              print(
-                'Note: README.md references image that may not exist: $imagePath',
-              );
-            }
+            if (!imageFile.existsSync()) {}
           }
         }
       }
@@ -486,11 +448,7 @@ void main() {
             );
 
         for (final line in globLines) {
-          if (line.contains(r'\')) {
-            print(
-              'Note: .qodo.toml may use backslashes in glob patterns (should use forward slashes)',
-            );
-          }
+          if (line.contains(r'\')) {}
         }
       }
     });
