@@ -2,7 +2,6 @@
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium)](https://github.com/omeritzics/Updatium/releases/latest)
 [![Nightly Build](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml/badge.svg)](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
-[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/omeritzics/updatium/total)](https://tooomm.github.io/github-release-stats/?username=omeritzics&repository=Updatium)
 [![Translation Help Wanted](https://img.shields.io/badge/translation-help_wanted-blue)](https://github.com/omeritzics/Updatium/tree/main/assets/translations)
 
 Update your Android apps directly from the APK source. Updatium is a customizable Android app catalogue that allows you to update your apps directly from their APK sources, and to receive notifications when updates are available.
@@ -20,10 +19,8 @@ Update your Android apps directly from the APK source. Updatium is a customizabl
 | 🧩 Third Party F-Droid Repos | ![Tencent App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=sj.qq.com) [Tencent App Store](https://sj.qq.com/) | ![WhatsApp favicon](https://www.google.com/s2/favicons?sz=16&domain=whatsapp.com) [WhatsApp](https://whatsapp.com/) |
 | ![IzzyOnDroid favicon](https://www.google.com/s2/favicons?sz=16&domain=android.izzysoft.de) [IzzyOnDroid](https://android.izzysoft.de/) | ![vivo App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=vivo.com.cn) [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) | |
 | ![SourceHut favicon](https://www.google.com/s2/favicons?sz=16&domain=sourcehut.org) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=16&domain=rustore.ru) [RuStore](https://rustore.ru/) | |
-| ![OpenAPK favicon](https://www.google.com/s2/favicons?sz=16&domain=openapk.net) [OpenAPK (Nightly builds only)](https://www.openapk.net/) | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
-| ![Bitbucket favicon](https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org) [Bitbucket (Nightly builds only)](https://www.bitbucket.org) | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror](https://apkmirror.com/) | |
-| ![Gitea favicon](https://www.google.com/s2/favicons?sz=16&domain=try.gitea.io) [Gitea (Nightly builds only)](https://try.gitea.io/) | | ![Signal favicon](https://www.google.com/s2/favicons?sz=16&domain=signal.org) [Signal](https://signal.org/) |
-| | | ![VLC favicon](https://www.google.com/s2/favicons?sz=16&domain=videolan.org) [VLC](https://www.videolan.org/) |
+| | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
+| | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror](https://apkmirror.com/) | |
 
 ### Improved Design
 
@@ -34,23 +31,21 @@ Based on Material Design 3 Expressive guidelines.
 - Better accessability for screen readers.
 - Grid View.
 - Safe Mode (allows you to block unwanted changes to the application catalogue).
-- Ability to use DNS-over-HTTP providers (Nightly builds only).
 
 ### Localization
 
-Updatium currently supports ~42~ 40 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull request with new translations added in the [translations directory](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
+Updatium currently supports 38 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull with the new translations added to ![here](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
 
 If you don't know how to make a pull request, and/or you don't have any experience with Git, you can open an issue ![here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help you with adding your language.
 
 Every language is welcome to Updatium, but your help is needed to make it happen.
 
-- Currently supported locales: English, 简体中文, Italiano, 日本語, עברית, हिन्दी, Magyar, Deutsch, فارسی, Français, Español, Polski,
+- Currently supported locales: English, 简体中文, 臺灣話, Italiano, 日本
+語, עברית, हिन्दी, Magyar, Deutsch, فارسی, Français, Español, Polski,
 Русский, Bosanski, Português, Česky, Svenska, Nederlands, Tiếng Việt,
 Türkçe, Українська, Dansk, Eesti, Esperanto, Bahasa Indonesia, বাংলা,
-한국어, Català, العربية, മലയാളം, Galego, Български, Bahasa Melayu,
-Română, ئۇيغۇرچە, Norsk (Bokmål), Ελληνικά, Filipino.
-
-* Taiwanese Hokkien (臺灣話) and Northen Kurdish (Kurdî) are not supported yet due to technical limitations.
+한국어, Català, العربية, മലയാളം, Galego, Български, Kurdî (Kurmanjî),
+Bahasa Melayu, Română, ئۇيغۇرچە.
 
 ## Download
 
@@ -64,7 +59,7 @@ Do not download Updatium from unofficial sources (such as Appteka), since these 
 
 | ![Apps Page](./assets/screenshots/1.apps.png) | ![Dark Theme](./assets/screenshots/2.dark_theme.png) | ![Material You](./assets/screenshots/3.material_you.png) |
 | ------------------------------------------------------ | ----------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/screenshots/5.app_opts.png) | ![Grid View](./assets/screenshots/6.grid_view.png) |
+| ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/graphics/screenshots/5.app_opts.png) | ![Grid View](./assets/graphics/screenshots/6.grid_view.png) |
 
 ## Limitations
 
