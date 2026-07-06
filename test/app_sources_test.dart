@@ -54,7 +54,6 @@ void main() {
     test('GitLab can search', () {
       expect(gitlab.canSearch, isTrue);
     });
-
   });
 
   group('FDroid Source Tests', () {
@@ -67,7 +66,6 @@ void main() {
     test('FDroid has correct hosts', () {
       expect(fdroid.hosts, contains('f-droid.org'));
     });
-
   });
 
   group('HTML Source Tests', () {
