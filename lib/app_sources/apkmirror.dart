@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:updatium/services/slang-converter.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -10,7 +10,7 @@ import 'package:updatium/providers/settings_provider.dart';
 class APKMirror extends AppSource {
   APKMirror() {
     hosts = ['apkmirror.com'];
-    name = t('apkmirror');
+    name = tr('apkmirror');
     enforceTrackOnly = false;
     showReleaseDateAsVersionToggle = true;
     additionalSourceAppSpecificSettingFormItems = [];
@@ -29,17 +29,14 @@ class APKMirror extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    RegExp standardUrlRegEx = RegExp(
+    return SourceProvider().standardizeUrlWithRegex(
+      url,
       '^https?://(www\\.)?${getSourceRegex(hosts)}/apk/[^/]+/[^/]+',
-      caseSensitive: false,
+      sourceName: name,
     );
-    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
-    if (match == null) {
-      throw InvalidURLError(name);
-    }
-    return match.group(0)!;
   }
 
+  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/#whatsnew';
 
@@ -108,8 +105,10 @@ class APKMirror extends AppSource {
   }
 
   AppNames getAppNames(String standardUrl) {
-    String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
-    List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
-    return AppNames(names[1], names[2]);
+    return SourceProvider().getAppNamesFromUrl(
+      standardUrl,
+      authorIndex: 1,
+      nameIndex: 2,
+    );
   }
 }

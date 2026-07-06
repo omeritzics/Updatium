@@ -1,5 +1,4 @@
 import 'package:animations/animations.dart';
-import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
@@ -14,6 +13,7 @@ import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // Material 3 spacing tokens
@@ -42,7 +42,6 @@ class AddAppPageState extends State<AddAppPage> {
   String userInput = '';
   String searchQuery = '';
   String? pickedSourceOverride;
-  String? previousPickedSourceOverride;
   AppSource? pickedSource;
   Map<String, dynamic> additionalSettings = {};
   bool additionalSettingsValid = true;
@@ -68,38 +67,12 @@ class AddAppPageState extends State<AddAppPage> {
   @override
   void initState() {
     super.initState();
-    _updateSourceOverrideController();
   }
 
   @override
   void dispose() {
     _sourceOverrideController.dispose();
     super.dispose();
-  }
-
-  void _updateSourceOverrideController() {
-    if (pickedSourceOverride == null || pickedSourceOverride == '') {
-      _sourceOverrideController.text = tr('none');
-      return;
-    }
-    if (sourceProvider.sources.isEmpty) {
-      _sourceOverrideController.text = tr('none');
-      return;
-    }
-    AppSource? selectedSource;
-    try {
-      selectedSource = sourceProvider.sources.firstWhere(
-        (s) => s.runtimeType.toString() == pickedSourceOverride,
-      );
-    } catch (e) {
-      // No matching source found
-      selectedSource = null;
-    }
-    if (selectedSource != null) {
-      _sourceOverrideController.text = selectedSource.name;
-    } else {
-      _sourceOverrideController.text = tr('none');
-    }
   }
 
   void linkFn(String input) {
@@ -127,12 +100,6 @@ class AddAppPageState extends State<AddAppPage> {
         if (overrideSource != null) {
           pickedSourceOverride = overrideSource;
         }
-        bool overrideChanged =
-            pickedSourceOverride != previousPickedSourceOverride;
-        previousPickedSourceOverride = pickedSourceOverride;
-        if (overrideChanged) {
-          _updateSourceOverrideController();
-        }
         if (updateUrlInput) {
           urlInputKey++;
         }
@@ -151,7 +118,6 @@ class AddAppPageState extends State<AddAppPage> {
           }
         }
         if (pickedSource?.runtimeType != source?.runtimeType ||
-            overrideChanged ||
             (prevHost != null && prevHost != source?.hosts[0])) {
           pickedSource = source;
           pickedSource?.runOnAddAppInputChange(userInput);
@@ -606,63 +572,16 @@ class AddAppPageState extends State<AddAppPage> {
         pickedSource == null &&
         userInput.isEmpty;
 
-    Widget getHTMLSourceOverrideDropdown() => Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: MenuAnchor(
-                builder: (context, controller, child) {
-                  return TextField(
-                    controller: _sourceOverrideController,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      labelText: tr('overrideSource'),
-                      suffixIcon: const Icon(Icons.arrow_drop_down),
-                    ),
-                    onTap: () {
-                      if (controller.isOpen) {
-                        controller.close();
-                      } else {
-                        controller.open();
-                      }
-                    },
-                  );
-                },
-                menuChildren: [
-                  MenuItemButton(
-                    onPressed: () {
-                      setState(() {
-                        pickedSourceOverride = null;
-                      });
-                      changeUserInput(userInput, true, false);
-                    },
-                    child: Text(tr('none')),
-                  ),
-                  ...sourceProvider.sources
-                      .where(
-                        (s) =>
-                            s.allowOverride ||
-                            (pickedSource != null &&
-                                pickedSource.runtimeType == s.runtimeType),
-                      )
-                      .map(
-                        (s) => MenuItemButton(
-                          onPressed: () {
-                            setState(() {
-                              pickedSourceOverride = s.runtimeType.toString();
-                            });
-                            changeUserInput(userInput, true, false);
-                          },
-                          child: Text(s.name),
-                        ),
-                      ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
+    Widget getHTMLSourceOverrideDropdown() => SourceOverrideDropdown(
+      selectedOverride: pickedSourceOverride,
+      pickedSource: pickedSource,
+      onSelectionChanged: (selection) {
+        setState(() {
+          pickedSourceOverride = selection;
+        });
+        changeUserInput(userInput, true, false);
+      },
+      controller: _sourceOverrideController,
     );
 
     Widget getSearchBarRow() => Row(
@@ -852,22 +771,16 @@ class AddAppPageState extends State<AddAppPage> {
                                         : TextDecoration.none,
                                   ),
                                 ),
-                                if (e.trusted) ...[
+                                if (e.openSource) ...[
                                   const SizedBox(width: 4),
                                   Icon(
-                                    Icons.verified,
+                                    Icons.workspace_premium,
                                     size: 14,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                   ),
                                   const SizedBox(width: 2),
-                                  Text(
-                                    tr('trusted'),
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Theme.of(context).colorScheme.primary,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
                                 ],
                               ],
                             ),
@@ -885,14 +798,14 @@ class AddAppPageState extends State<AddAppPage> {
                       Row(
                         children: [
                           Icon(
-                            Icons.verified,
+                            Icons.workspace_premium,
                             size: 14,
                             color: Theme.of(context).colorScheme.primary,
                           ),
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
-                              tr('trustedSourceNote'),
+                              tr('openSourceNote'),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
@@ -994,26 +907,11 @@ class AddAppPageState extends State<AddAppPage> {
           slivers: <Widget>[
             SliverAppBar.large(
               pinned: true,
-              title: Text(tr('addApp')),
+              title: Text(t('addApp')),
               leading: IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              bottom: (pickedSource != null || cameFromSearch)
-                  ? PreferredSize(
-                      preferredSize: const Size.fromHeight(4),
-                      child: TweenAnimationBuilder<double>(
-                        tween: Tween(
-                          begin: 0,
-                          end: cameFromSearch ? 2 / 3 : 1 / 2,
-                        ),
-                        duration: const Duration(milliseconds: 500),
-                        builder: (context, value, child) {
-                          return LinearProgressIndicator(value: value);
-                        },
-                      ),
-                    )
-                  : null,
             ),
             SliverToBoxAdapter(
               child: Padding(
