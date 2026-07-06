@@ -55,14 +55,14 @@ List<MapEntry<Locale, String>> supportedLocales = const [
     Locale('en', 'EO'),
     'Esperanto',
   ), // https://github.com/aissat/easy_localization/issues/220#issuecomment-846035493
-  MapEntry(Locale('in'), 'Bahasa Indonesia'),
+  MapEntry(Locale('id'), 'Bahasa Indonesia'),
   MapEntry(Locale('ko'), '한국어'),
   MapEntry(Locale('ca'), 'Català'),
   MapEntry(Locale('ar'), 'العربية'),
   MapEntry(Locale('ml'), 'മലയാളം'),
   MapEntry(Locale('gl'), 'Galego'),
   MapEntry(Locale('bg'), 'Български'),
-  MapEntry(Locale('kmr'), 'Kurdî (Kurmanjî)'),
+  MapEntry(Locale('en', 'KU'), 'Kurdî'),
   MapEntry(Locale('ms'), 'Bahasa Melayu'),
   MapEntry(Locale('nb'), 'Norsk (Bokmål)'),
   MapEntry(Locale('bn'), 'বাংলা'),
@@ -172,11 +172,19 @@ void main() async {
   await SimpleLocalization.ensureInitialized();
 
   // Enable edge-to-edge mode for Android 10+ (API 29)
-  if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent),
-    );
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  try {
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    if (androidInfo.version.sdkInt >= 29) {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.transparent,
+        ),
+      );
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    }
+  } catch (e) {
+    // Not on Android or DeviceInfoPlugin failed - skip edge-to-edge setup
+    debugPrint('Could not enable edge-to-edge mode: $e');
   }
 
   final np = NotificationsProvider();
@@ -189,7 +197,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => AppsProvider()),
         ChangeNotifierProvider(create: (context) => SettingsProvider()),
         Provider(create: (context) => np),
-        Provider(create: (context) => LogsProvider()),
+        ChangeNotifierProvider(create: (context) => LogsProvider()),
       ],
       child: SimpleLocalization(
         supportedLocales: supportedLocales.map((e) => e.key).toList(),
@@ -493,11 +501,7 @@ class _UpdatiumState extends State<Updatium> {
               fontFamily: getPrimaryFontForLocale(context.locale),
               fontFamilyFallback: settingsProvider.useSystemFont
                   ? null
-                  : const [
-                      'GoogleSans',
-                      'NotoSansCJK',
-                      'NotoSansArabic',
-                    ],
+                  : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
 
               // Keyboard/TV navigation support
               focusColor: scheme.primary.withValues(alpha: 0.2),
@@ -507,7 +511,6 @@ class _UpdatiumState extends State<Updatium> {
               appBarTheme: AppBarTheme(
                 backgroundColor: scheme.surface,
                 foregroundColor: scheme.onSurface,
-                centerTitle: true,
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
                   fontWeight: FontWeight.w600,
@@ -515,11 +518,7 @@ class _UpdatiumState extends State<Updatium> {
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: settingsProvider.useSystemFont
                       ? null
-                      : const [
-                          'GoogleSans',
-                          'NotoSansCJK',
-                          'NotoSansArabic',
-                        ],
+                      : const ['GoogleSans', 'NotoSansCJK', 'NotoSansArabic'],
                 ),
                 iconTheme: IconThemeData(color: scheme.onSurface, size: 22),
               ),

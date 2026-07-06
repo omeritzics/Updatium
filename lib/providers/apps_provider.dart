@@ -16,7 +16,6 @@ import 'package:android_package_installer/android_package_installer.dart';
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/io_client.dart';
@@ -375,7 +374,7 @@ Future<File> downloadFile(
   req.headers.addAll(reqHeaders);
   var headersClient = IOClient(createHttpClient(allowInsecure));
   http.StreamedResponse headersResponse;
-  var resHeaders;
+  Map<String, String> resHeaders;
 
   try {
     headersResponse = await headersClient.send(req);
@@ -772,7 +771,7 @@ class AppsProvider with ChangeNotifier {
           createHttpClient(app.additionalSettings['allowInsecure'] == true),
         );
         http.StreamedResponse headersResponse;
-        var resHeaders;
+        Map<String, String> resHeaders;
         try {
           headersResponse = await headersClient.send(req);
           resHeaders = headersResponse.headers;

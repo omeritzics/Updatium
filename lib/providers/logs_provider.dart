@@ -49,7 +49,7 @@ class Log {
   }
 }
 
-class LogsProvider {
+class LogsProvider extends ChangeNotifier {
   LogsProvider({bool runDefaultClear = true}) {
     clear(before: DateTime.now().subtract(const Duration(days: 7)));
   }
