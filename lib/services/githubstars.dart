@@ -8,6 +8,7 @@ import 'package:updatium/providers/source_provider.dart';
 class GitHubStars implements MassAppUrlSource {
   @override
   late String name = 'githubStarredRepos'.t();
+  @override
   late List<String> requiredArgs = ['username'.t()];
   Future<Map<String, List<String>>> getOnePageOfUserStarredUrlsWithDescriptions(
     String username,
