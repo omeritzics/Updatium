@@ -2,6 +2,8 @@ name: Nightly Build
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 
 on:
   push:
@@ -142,6 +144,10 @@ jobs:
             cp "$apk" "build/outputs/Updatium-Nightly-${arch}.apk"
           done
 
+      - name: Attest Build Provenance
+        uses: actions/attest-build-provenance@main
+        with:
+          subject-path: 'build/app/outputs/flutter-apk/*.apk'
       - name: Upload Artifacts
         uses: actions/upload-artifact@v7
         with:
