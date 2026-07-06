@@ -2,6 +2,8 @@ name: Build and Release Qama
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 
 on:
   workflow_dispatch:
@@ -10,6 +12,8 @@ on:
         type: boolean
         description: "Is this a beta release?"
         default: false
+  schedule:
+    - cron: '0 0 */29 * *'  # Run every 29 days at midnight UTC
 
 jobs:
   build:
@@ -130,10 +134,23 @@ jobs:
 
       - name: Build APKs (Release Mode)
         run: |
-          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
-          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
-          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --target-platform android-arm64 --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
-          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --target-platform android-arm64 --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}"
+          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false --split-per-abi
+          flutter build apk --flavor fdroid -t lib/main_fdroid.dart --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false --split-per-abi
+          # Copy and rename split APKs to maintain proper naming convention
+          mkdir -p build/outputs
+          for apk in build/app/outputs/flutter-apk/*-release.apk; do
+            arch=$(basename "$apk" | sed -e 's/app-normal-//' -e 's/-release.apk//')
+            cp "$apk" "build/outputs/Updatium-${{ steps.version.outputs.version }}-${arch}.apk"
+          done
+          for apk in build/app/outputs/flutter-apk/app-fdroid-*-release.apk; do
+            arch=$(basename "$apk" | sed -e 's/app-fdroid-//' -e 's/-release.apk//')
+            cp "$apk" "build/outputs/Updatium-${{ steps.version.outputs.version }}-fdroid-${arch}.apk"
+          done
+          
+      - name: Attest Build Provenance
+        uses: actions//attest-build-provenance@main
+        with:
+          subject-path: 'build/app/outputs/flutter-apk/*.apk'
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v7
@@ -143,12 +160,19 @@ jobs:
 
       - name: Create Release
         uses: softprops/action-gh-release@v3
+        if: success() && hashFiles('build/outputs/Updatium-*.apk') != ''
         with:
           tag_name: ${{ steps.version.outputs.tag }}
           name: "Updatium ${{ steps.version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
           prerelease: ${{ github.event.inputs.beta == true }}
           draft: true
           files: build/app/outputs/flutter-apk/*.apk
+          body: |
+            ## The meaning of 'Qama'
+            Qama (קמא/ܩܡܐ) means 'first' in Aramaic.
+
+            ## Important note
+            Updatium now moves to a **monthly release schedule**. While we strive for stability, not every release will include major updates. Thank you for your understanding and support!
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
