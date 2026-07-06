@@ -26,9 +26,9 @@ assignees: ''
 <!-- If applicable, add screenshots, logs, and any other artifacts (like some/all files under `/Android/data/com.omeritzics.updatium/`) that you think may help troubleshoot the issue. -->
 
 **Please complete the following information:**
- - Device: <!-- [e.g. Pixel 7] -->
- - OS: <!-- [e.g. GrapheneOS] -->
- - Updatium Version: <!-- [e.g. 0.14.6-beta] -->
+ - Device: <!-- [e.g. Pixel 9a] -->
+ - OS: <!-- [e.g. Android 16, GrapheneOS ROM] -->
+ - Updatium Version: <!-- [e.g. v26.6] -->
 
 **Additional context**
 <!-- Add any other context about the problem here. -->
