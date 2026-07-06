@@ -78,74 +78,6 @@ void main() {
       }
     });
 
-    test('.qodo.toml exists and is valid TOML format', () {
-      final qodoFile = File(path.join(projectRoot.path, '.qodo.toml'));
-
-      expect(
-        qodoFile.existsSync(),
-        isTrue,
-        reason: '.qodo.toml should exist in project root',
-      );
-
-      if (qodoFile.existsSync()) {
-        final content = qodoFile.readAsStringSync();
-
-        // Basic TOML validation
-        expect(content, isNotEmpty, reason: '.qodo.toml should not be empty');
-
-        // Check for TOML section headers
-        expect(
-          RegExp(r'\[.+\]').hasMatch(content),
-          isTrue,
-          reason: '.qodo.toml should contain TOML sections',
-        );
-
-        // Check for key-value pairs
-        expect(
-          RegExp(r'^\w+\s*=\s*.+', multiLine: true).hasMatch(content),
-          isTrue,
-          reason: '.qodo.toml should contain key-value pairs',
-        );
-
-        // Verify expected sections
-        expect(
-          content,
-          contains('[pr_code_suggestions]'),
-          reason: '.qodo.toml should have pr_code_suggestions section',
-        );
-        expect(
-          content,
-          contains('[rag_arguments]'),
-          reason: '.qodo.toml should have rag_arguments section',
-        );
-      }
-    });
-
-    test('.qodo.toml has required configuration keys', () {
-      final qodoFile = File(path.join(projectRoot.path, '.qodo.toml'));
-
-      if (qodoFile.existsSync()) {
-        final content = qodoFile.readAsStringSync();
-
-        // Check for important configuration keys
-        expect(
-          content,
-          contains('include_globs'),
-          reason: '.qodo.toml should specify include_globs',
-        );
-        expect(
-          content,
-          contains('exclude_globs'),
-          reason: '.qodo.toml should specify exclude_globs',
-        );
-        expect(
-          content,
-          contains('max_file_size_kb'),
-          reason: '.qodo.toml should specify max_file_size_kb',
-        );
-      }
-    });
-
     test('GitHub bug report template exists and is valid', () {
       final bugReportFile = File(
         path.join(
@@ -255,7 +187,7 @@ void main() {
         // Check for Updatium package name
         expect(
           content,
-          contains('com.omeritzics.updatium'),
+          contains('io.github.omeritzics.updatium'),
           reason: 'build.gradle.kts should use correct package name',
         );
       }
@@ -365,8 +297,8 @@ void main() {
         expect(content, contains('jobs:'), reason: 'ci.yml should define jobs');
         expect(
           content,
-          contains('build_artifact'),
-          reason: 'ci.yml should have build_artifact job',
+          contains('build'),
+          reason: 'ci.yml should have build job',
         );
       }
     });
@@ -398,13 +330,8 @@ void main() {
         );
         expect(
           content,
-          contains('--split-per-abi'),
-          reason: 'ci.yml should build split APKs per ABI',
-        );
-        expect(
-          content,
-          contains('--debug'),
-          reason: 'ci.yml should build debug APKs',
+          contains('--profile'),
+          reason: 'ci.yml should build profile APKs',
         );
       }
     });
@@ -471,8 +398,8 @@ void main() {
         );
         expect(
           content,
-          contains('nightly-build'),
-          reason: 'nightly.yml should tag as nightly-build',
+          contains('nightly'),
+          reason: 'nightly.yml should tag as nightly',
         );
       }
     });

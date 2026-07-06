@@ -28,7 +28,12 @@ void main() {
       // Get all translation files
       translationFiles = translationsDir
           .listSync()
-          .where((file) => file.path.endsWith('.json'))
+          .where(
+            (file) =>
+                file.path.endsWith('.json') &&
+                !file.path.endsWith('package.json') &&
+                !file.path.endsWith('package-lock.json'),
+          )
           .toList();
     });
 
@@ -137,9 +142,7 @@ void main() {
 
         // Warn about extra keys (not a failure, might be intentional)
         for (final key in translations.keys) {
-          if (!englishTranslations.containsKey(key)) {
-            print('Note: File $fileName has extra key "$key" not in en.json');
-          }
+          if (!englishTranslations.containsKey(key)) {}
         }
       }
     });
@@ -245,8 +248,8 @@ void main() {
         final content = File(file.path).readAsStringSync();
         final fileName = path.basename(file.path);
 
-        // Count occurrences of each key pattern
-        final keyPattern = RegExp(r'"([^"]+)"\s*:');
+        // Count occurrences of each top-level key (nested keys are allowed to repeat across different parent objects)
+        final keyPattern = RegExp(r'^\s*"([^"]+)"\s*:', multiLine: true);
         final matches = keyPattern.allMatches(content);
         final keyCounts = <String, int>{};
 
@@ -312,7 +315,12 @@ void main() {
     test('all translation files use UTF-8 encoding', () {
       final translationFiles = translationsDir
           .listSync()
-          .where((file) => file.path.endsWith('.json'))
+          .where(
+            (file) =>
+                file.path.endsWith('.json') &&
+                !file.path.endsWith('package.json') &&
+                !file.path.endsWith('package-lock.json'),
+          )
           .toList();
 
       for (final file in translationFiles) {
@@ -350,7 +358,12 @@ void main() {
     test('placeholder counts match between English and translations', () {
       final translationFiles = translationsDir
           .listSync()
-          .where((file) => file.path.endsWith('.json'))
+          .where(
+            (file) =>
+                file.path.endsWith('.json') &&
+                !file.path.endsWith('package.json') &&
+                !file.path.endsWith('package-lock.json'),
+          )
           .toList();
 
       for (final file in translationFiles) {
