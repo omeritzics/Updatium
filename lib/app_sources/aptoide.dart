@@ -6,7 +6,7 @@ import 'package:updatium/providers/source_provider.dart';
 class Aptoide extends AppSource {
   Aptoide() {
     hosts = ['aptoide.com'];
-    name = t('aptoide');
+    name = 'Aptoide';
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
@@ -20,6 +20,7 @@ class Aptoide extends AppSource {
     );
   }
 
+  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},

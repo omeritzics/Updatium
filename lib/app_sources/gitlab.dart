@@ -8,12 +8,12 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/generated_form.dart';
-import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/services/slang-converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GitLab extends AppSource {
   GitLab({bool hostChanged = false}) {
-    name = tr('gitlab');
+    name = 'GitLab';
     hosts = ['gitlab.com'];
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
@@ -21,8 +21,8 @@ class GitLab extends AppSource {
     openSource = true;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
-        tr('gitlabPATLabel'),
-        label: tr('gitlabPATLabel'),
+        'gitlabPATLabel'.t(),
+        label: 'gitlabPATLabel'.t(),
         password: true,
         required: false,
         belowWidgets: [
@@ -35,7 +35,7 @@ class GitLab extends AppSource {
               );
             },
             child: Text(
-              tr('about'),
+              'about'.t(),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -50,28 +50,15 @@ class GitLab extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
+    var urlSegments = url.split('/');
+    var cutOffIndex = urlSegments.indexWhere((s) => s == '-');
+    var processedUrl = urlSegments
+        .sublist(0, cutOffIndex <= 0 ? null : cutOffIndex)
+        .join('/');
     return SourceProvider().standardizeUrlWithRegex(
-      url,
-      '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+(/[^((\b/\b)|(\b/-/\b))]+){1,20}',
+      processedUrl,
+      '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+(/[^((\\b/\\b)|(\\b/-/\\b))]+){1,20}',
       sourceName: name,
-      transform: (matched, match) {
-        // Pre-process: cut off URL at '-' character
-        var urlSegments = url.split('/');
-        var cutOffIndex = urlSegments.indexWhere((s) => s == '-');
-        var processedUrl = urlSegments
-            .sublist(0, cutOffIndex <= 0 ? null : cutOffIndex)
-            .join('/');
-        // Re-match with processed URL
-        RegExp regEx = RegExp(
-          '^https?://(www\\.)?${getSourceRegex(hosts)}/[^/]+(/[^((\b/\b)|(\b/-/\b))]+){1,20}',
-          caseSensitive: false,
-        );
-        var newMatch = regEx.firstMatch(processedUrl);
-        if (newMatch != null) {
-          return newMatch.group(0)!;
-        }
-        return matched;
-      },
     );
   }
 
@@ -102,7 +89,7 @@ class GitLab extends AppSource {
     for (var element in json) {
       results['https://${hosts[0]}/${element['path_with_namespace']}'] = [
         element['name_with_namespace'],
-        element['description'] ?? tr('noDescription'),
+        element['description'] ?? 'noDescription'.t(),
       ];
     }
     return results;

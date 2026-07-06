@@ -20,7 +20,7 @@ DateTime? parseDateTimeMMMddCommayyyy(String? dateString) {
 class Uptodown extends AppSource {
   Uptodown() {
     hosts = ['uptodown.com'];
-    name = t('uptodown');
+    name = 'Uptodown';
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
@@ -40,6 +40,7 @@ class Uptodown extends AppSource {
     return '${match.group(0)!}/android/download';
   }
 
+  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
@@ -124,6 +125,7 @@ class Uptodown extends AppSource {
     );
   }
 
+  @override
   Future<String> assetUrlPrefetchModifier(
     String assetUrl,
     String standardUrl,

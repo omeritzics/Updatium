@@ -1,12 +1,11 @@
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/providers/source_provider.dart';
-import 'package:simple_localization/simple_localization.dart';
 
 class IzzyOnDroid extends AppSource {
   late FDroid fd;
   IzzyOnDroid() {
     hosts = ['izzysoft.de'];
-    name = tr('izzyondroid');
+    name = 'IzzyOnDroid';
     openSource = true;
     fd = FDroid();
     additionalSourceAppSpecificSettingFormItems =
@@ -17,20 +16,8 @@ class IzzyOnDroid extends AppSource {
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     return SourceProvider().standardizeUrlWithRegex(
       url,
-      '^https?://apt.${getSourceRegex(hosts)}/fdroid/index/apk/[^/]+',
+      '^https?://(apt|android)\\.${getSourceRegex(hosts)}/(fdroid/index|repo)/apk/[^/]+',
       sourceName: name,
-      transform: (matched, match) {
-        // Check if URL matches the android. pattern first
-        RegExp regExA = RegExp(
-          '^https?://android.${getSourceRegex(hosts)}/repo/apk/[^/]+',
-          caseSensitive: false,
-        );
-        var matchA = regExA.firstMatch(url);
-        if (matchA != null) {
-          return matchA.group(0)!;
-        }
-        return matched;
-      },
     );
   }
 

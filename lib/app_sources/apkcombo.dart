@@ -7,7 +7,7 @@ import 'package:updatium/providers/logs_provider.dart';
 class APKCombo extends AppSource {
   APKCombo() {
     hosts = ['apkcombo.com'];
-    name = t('apkcombo');
+    name = 'APKCombo';
     showReleaseDateAsVersionToggle = true;
   }
 
@@ -20,6 +20,7 @@ class APKCombo extends AppSource {
     );
   }
 
+  @override
   Future<String?> tryInferringAppId(
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
@@ -108,6 +109,7 @@ class APKCombo extends AppSource {
         .toList();
   }
 
+  @override
   Future<String> assetUrlPrefetchModifier(
     String assetUrl,
     String standardUrl,

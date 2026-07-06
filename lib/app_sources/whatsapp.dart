@@ -1,4 +1,3 @@
-import 'package:updatium/services/slang-converter.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -7,7 +6,7 @@ import 'package:updatium/providers/source_provider.dart' as source_provider;
 class WhatsAppApp extends AppSource {
   WhatsAppApp() {
     hosts = ['whatsapp.com'];
-    name = t('whatsapp');
+    name = 'WhatsApp';
   }
 
   @override
@@ -44,10 +43,7 @@ class WhatsAppApp extends AppSource {
       }
 
       // If no APK link found, use the known CDN URL pattern
-      if (apkUrl == null) {
-        apkUrl =
-            'https://scontent.whatsapp.net/v/t61.25591-34/10000000_2369797936868259_1705562541720575021_n.apk/WhatsApp.apk';
-      }
+      apkUrl ??= 'https://www.whatsapp.com/android/current/WhatsApp.apk';
 
       // Try to extract version from the page content
       var versionElement = http.querySelector(

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:simple_localization/simple_localization.dart';
 import 'package:updatium/providers/source_provider.dart';
 
 extension Unique<E, Id> on List<E> {
@@ -16,7 +15,7 @@ extension Unique<E, Id> on List<E> {
 class APKPure extends AppSource {
   APKPure() {
     hosts = ['apkpure.net', 'apkpure.com'];
-    name = tr('apkpure');
+    name = 'APKPure';
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
@@ -27,17 +26,11 @@ class APKPure extends AppSource {
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     return SourceProvider().standardizeUrlWithRegex(
       url,
-      '^https?://(www\\.)?${getSourceRegex(hosts)}(/+[^/]{2})?/+[^/]+/+[^/]+',
+      '^https?://(www\\.|m\\.)?${getSourceRegex(hosts)}(/+[^/]{2})?/+[^/]+/+[^/]+',
       sourceName: name,
       transform: (matched, match) {
-        // Check if URL matches the m. pattern first
-        RegExp regExB = RegExp(
-          '^https?://m.${getSourceRegex(hosts)}(/+[^/]{2})?/+[^/]+/+[^/]+',
-          caseSensitive: false,
-        );
-        var matchB = regExB.firstMatch(url);
-        if (matchB != null) {
-          var uri = Uri.parse(url);
+        if (matched.contains('://m.')) {
+          var uri = Uri.parse(matched);
           return 'https://${uri.host.substring(2)}${uri.path}';
         }
         return matched;
