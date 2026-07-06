@@ -12,7 +12,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 class Gitea extends AppSource {
   Gitea({bool hostChanged = false}) {
-    name = t('gitea');
+    name = 'Gitea';
     hosts = ['gitea.com'];
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
@@ -89,6 +89,7 @@ class Gitea extends AppSource {
     }
   }
 
+  @override
   Future<Map<String, List<String>>> search(
     String query, {
     Map<String, dynamic> querySettings = const {},
@@ -114,6 +115,7 @@ class Gitea extends AppSource {
     return results;
   }
 
+  @override
   String? changeLogPageFromStandardUrl(String standardUrl) =>
       '$standardUrl/releases';
 
