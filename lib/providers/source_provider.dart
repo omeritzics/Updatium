@@ -767,6 +767,7 @@ abstract class AppSource {
   bool hostChanged = false;
   bool hostIdenticalDespiteAnyChange = false;
   late String name;
+  bool enforceTrackOnly = false;
   bool changeLogIfAnyIsMarkDown = true;
   bool appIdInferIsOptional = false;
   bool allowSubDomains = false;
