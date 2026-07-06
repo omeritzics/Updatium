@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:simple_localization/simple_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -10,7 +9,7 @@ import 'package:updatium/providers/settings_provider.dart';
 class APKMirror extends AppSource {
   APKMirror() {
     hosts = ['apkmirror.com'];
-    name = tr('apkmirror');
+    name = 'APKMirror';
     enforceTrackOnly = false;
     showReleaseDateAsVersionToggle = true;
     additionalSourceAppSpecificSettingFormItems = [];
@@ -19,7 +18,7 @@ class APKMirror extends AppSource {
   Future<Map<String, String>?> getRequestHeaders(
     Map<String, dynamic> additionalSettings,
     String url, {
-    bool forAPKDownload = false,
+    bool forAPKDownload = true,
   }) async {
     return {
       "User-Agent":
