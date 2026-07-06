@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:updatium/services/slang_converter.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
@@ -11,15 +11,14 @@ import 'package:updatium/providers/source_provider.dart';
 class FDroid extends AppSource {
   FDroid() {
     hosts = ['f-droid.org'];
-    name = 'F-Droid';
+    name = tr('fdroid');
     naiveStandardVersionDetection = true;
     canSearch = true;
-    openSource = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(
           'filterVersionsByRegEx',
-          label: 'filterVersionsByRegEx'.t(),
+          label: tr('filterVersionsByRegEx'),
           required: false,
           additionalValidators: [
             (value) {
@@ -31,7 +30,7 @@ class FDroid extends AppSource {
       [
         GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
-          label: 'autoSelectHighestVersionCode'.t(),
+          label: tr('autoSelectHighestVersionCode'),
         ),
       ],
     ];
@@ -39,18 +38,24 @@ class FDroid extends AppSource {
 
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
-    return SourceProvider().standardizeUrlWithRegex(
-      url,
-      '^https?://(www\\.)?${getSourceRegex(hosts)}(/+[^/]+)?/+packages/+[^/]+',
-      sourceName: name,
-      transform: (matched, match) {
-        var uri = Uri.parse(matched);
-        if (uri.pathSegments.length > 2 && uri.pathSegments[0] != 'packages') {
-          return 'https://${uri.host}/packages/${uri.pathSegments.last}';
-        }
-        return matched;
-      },
+    RegExp standardUrlRegExB = RegExp(
+      '^https?://(www\\.)?${getSourceRegex(hosts)}/+[^/]+/+packages/+[^/]+',
+      caseSensitive: false,
     );
+    RegExpMatch? match = standardUrlRegExB.firstMatch(url);
+    if (match != null) {
+      url =
+          'https://${Uri.parse(match.group(0)!).host}/packages/${Uri.parse(url).pathSegments.where((s) => s.trim().isNotEmpty).last}';
+    }
+    RegExp standardUrlRegExA = RegExp(
+      '^https?://(www\\.)?${getSourceRegex(hosts)}/+packages/+[^/]+',
+      caseSensitive: false,
+    );
+    match = standardUrlRegExA.firstMatch(url);
+    if (match == null) {
+      throw InvalidURLError(name);
+    }
+    return match.group(0)!;
   }
 
   @override
@@ -78,33 +83,20 @@ class FDroid extends AppSource {
       additionalSettings,
       standardUrl,
     );
-    // Try to fetch author from F-Droid package page
-    try {
-      var res = await sourceRequest(
-        'https://$host/packages/$appId',
-        additionalSettings,
-      );
-      if (res.statusCode >= 200 && res.statusCode < 300) {
-        var body = parse(res.body);
-        var authorElement = body.querySelector('a[href^="mailto:"]');
-        if (authorElement != null) {
-          var authorText = authorElement.text.trim();
-          if (authorText.isNotEmpty) {
-            details.names.author = authorText;
-          }
-        }
-      }
-    } catch (e) {
-      // Fail silently, keep fallback author
-    }
-    // Try to fetch changelog from GitLab metadata
-    try {
-      var res = await sourceRequest(
-        'https://gitlab.com/fdroid/fdroiddata/-/raw/master/metadata/$appId.yml',
-        additionalSettings,
-      );
-      if (res.statusCode >= 200 && res.statusCode < 300) {
+    if (!hostChanged) {
+      try {
+        var res = await sourceRequest(
+          'https://gitlab.com/fdroid/fdroiddata/-/raw/master/metadata/$appId.yml',
+          additionalSettings,
+        );
         var lines = res.body.split('\n');
+        var authorLines = lines.where((l) => l.startsWith('AuthorName: '));
+        if (authorLines.isNotEmpty) {
+          details.names.author = authorLines.first
+              .split(': ')
+              .sublist(1)
+              .join(': ');
+        }
         var changelogUrls = lines
             .where((l) => l.startsWith('Changelog: '))
             .map((e) => e.split(' ').sublist(1).join(' '));
@@ -143,9 +135,9 @@ class FDroid extends AppSource {
         if ((details.changeLog?.length ?? 0) > 2048) {
           details.changeLog = '${details.changeLog!.substring(0, 2048)}...';
         }
+      } catch (e) {
+        // Fail silently
       }
-    } catch (e) {
-      // Fail silently, keep fallback changelog
     }
     return details;
   }
@@ -168,7 +160,7 @@ class FDroid extends AppSource {
           urlsWithDescriptions[url] = [
             e.querySelector('.package-name')?.text.trim() ?? '',
             e.querySelector('.package-summary')?.text.trim() ??
-                'noDescription'.t(),
+                tr('noDescription'),
           ];
         }
       });
@@ -274,12 +266,10 @@ class FDroid extends AppSource {
         .toList();
     // Extract author from API response or fall back to source name
     String author = response['authorName'] ?? sourceName;
-    bool? reproducible = response['reproducible'];
     return APKDetails(
       version,
       getApkUrlsFromUrls(apkUrls.toSet().toList()),
       AppNames(author, Uri.parse(standardUrl).pathSegments.last),
-      reproducible: reproducible,
     );
   }
 }
