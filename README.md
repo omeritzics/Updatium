@@ -1,4 +1,4 @@
-# ![Updatium Icon](./assets/graphics/icon_small.png) Updatium
+# ![Updatium Icon](./assets/graphics/icon_small.png) Updatium 
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium)](https://github.com/omeritzics/Updatium/releases/latest)
 [![Nightly Build](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml/badge.svg)](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
