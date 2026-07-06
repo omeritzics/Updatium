@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:updatium/services/slang-converter.dart';
@@ -59,7 +60,7 @@ class GitHubStarPrompt {
               },
               child: Text('githubStarPromptDontShowAgain'.t()),
             ),
-            FilledButton(
+            M3EFilledButton(
               onPressed: () async {
                 Navigator.of(context).pop();
                 await _launchGitHub();
