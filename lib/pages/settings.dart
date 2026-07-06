@@ -484,7 +484,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 );
               }
-            }).toList(),
+            }),
           ],
         );
         return columnContent;
@@ -811,7 +811,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             gap16,
                             if (settingsProvider.safeMode &&
                                 settingsProvider.preventUninstallation)
-                            gap16,
+                              gap16,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -1845,9 +1845,9 @@ class OpenSourcePackagesDialog extends StatelessWidget {
     try {
       final String pubspecString = await rootBundle.loadString('pubspec.yaml');
       final Pubspec pubspec = Pubspec.parse(pubspecString);
-      
+
       final List<Map<String, String>> dependencies = [];
-      
+
       // Get dependencies
       pubspec.dependencies.forEach((name, dependency) {
         // Skip flutter sdk as it's not a package
@@ -1858,7 +1858,7 @@ class OpenSourcePackagesDialog extends StatelessWidget {
           });
         }
       });
-      
+
       // Get dev_dependencies (include flutter_lints)
       pubspec.devDependencies.forEach((name, dependency) {
         // Only include flutter_lints from dev dependencies
@@ -1869,10 +1869,10 @@ class OpenSourcePackagesDialog extends StatelessWidget {
           });
         }
       });
-      
+
       // Sort dependencies alphabetically
       dependencies.sort((a, b) => a['name']!.compareTo(b['name']!));
-      
+
       return dependencies;
     } catch (e) {
       // Fallback to empty list if parsing fails
@@ -1885,18 +1885,20 @@ class OpenSourcePackagesDialog extends StatelessWidget {
     if (dependency is GitDependency) {
       return dependency.url.toString();
     }
-    
+
     // Handle special cases for known git dependencies
     const Map<String, String> gitPackages = {
-      'simple_localization': 'https://github.com/omeritzics/simple_localization',
+      'simple_localization':
+          'https://github.com/omeritzics/simple_localization',
       'android_system_font': 'https://github.com/re7gog/android_system_font',
-      'shizuku_apk_installer': 'https://github.com/re7gog/shizuku_apk_installer',
+      'shizuku_apk_installer':
+          'https://github.com/re7gog/shizuku_apk_installer',
     };
-    
+
     if (gitPackages.containsKey(packageName)) {
       return gitPackages[packageName]!;
     }
-    
+
     // Default to pub.dev URL
     return 'https://pub.dev/packages/$packageName';
   }

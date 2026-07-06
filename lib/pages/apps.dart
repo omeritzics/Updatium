@@ -838,7 +838,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     }
 
     // Handle app tap navigation
-    void _handleAppTap(App app) {
+    void handleAppTap(App app) {
       if (selectedAppIds.isNotEmpty) {
         toggleAppSelected(app);
       } else {
@@ -850,7 +850,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     }
 
     // Install app helper method
-    void _installApp(App app) {
+    void installApp(App app) {
       appsProvider
           .downloadAndInstallLatestApps([
             app.id,
@@ -862,7 +862,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     }
 
     // Build action button for install/update/updated states
-    Widget _buildActionButton(
+    Widget buildActionButton(
       App app,
       bool isInstalled,
       bool hasUpdate, {
@@ -876,7 +876,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           child: M3EFilledButton.tonal(
             onPressed: appsProvider.areDownloadsRunning()
                 ? null
-                : () => _installApp(app),
+                : () => installApp(app),
             child: Text('install'.t()),
           ),
         );
@@ -888,7 +888,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           child: M3EFilledButton.tonal(
             onPressed: appsProvider.areDownloadsRunning()
                 ? null
-                : () => _installApp(app),
+                : () => installApp(app),
             child: Text('update'.t()),
           ),
         );
@@ -906,7 +906,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     }
 
     // Simplified grid tile widget using Material Design 3 components
-    Widget _buildGridTile(int index) {
+    Widget buildGridTile(int index) {
       final appInfo = listedApps[index];
       final app = appInfo.app;
       final isInstalled = app.installedVersion != null;
@@ -939,7 +939,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           onTapHint: 'openAppDetails'.t(),
           child: InkWell(
             borderRadius: BorderRadius.circular(12),
-            onTap: () => _handleAppTap(app),
+            onTap: () => handleAppTap(app),
             onLongPress: () => toggleAppSelected(app),
             child: Stack(
               alignment: Alignment.center,
@@ -1025,7 +1025,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                           ),
                         )
                       else if (!isTrackOnly)
-                        _buildActionButton(
+                        buildActionButton(
                           app,
                           isInstalled,
                           hasUpdate,
@@ -1042,7 +1042,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     }
 
     // Simplified list tile widget using Material Design 3 components
-    Widget _buildListTile(int index) {
+    Widget buildListTile(int index) {
       final appInfo = listedApps[index];
       final app = appInfo.app;
       final isInstalled = app.installedVersion != null;
@@ -1150,8 +1150,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   )
-                : _buildActionButton(app, isInstalled, hasUpdate),
-            onTap: () => _handleAppTap(app),
+                : buildActionButton(app, isInstalled, hasUpdate),
+            onTap: () => handleAppTap(app),
             onLongPress: () => toggleAppSelected(app),
           ),
         ),
@@ -1159,11 +1159,11 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     }
 
     getSingleAppHorizTile(int index) {
-      return _buildListTile(index);
+      return buildListTile(index);
     }
 
     getSingleAppGridTile(int index) {
-      return _buildGridTile(index);
+      return buildGridTile(index);
     }
 
     getCategoryGridTile(int index) {

@@ -455,11 +455,9 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
           ),
           const SizedBox(height: 24),
           Text(
-            
             'developedBy'.t(),
-           
+
             style: Theme.of(context).textTheme.titleSmall,
-          ,
           ),
           const SizedBox(height: 8),
           TextButton.icon(
