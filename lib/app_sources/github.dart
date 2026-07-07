@@ -620,7 +620,10 @@ class GitHub extends AppSource {
       var verificationTasks = results.entries.map((entry) async {
         String url = entry.key;
         // Extract owner/repo from https://github.com/owner/repo
-        String repoFullName = url.substring('https://${hosts[0]}'.length).split('?')[0].split('#')[0];
+        String repoFullName = url
+            .substring('https://${hosts[0]}'.length)
+            .split('?')[0]
+            .split('#')[0];
 
         try {
           Response res = await sourceRequest(
