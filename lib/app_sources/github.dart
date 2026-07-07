@@ -48,6 +48,11 @@ class GitHub extends AppSource {
           const SizedBox(height: 4),
         ],
       ),
+      GeneratedFormSwitch(
+        'filterGitHubReleases',
+        label: 'filterGitHubReleases'.t(),
+        defaultValue: true,
+      ),
     ];
 
     additionalSourceAppSpecificSettingFormItems = [];
@@ -603,6 +608,46 @@ class GitHub extends AppSource {
       },
       querySettings: querySettings,
     );
+
+    SettingsProvider settingsProvider = SettingsProvider();
+    await settingsProvider.initializeSettings();
+    var sourceConfig = await getSourceConfigValues({}, settingsProvider);
+    bool filterReleases = sourceConfig['filterGitHubReleases'] == 'true';
+
+    if (filterReleases) {
+      Map<String, List<String>> filteredResults = {};
+
+      var verificationTasks = results.entries.map((entry) async {
+        String url = entry.key;
+        // Extract owner/repo from https://github.com/owner/repo
+        String repoFullName = url.substring('https://${hosts[0]}'.length).split('?')[0].split('#')[0];
+
+        try {
+          Response res = await sourceRequest(
+            '${await getAPIHost({})}/repos/$repoFullName/releases',
+            {},
+          );
+          if (res.statusCode == 200) {
+            var releases = jsonDecode(res.body) as List<dynamic>;
+            if (releases.isNotEmpty) {
+              return entry;
+            }
+          }
+        } catch (e) {
+          // Ignore errors and filter out
+        }
+        return null;
+      });
+
+      var verifiedEntries = await Future.wait(verificationTasks);
+      for (var entry in verifiedEntries) {
+        if (entry != null) {
+          filteredResults[entry.key] = entry.value;
+        }
+      }
+      return filteredResults;
+    }
+
     return results;
   }
 
