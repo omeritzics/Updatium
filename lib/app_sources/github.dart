@@ -60,7 +60,7 @@ class GitHub extends AppSource {
                 throw true;
               }
               if (value != null) {
-                Uri.parse('https://${value}/api.github.com');
+                Uri.parse('https://$value/api.github.com');
               }
             } catch (e) {
               return tr('invalidInput');

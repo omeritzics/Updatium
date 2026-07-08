@@ -359,7 +359,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
   int forceUpdateKeyCount = 0;
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, GlobalKey<FormFieldState>> _formKeys = {};
-  bool _isDisposed = false;
+  final bool _isDisposed = false;
 
   void someValueChanged({bool isBuilding = false, bool forceInvalid = false}) {
     Map<String, dynamic> returnValues = values;

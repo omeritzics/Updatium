@@ -146,9 +146,7 @@ Null Function()? getChangeLogFn(BuildContext context, App app) {
       app.url,
       overrideSource: app.overrideSource,
     );
-    if (changesUrl == null) {
-      changesUrl = appSource.changeLogPageFromStandardUrl(app.url);
-    }
+    changesUrl ??= appSource.changeLogPageFromStandardUrl(app.url);
     if (changeLog != null) {
       showChangeLogDialog(context, app, changesUrl, appSource, changeLog);
     } else if (changesUrl != null) {
