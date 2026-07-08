@@ -132,7 +132,7 @@ jobs:
 
       - name: Build Debug APK
         run: |
-          flutter build apk --flavor normal --debug --obfuscate --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false
+          flutter build apk --flavor normal --debug --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false
           # Copy and rename the debug APK to maintain original naming convention
           cp *debug.apk "build/outputs/Updatium-Nightly-Debug.apk"
 
