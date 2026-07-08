@@ -1,6 +1,6 @@
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 class AppsFilter {
   late String nameFilter;
@@ -59,15 +59,15 @@ class AppListBuilder {
   ) {
     final nameTokens = filter.nameFilter.isNotEmpty
         ? filter.nameFilter
-            .split(' ')
-            .where((element) => element.trim().isNotEmpty)
-            .toList()
+              .split(' ')
+              .where((element) => element.trim().isNotEmpty)
+              .toList()
         : const <String>[];
     final authorTokens = filter.authorFilter.isNotEmpty
         ? filter.authorFilter
-            .split(' ')
-            .where((element) => element.trim().isNotEmpty)
-            .toList()
+              .split(' ')
+              .where((element) => element.trim().isNotEmpty)
+              .toList()
         : const <String>[];
 
     return apps.where((app) {
@@ -123,9 +123,7 @@ class AppListBuilder {
 
     final isDesc = sortOrder == SortOrderSettings.descending;
     if (sortColumn == SortColumnSettings.releaseDate) {
-      var entries = apps
-          .map((a) => MapEntry(a.app.releaseDate, a))
-          .toList()
+      var entries = apps.map((a) => MapEntry(a.app.releaseDate, a)).toList()
         ..sort((a, b) {
           final aDate = a.key;
           final bDate = b.key;
@@ -137,15 +135,11 @@ class AppListBuilder {
       apps = entries.map((e) => e.value).toList();
     } else {
       String keyFn(AppInMemory a) => switch (sortColumn) {
-        SortColumnSettings.authorName =>
-          (a.author + a.name).toLowerCase(),
-        SortColumnSettings.nameAuthor =>
-          (a.name + a.author).toLowerCase(),
+        SortColumnSettings.authorName => (a.author + a.name).toLowerCase(),
+        SortColumnSettings.nameAuthor => (a.name + a.author).toLowerCase(),
         _ => '',
       };
-      var entries = apps
-          .map((a) => MapEntry(keyFn(a), a))
-          .toList()
+      var entries = apps.map((a) => MapEntry(keyFn(a), a)).toList()
         ..sort((a, b) => (a.key as String).compareTo(b.key as String));
       apps = entries.map((e) => e.value).toList();
     }

@@ -1,6 +1,6 @@
 import 'package:html/parser.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/source_provider.dart' hide InvalidURLError, NoReleasesError, NoAPKError, NoVersionError, UpdatiumError;
 
 class Apk4Free extends AppSource {
   Apk4Free() {
@@ -29,7 +29,7 @@ class Apk4Free extends AppSource {
     try {
       var res = await sourceRequest(standardUrl, additionalSettings);
       if (res.statusCode != 200) {
-        throw getObtainiumHttpError(res);
+        throw getUpdatiumHttpError(res);
       }
       var html = parse(res.body);
 
@@ -100,7 +100,7 @@ class Apk4Free extends AppSource {
 
       var resDlPage = await sourceRequest(downloadPageLink, additionalSettings);
       if (resDlPage.statusCode != 200) {
-        throw getObtainiumHttpError(resDlPage);
+        throw getUpdatiumHttpError(resDlPage);
       }
       var htmlDlPage = parse(resDlPage.body);
 
@@ -150,8 +150,8 @@ class Apk4Free extends AppSource {
 
       return APKDetails(appVersion.trim(), apkUrls, AppNames(name, fullTitle));
     } catch (e) {
-      if (e is ObtainiumError) rethrow;
-      throw ObtainiumError('$name Error: $e');
+      if (e is UpdatiumError) rethrow;
+      throw UpdatiumError('$name Error: $e');
     }
   }
 }

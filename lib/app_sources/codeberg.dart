@@ -1,4 +1,4 @@
-import 'package:updatium/app_sources/gitea.dart';
+import 'package:updatium/app_sources/github.dart' as gh;
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
@@ -7,9 +7,9 @@ class Codeberg extends AppSource {
     name = 'codeberg'.t();
     hosts = ['codeberg.org'];
     additionalSourceAppSpecificSettingFormItems =
-        Gitea().additionalSourceAppSpecificSettingFormItems;
+        gh.additionalSourceAppSpecificSettingFormItems;
     canSearch = true;
-    searchQuerySettingFormItems = Gitea().searchQuerySettingFormItems;
+    searchQuerySettingFormItems = gh.searchQuerySettingFormItems;
     openSource = true;
   }
 
@@ -37,10 +37,9 @@ class Codeberg extends AppSource {
       final standardUri = Uri.parse(standardUrl);
       final apiPath =
           '/api/v1/repos${standardUri.path}/${useTagUrl ? 'tags' : 'releases'}';
-      return standardUri.replace(
-        path: apiPath,
-        queryParameters: {'per_page': '100'},
-      ).toString();
+      return standardUri
+          .replace(path: apiPath, queryParameters: {'per_page': '100'})
+          .toString();
     }, null);
   }
 

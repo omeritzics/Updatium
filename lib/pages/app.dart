@@ -12,7 +12,7 @@ import 'package:updatium/main.dart';
 import 'package:updatium/pages/apps.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
-import 'package:obtainium/providers/notifications_provider.dart';
+import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -53,7 +53,7 @@ class _AppPageState extends State<AppPage> {
   AppInMemory? prevApp;
   bool updating = false;
 
-Widget buildRepoRenameWarning({
+  Widget buildRepoRenameWarning({
     required AppInMemory? app,
     required AppsProvider appsProvider,
     required Future<void> Function(String id) onUpdate,
@@ -457,17 +457,14 @@ Widget buildRepoRenameWarning({
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 8,
-                  ),
-                  child: buildRepoRenameWarning(
-                    app: app,
-                    appsProvider: appsProvider,
-                    onUpdate: (id) => getUpdate(id),
-                  ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                child: buildRepoRenameWarning(
+                  app: app,
+                  appsProvider: appsProvider,
+                  onUpdate: (id) => getUpdate(id),
                 ),
+              ),
               gap24,
               Text(
                 versionLines,
@@ -857,7 +854,9 @@ Widget buildRepoRenameWarning({
                 if (res.isNotEmpty) {
                   var np = context.read<NotificationsProvider>();
                   np.cancel(UpdateNotification([]).id);
-                  np.cancel(SilentUpdateAttemptNotification([], id: res[0].hashCode).id);
+                  np.cancel(
+                    SilentUpdateAttemptNotification([], id: res[0].hashCode).id,
+                  );
                 }
               } catch (e) {
                 if (!mounted) return;

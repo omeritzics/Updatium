@@ -84,7 +84,7 @@ Do not download Updatium from unofficial sources (such as Appteka), since these 
 - Some APK hosts (APKMirror, etc.) may require cookies or specific headers
 
 ### Flutter-related issues
-- Obtainium is built with Flutter. If the app crashes on startup, try:
+- Updatium is built with Flutter. If the app crashes on startup, try:
   - Clearing app data and reinstalling
   - Ensuring your Android version meets the minimum requirement
   - Checking if you have the latest Google Play Services

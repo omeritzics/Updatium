@@ -1,7 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:obtainium/components/generated_form.dart';
-import 'package:obtainium/providers/settings_provider.dart';
+import 'package:updatium/components/generated_form.dart';
+import 'package:updatium/providers/settings_provider.dart';
 import 'package:provider/provider.dart';
 
 class GeneratedFormModal extends StatefulWidget {
