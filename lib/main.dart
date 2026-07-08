@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:updatium/pages/home.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -165,24 +166,18 @@ void main() async {
   } catch (e) {
     // Already added, do nothing (see #375)
   }
+  await initializeDateFormatting();
   await SimpleLocalization.ensureInitialized();
-
-  // Enable edge-to-edge mode for Android 10+ (API 29)
-  try {
-    final androidInfo = await DeviceInfoPlugin().androidInfo;
-    if (androidInfo.version.sdkInt >= 29) {
-      SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(
-          systemNavigationBarColor: Colors.transparent,
-        ),
-      );
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    }
-  } catch (e) {
-    // Not on Android or DeviceInfoPlugin failed - skip edge-to-edge setup
-    debugPrint('Could not enable edge-to-edge mode: $e');
+  if ((await DeviceInfoPlugin().androidInfo).version.sdkInt >= 29) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.transparent,
+        statusBarColor: Colors.transparent,
+        systemStatusBarContrastEnforced: false,
+      ),
+    );
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
-
   final np = NotificationsProvider();
   await np.initialize();
   FlutterForegroundTask.initCommunicationPort();
@@ -248,7 +243,10 @@ class _UpdatiumState extends State<Updatium> {
       await FlutterForegroundTask.requestNotificationPermission();
     }
     if (!await FlutterForegroundTask.isIgnoringBatteryOptimizations) {
-      await FlutterForegroundTask.requestIgnoreBatteryOptimization();
+      var settingsProvider = context.read<SettingsProvider>();
+      if (settingsProvider.showBatteryOptimizationPrompt) {
+        await FlutterForegroundTask.requestIgnoreBatteryOptimization();
+      }
     }
   }
 
@@ -309,11 +307,6 @@ class _UpdatiumState extends State<Updatium> {
 
   @override
   void dispose() {
-    // Restore old locale changed callback to prevent memory leak
-    if (_oldLocaleChangedCallback != null) {
-      WidgetsBinding.instance.platformDispatcher.onLocaleChanged =
-          _oldLocaleChangedCallback;
-    }
     super.dispose();
   }
 
@@ -1273,13 +1266,70 @@ class _UpdatiumState extends State<Updatium> {
             locale: context.locale,
             navigatorKey: globalNavigatorKey,
             debugShowCheckedModeBanner: false,
-            theme: createTheme(lightColorScheme, false),
-            darkTheme: createTheme(darkColorScheme, true),
-            themeMode: settingsProvider.theme == ThemeSettings.dark
-                ? ThemeMode.dark
-                : (settingsProvider.theme == ThemeSettings.light
-                      ? ThemeMode.light
-                      : ThemeMode.system),
+            theme: ThemeData(
+              useMaterial3: true,
+              colorScheme: settingsProvider.theme == ThemeSettings.dark
+                  ? darkColorScheme
+                  : lightColorScheme,
+              fontFamily: settingsProvider.useSystemFont
+                  ? 'SystemFont'
+                  : 'Montserrat',
+              sliderTheme: SliderThemeData(
+                activeTrackColor:
+                    (settingsProvider.theme == ThemeSettings.dark
+                        ? darkColorScheme
+                        : lightColorScheme)
+                    .primary,
+                inactiveTrackColor:
+                    (settingsProvider.theme == ThemeSettings.dark
+                        ? darkColorScheme
+                        : lightColorScheme)
+                    .surfaceContainerHighest,
+                thumbColor:
+                    (settingsProvider.theme == ThemeSettings.dark
+                        ? darkColorScheme
+                        : lightColorScheme)
+                    .primary,
+                overlayColor:
+                    (settingsProvider.theme == ThemeSettings.dark
+                        ? darkColorScheme
+                        : lightColorScheme)
+                    .primary
+                    .withAlpha(30),
+              ),
+            ),
+            darkTheme: ThemeData(
+              useMaterial3: true,
+              colorScheme: settingsProvider.theme == ThemeSettings.light
+                  ? lightColorScheme
+                  : darkColorScheme,
+              fontFamily: settingsProvider.useSystemFont
+                  ? 'SystemFont'
+                  : 'Montserrat',
+              sliderTheme: SliderThemeData(
+                activeTrackColor:
+                    (settingsProvider.theme == ThemeSettings.light
+                        ? lightColorScheme
+                        : darkColorScheme)
+                    .primary,
+                inactiveTrackColor:
+                    (settingsProvider.theme == ThemeSettings.light
+                        ? lightColorScheme
+                        : darkColorScheme)
+                    .surfaceContainerHighest,
+                thumbColor:
+                    (settingsProvider.theme == ThemeSettings.light
+                        ? lightColorScheme
+                        : darkColorScheme)
+                    .primary,
+                overlayColor:
+                    (settingsProvider.theme == ThemeSettings.light
+                        ? lightColorScheme
+                        : darkColorScheme)
+                    .primary
+                    .withAlpha(30),
+              ),
+            ),
             home: Shortcuts(
               shortcuts: <LogicalKeySet, Intent>{
                 LogicalKeySet(LogicalKeyboardKey.select):

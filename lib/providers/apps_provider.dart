@@ -17,7 +17,6 @@ import 'package:android_package_manager/android_package_manager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:m3e_buttons/m3e_buttons.dart';
@@ -630,7 +629,7 @@ class AppsProvider with ChangeNotifier {
   late Directory APKDir;
   late SettingsProvider settingsProvider = SettingsProvider();
 
-  Iterable<AppInMemory> getAppValues() => apps.values.map((a) => a.deepCopy());
+  Iterable<AppInMemory> getAppValues() => apps.values;
 
   AppsProvider({bool isBg = false}) {
     // Subscribe to changes in the app foreground status
@@ -710,6 +709,21 @@ class AppsProvider with ChangeNotifier {
     return downloadedFile;
   }
 
+  Future<void> updatePendingRepoRename(String appId, String? newUrl) async {
+    if (apps.containsKey(appId)) {
+      apps[appId]!.app.pendingRepoRenameUrl = newUrl;
+      await saveApps([apps[appId]!.app]);
+    }
+  }
+
+  Future<void> acceptRepoRename(String appId, String newUrl) async {
+    if (apps.containsKey(appId)) {
+      apps[appId]!.app.url = newUrl;
+      apps[appId]!.app.pendingRepoRenameUrl = null;
+      await saveApps([apps[appId]!.app]);
+    }
+  }
+
   Future<Object> downloadApp(
     App app,
     BuildContext? context, {
@@ -722,6 +736,11 @@ class AppsProvider with ChangeNotifier {
       notifyListeners();
     }
     try {
+      if (app.apkUrls.isEmpty) throw NoAPKError();
+      if (app.preferredApkIndex >= app.apkUrls.length) {
+        app.preferredApkIndex = app.apkUrls.length - 1;
+      }
+      if (app.preferredApkIndex < 0) app.preferredApkIndex = 0;
       AppSource source = SourceProvider().getSource(
         app.url,
         overrideSource: app.overrideSource,
@@ -1533,6 +1552,23 @@ class AppsProvider with ChangeNotifier {
     return installed;
   }
 
+  Future<void> _shareToAppVerifier(
+    DownloadedApk file,
+    BuildContext context,
+  ) async {
+    if (!settingsProvider.beforeNewInstallsShareToAppVerifier) return;
+    if (await getInstalledInfo('dev.soupslurpr.appverifier') == null) return;
+    XFile f = XFile.fromData(
+      file.file.readAsBytesSync(),
+      mimeType: 'application/vnd.android.package-archive',
+    );
+    Fluttertoast.showToast(
+      msg: tr('appVerifierInstructionToast'),
+      toastLength: Toast.LENGTH_LONG,
+    );
+    await Share.shareXFiles([f]);
+  }
+
   Future<String> getStorageRootPath() async {
     return '/${(await getAppStorageDir()).uri.pathSegments.sublist(0, 3).join('/')}';
   }
@@ -1589,6 +1625,20 @@ class AppsProvider with ChangeNotifier {
         urlsToSelectFrom[app.preferredApkIndex >= 0
             ? app.preferredApkIndex
             : 0];
+    // When picking any asset, use the APK filter regex to pre-select the best matching
+    // asset by default, without hiding other assets from the user.
+    if (pickAnyAsset &&
+        app.additionalSettings['apkFilterRegEx'] is String &&
+        (app.additionalSettings['apkFilterRegEx'] as String).isNotEmpty) {
+      var matching = filterApks(
+        urlsToSelectFrom,
+        app.additionalSettings['apkFilterRegEx'],
+        app.additionalSettings['invertAPKFilter'] == true,
+      );
+      if (matching.isNotEmpty) {
+        appFileUrl = matching.first;
+      }
+    }
     // get device supported architecture
     List<String> archs = (await DeviceInfoPlugin().androidInfo).supportedAbis;
 
@@ -1642,25 +1692,14 @@ class AppsProvider with ChangeNotifier {
     return appFileUrl;
   }
 
-  // Given a list of AppIds, uses stored info about the apps to download APKs and install them
-  // If the APKs can be installed silently, they are
-  // If no BuildContext is provided, apps that require user interaction are ignored
-  // If user input is needed and the App is in the background, a notification is sent to get the user's attention
-  // Returns an array of Ids for Apps that were successfully downloaded, regardless of installation result
-  Future<List<String>> downloadAndInstallLatestApps(
+  // Filters app IDs into those that can be installed and those that are track-only,
+  // refreshing stale data and confirming file URLs before returning.
+  Future<(List<String>, List<String>)> _resolveAppsToInstall(
     List<String> appIds,
-    BuildContext? context, {
-    NotificationsProvider? notificationsProvider,
-    bool forceParallelDownloads = false,
-    bool useExisting = true,
-  }) async {
-    notificationsProvider =
-        notificationsProvider ?? context?.read<NotificationsProvider>();
+    BuildContext? context,
+  ) async {
     List<String> appsToInstall = [];
     List<String> trackOnlyAppsToUpdate = [];
-    // For all specified Apps, filter out those for which:
-    // 1. A URL cannot be picked
-    // 2. That cannot be installed silently (IF no buildContext was given for interactive install)
     for (var id in appIds) {
       if (apps[id] == null) {
         throw UpdatiumError('appNotFound'.t());
@@ -1679,10 +1718,9 @@ class AppsProvider with ChangeNotifier {
         apkUrl = await confirmAppFileUrl(apps[id]!.app, context, false);
       }
       if (apkUrl != null) {
+        var url = apkUrl.value;
         int urlInd = apps[id]!.app.apkUrls
-            .map((e) => e.value)
-            .toList()
-            .indexOf(apkUrl.value);
+            .indexWhere((e) => e.value == url);
         if (urlInd >= 0 && urlInd != apps[id]!.app.preferredApkIndex) {
           apps[id]!.app.preferredApkIndex = urlInd;
           await saveApps([apps[id]!.app]);
@@ -1695,6 +1733,27 @@ class AppsProvider with ChangeNotifier {
         trackOnlyAppsToUpdate.add(id);
       }
     }
+    return (appsToInstall, trackOnlyAppsToUpdate);
+  }
+
+  // Given a list of AppIds, uses stored info about the apps to download APKs and install them
+  // If the APKs can be installed silently, they are
+  // If no BuildContext is provided, apps that require user interaction are ignored
+  // If user input is needed and the App is in the background, a notification is sent to get the user's attention
+  // Returns an array of Ids for Apps that were successfully downloaded, regardless of installation result
+  Future<List<String>> downloadAndInstallLatestApps(
+    List<String> appIds,
+    BuildContext? context, {
+    NotificationsProvider? notificationsProvider,
+    bool forceParallelDownloads = false,
+    bool useExisting = true,
+  }) async {
+    notificationsProvider =
+        notificationsProvider ?? context?.read<NotificationsProvider>();
+
+    var (appsToInstall, trackOnlyAppsToUpdate) =
+        await _resolveAppsToInstall(appIds, context);
+
     // Mark all specified track-only apps as latest
     saveApps(
       trackOnlyAppsToUpdate.map((e) {
@@ -1804,8 +1863,8 @@ class AppsProvider with ChangeNotifier {
             throw UpdatiumError('cancelled'.t());
           }
         } else {
-          switch ((await ShizukuApkInstaller().checkPermission())!) {
-            case 'binder_not_found':
+          switch ((await ShizukuApkInstaller()().checkPermission())!) {
+            case 'services_not_found':
               throw UpdatiumError('shizukuBinderNotFound'.t());
             case 'old_shizuku':
               throw UpdatiumError('shizukuOld'.t());
@@ -2183,7 +2242,7 @@ class AppsProvider with ChangeNotifier {
               } catch (err) {
                 if (err is FormatException) {
                   logs.add(
-                    'Corrupt JSON when loading App (will be ignored): $e',
+                    'Corrupt JSON when loading App (will be ignored): $err',
                   );
                   item.renameSync('${item.path}.corrupt');
                 } else {
@@ -2338,7 +2397,6 @@ class AppsProvider with ChangeNotifier {
     bool attemptToCorrectInstallStatus = true,
     bool onlyIfExists = true,
   }) async {
-    attemptToCorrectInstallStatus = attemptToCorrectInstallStatus;
     await Future.wait(
       apps.map((a) async {
         var app = a.deepCopy();
@@ -2579,6 +2637,10 @@ class AppsProvider with ChangeNotifier {
 
   Future<App?> checkUpdate(String appId) async {
     App? currentApp = apps[appId]!.app;
+    // Pause update checks until the user resolves a pending repo rename.
+    if (currentApp.hasPendingRepoRename) {
+      return null;
+    }
     SourceProvider sourceProvider = SourceProvider();
     App newApp = await sourceProvider.getApp(
       sourceProvider.getSource(
@@ -2659,7 +2721,11 @@ class AppsProvider with ChangeNotifier {
                   throwErrorsForRetry) {
                 rethrow;
               }
-              errors.add(appId, e, appName: apps[appId]?.name);
+              if (e is RepositoryRenamedError) {
+                await updatePendingRepoRename(appId, e.newUrl);
+              } else {
+                errors.add(appId, e, appName: apps[appId]?.name);
+              }
             }
             if (newApp != null) {
               updates.add(newApp);
@@ -2721,7 +2787,7 @@ class AppsProvider with ChangeNotifier {
       shouldExportSettings = overrideExportSettings;
     }
     if (shouldExportSettings > 0) {
-      var settingsValueKeys = settingsProvider.prefs?.getKeys();
+      var settingsValueKeys = settingsProvider.prefs?.getKeys().toSet();
       if (shouldExportSettings < 2) {
         settingsValueKeys?.removeWhere((k) => k.endsWith('-creds'));
       }
@@ -3149,7 +3215,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
         ),
         TextButton(
           onPressed: () {
-            HapticFeedback.selectionClick();
+            context.read<SettingsProvider>().selectionClick();
             Navigator.of(context).pop(true);
           },
           child: Text('yes'.t()),
@@ -3319,7 +3385,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
             // Next task interval is based on the error with the longest retry time
             int minRetryIntervalForThisApp = err is RateLimitError
                 ? (err.remainingMinutes * 60)
-                : err is http.ClientException
+                : err is ClientException
                 ? (15 * 60)
                 : (toCheckApp.value + 1);
             if (minRetryIntervalForThisApp > maxRetryWaitSeconds) {

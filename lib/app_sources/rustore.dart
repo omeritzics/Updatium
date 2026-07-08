@@ -12,6 +12,7 @@ class RuStore extends AppSource {
     name = 'rustore'.t();
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
+    changeLogIfAnyIsMarkDown = false;
   }
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {

@@ -6,18 +6,35 @@ import 'package:bcrypt/bcrypt.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String updatiumTempId = 'omeritzics_updatium_${GitHub().hosts[0]}';
 String updatiumId = 'io.github.omeritzics.updatium';
 String updatiumUrl = 'https://github.com/omeritzics/Updatium';
 Color updatiumThemeColor = const Color(0xFF3a79b7);
+
+Locale? tryParseLocale(String? localeString) {
+  if (localeString == null) return null;
+  var split = localeString.split('-');
+  if (split.length == 3) {
+    return Locale.fromSubtags(languageCode: split[0], countryCode: split[2]);
+  }
+  if (split.length == 2) {
+    return Locale(split[0], split[1]);
+  }
+  if (split.isNotEmpty) {
+    return Locale(split[0]);
+  }
+  return null;
+}
 
 enum ThemeSettings { system, light, dark }
 
@@ -31,6 +48,7 @@ class SettingsProvider with ChangeNotifier {
   SharedPreferences? prefs;
   String? defaultAppDir;
   bool justStarted = true;
+  bool isTV = false;
 
   String sourceUrl = 'https://github.com/omeritzics/Updatium';
 
@@ -38,6 +56,9 @@ class SettingsProvider with ChangeNotifier {
   Future<void> initializeSettings() async {
     prefs = await SharedPreferences.getInstance();
     defaultAppDir = (await getAppStorageDir()).path;
+    final info = await DeviceInfoPlugin().androidInfo;
+    isTV = info.systemFeatures.contains('android.hardware.type.television') ||
+        info.systemFeatures.contains('android.software.leanback');
     notifyListeners();
   }
 
@@ -259,9 +280,12 @@ class SettingsProvider with ChangeNotifier {
       List<App> changedApps = appsProvider
           .getAppValues()
           .map((a) {
-            var n1 = a.app.categories?.length ?? 0;
-            a.app.categories?.removeWhere((c) => !cats.keys.contains(c));
-            return n1 > (a.app.categories?.length ?? 0) ? a.app : null;
+            if (!a.app.categories.any((c) => !cats.keys.contains(c))) {
+              return null;
+            }
+            var app = a.app.deepCopy();
+            app.categories.removeWhere((c) => !cats.keys.contains(c));
+            return app;
           })
           .where((element) => element != null)
           .map((e) => e as App)
@@ -356,10 +380,54 @@ class SettingsProvider with ChangeNotifier {
       context.deleteSaveLocale();
       return;
     }
+  }
 
-    // Fallback to default
-    context.setLocale(context.fallbackLocale!);
-    context.deleteSaveLocale();
+  bool get showOlderVersionWarning {
+    return prefs?.getBool('showOlderVersionWarning') ?? true;
+  }
+
+  set showOlderVersionWarning(bool show) {
+    prefs?.setBool('showOlderVersionWarning', show);
+    notifyListeners();
+  }
+
+  bool get showBatteryOptimizationPrompt {
+    return prefs?.getBool('showBatteryOptimizationPrompt') ?? true;
+  }
+
+  set showBatteryOptimizationPrompt(bool show) {
+    prefs?.setBool('showBatteryOptimizationPrompt', show);
+    notifyListeners();
+  }
+
+  bool get tactileFeedbackEnabled {
+    return prefs?.getBool('tactileFeedbackEnabled') ?? true;
+  }
+
+  set tactileFeedbackEnabled(bool val) {
+    prefs?.setBool('tactileFeedbackEnabled', val);
+    notifyListeners();
+  }
+
+  void lightImpact() {
+    if (tactileFeedbackEnabled) HapticFeedback.lightImpact();
+  }
+
+  void heavyImpact() {
+    if (tactileFeedbackEnabled) HapticFeedback.heavyImpact();
+  }
+
+  void selectionClick() {
+    if (tactileFeedbackEnabled) HapticFeedback.selectionClick();
+  }
+
+  bool get includePrereleasesByDefault {
+    return prefs?.getBool('includePrereleasesByDefault') ?? false;
+  }
+
+  set includePrereleasesByDefault(bool val) {
+    prefs?.setBool('includePrereleasesByDefault', val);
+    notifyListeners();
   }
 
   bool get removeOnExternalUninstall {
@@ -434,15 +502,6 @@ class SettingsProvider with ChangeNotifier {
 
   set lastCompletedBGCheckTime(DateTime val) {
     prefs?.setInt('lastCompletedBGCheckTime', val.millisecondsSinceEpoch);
-    notifyListeners();
-  }
-
-  bool get showDebugOpts {
-    return prefs?.getBool('showDebugOpts') ?? false;
-  }
-
-  set showDebugOpts(bool val) {
-    prefs?.setBool('showDebugOpts', val);
     notifyListeners();
   }
 

@@ -15,6 +15,7 @@ import 'package:updatium/app_sources/apkmirror.dart';
 import 'package:updatium/app_sources/apkpure.dart';
 import 'package:updatium/app_sources/bitbucket.dart';
 import 'package:updatium/app_sources/openapk.dart';
+import 'package:updatium/app_sources/apk4free.dart';
 import 'package:updatium/app_sources/aptoide.dart';
 import 'package:updatium/app_sources/codeberg.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
@@ -424,6 +425,7 @@ class App {
   late String? remoteIconUrl;
   late String? overrideSource;
   bool allowIdChange = false;
+  String? pendingRepoRenameUrl;
   App(
     this.id,
     this.url,
@@ -444,12 +446,16 @@ class App {
     this.overrideSource,
     this.allowIdChange = false,
     this.otherAssetUrls = const [],
+    this.pendingRepoRenameUrl,
   });
 
   @override
   String toString() {
     return 'ID: $id URL: $url INSTALLED: $installedVersion LATEST: $latestVersion APK: $apkUrls PREFERREDAPK: $preferredApkIndex ADDITIONALSETTINGS: ${additionalSettings.toString()} LASTCHECK: ${lastUpdateCheck.toString()} PINNED $pinned';
   }
+
+  bool get hasPendingRepoRename =>
+      pendingRepoRenameUrl != null && pendingRepoRenameUrl!.isNotEmpty;
 
   String? get overrideName =>
       additionalSettings['appName']?.toString().trim().isNotEmpty == true
@@ -489,6 +495,7 @@ class App {
     overrideSource: overrideSource,
     allowIdChange: allowIdChange,
     otherAssetUrls: otherAssetUrls,
+    pendingRepoRenameUrl: pendingRepoRenameUrl,
   );
 
   factory App.fromJson(Map<String, dynamic> json) {
@@ -539,6 +546,7 @@ class App {
       otherAssetUrls: assumed2DlistToStringMapList(
         jsonDecode((json['otherAssetUrls'] ?? '[]')),
       ),
+      pendingRepoRenameUrl: json['pendingRepoRenameUrl'] as String?,
     );
   }
 
@@ -562,6 +570,7 @@ class App {
     'remoteIconUrl': remoteIconUrl,
     'overrideSource': overrideSource,
     'allowIdChange': allowIdChange,
+    'pendingRepoRenameUrl': pendingRepoRenameUrl,
   };
 }
 
@@ -783,26 +792,6 @@ abstract class AppSource {
 
   AppSource() {
     name = runtimeType.toString();
-  }
-
-  void overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
-    String key, {
-    bool disabled = true,
-    bool defaultValue = true,
-  }) {
-    additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly =
-        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly.map(
-          (e) {
-            return e.map((e2) {
-              if (e2.key == key) {
-                var item = e2 as GeneratedFormSwitch;
-                item.disabled = disabled;
-                item.defaultValue = defaultValue;
-              }
-              return e2;
-            }).toList();
-          },
-        ).toList();
   }
 
   String standardizeUrl(String url) {
@@ -1207,50 +1196,37 @@ abstract class AppSource {
 
   // Previous 2 variables combined into one at runtime for convenient usage + additional processing
   List<List<GeneratedFormItem>> get combinedAppSpecificSettingFormItems {
-    if (showReleaseDateAsVersionToggle == true) {
-      if (additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
-              .indexWhere(
-                (List<GeneratedFormItem> e) =>
-                    e.indexWhere(
-                      (GeneratedFormItem i) => i.key == 'releaseDateAsVersion',
-                    ) >=
-                    0,
-              ) <
-          0) {
-        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
-            .insert(
-              additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
-                      .indexWhere(
-                        (List<GeneratedFormItem> e) =>
-                            e.indexWhere(
-                              (GeneratedFormItem i) =>
-                                  i.key == 'versionDetection',
-                            ) >=
-                            0,
-                      ) +
-                  1,
-              [
-                GeneratedFormSwitch(
-                  'releaseDateAsVersion',
-                  label:
-                      '${'releaseDateAsVersion'.t()} (${'pseudoVersion'.t()})',
-                  defaultValue: false,
-                ),
-              ],
-            );
-      }
-    }
-    additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly =
-        additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly
-            .map(
-              (e) => e
-                  .where((ee) => !excludeCommonSettingKeys.contains(ee.key))
-                  .toList(),
-            )
-            .where((e) => e.isNotEmpty)
-            .toList();
+    var agnosticItems = cloneFormItems(
+      additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly,
+    );
 
-    var moreConditionalItems = [];
+    final versionDetectionIdx = agnosticItems.indexWhere(
+      (row) => row.any((item) => item.key == 'versionDetection'),
+    );
+    if (showReleaseDateAsVersionToggle &&
+        versionDetectionIdx >= 0 &&
+        !agnosticItems.any(
+          (row) => row.any((item) => item.key == 'releaseDateAsVersion'),
+        )) {
+      agnosticItems.insert(versionDetectionIdx + 1, [
+        GeneratedFormSwitch(
+          'releaseDateAsVersion',
+          label: '${'releaseDateAsVersion'.t()} (${'pseudoVersion'.t()})',
+          defaultValue: false,
+        ),
+      ]);
+    }
+
+    agnosticItems = agnosticItems
+        .map(
+          (e) => e
+              .where((ee) => !excludeCommonSettingKeys.contains(ee.key))
+              .toList(),
+        )
+        .where((e) => e.isNotEmpty)
+        .toList();
+
+    var moreConditionalItems = <List<GeneratedFormItem>>[];
     if (allowIncludeZips) {
       moreConditionalItems.addAll([
         [
@@ -1276,20 +1252,18 @@ abstract class AppSource {
     }
 
     if (versionDetectionDisallowed) {
-      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
-        'versionDetection',
-        disabled: true,
-        defaultValue: false,
-      );
-      overrideAdditionalAppSpecificSourceAgnosticSettingSwitch(
-        'useVersionCodeAsOSVersion',
-        disabled: true,
-        defaultValue: false,
-      );
+      for (var item in agnosticItems.expand((row) => row)) {
+        if (item.key == 'versionDetection' ||
+            item.key == 'useVersionCodeAsOSVersion') {
+          (item as GeneratedFormSwitch).disabled = true;
+          (item as GeneratedFormSwitch).defaultValue = false;
+        }
+      }
     }
+
     return [
       ...additionalSourceAppSpecificSettingFormItems,
-      ...additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly,
+      ...agnosticItems,
       ...moreConditionalItems,
     ];
   }
@@ -1306,8 +1280,13 @@ abstract class AppSource {
       var val = hostChanged && !hostIdenticalDespiteAnyChange
           ? additionalSettings[e.key]
           : additionalSettings[e.key] ??
-                settingsProvider.getSettingString(e.key);
+                (e.runtimeType == GeneratedFormSwitch
+                    ? settingsProvider.getSettingBool(e.key).toString()
+                    : settingsProvider.getSettingString(e.key));
       if (val != null) {
+        if (e.runtimeType == GeneratedFormSwitch) {
+          val = val.toString();
+        }
         results[e.key] = val;
       }
     }

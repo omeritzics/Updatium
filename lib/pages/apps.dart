@@ -1,12 +1,14 @@
 import 'package:animations/animations.dart';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
 
 import 'package:updatium/services/slang_converter.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:markdown/markdown.dart' as md;
+import 'package:updatium/components/app_list_builder.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
@@ -17,12 +19,12 @@ import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:markdown/markdown.dart' as md;
 
 // Material 3 spacing tokens
 const gap8 = SizedBox(height: 8);
@@ -129,31 +131,30 @@ void showChangeLogDialog(
 }
 
 Null Function()? getChangeLogFn(BuildContext context, App app) {
-  AppSource appSource = SourceProvider().getSource(
-    app.url,
-    overrideSource: app.overrideSource,
-  );
-  String? changesUrl = appSource.changeLogPageFromStandardUrl(app.url);
+  String? changesUrl;
   String? changeLog = app.changeLog;
-  if (changeLog?.split('\n').length == 1) {
-    if (RegExp(
-      '(http|ftp|https)://([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?',
-    ).hasMatch(changeLog!)) {
-      if (changesUrl == null) {
-        changesUrl = changeLog;
-        changeLog = null;
-      }
-    }
+  if (changeLog?.split('\n').length == 1 &&
+      RegExp(
+        '(http|ftp|https)://([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?',
+      ).hasMatch(changeLog!)) {
+    changesUrl = changeLog;
+    changeLog = null;
   }
-  return (changeLog == null && changesUrl == null)
-      ? null
-      : () {
-          if (changeLog != null) {
-            showChangeLogDialog(context, app, changesUrl, appSource, changeLog);
-          } else {
-            launchUrlString(changesUrl!, mode: LaunchMode.externalApplication);
-          }
-        };
+  if (changeLog == null && changesUrl == null) return null;
+  return () {
+    var appSource = SourceProvider().getSource(
+      app.url,
+      overrideSource: app.overrideSource,
+    );
+    if (changesUrl == null) {
+      changesUrl = appSource.changeLogPageFromStandardUrl(app.url);
+    }
+    if (changeLog != null) {
+      showChangeLogDialog(context, app, changesUrl, appSource, changeLog);
+    } else if (changesUrl != null) {
+      launchUrlString(changesUrl!, mode: LaunchMode.externalApplication);
+    }
+  };
 }
 
 class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
@@ -166,42 +167,11 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   );
   Set<String> selectedAppIds = {};
   DateTime? refreshingSince;
-  final GlobalKey<ExpressiveRefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey();
-  // ... existing code ...
-  final Set<int> _expandedCategories = <int>{};
 
-  // Helper function to preserve transparency regardless of theme overrides
-  Color preserveTransparency(Color baseColor, double alpha) {
-    // ... existing code ...
-
-    // Always apply the requested transparency, ensuring it takes priority
-    // over any theme-based color overrides
-    return baseColor.withValues(alpha: alpha);
-  }
-
-  // Helper function to get category color with preserved transparency
-  Color getCategoryColor(
-    String category,
-    int alpha,
-    SettingsProvider settingsProvider,
-  ) {
-    final categoryColorValue = settingsProvider.categories[category];
-    if (categoryColorValue != null) {
-      return Color(categoryColorValue).withValues(alpha: alpha / 255);
-    }
-    // Fallback to truly transparent color
-    return Color.fromARGB(0, 0, 0, 0);
-  }
-
-  bool clearSelected() {
-    if (selectedAppIds.isNotEmpty) {
-      setState(() {
-        selectedAppIds.clear();
-      });
-      return true;
-    }
-    return false;
+  void clearSelected() {
+    setState(() {
+      selectedAppIds.clear();
+    });
   }
 
   void selectThese(List<App> apps) {
@@ -241,7 +211,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     var listedApps = appsProvider.getAppValues().toList();
 
     refresh() {
-      HapticFeedback.lightImpact();
+      settingsProvider.lightImpact();
       setState(() {
         refreshingSince = DateTime.now();
       });
@@ -267,13 +237,14 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       _refreshIndicatorKey.currentState?.show();
     }
 
+    var listedAppIdSet = listedApps.map((e) => e.app.id).toSet();
     selectedAppIds = selectedAppIds
-        .where((element) => listedApps.map((e) => e.app.id).contains(element))
+        .where(listedAppIdSet.contains)
         .toSet();
 
     toggleAppSelected(App app) {
       setState(() {
-        if (selectedAppIds.map((e) => e).contains(app.id)) {
+        if (selectedAppIds.contains(app.id)) {
           selectedAppIds.removeWhere((a) => a == app.id);
         } else {
           selectedAppIds.add(app.id);
@@ -400,69 +371,31 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     var existingUpdateIdsAllOrSelected = existingUpdates
         .where(
           (element) => selectedAppIds.isEmpty
-              ? listedApps.where((a) => a.app.id == element).isNotEmpty
-              : selectedAppIds.map((e) => e).contains(element),
+              ? listedAppIdSet.contains(element)
+              : selectedAppIds.contains(element),
         )
         .toList();
     var newInstallIdsAllOrSelected = appsProvider
         .findExistingUpdates(nonInstalledOnly: true)
         .where(
           (element) => selectedAppIds.isEmpty
-              ? listedApps.where((a) => a.app.id == element).isNotEmpty
-              : selectedAppIds.map((e) => e).contains(element),
+              ? listedAppIdSet.contains(element)
+              : selectedAppIds.contains(element),
         )
         .toList();
 
     List<String> trackOnlyUpdateIdsAllOrSelected = [];
-    existingUpdateIdsAllOrSelected = existingUpdateIdsAllOrSelected.where((id) {
+    bool isNotTrackOnly(String id) {
       if (appsProvider.apps[id]!.app.additionalSettings['trackOnly'] == true) {
         trackOnlyUpdateIdsAllOrSelected.add(id);
         return false;
       }
       return true;
-    }).toList();
-    newInstallIdsAllOrSelected = newInstallIdsAllOrSelected.where((id) {
-      if (appsProvider.apps[id]!.app.additionalSettings['trackOnly'] == true) {
-        trackOnlyUpdateIdsAllOrSelected.add(id);
-        return false;
-      }
-      return true;
-    }).toList();
-
-    if (settingsProvider.pinUpdates) {
-      var temp = [];
-      listedApps = listedApps.where((sa) {
-        if (existingUpdates.contains(sa.app.id)) {
-          temp.add(sa);
-          return false;
-        }
-        return true;
-      }).toList();
-      listedApps = [...temp, ...listedApps];
     }
-
-    if (settingsProvider.buryNonInstalled) {
-      var temp = [];
-      listedApps = listedApps.where((sa) {
-        if (sa.app.installedVersion == null) {
-          temp.add(sa);
-          return false;
-        }
-        return true;
-      }).toList();
-      listedApps = [...listedApps, ...temp];
-    }
-
-    var tempPinned = [];
-    var tempNotPinned = [];
-    for (var a in listedApps) {
-      if (a.app.pinned) {
-        tempPinned.add(a);
-      } else {
-        tempNotPinned.add(a);
-      }
-    }
-    listedApps = [...tempPinned, ...tempNotPinned];
+    existingUpdateIdsAllOrSelected =
+        existingUpdateIdsAllOrSelected.where(isNotTrackOnly).toList();
+    newInstallIdsAllOrSelected =
+        newInstallIdsAllOrSelected.where(isNotTrackOnly).toList();
 
     List<String?> getListedCategories() {
       var temp = listedApps.map(
@@ -1024,7 +957,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   trackOnlyUpdateIdsAllOrSelected.isEmpty)
           ? () {}
           : () {
-              HapticFeedback.heavyImpact();
+              settingsProvider.heavyImpact();
               List<GeneratedFormItem> formItems = [];
               if (existingUpdateIdsAllOrSelected.isNotEmpty) {
                 formItems.add(
@@ -1286,7 +1219,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 label: 'yes'.t(),
                 child: TextButton(
                   onPressed: () {
-                    HapticFeedback.selectionClick();
+                    settingsProvider.selectionClick();
                     appsProvider.saveApps(
                       selectedApps.map((a) {
                         if (a.installedVersion != null &&

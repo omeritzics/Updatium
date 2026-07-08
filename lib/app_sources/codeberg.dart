@@ -31,7 +31,17 @@ class Codeberg extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    return await Gitea().getLatestAPKDetails(standardUrl, additionalSettings);
+    return await gh.getLatestAPKDetailsCommon2(standardUrl, additionalSettings, (
+      bool useTagUrl,
+    ) async {
+      final standardUri = Uri.parse(standardUrl);
+      final apiPath =
+          '/api/v1/repos${standardUri.path}/${useTagUrl ? 'tags' : 'releases'}';
+      return standardUri.replace(
+        path: apiPath,
+        queryParameters: {'per_page': '100'},
+      ).toString();
+    }, null);
   }
 
   AppNames getAppNames(String standardUrl) {

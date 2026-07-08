@@ -3,6 +3,7 @@ import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:updatium/components/settings_widgets.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
@@ -393,7 +394,7 @@ class _SettingsPageState extends State<SettingsPage> {
       },
     );
 
-    var intervalSlider = Slider(
+    final rawSlider = Slider(
       value: settingsProvider.updateIntervalSliderVal,
       max: updateIntervalNodes.length.toDouble(),
       divisions: updateIntervalNodes.length * 20,
@@ -416,6 +417,57 @@ class _SettingsPageState extends State<SettingsPage> {
         });
       },
     );
+
+    final Widget intervalSlider = settingsProvider.isTV
+        ? Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.remove),
+                onPressed: settingsProvider.updateIntervalSliderVal <= 0
+                    ? null
+                    : () {
+                        setState(() {
+                          final newVal =
+                              (settingsProvider.updateIntervalSliderVal - 1)
+                                  .clamp(
+                                    0.0,
+                                    updateIntervalNodes.length.toDouble(),
+                                  );
+                          settingsProvider.updateIntervalSliderVal = newVal;
+                          processIntervalSliderValue(newVal);
+                          settingsProvider.updateInterval = updateInterval;
+                        });
+                      },
+              ),
+              Expanded(
+                child: Text(
+                  updateIntervalLabel,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed:
+                    settingsProvider.updateIntervalSliderVal >=
+                            updateIntervalNodes.length.toDouble()
+                        ? null
+                        : () {
+                            setState(() {
+                              final newVal =
+                                  (settingsProvider.updateIntervalSliderVal + 1)
+                                      .clamp(
+                                        0.0,
+                                        updateIntervalNodes.length.toDouble(),
+                                      );
+                              settingsProvider.updateIntervalSliderVal = newVal;
+                              processIntervalSliderValue(newVal);
+                              settingsProvider.updateInterval = updateInterval;
+                            });
+                          },
+              ),
+            ],
+          )
+        : rawSlider;
 
     var sourceSpecificFields = sourceProvider.sources.map((e) {
       if (e.sourceConfigSettingFormItems.isNotEmpty) {
@@ -879,18 +931,16 @@ class _SettingsPageState extends State<SettingsPage> {
                               value: settingsProvider.useShizuku,
                               onChanged: (useShizuku) {
                                 if (useShizuku) {
-                                  ShizukuApkInstaller().checkPermission().then((
+                                  ShizukuApkInstaller()().checkPermission().then((
                                     resCode,
                                   ) {
                                     if (!mounted) return;
-                                    settingsProvider.useShizuku =
-                                        resCode?.startsWith('granted') ?? false;
+                                    settingsProvider.useShizuku =resCode?.startsWith('granted') ?? false;
                                     switch (resCode) {
                                       case 'services_not_found':
+                                      case 'services_not_found':
                                         showError(
-                                          UpdatiumError(
-                                            'shizukuBinderNotFound'.t(),
-                                          ),
+                                          UpdatiumError('shizukuBinderNotFound'.t()),
                                           context,
                                         );
                                       case 'old_shizuku':
@@ -900,9 +950,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         );
                                       case 'old_android_with_adb':
                                         showError(
-                                          UpdatiumError(
-                                            t('shizukuOldAndroidWithADB'),
-                                          ),
+                                          UpdatiumError(t('shizukuOldAndroidWithADB')),
                                           context,
                                         );
                                       case 'denied':
@@ -1127,13 +1175,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                               if (useSystemFont) {
                                                 NativeFeatures.loadSystemFont()
                                                     .then((val) {
-                                                      settingsProvider
-                                                              .useSystemFont =
-                                                          true;
+                                                      settingsProvider.useSystemFont = true;
                                                     });
                                               } else {
-                                                settingsProvider.useSystemFont =
-                                                    false;
+                                                settingsProvider.useSystemFont = false;
                                               }
                                             },
                                           ),

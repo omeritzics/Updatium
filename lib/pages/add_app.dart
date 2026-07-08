@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -95,9 +94,25 @@ class AddAppPageState extends State<AddAppPage> {
             // Ignore errors while typing
           }
         }
-        if (pickedSource?.runtimeType != source?.runtimeType) {
+        if (pickedSource??.runtimeType != source?.runtimeType) {
           pickedSource = source;
           pickedSource?.runOnAddAppInputChange(userInput);
+          additionalSettings = source != null
+              ? getDefaultValuesFromFormItems(
+                  source.combinedAppSpecificSettingFormItems,
+                )
+              : {};
+          var sp = context.read<SettingsProvider>();
+          if (sp.includePrereleasesByDefault) {
+            additionalSettings['includePrereleases'] = true;
+          }
+          if (sp.shizukuPretendToBeGooglePlay) {
+            additionalSettings['shizukuPretendToBeGooglePlay'] = true;
+          }
+          additionalSettingsValid = source != null
+              ? !sourceProvider.ifRequiredAppSpecificSettingsExist(source)
+              : true;
+          inferAppIdIfOptional = true;
         }
       });
     }
@@ -165,7 +180,7 @@ class AddAppPageState extends State<AddAppPage> {
               onPressed: searching || pickedSource == null
                   ? null
                   : () {
-                      HapticFeedback.selectionClick();
+                      settingsProvider.selectionClick();
                       showDialog(
                         context: context,
                         builder: (context) => AddAppConfirmationPage(

@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
-import 'package:flutter/services.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/apps_provider.dart';
@@ -134,7 +133,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
     }
 
     runUpdatiumExport({bool pickOnly = false}) async {
-      HapticFeedback.selectionClick();
+      settingsProvider.selectionClick();
       appsProvider
           .export(
             pickOnly:
@@ -696,6 +695,7 @@ class _SelectionModalState extends State<SelectionModal> {
 
   @override
   Widget build(BuildContext context) {
+    final isTV = context.read<SettingsProvider>().isTV;
     Map<MapEntry<String, List<String>>, bool> filteredEntrySelections = {};
     entrySelections.forEach((key, value) {
       var searchableText = key.value.isEmpty ? key.key : key.value[0];
@@ -943,9 +943,43 @@ class _SelectionModalState extends State<SelectionModal> {
                         if (widget.titlesAreLinks) {
                           urlLink = GestureDetector(
                             onTap: () => launchUrlString(
-                              entry.key,
+                    if (isTV && !widget.onlyOneSelectionAllowed) ...[
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(tr('cancel')),
+                ),
+                TextButton(
+                  onPressed: entrySelections.values.where((b) => b).isEmpty
+                      ? null
+                      : () => Navigator.of(context).pop(
+                          entrySelections.entries
+                              .where((entry) => entry.value)
+                              .map((e) => e.key.key)
+                              .toList(),
+                        ),
+                  child: Text(
+                    tr(
+                      'selectX',
+                      args: [
+                        entrySelections.values
+                            .where((b) => b)
+                            .length
+                            .toString(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+                    entry.key,
                               mode: LaunchMode.externalApplication,
-                            ),
+                  autofocus: isTV,
+                    ),
                             child: urlLink,
                           );
                         }
