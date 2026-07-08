@@ -172,7 +172,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   DateTime? refreshingSince;
   final GlobalKey<ExpressiveRefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<ExpressiveRefreshIndicatorState>();
-  Set<int> _expandedCategories = {};
+  final Set<int> _expandedCategories = {};
 
   void clearSelected() {
     setState(() {
