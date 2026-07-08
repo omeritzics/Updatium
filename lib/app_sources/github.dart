@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -8,7 +9,7 @@ import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
-import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' hide NoReleasesError, NoVersionError, RateLimitError;
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -397,7 +398,7 @@ class GitHub extends AppSource {
     await checkForRepositoryRename(
       standardUrl,
       additionalSettings,
-      sourceConfigSettingValues,
+      await getSourceConfigValues(additionalSettings, SettingsProvider()),
     );
     bool includePrereleases = additionalSettings['includePrereleases'] == true;
     bool fallbackToOlderReleases =

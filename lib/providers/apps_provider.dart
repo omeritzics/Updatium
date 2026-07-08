@@ -7,6 +7,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 import 'package:battery_plus/battery_plus.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:typed_data';
@@ -21,6 +22,7 @@ import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
+import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
@@ -29,7 +31,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
-import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' hide UpdatiumError, IDChangedError, NoAPKError, MultiAppMultiError, DowngradeError, InstallError, RateLimitError, list2FriendlyString, NoVersionError;
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:updatium/pages/add_app.dart';
 import 'package:android_intent_plus/android_intent.dart';
@@ -1862,9 +1864,10 @@ class AppsProvider with ChangeNotifier {
           if (!(await settingsProvider.getInstallPermission(enforce: false))) {
             throw UpdatiumError('cancelled'.t());
           }
-        } else {
-          switch ((await ShizukuApkInstaller()().checkPermission())!) {
-            case 'services_not_found':
+         } else {
+           switch ((await ShizukuApkInstaller().checkPermission())!) {
+             case 'services_not_found':
+
               throw UpdatiumError('shizukuBinderNotFound'.t());
             case 'old_shizuku':
               throw UpdatiumError('shizukuOld'.t());
@@ -3385,7 +3388,7 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
             // Next task interval is based on the error with the longest retry time
             int minRetryIntervalForThisApp = err is RateLimitError
                 ? (err.remainingMinutes * 60)
-                : err is ClientException
+                : err is http.ClientException
                 ? (15 * 60)
                 : (toCheckApp.value + 1);
             if (minRetryIntervalForThisApp > maxRetryWaitSeconds) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
@@ -60,6 +61,8 @@ class AddAppPageState extends State<AddAppPage> {
   SourceProvider sourceProvider = SourceProvider();
   final TextEditingController _sourceOverrideController =
       TextEditingController();
+      
+        get settingsProvider => null;
 
   @override
   void dispose() {
@@ -94,10 +97,10 @@ class AddAppPageState extends State<AddAppPage> {
             // Ignore errors while typing
           }
         }
-        if (pickedSource??.runtimeType != source?.runtimeType) {
+        if (pickedSource == null || pickedSource?.runtimeType != source?.runtimeType) {
           pickedSource = source;
           pickedSource?.runOnAddAppInputChange(userInput);
-          additionalSettings = source != null
+          var additionalSettings = source != null
               ? getDefaultValuesFromFormItems(
                   source.combinedAppSpecificSettingFormItems,
                 )
@@ -109,10 +112,10 @@ class AddAppPageState extends State<AddAppPage> {
           if (sp.shizukuPretendToBeGooglePlay) {
             additionalSettings['shizukuPretendToBeGooglePlay'] = true;
           }
-          additionalSettingsValid = source != null
+          var additionalSettingsValid = source != null
               ? !sourceProvider.ifRequiredAppSpecificSettingsExist(source)
               : true;
-          inferAppIdIfOptional = true;
+          var inferAppIdIfOptional = true;
         }
       });
     }

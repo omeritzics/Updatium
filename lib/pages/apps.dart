@@ -37,8 +37,13 @@ const horizontalGap8 = SizedBox(width: 8);
 const horizontalGap12 = SizedBox(width: 12);
 const horizontalGap16 = SizedBox(width: 16);
 const horizontalGap24 = SizedBox(width: 24);
-
+ 
+Color preserveTransparency(Color color, double opacity) {
+  return color.withValues(alpha: opacity);
+}
+ 
 class AppsPage extends StatefulWidget {
+
   const AppsPage({super.key});
 
   @override
@@ -165,6 +170,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   );
   Set<String> selectedAppIds = {};
   DateTime? refreshingSince;
+  final GlobalKey<ExpressiveRefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<ExpressiveRefreshIndicatorState>();
+  Set<int> _expandedCategories = {};
 
   void clearSelected() {
     setState(() {
@@ -1541,8 +1549,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
         children: [
-          ExpressiveRefreshIndicator(
-            onRefresh: refresh,
+           ExpressiveRefreshIndicator(
+             key: _refreshIndicatorKey,
+             onRefresh: refresh,
+
             child: Scrollbar(
               interactive: true,
               controller: scrollController,

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:hsluv/hsluv.dart';
+import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +10,6 @@ import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/components/category_chip.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:provider/provider.dart';
 
 abstract class GeneratedFormItem {
   late String key;
@@ -411,10 +411,11 @@ class _GeneratedFormState extends State<GeneratedForm> {
         }
       }
     }
+    formInputs = buildFormInputs(context); // This was missing
     someValueChanged(isBuilding: true);
   }
 
-  List<List<Widget>> _buildFormInputs(BuildContext context) {
+  List<List<Widget>> buildFormInputs(BuildContext context) {
     return widget.items.asMap().entries.map((row) {
       return row.value.asMap().entries.map((e) {
         var formItem = e.value;

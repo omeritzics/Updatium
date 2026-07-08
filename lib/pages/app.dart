@@ -52,6 +52,10 @@ class AppPage extends StatefulWidget {
 class _AppPageState extends State<AppPage> {
   AppInMemory? prevApp;
   bool updating = false;
+  bool _iconRequested = false;
+  Future<void>? _iconFuture;
+  int? _prevPreferredApkIndex;
+  int? _apkFileSize;
 
   Widget buildRepoRenameWarning({
     required AppInMemory? app,

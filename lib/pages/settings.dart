@@ -930,10 +930,11 @@ class _SettingsPageState extends State<SettingsPage> {
                               title: Text('useShizuku'.t()),
                               value: settingsProvider.useShizuku,
                               onChanged: (useShizuku) {
-                                if (useShizuku) {
-                                  ShizukuApkInstaller()().checkPermission().then((
-                                    resCode,
-                                  ) {
+                                 if (useShizuku) {
+                                   ShizukuApkInstaller().checkPermission().then((
+                                     resCode,
+                                   ) {
+
                                     if (!mounted) return;
                                     settingsProvider.useShizuku =resCode?.startsWith('granted') ?? false;
                                     switch (resCode) {

@@ -6,7 +6,6 @@ import 'package:bcrypt/bcrypt.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/main.dart';
@@ -57,7 +56,8 @@ class SettingsProvider with ChangeNotifier {
     prefs = await SharedPreferences.getInstance();
     defaultAppDir = (await getAppStorageDir()).path;
     final info = await DeviceInfoPlugin().androidInfo;
-    isTV = info.systemFeatures.contains('android.hardware.type.television') ||
+    isTV =
+        info.systemFeatures.contains('android.hardware.type.television') ||
         info.systemFeatures.contains('android.software.leanback');
     notifyListeners();
   }
@@ -280,11 +280,12 @@ class SettingsProvider with ChangeNotifier {
       List<App> changedApps = appsProvider
           .getAppValues()
           .map((a) {
-            if (!a.app.categories.any((c) => !cats.keys.contains(c))) {
+            if (!(a.app.categories?.any((c) => !cats.keys.contains(c)) ??
+                false)) {
               return null;
             }
             var app = a.app.deepCopy();
-            app.categories.removeWhere((c) => !cats.keys.contains(c));
+            app.categories?.removeWhere((c) => !cats.keys.contains(c));
             return app;
           })
           .where((element) => element != null)

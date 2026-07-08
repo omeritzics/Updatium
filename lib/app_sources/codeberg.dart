@@ -4,12 +4,13 @@ import 'package:updatium/services/slang_converter.dart';
 
 class Codeberg extends AppSource {
   Codeberg() {
+    var github = gh.GitHub();
     name = 'codeberg'.t();
     hosts = ['codeberg.org'];
     additionalSourceAppSpecificSettingFormItems =
-        gh.additionalSourceAppSpecificSettingFormItems;
+        github.additionalSourceAppSpecificSettingFormItems;
     canSearch = true;
-    searchQuerySettingFormItems = gh.searchQuerySettingFormItems;
+    searchQuerySettingFormItems = github.searchQuerySettingFormItems;
     openSource = true;
   }
 
@@ -31,15 +32,16 @@ class Codeberg extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    return await gh.getLatestAPKDetailsCommon2(standardUrl, additionalSettings, (
+    return await gh.GitHub().getLatestAPKDetailsCommon2(standardUrl, additionalSettings, (
       bool useTagUrl,
     ) async {
       final standardUri = Uri.parse(standardUrl);
       final apiPath =
           '/api/v1/repos${standardUri.path}/${useTagUrl ? 'tags' : 'releases'}';
-      return standardUri
-          .replace(path: apiPath, queryParameters: {'per_page': '100'})
-          .toString();
+      return standardUri.replace(
+        path: apiPath,
+        queryParameters: {'per_page': '100'},
+      ).toString();
     }, null);
   }
 

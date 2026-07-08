@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
@@ -943,43 +944,10 @@ class _SelectionModalState extends State<SelectionModal> {
                         if (widget.titlesAreLinks) {
                           urlLink = GestureDetector(
                             onTap: () => launchUrlString(
-                    if (isTV && !widget.onlyOneSelectionAllowed) ...[
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(tr('cancel')),
-                ),
-                TextButton(
-                  onPressed: entrySelections.values.where((b) => b).isEmpty
-                      ? null
-                      : () => Navigator.of(context).pop(
-                          entrySelections.entries
-                              .where((entry) => entry.value)
-                              .map((e) => e.key.key)
-                              .toList(),
-                        ),
-                  child: Text(
-                    tr(
-                      'selectX',
-                      args: [
-                        entrySelections.values
-                            .where((b) => b)
-                            .length
-                            .toString(),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-                    entry.key,
+                              entry.key,
                               mode: LaunchMode.externalApplication,
-                  autofocus: isTV,
-                    ),
+                            ),
+
                             child: urlLink,
                           );
                         }

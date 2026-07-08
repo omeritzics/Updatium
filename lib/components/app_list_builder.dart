@@ -93,10 +93,11 @@ class AppListBuilder {
           return false;
         }
       }
-      if (filter.categoryFilter.isNotEmpty &&
-          filter.categoryFilter
-              .intersection(app.app.categories.toSet())
-              .isEmpty) {
+       if (filter.categoryFilter.isNotEmpty &&
+           filter.categoryFilter
+               .intersection((app.app.categories ?? []).toSet())
+               .isEmpty) {
+
         return false;
       }
       if (filter.sourceFilter.isNotEmpty &&
