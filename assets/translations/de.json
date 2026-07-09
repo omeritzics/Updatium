@@ -418,6 +418,8 @@
     "excludeSecrets": "Geheimnisse ausschließen",
     "includeZips": "ZIP-Dateien einbeziehen",
     "zippedApkFilterRegEx": "APKs in ZIP filtern",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Mehrere Zeichen",
     "removeAppQuestion": {
         "one": "App entfernen?",

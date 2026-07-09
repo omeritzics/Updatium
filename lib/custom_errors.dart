@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:android_package_installer/android_package_installer.dart';
-import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 class UpdatiumError {
   late String message;
@@ -26,37 +26,37 @@ class RateLimitError extends UpdatiumError {
 
 class InvalidURLError extends UpdatiumError {
   InvalidURLError(String sourceName)
-    : super(tr('invalidURLForSource', args: [sourceName]));
+    : super(t('invalidURLForSource', args: [sourceName]));
 }
 
 class CredsNeededError extends UpdatiumError {
   CredsNeededError(String sourceName)
-    : super(tr('requiresCredentialsInSettings', args: [sourceName]));
+    : super(t('requiresCredentialsInSettings', args: [sourceName]));
 }
 
 class NoReleasesError extends UpdatiumError {
   NoReleasesError({String? note})
     : super(
-        '${tr('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
+        '${t('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
       );
 }
 
 class NoAPKError extends UpdatiumError {
-  NoAPKError() : super(tr('noAPKFound'));
+  NoAPKError() : super(t('noAPKFound'));
 }
 
 class NoVersionError extends UpdatiumError {
-  NoVersionError() : super(tr('noVersionFound'));
+  NoVersionError() : super(t('noVersionFound'));
 }
 
 class UnsupportedURLError extends UpdatiumError {
-  UnsupportedURLError() : super(tr('urlMatchesNoSource'));
+  UnsupportedURLError() : super(t('urlMatchesNoSource'));
 }
 
 class DowngradeError extends UpdatiumError {
   DowngradeError(int currentVersionCode, int newVersionCode)
     : super(
-        '${tr('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
+        '${t('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
       );
 }
 
@@ -66,17 +66,17 @@ class InstallError extends UpdatiumError {
 }
 
 class IDChangedError extends UpdatiumError {
-  IDChangedError(String newId) : super('${tr('appIdMismatch')} - $newId');
+  IDChangedError(String newId) : super('${t('appIdMismatch')} - $newId');
 }
 
 class RepositoryRenamedError extends UpdatiumError {
   final String oldUrl;
   final String newUrl;
-  RepositoryRenamedError(this.oldUrl, this.newUrl) : super(tr('repoRenamed'));
+  RepositoryRenamedError(this.oldUrl, this.newUrl) : super(t('repoRenamed'));
 }
 
 class NotImplementedError extends UpdatiumError {
-  NotImplementedError() : super(tr('functionNotImplemented'));
+  NotImplementedError() : super(t('functionNotImplemented'));
 }
 
 class MultiAppMultiError extends UpdatiumError {
@@ -84,7 +84,7 @@ class MultiAppMultiError extends UpdatiumError {
   Map<String, List<String>> idsByErrorString = {};
   Map<String, String> appIdNames = {};
 
-  MultiAppMultiError() : super(tr('placeholder'), unexpected: true);
+  MultiAppMultiError() : super(t('placeholder'), unexpected: true);
 
   void add(String appId, dynamic error, {String? appName}) {
     if (error is SocketException) {
@@ -142,7 +142,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
               Clipboard.setData(ClipboardData(text: e.toString()));
               ScaffoldMessenger.of(
                 context,
-              ).showSnackBar(SnackBar(content: Text(tr('copiedToClipboard'))));
+              ).showSnackBar(SnackBar(content: Text(t('copiedToClipboard'))));
             },
             child: Text(e.toString()),
           ),
@@ -151,7 +151,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
-              child: Text(tr('ok')),
+              child: Text(t('ok')),
             ),
           ],
         );
@@ -167,7 +167,7 @@ void showError(dynamic e, BuildContext context) {
 String list2FriendlyString(List<String> list) {
   var isUsingEnglish = isEnglish();
   return list.length == 2
-      ? '${list[0]} ${tr('and')} ${list[1]}'
+      ? '${list[0]} ${t('and')} ${list[1]}'
       : list
             .asMap()
             .entries

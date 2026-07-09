@@ -280,7 +280,7 @@ class AddAppPageState extends State<AddAppPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                '${e.name}: ${e.canSearch ? ' ${'searchableInBrackets'.t()}' : ''}',
+                                '${e.name} ${e.canSearch ? ' ${'searchableInBrackets'.t()}' : ''}',
                                 style: TextStyle(
                                   decoration: e.hosts.isNotEmpty
                                       ? TextDecoration.underline
@@ -303,13 +303,6 @@ class AddAppPageState extends State<AddAppPage> {
                       ),
                     ),
                     gap16,
-                    Text(
-                      '${'note'.t()}:',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(t('selfHostedNote', args: ['overrideSource'.t()])),
-                    gap8,
                     Row(
                       children: [
                         Icon(
@@ -326,6 +319,14 @@ class AddAppPageState extends State<AddAppPage> {
                         ),
                       ],
                     ),
+                    gap8,
+
+                    Text(
+                      '${'note'.t()}:',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(t('selfHostedNote', args: ['overrideSource'.t()])),
                   ],
                 ),
                 actions: [

@@ -419,6 +419,8 @@
     "excludeSecrets": "استعبد الأسرار",
     "includeZips": "ضمّن ملفات ZIP",
     "zippedApkFilterRegEx": "تصفية ملفات APK داخل ZIP",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "موقّعون متعدّدون",
     "removeAppQuestion": {
         "one": "إزالة التطبيق؟",

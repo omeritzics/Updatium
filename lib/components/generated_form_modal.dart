@@ -1,8 +1,8 @@
-import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 class GeneratedFormModal extends StatefulWidget {
   const GeneratedFormModal({
@@ -73,7 +73,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
           },
           child: Text(
             widget.singleNullReturnButton == null
-                ? tr('cancel')
+                ? t('cancel')
                 : widget.singleNullReturnButton!,
           ),
         ),
@@ -92,7 +92,7 @@ class _GeneratedFormModalState extends State<GeneratedFormModal> {
                           Navigator.of(context).pop(values);
                         }
                       },
-                child: Text(tr('continue')),
+                child: Text(t('continue')),
               )
             : const SizedBox.shrink(),
       ],

@@ -418,6 +418,8 @@
     "excludeSecrets": "مەخپىي ئۇچۇرلارنى چىقىرىۋېتىش",
     "includeZips": "ZIP ھۆججەتلىرىنى ئۆز ئىچىگە ئالسۇن",
     "zippedApkFilterRegEx": "ZIP ئىچىدىكى APK لارنى سۈزۈش",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "كۆپ ئىمزا قويغۇچىلار",
     "removeAppQuestion": {
         "one": "ئەپنى چىقىرىۋېتەمسىز؟",

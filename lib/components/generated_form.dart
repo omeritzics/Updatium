@@ -593,7 +593,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 return GeneratedFormModal(
                   title: item.label,
                   items: [
-                    [GeneratedFormTextField('label', label: tr('label'))],
+                    [GeneratedFormTextField('label', label: t('label'))],
                   ],
                 );
               },
@@ -732,7 +732,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             },
                             icon: const Icon(Icons.format_color_fill_rounded),
                             visualDensity: VisualDensity.compact,
-                            tooltip: tr('colour'),
+                            tooltip: t('colour'),
                           ),
                         )
                       : const SizedBox.shrink(),
@@ -778,7 +778,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             },
                             icon: const Icon(Icons.remove),
                             visualDensity: VisualDensity.compact,
-                            tooltip: tr('remove'),
+                            tooltip: t('remove'),
                           ),
                         )
                       : const SizedBox.shrink(),
@@ -799,7 +799,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                             onPressed: onAddPressed,
                             icon: const Icon(Icons.add),
                             visualDensity: VisualDensity.compact,
-                            tooltip: tr('add'),
+                            tooltip: t('add'),
                           ),
                         ),
                 ],

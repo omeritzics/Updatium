@@ -418,6 +418,8 @@
     "excludeSecrets": "Loại trừ thông tin bí mật",
     "includeZips": "Bao gồm các tệp ZIP",
     "zippedApkFilterRegEx": "Lọc các tệp APK bên trong tệp ZIP",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Nhiều người ký",
     "removeAppQuestion": {
         "one": "Gỡ ứng dụng?",

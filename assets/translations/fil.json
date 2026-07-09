@@ -421,6 +421,8 @@
     "excludeSecrets": "Ibukod ang mga sikreto",
     "includeZips": "Isama ang mga ZIP file",
     "zippedApkFilterRegEx": "I-filter ang mga APK sa loob ng ZIP",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Maramihang Signer",
     "removeAppQuestion": {
         "one": "Alisin ang app?",

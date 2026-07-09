@@ -421,6 +421,8 @@
     "excludeSecrets": "ரகசியங்களை விலக்கு",
     "includeZips": "ZIP கோப்புகளைச் சேர்",
     "zippedApkFilterRegEx": "ZIP உள்ளே இருக்கும் APKகளை வடிகட்டு",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "பல கையொப்பமிட்டவர்கள் (Signers)",
     "removeAppQuestion": {
         "one": "செயலியை நீக்கவா?",

@@ -418,6 +418,8 @@
     "excludeSecrets": "Érzékeny adatok (például: személyes hozzáférési tokenek) kihagyása",
     "includeZips": "ZIP-fájlok belefoglalása",
     "zippedApkFilterRegEx": "APK-fájlok szűrése a ZIP-fájlon belül",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Többen is aláírták",
     "removeAppQuestion": {
         "one": "Biztosan eltávolítja az alkalmazást?",

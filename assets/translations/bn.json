@@ -418,6 +418,8 @@
     "excludeSecrets": "গোপন তথ্য (secrets) বাদ দিন",
     "includeZips": "ZIP ফাইল অন্তর্ভুক্ত করুন",
     "zippedApkFilterRegEx": "ZIP-এর ভেতরে থাকা APK ফিল্টার করুন",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "একাধিক সাইনার (Signers)",
     "removeAppQuestion": {
         "one": "অ্যাপটি কি সরিয়ে ফেলবেন?",

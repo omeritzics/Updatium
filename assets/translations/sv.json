@@ -418,6 +418,8 @@
     "excludeSecrets": "Utesluta hemligheter",
     "includeZips": "Inkludera ZIP-filer",
     "zippedApkFilterRegEx": "Filtrera APK:er inuti ZIP",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Flera signers",
     "removeAppQuestion": {
         "one": "Ta Bort App?",

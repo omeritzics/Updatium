@@ -1256,14 +1256,14 @@ abstract class AppSource {
         [
           GeneratedFormSwitch(
             'includeTarballs',
-            label: tr('includeTarballs'),
+            label: t('includeTarballs'),
             defaultValue: false,
           ),
         ],
         [
           GeneratedFormTextField(
             'tarballedApkFilterRegEx',
-            label: tr('tarballedApkFilterRegEx'),
+            label: t('tarballedApkFilterRegEx'),
             required: false,
             additionalValidators: [
               (value) {

@@ -418,6 +418,8 @@
     "excludeSecrets": "Mengecualikan rahasia",
     "includeZips": "Menyertakan file ZIP",
     "zippedApkFilterRegEx": "Saring APK di dalam ZIP",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Tanda Tangan Ganda",
     "removeAppQuestion": {
         "one": "Hapus aplikasi?",

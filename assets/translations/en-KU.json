@@ -418,6 +418,8 @@
     "excludeSecrets": "Sîrên derve",
     "includeZips": "Pelên ZIP tê de bike",
     "zippedApkFilterRegEx": "APK-ên li hundirê ZIP-yan parzûn bike",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Sazkarên Pir",
     "removeAppQuestion": {
         "one": "Sepan rakirin?",

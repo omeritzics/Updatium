@@ -418,6 +418,8 @@
     "excludeSecrets": "Gizli bilgileri (Secrets) hariç tut",
     "includeZips": "ZIP dosyalarını dahil et",
     "zippedApkFilterRegEx": "ZIP içindeki APK'ları filtrele",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Çoklu İmzalayıcı",
     "removeAppQuestion": {
         "one": "Uygulama kaldırılsın mı?",

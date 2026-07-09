@@ -418,6 +418,8 @@
     "excludeSecrets": "رازهای پنهان",
     "includeZips": "فایل های ZIP",
     "zippedApkFilterRegEx": "فیلتر APK در داخل Zip",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "ثبت نام های متعدد",
     "removeAppQuestion": {
         "one": "برنامه حذف شود؟",

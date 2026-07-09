@@ -418,6 +418,8 @@
     "excludeSecrets": "Vyloučit tajemství",
     "includeZips": "Zahrnout soubory ZIP",
     "zippedApkFilterRegEx": "Filtrování souborů APK uvnitř ZIP",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Několik signers",
     "removeAppQuestion": {
         "one": "Odstranit aplikaci?",

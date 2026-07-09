@@ -418,6 +418,8 @@
     "excludeSecrets": "Изключване на тайни",
     "includeZips": "Включване на ZIP файлове",
     "zippedApkFilterRegEx": "Филтриране на APK файлове вътре в ZIP",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Множество подписващи лица",
     "removeAppQuestion": {
         "one": "Премахване на приложение?",

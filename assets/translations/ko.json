@@ -418,6 +418,8 @@
     "excludeSecrets": "비밀 제외",
     "includeZips": "ZIP 파일 포함",
     "zippedApkFilterRegEx": "ZIP 내 APK 필터링",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "다수 Signers",
     "removeAppQuestion": {
         "one": "앱을 제거하시겠습니까?",

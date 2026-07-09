@@ -421,6 +421,8 @@
     "excludeSecrets": "Εξαίρεση ευαίσθητων δεδομένων (Secrets)",
     "includeZips": "Να περιλαμβάνονται αρχεία ZIP",
     "zippedApkFilterRegEx": "Φιλτράρισμα αρχείων APK μέσα στο ZIP",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Πολλαπλές ψηφιακές υπογραφές (Signers)",
     "removeAppQuestion": {
         "one": "Αφαίρεση εφαρμογής;",

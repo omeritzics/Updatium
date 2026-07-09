@@ -421,6 +421,8 @@
     "excludeSecrets": "Ekskluder hemmeligheter",
     "includeZips": "Inkluder ZIP-filer",
     "zippedApkFilterRegEx": "Filtrer APK-er inni en ZIP-fil",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Flere signaturer (Signers)",
     "removeAppQuestion": {
         "one": "Fjerne appen?",

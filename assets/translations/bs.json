@@ -418,6 +418,8 @@
     "excludeSecrets": "Izuzmi secrets",
     "includeZips": "Uključi i ZIP datoteke",
     "zippedApkFilterRegEx": "Filtriraj APK-ove unutar ZIP datoteka",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Multiple Signers",
     "removeAppQuestion": {
         "one": "Želite li ukloniti aplikaciju?",

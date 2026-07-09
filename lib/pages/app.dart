@@ -97,14 +97,14 @@ class _AppPageState extends State<AppPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          tr('repoRenamed'),
+                          t('repoRenamed'),
                           style: textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w500,
                             color: colorScheme.onSurface,
                           ),
                         ),
                         Text(
-                          tr('repoRenamedExplanation'),
+                          t('repoRenamedExplanation'),
                           style: textTheme.bodyMedium?.copyWith(
                             color: colorScheme.onSurfaceVariant,
                           ),
@@ -140,7 +140,7 @@ class _AppPageState extends State<AppPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          tr('newUrl'),
+                          t('newUrl'),
                           style: textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w500,
                             color: colorScheme.onSurface,
@@ -220,7 +220,7 @@ class _AppPageState extends State<AppPage> {
                           null,
                         );
                       },
-                      child: Text(tr('dismiss')),
+                      child: Text(t('dismiss')),
                     ),
                   ),
                   Expanded(
@@ -242,7 +242,7 @@ class _AppPageState extends State<AppPage> {
                           onUpdate(appValue.app.id);
                         }
                       },
-                      child: Text(tr('updateUrl')),
+                      child: Text(t('updateUrl')),
                     ),
                   ),
                 ],
@@ -355,7 +355,7 @@ class _AppPageState extends State<AppPage> {
         versionLines +=
             '\n${'installedVersion'.t()}: ${app.app.installedVersion}';
         if (installed && installedVersionIsEstimate) {
-          versionLines += ' (${tr('pseudoVersionInUse').toLowerCase()})';
+          versionLines += ' (${t('pseudoVersionInUse').toLowerCase()})';
         }
       }
       final lastUpdateCheck = app.app.lastUpdateCheck?.toLocal();
@@ -363,7 +363,7 @@ class _AppPageState extends State<AppPage> {
         'lastUpdateCheckX',
         args: [
           lastUpdateCheck == null
-              ? tr('never')
+              ? t('never')
               : lastUpdateCheck.toString().split('.').first,
         ],
       );

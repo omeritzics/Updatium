@@ -418,6 +418,8 @@
     "excludeSecrets": "Exclude secrets",
     "includeZips": "Include ZIP files",
     "zippedApkFilterRegEx": "Filter APKs inside ZIP",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Multiple Signers",
     "removeAppQuestion": {
         "one": "Forigi la aplikaĵon?",

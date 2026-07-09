@@ -418,6 +418,8 @@
     "excludeSecrets": "排除机密",
     "includeZips": "包含 ZIP 文件",
     "zippedApkFilterRegEx": "过滤 ZIP 内的 APK",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "多个签名人",
     "removeAppQuestion": {
         "one": "是否删除应用？",

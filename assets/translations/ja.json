@@ -418,6 +418,8 @@
     "excludeSecrets": "シークレットを除く",
     "includeZips": "ZIPファイルを含む",
     "zippedApkFilterRegEx": "ZIP内のAPKをフィルタリングする",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "複数の署名者",
     "removeAppQuestion": {
         "one": "アプリを削除しますか？",

@@ -418,6 +418,8 @@
     "excludeSecrets": "गोपनीय जानकारी (secrets) बाहर रखें",
     "includeZips": "ZIP फ़ाइलें शामिल करें",
     "zippedApkFilterRegEx": "ZIP के अंदर APK फ़िल्टर करें",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "एकाधिक हस्ताक्षरकर्ता (Multiple Signers)",
     "removeAppQuestion": {
         "one": "ऐप हटाएँ?",

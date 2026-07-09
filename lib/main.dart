@@ -1,8 +1,5 @@
-// ignore_for_file: implementation_imports
-
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -423,22 +420,14 @@ class _UpdatiumState extends State<Updatium> {
             darkColorScheme = darkDynamic;
             // Ensure surface container colors have proper opacity for switch visibility
             lightColorScheme = lightColorScheme.copyWith(
-              surfaceContainerHighest: lightColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.17),
-              surfaceContainerHigh: lightColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.12),
-              surfaceContainer: lightColorScheme.surfaceContainer.withValues(
-                alpha: 0.08,
-              ),
+              surfaceContainerHighest: lightColorScheme.surfaceContainerHighest,
+              surfaceContainerHigh: lightColorScheme.surfaceContainerHigh,
+              surfaceContainer: lightColorScheme.surfaceContainer,
             );
             darkColorScheme = darkColorScheme.copyWith(
-              surfaceContainerHighest: darkColorScheme.surfaceContainerHighest
-                  .withValues(alpha: 0.17),
-              surfaceContainerHigh: darkColorScheme.surfaceContainerHigh
-                  .withValues(alpha: 0.12),
-              surfaceContainer: darkColorScheme.surfaceContainer.withValues(
-                alpha: 0.08,
-              ),
+              surfaceContainerHighest: darkColorScheme.surfaceContainerHighest,
+              surfaceContainerHigh: darkColorScheme.surfaceContainerHigh,
+              surfaceContainer: darkColorScheme.surfaceContainer,
             );
           } else {
             lightColorScheme = ColorScheme.fromSeed(
@@ -688,7 +677,6 @@ class _UpdatiumState extends State<Updatium> {
                 ),
                 margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                 surfaceTintColor: scheme.surfaceTint,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
               ),
               // Expressive FilledButton with tonal styling - preserve M3 Expressive transparency
               filledButtonTheme: FilledButtonThemeData(
@@ -698,14 +686,6 @@ class _UpdatiumState extends State<Updatium> {
                     horizontal: 28,
                     vertical: 14,
                   ),
-                  backgroundColor: isDark
-                      ? scheme.secondaryContainer
-                      : scheme.secondaryContainer,
-                  foregroundColor: isDark
-                      ? scheme.onSecondaryContainer
-                      : scheme.onSecondaryContainer,
-                  elevation: isDark ? 2 : 1,
-                  shadowColor: isDark ? Colors.black26 : Colors.black12,
                   textStyle: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontFamily: getPrimaryFontForLocale(context.locale),
@@ -723,9 +703,6 @@ class _UpdatiumState extends State<Updatium> {
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
                   elevation: isDark ? 3 : 2,
-                  shadowColor: isDark
-                      ? Colors.black38
-                      : Colors.black.withValues(alpha: 0.2),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 28,
                     vertical: 14,
@@ -910,11 +887,9 @@ class _UpdatiumState extends State<Updatium> {
               appBarTheme: AppBarTheme(
                 backgroundColor: scheme.surface,
                 foregroundColor: scheme.onSurface,
-                elevation: 0,
                 scrolledUnderElevation: 1,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
                 surfaceTintColor: scheme.surfaceTint,
-                centerTitle: true,
+                centerTitle: false,
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
                   fontSize: 22,
@@ -974,7 +949,6 @@ class _UpdatiumState extends State<Updatium> {
                 builders: {
                   TargetPlatform.android:
                       PredictiveBackPageTransitionsBuilder(),
-                  TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
                 },
               ),
 
@@ -988,13 +962,6 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive Touch Feedback
               splashFactory: InkRipple.splashFactory,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-
-              // Expressive Divider
-              dividerTheme: DividerThemeData(
-                color: scheme.outlineVariant,
-                thickness: 1,
-                space: 1,
-              ),
 
               // Expressive Chip Theme - preserve M3 Expressive transparency
               chipTheme: ChipThemeData(
@@ -1089,33 +1056,8 @@ class _UpdatiumState extends State<Updatium> {
                 valueIndicatorColor: scheme.primary,
               ),
 
-              // Material Design 3 Switch Theme - preserve M3 Expressive transparency
-              switchTheme: SwitchThemeData(
-                thumbColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return scheme.primary;
-                  }
-                  return scheme.outline;
-                }),
-                trackColor: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return scheme.primary.withValues(alpha: 0.5);
-                  }
-                  return scheme.surfaceContainerHighest;
-                }),
-                trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-
               // Dialog Theme for AMOLED black theme compatibility
               dialogTheme: DialogThemeData(
-                backgroundColor: scheme.surface,
-                surfaceTintColor: scheme.surfaceTint,
-                shadowColor: isDark ? Colors.black26 : Colors.black12,
-                elevation: isDark ? 6 : 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28),
-                ),
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
                   fontSize: 24,
@@ -1149,37 +1091,11 @@ class _UpdatiumState extends State<Updatium> {
             locale: context.locale,
             navigatorKey: globalNavigatorKey,
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: settingsProvider.theme == ThemeSettings.dark
+            theme: createTheme(
+              settingsProvider.theme == ThemeSettings.dark
                   ? darkColorScheme
                   : lightColorScheme,
-              fontFamily: settingsProvider.useSystemFont
-                  ? 'SystemFont'
-                  : 'Montserrat',
-              sliderTheme: SliderThemeData(
-                activeTrackColor:
-                    (settingsProvider.theme == ThemeSettings.dark
-                            ? darkColorScheme
-                            : lightColorScheme)
-                        .primary,
-                inactiveTrackColor:
-                    (settingsProvider.theme == ThemeSettings.dark
-                            ? darkColorScheme
-                            : lightColorScheme)
-                        .surfaceContainerHighest,
-                thumbColor:
-                    (settingsProvider.theme == ThemeSettings.dark
-                            ? darkColorScheme
-                            : lightColorScheme)
-                        .primary,
-                overlayColor:
-                    (settingsProvider.theme == ThemeSettings.dark
-                            ? darkColorScheme
-                            : lightColorScheme)
-                        .primary
-                        .withAlpha(30),
-              ),
+              settingsProvider.theme == ThemeSettings.dark,
             ),
             darkTheme: createTheme(
               settingsProvider.theme == ThemeSettings.light
@@ -1324,7 +1240,7 @@ Future<void> showFreeDroidWarnDialog(BuildContext context) async {
           },
           child: Text(
             strings['solution'] ?? 'Solution',
-            style: const TextStyle(color: Colors.red),
+            style: const TextStyle(color: Colors.green),
           ),
         ),
         TextButton(

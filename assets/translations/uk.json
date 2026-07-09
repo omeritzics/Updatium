@@ -418,6 +418,8 @@
     "excludeSecrets": "Виключити секрети",
     "includeZips": "Додайте ZIP-файли",
     "zippedApkFilterRegEx": "Фільтруйте APK-файли всередині ZIP",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Кілька підписників",
     "removeAppQuestion": {
         "one": "Видалити застосунок?",

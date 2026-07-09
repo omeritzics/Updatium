@@ -1,24 +1,24 @@
 import 'dart:convert';
 
-import 'package:simple_localization/simple_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 class FDroid extends AppSource {
   FDroid() {
     hosts = ['f-droid.org'];
-    name = tr('fdroid');
+    name = t('fdroid');
     naiveStandardVersionDetection = true;
     canSearch = true;
     additionalSourceAppSpecificSettingFormItems = [
       [
         GeneratedFormTextField(
           'filterVersionsByRegEx',
-          label: tr('filterVersionsByRegEx'),
+          label: t('filterVersionsByRegEx'),
           required: false,
           additionalValidators: [
             (value) {
@@ -30,7 +30,7 @@ class FDroid extends AppSource {
       [
         GeneratedFormSwitch(
           'autoSelectHighestVersionCode',
-          label: tr('autoSelectHighestVersionCode'),
+          label: t('autoSelectHighestVersionCode'),
         ),
       ],
     ];
@@ -160,7 +160,7 @@ class FDroid extends AppSource {
           urlsWithDescriptions[url] = [
             e.querySelector('.package-name')?.text.trim() ?? '',
             e.querySelector('.package-summary')?.text.trim() ??
-                tr('noDescription'),
+                t('noDescription'),
           ];
         }
       });

@@ -418,6 +418,8 @@
     "excludeSecrets": "Välista saladused",
     "includeZips": "Kaasa ZIP failid",
     "zippedApkFilterRegEx": "Filtreeri APK-sid ZIP-i sees",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Mitu allkirjastajat",
     "removeAppQuestion": {
         "one": "Eemalda äpp?",

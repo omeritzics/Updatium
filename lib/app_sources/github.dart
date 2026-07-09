@@ -52,7 +52,7 @@ class GitHub extends AppSource {
       ),
       GeneratedFormTextField(
         'GHReqPrefix',
-        label: tr('GHReqPrefix'),
+        label: t('GHReqPrefix'),
         hint: 'gh-proxy.org',
         required: false,
         additionalValidators: [
@@ -65,7 +65,7 @@ class GitHub extends AppSource {
                 Uri.parse('https://$value/api.github.com');
               }
             } catch (e) {
-              return tr('invalidInput');
+              return t('invalidInput');
             }
             return null;
           },
@@ -80,7 +80,7 @@ class GitHub extends AppSource {
               );
             },
             child: Text(
-              tr('about'),
+              t('about'),
               style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 12,
@@ -92,7 +92,7 @@ class GitHub extends AppSource {
       ),
       GeneratedFormSwitch(
         'checkRepoRename',
-        label: tr('repoRenamedCheck'),
+        label: t('repoRenamedCheck'),
         defaultValue: false,
       ),
     ];
@@ -101,21 +101,21 @@ class GitHub extends AppSource {
       [
         GeneratedFormSwitch(
           'includePrereleases',
-          label: tr('includePrereleases'),
+          label: t('includePrereleases'),
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'fallbackToOlderReleases',
-          label: tr('fallbackToOlderReleases'),
+          label: t('fallbackToOlderReleases'),
           defaultValue: true,
         ),
       ],
       [
         GeneratedFormTextField(
           'filterReleaseTitlesByRegEx',
-          label: tr('filterReleaseTitlesByRegEx'),
+          label: t('filterReleaseTitlesByRegEx'),
           required: false,
           additionalValidators: [
             (value) {
@@ -127,7 +127,7 @@ class GitHub extends AppSource {
       [
         GeneratedFormTextField(
           'filterReleaseNotesByRegEx',
-          label: tr('filterReleaseNotesByRegEx'),
+          label: t('filterReleaseNotesByRegEx'),
           required: false,
           additionalValidators: [
             (value) {
@@ -136,35 +136,35 @@ class GitHub extends AppSource {
           ],
         ),
       ],
-      [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
+      [GeneratedFormSwitch('verifyLatestTag', label: t('verifyLatestTag'))],
       [
         GeneratedFormDropdown(
           'sortMethodChoice',
           [
-            MapEntry('date', tr('releaseDate')),
-            MapEntry('smartname', tr('smartname')),
-            MapEntry('none', tr('none')),
+            MapEntry('date', t('releaseDate')),
+            MapEntry('smartname', t('smartname')),
+            MapEntry('none', t('none')),
             MapEntry(
               'smartname-datefallback',
-              '${tr('smartname')} x ${tr('releaseDate')}',
+              '${t('smartname')} x ${t('releaseDate')}',
             ),
-            MapEntry('name', tr('name')),
+            MapEntry('name', t('name')),
           ],
-          label: tr('sortMethod'),
+          label: t('sortMethod'),
           defaultValue: 'date',
         ),
       ],
       [
         GeneratedFormSwitch(
           'useLatestAssetDateAsReleaseDate',
-          label: tr('useLatestAssetDateAsReleaseDate'),
+          label: t('useLatestAssetDateAsReleaseDate'),
           defaultValue: false,
         ),
       ],
       [
         GeneratedFormSwitch(
           'releaseTitleAsVersion',
-          label: tr('releaseTitleAsVersion'),
+          label: t('releaseTitleAsVersion'),
           defaultValue: false,
         ),
       ],

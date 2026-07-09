@@ -418,6 +418,8 @@
     "excludeSecrets": "Exclude secrete",
     "includeZips": "Include fișiere ZIP",
     "zippedApkFilterRegEx": "Filtrează APK-urile din interiorul ZIP-urilor",
+    "includeTarballs": "Include tarball files (tar.gz, etc.)",
+    "tarballedApkFilterRegEx": "Filter APKs inside tarball",
     "multipleSigners": "Semnatari Multipli",
     "removeAppQuestion": {
         "one": "Eliminați aplicația?",
