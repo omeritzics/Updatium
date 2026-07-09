@@ -470,12 +470,11 @@ class _UpdatiumState extends State<Updatium> {
 
           if (settingsProvider.useSystemFont) NativeFeatures.loadSystemFont();
 
-           // Determine primary font based on locale
-           String getPrimaryFontForLocale(Locale locale) {
-             if (settingsProvider.useSystemFont) {
-               return 'SystemFont';
-             }
-
+          // Determine primary font based on locale
+          String getPrimaryFontForLocale(Locale locale) {
+            if (settingsProvider.useSystemFont) {
+              return 'SystemFont';
+            }
 
             // CJK languages
             if (locale.languageCode == 'zh' ||

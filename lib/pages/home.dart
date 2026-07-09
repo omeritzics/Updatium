@@ -311,8 +311,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
     final settingsProvider = context.read<SettingsProvider>();
     final pages = getPages(settingsProvider);
-    return !((pages[0].widget.key as GlobalKey<AppsPageState>).currentState
-            ?.selectedAppIds.isNotEmpty ??
+    return !((pages[0].widget.key as GlobalKey<AppsPageState>)
+            .currentState
+            ?.selectedAppIds
+            .isNotEmpty ??
         false);
   }
 

@@ -96,6 +96,7 @@ dependencies:
   progress_indicator_m3e: ^0.1.1
   loading_indicator_m3e: ^0.1.1
   dynamic_color: ^1.8.1
+  intl: any
 flutter_launcher_icons:
   android: "ic_launcher"
   adaptive_icon_background: "#ffffff"

@@ -281,10 +281,7 @@ class _TVTextFieldFocus extends StatefulWidget {
   final Widget child;
   final FocusNode textFocusNode;
 
-  const _TVTextFieldFocus({
-    required this.child,
-    required this.textFocusNode,
-  });
+  const _TVTextFieldFocus({required this.child, required this.textFocusNode});
 
   @override
   State<_TVTextFieldFocus> createState() => _TVTextFieldFocusState();
@@ -609,14 +606,12 @@ class _GeneratedFormState extends State<GeneratedForm> {
                       values[fieldKey] as Map<String, MapEntry<int, bool>>?;
                   temp ??= {};
                   if (temp[label] == null) {
-                    var singleSelect =
-                        item
-                            .singleSelect;
+                    var singleSelect = item.singleSelect;
                     var someSelected = temp.entries
                         .where((element) => element.value.value)
                         .isNotEmpty;
                     temp[label] = MapEntry(
-                      generateRandomLightColor().value,
+                      generateRandomLightColor().toARGB32(),
                       !(someSelected && singleSelect),
                     );
                     values[fieldKey] = temp;
@@ -633,22 +628,15 @@ class _GeneratedFormState extends State<GeneratedForm> {
               if ((values[fieldKey] as Map<String, MapEntry<int, bool>>?)
                           ?.isNotEmpty ==
                       true &&
-                  item
-                      .showLabelWhenNotEmpty)
+                  item.showLabelWhenNotEmpty)
                 Column(
-                  crossAxisAlignment:
-                      item.alignment ==
-                          WrapAlignment.center
+                  crossAxisAlignment: item.alignment == WrapAlignment.center
                       ? CrossAxisAlignment.center
                       : CrossAxisAlignment.stretch,
-                  children: [
-                    Text(item.label),
-                    const SizedBox(height: 8),
-                  ],
+                  children: [Text(item.label), const SizedBox(height: 8)],
                 ),
               Wrap(
-                alignment:
-                    item.alignment,
+                alignment: item.alignment,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   ...(values[fieldKey] as Map<String, MapEntry<int, bool>>?)
@@ -679,8 +667,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                           .key,
                                       value,
                                     );
-                                    if (item.singleSelect &&
-                                        value == true) {
+                                    if (item.singleSelect && value == true) {
                                       for (var key
                                           in (values[fieldKey]
                                                   as Map<
@@ -732,7 +719,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 // generate new color, ensure it is not the same
                                 int newColor = oldEntry.value.key;
                                 while (oldEntry.value.key == newColor) {
-                                  newColor = generateRandomLightColor().value;
+                                  newColor = generateRandomLightColor()
+                                      .toARGB32();
                                 }
                                 // Update entry with new color, remain selected
                                 temp.update(
@@ -769,11 +757,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 });
                               }
 
-                              if (item
-                                      .deleteConfirmationMessage !=
-                                  null) {
-                                var message =
-                                    item.deleteConfirmationMessage!;
+                              if (item.deleteConfirmationMessage != null) {
+                                var message = item.deleteConfirmationMessage!;
                                 showDialog<Map<String, dynamic>?>(
                                   context: context,
                                   builder: (BuildContext ctx) {
@@ -806,10 +791,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                           child: TextButton.icon(
                             onPressed: onAddPressed,
                             icon: const Icon(Icons.add),
-                            label: Text(
-                              item
-                                  .label,
-                            ),
+                            label: Text(item.label),
                           ),
                         )
                       : Padding(
@@ -827,9 +809,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
           );
         } else if (item is GeneratedFormSubForm) {
           List<Widget> subformColumn = [];
-          var compact =
-              item.items.length == 1 &&
-              item.items[0].length == 1;
+          var compact = item.items.length == 1 && item.items[0].length == 1;
           for (int i = 0; i < values[fieldKey].length; i++) {
             var internalFormKey = ValueKey(
               generateRandomNumber(
@@ -850,18 +830,15 @@ class _GeneratedFormState extends State<GeneratedForm> {
                     ),
                   GeneratedForm(
                     key: internalFormKey,
-                    items:
-                        cloneFormItems(
-                              item.items,
-                            )
-                            .map(
-                              (x) => x.map((y) {
-                                y.defaultValue = values[fieldKey]?[i]?[y.key];
-                                y.key = '${y.key.toString()},$internalFormKey';
-                                return y;
-                              }).toList(),
-                            )
-                            .toList(),
+                    items: cloneFormItems(item.items)
+                        .map(
+                          (x) => x.map((y) {
+                            y.defaultValue = values[fieldKey]?[i]?[y.key];
+                            y.key = '${y.key.toString()},$internalFormKey';
+                            return y;
+                          }).toList(),
+                        )
+                        .toList(),
                     onValueChanges: (values, valid, isBuilding) {
                       values = values.map(
                         (key, value) => MapEntry(key.split(',')[0], value),
@@ -891,9 +868,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                                 someValueChanged();
                               }
                             : null,
-                        label: Text(
-                          '${item.label} (${i + 1})',
-                        ),
+                        label: Text('${item.label} (${i + 1})'),
                         icon: const Icon(Icons.delete_outline_rounded),
                       ),
                     ],
@@ -911,17 +886,13 @@ class _GeneratedFormState extends State<GeneratedForm> {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         values[fieldKey].add(
-                          getDefaultValuesFromFormItems(
-                            item.items,
-                          ),
+                          getDefaultValuesFromFormItems(item.items),
                         );
                         forceUpdateKeyCount++;
                         someValueChanged();
                       },
                       icon: const Icon(Icons.add),
-                      label: Text(
-                        item.label,
-                      ),
+                      label: Text(item.label),
                     ),
                   ),
                 ],

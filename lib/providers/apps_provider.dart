@@ -31,7 +31,17 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
-import 'package:updatium/providers/source_provider.dart' hide UpdatiumError, IDChangedError, NoAPKError, MultiAppMultiError, DowngradeError, InstallError, RateLimitError, list2FriendlyString, NoVersionError;
+import 'package:updatium/providers/source_provider.dart'
+    hide
+        UpdatiumError,
+        IDChangedError,
+        NoAPKError,
+        MultiAppMultiError,
+        DowngradeError,
+        InstallError,
+        RateLimitError,
+        list2FriendlyString,
+        NoVersionError;
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:updatium/pages/add_app.dart';
 import 'package:android_intent_plus/android_intent.dart';
@@ -1721,8 +1731,7 @@ class AppsProvider with ChangeNotifier {
       }
       if (apkUrl != null) {
         var url = apkUrl.value;
-        int urlInd = apps[id]!.app.apkUrls
-            .indexWhere((e) => e.value == url);
+        int urlInd = apps[id]!.app.apkUrls.indexWhere((e) => e.value == url);
         if (urlInd >= 0 && urlInd != apps[id]!.app.preferredApkIndex) {
           apps[id]!.app.preferredApkIndex = urlInd;
           await saveApps([apps[id]!.app]);
@@ -1753,8 +1762,10 @@ class AppsProvider with ChangeNotifier {
     notificationsProvider =
         notificationsProvider ?? context?.read<NotificationsProvider>();
 
-    var (appsToInstall, trackOnlyAppsToUpdate) =
-        await _resolveAppsToInstall(appIds, context);
+    var (appsToInstall, trackOnlyAppsToUpdate) = await _resolveAppsToInstall(
+      appIds,
+      context,
+    );
 
     // Mark all specified track-only apps as latest
     saveApps(
@@ -1864,10 +1875,9 @@ class AppsProvider with ChangeNotifier {
           if (!(await settingsProvider.getInstallPermission(enforce: false))) {
             throw UpdatiumError('cancelled'.t());
           }
-         } else {
-           switch ((await ShizukuApkInstaller().checkPermission())!) {
-             case 'services_not_found':
-
+        } else {
+          switch ((await ShizukuApkInstaller().checkPermission())!) {
+            case 'services_not_found':
               throw UpdatiumError('shizukuBinderNotFound'.t());
             case 'old_shizuku':
               throw UpdatiumError('shizukuOld'.t());

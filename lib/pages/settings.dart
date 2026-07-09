@@ -439,30 +439,27 @@ class _SettingsPageState extends State<SettingsPage> {
                       },
               ),
               Expanded(
-                child: Text(
-                  updateIntervalLabel,
-                  textAlign: TextAlign.center,
-                ),
+                child: Text(updateIntervalLabel, textAlign: TextAlign.center),
               ),
               IconButton(
                 icon: const Icon(Icons.add),
                 onPressed:
                     settingsProvider.updateIntervalSliderVal >=
-                            updateIntervalNodes.length.toDouble()
-                        ? null
-                        : () {
-                            setState(() {
-                              final newVal =
-                                  (settingsProvider.updateIntervalSliderVal + 1)
-                                      .clamp(
-                                        0.0,
-                                        updateIntervalNodes.length.toDouble(),
-                                      );
-                              settingsProvider.updateIntervalSliderVal = newVal;
-                              processIntervalSliderValue(newVal);
-                              settingsProvider.updateInterval = updateInterval;
-                            });
-                          },
+                        updateIntervalNodes.length.toDouble()
+                    ? null
+                    : () {
+                        setState(() {
+                          final newVal =
+                              (settingsProvider.updateIntervalSliderVal + 1)
+                                  .clamp(
+                                    0.0,
+                                    updateIntervalNodes.length.toDouble(),
+                                  );
+                          settingsProvider.updateIntervalSliderVal = newVal;
+                          processIntervalSliderValue(newVal);
+                          settingsProvider.updateInterval = updateInterval;
+                        });
+                      },
               ),
             ],
           )
@@ -929,17 +926,19 @@ class _SettingsPageState extends State<SettingsPage> {
                               title: Text('useShizuku'.t()),
                               value: settingsProvider.useShizuku,
                               onChanged: (useShizuku) {
-                                 if (useShizuku) {
-                                   ShizukuApkInstaller().checkPermission().then((
-                                     resCode,
-                                   ) {
-
+                                if (useShizuku) {
+                                  ShizukuApkInstaller().checkPermission().then((
+                                    resCode,
+                                  ) {
                                     if (!mounted) return;
-                                    settingsProvider.useShizuku =resCode?.startsWith('granted') ?? false;
+                                    settingsProvider.useShizuku =
+                                        resCode?.startsWith('granted') ?? false;
                                     switch (resCode) {
                                       case 'services_not_found':
                                         showError(
-                                          UpdatiumError('shizukuBinderNotFound'.t()),
+                                          UpdatiumError(
+                                            'shizukuBinderNotFound'.t(),
+                                          ),
                                           context,
                                         );
                                       case 'old_shizuku':
@@ -949,7 +948,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                         );
                                       case 'old_android_with_adb':
                                         showError(
-                                          UpdatiumError(t('shizukuOldAndroidWithADB')),
+                                          UpdatiumError(
+                                            t('shizukuOldAndroidWithADB'),
+                                          ),
                                           context,
                                         );
                                       case 'denied':
@@ -1174,10 +1175,13 @@ class _SettingsPageState extends State<SettingsPage> {
                                               if (useSystemFont) {
                                                 NativeFeatures.loadSystemFont()
                                                     .then((val) {
-                                                      settingsProvider.useSystemFont = true;
+                                                      settingsProvider
+                                                              .useSystemFont =
+                                                          true;
                                                     });
                                               } else {
-                                                settingsProvider.useSystemFont = false;
+                                                settingsProvider.useSystemFont =
+                                                    false;
                                               }
                                             },
                                           ),

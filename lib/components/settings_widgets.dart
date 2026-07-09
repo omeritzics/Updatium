@@ -24,10 +24,7 @@ class SettingsToggleRow extends StatelessWidget {
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(label),
-                    subtitle!,
-                  ],
+                  children: [Text(label), subtitle!],
                 )
               : Text(label),
         ),
@@ -71,7 +68,7 @@ class SettingsDropdown<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<T>(
-      value: value,
+      initialValue: value,
       items: items,
       onChanged: onChanged,
       decoration: InputDecoration(labelText: label),

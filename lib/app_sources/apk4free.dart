@@ -1,6 +1,12 @@
 import 'package:html/parser.dart';
 import 'package:updatium/custom_errors.dart';
-import 'package:updatium/providers/source_provider.dart' hide InvalidURLError, NoReleasesError, NoAPKError, NoVersionError, UpdatiumError;
+import 'package:updatium/providers/source_provider.dart'
+    hide
+        InvalidURLError,
+        NoReleasesError,
+        NoAPKError,
+        NoVersionError,
+        UpdatiumError;
 
 class Apk4Free extends AppSource {
   Apk4Free() {

@@ -93,11 +93,10 @@ class AppListBuilder {
           return false;
         }
       }
-       if (filter.categoryFilter.isNotEmpty &&
-           filter.categoryFilter
-               .intersection((app.app.categories ?? []).toSet())
-               .isEmpty) {
-
+      if (filter.categoryFilter.isNotEmpty &&
+          filter.categoryFilter
+              .intersection((app.app.categories ?? []).toSet())
+              .isEmpty) {
         return false;
       }
       if (filter.sourceFilter.isNotEmpty &&
@@ -140,8 +139,8 @@ class AppListBuilder {
         SortColumnSettings.nameAuthor => (a.name + a.author).toLowerCase(),
         _ => '',
       };
-       var entries = apps.map((a) => MapEntry(keyFn(a), a)).toList()
-         ..sort((a, b) => a.key.compareTo(b.key));
+      var entries = apps.map((a) => MapEntry(keyFn(a), a)).toList()
+        ..sort((a, b) => a.key.compareTo(b.key));
 
       apps = entries.map((e) => e.value).toList();
     }

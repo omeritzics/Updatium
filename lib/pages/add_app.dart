@@ -61,8 +61,8 @@ class AddAppPageState extends State<AddAppPage> {
   SourceProvider sourceProvider = SourceProvider();
   final TextEditingController _sourceOverrideController =
       TextEditingController();
-      
-        get settingsProvider => null;
+
+  Null get settingsProvider => null;
 
   @override
   void dispose() {
@@ -97,7 +97,8 @@ class AddAppPageState extends State<AddAppPage> {
             // Ignore errors while typing
           }
         }
-        if (pickedSource == null || pickedSource?.runtimeType != source?.runtimeType) {
+        if (pickedSource == null ||
+            pickedSource?.runtimeType != source?.runtimeType) {
           pickedSource = source;
           pickedSource?.runOnAddAppInputChange(userInput);
           var additionalSettings = source != null

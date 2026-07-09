@@ -9,7 +9,8 @@ import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
-import 'package:updatium/providers/source_provider.dart' hide NoReleasesError, NoVersionError, RateLimitError;
+import 'package:updatium/providers/source_provider.dart'
+    hide NoReleasesError, NoVersionError, RateLimitError;
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:url_launcher/url_launcher_string.dart';
 
