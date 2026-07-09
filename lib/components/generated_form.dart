@@ -549,7 +549,6 @@ class _GeneratedFormState extends State<GeneratedForm> {
         }
       }).toList();
     }).toList();
-    someValueChanged(isBuilding: true);
   }
 
   @override
