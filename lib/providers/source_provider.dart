@@ -787,6 +787,7 @@ abstract class AppSource {
   List<String> excludeCommonSettingKeys = [];
   bool urlsAlwaysHaveExtension = false;
   bool allowIncludeZips = false;
+  bool allowIncludeTarballs = false;
   bool openSource = false;
 
   AppSource() {
@@ -1238,7 +1239,31 @@ abstract class AppSource {
         [
           GeneratedFormTextField(
             'zippedApkFilterRegEx',
-            label: 'zippedApkFilterRegEx'.t(),
+            label: t('zippedApkFilterRegEx'),
+            required: false,
+            additionalValidators: [
+              (value) {
+                return regExValidator(value);
+              },
+            ],
+          ),
+        ],
+      ]);
+    }
+
+    if (allowIncludeTarballs) {
+      moreConditionalItems.addAll([
+        [
+          GeneratedFormSwitch(
+            'includeTarballs',
+            label: tr('includeTarballs'),
+            defaultValue: false,
+          ),
+        ],
+        [
+          GeneratedFormTextField(
+            'tarballedApkFilterRegEx',
+            label: tr('tarballedApkFilterRegEx'),
             required: false,
             additionalValidators: [
               (value) {
