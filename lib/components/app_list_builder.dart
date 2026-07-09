@@ -140,8 +140,9 @@ class AppListBuilder {
         SortColumnSettings.nameAuthor => (a.name + a.author).toLowerCase(),
         _ => '',
       };
-      var entries = apps.map((a) => MapEntry(keyFn(a), a)).toList()
-        ..sort((a, b) => (a.key as String).compareTo(b.key as String));
+       var entries = apps.map((a) => MapEntry(keyFn(a), a)).toList()
+         ..sort((a, b) => a.key.compareTo(b.key));
+
       apps = entries.map((e) => e.value).toList();
     }
 

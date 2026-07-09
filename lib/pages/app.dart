@@ -434,7 +434,7 @@ class _AppPageState extends State<AppPage> {
           versionLines += ' (${tr('pseudoVersionInUse').toLowerCase()})';
         }
       }
-      final lastUpdateCheck = app?.app.lastUpdateCheck?.toLocal();
+      final lastUpdateCheck = app.app.lastUpdateCheck?.toLocal();
       String infoLines = t(
         'lastUpdateCheckX',
         args: [
@@ -449,9 +449,9 @@ class _AppPageState extends State<AppPage> {
       if (installedVersionIsEstimate) {
         infoLines = '${'pseudoVersionInUse'.t()}\n$infoLines';
       }
-      if ((app?.app.apkUrls.length ?? 0) > 0) {
+      if ((app.app.apkUrls.length) > 0) {
         infoLines =
-            '$infoLines\n${app?.app.apkUrls.length == 1 ? app?.app.apkUrls[0].key : plural('apk', app?.app.apkUrls.length ?? 0)}';
+            '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : plural('apk', app.app.apkUrls.length)}';
       }
       var changeLogFn = app != null ? getChangeLogFn(context, app.app) : null;
       return Column(

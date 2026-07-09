@@ -696,7 +696,7 @@ class _SelectionModalState extends State<SelectionModal> {
 
   @override
   Widget build(BuildContext context) {
-    final isTV = context.read<SettingsProvider>().isTV;
+    final _ = context.read<SettingsProvider>().isTV;
     Map<MapEntry<String, List<String>>, bool> filteredEntrySelections = {};
     entrySelections.forEach((key, value) {
       var searchableText = key.value.isEmpty ? key.key : key.value[0];

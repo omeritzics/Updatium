@@ -1546,7 +1546,7 @@ class SourceProvider {
     DirectAPKLink(),
     Signal(),
     VLC(),
-    HTML(), // This should ALWAYS be the last option as they are tried in order
+    HTML(), // This should ALWAYS be the last option
   ];
 
   // Add more mass url source classes here so they are available via the service

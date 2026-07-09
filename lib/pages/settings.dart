@@ -3,7 +3,6 @@ import 'package:equations/equations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:updatium/components/settings_widgets.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
@@ -938,7 +937,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                     if (!mounted) return;
                                     settingsProvider.useShizuku =resCode?.startsWith('granted') ?? false;
                                     switch (resCode) {
-                                      case 'services_not_found':
                                       case 'services_not_found':
                                         showError(
                                           UpdatiumError('shizukuBinderNotFound'.t()),

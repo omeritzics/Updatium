@@ -8,7 +8,6 @@ import 'package:expressive_refresh/expressive_refresh.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:updatium/components/app_list_builder.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar.dart';
 import 'package:m3_floating_toolbar/m3_floating_toolbar_action.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
@@ -19,7 +18,6 @@ import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
 import 'package:updatium/pages/settings.dart';
 import 'package:updatium/providers/apps_provider.dart';
-import 'package:updatium/providers/notifications_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
@@ -37,13 +35,12 @@ const horizontalGap8 = SizedBox(width: 8);
 const horizontalGap12 = SizedBox(width: 12);
 const horizontalGap16 = SizedBox(width: 16);
 const horizontalGap24 = SizedBox(width: 24);
- 
+
 Color preserveTransparency(Color color, double opacity) {
   return color.withValues(alpha: opacity);
 }
- 
-class AppsPage extends StatefulWidget {
 
+class AppsPage extends StatefulWidget {
   const AppsPage({super.key});
 
   @override
@@ -244,9 +241,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     }
 
     var listedAppIdSet = listedApps.map((e) => e.app.id).toSet();
-    selectedAppIds = selectedAppIds
-        .where(listedAppIdSet.contains)
-        .toSet();
+    selectedAppIds = selectedAppIds.where(listedAppIdSet.contains).toSet();
 
     toggleAppSelected(App app) {
       setState(() {
@@ -398,10 +393,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       }
       return true;
     }
-    existingUpdateIdsAllOrSelected =
-        existingUpdateIdsAllOrSelected.where(isNotTrackOnly).toList();
-    newInstallIdsAllOrSelected =
-        newInstallIdsAllOrSelected.where(isNotTrackOnly).toList();
+
+    existingUpdateIdsAllOrSelected = existingUpdateIdsAllOrSelected
+        .where(isNotTrackOnly)
+        .toList();
+    newInstallIdsAllOrSelected = newInstallIdsAllOrSelected
+        .where(isNotTrackOnly)
+        .toList();
 
     List<String?> getListedCategories() {
       var temp = listedApps.map(
@@ -1549,9 +1547,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
         children: [
-           ExpressiveRefreshIndicator(
-             key: _refreshIndicatorKey,
-             onRefresh: refresh,
+          ExpressiveRefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: refresh,
 
             child: Scrollbar(
               interactive: true,

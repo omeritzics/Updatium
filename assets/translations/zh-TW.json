@@ -26,6 +26,7 @@
     "filterReleaseTitlesByRegEx": "用正則表達式過濾版本發佈標題",
     "invalidRegEx": "無效的正則表達式",
     "noDescription": "沒有描述",
+    "newUrl": "New URL",
     "cancel": "取消",
     "continue": "繼續",
     "requiredInBrackets": "（必填）",

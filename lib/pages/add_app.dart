@@ -112,10 +112,10 @@ class AddAppPageState extends State<AddAppPage> {
           if (sp.shizukuPretendToBeGooglePlay) {
             additionalSettings['shizukuPretendToBeGooglePlay'] = true;
           }
-          var additionalSettingsValid = source != null
+          var _ = source != null
               ? !sourceProvider.ifRequiredAppSpecificSettingsExist(source)
               : true;
-          var inferAppIdIfOptional = true;
+          var _ = true;
         }
       });
     }
