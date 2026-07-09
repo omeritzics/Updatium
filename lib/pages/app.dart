@@ -453,7 +453,7 @@ class _AppPageState extends State<AppPage> {
         infoLines =
             '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : plural('apk', app.app.apkUrls.length)}';
       }
-      var changeLogFn = app != null ? getChangeLogFn(context, app.app) : null;
+      var changeLogFn = getChangeLogFn(context, app.app);
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
