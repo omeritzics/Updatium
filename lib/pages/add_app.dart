@@ -8,7 +8,7 @@ import 'package:updatium/pages/settings.dart';
 import 'package:updatium/pages/import_export.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/notifications_provider.dart';
-import 'package:updatium/providers/settings_provider.dart';
+import '../providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
@@ -62,7 +62,7 @@ class AddAppPageState extends State<AddAppPage> {
   final TextEditingController _sourceOverrideController =
       TextEditingController();
 
-  Null get settingsProvider => null;
+  SettingsProvider get settingsProvider => context.read<SettingsProvider>();
 
   @override
   void dispose() {
@@ -106,7 +106,7 @@ class AddAppPageState extends State<AddAppPage> {
                   source.combinedAppSpecificSettingFormItems,
                 )
               : {};
-          var sp = context.read<SettingsProvider>();
+           var sp = settingsProvider;
           if (sp.includePrereleasesByDefault) {
             additionalSettings['includePrereleases'] = true;
           }

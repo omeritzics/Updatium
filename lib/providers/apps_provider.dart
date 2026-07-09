@@ -1564,23 +1564,6 @@ class AppsProvider with ChangeNotifier {
     return installed;
   }
 
-  Future<void> _shareToAppVerifier(
-    DownloadedApk file,
-    BuildContext context,
-  ) async {
-    if (!settingsProvider.beforeNewInstallsShareToAppVerifier) return;
-    if (await getInstalledInfo('dev.soupslurpr.appverifier') == null) return;
-    XFile f = XFile.fromData(
-      file.file.readAsBytesSync(),
-      mimeType: 'application/vnd.android.package-archive',
-    );
-    Fluttertoast.showToast(
-      msg: tr('appVerifierInstructionToast'),
-      toastLength: Toast.LENGTH_LONG,
-    );
-    await Share.shareXFiles([f]);
-  }
-
   Future<String> getStorageRootPath() async {
     return '/${(await getAppStorageDir()).uri.pathSegments.sublist(0, 3).join('/')}';
   }

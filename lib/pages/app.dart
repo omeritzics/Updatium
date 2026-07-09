@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:flutter/services.dart';
 import 'package:expressive_refresh/expressive_refresh.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
@@ -54,8 +53,6 @@ class _AppPageState extends State<AppPage> {
   bool updating = false;
   bool _iconRequested = false;
   Future<void>? _iconFuture;
-  int? _prevPreferredApkIndex;
-  int? _apkFileSize;
 
   Widget buildRepoRenameWarning({
     required AppInMemory? app,
@@ -261,72 +258,6 @@ class _AppPageState extends State<AppPage> {
   void initState() {
     super.initState();
     // Fetch APK file size when the app is loaded
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _fetchApkFileSize();
-    });
-  }
-
-  Future<void> _fetchApkFileSize() async {
-    if (!mounted) return;
-    var appsProvider = context.read<AppsProvider>();
-    AppInMemory? app = appsProvider.apps[widget.appId];
-    if (app != null && app.app.apkUrls.isNotEmpty) {
-      final idx =
-          (app.app.preferredApkIndex >= 0 &&
-              app.app.preferredApkIndex < app.app.apkUrls.length)
-          ? app.app.preferredApkIndex
-          : 0;
-      final size = await getApkFileSize(app.app.apkUrls[idx].value);
-      if (mounted) {
-        setState(() {
-          _apkFileSize = size;
-        });
-      }
-    }
-  }
-
-  Future<int?> getApkFileSize(String url) async {
-    try {
-      final updatiumInfo = await getInstalledInfo(updatiumId, printErr: false);
-      final userAgent = 'Updatium/${updatiumInfo?.versionName ?? '1.0.0'}';
-      final response = await http
-          .get(
-            Uri.parse(url),
-            headers: {'User-Agent': userAgent, 'Range': 'bytes=0-0'},
-          )
-          .timeout(const Duration(seconds: 5));
-
-      if (response.statusCode == 206) {
-        final contentRange = response.headers['content-range'];
-        if (contentRange != null) {
-          final parts = contentRange.split('/');
-          if (parts.length == 2) {
-            final size = int.tryParse(parts[1]);
-            if (size != null && size > 10240) {
-              return size;
-            }
-          }
-        }
-      } else if (response.statusCode == 200) {
-        final contentLength = response.headers['content-length'];
-        if (contentLength != null) {
-          final size = int.tryParse(contentLength);
-          if (size != null && size > 10240) {
-            return size;
-          }
-        }
-      }
-    } catch (e) {}
-    return null;
-  }
-
-  String formatFileSize(int bytes) {
-    if (bytes < 1024) return '$bytes B';
-    if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)} KB';
-    if (bytes < 1024 * 1024 * 1024) {
-      return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
-    }
-    return '${(bytes / (1024 * 1024 * 1024)).toStringAsFixed(1)} GB';
   }
 
   Future<void> getUpdate(String id, {bool resetVersion = false}) async {
@@ -369,14 +300,6 @@ class _AppPageState extends State<AppPage> {
             overrideSource: app.app.overrideSource,
           )
         : null;
-
-    // Refresh APK size when preferred APK index changes
-    if (app != null && _prevPreferredApkIndex != app.app.preferredApkIndex) {
-      _prevPreferredApkIndex = app.app.preferredApkIndex;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _fetchApkFileSize();
-      });
-    }
 
     // Handle null app case - show loading or error
     if (app == null) {
