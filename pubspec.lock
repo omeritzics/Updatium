@@ -39,10 +39,8 @@ packages:
     description:
       name: animations
       sha256: "9cb469212ea51be27097f23b519d594c01171721347b55df9334fff653659e7f"
-      sha256: "9cb469212ea51be27097f23b519d594c01171721347b55df9334fff653659e7f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
     version: "2.2.0"
   app_links:
     dependency: "direct main"
@@ -64,7 +62,6 @@ packages:
     dependency: transitive
     description:
       name: app_links_platform_interface
-      sha256: "78a18580eecac98108d1eef52a7db668bc317714f5205e616973363326efe333"
       sha256: "78a18580eecac98108d1eef52a7db668bc317714f5205e616973363326efe333"
       url: "https://pub.dev"
     source: hosted
@@ -186,10 +183,8 @@ packages:
     description:
       name: connectivity_plus_platform_interface
       sha256: "3c09627c536d22fd24691a905cdd8b14520de69da52c7a97499c8be5284a32ed"
-      sha256: "3c09627c536d22fd24691a905cdd8b14520de69da52c7a97499c8be5284a32ed"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
     version: "2.1.0"
   cross_file:
     dependency: transitive
@@ -235,7 +230,6 @@ packages:
     dependency: transitive
     description:
       name: device_info_plus_platform_interface
-      sha256: "04b173a92e2d9161dfead145667037c8d834db725ce2e7b942bfe18fd2f45a46"
       sha256: "04b173a92e2d9161dfead145667037c8d834db725ce2e7b942bfe18fd2f45a46"
       url: "https://pub.dev"
     source: hosted
@@ -369,7 +363,6 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_charset_detector
-      sha256: "6ec4905f423206bd69fb256c496f542cba36e9c6121cbb48d9d0f2190fb6dacd"
       sha256: "6ec4905f423206bd69fb256c496f542cba36e9c6121cbb48d9d0f2190fb6dacd"
       url: "https://pub.dev"
     source: hosted
