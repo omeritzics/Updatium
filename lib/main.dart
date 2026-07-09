@@ -240,6 +240,7 @@ class _UpdatiumState extends State<Updatium> {
       await FlutterForegroundTask.requestNotificationPermission();
     }
     if (!await FlutterForegroundTask.isIgnoringBatteryOptimizations) {
+      // ignore: use_build_context_synchronously
       var settingsProvider = context.read<SettingsProvider>();
       if (settingsProvider.showBatteryOptimizationPrompt) {
         await FlutterForegroundTask.requestIgnoreBatteryOptimization();
@@ -501,8 +502,6 @@ class _UpdatiumState extends State<Updatium> {
               displayLarge: TextStyle(
                 fontSize: 57,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
-                height: 1.12,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -514,8 +513,6 @@ class _UpdatiumState extends State<Updatium> {
               displayMedium: TextStyle(
                 fontSize: 45,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
-                height: 1.16,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -527,8 +524,6 @@ class _UpdatiumState extends State<Updatium> {
               displaySmall: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
-                height: 1.22,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -540,8 +535,6 @@ class _UpdatiumState extends State<Updatium> {
               headlineLarge: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
-                height: 1.25,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -553,8 +546,6 @@ class _UpdatiumState extends State<Updatium> {
               headlineMedium: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
-                height: 1.29,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -566,8 +557,6 @@ class _UpdatiumState extends State<Updatium> {
               headlineSmall: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.0,
-                height: 1.33,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -579,8 +568,6 @@ class _UpdatiumState extends State<Updatium> {
               titleLarge: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.0,
-                height: 1.27,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -592,8 +579,6 @@ class _UpdatiumState extends State<Updatium> {
               titleMedium: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.2,
-                height: 1.5,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -605,8 +590,6 @@ class _UpdatiumState extends State<Updatium> {
               titleSmall: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.15,
-                height: 1.43,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -618,8 +601,6 @@ class _UpdatiumState extends State<Updatium> {
               bodyLarge: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.5,
-                height: 1.5,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -631,8 +612,6 @@ class _UpdatiumState extends State<Updatium> {
               bodyMedium: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.3,
-                height: 1.5,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -644,8 +623,6 @@ class _UpdatiumState extends State<Updatium> {
               bodySmall: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
-                letterSpacing: 0.4,
-                height: 1.4,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -657,8 +634,6 @@ class _UpdatiumState extends State<Updatium> {
               labelLarge: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.15,
-                height: 1.43,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -670,8 +645,6 @@ class _UpdatiumState extends State<Updatium> {
               labelMedium: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.5,
-                height: 1.4,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -683,8 +656,6 @@ class _UpdatiumState extends State<Updatium> {
               labelSmall: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
-                letterSpacing: 0.5,
-                height: 1.3,
                 color: scheme.onSurface,
                 fontFamily: getPrimaryFontForLocale(context.locale),
                 fontFamilyFallback: const [
@@ -737,7 +708,6 @@ class _UpdatiumState extends State<Updatium> {
                   shadowColor: isDark ? Colors.black26 : Colors.black12,
                   textStyle: TextStyle(
                     fontWeight: FontWeight.w500,
-                    letterSpacing: 0.1,
                     fontFamily: getPrimaryFontForLocale(context.locale),
                     fontFamilyFallback: const [
                       'GoogleSans',
@@ -924,7 +894,6 @@ class _UpdatiumState extends State<Updatium> {
                 ),
                 extendedTextStyle: TextStyle(
                   fontWeight: FontWeight.w500,
-                  letterSpacing: 0.1,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'GoogleSans',
@@ -950,8 +919,6 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
-                  letterSpacing: -0.5,
-                  height: 1.27,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'GoogleSans',
@@ -982,7 +949,6 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  letterSpacing: 0.15,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'GoogleSans',
@@ -994,7 +960,6 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurfaceVariant,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  letterSpacing: 0.25,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'GoogleSans',
@@ -1109,8 +1074,6 @@ class _UpdatiumState extends State<Updatium> {
                 valueIndicatorTextStyle: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  letterSpacing: 0.25,
-                  height: 1.5,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'GoogleSans',
@@ -1157,8 +1120,6 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontSize: 24,
                   fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.33,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'GoogleSans',
@@ -1170,8 +1131,6 @@ class _UpdatiumState extends State<Updatium> {
                   color: scheme.onSurface,
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
-                  letterSpacing: 0.5,
-                  height: 1.5,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'GoogleSans',
@@ -1222,37 +1181,11 @@ class _UpdatiumState extends State<Updatium> {
                         .withAlpha(30),
               ),
             ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              colorScheme: settingsProvider.theme == ThemeSettings.light
+            darkTheme: createTheme(
+              settingsProvider.theme == ThemeSettings.light
                   ? lightColorScheme
                   : darkColorScheme,
-              fontFamily: settingsProvider.useSystemFont
-                  ? 'SystemFont'
-                  : 'Montserrat',
-              sliderTheme: SliderThemeData(
-                activeTrackColor:
-                    (settingsProvider.theme == ThemeSettings.light
-                            ? lightColorScheme
-                            : darkColorScheme)
-                        .primary,
-                inactiveTrackColor:
-                    (settingsProvider.theme == ThemeSettings.light
-                            ? lightColorScheme
-                            : darkColorScheme)
-                        .surfaceContainerHighest,
-                thumbColor:
-                    (settingsProvider.theme == ThemeSettings.light
-                            ? lightColorScheme
-                            : darkColorScheme)
-                        .primary,
-                overlayColor:
-                    (settingsProvider.theme == ThemeSettings.light
-                            ? lightColorScheme
-                            : darkColorScheme)
-                        .primary
-                        .withAlpha(30),
-              ),
+              settingsProvider.theme != ThemeSettings.light,
             ),
             home: Shortcuts(
               shortcuts: <LogicalKeySet, Intent>{

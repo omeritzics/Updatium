@@ -610,7 +610,7 @@ class AddAppPageState extends State<AddAppPage> {
         List<String>? selectedUrls = res.isEmpty
             ? []
             : await showDialog<List<String>?>(
-                context: context,
+                context: context.mounted as BuildContext,
                 builder: (BuildContext ctx) {
                   return SelectionModal(
                     entries: res.map((k, v) => MapEntry(k, v.value)),
@@ -917,7 +917,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             if (!mounted) return;
             var apkUrl = await appsProvider.confirmAppFileUrl(
               app,
-              context,
+              context.mounted as BuildContext,
               false,
               progressIndicatorStep: cameFromSearch ? 3 : 2,
               progressIndicatorTotal: cameFromSearch ? 3 : 2,
@@ -971,6 +971,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
         }
       } catch (e) {
         if (!mounted) return;
+        // ignore: use_build_context_synchronously
         showError(e, context);
       } finally {
         setState(() {

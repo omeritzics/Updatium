@@ -575,7 +575,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           ], globalNavigatorKey.currentContext)
           .catchError((e) {
             if (mounted) {
-              showError(e, context);
+              showError(e, context.mounted as BuildContext);
             }
             return <String>[];
           });
@@ -1081,7 +1081,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       )
                       .catchError((e) {
                         if (mounted) {
-                          showError(e, context);
+                          showError(e, context.mounted as BuildContext);
                         }
                         return <String>[];
                       })
@@ -1089,7 +1089,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         if (value.isNotEmpty &&
                             shouldInstallUpdates &&
                             mounted) {
-                          showMessage('appsUpdated'.t(), context);
+                          showMessage(
+                            'appsUpdated'.t(),
+                            context.mounted as BuildContext,
+                          );
                         }
                       });
                 }
@@ -1151,7 +1154,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 : {};
             if (!mounted) return;
             await showDialog<void>(
-              context: context,
+              context: context.mounted as BuildContext,
               builder: (BuildContext ctx) {
                 return AlertDialog(
                   title: Text('categorize'.t()),
@@ -1186,7 +1189,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           }
         } catch (err) {
           if (mounted) {
-            showError(err, context);
+            showError(err, context.mounted as BuildContext);
           }
         }
       };
@@ -1246,7 +1249,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         },
       ).whenComplete(() {
         if (mounted) {
-          Navigator.of(context).pop();
+          Navigator.of(context.mounted as BuildContext).pop();
         }
       });
     }
@@ -1726,12 +1729,14 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         onPressed: () async {
                           final removedApps = await appsProvider
                               .removeAppsWithModal(
-                                context,
+                                context.mounted as BuildContext,
                                 selectedApps.toList(),
                               );
                           if (removedApps != null && removedApps.isNotEmpty) {
                             if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
+                              ScaffoldMessenger.of(
+                                context.mounted as BuildContext,
+                              ).showSnackBar(
                                 SnackBar(
                                   content: Text(
                                     'appRemoved'.plural(removedApps.length),

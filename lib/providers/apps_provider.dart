@@ -661,9 +661,11 @@ class AppsProvider with ChangeNotifier {
       // Clean up unused icon cache directory
       var iconCacheDir = Directory('${(await getAppStorageDir()).path}/icons');
       if (iconCacheDir.existsSync()) {
-        try {
-          iconCacheDir.deleteSync(recursive: true);
-        } catch (e) {}
+          try {
+            iconCacheDir.deleteSync(recursive: true);
+          } catch (e) {
+            // Ignore deletion errors
+          }
       }
       // Clean up old external cache directory to reduce cache usage
       var cacheDirs = await getExternalCacheDirectories();
@@ -672,7 +674,9 @@ class AppsProvider with ChangeNotifier {
         if (oldCacheDir.existsSync()) {
           try {
             oldCacheDir.deleteSync(recursive: true);
-          } catch (e) {}
+          } catch (e) {
+            // Ignore deletion errors
+          }
         }
       }
       if (!isBg) {

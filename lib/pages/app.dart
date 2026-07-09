@@ -277,7 +277,7 @@ class _AppPageState extends State<AppPage> {
         appsProvider.saveApps([appsProvider.apps[id]!.app]);
       }
     } catch (err) {
-      showError(err, context);
+      showError(err, context.mounted as BuildContext);
     } finally {
       setState(() {
         updating = false;
@@ -372,7 +372,7 @@ class _AppPageState extends State<AppPage> {
       if (installedVersionIsEstimate) {
         infoLines = '${'pseudoVersionInUse'.t()}\n$infoLines';
       }
-      if ((app.app.apkUrls.length) > 0) {
+      if (app.app.apkUrls.isNotEmpty) {
         infoLines =
             '$infoLines\n${app.app.apkUrls.length == 1 ? app.app.apkUrls[0].key : plural('apk', app.app.apkUrls.length)}';
       }
@@ -773,12 +773,13 @@ class _AppPageState extends State<AppPage> {
                 ], globalNavigatorKey.currentContext);
                 if (!mounted) return;
                 if (res.isNotEmpty && !trackOnly) {
-                  showMessage(successMessage, context);
+                  showMessage(successMessage, context.mounted as BuildContext);
                 }
                 if (res.isNotEmpty) {
-                  Navigator.of(context).pop();
+                  Navigator.of(context.mounted as BuildContext).pop();
                 }
                 if (res.isNotEmpty) {
+                  // ignore: use_build_context_synchronously
                   var np = context.read<NotificationsProvider>();
                   np.cancel(UpdateNotification([]).id);
                   np.cancel(
@@ -787,7 +788,7 @@ class _AppPageState extends State<AppPage> {
                 }
               } catch (e) {
                 if (!mounted) return;
-                showError(e, context);
+                showError(e, context.mounted as BuildContext);
               }
             }
           : null,
@@ -1001,7 +1002,7 @@ class _AppPageState extends State<AppPage> {
                             ], context);
                           } catch (e) {
                             if (!mounted) return;
-                            showError(e, context);
+                            showError(e, context.mounted as BuildContext);
                           }
                         },
                       ),
@@ -1015,7 +1016,9 @@ class _AppPageState extends State<AppPage> {
                             .removeAppsWithModal(context, [app.app]);
                         if (removedApps != null && removedApps.isNotEmpty) {
                           if (mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
+                            ScaffoldMessenger.of(
+                              context.mounted as BuildContext,
+                            ).showSnackBar(
                               SnackBar(
                                 content: Text('appRemoved'.t()),
                                 action: SnackBarAction(
@@ -1026,7 +1029,7 @@ class _AppPageState extends State<AppPage> {
                                 ),
                               ),
                             );
-                            Navigator.of(context).pop();
+                            Navigator.of(context.mounted as BuildContext).pop();
                           }
                         }
                       },

@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           await SecurityDisclaimerScreen.isDisclaimerAccepted();
       if (!disclaimerAccepted) {
         if (!context.mounted) return;
-        final accepted = await Navigator.of(context).push<bool>(
+        final accepted = await Navigator.of(context.mounted as BuildContext).push<bool>(
           MaterialPageRoute(
             builder: (context) => const SecurityDisclaimerScreen(),
           ),
@@ -103,7 +103,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
 
       if (!context.mounted) return;
-      await FreeDroidWarnService.showWarningDialog(context);
+      await FreeDroidWarnService.showWarningDialog(
+        context.mounted as BuildContext,
+      );
     });
   }
 
@@ -228,6 +230,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               },
             ) ==
             true) {
+          // ignore: use_build_context_synchronously
           var appsProvider = context.read<AppsProvider>();
           var result = await appsProvider.import(
             action == 'app' ? '{ "apps": [$dataStr] }' : '{ "apps": $dataStr }',
@@ -238,7 +241,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               'importedX',
               args: ['apps'.plural(result.key.length).toLowerCase()],
             ),
-            context,
+            context.mounted as BuildContext,
           );
         }
       } else {
@@ -246,7 +249,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
     } catch (e) {
       if (!context.mounted) return;
-      showError(e, context);
+      showError(e, context.mounted as BuildContext);
     }
   }
 
@@ -262,7 +265,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
     } catch (e) {
       if (!context.mounted) return;
-      showError(e, context);
+      showError(e, context.mounted as BuildContext);
     }
   }
 

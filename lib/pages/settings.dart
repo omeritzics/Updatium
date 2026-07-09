@@ -769,7 +769,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         } else {
                                           // User declined or failed
                                           ScaffoldMessenger.of(
-                                            context,
+                                            context.mounted as BuildContext,
                                           ).showSnackBar(
                                             SnackBar(
                                               content: Text(
@@ -939,24 +939,24 @@ class _SettingsPageState extends State<SettingsPage> {
                                           UpdatiumError(
                                             'shizukuBinderNotFound'.t(),
                                           ),
-                                          context,
+                                          context.mounted as BuildContext,
                                         );
                                       case 'old_shizuku':
                                         showError(
                                           UpdatiumError('shizukuOld'.t()),
-                                          context,
+                                          context.mounted as BuildContext,
                                         );
                                       case 'old_android_with_adb':
                                         showError(
                                           UpdatiumError(
                                             t('shizukuOldAndroidWithADB'),
                                           ),
-                                          context,
+                                          context.mounted as BuildContext,
                                         );
                                       case 'denied':
                                         showError(
                                           UpdatiumError('cancelled'.t()),
-                                          context,
+                                          context.mounted as BuildContext,
                                         );
                                     }
                                   });
@@ -1434,7 +1434,7 @@ class _LogsDialogState extends State<LogsDialog> {
             if (cont) {
               logsProvider.clear();
               if (mounted) {
-                Navigator.of(context).pop();
+                Navigator.of(context.mounted as BuildContext).pop();
               }
             }
           },
@@ -1442,7 +1442,7 @@ class _LogsDialogState extends State<LogsDialog> {
         ),
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context.mounted as BuildContext).pop();
           },
           child: Text('close'.t()),
         ),
@@ -1503,13 +1503,14 @@ class CategoryTagEditor extends StatelessWidget {
     );
 
     showCategoryEditorDialog(
-      context,
+      context.mounted as BuildContext,
       initialName: oldName,
       initialColor: initialColor,
       title: 'editCategory'.t(),
       confirmButtonText: 'save'.t(),
     ).then((result) {
       if (result != null && result.name.isNotEmpty) {
+        // ignore: use_build_context_synchronously
         final appsProvider = context.read<AppsProvider>();
         final newColorValue = result.color.toARGB32();
         if (result.name != oldName) {
