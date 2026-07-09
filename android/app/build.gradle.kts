@@ -148,7 +148,7 @@ android {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
-    implementation("com.github.woheller69:FreeDroidWarn:V1.+")
+    implementation("com.github.woheller69:FreeDroidWarn:V1.12")
 }
 
 flutter {

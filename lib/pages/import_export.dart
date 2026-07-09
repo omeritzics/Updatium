@@ -91,148 +91,140 @@ class _ImportExportPageState extends State<ImportExportPage> {
             ],
           );
         },
-      ).then((value) {
+      ).then((value) async {
         controller.dispose();
         if (value != null && value.isNotEmpty) {
           var urls = value.trim().split('\n');
-          setState(() {
-            importInProgress = true;
-          });
-          appsProvider
-              .addAppsByURL(urls)
-              .then((errors) {
-                if (errors.isEmpty) {
-                  showMessage(
-                    t(
-                      'importedX',
-                      args: ['apps'.plural(urls.length).toLowerCase()],
-                    ),
-                    context.mounted as BuildContext,
-                  );
-                } else {
-                  showDialog(
-                    context: context.mounted as BuildContext,
-                    builder: (BuildContext ctx) {
-                      return ImportErrorDialog(
-                        urlsLength: urls.length,
-                        errors: errors,
-                      );
-                    },
-                  );
-                }
-              })
-              .catchError((e) {
-                showError(e, context.mounted as BuildContext);
-              })
-              .whenComplete(() {
-                setState(() {
-                  importInProgress = false;
-                });
-              });
+      setState(() {
+        importInProgress = true;
+      });
+      try {
+        final errors = await appsProvider.addAppsByURL(urls);
+        if (!mounted) return;
+        if (errors.isEmpty) {
+          showMessage(
+            t(
+              'importedX',
+              args: ['apps'.plural(urls.length).toLowerCase()],
+            ),
+            context,
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext ctx) {
+              return ImportErrorDialog(
+                urlsLength: urls.length,
+                errors: errors,
+              );
+            },
+          );
         }
+      } catch (e) {
+        if (!mounted) return;
+        showError(e, context);
+      } finally {
+        setState(() {
+          importInProgress = false;
+        });
+      }
+    }
       });
     }
 
     runUpdatiumExport({bool pickOnly = false}) async {
       settingsProvider.selectionClick();
-      appsProvider
-          .export(
-            pickOnly:
-                pickOnly || (await settingsProvider.getExportDir()) == null,
-            sp: settingsProvider,
-          )
-          .then((String? result) {
-            if (result != null) {
-              showMessage(
-                t('exportedTo', args: [result]),
-                context.mounted as BuildContext,
-              );
-            }
-          })
-          .catchError((e) {
-            showError(e, context.mounted as BuildContext);
-          });
+      try {
+        final result = await appsProvider.export(
+          pickOnly:
+              pickOnly || (await settingsProvider.getExportDir()) == null,
+          sp: settingsProvider,
+        );
+        if (result != null && mounted) {
+          showMessage(
+            t('exportedTo', args: [result]),
+            context,
+          );
+        }
+      } catch (e) {
+        if (!mounted) return;
+        showError(e, context);
+      }
     }
 
-    runUpdatiumImport() {
+    runUpdatiumImport() async {
       HapticFeedback.selectionClick();
       setState(() {
         importInProgress = true;
       });
-      DocMan.pick
-          .files(limit: 1)
-          .then((result) {
-            if (result.isNotEmpty) {
-              String data = File(result.first.path).readAsStringSync();
-              try {
-                jsonDecode(data);
-              } catch (e) {
-                throw UpdatiumError('invalidInput'.t());
+      try {
+        final result = await DocMan.pick.files(limit: 1);
+        if (result.isNotEmpty) {
+          String data = File(result.first.path).readAsStringSync();
+          try {
+            jsonDecode(data);
+          } catch (e) {
+            throw UpdatiumError('invalidInput'.t());
+          }
+          final value = await appsProvider.import(data);
+          if (!mounted) return;
+          var cats = settingsProvider.categories;
+          appsProvider.apps.forEach((key, valueApp) {
+            for (var c in valueApp.app.categories ?? []) {
+              if (!cats.containsKey(c)) {
+                cats[c] = generateRandomLightColor().toARGB32();
               }
-              appsProvider.import(data).then((value) {
-                var cats = settingsProvider.categories;
-                appsProvider.apps.forEach((key, value) {
-                  for (var c in value.app.categories ?? []) {
-                    if (!cats.containsKey(c)) {
-                      cats[c] = generateRandomLightColor().toARGB32();
-                    }
-                  }
-                });
-                appsProvider.addMissingCategories(settingsProvider);
-                showMessage(
-                  '${t('importedX', args: ['apps'.plural(value.key.length).toLowerCase()])}${value.value ? ' + ${'settings'.t().toLowerCase()}' : ''}',
-                  context.mounted as BuildContext,
-                );
-              });
-            } else {
-              // User canceled the picker
             }
-          })
-          .catchError((e) {
-            showError(e, context.mounted as BuildContext);
-          })
-          .whenComplete(() {
-            setState(() {
-              importInProgress = false;
-            });
           });
+          appsProvider.addMissingCategories(settingsProvider);
+          showMessage(
+            '${t('importedX', args: ['apps'.plural(value.key.length).toLowerCase()])}${value.value ? ' + ${'settings'.t().toLowerCase()}' : ''}',
+            context,
+          );
+        }
+      } catch (e) {
+        if (!mounted) return;
+        showError(e, context);
+      } finally {
+        setState(() {
+          importInProgress = false;
+        });
+      }
     }
 
-    runUrlImport() {
+    runUrlImport() async {
       setState(() {
         importInProgress = true;
       });
-      DocMan.pick
-          .files(limit: 1)
-          .then((result) {
-            if (result.isNotEmpty) {
-              urlListImport(
-                overrideInitValid: true,
-                initValue: RegExp('https?://[^"]+')
-                    .allMatches(File(result.first.path).readAsStringSync())
-                    .map((e) => e.input.substring(e.start, e.end))
-                    .toSet()
-                    .toList()
-                    .where((url) {
-                      try {
-                        sourceProvider.getSource(url);
-                        return true;
-                      } catch (e) {
-                        return false;
-                      }
-                    })
-                    .join('\n'),
-              );
-            }
-          })
-          .catchError((e) {
-            showError(e, context.mounted as BuildContext);
-          })
-          .whenComplete(() {
-            setState(() {
-              importInProgress = false;
-            });
-          });
+      try {
+        final result = await DocMan.pick.files(limit: 1);
+        if (result.isNotEmpty) {
+          await urlListImport(
+            overrideInitValid: true,
+            initValue: RegExp('https?://[^"]+')
+                .allMatches(File(result.first.path).readAsStringSync())
+                .map((e) => e.input.substring(e.start, e.end))
+                .toSet()
+                .toList()
+                .where((url) {
+                  try {
+                    sourceProvider.getSource(url);
+                    return true;
+                  } catch (e) {
+                    return false;
+                  }
+                })
+                .join('\n'),
+          );
+        }
+      } catch (e) {
+        if (!mounted) return;
+        showError(e, context);
+      } finally {
+        setState(() {
+          importInProgress = false;
+        });
+      }
     }
 
     runMassSourceImport(MassAppUrlSource source) {
@@ -296,44 +288,45 @@ class _ImportExportPageState extends State<ImportExportPage> {
               var urlsWithDescriptions = await source.getUrlsWithDescriptions(
                 values.values.map((e) => e.toString()).toList(),
               );
-              var selectedUrls = await showDialog<List<String>?>(
-                context: context.mounted as BuildContext,
-                builder: (BuildContext ctx) {
-                  return SelectionModal(entries: urlsWithDescriptions);
-                },
-              );
-              if (selectedUrls != null) {
-                var errors = await appsProvider.addAppsByURL(selectedUrls);
-                if (errors.isEmpty) {
-                  showMessage(
-                    t(
-                      'importedX',
-                      args: ['apps'.plural(selectedUrls.length).toLowerCase()],
-                    ),
-                    context.mounted as BuildContext,
-                  );
-                } else {
-                  showDialog(
-                    context: context.mounted as BuildContext,
-                    builder: (BuildContext ctx) {
-                      return ImportErrorDialog(
-                        urlsLength: selectedUrls.length,
-                        errors: errors,
-                      );
-                    },
-                  );
-                }
-              }
-            }
-          }()
-          .catchError((e) {
-            showError(e, context.mounted as BuildContext);
-          })
-          .whenComplete(() {
-            setState(() {
-              importInProgress = false;
-            });
-          });
+               var selectedUrls = await showDialog<List<String>?>(
+                 context: context,
+                 builder: (BuildContext ctx) {
+                   return SelectionModal(entries: urlsWithDescriptions);
+                 },
+               );
+               if (selectedUrls != null) {
+                 var errors = await appsProvider.addAppsByURL(selectedUrls);
+                 if (errors.isEmpty) {
+                   showMessage(
+                     t(
+                       'importedX',
+                       args: ['apps'.plural(selectedUrls.length).toLowerCase()],
+                     ),
+                     context,
+                   );
+                 } else {
+                   showDialog(
+                     context: context,
+                     builder: (BuildContext ctx) {
+                       return ImportErrorDialog(
+                         urlsLength: selectedUrls.length,
+                         errors: errors,
+                       );
+                     },
+                   );
+                 }
+               }
+             }
+           }()
+           .catchError((e) {
+             if (!mounted) return;
+             showError(e, context);
+           })
+           .whenComplete(() {
+             setState(() {
+               importInProgress = false;
+             });
+           });
     }
 
     var sourceStrings = <String, List<String>>{};

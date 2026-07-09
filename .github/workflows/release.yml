@@ -30,7 +30,7 @@ jobs:
           swap-storage: false
           
       - name: Checkout Code
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -38,7 +38,7 @@ jobs:
         run: sudo apt-get install default-jre -y
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@main
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
@@ -135,7 +135,7 @@ jobs:
           subject-path: 'build/app/outputs/flutter-apk/*.apk'
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v6
         with:
           name: updatium-v${{ steps.version.outputs.version }}-run${{ github.run_number }}
           path: build/outputs/Updatium-*.apk

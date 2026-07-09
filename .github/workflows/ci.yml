@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Code
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -47,7 +47,7 @@ jobs:
           java-version: '25'
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@main
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
@@ -75,11 +75,11 @@ jobs:
           cp build/app/outputs/flutter-apk/app-normal-debug.apk build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
 
       - name: Upload Build Artifact
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v6
         with:
           name: Updatium-Commit-${{ steps.vars.outputs.sha_short }}
           path: build/outputs/artifacts/updatium-${{ steps.vars.outputs.sha_short }}.apk
-          retention-days: 14 # Keep artifacts for 14 days to save space
+          retention-days: 7 # Keep artifacts for 14 days to save space
 
   auto_reject_on_failure:
     runs-on: ubuntu-latest

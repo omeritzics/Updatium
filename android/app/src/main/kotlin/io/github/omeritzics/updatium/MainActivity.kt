@@ -64,19 +64,27 @@ class MainActivity : FlutterActivity() {
                     result.success(isEnabled)
                 }
                 "enableUninstallProtection" -> {
-                    if (devicePolicyManager.isAdminActive(deviceAdminComponent)) {
-                        devicePolicyManager.setUninstallBlocked(deviceAdminComponent, packageName, true)
-                        result.success(true)
-                    } else {
-                        result.success(false)
+                    try {
+                        if (devicePolicyManager.isAdminActive(deviceAdminComponent)) {
+                            devicePolicyManager.setUninstallBlocked(deviceAdminComponent, packageName, true)
+                            result.success(true)
+                        } else {
+                            result.success(false)
+                        }
+                    } catch (e: Exception) {
+                        result.error("ENABLE_UNINSTALL_PROTECTION_FAILED", "Failed to enable uninstall protection", e.message)
                     }
                 }
                 "disableUninstallProtection" -> {
-                    if (devicePolicyManager.isAdminActive(deviceAdminComponent)) {
-                        devicePolicyManager.setUninstallBlocked(deviceAdminComponent, packageName, false)
-                        result.success(true)
-                    } else {
-                        result.success(false)
+                    try {
+                        if (devicePolicyManager.isAdminActive(deviceAdminComponent)) {
+                            devicePolicyManager.setUninstallBlocked(deviceAdminComponent, packageName, false)
+                            result.success(true)
+                        } else {
+                            result.success(false)
+                        }
+                    } catch (e: Exception) {
+                        result.error("DISABLE_UNINSTALL_PROTECTION_FAILED", "Failed to disable uninstall protection", e.message)
                     }
                 }
                 "enableAntiCheat" -> {

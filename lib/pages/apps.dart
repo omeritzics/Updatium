@@ -575,7 +575,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           ], globalNavigatorKey.currentContext)
           .catchError((e) {
             if (mounted) {
-              showError(e, context.mounted as BuildContext);
+              showError(e, context);
             }
             return <String>[];
           });
@@ -1081,19 +1081,19 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       )
                       .catchError((e) {
                         if (mounted) {
-                          showError(e, context.mounted as BuildContext);
+                          showError(e, context);
                         }
                         return <String>[];
                       })
                       .then((value) {
-                        if (value.isNotEmpty &&
-                            shouldInstallUpdates &&
-                            mounted) {
-                          showMessage(
-                            'appsUpdated'.t(),
-                            context.mounted as BuildContext,
-                          );
-                        }
+                               if (value.isNotEmpty &&
+                                   shouldInstallUpdates &&
+                                   mounted) {
+                                 showMessage(
+                                   'appsUpdated'.t(),
+                                   context,
+                                 );
+                               }
                       });
                 }
               });
@@ -1154,7 +1154,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 : {};
             if (!mounted) return;
             await showDialog<void>(
-              context: context.mounted as BuildContext,
+              context: context,
               builder: (BuildContext ctx) {
                 return AlertDialog(
                   title: Text('categorize'.t()),
@@ -1189,7 +1189,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           }
         } catch (err) {
           if (mounted) {
-            showError(err, context.mounted as BuildContext);
+            showError(err, context);
           }
         }
       };
@@ -1249,7 +1249,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         },
       ).whenComplete(() {
         if (mounted) {
-          Navigator.of(context.mounted as BuildContext).pop();
+          Navigator.of(context).pop();
         }
       });
     }
@@ -1727,16 +1727,16 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         semanticLabel: 'removeSelectedApps'.t(),
                         tooltip: 'removeSelectedApps'.t(),
                         onPressed: () async {
-                          final removedApps = await appsProvider
-                              .removeAppsWithModal(
-                                context.mounted as BuildContext,
-                                selectedApps.toList(),
-                              );
-                          if (removedApps != null && removedApps.isNotEmpty) {
-                            if (mounted) {
-                              ScaffoldMessenger.of(
-                                context.mounted as BuildContext,
-                              ).showSnackBar(
+                           final removedApps = await appsProvider
+                               .removeAppsWithModal(
+                                 context,
+                                 selectedApps.toList(),
+                               );
+                           if (removedApps != null && removedApps.isNotEmpty) {
+                             if (mounted) {
+                               ScaffoldMessenger.of(
+                                 context,
+                               ).showSnackBar(
                                 SnackBar(
                                   content: Text(
                                     'appRemoved'.plural(removedApps.length),

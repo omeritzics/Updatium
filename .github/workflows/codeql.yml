@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@main
@@ -61,10 +61,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@main
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
           version: ^3.44.0
@@ -117,7 +117,7 @@ jobs:
           fi
 
       - name: Upload Flutter analysis results
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: flutter-security-analysis
@@ -125,4 +125,4 @@ jobs:
             flutter_analysis.txt
             deps_tree.txt
             security_check.txt
-          retention-days: 30
+          retention-days: 15

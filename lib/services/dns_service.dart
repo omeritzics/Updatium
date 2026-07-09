@@ -49,14 +49,19 @@ class DNSService {
         case DNSProvider.system:
           // System default - use Google's constructor as base
           _dnsOverHttps = DnsOverHttps.google();
+          break;
         case DNSProvider.cloudflare:
           _dnsOverHttps = DnsOverHttps.cloudflare();
+          break;
         case DNSProvider.quad9:
           _dnsOverHttpsWire = DnsOverHttpsWire.quad9();
+          break;
         case DNSProvider.opendns:
           _dnsOverHttpsWire = DnsOverHttpsWire.opendns();
+          break;
         case DNSProvider.mullvad:
           _dnsOverHttps = DnsOverHttps('https://dns.mullvad.net/dns-query');
+          break;
       }
     }
   }
