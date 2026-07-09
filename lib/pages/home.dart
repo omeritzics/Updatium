@@ -90,11 +90,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           await SecurityDisclaimerScreen.isDisclaimerAccepted();
       if (!disclaimerAccepted) {
         if (!context.mounted) return;
-        final accepted = await Navigator.of(context.mounted as BuildContext).push<bool>(
-          MaterialPageRoute(
-            builder: (context) => const SecurityDisclaimerScreen(),
-          ),
-        );
+        final accepted = await Navigator.of(context.mounted as BuildContext)
+            .push<bool>(
+              MaterialPageRoute(
+                builder: (context) => const SecurityDisclaimerScreen(),
+              ),
+            );
 
         if (accepted != true) {
           SystemNavigator.pop();
