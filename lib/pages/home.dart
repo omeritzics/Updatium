@@ -90,12 +90,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           await SecurityDisclaimerScreen.isDisclaimerAccepted();
       if (!disclaimerAccepted) {
         if (!context.mounted) return;
-        final accepted = await Navigator.of(context)
-            .push<bool>(
-              MaterialPageRoute(
-                builder: (context) => const SecurityDisclaimerScreen(),
-              ),
-            );
+        final accepted = await Navigator.of(context).push<bool>(
+          MaterialPageRoute(
+            builder: (context) => const SecurityDisclaimerScreen(),
+          ),
+        );
 
         if (accepted != true) {
           SystemNavigator.pop();
@@ -104,9 +103,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
 
       if (!context.mounted) return;
-      await FreeDroidWarnService.showWarningDialog(
-        context,
-      );
+      await FreeDroidWarnService.showWarningDialog(context);
     });
   }
 
@@ -236,39 +233,39 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           var result = await appsProvider.import(
             action == 'app' ? '{ "apps": [$dataStr] }' : '{ "apps": $dataStr }',
           );
-           if (!context.mounted) return;
-           showMessage(
-             t(
-               'importedX',
-               args: ['apps'.plural(result.key.length).toLowerCase()],
-             ),
-             context,
-           );
-         }
-       } else {
-         throw UpdatiumError('unknown'.t());
-       }
-     } catch (e) {
-       if (!context.mounted) return;
-       showError(e, context);
-     }
-   }
+          if (!context.mounted) return;
+          showMessage(
+            t(
+              'importedX',
+              args: ['apps'.plural(result.key.length).toLowerCase()],
+            ),
+            context,
+          );
+        }
+      } else {
+        throw UpdatiumError('unknown'.t());
+      }
+    } catch (e) {
+      if (!context.mounted) return;
+      showError(e, context);
+    }
+  }
 
-   Future<void> _interpretObtainiumLink(Uri uri) async {
-     isLinkActivity = true;
-     var action = uri.host;
-     var data = uri.path.length > 1 ? uri.path.substring(1) : "";
-     try {
-       if (action == 'add') {
-         await _handleAddLink(data);
-       } else {
-         throw UpdatiumError('unknown'.t());
-       }
-     } catch (e) {
-       if (!context.mounted) return;
-       showError(e, context);
-     }
-   }
+  Future<void> _interpretObtainiumLink(Uri uri) async {
+    isLinkActivity = true;
+    var action = uri.host;
+    var data = uri.path.length > 1 ? uri.path.substring(1) : "";
+    try {
+      if (action == 'add') {
+        await _handleAddLink(data);
+      } else {
+        throw UpdatiumError('unknown'.t());
+      }
+    } catch (e) {
+      if (!context.mounted) return;
+      showError(e, context);
+    }
+  }
 
   void setIsReversing(int targetIndex) {
     bool reversing =

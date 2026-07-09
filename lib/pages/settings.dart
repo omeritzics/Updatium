@@ -768,9 +768,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                               true;
                                         } else {
                                           // User declined or failed
-                                           ScaffoldMessenger.of(
-                                             context,
-                                           ).showSnackBar(
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
                                             SnackBar(
                                               content: Text(
                                                 'deviceAdminRequired'.t(),
@@ -933,32 +933,32 @@ class _SettingsPageState extends State<SettingsPage> {
                                     if (!mounted) return;
                                     settingsProvider.useShizuku =
                                         resCode?.startsWith('granted') ?? false;
-                                     switch (resCode) {
-                                       case 'services_not_found':
-                                         showError(
-                                           UpdatiumError(
-                                             'shizukuBinderNotFound'.t(),
-                                           ),
-                                           context,
-                                         );
-                                       case 'old_shizuku':
-                                         showError(
-                                           UpdatiumError('shizukuOld'.t()),
-                                           context,
-                                         );
-                                       case 'old_android_with_adb':
-                                         showError(
-                                           UpdatiumError(
-                                             t('shizukuOldAndroidWithADB'),
-                                           ),
-                                           context,
-                                         );
-                                       case 'denied':
-                                         showError(
-                                           UpdatiumError('cancelled'.t()),
-                                           context,
-                                         );
-                                     }
+                                    switch (resCode) {
+                                      case 'services_not_found':
+                                        showError(
+                                          UpdatiumError(
+                                            'shizukuBinderNotFound'.t(),
+                                          ),
+                                          context,
+                                        );
+                                      case 'old_shizuku':
+                                        showError(
+                                          UpdatiumError('shizukuOld'.t()),
+                                          context,
+                                        );
+                                      case 'old_android_with_adb':
+                                        showError(
+                                          UpdatiumError(
+                                            t('shizukuOldAndroidWithADB'),
+                                          ),
+                                          context,
+                                        );
+                                      case 'denied':
+                                        showError(
+                                          UpdatiumError('cancelled'.t()),
+                                          context,
+                                        );
+                                    }
                                   });
                                 } else {
                                   settingsProvider.useShizuku = false;
@@ -1431,84 +1431,84 @@ class _LogsDialogState extends State<LogsDialog> {
                   },
                 )) ==
                 true;
-             if (cont) {
-               logsProvider.clear();
-               if (mounted) {
-                 Navigator.of(context).pop();
-               }
-             }
-           },
-           child: Text('remove'.t()),
-         ),
-         TextButton(
-           onPressed: () {
-             Navigator.of(context).pop();
-           },
-           child: Text('close'.t()),
-         ),
-         TextButton(
-           onPressed: () {
-             SharePlus.instance.share(
-               ShareParams(text: logString ?? '', subject: 'appLogs'.t()),
-             );
-             Navigator.of(context).pop();
-           },
-           child: Text('share'.t()),
-         ),
-       ],
-     );
-   }
- }
- 
- class CategoryTagEditor extends StatelessWidget {
-   final bool showLabelWhenNotEmpty;
-   final WrapAlignment alignment;
- 
-   const CategoryTagEditor({
-     super.key,
-     this.showLabelWhenNotEmpty = true,
-     this.alignment = WrapAlignment.start,
-   });
- 
-   void _onAddPressed(BuildContext context, SettingsProvider settingsProvider) {
-     final random = DateTime.now().millisecondsSinceEpoch;
-     final initialColor = Color((random & 0xFFFFFF) | 0xFF000000);
- 
-     showCategoryEditorDialog(
-       context,
-       initialColor: initialColor,
-       title: 'addCategory'.t(),
-       confirmButtonText: 'add'.t(),
-     ).then((result) {
-       if (result != null && result.name.isNotEmpty) {
-         final newCategories = Map<String, int>.from(
-           settingsProvider.categories,
-         );
-         if (!newCategories.containsKey(result.name)) {
-           newCategories[result.name] = result.color.toARGB32();
-           settingsProvider.setCategories(newCategories);
-         }
-       }
-     });
-   }
- 
-   void _onEditPressed(
-     BuildContext context,
-     SettingsProvider settingsProvider,
-     String oldName,
-   ) {
-     final initialColor = Color(
-       settingsProvider.categories[oldName] ??
-           Theme.of(context).colorScheme.primary.toARGB32(),
-     );
- 
-     showCategoryEditorDialog(
-       context,
-       initialName: oldName,
-       initialColor: initialColor,
-       title: 'editCategory'.t(),
-       confirmButtonText: 'save'.t(),
-     ).then((result) {
+            if (cont) {
+              logsProvider.clear();
+              if (mounted) {
+                Navigator.of(context).pop();
+              }
+            }
+          },
+          child: Text('remove'.t()),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('close'.t()),
+        ),
+        TextButton(
+          onPressed: () {
+            SharePlus.instance.share(
+              ShareParams(text: logString ?? '', subject: 'appLogs'.t()),
+            );
+            Navigator.of(context).pop();
+          },
+          child: Text('share'.t()),
+        ),
+      ],
+    );
+  }
+}
+
+class CategoryTagEditor extends StatelessWidget {
+  final bool showLabelWhenNotEmpty;
+  final WrapAlignment alignment;
+
+  const CategoryTagEditor({
+    super.key,
+    this.showLabelWhenNotEmpty = true,
+    this.alignment = WrapAlignment.start,
+  });
+
+  void _onAddPressed(BuildContext context, SettingsProvider settingsProvider) {
+    final random = DateTime.now().millisecondsSinceEpoch;
+    final initialColor = Color((random & 0xFFFFFF) | 0xFF000000);
+
+    showCategoryEditorDialog(
+      context,
+      initialColor: initialColor,
+      title: 'addCategory'.t(),
+      confirmButtonText: 'add'.t(),
+    ).then((result) {
+      if (result != null && result.name.isNotEmpty) {
+        final newCategories = Map<String, int>.from(
+          settingsProvider.categories,
+        );
+        if (!newCategories.containsKey(result.name)) {
+          newCategories[result.name] = result.color.toARGB32();
+          settingsProvider.setCategories(newCategories);
+        }
+      }
+    });
+  }
+
+  void _onEditPressed(
+    BuildContext context,
+    SettingsProvider settingsProvider,
+    String oldName,
+  ) {
+    final initialColor = Color(
+      settingsProvider.categories[oldName] ??
+          Theme.of(context).colorScheme.primary.toARGB32(),
+    );
+
+    showCategoryEditorDialog(
+      context,
+      initialName: oldName,
+      initialColor: initialColor,
+      title: 'editCategory'.t(),
+      confirmButtonText: 'save'.t(),
+    ).then((result) {
       if (result != null && result.name.isNotEmpty) {
         // ignore: use_build_context_synchronously
         final appsProvider = context.read<AppsProvider>();

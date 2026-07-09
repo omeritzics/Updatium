@@ -607,11 +607,11 @@ class AddAppPageState extends State<AddAppPage> {
         if (res.isEmpty) {
           throw UpdatiumError('noResults'.t());
         }
-               List<String>? selectedUrls = res.isEmpty
-                   ? []
-                   : await showDialog<List<String>?>(
-                       context: context,
-                       builder: (BuildContext ctx) {
+        List<String>? selectedUrls = res.isEmpty
+            ? []
+            : await showDialog<List<String>?>(
+                context: context,
+                builder: (BuildContext ctx) {
                   return SelectionModal(
                     entries: res.map((k, v) => MapEntry(k, v.value)),
                     selectedByDefault: false,
@@ -915,13 +915,13 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           if (isTempId(app) && app.additionalSettings['trackOnly'] != true) {
             if (!mounted) return;
             if (!mounted) return;
-             var apkUrl = await appsProvider.confirmAppFileUrl(
-               app,
-               context,
-               false,
-               progressIndicatorStep: cameFromSearch ? 3 : 2,
-               progressIndicatorTotal: cameFromSearch ? 3 : 2,
-             );
+            var apkUrl = await appsProvider.confirmAppFileUrl(
+              app,
+              context,
+              false,
+              progressIndicatorStep: cameFromSearch ? 3 : 2,
+              progressIndicatorTotal: cameFromSearch ? 3 : 2,
+            );
 
             if (apkUrl == null) {
               throw UpdatiumError('cancelled'.t());

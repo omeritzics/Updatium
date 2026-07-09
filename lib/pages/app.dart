@@ -773,24 +773,24 @@ class _AppPageState extends State<AppPage> {
                   app.app.id,
                 ], globalNavigatorKey.currentContext);
                 if (!mounted) return;
-                               if (res.isNotEmpty && !trackOnly) {
-                                 showMessage(successMessage, context);
-                               }
-                               if (res.isNotEmpty) {
-                                 Navigator.of(context).pop();
-                               }
-                               if (res.isNotEmpty) {
-                                 // ignore: use_build_context_synchronously
-                                 var np = context.read<NotificationsProvider>();
-                                 np.cancel(UpdateNotification([]).id);
-                                 np.cancel(
-                                   SilentUpdateAttemptNotification([], id: res[0].hashCode).id,
-                                 );
-                               }
-                              } catch (e) {
-                                if (!mounted) return;
-                                showError(e, context);
-                              }
+                if (res.isNotEmpty && !trackOnly) {
+                  showMessage(successMessage, context);
+                }
+                if (res.isNotEmpty) {
+                  Navigator.of(context).pop();
+                }
+                if (res.isNotEmpty) {
+                  // ignore: use_build_context_synchronously
+                  var np = context.read<NotificationsProvider>();
+                  np.cancel(UpdateNotification([]).id);
+                  np.cancel(
+                    SilentUpdateAttemptNotification([], id: res[0].hashCode).id,
+                  );
+                }
+              } catch (e) {
+                if (!mounted) return;
+                showError(e, context);
+              }
             }
           : null,
       child: Text(
@@ -1002,9 +1002,9 @@ class _AppPageState extends State<AppPage> {
                               app.app.id,
                             ], context);
                           } catch (e) {
-                                 if (!mounted) return;
-                                 showError(e, context);
-                               }
+                            if (!mounted) return;
+                            showError(e, context);
+                          }
                         },
                       ),
                     M3FloatingToolbarAction(
@@ -1016,22 +1016,20 @@ class _AppPageState extends State<AppPage> {
                         final removedApps = await appsProvider
                             .removeAppsWithModal(context, [app.app]);
                         if (removedApps != null && removedApps.isNotEmpty) {
-                            if (mounted) {
-                              ScaffoldMessenger.of(
-                                context,
-                              ).showSnackBar(
-                                SnackBar(
-                                  content: Text('appRemoved'.t()),
-                                  action: SnackBarAction(
-                                    label: 'undo'.t(),
-                                    onPressed: () {
-                                      appsProvider.undoRestoreApps(removedApps);
-                                    },
-                                  ),
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('appRemoved'.t()),
+                                action: SnackBarAction(
+                                  label: 'undo'.t(),
+                                  onPressed: () {
+                                    appsProvider.undoRestoreApps(removedApps);
+                                  },
                                 ),
-                              );
-                              Navigator.of(context).pop();
-                            }
+                              ),
+                            );
+                            Navigator.of(context).pop();
+                          }
                         }
                       },
                     ),

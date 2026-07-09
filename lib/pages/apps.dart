@@ -1086,14 +1086,11 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         return <String>[];
                       })
                       .then((value) {
-                               if (value.isNotEmpty &&
-                                   shouldInstallUpdates &&
-                                   mounted) {
-                                 showMessage(
-                                   'appsUpdated'.t(),
-                                   context,
-                                 );
-                               }
+                        if (value.isNotEmpty &&
+                            shouldInstallUpdates &&
+                            mounted) {
+                          showMessage('appsUpdated'.t(), context);
+                        }
                       });
                 }
               });
@@ -1727,16 +1724,14 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         semanticLabel: 'removeSelectedApps'.t(),
                         tooltip: 'removeSelectedApps'.t(),
                         onPressed: () async {
-                           final removedApps = await appsProvider
-                               .removeAppsWithModal(
-                                 context,
-                                 selectedApps.toList(),
-                               );
-                           if (removedApps != null && removedApps.isNotEmpty) {
-                             if (mounted) {
-                               ScaffoldMessenger.of(
-                                 context,
-                               ).showSnackBar(
+                          final removedApps = await appsProvider
+                              .removeAppsWithModal(
+                                context,
+                                selectedApps.toList(),
+                              );
+                          if (removedApps != null && removedApps.isNotEmpty) {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
                                     'appRemoved'.plural(removedApps.length),
