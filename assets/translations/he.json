@@ -87,7 +87,7 @@
     "appRemoved": {
         "one": "הוסר יישום אחד",
         "two": "הוסרו שני יישומים",
-        "other": "הוסרו {count} יישומים"
+        "other": "הוסרו {} יישומים"
     },
     "updateX": "עדכון {}",
     "installX": "התקנת {}",
@@ -433,42 +433,42 @@
     "tooManyRequestsTryAgainInMinutes": {
         "one": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד דקה",
         "two": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד שתי דקות",
-        "other": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד {count} דקות"
+        "other": "יותר מדי בקשות (הגעת למכסת השימוש) - נא לנסות שוב בעוד {} דקות"
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "בדיקת העדכונים ברקע נתקלה ב{error}, ניסיון בדיקה חוזר מתוכנן לעוד דקה",
         "two": "בדיקת העדכונים ברקע נתקלה ב{error}, ניסיון בדיקה חוזר מתוכנן לעוד שתי דקות",
-        "other": "בדיקת העדכונים ברקע נתקלה ב{error}, ניסיון בדיקה חוזר מתוכנן לעוד {count} דקות"
+        "other": "בדיקת העדכונים ברקע נתקלה ב{error}, ניסיון בדיקה חוזר מתוכנן לעוד {} דקות"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "בדיקת העדכונים ברקע מצאה עדכון אחד - המשתמש יקבל התראה במידת הצורך",
         "two": "בדיקת העדכונים ברקע מצאה שני עדכונים - המשתמש יקבל התראה במידת הצורך",
-        "other": "בדיקת העדכונים ברקע מצאה {count} עדכונים - המשתמש יקבל התראה במידת הצורך"
+        "other": "בדיקת העדכונים ברקע מצאה {} עדכונים - המשתמש יקבל התראה במידת הצורך"
     },
     "apps": {
         "one": "יישום אחד",
         "two": "שני יישומים",
-        "other": "{count} יישומים"
+        "other": "{} יישומים"
     },
     "url": {
         "one": "כתובת אחת",
         "two": "שתי כתובות",
-        "other": "{count} כתובות"
+        "other": "{} כתובות"
     },
     "minute": {
         "one": "דקה אחת",
         "two": "שתי דקות",
-        "other": "{count} דקות"
+        "other": "{} דקות"
     },
     "hour": {
         "one": "שעה אחת",
         "two": "שעתיים",
-        "other": "{count} שעות"
+        "other": "{} שעות"
     },
     "day": {
         "one": "יום אחד",
         "two": "יומיים",
-        "other": "{count} ימים"
+        "other": "{} ימים"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "נוקה יומן אחד  (לפני = {before}, אחרי = {after})",
@@ -478,27 +478,27 @@
     "xAndNMoreUpdatesAvailable": {
         "one": "ליישום {app} ולעוד יישום יש עדכונים.",
         "two": "ליישום {app} ולעוד שני יישומים יש עדכונים.",
-        "other": "ליישום {app} ולעוד {count} יישומים יש עדכונים."
+        "other": "ליישום {app} ולעוד {} יישומים יש עדכונים."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "היישום {app} ועוד יישום נוסף עודכנו.",
         "two": "{app} ועוד שני יישומים נוספים עודכנו.",
-        "other": "{app} ועוד {count} יישומים נוספים עודכנו."
+        "other": "{app} ועוד {} יישומים נוספים עודכנו."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "נכשל העדכון של {app} ועוד יישום אחד.",
         "two": "נכשל העדכון של {app} ועוד שני יישומים.",
-        "other": "נכשל העדכון של {app} ועוד {count} יישומים."
+        "other": "נכשל העדכון של {app} ועוד {} יישומים."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "ייתכן כי {app} ועוד יישום אחד התעדכנו.",
         "two": "ייתכן כי {app} ועוד שני יישומים התעדכנו.",
-        "other": "ייתכן כי {app} ועוד {count} יישומים התעדכנו."
+        "other": "ייתכן כי {app} ועוד {} יישומים התעדכנו."
     },
     "apk": {
         "one": "קובץ APK אחד",
         "two": "שני קובצי APK",
-        "other": "{count} קובצי APK"
+        "other": "{} קובצי APK"
     },
     "certificateHash": {
         "one": "גיבוב תעודה",
@@ -538,7 +538,7 @@
     "safeModePasswordError": "שגיאה בעת קביעת הסיסמה. נא לנסות שוב.",
     "safeModeEnable": "הפעלת המצב הבטוח",
     "safeModeToggle": "השבתת המצב הבטוח",
-    "safeModeTapsRemaining": "נותרו {count} הקשות עד להשבתת המצב הבטוח",
+    "safeModeTapsRemaining": "נותרו {} הקשות עד להשבתת המצב הבטוח",
     "safeModeEnabledHint": "המצב הבטוח מופעל. יש להקיש על מספר הגרסה שבעמוד ההגדרות פעמים רבות בשביל להשבית אותו.",
     "preventUninstallation": "מניעת הסרה",
     "preventUninstallationDescription": "מניעת ההסרה של Updatium כאשר המצב הבטוח מופעל",
@@ -567,5 +567,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

@@ -302,7 +302,7 @@ class AddAppPageState extends State<AddAppPage> {
                         ),
                       ),
                     ),
-                    gap16,
+                    gap12,
                     Row(
                       children: [
                         Icon(
@@ -319,7 +319,7 @@ class AddAppPageState extends State<AddAppPage> {
                         ),
                       ],
                     ),
-                    gap8,
+                    gap16,
 
                     Text(
                       '${'note'.t()}:',

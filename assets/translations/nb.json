@@ -86,7 +86,7 @@
     "removeSelectedApps": "Fjern valgte apper",
     "appRemoved": {
         "one": "Fjernet én app",
-        "other": "Fjernet {count} apper"
+        "other": "Fjernet {} apper"
     },
     "updateX": "Oppdater {}",
     "installX": "Installer {}",
@@ -429,36 +429,36 @@
         "other": "Fjerne appene?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "For mange forespørsler (hastighetsbegrenset) - prøv igjen om {count} minutt",
-        "other": "For many forespørsler (hastighetsbegrenset) - prøv igjen om {count} minutter"
+        "one": "For mange forespørsler (hastighetsbegrenset) - prøv igjen om {} minutt",
+        "other": "For many forespørsler (hastighetsbegrenset) - prøv igjen om {} minutter"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Oppdateringssøk i bakgrunnen støtte på en {error}, prøver igjen om {count} minutt",
-        "other": "Oppdateringssøk i bakgrunnen støtte på en {error}, prøver igjen om {count} minutter"
+        "one": "Oppdateringssøk i bakgrunnen støtte på en {error}, prøver igjen om {} minutt",
+        "other": "Oppdateringssøk i bakgrunnen støtte på en {error}, prøver igjen om {} minutter"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Bakgrunnssøk fant {count} oppdatering - varsler brukeren om nødvendig",
-        "other": "Bakgrunnssøk fant {count} oppdateringer - varsler brukeren om nødvendig"
+        "one": "Bakgrunnssøk fant {} oppdatering - varsler brukeren om nødvendig",
+        "other": "Bakgrunnssøk fant {} oppdateringer - varsler brukeren om nødvendig"
     },
     "apps": {
-        "one": "{count} app",
-        "other": "{count} apper"
+        "one": "{} app",
+        "other": "{} apper"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URL-er"
+        "one": "{} URL",
+        "other": "{} URL-er"
     },
     "minute": {
-        "one": "{count} minutt",
-        "other": "{count} minutter"
+        "one": "{} minutt",
+        "other": "{} minutter"
     },
     "hour": {
-        "one": "{count} time",
-        "other": "{count} timer"
+        "one": "{} time",
+        "other": "{} timer"
     },
     "day": {
-        "one": "{count} dag",
-        "other": "{count} dager"
+        "one": "{} dag",
+        "other": "{} dager"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Tømte {n} logg (før = {before}, etter = {after})",
@@ -466,23 +466,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} og 1 app til har oppdateringer.",
-        "other": "{app} og {count} flere apper har oppdateringer."
+        "other": "{app} og {} flere apper har oppdateringer."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} og 1 app til ble oppdatert.",
-        "other": "{app} og {count} flere apper ble oppdatert."
+        "other": "{app} og {} flere apper ble oppdatert."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Kunne ikke oppdatere {app} og 1 app til.",
-        "other": "Kunne ikke oppdatere {app} og {count} flere apper."
+        "other": "Kunne ikke oppdatere {app} og {} flere apper."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} og 1 app til kan ha blitt oppdatert.",
-        "other": "{app} og {count} flere apper kan ha blitt oppdatert."
+        "other": "{app} og {} flere apper kan ha blitt oppdatert."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK-er"
+        "one": "{} APK",
+        "other": "{} APK-er"
     },
     "certificateHash": {
         "one": "Sertifikathash",
@@ -522,7 +522,7 @@
     "safeModePasswordError": "Feil under angivelse av passord. Vennligst prøv igjen.",
     "safeModeEnable": "Aktiver sikkermodus",
     "safeModeToggle": "Deaktiver sikkermodus",
-    "safeModeTapsRemaining": "{count} trykk gjenstår for å deaktivere sikkermodus",
+    "safeModeTapsRemaining": "{} trykk gjenstår for å deaktivere sikkermodus",
     "safeModeEnabledHint": "Sikkermodus er aktivert. Trykk på versjonsnummeret i Innstillinger mange ganger for å deaktivere.",
     "preventUninstallation": "Forhindre avinstallasjon",
     "preventUninstallationDescription": "Forhindrer at Updatium blir avinstallert når sikkermodus er på",
@@ -551,5 +551,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

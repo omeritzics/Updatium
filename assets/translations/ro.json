@@ -86,7 +86,7 @@
     "removeSelectedApps": "Eliminați aplicațiile selectate",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Actualizează {}",
     "installX": "Instalează {}",
@@ -426,36 +426,36 @@
         "other": "Eliminați aplicațiile?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Prea multe cereri (limitat la rată) - încercați din nou în {count} minut",
-        "other": "Prea multe cereri (limitat la rată) - încercați din nou în {count} minute"
+        "one": "Prea multe cereri (limitat la rată) - încercați din nou în {} minut",
+        "other": "Prea multe cereri (limitat la rată) - încercați din nou în {} minute"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Verificarea actualizărilor în fundal a întâmpinat un {error}, va programa o verificare de reîncercare în {count} minut",
-        "other": "Verificarea actualizărilor în fundal a întâmpinat un {error}, va programa o verificare de reîncercare în {count} minute"
+        "one": "Verificarea actualizărilor în fundal a întâmpinat un {error}, va programa o verificare de reîncercare în {} minut",
+        "other": "Verificarea actualizărilor în fundal a întâmpinat un {error}, va programa o verificare de reîncercare în {} minute"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Verificarea actualizărilor în fundal a găsit {count} actualizare - va notifica utilizatorul dacă este necesar",
-        "other": "Verificarea actualizărilor în fundal a găsit {count} actualizări - va notifica utilizatorul dacă este necesar"
+        "one": "Verificarea actualizărilor în fundal a găsit {} actualizare - va notifica utilizatorul dacă este necesar",
+        "other": "Verificarea actualizărilor în fundal a găsit {} actualizări - va notifica utilizatorul dacă este necesar"
     },
     "apps": {
-        "one": "{count} Aplicație",
-        "other": "{count} Aplicații"
+        "one": "{} Aplicație",
+        "other": "{} Aplicații"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URL-uri"
+        "one": "{} URL",
+        "other": "{} URL-uri"
     },
     "minute": {
-        "one": "{count} minut",
-        "other": "{count} minute"
+        "one": "{} minut",
+        "other": "{} minute"
     },
     "hour": {
-        "one": "{count} oră",
-        "other": "{count} ore"
+        "one": "{} oră",
+        "other": "{} ore"
     },
     "day": {
-        "one": "{count} zi",
-        "other": "{count} zile"
+        "one": "{} zi",
+        "other": "{} zile"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Șters {n} jurnal (înainte = {before}, după = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} și încă 1 aplicație mai are actualizări.",
-        "other": "{app} și încă {count} aplicații mai au actualizări."
+        "other": "{app} și încă {} aplicații mai au actualizări."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} și încă 1 aplicație a fost actualizată.",
-        "other": "{app} și încă {count} aplicații au fost actualizate."
+        "other": "{app} și încă {} aplicații au fost actualizate."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Eșec la actualizarea {app} și încă 1 aplicație.",
-        "other": "Eșec la actualizarea {app} și încă {count} aplicații."
+        "other": "Eșec la actualizarea {app} și încă {} aplicații."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} și încă 1 aplicație ar putea fi fost actualizată.",
-        "other": "{app} și încă {count} aplicații ar putea fi fost actualizate."
+        "other": "{app} și încă {} aplicații ar putea fi fost actualizate."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK-uri"
+        "one": "{} APK",
+        "other": "{} APK-uri"
     },
     "certificateHash": {
         "one": "Hash Certificat",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Eroare la setarea parolei. Încercați din nou.",
     "safeModeEnable": "Activează Modul Sigur",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} atingeri rămase pentru a dezactiva Modul Sigur",
+    "safeModeTapsRemaining": "{} atingeri rămase pentru a dezactiva Modul Sigur",
     "safeModeEnabledHint": "Modul Sigur este activat. Atingeți de mai multe ori numărul versiunii din Setări pentru a dezactiva.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

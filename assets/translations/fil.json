@@ -86,7 +86,7 @@
     "removeSelectedApps": "Alisin ang mga napiling app",
     "appRemoved": {
         "one": "Inalis ang isang app",
-        "other": "Inalis ang {count} na app"
+        "other": "Inalis ang {} na app"
     },
     "updateX": "I-update ang {}",
     "installX": "I-install ang {}",
@@ -429,36 +429,36 @@
         "other": "Alisin ang mga app?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Masyadong maraming kahilingan (rate limited) - subukan muli sa loob ng {count} minuto",
-        "other": "Masyadong maraming kahilingan (rate limited) - subukan muli sa loob ng {count} na minuto"
+        "one": "Masyadong maraming kahilingan (rate limited) - subukan muli sa loob ng {} minuto",
+        "other": "Masyadong maraming kahilingan (rate limited) - subukan muli sa loob ng {} na minuto"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Ang pag-check ng update sa BG ay nakaranas ng isang {error}, mag-iskedyul ng muling pagsubok sa loob ng {count} minuto",
-        "other": "Ang pag-check ng update sa BG ay nakaranas ng isang {error}, mag-iskedyul ng muling pagsubok sa loob ng {count} na minuto"
+        "one": "Ang pag-check ng update sa BG ay nakaranas ng isang {error}, mag-iskedyul ng muling pagsubok sa loob ng {} minuto",
+        "other": "Ang pag-check ng update sa BG ay nakaranas ng isang {error}, mag-iskedyul ng muling pagsubok sa loob ng {} na minuto"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Ang pag-check ng update sa BG ay nakahanap ng {count} na update - aabisuhan ang user kung kinakailangan",
-        "other": "Ang pag-check ng update sa BG ay nakahanap ng {count} na mga update - aabisuhan ang user kung kinakailangan"
+        "one": "Ang pag-check ng update sa BG ay nakahanap ng {} na update - aabisuhan ang user kung kinakailangan",
+        "other": "Ang pag-check ng update sa BG ay nakahanap ng {} na mga update - aabisuhan ang user kung kinakailangan"
     },
     "apps": {
-        "one": "{count} App",
-        "other": "{count} na mga App"
+        "one": "{} App",
+        "other": "{} na mga App"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} na mga URL"
+        "one": "{} URL",
+        "other": "{} na mga URL"
     },
     "minute": {
-        "one": "{count} minuto",
-        "other": "{count} na minuto"
+        "one": "{} minuto",
+        "other": "{} na minuto"
     },
     "hour": {
-        "one": "{count} oras",
-        "other": "{count} na oras"
+        "one": "{} oras",
+        "other": "{} na oras"
     },
     "day": {
-        "one": "{count} araw",
-        "other": "{count} na araw"
+        "one": "{} araw",
+        "other": "{} na araw"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Na-clear ang {n} na log (bago = {before}, pagkatapos = {after})",
@@ -466,23 +466,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "May mga update ang {app} at 1 pang app.",
-        "other": "May mga update ang {app} at {count} pang mga app."
+        "other": "May mga update ang {app} at {} pang mga app."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "Na-update ang {app} at 1 pang app.",
-        "other": "Na-update ang {app} at {count} pang mga app."
+        "other": "Na-update ang {app} at {} pang mga app."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Nabigong i-update ang {app} at 1 pang app.",
-        "other": "Nabigong i-update ang {app} at {count} pang mga app."
+        "other": "Nabigong i-update ang {app} at {} pang mga app."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "Ang {app} at 1 pang app ay maaaring na-update na.",
-        "other": "Ang {app} at {count} pang mga app ay maaaring na-update na."
+        "other": "Ang {app} at {} pang mga app ay maaaring na-update na."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} na mga APK"
+        "one": "{} APK",
+        "other": "{} na mga APK"
     },
     "certificateHash": {
         "one": "Hash ng Sertipiko",
@@ -522,7 +522,7 @@
     "safeModePasswordError": "Error sa pagtatakda ng password. Mangyaring subukan muli.",
     "safeModeEnable": "I-enable ang Safe Mode",
     "safeModeToggle": "I-disable ang Safe Mode",
-    "safeModeTapsRemaining": "{count} na tap ang natitira upang i-disable ang Safe Mode",
+    "safeModeTapsRemaining": "{} na tap ang natitira upang i-disable ang Safe Mode",
     "safeModeEnabledHint": "Naka-enable ang Safe Mode. I-tap ang numero ng bersyon sa Mga Setting nang maraming beses upang i-disable.",
     "preventUninstallation": "Pigilan ang pag-uninstall",
     "preventUninstallationDescription": "Pinipigilan ang Updatium na mai-uninstall kapag naka-on ang Safe Mode",
@@ -551,5 +551,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

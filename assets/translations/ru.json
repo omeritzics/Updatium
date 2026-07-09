@@ -86,7 +86,7 @@
     "removeSelectedApps": "Удалить выбранные приложения",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Обновить {}",
     "installX": "Установить {}",
@@ -426,43 +426,43 @@
         "other": "Удалить приложения?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Слишком много запросов (ограничение скорости) — попробуйте снова через {count} минуту",
-        "few": "Слишком много запросов (ограничение скорости) — попробуйте снова через {count} минуты",
-        "other": "Слишком много запросов (ограничение скорости) — попробуйте снова через {count} минут"
+        "one": "Слишком много запросов (ограничение скорости) — попробуйте снова через {} минуту",
+        "few": "Слишком много запросов (ограничение скорости) — попробуйте снова через {} минуты",
+        "other": "Слишком много запросов (ограничение скорости) — попробуйте снова через {} минут"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "При проверке обновлений в фоновом режиме возникла ошибка {error}, повторная проверка будет через {count} минуту",
-        "few": "При проверке обновлений в фоновом режиме возникла ошибка {error}, повторная проверка будет через {count} минуты",
-        "other": "При проверке обновлений в фоновом режиме возникла ошибка {error}, повторная проверка будет через {count} минут"
+        "one": "При проверке обновлений в фоновом режиме возникла ошибка {error}, повторная проверка будет через {} минуту",
+        "few": "При проверке обновлений в фоновом режиме возникла ошибка {error}, повторная проверка будет через {} минуты",
+        "other": "При проверке обновлений в фоновом режиме возникла ошибка {error}, повторная проверка будет через {} минут"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "При проверке в фоновом режиме было обнаружено {count} обновления — пользователь будет уведомлен по необходимости",
-        "other": "При проверке в фоновом режиме было обнаружено {count} обновлений — пользователь будет уведомлен по необходимости"
+        "one": "При проверке в фоновом режиме было обнаружено {} обновления — пользователь будет уведомлен по необходимости",
+        "other": "При проверке в фоновом режиме было обнаружено {} обновлений — пользователь будет уведомлен по необходимости"
     },
     "apps": {
-        "one": "{count} приложение",
-        "few": "{count} приложения",
-        "other": "{count} приложений"
+        "one": "{} приложение",
+        "few": "{} приложения",
+        "other": "{} приложений"
     },
     "url": {
-        "one": "{count} URL-адрес",
-        "few": "{count} URL-адреса",
-        "other": "{count} URL-адресов"
+        "one": "{} URL-адрес",
+        "few": "{} URL-адреса",
+        "other": "{} URL-адресов"
     },
     "minute": {
-        "one": "{count} минута",
-        "few": "{count} минуты",
-        "other": "{count} минут"
+        "one": "{} минута",
+        "few": "{} минуты",
+        "other": "{} минут"
     },
     "hour": {
-        "one": "{count} час",
-        "few": "{count} часа",
-        "other": "{count} часов"
+        "one": "{} час",
+        "few": "{} часа",
+        "other": "{} часов"
     },
     "day": {
-        "one": "{count} день",
-        "few": "{count} дня",
-        "other": "{count} дней"
+        "one": "{} день",
+        "few": "{} дня",
+        "other": "{} дней"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Очищен {n} журнал (до = {before}, после = {after})",
@@ -471,27 +471,27 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "У {app} и ещё 1 приложения есть обновление",
-        "other": "У {app} и ещё {count} приложений есть обновления"
+        "other": "У {app} и ещё {} приложений есть обновления"
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} и ещё 1 приложение были обновлены",
-        "few": "{app} и ещё {count} приложения были обновлены",
-        "other": "{app} и ещё {count} приложений были обновлены"
+        "few": "{app} и ещё {} приложения были обновлены",
+        "other": "{app} и ещё {} приложений были обновлены"
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Не удалось обновить {app} и ещё 1 приложение",
-        "few": "Не удалось обновить {app} и ещё {count} приложения",
-        "other": "Не удалось обновить {app} и ещё {count} приложений"
+        "few": "Не удалось обновить {app} и ещё {} приложения",
+        "other": "Не удалось обновить {app} и ещё {} приложений"
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} и ещё 1 приложение могли быть обновлены",
-        "few": "{app} и ещё {count} приложения могли быть обновлены",
-        "other": "{app} и ещё {count} приложений могли быть обновлены"
+        "few": "{app} и ещё {} приложения могли быть обновлены",
+        "other": "{app} и ещё {} приложений могли быть обновлены"
     },
     "apk": {
-        "one": "{count} APK-файл",
-        "few": "{count} APK-файла",
-        "other": "{count} APK-файлов"
+        "one": "{} APK-файл",
+        "few": "{} APK-файла",
+        "other": "{} APK-файлов"
     },
     "certificateHash": {
         "one": "Хеш сертификата",
@@ -531,7 +531,7 @@
     "safeModePasswordError": "Error setting password. Please try again.",
     "safeModeEnable": "Enable Safe Mode",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} taps remaining to disable Safe Mode",
+    "safeModeTapsRemaining": "{} taps remaining to disable Safe Mode",
     "safeModeEnabledHint": "Safe Mode enabled. Tap on the version number in the Settings many times to disable.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -560,5 +560,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

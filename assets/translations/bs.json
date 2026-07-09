@@ -86,7 +86,7 @@
     "removeSelectedApps": "Ukloni odabrane aplikacije",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Nadogradi {}",
     "installX": "Instaliraj {}",
@@ -426,36 +426,36 @@
         "other": "Želite li ukloniti aplikacije?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Previše zahtjeva (ograničena broj zahteva) - pokušajte ponovo za {count} minutu",
-        "other": "Previše zahtjeva (ograničena cijena) - pokušajte ponovo za {count} min."
+        "one": "Previše zahtjeva (ograničena broj zahteva) - pokušajte ponovo za {} minutu",
+        "other": "Previše zahtjeva (ograničena cijena) - pokušajte ponovo za {} min."
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Provjera ažuriranja u pozadini naišla je na {error}, zakazuje se ponovni pokušaj za {count} minutu",
-        "other": "Provjera ažuriranja u pozadini naišla je na {error}, zakazuje se ponovni pokušaj za {count} min."
+        "one": "Provjera ažuriranja u pozadini naišla je na {error}, zakazuje se ponovni pokušaj za {} minutu",
+        "other": "Provjera ažuriranja u pozadini naišla je na {error}, zakazuje se ponovni pokušaj za {} min."
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Provjera ažuriranja u pozadini je pronašla {count} ažuriranje - korisnik će biti obavješten ako je to potrebno",
-        "other": "Provjera ažuriranja u pozadini je pronašla {count} ažuriranja - korisnik će biti obavješten ako je to potrebno"
+        "one": "Provjera ažuriranja u pozadini je pronašla {} ažuriranje - korisnik će biti obavješten ako je to potrebno",
+        "other": "Provjera ažuriranja u pozadini je pronašla {} ažuriranja - korisnik će biti obavješten ako je to potrebno"
     },
     "apps": {
-        "one": "{count} aplikacija",
-        "other": "{count} aplikacije"
+        "one": "{} aplikacija",
+        "other": "{} aplikacije"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URL-ovi"
+        "one": "{} URL",
+        "other": "{} URL-ovi"
     },
     "minute": {
-        "one": "{count} minuta",
-        "other": "{count} min."
+        "one": "{} minuta",
+        "other": "{} min."
     },
     "hour": {
-        "one": "{count} sat",
-        "other": "{count} sat/i"
+        "one": "{} sat",
+        "other": "{} sat/i"
     },
     "day": {
-        "one": "{count} dan",
-        "other": "{count} dana"
+        "one": "{} dan",
+        "other": "{} dana"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Izbrisan {n} log (prije = {before}, nakon = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} i još 1 aplikacija ima ažuriranja.",
-        "other": "{app} i još {count} aplikacija imaju ažuriranja."
+        "other": "{app} i još {} aplikacija imaju ažuriranja."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} i još 1 aplikacija je ažurirana.",
-        "other": "{app} i još {count} aplikacija je ažurirano."
+        "other": "{app} i još {} aplikacija je ažurirano."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Neuspješno ažuriranje {app} i još 1 aplikacije.",
-        "other": "Neuspješno ažuriranje {app} i još {count} aplikacija."
+        "other": "Neuspješno ažuriranje {app} i još {} aplikacija."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} i još jedna aplikacija je vjerovatno ažurirana.",
-        "other": "{app} i još {count} aplikacija su vjerovatno ažurirane."
+        "other": "{app} i još {} aplikacija su vjerovatno ažurirane."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK-a"
+        "one": "{} APK",
+        "other": "{} APK-a"
     },
     "certificateHash": {
         "one": "Certificate Hash",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Error setting password. Please try again.",
     "safeModeEnable": "Enable Safe Mode",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} taps remaining to disable Safe Mode",
+    "safeModeTapsRemaining": "{} taps remaining to disable Safe Mode",
     "safeModeEnabledHint": "Safe Mode enabled. Tap on the version number in the Settings many times to disable.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

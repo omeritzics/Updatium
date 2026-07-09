@@ -86,7 +86,7 @@
     "removeSelectedApps": "Hapus aplikasi terpilih",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Perbarui {}",
     "installX": "Pasang {}",
@@ -426,36 +426,36 @@
         "other": "Hapus aplikasi?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {count} menit",
-        "other": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {count} menit"
+        "one": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {} menit",
+        "other": "Terlalu banyak permintaan (tarif dibatasi) - coba lagi dalam {} menit"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Pemeriksaan pembaruan latar belakang menemui {error}, akan menjadwalkan pemeriksaan ulang dalam {count} menit",
-        "other": "Pemeriksaan pembaruan latar belakang menemui {error}, akan menjadwalkan pemeriksaan ulang dalam {count} menit"
+        "one": "Pemeriksaan pembaruan latar belakang menemui {error}, akan menjadwalkan pemeriksaan ulang dalam {} menit",
+        "other": "Pemeriksaan pembaruan latar belakang menemui {error}, akan menjadwalkan pemeriksaan ulang dalam {} menit"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Pemeriksaan pembaruan latar belakang menemukan {count} pembaruan - akan memberi tahu pengguna jika diperlukan",
-        "other": "Pemeriksaan pembaruan latar belakang menemukan {count} pembaruan - akan memberi tahu pengguna jika diperlukan"
+        "one": "Pemeriksaan pembaruan latar belakang menemukan {} pembaruan - akan memberi tahu pengguna jika diperlukan",
+        "other": "Pemeriksaan pembaruan latar belakang menemukan {} pembaruan - akan memberi tahu pengguna jika diperlukan"
     },
     "apps": {
-        "one": "{count} aplikasi",
-        "other": "{count} aplikasi"
+        "one": "{} aplikasi",
+        "other": "{} aplikasi"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URL"
+        "one": "{} URL",
+        "other": "{} URL"
     },
     "minute": {
-        "one": "{count} menit",
-        "other": "{count} menit"
+        "one": "{} menit",
+        "other": "{} menit"
     },
     "hour": {
-        "one": "{count} jam",
-        "other": "{count} jam"
+        "one": "{} jam",
+        "other": "{} jam"
     },
     "day": {
-        "one": "{count} hari",
-        "other": "{count} hari"
+        "one": "{} hari",
+        "other": "{} hari"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Menghapus {n} catatan (sebelum = {before}, setelah = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} dan 1 aplikasi lainnya memiliki pembaruan.",
-        "other": "{app} dan {count} aplikasi lainnya memiliki pembaruan."
+        "other": "{app} dan {} aplikasi lainnya memiliki pembaruan."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} dan 1 aplikasi lainnya telah diperbarui.",
-        "other": "{app} dan {count} aplikasi lainnya telah diperbarui."
+        "other": "{app} dan {} aplikasi lainnya telah diperbarui."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Gagal memperbarui {app} dan 1 aplikasi lainnya.",
-        "other": "Gagal memperbarui {app} dan {count} aplikasi lainnya."
+        "other": "Gagal memperbarui {app} dan {} aplikasi lainnya."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} dan 1 aplikasi lainnya mungkin telah diperbarui.",
-        "other": "{app} dan {count} aplikasi lainnya mungkin telah diperbarui."
+        "other": "{app} dan {} aplikasi lainnya mungkin telah diperbarui."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK"
+        "one": "{} APK",
+        "other": "{} APK"
     },
     "certificateHash": {
         "one": "Hash Sertifikat",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Error setting password. Please try again.",
     "safeModeEnable": "Enable Safe Mode",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} taps remaining to disable Safe Mode",
+    "safeModeTapsRemaining": "{} taps remaining to disable Safe Mode",
     "safeModeEnabledHint": "Safe Mode enabled. Tap on the version number in the Settings many times to disable.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

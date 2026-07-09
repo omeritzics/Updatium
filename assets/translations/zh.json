@@ -86,7 +86,7 @@
     "removeSelectedApps": "删除选中的应用",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "更新 {}",
     "installX": "安装 {}",
@@ -426,36 +426,36 @@
         "other": "是否删除应用？"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "请求过于频繁（API 速率限制）- 请在 {count} 分钟后重试",
-        "other": "请求过于频繁（API 速率限制）- 请在 {count} 分钟后重试"
+        "one": "请求过于频繁（API 速率限制）- 请在 {} 分钟后重试",
+        "other": "请求过于频繁（API 速率限制）- 请在 {} 分钟后重试"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "后台更新检查遇到了“{error}”问题，将于 {count} 分钟后重试",
-        "other": "后台更新检查遇到了“{error}”问题，将于 {count} 分钟后重试"
+        "one": "后台更新检查遇到了“{error}”问题，将于 {} 分钟后重试",
+        "other": "后台更新检查遇到了“{error}”问题，将于 {} 分钟后重试"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "后台检查发现 {count} 个应用更新 - 如有需要将发送通知",
-        "other": "后台检查发现 {count} 个应用更新 - 如有需要将发送通知"
+        "one": "后台检查发现 {} 个应用更新 - 如有需要将发送通知",
+        "other": "后台检查发现 {} 个应用更新 - 如有需要将发送通知"
     },
     "apps": {
-        "one": "{count} 个应用",
-        "other": "{count} 个应用"
+        "one": "{} 个应用",
+        "other": "{} 个应用"
     },
     "url": {
-        "one": "{count} 个 URL",
-        "other": "{count} 个 URL"
+        "one": "{} 个 URL",
+        "other": "{} 个 URL"
     },
     "minute": {
-        "one": "{count} 分钟",
-        "other": "{count} 分钟"
+        "one": "{} 分钟",
+        "other": "{} 分钟"
     },
     "hour": {
-        "one": "{count} 小时",
-        "other": "{count} 小时"
+        "one": "{} 小时",
+        "other": "{} 小时"
     },
     "day": {
-        "one": "{count} 天",
-        "other": "{count} 天"
+        "one": "{} 天",
+        "other": "{} 天"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "清除了 {n} 条日志（早于 {before}，晚于 {after}）",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "“{app}”和另外 1 个应用可以更新了。",
-        "other": "“{app}”和另外 {count} 个应用可以更新了。"
+        "other": "“{app}”和另外 {} 个应用可以更新了。"
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "“{app}”和另外 1 个应用已更新。",
-        "other": "“{app}”和另外 {count} 个应用已更新。"
+        "other": "“{app}”和另外 {} 个应用已更新。"
     },
     "xAndNMoreUpdatesFailed": {
         "one": "“{app}”和另外 1 个应用更新失败。",
-        "other": "“{app}”和另外 {count} 个应用更新失败。"
+        "other": "“{app}”和另外 {} 个应用更新失败。"
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "已尝试更新“{app}”和另外 1 个应用。",
-        "other": "已尝试更新“{app}”和另外 {count} 个应用。"
+        "other": "已尝试更新“{app}”和另外 {} 个应用。"
     },
     "apk": {
-        "one": "{count} 个 APK 文件",
-        "other": "{count} 个 APK 文件"
+        "one": "{} 个 APK 文件",
+        "other": "{} 个 APK 文件"
     },
     "certificateHash": {
         "one": "证书散列",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "设置密码出错，请重试。",
     "safeModeEnable": "启用安全模式",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "剩余 {count} 次点击以禁用安全模式",
+    "safeModeTapsRemaining": "剩余 {} 次点击以禁用安全模式",
     "safeModeEnabledHint": "安全模式已启用。点击设置中的版本号多次以禁用。",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

@@ -86,7 +86,7 @@
     "removeSelectedApps": "Sepanên hilbijartî rakirin",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "{} rojane bike",
     "installX": "{} saz bike",
@@ -426,36 +426,36 @@
         "other": "Sepanên rakirin?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Zêde daxwaz (hat sînor kirin) - dîsa {count} deqeyê de biceribîne",
-        "other": "Zêde daxwaz (hat sînor kirin) - dîsa {count} deqeyan de biceribîne"
+        "one": "Zêde daxwaz (hat sînor kirin) - dîsa {} deqeyê de biceribîne",
+        "other": "Zêde daxwaz (hat sînor kirin) - dîsa {} deqeyan de biceribîne"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Kontrola rojanekirinê ya li paqijî rastî {error} hat, dê kontrola dubarekirinê di {count} deqeyê de plan bike",
-        "other": "Kontrola rojanekirinê ya li paqijî rastî {error} hat, dê kontrola dubarekirinê di {count} deqeyan de plan bike"
+        "one": "Kontrola rojanekirinê ya li paqijî rastî {error} hat, dê kontrola dubarekirinê di {} deqeyê de plan bike",
+        "other": "Kontrola rojanekirinê ya li paqijî rastî {error} hat, dê kontrola dubarekirinê di {} deqeyan de plan bike"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Kontrola rojanekirinê ya li paqijî {count} rojanekirin dît - dê bikarhêner agahdar bike heke pêwîst be",
-        "other": "Kontrola rojanekirinê ya li paqijî {count} rojanekirin dît - dê bikarhêner agahdar bike heke pêwîst be"
+        "one": "Kontrola rojanekirinê ya li paqijî {} rojanekirin dît - dê bikarhêner agahdar bike heke pêwîst be",
+        "other": "Kontrola rojanekirinê ya li paqijî {} rojanekirin dît - dê bikarhêner agahdar bike heke pêwîst be"
     },
     "apps": {
-        "one": "{count} Sepan",
-        "other": "{count} Sepan"
+        "one": "{} Sepan",
+        "other": "{} Sepan"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URL"
+        "one": "{} URL",
+        "other": "{} URL"
     },
     "minute": {
-        "one": "{count} deqe",
-        "other": "{count} deqe"
+        "one": "{} deqe",
+        "other": "{} deqe"
     },
     "hour": {
-        "one": "{count} saet",
-        "other": "{count} saet"
+        "one": "{} saet",
+        "other": "{} saet"
     },
     "day": {
-        "one": "{count} roj",
-        "other": "{count} roj"
+        "one": "{} roj",
+        "other": "{} roj"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} log hate jêbirin (berê = {before}, pa = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} û sepanek din jî rojanekirin heye.",
-        "other": "{app} û {count} sepanên din jî rojanekirin heye."
+        "other": "{app} û {} sepanên din jî rojanekirin heye."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} û sepanek din jî hat rojanekirin.",
-        "other": "{app} û {count} sepanên din jî hatin rojanekirin."
+        "other": "{app} û {} sepanên din jî hatin rojanekirin."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Rojankirina {app} û sepanek din jî têk çû.",
-        "other": "Rojankirina {app} û {count} sepanên din jî têk çû."
+        "other": "Rojankirina {app} û {} sepanên din jî têk çû."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} û sepanek din jî dibe ku hat rojanekirin.",
-        "other": "{app} û {count} sepanên din jî dibe ku hatin rojanekirin."
+        "other": "{app} û {} sepanên din jî dibe ku hatin rojanekirin."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK"
+        "one": "{} APK",
+        "other": "{} APK"
     },
     "certificateHash": {
         "one": "Hasha Sertîfîkayê",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Çewtî di sazkirina kelîmeya serê de - dîsa biceribîne",
     "safeModeEnable": "Moda Ewle çalak bike",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} tapên mayî hene ji bo neçalakkirina Moda Ewle",
+    "safeModeTapsRemaining": "{} tapên mayî hene ji bo neçalakkirina Moda Ewle",
     "safeModeEnabledHint": "Moda Ewle çalak bû. Li ser hejmara versiyonê di De rê de pir car bikin ji bo neçalakkirinê.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

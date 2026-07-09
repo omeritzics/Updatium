@@ -86,7 +86,7 @@
     "removeSelectedApps": "Usuń wybrane aplikacje",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Zaktualizuj {}",
     "installX": "Zainstaluj {}",
@@ -428,52 +428,52 @@
         "other": "Usunąć aplikacje?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {count} minutę",
-        "few": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {count} minuty",
-        "many": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {count} minut",
-        "other": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {count} minut"
+        "one": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {} minutę",
+        "few": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {} minuty",
+        "many": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {} minut",
+        "other": "Zbyt wiele żądań (limit API) - spróbuj ponownie za {} minut"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {count} minutę",
-        "few": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {count} minuty",
-        "many": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {count} minut",
-        "other": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {count} minuty"
+        "one": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {} minutę",
+        "few": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {} minuty",
+        "many": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {} minut",
+        "other": "Sprawdzanie aktualizacji w tle napotkało {error}, zaplanuje ponowne sprawdzenie za {} minuty"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Sprawdzanie w tle znalazło {count} aktualizację - powiadomię, jeśli to konieczne",
-        "few": "Sprawdzanie w tle znalazło {count} aktualizacje - powiadomię, jeśli to konieczne",
-        "many": "Sprawdzanie w tle znalazło {count} aktualizacji - powiadomię, jeśli to konieczne",
-        "other": "Sprawdzanie w tle znalazło {count} aktualizacji - powiadomię, jeśli to konieczne"
+        "one": "Sprawdzanie w tle znalazło {} aktualizację - powiadomię, jeśli to konieczne",
+        "few": "Sprawdzanie w tle znalazło {} aktualizacje - powiadomię, jeśli to konieczne",
+        "many": "Sprawdzanie w tle znalazło {} aktualizacji - powiadomię, jeśli to konieczne",
+        "other": "Sprawdzanie w tle znalazło {} aktualizacji - powiadomię, jeśli to konieczne"
     },
     "apps": {
-        "one": "{count} aplikacja",
-        "few": "{count} aplikacje",
-        "many": "{count} aplikacji",
-        "other": "{count} aplikacji"
+        "one": "{} aplikacja",
+        "few": "{} aplikacje",
+        "many": "{} aplikacji",
+        "other": "{} aplikacji"
     },
     "url": {
-        "one": "{count} adres URL",
-        "few": "{count} adresy URL",
-        "many": "{count} adresów URL",
-        "other": "{count} adresów URL"
+        "one": "{} adres URL",
+        "few": "{} adresy URL",
+        "many": "{} adresów URL",
+        "other": "{} adresów URL"
     },
     "minute": {
-        "one": "{count} minuta",
-        "few": "{count} minuty",
-        "many": "{count} minut",
-        "other": "{count} minut"
+        "one": "{} minuta",
+        "few": "{} minuty",
+        "many": "{} minut",
+        "other": "{} minut"
     },
     "hour": {
-        "one": "{count} godzina",
-        "few": "{count} godziny",
-        "many": "{count} godzin",
-        "other": "{count} godzin"
+        "one": "{} godzina",
+        "few": "{} godziny",
+        "many": "{} godzin",
+        "other": "{} godzin"
     },
     "day": {
-        "one": "{count} dzień",
-        "few": "{count} dni",
-        "many": "{count} dni",
-        "other": "{count} dni"
+        "one": "{} dzień",
+        "few": "{} dni",
+        "many": "{} dni",
+        "other": "{} dni"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Wyczyszczono {n} log (przed = {before}, po = {after})",
@@ -483,33 +483,33 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} i 1 inna aplikacja mają aktualizacje.",
-        "few": "{app} i {count} inne aplikacje mają aktualizacje.",
-        "many": "{app} i {count} innych aplikacji ma aktualizacje.",
-        "other": "{app} i {count} innych aplikacji ma aktualizacje."
+        "few": "{app} i {} inne aplikacje mają aktualizacje.",
+        "many": "{app} i {} innych aplikacji ma aktualizacje.",
+        "other": "{app} i {} innych aplikacji ma aktualizacje."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "Zaktualizowano {app} i 1 inną apkę.",
-        "few": "{app} i {count} inne apki zostały zaktualizowane.",
-        "many": "{app} i {count} innych apek zostało zaktualizowanych.",
-        "other": "{app} i {count} inne apki zostały zaktualizowane."
+        "few": "{app} i {} inne apki zostały zaktualizowane.",
+        "many": "{app} i {} innych apek zostało zaktualizowanych.",
+        "other": "{app} i {} inne apki zostały zaktualizowane."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Błąd aktualizacji {app} i 1 innej aplikacji.",
-        "few": "Błąd aktualizacji {app} i {count} innych aplikacji.",
-        "many": "Błąd aktualizacji {app} i {count} innych aplikacji.",
-        "other": "Błąd aktualizacji {app} i {count} innych aplikacji."
+        "few": "Błąd aktualizacji {app} i {} innych aplikacji.",
+        "many": "Błąd aktualizacji {app} i {} innych aplikacji.",
+        "other": "Błąd aktualizacji {app} i {} innych aplikacji."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} i 1 inna apka mogły zostać zaktualizowane.",
-        "few": "{app} i {count} inne apki mogły zostać zaktualizowane.",
-        "many": "{app} i {count} innych apek mogło zostać zaktualizowanych.",
-        "other": "{app} i {count} inne apki mogły zostać zaktualizowane."
+        "few": "{app} i {} inne apki mogły zostać zaktualizowane.",
+        "many": "{app} i {} innych apek mogło zostać zaktualizowanych.",
+        "other": "{app} i {} inne apki mogły zostać zaktualizowane."
     },
     "apk": {
-        "one": "{count} plik APK",
-        "few": "{count} pliki APK",
-        "many": "{count} plików APK",
-        "other": "{count} plików APK"
+        "one": "{} plik APK",
+        "few": "{} pliki APK",
+        "many": "{} plików APK",
+        "other": "{} plików APK"
     },
     "certificateHash": {
         "one": "Hash certyfikatu",
@@ -551,7 +551,7 @@
     "safeModePasswordError": "Błąd ustawiania hasła. Proszę spróbować ponownie.",
     "safeModeEnable": "Włącz tryb bezpieczeństwa",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} dotknięć pozostało do wyłączenia trybu bezpieczeństwa",
+    "safeModeTapsRemaining": "{} dotknięć pozostało do wyłączenia trybu bezpieczeństwa",
     "safeModeEnabledHint": "Tryb bezpieczeństwa włączony. Dotknij numeru wersji w Ustawieniach wiele razy, aby wyłączyć.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -580,5 +580,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

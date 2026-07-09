@@ -86,7 +86,7 @@
     "removeSelectedApps": "Видалити вибрані застосунки",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Оновити {}",
     "installX": "Встановити {}",
@@ -426,36 +426,36 @@
         "other": "Видалити застосунки?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Забагато запитів (обмеження швидкості) - повторіть спробу через {count} хвилину",
-        "other": "Забагато запитів (обмеження швидкості) - повторіть спробу через {count} хвилин"
+        "one": "Забагато запитів (обмеження швидкості) - повторіть спробу через {} хвилину",
+        "other": "Забагато запитів (обмеження швидкості) - повторіть спробу через {} хвилин"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Помилка перевірки оновлень у фоновому режимі - спробую знову через {count} хвилину",
-        "other": "Помилка перевірки оновлень у фоновому режимі - спробую знову через {count} хвилин"
+        "one": "Помилка перевірки оновлень у фоновому режимі - спробую знову через {} хвилину",
+        "other": "Помилка перевірки оновлень у фоновому режимі - спробую знову через {} хвилин"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Фонова перевірка оновлень знайшла {count} оновлення - сповістити користувача, якщо це необхідно",
-        "other": "Фонова перевірка оновлень знайшла {count} оновлень - сповістити користувача, якщо це необхідно"
+        "one": "Фонова перевірка оновлень знайшла {} оновлення - сповістити користувача, якщо це необхідно",
+        "other": "Фонова перевірка оновлень знайшла {} оновлень - сповістити користувача, якщо це необхідно"
     },
     "apps": {
-        "one": "{count} застосунок",
-        "other": "{count} застосунки"
+        "one": "{} застосунок",
+        "other": "{} застосунки"
     },
     "url": {
-        "one": "{count} URL-адреса",
-        "other": "{count} URL-адреси"
+        "one": "{} URL-адреса",
+        "other": "{} URL-адреси"
     },
     "minute": {
-        "one": "{count} хвилина",
-        "other": "{count} хвилин"
+        "one": "{} хвилина",
+        "other": "{} хвилин"
     },
     "hour": {
-        "one": "{count} година",
-        "other": "{count} годин"
+        "one": "{} година",
+        "other": "{} годин"
     },
     "day": {
-        "one": "{count} день",
-        "other": "{count} днів"
+        "one": "{} день",
+        "other": "{} днів"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Очищено {n} журнал (до = {before}, після = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} та ще 1 застосунок мають оновлення.",
-        "other": "{app} та ще {count} застосунки мають оновлення."
+        "other": "{app} та ще {} застосунки мають оновлення."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} та ще 1 застосунок було оновлено.",
-        "other": "{app} та ще {count} застосунків було оновлено."
+        "other": "{app} та ще {} застосунків було оновлено."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Не вдалося оновити {app} та ще 1 програму.",
-        "other": "Не вдалося оновити {app} і {count} та інші програми."
+        "other": "Не вдалося оновити {app} і {} та інші програми."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} та ще 1 застосунок можливо було оновлено.",
-        "other": "{app} та ще {count} застосунків можливо було оновлено."
+        "other": "{app} та ще {} застосунків можливо було оновлено."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK-файли"
+        "one": "{} APK",
+        "other": "{} APK-файли"
     },
     "certificateHash": {
         "one": "Сертифікат Hash",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Помилка встановлення пароля. Будь ласка, спробуйте знову.",
     "safeModeEnable": "Увімкнути безпечний режим",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} натискань залишилося для вимкнення безпечного режиму",
+    "safeModeTapsRemaining": "{} натискань залишилося для вимкнення безпечного режиму",
     "safeModeEnabledHint": "Безпечний режим увімкнено. Натисніть на номер версії в Налаштуваннях багаторазово, щоб вимкнути.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

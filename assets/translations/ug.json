@@ -86,7 +86,7 @@
     "removeSelectedApps": "تاللانغان ئەپلەرنى چىقىرىۋېتىش",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "{} نى يېڭىلاش",
     "installX": "{} نى قاچىلاش",
@@ -426,36 +426,36 @@
         "other": "ئەپلەرنى چىقىرىۋېتەمسىز؟"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "تەلەپ بەك كۆپ - {count} مىنۇتتىن كېيىن قايتا سىناڭ",
-        "other": "تەلەپ بەك كۆپ - {count} مىنۇتتىن كېيىن قايتا سىناڭ"
+        "one": "تەلەپ بەك كۆپ - {} مىنۇتتىن كېيىن قايتا سىناڭ",
+        "other": "تەلەپ بەك كۆپ - {} مىنۇتتىن كېيىن قايتا سىناڭ"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "خاتالىق كۆرۈلدى، {count} مىنۇتتىن كېيىن قايتا سىنايدۇ",
-        "other": "خاتالىق كۆرۈلدى، {count} مىنۇتتىن كېيىن قايتا سىنايدۇ"
+        "one": "خاتالىق كۆرۈلدى، {} مىنۇتتىن كېيىن قايتا سىنايدۇ",
+        "other": "خاتالىق كۆرۈلدى، {} مىنۇتتىن كېيىن قايتا سىنايدۇ"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "ئارقا كۆرۈنۈشتە {count} يېڭىلانما تېپىلدى",
-        "other": "ئارقا كۆرۈنۈشتە {count} يېڭىلانما تېپىلدى"
+        "one": "ئارقا كۆرۈنۈشتە {} يېڭىلانما تېپىلدى",
+        "other": "ئارقا كۆرۈنۈشتە {} يېڭىلانما تېپىلدى"
     },
     "apps": {
-        "one": "{count} ئەپ",
-        "other": "{count} ئەپ"
+        "one": "{} ئەپ",
+        "other": "{} ئەپ"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URL"
+        "one": "{} URL",
+        "other": "{} URL"
     },
     "minute": {
-        "one": "{count} مىنۇت",
-        "other": "{count} مىنۇت"
+        "one": "{} مىنۇت",
+        "other": "{} مىنۇت"
     },
     "hour": {
-        "one": "{count} سائەت",
-        "other": "{count} سائەت"
+        "one": "{} سائەت",
+        "other": "{} سائەت"
     },
     "day": {
-        "one": "{count} كۈن",
-        "other": "{count} كۈن"
+        "one": "{} كۈن",
+        "other": "{} كۈن"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} خاتىرە تازىلاندى",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} ۋە يەنە 1 ئەپنىڭ يېڭىلانمىسى بار.",
-        "other": "{app} ۋە يەنە {count} ئەپنىڭ يېڭىلانمىسى بار."
+        "other": "{app} ۋە يەنە {} ئەپنىڭ يېڭىلانمىسى بار."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} ۋە يەنە 1 ئەپ يېڭىلاندى.",
-        "other": "{app} ۋە يەنە {count} ئەپ يېڭىلاندى."
+        "other": "{app} ۋە يەنە {} ئەپ يېڭىلاندى."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "{app} ۋە يەنە 1 ئەپنى يېڭىلاش مەغلۇپ بولدى.",
-        "other": "{app} ۋە يەنە {count} ئەپنى يېڭىلاش مەغلۇپ بولدى."
+        "other": "{app} ۋە يەنە {} ئەپنى يېڭىلاش مەغلۇپ بولدى."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} ۋە يەنە 1 ئەپ يېڭىلانغان بولۇشى مۇمكىن.",
-        "other": "{app} ۋە يەنە {count} ئەپ يېڭىلانغان بولۇشى مۇمكىن."
+        "other": "{app} ۋە يەنە {} ئەپ يېڭىلانغان بولۇشى مۇمكىن."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK"
+        "one": "{} APK",
+        "other": "{} APK"
     },
     "certificateHash": {
         "one": "گۇۋاھنامە خاشى",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "پارول بەلگىلەشتە خاتالىق كۆرۈلدى.",
     "safeModeEnable": "بىخەتەر ھالەتنى قوزغىتىش",
     "safeModeToggle": "بىخەتەر ھالەتنى چەكلەش",
-    "safeModeTapsRemaining": "بىخەتەر ھالەتنى چەكلەش ئۈچۈن يەنە {count} قېتىم بېسىڭ",
+    "safeModeTapsRemaining": "بىخەتەر ھالەتنى چەكلەش ئۈچۈن يەنە {} قېتىم بېسىڭ",
     "safeModeEnabledHint": "بىخەتەر ھالەت قوزغىتىلدى. تەڭشەكتىكى نەشر نومۇرىنى كۆپ قېتىم بېسىپ چەكلەڭ.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

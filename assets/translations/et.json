@@ -86,7 +86,7 @@
     "removeSelectedApps": "Eemalda valitud äpid",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Uuenda {}",
     "installX": "Installi {}",
@@ -426,36 +426,36 @@
         "other": "Eemalda äpid?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Liiga palju päringuid (piirangutatud) - proovige uuesti {count} minuti pärast",
-        "other": "Liiga palju päringuid (piirangutatud) - proovige uuesti {count} minuti pärast"
+        "one": "Liiga palju päringuid (piirangutatud) - proovige uuesti {} minuti pärast",
+        "other": "Liiga palju päringuid (piirangutatud) - proovige uuesti {} minuti pärast"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Taustauuenduste kontrollimisel tekkis {error}, kavandatakse uuesti kontroll {count} minuti pärast",
-        "other": "Taustauuenduste kontrollimisel tekkis {error}, kavandatakse uuesti kontroll {count} minuti pärast"
+        "one": "Taustauuenduste kontrollimisel tekkis {error}, kavandatakse uuesti kontroll {} minuti pärast",
+        "other": "Taustauuenduste kontrollimisel tekkis {error}, kavandatakse uuesti kontroll {} minuti pärast"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Taustauuenduste kontroll leidis {count} uuenduse - teavitab kasutajat vajadusel",
-        "other": "Taustauuenduste kontroll leidis {count} uuendust - teavitab kasutajat vajadusel"
+        "one": "Taustauuenduste kontroll leidis {} uuenduse - teavitab kasutajat vajadusel",
+        "other": "Taustauuenduste kontroll leidis {} uuendust - teavitab kasutajat vajadusel"
     },
     "apps": {
-        "one": "{count} Äpp",
-        "other": "{count} Äppi"
+        "one": "{} Äpp",
+        "other": "{} Äppi"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URL-i"
+        "one": "{} URL",
+        "other": "{} URL-i"
     },
     "minute": {
-        "one": "{count} minut",
-        "other": "{count} minutit"
+        "one": "{} minut",
+        "other": "{} minutit"
     },
     "hour": {
-        "one": "{count} tund",
-        "other": "{count} tundi"
+        "one": "{} tund",
+        "other": "{} tundi"
     },
     "day": {
-        "one": "{count} päev",
-        "other": "{count} päeva"
+        "one": "{} päev",
+        "other": "{} päeva"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Kustutatud {n} logi (enne = {before}, pärast = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} ja 1 veel äpp on uuendusi.",
-        "other": "{app} ja {count} veel äppi on uuendusi."
+        "other": "{app} ja {} veel äppi on uuendusi."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} ja 1 veel äpp uuendati.",
-        "other": "{app} ja {count} veel äppi uuendati."
+        "other": "{app} ja {} veel äppi uuendati."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "{app} ja 1 veel äpi uuendamine ebaõnnestus.",
-        "other": "{app} ja {count} veel äpi uuendamine ebaõnnestus."
+        "other": "{app} ja {} veel äpi uuendamine ebaõnnestus."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} ja 1 veel äpp võidi uuendada.",
-        "other": "{app} ja {count} veel äppi võidi uuendada."
+        "other": "{app} ja {} veel äppi võidi uuendada."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK-d"
+        "one": "{} APK",
+        "other": "{} APK-d"
     },
     "certificateHash": {
         "one": "Sertifikaadi räsi",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Viga parooli seadmiseks. Proovige uuesti.",
     "safeModeEnable": "Luba turvarežiim",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} puudutusi jäänud, et keelata turvarežiim",
+    "safeModeTapsRemaining": "{} puudutusi jäänud, et keelata turvarežiim",
     "safeModeEnabledHint": "Turvarežiim on sisse lülitatud. Puudutage mitu korda versiooninumbrit Sätetes, et keelata.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

@@ -698,11 +698,10 @@ class _UpdatiumState extends State<Updatium> {
                 ),
               ),
 
-              // Expressive ElevatedButton with subtle shadows - preserve M3 Expressive transparency
+              // Expressive ElevatedButton with subtle shadows
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
-                  elevation: isDark ? 3 : 2,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 28,
                     vertical: 14,
@@ -990,12 +989,9 @@ class _UpdatiumState extends State<Updatium> {
                     'NotoSansArabic',
                   ],
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
 

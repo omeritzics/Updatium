@@ -86,7 +86,7 @@
     "removeSelectedApps": "चुने गए ऐप्स हटाएँ",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "{} अपडेट करें",
     "installX": "{} इंस्टॉल करें",
@@ -426,36 +426,36 @@
         "other": "ऐप्स हटाएँ?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "बहुत अधिक अनुरोध (रेट लिमिटेड) - {count} मिनट में पुनः प्रयास करें",
-        "other": "बहुत अधिक अनुरोध (रेट लिमिटेड) - {count} मिनट में पुनः प्रयास करें"
+        "one": "बहुत अधिक अनुरोध (रेट लिमिटेड) - {} मिनट में पुनः प्रयास करें",
+        "other": "बहुत अधिक अनुरोध (रेट लिमिटेड) - {} मिनट में पुनः प्रयास करें"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "पृष्ठभूमि अपडेट जाँच में एक {error} त्रुटि आई, {count} मिनट में पुनः प्रयास निर्धारित किया जाएगा",
-        "other": "पृष्ठभूमि अपडेट जाँच में एक {error} त्रुटि आई, {count} मिनट में पुनः प्रयास निर्धारित किया जाएगा"
+        "one": "पृष्ठभूमि अपडेट जाँच में एक {error} त्रुटि आई, {} मिनट में पुनः प्रयास निर्धारित किया जाएगा",
+        "other": "पृष्ठभूमि अपडेट जाँच में एक {error} त्रुटि आई, {} मिनट में पुनः प्रयास निर्धारित किया जाएगा"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "पृष्ठभूमि अपडेट जाँच में {count} अपडेट मिला - यदि आवश्यक हो तो उपयोगकर्ता को सूचित किया जाएगा",
-        "other": "पृष्ठभूमि अपडेट जाँच में {count} अपडेट मिले - यदि आवश्यक हो तो उपयोगकर्ता को सूचित किया जाएगा"
+        "one": "पृष्ठभूमि अपडेट जाँच में {} अपडेट मिला - यदि आवश्यक हो तो उपयोगकर्ता को सूचित किया जाएगा",
+        "other": "पृष्ठभूमि अपडेट जाँच में {} अपडेट मिले - यदि आवश्यक हो तो उपयोगकर्ता को सूचित किया जाएगा"
     },
     "apps": {
-        "one": "{count} ऐप",
-        "other": "{count} ऐप्स"
+        "one": "{} ऐप",
+        "other": "{} ऐप्स"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URL"
+        "one": "{} URL",
+        "other": "{} URL"
     },
     "minute": {
-        "one": "{count} मिनट",
-        "other": "{count} मिनट"
+        "one": "{} मिनट",
+        "other": "{} मिनट"
     },
     "hour": {
-        "one": "{count} घंटा",
-        "other": "{count} घंटे"
+        "one": "{} घंटा",
+        "other": "{} घंटे"
     },
     "day": {
-        "one": "{count} दिन",
-        "other": "{count} दिन"
+        "one": "{} दिन",
+        "other": "{} दिन"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} लॉग साफ़ किया गया (पहले = {before}, बाद में = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} और 1 अन्य ऐप के लिए अपडेट हैं।",
-        "other": "{app} और {count} अन्य ऐप्स के लिए अपडेट हैं।"
+        "other": "{app} और {} अन्य ऐप्स के लिए अपडेट हैं।"
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} और 1 अन्य ऐप अपडेट किया गया था।",
-        "other": "{app} और {count} अन्य ऐप्स अपडेट किए गए थे।"
+        "other": "{app} और {} अन्य ऐप्स अपडेट किए गए थे।"
     },
     "xAndNMoreUpdatesFailed": {
         "one": "{app} और 1 अन्य ऐप को अपडेट करने में विफल।",
-        "other": "{app} और {count} अन्य ऐप्स को अपडेट करने में विफल।"
+        "other": "{app} और {} अन्य ऐप्स को अपडेट करने में विफल।"
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} और 1 अन्य ऐप संभवतः अपडेट हो गया होगा।",
-        "other": "{app} और {count} अन्य ऐप्स संभवतः अपडेट हो गए होंगे।"
+        "other": "{app} और {} अन्य ऐप्स संभवतः अपडेट हो गए होंगे।"
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK"
+        "one": "{} APK",
+        "other": "{} APK"
     },
     "certificateHash": {
         "one": "प्रमाणपत्र हैश",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "पासवर्ड सेट करने में त्रुटि। कृपया पुनः प्रयास करें।",
     "safeModeEnable": "सेफ मोड सक्षम करें",
     "safeModeToggle": "सेफ मोड अक्षम करें",
-    "safeModeTapsRemaining": "सेफ मोड अक्षम करने के लिए {count} टैप शेष हैं",
+    "safeModeTapsRemaining": "सेफ मोड अक्षम करने के लिए {} टैप शेष हैं",
     "safeModeEnabledHint": "सेफ मोड सक्षम है। अक्षम करने के लिए सेटिंग्स में वर्शन नंबर पर कई बार टैप करें।",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

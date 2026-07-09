@@ -86,7 +86,7 @@
     "removeSelectedApps": "Retirar apps seleccionadas",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Actualizar {}",
     "installX": "Instalar {}",
@@ -426,36 +426,36 @@
         "other": "Retirar apps?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Demasiadas peticións (taxa limitada) - volver a intentar en {count} minuto",
-        "other": "Demasiadas peticións (taxa limitada) - volver a intentar en {count} minutos"
+        "one": "Demasiadas peticións (taxa limitada) - volver a intentar en {} minuto",
+        "other": "Demasiadas peticións (taxa limitada) - volver a intentar en {} minutos"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "A actualización en segundo plano atopou un {error}, programará un reintento en {count} minuto",
-        "other": "A actualización en segundo plano atopou un {error}, programará un reintento en {count} minutos"
+        "one": "A actualización en segundo plano atopou un {error}, programará un reintento en {} minuto",
+        "other": "A actualización en segundo plano atopou un {error}, programará un reintento en {} minutos"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "A actualización en segundo plano atopou {count} actualización - avisará a usuaria se fose preciso",
-        "other": "A actualización en segundo plano atopou {count} actualizacións - avisará á usuaria se fose preciso"
+        "one": "A actualización en segundo plano atopou {} actualización - avisará a usuaria se fose preciso",
+        "other": "A actualización en segundo plano atopou {} actualizacións - avisará á usuaria se fose preciso"
     },
     "apps": {
-        "one": "{count} App",
-        "other": "{count} Apps"
+        "one": "{} App",
+        "other": "{} Apps"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URLs"
+        "one": "{} URL",
+        "other": "{} URLs"
     },
     "minute": {
-        "one": "{count} minuto",
-        "other": "{count} minutos"
+        "one": "{} minuto",
+        "other": "{} minutos"
     },
     "hour": {
-        "one": "{count} hora",
-        "other": "{count} horas"
+        "one": "{} hora",
+        "other": "{} horas"
     },
     "day": {
-        "one": "{count} día",
-        "other": "{count} días"
+        "one": "{} día",
+        "other": "{} días"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Limpado {n} rexistro (anterior = {before}, posterior = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} e outra app teñen actualizacións.",
-        "other": "{app} e {count} apps máis teñen actualizacións."
+        "other": "{app} e {} apps máis teñen actualizacións."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} e outra actualizáronse.",
-        "other": "{app} e outras {count} apps actualizáronse."
+        "other": "{app} e outras {} apps actualizáronse."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Fallou a actualización de {app} e outra app.",
-        "other": "Fallou a actualización de {app} e {count} apps máis."
+        "other": "Fallou a actualización de {app} e {} apps máis."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} e outra app poderían ter sido actualizadas.",
-        "other": "{app} e {count} apps máis poderían ter sido actualizadas."
+        "other": "{app} e {} apps máis poderían ter sido actualizadas."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APKs"
+        "one": "{} APK",
+        "other": "{} APKs"
     },
     "certificateHash": {
         "one": "Certificado hash",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Erro ao establecer o contrasinal. Por favor, inténtao de novo.",
     "safeModeEnable": "Activar Modo seguro",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} toques restantes para desactivar o Modo seguro",
+    "safeModeTapsRemaining": "{} toques restantes para desactivar o Modo seguro",
     "safeModeEnabledHint": "Modo seguro activado. Toca varias veces o número de versión en Configuración para desactivar.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

@@ -86,7 +86,7 @@
     "removeSelectedApps": "Geselecteerde apps verwijderen",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "{} bijwerken",
     "installX": "{} installeren",
@@ -426,36 +426,36 @@
         "other": "Apps verwijderen?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Te veel verzoeken (aantal beperkt) - opnieuw proberen over {count} minuut",
-        "other": "Te veel verzoeken (aantal beperkt) - opnieuw proberen over {count} minuten"
+        "one": "Te veel verzoeken (aantal beperkt) - opnieuw proberen over {} minuut",
+        "other": "Te veel verzoeken (aantal beperkt) - opnieuw proberen over {} minuten"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Achtergrond-updatecontrole heeft een {error}, zal een nieuwe controle plannen over {count} minuut",
-        "other": "Achtergrond-updatecontrole heeft een {error}, zal een nieuwe controle plannen over {count} minuten"
+        "one": "Achtergrond-updatecontrole heeft een {error}, zal een nieuwe controle plannen over {} minuut",
+        "other": "Achtergrond-updatecontrole heeft een {error}, zal een nieuwe controle plannen over {} minuten"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Achtergrond-updatecontrole heeft {count} update gevonden - zal de gebruiker op de hoogte stellen indien nodig",
-        "other": "Achtergrond-updatecontrole heeft {count} updates gevonden - zal de gebruiker op de hoogte stellen indien nodig"
+        "one": "Achtergrond-updatecontrole heeft {} update gevonden - zal de gebruiker op de hoogte stellen indien nodig",
+        "other": "Achtergrond-updatecontrole heeft {} updates gevonden - zal de gebruiker op de hoogte stellen indien nodig"
     },
     "apps": {
-        "one": "{count} app",
-        "other": "{count} apps"
+        "one": "{} app",
+        "other": "{} apps"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URL's"
+        "one": "{} URL",
+        "other": "{} URL's"
     },
     "minute": {
-        "one": "{count} minuut",
-        "other": "{count} minuten"
+        "one": "{} minuut",
+        "other": "{} minuten"
     },
     "hour": {
-        "one": "{count} uur",
-        "other": "{count} uur"
+        "one": "{} uur",
+        "other": "{} uur"
     },
     "day": {
-        "one": "{count} dag",
-        "other": "{count} dagen"
+        "one": "{} dag",
+        "other": "{} dagen"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} logboekitem gewist (voor = {before}, na = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} en nog 1 app hebben updates.",
-        "other": "{app} en nog {count} apps hebben updates."
+        "other": "{app} en nog {} apps hebben updates."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} en nog 1 app is bijgewerkt.",
-        "other": "{app} en nog {count} apps zijn bijgewerkt."
+        "other": "{app} en nog {} apps zijn bijgewerkt."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Bijwerken mislukt voor {app} en nog 1 app.",
-        "other": "Bijwerken mislukt voor {app} en nog {count} apps."
+        "other": "Bijwerken mislukt voor {app} en nog {} apps."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} en nog 1 app zijn mogelijk bijgewerkt.",
-        "other": "{app} en nog {count} apps zijn mogelijk bijgewerkt."
+        "other": "{app} en nog {} apps zijn mogelijk bijgewerkt."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK's"
+        "one": "{} APK",
+        "other": "{} APK's"
     },
     "certificateHash": {
         "one": "Certificaat Hash",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Error setting password. Please try again.",
     "safeModeEnable": "Enable Safe Mode",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} taps remaining to disable Safe Mode",
+    "safeModeTapsRemaining": "{} taps remaining to disable Safe Mode",
     "safeModeEnabledHint": "Safe Mode enabled. Tap on the version number in the Settings many times to disable.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

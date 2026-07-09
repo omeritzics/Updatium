@@ -86,7 +86,7 @@
     "removeSelectedApps": "Farigi la selektitajn apojn",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Ĝisdatigi {}",
     "installX": "Instali {}",
@@ -426,36 +426,36 @@
         "other": "Forigi la aplikaĵojn?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Tro da informmendoj (limigita kvanto) - reprovu en {count} minuto",
-        "other": "Tro da informmendoj (limigita kvanto) - reprovu en {count} minutoj"
+        "one": "Tro da informmendoj (limigita kvanto) - reprovu en {} minuto",
+        "other": "Tro da informmendoj (limigita kvanto) - reprovu en {} minutoj"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {count} minuto",
-        "other": "La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {count} minutoj"
+        "one": "La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {} minuto",
+        "other": "La serĉo de fonaj ĝisdatigoj renkontis al {error}, nova programota provo en {} minutoj"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "La serĉo de fonaj ĝisdatigoj trovis {count} ĝisdatigon - la uzanto estas sciigota se necesa",
-        "other": "La serĉo de fonaj ĝisdatigoj trovis {count} ĝisdatigojn - la uzanto estas sciigota se necesa"
+        "one": "La serĉo de fonaj ĝisdatigoj trovis {} ĝisdatigon - la uzanto estas sciigota se necesa",
+        "other": "La serĉo de fonaj ĝisdatigoj trovis {} ĝisdatigojn - la uzanto estas sciigota se necesa"
     },
     "apps": {
-        "one": "{count} Apo",
-        "other": "{count} Apoj"
+        "one": "{} Apo",
+        "other": "{} Apoj"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URLj"
+        "one": "{} URL",
+        "other": "{} URLj"
     },
     "minute": {
-        "one": "{count} minuto",
-        "other": "{count} minutoj"
+        "one": "{} minuto",
+        "other": "{} minutoj"
     },
     "hour": {
-        "one": "{count} horo",
-        "other": "{count} horoj"
+        "one": "{} horo",
+        "other": "{} horoj"
     },
     "day": {
-        "one": "{count} tago",
-        "other": "{count} tagoj"
+        "one": "{} tago",
+        "other": "{} tagoj"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Purigis {n} protokolon (antaŭe = {before}, malantaŭe = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} kaj 1 alia apo havas ĝisdatigojn.",
-        "other": "{app} kaj {count} aliaj apoj havas ĝisdatigojn."
+        "other": "{app} kaj {} aliaj apoj havas ĝisdatigojn."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} kaj 1 alia apo ĝisdatiĝis.",
-        "other": "{app} kaj {count} aliaj apoj ĝisdatiĝis."
+        "other": "{app} kaj {} aliaj apoj ĝisdatiĝis."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Ne eblas ĝisdatigi {app} kaj 1 alian apon.",
-        "other": "Ne eblas ĝisdatigi {app} et {count} aliajn apojn."
+        "other": "Ne eblas ĝisdatigi {app} et {} aliajn apojn."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} kaj 1 alia apo eble ĝisdatiĝis.",
-        "other": "{app} kaj {count} aliaj apoj eble ĝisdatiĝis."
+        "other": "{app} kaj {} aliaj apoj eble ĝisdatiĝis."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APKj"
+        "one": "{} APK",
+        "other": "{} APKj"
     },
     "certificateHash": {
         "one": "Certificate Hash",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Error setting password. Please try again.",
     "safeModeEnable": "Enable Safe Mode",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} taps remaining to disable Safe Mode",
+    "safeModeTapsRemaining": "{} taps remaining to disable Safe Mode",
     "safeModeEnabledHint": "Safe Mode enabled. Tap on the version number in the Settings many times to disable.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

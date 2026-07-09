@@ -549,17 +549,11 @@ class _SettingsPageState extends State<SettingsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ExpansionTile(
-                          leading: Icon(
-                            Icons.update,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                          leading: Icon(Icons.update),
                           title: Text(
                             'updates'.t(),
                             style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                                ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           initiallyExpanded:
                               settingsProvider.updatesSectionExpanded,
@@ -567,9 +561,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             settingsProvider.updatesSectionExpanded = expanded;
                           },
                           tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
+                            horizontal: 8,
                           ),
-                          childrenPadding: const EdgeInsets.all(16),
+                          childrenPadding: const EdgeInsets.all(8),
                           children: [
                             gap16,
                             //intervalDropdown,
@@ -1049,17 +1043,11 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap24,
                         ExpansionTile(
-                          leading: Icon(
-                            Icons.cloud_download,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                          leading: Icon(Icons.cloud_download),
                           title: Text(
                             'sourceSpecific'.t(),
                             style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                                ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           initiallyExpanded:
                               settingsProvider.sourceSpecificSectionExpanded,
@@ -1068,24 +1056,18 @@ class _SettingsPageState extends State<SettingsPage> {
                                 expanded;
                           },
                           tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
+                            horizontal: 8,
                           ),
-                          childrenPadding: const EdgeInsets.all(16),
+                          childrenPadding: const EdgeInsets.all(8),
                           children: [...sourceSpecificFields],
                         ),
                         gap24,
                         ExpansionTile(
-                          leading: Icon(
-                            Icons.palette_rounded,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                          leading: Icon(Icons.palette_rounded),
                           title: Text(
                             'appearance'.t(),
                             style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                                ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           initiallyExpanded:
                               settingsProvider.appearanceSectionExpanded,
@@ -1094,9 +1076,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                 expanded;
                           },
                           tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
+                            horizontal: 8,
                           ),
-                          childrenPadding: const EdgeInsets.all(16),
+                          childrenPadding: const EdgeInsets.all(8),
                           children: [
                             gap16,
                             GeneratedForm(
@@ -1193,34 +1175,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             gap16,
 
-                            SwitchListTile(
-                              title: Text('pinUpdates'.t()),
-                              value: settingsProvider.pinUpdates,
-                              onChanged: (value) {
-                                settingsProvider.pinUpdates = value;
-                              },
-                            ),
-
-                            gap16,
-
-                            SwitchListTile(
-                              title: Text('moveNonInstalledAppsToBottom'.t()),
-                              value: settingsProvider.buryNonInstalled,
-                              onChanged: (value) {
-                                settingsProvider.buryNonInstalled = value;
-                              },
-                            ),
-
-                            gap16,
-
-                            SwitchListTile(
-                              title: Text('groupByCategory'.t()),
-                              value: settingsProvider.groupByCategory,
-                              onChanged: (value) {
-                                settingsProvider.groupByCategory = value;
-                              },
-                            ),
-
                             gap16,
 
                             SwitchListTile(
@@ -1277,17 +1231,11 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         gap24,
                         ExpansionTile(
-                          leading: Icon(
-                            Icons.category_rounded,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                          leading: Icon(Icons.list_rounded),
                           title: Text(
-                            'categories'.t(),
+                            'appDisplay'.t(),
                             style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                                ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           initiallyExpanded:
                               settingsProvider.categoriesSectionExpanded,
@@ -1296,9 +1244,57 @@ class _SettingsPageState extends State<SettingsPage> {
                                 expanded;
                           },
                           tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
+                            horizontal: 8,
                           ),
-                          childrenPadding: const EdgeInsets.all(16),
+                          childrenPadding: const EdgeInsets.all(8),
+                          children: [
+                            SwitchListTile(
+                              title: Text('pinUpdates'.t()),
+                              value: settingsProvider.pinUpdates,
+                              onChanged: (value) {
+                                settingsProvider.pinUpdates = value;
+                              },
+                            ),
+
+                            gap16,
+
+                            SwitchListTile(
+                              title: Text('moveNonInstalledAppsToBottom'.t()),
+                              value: settingsProvider.buryNonInstalled,
+                              onChanged: (value) {
+                                settingsProvider.buryNonInstalled = value;
+                              },
+                            ),
+
+                            gap16,
+
+                            SwitchListTile(
+                              title: Text('groupByCategory'.t()),
+                              value: settingsProvider.groupByCategory,
+                              onChanged: (value) {
+                                settingsProvider.groupByCategory = value;
+                              },
+                            ),
+                          ],
+                        ),
+                        gap24,
+                        ExpansionTile(
+                          leading: Icon(Icons.category_rounded),
+                          title: Text(
+                            'categories'.t(),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(fontWeight: FontWeight.w600),
+                          ),
+                          initiallyExpanded:
+                              settingsProvider.categoriesSectionExpanded,
+                          onExpansionChanged: (bool expanded) {
+                            settingsProvider.categoriesSectionExpanded =
+                                expanded;
+                          },
+                          tilePadding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                          ),
+                          childrenPadding: const EdgeInsets.all(8),
                           children: [
                             gap16,
                             CategoryTagEditor(showLabelWhenNotEmpty: false),
@@ -1802,9 +1798,7 @@ class _AboutDialogState extends State<AboutDialog> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            t(
-              'safeModeTapsRemaining',
-            ).replaceAll('{count}', remaining.toString()),
+            t('safeModeTapsRemaining').replaceAll('{}', remaining.toString()),
           ),
           duration: const Duration(milliseconds: 800),
           behavior: SnackBarBehavior.floating,

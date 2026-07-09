@@ -86,7 +86,7 @@
     "removeSelectedApps": "Seçili uygulamaları kaldır",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "{} güncelle",
     "installX": "{} yükle",
@@ -426,36 +426,36 @@
         "other": "Uygulamalar kaldırılsın mı?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Çok fazla istek (istek sınırı) - {count} dakika içinde tekrar deneyin",
-        "other": "Çok fazla istek (istek sınırı) - {count} dakika içinde tekrar deneyin"
+        "one": "Çok fazla istek (istek sınırı) - {} dakika içinde tekrar deneyin",
+        "other": "Çok fazla istek (istek sınırı) - {} dakika içinde tekrar deneyin"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Arka planda güncelleme kontrolü sırasında {error} ile karşılaşıldı, {count} dakika içinde yeniden kontrol planlanacak",
-        "other": "Arka planda güncelleme kontrolü sırasında {error} ile karşılaşıldı, {count} dakika içinde yeniden kontrol planlanacak"
+        "one": "Arka planda güncelleme kontrolü sırasında {error} ile karşılaşıldı, {} dakika içinde yeniden kontrol planlanacak",
+        "other": "Arka planda güncelleme kontrolü sırasında {error} ile karşılaşıldı, {} dakika içinde yeniden kontrol planlanacak"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Arka planda güncelleme kontrolünde {count} güncelleme bulundu - gerekirse kullanıcıya bildirilecek",
-        "other": "Arka planda güncelleme kontrolünde {count} güncelleme bulundu - gerekirse kullanıcıya bildirilecek"
+        "one": "Arka planda güncelleme kontrolünde {} güncelleme bulundu - gerekirse kullanıcıya bildirilecek",
+        "other": "Arka planda güncelleme kontrolünde {} güncelleme bulundu - gerekirse kullanıcıya bildirilecek"
     },
     "apps": {
-        "one": "{count} Uygulama",
-        "other": "{count} Uygulama"
+        "one": "{} Uygulama",
+        "other": "{} Uygulama"
     },
     "url": {
-        "one": "{count} Bağlantı (URL)",
-        "other": "{count} Bağlantı (URL)"
+        "one": "{} Bağlantı (URL)",
+        "other": "{} Bağlantı (URL)"
     },
     "minute": {
-        "one": "{count} dakika",
-        "other": "{count} dakika"
+        "one": "{} dakika",
+        "other": "{} dakika"
     },
     "hour": {
-        "one": "{count} saat",
-        "other": "{count} saat"
+        "one": "{} saat",
+        "other": "{} saat"
     },
     "day": {
-        "one": "{count} gün",
-        "other": "{count} gün"
+        "one": "{} gün",
+        "other": "{} gün"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} kayıt temizlendi (önce = {before}, sonra = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} ve 1 uygulamanın daha güncellemesi var.",
-        "other": "{app} ve {count} uygulamanın daha güncellemesi var."
+        "other": "{app} ve {} uygulamanın daha güncellemesi var."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} ve 1 uygulama daha güncellendi.",
-        "other": "{app} ve {count} uygulama daha güncellendi."
+        "other": "{app} ve {} uygulama daha güncellendi."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "{app} ve 1 uygulama güncellenemedi.",
-        "other": "{app} ve {count} uygulama güncellenemedi."
+        "other": "{app} ve {} uygulama güncellenemedi."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} ve 1 uygulama daha güncellenmiş olabilir.",
-        "other": "{app} ve {count} uygulama daha güncellenmiş olabilir."
+        "other": "{app} ve {} uygulama daha güncellenmiş olabilir."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK"
+        "one": "{} APK",
+        "other": "{} APK"
     },
     "certificateHash": {
         "one": "Sertifika Karma Değeri (Hash)",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Parola ayarlanırken hata oluştu. Lütfen tekrar deneyin.",
     "safeModeEnable": "Güvenli Mod'u Etkinleştir",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} dokunma kaldı, Güvenli Mod'u devre dışı bırakmak için",
+    "safeModeTapsRemaining": "{} dokunma kaldı, Güvenli Mod'u devre dışı bırakmak için",
     "safeModeEnabledHint": "Güvenli Mod etkinleştirildi. Ayarlardaki sürüm numarasına birçoğuna dokunarak devre dışı bırakın.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

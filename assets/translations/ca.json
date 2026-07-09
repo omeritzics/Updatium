@@ -86,7 +86,7 @@
     "removeSelectedApps": "Elimina les aplicacions seleccionades",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Actualitza {}",
     "installX": "Instal·la {}",
@@ -426,36 +426,36 @@
         "other": "¿Suprimeixo les aplicacions?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Massa peticions (límit excedit), torna-hi en {count} minut",
-        "other": "Massa peticions (límit excedit), torna-hi en {count} minuts"
+        "one": "Massa peticions (límit excedit), torna-hi en {} minut",
+        "other": "Massa peticions (límit excedit), torna-hi en {} minuts"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "La comprovació d'actualitzacions en segon pla ha trobat un {error}, es tornarà a provar en {count} minut",
-        "other": "La comprovació d'actualitzacions en segon pla ha trobat un {error}, es tornarà a provar en {count} minuts"
+        "one": "La comprovació d'actualitzacions en segon pla ha trobat un {error}, es tornarà a provar en {} minut",
+        "other": "La comprovació d'actualitzacions en segon pla ha trobat un {error}, es tornarà a provar en {} minuts"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "La comprovació d'actualitzacions en segon pla ha trobat {count} actualització, t'ho notificarem si cal",
-        "other": "La comprovació d'actualitzacions en segon pla ha trobat {count} actualitzacions, t'ho notificarem si cal"
+        "one": "La comprovació d'actualitzacions en segon pla ha trobat {} actualització, t'ho notificarem si cal",
+        "other": "La comprovació d'actualitzacions en segon pla ha trobat {} actualitzacions, t'ho notificarem si cal"
     },
     "apps": {
-        "one": "{count} Aplicació",
-        "other": "{count} Aplicacions"
+        "one": "{} Aplicació",
+        "other": "{} Aplicacions"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URLs"
+        "one": "{} URL",
+        "other": "{} URLs"
     },
     "minute": {
-        "one": "{count} minut",
-        "other": "{count} minuts"
+        "one": "{} minut",
+        "other": "{} minuts"
     },
     "hour": {
-        "one": "{count} hora",
-        "other": "{count} hores"
+        "one": "{} hora",
+        "other": "{} hores"
     },
     "day": {
-        "one": "{count} dia",
-        "other": "{count} dies"
+        "one": "{} dia",
+        "other": "{} dies"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Suprimit {n} registre (anterior a = {before}, posterior a = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} i 1 aplicació més tenen actualitzacions.",
-        "other": "{app} i {count} aplicacions més tenen actualitzacions."
+        "other": "{app} i {} aplicacions més tenen actualitzacions."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} i 1 aplicació més s'han actualitzat.",
-        "other": "{app} i {count} aplicacions més s'han actualitzat."
+        "other": "{app} i {} aplicacions més s'han actualitzat."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Error en actualitzar {app} i 1 aplicació més.",
-        "other": "No s'ha pogut actualizar {app} i {count} aplicacions més."
+        "other": "No s'ha pogut actualizar {app} i {} aplicacions més."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} i 1 aplicació més podrien haver estat actualizades.",
-        "other": "{app} i {count} aplicacions més podrien haver estat actualitzades."
+        "other": "{app} i {} aplicacions més podrien haver estat actualitzades."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APKs"
+        "one": "{} APK",
+        "other": "{} APKs"
     },
     "certificateHash": {
         "one": "Suma de certificat",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Error al establir la contrasenya. Torneu-ho a provar.",
     "safeModeEnable": "Activa el Mode segur",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} tocs restants per desactivar el Mode segur",
+    "safeModeTapsRemaining": "{} tocs restants per desactivar el Mode segur",
     "safeModeEnabledHint": "El Mode segur està activat. Toca el número de versió a Configuració diverses vegades per desactivar.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

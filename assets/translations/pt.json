@@ -86,7 +86,7 @@
     "removeSelectedApps": "Remover aplicações selecionadas",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Atualizar {}",
     "installX": "Instalar {}",
@@ -426,36 +426,36 @@
         "other": "Remover aplicações?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Muitos pedidos (taxa de pedidos limitada) - tente novamente em {count} minuto",
-        "other": "Muitos pedidos (taxa limitada) - tente novamente em {count} minutos"
+        "one": "Muitos pedidos (taxa de pedidos limitada) - tente novamente em {} minuto",
+        "other": "Muitos pedidos (taxa limitada) - tente novamente em {} minutos"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "A verificação de atualizações em segundo plano encontrou um {error}, agendada uma nova verificação em {count} minuto",
-        "other": "A verificação de atualizações em segundo plano encontrou um {error}, agendada uma nova verificação em {count} minutos"
+        "one": "A verificação de atualizações em segundo plano encontrou um {error}, agendada uma nova verificação em {} minuto",
+        "other": "A verificação de atualizações em segundo plano encontrou um {error}, agendada uma nova verificação em {} minutos"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "A verificação de atualizações em segundo plano encontrou {count} atualização, o utilizador será notificado caso necessário",
-        "other": "A verificação de atualizações em segundo plano encontrou {count} atualizações, o utilizador será notificado caso necessário"
+        "one": "A verificação de atualizações em segundo plano encontrou {} atualização, o utilizador será notificado caso necessário",
+        "other": "A verificação de atualizações em segundo plano encontrou {} atualizações, o utilizador será notificado caso necessário"
     },
     "apps": {
-        "one": "{count} Aplicação",
-        "other": "{count} Aplicações"
+        "one": "{} Aplicação",
+        "other": "{} Aplicações"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URLs"
+        "one": "{} URL",
+        "other": "{} URLs"
     },
     "minute": {
-        "one": "{count} minuto",
-        "other": "{count} minutos"
+        "one": "{} minuto",
+        "other": "{} minutos"
     },
     "hour": {
-        "one": "{count} hora",
-        "other": "{count} horas"
+        "one": "{} hora",
+        "other": "{} horas"
     },
     "day": {
-        "one": "{count} dia",
-        "other": "{count} dias"
+        "one": "{} dia",
+        "other": "{} dias"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Foi limpo {n} log (antes = {antes}, depois = {depois})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} e uma outra aplicação possui atualizações.",
-        "other": "{app} e {count} outras aplicações possuem atualizações."
+        "other": "{app} e {} outras aplicações possuem atualizações."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} e uma outra aplicação foram atualizadas.",
-        "other": "{app} e {count} outras aplicações foram atualizadas."
+        "other": "{app} e {} outras aplicações foram atualizadas."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Falha ao atualizar {app} e mais 1 aplicação.",
-        "other": "Falha ao atualizar {app} e {count} outras aplicações."
+        "other": "Falha ao atualizar {app} e {} outras aplicações."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} e uma outra aplicação podem ter sido atualizadas.",
-        "other": "{app} e {count} outras aplicações podem ter sido atualizadas."
+        "other": "{app} e {} outras aplicações podem ter sido atualizadas."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APKs"
+        "one": "{} APK",
+        "other": "{} APKs"
     },
     "certificateHash": {
         "one": "Hash do Certificado",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Error setting password. Please try again.",
     "safeModeEnable": "Enable Safe Mode",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} taps remaining to disable Safe Mode",
+    "safeModeTapsRemaining": "{} taps remaining to disable Safe Mode",
     "safeModeEnabledHint": "Safe Mode enabled. Tap on the version number in the Settings many times to disable.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

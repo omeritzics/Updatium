@@ -370,9 +370,7 @@ class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            t(
-              'safeModeTapsRemaining',
-            ).replaceAll('{count}', remaining.toString()),
+            t('safeModeTapsRemaining').replaceAll('{}', remaining.toString()),
           ),
           duration: const Duration(milliseconds: 800),
           behavior: SnackBarBehavior.floating,

@@ -86,7 +86,7 @@
     "removeSelectedApps": "選択したアプリを削除する",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "{} をアップデートする",
     "installX": "{} をインストールする",
@@ -426,36 +426,36 @@
         "other": "アプリを削除しますか？"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "リクエストが多すぎます（レート制限）- {count} 分後に再試行してください",
-        "other": "リクエストが多すぎます（レート制限）- {count} 分後に再試行してください"
+        "one": "リクエストが多すぎます（レート制限）- {} 分後に再試行してください",
+        "other": "リクエストが多すぎます（レート制限）- {} 分後に再試行してください"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "バックグラウンドでのアップデート確認で {error} の問題が発生, {count} 分後に再試行します",
-        "other": "バックグラウンドでのアップデート確認で {error} の問題が発生, {count} 分後に再試行します"
+        "one": "バックグラウンドでのアップデート確認で {error} の問題が発生, {} 分後に再試行します",
+        "other": "バックグラウンドでのアップデート確認で {error} の問題が発生, {} 分後に再試行します"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "バックグラウンドでのアップデート確認で {count} 個のアップデートを発見 - 必要に応じてユーザーに通知します",
-        "other": "バックグラウンドでのアップデート確認で {count} 個のアップデートを発見 - 必要に応じてユーザーに通知します"
+        "one": "バックグラウンドでのアップデート確認で {} 個のアップデートを発見 - 必要に応じてユーザーに通知します",
+        "other": "バックグラウンドでのアップデート確認で {} 個のアップデートを発見 - 必要に応じてユーザーに通知します"
     },
     "apps": {
-        "one": "{count} 個のアプリ",
-        "other": "{count} 個のアプリ"
+        "one": "{} 個のアプリ",
+        "other": "{} 個のアプリ"
     },
     "url": {
-        "one": "{count} 個のURL",
-        "other": "{count} 個のURL"
+        "one": "{} 個のURL",
+        "other": "{} 個のURL"
     },
     "minute": {
-        "one": "{count} 分",
-        "other": "{count} 分"
+        "one": "{} 分",
+        "other": "{} 分"
     },
     "hour": {
-        "one": "{count} 時間",
-        "other": "{count} 時間"
+        "one": "{} 時間",
+        "other": "{} 時間"
     },
     "day": {
-        "one": "{count} 日",
-        "other": "{count} 日"
+        "one": "{} 日",
+        "other": "{} 日"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "{n} 個のログをクリアしました (前 = {before}, 後 = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} とさらに 1 個のアプリのアップデートが利用可能です。",
-        "other": "{app} とさらに {count} 個のアプリのアップデートが利用可能です。"
+        "other": "{app} とさらに {} 個のアプリのアップデートが利用可能です。"
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} とさらに 1 個のアプリがアップデートされました。",
-        "other": "{app} とさらに {count} 個のアプリがアップデートされました。"
+        "other": "{app} とさらに {} 個のアプリがアップデートされました。"
     },
     "xAndNMoreUpdatesFailed": {
         "one": "{app} とさらに 1 個のアプリのアップデートに失敗しました。",
-        "other": "{app} とさらに {count} 個のアプリのアップデートに失敗しました。"
+        "other": "{app} とさらに {} 個のアプリのアップデートに失敗しました。"
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} とさらに 1 個のアプリがアップデートされた可能性があります。",
-        "other": "{app} とさらに {count} 個のアプリがアップデートされた可能性があります。"
+        "other": "{app} とさらに {} 個のアプリがアップデートされた可能性があります。"
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APK"
+        "one": "{} APK",
+        "other": "{} APK"
     },
     "certificateHash": {
         "one": "証明書ハッシュ",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "パスワードの設定にエラーが発生しました。もう一度お試しください。",
     "safeModeEnable": "セーフモードを有効にする",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} 回タップしてセーフモードを無効にする",
+    "safeModeTapsRemaining": "{} 回タップしてセーフモードを無効にする",
     "safeModeEnabledHint": "セーフモードが有効になっています。設定でバージョンコードをタップして無効にしてください",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

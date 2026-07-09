@@ -86,7 +86,7 @@
     "removeSelectedApps": "移除選取的應用程式",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "更新 {}",
     "installX": "安裝 {}",
@@ -426,36 +426,36 @@
         "other": "移除應用程式？"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "要求過多（受速率限制） - 請在 {count} 分鐘後重試",
-        "other": "要求過多（受速率限制） - 請在 {count} 分鐘後重試"
+        "one": "要求過多（受速率限制） - 請在 {} 分鐘後重試",
+        "other": "要求過多（受速率限制） - 請在 {} 分鐘後重試"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "背景更新檢查遭遇 {error}，將在 {count} 分鐘後排程重試檢查",
-        "other": "背景更新檢查遭遇 {error}，將在 {count} 分鐘後排程重試檢查"
+        "one": "背景更新檢查遭遇 {error}，將在 {} 分鐘後排程重試檢查",
+        "other": "背景更新檢查遭遇 {error}，將在 {} 分鐘後排程重試檢查"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "背景更新檢查找到 {count} 個更新 - 必要時將通知使用者",
-        "other": "背景更新檢查找到 {count} 個更新 - 必要時將通知使用者"
+        "one": "背景更新檢查找到 {} 個更新 - 必要時將通知使用者",
+        "other": "背景更新檢查找到 {} 個更新 - 必要時將通知使用者"
     },
     "apps": {
-        "one": "{count} 個應用程式",
-        "other": "{count} 個應用程式"
+        "one": "{} 個應用程式",
+        "other": "{} 個應用程式"
     },
     "url": {
-        "one": "{count} 個網址",
-        "other": "{count} 個網址"
+        "one": "{} 個網址",
+        "other": "{} 個網址"
     },
     "minute": {
-        "one": "{count} 分鐘",
-        "other": "{count} 分鐘"
+        "one": "{} 分鐘",
+        "other": "{} 分鐘"
     },
     "hour": {
-        "one": "{count} 小時",
-        "other": "{count} 小時"
+        "one": "{} 小時",
+        "other": "{} 小時"
     },
     "day": {
-        "one": "{count} 天",
-        "other": "{count} 天"
+        "one": "{} 天",
+        "other": "{} 天"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "已清除 {n} 筆記錄（之前 = {before}，之後 = {after}）",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} 以及 1 個應用程式有更新。",
-        "other": "{app} 以及 {count} 個應用程式有更新。"
+        "other": "{app} 以及 {} 個應用程式有更新。"
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} 以及 1 個應用程式已更新。",
-        "other": "{app} 以及 {count} 個應用程式已更新。"
+        "other": "{app} 以及 {} 個應用程式已更新。"
     },
     "xAndNMoreUpdatesFailed": {
         "one": "無法更新 {app} 以及 1 個應用程式。",
-        "other": "無法更新 {app} 以及 {count} 個應用程式。"
+        "other": "無法更新 {app} 以及 {} 個應用程式。"
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} 以及 1 個應用程式可能已更新。",
-        "other": "{app} 以及 {count} 個應用程式可能已更新。"
+        "other": "{app} 以及 {} 個應用程式可能已更新。"
     },
     "apk": {
-        "one": "{count} 個 APK",
-        "other": "{count} 個 APK"
+        "one": "{} 個 APK",
+        "other": "{} 個 APK"
     },
     "certificateHash": {
         "one": "憑證雜湊",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Error setting password. Please try again.",
     "safeModeEnable": "Enable Safe Mode",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} taps remaining to disable Safe Mode",
+    "safeModeTapsRemaining": "{} taps remaining to disable Safe Mode",
     "safeModeEnabledHint": "Safe Mode enabled. Tap on the version number in the Settings many times to disable.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }

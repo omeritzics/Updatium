@@ -86,7 +86,7 @@
     "removeSelectedApps": "Xóa ứng dụng đã chọn",
     "appRemoved": {
         "one": "Removed one app",
-        "other": "Removed {count} apps"
+        "other": "Removed {} apps"
     },
     "updateX": "Cập nhật {}",
     "installX": "Cài đặt {}",
@@ -426,36 +426,36 @@
         "other": "Gỡ ứng dụng?"
     },
     "tooManyRequestsTryAgainInMinutes": {
-        "one": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {count} phút",
-        "other": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {count} phút"
+        "one": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {} phút",
+        "other": "Quá nhiều yêu cầu (tốc độ giới hạn) - hãy thử lại sau {} phút"
     },
     "bgUpdateGotErrorRetryInMinutes": {
-        "one": "Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {count} phút",
-        "other": "Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {count} phút"
+        "one": "Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {} phút",
+        "other": "Việc kiểm tra bản cập nhật BG gặp phải {error}, sẽ lên lịch kiểm tra lại sau {} phút"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
-        "one": "Đang kiểm tra bản cập nhật BG tìm thấy {count} bản cập nhật - sẽ thông báo cho người dùng nếu cần",
-        "other": "Đang kiểm tra bản cập nhật BG tìm thấy {count} bản cập nhật - sẽ thông báo cho người dùng nếu cần"
+        "one": "Đang kiểm tra bản cập nhật BG tìm thấy {} bản cập nhật - sẽ thông báo cho người dùng nếu cần",
+        "other": "Đang kiểm tra bản cập nhật BG tìm thấy {} bản cập nhật - sẽ thông báo cho người dùng nếu cần"
     },
     "apps": {
-        "one": "{count} Ứng dụng",
-        "other": "{count} Ứng dụng"
+        "one": "{} Ứng dụng",
+        "other": "{} Ứng dụng"
     },
     "url": {
-        "one": "{count} URL",
-        "other": "{count} URL"
+        "one": "{} URL",
+        "other": "{} URL"
     },
     "minute": {
-        "one": "{count} phút",
-        "other": "{count} phút"
+        "one": "{} phút",
+        "other": "{} phút"
     },
     "hour": {
-        "one": "{count} giờ",
-        "other": "{count} giờ"
+        "one": "{} giờ",
+        "other": "{} giờ"
     },
     "day": {
-        "one": "{count} ngày",
-        "other": "{count} ngày"
+        "one": "{} ngày",
+        "other": "{} ngày"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "Đã xóa {n} nhật ký (trước = {before}, sau = {after})",
@@ -463,23 +463,23 @@
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} và 1 ứng dụng khác có bản cập nhật.",
-        "other": "{app} và {count} ứng dụng khác có bản cập nhật."
+        "other": "{app} và {} ứng dụng khác có bản cập nhật."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} và 1 ứng dụng khác đã được cập nhật.",
-        "other": "{app} và {count} ứng dụng khác đã được cập nhật."
+        "other": "{app} và {} ứng dụng khác đã được cập nhật."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "{app} và 1 ứng dụng khác đã cập nhật không thành công.",
-        "other": "{app} và {count} ứng dụng khác đã cập nhật không thành công."
+        "other": "{app} và {} ứng dụng khác đã cập nhật không thành công."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} và 1 ứng dụng khác có thể đã được cập nhật.",
-        "other": "{app} và {count} ứng dụng khác có thể đã được cập nhật."
+        "other": "{app} và {} ứng dụng khác có thể đã được cập nhật."
     },
     "apk": {
-        "one": "{count} APK",
-        "other": "{count} APKs"
+        "one": "{} APK",
+        "other": "{} APKs"
     },
     "certificateHash": {
         "one": "Mã băm chứng chỉ",
@@ -519,7 +519,7 @@
     "safeModePasswordError": "Error setting password. Please try again.",
     "safeModeEnable": "Enable Safe Mode",
     "safeModeToggle": "Disable Safe Mode",
-    "safeModeTapsRemaining": "{count} taps remaining to disable Safe Mode",
+    "safeModeTapsRemaining": "{} taps remaining to disable Safe Mode",
     "safeModeEnabledHint": "Safe Mode enabled. Tap on the version number in the Settings many times to disable.",
     "preventUninstallation": "Prevent uninstallation",
     "preventUninstallationDescription": "Prevents Updatium from being uninstalled when Safe Mode is on",
@@ -548,5 +548,8 @@
     "openDNS": "OpenDNS",
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
-    "cloudflare": "Cloudflare DNS"
+    "cloudflare": "Cloudflare DNS",
+    "appDisplay": "App display",
+    "GHReqPrefix": "GitHub request prefix",
+    "checkRepoRename": "Check GitHub repo renames"
 }
