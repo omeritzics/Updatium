@@ -407,7 +407,6 @@ class _GeneratedFormState extends State<GeneratedForm> {
         }
       }
     }
-    formInputs = buildFormInputs(context); // This was missing
     someValueChanged(isBuilding: true);
   }
 
@@ -558,9 +557,16 @@ class _GeneratedFormState extends State<GeneratedForm> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    formInputs = buildFormInputs(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (widget.key.toString() != initKey) {
       initForm();
+      formInputs = buildFormInputs(context);
     }
     for (var r = 0; r < formInputs.length; r++) {
       for (var e = 0; e < formInputs[r].length; e++) {

@@ -1129,15 +1129,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             gap16,
                             if (!settingsProvider.useMaterialYou) colorPicker,
                             gap16,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(child: sortDropdown),
-                                horizontalGap16,
-                                Expanded(child: orderDropdown),
-                              ],
-                            ),
                             gap16,
                             localeDropdown,
                             FutureBuilder(
@@ -1173,8 +1164,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                               future: DeviceInfoPlugin().androidInfo,
                             ),
-                            gap16,
-
                             gap16,
 
                             SwitchListTile(
@@ -1233,7 +1222,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ExpansionTile(
                           leading: Icon(Icons.list_rounded),
                           title: Text(
-                            'appDisplay'.t(),
+                            'appView'.t(),
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(fontWeight: FontWeight.w600),
                           ),
@@ -1248,6 +1237,16 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(child: sortDropdown),
+                                horizontalGap16,
+                                Expanded(child: orderDropdown),
+                              ],
+                            ),
+                            gap8,
                             SwitchListTile(
                               title: Text('pinUpdates'.t()),
                               value: settingsProvider.pinUpdates,

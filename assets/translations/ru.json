@@ -561,7 +561,7 @@
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
     "cloudflare": "Cloudflare DNS",
-    "appDisplay": "App display",
+    "appView": "App view",
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames"
 }
