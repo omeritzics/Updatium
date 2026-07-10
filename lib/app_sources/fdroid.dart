@@ -153,24 +153,24 @@ class FDroid extends AppSource {
     );
     if (res.statusCode == 200) {
       Map<String, List<String>> urlsWithDescriptions = {};
-       parse(res.body).querySelectorAll('.package-header').forEach((e) {
-         String? url = e.attributes['href'];
-         if (url != null) {
-           try {
-             if (url.startsWith('/')) {
-               url = 'https://${hosts[0]}$url';
-             }
-             url = standardizeUrl(url);
-             urlsWithDescriptions[url] = [
-               e.querySelector('.package-name')?.text.trim() ?? '',
-               e.querySelector('.package-summary')?.text.trim() ??
-                   t('noDescription'),
-             ];
-           } catch (e) {
-             // Skip invalid URLs
-           }
-         }
-       });
+      parse(res.body).querySelectorAll('.package-header').forEach((e) {
+        String? url = e.attributes['href'];
+        if (url != null) {
+          try {
+            if (url.startsWith('/')) {
+              url = 'https://${hosts[0]}$url';
+            }
+            url = standardizeUrl(url);
+            urlsWithDescriptions[url] = [
+              e.querySelector('.package-name')?.text.trim() ?? '',
+              e.querySelector('.package-summary')?.text.trim() ??
+                  t('noDescription'),
+            ];
+          } catch (e) {
+            // Skip invalid URLs
+          }
+        }
+      });
       return urlsWithDescriptions;
     } else {
       throw getUpdatiumHttpError(res);

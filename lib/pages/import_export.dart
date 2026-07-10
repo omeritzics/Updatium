@@ -123,13 +123,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
           } catch (e) {
             if (!mounted) return;
             showError(e, context);
-           } finally {
-             if (mounted) {
-               setState(() {
-                 importInProgress = false;
-               });
-             }
-           }
+          } finally {
+            if (mounted) {
+              setState(() {
+                importInProgress = false;
+              });
+            }
+          }
         }
       });
     }
@@ -324,13 +324,13 @@ class _ImportExportPageState extends State<ImportExportPage> {
             if (!mounted) return;
             showError(e, context);
           })
-           .whenComplete(() {
-             if (mounted) {
-               setState(() {
-                 importInProgress = false;
-               });
-             }
-           });
+          .whenComplete(() {
+            if (mounted) {
+              setState(() {
+                importInProgress = false;
+              });
+            }
+          });
     }
 
     var sourceStrings = <String, List<String>>{};
