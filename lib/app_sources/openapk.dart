@@ -77,7 +77,7 @@ class OpenAPK extends AppSource {
 
     // Convert relative URL to absolute if needed
     if (downloadUrl.startsWith('/')) {
-      downloadUrl = 'https://www.openapk.net$downloadUrl';
+      downloadUrl = Uri.parse('https://${hosts[0]}').resolve(downloadUrl).toString();
     }
 
     // Extract version info from the page
