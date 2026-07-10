@@ -696,24 +696,6 @@ class _SelectionModalState extends State<SelectionModal> {
   @override
   Widget build(BuildContext context) {
     final _ = context.read<SettingsProvider>().isTV;
-    Map<MapEntry<String, List<String>>, bool> filteredEntrySelections = {};
-    entrySelections.forEach((key, value) {
-      var searchableText = key.value.isEmpty ? key.key : key.value[0];
-      try {
-        if (filterRegex.isEmpty ||
-            RegExp(
-              filterRegex,
-              caseSensitive: false,
-            ).hasMatch(searchableText)) {
-          filteredEntrySelections.putIfAbsent(key, () => value);
-        }
-      } catch (e) {
-        if (filterRegex.isEmpty ||
-            searchableText.toLowerCase().contains(filterRegex.toLowerCase())) {
-          filteredEntrySelections.putIfAbsent(key, () => value);
-        }
-      }
-    });
 
     Widget getSelectAllButton() {
       if (widget.onlyOneSelectionAllowed) {

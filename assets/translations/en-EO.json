@@ -471,7 +471,7 @@
     },
     "xAndNMoreUpdatesFailed": {
         "one": "Ne eblas ĝisdatigi {app} kaj 1 alian apon.",
-        "other": "Ne eblas ĝisdatigi {app} et {} aliajn apojn."
+        "other": "Ne eblas ĝisdatigi {app} kaj {} aliajn apojn."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} kaj 1 alia apo eble ĝisdatiĝis.",

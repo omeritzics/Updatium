@@ -741,6 +741,15 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  bool get appViewSectionExpanded {
+    return prefs?.getBool('appViewSectionExpanded') ?? false;
+  }
+
+  set appViewSectionExpanded(bool val) {
+    prefs?.setBool('appViewSectionExpanded', val);
+    notifyListeners();
+  }
+
   double get settingsScrollPosition {
     return prefs?.getDouble('settingsScrollPosition') ?? 0.0;
   }

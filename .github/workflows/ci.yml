@@ -23,7 +23,7 @@ jobs:
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Cache Flutter dependencies
-        uses: actions/cache@main
+        uses: actions/cache@v4
         with:
           path: |
             ~/.pub-cache
@@ -33,7 +33,7 @@ jobs:
             flutter-${{ runner.os }}-
 
       - name: Cache Gradle dependencies
-        uses: actions/cache@main
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
@@ -66,6 +66,7 @@ jobs:
         run: |
           # Inject the short SHA into the Application ID to allow side-by-side testing
           # This replaces the existing applicationId with a unique one for this commit
+          sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle.kts || true
           sed -i 's/applicationId = ".*"/applicationId = "com.updatium.ci.${{ steps.vars.outputs.sha_short }}"/g' android/app/build.gradle || true
           
           # Build the debug APK for the normal flavor

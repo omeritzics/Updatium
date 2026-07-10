@@ -355,7 +355,18 @@ class _GeneratedFormState extends State<GeneratedForm> {
   int forceUpdateKeyCount = 0;
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, GlobalKey<FormFieldState>> _formKeys = {};
-  final bool _isDisposed = false;
+  bool _isDisposed = false;
+
+  @override
+  void dispose() {
+    for (final controller in _controllers.values) {
+      controller.dispose();
+    }
+    _controllers.clear();
+    _formKeys.clear();
+    _isDisposed = true;
+    super.dispose();
+  }
 
   void someValueChanged({bool isBuilding = false, bool forceInvalid = false}) {
     Map<String, dynamic> returnValues = values;

@@ -1900,36 +1900,6 @@ class MultiAppMultiError extends UpdatiumError {
   Map<String, String> appIdNames = {};
 
   MultiAppMultiError() : super('placeholder'.t(), unexpected: true);
-
-  void add(String appId, dynamic error, {String? appName}) {
-    if (error is SocketException) {
-      error = error.message;
-    }
-    rawErrors[appId] = error;
-    var string = error.toString();
-    var tempIds = idsByErrorString.remove(string);
-    tempIds ??= [];
-    tempIds.add(appId);
-    idsByErrorString.putIfAbsent(string, () => tempIds!);
-    if (appName != null) {
-      appIdNames[appId] = appName;
-    }
-  }
-
-  String errorString(String appId, {bool includeIdsWithNames = false}) =>
-      '${appIdNames.containsKey(appId) ? '${appIdNames[appId]}${includeIdsWithNames ? ' ($appId)' : ''}' : appId}: ${rawErrors[appId].toString()}';
-
-  String errorsAppsString(
-    String errString,
-    List<String> appIds, {
-    bool includeIdsWithNames = false,
-  }) =>
-      '$errString [${list2FriendlyString(appIds.map((id) => appIdNames.containsKey(id) == true ? '${appIdNames[id]}${includeIdsWithNames ? ' ($id)' : ''}' : id).toList())}]';
-
-  @override
-  String toString() => idsByErrorString.entries
-      .map((e) => errorsAppsString(e.key, e.value))
-      .join('\n\n');
 }
 
 String list2FriendlyString(List<String> list) {

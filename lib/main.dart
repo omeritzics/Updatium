@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:background_fetch/background_fetch.dart';
+import 'package:updatium/services/bg_updates.dart';
 
 import 'package:updatium/services/slang_converter.dart';
 import 'package:simple_localization/src/simple_localization_controller.dart';
@@ -120,34 +121,6 @@ void backgroundFetchHeadlessTask(HeadlessEvent task) async {
   }
   await bgUpdateCheck(taskId, null);
   BackgroundFetch.finish(taskId);
-}
-
-@pragma('vm:entry-point')
-void startCallback() {
-  FlutterForegroundTask.setTaskHandler(MyTaskHandler());
-}
-
-class MyTaskHandler extends TaskHandler {
-  static const String incrementCountCommand = 'incrementCount';
-
-  @override
-  Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
-    debugPrint('onStart(starter: ${starter.name})');
-    bgUpdateCheck('bg_check', null);
-  }
-
-  @override
-  void onRepeatEvent(DateTime timestamp) {
-    bgUpdateCheck('bg_check', null);
-  }
-
-  @override
-  Future<void> onDestroy(DateTime timestamp, bool isTimeout) async {
-    debugPrint('Foreground service onDestroy(isTimeout: $isTimeout)');
-  }
-
-  @override
-  void onReceiveData(Object data) {}
 }
 
 void main() async {

@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/components/generated_form.dart';
+import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
@@ -156,19 +157,23 @@ class FDroid extends AppSource {
       parse(res.body).querySelectorAll('.package-header').forEach((e) {
         String? url = e.attributes['href'];
         if (url != null) {
-          try {
-            if (url.startsWith('/')) {
-              url = 'https://${hosts[0]}$url';
-            }
-            url = standardizeUrl(url);
-            urlsWithDescriptions[url] = [
-              e.querySelector('.package-name')?.text.trim() ?? '',
-              e.querySelector('.package-summary')?.text.trim() ??
-                  t('noDescription'),
-            ];
-          } catch (e) {
-            // Skip invalid URLs
-          }
+           try {
+             if (url.startsWith('/')) {
+               url = 'https://${hosts[0]}$url';
+             }
+             url = standardizeUrl(url);
+             urlsWithDescriptions[url] = [
+               e.querySelector('.package-name')?.text.trim() ?? '',
+               e.querySelector('.package-summary')?.text.trim() ??
+                   t('noDescription'),
+             ];
+           } on UnsupportedURLError catch (_) {
+             // Skip invalid URLs
+           } on InvalidURLError catch (_) {
+             // Skip invalid URLs
+           } catch (e) {
+             LogsProvider().add(e.toString(), level: LogLevels.error, context: 'FDroid.search');
+           }
         }
       });
       return urlsWithDescriptions;

@@ -430,7 +430,7 @@
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "For mange forespørsler (hastighetsbegrenset) - prøv igjen om {} minutt",
-        "other": "For many forespørsler (hastighetsbegrenset) - prøv igjen om {} minutter"
+        "other": "For mange forespørsler (hastighetsbegrenset) - prøv igjen om {} minutter"
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "Oppdateringssøk i bakgrunnen støtte på en {error}, prøver igjen om {} minutt",
