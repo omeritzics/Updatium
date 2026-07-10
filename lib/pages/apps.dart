@@ -928,23 +928,23 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               });
             },
             tilePadding: const EdgeInsets.symmetric(horizontal: 8),
-             children: [
-               Wrap(
-                 spacing: 8,
-                 runSpacing: 8,
-                 children: filteredEntries.map((entry) {
-                   final appIndex = entry.key;
-                   if (appIndex >= 0 && appIndex < listedApps.length) {
-                     return SizedBox(
-                       width: 160,
-                       height: 230,
-                       child: getSingleAppGridTile(appIndex),
-                     );
-                   }
-                   return const SizedBox.shrink();
-                 }).toList(),
-               ),
-             ],
+            children: [
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: filteredEntries.map((entry) {
+                  final appIndex = entry.key;
+                  if (appIndex >= 0 && appIndex < listedApps.length) {
+                    return SizedBox(
+                      width: 160,
+                      height: 230,
+                      child: getSingleAppGridTile(appIndex),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                }).toList(),
+              ),
+            ],
           ),
         ),
       );

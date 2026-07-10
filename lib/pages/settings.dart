@@ -1049,12 +1049,11 @@ class _SettingsPageState extends State<SettingsPage> {
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(fontWeight: FontWeight.w600),
                           ),
-                           initiallyExpanded:
-                               settingsProvider.appViewSectionExpanded,
-                           onExpansionChanged: (bool expanded) {
-                             settingsProvider.appViewSectionExpanded =
-                                 expanded;
-                           },
+                          initiallyExpanded:
+                              settingsProvider.appViewSectionExpanded,
+                          onExpansionChanged: (bool expanded) {
+                            settingsProvider.appViewSectionExpanded = expanded;
+                          },
                           tilePadding: const EdgeInsets.symmetric(
                             horizontal: 8,
                           ),
