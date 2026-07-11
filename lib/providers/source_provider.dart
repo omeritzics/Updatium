@@ -969,6 +969,28 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
+    [
+      GeneratedFormSwitch(
+        'shizukuPretendToBeGooglePlay',
+        label: 'shizukuPretendToBeGooglePlay'.t(),
+        defaultValue: false,
+      ),
+    ],
+
+    [
+      GeneratedFormSwitch(
+        'autoApkFilterByArch',
+        label: 'autoApkFilterByArch'.t(),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'exemptFromBackgroundUpdates',
+        label: 'exemptFromBackgroundUpdates'.t(),
+        defaultValue: false,
+      ),
+    ],
 
     [
       GeneratedFormSwitch(
@@ -977,6 +999,28 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
+    [
+      GeneratedFormSwitch(
+        'autoApkFilterByArch',
+        label: 'autoApkFilterByArch'.t(),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'exemptFromBackgroundUpdates',
+        label: 'exemptFromBackgroundUpdates'.t(),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'shizukuPretendToBeGooglePlay',
+        label: 'shizukuPretendToBeGooglePlay'.t(),
+        defaultValue: false,
+      ),
+    ],
+
     [
       GeneratedFormSwitch(
         'autoApkFilterByArch',

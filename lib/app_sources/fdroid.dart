@@ -140,6 +140,26 @@ class FDroid extends AppSource {
         // Fail silently
       }
     }
+    if (details.names.author == t('fdroid')) {
+      try {
+        var res = await sourceRequest(
+          'https://f-droid.org/packages/$appId',
+          additionalSettings,
+        );
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          var body = parse(res.body);
+          var authorElement = body.querySelector('a[href^="mailto:"]');
+          if (authorElement != null) {
+            var authorText = authorElement.text.trim();
+            if (authorText.isNotEmpty) {
+              details.names.author = authorText;
+            }
+          }
+        }
+      } catch (e) {
+        // Fail silently, keep fallback author
+      }
+    }
     return details;
   }
 
