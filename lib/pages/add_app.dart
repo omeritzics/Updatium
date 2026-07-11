@@ -665,7 +665,7 @@ class AddAppPageState extends State<AddAppPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 4),
                       child: AppAddingProgressBar(
-                        currentStep: 1,
+                        currentStep: 0,
                         totalSteps: (searching || searchQuery.isNotEmpty)
                             ? 3
                             : 2,
@@ -1269,7 +1269,7 @@ class _SelectionModalState extends State<SelectionModal> {
         ),
         body: Column(
           children: [
-            const AppAddingProgressBar(currentStep: 2, totalSteps: 3),
+            const AppAddingProgressBar(currentStep: 1, totalSteps: 3),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: Row(
