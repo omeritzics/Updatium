@@ -568,7 +568,9 @@
     "mullvadDNS": "Mullvad DNS",
     "quad9": "Quad9 DNS",
     "cloudflare": "Cloudflare DNS",
-    "appView": "App view",
+    "appView": "תצוגת היישומים",
     "GHReqPrefix": "קידומת לבקשות מ־GitHub",
-    "checkRepoRename": "Check GitHub repo renames"
+    "checkRepoRename": "בדיקת שינויי שם של מאגרי GitHub",
+    "misc": "שונות",
+    "showConfetti": "הצגת אפקט קונפטי בעת הוספת יישומים בקוד פתוח"
 }

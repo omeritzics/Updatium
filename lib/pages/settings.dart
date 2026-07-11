@@ -1060,9 +1060,37 @@ class _SettingsPageState extends State<SettingsPage> {
                           childrenPadding: const EdgeInsets.all(8),
                           children: [...sourceSpecificFields],
                         ),
-                        gap24,
-                        ExpansionTile(
-                          leading: Icon(Icons.palette_rounded),
+                                 gap24,
+                                 ExpansionTile(
+                                   leading: Icon(Icons.more_horiz),
+                                   title: Text(
+                                     'misc'.t(),
+                                     style: Theme.of(context).textTheme.titleMedium
+                                         ?.copyWith(fontWeight: FontWeight.w600),
+                                   ),
+                                   initiallyExpanded: false,
+                                   onExpansionChanged: (bool expanded) {
+                                     // Optional: save expansion state in settingsProvider if desired
+                                   },
+                                   tilePadding: const EdgeInsets.symmetric(
+                                     horizontal: 8,
+                                   ),
+                                   childrenPadding: const EdgeInsets.all(8),
+                                   children: [
+                                     gap16,
+                                     SwitchListTile(
+                                       title: Text('showConfetti'.t()),
+                                       value: settingsProvider.showConfetti,
+                                       onChanged: (value) {
+                                         settingsProvider.showConfetti = value;
+                                       },
+                                     ),
+                                   ],
+                                 ),
+                                 gap24,
+                                 ExpansionTile(
+                                   leading: Icon(Icons.palette_rounded),
+
                           title: Text(
                             'appearance'.t(),
                             style: Theme.of(context).textTheme.titleMedium

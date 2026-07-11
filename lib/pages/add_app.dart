@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:confetti/confetti.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
@@ -61,9 +62,9 @@ class AddAppPageState extends State<AddAppPage> {
   SourceProvider sourceProvider = SourceProvider();
   final TextEditingController _sourceOverrideController =
       TextEditingController();
-
+  
   SettingsProvider get settingsProvider => context.read<SettingsProvider>();
-
+  
   @override
   void dispose() {
     _sourceOverrideController.dispose();
@@ -731,6 +732,9 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   bool gettingAppInfo = false;
   bool cameFromSearch = false;
 
+  late ConfettiController _confettiController;
+  Future<String?>? _sourceNoteFuture;
+  
   App? prefilledApp;
   int prefillVersion = 0;
 
@@ -748,6 +752,9 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
   @override
   void initState() {
     super.initState();
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 2),
+    );
     userInput = widget.initialUrl ?? '';
     pickedSourceOverride = widget.initialSourceOverride;
     cameFromSearch = widget.cameFromSearch;
@@ -769,7 +776,14 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
         // Ignore errors during initialization
       }
       prefillAppInfo();
+      _updateSourceNoteFuture();
     }
+  }
+
+  void _updateSourceNoteFuture() {
+    setState(() {
+      _sourceNoteFuture = pickedSource?.getSourceNote();
+    });
   }
 
   Future<void> prefillAppInfo() async {
@@ -797,6 +811,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
 
   @override
   void dispose() {
+    _confettiController.dispose();
     _sourceOverrideController.dispose();
     super.dispose();
   }
@@ -955,19 +970,27 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           }
           app.categories = pickedCategories;
           await appsProvider.saveApps([app], onlyIfExists: false);
+
+          if (pickedSource?.isOpenSource == true &&
+              settingsProvider.showConfetti) {
+            _confettiController.play();
+          }
         }
         if (app != null) {
-          Navigator.push(
-            globalNavigatorKey.currentContext ?? context,
-            MaterialPageRoute(
-              builder: (context) => AppPage(
-                appId: app!.id,
-                flowType: cameFromSearch
-                    ? AppAddFlowType.search
-                    : AppAddFlowType.url,
+          Future.delayed(const Duration(milliseconds: 800), () {
+            if (!mounted) return;
+            Navigator.push(
+              globalNavigatorKey.currentContext ?? context,
+              MaterialPageRoute(
+                builder: (context) => AppPage(
+                  appId: app!.id,
+                  flowType: cameFromSearch
+                      ? AppAddFlowType.search
+                      : AppAddFlowType.url,
+                ),
               ),
-            ),
-          );
+            );
+          });
         }
       } catch (e) {
         if (!mounted) return;
@@ -1047,86 +1070,104 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
     );
 
     return Dialog.fullscreen(
-      child: Scaffold(
-        body: CustomScrollView(
-          shrinkWrap: true,
-          slivers: <Widget>[
-            SliverAppBar.large(
-              pinned: true,
-              title: Text('addApp'.t()),
-              actions: [
-                TextButton(
-                  onPressed:
-                      gettingAppInfo ||
-                          pickedSource == null ||
-                          (pickedSource!
-                                  .combinedAppSpecificSettingFormItems
-                                  .isNotEmpty &&
-                              !additionalSettingsValid)
-                      ? null
-                      : () {
-                          HapticFeedback.selectionClick();
-                          addApp();
-                        },
-                  child: Text('add'.t()),
+      child: Stack(
+        children: [
+          Scaffold(
+            body: CustomScrollView(
+              shrinkWrap: true,
+              slivers: <Widget>[
+                SliverAppBar.large(
+                  pinned: true,
+                  title: Text('addApp'.t()),
+                  actions: [
+                    TextButton(
+                      onPressed:
+                          gettingAppInfo ||
+                              pickedSource == null ||
+                              (pickedSource!
+                                      .combinedAppSpecificSettingFormItems
+                                      .isNotEmpty &&
+                                  !additionalSettingsValid)
+                          ? null
+                          : () {
+                              HapticFeedback.selectionClick();
+                              addApp();
+                            },
+                      child: Text('add'.t()),
+                    ),
+                  ],
+                  leading: IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  bottom: (pickedSource != null || cameFromSearch)
+                      ? PreferredSize(
+                          preferredSize: const Size.fromHeight(4),
+                          child: AppAddingProgressBar(
+                            currentStep: cameFromSearch ? 3 : 2,
+                            totalSteps: cameFromSearch ? 3 : 2,
+                          ),
+                        )
+                      : null,
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (pickedSource != null)
+                          FutureBuilder(
+                            builder: (ctx, val) {
+                              return val.data != null && val.data!.isNotEmpty
+                                  ? Text(
+                                      val.data!,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodySmall,
+                                    )
+                                  : const SizedBox();
+                            },
+                            future: _sourceNoteFuture,
+                          ),
+                        if (pickedSource != null) getAdditionalOptsCol(),
+                        if (pickedSource != null)
+                          pickedSource!.buildAdvancedSettingsWidget(
+                            context,
+                            currentInferAppIdIfOptional: inferAppIdIfOptional,
+                            onInferAppIdChanged: (value) {
+                              setState(() {
+                                inferAppIdIfOptional = value;
+                              });
+                            },
+                            onAdvancedSettingsChanged: (values) {
+                              setState(() {
+                                additionalSettings.addAll(values);
+                              });
+                            },
+                          ),
+                        gap24,
+                      ],
+                    ),
+                  ),
                 ),
               ],
-              leading: IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              bottom: (pickedSource != null || cameFromSearch)
-                  ? PreferredSize(
-                      preferredSize: const Size.fromHeight(4),
-                      child: AppAddingProgressBar(
-                        currentStep: cameFromSearch ? 3 : 2,
-                        totalSteps: cameFromSearch ? 3 : 2,
-                      ),
-                    )
-                  : null,
             ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (pickedSource != null)
-                      FutureBuilder(
-                        builder: (ctx, val) {
-                          return val.data != null && val.data!.isNotEmpty
-                              ? Text(
-                                  val.data!,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                )
-                              : const SizedBox();
-                        },
-                        future: pickedSource?.getSourceNote(),
-                      ),
-                    if (pickedSource != null) getAdditionalOptsCol(),
-                    if (pickedSource != null)
-                      pickedSource!.buildAdvancedSettingsWidget(
-                        context,
-                        currentInferAppIdIfOptional: inferAppIdIfOptional,
-                        onInferAppIdChanged: (value) {
-                          setState(() {
-                            inferAppIdIfOptional = value;
-                          });
-                        },
-                        onAdvancedSettingsChanged: (values) {
-                          setState(() {
-                            additionalSettings.addAll(values);
-                          });
-                        },
-                      ),
-                    gap24,
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+          ConfettiWidget(
+            confettiController: _confettiController,
+            blastDirectionality: BlastDirectionality.explosive,
+            colors: const [
+              Colors.green,
+              Colors.blue,
+              Colors.pink,
+              Colors.orange,
+              Colors.purple,
+              Colors.yellow,
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -1173,13 +1214,13 @@ class _SelectionModalState extends State<SelectionModal> {
       selectOnlyOne(widget.entries.entries.first.key);
     }
   }
-
+  
   @override
   void dispose() {
     _filterController.dispose();
     super.dispose();
   }
-
+  
   void selectOnlyOne(String url) {
     for (var e in entrySelections.keys) {
       entrySelections[e] = e.key == url;

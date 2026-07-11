@@ -568,5 +568,7 @@
     "cloudflare": "Cloudflare DNS",
     "appView": "App view",
     "GHReqPrefix": "GitHub request prefix",
-    "checkRepoRename": "Check GitHub repo renames"
+    "checkRepoRename": "Check GitHub repo renames",
+    "misc": "Miscellaneous",
+    "showConfetti": "Show confetti effect when adding open-source apps"
 }

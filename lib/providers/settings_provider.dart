@@ -422,6 +422,15 @@ class SettingsProvider with ChangeNotifier {
     if (tactileFeedbackEnabled) HapticFeedback.selectionClick();
   }
 
+  bool get showConfetti {
+    return prefs?.getBool('showConfetti') ?? true;
+  }
+
+  set showConfetti(bool val) {
+    prefs?.setBool('showConfetti', val);
+    notifyListeners();
+  }
+
   bool get includePrereleasesByDefault {
     return prefs?.getBool('includePrereleasesByDefault') ?? false;
   }
