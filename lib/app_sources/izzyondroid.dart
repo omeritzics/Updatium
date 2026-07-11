@@ -8,7 +8,7 @@ class IzzyOnDroid extends FDroid {
   IzzyOnDroid() {
     hosts = ['izzysoft.de'];
     name = 'IzzyOnDroid';
-    openSource = true;
+    isOpenSource = true;
     allowSubDomains = true;
   }
   @override

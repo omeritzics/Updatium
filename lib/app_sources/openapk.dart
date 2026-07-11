@@ -7,7 +7,7 @@ class OpenAPK extends AppSource {
     hosts = ['openapk.net'];
     name = 'OpenAPK';
     showReleaseDateAsVersionToggle = true;
-    openSource = true;
+    isOpenSource = true;
     canSearch = true;
   }
 

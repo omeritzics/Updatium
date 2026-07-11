@@ -17,7 +17,7 @@ class Bitbucket extends AppSource {
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
-    openSource = true;
+    isOpenSource = true;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
         'bitbucketAPITokenLabel'.t(),

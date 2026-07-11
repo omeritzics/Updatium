@@ -12,7 +12,7 @@ class SourceHut extends AppSource {
     name = 'SourceHut';
     showReleaseDateAsVersionToggle = true;
     additionalSourceAppSpecificSettingFormItems = [];
-    openSource = true;
+    isOpenSource = true;
   }
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {

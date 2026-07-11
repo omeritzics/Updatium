@@ -11,7 +11,7 @@ class Codeberg extends AppSource {
         github.additionalSourceAppSpecificSettingFormItems;
     canSearch = true;
     searchQuerySettingFormItems = github.searchQuerySettingFormItems;
-    openSource = true;
+    isOpenSource = true;
   }
 
   @override

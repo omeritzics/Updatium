@@ -18,7 +18,7 @@ class Gitea extends AppSource {
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
     allowIncludeZips = true;
-    openSource = true;
+    isOpenSource = true;
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
         'giteaTokenLabel'.t(),

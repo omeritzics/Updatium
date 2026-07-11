@@ -22,7 +22,7 @@ class GitHub extends AppSource {
     this.hostChanged = hostChanged;
     allowIncludeZips = true;
     allowIncludeTarballs = true;
-    openSource = true;
+    isOpenSource = true;
 
     sourceConfigSettingFormItems = [
       GeneratedFormTextField(
@@ -97,78 +97,7 @@ class GitHub extends AppSource {
       ),
     ];
 
-    additionalSourceAppSpecificSettingFormItems = [
-      [
-        GeneratedFormSwitch(
-          'includePrereleases',
-          label: t('includePrereleases'),
-          defaultValue: false,
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'fallbackToOlderReleases',
-          label: t('fallbackToOlderReleases'),
-          defaultValue: true,
-        ),
-      ],
-      [
-        GeneratedFormTextField(
-          'filterReleaseTitlesByRegEx',
-          label: t('filterReleaseTitlesByRegEx'),
-          required: false,
-          additionalValidators: [
-            (value) {
-              return regExValidator(value);
-            },
-          ],
-        ),
-      ],
-      [
-        GeneratedFormTextField(
-          'filterReleaseNotesByRegEx',
-          label: t('filterReleaseNotesByRegEx'),
-          required: false,
-          additionalValidators: [
-            (value) {
-              return regExValidator(value);
-            },
-          ],
-        ),
-      ],
-      [GeneratedFormSwitch('verifyLatestTag', label: t('verifyLatestTag'))],
-      [
-        GeneratedFormDropdown(
-          'sortMethodChoice',
-          [
-            MapEntry('date', t('releaseDate')),
-            MapEntry('smartname', t('smartname')),
-            MapEntry('none', t('none')),
-            MapEntry(
-              'smartname-datefallback',
-              '${t('smartname')} x ${t('releaseDate')}',
-            ),
-            MapEntry('name', t('name')),
-          ],
-          label: t('sortMethod'),
-          defaultValue: 'date',
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'useLatestAssetDateAsReleaseDate',
-          label: t('useLatestAssetDateAsReleaseDate'),
-          defaultValue: false,
-        ),
-      ],
-      [
-        GeneratedFormSwitch(
-          'releaseTitleAsVersion',
-          label: t('releaseTitleAsVersion'),
-          defaultValue: false,
-        ),
-      ],
-    ];
+    additionalSourceAppSpecificSettingFormItems = [];
 
     canSearch = true;
     searchQuerySettingFormItems = [

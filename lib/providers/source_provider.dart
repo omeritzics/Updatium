@@ -788,7 +788,7 @@ abstract class AppSource {
   bool urlsAlwaysHaveExtension = false;
   bool allowIncludeZips = false;
   bool allowIncludeTarballs = false;
-  bool openSource = false;
+  bool isOpenSource = false;
 
   AppSource() {
     name = runtimeType.toString();
@@ -940,7 +940,6 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
-
     [
       GeneratedFormSwitch(
         'versionDetection',
@@ -976,65 +975,6 @@ abstract class AppSource {
         defaultValue: false,
       ),
     ],
-
-    [
-      GeneratedFormSwitch(
-        'autoApkFilterByArch',
-        label: 'autoApkFilterByArch'.t(),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'exemptFromBackgroundUpdates',
-        label: 'exemptFromBackgroundUpdates'.t(),
-        defaultValue: false,
-      ),
-    ],
-
-    [
-      GeneratedFormSwitch(
-        'useVersionCodeAsOSVersion',
-        label: 'useVersionCodeAsOSVersion'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'autoApkFilterByArch',
-        label: 'autoApkFilterByArch'.t(),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'exemptFromBackgroundUpdates',
-        label: 'exemptFromBackgroundUpdates'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'shizukuPretendToBeGooglePlay',
-        label: 'shizukuPretendToBeGooglePlay'.t(),
-        defaultValue: false,
-      ),
-    ],
-
-    [
-      GeneratedFormSwitch(
-        'autoApkFilterByArch',
-        label: 'autoApkFilterByArch'.t(),
-        defaultValue: true,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'shizukuPretendToBeGooglePlay',
-        label: 'shizukuPretendToBeGooglePlay'.t(),
-        defaultValue: false,
-      ),
-    ],
     [
       GeneratedFormSwitch(
         'allowInsecure',
@@ -1044,20 +984,16 @@ abstract class AppSource {
     ],
     [
       GeneratedFormSwitch(
-        'exemptFromBackgroundUpdates',
-        label: 'exemptFromBackgroundUpdates'.t(),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
         'skipUpdateNotifications',
         label: 'skipUpdateNotifications'.t(),
+        defaultValue: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'refreshBeforeDownload',
         label: 'refreshBeforeDownload'.t(),
+        defaultValue: false,
       ),
     ],
     [
@@ -1092,6 +1028,7 @@ abstract class AppSource {
       GeneratedFormSwitch(
         'useFirstApkOfVersion',
         label: 'useFirstApkOfVersion'.t(),
+        defaultValue: false,
       ),
     ],
     [GeneratedFormSwitch('verifyLatestTag', label: 'verifyLatestTag'.t())],

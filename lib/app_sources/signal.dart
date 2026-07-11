@@ -8,7 +8,7 @@ class Signal extends AppSource {
     name = 'Signal';
     hosts = ['signal.org'];
     allowOverride = false;
-    openSource = true;
+    isOpenSource = true;
   }
 
   @override

@@ -287,7 +287,7 @@ class AddAppPageState extends State<AddAppPage> {
                                       : TextDecoration.none,
                                 ),
                               ),
-                              if (e.openSource) ...[
+                              if (e.isOpenSource) ...[
                                 const SizedBox(width: 4),
                                 Icon(
                                   Icons.workspace_premium,
