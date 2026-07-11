@@ -62,9 +62,9 @@ class AddAppPageState extends State<AddAppPage> {
   SourceProvider sourceProvider = SourceProvider();
   final TextEditingController _sourceOverrideController =
       TextEditingController();
-  
+
   SettingsProvider get settingsProvider => context.read<SettingsProvider>();
-  
+
   @override
   void dispose() {
     _sourceOverrideController.dispose();
@@ -734,7 +734,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
 
   late ConfettiController _confettiController;
   Future<String?>? _sourceNoteFuture;
-  
+
   App? prefilledApp;
   int prefillVersion = 0;
 
@@ -1214,13 +1214,13 @@ class _SelectionModalState extends State<SelectionModal> {
       selectOnlyOne(widget.entries.entries.first.key);
     }
   }
-  
+
   @override
   void dispose() {
     _filterController.dispose();
     super.dispose();
   }
-  
+
   void selectOnlyOne(String url) {
     for (var e in entrySelections.keys) {
       entrySelections[e] = e.key == url;
