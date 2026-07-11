@@ -98,6 +98,7 @@ dependencies:
   loading_indicator_m3e: ^0.1.1
   dynamic_color: ^1.8.1
   intl: any
+  confetti: ^0.8.0
 flutter_launcher_icons:
   android: "ic_launcher"
   adaptive_icon_background: "#ffffff"
