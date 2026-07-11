@@ -356,6 +356,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, GlobalKey<FormFieldState>> _formKeys = {};
   bool _isDisposed = false;
+  bool _isInitCallbackPending = false;
 
   @override
   void dispose() {
@@ -385,7 +386,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
     widget.onValueChanges(returnValues, valid, isBuilding);
   }
 
-  void initForm() {
+  void initForm({bool deferCallback = true}) {
     if (_isDisposed) return;
     initKey = widget.key.toString();
     for (var controller in _controllers.values) {
@@ -418,7 +419,18 @@ class _GeneratedFormState extends State<GeneratedForm> {
         }
       }
     }
-    someValueChanged(isBuilding: true);
+    if (deferCallback) {
+      if (_isInitCallbackPending) return;
+      _isInitCallbackPending = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!_isDisposed) {
+          someValueChanged(isBuilding: true);
+        }
+        _isInitCallbackPending = false;
+      });
+    } else {
+      someValueChanged(isBuilding: true);
+    }
   }
 
   List<List<Widget>> buildFormInputs(BuildContext context) {
