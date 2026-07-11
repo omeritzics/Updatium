@@ -425,7 +425,7 @@ class _AppPageState extends State<AppPage> {
           Text(
             infoLines,
             textAlign: TextAlign.start,
-            style: const TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 14),
           ),
 
           /* Certificate Hashes */
@@ -438,7 +438,7 @@ class _AppPageState extends State<AppPage> {
                   "${'certificateHash'.plural(app.certificateHashes.length)}:"
                   "${app.hasMultipleSigners ? " (${'multipleSigners'.t()})" : ""}",
                   textAlign: TextAlign.start,
-                  style: const TextStyle(fontSize: 12),
+                  style: const TextStyle(fontSize: 14),
                 ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
@@ -455,7 +455,7 @@ class _AppPageState extends State<AppPage> {
                         child: Text(
                           hash,
                           textAlign: TextAlign.start,
-                          style: const TextStyle(fontSize: 12),
+                          style: const TextStyle(fontSize: 14),
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),

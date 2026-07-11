@@ -486,7 +486,6 @@ class AddAppPageState extends State<AddAppPage> {
                 entries: sourceStrings,
                 selectedByDefault: true,
                 onlyOneSelectionAllowed: false,
-                titlesAreLinks: false,
                 deselectThese: settingsProvider.searchDeselected,
               );
             },
@@ -1139,7 +1138,6 @@ class SelectionModal extends StatefulWidget {
     required this.entries,
     this.selectedByDefault = true,
     this.onlyOneSelectionAllowed = false,
-    this.titlesAreLinks = true,
     this.title,
     this.deselectThese = const [],
   });
@@ -1149,7 +1147,6 @@ class SelectionModal extends StatefulWidget {
   final bool selectedByDefault;
   final List<String> deselectThese;
   final bool onlyOneSelectionAllowed;
-  final bool titlesAreLinks;
 
   @override
   State<SelectionModal> createState() => _SelectionModalState();
@@ -1337,37 +1334,12 @@ class _SelectionModalState extends State<SelectionModal> {
                                   entry.value.isEmpty
                                       ? entry.key
                                       : entry.value[0],
-                                  style: TextStyle(
-                                    decoration: widget.titlesAreLinks
-                                        ? TextDecoration.underline
-                                        : null,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                                if (widget.titlesAreLinks)
-                                  Text(
-                                    Uri.tryParse(entry.key)?.host ?? entry.key,
-                                    style: const TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontSize: 12,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
                               ],
                             );
-
-                            if (widget.titlesAreLinks) {
-                              urlLink = GestureDetector(
-                                onTap: () => launchUrlString(
-                                  entry.key,
-                                  mode: LaunchMode.externalApplication,
-                                ),
-                                child: urlLink,
-                              );
-                            }
 
                             Widget? descriptionText = entry.value.length <= 1
                                 ? null
@@ -1406,37 +1378,12 @@ class _SelectionModalState extends State<SelectionModal> {
                           children: [
                             Text(
                               entry.value.isEmpty ? entry.key : entry.value[0],
-                              style: TextStyle(
-                                decoration: widget.titlesAreLinks
-                                    ? TextDecoration.underline
-                                    : null,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: TextStyle(fontWeight: FontWeight.bold),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            if (widget.titlesAreLinks)
-                              Text(
-                                Uri.tryParse(entry.key)?.host ?? entry.key,
-                                style: const TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 12,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
                           ],
                         );
-
-                        if (widget.titlesAreLinks) {
-                          urlLink = GestureDetector(
-                            onTap: () => launchUrlString(
-                              entry.key,
-                              mode: LaunchMode.externalApplication,
-                            ),
-                            child: urlLink,
-                          );
-                        }
 
                         Widget? descriptionText = entry.value.length <= 1
                             ? null
