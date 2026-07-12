@@ -417,17 +417,17 @@ class _UpdatiumState extends State<Updatium> {
           if (settingsProvider.useBlackTheme) {
             darkColorScheme = darkColorScheme.copyWith(
               surface: Colors.black,
-              surfaceContainerHighest: Colors.white.withValues(alpha: 0.17),
-              surfaceContainerHigh: Colors.white.withValues(alpha: 0.12),
+              // surfaceContainerHighest: Colors.white.withValues(alpha: 0.17),
+              // surfaceContainerHigh: Colors.white.withValues(alpha: 0.12),
               // surfaceContainer: Colors.white.withValues(alpha: 0.08),
               // surfaceContainerLow: Colors.white.withValues(alpha: 0.04),
               // surfaceContainerLowest: Colors.white.withValues(alpha: 0.02),
               surfaceDim: Colors.black,
               surfaceBright: Colors.white.withValues(alpha: 0.05),
-              onSurface: Colors.white.withValues(alpha: 0.95),
+              onSurface: Colors.white,
               onSurfaceVariant: Colors.white.withValues(alpha: 0.7),
-              outline: Colors.white.withValues(alpha: 0.25),
-              outlineVariant: Colors.white.withValues(alpha: 0.12),
+              outline: Colors.white,
+              outlineVariant: Colors.white.withValues(alpha: 0.85),
             );
           }
 

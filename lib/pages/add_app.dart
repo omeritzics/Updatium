@@ -368,7 +368,7 @@ class AddAppPageState extends State<AddAppPage> {
                   }).toList();
 
                   return AlertDialog(
-                    contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+                    contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                     title: Text('installedApps'.t()),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
