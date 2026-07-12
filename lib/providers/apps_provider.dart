@@ -740,7 +740,7 @@ class AppsProvider with ChangeNotifier {
     }
   }
 
-  Future<Object> downloadApp(
+  Future<Object?> downloadApp(
     App app,
     BuildContext? context, {
     NotificationsProvider? notificationsProvider,
@@ -890,14 +890,14 @@ class AppsProvider with ChangeNotifier {
             APKDir.path,
           );
           if (!context.mounted) {
-            throw UpdatiumError('downloadCancelled'.t());
+            return null;
           }
           String? userFileName = await promptForFileName(
             context,
             suggestedName,
           );
           if (userFileName == null) {
-            throw UpdatiumError('downloadCancelled'.t());
+            return null;
           }
           // Update fileNameNoExt based on user input
           if (source.urlsAlwaysHaveExtension) {
@@ -1920,6 +1920,15 @@ class AppsProvider with ChangeNotifier {
               notificationsProvider: notificationsProvider,
               useExisting: useExisting,
             );
+        if (downloadedArtifact == null) {
+          return {
+            'id': id,
+            'willBeSilent': false,
+            'downloadedFile': null,
+            'downloadedDir': null,
+            'cancelled': true,
+          };
+        }
         if (downloadedArtifact is DownloadedApk) {
           downloadedFile = downloadedArtifact;
         } else {
@@ -1969,7 +1978,7 @@ class AppsProvider with ChangeNotifier {
       );
     }
     for (var res in downloadResults) {
-      if (!errors.appIdNames.containsKey(res['id'])) {
+      if (!errors.appIdNames.containsKey(res['id']) && res['cancelled'] != true) {
         try {
           await installFn(
             res['id'] as String,

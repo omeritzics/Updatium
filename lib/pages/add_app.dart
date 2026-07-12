@@ -958,6 +958,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               globalNavigatorKey.currentContext,
               notificationsProvider: notificationsProvider,
             );
+            if (downloadedArtifact == null) return;
             DownloadedApk? downloadedFile;
             DownloadedDir? downloadedDir;
             if (downloadedArtifact is DownloadedApk) {

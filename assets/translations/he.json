@@ -198,7 +198,7 @@
     "errorCheckingUpdates": "שגיאה בעת  בדיקת עדכונים",
     "errorCheckingUpdatesNotifDescription": "התראה שמופיעה כאשר נכשלת בדיקת העדכונים ברקע",
     "appsRemoved": "הוסרו יישומים",
-    "undo": "Undo",
+    "undo": "החזרה",
     "appsRemovedNotifDescription": "התראה למשתמש על עצם כך שהוסר יישום אחד או יותר בשל שגיאות במהלך טעינתו",
     "xWasRemovedDueToErrorY": "היישום {} הוסר בשל שגיאה זו: {}",
     "completeAppInstallation": "השלמת התקנת היישום",
