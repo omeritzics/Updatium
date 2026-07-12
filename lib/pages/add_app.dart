@@ -280,14 +280,15 @@ class AddAppPageState extends State<AddAppPage> {
                                 }
                               : null,
                           child: Row(
-                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(
-                                '${e.name} ${e.canSearch ? ' ${'searchableInBrackets'.t()}' : ''}',
-                                style: TextStyle(
-                                  decoration: e.hosts.isNotEmpty
-                                      ? TextDecoration.underline
-                                      : TextDecoration.none,
+                              Expanded(
+                                child: Text(
+                                  '${e.name} ${e.canSearch ? ' ${'searchableInBrackets'.t()}' : ''}',
+                                  style: TextStyle(
+                                    decoration: e.hosts.isNotEmpty
+                                        ? TextDecoration.underline
+                                        : TextDecoration.none,
+                                  ),
                                 ),
                               ),
                               if (e.isOpenSource) ...[
