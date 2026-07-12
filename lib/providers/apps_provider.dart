@@ -43,7 +43,6 @@ import 'package:updatium/providers/source_provider.dart'
         list2FriendlyString,
         NoVersionError;
 import 'package:updatium/providers/source_provider.dart' as source_provider;
-import 'package:updatium/pages/add_app.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:archive/archive.dart' as archive;
@@ -3129,12 +3128,12 @@ class _AppFilePickerState extends State<AppFilePicker> {
     if (widget.pickAnyAsset) {
       urlsToSelectFrom = [...urlsToSelectFrom, ...widget.app.otherAssetUrls];
     }
-    final showProgress =
-        widget.progressIndicatorStep != null &&
-        widget.progressIndicatorTotal != null;
-    final progressText = showProgress
-        ? '${widget.progressIndicatorStep}/${widget.progressIndicatorTotal}'
-        : '';
+    // final showProgress =
+    //    widget.progressIndicatorStep != null &&
+    //    widget.progressIndicatorTotal != null;
+    // final progressText = showProgress
+    //    ? '${widget.progressIndicatorStep}/${widget.progressIndicatorTotal}'
+    //    : '';
 
     return Dialog.fullscreen(
       child: Scaffold(
@@ -3166,30 +3165,30 @@ class _AppFilePickerState extends State<AppFilePicker> {
         ),
         body: Column(
           children: [
-            if (showProgress)
-              AppAddingProgressBar(
-                currentStep: widget.progressIndicatorStep!,
-                totalSteps: widget.progressIndicatorTotal!,
-              ),
-            if (showProgress)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'confirmAppSelection'.t(),
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    Text(
-                      progressText,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            //  if (showProgress)
+            //    AppAddingProgressBar(
+            //      currentStep: widget.progressIndicatorStep!,
+            //      totalSteps: widget.progressIndicatorTotal!,
+            //    ),
+            //  if (showProgress)
+            //    Padding(
+            //      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            //      child: Row(
+            //        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //        children: [
+            //          Text(
+            //            'confirmAppSelection'.t(),
+            //            style: Theme.of(context).textTheme.titleSmall,
+            //          ),
+            //         Text(
+            //            progressText,
+            //            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            //              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            //            ),
+            //          ),
+            //        ],
+            //      ),
+            //    ),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),

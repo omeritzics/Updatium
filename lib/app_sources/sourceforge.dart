@@ -13,7 +13,7 @@ class SourceForge extends AppSource {
     var sourceRegex = getSourceRegex(hosts);
     return SourceProvider().standardizeUrlWithRegex(
       url,
-      '^https?://(www\\.)?$sourceRegex/(projects/[^/]+/files|p)/.+',
+      '^https?://(www\\.)?$sourceRegex/(projects/[^/]+/files/.+|projects/[^/]+|p/.+)',
       sourceName: name,
       transform: (matched, match) {
         var uri = Uri.parse(matched);

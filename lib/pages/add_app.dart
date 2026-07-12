@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:loading_indicator_m3e/loading_indicator_m3e.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:confetti/confetti.dart';
 import 'package:updatium/components/generated_form.dart';
@@ -28,21 +29,21 @@ const horizontalGap12 = SizedBox(width: 12);
 const horizontalGap16 = SizedBox(width: 16);
 const horizontalGap24 = SizedBox(width: 24);
 
-class AppAddingProgressBar extends StatelessWidget {
-  final int currentStep;
-  final int totalSteps;
+// class AppAddingProgressBar extends StatelessWidget {
+//  final int currentStep;
+//  final int totalSteps;
+//
+//  const AppAddingProgressBar({
+//    super.key,
+//    required this.currentStep,
+//    required this.totalSteps,
+//  });
 
-  const AppAddingProgressBar({
-    super.key,
-    required this.currentStep,
-    required this.totalSteps,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return LinearProgressIndicator(value: currentStep / totalSteps);
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return LinearProgressIndicator(value: currentStep / totalSteps);
+//  }
+// }
 
 class AddAppPage extends StatefulWidget {
   const AddAppPage({super.key});
@@ -180,7 +181,7 @@ class AddAppPageState extends State<AddAppPage> {
       ),
       horizontalGap16,
       searching
-          ? const CircularProgressIndicator()
+          ? const LoadingIndicatorM3E()
           : M3EFilledButton.tonal(
               onPressed: searching || pickedSource == null
                   ? null
@@ -665,12 +666,12 @@ class AddAppPageState extends State<AddAppPage> {
                     preferredSize: const Size.fromHeight(8),
                     child: Padding(
                       padding: const EdgeInsets.only(top: 4),
-                      child: AppAddingProgressBar(
-                        currentStep: 0,
-                        totalSteps: (searching || searchQuery.isNotEmpty)
-                            ? 3
-                            : 2,
-                      ),
+                      //child: AppAddingProgressBar(
+                      //  currentStep: 0,
+                      //  totalSteps: (searching || searchQuery.isNotEmpty)
+                      //      ? 3
+                      //      : 2,
+                      //),
                     ),
                   )
                 : null,
@@ -1105,15 +1106,15 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                     icon: const Icon(Icons.close),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
-                  bottom: (pickedSource != null || cameFromSearch)
-                      ? PreferredSize(
-                          preferredSize: const Size.fromHeight(4),
-                          child: AppAddingProgressBar(
-                            currentStep: cameFromSearch ? 3 : 2,
-                            totalSteps: cameFromSearch ? 3 : 2,
-                          ),
-                        )
-                      : null,
+                  //bottom: (pickedSource != null || cameFromSearch)
+                  //    ? PreferredSize(
+                  //        preferredSize: const Size.fromHeight(4),
+                  //        child: AppAddingProgressBar(
+                  //          currentStep: cameFromSearch ? 3 : 2,
+                  //          totalSteps: cameFromSearch ? 3 : 2,
+                  //        ),
+                  //      )
+                  //    : null,
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
@@ -1137,22 +1138,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
                             future: _sourceNoteFuture,
                           ),
                         if (pickedSource != null) getAdditionalOptsCol(),
-                        if (pickedSource != null)
-                          pickedSource!.buildAdvancedSettingsWidget(
-                            context,
-                            currentInferAppIdIfOptional: inferAppIdIfOptional,
-                            onInferAppIdChanged: (value) {
-                              setState(() {
-                                inferAppIdIfOptional = value;
-                              });
-                            },
-                            onAdvancedSettingsChanged: (values) {
-                              setState(() {
-                                additionalSettings.addAll(values);
-                              });
-                            },
-                          ),
-                        gap24,
                       ],
                     ),
                   ),
@@ -1315,7 +1300,7 @@ class _SelectionModalState extends State<SelectionModal> {
         ),
         body: Column(
           children: [
-            const AppAddingProgressBar(currentStep: 1, totalSteps: 3),
+            //const AppAddingProgressBar(currentStep: 1, totalSteps: 3),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: Row(

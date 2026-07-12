@@ -10,17 +10,17 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0
 
-        # we only need JSON files
+        # we only need the JSON files
       - name: Get JSON PR files
         id: changed
         # get only the changed files
         run: |
           echo "files<<EOF" >> "$GITHUB_OUTPUT"
-          git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '^assets/translations/.*\.json$' || true >> "$GITHUB_OUTPUT"
+          git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '^assets/translations/.*\.json$' >> "$GITHUB_OUTPUT" || true
           echo "EOF" >> "$GITHUB_OUTPUT"
         
 
