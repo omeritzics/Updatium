@@ -91,7 +91,7 @@ class Bitbucket extends AppSource {
     Map<String, dynamic> querySettings = const {},
   }) async {
     var url =
-        'https://api.${hosts[0]}/2.0/repositories/${Uri.encodeQueryComponent(query)}';
+        'https://api.${hosts[0]}/2.0/repositories?q=${Uri.encodeQueryComponent(query)}';
     var res = await sourceRequest(url, {});
     if (res.statusCode != 200) {
       throw getUpdatiumHttpError(res);
