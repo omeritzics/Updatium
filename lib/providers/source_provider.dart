@@ -913,6 +913,20 @@ abstract class AppSource {
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
+    [GeneratedFormTextField('appId', label: 'appId'.t(), required: false, additionalValidators: [
+      (value) {
+        if (value == null || value.isEmpty) {
+          return null;
+        }
+        final isValid = RegExp(
+          r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+        ).hasMatch(value);
+        if (!isValid) {
+          return 'invalidInput'.t();
+        }
+        return null;
+      },
+    ])],
     [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
     [
       GeneratedFormTextField(
@@ -955,6 +969,21 @@ abstract class AppSource {
         'autoApkFilterByArch',
         label: 'autoApkFilterByArch'.t(),
         defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'apkFilterRegEx',
+        label: 'filterAPKsByRegEx'.t(),
+        required: false,
+        additionalValidators: [(value) => regExValidator(value)],
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'invertAPKFilter',
+        label: '${'invertRegEx'.t()} (${'filterAPKsByRegEx'.t()})',
+        defaultValue: false,
       ),
     ],
     [
@@ -1101,79 +1130,10 @@ abstract class AppSource {
     ],
   ];
 
-  List<List<GeneratedFormItem>>
-  advancedAppSpecificSourceAgnosticSettingFormItems = [
-    [
-      GeneratedFormTextField(
-        'appId',
-        label: 'appId'.t(),
-        required: false,
-        additionalValidators: [
-          (value) {
-            if (value == null || value.isEmpty) {
-              return null;
-            }
-            final isValid = RegExp(
-              r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-            ).hasMatch(value);
-            if (!isValid) {
-              return 'invalidInput'.t();
-            }
-            return null;
-          },
-        ],
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'shizukuPretendToBeGooglePlay',
-        label: 'shizukuPretendToBeGooglePlay'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'allowInsecure',
-        label: 'allowInsecure'.t(),
-        defaultValue: false,
-      ),
-    ],
-    [
-      GeneratedFormTextField(
-        'apkFilterRegEx',
-        label: 'filterAPKsByRegEx'.t(),
-        required: false,
-        additionalValidators: [(value) => regExValidator(value)],
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
-        'invertAPKFilter',
-        label: '${'invertRegEx'.t()} (${'filterAPKsByRegEx'.t()})',
-        defaultValue: false,
-      ),
-    ],
-  ];
-
-  List<List<GeneratedFormItem>> get combinedAdvancedSettingFormItems {
-    var items = <List<GeneratedFormItem>>[];
-    items.addAll(advancedAppSpecificSourceAgnosticSettingFormItems.sublist(1));
-    if (allowIncludeZips) {
-      items.add([
-        GeneratedFormTextField(
-          'zippedApkFilterRegEx',
-          label: 'zippedApkFilterRegEx'.t(),
-          required: false,
-          additionalValidators: [(value) => regExValidator(value)],
-        ),
-      ]);
-    }
-    return items;
-  }
-
   // Previous 2 variables combined into one at runtime for convenient usage + additional processing
   List<List<GeneratedFormItem>> get combinedAppSpecificSettingFormItems {
     var agnosticItems = cloneFormItems(
+
       additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly,
     );
 

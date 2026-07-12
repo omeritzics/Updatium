@@ -817,6 +817,10 @@ class _AppPageState extends State<AppPage> {
                 slivers: [
                   SliverAppBar.large(
                     pinned: true,
+                    leading: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
                     title: Row(
                       children: [
                         Consumer<AppsProvider>(
@@ -830,13 +834,13 @@ class _AppPageState extends State<AppPage> {
                                 ),
                                 child: Image.memory(
                                   appInMemory!.icon!,
-                                  width: 40,
-                                  height: 40,
+                                  width: 48,
+                                  height: 48,
                                   gaplessPlayback: true,
                                   errorBuilder: (context, error, stackTrace) {
                                     return Icon(
                                       Icons.apps,
-                                      size: 40,
+                                      size: 48,
                                       color: Theme.of(
                                         context,
                                       ).colorScheme.primary,
@@ -864,14 +868,14 @@ class _AppPageState extends State<AppPage> {
                                     padding: EdgeInsets.zero,
                                     child: Image.memory(
                                       updatedAppInMemory!.icon!,
-                                      width: 40,
-                                      height: 40,
+                                      width: 48,
+                                      height: 48,
                                       gaplessPlayback: true,
                                       errorBuilder:
                                           (context, error, stackTrace) {
                                             return Icon(
                                               Icons.apps,
-                                              size: 40,
+                                              size: 48,
                                               color: Theme.of(
                                                 context,
                                               ).colorScheme.primary,
@@ -886,7 +890,7 @@ class _AppPageState extends State<AppPage> {
                                   padding: EdgeInsets.zero,
                                   child: Icon(
                                     Icons.apps,
-                                    size: 40,
+                                    size: 48,
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.primary,
@@ -955,7 +959,7 @@ class _AppPageState extends State<AppPage> {
             Positioned(
               left: 0,
               right: 0,
-              bottom: 16,
+              bottom: 20,
               child: Align(
                 alignment: Alignment.center,
                 child: M3FloatingToolbar(

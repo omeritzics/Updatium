@@ -53,7 +53,8 @@ class AddAppPage extends StatefulWidget {
 }
 
 class AddAppPageState extends State<AddAppPage> {
-  bool searching = false;
+  bool isSearchLoading = false;
+  bool isUrlLoading = false;
   String userInput = '';
   String searchQuery = '';
   int searchBarKey = 0;
@@ -180,10 +181,10 @@ class AddAppPageState extends State<AddAppPage> {
         ),
       ),
       horizontalGap16,
-      searching
+      isUrlLoading
           ? const LoadingIndicatorM3E()
           : M3EFilledButton.tonal(
-              onPressed: searching || pickedSource == null
+              onPressed: isUrlLoading || pickedSource == null
                   ? null
                   : () {
                       settingsProvider.selectionClick();
@@ -225,10 +226,10 @@ class AddAppPageState extends State<AddAppPage> {
         ),
       ),
       horizontalGap16,
-      searching
-          ? const CircularProgressIndicator()
+      isSearchLoading
+          ? const LoadingIndicatorM3E()
           : M3EFilledButton.tonal(
-              onPressed: searchQuery.isEmpty || searching
+              onPressed: searchQuery.isEmpty || isSearchLoading
                   ? null
                   : () {
                       runSearch();
@@ -471,7 +472,7 @@ class AddAppPageState extends State<AddAppPage> {
 
   Future<void> runSearch({bool filtered = true}) async {
     setState(() {
-      searching = true;
+      isSearchLoading = true;
     });
     var sourceStrings = <String, List<String>>{};
     sourceProvider.sources.where((e) => e.canSearch).forEach((s) {
@@ -647,7 +648,7 @@ class AddAppPageState extends State<AddAppPage> {
       showError(e, context);
     } finally {
       setState(() {
-        searching = false;
+        isSearchLoading = false;
       });
     }
   }
@@ -661,14 +662,14 @@ class AddAppPageState extends State<AddAppPage> {
             pinned: true,
             title: Text('addApp'.t()),
             bottom:
-                (pickedSource != null || searching || searchQuery.isNotEmpty)
+                (pickedSource != null || isSearchLoading || isUrlLoading || searchQuery.isNotEmpty)
                 ? PreferredSize(
                     preferredSize: const Size.fromHeight(8),
                     child: Padding(
                       padding: const EdgeInsets.only(top: 4),
                       //child: AppAddingProgressBar(
                       //  currentStep: 0,
-                      //  totalSteps: (searching || searchQuery.isNotEmpty)
+                      //  totalSteps: (isUrlLoading || searchQuery.isNotEmpty)
                       //      ? 3
                       //      : 2,
                       //),
@@ -981,9 +982,6 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           Future.delayed(const Duration(milliseconds: 800), () {
             if (!mounted) return;
             Navigator.pop(context);
-
-            // Pop the AddAppPage as well so the user returns to the AppsPage
-            Navigator.of(globalNavigatorKey.currentContext!).pop();
 
             Navigator.push(
               globalNavigatorKey.currentContext ?? context,
