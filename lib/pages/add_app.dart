@@ -979,6 +979,11 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
         if (app != null) {
           Future.delayed(const Duration(milliseconds: 800), () {
             if (!mounted) return;
+            Navigator.pop(context);
+            
+            // Pop the AddAppPage as well so the user returns to the AppsPage
+            Navigator.of(globalNavigatorKey.currentContext!).pop();
+            
             Navigator.push(
               globalNavigatorKey.currentContext ?? context,
               MaterialPageRoute(
