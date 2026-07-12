@@ -508,19 +508,17 @@ class App {
       );
     }
     return App(
-      json['id'] as String,
-      json['url'] as String,
-      json['appAuthor'] as String,
-      json['name'] as String,
-      json['installedVersion'] == null
-          ? null
-          : json['installedVersion'] as String,
-      (json['latestVersion'] ?? 'unknown'.t()) as String,
+      json['id']?.toString() ?? '',
+      json['url']?.toString() ?? '',
+      json['appAuthor']?.toString() ?? '',
+      json['name']?.toString() ?? '',
+      json['installedVersion']?.toString(),
+      (json['latestVersion'] ?? 'unknown'.t()).toString(),
       assumed2DlistToStringMapList(
         jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
       ),
       (json['preferredApkIndex'] ?? -1) as int,
-      jsonDecode(json['additionalSettings']) as Map<String, dynamic>,
+      jsonDecode(json['additionalSettings'] ?? '{}') as Map<String, dynamic>,
       json['lastUpdateCheck'] == null
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['lastUpdateCheck']),
@@ -531,21 +529,19 @@ class App {
                 .map((e) => e.toString())
                 .toList()
           : json['category'] != null
-          ? [json['category'] as String]
-          : [],
+              ? [json['category']?.toString() ?? '']
+              : [],
       releaseDate: json['releaseDate'] == null
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['releaseDate']),
-      changeLog: json['changeLog'] == null ? null : json['changeLog'] as String,
-      remoteIconUrl: json['remoteIconUrl'] == null
-          ? null
-          : json['remoteIconUrl'] as String,
+      changeLog: json['changeLog']?.toString(),
+      remoteIconUrl: json['remoteIconUrl']?.toString(),
       overrideSource: json['overrideSource'],
       allowIdChange: json['allowIdChange'] ?? false,
       otherAssetUrls: assumed2DlistToStringMapList(
         jsonDecode((json['otherAssetUrls'] ?? '[]')),
       ),
-      pendingRepoRenameUrl: json['pendingRepoRenameUrl'] as String?,
+      pendingRepoRenameUrl: json['pendingRepoRenameUrl']?.toString(),
     );
   }
 

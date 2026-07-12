@@ -3024,10 +3024,10 @@ class AppsProvider with ChangeNotifier {
         } else if (value is List) {
           settingsProvider.prefs?.setStringList(
             key,
-            value.map((e) => e as String).toList(),
+            value.map((e) => e?.toString() ?? '').toList(),
           );
-        } else {
-          settingsProvider.prefs?.setString(key, value as String);
+        } else if (value != null) {
+          settingsProvider.prefs?.setString(key, value.toString());
         }
       });
     }
