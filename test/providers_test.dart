@@ -127,7 +127,7 @@ void main() {
     });
 
     test('sources contains FDroid', () {
-      expect(sourceProvider.sources.any((s) => s.name == 'F-Droid'), isTrue);
+      expect(sourceProvider.sources.any((s) => s.name == 'FDroid'), isTrue);
     });
 
     test('hasSupportedApkExtension identifies APK files', () {

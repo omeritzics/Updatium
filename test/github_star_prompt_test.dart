@@ -19,7 +19,7 @@ void main() {
       await tester.pumpWidget(testWidget);
 
       await GitHubStarPrompt.initializeAndCheck(
-        tester.element(find.byType(MaterialApp)),
+        tester.element(find.byType(Container)),
       );
 
       final prefs = await SharedPreferences.getInstance();
@@ -41,7 +41,7 @@ void main() {
       await tester.pumpWidget(testWidget);
 
       await GitHubStarPrompt.initializeAndCheck(
-        tester.element(find.byType(MaterialApp)),
+        tester.element(find.byType(Container)),
       );
       await tester.pump();
 
@@ -64,7 +64,7 @@ void main() {
       await tester.pumpWidget(testWidget);
 
       await GitHubStarPrompt.initializeAndCheck(
-        tester.element(find.byType(MaterialApp)),
+        tester.element(find.byType(Container)),
       );
       await tester.pumpAndSettle();
 

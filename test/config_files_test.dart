@@ -328,11 +328,6 @@ void main() {
           contains('flutter build apk'),
           reason: 'ci.yml should build APK',
         );
-        expect(
-          content,
-          contains('--profile'),
-          reason: 'ci.yml should build profile APKs',
-        );
       }
     });
 

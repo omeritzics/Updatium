@@ -16,6 +16,14 @@ void main() {
       final result = generateUniqueFileName('app', 'apk', '/tmp');
       expect(result, matches(RegExp(r'^app(\(\d+\))?\.apk$')));
     });
+
+    test('hashListOfLists returns consistent hash', () {
+      final data = [[1, 2], [3, 4]];
+      final hash1 = hashListOfLists(data);
+      final hash2 = hashListOfLists(data);
+      expect(hash1, equals(hash2));
+      expect(hash1, isA<String>());
+    });
   });
 
   group('Version Format Detection Tests', () {
@@ -94,6 +102,17 @@ void main() {
       expect(copy.app.id, equals(app.id));
       expect(copy.downloadProgress, equals(50.0));
     });
+    // ... (rest of AppInMemory tests)
+  });
+
+  group('Architecture Filtering Tests', () {
+    // Since filterApksByArchitecture depends on device info, 
+    // we create a MockAppsProvider to override device info methods.
+    
+    // Mock provider class
+    // Note: In a real project, we'd use mocktail or mockito.
+    // For simplicity here, we can just define a subclass.
+  });
 
     test('AppInMemory name returns override name when set', () {
       final app = App(
@@ -166,8 +185,7 @@ void main() {
       final appInMemory = AppInMemory(app, null, null, null);
       expect(appInMemory.author, equals('Original Author'));
     });
-  });
-
+  
   group('DownloadedApk Tests', () {
     test('DownloadedApk stores properties', () {
       final apk = DownloadedApk('com.example.app', File('/path/to/app.apk'));
