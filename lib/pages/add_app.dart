@@ -662,7 +662,10 @@ class AddAppPageState extends State<AddAppPage> {
             pinned: true,
             title: Text('addApp'.t()),
             bottom:
-                (pickedSource != null || isSearchLoading || isUrlLoading || searchQuery.isNotEmpty)
+                (pickedSource != null ||
+                    isSearchLoading ||
+                    isUrlLoading ||
+                    searchQuery.isNotEmpty)
                 ? PreferredSize(
                     preferredSize: const Size.fromHeight(8),
                     child: Padding(

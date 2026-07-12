@@ -913,20 +913,27 @@ abstract class AppSource {
   // Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>>
   additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly = [
-    [GeneratedFormTextField('appId', label: 'appId'.t(), required: false, additionalValidators: [
-      (value) {
-        if (value == null || value.isEmpty) {
-          return null;
-        }
-        final isValid = RegExp(
-          r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-        ).hasMatch(value);
-        if (!isValid) {
-          return 'invalidInput'.t();
-        }
-        return null;
-      },
-    ])],
+    [
+      GeneratedFormTextField(
+        'appId',
+        label: 'appId'.t(),
+        required: false,
+        additionalValidators: [
+          (value) {
+            if (value == null || value.isEmpty) {
+              return null;
+            }
+            final isValid = RegExp(
+              r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+            ).hasMatch(value);
+            if (!isValid) {
+              return 'invalidInput'.t();
+            }
+            return null;
+          },
+        ],
+      ),
+    ],
     [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
     [
       GeneratedFormTextField(
@@ -1133,7 +1140,6 @@ abstract class AppSource {
   // Previous 2 variables combined into one at runtime for convenient usage + additional processing
   List<List<GeneratedFormItem>> get combinedAppSpecificSettingFormItems {
     var agnosticItems = cloneFormItems(
-
       additionalAppSpecificSourceAgnosticSettingFormItemsNeverUseDirectly,
     );
 

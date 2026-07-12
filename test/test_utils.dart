@@ -13,7 +13,7 @@ class MockSettingsProvider extends SettingsProvider {
 
   @override
   String? get safeModePassword => _mockPrefs['safeModePassword'] as String?;
-  
+
   @override
   Future<bool> setSafeModePassword(String password) async {
     _mockPrefs['safeModePassword'] = password; // In real app it's hashed
