@@ -529,8 +529,8 @@ class App {
                 .map((e) => e.toString())
                 .toList()
           : json['category'] != null
-              ? [json['category']?.toString() ?? '']
-              : [],
+          ? [json['category']?.toString() ?? '']
+          : [],
       releaseDate: json['releaseDate'] == null
           ? null
           : DateTime.fromMicrosecondsSinceEpoch(json['releaseDate']),
