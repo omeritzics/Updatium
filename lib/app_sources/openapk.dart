@@ -8,7 +8,7 @@ class OpenAPK extends AppSource {
     name = 'OpenAPK';
     showReleaseDateAsVersionToggle = true;
     isOpenSource = true;
-    canSearch = true;
+    canSearch = false;
   }
 
   @override
