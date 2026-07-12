@@ -5,15 +5,24 @@ import 'dart:convert';
 void main() {
   group('URL Standardization Tests', () {
     test('preStandardizeUrl adds https if missing', () {
-      expect(preStandardizeUrl('duckduckgo.com'), equals('https://duckduckgo.com'));
+      expect(
+        preStandardizeUrl('duckduckgo.com'),
+        equals('https://duckduckgo.com'),
+      );
     });
 
     test('preStandardizeUrl handles existing https', () {
-      expect(preStandardizeUrl('https://duckduckgo.com'), equals('https://duckduckgo.com'));
+      expect(
+        preStandardizeUrl('https://duckduckgo.com'),
+        equals('https://duckduckgo.com'),
+      );
     });
 
     test('preStandardizeUrl throws on invalid URL', () {
-      expect(() => preStandardizeUrl('invalid'), throwsA(isA<UnsupportedURLError>()));
+      expect(
+        () => preStandardizeUrl('invalid'),
+        throwsA(isA<UnsupportedURLError>()),
+      );
     });
   });
 
@@ -39,11 +48,18 @@ void main() {
     test('stringMapListTo2DList converts MapEntry list to 2D list', () {
       final input = [MapEntry('name', 'url')];
       final result = stringMapListTo2DList(input);
-      expect(result, equals([['name', 'url']]));
+      expect(
+        result,
+        equals([
+          ['name', 'url'],
+        ]),
+      );
     });
 
     test('assumed2DlistToStringMapList converts 2D list to MapEntry list', () {
-      final input = [['name', 'url']];
+      final input = [
+        ['name', 'url'],
+      ];
       final result = assumed2DlistToStringMapList(input);
       expect(result.first.key, equals('name'));
       expect(result.first.value, equals('url'));
@@ -52,7 +68,10 @@ void main() {
 
   group('APK URL Helper Tests', () {
     test('getApkUrlsFromUrls extracts filenames correctly', () {
-      final urls = ['https://example.com/app-1.0.apk', 'https://example.com/app-2.0.xapk'];
+      final urls = [
+        'https://example.com/app-1.0.apk',
+        'https://example.com/app-2.0.xapk',
+      ];
       final result = getApkUrlsFromUrls(urls);
       expect(result[0].key, equals('app-1.0.apk'));
       expect(result[1].key, equals('app-2.0.xapk'));
@@ -80,28 +99,33 @@ void main() {
         'overrideSource': 'RemovedSource',
       };
       // Since RemovedSource doesn't exist in SourceProvider, it should be cleared
-      final result = appJSONCompatibilityModifiers(Map<String, dynamic>.from(json));
+      final result = appJSONCompatibilityModifiers(
+        Map<String, dynamic>.from(json),
+      );
       expect(result['overrideSource'], isNull);
     });
 
-    test('appJSONCompatibilityModifiers migrates additionalData to additionalSettings', () {
-      final json = {
-        'url': 'https://github.com/user/repo',
-        'additionalData': '["true", "some_value"]',
-      };
-      final result = appJSONCompatibilityModifiers(Map<String, dynamic>.from(json));
-      expect(result['additionalSettings'], isNotNull);
-      final settings = jsonDecode(result['additionalSettings'] as String);
-      expect(settings, isNotNull);
-    });
-
+    test(
+      'appJSONCompatibilityModifiers migrates additionalData to additionalSettings',
+      () {
+        final json = {
+          'url': 'https://github.com/user/repo',
+          'additionalData': '["true", "some_value"]',
+        };
+        final result = appJSONCompatibilityModifiers(
+          Map<String, dynamic>.from(json),
+        );
+        expect(result['additionalSettings'], isNotNull);
+        final settings = jsonDecode(result['additionalSettings'] as String);
+        expect(settings, isNotNull);
+      },
+    );
 
     test('appJSONCompatibilityModifiers normalizes preferredApkIndex', () {
-      final json = {
-        'url': 'https://example.com',
-        'preferredApkIndex': -5,
-      };
-      final result = appJSONCompatibilityModifiers(Map<String, dynamic>.from(json));
+      final json = {'url': 'https://example.com', 'preferredApkIndex': -5};
+      final result = appJSONCompatibilityModifiers(
+        Map<String, dynamic>.from(json),
+      );
       expect(result['preferredApkIndex'], equals(0));
     });
 
@@ -110,17 +134,19 @@ void main() {
         'url': 'https://example.com',
         'apkUrls': '["https://example.com/app.apk"]',
       };
-      final result = appJSONCompatibilityModifiers(Map<String, dynamic>.from(json));
+      final result = appJSONCompatibilityModifiers(
+        Map<String, dynamic>.from(json),
+      );
       final apkUrls = jsonDecode(result['apkUrls'] as String);
       expect(apkUrls, isA<List>());
       expect(apkUrls[0], equals(['app.apk', 'https://example.com/app.apk']));
     });
 
     test('appJSONCompatibilityModifiers migrates F-Droid cloudflare URLs', () {
-      final json = {
-        'url': 'https://cloudflare.f-droid.org/repo',
-      };
-      final result = appJSONCompatibilityModifiers(Map<String, dynamic>.from(json));
+      final json = {'url': 'https://cloudflare.f-droid.org/repo'};
+      final result = appJSONCompatibilityModifiers(
+        Map<String, dynamic>.from(json),
+      );
       expect(result['overrideSource'], equals('FDroid'));
     });
   });

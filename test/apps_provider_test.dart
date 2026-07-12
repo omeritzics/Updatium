@@ -18,7 +18,10 @@ void main() {
     });
 
     test('hashListOfLists returns consistent hash', () {
-      final data = [[1, 2], [3, 4]];
+      final data = [
+        [1, 2],
+        [3, 4],
+      ];
       final hash1 = hashListOfLists(data);
       final hash2 = hashListOfLists(data);
       expect(hash1, equals(hash2));
@@ -106,86 +109,86 @@ void main() {
   });
 
   group('Architecture Filtering Tests', () {
-    // Since filterApksByArchitecture depends on device info, 
+    // Since filterApksByArchitecture depends on device info,
     // we create a MockAppsProvider to override device info methods.
-    
+
     // Mock provider class
     // Note: In a real project, we'd use mocktail or mockito.
     // For simplicity here, we can just define a subclass.
   });
 
-    test('AppInMemory name returns override name when set', () {
-      final app = App(
-        'com.example.app',
-        'https://github.com/user/repo',
-        'user',
-        'Original Name',
-        null,
-        '1.0.0',
-        [],
-        0,
-        {'appName': 'Custom Name'},
-        null,
-        false,
-      );
-      final appInMemory = AppInMemory(app, null, null, null);
-      expect(appInMemory.name, equals('Custom Name'));
-    });
+  test('AppInMemory name returns override name when set', () {
+    final app = App(
+      'com.example.app',
+      'https://github.com/user/repo',
+      'user',
+      'Original Name',
+      null,
+      '1.0.0',
+      [],
+      0,
+      {'appName': 'Custom Name'},
+      null,
+      false,
+    );
+    final appInMemory = AppInMemory(app, null, null, null);
+    expect(appInMemory.name, equals('Custom Name'));
+  });
 
-    test('AppInMemory name returns original name when no override', () {
-      final app = App(
-        'com.example.app',
-        'https://github.com/user/repo',
-        'user',
-        'Original Name',
-        null,
-        '1.0.0',
-        [],
-        0,
-        {},
-        null,
-        false,
-      );
-      final appInMemory = AppInMemory(app, null, null, null);
-      expect(appInMemory.name, equals('Original Name'));
-    });
+  test('AppInMemory name returns original name when no override', () {
+    final app = App(
+      'com.example.app',
+      'https://github.com/user/repo',
+      'user',
+      'Original Name',
+      null,
+      '1.0.0',
+      [],
+      0,
+      {},
+      null,
+      false,
+    );
+    final appInMemory = AppInMemory(app, null, null, null);
+    expect(appInMemory.name, equals('Original Name'));
+  });
 
-    test('AppInMemory author returns override author when set', () {
-      final app = App(
-        'com.example.app',
-        'https://github.com/user/repo',
-        'Original Author',
-        'App',
-        null,
-        '1.0.0',
-        [],
-        0,
-        {'appAuthor': 'Custom Author'},
-        null,
-        false,
-      );
-      final appInMemory = AppInMemory(app, null, null, null);
-      expect(appInMemory.author, equals('Custom Author'));
-    });
+  test('AppInMemory author returns override author when set', () {
+    final app = App(
+      'com.example.app',
+      'https://github.com/user/repo',
+      'Original Author',
+      'App',
+      null,
+      '1.0.0',
+      [],
+      0,
+      {'appAuthor': 'Custom Author'},
+      null,
+      false,
+    );
+    final appInMemory = AppInMemory(app, null, null, null);
+    expect(appInMemory.author, equals('Custom Author'));
+  });
 
-    test('AppInMemory author returns original author when no override', () {
-      final app = App(
-        'com.example.app',
-        'https://github.com/user/repo',
-        'Original Author',
-        'App',
-        null,
-        '1.0.0',
-        [],
-        0,
-        {},
-        null,
-        false,
-      );
-      final appInMemory = AppInMemory(app, null, null, null);
-      expect(appInMemory.author, equals('Original Author'));
-    });
-  
+  test('AppInMemory author returns original author when no override', () {
+    final app = App(
+      'com.example.app',
+      'https://github.com/user/repo',
+      'Original Author',
+      'App',
+      null,
+      '1.0.0',
+      [],
+      0,
+      {},
+      null,
+      false,
+    );
+    final appInMemory = AppInMemory(app, null, null, null);
+    expect(appInMemory.author, equals('Original Author'));
+  });
+
   group('DownloadedApk Tests', () {
     test('DownloadedApk stores properties', () {
       final apk = DownloadedApk('com.example.app', File('/path/to/app.apk'));
