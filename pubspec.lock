@@ -1060,7 +1060,7 @@ packages:
     description:
       path: "."
       ref: develop
-      resolved-ref: "64f3d4b7a7a922859366b14d6a71f63792c1edc0"
+      resolved-ref: "26a27463146305723bbaa248cceca2a2a073bf59"
       url: "https://github.com/omeritzics/simple_localization"
     source: git
     version: "3.0.9"
