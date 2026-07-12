@@ -291,40 +291,40 @@ class AddAppPageState extends State<AddAppPage> {
                                   ),
                                 ),
                               ),
-                              if (e.isOpenSource) ...[
-                                const SizedBox(width: 4),
-                                Icon(
-                                  Icons.workspace_premium,
-                                  size: 14,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  semanticLabel: 'openSource'.t(),
-                                ),
-                                const SizedBox(width: 2),
-                              ],
+                              //if (e.isOpenSource) ...[
+                              //  const SizedBox(width: 4),
+                              //  Icon(
+                              //    Icons.workspace_premium,
+                              //    size: 14,
+                              //    color: Theme.of(context).colorScheme.primary,
+                              //    semanticLabel: 'openSource'.t(),
+                              //  ),
+                              //  const SizedBox(width: 2),
+                              //],
                             ],
                           ),
                         ),
                       ),
                     ),
                     gap12,
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.workspace_premium,
-                          size: 14,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: Text(
-                            'openSourceNote'.t(),
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ),
-                      ],
-                    ),
-                    gap16,
 
+                    //Row(
+                    //  children: [
+                    //    Icon(
+                    //      Icons.workspace_premium,
+                    //      size: 14,
+                    //      color: Theme.of(context).colorScheme.primary,
+                    //    ),
+                    //    const SizedBox(width: 4),
+                    //    Expanded(
+                    //      child: Text(
+                    //        'openSourceNote'.t(),
+                    //        style: Theme.of(context).textTheme.bodySmall,
+                    //      ),
+                    //    ),
+                    //  ],
+                    //),
+                    //gap12,
                     Text(
                       '${'note'.t()}:',
                       style: const TextStyle(fontWeight: FontWeight.bold),
