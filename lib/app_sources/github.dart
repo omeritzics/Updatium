@@ -51,7 +51,7 @@ class GitHub extends AppSource {
         ],
       ),
       GeneratedFormTextField(
-        'GHReqPrefix',
+        t('GHReqPrefix'),
         label: t('GHReqPrefix'),
         hint: 'gh-proxy.org',
         required: false,
@@ -91,7 +91,7 @@ class GitHub extends AppSource {
         ],
       ),
       GeneratedFormSwitch(
-        'checkRepoRename',
+        t('checkRepoRename'),
         label: t('repoRenamedCheck'),
         defaultValue: false,
       ),
