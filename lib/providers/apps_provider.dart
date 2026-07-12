@@ -1978,7 +1978,8 @@ class AppsProvider with ChangeNotifier {
       );
     }
     for (var res in downloadResults) {
-      if (!errors.appIdNames.containsKey(res['id']) && res['cancelled'] != true) {
+      if (!errors.appIdNames.containsKey(res['id']) &&
+          res['cancelled'] != true) {
         try {
           await installFn(
             res['id'] as String,
