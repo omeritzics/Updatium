@@ -14,7 +14,8 @@ import '../providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:android_package_manager/android_package_manager.dart' hide LaunchMode;
+import 'package:android_package_manager/android_package_manager.dart'
+    hide LaunchMode;
 import 'package:updatium/services/slang_converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -365,15 +366,15 @@ class AddAppPageState extends State<AddAppPage> {
 
           final selectedPackageName = await showDialog<String>(
             context: context,
-            builder: (BuildContext ctx) => InstalledAppsDialog(installedApps: installedApps),
+            builder: (BuildContext ctx) =>
+                InstalledAppsDialog(installedApps: installedApps),
           );
 
           if (selectedPackageName != null) {
             setState(() {
-              searchQuery =
-                  (selectedPackageName.contains('.'))
-                      ? selectedPackageName.split('.').last
-                      : selectedPackageName;
+              searchQuery = (selectedPackageName.contains('.'))
+                  ? selectedPackageName.split('.').last
+                  : selectedPackageName;
               userInput = '';
               pickedSource = null;
               pickedSourceOverride = null;
@@ -1398,20 +1399,22 @@ class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
 
   void _prefetchFirstN(int n) async {
     final appsToPrefetch = _appsToDisplay.take(n);
-    await Future.wait(appsToPrefetch.map((app) async {
-      final packageName = app.packageName ?? '';
-      if (packageName.isEmpty) return;
+    await Future.wait(
+      appsToPrefetch.map((app) async {
+        final packageName = app.packageName ?? '';
+        if (packageName.isEmpty) return;
 
-      final icon = await app.applicationInfo?.getAppIcon();
-      if (icon != null) {
-        _iconCache[packageName] = icon;
-      }
+        final icon = await app.applicationInfo?.getAppIcon();
+        if (icon != null) {
+          _iconCache[packageName] = icon;
+        }
 
-      final label = await app.applicationInfo?.getAppLabel();
-      if (label != null) {
-        _labelCache[packageName] = label;
-      }
-    }));
+        final label = await app.applicationInfo?.getAppLabel();
+        if (label != null) {
+          _labelCache[packageName] = label;
+        }
+      }),
+    );
     if (mounted) {
       setState(() {
         isPrefetching = false;
