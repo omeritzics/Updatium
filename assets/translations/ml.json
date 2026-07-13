@@ -163,7 +163,6 @@
     "pinUpdates": "അപ്‌ഡേറ്റുകൾ ആപ്പ് കാഴ്ചയുടെ മുകളിൽ പിൻ ചെയ്യുക",
     "updates": "അപ്‌ഡേറ്റുകൾ",
     "dnsServiceProvider": "DNS Service",
-    "dnsServiceProviderDescription": "Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "ഉറവിടം അടിസ്ഥാനമാക്കി",
     "appSource": "ആപ്പ് ഉറവിടം",

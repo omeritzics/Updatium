@@ -163,7 +163,6 @@
     "pinUpdates": "Frissítések kitűzése az alkalmazásnézet tetejére",
     "updates": "Frissítések",
     "dnsServiceProvider": "DNS Service",
-    "dnsServiceProviderDescription": "Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "Forrásspecifikus",
     "appSource": "Alkalmazás forrása",

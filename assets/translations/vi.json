@@ -163,7 +163,6 @@
     "pinUpdates": "Chuyển ứng dụng có phiên bản mới lên đầu danh sách",
     "updates": "Cập nhật",
     "dnsServiceProvider": "DNS Service",
-    "dnsServiceProviderDescription": "Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "Cài đặt Nguồn",
     "appSource": "Nguồn ứng dụng",

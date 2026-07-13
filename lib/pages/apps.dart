@@ -434,7 +434,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             hasScrollBody: false,
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -703,7 +703,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         style: Theme.of(context).textTheme.labelMedium
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 2),
+                       const SizedBox(height: 4),
                       // Author name
                       Text(
                         t('byX', args: [appInfo.author]),
@@ -817,7 +817,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ),
                 if (app.pinned)
                   Padding(
-                    padding: const EdgeInsets.only(left: 6),
+                     padding: const EdgeInsets.only(left: 8),
                     child: Semantics(
                       label: 'pinned'.t(),
                       child: Icon(
@@ -938,7 +938,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   final appIndex = entry.key;
                   if (appIndex >= 0 && appIndex < listedApps.length) {
                     return SizedBox(
-                      width: 160,
+                      width: 120,
                       height: 230,
                       child: getSingleAppGridTile(appIndex),
                     );
@@ -1256,7 +1256,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           return AlertDialog(
             scrollable: true,
             content: Padding(
-              padding: const EdgeInsets.only(top: 6),
+               padding: const EdgeInsets.only(top: 8),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -1513,7 +1513,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 children: listedApps.asMap().entries.map((entry) {
                   final index = entry.key;
                   return SizedBox(
-                    width: 160,
+                    width: 120,
                     height: 230,
                     child: getSingleAppGridTile(index),
                   );
@@ -1842,7 +1842,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           alignment: Alignment.center,
           transform: Matrix4.rotationZ(0.31),
           child: Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(12),
             child: Image(
               image: const AssetImage('assets/graphics/icon_small.png'),
               color: Theme.of(context).brightness == Brightness.dark

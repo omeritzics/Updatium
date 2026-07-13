@@ -1017,16 +1017,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 }
                               },
                             ),
-                            gap8,
-                            Text(
-                              'dnsServiceProviderDescription'.t(),
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurfaceVariant,
-                                  ),
-                            ),
                           ],
                         ),
                         gap24,

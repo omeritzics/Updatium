@@ -163,7 +163,6 @@
     "pinUpdates": "Fastgør opdateringer øverst i app-visning",
     "updates": "Opdateringer",
     "dnsServiceProvider": "DNS Service",
-    "dnsServiceProviderDescription": "Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "Kildespecifik",
     "appSource": "App-kilde",

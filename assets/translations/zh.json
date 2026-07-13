@@ -163,7 +163,6 @@
     "pinUpdates": "将待更新应用置顶",
     "updates": "更新",
     "dnsServiceProvider": "DNS Service",
-    "dnsServiceProviderDescription": "Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "来源",
     "appSource": "源代码",

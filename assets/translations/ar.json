@@ -164,7 +164,6 @@
     "pinUpdates": "تدبيس التحديثات في أعلى قائمة التطبيقات",
     "updates": "التحديثات",
     "dnsServiceProvider": "DNS Service",
-    "dnsServiceProviderDescription": "Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "خاص بالمصدر",
     "appSource": "مصدر التطبيق",

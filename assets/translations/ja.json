@@ -163,7 +163,6 @@
     "pinUpdates": "アップデートがあるアプリをトップに固定する",
     "updates": "アップデート",
     "dnsServiceProvider": "DNS Service",
-    "dnsServiceProviderDescription": "Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "ソース別の設定",
     "appSource": "アプリのソース",

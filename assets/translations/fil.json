@@ -163,7 +163,6 @@
     "pinUpdates": "I-pin ang mga update sa itaas ng view ng mga app",
     "updates": "Mga Update",
     "dnsServiceProvider": "Serbisyo ng DNS",
-    "dnsServiceProviderDescription": "Piliin ang serbisyong DNS na gagamitin para sa hostname resolution. Nakaaapekto ito sa kung paano kinukuha ang mga app mula sa kanilang mga source.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "Source-specific",
     "appSource": "Source ng app",

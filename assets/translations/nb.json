@@ -163,7 +163,6 @@
     "pinUpdates": "Fest oppdateringer til toppen av appvisningen",
     "updates": "Oppdateringer",
     "dnsServiceProvider": "DNS-tjeneste",
-    "dnsServiceProviderDescription": "Velg DNS-tjenesten som brukes til oppslag av vertsnavn. Dette påvirker hvordan apper hentes fra kildene sine.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "Kildespesifikk",
     "appSource": "App-kilde",

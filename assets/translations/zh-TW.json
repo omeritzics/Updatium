@@ -163,7 +163,6 @@
     "pinUpdates": "將更新釘選至應用程式檢視頂端",
     "updates": "更新",
     "dnsServiceProvider": "DNS Service",
-    "dnsServiceProviderDescription": "Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "特定來源",
     "appSource": "應用程式來源",

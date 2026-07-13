@@ -163,7 +163,6 @@
     "pinUpdates": "Закачване на актуализациите най- отгоре в изгледа на приложенията",
     "updates": "Актуализации",
     "dnsServiceProvider": "DNS Service",
-    "dnsServiceProviderDescription": "Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "Специфично за източника",
     "appSource": "Източник на приложение",

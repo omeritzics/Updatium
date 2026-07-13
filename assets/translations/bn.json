@@ -163,7 +163,6 @@
     "pinUpdates": "আপডেটগুলো অ্যাপ ভিউয়ের উপরে পিন করুন",
     "updates": "আপডেটসমূহ",
     "dnsServiceProvider": "DNS Service",
-    "dnsServiceProviderDescription": "Select the DNS service used for hostname resolution. This affects how apps are fetched from their sources.",
     "OpenDNS": "OpenDNS",
     "sourceSpecific": "সোর্স-নির্দিষ্ট",
     "appSource": "অ্যাপ সোর্স",
