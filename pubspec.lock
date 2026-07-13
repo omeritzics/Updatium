@@ -682,10 +682,10 @@ packages:
     dependency: "direct main"
     description:
       name: m3e_buttons
-      sha256: "50cdf9ba30fb3ab529afafb0e837484549f8599f1f109ac07da50951febaace1"
+      sha256: af1b19bd5ec7327d20b5a57c6c91e1ed30ee15a4dbade781c0cdbc72e6b04b5e
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3"
+    version: "0.0.4"
   m3e_design:
     dependency: transitive
     description:
