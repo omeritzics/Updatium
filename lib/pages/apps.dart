@@ -703,7 +703,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         style: Theme.of(context).textTheme.labelMedium
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
-                       const SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       // Author name
                       Text(
                         t('byX', args: [appInfo.author]),
@@ -817,7 +817,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ),
                 if (app.pinned)
                   Padding(
-                     padding: const EdgeInsets.only(left: 8),
+                    padding: const EdgeInsets.only(left: 8),
                     child: Semantics(
                       label: 'pinned'.t(),
                       child: Icon(
@@ -1256,7 +1256,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           return AlertDialog(
             scrollable: true,
             content: Padding(
-               padding: const EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.only(top: 8),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
