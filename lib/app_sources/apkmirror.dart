@@ -12,6 +12,7 @@ class APKMirror extends AppSource {
     name = 'APKMirror';
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
+    enforceTrackOnly = true;
     additionalSourceAppSpecificSettingFormItems = [];
   }
   @override
