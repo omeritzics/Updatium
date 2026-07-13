@@ -1382,43 +1382,44 @@ class InstalledAppsDialog extends StatefulWidget {
 
 class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
   bool showSystemApps = false;
-  bool isPrefetching = true;
   final Map<String, Uint8List> _iconCache = {};
   final Map<String, String> _labelCache = {};
-  late List<PackageInfo> _appsToDisplay;
+  final Set<String> _loadingPackageNames = {};
 
-  @override
-  void initState() {
-    super.initState();
-    _appsToDisplay = widget.installedApps.where((app) {
-      final flags = app.applicationInfo?.flags ?? 0;
-      return (flags & 0x00000001) == 0;
-    }).toList();
-    _prefetchFirstN(10);
-  }
+  void _onNeedLoad(String packageName) async {
+    if (_iconCache.containsKey(packageName) ||
+        _labelCache.containsKey(packageName) ||
+        _loadingPackageNames.contains(packageName)) {
+      return;
+    }
 
-  void _prefetchFirstN(int n) async {
-    final appsToPrefetch = _appsToDisplay.take(n);
-    await Future.wait(
-      appsToPrefetch.map((app) async {
-        final packageName = app.packageName ?? '';
-        if (packageName.isEmpty) return;
+    _loadingPackageNames.add(packageName);
 
-        final icon = await app.applicationInfo?.getAppIcon();
-        if (icon != null) {
-          _iconCache[packageName] = icon;
-        }
+    try {
+      final app = widget.installedApps.firstWhere(
+        (a) => a.packageName == packageName,
+      );
 
-        final label = await app.applicationInfo?.getAppLabel();
-        if (label != null) {
-          _labelCache[packageName] = label;
-        }
-      }),
-    );
-    if (mounted) {
-      setState(() {
-        isPrefetching = false;
-      });
+      final icon = await app.applicationInfo?.getAppIcon();
+      final label = await app.applicationInfo?.getAppLabel();
+
+      if (mounted) {
+        setState(() {
+          if (icon != null) {
+            _iconCache[packageName] = icon;
+          }
+          if (label != null) {
+            _labelCache[packageName] = label;
+          }
+          _loadingPackageNames.remove(packageName);
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _loadingPackageNames.remove(packageName);
+        });
+      }
     }
   }
 
@@ -1448,29 +1449,21 @@ class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
                 });
               },
             ),
-            if (isPrefetching)
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: CircularProgressIndicator(),
-              )
-            else
-              Expanded(
-                child: ListView.builder(
-                  itemCount: filteredApps.length,
-                  itemBuilder: (context, index) {
-                    final app = filteredApps[index];
-                    final packageName = app.packageName ?? '';
-                    return InstalledAppTile(
-                      app: app,
-                      icon: _iconCache[packageName],
-                      label: _labelCache[packageName],
-                      onTap: () {
-                        Navigator.of(context).pop(packageName);
-                      },
-                    );
-                  },
-                ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: filteredApps.length,
+                itemBuilder: (context, index) {
+                  final app = filteredApps[index];
+                  final packageName = app.packageName ?? '';
+                  return InstalledAppTile(
+                    app: app,
+                    icon: _iconCache[packageName],
+                    label: _labelCache[packageName],
+                    onNeedLoad: _onNeedLoad,
+                  );
+                },
               ),
+            ),
           ],
         ),
       ),
@@ -1484,30 +1477,63 @@ class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
   }
 }
 
-class InstalledAppTile extends StatelessWidget {
+class InstalledAppTile extends StatefulWidget {
   final PackageInfo app;
   final Uint8List? icon;
   final String? label;
-  final VoidCallback onTap;
+  final Function(String packageName) onNeedLoad;
 
   const InstalledAppTile({
     super.key,
     required this.app,
     this.icon,
     this.label,
-    required this.onTap,
+    required this.onNeedLoad,
   });
+
+  @override
+  State<InstalledAppTile> createState() => _InstalledAppTileState();
+}
+
+class _InstalledAppTileState extends State<InstalledAppTile> {
+  late Uint8List? _icon;
+  late String? _label;
+
+  @override
+  void initState() {
+    super.initState();
+    _icon = widget.icon;
+    _label = widget.label;
+    if (_icon == null || _label == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.onNeedLoad(widget.app.packageName!);
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(InstalledAppTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.icon != oldWidget.icon) {
+      _icon = widget.icon;
+    }
+    if (widget.label != oldWidget.label) {
+      _label = widget.label;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       dense: true,
-      leading: icon != null
-          ? Image.memory(icon!, width: 40, height: 40)
+      leading: _icon != null
+          ? Image.memory(_icon!, width: 40, height: 40)
           : const Icon(Icons.apps),
-      title: Text(label ?? (app.packageName ?? 'Unknown')),
-      subtitle: Text(app.packageName ?? ''),
-      onTap: onTap,
+      title: Text(_label ?? (widget.app.packageName ?? 'Unknown')),
+      subtitle: Text(widget.app.packageName ?? ''),
+      onTap: () {
+        Navigator.of(context).pop(widget.app.packageName);
+      },
     );
   }
 }

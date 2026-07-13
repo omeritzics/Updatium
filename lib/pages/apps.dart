@@ -686,7 +686,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                                 label: 'pinned'.t(),
                                 child: Icon(
                                   Icons.push_pin,
-                                  size: 14,
+                                  size: 16,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
@@ -822,7 +822,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       label: 'pinned'.t(),
                       child: Icon(
                         Icons.push_pin,
-                        size: 14,
+                        size: 16,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
@@ -903,6 +903,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       if (filteredEntries.isEmpty) {
         return const SizedBox.shrink();
       }
+
+      // Grid view when 'Group by category' is enabled
 
       capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
       return Padding(
@@ -1465,6 +1467,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   .map((e) => getSingleAppHorizTile(e.key))
                   .toList();
 
+              // List view when 'Group by category' is enabled
               return Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
@@ -1490,7 +1493,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         }
                       });
                     },
-                    tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+                    tilePadding: const EdgeInsets.symmetric(horizontal: 8),
                     childrenPadding: const EdgeInsets.all(16),
                     children: tiles,
                   ),
@@ -1501,23 +1504,21 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         }
       } else {
         if (settingsProvider.useGridView) {
-          final spacing = 8.0;
-
-          return SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            sliver: SliverGrid(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 160,
-                crossAxisSpacing: spacing,
-                mainAxisSpacing: spacing,
-                childAspectRatio: 0.65,
+          return SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: listedApps.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  return SizedBox(
+                    width: 160,
+                    height: 230,
+                    child: getSingleAppGridTile(index),
+                  );
+                }).toList(),
               ),
-              delegate: SliverChildBuilderDelegate((
-                BuildContext context,
-                int index,
-              ) {
-                return getSingleAppGridTile(index);
-              }, childCount: listedApps.length),
             ),
           );
         } else {
@@ -1562,9 +1563,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         Text('appsString'.t()),
                         TabBar(
                           controller: _tabController,
-                          labelPadding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                          ),
                           tabs: [
                             Tab(text: 'all'.t()),
                             Tab(text: 'installed'.t()),
