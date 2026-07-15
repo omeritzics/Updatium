@@ -478,17 +478,14 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             gap16,
             ...e.sourceConfigSettingFormItems.map((formItem) {
-              if (formItem.key.contains('switch') ||
-                  formItem.key.contains('enable') ||
-                  formItem.key.contains('Rename') ||
-                  formItem.key == 'checkRepoRename') {
+              if (formItem is GeneratedFormSwitch) {
                 // Switch type
                 final bool currentValue =
                     settingsProvider.getSettingBool(formItem.key) ?? false;
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: SwitchListTile(
-                    title: Text(formItem.key),
+                    title: Text(formItem.label),
                     value: currentValue,
                     onChanged: (value) {
                       settingsProvider.setSettingBool(formItem.key, value);
@@ -516,7 +513,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: TextField(
                     controller: _textControllers[formItem.key],
                     focusNode: _focusNodes[formItem.key],
-                    decoration: InputDecoration(labelText: formItem.key),
+                    decoration: InputDecoration(labelText: formItem.label),
                     onChanged: (value) {
                       settingsProvider.setSettingString(formItem.key, value);
                     },
