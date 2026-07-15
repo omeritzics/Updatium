@@ -939,7 +939,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   if (appIndex >= 0 && appIndex < listedApps.length) {
                     return SizedBox(
                       width: 120,
-                      height: 230,
+                      height: 200,
                       child: getSingleAppGridTile(appIndex),
                     );
                   }
@@ -1514,7 +1514,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   final index = entry.key;
                   return SizedBox(
                     width: 120,
-                    height: 230,
+                    height: 200,
                     child: getSingleAppGridTile(index),
                   );
                 }).toList(),

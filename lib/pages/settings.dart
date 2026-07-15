@@ -479,7 +479,9 @@ class _SettingsPageState extends State<SettingsPage> {
             gap16,
             ...e.sourceConfigSettingFormItems.map((formItem) {
               if (formItem.key.contains('switch') ||
-                  formItem.key.contains('enable')) {
+                  formItem.key.contains('enable') ||
+                  formItem.key.contains('Rename') ||
+                  formItem.key == 'checkRepoRename') {
                 // Switch type
                 final bool currentValue =
                     settingsProvider.getSettingBool(formItem.key) ?? false;
