@@ -906,48 +906,49 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
       // Grid view when 'Group by category' is enabled
 
-      capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        child: Card(
-          child: ExpansionTile(
-            key: ValueKey(
-              'category_grid_${listedCategories[index] ?? "null"}_$index',
-            ),
-            title: Text(
-              capFirstChar(listedCategories[index] ?? 'noCategory'.t()),
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            trailing: Text(filteredEntries.length.toString()),
-            initiallyExpanded: _expandedCategories.contains(index),
-            onExpansionChanged: (isExpanded) {
-              setState(() {
-                if (isExpanded) {
-                  _expandedCategories.add(index);
-                } else {
-                  _expandedCategories.remove(index);
-                }
-              });
-            },
-            tilePadding: const EdgeInsets.symmetric(horizontal: 8),
-            children: [
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: filteredEntries.map((entry) {
-                  final appIndex = entry.key;
-                  if (appIndex >= 0 && appIndex < listedApps.length) {
-                    return SizedBox(
-                      width: 120,
-                      height: 200,
-                      child: getSingleAppGridTile(appIndex),
-                    );
-                  }
-                  return const SizedBox.shrink();
-                }).toList(),
-              ),
-            ],
+        child: ExpansionTile(
+          key: ValueKey(
+            'category_grid_${listedCategories[index] ?? "null"}_$index',
           ),
+          title: Text(
+            listedCategories[index] ?? 'noCategory'.t(),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+          ),
+          trailing: Text(filteredEntries.length.toString()),
+          initiallyExpanded: _expandedCategories.contains(index),
+          onExpansionChanged: (isExpanded) {
+            setState(() {
+              if (isExpanded) {
+                _expandedCategories.add(index);
+              } else {
+                _expandedCategories.remove(index);
+              }
+            });
+          },
+          leading: const Icon(Icons.category),
+          tilePadding: const EdgeInsets.symmetric(horizontal: 8),
+          childrenPadding: const EdgeInsets.all(8),
+          children: [
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: filteredEntries.map((entry) {
+                final appIndex = entry.key;
+                if (appIndex >= 0 && appIndex < listedApps.length) {
+                  return SizedBox(
+                    width: 120,
+                    height: 200,
+                    child: getSingleAppGridTile(appIndex),
+                  );
+                }
+                return const SizedBox.shrink();
+              }).toList(),
+            ),
+          ],
         ),
       );
     }
@@ -1439,7 +1440,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           );
         } else {
           // Build expansion tiles similar to settings page
-          capFirstChar(String str) => str[0].toUpperCase() + str.substring(1);
           return SliverList(
             delegate: SliverChildBuilderDelegate((
               BuildContext context,
@@ -1473,30 +1473,30 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   horizontal: 16,
                   vertical: 4,
                 ),
-                child: Card(
-                  child: ExpansionTile(
-                    key: ValueKey(
-                      'category_${listedCategories[index] ?? "null"}_$index',
-                    ),
-                    title: Text(
-                      capFirstChar(listedCategories[index] ?? 'noCategory'.t()),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    trailing: Text(tiles.length.toString()),
-                    initiallyExpanded: _expandedCategories.contains(index),
-                    onExpansionChanged: (isExpanded) {
-                      setState(() {
-                        if (isExpanded) {
-                          _expandedCategories.add(index);
-                        } else {
-                          _expandedCategories.remove(index);
-                        }
-                      });
-                    },
-                    tilePadding: const EdgeInsets.symmetric(horizontal: 8),
-                    childrenPadding: const EdgeInsets.all(16),
-                    children: tiles,
+                child: ExpansionTile(
+                  key: ValueKey(
+                    'category_${listedCategories[index] ?? "null"}_$index',
                   ),
+                  title: Text(
+                    listedCategories[index] ?? 'noCategory'.t(),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  trailing: Text(tiles.length.toString()),
+                  initiallyExpanded: _expandedCategories.contains(index),
+                  onExpansionChanged: (isExpanded) {
+                    setState(() {
+                      if (isExpanded) {
+                        _expandedCategories.add(index);
+                      } else {
+                        _expandedCategories.remove(index);
+                      }
+                    });
+                  },
+                  tilePadding: const EdgeInsets.symmetric(horizontal: 8),
+                  childrenPadding: const EdgeInsets.all(16),
+                  children: tiles,
                 ),
               );
             }, childCount: listedCategories.length),

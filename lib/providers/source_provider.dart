@@ -1593,9 +1593,21 @@ class SourceProvider {
   }) async {
     var trackOnly = additionalSettings['trackOnly'] == true;
     String standardUrl = source.standardizeUrl(url);
+
+    // Apply fallback for includePrereleases from global setting if not explicitly set
+    var mergedAdditionalSettings = Map<String, dynamic>.from(
+      additionalSettings,
+    );
+    if (mergedAdditionalSettings['includePrereleases'] == null) {
+      var sp = SettingsProvider();
+      await sp.initializeSettings();
+      mergedAdditionalSettings['includePrereleases'] =
+          sp.includePrereleasesByDefault;
+    }
+
     APKDetails apk = await source.getLatestAPKDetails(
       standardUrl,
-      additionalSettings,
+      mergedAdditionalSettings,
     );
 
     if (source.runtimeType !=
