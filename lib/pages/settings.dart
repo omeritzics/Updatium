@@ -638,7 +638,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                                   },
                                                 ),
 
-                                                gap16,
                                                 SwitchListTile(
                                                   title: Text(
                                                     t(
@@ -776,7 +775,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                   ),
                                 ],
                               ),
-                            gap16,
 
                             //if (settingsProvider.safeMode &&
                             //    settingsProvider.preventUninstallation)
@@ -832,7 +830,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             //    }
                             //  },
                             //),
-                            gap16,
                             SwitchListTile(
                               title: Text('checkOnStart'.t()),
                               value: settingsProvider.checkOnStart,
@@ -840,7 +837,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 settingsProvider.checkOnStart = value;
                               },
                             ),
-                            gap16,
 
                             SwitchListTile(
                               title: Text('checkUpdateOnDetailPage'.t()),
@@ -851,8 +847,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                             ),
 
-                            gap16,
-
                             SwitchListTile(
                               title: Text('removeOnExternalUninstall'.t()),
                               value: settingsProvider.removeOnExternalUninstall,
@@ -862,8 +856,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                             ),
 
-                            gap16,
-
                             SwitchListTile(
                               title: Text('parallelDownloads'.t()),
                               value: settingsProvider.parallelDownloads,
@@ -871,8 +863,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 settingsProvider.parallelDownloads = value;
                               },
                             ),
-
-                            gap16,
 
                             SwitchListTile(
                               title: Text(
@@ -901,8 +891,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                     value;
                               },
                             ),
-
-                            gap16,
 
                             SwitchListTile(
                               title: Text('useShizuku'.t()),
@@ -947,8 +935,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 }
                               },
                             ),
-
-                            gap16,
 
                             SwitchListTile(
                               title: Text(
@@ -1107,7 +1093,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             gap16,
                             if (!settingsProvider.useMaterialYou) colorPicker,
                             gap16,
-                            gap16,
                             localeDropdown,
                             FutureBuilder(
                               builder: (ctx, val) {
@@ -1142,8 +1127,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                               future: DeviceInfoPlugin().androidInfo,
                             ),
-                            gap16,
-
                             SwitchListTile(
                               title: Text('dontShowTrackOnlyWarnings'.t()),
                               value: settingsProvider.hideTrackOnlyWarning,
@@ -1151,8 +1134,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 settingsProvider.hideTrackOnlyWarning = value;
                               },
                             ),
-
-                            gap16,
 
                             SwitchListTile(
                               title: Text('dontShowAPKOriginWarnings'.t()),
@@ -1162,8 +1143,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                             ),
 
-                            gap16,
-
                             SwitchListTile(
                               title: Text('disablePageTransitions'.t()),
                               value: settingsProvider.disablePageTransitions,
@@ -1171,8 +1150,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 settingsProvider.disablePageTransitions = value;
                               },
                             ),
-
-                            gap16,
 
                             SwitchListTile(
                               title: Text('disablePageTransitions'.t()),
@@ -1184,8 +1161,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                           value;
                                     },
                             ),
-
-                            gap16,
 
                             SwitchListTile(
                               title: Text('highlightTouchTargets'.t()),
@@ -1233,8 +1208,6 @@ class _SettingsPageState extends State<SettingsPage> {
                               },
                             ),
 
-                            gap16,
-
                             SwitchListTile(
                               title: Text('moveNonInstalledAppsToBottom'.t()),
                               value: settingsProvider.buryNonInstalled,
@@ -1242,8 +1215,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 settingsProvider.buryNonInstalled = value;
                               },
                             ),
-
-                            gap16,
 
                             SwitchListTile(
                               title: Text('groupByCategory'.t()),
