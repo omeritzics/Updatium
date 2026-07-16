@@ -351,6 +351,7 @@ class _UpdatiumState extends State<Updatium> {
                         'apkFilterRegEx': 'fdroid',
                         'invertAPKFilter': true,
                         'useVersionCodeAsOSVersion': true,
+                        'includePrereleases': false,
                       },
                       null,
                       false,
@@ -855,13 +856,8 @@ class _UpdatiumState extends State<Updatium> {
                 iconSize: 24,
               ),
 
-              // Expressive App Bar
+              // Material App Bar with fallback fonts
               appBarTheme: AppBarTheme(
-                backgroundColor: scheme.surface,
-                foregroundColor: scheme.onSurface,
-                scrolledUnderElevation: 1,
-                surfaceTintColor: scheme.surfaceTint,
-                centerTitle: false,
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
                   fontSize: 22,
@@ -872,11 +868,6 @@ class _UpdatiumState extends State<Updatium> {
                     'NotoSansCJK',
                     'NotoSansArabic',
                   ],
-                ),
-                iconTheme: IconThemeData(color: scheme.onSurface, size: 24),
-                actionsIconTheme: IconThemeData(
-                  color: scheme.onSurface,
-                  size: 24,
                 ),
               ),
 
@@ -1095,43 +1086,6 @@ class _UpdatiumState extends State<Updatium> {
       ),
     );
   }
-}
-
-void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
-  Provider.of<LogsProvider>(
-    context,
-    listen: false,
-  ).add(e.toString(), level: isError ? LogLevels.error : LogLevels.info);
-
-  if (e is String || (e is UpdatiumError && !e.unexpected)) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(e.toString())));
-  } else {
-    showAdaptiveDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            e is MultiAppMultiError
-                ? t(isError ? 'someErrors' : 'updates')
-                : t(isError ? 'unexpectedError' : 'unknown'),
-          ),
-          content: SelectableText(e.toString()),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text('ok'.t()),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-void showError(dynamic e, BuildContext context) {
-  showMessage(e, context, isError: true);
 }
 
 // FreeDroidWarn integration

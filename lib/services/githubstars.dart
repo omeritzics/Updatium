@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:http/http.dart';
 import 'package:updatium/app_sources/github.dart';

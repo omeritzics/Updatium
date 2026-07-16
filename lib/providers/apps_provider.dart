@@ -31,17 +31,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
-import 'package:updatium/providers/source_provider.dart'
-    hide
-        UpdatiumError,
-        IDChangedError,
-        NoAPKError,
-        MultiAppMultiError,
-        DowngradeError,
-        InstallError,
-        RateLimitError,
-        list2FriendlyString,
-        NoVersionError;
+import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/source_provider.dart' as source_provider;
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';

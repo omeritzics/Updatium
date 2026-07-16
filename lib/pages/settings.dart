@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:updatium/custom_errors.dart';
 
 import 'package:updatium/main.dart';
 import 'package:updatium/components/generated_form.dart';

@@ -1,3 +1,4 @@
+import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:updatium/providers/source_provider.dart';

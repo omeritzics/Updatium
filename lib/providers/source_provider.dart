@@ -39,11 +39,11 @@ import 'package:updatium/app_sources/uptodown.dart';
 import 'package:updatium/app_sources/vivoappstore.dart';
 import 'package:updatium/app_sources/vlc.dart';
 import 'package:updatium/components/generated_form.dart';
+import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
-import 'package:android_package_installer/android_package_installer.dart';
 import 'package:updatium/services/slang_converter.dart';
 
 /// Cache entry for ETag-based conditional requests
@@ -1728,97 +1728,10 @@ class SourceProvider {
   }
 }
 
-class UpdatiumError {
-  late String message;
-  bool unexpected;
-  UpdatiumError(this.message, {this.unexpected = false});
-  @override
-  String toString() {
-    return message;
-  }
-}
-
-class RateLimitError extends UpdatiumError {
-  late int remainingMinutes;
-  RateLimitError(this.remainingMinutes)
-    : super('tooManyRequestsTryAgainInMinutes'.plural(remainingMinutes));
-}
-
-class InvalidURLError extends UpdatiumError {
-  InvalidURLError(String sourceName)
-    : super(t('invalidURLForSource', args: [sourceName]));
-}
-
-class CredsNeededError extends UpdatiumError {
-  CredsNeededError(String sourceName)
-    : super(t('requiresCredentialsInSettings', args: [sourceName]));
-}
-
-class NoReleasesError extends UpdatiumError {
-  NoReleasesError({String? note})
-    : super(
-        '${'noReleaseFound'.t()}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
-      );
-}
-
-class NoAPKError extends UpdatiumError {
-  NoAPKError() : super('noAPKFound'.t());
-}
-
-class NoVersionError extends UpdatiumError {
-  NoVersionError() : super('noVersionFound'.t());
-}
-
-class UnsupportedURLError extends UpdatiumError {
-  UnsupportedURLError() : super('urlMatchesNoSource'.t());
-}
-
-class DowngradeError extends UpdatiumError {
-  DowngradeError(int currentVersionCode, int newVersionCode)
-    : super(
-        '${'cantInstallOlderVersion'.t()} (versionCode $currentVersionCode ➔ $newVersionCode)',
-      );
-}
-
-class InstallError extends UpdatiumError {
-  InstallError(int code)
-    : super(PackageInstallerStatus.byCode(code).name.substring(7));
-}
-
-class IDChangedError extends UpdatiumError {
-  IDChangedError(String newId) : super('${'appIdMismatch'.t()} - $newId');
-}
-
 class NotImplementedError extends UpdatiumError {
   NotImplementedError() : super('functionNotImplemented'.t());
 }
 
-class MultiAppMultiError extends UpdatiumError {
-  Map<String, dynamic> rawErrors = {};
-  Map<String, List<String>> idsByErrorString = {};
-  Map<String, String> appIdNames = {};
-
-  MultiAppMultiError() : super('placeholder'.t(), unexpected: true);
-}
-
-String list2FriendlyString(List<String> list) {
-  var isUsingEnglish = isEnglish();
-  return list.length == 2
-      ? '${list[0]} ${'and'.t()} ${list[1]}'
-      : list
-            .asMap()
-            .entries
-            .map(
-              (e) =>
-                  e.value +
-                  (e.key == list.length - 1
-                      ? ''
-                      : e.key == list.length - 2
-                      ? '${isUsingEnglish ? ',' : ''} and '
-                      : ', '),
-            )
-            .join('');
-}
 
 /// Reusable widget for selecting a source override
 class SourceOverrideDropdown extends StatefulWidget {

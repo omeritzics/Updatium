@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
+import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
