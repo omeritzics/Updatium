@@ -1732,7 +1732,6 @@ class NotImplementedError extends UpdatiumError {
   NotImplementedError() : super('functionNotImplemented'.t());
 }
 
-
 /// Reusable widget for selecting a source override
 class SourceOverrideDropdown extends StatefulWidget {
   final String? selectedOverride;
