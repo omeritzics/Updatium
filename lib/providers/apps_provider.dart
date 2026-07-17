@@ -1924,7 +1924,7 @@ class AppsProvider with ChangeNotifier {
         } else {
           downloadedDir = downloadedArtifact as DownloadedDir;
         }
-        id = downloadedFile?.appId ?? downloadedDir!.appId;
+        id = downloadedFile?.appId ?? downloadedDir?.appId ?? id;
         willBeSilent = await canInstallSilently(apps[id]!.app);
         if (!settingsProvider.useShizuku) {
           if (!(await settingsProvider.getInstallPermission(enforce: false))) {
@@ -2136,7 +2136,7 @@ class AppsProvider with ChangeNotifier {
         source.naiveStandardVersionDetection;
     String? realInstalledVersion =
         app.app.additionalSettings['useVersionCodeAsOSVersion'] == true
-        ? app.installedInfo?.versionCode.toString()
+        ? app.installedInfo?.versionCode?.toString()
         : app.installedInfo?.versionName;
     bool isHTMLWithNoVersionDetection =
         (source.runtimeType.toString() == 'HTML' &&
@@ -2175,7 +2175,7 @@ class AppsProvider with ChangeNotifier {
             .naiveStandardVersionDetection;
     String? realInstalledVersion =
         app.additionalSettings['useVersionCodeAsOSVersion'] == true
-        ? installedInfo?.versionCode.toString()
+        ? installedInfo?.versionCode?.toString()
         : installedInfo?.versionName;
     // FIRST, COMPARE THE APP'S REPORTED AND REAL INSTALLED VERSIONS, WHERE ONE IS NULL
     if (installedInfo == null && app.installedVersion != null && !trackOnly) {

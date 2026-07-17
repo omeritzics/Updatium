@@ -435,7 +435,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             hasScrollBody: false,
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -447,7 +446,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         size: 80,
                         color: preserveTransparency(
                           Theme.of(context).colorScheme.primary,
-                          0.6,
+                          0.55,
                         ),
                       ),
                     gap24,
@@ -471,7 +470,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       ),
                     if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
                       Padding(
-                        padding: const EdgeInsets.only(top: 12),
+                        padding: const EdgeInsets.only(top: 8),
                         child: Text(
                           () {
                             final subtext = 'noAppsSubtext'.t();
@@ -497,25 +496,22 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           ),
         if (refreshingSince != null || appsProvider.loadingApps)
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: LinearProgressIndicator(
-                value: appsProvider.loadingApps
-                    ? null
-                    : appsProvider
-                              .getAppValues()
-                              .where(
-                                (element) =>
-                                    !(element.app.lastUpdateCheck?.isBefore(
-                                          refreshingSince!,
-                                        ) ??
-                                        true),
-                              )
-                              .length /
-                          (appsProvider.apps.isNotEmpty
-                              ? appsProvider.apps.length
-                              : 1),
-              ),
+            child: LinearProgressIndicator(
+              value: appsProvider.loadingApps
+                  ? null
+                  : appsProvider
+                            .getAppValues()
+                            .where(
+                              (element) =>
+                                  !(element.app.lastUpdateCheck?.isBefore(
+                                        refreshingSince!,
+                                      ) ??
+                                      true),
+                            )
+                            .length /
+                        (appsProvider.apps.isNotEmpty
+                            ? appsProvider.apps.length
+                            : 1),
             ),
           ),
       ];
@@ -773,7 +769,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       final isSelected = selectedAppIds.contains(app.id);
 
       return Card(
-        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         child: Semantics(
           button: true,
           label: app.pinned
@@ -908,13 +904,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       // Grid view when 'Group by category' is enabled
 
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         child: ExpansionTile(
           key: ValueKey(
             'category_grid_${listedCategories[index] ?? "null"}_$index',
           ),
           title: Text(
-            '${listedCategories[index] ?? 'noCategory'.t()}-${filteredEntries.length}',
+            '${listedCategories[index] ?? 'noCategory'.t()} (${filteredEntries.length})',
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
@@ -935,13 +931,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             decoration: BoxDecoration(
               color: Color(
                 settingsProvider.categories[listedCategories[index]] ??
-                    0xFFFFFFFF,
+                    Colors.transparent.toARGB32(),
               ),
               shape: BoxShape.circle,
             ),
           ),
           tilePadding: const EdgeInsets.symmetric(horizontal: 8),
-          childrenPadding: const EdgeInsets.all(8),
           children: [
             Wrap(
               spacing: 8,
@@ -1479,16 +1474,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
               // List view when 'Group by category' is enabled
               return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 4,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 child: ExpansionTile(
                   key: ValueKey(
                     'category_${listedCategories[index] ?? "null"}_$index',
                   ),
                   title: Text(
-                    '${listedCategories[index] ?? 'noCategory'.t()}-${tiles.length}',
+                    '${listedCategories[index] ?? 'noCategory'.t()} (${tiles.length})',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -1509,13 +1501,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     decoration: BoxDecoration(
                       color: Color(
                         settingsProvider.categories[listedCategories[index]] ??
-                            0xFFFFFFFF,
+                            Colors.transparent.toARGB32(),
                       ),
                       shape: BoxShape.circle,
                     ),
                   ),
                   tilePadding: const EdgeInsets.symmetric(horizontal: 8),
-                  childrenPadding: const EdgeInsets.all(8),
                   children: tiles,
                 ),
               );
@@ -1548,10 +1539,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               int index,
             ) {
               return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 2,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 child: getSingleAppHorizTile(index),
               );
             }, childCount: listedApps.length),

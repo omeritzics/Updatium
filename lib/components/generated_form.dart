@@ -596,23 +596,18 @@ class _GeneratedFormState extends State<GeneratedForm> {
         final item = widget.items[r][e];
         String fieldKey = item.key;
         if (item is GeneratedFormSwitch) {
-          formInputs[r][e] = Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(child: Text(item.label)),
-              const SizedBox(width: 8),
-              Switch(
-                value: values[fieldKey],
-                onChanged: item.disabled
-                    ? null
-                    : (value) {
-                        setState(() {
-                          values[fieldKey] = value;
-                          someValueChanged();
-                        });
-                      },
-              ),
-            ],
+          formInputs[r][e] = SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(item.label),
+            value: values[fieldKey],
+            onChanged: item.disabled
+                ? null
+                : (value) {
+                    setState(() {
+                      values[fieldKey] = value;
+                      someValueChanged();
+                    });
+                  },
           );
         } else if (item is GeneratedFormTagInput) {
           onAddPressed() {

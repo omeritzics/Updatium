@@ -565,7 +565,6 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
-                            gap16,
                             //intervalDropdown,
                             gap16,
                             if (showIntervalLabel)
@@ -623,8 +622,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                               .enableBackgroundUpdates)
                                             Column(
                                               children: [
-                                                gap16,
-
                                                 SwitchListTile(
                                                   title: Text(
                                                     t('bgUpdatesOnWiFiOnly'),
@@ -956,7 +953,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     }
                                   : null,
                             ),
-                            gap16,
+                            gap8,
                             GeneratedForm(
                               items: [
                                 [
@@ -1101,7 +1098,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          gap16,
+                                          gap8,
 
                                           SwitchListTile(
                                             title: Text('useSystemFont'.t()),
@@ -1199,7 +1196,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                 Expanded(child: orderDropdown),
                               ],
                             ),
-                            gap8,
                             SwitchListTile(
                               title: Text('pinUpdates'.t()),
                               value: settingsProvider.pinUpdates,
