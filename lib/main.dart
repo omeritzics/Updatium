@@ -406,10 +406,12 @@ class _UpdatiumState extends State<Updatium> {
           } else {
             lightColorScheme = ColorScheme.fromSeed(
               seedColor: settingsProvider.themeColor,
+              dynamicSchemeVariant: DynamicSchemeVariant.vibrant,
             );
             darkColorScheme = ColorScheme.fromSeed(
               seedColor: settingsProvider.themeColor,
               brightness: Brightness.dark,
+              dynamicSchemeVariant: DynamicSchemeVariant.vibrant,
             );
           }
 

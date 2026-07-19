@@ -44,9 +44,10 @@ class HomePage extends StatefulWidget {
 class NavigationPageItem {
   late String title;
   late IconData icon;
+  late IconData? selectedIcon;
   late Widget widget;
 
-  NavigationPageItem(this.title, this.icon, this.widget);
+  NavigationPageItem(this.title, this.icon, this.widget, {this.selectedIcon});
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
@@ -155,8 +156,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<void> _handleLink(Uri uri) async {
-    if (uri.scheme == 'obtainium') {
-      await _interpretObtainiumLink(uri);
+    if (uri.scheme == 'updatium') {
+      await _interpretUpdatiumLink(uri);
     } else {
       await _interpretLink(uri);
     }
@@ -251,7 +252,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> _interpretObtainiumLink(Uri uri) async {
+  Future<void> _interpretUpdatiumLink(Uri uri) async {
     isLinkActivity = true;
     var action = uri.host;
     var data = uri.path.length > 1 ? uri.path.substring(1) : "";

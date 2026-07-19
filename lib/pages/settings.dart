@@ -248,11 +248,12 @@ class _SettingsPageState extends State<SettingsPage> {
               Animation<double> a2,
               Widget widget,
             ) {
-              final double curvedValue = Curves.easeInCubic.transform(a1.value);
+              final double curvedValue = Curves.easeInOutCubicEmphasized
+                  .transform(a1.value);
               return Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.diagonal3Values(curvedValue, curvedValue, 1),
-                child: Opacity(opacity: curvedValue, child: widget),
+                child: Opacity(opacity: a1.value, child: widget),
               );
             },
         transitionDuration: const Duration(milliseconds: 250),
@@ -546,7 +547,7 @@ class _SettingsPageState extends State<SettingsPage> {
               child: settingsProvider.prefs == null
                   ? const SizedBox()
                   : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         ExpansionTile(
                           leading: Icon(Icons.update),

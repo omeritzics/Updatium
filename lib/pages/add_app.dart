@@ -933,8 +933,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
         });
       }
     }
-
-    Widget getAdditionalOptsCol() => Column(
+Widget getAdditionalOptsCol() => Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         gap16,
@@ -985,17 +984,13 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
               });
             }
           },
-        ),
-        Column(
-          children: [
-            gap16,
-            CategorySelector(
-              alignment: WrapAlignment.start,
-              onSelected: (categories) {
-                pickedCategories = categories;
-              },
-            ),
-          ],
+        ), // <-- כאן החלפנו מנקודה-פסיק לפסיק
+        gap16, // הורדנו את ה-Column המיותר והשארנו ישירות את הילדים שלו
+        CategorySelector(
+          alignment: WrapAlignment.start,
+          onSelected: (categories) {
+            pickedCategories = categories;
+          },
         ),
       ],
     );

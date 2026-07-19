@@ -68,12 +68,12 @@ class AppInMemory {
         : installedInfo?.signingInfo?.signingCertificateHistory;
 
     return signatures?.map((signature) {
-          final digest = sha256.convert(signature);
-          return digest.bytes
-              .map((b) => b.toRadixString(16).padLeft(2, '0').toUpperCase())
-              .join(':');
-        }).toList() ??
-        [];
+              final digest = sha256.convert(signature);
+              return digest.bytes
+                    .map((b) => b.toRadixString(16).padLeft(2, '0').toUpperCase())
+                    .join(':');
+          }).toList() ??
+          [];
   }
 }
 
@@ -949,6 +949,7 @@ class AppsProvider with ChangeNotifier {
       }
       PackageInfo? newInfo;
       var originalAssetName = app.apkUrls[app.preferredApkIndex].key
+          
           .toLowerCase();
       var isAPK = source_provider.endsWithExtension(
         downloadedFile.path,
@@ -959,6 +960,7 @@ class AppsProvider with ChangeNotifier {
         source_provider.supportedApkExtensions[1],
       );
       var isTarball =
+         
           originalAssetName.endsWith('.tar.gz') ||
           originalAssetName.endsWith('.tgz') ||
           originalAssetName.endsWith('.tar.bz2') ||
@@ -1007,7 +1009,8 @@ class AppsProvider with ChangeNotifier {
         if (filterRegEx != null) {
           var reg = RegExp(filterRegEx);
           selectedApks.removeWhere((apk) {
-            var shouldDelete = !reg.hasMatch(apk.uri.pathSegments.last);
+            var relativePath = apk.path.substring(apkDir!.path.length + 1);
+            var shouldDelete = !reg.hasMatch(relativePath);
             if (shouldDelete) {
               apk.delete();
             }
@@ -1220,6 +1223,8 @@ class AppsProvider with ChangeNotifier {
     }
     for (final file in tarArchive.files) {
       if (file.isFile) {
+        final content = file.content;
+        if (content == null) continue;
         final outPath = '${destDir.path}/${file.name}';
         final outFile = File(outPath);
         outFile.createSync(recursive: true);
@@ -1591,7 +1596,21 @@ class AppsProvider with ChangeNotifier {
     if (appInfo != null &&
         newInfo.versionCode! < appInfo.versionCode! &&
         !(await canDowngradeApps())) {
-      throw DowngradeError(appInfo.versionCode!, newInfo.versionCode!);
+      if (settingsProvider.showAppDowngradeError) {
+        throw DowngradeError(appInfo.versionCode!, newInfo.versionCode!);
+      }
+    }
+    if (needsBGWorkaround) {
+      // The below 'await' will never return if we are in a background process
+      // To work around this, we should assume the install will be successful
+      // So we update the app's installed version first as we will never get to the later code
+      // We can't conditionally get rid of the 'await' as this causes install fails (BG process times out) - see #896
+      // TODO: When fixed, update this function and the calls to it accordingly
+      apps[file.appId]!.app.installedVersion =
+          apps[file.appId]!.app.latestVersion;
+      await saveApps([
+        apps[file.appId]!.app,
+      ], attemptToCorrectInstallStatus: false);
     }
     int? code;
     if (!settingsProvider.useShizuku) {
@@ -1625,6 +1644,23 @@ class AppsProvider with ChangeNotifier {
     }
     await saveApps([apps[file.appId]!.app]);
     return installed;
+  }
+
+  Future<void> _shareToAppVerifier(
+    DownloadedApk file,
+    BuildContext context,
+  ) async {
+    if (!settingsProvider.beforeNewInstallsShareToAppVerifier) return;
+    if (await getInstalledInfo('dev.soupslurpr.appverifier') == null) return;
+    XFile f = XFile.fromData(
+      file.file.readAsBytesSync(),
+      mimeType: 'application/vnd.android.package-archive',
+    );
+    Fluttertoast.showToast(
+      msg: tr('appVerifierInstructionToast'),
+      toastLength: Toast.LENGTH_LONG,
+    );
+    await SharePlus.instance.share(ShareParams(files: [f]));
   }
 
   Future<String> getStorageRootPath() async {
@@ -2390,12 +2426,9 @@ class AppsProvider with ChangeNotifier {
       );
     }
     // Delete externally uninstalled Apps if needed
-    if (removedAppIds.isNotEmpty) {
-      if (removedAppIds.isNotEmpty) {
-        if (settingsProvider.removeOnExternalUninstall) {
-          await removeApps(removedAppIds);
-        }
-      }
+    if (removedAppIds.isNotEmpty &&
+        settingsProvider.removeOnExternalUninstall) {
+      await removeApps(removedAppIds);
     }
     loadingApps = false;
     notifyListeners();
@@ -3479,6 +3512,8 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
     }
 
     // Filter out updates that will be installed silently (the rest go into toNotify)
+    List<App> trackOnlyToNotify = [];
+    List<App> exemptToNotify = [];
     for (var i = 0; i < updates.length; i++) {
       var canInstallSilently = await appsProvider.canInstallSilently(
         updates[i],
@@ -3488,14 +3523,32 @@ Future<void> bgUpdateCheck(String taskId, Map<String, dynamic>? params) async {
           logs.add(
             'BG update task notifying for ${updates[i].id} (networkRestricted $networkRestricted, chargingRestricted: $chargingRestricted, canInstallSilently: $canInstallSilently).',
           );
-          toNotify.add(updates[i]);
+          if (updates[i].additionalSettings['trackOnly'] == true) {
+            trackOnlyToNotify.add(updates[i]);
+          } else if (
+            updates[i].additionalSettings['exemptFromBackgroundUpdates'] == true) {
+            exemptToNotify.add(updates[i]);
+          } else {
+            toNotify.add(updates[i]);
+          }
         }
       }
     }
 
-    // Send the update notification
+    // Send separate notifications to avoid one being cancelled
+    // when the other is processed
     if (toNotify.isNotEmpty) {
       notificationsProvider.notify(UpdateNotification(toNotify));
+    }
+    if (trackOnlyToNotify.isNotEmpty) {
+      notificationsProvider.notify(
+        TrackOnlyUpdateNotification(trackOnlyToNotify),
+      );
+    }
+    if (exemptToNotify.isNotEmpty) {
+      notificationsProvider.notify(
+        TrackOnlyUpdateNotification(exemptToNotify),
+      );
     }
 
     // Send the error notifications (grouped by error string)

@@ -189,6 +189,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
   }
 
   late final ScrollController scrollController = ScrollController();
+  final TextEditingController searchController = TextEditingController();
 
   var sourceProvider = SourceProvider();
 
@@ -247,7 +248,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     toggleAppSelected(App app) {
       setState(() {
         if (selectedAppIds.contains(app.id)) {
-          selectedAppIds.removeWhere((a) => a == app.id);
+          selectedAppIds.remove(app.id);
         } else {
           selectedAppIds.add(app.id);
         }

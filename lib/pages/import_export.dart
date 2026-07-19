@@ -338,6 +338,21 @@ class _ImportExportPageState extends State<ImportExportPage> {
       sourceStrings[s.name] = [s.name];
     });
 
+    Widget actionTile({
+      required IconData icon,
+      required String label,
+      Widget? trailing,
+      required VoidCallback? onTap,
+    }) {
+      return ListTile(
+        leading: Icon(icon),
+        title: Text(label),
+        trailing: trailing,
+        onTap: onTap,
+        enabled: onTap != null,
+      );
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
@@ -345,9 +360,10 @@ class _ImportExportPageState extends State<ImportExportPage> {
           SliverAppBar.large(pinned: true, title: Text('importExport'.t())),
           SliverFillRemaining(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
+                spacing: 12,
                 children: [
                   FutureBuilder(
                     future: settingsProvider.getExportDir(),

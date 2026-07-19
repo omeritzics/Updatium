@@ -128,9 +128,11 @@ class AppListBuilder {
           final aDate = a.key;
           final bDate = b.key;
           if (aDate == null && bDate == null) return 0;
-          if (aDate == null) return isDesc ? -1 : 1;
-          if (bDate == null) return isDesc ? 1 : -1;
-          return aDate.compareTo(bDate);
+          if (aDate == null) return 1;
+          if (bDate == null) return -1;
+          return isDesc
+              ? bDate.compareTo(aDate)
+              : aDate.compareTo(bDate);
         });
       apps = entries.map((e) => e.value).toList();
     } else {
@@ -143,10 +145,9 @@ class AppListBuilder {
         ..sort((a, b) => a.key.compareTo(b.key));
 
       apps = entries.map((e) => e.value).toList();
-    }
-
-    if (isDesc) {
-      apps = apps.reversed.toList();
+      if (isDesc) {
+        apps = apps.reversed.toList();
+      }
     }
     return apps;
   }

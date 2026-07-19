@@ -7,7 +7,7 @@ import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:updatium/app_sources/github.dart';
+import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -15,7 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-String updatiumTempId = 'omeritzics_updatium_${GitHub().hosts[0]}';
+String updatiumTempId = 'omeritzics_updatium_github.com';
 String updatiumId = 'io.github.omeritzics.updatium';
 String updatiumUrl = 'https://github.com/omeritzics/Updatium';
 Color updatiumThemeColor = const Color(0xFF3a79b7);
@@ -383,12 +383,12 @@ class SettingsProvider with ChangeNotifier {
     }
   }
 
-  bool get showOlderVersionWarning {
-    return prefs?.getBool('showOlderVersionWarning') ?? true;
+  bool get showAppDowngradeError {
+    return prefs?.getBool('showAppDowngradeError') ?? true;
   }
 
-  set showOlderVersionWarning(bool show) {
-    prefs?.setBool('showOlderVersionWarning', show);
+  set showAppDowngradeError(bool show) {
+    prefs?.setBool('showAppDowngradeError', show);
     notifyListeners();
   }
 
