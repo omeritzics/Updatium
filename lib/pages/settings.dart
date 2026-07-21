@@ -6,7 +6,6 @@ import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:flutter/material.dart';
-import 'package:updatium/components/ui_widgets.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/import_export.dart';

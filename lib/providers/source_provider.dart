@@ -35,7 +35,7 @@ import 'package:updatium/app_sources/telegramapp.dart';
 import 'package:updatium/app_sources/tencent.dart';
 import 'package:updatium/app_sources/uptodown.dart';
 import 'package:updatium/app_sources/vivoappstore.dart';
-import 'package:updatium/components/generated_form_model.dart';
+import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
