@@ -3,15 +3,12 @@ import 'dart:convert';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:http/http.dart';
-<<<<<<<< HEAD:lib/app_sources/githubstars.dart
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
-========
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/providers/source_provider.dart';
->>>>>>>> main:lib/services/void void githubstars.dart
 
 /// Bulk import source: fetches all starred repos of a GitHub user.
 ///
@@ -19,7 +16,6 @@ import 'package:updatium/providers/source_provider.dart';
 /// repo's URL, full name, and description. Rate limits are checked per page.
 class GitHubStars implements MassAppUrlSource {
   @override
-<<<<<<<< HEAD:lib/app_sources/githubstars.dart
   String @override
   String get name => t('githubStarredRepos');
 
@@ -28,13 +24,10 @@ class GitHubStars implements MassAppUrlSource {
 
   final GitHub _gh = GitHub();
 
-======@override
-  ==
   @override
   late String name = 'githubStarredRepos'.t();
   @override
   late List<String> requiredArgs = ['username'.t()];
->>>>>>>> main:lib/services/githubstars.dart
   Future<Map<String, List<String>>> getOnePageOfUserStarredUrlsWithDescriptions(
     String username,
     int page,
@@ -62,14 +55,11 @@ class GitHubStars implements MassAppUrlSource {
       }
       return urlsWithDescriptions;
     } else {
-<<<<<<<< HEAD:lib/app_sources/githubstars.dart
       _gh.rateLimitErrorCheck(res);
       throw getUpdatiumHttpError(res);
-========
       final gh = GitHub();
       gh.rateLimitErrorCheck(res);
       throw getUpdatiumHttpError(res);
->>>>>>>> main:lib/services/githubstars.dart
     }
   }
 
