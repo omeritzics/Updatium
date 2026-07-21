@@ -29,16 +29,16 @@ Never rethrowOrWrapError(
   String? sourceName,
   StackTrace? stack,
 }) {
-  if (error is ObtainiumError) {
+  if (error is UpdatiumError) {
     if (error.unexpected) {
       final resolvedStack = error.stack ?? StackTrace.current;
       unawaited(
         LogsProvider().add(
-          'Unexpected ObtainiumError: ${error.toString()}\n$resolvedStack',
+          'Unexpected UpdatiumError: ${error.toString()}\n$resolvedStack',
           level: LogLevel.error,
         ),
       );
-      throw ObtainiumError(
+      throw UpdatiumError(
         error.message,
         code: 'UNEXPECTED',
         unexpected: true,
@@ -56,7 +56,7 @@ Never rethrowOrWrapError(
       level: LogLevel.error,
     ),
   );
-  throw ObtainiumError(
+  throw UpdatiumError(
     sourceName != null ? '$sourceName: $error' : error.toString(),
     code: 'UNEXPECTED',
     unexpected: true,

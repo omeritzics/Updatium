@@ -714,7 +714,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ),
                 optionTile(
                   icon: Icons.file_download_outlined,
-                  label: '${tr('share')} - ${tr('obtainiumExport')}',
+                  label: '${tr('share')} - ${tr('updatiumExport')}',
                   onTap: !hasSelection ? null : () => shareExport(selectedApps),
                 ),
                 optionTile(
@@ -758,7 +758,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     final urls = buf.toString().trimRight();
     unawaited(
       SharePlus.instance.share(
-        ShareParams(text: urls, subject: 'Obtainium - ${tr('appsString')}'),
+        ShareParams(text: urls, subject: 'Updatium - ${tr('appsString')}'),
       ),
     );
   }
@@ -767,14 +767,14 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     final buf = StringBuffer();
     for (var a in selectedApps) {
       buf.writeln(
-        'https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/${Uri.encodeComponent(jsonEncode({'id': a.id, 'url': a.url, 'author': a.author, 'name': a.name, 'preferredApkIndex': a.preferredApkIndex, 'additionalSettings': jsonEncode(a.additionalSettings), 'overrideSource': a.overrideSource}))}',
+        'https://apps.updatium.imranr.dev/redirect?r=updatium://app/${Uri.encodeComponent(jsonEncode({'id': a.id, 'url': a.url, 'author': a.author, 'name': a.name, 'preferredApkIndex': a.preferredApkIndex, 'additionalSettings': jsonEncode(a.additionalSettings), 'overrideSource': a.overrideSource}))}',
       );
     }
     unawaited(
       SharePlus.instance.share(
         ShareParams(
           text: buf.toString(),
-          subject: 'Obtainium - ${tr('appsString')}',
+          subject: 'Updatium - ${tr('appsString')}',
         ),
       ),
     );
@@ -789,7 +789,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       ),
     );
     final String fn =
-        '${tr('obtainiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
+        '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
     final XFile f = XFile.fromData(
       Uint8List.fromList(utf8.encode(exportJSON)),
       mimeType: 'application/json',

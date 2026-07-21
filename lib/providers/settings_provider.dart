@@ -684,7 +684,7 @@ class SettingsProvider with ChangeNotifier {
             level: LogLevel.error,
           ),
         );
-        throw ObtainiumError(tr('noFilePickerAvailable'));
+        throw UpdatiumError(tr('noFilePickerAvailable'));
       }
     }
     if (currentOneWayDataSyncDir?.path != newOneWayDataSyncDir?.path) {
@@ -758,9 +758,7 @@ class SettingsProvider with ChangeNotifier {
     }
     final legacyBool = _getBool('showActionBannerForUpdateOnly');
     if (legacyBool != null) {
-      return legacyBool
-          ? ActionBannerMode.updatesOnly
-          : ActionBannerMode.all;
+      return legacyBool ? ActionBannerMode.updatesOnly : ActionBannerMode.all;
     }
     return ActionBannerMode.updatesOnly;
   }

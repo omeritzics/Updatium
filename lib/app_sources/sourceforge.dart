@@ -139,7 +139,7 @@ class SourceForge extends AppSource {
           AppNames(name, segments[segments.indexOf('files') - 1]),
         );
       } else {
-        throw getObtainiumHttpError(res);
+        throw getUpdatiumHttpError(res);
       }
     } catch (e) {
       rethrowOrWrapError(e);

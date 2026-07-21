@@ -672,7 +672,7 @@ class GitHub extends AppSource {
         if (onHttpErrorCode != null) {
           onHttpErrorCode(res);
         }
-        throw getObtainiumHttpError(res);
+        throw getUpdatiumHttpError(res);
       }
       latestRelease = jsonDecode(res.body);
     }

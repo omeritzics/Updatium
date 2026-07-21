@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:obtainium/theme.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
+import 'package:updatium/theme.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -53,7 +53,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
     e.toString(),
     level: isError ? LogLevel.error : LogLevel.info,
   );
-  if (e is String || (e is ObtainiumError && !e.unexpected)) {
+  if (e is String || (e is UpdatiumError && !e.unexpected)) {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text(e.toString())));
@@ -438,11 +438,7 @@ Widget _wrapChildWithRadius(Widget w, BorderRadius radius) {
     final r = radius;
     final isFirst = r.topLeft.x == connectedTileBigRadius;
     final isLast = r.bottomLeft.x == connectedTileBigRadius;
-    return ConnectedCard(
-      isFirst: isFirst,
-      isLast: isLast,
-      child: w,
-    );
+    return ConnectedCard(isFirst: isFirst, isLast: isLast, child: w);
   }
   if (w is ConnectedCard) {
     final r = radius;
@@ -468,8 +464,7 @@ List<Widget> shapeCardTiles(List<Widget> children) {
       continue;
     }
     final prevIsTile = i > 0 && _isTile(children[i - 1]);
-    final nextIsTile =
-        i < children.length - 1 && _isTile(children[i + 1]);
+    final nextIsTile = i < children.length - 1 && _isTile(children[i + 1]);
     result.add(
       _wrapChildWithRadius(
         w,

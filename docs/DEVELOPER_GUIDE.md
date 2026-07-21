@@ -1,6 +1,6 @@
-# Obtainium Developer Guide
+# Updatium Developer Guide
 
-Obtainium is a Flutter (Android-first) app that installs and updates Android apps
+Updatium is a Flutter (Android-first) app that installs and updates Android apps
 **directly from their release sources** (GitHub, GitLab, F-Droid repos, HTML pages,
 APK hosts, etc.). It scrapes/queries each source for the latest release, downloads
 the APK (or split-APK container / archive), and installs it — optionally silently
@@ -32,11 +32,11 @@ should follow when working in this codebase.
 - Providers are created in `main()` (not inside the widget tree) so background tasks
   can use the same instances: `AppsProvider`, `SettingsProvider`, `NotificationsProvider`,
   `LogsProvider`, `SourceProvider`. Read them everywhere via `context.read/watch/select`.
-- `buildObtainiumTheme()` builds the app-wide Material 3 Expressive `ThemeData` once;
+- `buildUpdatiumTheme()` builds the app-wide Material 3 Expressive `ThemeData` once;
   **all shape/motion character lives here** (squircle `RoundedSuperellipseBorder`
   cards/dialogs, `StadiumBorder` pill buttons, emphasized page transitions, Material 3
   expressive sliders/progress indicators). Do not re-style these per widget — extend the theme.
-- `_ObtainiumState` runs **side effects in `initState` (post-frame), not in `build()`**:
+- `_UpdatiumState` runs **side effects in `initState` (post-frame), not in `build()`**:
   permission requests, WorkManager scheduling (`_scheduleWorkManager`),
   first-run handling (`_handleFirstRun`), and the launch-by-notification check. Each is
   guarded so it runs once; a `SettingsProvider` listener re-runs service/first-run logic
@@ -57,7 +57,7 @@ lib/
 ├─ main.dart                      App bootstrap, WorkManager scheduling
 ├─ main_fdroid.dart               F-Droid flavour entry point
 ├─ theme.dart                     Material 3 Expressive ThemeData builder, shapes + motion tokens
-├─ custom_errors.dart             ObtainiumError + typed errors with codes/stacks/data
+├─ custom_errors.dart             UpdatiumError + typed errors with codes/stacks/data
 ├─ pages/                         Full screens (each is a StatefulWidget in a single file)
 │  ├─ home.dart
 │  ├─ apps.dart
@@ -143,7 +143,7 @@ cached `icon` bytes, and a `sourceType` field for tracking which source produced
 
 ## 4. The Source system (the core extensibility model)
 
-This is the heart of Obtainium. **To add support for a new app source, add one file in
+This is the heart of Updatium. **To add support for a new app source, add one file in
 `lib/app_sources/` and register it in `SourceProvider._buildSources()`.**
 
 ### `AppSource` (abstract, in `source_provider.dart`)
@@ -243,12 +243,12 @@ URI host as the **action** and dispatches accordingly:
 | `app` / `apps` | URI-decoded query or path | Shows a confirmation dialog with the raw JSON, then imports via `AppsProvider` |
 
 Inbound links arrive via `AppLinks` (Android App Links / intent filters) — the
-`obtainium://` scheme is registered in `AndroidManifest.xml`. Both `getInitialLink()`
+`updatium://` scheme is registered in `AndroidManifest.xml`. Both `getInitialLink()`
 (cold start) and `uriLinkStream` (warm start) feed into `interpretLink`, with a
 dedup guard so the initial link isn't processed twice.
 
 The **share sheet** (`ACTION_SEND` intent) added in the `MainActivity.kt` native layer
-rewrites shared URLs as `obtainium://add/<url>` before they reach `interpretLink`, so
+rewrites shared URLs as `updatium://add/<url>` before they reach `interpretLink`, so
 the same Dart-side dispatch handles both manual deeplinks and share-target intents.
 
 ### Reusable components (`lib/components/`)
@@ -259,7 +259,7 @@ Prefer these over bespoke widgets:
   `ExpressiveMotion.{emphasized, short, medium}` motion tokens. All shape and motion
   characters are defined here.
 - **`ui_widgets.dart`** —
-  - `AppIcon` (squircle icon with Obtainium glyph fallback, excluded from semantics),
+  - `AppIcon` (squircle icon with Updatium glyph fallback, excluded from semantics),
   - `ActionListTile` (icon + label ListTile with optional auto-pop),
   - `ConnectedCard` (single tonal card; `isFirst`/`isLast` round outer corners so runs
     read as one block),
@@ -319,7 +319,7 @@ apps. `tileMode: true` renders fields in the connected-tile settings aesthetic.
 
 Background work is scheduled via **`workmanager`** (Android periodic tasks). The flow:
 
-1. `_scheduleWorkManager()` (in `lib/main.dart`) registers a periodic task (`obtainiumBgUpdateCheck`)
+1. `_scheduleWorkManager()` (in `lib/main.dart`) registers a periodic task (`updatiumBgUpdateCheck`)
    with a 15-minute minimum interval, requiring network connectivity.
 2. When triggered, Android invokes **`callbackDispatcher()`** (`lib/main.dart:64`), a top-level
    function annotated `@pragma('vm:entry-point')` registered via `Workmanager().initialize()`.
@@ -337,7 +337,7 @@ Background work is scheduled via **`workmanager`** (Android periodic tasks). The
    notify-only vs silently-installable, sends grouped notifications, and **schedules
    retries that actually `await` the retry delay** so rate-limited hosts aren't hammered.
 4. **Install mode** (`toCheck` empty): downloads + silently installs pending updates;
-   Obtainium itself is always moved to install **last**.
+   Updatium itself is always moved to install **last**.
 5. Publishes saves via a broadcast `StreamController<void>` so the foreground
    instance can detect background writes and reload automatically. Errors during
    background tasks are caught and logged rather than crashing the headless process.
@@ -384,7 +384,7 @@ Three concrete implementations:
 | Installer | Backend | Use case |
 | --- | --- | --- |
 | `StockInstaller` | `android_package_installer` plugin (PackageInstaller session API) | Standard installs; supports silent install via ADB-granted `INSTALL_PACKAGES` |
-| `ShizukuInstaller` | `shizuku_apk_installer` plugin | Self-update of Obtainium itself, or when Shizuku/Dhizuku/Sui is available |
+| `ShizukuInstaller` | `shizuku_apk_installer` plugin | Self-update of Updatium itself, or when Shizuku/Dhizuku/Sui is available |
 | `ExternalInstaller` | Native `MethodChannel` bridge (`external_install_bridge.dart` + `MainActivity.kt`) | Hands off to a third-party installer app chosen by the user; lists eligible targets via `listInstallTargets()` and converts file paths to `content://` URIs via `FileProvider` |
 
 The selection logic (in `apps_provider_install.dart`) checks: self-update → `ShizukuInstaller`;
@@ -409,7 +409,7 @@ Source credentials (e.g. `github-creds`, `gitlab-creds`) are stored in
   objects in place.
 
 **Errors / robustness**
-- Throw `ObtainiumError` (or a typed subclass in `custom_errors.dart`) rather than raw
+- Throw `UpdatiumError` (or a typed subclass in `custom_errors.dart`) rather than raw
   `String`s. Key types: `RateLimitError` (with remaining minutes), `InvalidURLError`,
   `NoReleasesError`, `NoAPKError`, `NoVersionError`, `DowngradeError`, `InstallError`,
   `IDChangedError`, `RepositoryRenamedError`.
@@ -424,7 +424,7 @@ Source credentials (e.g. `github-creds`, `gitlab-creds`) are stored in
   ```
 
   `rethrowOrWrapError()` from `custom_errors.dart` passes through existing
-  `ObtainiumError`s unchanged and wraps raw exceptions with a stack trace.
+  `UpdatiumError`s unchanged and wraps raw exceptions with a stack trace.
 - In pages, use the helper functions:
 
   ```dart
@@ -500,4 +500,4 @@ flutter build apk --flavor normal   # or use ./build.sh
 | Change update logic | `apps_provider_updates.dart` (foreground) / `bgUpdateCheck` (background) |
 | Change install behaviour | `apps_provider_install.dart` |
 | Add a reusable widget/dialog | `components/ui_widgets.dart` (or a dedicated component file) |
-| Theme/shape/motion tweaks | `buildObtainiumTheme()` in `lib/theme.dart` (`positionalTileShape`, `StadiumBorder`, `ExpressiveMotion` tokens all live here) |
+| Theme/shape/motion tweaks | `buildUpdatiumTheme()` in `lib/theme.dart` (`positionalTileShape`, `StadiumBorder`, `ExpressiveMotion` tokens all live here) |

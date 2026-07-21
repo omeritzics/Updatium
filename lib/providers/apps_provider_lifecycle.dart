@@ -7,14 +7,14 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/app_sources/html.dart';
-import 'package:obtainium/components/generated_form_renderer.dart';
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/notifications_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/app_sources/html.dart';
+import 'package:updatium/components/generated_form_renderer.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/notifications_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:path_provider/path_provider.dart';
 
 /// App persistence (load/save/remove), icons, and version-detection helpers.
@@ -490,7 +490,7 @@ extension AppsProviderLifecycle on AppsProvider {
                   [
                     GeneratedFormSwitch(
                       'rmAppEntry',
-                      label: tr('removeFromObtainium'),
+                      label: tr('removeFromUpdatium'),
                       value: true,
                     ),
                   ],

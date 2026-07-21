@@ -143,7 +143,7 @@ class APKMirror extends AppSource {
           releaseDate: releaseDate,
         );
       } else {
-        throw getObtainiumHttpError(res);
+        throw getUpdatiumHttpError(res);
       }
     } catch (e) {
       rethrowOrWrapError(e);

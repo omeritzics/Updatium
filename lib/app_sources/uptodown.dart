@@ -150,7 +150,7 @@ class Uptodown extends AppSource {
   ) async {
     final res = await sourceRequest(assetUrl, additionalSettings);
     if (res.statusCode != 200) {
-      throw getObtainiumHttpError(res);
+      throw getUpdatiumHttpError(res);
     }
     final html = parse(res.body);
     final urlDataKey = html

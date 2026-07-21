@@ -2,12 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/foundation.dart' show setEquals;
 import 'package:flutter/material.dart';
-import 'package:obtainium/components/generated_form_renderer.dart'
+import 'package:updatium/components/generated_form_renderer.dart'
     show generateRandomLightColor;
-import 'package:obtainium/components/ui_widgets.dart';
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/components/ui_widgets.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
 
 /// A small curated palette of pleasant category colours for quick picking.
@@ -466,8 +466,9 @@ class _CategorySelectorState extends State<CategorySelector> {
                       onLongPress: () => _edit(name),
                       child: FilterChip(
                         avatar: CircleAvatar(
-                          backgroundColor:
-                              Color(categories[name] ?? 0xFFCCCCCC),
+                          backgroundColor: Color(
+                            categories[name] ?? 0xFFCCCCCC,
+                          ),
                           radius: 7,
                         ),
                         label: Text(name),
@@ -513,10 +514,9 @@ class CategoryManager extends StatelessWidget {
         children: [
           Text(
             tr('noCategories'),
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: cs.onSurfaceVariant),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
           ),
           const Spacer(),
           ActionChip(

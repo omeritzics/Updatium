@@ -126,7 +126,7 @@ class APKCombo extends AppSource {
       }
       final preres = await sourceRequest(standardUrl, additionalSettings);
       if (preres.statusCode != 200) {
-        throw getObtainiumHttpError(preres);
+        throw getUpdatiumHttpError(preres);
       }
       final res = parse(preres.body);
       final String? version = res.querySelector('div.version')?.text.trim();

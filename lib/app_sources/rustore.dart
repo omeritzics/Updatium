@@ -18,13 +18,11 @@ class RuStore extends AppSource {
   }
   @override
   Future<Map<String, String>?> getRequestHeaders(
-      Map<String, dynamic> additionalSettings,
-      String url, {
-        bool forAPKDownload = false,
-      }) async {
-    return {
-      'ruStoreVerCode': '1105002',
-    };
+    Map<String, dynamic> additionalSettings,
+    String url, {
+    bool forAPKDownload = false,
+  }) async {
+    return {'ruStoreVerCode': '1105002'};
   }
 
   @override
@@ -60,7 +58,7 @@ class RuStore extends AppSource {
         additionalSettings,
       );
       if (overallInfoResponse.statusCode != 200) {
-        throw getObtainiumHttpError(overallInfoResponse);
+        throw getUpdatiumHttpError(overallInfoResponse);
       }
       final decoded = await decodeJsonBody(overallInfoResponse.bodyBytes);
       final appDetails = decoded is Map ? decoded['body'] : null;
@@ -87,9 +85,11 @@ class RuStore extends AppSource {
         followRedirects: false,
         postBody: {'appId': appDetails['appId'], 'firstInstall': true},
       );
-      final downloadDetails = await decodeJsonBody(downloadLinksResponse.bodyBytes);
+      final downloadDetails = await decodeJsonBody(
+        downloadLinksResponse.bodyBytes,
+      );
       if (downloadLinksResponse.statusCode != 200 || downloadDetails == null) {
-        throw getObtainiumHttpError(downloadLinksResponse);
+        throw getUpdatiumHttpError(downloadLinksResponse);
       }
       final url = downloadDetails['downloadUrls']?[0]?['url'] as String?;
       if (url == null) {

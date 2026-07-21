@@ -318,7 +318,7 @@ class FDroid extends AppSource {
         AppNames(sourceName, Uri.parse(standardUrl).pathSegments.last),
       );
     } else {
-      throw getObtainiumHttpError(res);
+      throw getUpdatiumHttpError(res);
     }
   }
 }

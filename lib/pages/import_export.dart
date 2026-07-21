@@ -667,7 +667,7 @@ class _ExportSectionState extends State<ExportSection> {
       _exportDirFuture = settingsProvider.getExportDir();
     }
 
-    Future<void> runObtainiumExport({bool pickOnly = false}) async {
+    Future<void> runUpdatiumExport({bool pickOnly = false}) async {
       settingsProvider.selectionClick();
       unawaited(
         appsProvider
@@ -705,7 +705,7 @@ class _ExportSectionState extends State<ExportSection> {
                       color: Theme.of(context).colorScheme.primary,
                     )
                   : null,
-              onTap: () => runObtainiumExport(pickOnly: true),
+              onTap: () => runUpdatiumExport(pickOnly: true),
             ),
           ),
           ConnectedCard(
@@ -713,8 +713,8 @@ class _ExportSectionState extends State<ExportSection> {
             isLast: snapshot.data == null,
             child: ActionListTile(
               icon: Icons.upload_outlined,
-              label: tr('obtainiumExport'),
-              onTap: snapshot.data == null ? null : runObtainiumExport,
+              label: tr('updatiumExport'),
+              onTap: snapshot.data == null ? null : runUpdatiumExport,
             ),
           ),
         ];
@@ -843,7 +843,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
 
 void _showImportError(dynamic e, BuildContext context) {
   if (e is PlatformException || e is MissingPluginException) {
-    showError(ObtainiumError(tr('noFilePickerAvailable')), context);
+    showError(UpdatiumError(tr('noFilePickerAvailable')), context);
   } else {
     showError(e, context);
   }

@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/installers/installer.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/installers/installer.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 
 /// Installs via the Shizuku/Dhizuku/Sui binder API for elevated installs with
@@ -26,13 +26,13 @@ class ShizukuInstaller extends Installer {
   Future<void> ensurePermission() async {
     switch ((await ShizukuApkInstaller().checkPermission())) {
       case 'services_not_found':
-        throw ObtainiumError(tr('shizukuBinderNotFound'));
+        throw UpdatiumError(tr('shizukuBinderNotFound'));
       case 'old_shizuku':
-        throw ObtainiumError(tr('shizukuOld'));
+        throw UpdatiumError(tr('shizukuOld'));
       case 'old_android_with_adb':
-        throw ObtainiumError(tr('shizukuOldAndroidWithADB'));
+        throw UpdatiumError(tr('shizukuOldAndroidWithADB'));
       case 'denied':
-        throw ObtainiumError(tr('cancelled'));
+        throw UpdatiumError(tr('cancelled'));
     }
   }
 

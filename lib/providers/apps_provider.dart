@@ -1,4 +1,4 @@
-// Manages state related to the list of Apps tracked by Obtainium,
+// Manages state related to the list of Apps tracked by Updatium,
 // Exposes related functions such as those used to add, remove, download, and install Apps.
 
 import 'dart:async';
@@ -20,20 +20,20 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/io_client.dart';
-import 'package:obtainium/app_sources/directAPKLink.dart';
-import 'package:obtainium/app_sources/html.dart';
-import 'package:obtainium/components/generated_form.dart';
-import 'package:obtainium/components/generated_form_modal.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/main.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/notifications_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
+import 'package:updatium/app_sources/directAPKLink.dart';
+import 'package:updatium/app_sources/html.dart';
+import 'package:updatium/components/generated_form.dart';
+import 'package:updatium/components/generated_form_modal.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/main.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/notifications_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:http/http.dart';
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter_archive/flutter_archive.dart';
@@ -278,7 +278,7 @@ Future<String> checkPartialDownloadHash(
   var client = IOClient(createHttpClient(allowInsecure));
   var response = await client.send(req);
   if (response.statusCode < 200 || response.statusCode > 299) {
-    throw ObtainiumError(response.reasonPhrase ?? tr('unexpectedError'));
+    throw UpdatiumError(response.reasonPhrase ?? tr('unexpectedError'));
   }
   List<List<int>> bytes = await response.stream.take(bytesToGrab).toList();
   return hashListOfLists(bytes);
@@ -903,7 +903,7 @@ class AppsProvider with ChangeNotifier {
       }
       if (newInfo == null) {
         downloadedFile.delete();
-        throw ObtainiumError('Could not get ID from APK');
+        throw UpdatiumError('Could not get ID from APK');
       }
       downloadedFile = await handleAPKIDChange(
         app,
@@ -991,10 +991,10 @@ class AppsProvider with ChangeNotifier {
       return true;
     }
 
-    if (app.id == obtainiumId) {
+    if (app.id == updatiumId) {
       return false;
     }
-    if (installerPackageName != obtainiumId) {
+    if (installerPackageName != updatiumId) {
       // If we did not install the app, silent install is not possible
       return false;
     }
@@ -1161,7 +1161,7 @@ class AppsProvider with ChangeNotifier {
       } catch (e) {
         //
       } finally {
-        throw ObtainiumError(tr('badDownload'));
+        throw UpdatiumError(tr('badDownload'));
       }
     }
     PackageInfo? appInfo = await getInstalledInfo(apps[file.appId]!.app.id);
@@ -1355,7 +1355,7 @@ class AppsProvider with ChangeNotifier {
     List<String> trackOnlyAppsToUpdate = [];
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw ObtainiumError(tr('appNotFound'));
+        throw UpdatiumError(tr('appNotFound'));
       }
       MapEntry<String, String>? apkUrl;
       var trackOnly = apps[id]!.app.additionalSettings['trackOnly'] == true;
@@ -1421,13 +1421,13 @@ class AppsProvider with ChangeNotifier {
     MultiAppMultiError errors = MultiAppMultiError();
     List<String> installedIds = [];
 
-    // Move Obtainium to the end of the line (let all other apps update first)
+    // Move Updatium to the end of the line (let all other apps update first)
     appsToInstall = moveStrToEnd(
       appsToInstall,
-      obtainiumId,
-      strB: obtainiumTempId,
+      updatiumId,
+      strB: updatiumTempId,
     );
-    appsToInstall = moveStrToEnd(appsToInstall, '$obtainiumId.fdroid');
+    appsToInstall = moveStrToEnd(appsToInstall, '$updatiumId.fdroid');
 
     Future<void> installFn(
       String id,
@@ -1533,18 +1533,18 @@ class AppsProvider with ChangeNotifier {
         willBeSilent = await canInstallSilently(apps[id]!.app);
         if (!settingsProvider.useShizuku) {
           if (!(await settingsProvider.getInstallPermission(enforce: false))) {
-            throw ObtainiumError(tr('cancelled'));
+            throw UpdatiumError(tr('cancelled'));
           }
         } else {
           switch ((await ShizukuApkInstaller().checkPermission())!) {
             case 'services_not_found':
-              throw ObtainiumError(tr('shizukuBinderNotFound'));
+              throw UpdatiumError(tr('shizukuBinderNotFound'));
             case 'old_shizuku':
-              throw ObtainiumError(tr('shizukuOld'));
+              throw UpdatiumError(tr('shizukuOld'));
             case 'old_android_with_adb':
-              throw ObtainiumError(tr('shizukuOldAndroidWithADB'));
+              throw UpdatiumError(tr('shizukuOldAndroidWithADB'));
             case 'denied':
-              throw ObtainiumError(tr('cancelled'));
+              throw UpdatiumError(tr('cancelled'));
           }
         }
         if (!willBeSilent && context != null && !settingsProvider.useShizuku) {
@@ -1605,7 +1605,7 @@ class AppsProvider with ChangeNotifier {
     List<MapEntry<MapEntry<String, String>, App>> filesToDownload = [];
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw ObtainiumError(tr('appNotFound'));
+        throw UpdatiumError(tr('appNotFound'));
       }
       MapEntry<String, String>? fileUrl;
       var refreshBeforeDownload =
@@ -2101,7 +2101,7 @@ class AppsProvider with ChangeNotifier {
                   [
                     GeneratedFormSwitch(
                       'rmAppEntry',
-                      label: tr('removeFromObtainium'),
+                      label: tr('removeFromUpdatium'),
                       defaultValue: true,
                     ),
                   ],
@@ -2360,12 +2360,12 @@ class AppsProvider with ChangeNotifier {
       var result = await saf.createFile(
         exportDir,
         displayName:
-            '${tr('obtainiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
+            '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
         mimeType: 'application/json',
         bytes: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
       );
       if (result == null) {
-        throw ObtainiumError(tr('unexpectedError'));
+        throw UpdatiumError(tr('unexpectedError'));
       }
       returnPath = exportDir.pathSegments
           .join('/')
@@ -2602,7 +2602,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
 /// If there are any errors, we recursively call the same function with retry count for the relevant apps decremented (if zero, the user is notified).
 ///
 /// In "install mode" (toCheck is empty): downloads and silently installs all
-/// pending updates, placing Obtainium last in the install queue.
+/// pending updates, placing Updatium last in the install queue.
 Future<void> bgUpdateCheck(
   String taskId,
   Map<String, dynamic>? params, {
@@ -2855,10 +2855,10 @@ Future<void> bgUpdateCheck(
     if (toInstall.isNotEmpty) {
       var tempObtArr = toInstall.where(
         (element) =>
-            element.key == obtainiumId || element.key == '$obtainiumId.fdroid',
+            element.key == updatiumId || element.key == '$updatiumId.fdroid',
       );
       if (tempObtArr.isNotEmpty) {
-        // Move obtainium to the end of the list as it must always install last
+        // Move updatium to the end of the list as it must always install last
         var obt = tempObtArr.first;
         toInstall = moveStrToEndMapEntryWithCount(toInstall, obt);
       }

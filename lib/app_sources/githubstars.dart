@@ -4,10 +4,10 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:http/http.dart';
 <<<<<<<< HEAD:lib/app_sources/githubstars.dart
-import 'package:obtainium/app_sources/github.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/app_sources/github.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 ========
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/providers/source_provider.dart';
@@ -61,7 +61,7 @@ class GitHubStars implements MassAppUrlSource {
     } else {
 <<<<<<<< HEAD:lib/app_sources/githubstars.dart
       _gh.rateLimitErrorCheck(res);
-      throw getObtainiumHttpError(res);
+      throw getUpdatiumHttpError(res);
 ========
       var gh = GitHub();
       gh.rateLimitErrorCheck(res);

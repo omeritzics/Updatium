@@ -1,5 +1,5 @@
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 /// Android PackageInstaller status codes: 0 = success, 3 = already installed / pending.
 const int installSuccessCode = 0;
@@ -80,7 +80,7 @@ abstract class Installer {
   Future<bool> checkPermission();
 
   /// Ensures the installer has the privileges needed to install, prompting the
-  /// user if necessary. Throws an [ObtainiumError] if permission is denied.
+  /// user if necessary. Throws an [UpdatiumError] if permission is denied.
   Future<void> ensurePermission();
 
   /// Installs one or more APK file paths (a base APK plus optional splits).

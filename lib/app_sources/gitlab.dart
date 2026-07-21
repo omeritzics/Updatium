@@ -146,7 +146,7 @@ class GitLab extends AppSource {
         additionalSettings,
       );
       if (res0.statusCode != 200) {
-        throw getObtainiumHttpError(res0);
+        throw getUpdatiumHttpError(res0);
       }
       final int? projectId = jsonDecode(res0.body)['id'];
       if (projectId == null) {
@@ -164,7 +164,7 @@ class GitLab extends AppSource {
         additionalSettings,
       );
       if (res.statusCode != 200) {
-        throw getObtainiumHttpError(res);
+        throw getUpdatiumHttpError(res);
       }
 
       // Extract .apk details from received data

@@ -3,18 +3,18 @@ import 'dart:async';
 import 'package:android_package_installer/android_package_installer.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/installers/installer.dart';
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/installers/installer.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 const int _androidApiLevelS = 31;
 
 /// Installs using Android's session-based [AndroidPackageInstaller]. Requires
 /// the `REQUEST_INSTALL_PACKAGES` permission and, for silent installs, that
-/// Obtainium is the installing package on a new enough OS.
+/// Updatium is the installing package on a new enough OS.
 class StockInstaller extends Installer {
   StockInstaller(super.settingsProvider);
 
@@ -23,12 +23,12 @@ class StockInstaller extends Installer {
 
   @override
   Future<bool> canInstallSilently(App app) async {
-    if (app.id == obtainiumId ||
-        app.id == '$obtainiumId.fdroid' ||
-        app.id == '$obtainiumId.debug') {
+    if (app.id == updatiumId ||
+        app.id == '$updatiumId.fdroid' ||
+        app.id == '$updatiumId.debug') {
       unawaited(
         LogsProvider().add(
-          'App will not be installed silently: Obtainium cannot silently install itself: ${app.id}',
+          'App will not be installed silently: Updatium cannot silently install itself: ${app.id}',
         ),
       );
       return false;
@@ -49,13 +49,13 @@ class StockInstaller extends Installer {
       );
       return false;
     }
-    if (installerPackageName != obtainiumId &&
-        installerPackageName != '$obtainiumId.fdroid' &&
-        installerPackageName != '$obtainiumId.debug') {
+    if (installerPackageName != updatiumId &&
+        installerPackageName != '$updatiumId.fdroid' &&
+        installerPackageName != '$updatiumId.debug') {
       // If we did not install the app, silent install is not possible
       unawaited(
         LogsProvider().add(
-          'App will not be installed silently: Obtainium is not the installing package (current installer: ${installerPackageName ?? 'unknown'}): ${app.id}',
+          'App will not be installed silently: Updatium is not the installing package (current installer: ${installerPackageName ?? 'unknown'}): ${app.id}',
         ),
       );
       return false;
@@ -94,7 +94,7 @@ class StockInstaller extends Installer {
   @override
   Future<void> ensurePermission() async {
     if (!(await settingsProvider.getInstallPermission(enforce: false))) {
-      throw ObtainiumError(tr('cancelled'));
+      throw UpdatiumError(tr('cancelled'));
     }
   }
 

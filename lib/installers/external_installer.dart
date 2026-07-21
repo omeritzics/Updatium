@@ -4,21 +4,21 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/installers/installer.dart';
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/external_install_bridge.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/installers/installer.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/external_install_bridge.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 const String _apkMime = 'application/vnd.android.package-archive';
 const String _bundleMime = 'application/zip';
 
 /// Ceiling for how long we wait for the user to return after the external
-/// installer took them away from Obtainium.
+/// installer took them away from Updatium.
 const Duration _foregroundReturnFallback = Duration(hours: 2);
 
-/// If the external installer doesn't take the user away from Obtainium
+/// If the external installer doesn't take the user away from Updatium
 /// (modal overlay), we won't see a background event. This timeout caps how
 /// long we wait before falling through to the install-confirmation poll.
 const Duration _backgroundDetectionWindow = Duration(seconds: 30);
@@ -59,7 +59,7 @@ class ExternalInstaller extends Installer {
   @override
   Future<void> ensurePermission() async {
     if (settingsProvider.externalInstallerPackage == null) {
-      throw ObtainiumError(tr('externalInstallerRequired'));
+      throw UpdatiumError(tr('externalInstallerRequired'));
     }
   }
 
@@ -71,7 +71,7 @@ class ExternalInstaller extends Installer {
   }) async {
     final targetPackage = settingsProvider.externalInstallerPackage;
     if (targetPackage == null || apkFilePaths.isEmpty) {
-      throw ObtainiumError(tr('externalInstallerRequired'));
+      throw UpdatiumError(tr('externalInstallerRequired'));
     }
 
     final baseline = await captureInstallBaseline(appId);
@@ -80,7 +80,7 @@ class ExternalInstaller extends Installer {
       final contentUri = await ExternalInstallerBridge.instance
           .contentUriForFile(filePath);
       if (contentUri == null) {
-        throw ObtainiumError(tr('badDownload'));
+        throw UpdatiumError(tr('badDownload'));
       }
 
       final intent = AndroidIntent(
@@ -116,7 +116,7 @@ class ExternalInstaller extends Installer {
             );
         await returned;
       } else {
-        // The installer is a modal — we never left Obtainium. Give the
+        // The installer is a modal — we never left Updatium. Give the
         // user time to interact with the modal before polling.
         await Future.delayed(_modalPollDelay);
       }

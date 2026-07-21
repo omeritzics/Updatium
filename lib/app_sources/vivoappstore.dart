@@ -134,7 +134,7 @@ class VivoAppStore extends AppSource {
     final detailUrl = '$apiBaseUrl${Uri.encodeComponent(vivoAppId)}$params';
     final response = await sourceRequest(detailUrl, additionalSettings);
     if (response.statusCode != 200) {
-      throw getObtainiumHttpError(response);
+      throw getUpdatiumHttpError(response);
     }
     final json = jsonDecode(response.body);
     if (json['id'] == null) {

@@ -11,17 +11,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:obtainium/components/app_detail_widgets.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/installers/installer.dart';
-import 'package:obtainium/installers/shizuku_installer.dart';
-import 'package:obtainium/installers/stock_installer.dart';
-import 'package:obtainium/installers/external_installer.dart';
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/notifications_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/components/app_detail_widgets.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/installers/installer.dart';
+import 'package:updatium/installers/shizuku_installer.dart';
+import 'package:updatium/installers/stock_installer.dart';
+import 'package:updatium/installers/external_installer.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/notifications_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -93,7 +93,7 @@ extension AppsProviderInstall on AppsProvider {
     final actualPackageName = newInfo.packageName;
     if (app.id != actualPackageName) {
       if (actualPackageName == null) {
-        throw ObtainiumError(tr('couldNotGetIdFromApk'))..url = app.url;
+        throw UpdatiumError(tr('couldNotGetIdFromApk'))..url = app.url;
       }
       if (apps[app.id] != null && !isTempIdBool && !app.allowIdChange) {
         throw IDChangedError(actualPackageName)..url = app.url;
@@ -310,7 +310,7 @@ extension AppsProviderInstall on AppsProvider {
         if (apkDir != null && apkDir.existsSync()) {
           apkDir.deleteSync(recursive: true);
         }
-        throw ObtainiumError(tr('couldNotGetIdFromApk'))..url = app.url;
+        throw UpdatiumError(tr('couldNotGetIdFromApk'))..url = app.url;
       }
       final (renamedFile, resolvedApp) = await handleAPKIDChange(
         app,
@@ -591,7 +591,7 @@ extension AppsProviderInstall on AppsProvider {
           ),
         );
       }
-      throw ObtainiumError(tr('badDownload'))..url = apps[file.appId]?.app.url;
+      throw UpdatiumError(tr('badDownload'))..url = apps[file.appId]?.app.url;
     }
     final PackageInfo? appInfo = await getInstalledInfo(
       apps[file.appId]!.app.id,
@@ -843,7 +843,7 @@ extension AppsProviderInstall on AppsProvider {
     final List<String> trackOnlyAppsToUpdate = [];
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw ObtainiumError(tr('appNotFound'));
+        throw UpdatiumError(tr('appNotFound'));
       }
       MapEntry<String, String>? apkUrl;
       final trackOnly = apps[id]!.app.settings.getBool('trackOnly');
@@ -906,14 +906,14 @@ extension AppsProviderInstall on AppsProvider {
     final MultiAppMultiError errors = MultiAppMultiError();
     final List<String> installedIds = [];
 
-    // Move Obtainium to the end of the line (let all other apps update first)
+    // Move Updatium to the end of the line (let all other apps update first)
     appsToInstall = moveStrToEnd(
       appsToInstall,
-      obtainiumId,
-      strB: obtainiumTempId,
+      updatiumId,
+      strB: updatiumTempId,
     );
-    appsToInstall = moveStrToEnd(appsToInstall, '$obtainiumId.fdroid');
-    appsToInstall = moveStrToEnd(appsToInstall, '$obtainiumId.debug');
+    appsToInstall = moveStrToEnd(appsToInstall, '$updatiumId.fdroid');
+    appsToInstall = moveStrToEnd(appsToInstall, '$updatiumId.debug');
 
     List<_InstallResult> downloadResults = [];
     try {
@@ -991,7 +991,7 @@ extension AppsProviderInstall on AppsProvider {
     final List<MapEntry<MapEntry<String, String>, App>> filesToDownload = [];
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw ObtainiumError(tr('appNotFound'));
+        throw UpdatiumError(tr('appNotFound'));
       }
       MapEntry<String, String>? fileUrl;
       final refreshBeforeDownload = apps[id]!.needsRefreshBeforeDownload;
@@ -1259,7 +1259,7 @@ extension AppsProviderInstall on AppsProvider {
       } else if (downloadedArtifact is DownloadedDir) {
         downloadedDir = downloadedArtifact;
       } else {
-        throw ObtainiumError(tr('downloadFailed'))..url = apps[id]?.app.url;
+        throw UpdatiumError(tr('downloadFailed'))..url = apps[id]?.app.url;
       }
       id = downloadedFile?.appId ?? downloadedDir?.appId ?? id;
       // Bridge download-to-install gap so the Dismissible stays disabled.

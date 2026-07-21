@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:obtainium/components/generated_form_renderer.dart';
-import 'package:obtainium/main.dart';
-import 'package:obtainium/pages/app.dart';
-import 'package:obtainium/theme.dart';
-import 'package:obtainium/components/ui_widgets.dart';
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/notifications_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/components/generated_form_renderer.dart';
+import 'package:updatium/main.dart';
+import 'package:updatium/pages/app.dart';
+import 'package:updatium/theme.dart';
+import 'package:updatium/components/ui_widgets.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/notifications_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 // AppsFilter and AppListBuilder are defined below in this file.
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -433,14 +433,11 @@ class AppListTile extends StatelessWidget {
                     ? RoundedSuperellipseBorder(borderRadius: borderRadius!)
                     : null,
                 tileColor: _app.pinned
-                    ? Theme.of(context)
-                        .colorScheme
-                        .onSurface
-                        .withValues(alpha: 0.06)
+                    ? Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.06)
                     : Colors.transparent,
-                selectedTileColor: Theme.of(context)
-                    .colorScheme
-                    .primary
+                selectedTileColor: Theme.of(context).colorScheme.primary
                     .withValues(alpha: _app.pinned ? 0.2 : 0.1),
                 selected: multiSelected || detailSelected,
                 leading: settingsProvider.isTV
@@ -465,10 +462,7 @@ class AppListTile extends StatelessWidget {
                     ? Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _authorText(),
-                          _repoMovedRow(context),
-                        ],
+                        children: [_authorText(), _repoMovedRow(context)],
                       )
                     : _authorText(),
                 trailing: downloadProgress != null
@@ -508,8 +502,7 @@ class AppListTile extends StatelessWidget {
                   color: cs.errorContainer,
                   alignment: Alignment.centerRight,
                   padding: const EdgeInsets.only(right: 24),
-                  child: Icon(Icons.delete_outline,
-                      color: cs.onErrorContainer),
+                  child: Icon(Icons.delete_outline, color: cs.onErrorContainer),
                 ),
                 confirmDismiss: (direction) async {
                   if (direction == DismissDirection.startToEnd) {
@@ -919,8 +912,7 @@ class _VersionLabel extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.end,
                 style: TextStyle(
-                  fontStyle:
-                      isVersionPseudo(app) ? FontStyle.italic : null,
+                  fontStyle: isVersionPseudo(app) ? FontStyle.italic : null,
                   color: updateColor,
                 ),
               ),
@@ -975,8 +967,8 @@ class _VersionLabel extends StatelessWidget {
   String changesLabel(App app, bool hasChangeLogFn) {
     return app.releaseDate == null
         ? hasChangeLogFn
-            ? tr('changes')
-            : ''
+              ? tr('changes')
+              : ''
         : DateFormat('yyyy-MM-dd').format(app.releaseDate!.toLocal());
   }
 }

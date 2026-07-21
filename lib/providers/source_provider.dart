@@ -993,7 +993,7 @@ abstract class AppSource {
 }
 
 /// Delegates to [HttpService.getHttpError].
-UpdatiumError getObtainiumHttpError(http.Response res) =>
+UpdatiumError getUpdatiumHttpError(http.Response res) =>
     HttpService().getHttpError(res);
 
 abstract class MassAppUrlSource {
@@ -1260,13 +1260,13 @@ class SourceProvider {
     final String standardUrl;
     try {
       standardUrl = source.standardizeUrl(url);
-    } on ObtainiumError catch (e) {
+    } on UpdatiumError catch (e) {
       throw e..withUrlContext(url);
     }
     final APKDetails apk;
     try {
       apk = await source.getLatestAPKDetails(standardUrl, additionalSettings);
-    } on ObtainiumError catch (e) {
+    } on UpdatiumError catch (e) {
       throw e..withUrlContext(standardUrl);
     }
 
@@ -1352,7 +1352,7 @@ class SourceProvider {
         batch.map((url) async {
           try {
             if (alreadyAddedUrls.contains(url)) {
-              throw ObtainiumError(tr('appAlreadyAdded'));
+              throw UpdatiumError(tr('appAlreadyAdded'));
             }
             final source = sourceOverride ?? getSource(url);
             return await getApp(
@@ -1495,7 +1495,7 @@ class HttpService {
       return MapEntry(currentUrl, MapEntry(httpClient, response));
     }
     httpClient?.close();
-    throw ObtainiumError(tr('tooManyRedirects'));
+    throw UpdatiumError(tr('tooManyRedirects'));
   }
 
   Future<http.Response> httpClientResponseStreamToFinalResponse(
@@ -1526,7 +1526,7 @@ class HttpService {
     }
   }
 
-  ObtainiumError getHttpError(http.Response res) {
+  UpdatiumError getHttpError(http.Response res) {
     if (res.statusCode == 404) return NoReleasesError();
     if (res.statusCode == 429 || res.statusCode == 403) {
       final retryAfter = res.headers['retry-after'];
@@ -1534,7 +1534,7 @@ class HttpService {
       if (secs != null) return RateLimitError((secs / 60).ceil());
       return RateLimitError(1);
     }
-    return ObtainiumError(
+    return UpdatiumError(
       (res.reasonPhrase != null && res.reasonPhrase!.isNotEmpty)
           ? res.reasonPhrase!
           : tr('errorWithHttpStatusCode', args: [res.statusCode.toString()]),

@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:obtainium/app_sources/html.dart';
-import 'package:obtainium/components/generated_form_model.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/app_sources/html.dart';
+import 'package:updatium/components/generated_form_model.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 /// Tracks an APK at a direct URL (e.g. `https://example.com/app.apk`).
 /// Delegates version detection and downloading to [HTML] with pseudo-versioning

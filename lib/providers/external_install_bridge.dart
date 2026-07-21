@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:obtainium/providers/apps_provider.dart' show packageManager;
-import 'package:obtainium/providers/logs_provider.dart';
+import 'package:updatium/providers/apps_provider.dart' show packageManager;
+import 'package:updatium/providers/logs_provider.dart';
 
 /// A device app that can receive an APK install handoff.
 class InstallerTarget {
@@ -29,7 +29,7 @@ class ExternalInstallerBridge {
   static final ExternalInstallerBridge instance = ExternalInstallerBridge._();
 
   static const MethodChannel _channel = MethodChannel(
-    'dev.imranr.obtainium/external_install',
+    'dev.imranr.updatium/external_install',
   );
 
   /// Lists installer apps, enriching each native package/activity pair with a

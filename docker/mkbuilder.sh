@@ -3,7 +3,7 @@
 set -euo pipefail
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-IMAGE=${IMAGE:-flutter-builder-obtainium}
+IMAGE=${IMAGE:-flutter-builder-updatium}
 STAMP=$(date +'%Y%m%d.%H%M%S')
 
 # The Dockerfile COPYs nothing (the source tree is mounted at runtime), so use

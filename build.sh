@@ -52,8 +52,8 @@ for file in ./build/app/outputs/flutter-apk/app-*normal*.apk*; do mv "$file" "${
 flutter build apk $DART_DEFINE --flavor fdroid -t lib/main_fdroid.dart && \
     flutter build apk $DART_DEFINE --split-per-abi --flavor fdroid -t lib/main_fdroid.dart
 for file in ./build/app/outputs/flutter-apk/*.sha1; do gpg --sign --detach-sig "$file"; done
-rsync -r ./build/app/outputs/flutter-apk/ ~/Downloads/Obtainium-build/
-cd ~/Downloads/Obtainium-build/
+rsync -r ./build/app/outputs/flutter-apk/ ~/Downloads/Updatium-build/
+cd ~/Downloads/Updatium-build/
 for apk in *.apk; do
     PREFIX="$(echo "$apk" | head -c -5)"
     zip "$PREFIX" "$PREFIX"*

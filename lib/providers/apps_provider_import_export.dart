@@ -4,11 +4,11 @@ import 'dart:typed_data';
 
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:obtainium/custom_errors.dart';
+import 'package:updatium/custom_errors.dart';
 
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:shared_storage/shared_storage.dart' as saf;
 
 /// Import/export of app configurations for [AppsProvider].
@@ -88,12 +88,12 @@ extension AppsProviderImportExport on AppsProvider {
       final result = await saf.createFile(
         exportDir,
         displayName:
-            '${tr('obtainiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
+            '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
         mimeType: 'application/json',
         bytes: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
       );
       if (result == null) {
-        throw ObtainiumError(tr('unexpectedError'));
+        throw UpdatiumError(tr('unexpectedError'));
       }
       returnPath = exportDir.pathSegments
           .join('/')
@@ -108,7 +108,7 @@ extension AppsProviderImportExport on AppsProvider {
     try {
       decodedJSON = jsonDecode(appsJSON);
     } catch (e) {
-      throw ObtainiumError('${tr('failedToImport')}: ${e.toString()}');
+      throw UpdatiumError('${tr('failedToImport')}: ${e.toString()}');
     }
     final hasSchemaVersion =
         decodedJSON is Map && decodedJSON.containsKey('schemaVersion');
@@ -126,7 +126,7 @@ extension AppsProviderImportExport on AppsProvider {
                 .toList();
       }
     } catch (e) {
-      throw ObtainiumError('${tr('failedToImport')}: ${e.toString()}');
+      throw UpdatiumError('${tr('failedToImport')}: ${e.toString()}');
     }
     await waitForAppsToLoad();
     for (var i = 0; i < importedApps.length; i++) {
@@ -197,9 +197,9 @@ class ExportSchema {
     final schemaVersion = json['schemaVersion'] as int? ?? 1;
     if (schemaVersion > currentExportSchemaVersion) {
       throw FormatException(
-        'Export was created by a newer version of Obtainium '
+        'Export was created by a newer version of Updatium '
         '(schema v$schemaVersion, current is v$currentExportSchemaVersion). '
-        'Please update Obtainium to import this file.',
+        'Please update Updatium to import this file.',
       );
     }
     return ExportSchema(
