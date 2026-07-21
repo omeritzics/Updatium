@@ -1,11 +1,17 @@
-name: Build and Release
+name: Build and Release Qama
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
 
 on:
   workflow_dispatch:
     inputs:
       beta:
         type: boolean
-        description: Is beta?
+        description: "Is this a beta release?"
+        default: false
 
 jobs:
   build:
@@ -13,68 +19,122 @@ jobs:
 
     steps:
       
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
-          java-version: '21'
+          cache: true
 
-      - name: Flutter Doctor
-        id: flutter_doctor
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Auto-fix linting issues
+        run: dart fix --apply
+
+      - name: Format code
+        run: dart format .
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@master
+        with:
+          commit_message: "style: auto-fix linting and formatting issues"
+          branch: ${{ github.ref_name }}
+          
+      - name: Generate Version
+        id: version
         run: |
           flutter doctor -v
 
       - name: Check submodule
+        id: check_submodule
         run: |
-          git submodule update --init --recursive
+          git checkout ${{ inputs.checkout }}
 
       - name: Extract Version
         id: extract_version      
         run: |
-          VERSION=$(grep -oP "^version: [^\+]+" pubspec.yaml | tail -c +10)
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          if [ ${{ inputs.beta }} == true ]; then BETA=true; else BETA=false; fi
-          echo "beta=$BETA" >> $GITHUB_OUTPUT
-          TAG="v$VERSION"
-          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          ls -la android/upload-keystore.jks
+          file android/upload-keystore.jks
+          echo "=== Keystore contents ==="
+          # Use heredoc to handle non-ASCII characters properly
+          keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null || echo "Failed to list keystore contents"
+          echo "=== End keystore contents ==="
+          if ! keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null; then
+            echo "ERROR: Keystore verification failed - aborting build"
+            exit 1
+          fi
+          echo "Keystore verification successful"
 
-      - name: Build APKs
+      - name: Build APKs (Release Mode)
         run: |
           flutter pub get
           # TODO: Remove once Flutter's libdartjni.so no longer embeds a non-reproducible build ID
           sed -i -e 's/-Wl,/-Wl,--build-id=none,/' ${PUB_CACHE:-$HOME/.pub-cache}/hosted/*/jni-*/src/CMakeLists.txt
-          # No key.properties exists in CI, so build.gradle.kts already sets
-          # signingConfig = null and produces unsigned APKs (signing happens
-          # separately in the sign.sh script).
+          sed -i 's/signingConfig = signingConfigs.getByName("release")//g' android/app/build.gradle.kts
           flutter build apk --flavor normal && flutter build apk --split-per-abi --flavor normal
           for file in build/app/outputs/flutter-apk/app-*normal*.apk*; do mv "$file" "${file//-normal/}"; done
           flutter build apk --flavor fdroid -t lib/main_fdroid.dart && flutter build apk --split-per-abi --flavor fdroid -t lib/main_fdroid.dart
-          rm -f ./build/app/outputs/flutter-apk/*.sha1
+          rm ./build/app/outputs/flutter-apk/*.sha1
           cp ./sign.sh ./build/app/outputs/flutter-apk/
           ls -l ./build/app/outputs/flutter-apk/
 
       - name: Save Unsigned APKs as Action Artifacts
         uses: actions/upload-artifact@v4
         with:
-          path: build/app/outputs/flutter-apk/*
+          subject-path: 'build/app/outputs/flutter-apk/*.apk'
 
-      - name: Create Tag
-        uses: mathieudutour/github-tag-action@v6.1
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v6
         with:
-          github_token: ${{ secrets.GH_ACCESS_TOKEN }}
-          custom_tag: "${{ steps.extract_version.outputs.tag }}"
-          tag_prefix: ""
-      
-      - name: Create Draft Release
-        uses: ncipollo/release-action@v1
+          name: updatium-v${{ steps.version.outputs.version }}-run${{ github.run_number }}
+          path: build/outputs/Updatium-*.apk
+
+      - name: Create Release
+        if: success() && hashFiles('build/outputs/Updatium-*.apk') != ''
+        uses: softprops/action-gh-release@master
         with:
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
-          tag: "${{ steps.extract_version.outputs.tag }}"
-          prerelease: "${{ steps.extract_version.outputs.beta }}"
-          draft: "true"
-          generateReleaseNotes: true
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "Updatium ${{ steps.version.outputs.version }}${{ github.event.inputs.beta == 'true' && ' (Beta)' || '' }}"
+          prerelease: ${{ github.event.inputs.beta == 'true' }}
+          draft: true
+          files: build/outputs/Updatium-*.apk
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cleanup signing files
+        if: always()
+        run: |
+          echo "Starting cleanup of sensitive signing files..."
+          
+          # Cleanup keystore file
+          if [ -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" ]; then
+            rm -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" || echo "WARNING: Failed to delete keystore file"
+            if [ -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" ]; then
+              echo "ERROR: Keystore file still exists after cleanup attempt"
+            else
+              echo "Successfully deleted keystore file"
+            fi
+          else
+            echo "Keystore file not found, nothing to cleanup"
+          fi
+          
+          # Cleanup key.properties file
+          if [ -f "$GITHUB_WORKSPACE/android/key.properties" ]; then
+            rm -f "$GITHUB_WORKSPACE/android/key.properties" || echo "WARNING: Failed to delete key.properties file"
+            if [ -f "$GITHUB_WORKSPACE/android/key.properties" ]; then
+              echo "ERROR: key.properties file still exists after cleanup attempt"
+            else
+              echo "Successfully deleted key.properties file"
+            fi
+          else
+            echo "key.properties file not found, nothing to cleanup"
+          fi
+          
+          # Unset environment variables
+          unset KEYSTORE_PASSWORD || echo "WARNING: Failed to unset KEYSTORE_PASSWORD"
+          unset KEY_PASSWORD || echo "WARNING: Failed to unset KEY_PASSWORD"
+          unset KEY_ALIAS || echo "WARNING: Failed to unset KEY_ALIAS"
+          unset KEYSTORE_PASS || echo "WARNING: Failed to unset KEYSTORE_PASS"
+          
+          echo "Cleanup completed"

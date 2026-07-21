@@ -12,6 +12,7 @@
 .swiftpm/
 migrate_working_dir/
 .vscode/*
+.mockups/*
 !.vscode/launch.json
 
 # IntelliJ related
@@ -54,6 +55,13 @@ app.*.map.json
 TODO.txt
 data
 node_modules/
+.flutter
+.kilo/
+
+
+#Ignore vscode AI rules
+.github/instructions/codacy.instructions.md
+
 
 # FVM Version Cache
 .fvm/

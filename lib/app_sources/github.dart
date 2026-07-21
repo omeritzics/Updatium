@@ -1,17 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:http/http.dart';
-import 'package:obtainium/app_sources/html.dart';
-import 'package:obtainium/components/generated_form_model.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/app_sources/html.dart';
+import 'package:updatium/components/generated_form_model.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 class GitHub extends AppSource {
+  GitHub({bool hostChanged = false}) {
+    name = 'GitHub';
   GitHub({bool hostChanged = false}) {
     name = 'GitHub';
     hosts = ['github.com'];
@@ -20,6 +22,7 @@ class GitHub extends AppSource {
     this.hostChanged = hostChanged;
     allowIncludeZips = true;
     allowIncludeTarballs = true;
+    isOpenSource = true;
     canSearch = true;
   }
 
@@ -267,10 +270,7 @@ class GitHub extends AppSource {
       additionalSettings,
       settingsProvider,
     );
-    String? creds = sourceConfig['github-creds'];
-    if ((additionalSettings['GHReqPrefix'] as String? ?? '').isNotEmpty) {
-      creds = null;
-    }
+    String? creds = sourceConfig['githubPATLabel'];
     if (creds != null) {
       final userNameEndIndex = creds.indexOf(':');
       if (userNameEndIndex > 0) {
@@ -287,7 +287,7 @@ class GitHub extends AppSource {
   @override
   Future<String?> getSourceNote() async {
     if (!hostChanged && (await getTokenIfAny({})) == null) {
-      return '${tr('githubSourceNote')} ${hostChanged ? tr('addInfoBelow') : tr('addInfoInSettings')}';
+      return '${'githubSourceNote'.t()} ${hostChanged ? 'addInfoBelow'.t() : 'addInfoInSettings'.t()}';
     }
     return null;
   }
@@ -742,7 +742,7 @@ class GitHub extends AppSource {
       if (onHttpErrorCode != null) {
         onHttpErrorCode(res);
       }
-      throw getObtainiumHttpError(res);
+      throw getUpdatiumHttpError(res);
     }
   }
 
@@ -823,7 +823,7 @@ class GitHub extends AppSource {
               ((e['archived'] == true ? '[ARCHIVED] ' : '') +
                   (e['description'] != null
                       ? e['description'] as String
-                      : tr('noDescription'))),
+                      : 'noDescription'.t())),
             ],
           });
         }
@@ -833,7 +833,7 @@ class GitHub extends AppSource {
       if (onHttpErrorCode != null) {
         onHttpErrorCode(res);
       }
-      throw getObtainiumHttpError(res);
+      throw getUpdatiumHttpError(res);
     }
   }
 
@@ -873,6 +873,8 @@ class GitHub extends AppSource {
     } else {
       return results;
     }
+
+    return results;
   }
 
   void rateLimitErrorCheck(Response res) {

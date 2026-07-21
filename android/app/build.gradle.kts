@@ -1,11 +1,10 @@
 import java.io.FileInputStream
+
 import java.util.Properties
-import com.android.build.api.variant.FilterConfiguration.FilterType.*
-import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    id("org.jetbrains.kotlin.android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
@@ -29,26 +28,30 @@ if (keystorePropertiesExists) {
 }
 
 android {
-    namespace = "dev.imranr.obtainium"
-    compileSdk = flutter.compileSdkVersion
+    namespace = "io.github.omeritzics.updatium"
+    compileSdk = 36
     ndkVersion = "28.2.13676358"
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+    kotlin {
+        jvmToolchain(21)
     }
 
     defaultConfig {
-        applicationId = "dev.imranr.obtainium"
+        applicationId = "io.github.omeritzics.updatium"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 26
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 36
         versionCode = flutterVersionCode.toInt()
         versionName = flutterVersionName
     }
@@ -88,7 +91,6 @@ android {
                                      You will need to sign the APKs separately.
 
                             To sign a release build automatically, a keystore properties file is required.
-
                             The following is an example configuration.
                             Create a file named [project]/android/key.properties that contains a reference to your keystore.
                             Don't include the angle brackets (< >). They indicate that the text serves as a placeholder for your values.
@@ -105,29 +107,48 @@ android {
                 }
                 null
             }
+
+            // APK size optimizations for F-Droid/IzzyOnDroid (30MB limit)
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
         getByName("debug") {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
         }
     }
-}
 
-val abiCodes = mapOf("x86_64" to 1, "armeabi-v7a" to 2, "arm64-v8a" to 3)
+    /*
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("arm64-v8a", "armeabi-v7a")
+            isUniversalApk = false
+        }
+    }
+    */
 
-android.applicationVariants.configureEach {
-    val variant = this
-    variant.outputs.forEach { output ->
-        val abiVersionCode = abiCodes[output.filters.find { it.filterType == "ABI" }?.identifier]
-        if (abiVersionCode != null) {
-            (output as ApkVariantOutputImpl).versionCodeOverride = variant.versionCode * 10 + abiVersionCode
+    androidComponents {
+        onVariants { variant ->
+            val abiCodes = mapOf("arm64-v8a" to 1, "armeabi-v7a" to 2)
+            variant.outputs.all { output ->
+                val abiName = output.filters.find { it.filterType.name == "ABI" }?.identifier ?: "universal"
+                val abiCode = abiCodes[abiName] ?: 0
+                output.versionCode.set(flutterVersionCode.toInt() * 10 + abiCode)
+                true
+            }
         }
     }
 }
 
-
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+    implementation("com.github.woheller69:FreeDroidWarn:V1.12")
 }
 
 flutter {

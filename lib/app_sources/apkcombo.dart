@@ -1,12 +1,15 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:html/parser.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/services/slang_converter.dart';
+import 'package:html/parser.dart' show parse;
+import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_provider;
+import 'package:updatium/providers/logs_provider.dart';
 
 class APKCombo extends AppSource {
   APKCombo() {
     name = 'APKCombo';
     hosts = ['apkcombo.com'];
+    name = 'APKCombo';
     showReleaseDateAsVersionToggle = true;
     inferAppIdFromUrlPath = true;
   }
@@ -47,7 +50,7 @@ class APKCombo extends AppSource {
       additionalSettings,
     );
     if (res.statusCode != 200) {
-      throw getObtainiumHttpError(res);
+      throw getUpdatiumHttpError(res);
     }
     final html = parse(res.body);
     return html

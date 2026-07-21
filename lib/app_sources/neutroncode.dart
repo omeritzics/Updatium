@@ -1,16 +1,16 @@
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 class NeutronCode extends AppSource {
   NeutronCode() {
     name = 'NeutronCode';
     hosts = ['neutroncode.com'];
+    name = 'NeutronCode';
     showReleaseDateAsVersionToggle = true;
     changeLogPageIsStandardUrl = true;
   }
-
   @override
   String sourceSpecificStandardizeURL(
     String url, {
@@ -103,7 +103,7 @@ class NeutronCode extends AppSource {
               : null,
         );
       } else {
-        throw getObtainiumHttpError(res);
+        throw getUpdatiumHttpError(res);
       }
     } catch (e) {
       rethrowOrWrapError(e);

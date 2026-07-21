@@ -1,13 +1,15 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:http/http.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class HuaweiAppGallery extends AppSource {
   @override
   String get name => tr('huaweiAppGallery');
 
   HuaweiAppGallery() {
+    name = 'huaweiappgallery'.t();
     hosts = ['appgallery.huawei.com', 'appgallery.cloud.huawei.com'];
     versionDetectionDisallowed = true;
     showReleaseDateAsVersionToggle = true;
@@ -40,7 +42,7 @@ class HuaweiAppGallery extends AppSource {
     if (res.statusCode == 200 || res.statusCode == 302) {
       return res;
     } else {
-      throw getObtainiumHttpError(res);
+      throw getUpdatiumHttpError(res);
     }
   }
 
@@ -52,9 +54,6 @@ class HuaweiAppGallery extends AppSource {
         .split('.')
         .reversed
         .toList();
-    if (parts.length < 2) {
-      return '';
-    }
     parts.removeAt(0);
     parts.removeAt(0);
     return parts.reversed.join('.');

@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:html/parser.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 DateTime? parseUptodownDate(String? dateString) {
   if (dateString == null) return null;
@@ -35,6 +36,7 @@ class Uptodown extends AppSource {
   Uptodown() {
     name = 'Uptodown';
     hosts = ['uptodown.com'];
+    name = 'Uptodown';
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
@@ -63,7 +65,7 @@ class Uptodown extends AppSource {
   ) async {
     final res = await sourceRequest(standardUrl, additionalSettings);
     if (res.statusCode != 200) {
-      throw getObtainiumHttpError(res);
+      throw getUpdatiumHttpError(res);
     }
     final html = parse(res.body);
     final String? version = html.querySelector('div.version')?.innerHtml;
@@ -91,7 +93,7 @@ class Uptodown extends AppSource {
       MapEntry('version', version),
       MapEntry('appId', appId),
       MapEntry('name', name),
-      MapEntry('author', author),
+      MapEntry('appAuthor', author),
       MapEntry('dateStr', dateStr),
       MapEntry('fileId', fileId),
       MapEntry('extension', extension),

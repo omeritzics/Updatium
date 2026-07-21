@@ -1,84 +1,94 @@
-<div align="center"><a href="https://github.com/Safouene1/support-palestine-banner/blob/master/Markdown-pages/Support.md"><img src="https://raw.githubusercontent.com/Safouene1/support-palestine-banner/master/banner-support.svg" alt="Support Palestine" style="width: 100%;"></a></div>
+# ![Updatium Icon](./assets/graphics/icon_small.png) Updatium
 
-# ![Obtainium Icon](./assets/graphics/icon_small.png) Obtainium
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium)](https://github.com/omeritzics/Updatium/releases/latest)
+[![Nightly Build](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml/badge.svg)](https://github.com/omeritzics/Updatium/actions/workflows/nightly.yml)
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/omeritzics/updatium/total)](https://tooomm.github.io/github-release-stats/?username=omeritzics&repository=Updatium)
+[![Translation Help Wanted](https://img.shields.io/badge/translation-help_wanted-blue)](https://github.com/omeritzics/Updatium/tree/main/assets/translations)
 
-Get Android app updates straight from the source.
+Update your Android apps directly from the APK source. Updatium is a customizable Android app catalogue that allows you to update your apps directly from their APK sources, and to receive notifications when updates are available.
 
-Obtainium allows you to install and update apps directly from their releases pages, and receive notifications when new releases are made available.
+## Features
 
-More info:
-- [Obtainium Wiki](https://wiki.obtainium.imranr.dev/) ([repository](https://github.com/ImranR98/Obtainium-Wiki))
-- [Obtainium 101](https://www.youtube.com/watch?v=0MF_v2OBncw) - Tutorial video
-- ["Verified Apps"](https://github.com/privacyguides/verified-apps-android) - App verification tool (recommended, integrates with Obtainium)
-- [apps.obtainium.imranr.dev](https://apps.obtainium.imranr.dev/) - Crowdsourced app configurations ([repository](https://github.com/ImranR98/apps.obtainium.imranr.dev))
-- [Side Of Burritos - You should use this instead of F-Droid | How to use app RSS feed](https://youtu.be/FFz57zNR_M0) - Original motivation for this app
-- [Website](https://obtainium.imranr.dev) ([repository](https://github.com/ImranR98/obtainium.imranr.dev))
+### Currently supported App sources
 
-Currently supported App sources:
-- Open Source - General:
-  - [GitHub](https://github.com/)
-  - [GitLab](https://gitlab.com/)
-  - [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/))
-  - [F-Droid](https://f-droid.org/)
-  - Third Party F-Droid Repos
-  - [IzzyOnDroid](https://android.izzysoft.de/)
-  - [SourceHut](https://git.sr.ht/)
-- Other - General:
-  - [APKPure](https://apkpure.net/)
-  - [Aptoide](https://aptoide.com/)
-  - [Uptodown](https://uptodown.com/)
-  - [APKCombo](https://apkcombo.com/)
-  - [itch.io](https://itch.io/)
-  - [Huawei AppGallery](https://appgallery.huawei.com/)
-  - [Tencent App Store](https://sj.qq.com/)
-  - [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/)
-  - [RuStore](https://rustore.ru/)
-  - [Farsroid](https://www.farsroid.com)
-  - [CoolApk](https://coolapk.com/)
-  - [LiteAPKs](https://liteapks.com/)
-  - [APK4Free](https://apk4free.net/)
-  - [SourceForge](https://sourceforge.net/)
-  - Jenkins Jobs
-  - [APKMirror](https://apkmirror.com/) *(Track-Only)*
-  - [RockMods](https://rockmods.net/) *(Track-Only)*
-- Other - App-Specific:
-  - [Telegram App](https://telegram.org/)
-  - [Neutron Code](https://neutroncode.com/)
-- Direct APK Link
-- "HTML" (Fallback): Any other URL that returns an HTML page with links to APK files
+| Open Source (General) | Other (General) | Other (App-specific) |
+| :------------------- | :-------------- | :------------------ |
+| ![GitHub favicon](https://www.google.com/s2/favicons?sz=16&domain=github.com) [GitHub](https://github.com/) | ![APKPure favicon](https://www.google.com/s2/favicons?sz=16&domain=apkpure.com) [APKPure](https://apkpure.net/) | ![Neutron Code favicon](https://www.google.com/s2/favicons?sz=16&domain=neutroncode.com) [Neutron Code](https://neutroncode.com/) |
+| ![GitLab favicon](https://www.google.com/s2/favicons?sz=16&domain=gitlab.com) [GitLab](https://gitlab.com/) | ![Aptoide favicon](https://www.google.com/s2/favicons?sz=16&domain=aptoide.com) [Aptoide](https://aptoide.com/) | 🏗️ Jenkins Jobs |
+| ![Forgejo favicon](https://www.google.com/s2/favicons?sz=16&domain=forgejo.org) [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/)) | ![Uptodown favicon](https://www.google.com/s2/favicons?sz=16&domain=uptodown.com) [Uptodown](https://uptodown.com/) | 📦 Direct APK Link |
+| ![F-Droid favicon](https://www.google.com/s2/favicons?sz=16&domain=f-droid.org) [F-Droid](https://f-droid.org/) | ![Huawei AppGallery favicon](https://www.google.com/s2/favicons?sz=16&domain=huawei.com) [Huawei AppGallery](https://appgallery.huawei.com/) | 🌐 HTML page fallback |
+| 🧩 Third Party F-Droid Repos | ![Tencent App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=sj.qq.com) [Tencent App Store](https://sj.qq.com/) | ![WhatsApp favicon](https://www.google.com/s2/favicons?sz=16&domain=whatsapp.com) [WhatsApp](https://whatsapp.com/) |
+| ![IzzyOnDroid favicon](https://www.google.com/s2/favicons?sz=16&domain=android.izzysoft.de) [IzzyOnDroid](https://android.izzysoft.de/) | ![vivo App Store favicon](https://www.google.com/s2/favicons?sz=16&domain=vivo.com.cn) [vivo App Store (CN)](https://h5.appstore.vivo.com.cn/) | ![Signal favicon](https://www.google.com/s2/favicons?sz=16&domain=signal.org) [Signal (Nightly builds only)](https://signal.org/) |
+| ![SourceHut favicon](https://www.google.com/s2/favicons?sz=16&domain=sourcehut.org) [SourceHut](https://git.sr.ht/) | ![RuStore favicon](https://www.google.com/s2/favicons?sz=16&domain=rustore.ru) [RuStore](https://rustore.ru/) | ![VLC favicon](https://www.google.com/s2/favicons?sz=16&domain=videolan.org) [VLC (Nightly builds only)](https://www.videolan.org/) |
+| ![OpenAPK favicon](https://www.google.com/s2/favicons?sz=16&domain=openapk.net) [OpenAPK (Nightly builds only)](https://www.openapk.net/) | ![APKCombo favicon](https://www.google.com/s2/favicons?sz=16&domain=apkcombo.com) [APKCombo](https://apkcombo.com/) | |
+| ![Bitbucket favicon](https://www.google.com/s2/favicons?sz=16&domain=bitbucket.org) [Bitbucket (Nightly builds only)](https://www.bitbucket.org) | ![APKMirror favicon](https://www.google.com/s2/favicons?sz=16&domain=apkmirror.com) [APKMirror (track-only)](https://apkmirror.com/) | |
+| ![Gitea favicon](https://www.google.com/s2/favicons?sz=16&domain=try.gitea.io) [Gitea (Nightly builds only)](https://try.gitea.io/) | | |
 
-## Finding App Configurations
+### Improved Design
 
-You can find crowdsourced app configurations at [apps.obtainium.imranr.dev](https://apps.obtainium.imranr.dev).
+Based on Material Design 3 Expressive guidelines.
 
-If you can't find the configuration for an app you want, feel free to leave a request on the [issues page](https://github.com/ImranR98/apps.obtainium.imranr.dev/issues).
+### Other Additional Features
 
-Or, contribute some configurations to the website by creating a PR at [this repo](https://github.com/ImranR98/apps.obtainium.imranr.dev).
+- Better accessibility for screen readers.
+- Grid View.
+- Safe Mode (allows you to block unwanted changes to the application catalogue).
+- Ability to use DNS-over-HTTPS providers (Nightly builds only).
+- Editing basic app information after adding it (Nightly builds only).
 
-## Installation
+### Localization
 
-[<img src="https://github.com/machiav3lli/oandbackupx/blob/034b226cea5c1b30eb4f6a6f313e4dadcbb0ece4/badge_github.png"
-    alt="Get it on GitHub"
-    height="80">](https://github.com/ImranR98/Obtainium/releases)
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
-     alt="Get it on IzzyOnDroid"
-     height="80">](https://apt.izzysoft.de/fdroid/index/apk/dev.imranr.obtainium)
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-    alt="Get it on F-Droid"
-    height="80">](https://f-droid.org/packages/dev.imranr.obtainium.fdroid/)
-     
-Verification info:
+Updatium currently supports ~42~ 40 locales (including English). If you want to help translate Updatium to your language or improve an existing translation, please open a pull request with new translations added in the [translations directory](https://github.com/omeritzics/Updatium/tree/main/assets/translations).
 
-- Package ID: `dev.imranr.obtainium`
-- SHA-256 hash of signing certificate: `B3:53:60:1F:6A:1D:5F:D6:60:3A:E2:F5:0B:E8:0C:F3:01:36:7B:86:B6:AB:8B:1F:66:24:3D:A9:6C:D5:73:62`
-  - Note: The above signature is also valid for the F-Droid flavour of Obtainium, thanks to [reproducible builds](https://f-droid.org/docs/Reproducible_Builds/).
-- [PGP Public Key](https://keyserver.ubuntu.com/pks/lookup?search=contact%40imranr.dev&fingerprint=on&op=index) (to verify APK hashes)
+If you don't know how to make a pull request, and/or you don't have any experience with Git, you can open an issue ![here](https://github.com/omeritzics/Updatium/issues/new/choose) and I'd be happy to help you with adding your language.
 
-## Limitations
-- For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.
+Every language is welcome to Updatium, but your help is needed to make it happen.
+
+- Currently supported locales: English, 简体中文, Italiano, 日本語, עברית, हिन्दी, Magyar, Deutsch, فارسی, Français, Español, Polski,
+Русский, Bosanski, Português, Česky, Svenska, Nederlands, Tiếng Việt,
+Türkçe, Українська, Dansk, Eesti, Esperanto, Bahasa Indonesia, বাংলা,
+한국어, Català, العربية, മലയാളം, Galego, Български, Bahasa Melayu,
+Română, ئۇيغۇرچە, Norsk (Bokmål), Ελληνικά, Filipino.
+
+`Taiwanese Hokkien (臺灣話) and Northen Kurdish (Kurdî) are not supported yet due to technical limitations.`
+
+## Download
+
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/omeritzics/Updatium?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/latest)
+
+[![Download Nightly APK](https://img.shields.io/badge/Download-Nightly_APK-green?style=for-the-badge&logo=android)](https://github.com/omeritzics/Updatium/releases/tag/nightly)
+
+Do not download Updatium from unofficial sources (such as Appteka), since these may contain more bugs, or even malware. If you are an administrator of an APK distribution source, please let me know you're interested in adding Updatium to your website by creating an issue.
 
 ## Screenshots
 
-| <img src="./assets/screenshots/1.apps.png" alt="Apps Page" /> | <img src="./assets/screenshots/2.dark_theme.png" alt="Dark Theme" />           | <img src="./assets/screenshots/3.material_you.png" alt="Material You" />    |
-| ------------------------------------------------------ | ----------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| <img src="./assets/screenshots/4.app.png" alt="App Page" />   | <img src="./assets/screenshots/5.app_opts.png" alt="App Options" /> | <img src="./assets/screenshots/6.app_webview.png" alt="App Web View" /> |
+| ![App List View](./assets/screenshots/1.apps.png)| ![App Grid View](./assets/screenshots/6.grid_view.png) | ![Dark Theme](./assets/screenshots/2.dark_theme.png) | ![Material You](./assets/screenshots/3.material_you.png) |
+|---|---|---|---|
+| ![App Page](./assets/screenshots/4.app.png) | ![Additional Options](./assets/screenshots/5.app_opts.png) |  | |
+
+## Limitations
+
+- For some sources, data is gathered using Web scraping and can easily break due to changes in website design. In such cases, more reliable methods may be unavailable.
+
+## Troubleshooting
+
+### App not updating even when a new version is available
+- **Check the source settings** — Some sources require additional configuration (e.g., GitHub releases need the correct repository URL format)
+- **Check if the source is supported** — Not all sources support version checking equally; some use HTML scraping which may be slower
+- **Check the update interval** — By default, apps update every 6 hours. You can change this in app settings
+- **Try force-refreshing** — Pull down on the apps list to force a refresh
+
+### Source additions failing with 403 Forbidden
+- Some sources block requests from unknown user agents or regions
+- GitHub-based sources may need a Personal Access Token if you're hitting rate limits
+- Some APK hosts (APKMirror, etc.) may require cookies or specific headers
+
+### Flutter-related issues
+- Updatium is built with Flutter. If the app crashes on startup, try:
+  - Clearing app data and reinstalling
+  - Ensuring your Android version meets the minimum requirement
+  - Checking if you have the latest Google Play Services
+
+### APK verification failures
+- If you see "Signature verification failed", ensure you haven't modified the APK after download
+- The SHA-256 hash in the app settings should match the downloaded APK

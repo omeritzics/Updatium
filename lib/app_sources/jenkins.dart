@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:http/http.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 /// Fetches APKs from the last successful build of a Jenkins job.
 ///
@@ -87,7 +86,7 @@ class Jenkins extends AppSource {
           AppNames(Uri.parse(standardUrl).host, standardUrl.split('/').last),
         );
       } else {
-        throw getObtainiumHttpError(res);
+        throw getUpdatiumHttpError(res);
       }
     } catch (e) {
       rethrowOrWrapError(e);

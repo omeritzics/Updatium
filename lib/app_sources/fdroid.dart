@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:obtainium/app_sources/github.dart';
-import 'package:obtainium/app_sources/gitlab.dart';
-import 'package:obtainium/components/generated_form_model.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/app_sources/github.dart';
+import 'package:updatium/app_sources/gitlab.dart';
+import 'package:updatium/components/generated_form_model.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 class FDroid extends AppSource {
   static const _maxChangeLogCodeUnits = 2048;
@@ -18,8 +18,11 @@ class FDroid extends AppSource {
 
   FDroid() {
     hosts = ['f-droid.org'];
+    name = t('fdroid');
     naiveStandardVersionDetection = true;
     canSearch = true;
+    isOpenSource = true;
+
     inferAppIdFromUrlPath = true;
   }
 
@@ -180,28 +183,39 @@ class FDroid extends AppSource {
         String? url = e.attributes['href'];
         if (url != null) {
           try {
-            standardizeUrl(url);
+            if (url.startsWith('/')) {
+              url = 'https://${hosts[0]}$url';
+            }
+            url = standardizeUrl(url);
+            urlsWithDescriptions[url] = [
+              e.querySelector('.package-name')?.text.trim() ?? '',
+              e.querySelector('.package-summary')?.text.trim() ??
+                  t('noDescription'),
+            ];
+          } on UnsupportedURLError catch (_) {
+            // Skip invalid URLs
+          } on InvalidURLError catch (_) {
+            // Skip invalid URLs
           } catch (e) {
-            url = null;
+            LogsProvider().add(
+              e.toString(),
+              level: LogLevels.error,
+              context: 'FDroid.search',
+            );
           }
-        }
-        if (url != null) {
-          urlsWithDescriptions[url] = [
-            e.querySelector('.package-name')?.text.trim() ?? '',
-            e.querySelector('.package-summary')?.text.trim() ??
-                tr('noDescription'),
-          ];
         }
       });
       return urlsWithDescriptions;
     } else {
-      throw getObtainiumHttpError(res);
+      throw getUpdatiumHttpError(res);
     }
   }
 
   APKDetails getAPKUrlsFromFDroidPackagesAPIResponse(
     Response res,
     String apkUrlPrefix,
+    String sourceName,
+    Map<String, dynamic> additionalSettings,
     String standardUrl,
     String sourceName, {
     Map<String, dynamic> additionalSettings = const {},

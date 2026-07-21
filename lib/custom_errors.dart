@@ -2,60 +2,21 @@ import 'dart:async';
 import 'dart:io' show SocketException;
 import 'dart:ui' show Locale;
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:android_package_installer/android_package_installer.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
-class ObtainiumError {
-  final String code;
-  final String _message;
-  final StackTrace? stack;
-  final Map<String, dynamic> data;
-  final bool unexpected;
-
-  /// The app/source URL this error relates to, if known. Attached as context so
-  /// that logs and error messages can identify which app/URL an error came from
-  /// even when the error itself was thrown deep inside a source with no app
-  /// reference. Not part of the localized [message]; only surfaced via
-  /// [toString].
-  String? url;
-
-  ObtainiumError(
-    this._message, {
-    this.code = 'UNKNOWN',
-    this.unexpected = false,
-    this.stack,
-    this.data = const {},
-    this.url,
-  });
-
-  ObtainiumError.withCode(
-    this.code, {
-    this._message = '',
-    this.unexpected = false,
-    this.stack,
-    this.data = const {},
-    this.url,
-  });
-
-  String get message =>
-      code == 'UNKNOWN' ||
-          code == 'UNEXPECTED' ||
-          code == 'CHECK_UPDATES_FAILED' ||
-          code == 'HTTP_ERROR'
-      ? _message
-      : localizeErrorCode(code, data);
-
-  /// Attaches [contextUrl] as the offending URL if none is set yet, so logs and
-  /// messages can identify the app/URL involved. Returns this for chaining.
-  ObtainiumError withUrlContext(String? contextUrl) {
-    if ((url == null || url!.isEmpty) &&
-        contextUrl != null &&
-        contextUrl.isNotEmpty) {
-      url = contextUrl;
-    }
-    return this;
+class UpdatiumError {
+  late String message;
+  bool unexpected;
+  UpdatiumError(this.message, {this.unexpected = false});
+  @override
+  String toString() {
+    return message;
   }
 
   @override
@@ -103,8 +64,8 @@ Never rethrowOrWrapError(
   );
 }
 
-class RateLimitError extends ObtainiumError {
-  final int remainingMinutes;
+class RateLimitError extends UpdatiumError {
+  late int remainingMinutes;
   RateLimitError(this.remainingMinutes)
     : super.withCode(
         'RATE_LIMIT',
@@ -112,45 +73,43 @@ class RateLimitError extends ObtainiumError {
       );
 }
 
-class InvalidURLError extends ObtainiumError {
+class InvalidURLError extends UpdatiumError {
   InvalidURLError(String sourceName)
-    : super.withCode('INVALID_URL', data: {'sourceName': sourceName});
+    : super(t('invalidURLForSource', args: [sourceName]));
 }
 
-class CredsNeededError extends ObtainiumError {
+class CredsNeededError extends UpdatiumError {
   CredsNeededError(String sourceName)
-    : super.withCode('CREDS_NEEDED', data: {'sourceName': sourceName});
+    : super(t('requiresCredentialsInSettings', args: [sourceName]));
 }
 
-class NoReleasesError extends ObtainiumError {
+class NoReleasesError extends UpdatiumError {
   NoReleasesError({String? note})
-    : super.withCode('NO_RELEASES', data: {'note': note ?? ''});
-}
-
-class NoAPKError extends ObtainiumError {
-  NoAPKError() : super.withCode('NO_APK');
-}
-
-class NoVersionError extends ObtainiumError {
-  NoVersionError() : super.withCode('NO_VERSION');
-}
-
-class UnsupportedURLError extends ObtainiumError {
-  UnsupportedURLError() : super.withCode('UNSUPPORTED_URL');
-}
-
-class DowngradeError extends ObtainiumError {
-  DowngradeError(int currentVersionCode, int newVersionCode)
-    : super.withCode(
-        'DOWNGRADE',
-        data: {
-          'currentVersionCode': currentVersionCode,
-          'newVersionCode': newVersionCode,
-        },
+    : super(
+        '${t('noReleaseFound')}${note?.isNotEmpty == true ? '\n\n$note' : ''}',
       );
 }
 
-class InstallError extends ObtainiumError {
+class NoAPKError extends UpdatiumError {
+  NoAPKError() : super(t('noAPKFound'));
+}
+
+class NoVersionError extends UpdatiumError {
+  NoVersionError() : super(t('noVersionFound'));
+}
+
+class UnsupportedURLError extends UpdatiumError {
+  UnsupportedURLError() : super(t('urlMatchesNoSource'));
+}
+
+class DowngradeError extends UpdatiumError {
+  DowngradeError(int currentVersionCode, int newVersionCode)
+    : super(
+        '${t('cantInstallOlderVersion')} (versionCode $currentVersionCode ➔ $newVersionCode)',
+      );
+}
+
+class InstallError extends UpdatiumError {
   InstallError(int code)
     : super.withCode(
         'INSTALL_FAILED',
@@ -161,40 +120,26 @@ class InstallError extends ObtainiumError {
       );
 }
 
-class IDChangedError extends ObtainiumError {
-  IDChangedError(String newId)
-    : super.withCode('ID_CHANGED', data: {'newId': newId});
+class IDChangedError extends UpdatiumError {
+  IDChangedError(String newId) : super('${t('appIdMismatch')} - $newId');
 }
 
-class RepositoryRenamedError extends ObtainiumError {
+class RepositoryRenamedError extends UpdatiumError {
   final String oldUrl;
   final String newUrl;
-  RepositoryRenamedError(this.oldUrl, this.newUrl)
-    : super.withCode(
-        'REPO_RENAMED',
-        data: {'oldUrl': oldUrl, 'newUrl': newUrl},
-      );
+  RepositoryRenamedError(this.oldUrl, this.newUrl) : super(t('repoRenamed'));
 }
 
-class CheckUpdatesException extends ObtainiumError {
-  final List<App> updates;
-  final MultiAppMultiError errors;
-  CheckUpdatesException(this.updates, this.errors)
-    : super.withCode('CHECK_UPDATES_FAILED', unexpected: true);
-  @override
-  String toString() => errors.toString();
+class NotImplementedError extends UpdatiumError {
+  NotImplementedError() : super(t('functionNotImplemented'));
 }
 
-class NotImplementedError extends ObtainiumError {
-  NotImplementedError() : super.withCode('NOT_IMPLEMENTED');
-}
-
-class MultiAppMultiError extends ObtainiumError {
+class MultiAppMultiError extends UpdatiumError {
   Map<String, dynamic> rawErrors = {};
   Map<String, List<String>> idsByErrorString = {};
   Map<String, String> appIdNames = {};
 
-  MultiAppMultiError() : super.withCode('MULTI_ERROR', unexpected: true);
+  MultiAppMultiError() : super(t('placeholder'), unexpected: true);
 
   void add(String appId, dynamic error, {String? appName}) {
     if (error is SocketException) {
@@ -230,35 +175,47 @@ class MultiAppMultiError extends ObtainiumError {
       .join('\n\n');
 }
 
-String localizeErrorCode(String code, Map<String, dynamic>? data) {
-  return switch (code) {
-    'NO_RELEASES' =>
-      data?['note'] != null && (data!['note'] as String).isNotEmpty
-          ? '${tr('noReleaseFound')}\n\n${data['note']}'
-          : tr('noReleaseFound'),
-    'RATE_LIMIT' => plural(
-      'tooManyRequestsTryAgainInMinutes',
-      data?['remainingMinutes'] ?? 0,
-    ),
-    'INVALID_URL' => tr(
-      'invalidURLForSource',
-      args: [data?['sourceName'] ?? ''],
-    ),
-    'CREDS_NEEDED' => tr(
-      'requiresCredentialsInSettings',
-      args: [data?['sourceName'] ?? ''],
-    ),
-    'NO_APK' => tr('noAPKFound'),
-    'NO_VERSION' => tr('noVersionFound'),
-    'UNSUPPORTED_URL' => tr('urlMatchesNoSource'),
-    'DOWNGRADE' =>
-      '${tr('cantInstallOlderVersion')} (versionCode ${data?['currentVersionCode'] ?? '?'} → ${data?['newVersionCode'] ?? '?'})',
-    'INSTALL_FAILED' => data?['message']?.toString() ?? tr('installFailed'),
-    'ID_CHANGED' => '${tr('appIdMismatch')} - ${data?['newId'] ?? ''}',
-    'REPO_RENAMED' => tr('repoRenamed'),
-    'NOT_IMPLEMENTED' => tr('functionNotImplemented'),
-    _ => data?['message']?.toString() ?? tr('unexpectedError'),
-  };
+void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
+  Provider.of<LogsProvider>(
+    context,
+    listen: false,
+  ).add(e.toString(), level: isError ? LogLevels.error : LogLevels.info);
+  if (e is String || (e is UpdatiumError && !e.unexpected)) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(e.toString())));
+  } else {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          scrollable: true,
+          title: Text(
+            e is MultiAppMultiError
+                ? tr(isError ? 'someErrors' : 'updates')
+                : tr(isError ? 'unexpectedError' : 'unknown'),
+          ),
+          content: GestureDetector(
+            onLongPress: () {
+              Clipboard.setData(ClipboardData(text: e.toString()));
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(t('copiedToClipboard'))));
+            },
+            child: Text(e.toString()),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(null);
+              },
+              child: Text(t('ok')),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 Locale? _appCurrentLocale;
@@ -277,7 +234,7 @@ String lowerCaseIfEnglish(String str) => isEnglish() ? str.toLowerCase() : str;
 String list2FriendlyString(List<String> list) {
   final isUsingEnglish = isEnglish();
   return list.length == 2
-      ? '${list[0]} ${tr('and')} ${list[1]}'
+      ? '${list[0]} ${t('and')} ${list[1]}'
       : list
             .asMap()
             .entries

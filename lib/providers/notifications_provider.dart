@@ -1,17 +1,20 @@
 // Exposes functions that can be used to send notifications to the user.
 //
-// Contains a set of pre-defined ObtainiumNotification objects that should be used throughout the app.
+// Contains a set of pre-defined UpdatiumNotification objects that should be used throughout the app.
 
 import 'dart:isolate';
 import 'dart:ui';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:obtainium/main.dart';
-import 'package:obtainium/providers/apps_provider.dart' show formatDownloadSize;
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:android_intent_plus/flag.dart';
+
+import 'package:updatium/main.dart';
+import 'package:updatium/providers/apps_provider.dart' show formatDownloadSize;
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 /// Prefix for the download-notification Cancel action id; the app ID is appended
 /// so the tap handler knows which download to stop.
@@ -32,7 +35,7 @@ const int downloadNotificationIdRange = 2000000000;
 
 /// Name under which the main isolate registers a port to receive download-cancel
 /// requests forwarded from the notification-action background isolate.
-const String _downloadCancelPortName = 'obtainium_download_cancel';
+const String _downloadCancelPortName = 'updatium_download_cancel';
 
 /// The app ID targeted by a download-cancel notification action, or null if
 /// [actionId] isn't a download-cancel action.
@@ -73,7 +76,7 @@ String _buildUpdateMessage(
   return plural(pluralKey, count, args: [name, count.toString()]);
 }
 
-class ObtainiumNotification {
+class UpdatiumNotification {
   late int id;
   late String title;
   late String message;
@@ -86,7 +89,7 @@ class ObtainiumNotification {
   String? payload;
   List<AndroidNotificationAction>? androidActions;
 
-  ObtainiumNotification(
+  UpdatiumNotification(
     this.id,
     this.title,
     this.message,
@@ -101,7 +104,7 @@ class ObtainiumNotification {
   });
 }
 
-class UpdateNotification extends ObtainiumNotification {
+class UpdateNotification extends UpdatiumNotification {
   UpdateNotification(List<App> updates, {int? id})
     : super(
         id ?? updateNotificationId,
@@ -113,13 +116,13 @@ class UpdateNotification extends ObtainiumNotification {
           pluralKey: 'xAndNMoreUpdatesAvailable',
         ),
         'UPDATES_AVAILABLE',
-        tr('updatesAvailableNotifChannel'),
-        tr('updatesAvailableNotifDescription'),
+        'updatesAvailableNotifChannel'.t(),
+        'updatesAvailableNotifDescription'.t(),
         Importance.max,
       );
 }
 
-class TrackOnlyUpdateNotification extends ObtainiumNotification {
+class TrackOnlyUpdateNotification extends UpdatiumNotification {
   TrackOnlyUpdateNotification(List<App> updates, {int? id})
     : super(
         id ?? trackOnlyUpdateNotificationId,
@@ -137,7 +140,7 @@ class TrackOnlyUpdateNotification extends ObtainiumNotification {
       );
 }
 
-class SilentUpdateNotification extends ObtainiumNotification {
+class SilentUpdateNotification extends UpdatiumNotification {
   SilentUpdateNotification(List<App> updates, bool succeeded, {int? id})
     : super(
         id ?? 3,
@@ -151,13 +154,13 @@ class SilentUpdateNotification extends ObtainiumNotification {
           includeVersion: true,
         ),
         'APPS_UPDATED',
-        tr('appsUpdatedNotifChannel'),
-        tr('appsUpdatedNotifDescription'),
+        'appsUpdatedNotifChannel'.t(),
+        'appsUpdatedNotifDescription'.t(),
         Importance.defaultImportance,
       );
 }
 
-class SilentUpdateAttemptNotification extends ObtainiumNotification {
+class SilentUpdateAttemptNotification extends UpdatiumNotification {
   SilentUpdateAttemptNotification(List<App> updates, {int? id})
     : super(
         id ?? 8,
@@ -169,35 +172,35 @@ class SilentUpdateAttemptNotification extends ObtainiumNotification {
           includeVersion: true,
         ),
         'APPS_POSSIBLY_UPDATED',
-        tr('appsPossiblyUpdatedNotifChannel'),
-        tr('appsPossiblyUpdatedNotifDescription'),
+        'appsPossiblyUpdatedNotifChannel'.t(),
+        'appsPossiblyUpdatedNotifDescription'.t(),
         Importance.defaultImportance,
       );
 }
 
-class ErrorCheckingUpdatesNotification extends ObtainiumNotification {
+class ErrorCheckingUpdatesNotification extends UpdatiumNotification {
   ErrorCheckingUpdatesNotification(String error, {int? id})
     : super(
         id ?? 5,
-        tr('errorCheckingUpdates'),
+        'errorCheckingUpdates'.t(),
         error,
         'BG_UPDATE_CHECK_ERROR',
-        tr('errorCheckingUpdatesNotifChannel'),
-        tr('errorCheckingUpdatesNotifDescription'),
+        'errorCheckingUpdatesNotifChannel'.t(),
+        'errorCheckingUpdatesNotifDescription'.t(),
         Importance.high,
-        payload: "${tr('errorCheckingUpdates')}\n$error",
+        payload: "${'errorCheckingUpdates'.t()}\n$error",
       );
 }
 
-class AppsRemovedNotification extends ObtainiumNotification {
+class AppsRemovedNotification extends UpdatiumNotification {
   AppsRemovedNotification(List<List<String>> namedReasons)
     : super(
         6,
-        tr('appsRemoved'),
+        'appsRemoved'.t(),
         '',
         'APPS_REMOVED',
-        tr('appsRemovedNotifChannel'),
-        tr('appsRemovedNotifDescription'),
+        'appsRemovedNotifChannel'.t(),
+        'appsRemovedNotifDescription'.t(),
         Importance.max,
       ) {
     final buffer = StringBuffer();
@@ -208,7 +211,7 @@ class AppsRemovedNotification extends ObtainiumNotification {
   }
 }
 
-class DownloadNotification extends ObtainiumNotification {
+class DownloadNotification extends UpdatiumNotification {
   static const int _baseId = downloadNotificationBaseId;
   DownloadNotification(
     String appName,
@@ -239,39 +242,40 @@ class DownloadNotification extends ObtainiumNotification {
        );
 }
 
-class DownloadedNotification extends ObtainiumNotification {
-  DownloadedNotification(String fileName, String downloadUrl)
+class DownloadedNotification extends UpdatiumNotification {
+  DownloadedNotification(String fileName, String downloadUrl, String filePath)
     : super(
         downloadUrl.hashCode.abs(),
         tr('downloadedX', args: [fileName]),
         '',
         'FILE_DOWNLOADED',
-        tr('downloadedXNotifChannel', args: [tr('app')]),
-        tr('downloadedX', args: [tr('app')]),
+        t('downloadedXNotifChannel', args: ['app'.t()]),
+        t('downloadedX', args: ['app'.t()]),
         Importance.defaultImportance,
+        payload: 'FILE_DOWNLOADED:$filePath',
       );
 }
 
-ObtainiumNotification get completeInstallationNotification =>
-    ObtainiumNotification(
+UpdatiumNotification get completeInstallationNotification =>
+    UpdatiumNotification(
       1,
       tr('completeAppInstallation'),
-      tr('obtainiumMustBeOpenToInstallApps'),
+      tr('updatiumMustBeOpenToInstallApps'),
       'COMPLETE_INSTALL',
       tr('completeAppInstallationNotifChannel'),
       tr('completeAppInstallationNotifDescription'),
       Importance.max,
     );
 
-class CheckingUpdatesNotification extends ObtainiumNotification {
+class CheckingUpdatesNotification extends UpdatiumNotification {
   CheckingUpdatesNotification(String appName)
     : super(
         4,
-        tr('checkingForUpdates'),
+        'checkingForUpdates'.t(),
         appName,
         'BG_UPDATE_CHECK',
-        tr('checkingForUpdatesNotifChannel'),
-        tr('checkingForUpdatesNotifDescription'),
+        'checkingForUpdatesNotifChannel'.t(),
+        'checkingForUpdatesNotifDescription'.t(),
         Importance.min,
       );
 }
@@ -341,10 +345,66 @@ class NotificationsProvider {
     final NotificationAppLaunchDetails? launchDetails = await notifications
         .getNotificationAppLaunchDetails();
     if (launchDetails?.didNotificationLaunchApp ?? false) {
-      _showNotificationPayload(
-        launchDetails!.notificationResponse?.payload,
-        doublePop: true,
+      final response = launchDetails!.notificationResponse;
+      if (response != null) {
+        _handleNotificationResponse(response);
+      }
+    }
+  }
+
+  void _handleNotificationResponse(NotificationResponse response) {
+    // Check if this is a FILE_DOWNLOADED notification
+    if (response.payload != null &&
+        response.payload!.startsWith('FILE_DOWNLOADED:')) {
+      // For FILE_DOWNLOADED notifications, show a snackbar instead of opening the file
+      final filePath = response.payload!.substring('FILE_DOWNLOADED:'.length);
+      _showDownloadedSnackbar(filePath);
+    } else {
+      // For other notifications, show the payload in an alert dialog
+      _showNotificationPayload(response.payload);
+    }
+  }
+
+  void _showDownloadedSnackbar(String filePath) {
+    if (globalNavigatorKey.currentState?.context != null) {
+      final context = globalNavigatorKey.currentState!.context;
+      final fileName = filePath.split('/').last;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(t('downloadedX', args: [fileName])),
+          action: SnackBarAction(
+            label: 'showInFileManager'.t(),
+            onPressed: () {
+              _showInFileManager(filePath);
+            },
+          ),
+        ),
       );
+    }
+  }
+
+  void _showInFileManager(String filePath) {
+    // Use AndroidIntent to show the file in file manager
+    try {
+      final intent = AndroidIntent(
+        action: 'android.intent.action.VIEW',
+        data: 'file://$filePath',
+        type: '*/*',
+        flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+      );
+      intent.launch();
+    } catch (e) {
+      // If launching fails, show an error message
+      if (globalNavigatorKey.currentState?.context != null) {
+        ScaffoldMessenger.of(
+          globalNavigatorKey.currentState!.context,
+        ).showSnackBar(
+          SnackBar(
+            content: Text('Failed to open file manager'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
     }
   }
 
@@ -366,7 +426,7 @@ class NotificationsProvider {
                     Navigator.of(context).pop(null);
                   }
                 },
-                child: Text(tr('ok')),
+                child: Text('ok'.t()),
               ),
             ],
           ),
@@ -414,7 +474,7 @@ class NotificationsProvider {
           importance: importance,
           priority:
               importanceToPriority[importance] ?? Priority.defaultPriority,
-          groupKey: '$obtainiumId.$channelCode',
+          groupKey: '$updatiumId.$channelCode',
           progress: progPercent ?? 0,
           maxProgress: 100,
           showProgress: progPercent != null,
@@ -428,7 +488,7 @@ class NotificationsProvider {
   }
 
   Future<void> notify(
-    ObtainiumNotification notif, {
+    UpdatiumNotification notif, {
     bool cancelExisting = false,
   }) => notifyRaw(
     notif.id,

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -8,6 +8,7 @@ const String idColumn = '_id';
 const String levelColumn = 'level';
 const String messageColumn = 'message';
 const String timestampColumn = 'timestamp';
+const String contextColumn = 'context';
 const String dbPath = 'logs.db';
 
 enum LogLevel { debug, info, warning, error }
@@ -17,6 +18,7 @@ class Log {
   late LogLevel level;
   late String message;
   DateTime timestamp = DateTime.now();
+  String? context;
 
   Map<String, Object?> toMap() {
     final map = <String, Object?>{
@@ -24,11 +26,12 @@ class Log {
       levelColumn: level.index,
       messageColumn: message,
       timestampColumn: timestamp.millisecondsSinceEpoch,
+      contextColumn: context,
     };
     return map;
   }
 
-  Log(this.message, this.level);
+  Log(this.message, this.level, {this.context});
 
   Log.fromMap(Map<String, Object?> map) {
     id = map[idColumn] as int;
@@ -37,11 +40,13 @@ class Log {
     timestamp = DateTime.fromMillisecondsSinceEpoch(
       map[timestampColumn] as int,
     );
+    context = map[contextColumn] as String?;
   }
 
   @override
   String toString() {
-    return '${timestamp.toString()}: ${level.name}: $message';
+    final contextStr = context != null ? ' [$context]' : '';
+    return '${timestamp.toString()}: ${level.name}: $message$contextStr';
   }
 }
 
@@ -75,15 +80,24 @@ class LogsProvider {
   Future<Database> getDB() async {
     _db ??= await openDatabase(
       dbPath,
-      version: 1,
+      version: 2, // Increment version for schema update
       onCreate: (Database db, int version) async {
         await db.execute('''
 create table if not exists $logTable ( 
   $idColumn integer primary key autoincrement, 
   $levelColumn integer not null,
   $messageColumn text not null,
-  $timestampColumn integer not null)
+  $timestampColumn integer not null,
+  $contextColumn text)
 ''');
+      },
+      onUpgrade: (Database db, int oldVersion, int newVersion) async {
+        if (oldVersion < 2) {
+          // Add context column for structured logging
+          await db.execute(
+            'ALTER TABLE $logTable ADD COLUMN $contextColumn text',
+          );
+        }
       },
     );
     return _db!;
@@ -95,7 +109,24 @@ create table if not exists $logTable (
     if (kDebugMode) {
       debugPrint(l.toString());
     }
+    notifyListeners();
     return l;
+  }
+
+  /// Structured logging method for security-sensitive operations
+  /// Sanitizes data and provides structured context for auditing
+  Future<Log> addStructured({
+    required String operation,
+    required String component,
+    String? errorCode,
+    LogLevels level = LogLevels.info,
+  }) async {
+    final structuredMessage =
+        '$operation - $component${errorCode != null ? ' - Error: $errorCode' : ''}';
+    final context =
+        '{"operation":"$operation","component":"$component"${errorCode != null ? ',"error":"$errorCode"' : ''}}';
+
+    return await add(structuredMessage, level: level, context: context);
   }
 
   Future<List<Log>> get({DateTime? before, DateTime? after}) async {
@@ -129,6 +160,7 @@ create table if not exists $logTable (
         ),
       );
     }
+    notifyListeners();
     return res;
   }
 

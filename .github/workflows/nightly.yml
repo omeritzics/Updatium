@@ -1,0 +1,191 @@
+name: Nightly Build
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+on:
+  push:
+    branches:
+      - main 
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Upgrade existing dependencies
+        run: flutter pub upgrade
+        
+      - name: Auto-fix linting issues
+        run: |
+          git config pull.rebase false
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git pull && dart fix --apply
+
+      - name: Format code
+        run: dart format .
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@master
+        with:
+          commit_message: "style: auto-fix linting and formatting issues"
+          branch: ${{ github.ref_name }}
+          push_options: --force
+          
+      - name: Generate Version
+        id: version
+        run: |
+          # Generate version: YY.M.0 format (semantic versioning)
+          YEAR=$(date +'%y')
+          MONTH=$(date +'%-m')
+          VERSION="$YEAR.$MONTH.0"
+          
+          # Generate build number: YYMMDDHH format
+          BUILD_NUMBER=$(date +'%y%m%d%H')
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
+
+      - name: Decode Keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          echo "${KEYSTORE_BASE64}" | base64 -d > android/upload-keystore.jks
+          chmod 600 android/upload-keystore.jks
+          echo "Keystore decoded and permissions set"
+
+      - name: Create key.properties
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          # Handle non-ASCII characters properly
+          cat << EOF > android/key.properties
+          storePassword=${KEYSTORE_PASSWORD}
+          keyPassword=${KEY_PASSWORD}
+          keyAlias=${KEY_ALIAS}
+          storeFile=../upload-keystore.jks
+          EOF
+          chmod 600 android/key.properties
+          echo "Created keystore properties file with restricted permissions"
+
+      - name: Verify Keystore
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          ls -la android/upload-keystore.jks
+          file android/upload-keystore.jks
+          echo "=== Keystore contents ==="
+          # Use heredoc to handle non-ASCII characters properly
+          keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null || echo "Failed to list keystore contents"
+          echo "=== End keystore contents ==="
+          if ! keytool -list -v -keystore android/upload-keystore.jks -storepass "${KEYSTORE_PASSWORD}" 2>/dev/null; then
+            echo "ERROR: Keystore verification failed - aborting build"
+            exit 1
+          fi
+          echo "Keystore verification successful"
+
+      - name: Build APKs
+        run: |
+          flutter build apk --flavor normal --release --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false --split-per-abi
+          mkdir -p build/outputs
+          # Copy and rename split APKs to maintain original naming convention
+          for apk in build/app/outputs/flutter-apk/app-*-normal-release.apk; do
+            arch=$(basename "$apk" | sed -e 's/app-//' -e 's/-normal-release.apk//')
+            cp "$apk" "build/outputs/Updatium-Nightly-${arch}.apk"
+          done
+
+      # I need the debug APK for testing
+
+      - name: Build Debug APK
+        run: |
+          flutter build apk --flavor normal --debug --obfuscate --split-debug-info=build/debug-info --build-name="${{ steps.version.outputs.version }}" --build-number="${{ steps.version.outputs.build_number }}" --no-pub --tree-shake-icons --dart-define=flutter.web.canvaskit=false
+          # Copy and rename the debug APK to maintain original naming convention
+          cp "build/app/outputs/flutter-apk/app-normal-debug.apk" "build/outputs/Updatium-Nightly-Debug.apk"
+
+      - name: Attest Build Provenance
+        uses: actions/attest@v4.1.1
+        with:
+          subject-path: 'build/app/outputs/flutter-apk/*.apk'
+          
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: Updatium-Nightly-APKs
+          path: |
+            build/outputs/Updatium-Nightly-*.apk
+
+      - name: Create Release
+        if: success() && hashFiles('build/outputs/Updatium-Nightly-*.apk') != ''
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: nightly
+          name: "Updatium Nightly"
+          files: |
+            build/outputs/Updatium-Nightly*.apk
+          prerelease: true
+          overwrite: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cleanup signing files
+        if: always()
+        run: |
+          echo "Starting cleanup of sensitive signing files..."
+          
+          # Cleanup keystore file
+          if [ -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" ]; then
+            rm -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" || echo "WARNING: Failed to delete keystore file"
+            if [ -f "$GITHUB_WORKSPACE/android/upload-keystore.jks" ]; then
+              echo "ERROR: Keystore file still exists after cleanup attempt"
+            else
+              echo "Successfully deleted keystore file"
+            fi
+          else
+            echo "Keystore file not found, nothing to cleanup"
+          fi
+          
+          # Cleanup key.properties file
+          if [ -f "$GITHUB_WORKSPACE/android/key.properties" ]; then
+            rm -f "$GITHUB_WORKSPACE/android/key.properties" || echo "WARNING: Failed to delete key.properties file"
+            if [ -f "$GITHUB_WORKSPACE/android/key.properties" ]; then
+              echo "ERROR: key.properties file still exists after cleanup attempt"
+            else
+              echo "Successfully deleted key.properties file"
+            fi
+          else
+            echo "key.properties file not found, nothing to cleanup"
+          fi
+          
+          # Unset environment variables
+          unset KEYSTORE_PASSWORD || echo "WARNING: Failed to unset KEYSTORE_PASSWORD"
+          unset KEY_PASSWORD || echo "WARNING: Failed to unset KEY_PASSWORD"
+          unset KEY_ALIAS || echo "WARNING: Failed to unset KEY_ALIAS"
+          unset KEYSTORE_PASS || echo "WARNING: Failed to unset KEYSTORE_PASS"
+          
+          echo "Cleanup completed"

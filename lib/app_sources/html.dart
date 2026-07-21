@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:obtainium/components/generated_form_model.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 int compareAlphaNumeric(String a, String b) {
   final List<String> aParts = _splitAlphaNumeric(a);
@@ -109,7 +109,7 @@ Future<List<MapEntry<String, String>>> grabLinksCommonFromRes(
   Map<String, dynamic> additionalSettings,
 ) async {
   if (res.statusCode != 200) {
-    throw getObtainiumHttpError(res);
+    throw getUpdatiumHttpError(res);
   }
   final reqUrl = res.request?.url ?? Uri.parse('');
   return grabLinksCommon(res.body, reqUrl, additionalSettings);
@@ -221,10 +221,10 @@ class HTML extends AppSource {
     return super.combinedAppSpecificSettingFormItems.map((r) {
       return r.map((e) {
         if (e.key == 'versionExtractionRegEx') {
-          e.label = tr('versionExtractionRegEx');
+          e.label = 'versionExtractionRegEx'.t();
         }
         if (e.key == 'matchGroupToUse') {
-          e.label = tr('matchGroupToUse');
+          e.label = 'matchGroupToUse'.t();
         }
         return e;
       }).toList();
@@ -235,7 +235,7 @@ class HTML extends AppSource {
     [
       GeneratedFormTextField(
         'customLinkFilterRegex',
-        label: tr('customLinkFilterRegex'),
+        label: 'customLinkFilterRegex'.t(),
         hint: 'download/(.*/)?(android|apk|mobile)',
         required: false,
         additionalValidators: [
@@ -248,7 +248,7 @@ class HTML extends AppSource {
     [
       GeneratedFormSwitch(
         'versionExtractWholePage',
-        label: tr('versionExtractWholePage'),
+        label: 'versionExtractWholePage'.t(),
       ),
     ],
   ];
@@ -258,15 +258,15 @@ class HTML extends AppSource {
     [
       GeneratedFormSwitch(
         'matchLinksOutsideATags',
-        label: tr('matchLinksOutsideATags'),
+        label: 'matchLinksOutsideATags'.t(),
       ),
     ],
-    [GeneratedFormSwitch('skipSort', label: tr('skipSort'))],
-    [GeneratedFormSwitch('reverseSort', label: tr('takeFirstLink'))],
+    [GeneratedFormSwitch('skipSort', label: 'skipSort'.t())],
+    [GeneratedFormSwitch('reverseSort', label: 'takeFirstLink'.t())],
     [
       GeneratedFormSwitch(
         'sortByLastLinkSegment',
-        label: tr('sortByLastLinkSegment'),
+        label: 'sortByLastLinkSegment'.t(),
       ),
     ],
   ];
@@ -275,7 +275,7 @@ class HTML extends AppSource {
     [
       GeneratedFormTextField(
         'customLinkFilterRegex',
-        label: tr('intermediateLinkRegex'),
+        label: 'intermediateLinkRegex'.t(),
         hint: '([0-9]+.)*[0-9]+/\$',
         required: true,
         additionalValidators: [(value) => regExValidator(value)],

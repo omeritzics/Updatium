@@ -2,10 +2,9 @@ import 'dart:async';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/components/generated_form_model.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 class SourceHut extends AppSource {
   SourceHut() {
@@ -13,8 +12,8 @@ class SourceHut extends AppSource {
     hosts = ['git.sr.ht'];
     changeLogPageIsStandardUrl = true;
     showReleaseDateAsVersionToggle = true;
+    isOpenSource = true;
   }
-
   @override
   List<List<GeneratedFormItem>>
   get additionalSourceAppSpecificSettingFormItems => [

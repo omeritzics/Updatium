@@ -1,7 +1,8 @@
-import 'package:obtainium/app_sources/fdroid.dart';
-import 'package:obtainium/components/generated_form_model.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:html/parser.dart';
+import 'package:updatium/app_sources/fdroid.dart';
+import 'package:updatium/app_sources/github.dart';
+import 'package:updatium/app_sources/gitlab.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 class IzzyOnDroid extends AppSource {
   final FDroid fd = FDroid();
@@ -9,6 +10,8 @@ class IzzyOnDroid extends AppSource {
   IzzyOnDroid() {
     name = 'IzzyOnDroid';
     hosts = ['izzysoft.de'];
+    name = 'IzzyOnDroid';
+    isOpenSource = true;
     allowSubDomains = true;
   }
 
@@ -39,7 +42,7 @@ class IzzyOnDroid extends AppSource {
     String standardUrl, {
     Map<String, dynamic> additionalSettings = const {},
   }) async {
-    return fd.tryInferringAppId(standardUrl);
+    return super.tryInferringAppId(standardUrl);
   }
 
   @override

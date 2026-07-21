@@ -1,19 +1,52 @@
-import 'dart:async';
-
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:obtainium/components/ui_widgets.dart';
-import 'package:obtainium/components/generated_form_renderer.dart';
-import 'package:obtainium/components/category_editor.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/pages/app.dart';
-import 'package:obtainium/pages/import_export.dart';
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/notifications_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:flutter/services.dart';
+import 'package:loading_indicator_m3e/loading_indicator_m3e.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:confetti/confetti.dart';
+import 'package:updatium/components/generated_form.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/main.dart';
+import 'package:updatium/pages/app.dart';
+import 'package:updatium/pages/settings.dart';
+import 'package:updatium/pages/import_export.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/notifications_provider.dart';
+import '../providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/logs_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:android_package_manager/android_package_manager.dart'
+    hide LaunchMode;
+import 'package:updatium/services/slang_converter.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+// Material 3 spacing tokens
+const gap8 = SizedBox(height: 8);
+const gap12 = SizedBox(height: 12);
+const gap16 = SizedBox(height: 16);
+const gap24 = SizedBox(height: 24);
+const gap32 = SizedBox(height: 32);
+
+const horizontalGap8 = SizedBox(width: 8);
+const horizontalGap12 = SizedBox(width: 12);
+const horizontalGap16 = SizedBox(width: 16);
+const horizontalGap24 = SizedBox(width: 24);
+
+// class AppAddingProgressBar extends StatelessWidget {
+//  final int currentStep;
+//  final int totalSteps;
+//
+//  const AppAddingProgressBar({
+//    super.key,
+//    required this.currentStep,
+//    required this.totalSteps,
+//  });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return LinearProgressIndicator(value: currentStep / totalSteps);
+//  }
+// }
 
 class AddAppPage extends StatefulWidget {
   const AddAppPage({super.key, this.initialUrl});
@@ -27,56 +60,74 @@ class AddAppPage extends StatefulWidget {
 }
 
 class AddAppPageState extends State<AddAppPage> {
-  late final AppsProvider appsProvider;
-  late final SettingsProvider settingsProvider;
-  late final NotificationsProvider notificationsProvider;
-  bool _providersInitialized = false;
-
-  bool gettingAppInfo = false;
-  bool searching = false;
-
+  bool isSearchLoading = false;
+  bool isUrlLoading = false;
   String userInput = '';
   String searchQuery = '';
+  int searchBarKey = 0;
   String? pickedSourceOverride;
-  String? _previousPickedSourceOverride;
   AppSource? pickedSource;
-  Map<String, dynamic> additionalSettings = {};
-  bool additionalSettingsValid = true;
-  bool _urlValid = false;
-  bool _prevValid = false;
-  bool inferAppIdIfOptional = true;
-  List<String> pickedCategories = [];
   int urlInputKey = 0;
-  late final SourceProvider sourceProvider;
+  SourceProvider sourceProvider = SourceProvider();
+  final TextEditingController _sourceOverrideController =
+      TextEditingController();
 
-  Future<String?>? _sourceNoteFuture;
-  String? _sourceNoteSourceKey;
+  SettingsProvider get settingsProvider => context.read<SettingsProvider>();
 
   @override
-  void initState() {
-    super.initState();
-    if (widget.initialUrl != null && widget.initialUrl!.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) processInitialUrl(widget.initialUrl);
+  void dispose() {
+    _sourceOverrideController.dispose();
+    super.dispose();
+  }
+
+  void changeUserInput(
+    String input,
+    bool valid,
+    bool isBuilding, {
+    bool updateUrlInput = false,
+    String? overrideSource,
+  }) {
+    if (!isBuilding) {
+      setState(() {
+        if (overrideSource != null) {
+          pickedSourceOverride = overrideSource;
+        }
+        if (updateUrlInput) {
+          urlInputKey++;
+        }
+        AppSource? source;
+        if (valid) {
+          try {
+            source = sourceProvider.getSource(
+              userInput,
+              overrideSource: pickedSourceOverride,
+            );
+          } catch (e) {
+            // Ignore errors while typing
+          }
+        }
+        if (pickedSource == null ||
+            pickedSource?.runtimeType != source?.runtimeType) {
+          pickedSource = source;
+          pickedSource?.runOnAddAppInputChange(userInput);
+          var additionalSettings = source != null
+              ? getDefaultValuesFromFormItems(
+                  source.combinedAppSpecificSettingFormItems,
+                )
+              : {};
+          var sp = settingsProvider;
+          if (sp.includePrereleasesByDefault) {
+            additionalSettings['includePrereleases'] = true;
+          }
+          if (sp.shizukuPretendToBeGooglePlay) {
+            additionalSettings['shizukuPretendToBeGooglePlay'] = true;
+          }
+          var _ = source != null
+              ? !sourceProvider.ifRequiredAppSpecificSettingsExist(source)
+              : true;
+          var _ = true;
+        }
       });
-    }
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_providersInitialized) {
-      appsProvider = context.read<AppsProvider>();
-      settingsProvider = context.read<SettingsProvider>();
-      notificationsProvider = context.read<NotificationsProvider>();
-      sourceProvider = context.read<SourceProvider>();
-      _providersInitialized = true;
-    }
-  }
-
-  void processInitialUrl(String? url) {
-    if (url != null && url.isNotEmpty) {
-      linkFn(url);
     }
   }
 
@@ -88,239 +139,282 @@ class AddAppPageState extends State<AddAppPage> {
       sourceProvider.getSource(input);
       changeUserInput(input, true, false, updateUrlInput: true);
     } catch (e) {
-      changeUserInput(input, false, false, updateUrlInput: true);
       showError(e, context);
     }
   }
 
-  void changeUserInput(
-    String input,
-    bool valid,
-    bool isBuilding, {
-    bool updateUrlInput = false,
-    String? overrideSource,
-  }) {
-    if (!isBuilding) {
-      userInput = input;
-      if (overrideSource != null) {
-        pickedSourceOverride = overrideSource;
-      }
-      final bool overrideChanged =
-          pickedSourceOverride != _previousPickedSourceOverride;
-      _previousPickedSourceOverride = pickedSourceOverride;
-      if (updateUrlInput) {
-        urlInputKey++;
-      }
-      _urlValid = valid || pickedSourceOverride != null;
-      final prevHost = pickedSource?.hosts.isNotEmpty == true
-          ? pickedSource?.hosts.first
-          : null;
-      AppSource? source;
-      try {
-        source = sourceProvider.getSource(
-          userInput,
-          overrideSource: pickedSourceOverride,
-        );
-      } catch (_) {
-        source = null;
-      }
-      if (pickedSource?.sourceIdentifier != source?.sourceIdentifier ||
-          overrideChanged ||
-          (prevHost != null && prevHost != source?.hosts.firstOrNull)) {
-        pickedSource = source;
-        pickedSource?.runOnAddAppInputChange(userInput);
-        additionalSettings = source != null
-            ? getDefaultValuesFromFormItems(
-                source.combinedAppSpecificSettingFormItems,
-              )
-            : {};
-        additionalSettingsValid = source != null
-            ? !sourceProvider.ifRequiredAppSpecificSettingsExist(source)
-            : true;
-        inferAppIdIfOptional = true;
-      } else if (valid && !updateUrlInput && _prevValid) {
-        return;
-      }
-      _prevValid = valid;
-      _updateSourceNote();
-      if (mounted) setState(() {});
-    }
-  }
+  bool shouldShowSearchBar() =>
+      sourceProvider.sources.where((e) => e.canSearch).isNotEmpty &&
+      pickedSource == null &&
+      userInput.isEmpty;
 
-  void setSourceOverride(String? override) {
-    pickedSourceOverride = override;
-    changeUserInput(userInput, true, false);
-  }
-
-  void _updateSourceNote() {
-    if (pickedSource != null) {
-      final sourceKey = pickedSource!.name;
-      if (_sourceNoteSourceKey != sourceKey) {
-        _sourceNoteSourceKey = sourceKey;
-        _sourceNoteFuture = pickedSource?.getSourceNote();
-      }
-    } else {
-      _sourceNoteFuture = null;
-      _sourceNoteSourceKey = null;
-    }
-  }
-
-  Future<bool> getTrackOnlyConfirmationIfNeeded(
-    bool userPickedTrackOnly,
-    BuildContext context, {
-    bool ignoreHideSetting = false,
-  }) async {
-    final s = pickedSource!;
-    final useTrackOnly = userPickedTrackOnly || s.enforceTrackOnly;
-    if (useTrackOnly &&
-        (!settingsProvider.hideTrackOnlyWarning || ignoreHideSetting)) {
-      if (!context.mounted) return false;
-      final values = await showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return GeneratedFormModal(
-            initValid: true,
-            title: tr(
-              'xIsTrackOnly',
-              args: [s.enforceTrackOnly ? tr('source') : tr('app')],
-            ),
-            items: [
-              [GeneratedFormSwitch('hide', label: tr('dontShowAgain'))],
+  Widget getUrlInputRow() => Row(
+    children: [
+      Expanded(
+        child: GeneratedForm(
+          key: Key(urlInputKey.toString()),
+          items: [
+            [
+              GeneratedFormTextField(
+                'appSourceURL',
+                label: 'appSourceURL'.t(),
+                defaultValue: userInput,
+                additionalValidators: [
+                  (value) {
+                    try {
+                      sourceProvider
+                          .getSource(
+                            value ?? '',
+                            overrideSource: pickedSourceOverride,
+                          )
+                          .standardizeUrl(value ?? '');
+                    } catch (e) {
+                      return e is String
+                          ? e
+                          : e is UpdatiumError
+                          ? e.toString()
+                          : 'error'.t();
+                    }
+                    return null;
+                  },
+                ],
+              ),
             ],
-            message:
-                '${s.enforceTrackOnly ? tr('appsFromSourceAreTrackOnly') : tr('youPickedTrackOnly')}\n\n${tr('trackOnlyAppDescription')}',
+          ],
+          onValueChanges: (values, valid, isBuilding) {
+            changeUserInput(values['appSourceURL']!, valid, isBuilding);
+          },
+        ),
+      ),
+      horizontalGap16,
+      isUrlLoading
+          ? const LoadingIndicatorM3E()
+          : M3EFilledButton.tonal(
+              onPressed: isUrlLoading || pickedSource == null
+                  ? null
+                  : () {
+                      settingsProvider.selectionClick();
+                      showDialog(
+                        context: context,
+                        builder: (context) => AddAppConfirmationPage(
+                          initialUrl: userInput,
+                          initialSourceOverride: pickedSourceOverride,
+                        ),
+                      );
+                    },
+              child: Text('continue'.t()),
+            ),
+    ],
+  );
+
+  Widget getSearchBarRow() => Row(
+    children: [
+      Expanded(
+        child: GeneratedForm(
+          key: Key(searchBarKey.toString()),
+          items: [
+            [
+              GeneratedFormTextField(
+                'searchSomeSources',
+                label: 'searchSomeSourcesLabel'.t(),
+                required: false,
+                defaultValue: searchQuery,
+              ),
+            ],
+          ],
+          onValueChanges: (values, valid, isBuilding) {
+            if (values.isNotEmpty && valid && !isBuilding) {
+              setState(() {
+                searchQuery = values['searchSomeSources']!.trim();
+              });
+            }
+          },
+        ),
+      ),
+      horizontalGap16,
+      isSearchLoading
+          ? const LoadingIndicatorM3E()
+          : M3EFilledButton.tonal(
+              onPressed: searchQuery.isEmpty || isSearchLoading
+                  ? null
+                  : () {
+                      runSearch();
+                    },
+              child: Text('search'.t()),
+            ),
+    ],
+  );
+
+  Widget getHTMLSourceOverrideDropdown() => SourceOverrideDropdown(
+    selectedOverride: pickedSourceOverride,
+    pickedSource: pickedSource,
+    onSelectionChanged: (selection) {
+      setState(() {
+        pickedSourceOverride = selection;
+      });
+      changeUserInput(userInput, true, false);
+    },
+    controller: _sourceOverrideController,
+  );
+
+  Widget getSourcesListWidget() => Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      TextButton.icon(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext ctx) {
+              return AlertDialog(
+                scrollable: true,
+                contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+                title: Text('supportedSources'.t()),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ...sourceProvider.sources.map(
+                      (e) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: GestureDetector(
+                          onTap: e.hosts.isNotEmpty
+                              ? () {
+                                  launchUrlString(
+                                    'https://${e.hosts[0]}',
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                }
+                              : null,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '${e.name} ${e.canSearch ? ' ${'searchableInBrackets'.t()}' : ''}',
+                                  style: TextStyle(
+                                    decoration: e.hosts.isNotEmpty
+                                        ? TextDecoration.underline
+                                        : TextDecoration.none,
+                                  ),
+                                ),
+                              ),
+                              //if (e.isOpenSource) ...[
+                              //  const SizedBox(width: 4),
+                              //  Icon(
+                              //    Icons.workspace_premium,
+                              //    size: 14,
+                              //    color: Theme.of(context).colorScheme.primary,
+                              //    semanticLabel: 'openSource'.t(),
+                              //  ),
+                              //  const SizedBox(width: 2),
+                              //],
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    gap12,
+
+                    //Row(
+                    //  children: [
+                    //    Icon(
+                    //      Icons.workspace_premium,
+                    //      size: 14,
+                    //      color: Theme.of(context).colorScheme.primary,
+                    //    ),
+                    //    const SizedBox(width: 4),
+                    //    Expanded(
+                    //      child: Text(
+                    //        'openSourceNote'.t(),
+                    //        style: Theme.of(context).textTheme.bodySmall,
+                    //      ),
+                    //    ),
+                    //  ],
+                    //),
+                    //gap12,
+                    Text(
+                      '${'note'.t()}:',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(t('selfHostedNote', args: ['overrideSource'.t()])),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(ctx).pop(),
+                    child: Text('ok'.t()),
+                  ),
+                ],
+              );
+            },
           );
         },
-      );
-      if (values != null) {
-        settingsProvider.hideTrackOnlyWarning = values['hide'] == true;
-      }
-      return useTrackOnly && values != null;
-    } else {
-      return true;
-    }
-  }
+        icon: const Icon(Icons.info_outline, size: 18),
+        label: Text('supportedSources'.t()),
+        style: TextButton.styleFrom(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.zero,
+        ),
+      ),
+      horizontalGap8,
+      TextButton.icon(
+        onPressed: () async {
+          setState(() {
+            isSearchLoading = true;
+          });
+          final installedApps = await getAllInstalledInfo();
+          setState(() {
+            isSearchLoading = false;
+          });
+          if (!mounted) return;
 
-  Future<bool> getReleaseDateAsVersionConfirmationIfNeeded(
-    BuildContext context,
-  ) async {
-    if (additionalSettings['releaseDateAsVersion'] != true) return true;
-    if (!context.mounted) return false;
-    return await showDialog(
-          context: context,
-          builder: (BuildContext ctx) {
-            return GeneratedFormModal(
-              title: tr('releaseDateAsVersion'),
-              items: const [],
-              message: tr('releaseDateAsVersionExplanation'),
-            );
-          },
-        ) !=
-        null;
-  }
+          final selectedPackageName = await showDialog<String>(
+            context: context,
+            builder: (BuildContext ctx) =>
+                InstalledAppsDialog(installedApps: installedApps),
+          );
 
-  Future<void> addApp(BuildContext context) async {
-    gettingAppInfo = true;
-    setState(() {});
-    try {
-      final userPickedTrackOnly = additionalSettings['trackOnly'] == true;
-      App? app;
-      var confirmed = await getTrackOnlyConfirmationIfNeeded(
-        userPickedTrackOnly,
-        context,
-      );
-      if (!context.mounted) return;
-      if (confirmed) {
-        confirmed = await getReleaseDateAsVersionConfirmationIfNeeded(context);
-      }
-      if (!context.mounted) return;
-      if (confirmed) {
-        final s = pickedSource!;
-        final trackOnly = s.enforceTrackOnly || userPickedTrackOnly;
-        app = await sourceProvider.getApp(
-          s,
-          userInput.trim(),
-          additionalSettings,
-          trackOnlyOverride: trackOnly,
-          sourceIsOverriden: pickedSourceOverride != null,
-          inferAppIdIfOptional: inferAppIdIfOptional,
-        );
-        if (isTempId(app) && !app.settings.getBool('trackOnly')) {
-          if (!context.mounted) return;
-          final apkUrl = await appsProvider.confirmAppFileUrl(
-            app,
-            context,
-            false,
-          );
-          if (apkUrl == null) {
-            throw ObtainiumError(tr('cancelled'));
+          if (selectedPackageName != null) {
+            setState(() {
+              searchQuery = (selectedPackageName.contains('.'))
+                  ? selectedPackageName.split('.').last
+                  : selectedPackageName;
+              userInput = '';
+              pickedSource = null;
+              pickedSourceOverride = null;
+              searchBarKey++;
+            });
           }
-          app = app.copyWith(
-            preferredApkIndex: app.apkUrls
-                .map((e) => e.value)
-                .toList()
-                .indexOf(apkUrl.value),
-          );
-          if (!context.mounted) return;
-          final downloadedArtifact = await appsProvider.downloadApp(
-            app,
-            context,
-            notificationsProvider: notificationsProvider,
-          );
-          DownloadedApk? downloadedFile;
-          DownloadedDir? downloadedDir;
-          if (downloadedArtifact is DownloadedApk) {
-            downloadedFile = downloadedArtifact;
-          } else if (downloadedArtifact is DownloadedDir) {
-            downloadedDir = downloadedArtifact;
-          }
-          if (downloadedFile == null && downloadedDir == null) {
-            throw ObtainiumError(tr('downloadFailed'));
-          }
-          app = app.copyWith(id: downloadedFile?.appId ?? downloadedDir!.appId);
-        }
-        if (appsProvider.apps.containsKey(app.id)) {
-          throw ObtainiumError(tr('appAlreadyAdded'));
-        }
-        if (app.settings.getBool('trackOnly') ||
-            !app.settings.getBool('versionDetection')) {
-          app = app.copyWith(installedVersion: app.latestVersion);
-        }
-        app = app.copyWith(categories: pickedCategories);
-        await appsProvider.saveApps([app], onlyIfExists: false);
-      }
-      if (app != null && context.mounted) {
-        final route = MaterialPageRoute<void>(
-          builder: (context) => AppPage(appId: app!.id),
-        );
-        unawaited(Navigator.of(context).pushReplacement(route));
-      }
-    } catch (e) {
-      if (context.mounted) showError(e, context);
-    } finally {
-      gettingAppInfo = false;
-      if (mounted) setState(() {});
-    }
-  }
+        },
+        icon: const Icon(Icons.apps, size: 18),
+        label: Text('installedApps'.t()),
+        style: TextButton.styleFrom(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.zero,
+        ),
+      ),
+    ],
+  );
 
-  Future<void> runSearch(BuildContext context) async {
-    searching = true;
-    setState(() {});
-    final sourceStrings = <String, List<String>>{};
+  Future<void> runSearch({bool filtered = true}) async {
+    setState(() {
+      isSearchLoading = true;
+    });
+    var sourceStrings = <String, List<String>>{};
     sourceProvider.sources.where((e) => e.canSearch).forEach((s) {
       sourceStrings[s.name] = [s.name];
     });
+    SettingsProvider settingsProvider = context.read<SettingsProvider>();
     try {
-      final searchSources =
+      var searchSources =
           await showDialog<List<String>?>(
             context: context,
             builder: (BuildContext ctx) {
               return SelectionModal(
-                title: tr('selectX', args: [plural('source', 2).toLowerCase()]),
+                title: t('selectX', args: ['source'.plural(2).toLowerCase()]),
                 entries: sourceStrings,
                 selectedByDefault: true,
                 onlyOneSelectionAllowed: false,
-                titlesAreLinks: false,
                 deselectThese: settingsProvider.searchDeselected,
               );
             },
@@ -330,111 +424,133 @@ class AddAppPageState extends State<AddAppPage> {
         settingsProvider.searchDeselected = sourceStrings.keys
             .where((s) => !searchSources.contains(s))
             .toList();
-        final List<MapEntry<String, Map<String, List<String>>>?>
-        results = (await Future.wait(
-          sourceProvider.sources
-              .where((e) => searchSources.contains(e.name))
-              .map((e) async {
-                try {
-                  Map<String, dynamic>? querySettings = {};
-                  if (e.includeAdditionalOptsInMainSearch) {
-                    querySettings = await showDialog<Map<String, dynamic>?>(
-                      context: context,
-                      builder: (BuildContext ctx) {
-                        return GeneratedFormModal(
-                          title: tr('searchX', args: [e.name]),
-                          items: [
-                            ...e.searchQuerySettingFormItems.map((e) => [e]),
-                            [
-                              GeneratedFormTextField(
-                                'url',
-                                label: e.hosts.isNotEmpty
-                                    ? tr('overrideSource')
-                                    : plural('url', 1).substring(2),
-                                autoCompleteOptions: [
-                                  ...(e.hosts.isNotEmpty ? [e.hosts[0]] : []),
-                                  ...appsProvider.apps.values
-                                      .where(
-                                        (a) =>
-                                            sourceProvider
-                                                .getSource(
-                                                  a.app.url,
-                                                  overrideSource:
-                                                      a.app.overrideSource,
-                                                )
-                                                .sourceIdentifier ==
-                                            e.sourceIdentifier,
-                                      )
-                                      .map((a) {
-                                        final uri = Uri.parse(a.app.url);
-                                        return '${uri.origin}${uri.path}';
-                                      }),
-                                ],
-                                value: e.hosts.isNotEmpty ? e.hosts[0] : '',
-                                required: true,
-                              ),
-                            ],
-                          ],
-                        );
-                      },
-                    );
-                    if (querySettings == null) {
-                      return null;
-                    }
-                  }
-                  return MapEntry(
-                    e.sourceIdentifier,
-                    await e.search(searchQuery, querySettings: querySettings),
-                  );
-                } catch (err) {
-                  final errorToShow = err is ObtainiumError
-                      ? ObtainiumError(
-                          err.message,
-                          code: err.code,
-                          unexpected: true,
-                          stack: err.stack,
-                          data: err.data,
-                        )
-                      : err;
-                  if (context.mounted) showError(errorToShow, context);
-                  return null;
-                }
-              }),
-        )).where((a) => a != null).toList();
+        List<MapEntry<String, Map<String, List<String>>>> results =
+            (await Future.wait<MapEntry<String, Map<String, List<String>>>?>(
+                  sourceProvider.sources
+                      .where((e) => searchSources.contains(e.name))
+                      .map((e) async {
+                        try {
+                          Map<String, dynamic>? querySettings = {};
+                          if (e.includeAdditionalOptsInMainSearch) {
+                            querySettings =
+                                await showDialog<Map<String, dynamic>?>(
+                                  context: context,
+                                  builder: (BuildContext ctx) {
+                                    Map<String, dynamic> localValues = {};
+                                    return AlertDialog(
+                                      scrollable: true,
+                                      contentPadding: const EdgeInsets.fromLTRB(
+                                        24,
+                                        16,
+                                        24,
+                                        16,
+                                      ),
+                                      title: Text(t('searchX', args: [e.name])),
+                                      content: SizedBox(
+                                        width: double.maxFinite,
+                                        child: GeneratedForm(
+                                          items: [
+                                            ...e.searchQuerySettingFormItems
+                                                .map((e) => [e]),
+                                            [
+                                              GeneratedFormTextField(
+                                                'url',
+                                                label: e.hosts.isNotEmpty
+                                                    ? 'overrideSource'.t()
+                                                    : plural(
+                                                        'url',
+                                                        1,
+                                                      ).substring(2),
+                                                defaultValue: e.hosts.isNotEmpty
+                                                    ? e.hosts[0]
+                                                    : '',
+                                                required: true,
+                                              ),
+                                            ],
+                                          ],
+                                          onValueChanges:
+                                              (vals, valid, isBuilding) {
+                                                localValues = vals;
+                                              },
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(ctx).pop(null),
+                                          child: Text('cancel'.t()),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.of(
+                                            ctx,
+                                          ).pop(localValues),
+                                          child: Text('ok'.t()),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                          }
+                          if (!mounted) return null;
+                          return MapEntry(
+                            e.runtimeType.toString(),
+                            await e.search(
+                              searchQuery,
+                              querySettings: querySettings ?? {},
+                            ),
+                          );
+                        } catch (err) {
+                          if (err is CredsNeededError) {
+                            err.unexpected = true;
+                            if (!mounted) return null;
+                            showError(err, context);
+                          } else {
+                            LogsProvider().add(
+                              'Search error for ${e.name}: ${err.toString()}',
+                              level: LogLevels.error,
+                            );
+                          }
+                          return null;
+                        }
+                      }),
+                ))
+                .whereType<MapEntry<String, Map<String, List<String>>>>()
+                .toList();
 
-        if (!context.mounted) return;
-
-        final Map<String, MapEntry<String, List<String>>> res = {};
+        // Interleave results instead of simple reduce
+        Map<String, MapEntry<String, List<String>>> res = {};
         var si = 0;
         var done = false;
         while (!done) {
           done = true;
           for (var r in results) {
-            final sourceName = r!.key;
+            var sourceName = r.key;
             if (r.value.length > si) {
               done = false;
-              final singleRes = r.value.entries.elementAt(si);
+              var singleRes = r.value.entries.elementAt(si);
               res[singleRes.key] = MapEntry(sourceName, singleRes.value);
             }
           }
           si++;
         }
         if (res.isEmpty) {
-          throw ObtainiumError(tr('noResults'));
+          throw UpdatiumError('noResults'.t());
         }
-        if (!context.mounted) return;
-        final List<String>? selectedUrls = await showDialog<List<String>?>(
-          context: context,
-          builder: (BuildContext ctx) {
-            return SelectionModal(
-              entries: res.map((k, v) => MapEntry(k, v.value)),
-              selectedByDefault: false,
-              onlyOneSelectionAllowed: true,
-            );
-          },
-        );
+        List<String>? selectedUrls = res.isEmpty
+            ? []
+            : await showDialog<List<String>?>(
+                context: context,
+                builder: (BuildContext ctx) {
+                  return SelectionModal(
+                    entries: res.map((k, v) => MapEntry(k, v.value)),
+                    selectedByDefault: false,
+                    onlyOneSelectionAllowed: true,
+                  );
+                },
+              );
+        if (!mounted) return;
         if (selectedUrls != null && selectedUrls.isNotEmpty) {
-          final sourceName = res[selectedUrls[0]]?.key;
+          var sourceName = res[selectedUrls[0]]?.key;
           changeUserInput(
             selectedUrls[0],
             true,
@@ -442,7 +558,382 @@ class AddAppPageState extends State<AddAppPage> {
             updateUrlInput: true,
             overrideSource: sourceName,
           );
+          if (!mounted) return;
+          showDialog(
+            context: context,
+            builder: (context) => AddAppConfirmationPage(
+              initialUrl: selectedUrls[0],
+              initialSourceOverride: sourceName,
+              cameFromSearch: true,
+            ),
+          );
         }
+      }
+    } catch (e) {
+      if (!mounted) return;
+      showError(e, context);
+    } finally {
+      setState(() {
+        isSearchLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar.large(
+            pinned: true,
+            title: Text('addApp'.t()),
+            bottom:
+                (pickedSource != null ||
+                    isSearchLoading ||
+                    isUrlLoading ||
+                    searchQuery.isNotEmpty)
+                ? PreferredSize(
+                    preferredSize: const Size.fromHeight(8),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      //child: AppAddingProgressBar(
+                      //  currentStep: 0,
+                      //  totalSteps: (isUrlLoading || searchQuery.isNotEmpty)
+                      //      ? 3
+                      //      : 2,
+                      //),
+                    ),
+                  )
+                : null,
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  getUrlInputRow(),
+                  gap16,
+                  if (pickedSource != null) getHTMLSourceOverrideDropdown(),
+                  if (shouldShowSearchBar()) getSearchBarRow(),
+                  if (pickedSource == null) getSourcesListWidget(),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.import_export),
+        label: Text('importExport'.t()),
+        extendedPadding: const EdgeInsets.symmetric(horizontal: 20),
+        elevation: 3,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        onPressed: () {
+          HapticFeedback.selectionClick();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ImportExportPage()),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class AddAppConfirmationPage extends StatefulWidget {
+  final String? initialUrl;
+  final String? initialSourceOverride;
+  final bool cameFromSearch;
+
+  const AddAppConfirmationPage({
+    super.key,
+    this.initialUrl,
+    this.initialSourceOverride,
+    this.cameFromSearch = false,
+  });
+
+  @override
+  State<AddAppConfirmationPage> createState() => AddAppConfirmationPageState();
+}
+
+class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
+  bool gettingAppInfo = false;
+  bool cameFromSearch = false;
+
+  late ConfettiController _confettiController;
+  Future<String?>? _sourceNoteFuture;
+
+  App? prefilledApp;
+  int prefillVersion = 0;
+
+  String userInput = '';
+  String? pickedSourceOverride;
+  AppSource? pickedSource;
+  Map<String, dynamic> additionalSettings = {};
+  bool additionalSettingsValid = true;
+  bool inferAppIdIfOptional = true;
+  List<String> pickedCategories = [];
+  SourceProvider sourceProvider = SourceProvider();
+  final TextEditingController _sourceOverrideController =
+      TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _confettiController = ConfettiController(
+      duration: const Duration(seconds: 2),
+    );
+    userInput = widget.initialUrl ?? '';
+    pickedSourceOverride = widget.initialSourceOverride;
+    cameFromSearch = widget.cameFromSearch;
+    if (userInput.isNotEmpty) {
+      try {
+        pickedSource = sourceProvider.getSource(
+          userInput,
+          overrideSource: pickedSourceOverride,
+        );
+        additionalSettings = pickedSource != null
+            ? getDefaultValuesFromFormItems(
+                pickedSource!.combinedAppSpecificSettingFormItems,
+              )
+            : {};
+        additionalSettingsValid = pickedSource != null
+            ? !sourceProvider.ifRequiredAppSpecificSettingsExist(pickedSource!)
+            : true;
+      } catch (e) {
+        // Ignore errors during initialization
+      }
+      prefillAppInfo();
+      _updateSourceNoteFuture();
+    }
+  }
+
+  void _updateSourceNoteFuture() {
+    setState(() {
+      _sourceNoteFuture = pickedSource?.getSourceNote();
+    });
+  }
+
+  Future<void> prefillAppInfo() async {
+    if (userInput.isEmpty || pickedSource == null) return;
+    try {
+      App app = await sourceProvider.getApp(
+        pickedSource!,
+        userInput.trim(),
+        additionalSettings,
+        trackOnlyOverride: true,
+        sourceIsOverriden: pickedSourceOverride != null,
+        inferAppIdIfOptional: inferAppIdIfOptional,
+      );
+      if (mounted) {
+        setState(() {
+          prefilledApp = app;
+          additionalSettings = Map.from(app.additionalSettings);
+          prefillVersion++;
+        });
+      }
+    } catch (e) {
+      // Ignore errors during pre-filling
+    }
+  }
+
+  @override
+  void dispose() {
+    _confettiController.dispose();
+    _sourceOverrideController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    AppsProvider appsProvider = context.read<AppsProvider>();
+    SettingsProvider settingsProvider = context.watch<SettingsProvider>();
+    NotificationsProvider notificationsProvider = context
+        .read<NotificationsProvider>();
+
+    Future<bool> getTrackOnlyConfirmationIfNeeded(
+      bool userPickedTrackOnly, {
+      bool ignoreHideSetting = false,
+    }) async {
+      var useTrackOnly = userPickedTrackOnly;
+      if (useTrackOnly &&
+          (!settingsProvider.hideTrackOnlyWarning || ignoreHideSetting)) {
+        // ignore: use_build_context_synchronously
+        var values = await showDialog<Map<String, dynamic>?>(
+          context: context,
+          builder: (BuildContext ctx) {
+            Map<String, dynamic> localValues = {'hide': false};
+            return AlertDialog(
+              scrollable: true,
+              contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+              title: Text(t('xIsTrackOnly', args: ['app'.t()])),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${'youPickedTrackOnly'.t()}\n\n${'trackOnlyAppDescription'.t()}',
+                  ),
+                  gap16,
+                  GeneratedForm(
+                    items: [
+                      [GeneratedFormSwitch('hide', label: 'dontShowAgain'.t())],
+                    ],
+                    onValueChanges: (vals, valid, isBuilding) {
+                      localValues = vals;
+                    },
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(null),
+                  child: Text('cancel'.t()),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(localValues),
+                  child: Text('ok'.t()),
+                ),
+              ],
+            );
+          },
+        );
+        if (values != null) {
+          settingsProvider.hideTrackOnlyWarning = values['hide'] == true;
+        }
+        return useTrackOnly && values != null;
+      } else {
+        return true;
+      }
+    }
+
+    getReleaseDateAsVersionConfirmationIfNeeded(
+      bool userPickedTrackOnly,
+    ) async {
+      return (!(additionalSettings['releaseDateAsVersion'] == true &&
+          // ignore: use_build_context_synchronously
+          await showDialog(
+                context: context,
+                builder: (BuildContext ctx) {
+                  return AlertDialog(
+                    title: Text('releaseDateAsVersion'.t()),
+                    content: Text('releaseDateAsVersionExplanation'.t()),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(null),
+                        child: Text('cancel'.t()),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(ctx).pop(true),
+                        child: Text('ok'.t()),
+                      ),
+                    ],
+                  );
+                },
+              ) ==
+              null));
+    }
+
+    addApp() async {
+      setState(() {
+        gettingAppInfo = true;
+      });
+      try {
+        var userPickedTrackOnly = additionalSettings['trackOnly'] == true;
+        App? app;
+        if ((await getTrackOnlyConfirmationIfNeeded(userPickedTrackOnly)) &&
+            (await getReleaseDateAsVersionConfirmationIfNeeded(
+              userPickedTrackOnly,
+            ))) {
+          var trackOnly = userPickedTrackOnly;
+          app = await sourceProvider.getApp(
+            pickedSource!,
+            userInput.trim(),
+            additionalSettings,
+            trackOnlyOverride: trackOnly,
+            sourceIsOverriden: pickedSourceOverride != null,
+            inferAppIdIfOptional: inferAppIdIfOptional,
+          );
+          // Only download the APK here if you need to for the package ID
+          if (isTempId(app) && app.additionalSettings['trackOnly'] != true) {
+            if (!mounted) return;
+            if (!mounted) return;
+            var apkUrl = await appsProvider.confirmAppFileUrl(
+              app,
+              context,
+              false,
+              progressIndicatorStep: cameFromSearch ? 3 : 2,
+              progressIndicatorTotal: cameFromSearch ? 3 : 2,
+            );
+
+            if (apkUrl == null) {
+              throw UpdatiumError('cancelled'.t());
+            }
+            app.preferredApkIndex = app.apkUrls
+                .map((e) => e.value)
+                .toList()
+                .indexOf(apkUrl.value);
+            // ignore: use_build_context_synchronously
+            if (!mounted) return;
+            var downloadedArtifact = await appsProvider.downloadApp(
+              app,
+              globalNavigatorKey.currentContext,
+              notificationsProvider: notificationsProvider,
+            );
+            if (downloadedArtifact == null) return;
+            DownloadedApk? downloadedFile;
+            DownloadedDir? downloadedDir;
+            if (downloadedArtifact is DownloadedApk) {
+              downloadedFile = downloadedArtifact;
+            } else {
+              downloadedDir = downloadedArtifact as DownloadedDir;
+            }
+            app.id = downloadedFile?.appId ?? downloadedDir!.appId;
+          }
+          if (appsProvider.apps.containsKey(app.id)) {
+            throw UpdatiumError('appAlreadyAdded'.t());
+          }
+          if (app.additionalSettings['trackOnly'] == true ||
+              app.additionalSettings['versionDetection'] != true) {
+            app.installedVersion = app.latestVersion;
+          }
+          app.categories = pickedCategories;
+          await appsProvider.saveApps([app], onlyIfExists: false);
+
+          if (pickedSource?.isOpenSource == true &&
+              settingsProvider.showConfetti) {
+            _confettiController.play();
+          }
+        }
+        if (app != null) {
+          Future.delayed(const Duration(milliseconds: 800), () {
+            if (!mounted) return;
+            Navigator.pop(context);
+
+            Navigator.push(
+              globalNavigatorKey.currentContext ?? context,
+              MaterialPageRoute(
+                builder: (context) => AppPage(
+                  appId: app!.id,
+                  flowType: cameFromSearch
+                      ? AppAddFlowType.search
+                      : AppAddFlowType.url,
+                ),
+              ),
+            );
+          });
+        }
+      } catch (e) {
+        if (!mounted) return;
+        // ignore: use_build_context_synchronously
+        showError(e, context);
+      } finally {
+        setState(() {
+          gettingAppInfo = false;
+        });
       }
     } catch (e) {
       if (context.mounted) showError(e, context);
@@ -450,152 +941,48 @@ class AddAppPageState extends State<AddAppPage> {
       searching = false;
       if (mounted) setState(() {});
     }
-  }
-
-  bool get shouldShowSearchBar =>
-      sourceProvider.sources.where((e) => e.canSearch).isNotEmpty &&
-      pickedSource == null &&
-      userInput.isEmpty;
-
-  void openSourcesListDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return GeneratedFormModal(
-          singleNullReturnButton: tr('ok'),
-          title: tr('supportedSources'),
-          items: const [],
-          additionalWidgets: [
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: sourceProvider.sources.map((e) {
-                return ActionChip(
-                  label: Text(
-                    '${e.name}${e.enforceTrackOnly ? ' ${tr('trackOnlyInBrackets')}' : ''}${e.canSearch ? ' ${tr('searchableInBrackets')}' : ''}',
-                  ),
-                  onPressed: e.hosts.isNotEmpty
-                      ? () {
-                          unawaited(
-                            launchUrlString(
-                              'https://${e.hosts[0]}',
-                              mode: LaunchMode.externalApplication,
-                            ),
-                          );
-                        }
-                      : null,
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              '${tr('note')}:',
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 4),
-            Text(tr('selfHostedNote', args: [tr('overrideSource')])),
-          ],
-        );
-      },
-    );
-  }
-
-  void openCrowdsourcedConfigs() {
-    unawaited(
-      launchUrlString(
-        'https://apps.obtainium.imranr.dev/',
-        mode: LaunchMode.externalApplication,
-      ),
-    );
-  }
-
-  Widget _buildSourceSpecificForm(SettingsProvider settingsProvider) {
-    final s = pickedSource!;
-    final formItems = s.combinedAppSpecificSettingFormItems;
-    for (var row in formItems) {
-      for (var item in row) {
-        if (additionalSettings[item.key] != null) {
-          item.value = additionalSettings[item.key];
-        }
-      }
-    }
-    if (settingsProvider.includePrereleasesByDefault ||
-        settingsProvider.shizukuPretendToBeGooglePlay) {
-      for (var row in formItems) {
-        for (var item in row) {
-          if (item.key == 'includePrereleases' &&
-              settingsProvider.includePrereleasesByDefault) {
-            item.value = true;
-          }
-          if (item.key == 'shizukuPretendToBeGooglePlay' &&
-              settingsProvider.shizukuPretendToBeGooglePlay) {
-            item.value = true;
-          }
-        }
-      }
-    }
-    return GeneratedForm(
-      tileMode: true,
-      key: Key(
-        '${s.name}-${s.hostChanged.toString()}-${s.hostIdenticalDespiteAnyChange.toString()}',
-      ),
-      items: [
-        ...formItems,
-        ...(pickedSourceOverride != null
-            ? s.sourceConfigSettingFormItems.map((e) => [e])
-            : []),
-      ],
-      onValueChanges: (values, valid, isBuilding) {
-        if (!isBuilding) {
-          setState(() {
-            additionalSettings = values;
-            additionalSettingsValid = valid;
-          });
-        }
-      },
-    );
-  }
-
-  Widget _getAdditionalOptsCol(
-    BuildContext context,
-    SettingsProvider settingsProvider,
-  ) => Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-      const SizedBox(height: 16),
-      Text(
-        tr('additionalOptsFor', args: [pickedSource?.name ?? tr('source')]),
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.bold,
+Widget getAdditionalOptsCol() => Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        gap16,
+        Text(
+          t('additionalOptsFor', args: [pickedSource?.name ?? 'source'.t()]),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      ),
-      const SizedBox(height: 16),
-      _buildSourceSpecificForm(settingsProvider),
-      const SizedBox(height: 12),
-      CardTile(
-        padding: const EdgeInsets.all(12),
-        child: CategorySelector(
-          selected: pickedCategories.toSet(),
-          alignment: WrapAlignment.start,
-          onChanged: (categories) {
-            pickedCategories = categories.toList();
-          },
-        ),
-      ),
-      if (pickedSource?.appIdInferIsOptional == true) ...[
-        const SizedBox(height: 12),
+        gap16,
         GeneratedForm(
-          tileMode: true,
-          key: const Key('inferAppIdIfOptional'),
+          key: Key(
+            '${pickedSource.runtimeType.toString()}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-$prefillVersion',
+          ),
           items: [
-            [
-              GeneratedFormSwitch(
-                'inferAppIdIfOptional',
-                label: tr('tryInferAppIdFromCode'),
-                value: inferAppIdIfOptional,
-              ),
-            ],
+            ...pickedSource!.combinedAppSpecificSettingFormItems.map((row) {
+              return row.map((e) {
+                var item = e.clone();
+                if (prefilledApp != null) {
+                  if (prefilledApp!.additionalSettings[item.key] != null) {
+                    item.defaultValue =
+                        prefilledApp!.additionalSettings[item.key];
+                  } else if (item.key == 'appAuthor') {
+                    item.defaultValue = prefilledApp!.author;
+                  } else if (item.key == 'appId') {
+                    item.defaultValue = prefilledApp!.id;
+                  } else if (item.key == 'appName') {
+                    item.defaultValue = prefilledApp!.name;
+                  } else if (item.key == 'appSourceURL') {
+                    item.defaultValue = prefilledApp!.url;
+                  }
+                }
+                return item;
+              }).toList();
+            }),
+            ...(pickedSourceOverride != null
+                ? pickedSource!.sourceConfigSettingFormItems.map(
+                    (e) => [e.clone()],
+                  )
+                : []),
           ],
           onValueChanges: (values, valid, isBuilding) {
             if (!isBuilding) {
@@ -604,329 +991,552 @@ class AddAppPageState extends State<AddAppPage> {
               });
             }
           },
-        ),
-      ],
-      if (pickedSource?.enforceTrackOnly == true) ...[
-        const SizedBox(height: 12),
-        GeneratedForm(
-          tileMode: true,
-          key: Key(
-            '${pickedSource?.name}-${pickedSource?.hostChanged.toString()}-${pickedSource?.hostIdenticalDespiteAnyChange.toString()}-appId',
-          ),
-          items: [
-            [
-              GeneratedFormTextField(
-                'appId',
-                label: '${tr('appId')} - ${tr('custom')}',
-                required: false,
-                additionalValidators: [
-                  (value) {
-                    if (value == null || value.isEmpty) {
-                      return null;
-                    }
-                    final isValid = RegExp(
-                      r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
-                    ).hasMatch(value);
-                    if (!isValid) {
-                      return tr('invalidInput');
-                    }
-                    return null;
-                  },
-                ],
-              ),
-            ],
-          ],
-          onValueChanges: (values, valid, isBuilding) {
-            if (!isBuilding) {
-              setState(() {
-                additionalSettings['appId'] = values['appId'];
-              });
-            }
+        ), // <-- כאן החלפנו מנקודה-פסיק לפסיק
+        gap16, // הורדנו את ה-Column המיותר והשארנו ישירות את הילדים שלו
+        CategorySelector(
+          alignment: WrapAlignment.start,
+          onSelected: (categories) {
+            pickedCategories = categories;
           },
         ),
       ],
-    ],
-  );
+    );
 
-  Widget _getSourcesListWidget(BuildContext context) => Padding(
-    padding: EdgeInsets.only(
-      left: 16,
-      right: 16,
-      top: MediaQuery.of(context).padding.top,
-      bottom: MediaQuery.of(context).padding.bottom,
-    ),
-    child: Wrap(
-      direction: Axis.horizontal,
-      alignment: WrapAlignment.spaceBetween,
-      spacing: 12,
-      children: [
-        ActionChip(
-          onPressed: () {
-            openSourcesListDialog(context);
-          },
-          avatar: const Icon(Icons.dynamic_feed_outlined, size: 18),
-          label: Text(tr('supportedSources')),
-        ),
-        ActionChip(
-          avatar: const Icon(Icons.public, size: 18),
-          label: Text(tr('crowdsourcedConfigsShort')),
-          onPressed: () {
-            openCrowdsourcedConfigs();
-          },
-        ),
-      ],
-    ),
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    final SettingsProvider settingsProvider = context.watch<SettingsProvider>();
-
-    final bool doingSomething = gettingAppInfo || searching;
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      bottomNavigationBar: pickedSource == null
-          ? _getSourcesListWidget(context)
-          : null,
-      body: CustomScrollView(
-        slivers: <Widget>[
-          CustomAppBar(title: tr('addApp')),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                16,
-                0,
-                16,
-                MediaQuery.of(context).padding.bottom,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: GeneratedForm(
-                          key: Key('url-$urlInputKey'),
-                          tileMode: true,
-                          items: [
-                            [
-                              GeneratedFormTextField(
-                                'appSourceURL',
-                                label: tr('appSourceURL'),
-                                value: userInput,
-                                required: false,
-                                additionalValidators: [
-                                  (value) {
-                                    if (value == null ||
-                                        value.trim().isEmpty) {
-                                      return null;
-                                    }
-                                    try {
-                                      sourceProvider
-                                          .getSource(
-                                            value,
-                                            overrideSource:
-                                                pickedSourceOverride,
-                                          )
-                                          .standardizeUrl(value);
-                                    } catch (e) {
-                                      return e is String
-                                          ? e
-                                          : e is ObtainiumError
-                                          ? e.toString()
-                                          : tr('error');
-                                    }
-                                    return null;
-                                  },
-                                ],
-                              ),
-                            ],
-                          ],
-                          onValueChanges: (values, valid, isBuilding) {
-                            changeUserInput(
-                              values['appSourceURL']!,
-                              valid,
-                              isBuilding,
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      gettingAppInfo
-                          ? const Padding(
-                              padding: EdgeInsets.all(12),
-                              child: SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                    strokeWidth: 2),
-                              ),
-                            )
-                          : IconButton(
-                              icon: const Icon(Icons.add_rounded),
-                              visualDensity: VisualDensity.compact,
-                              tooltip: tr('add'),
-                              onPressed:
-                                  doingSomething ||
-                                          pickedSource == null ||
-                                          !_urlValid ||
-                                          userInput.trim().isEmpty ||
-                                          (pickedSource!
-                                                      .combinedAppSpecificSettingFormItems
-                                                      .isNotEmpty &&
-                                                  !additionalSettingsValid)
-                                      ? null
-                                      : () {
-                                          settingsProvider.selectionClick();
-                                          addApp(context);
-                                        },
-                            ),
-                    ],
-                  ),
-                  if (pickedSource != null) ...[
-                    const SizedBox(height: 13),
-                    GeneratedForm(
-                      tileMode: true,
-                      items: [
-                        [
-                          GeneratedFormDropdown(
-                            'overrideSource',
-                            value: pickedSourceOverride ?? '',
-                            [
-                              MapEntry('', tr('none')),
-                              ...sourceProvider.sources
-                                  .where(
-                                    (s) =>
-                                        s.allowOverride ||
-                                        (pickedSource!.sourceIdentifier ==
-                                            s.sourceIdentifier),
-                                  )
-                                  .map(
-                                    (s) => MapEntry(s.sourceIdentifier, s.name),
-                                  ),
-                            ],
-                            label: tr('overrideSource'),
-                          ),
-                        ],
-                      ],
-                      onValueChanges: (values, valid, isBuilding) {
-                        final newOverride =
-                            (values['overrideSource'] == null ||
-                                values['overrideSource'] == '')
-                            ? null
-                            : values['overrideSource'] as String?;
-                        setSourceOverride(newOverride);
-                      },
-                    ),
-                  ],
-                  if (shouldShowSearchBar) ...[
-                    const SizedBox(height: 13),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: GeneratedForm(
-                            tileMode: true,
-                            items: [
-                              [
-                                GeneratedFormTextField(
-                                  'searchSomeSources',
-                                  label: tr('searchSomeSourcesLabel'),
-                                  required: false,
-                                ),
-                              ],
-                            ],
-                            onValueChanges: (values, valid, isBuilding) {
-                              if (values.isNotEmpty &&
-                                  valid &&
-                                  !isBuilding) {
-                                setState(() {
-                                  searchQuery =
-                                      values['searchSomeSources']!.trim();
-                                });
-                              }
+    return Dialog.fullscreen(
+      child: Stack(
+        children: [
+          Scaffold(
+            body: CustomScrollView(
+              shrinkWrap: true,
+              slivers: <Widget>[
+                SliverAppBar.large(
+                  pinned: true,
+                  title: Text('addApp'.t()),
+                  actions: [
+                    TextButton(
+                      onPressed:
+                          gettingAppInfo ||
+                              pickedSource == null ||
+                              (pickedSource!
+                                      .combinedAppSpecificSettingFormItems
+                                      .isNotEmpty &&
+                                  !additionalSettingsValid)
+                          ? null
+                          : () {
+                              HapticFeedback.selectionClick();
+                              addApp();
                             },
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        searching
-                            ? const Padding(
-                                padding: EdgeInsets.all(12),
-                                child: SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                      strokeWidth: 2),
-                                ),
-                              )
-                            : IconButton(
-                                icon: const Icon(
-                                    Icons.search_rounded),
-                                visualDensity:
-                                    VisualDensity.compact,
-                                tooltip: tr('search'),
-                                onPressed: doingSomething
-                                    ? null
-                                    : () => runSearch(context),
-                              ),
-                      ],
+                      child: Text('add'.t()),
                     ),
                   ],
-                  if (pickedSource == null && userInput.isEmpty) ...[
-                    if (shouldShowSearchBar) const SizedBox(height: 13),
-                    const ImportSection(),
-                  ],
-                  if (pickedSource != null)
-                    FutureBuilder(
-                      future: _sourceNoteFuture,
-                      builder: (ctx, val) {
-                        if (val.data != null && val.data!.isNotEmpty) {
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                            child: ConnectedCard(
-                              isFirst: true,
-                              isLast: true,
-                              padding: const EdgeInsets.all(16),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    pickedSource!.name,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium
-                                        ?.copyWith(
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.primary,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: Text(
+                  leading: IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  //bottom: (pickedSource != null || cameFromSearch)
+                  //    ? PreferredSize(
+                  //        preferredSize: const Size.fromHeight(4),
+                  //        child: AppAddingProgressBar(
+                  //          currentStep: cameFromSearch ? 3 : 2,
+                  //          totalSteps: cameFromSearch ? 3 : 2,
+                  //        ),
+                  //      )
+                  //    : null,
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (pickedSource != null)
+                          FutureBuilder(
+                            builder: (ctx, val) {
+                              return val.data != null && val.data!.isNotEmpty
+                                  ? Text(
                                       val.data!,
                                       style: Theme.of(
                                         context,
                                       ).textTheme.bodySmall,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      },
+                                    )
+                                  : const SizedBox();
+                            },
+                            future: _sourceNoteFuture,
+                          ),
+                        if (pickedSource != null) getAdditionalOptsCol(),
+                      ],
                     ),
-                  if (pickedSource != null)
-                    _getAdditionalOptsCol(context, settingsProvider),
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
+          ),
+          ConfettiWidget(
+            confettiController: _confettiController,
+            blastDirectionality: BlastDirectionality.explosive,
+            colors: const [
+              Colors.green,
+              Colors.blue,
+              Colors.pink,
+              Colors.orange,
+              Colors.purple,
+              Colors.yellow,
+            ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class SelectionModal extends StatefulWidget {
+  const SelectionModal({
+    super.key,
+    required this.entries,
+    this.selectedByDefault = true,
+    this.onlyOneSelectionAllowed = false,
+    this.title,
+    this.deselectThese = const [],
+  });
+
+  final String? title;
+  final Map<String, List<String>> entries;
+  final bool selectedByDefault;
+  final List<String> deselectThese;
+  final bool onlyOneSelectionAllowed;
+
+  @override
+  State<SelectionModal> createState() => _SelectionModalState();
+}
+
+class _SelectionModalState extends State<SelectionModal> {
+  Map<MapEntry<String, List<String>>, bool> entrySelections = {};
+  String filterRegex = '';
+  final TextEditingController _filterController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    for (var entry in widget.entries.entries) {
+      entrySelections.putIfAbsent(
+        entry,
+        () =>
+            widget.selectedByDefault &&
+            !widget.onlyOneSelectionAllowed &&
+            !widget.deselectThese.contains(entry.key),
+      );
+    }
+    if (widget.selectedByDefault && widget.onlyOneSelectionAllowed) {
+      selectOnlyOne(widget.entries.entries.first.key);
+    }
+  }
+
+  @override
+  void dispose() {
+    _filterController.dispose();
+    super.dispose();
+  }
+
+  void selectOnlyOne(String url) {
+    for (var e in entrySelections.keys) {
+      entrySelections[e] = e.key == url;
+    }
+  }
+
+  void selectAll({bool deselect = false}) {
+    for (var e in entrySelections.keys) {
+      entrySelections[e] = !deselect;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Map<MapEntry<String, List<String>>, bool> filteredEntrySelections = {};
+    entrySelections.forEach((key, value) {
+      var searchableText = key.value.isEmpty ? key.key : key.value[0];
+      try {
+        if (filterRegex.isEmpty ||
+            RegExp(
+              filterRegex,
+              caseSensitive: false,
+            ).hasMatch(searchableText)) {
+          filteredEntrySelections.putIfAbsent(key, () => value);
+        }
+      } catch (e) {
+        if (filterRegex.isEmpty ||
+            searchableText.toLowerCase().contains(filterRegex.toLowerCase())) {
+          filteredEntrySelections.putIfAbsent(key, () => value);
+        }
+      }
+    });
+
+    Widget getSelectAllButton() {
+      if (widget.onlyOneSelectionAllowed) {
+        return const SizedBox.shrink();
+      }
+      var noneSelected = entrySelections.values.every((v) => v == false);
+      return noneSelected
+          ? TextButton(
+              onPressed: () => setState(selectAll),
+              child: Text('selectAll'.t()),
+            )
+          : TextButton(
+              onPressed: () => setState(() => selectAll(deselect: true)),
+              child: Text(t('deselectX', args: ['all'.t()])),
+            );
+    }
+
+    return Dialog.fullscreen(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(),
+            tooltip: 'cancel'.t(),
+          ),
+          title: Text(widget.title ?? 'pick'.t()),
+          actions: [
+            getSelectAllButton(),
+            TextButton(
+              onPressed: entrySelections.values.every((v) => v == false)
+                  ? null
+                  : () {
+                      Navigator.of(context).pop(
+                        entrySelections.entries
+                            .where((entry) => entry.value)
+                            .map((e) => e.key.key)
+                            .toList(),
+                      );
+                    },
+              child: Text(
+                widget.onlyOneSelectionAllowed
+                    ? 'pick'.t()
+                    : t(
+                        'selectX',
+                        args: [
+                          entrySelections.values
+                              .where((b) => b)
+                              .length
+                              .toString(),
+                        ],
+                      ),
+              ),
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            //const AppAddingProgressBar(currentStep: 1, totalSteps: 3),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'addApp'.t(),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: TextFormField(
+                controller: _filterController,
+                decoration: InputDecoration(
+                  labelText: 'filter'.t(),
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: _filterController.text.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            setState(() {
+                              _filterController.clear();
+                              filterRegex = '';
+                            });
+                          },
+                        )
+                      : null,
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    filterRegex = value;
+                  });
+                },
+                validator: regExValidator,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    if (widget.onlyOneSelectionAllowed)
+                      RadioGroup<String>(
+                        groupValue: entrySelections.entries
+                            .where((e) => e.value)
+                            .map((e) => e.key.key)
+                            .firstOrNull,
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() => selectOnlyOne(value));
+                          }
+                        },
+                        child: Column(
+                          children: filteredEntrySelections.keys.map((entry) {
+                            Widget urlLink = Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  entry.value.isEmpty
+                                      ? entry.key
+                                      : entry.value[0],
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            );
+
+                            Widget? descriptionText = entry.value.length <= 1
+                                ? null
+                                : Text(
+                                    entry.value[1].length > 128
+                                        ? '${entry.value[1].substring(0, 128)}...'
+                                        : entry.value[1],
+                                    style: const TextStyle(fontSize: 12),
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                  );
+
+                            return RadioListTile<String>(
+                              title: urlLink,
+                              subtitle: descriptionText,
+                              value: entry.key,
+                            );
+                          }).toList(),
+                        ),
+                      )
+                    else
+                      ...filteredEntrySelections.keys.map((entry) {
+                        void selectThis(bool? value) {
+                          setState(() {
+                            value ??= false;
+                            if (value! && widget.onlyOneSelectionAllowed) {
+                              selectOnlyOne(entry.key);
+                            } else {
+                              entrySelections[entry] = value!;
+                            }
+                          });
+                        }
+
+                        Widget urlLink = Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              entry.value.isEmpty ? entry.key : entry.value[0],
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        );
+
+                        Widget? descriptionText = entry.value.length <= 1
+                            ? null
+                            : Text(
+                                entry.value[1].length > 128
+                                    ? '${entry.value[1].substring(0, 128)}...'
+                                    : entry.value[1],
+                                style: const TextStyle(fontSize: 12),
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              );
+
+                        return CheckboxListTile(
+                          title: urlLink,
+                          subtitle: descriptionText,
+                          value: entrySelections[entry],
+                          onChanged: selectThis,
+                          controlAffinity: ListTileControlAffinity.leading,
+                        );
+                      }),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    // Here is the end of the dialog
+  }
+}
+
+class InstalledAppsDialog extends StatefulWidget {
+  final List<PackageInfo> installedApps;
+
+  const InstalledAppsDialog({super.key, required this.installedApps});
+
+  @override
+  State<InstalledAppsDialog> createState() => _InstalledAppsDialogState();
+}
+
+class _InstalledAppsDialogState extends State<InstalledAppsDialog> {
+  bool showSystemApps = false;
+  final Map<String, Uint8List> _iconCache = {};
+  final Map<String, String> _labelCache = {};
+  final Set<String> _loadingPackageNames = {};
+
+  void _onNeedLoad(String packageName) async {
+    if (_iconCache.containsKey(packageName) ||
+        _labelCache.containsKey(packageName) ||
+        _loadingPackageNames.contains(packageName)) {
+      return;
+    }
+
+    _loadingPackageNames.add(packageName);
+
+    try {
+      final app = widget.installedApps.firstWhere(
+        (a) => a.packageName == packageName,
+      );
+
+      final icon = await app.applicationInfo?.getAppIcon();
+      final label = await app.applicationInfo?.getAppLabel();
+
+      if (mounted) {
+        setState(() {
+          if (icon != null) {
+            _iconCache[packageName] = icon;
+          }
+          if (label != null) {
+            _labelCache[packageName] = label;
+          }
+          _loadingPackageNames.remove(packageName);
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _loadingPackageNames.remove(packageName);
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final filteredApps = widget.installedApps.where((app) {
+      final flags = app.applicationInfo?.flags ?? 0;
+      return showSystemApps || (flags & 0x00000001) == 0;
+    }).toList();
+
+    return AlertDialog(
+      title: Text('installedApps'.t()),
+      content: SizedBox(
+        width: double.maxFinite,
+        height: MediaQuery.of(context).size.height * 0.6,
+        child: Column(
+          children: [
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(
+                showSystemApps ? 'hideSystemApps'.t() : 'showSystemApps'.t(),
+              ),
+              value: showSystemApps,
+              onChanged: (val) {
+                setState(() {
+                  showSystemApps = val;
+                });
+              },
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: filteredApps.length,
+                itemBuilder: (context, index) {
+                  final app = filteredApps[index];
+                  final packageName = app.packageName ?? '';
+                  return InstalledAppTile(
+                    app: app,
+                    icon: _iconCache[packageName],
+                    label: _labelCache[packageName],
+                    onNeedLoad: _onNeedLoad,
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text('ok'.t()),
+        ),
+      ],
+    );
+  }
+}
+
+class InstalledAppTile extends StatefulWidget {
+  final PackageInfo app;
+  final Uint8List? icon;
+  final String? label;
+  final Function(String packageName) onNeedLoad;
+
+  const InstalledAppTile({
+    super.key,
+    required this.app,
+    this.icon,
+    this.label,
+    required this.onNeedLoad,
+  });
+
+  @override
+  State<InstalledAppTile> createState() => _InstalledAppTileState();
+}
+
+class _InstalledAppTileState extends State<InstalledAppTile> {
+  late Uint8List? _icon;
+  late String? _label;
+
+  @override
+  void initState() {
+    super.initState();
+    _icon = widget.icon;
+    _label = widget.label;
+    if (_icon == null || _label == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.onNeedLoad(widget.app.packageName!);
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(InstalledAppTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.icon != oldWidget.icon) {
+      _icon = widget.icon;
+    }
+    if (widget.label != oldWidget.label) {
+      _label = widget.label;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      dense: true,
+      leading: _icon != null
+          ? Image.memory(_icon!, width: 40, height: 40)
+          : const Icon(Icons.apps),
+      title: Text(_label ?? (widget.app.packageName ?? 'Unknown')),
+      subtitle: Text(widget.app.packageName ?? ''),
+      onTap: () {
+        Navigator.of(context).pop(widget.app.packageName);
+      },
     );
   }
 }

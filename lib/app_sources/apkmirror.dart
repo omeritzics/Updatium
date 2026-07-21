@@ -1,21 +1,20 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:obtainium/components/generated_form_model.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
 
 class APKMirror extends AppSource {
   APKMirror() {
     name = 'APKMirror';
     hosts = ['apkmirror.com'];
     enforceTrackOnly = true;
+    name = 'APKMirror';
+    naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
   }
 
@@ -41,11 +40,11 @@ class APKMirror extends AppSource {
   Future<Map<String, String>?> getRequestHeaders(
     Map<String, dynamic> additionalSettings,
     String url, {
-    bool forAPKDownload = false,
+    bool forAPKDownload = true,
   }) async {
     return {
       'User-Agent':
-          "Obtainium/${(await getInstalledInfo(obtainiumId))?.versionName ?? '1.0.0'}",
+          "Updatium/${(await getInstalledInfo(updatiumId))?.versionName ?? '1.0.0'}",
     };
   }
 

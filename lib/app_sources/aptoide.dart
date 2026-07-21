@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/services/slang_converter.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 class Aptoide extends AppSource {
   Aptoide() {
@@ -12,7 +12,6 @@ class Aptoide extends AppSource {
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     return standardizeUrlWithRegex(
@@ -39,7 +38,7 @@ class Aptoide extends AppSource {
   ) async {
     final res = await sourceRequest(standardUrl, additionalSettings);
     if (res.statusCode != 200) {
-      throw getObtainiumHttpError(res);
+      throw getUpdatiumHttpError(res);
     }
     final idMatch = RegExp(
       r'"app"\s*:\s*\{\s*"id"\s*:\s*([0-9]+)',
@@ -55,7 +54,7 @@ class Aptoide extends AppSource {
       additionalSettings,
     );
     if (res2.statusCode != 200) {
-      throw getObtainiumHttpError(res2);
+      throw getUpdatiumHttpError(res22);
     }
     final data = jsonDecode(res2.body)?['nodes']?['meta']?['data'];
     if (data == null) {

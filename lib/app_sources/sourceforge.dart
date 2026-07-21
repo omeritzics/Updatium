@@ -1,7 +1,8 @@
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 /// Fetches the latest release from a SourceForge project's RSS feed.
 ///
@@ -13,8 +14,8 @@ class SourceForge extends AppSource {
     name = 'SourceForge';
     suppressStandardVersionExtraction = true;
     hosts = ['sourceforge.net'];
+    name = 'SourceForge';
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     final sourceRegex = getSourceRegex(hosts);

@@ -9,8 +9,8 @@ assignees: ''
 
 **Prerequisites**
 <!-- Please ensure your request is not part of an existing issue. -->
-<!-- Please ensure you have checked the Obtainium Wiki. -->
-<!-- Please ensure your request is an actual bug and not intended behaviour (this is frequently the case for issues involving version strings and the HTML source. -->
+<!-- Please ensure you have checked the Updatium Wiki. -->
+<!-- Please ensure your request is an actual bug and not intended behavior (this is frequently the case for issues involving version strings and the HTML source. -->
 
 **Describe the bug**
 <!-- A clear and concise description of what the bug is. -->
@@ -23,12 +23,12 @@ assignees: ''
 4. See error -->
 
 **Screenshots and Logs**
-<!-- If applicable, add screenshots, logs, and any other artifacts (like some/all files under `/Android/data/dev.imranr.obtainium/`) that you think may help troubleshoot the issue. -->
+<!-- If applicable, add screenshots, logs, and any other artifacts (like files under `/Android/data/io.github.omeritzics.updatium/`) that you think may help troubleshoot the issue. -->
 
 **Please complete the following information:**
- - Device: <!-- [e.g. Pixel 7] -->
- - OS: <!-- [e.g. GrapheneOS] -->
- - Obtainium Version: <!-- [e.g. 0.14.6-beta] -->
+ - Device: <!-- [e.g. Pixel 9a] -->
+ - OS: <!-- [e.g. Android 16, GrapheneOS ROM] -->
+ - Updatium Version: <!-- [e.g. v26.6] -->
 
 **Additional context**
 <!-- Add any other context about the problem here. -->

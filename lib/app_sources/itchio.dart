@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:html/dom.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:html/parser.dart';
 
 /// AppSource implementation for itch.io.
@@ -277,7 +277,7 @@ class ItchIO extends AppSource {
       // Retrieve the body for parsing
       final res = await sourceRequest(standardUrl, additionalSettings);
       if (res.statusCode != 200) {
-        throw getObtainiumHttpError(res);
+        throw getUpdatiumHttpError(res);
       }
       final body = res.body;
 

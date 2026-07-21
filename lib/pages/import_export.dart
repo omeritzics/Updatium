@@ -2,18 +2,31 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:obtainium/components/generated_form_renderer.dart';
-import 'package:obtainium/components/ui_widgets.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/pages/add_app.dart';
+import 'package:updatium/services/slang_converter.dart';
+import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:updatium/services/githubstars.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:docman/docman.dart';
+import 'package:updatium/components/generated_form.dart';
+
+// Material 3 spacing tokens
+const gap8 = SizedBox(height: 8);
+const gap12 = SizedBox(height: 12);
+const gap16 = SizedBox(height: 16);
+const gap24 = SizedBox(height: 24);
+const gap32 = SizedBox(height: 32);
+
+const horizontalGap8 = SizedBox(width: 8);
+const horizontalGap12 = SizedBox(width: 12);
+const horizontalGap16 = SizedBox(width: 16);
+const horizontalGap24 = SizedBox(width: 24);
 
 class ImportFromURLListPage extends StatefulWidget {
   const ImportFromURLListPage({super.key});
@@ -79,212 +92,149 @@ class _ImportFromURLListPageState extends State<ImportFromURLListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: _controller,
-      child: Builder(
-        builder: (context) {
-          final controller = context.watch<ImportFromURLListController>();
-          return Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            body: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  pinned: true,
-                  automaticallyImplyLeading: false,
-                  title: Text(tr('importFromURLList')),
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      16,
-                      0,
-                      16,
-                      MediaQuery.of(context).padding.bottom,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      spacing: 16,
-                      children: [
-                        ConnectedCard(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .surfaceContainerHighest,
-                          child: TextFormField(
-                            controller: controller.urlController,
-                            maxLines: null,
-                            minLines: 8,
-                            decoration: InputDecoration(
-                                labelText: tr('appURLList')),
-                            validator: controller.validate,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                          ),
-                        ),
-                        OutlinedButton.icon(
-                          onPressed: controller.isImporting
-                              ? null
-                              : () => controller.importFromFile(context),
-                          icon: const Icon(Icons.upload_file_outlined),
-                          label: Text(tr('importFromURLsInFile')),
-                        ),
-                        FilledButton(
-                          onPressed: controller.isImporting ? null : _import,
-                          child: controller.isImporting
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(),
-                                )
-                              : Text(tr('import')),
-                        ),
-                        ConnectedCard(
-                          isFirst: true,
-                          isLast: true,
-                          padding: const EdgeInsets.all(16),
-                          child: Text(
-                            tr('importedAppsIdDisclaimer'),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+    SourceProvider sourceProvider = SourceProvider();
+    var appsProvider = context.watch<AppsProvider>();
+    var settingsProvider = context.watch<SettingsProvider>();
+
+    urlListImport({String? initValue, bool overrideInitValid = false}) {
+      final formKey = GlobalKey<FormState>();
+      final controller = TextEditingController(text: initValue ?? '');
+
+      showDialog<String?>(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: Text('importFromURLList'.t()),
+            contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+            content: Form(
+              key: formKey,
+              child: TextFormField(
+                controller: controller,
+                decoration: InputDecoration(labelText: 'appURLList'.t()),
+                maxLines: 7,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value != null && value.isNotEmpty) {
+                    var lines = value.trim().split('\n');
+                    for (int i = 0; i < lines.length; i++) {
+                      try {
+                        sourceProvider.getSource(lines[i]);
+                      } catch (e) {
+                        return '${'line'.t()} ${i + 1}: $e';
+                      }
+                    }
+                  }
+                  return null;
+                },
+              ),
             ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(null),
+                child: Text('cancel'.t()),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (formKey.currentState?.validate() == true) {
+                    Navigator.of(ctx).pop(controller.text);
+                  }
+                },
+                child: Text('continue'.t()),
+              ),
+            ],
           );
         },
-      ),
-    );
-  }
-}
-
-/// The app-import controls (file import, source search, URL-list import, mass
-/// sources). Embedded in the Add App page (shown while no URL is entered).
-class ImportSection extends StatefulWidget {
-  const ImportSection({super.key});
-
-  @override
-  State<ImportSection> createState() => _ImportSectionState();
-}
-
-class _ImportSectionState extends State<ImportSection> {
-  bool importInProgress = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final appsProvider = context.read<AppsProvider>();
-    final settingsProvider = context.read<SettingsProvider>();
-
-    void runObtainiumImport() {
-      settingsProvider.selectionClick();
-      FilePicker.pickFiles()
-          .then((result) async {
-            if (result == null) {
-              if (!context.mounted) return;
-              showMessage(tr('cancelled'), context);
-              return;
+      ).then((value) async {
+        controller.dispose();
+        if (value != null && value.isNotEmpty) {
+          var urls = value.trim().split('\n');
+          setState(() {
+            importInProgress = true;
+          });
+          try {
+            final errors = await appsProvider.addAppsByURL(urls);
+            if (!mounted) return;
+            if (errors.isEmpty) {
+              showMessage(
+                t(
+                  'importedX',
+                  args: ['apps'.plural(urls.length).toLowerCase()],
+                ),
+                context,
+              );
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext ctx) {
+                  return ImportErrorDialog(
+                    urlsLength: urls.length,
+                    errors: errors,
+                  );
+                },
+              );
             }
-            if (result.files.isEmpty) {
-              return;
-            }
-            if (mounted) {
-              setState(() {
-                importInProgress = true;
-              });
-            }
-            final path = result.files.single.path;
-            if (path == null) {
-              throw ObtainiumError(tr('noFilePickerAvailable'));
-            }
-            final String data = await File(path).readAsString();
-            try {
-              jsonDecode(data);
-            } catch (e) {
-              throw ObtainiumError(tr('invalidInput'));
-            }
-            final value = await appsProvider.import(data);
-            appsProvider.addMissingCategories(settingsProvider);
-            if (!context.mounted) return;
-            showMessage(
-              '${tr('importedX', args: [plural('apps', value.key.length).toLowerCase()])}${value.value ? ' + ${tr('settings').toLowerCase()}' : ''}',
-              context,
-            );
-          })
-          .catchError((e) {
-            if (!context.mounted) return;
-            _showImportError(e, context);
-          })
-          .whenComplete(() {
+          } catch (e) {
+            if (!mounted) return;
+            showError(e, context);
+          } finally {
             if (mounted) {
               setState(() {
                 importInProgress = false;
               });
             }
-          });
-    }
-
-    Future<void> runMassSourceImport(MassAppUrlSource source) async {
-      try {
-        final values = await showDialog<Map<String, dynamic>?>(
-          context: context,
-          builder: (BuildContext ctx) {
-            return GeneratedFormModal(
-              title: tr('importX', args: [source.name]),
-              items: source.requiredArgs
-                  .map((e) => [GeneratedFormTextField(e, label: e)])
-                  .toList(),
-            );
-          },
-        );
-        if (values != null) {
-          if (mounted) {
-            setState(() {
-              importInProgress = true;
-            });
-          }
-          final urlsWithDescriptions = await source.getUrlsWithDescriptions(
-            values.values.map((e) => e.toString()).toList(),
-          );
-          if (!context.mounted) return;
-          final selectedUrls = await showDialog<List<String>?>(
-            context: context,
-            builder: (BuildContext ctx) {
-              return SelectionModal(entries: urlsWithDescriptions);
-            },
-          );
-          if (selectedUrls != null) {
-            final errors = await appsProvider.addAppsByURL(selectedUrls);
-            if (!context.mounted) return;
-            if (errors.isEmpty) {
-              showMessage(
-                tr(
-                  'importedX',
-                  args: [plural('apps', selectedUrls.length).toLowerCase()],
-                ),
-                context,
-              );
-            } else {
-              unawaited(
-                showDialog(
-                  context: context,
-                  builder: (BuildContext ctx) {
-                    return ImportErrorDialog(
-                      urlsLength: selectedUrls.length,
-                      errors: errors,
-                    );
-                  },
-                ),
-              );
-            }
           }
         }
+      });
+    }
+
+    runUpdatiumExport({bool pickOnly = false}) async {
+      settingsProvider.selectionClick();
+      try {
+        final result = await appsProvider.export(
+          pickOnly: pickOnly || (await settingsProvider.getExportDir()) == null,
+          sp: settingsProvider,
+        );
+        if (result != null && mounted) {
+          showMessage(t('exportedTo', args: [result]), context);
+        }
       } catch (e) {
-        if (!context.mounted) return;
+        if (!mounted) return;
+        showError(e, context);
+      }
+    }
+
+    runUpdatiumImport() async {
+      HapticFeedback.selectionClick();
+      setState(() {
+        importInProgress = true;
+      });
+      try {
+        final result = await DocMan.pick.files(limit: 1);
+        if (result.isNotEmpty) {
+          String data = File(result.first.path).readAsStringSync();
+          try {
+            jsonDecode(data);
+          } catch (e) {
+            throw UpdatiumError('invalidInput'.t());
+          }
+          final value = await appsProvider.import(data);
+          if (!mounted) return;
+          var cats = settingsProvider.categories;
+          appsProvider.apps.forEach((key, valueApp) {
+            for (var c in valueApp.app.categories ?? []) {
+              if (!cats.containsKey(c)) {
+                cats[c] = generateRandomLightColor().toARGB32();
+              }
+            }
+          });
+          appsProvider.addMissingCategories(settingsProvider);
+          showMessage(
+            '${t('importedX', args: ['apps'.plural(value.key.length).toLowerCase()])}${value.value ? ' + ${'settings'.t().toLowerCase()}' : ''}',
+            context,
+          );
+        }
+      } catch (e) {
+        if (!mounted) return;
         showError(e, context);
       } finally {
         if (mounted) {
@@ -295,35 +245,378 @@ class _ImportSectionState extends State<ImportSection> {
       }
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 12,
-      children: [
-        if (importInProgress) const LinearProgressIndicator(),
-        ConnectedCard(
-          isFirst: true,
-          isLast: true,
-          child: ActionListTile(
-            icon: Icons.download_outlined,
-            label: tr('obtainiumImport'),
-            onTap: importInProgress ? null : runObtainiumImport,
-          ),
-        ),
-        Column(
-          spacing: 2,
-          children: () {
-            final tiles = <Widget>[
-              ActionListTile(
-                icon: Icons.format_list_bulleted_outlined,
-                label: tr('importFromURLList'),
-                onTap: importInProgress
-                    ? null
-                    : () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const ImportFromURLListPage(),
+    runUrlImport() async {
+      setState(() {
+        importInProgress = true;
+      });
+      try {
+        final result = await DocMan.pick.files(limit: 1);
+        if (result.isNotEmpty) {
+          await urlListImport(
+            overrideInitValid: true,
+            initValue: RegExp('https?://[^"]+')
+                .allMatches(File(result.first.path).readAsStringSync())
+                .map((e) => e.input.substring(e.start, e.end))
+                .toSet()
+                .toList()
+                .where((url) {
+                  try {
+                    sourceProvider.getSource(url);
+                    return true;
+                  } catch (e) {
+                    return false;
+                  }
+                })
+                .join('\n'),
+          );
+        }
+      } catch (e) {
+        if (!mounted) return;
+        showError(e, context);
+      } finally {
+        if (mounted) {
+          setState(() {
+            importInProgress = false;
+          });
+        }
+      }
+    }
+
+    runMassSourceImport(MassAppUrlSource source) {
+      () async {
+            final formKey = GlobalKey<FormState>();
+            final controllers = {
+              for (var arg in source.requiredArgs) arg: TextEditingController(),
+            };
+
+            var values =
+                await showDialog<Map<String, String>?>(
+                  context: context,
+                  builder: (BuildContext ctx) {
+                    return AlertDialog(
+                      title: Text(t('importX', args: [source.name])),
+                      content: Form(
+                        key: formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: source.requiredArgs.map((arg) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: TextFormField(
+                                controller: controllers[arg],
+                                decoration: InputDecoration(labelText: arg),
+                                validator: (v) => v == null || v.isEmpty
+                                    ? 'requiredInBrackets'.t()
+                                    : null,
+                              ),
+                            );
+                          }).toList(),
                         ),
                       ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(null),
+                          child: Text('cancel'.t()),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            if (formKey.currentState?.validate() == true) {
+                              Navigator.of(ctx).pop(
+                                controllers.map((k, v) => MapEntry(k, v.text)),
+                              );
+                            }
+                          },
+                          child: Text('continue'.t()),
+                        ),
+                      ],
+                    );
+                  },
+                ).then((_) {
+                  for (var controller in controllers.values) {
+                    controller.dispose();
+                  }
+                });
+            if (values != null) {
+              setState(() {
+                importInProgress = true;
+              });
+              var urlsWithDescriptions = await source.getUrlsWithDescriptions(
+                values.values.map((e) => e.toString()).toList(),
+              );
+              var selectedUrls = await showDialog<List<String>?>(
+                context: context,
+                builder: (BuildContext ctx) {
+                  return SelectionModal(entries: urlsWithDescriptions);
+                },
+              );
+              if (selectedUrls != null) {
+                var errors = await appsProvider.addAppsByURL(selectedUrls);
+                if (errors.isEmpty) {
+                  showMessage(
+                    t(
+                      'importedX',
+                      args: ['apps'.plural(selectedUrls.length).toLowerCase()],
+                    ),
+                    context,
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext ctx) {
+                      return ImportErrorDialog(
+                        urlsLength: selectedUrls.length,
+                        errors: errors,
+                      );
+                    },
+                  );
+                }
+              }
+            }
+          }()
+          .catchError((e) {
+            if (!mounted) return;
+            showError(e, context);
+          })
+          .whenComplete(() {
+            if (mounted) {
+              setState(() {
+                importInProgress = false;
+              });
+            }
+          });
+    }
+
+    var sourceStrings = <String, List<String>>{};
+    sourceProvider.sources.where((e) => e.canSearch).forEach((s) {
+      sourceStrings[s.name] = [s.name];
+    });
+
+    Widget actionTile({
+      required IconData icon,
+      required String label,
+      Widget? trailing,
+      required VoidCallback? onTap,
+    }) {
+      return ListTile(
+        leading: Icon(icon),
+        title: Text(label),
+        trailing: trailing,
+        onTap: onTap,
+        enabled: onTap != null,
+      );
+    }
+
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar.large(pinned: true, title: Text('importExport'.t())),
+          SliverFillRemaining(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                spacing: 12,
+                children: [
+                  FutureBuilder(
+                    future: settingsProvider.getExportDir(),
+                    builder: (context, snapshot) {
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Semantics(
+                                  button: true,
+                                  label: 'pickExportDir'.t(),
+                                  hint:
+                                      'Choose a directory to export your apps and settings',
+                                  excludeSemantics: true,
+                                  child: M3EFilledButton.tonalIcon(
+                                    onPressed:
+                                        importInProgress ||
+                                            appsProvider.exportInProgress
+                                        ? null
+                                        : () {
+                                            runUpdatiumExport(pickOnly: true);
+                                          },
+                                    icon: const Icon(Icons.folder_open),
+                                    label: Text(
+                                      'pickExportDir'.t(),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              horizontalGap16,
+                              Expanded(
+                                child: Semantics(
+                                  button: true,
+                                  label: 'updatiumExport'.t(),
+                                  hint: snapshot.data == null
+                                      ? 'Set export directory first'
+                                      : 'Export all your apps and settings to file',
+                                  excludeSemantics: true,
+                                  child: M3EFilledButton.tonalIcon(
+                                    onPressed:
+                                        importInProgress ||
+                                            appsProvider.exportInProgress ||
+                                            snapshot.data == null
+                                        ? null
+                                        : runUpdatiumExport,
+                                    icon: const Icon(Icons.upload_file),
+                                    label: Text(
+                                      'updatiumExport'.t(),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          gap8,
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Semantics(
+                                  button: true,
+                                  label: 'updatiumImport'.t(),
+                                  hint:
+                                      'Import apps and settings from a backup file',
+                                  excludeSemantics: true,
+                                  child: M3EFilledButton.tonalIcon(
+                                    onPressed: importInProgress
+                                        ? null
+                                        : runUpdatiumImport,
+                                    icon: const Icon(Icons.download),
+                                    label: Text(
+                                      'updatiumImport'.t(),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (snapshot.data != null)
+                            Column(
+                              children: [
+                                gap16,
+                                GeneratedForm(
+                                  items: [
+                                    [
+                                      GeneratedFormSwitch(
+                                        'autoExportOnChanges',
+                                        label: 'autoExportOnChanges'.t(),
+                                        defaultValue: settingsProvider
+                                            .autoExportOnChanges,
+                                      ),
+                                    ],
+                                    [
+                                      GeneratedFormDropdown(
+                                        'exportSettings',
+                                        [
+                                          MapEntry('0', 'none'.t()),
+                                          MapEntry('1', 'excludeSecrets'.t()),
+                                          MapEntry('2', 'all'.t()),
+                                        ],
+                                        label: 'includeSettings'.t(),
+                                        defaultValue: settingsProvider
+                                            .exportSettings
+                                            .toString(),
+                                      ),
+                                    ],
+                                  ],
+                                  onValueChanges: (value, valid, isBuilding) {
+                                    if (valid && !isBuilding) {
+                                      if (value['autoExportOnChanges'] !=
+                                          null) {
+                                        settingsProvider.autoExportOnChanges =
+                                            value['autoExportOnChanges'] ==
+                                            true;
+                                      }
+                                      if (value['exportSettings'] != null) {
+                                        settingsProvider.exportSettings =
+                                            int.parse(value['exportSettings']);
+                                      }
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                        ],
+                      );
+                    },
+                  ),
+                  if (importInProgress || appsProvider.exportInProgress)
+                    const Column(
+                      children: [gap12, LinearProgressIndicator(), gap12],
+                    )
+                  else
+                    Column(
+                      children: [
+                        gap32,
+                        Semantics(
+                          button: true,
+                          label: 'importFromURLList'.t(),
+                          hint:
+                              'Import multiple apps by entering their URLs in a list',
+                          excludeSemantics: true,
+                          child: M3EFilledButton.tonalIcon(
+                            onPressed: importInProgress ? null : urlListImport,
+                            icon: const Icon(Icons.list_alt),
+                            label: Text('importFromURLList'.t()),
+                          ),
+                        ),
+                        if (!settingsProvider.safeMode) ...[
+                          gap8,
+                          Semantics(
+                            button: true,
+                            label: 'importFromURLsInFile'.t(),
+                            hint:
+                                'Import apps by reading URLs from a text file',
+                            excludeSemantics: true,
+                            child: M3EFilledButton.tonalIcon(
+                              onPressed: importInProgress ? null : runUrlImport,
+                              icon: const Icon(Icons.link),
+                              label: Text('importFromURLsInFile'.t()),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ...sourceProvider.massUrlSources
+                      .where(
+                        (source) =>
+                            !(source is GitHubStars &&
+                                settingsProvider.safeMode),
+                      )
+                      .map(
+                        (source) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            gap8,
+                            M3EFilledButton.tonalIcon(
+                              onPressed: importInProgress
+                                  ? null
+                                  : () {
+                                      runMassSourceImport(source);
+                                    },
+                              icon: const Icon(Icons.cloud_download),
+                              label: Text(t('importX', args: [source.name])),
+                            ),
+                          ],
+                        ),
+                      ),
+                  const Spacer(),
+                  const Divider(height: 32),
+                  Text(
+                    'importedAppsIdDisclaimer'.t(),
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  gap8,
+                ],
               ),
               ...context.read<SourceProvider>().massUrlSources.map(
                 (source) => ActionListTile(
@@ -492,12 +785,12 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text(tr('importErrors')),
+      title: Text('importErrors'.t()),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            tr(
+            t(
               'importedXOfYApps',
               args: [
                 (widget.urlsLength - widget.errors.length).toString(),
@@ -506,394 +799,42 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
             ),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
-          const SizedBox(height: 16),
+          gap16,
           Text(
-            tr('followingURLsHadErrors'),
+            'followingURLsHadErrors'.t(),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           ...widget.errors.map((e) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 16),
-                Text(e[0]),
-                Text(e[1], style: const TextStyle(fontStyle: FontStyle.italic)),
+                gap16,
+                Text(
+                  e[0],
+                  style: Theme.of(context).textTheme.titleSmall,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  e[1],
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             );
           }),
         ],
       ),
       actions: [
-        FilledButton.tonal(
-          autofocus: context.read<SettingsProvider>().isTV,
+        TextButton.icon(
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text(tr('ok')),
-        ),
-      ],
-    );
-  }
-}
-
-class SelectionModal extends StatefulWidget {
-  const SelectionModal({
-    super.key,
-    required this.entries,
-    this.selectedByDefault = true,
-    this.onlyOneSelectionAllowed = false,
-    this.titlesAreLinks = true,
-    this.title,
-    this.deselectThese = const [],
-  });
-
-  final String? title;
-  final Map<String, List<String>> entries;
-  final bool selectedByDefault;
-  final List<String> deselectThese;
-  final bool onlyOneSelectionAllowed;
-  final bool titlesAreLinks;
-
-  @override
-  State<SelectionModal> createState() => _SelectionModalState();
-}
-
-class _SelectionModalState extends State<SelectionModal> {
-  Map<MapEntry<String, List<String>>, bool> entrySelections = {};
-  String filterRegex = '';
-  @override
-  void didUpdateWidget(SelectionModal oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.entries != oldWidget.entries ||
-        widget.selectedByDefault != oldWidget.selectedByDefault ||
-        widget.deselectThese != oldWidget.deselectThese) {
-      _resetEntrySelections();
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _resetEntrySelections();
-  }
-
-  void selectOnlyOne(String url) {
-    for (var e in entrySelections.keys) {
-      entrySelections[e] = e.key == url;
-    }
-  }
-
-  void selectAll({bool deselect = false}) {
-    for (var e in entrySelections.keys) {
-      entrySelections[e] = !deselect;
-    }
-  }
-
-  void _resetEntrySelections() {
-    entrySelections.clear();
-    for (var entry in widget.entries.entries) {
-      entrySelections[entry] =
-          widget.selectedByDefault &&
-          !widget.onlyOneSelectionAllowed &&
-          !widget.deselectThese.contains(entry.key);
-    }
-    if (widget.selectedByDefault &&
-        widget.onlyOneSelectionAllowed &&
-        widget.entries.entries.isNotEmpty) {
-      selectOnlyOne(widget.entries.entries.first.key);
-    }
-  }
-
-  Widget _buildSelectAllButton() {
-    if (widget.onlyOneSelectionAllowed) {
-      return const SizedBox.shrink();
-    }
-    final noneSelected = entrySelections.values.where((v) => v == true).isEmpty;
-    return noneSelected
-        ? TextButton(
-            style: const ButtonStyle(visualDensity: VisualDensity.compact),
-            onPressed: () {
-              setState(() {
-                selectAll();
-              });
-            },
-            child: Text(tr('selectAll')),
-          )
-        : TextButton(
-            style: const ButtonStyle(visualDensity: VisualDensity.compact),
-            onPressed: () {
-              setState(() {
-                selectAll(deselect: true);
-              });
-            },
-            child: Text(tr('deselectX', args: [''])),
-          );
-  }
-
-  void _selectThis(MapEntry<String, List<String>> entry, bool? value) {
-    setState(() {
-      value ??= false;
-      if (value! && widget.onlyOneSelectionAllowed) {
-        selectOnlyOne(entry.key);
-      } else {
-        entrySelections[entry] = value!;
-      }
-    });
-  }
-
-  Widget _buildUrlLink(MapEntry<String, List<String>> entry) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (widget.titlesAreLinks)
-          LinkText(
-            text: entry.value.isEmpty ? entry.key : entry.value[0],
-            url: entry.key,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          )
-        else
-          Text(
-            entry.value.isEmpty ? entry.key : entry.value[0],
-            style: const TextStyle(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.start,
-          ),
-        if (widget.titlesAreLinks)
-          Text(
-            Uri.parse(entry.key).host,
-            style: const TextStyle(
-              decoration: TextDecoration.underline,
-              fontSize: 12,
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildDescriptionText(MapEntry<String, List<String>> entry) {
-    return entry.value.length <= 1
-        ? const SizedBox.shrink()
-        : Text(
-            entry.value[1].length > 128
-                ? '${entry.value[1].substring(0, 128)}...'
-                : entry.value[1],
-            style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
-          );
-  }
-
-  Widget _buildSingleSelectTile(MapEntry<String, List<String>> entry) {
-    return ListTile(
-      title: InkWell(
-        onTap: widget.titlesAreLinks
-            ? null
-            : () {
-                _selectThis(entry, !(entrySelections[entry] ?? false));
-              },
-        child: _buildUrlLink(entry),
-      ),
-      subtitle: entry.value.length <= 1
-          ? null
-          : InkWell(
-              onTap: () {
-                setState(() {
-                  selectOnlyOne(entry.key);
-                });
-              },
-              child: _buildDescriptionText(entry),
-            ),
-      leading: Radio<String>(value: entry.key),
-    );
-  }
-
-  Widget _buildMultiSelectTile(MapEntry<String, List<String>> entry) {
-    return Row(
-      children: [
-        Checkbox(
-          value: entrySelections[entry],
-          onChanged: (value) {
-            _selectThis(entry, value);
-          },
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 8),
-              InkWell(
-                onTap: widget.titlesAreLinks
-                    ? null
-                    : () {
-                        _selectThis(entry, !(entrySelections[entry] ?? false));
-                      },
-                child: _buildUrlLink(entry),
-              ),
-              entry.value.length <= 1
-                  ? const SizedBox.shrink()
-                  : InkWell(
-                      onTap: () {
-                        _selectThis(entry, !(entrySelections[entry] ?? false));
-                      },
-                      child: _buildDescriptionText(entry),
-                    ),
-              const SizedBox(height: 8),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  List<Widget> _buildTVFooter() {
-    if (!context.read<SettingsProvider>().isTV ||
-        widget.onlyOneSelectionAllowed) {
-      return [];
-    }
-    return [
-      const SizedBox(height: 8),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(tr('cancel')),
-          ),
-          TextButton(
-            onPressed: entrySelections.values.where((b) => b).isEmpty
-                ? null
-                : () => Navigator.of(context).pop(
-                    entrySelections.entries
-                        .where((entry) => entry.value)
-                        .map((e) => e.key.key)
-                        .toList(),
-                  ),
-            child: Text(
-              tr(
-                'selectX',
-                args: [
-                  entrySelections.values.where((b) => b).length.toString(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    ];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final isTV = context.read<SettingsProvider>().isTV;
-    final Map<MapEntry<String, List<String>>, bool> filteredEntrySelections =
-        {};
-    entrySelections.forEach((key, value) {
-      final searchableText = key.value.isEmpty ? key.key : key.value[0];
-      if (filterRegex.isEmpty || RegExp(filterRegex).hasMatch(searchableText)) {
-        filteredEntrySelections.putIfAbsent(key, () => value);
-      }
-    });
-    if (filterRegex.isNotEmpty && filteredEntrySelections.isEmpty) {
-      entrySelections.forEach((key, value) {
-        final searchableText = key.value.isEmpty ? key.key : key.value[0];
-        if (filterRegex.isEmpty ||
-            RegExp(
-              filterRegex,
-              caseSensitive: false,
-            ).hasMatch(searchableText)) {
-          filteredEntrySelections.putIfAbsent(key, () => value);
-        }
-      });
-    }
-
-    final selectedRadioKey = entrySelections.entries
-        .where((e) => e.value)
-        .map((e) => e.key.key)
-        .firstOrNull;
-    void onRadioChanged(String? value) {
-      if (value == null) return;
-      if (isTV) {
-        Navigator.of(context).pop([value]);
-      } else {
-        setState(() {
-          selectOnlyOne(value);
-        });
-      }
-    }
-
-    return AlertDialog(
-      scrollable: true,
-      title: Text(widget.title ?? tr('pick')),
-      content: RadioGroup<String>(
-        groupValue: selectedRadioKey,
-        onChanged: onRadioChanged,
-        child: Column(
-          children: [
-            GeneratedForm(
-              tileMode: true,
-              noTilePadding: true,
-              items: [
-                [
-                  GeneratedFormTextField(
-                    'filter',
-                    label: tr('filter'),
-                    required: false,
-                    additionalValidators: [
-                      (value) {
-                        return regExValidator(value);
-                      },
-                    ],
-                  ),
-                ],
-              ],
-              onValueChanges: (value, valid, isBuilding) {
-                if (valid && !isBuilding) {
-                  if (value['filter'] != null) {
-                    setState(() {
-                      filterRegex = value['filter'];
-                    });
-                  }
-                }
-              },
-            ),
-            ...filteredEntrySelections.keys.map((entry) {
-              return widget.onlyOneSelectionAllowed
-                  ? _buildSingleSelectTile(entry)
-                  : _buildMultiSelectTile(entry);
-            }),
-            ..._buildTVFooter(),
-          ],
-        ),
-      ),
-      actions: [
-        _buildSelectAllButton(),
-        TextButton(
-          autofocus: isTV,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(tr('cancel')),
-        ),
-        FilledButton(
-          onPressed: entrySelections.values.where((b) => b).isEmpty
-              ? null
-              : () {
-                  Navigator.of(context).pop(
-                    entrySelections.entries
-                        .where((entry) => entry.value)
-                        .map((e) => e.key.key)
-                        .toList(),
-                  );
-                },
-          child: Text(
-            widget.onlyOneSelectionAllowed
-                ? tr('pick')
-                : tr(
-                    'selectX',
-                    args: [
-                      entrySelections.values.where((b) => b).length.toString(),
-                    ],
-                  ),
-          ),
+          icon: const Icon(Icons.close),
+          label: Text('ok'.t()),
         ),
       ],
     );

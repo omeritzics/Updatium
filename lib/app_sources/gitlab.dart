@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
-import 'package:obtainium/app_sources/github.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/settings_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
-import 'package:obtainium/components/generated_form_model.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/app_sources/github.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_provider;
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/components/generated_form_model.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 class GitLab extends AppSource {
   // Reused for getAppNames, API URL building, search, and getRequestHeaders
@@ -20,6 +21,7 @@ class GitLab extends AppSource {
     canSearch = true;
     showReleaseDateAsVersionToggle = true;
     this.hostChanged = hostChanged;
+    isOpenSource = true;
   }
 
   @override
@@ -78,14 +80,14 @@ class GitLab extends AppSource {
         'https://${hosts[0]}/api/v4/projects?search=${Uri.encodeQueryComponent(query)}';
     final res = await sourceRequest(url, {});
     if (res.statusCode != 200) {
-      throw getObtainiumHttpError(res);
+      throw getUpdatiumHttpError(res);
     }
     final json = jsonDecode(res.body) as List<dynamic>;
     final Map<String, List<String>> results = {};
     for (var element in json) {
       results['https://${hosts[0]}/${element['path_with_namespace']}'] = [
         element['name_with_namespace'],
-        element['description'] ?? tr('noDescription'),
+        element['description'] ?? 'noDescription'.t(),
       ];
     }
     return results;

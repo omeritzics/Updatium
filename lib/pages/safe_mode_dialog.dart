@@ -1,0 +1,523 @@
+import 'dart:async';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:m3e_buttons/m3e_buttons.dart';
+import 'package:flutter/services.dart';
+
+import 'package:updatium/services/slang_converter.dart';
+import 'package:provider/provider.dart';
+import 'package:pubspec_parse/pubspec_parse.dart';
+import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/services/device_admin_service.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
+void showSafeModeEnableDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) => const SafeModeEnableDialog(),
+  );
+}
+
+class SafeModeEnableDialog extends StatefulWidget {
+  const SafeModeEnableDialog({super.key});
+
+  @override
+  State<SafeModeEnableDialog> createState() => _SafeModeEnableDialogState();
+}
+
+class _SafeModeEnableDialogState extends State<SafeModeEnableDialog> {
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  bool isLoading = false;
+  String? errorMessage;
+
+  Future<void> setupPassword() async {
+    if (passwordController.text.length < 8) {
+      setState(() {
+        errorMessage = 'safeModePasswordTooShort'.t();
+      });
+      return;
+    }
+
+    if (passwordController.text != confirmPasswordController.text) {
+      setState(() {
+        errorMessage = 'safeModePasswordMismatch'.t();
+      });
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+
+    try {
+      final settingsProvider = context.read<SettingsProvider>();
+      final success = await settingsProvider.setSafeModePassword(
+        passwordController.text,
+      );
+
+      if (success) {
+        settingsProvider.safeMode = true;
+        if (mounted) {
+          Navigator.of(context).pop(true);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('safeModeEnabled'.t()),
+              backgroundColor: Colors.green,
+            ),
+          );
+
+          Future.delayed(const Duration(seconds: 2), () {
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('safeModeEnabledHint'.t()),
+                  duration: const Duration(seconds: 5),
+                  action: SnackBarAction(
+                    label: 'gotIt'.t(),
+                    onPressed: () {
+                      settingsProvider.safeModeHintShown = true;
+                    },
+                  ),
+                ),
+              );
+            }
+          });
+        }
+      } else {
+        setState(() {
+          errorMessage = 'safeModePasswordError'.t();
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = 'safeModePasswordError'.t();
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Row(
+        children: [
+          Icon(
+            Icons.lock_rounded,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          const SizedBox(width: 12),
+          Text('safeModeEnable'.t()),
+        ],
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'safeModeDescription'.t(),
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'safeModeSetupHint'.t(),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextField(
+            controller: passwordController,
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: 'safeModeSetPassword'.t(),
+              hintText: 'safeModePasswordHint'.t(),
+              border: const OutlineInputBorder(),
+            ),
+            enabled: !isLoading,
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: confirmPasswordController,
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: 'safeModeConfirmPassword'.t(),
+              hintText: 'safeModePasswordHint'.t(),
+              border: const OutlineInputBorder(),
+            ),
+            enabled: !isLoading,
+          ),
+          if (errorMessage != null) ...[
+            const SizedBox(height: 12),
+            Text(
+              errorMessage!,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: isLoading ? null : () => Navigator.of(context).pop(),
+          child: Text('cancel'.t()),
+        ),
+        M3EFilledButton(
+          onPressed: isLoading ? null : setupPassword,
+          child: isLoading
+              ? const SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(),
+                )
+              : Text('safeModeEnable'.t()),
+        ),
+      ],
+    );
+  }
+}
+
+void showSafeModeDisableDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) => const SafeModeDisableDialog(),
+  );
+}
+
+class SafeModeDisableDialog extends StatefulWidget {
+  const SafeModeDisableDialog({super.key});
+
+  @override
+  State<SafeModeDisableDialog> createState() => _SafeModeDisableDialogState();
+}
+
+class _SafeModeDisableDialogState extends State<SafeModeDisableDialog> {
+  final passwordController = TextEditingController();
+  bool isLoading = false;
+  String? errorMessage;
+
+  Future<void> disableSafeMode() async {
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+
+    try {
+      final settingsProvider = context.read<SettingsProvider>();
+      final success = await settingsProvider.verifySafeModePassword(
+        passwordController.text,
+      );
+
+      if (success) {
+        settingsProvider.safeMode = false;
+        await settingsProvider.clearSafeModePassword();
+        settingsProvider.safeModeHintShown = false;
+        settingsProvider.safeModeTapCount = 0;
+
+        // Disable uninstall protection when Safe Mode is disabled
+        await DeviceAdminService.disableUninstallProtection();
+        settingsProvider.preventUninstallation = false;
+
+        if (mounted) {
+          Navigator.of(context).pop(true);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('safeModeDisabled'.t()),
+              backgroundColor: Colors.orange,
+            ),
+          );
+        }
+      } else {
+        setState(() {
+          errorMessage = 'safeModePasswordIncorrect'.t();
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = 'safeModePasswordError'.t();
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Row(
+        children: [
+          Icon(
+            Icons.lock_rounded,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          const SizedBox(width: 12),
+          Text('safeModeDisable'.t()),
+        ],
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'safeModeToggleDescription'.t(),
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 20),
+          TextField(
+            controller: passwordController,
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: 'safeModeEnterPassword'.t(),
+              hintText: 'safeModePasswordHint'.t(),
+            ),
+            enabled: !isLoading,
+            onSubmitted: (_) => disableSafeMode(),
+          ),
+          if (errorMessage != null) ...[
+            const SizedBox(height: 12),
+            Text(
+              errorMessage!,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: isLoading ? null : () => Navigator.of(context).pop(),
+          child: Text('cancel'.t()),
+        ),
+        M3EFilledButton(
+          onPressed: isLoading ? null : disableSafeMode,
+          child: isLoading
+              ? const SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(),
+                )
+              : Text('safeModeDisable'.t()),
+        ),
+      ],
+    );
+  }
+}
+
+class AboutDialogWithSafeMode extends StatefulWidget {
+  const AboutDialogWithSafeMode({super.key});
+
+  @override
+  State<AboutDialogWithSafeMode> createState() =>
+      _AboutDialogWithSafeModeState();
+}
+
+class _AboutDialogWithSafeModeState extends State<AboutDialogWithSafeMode> {
+  Timer? _tapResetTimer;
+
+  @override
+  void dispose() {
+    _tapResetTimer?.cancel();
+    super.dispose();
+  }
+
+  void _onVersionTapped() {
+    final settingsProvider = context.read<SettingsProvider>();
+    final isSafeModeEnabled = settingsProvider.safeMode;
+    final tapCount = settingsProvider.safeModeTapCount;
+
+    settingsProvider.safeModeTapCount = tapCount + 1;
+
+    _tapResetTimer?.cancel();
+    _tapResetTimer = Timer(const Duration(hours: 1), () {
+      settingsProvider.safeModeTapCount = 0;
+    });
+
+    // Haptic feedback at milestones
+    if ((tapCount + 1) % 25 == 0) {
+      HapticFeedback.selectionClick();
+    }
+
+    // Show remaining taps when Safe Mode is enabled (only from third tap)
+    if (isSafeModeEnabled && (tapCount + 1) >= 3) {
+      final remaining = 613 - (tapCount + 1);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            t('safeModeTapsRemaining', args: [remaining.toString()]),
+          ),
+          duration: const Duration(milliseconds: 800),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+
+    // Visual feedback at 100-tap intervals when Safe Mode is disabled
+    if (!isSafeModeEnabled && (tapCount + 1) % 100 == 0 && (tapCount + 1) > 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${tapCount + 1}...'),
+          duration: const Duration(milliseconds: 500),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
+
+    // Success at 613 taps
+    if ((tapCount + 1) >= 613) {
+      settingsProvider.safeModeTapCount = 0;
+      _tapResetTimer?.cancel();
+
+      HapticFeedback.heavyImpact();
+      _showSafeModeDialog();
+    }
+  }
+
+  void _showSafeModeDialog() {
+    showSafeModeDisableDialog(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final pubspecFile = File('pubspec.yaml');
+    final pubspec = Pubspec.parse(pubspecFile.readAsStringSync());
+    final versionString = pubspec.version?.toString() ?? '';
+    final parts = versionString.split('+');
+    final version = parts[0];
+    final buildNumber = parts.length > 1 ? parts[1] : '';
+
+    return AlertDialog(
+      scrollable: true,
+      title: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            child: Icon(
+              Icons.info_rounded,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+              size: 28,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Text('about'.t()),
+        ],
+      ),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            ),
+            child: Column(
+              children: [
+                Image.asset('assets/graphics/icon.png', width: 80, height: 80),
+                const SizedBox(height: 16),
+                Text(
+                  'Updatium',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: _onVersionTapped,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 8,
+                    ),
+                    child: Text(
+                      '${'version'.t()} $version ($buildNumber)',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'appDescription'.t(),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            'developedBy'.t(),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          const SizedBox(height: 8),
+          TextButton.icon(
+            onPressed: () {
+              launchUrlString(
+                'https://github.com/omeritzics',
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            icon: const Icon(Icons.link_rounded, size: 18),
+            label: Text('Omer I.S. (@omeritzics)'),
+          ),
+          const SizedBox(height: 16),
+          Text('sourceCode'.t(), style: Theme.of(context).textTheme.titleSmall),
+          const SizedBox(height: 8),
+          TextButton.icon(
+            onPressed: () {
+              launchUrlString(
+                'https://github.com/omeritzics/Updatium',
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            icon: const Icon(Icons.link_rounded, size: 18),
+            label: Text('GitHub'),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text('close'.t()),
+        ),
+      ],
+    );
+  }
+}

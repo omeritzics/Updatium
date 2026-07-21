@@ -1,8 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class TelegramApp extends AppSource {
   @override
@@ -10,8 +11,8 @@ class TelegramApp extends AppSource {
 
   TelegramApp() {
     hosts = ['telegram.org'];
+    name = 'telegramapp'.t();
   }
-
   @override
   String sourceSpecificStandardizeURL(String url, {bool forSelection = false}) {
     // Telegram has a single known APK download page — the user's exact URL

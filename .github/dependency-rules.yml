@@ -1,0 +1,70 @@
+# Custom Dependency Update Rules
+# This file defines policies for automated dependency updates
+
+# Package-specific update policies
+packages:
+  # Critical packages - conservative updates only
+  flutter:
+    policy: conservative
+    max_version_bump: minor
+    stability_requirement: stable
+  dart:
+    policy: conservative
+    max_version_bump: minor
+    stability_requirement: stable
+  
+  # UI packages - allow major updates but with caution
+  cupertino_icons:
+    policy: standard
+    max_version_bump: major
+    stability_requirement: stable
+  
+  # Network packages - conservative for security
+  http:
+    policy: security-first
+    max_version_bump: minor
+    auto_update_security: true
+  
+  # Device info packages - standard updates
+  device_info_plus:
+    policy: standard
+    max_version_bump: major
+    stability_requirement: stable
+  
+  # Sharing packages - standard updates
+  share_plus:
+    policy: standard
+    max_version_bump: major
+    stability_requirement: stable
+
+# Global policies
+global:
+  # Auto-update security patches
+  auto_security_updates: true
+  
+  # Require stability for production
+  require_stable_versions: true
+  
+  # Blacklist problematic versions
+  blacklist:
+    - package: "*"
+      versions: ["*.*.*-beta", "*.*.*-alpha", "*.*.*-dev"]
+  
+  # Packages to monitor for abandonment
+  abandonment_threshold: 180  # days without updates
+  
+  # Health check requirements
+  health_requirements:
+    min_downloads: 1000
+    max_open_issues: 100
+    requires_maintainer: true
+
+# Ecosystem-specific rules
+ecosystems:
+  flutter:
+    pub_dev_required: true
+    flutter_favorite_priority: true
+  
+  npm:
+    npm_audit_required: true
+    min_package_score: 80

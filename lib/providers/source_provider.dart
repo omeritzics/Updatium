@@ -12,39 +12,34 @@ import 'package:crypto/crypto.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
-import 'package:obtainium/app_sources/apkcombo.dart';
-import 'package:obtainium/app_sources/apkmirror.dart';
-import 'package:obtainium/app_sources/apkpure.dart';
-import 'package:obtainium/app_sources/aptoide.dart';
-import 'package:obtainium/app_sources/apk4free.dart';
-import 'package:obtainium/app_sources/codeberg.dart';
-import 'package:obtainium/app_sources/coolapk.dart';
-import 'package:obtainium/app_sources/direct_apk_link.dart';
-import 'package:obtainium/app_sources/farsroid.dart';
-import 'package:obtainium/app_sources/fdroid.dart';
-import 'package:obtainium/app_sources/fdroidrepo.dart';
-import 'package:obtainium/app_sources/github.dart';
-import 'package:obtainium/app_sources/gitlab.dart';
-import 'package:obtainium/app_sources/huaweiappgallery.dart';
-import 'package:obtainium/app_sources/itchio.dart';
-import 'package:obtainium/app_sources/izzyondroid.dart';
-import 'package:obtainium/app_sources/html.dart';
-import 'package:obtainium/app_sources/jenkins.dart';
-import 'package:obtainium/app_sources/liteapks.dart';
-import 'package:obtainium/app_sources/neutroncode.dart';
-import 'package:obtainium/app_sources/rockmods.dart';
-import 'package:obtainium/app_sources/rustore.dart';
-import 'package:obtainium/app_sources/sourceforge.dart';
-import 'package:obtainium/app_sources/sourcehut.dart';
-import 'package:obtainium/app_sources/telegramapp.dart';
-import 'package:obtainium/app_sources/tencent.dart';
-import 'package:obtainium/app_sources/uptodown.dart';
-import 'package:obtainium/app_sources/vivoappstore.dart';
-import 'package:obtainium/components/generated_form_model.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/app_sources/githubstars.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/settings_provider.dart';
+import 'package:updatium/app_sources/apkcombo.dart';
+import 'package:updatium/app_sources/apkmirror.dart';
+import 'package:updatium/app_sources/apkpure.dart';
+import 'package:updatium/app_sources/aptoide.dart';
+import 'package:updatium/app_sources/codeberg.dart';
+import 'package:updatium/app_sources/direct_apk_link.dart';
+import 'package:updatium/app_sources/fdroid.dart';
+import 'package:updatium/app_sources/fdroidrepo.dart';
+import 'package:updatium/app_sources/github.dart';
+import 'package:updatium/app_sources/gitlab.dart';
+import 'package:updatium/app_sources/huaweiappgallery.dart';
+import 'package:updatium/app_sources/itchio.dart';
+import 'package:updatium/app_sources/izzyondroid.dart';
+import 'package:updatium/app_sources/html.dart';
+import 'package:updatium/app_sources/jenkins.dart';
+import 'package:updatium/app_sources/neutroncode.dart';
+import 'package:updatium/app_sources/rustore.dart';
+import 'package:updatium/app_sources/sourceforge.dart';
+import 'package:updatium/app_sources/sourcehut.dart';
+import 'package:updatium/app_sources/telegramapp.dart';
+import 'package:updatium/app_sources/tencent.dart';
+import 'package:updatium/app_sources/uptodown.dart';
+import 'package:updatium/app_sources/vivoappstore.dart';
+import 'package:updatium/components/generated_form_model.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/app_sources/githubstars.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/settings_provider.dart';
 
 class AppNames {
   String author;
@@ -67,11 +62,12 @@ class APKDetails {
     this.names, {
     this.releaseDate,
     this.changeLog,
+    this.remoteIconUrl,
+    this.reproducible,
     this.allAssetUrls = const [],
   });
 }
 
-/// Converts a list of [MapEntry] pairs into a 2D list of strings for JSON encoding.
 List<List<String>> stringMapListTo2DList(
   List<MapEntry<String, String>> mapList,
 ) => mapList.map((e) => [e.key, e.value]).toList();
@@ -92,15 +88,17 @@ class App {
   final String name;
   final String? installedVersion;
   final String latestVersion;
+  bool? reproducible;
   final List<MapEntry<String, String>> apkUrls;
   final List<MapEntry<String, String>> otherAssetUrls;
   final int preferredApkIndex;
   final Map<String, dynamic> additionalSettings;
   final DateTime? lastUpdateCheck;
   final bool pinned;
-  final List<String> categories;
+  final List<String>? categories;
   final DateTime? releaseDate;
   final String? changeLog;
+  late String? remoteIconUrl;
   final String? overrideSource;
   final bool allowIdChange;
   final String? pendingRepoRenameUrl;
@@ -121,6 +119,8 @@ class App {
     this.categories = const [],
     this.releaseDate,
     this.changeLog,
+    this.remoteIconUrl,
+    this.reproducible,
     this.overrideSource,
     this.allowIdChange = false,
     this.pendingRepoRenameUrl,
@@ -280,10 +280,11 @@ class App {
   Map<String, dynamic> toJson() => {
     'id': id,
     'url': url,
-    'author': author,
+    'appAuthor': author,
     'name': name,
     'installedVersion': installedVersion,
     'latestVersion': latestVersion,
+    'reproducible': reproducible,
     'apkUrls': jsonEncode(stringMapListTo2DList(apkUrls)),
     'otherAssetUrls': jsonEncode(stringMapListTo2DList(otherAssetUrls)),
     'preferredApkIndex': preferredApkIndex,
@@ -293,6 +294,7 @@ class App {
     'categories': categories,
     'releaseDate': releaseDate?.microsecondsSinceEpoch,
     'changeLog': changeLog,
+    'remoteIconUrl': remoteIconUrl,
     'overrideSource': overrideSource,
     'allowIdChange': allowIdChange,
     'pendingRepoRenameUrl': pendingRepoRenameUrl,
@@ -418,6 +420,8 @@ abstract class AppSource {
   bool urlsAlwaysHaveExtension = false;
   bool allowIncludeZips = false;
   bool allowIncludeTarballs = false;
+  bool isOpenSource = false;
+
   String get sourceIdentifier => runtimeType.toString();
 
   Future<Map<String, String>?> getRequestHeaders(
@@ -484,7 +488,8 @@ abstract class AppSource {
           followRedirects: followRedirects,
           postBody: postBody,
         );
-    return await httpClientResponseStreamToFinalResponse(
+
+    var response = await httpClientResponseStreamToFinalResponse(
       streamedResponseUrlWithResponseAndClient.value.key,
       method,
       streamedResponseUrlWithResponseAndClient.key.toString(),
@@ -564,18 +569,46 @@ abstract class AppSource {
     [GeneratedFormSwitch('trackOnly', label: tr('trackOnly'))],
     [
       GeneratedFormTextField(
-        'versionExtractionRegEx',
-        label: tr('trimVersionString'),
+        'appId',
+        label: 'appId'.t(),
         required: false,
-        additionalValidators: [(value) => regExValidator(value)],
+        additionalValidators: [
+          (value) {
+            if (value == null || value.isEmpty) {
+              return null;
+            }
+            final isValid = RegExp(
+              r'^([A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$',
+            ).hasMatch(value);
+            if (!isValid) {
+              return 'invalidInput'.t();
+            }
+            return null;
+          },
+        ],
+      ),
+    ],
+    [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
+    [
+      GeneratedFormTextField(
+        'appAuthor',
+        label: 'appAuthor'.t(),
+        required: false,
       ),
     ],
     [
       GeneratedFormTextField(
-        'matchGroupToUse',
-        label: tr('matchGroupToUseForX', args: [tr('trimVersionString')]),
+        'appSourceURL',
+        label: 'appSourceURL'.t(),
         required: false,
-        hint: '\$0',
+      ),
+    ],
+    [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
+    [
+      GeneratedFormSwitch(
+        'trackOnly',
+        label: 'trackOnly'.t(),
+        defaultValue: false,
       ),
     ],
     [
@@ -593,15 +626,18 @@ abstract class AppSource {
       ),
     ],
     [
+      GeneratedFormSwitch(
+        'autoApkFilterByArch',
+        label: 'autoApkFilterByArch'.t(),
+        defaultValue: true,
+      ),
+    ],
+    [
       GeneratedFormTextField(
         'apkFilterRegEx',
-        label: tr('filterAPKsByRegEx'),
+        label: 'filterAPKsByRegEx'.t(),
         required: false,
-        additionalValidators: [
-          (value) {
-            return regExValidator(value);
-          },
-        ],
+        additionalValidators: [(value) => regExValidator(value)],
       ),
     ],
     [
@@ -618,8 +654,6 @@ abstract class AppSource {
         value: true,
       ),
     ],
-    [GeneratedFormTextField('appName', label: tr('appName'), required: false)],
-    [GeneratedFormTextField('appAuthor', label: tr('author'), required: false)],
     [
       GeneratedFormSwitch(
         'shizukuPretendToBeGooglePlay',
@@ -636,21 +670,123 @@ abstract class AppSource {
     ],
     [
       GeneratedFormSwitch(
-        'exemptFromBackgroundUpdates',
-        label: tr('exemptFromBackgroundUpdates'),
-      ),
-    ],
-    [
-      GeneratedFormSwitch(
         'skipUpdateNotifications',
-        label: tr('skipUpdateNotifications'),
+        label: 'skipUpdateNotifications'.t(),
+        defaultValue: false,
       ),
     ],
-    [GeneratedFormTextField('about', label: tr('about'), required: false)],
     [
       GeneratedFormSwitch(
         'refreshBeforeDownload',
-        label: tr('refreshBeforeDownload'),
+        label: 'refreshBeforeDownload'.t(),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'fallbackToOlderReleases',
+        label: 'fallbackToOlderReleases'.t(),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'trySelectingSuggestedVersionCode',
+        label: 'trySelectingSuggestedVersionCode'.t(),
+        defaultValue: true,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'includePrereleases',
+        label: 'includePrereleases'.t(),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'stayOneVersionBehind',
+        label: 'stayOneVersionBehind'.t(),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'useFirstApkOfVersion',
+        label: 'useFirstApkOfVersion'.t(),
+        defaultValue: false,
+      ),
+    ],
+    [GeneratedFormSwitch('verifyLatestTag', label: 'verifyLatestTag'.t())],
+    [
+      GeneratedFormDropdown(
+        'sortMethodChoice',
+        [
+          MapEntry('date', 'releaseDate'.t()),
+          MapEntry('smartname', 'smartname'.t()),
+          MapEntry('none', 'none'.t()),
+          MapEntry(
+            'smartname-datefallback',
+            '${'smartname'.t()} x ${'releaseDate'.t()}',
+          ),
+          MapEntry('name', 'name'.t()),
+        ],
+        label: 'sortMethod'.t(),
+        defaultValue: 'date',
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'useLatestAssetDateAsReleaseDate',
+        label: 'useLatestAssetDateAsReleaseDate'.t(),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormSwitch(
+        'releaseTitleAsVersion',
+        label: 'releaseTitleAsVersion'.t(),
+        defaultValue: false,
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'versionExtractionRegEx',
+        label: 'trimVersionString'.t(),
+        required: false,
+        additionalValidators: [(value) => regExValidator(value)],
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'matchGroupToUse',
+        label: t('matchGroupToUseForX', args: ['trimVersionString'.t()]),
+        required: false,
+        hint: '\$0',
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'filterReleaseTitlesByRegEx',
+        label: 'filterReleaseTitlesByRegEx'.t(),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
+      ),
+    ],
+    [
+      GeneratedFormTextField(
+        'filterReleaseNotesByRegEx',
+        label: 'filterReleaseNotesByRegEx'.t(),
+        required: false,
+        additionalValidators: [
+          (value) {
+            return regExValidator(value);
+          },
+        ],
       ),
     ],
   ];
@@ -702,7 +838,7 @@ abstract class AppSource {
         [
           GeneratedFormTextField(
             'zippedApkFilterRegEx',
-            label: tr('zippedApkFilterRegEx'),
+            label: t('zippedApkFilterRegEx'),
             required: false,
             additionalValidators: [
               (value) {
@@ -726,7 +862,7 @@ abstract class AppSource {
         [
           GeneratedFormTextField(
             'tarballedApkFilterRegEx',
-            label: tr('tarballedApkFilterRegEx'),
+            label: t('tarballedApkFilterRegEx'),
             required: false,
             additionalValidators: [
               (value) {
@@ -857,7 +993,7 @@ abstract class AppSource {
 }
 
 /// Delegates to [HttpService.getHttpError].
-ObtainiumError getObtainiumHttpError(http.Response res) =>
+UpdatiumError getObtainiumHttpError(http.Response res) =>
     HttpService().getHttpError(res);
 
 abstract class MassAppUrlSource {
@@ -917,12 +1053,16 @@ class SourceProvider {
   static List<AppSource> _buildSources() => [
     GitHub(),
     GitLab(),
+    Bitbucket(),
     Codeberg(),
+    Gitea(),
     FDroid(),
     FDroidRepo(),
     IzzyOnDroid(),
     SourceHut(),
+    APKCombo(),
     APKPure(),
+    OpenAPK(),
     Aptoide(),
     Uptodown(),
     ItchIO(),
@@ -930,18 +1070,16 @@ class SourceProvider {
     Tencent(),
     VivoAppStore(),
     RuStore(),
-    Apk4Free(),
-    Farsroid(),
-    CoolApk(),
-    LiteAPKs(),
     SourceForge(),
     Jenkins(),
     APKMirror(),
     APKCombo(),
-    RockMods(),
     TelegramApp(),
+    WhatsApp(),
     NeutronCode(),
     DirectAPKLink(),
+    Signal(),
+    VLC(),
     HTML(), // Must be the last entry — hostless sources are tried in order and HTML is the catch-all fallback
   ];
 
@@ -952,6 +1090,12 @@ class SourceProvider {
 
   /// Add mass URL source classes here so they are available via the service.
   List<MassAppUrlSource> massUrlSources = [GitHubStars()];
+
+  // Helper method to check if a source exists without throwing an error
+  bool sourceExists(String? overrideSource) {
+    if (overrideSource == null) return true;
+    return sources.any((e) => e.runtimeType.toString() == overrideSource);
+  }
 
   AppSource getSource(String url, {String? overrideSource}) {
     url = preStandardizeUrl(url);
@@ -1021,6 +1165,51 @@ class SourceProvider {
       }
     }
     return false;
+  }
+
+  /// Helper method for common URL standardization pattern
+  /// Matches URL against a regex pattern and returns the matched portion
+  /// Throws InvalidURLError if no match is found
+  /// If transform is provided, applies transformation to the matched URL
+  String standardizeUrlWithRegex(
+    String url,
+    String pattern, {
+    String? sourceName,
+    String Function(String, RegExpMatch)? transform,
+  }) {
+    // Use cached regex if available, otherwise compile and cache it
+    RegExp standardUrlRegEx = _regexCache.putIfAbsent(
+      pattern,
+      () => RegExp(pattern, caseSensitive: false),
+    );
+    RegExpMatch? match = standardUrlRegEx.firstMatch(url);
+    if (match == null) {
+      if (sourceName != null) {
+        throw InvalidURLError(sourceName);
+      }
+      throw UnsupportedURLError();
+    }
+    String result = match.group(0)!;
+    if (transform != null) {
+      result = transform(result, match);
+    }
+    return result;
+  }
+
+  /// Helper method to extract app names from a standard URL
+  /// Assumes format: https://host/author/name or similar
+  /// If nameIndex is null, joins all parts from authorIndex+1 onwards
+  AppNames getAppNamesFromUrl(
+    String standardUrl, {
+    int authorIndex = 0,
+    int? nameIndex,
+  }) {
+    String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
+    List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
+    String name = nameIndex != null
+        ? names[nameIndex]
+        : names.sublist(authorIndex + 1).join('/');
+    return AppNames(names[authorIndex], name);
   }
 
   String generateTempID(
@@ -1106,9 +1295,6 @@ class SourceProvider {
     }
     if (additionalSettings['autoApkFilterByArch'] == true) {
       apk.apkUrls = await filterApksByArch(apk.apkUrls);
-      if (apk.apkUrls.isEmpty && !trackOnly) {
-        throw NoAPKError()..url = standardUrl;
-      }
     }
     var name = currentApp != null ? currentApp.name.trim() : '';
     name = name.isNotEmpty ? name : apk.names.name;
@@ -1136,6 +1322,7 @@ class SourceProvider {
       categories: currentApp?.categories ?? const [],
       releaseDate: apk.releaseDate,
       changeLog: apk.changeLog,
+      remoteIconUrl: apk.remoteIconUrl,
       overrideSource: sourceIsOverriden
           ? source.sourceIdentifier
           : currentApp?.overrideSource,

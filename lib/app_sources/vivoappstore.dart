@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/services/slang_converter.dart';
+import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class VivoAppStore extends AppSource {
   static const appDetailUrl =
@@ -12,10 +13,38 @@ class VivoAppStore extends AppSource {
   String get name => tr('vivoAppStore');
 
   VivoAppStore() {
+    name = 'vivoAppStore'.t();
     hosts = ['h5.appstore.vivo.com.cn', 'h5coml.vivo.com.cn'];
     naiveStandardVersionDetection = true;
     canSearch = true;
     allowOverride = false;
+  }
+
+  String parseVivoAppId(String url) {
+    var appId = Uri.parse(url.replaceAll('/#', '')).queryParameters['appId'];
+    if (appId == null || appId.isEmpty) {
+      throw InvalidURLError(name);
+    }
+    return appId;
+  }
+
+  Future<Map<String, dynamic>> getDetailJson(
+    String standardUrl,
+    Map<String, dynamic> additionalSettings,
+  ) async {
+    var vivoAppId = parseVivoAppId(standardUrl);
+    var apiBaseUrl = 'https://h5-api.appstore.vivo.com.cn/detail/';
+    var params = '?frompage=messageh5&app_version=2100';
+    var detailUrl = '$apiBaseUrl$vivoAppId$params';
+    var response = await sourceRequest(detailUrl, additionalSettings);
+    if (response.statusCode != 200) {
+      throw getUpdatiumHttpError(response);
+    }
+    var json = jsonDecode(response.body);
+    if (json['id'] == null) {
+      throw NoReleasesError();
+    }
+    return json;
   }
 
   @override
@@ -75,7 +104,7 @@ class VivoAppStore extends AppSource {
     final searchUrl = '$apiBaseUrl${Uri.encodeQueryComponent(query)}';
     final response = await sourceRequest(searchUrl, {});
     if (response.statusCode != 200) {
-      throw getObtainiumHttpError(response);
+      throw getUpdatiumHttpError(response);
     }
     final json = jsonDecode(response.body);
     if (json['code'] != 0 ||

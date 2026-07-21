@@ -1,14 +1,15 @@
-import 'package:obtainium/app_sources/github.dart';
-import 'package:obtainium/components/generated_form_model.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/app_sources/github.dart' as gh;
+import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 class Codeberg extends AppSource {
   final GitHub _gh = GitHub(hostChanged: true);
   Codeberg() {
-    name = 'Forgejo (Codeberg)';
+    var github = gh.GitHub();
+    name = 'codeberg'.t();
     hosts = ['codeberg.org'];
     canSearch = true;
+    isOpenSource = true;
   }
 
   @override
@@ -38,23 +39,22 @@ class Codeberg extends AppSource {
     String standardUrl,
     Map<String, dynamic> additionalSettings,
   ) async {
-    try {
-      return await _gh.fetchReleaseDetailsWithTagFallback(
-        standardUrl,
-        additionalSettings,
-        (bool useTagUrl) async {
-          final standardUri = Uri.parse(standardUrl);
-          final apiPath =
-              '/api/v1/repos${standardUri.path}/${useTagUrl ? 'tags' : 'releases'}';
-          return standardUri
-              .replace(path: apiPath, queryParameters: {'per_page': '100'})
-              .toString();
-        },
-        null,
-      );
-    } catch (e) {
-      rethrowOrWrapError(e);
-    }
+    return await gh.getLatestAPKDetailsCommon2(standardUrl, additionalSettings, (
+      bool useTagUrl,
+    ) async {
+      final standardUri = Uri.parse(standardUrl);
+      final apiPath =
+          '/api/v1/repos${standardUri.path}/${useTagUrl ? 'tags' : 'releases'}';
+      return standardUri
+          .replace(path: apiPath, queryParameters: {'per_page': '100'})
+          .toString();
+    }, null);
+  }
+
+  AppNames getAppNames(String standardUrl) {
+    String temp = standardUrl.substring(standardUrl.indexOf('://') + 3);
+    List<String> names = temp.substring(temp.indexOf('/') + 1).split('/');
+    return AppNames(names[0], names[1]);
   }
 
   @override

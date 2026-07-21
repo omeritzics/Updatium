@@ -3,25 +3,25 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:bcrypt/bcrypt.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/main.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/main.dart';
 
-import 'package:obtainium/providers/apps_provider.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:updatium/providers/apps_provider.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shared_storage/shared_storage.dart' as saf;
 
-const String obtainiumTempId = 'imranr98_obtainium_github.com';
-const String obtainiumId = 'dev.imranr.obtainium';
-const String obtainiumUrl = 'https://github.com/ImranR98/Obtainium';
-const Color obtainiumThemeColor = Color(0xFF6438B5);
+const String updatiumTempId = 'omeritzics_updatium_github.com';
+const String updatiumId = 'io.github.omeritzics.updatium';
+const String updatiumUrl = 'https://github.com/omeritzics/Updatium';
+const Color updatiumThemeColor = Color(0xFF3a79b7);
 
 String lowerCaseUnlessLang(String str, String lang) =>
     currentLanguageCode == lang ? str : str.toLowerCase();
@@ -55,9 +55,7 @@ enum SortColumnSettings { added, nameAuthor, authorName, releaseDate }
 
 enum SortOrderSettings { ascending, descending }
 
-enum ColourSchemeMode { standard, vibrant, expressive, materialYou }
-
-enum ActionBannerMode { all, updatesOnly, none }
+enum DNSServiceProvider { system, cloudflare, quad9, opendns, mullvad }
 
 class SettingsProvider with ChangeNotifier {
   SharedPreferences? prefs;
@@ -65,6 +63,9 @@ class SettingsProvider with ChangeNotifier {
   bool justStarted = true;
   bool isTV = false;
 
+  String sourceUrl = 'https://github.com/omeritzics/Updatium';
+
+  // Not done in constructor as we want to be able to await it
   T? _get<T>(String key) {
     final value = prefs?.get(key);
     if (value is T) return value;
@@ -76,7 +77,7 @@ class SettingsProvider with ChangeNotifier {
   double? _getDouble(String key) => _get<double>(key);
   String? _getString(String key) => _get<String>(key);
 
-  final String sourceUrl = obtainiumUrl;
+  final String sourceUrl = updatiumUrl;
 
   /// Platform properties that are stable for the process lifetime but expensive
   /// to fetch (platform channel round-trips). Cached across all provider instances.
@@ -203,7 +204,7 @@ class SettingsProvider with ChangeNotifier {
 
   Color get themeColor {
     final int? colorCode = _getInt('themeColor');
-    return (colorCode != null) ? Color(colorCode) : obtainiumThemeColor;
+    return (colorCode != null) ? Color(colorCode) : updatiumThemeColor;
   }
 
   set themeColor(Color themeColor) {
@@ -239,7 +240,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   int get updateInterval {
-    return _getInt('updateInterval') ?? 360;
+    return _getInt('updateInterval') ?? 720;
   }
 
   set updateInterval(int min) {
@@ -248,7 +249,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   double get updateIntervalSliderVal {
-    return _getDouble('updateIntervalSliderVal') ?? 6.0;
+    return _getDouble('updateIntervalSliderVal') ?? 7.0;
   }
 
   set updateIntervalSliderVal(double val) {
@@ -302,18 +303,6 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool get googleVerificationWarningShown {
-    return _getBool('googleVerificationWarningShown') ?? false;
-  }
-
-  set googleVerificationWarningShown(bool googleVerificationWarningShown) {
-    prefs?.setBool(
-      'googleVerificationWarningShown',
-      googleVerificationWarningShown,
-    );
-    notifyListeners();
-  }
-
   bool checkJustStarted() {
     if (justStarted) {
       justStarted = false;
@@ -346,15 +335,6 @@ class SettingsProvider with ChangeNotifier {
       await Future.delayed(const Duration(seconds: 1));
     }
     return true;
-  }
-
-  bool get showAppWebpage {
-    return _getBool('showAppWebpage') ?? false;
-  }
-
-  set showAppWebpage(bool show) {
-    prefs?.setBool('showAppWebpage', show);
-    notifyListeners();
   }
 
   bool get pinUpdates {
@@ -455,7 +435,8 @@ class SettingsProvider with ChangeNotifier {
       final List<App> changedApps = appsProvider
           .getAppValues()
           .map((a) {
-            if (!a.app.categories.any((c) => !cats.keys.contains(c))) {
+            if (!(a.app.categories?.any((c) => !cats.keys.contains(c)) ??
+                false)) {
               return null;
             }
             final app = a.app.copyWith(
@@ -479,6 +460,37 @@ class SettingsProvider with ChangeNotifier {
       }
     }
     prefs?.setString('categories', jsonEncode(cats));
+    notifyListeners();
+  }
+
+  /// Renames a category from [oldName] to [newName], updating both the
+  /// categories map and all apps that reference the old name.
+  void renameCategory(
+    String oldName,
+    String newName,
+    int colorValue, {
+    required AppsProvider appsProvider,
+  }) {
+    final newCategories = Map<String, int>.from(categories);
+    newCategories.remove(oldName);
+    newCategories[newName] = colorValue;
+
+    // Propagate the rename to every app that has the old category name
+    final List<App> changedApps = appsProvider
+        .getAppValues()
+        .where((a) => a.app.categories?.contains(oldName) == true)
+        .map((a) {
+          final idx = a.app.categories!.indexOf(oldName);
+          a.app.categories![idx] = newName;
+          return a.app;
+        })
+        .toList();
+
+    if (changedApps.isNotEmpty) {
+      appsProvider.saveApps(changedApps);
+    }
+
+    prefs?.setString('categories', jsonEncode(newCategories));
     notifyListeners();
   }
 
@@ -510,9 +522,15 @@ class SettingsProvider with ChangeNotifier {
       (l) => l.languageCode == context.deviceLocale.languageCode,
     )) {
       context.resetLocale();
-    } else {
-      context.setLocale(context.fallbackLocale!);
+      return;
+    }
+
+    // Try language-only match (e.g., 'en-US' → 'en')
+    var languageOnly = Locale(context.deviceLocale.languageCode);
+    if (context.supportedLocales.contains(languageOnly)) {
+      context.setLocale(languageOnly);
       context.deleteSaveLocale();
+      return;
     }
   }
 
@@ -544,6 +562,15 @@ class SettingsProvider with ChangeNotifier {
 
   void selectionClick() {
     if (tactileFeedbackEnabled) HapticFeedback.selectionClick();
+  }
+
+  bool get showConfetti {
+    return prefs?.getBool('showConfetti') ?? true;
+  }
+
+  set showConfetti(bool val) {
+    prefs?.setBool('showConfetti', val);
+    notifyListeners();
   }
 
   bool get includePrereleasesByDefault {
@@ -601,7 +628,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   bool get highlightTouchTargets {
-    return _getBool('highlightTouchTargets') ?? false;
+    return _getBool('highlightTouchTargets') ?? true;
   }
 
   set highlightTouchTargets(bool val) {
@@ -687,7 +714,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   bool get onlyCheckInstalledOrTrackOnlyApps {
-    return _getBool('onlyCheckInstalledOrTrackOnlyApps') ?? false;
+    return _getBool('onlyCheckInstalledOrTrackOnlyApps') ?? true;
   }
 
   set onlyCheckInstalledOrTrackOnlyApps(bool val) {
@@ -705,7 +732,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
   bool get parallelDownloads {
-    return _getBool('parallelDownloads') ?? false;
+    return _getBool('parallelDownloads') ?? true;
   }
 
   set parallelDownloads(bool val) {
@@ -758,6 +785,172 @@ class SettingsProvider with ChangeNotifier {
 
   set shizukuPretendToBeGooglePlay(bool val) {
     prefs?.setBool('shizukuPretendToBeGooglePlay', val);
+    notifyListeners();
+  }
+
+  bool get useGridView {
+    return prefs?.getBool('useGridView') ?? false;
+  }
+
+  set useGridView(bool val) {
+    prefs?.setBool('useGridView', val);
+    notifyListeners();
+  }
+
+  bool get safeMode {
+    return prefs?.getBool('safeMode') ?? false;
+  }
+
+  set safeMode(bool val) {
+    prefs?.setBool('safeMode', val);
+    notifyListeners();
+  }
+
+  String? get safeModePassword {
+    return prefs?.getString('safeModePassword');
+  }
+
+  bool get safeModePasswordSet {
+    return safeModePassword != null && safeModePassword!.isNotEmpty;
+  }
+
+  Future<bool> setSafeModePassword(String password) async {
+    try {
+      final hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+      await prefs?.setString('safeModePassword', hashed);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> verifySafeModePassword(String password) async {
+    try {
+      final stored = safeModePassword;
+      if (stored == null) return false;
+      return BCrypt.checkpw(password, stored);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> clearSafeModePassword() async {
+    try {
+      await prefs?.remove('safeModePassword');
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  bool get safeModeHintShown {
+    return prefs?.getBool('safeModeHintShown') ?? false;
+  }
+
+  set safeModeHintShown(bool val) {
+    prefs?.setBool('safeModeHintShown', val);
+    notifyListeners();
+  }
+
+  int get safeModeTapCount {
+    return prefs?.getInt('safeModeTapCount') ?? 0;
+  }
+
+  set safeModeTapCount(int val) {
+    prefs?.setInt('safeModeTapCount', val);
+    notifyListeners();
+  }
+
+  bool get preferApkOverXapk {
+    return prefs?.getBool('preferApkOverXapk') ?? true;
+  }
+
+  set preferApkOverXapk(bool val) {
+    prefs?.setBool('preferApkOverXapk', val);
+    notifyListeners();
+  }
+
+  bool get updatesSectionExpanded {
+    return prefs?.getBool('updatesSectionExpanded') ?? false;
+  }
+
+  set updatesSectionExpanded(bool val) {
+    prefs?.setBool('updatesSectionExpanded', val);
+    notifyListeners();
+  }
+
+  bool get sourceSpecificSectionExpanded {
+    return prefs?.getBool('sourceSpecificSectionExpanded') ?? false;
+  }
+
+  set sourceSpecificSectionExpanded(bool val) {
+    prefs?.setBool('sourceSpecificSectionExpanded', val);
+    notifyListeners();
+  }
+
+  bool get appearanceSectionExpanded {
+    return prefs?.getBool('appearanceSectionExpanded') ?? false;
+  }
+
+  set appearanceSectionExpanded(bool val) {
+    prefs?.setBool('appearanceSectionExpanded', val);
+    notifyListeners();
+  }
+
+  bool get categoriesSectionExpanded {
+    return prefs?.getBool('categoriesSectionExpanded') ?? false;
+  }
+
+  set categoriesSectionExpanded(bool val) {
+    prefs?.setBool('categoriesSectionExpanded', val);
+    notifyListeners();
+  }
+
+  bool get appViewSectionExpanded {
+    return prefs?.getBool('appViewSectionExpanded') ?? false;
+  }
+
+  set appViewSectionExpanded(bool val) {
+    prefs?.setBool('appViewSectionExpanded', val);
+    notifyListeners();
+  }
+
+  double get settingsScrollPosition {
+    return prefs?.getDouble('settingsScrollPosition') ?? 0.0;
+  }
+
+  set settingsScrollPosition(double val) {
+    prefs?.setDouble('settingsScrollPosition', val);
+    notifyListeners();
+  }
+
+  bool get preventUninstallation {
+    return prefs?.getBool('preventUninstallation') ?? false;
+  }
+
+  set preventUninstallation(bool val) {
+    prefs?.setBool('preventUninstallation', val);
+    notifyListeners();
+  }
+
+  DNSServiceProvider get dnsServiceProvider {
+    return DNSServiceProvider.values[prefs?.getInt('dnsServiceProvider') ??
+        DNSServiceProvider.system.index];
+  }
+
+  set dnsServiceProvider(DNSServiceProvider provider) {
+    prefs?.setInt('dnsServiceProvider', provider.index);
+    notifyListeners();
+  }
+
+  bool get safeModeAntiCheat {
+    return prefs?.getBool('safeModeAntiCheat') ?? false;
+  }
+
+  set safeModeAntiCheat(bool val) {
+    prefs?.setBool('safeModeAntiCheat', val);
     notifyListeners();
   }
 }

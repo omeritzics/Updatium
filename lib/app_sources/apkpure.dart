@@ -2,11 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:obtainium/components/generated_form_model.dart';
-import 'package:obtainium/custom_errors.dart';
-import 'package:obtainium/providers/logs_provider.dart';
-import 'package:obtainium/providers/source_provider.dart';
+import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/logs_provider.dart';
+import 'package:updatium/providers/source_provider.dart';
 
 extension Unique<E, Id> on List<E> {
   List<E> unique([Id Function(E element)? id, bool inplace = true]) {
@@ -21,6 +20,7 @@ class APKPure extends AppSource {
   APKPure() {
     name = 'APKPure';
     hosts = ['apkpure.net', 'apkpure.com'];
+    name = 'APKPure';
     allowSubDomains = true;
     naiveStandardVersionDetection = true;
     showReleaseDateAsVersionToggle = true;
@@ -115,7 +115,6 @@ class APKPure extends AppSource {
         .nonNulls
         .toList()
         .unique((e) => e.key);
-
     if (apkUrls.isEmpty) {
       throw NoAPKError();
     }
@@ -134,11 +133,9 @@ class APKPure extends AppSource {
     if (changeLog != null && changeLog.isEmpty) {
       changeLog = null;
     }
-
     if (additionalSettings['useFirstApkOfVersion'] == true) {
       apkUrls = [apkUrls.first];
     }
-
     return APKDetails(
       version,
       apkUrls,
