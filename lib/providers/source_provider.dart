@@ -16,10 +16,12 @@ import 'package:updatium/app_sources/apkcombo.dart';
 import 'package:updatium/app_sources/apkmirror.dart';
 import 'package:updatium/app_sources/apkpure.dart';
 import 'package:updatium/app_sources/aptoide.dart';
+import 'package:updatium/app_sources/bitbucket.dart';
 import 'package:updatium/app_sources/codeberg.dart';
-import 'package:updatium/app_sources/directapklink.dart';
+import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/fdroid.dart';
 import 'package:updatium/app_sources/fdroidrepo.dart';
+import 'package:updatium/app_sources/gitea.dart';
 import 'package:updatium/app_sources/github.dart';
 import 'package:updatium/app_sources/gitlab.dart';
 import 'package:updatium/app_sources/huaweiappgallery.dart';
@@ -28,13 +30,17 @@ import 'package:updatium/app_sources/izzyondroid.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/app_sources/jenkins.dart';
 import 'package:updatium/app_sources/neutroncode.dart';
+import 'package:updatium/app_sources/openapk.dart';
 import 'package:updatium/app_sources/rustore.dart';
+import 'package:updatium/app_sources/signal.dart';
 import 'package:updatium/app_sources/sourceforge.dart';
 import 'package:updatium/app_sources/sourcehut.dart';
 import 'package:updatium/app_sources/telegramapp.dart';
 import 'package:updatium/app_sources/tencent.dart';
 import 'package:updatium/app_sources/uptodown.dart';
 import 'package:updatium/app_sources/vivoappstore.dart';
+import 'package:updatium/app_sources/vlc.dart';
+import 'package:updatium/app_sources/whatsapp.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/githubstars.dart';
@@ -1070,7 +1076,7 @@ class SourceProvider {
     APKMirror(),
     APKCombo(),
     TelegramApp(),
-    WhatsApp(),
+    WhatsAppApp(),
     NeutronCode(),
     DirectAPKLink(),
     Signal(),

@@ -16,7 +16,6 @@ import 'package:updatium/providers/source_provider.dart';
 /// repo's URL, full name, and description. Rate limits are checked per page.
 class GitHubStars implements MassAppUrlSource {
   @override
-  String @override
   String get name => t('githubStarredRepos');
 
   @override
