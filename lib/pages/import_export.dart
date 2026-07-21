@@ -508,7 +508,7 @@ class _ImportFromURLListPageState extends State<ImportFromURLListPage> {
                                       GeneratedFormSwitch(
                                         'autoExportOnChanges',
                                         label: 'autoExportOnChanges'.t(),
-                                        defaultValue: settingsProvider
+                                        value: settingsProvider
                                             .autoExportOnChanges,
                                       ),
                                     ],
@@ -521,7 +521,7 @@ class _ImportFromURLListPageState extends State<ImportFromURLListPage> {
                                           MapEntry('2', 'all'.t()),
                                         ],
                                         label: 'includeSettings'.t(),
-                                        defaultValue: settingsProvider
+                                        value: settingsProvider
                                             .exportSettings
                                             .toString(),
                                       ),
@@ -621,7 +621,7 @@ class _ImportFromURLListPageState extends State<ImportFromURLListPage> {
               ...context.read<SourceProvider>().massUrlSources.map(
                 (source) => ActionListTile(
                   icon: Icons.cloud_download_outlined,
-                  label: tr('importX', args: [source.name]),
+                  label: t('importX', args: [source.name]),
                   onTap: importInProgress
                       ? null
                       : () => runMassSourceImport(source),
@@ -679,7 +679,7 @@ class _ExportSectionState extends State<ExportSection> {
             .then((String? result) {
               if (result != null) {
                 if (!context.mounted) return;
-                showMessage(tr('exportedTo', args: [result]), context);
+                showMessage(t('exportedTo', args: [result]), context);
               }
             })
             .catchError((e) {
@@ -698,7 +698,7 @@ class _ExportSectionState extends State<ExportSection> {
             isLast: false,
             child: ActionListTile(
               icon: Icons.folder_open_outlined,
-              label: tr('pickExportDir'),
+              label: t('pickExportDir'),
               trailing: snapshot.data != null
                   ? Icon(
                       Icons.check_circle,
@@ -713,7 +713,7 @@ class _ExportSectionState extends State<ExportSection> {
             isLast: snapshot.data == null,
             child: ActionListTile(
               icon: Icons.upload_outlined,
-              label: tr('updatiumExport'),
+              label: t('updatiumExport'),
               onTap: snapshot.data == null ? null : runUpdatiumExport,
             ),
           ),
@@ -724,7 +724,7 @@ class _ExportSectionState extends State<ExportSection> {
               isFirst: false,
               isLast: false,
               child: ToggleTile(
-                label: tr('autoExportOnChanges'),
+                label: t('autoExportOnChanges'),
                 value: settingsProvider.autoExportOnChanges,
                 onChanged: (value) =>
                     settingsProvider.autoExportOnChanges = value,
@@ -735,16 +735,16 @@ class _ExportSectionState extends State<ExportSection> {
               isLast: true,
               child: DropdownMenu<String>(
                 expandedInsets: EdgeInsets.zero,
-                label: Text(tr('includeSettings')),
+                label: Text(t('includeSettings')),
                 initialSelection:
                     settingsProvider.exportSettings.toString(),
                 dropdownMenuEntries: [
                   DropdownMenuEntry(
-                      value: '0', label: tr('none')),
+                      value: '0', label: t('none')),
                   DropdownMenuEntry(
-                      value: '1', label: tr('excludeSecrets')),
+                      value: '1', label: t('excludeSecrets')),
                   DropdownMenuEntry(
-                      value: '2', label: tr('all')),
+                      value: '2', label: t('all')),
                 ],
                 onSelected: (value) {
                   if (value != null) {
@@ -843,7 +843,7 @@ class _ImportErrorDialogState extends State<ImportErrorDialog> {
 
 void _showImportError(dynamic e, BuildContext context) {
   if (e is PlatformException || e is MissingPluginException) {
-    showError(UpdatiumError(tr('noFilePickerAvailable')), context);
+    showError(UpdatiumError(t('noFilePickerAvailable')), context);
   } else {
     showError(e, context);
   }
@@ -904,7 +904,7 @@ class ImportFromURLListController extends ChangeNotifier {
         try {
           sourceProvider.getSource(lines[i]);
         } catch (e) {
-          return '${tr('line')} ${i + 1}: $e';
+          return '${t('line')} ${i + 1}: $e';
         }
       }
     }

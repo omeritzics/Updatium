@@ -16,12 +16,13 @@ import 'package:android_package_manager/android_package_manager.dart';
 import 'package:battery_plus/battery_plus.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/io_client.dart';
 import 'package:updatium/app_sources/directAPKLink.dart';
 import 'package:updatium/app_sources/html.dart';
+import 'package:updatium/components/app_detail_widgets.dart';
 import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/components/generated_form_modal.dart';
 import 'package:updatium/custom_errors.dart';
@@ -41,6 +42,7 @@ import 'package:archive/archive.dart' as archive;
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_storage/shared_storage.dart' as saf;
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 final packageManager = AndroidPackageManager();
 final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
@@ -278,7 +280,7 @@ Future<String> checkPartialDownloadHash(
   final client = IOClient(createHttpClient(allowInsecure));
   final response = await client.send(req);
   if (response.statusCode < 200 || response.statusCode > 299) {
-    throw UpdatiumError(response.reasonPhrase ?? tr('unexpectedError'));
+    throw UpdatiumError(response.reasonPhrase ?? t('unexpectedError'));
   }
   final List<List<int>> bytes = await response.stream.take(bytesToGrab).toList();
   return hashListOfLists(bytes);
@@ -1160,7 +1162,7 @@ class AppsProvider with ChangeNotifier {
       } catch (e) {
         //
       } finally {
-        throw UpdatiumError(tr('badDownload'));
+        throw UpdatiumError(t('badDownload'));
       }
     }
     final PackageInfo? appInfo = await getInstalledInfo(apps[file.appId]!.app.id);
@@ -1229,7 +1231,7 @@ class AppsProvider with ChangeNotifier {
       mimeType: 'application/vnd.android.package-archive',
     );
     Fluttertoast.showToast(
-      msg: tr('appVerifierInstructionToast'),
+      msg: t('appVerifierInstructionToast'),
       toastLength: Toast.LENGTH_LONG,
     );
     await SharePlus.instance.share(ShareParams(files: [f]));
@@ -1354,7 +1356,7 @@ class AppsProvider with ChangeNotifier {
     final List<String> trackOnlyAppsToUpdate = [];
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw UpdatiumError(tr('appNotFound'));
+        throw UpdatiumError(t('appNotFound'));
       }
       MapEntry<String, String>? apkUrl;
       final trackOnly = apps[id]!.app.additionalSettings['trackOnly'] == true;
@@ -1532,18 +1534,18 @@ class AppsProvider with ChangeNotifier {
         willBeSilent = await canInstallSilently(apps[id]!.app);
         if (!settingsProvider.useShizuku) {
           if (!(await settingsProvider.getInstallPermission(enforce: false))) {
-            throw UpdatiumError(tr('cancelled'));
+            throw UpdatiumError(t('cancelled'));
           }
         } else {
           switch ((await ShizukuApkInstaller().checkPermission())!) {
             case 'services_not_found':
-              throw UpdatiumError(tr('shizukuBinderNotFound'));
+              throw UpdatiumError(t('shizukuBinderNotFound'));
             case 'old_shizuku':
-              throw UpdatiumError(tr('shizukuOld'));
+              throw UpdatiumError(t('shizukuOld'));
             case 'old_android_with_adb':
-              throw UpdatiumError(tr('shizukuOldAndroidWithADB'));
+              throw UpdatiumError(t('shizukuOldAndroidWithADB'));
             case 'denied':
-              throw UpdatiumError(tr('cancelled'));
+              throw UpdatiumError(t('cancelled'));
           }
         }
         if (!willBeSilent && context != null && !settingsProvider.useShizuku) {
@@ -1604,7 +1606,7 @@ class AppsProvider with ChangeNotifier {
     final List<MapEntry<MapEntry<String, String>, App>> filesToDownload = [];
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw UpdatiumError(tr('appNotFound'));
+        throw UpdatiumError(t('appNotFound'));
       }
       MapEntry<String, String>? fileUrl;
       final refreshBeforeDownload =
@@ -2100,14 +2102,14 @@ class AppsProvider with ChangeNotifier {
                   [
                     GeneratedFormSwitch(
                       'rmAppEntry',
-                      label: tr('removeFromUpdatium'),
-                      defaultValue: true,
+                      label: t('removeFromUpdatium'),
+                      value: true,
                     ),
                   ],
                   [
                     GeneratedFormSwitch(
                       'uninstallApp',
-                      label: tr('uninstallFromDevice'),
+                      label: t('uninstallFromDevice'),
                     ),
                   ],
                 ],
@@ -2359,12 +2361,12 @@ class AppsProvider with ChangeNotifier {
       final result = await saf.createFile(
         exportDir,
         displayName:
-            '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
+            '${t('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
         mimeType: 'application/json',
         bytes: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
       );
       if (result == null) {
-        throw UpdatiumError(tr('unexpectedError'));
+        throw UpdatiumError(t('unexpectedError'));
       }
       returnPath = exportDir.pathSegments
           .join('/')
@@ -2484,8 +2486,8 @@ class _AppFilePickerState extends State<AppFilePicker> {
       scrollable: true,
       title: Text(
         widget.pickAnyAsset
-            ? tr('selectX', args: [lowerCaseIfEnglish(tr('releaseAsset'))])
-            : tr('pickAnAPK'),
+            ? t('selectX', args: [lowerCaseIfEnglish(t('releaseAsset'))])
+            : t('pickAnAPK'),
       ),
       content: RadioGroup<String>(
         groupValue: fileUrl!.value,
@@ -2498,7 +2500,7 @@ class _AppFilePickerState extends State<AppFilePicker> {
           children: [
           urlsToSelectFrom.length > 1
               ? Text(
-                  tr('appHasMoreThanOnePackage', args: [widget.app.finalName]),
+                  t('appHasMoreThanOnePackage', args: [widget.app.finalName]),
                 )
               : const SizedBox.shrink(),
           const SizedBox(height: 16),
@@ -2512,8 +2514,8 @@ class _AppFilePickerState extends State<AppFilePicker> {
           if (widget.archs != null)
             Text(
               widget.archs!.length == 1
-                  ? tr('deviceSupportsXArch', args: [widget.archs![0]])
-                  : tr('deviceSupportsFollowingArchs') +
+                  ? t('deviceSupportsXArch', args: [widget.archs![0]])
+                  : t('deviceSupportsFollowingArchs') +
                         list2FriendlyString(
                           widget.archs!.map((e) => '\'$e\'').toList(),
                         ),
@@ -2527,14 +2529,14 @@ class _AppFilePickerState extends State<AppFilePicker> {
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text(tr('cancel')),
+          child: Text(t('cancel')),
         ),
         TextButton(
           onPressed: () {
             context.read<SettingsProvider>().selectionClick();
             Navigator.of(context).pop(fileUrl);
           },
-          child: Text(tr('continue')),
+          child: Text(t('continue')),
         ),
       ],
     );
@@ -2560,7 +2562,7 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text(tr('warning')),
+      title: Text(t('warning')),
       content: Text(
         tr(
           'sourceIsXButPackageFromYPrompt',
@@ -2575,14 +2577,14 @@ class _APKOriginWarningDialogState extends State<APKOriginWarningDialog> {
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text(tr('cancel')),
+          child: Text(t('cancel')),
         ),
         TextButton(
           onPressed: () {
             context.read<SettingsProvider>().selectionClick();
             Navigator.of(context).pop(true);
           },
-          child: Text(tr('continue')),
+          child: Text(t('continue')),
         ),
       ],
     );

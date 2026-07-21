@@ -23,7 +23,7 @@ class FormFieldDefinition {
   final String label;
   final GeneratedFormItemType type;
   final bool required;
-  final dynamic defaultValue;
+  final dynamic value;
   final int max;
   final String? hint;
   final bool password;
@@ -42,7 +42,7 @@ class FormFieldDefinition {
     required this.label,
     required this.type,
     this.required = true,
-    this.defaultValue,
+    this.value,
     this.max = 1,
     this.hint,
     this.password = false,
@@ -64,7 +64,7 @@ class FormFieldDefinition {
           key,
           label: label,
           belowWidgets: belowWidgets,
-          value: defaultValue,
+          value: value,
           additionalValidators: List.from(validators),
           required: required,
           max: max,
@@ -80,7 +80,7 @@ class FormFieldDefinition {
           opts,
           label: label,
           belowWidgets: belowWidgets,
-          value: defaultValue,
+          value: value,
           disabledOptKeys: disabledOptKeys,
           additionalValidators: List.from(validators),
         );
@@ -89,7 +89,7 @@ class FormFieldDefinition {
           key,
           label: label,
           belowWidgets: belowWidgets,
-          value: defaultValue ?? false,
+          value: value ?? false,
           disabled: disabledSwitch,
           additionalValidators: List.from(validators),
         );
@@ -104,7 +104,7 @@ class FormFieldDefinition {
               [],
           label: label,
           belowWidgets: belowWidgets,
-          value: defaultValue,
+          value: value,
         );
     }
   }
@@ -135,7 +135,7 @@ abstract class GeneratedFormItem {
         label: label,
         type: GeneratedFormItemType.textField,
         required: self.required,
-        defaultValue: value,
+        value: value,
         max: self.max,
         hint: self.hint,
         password: self.password,
@@ -152,7 +152,7 @@ abstract class GeneratedFormItem {
         key: key,
         label: label,
         type: GeneratedFormItemType.dropdown,
-        defaultValue: value,
+        value: value,
         opts: self.opts,
         disabledOptKeys: self.disabledOptKeys,
         validators: List.from(additionalValidators),
@@ -165,7 +165,7 @@ abstract class GeneratedFormItem {
         key: key,
         label: label,
         type: GeneratedFormItemType.switch_,
-        defaultValue: value ?? false,
+        value: value ?? false,
         disabledSwitch: self.disabled,
         validators: List.from(additionalValidators),
         belowWidgets: List.from(belowWidgets),
@@ -177,7 +177,7 @@ abstract class GeneratedFormItem {
         key: key,
         label: label,
         type: GeneratedFormItemType.subForm,
-        defaultValue: value,
+        value: value,
         subItems: self.items
             .map((row) => row.map((item) => item.toDefinition()).toList())
             .toList(),
@@ -370,7 +370,7 @@ int generateDeterministicId(
   return random.nextInt(max);
 }
 
-Map<String, dynamic> getDefaultValuesFromFormItems(
+Map<String, dynamic> getValuesFromFormItems(
   List<List<GeneratedFormItem>> items,
 ) {
   final entries = <MapEntry<String, dynamic>>[];

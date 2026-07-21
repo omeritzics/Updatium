@@ -3,10 +3,13 @@ import 'dart:io';
 
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
+import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
+import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 class APKMirror extends AppSource {
   APKMirror() {
@@ -25,7 +28,7 @@ class APKMirror extends AppSource {
     [
       GeneratedFormTextField(
         'filterReleaseTitlesByRegEx',
-        label: tr('filterReleaseTitlesByRegEx'),
+        label: t('filterReleaseTitlesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -100,7 +103,7 @@ class APKMirror extends AppSource {
             ?.innerHtml;
         if (targetRelease == null) {
           throw NoReleasesError(
-            note: regexFilter != null ? tr('noMatchingReleaseFound') : null,
+            note: regexFilter != null ? t('noMatchingReleaseFound') : null,
           );
         }
         final pubDateRaw = targetRelease?.querySelector('pubDate')?.innerHtml;

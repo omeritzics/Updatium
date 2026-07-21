@@ -14,7 +14,7 @@ import 'package:updatium/services/slang_converter.dart';
 class FDroid extends AppSource {
   static const _maxChangeLogCodeUnits = 2048;
   @override
-  String get name => tr('fdroid');
+  String get name => t('fdroid');
 
   FDroid() {
     hosts = ['f-droid.org'];
@@ -32,7 +32,7 @@ class FDroid extends AppSource {
     [
       GeneratedFormTextField(
         'filterVersionsByRegEx',
-        label: tr('filterVersionsByRegEx'),
+        label: t('filterVersionsByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -44,14 +44,14 @@ class FDroid extends AppSource {
     [
       GeneratedFormSwitch(
         'trySelectingSuggestedVersionCode',
-        label: tr('trySelectingSuggestedVersionCode'),
+        label: t('trySelectingSuggestedVersionCode'),
         value: true,
       ),
     ],
     [
       GeneratedFormSwitch(
         'autoSelectHighestVersionCode',
-        label: tr('autoSelectHighestVersionCode'),
+        label: t('autoSelectHighestVersionCode'),
       ),
     ],
   ];

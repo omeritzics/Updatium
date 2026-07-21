@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/foundation.dart' show setEquals;
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 /// A small curated palette of pleasant category colours for quick picking.
 const List<Color> kCategoryPalette = [
@@ -104,7 +105,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
     // existing one's color (matches main, which no-ops on duplicates).
     if (prev == null && cats.containsKey(name)) {
       if (context.mounted) {
-        showMessage(tr('categoryAlreadyExists'), context);
+        showMessage(t('categoryAlreadyExists'), context);
       }
       return;
     }
@@ -137,8 +138,8 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
     final settingsProvider = context.read<SettingsProvider>();
     final confirmed = await showConfirmDialog(
       context,
-      title: tr('deleteCategoriesQuestion'),
-      content: Text(tr('categoryDeleteWarning')),
+      title: t('deleteCategoriesQuestion'),
+      content: Text(t('categoryDeleteWarning')),
       autofocusConfirm: context.read<SettingsProvider>().isTV,
     );
     if (!confirmed) return;
@@ -171,7 +172,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
         ColorPickerType.wheel: true,
       },
       title: Text(
-        tr('selectX', args: [lowerCaseUnlessLang(tr('colour'), 'de')]),
+        t('selectX', args: [lowerCaseUnlessLang(t('colour'), 'de')]),
         style: Theme.of(context).textTheme.titleLarge,
       ),
       wheelDiameter: 192,
@@ -239,7 +240,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            _isEditing ? tr('editCategory') : tr('newCategory'),
+            _isEditing ? t('editCategory') : t('newCategory'),
             style: textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
@@ -248,7 +249,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
               controller: _nameCtrl,
               autofocus: !_isEditing,
               textCapitalization: TextCapitalization.sentences,
-              decoration: InputDecoration(labelText: tr('categoryName')),
+              decoration: InputDecoration(labelText: t('categoryName')),
               onChanged: (value) => _nameNotifier.value = value,
               onSubmitted: (_) {
                 if (_nameCtrl.text.trim().isNotEmpty) _save();
@@ -256,7 +257,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
             ),
           ),
           const SizedBox(height: 20),
-          Text(tr('colour'), style: textTheme.titleSmall),
+          Text(t('colour'), style: textTheme.titleSmall),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
@@ -274,7 +275,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
                 onTap: () =>
                     setState(() => _color = generateRandomLightColor()),
                 icon: Tooltip(
-                  message: tr('randomColour'),
+                  message: t('randomColour'),
                   child: const Icon(Icons.casino_outlined, size: 20),
                 ),
               ),
@@ -283,7 +284,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
                 selected: false,
                 onTap: _pickCustomColor,
                 icon: Tooltip(
-                  message: tr('custom'),
+                  message: t('custom'),
                   child: const Icon(Icons.colorize_outlined, size: 20),
                 ),
               ),
@@ -296,7 +297,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
                 TextButton.icon(
                   onPressed: _delete,
                   icon: const Icon(Icons.delete_outline),
-                  label: Text(tr('remove')),
+                  label: Text(t('remove')),
                   style: TextButton.styleFrom(
                     foregroundColor: Theme.of(context).colorScheme.error,
                   ),
@@ -304,7 +305,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
               const Spacer(),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text(tr('cancel')),
+                child: Text(t('cancel')),
               ),
               const SizedBox(width: 8),
               ValueListenableBuilder<String>(
@@ -313,7 +314,7 @@ class _CategoryEditorSheetState extends State<_CategoryEditorSheet> {
                   final canSave = value.trim().isNotEmpty;
                   return FilledButton(
                     onPressed: canSave ? _save : null,
-                    child: Text(tr('continue')),
+                    child: Text(t('continue')),
                   );
                 },
               ),
@@ -426,7 +427,7 @@ class _CategorySelectorState extends State<CategorySelector> {
 
     if (names.isEmpty && !widget.allowCreate) {
       return Text(
-        tr('noCategories'),
+        t('noCategories'),
         style: Theme.of(
           context,
         ).textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
@@ -441,7 +442,7 @@ class _CategorySelectorState extends State<CategorySelector> {
         children: [
           ActionChip(
             avatar: const Icon(Icons.add, size: 18),
-            label: Text(tr('newCategory')),
+            label: Text(t('newCategory')),
             onPressed: _create,
           ),
         ],
@@ -459,7 +460,7 @@ class _CategorySelectorState extends State<CategorySelector> {
             children: [
               for (final name in names)
                 Tooltip(
-                  message: tr('editCategory'),
+                  message: t('editCategory'),
                   child: Semantics(
                     onLongPress: () => _edit(name),
                     child: GestureDetector(
@@ -489,7 +490,7 @@ class _CategorySelectorState extends State<CategorySelector> {
         if (widget.allowCreate)
           ActionChip(
             avatar: const Icon(Icons.add, size: 18),
-            label: Text(tr('newCategory')),
+            label: Text(t('newCategory')),
             onPressed: _create,
           ),
       ],
@@ -513,7 +514,7 @@ class CategoryManager extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            tr('noCategories'),
+            t('noCategories'),
             style: Theme.of(
               context,
             ).textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
@@ -521,7 +522,7 @@ class CategoryManager extends StatelessWidget {
           const Spacer(),
           ActionChip(
             avatar: const Icon(Icons.add, size: 18),
-            label: Text(tr('newCategory')),
+            label: Text(t('newCategory')),
             onPressed: () => showCategoryEditor(context),
           ),
         ],
@@ -552,7 +553,7 @@ class CategoryManager extends StatelessWidget {
         const SizedBox(width: 8),
         ActionChip(
           avatar: const Icon(Icons.add, size: 18),
-          label: Text(tr('newCategory')),
+          label: Text(t('newCategory')),
           onPressed: () => showCategoryEditor(context),
         ),
       ],

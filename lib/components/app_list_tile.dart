@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
@@ -9,6 +9,7 @@ import 'package:markdown/markdown.dart' as md;
 import 'package:updatium/components/generated_form_renderer.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:updatium/theme.dart';
 import 'package:updatium/components/ui_widgets.dart';
 import 'package:updatium/providers/apps_provider.dart';
@@ -34,7 +35,7 @@ void showChangeLogDialog(
     context: context,
     builder: (BuildContext context) {
       return GeneratedFormModal(
-        title: tr('changes'),
+        title: t('changes'),
         items: const [],
         message: app.latestVersion,
         additionalWidgets: [
@@ -79,7 +80,7 @@ void showChangeLogDialog(
                 )
               : Text(changeLog),
         ],
-        singleNullReturnButton: tr('ok'),
+        singleNullReturnButton: t('ok'),
       );
     },
   );
@@ -257,7 +258,7 @@ class AppListTile extends StatelessWidget {
           };
     return IconButton.filled(
       onPressed: onPressed,
-      tooltip: trackOnly ? tr('markUpdated') : tr('update'),
+      tooltip: trackOnly ? t('markUpdated') : t('update'),
       style: IconButton.styleFrom(
         backgroundColor: cs.primary,
         foregroundColor: cs.onPrimary,
@@ -274,7 +275,7 @@ class AppListTile extends StatelessWidget {
 
   Widget _authorText() {
     return Text(
-      tr('byX', args: [appInMemory.author]),
+      t('byX', args: [appInMemory.author]),
       maxLines: 1,
       style: TextStyle(
         overflow: TextOverflow.ellipsis,
@@ -296,7 +297,7 @@ class AppListTile extends StatelessWidget {
           const SizedBox(width: 4),
           Flexible(
             child: Text(
-              tr('repoRenamed'),
+              t('repoRenamed'),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style:
@@ -361,7 +362,7 @@ class AppListTile extends StatelessWidget {
                 Icon(Icons.install_mobile, color: cs.onPrimaryContainer),
                 const SizedBox(width: 8),
                 Text(
-                  tr('install'),
+                  t('install'),
                   style: TextStyle(color: cs.onPrimaryContainer),
                 ),
               ],
@@ -381,7 +382,7 @@ class AppListTile extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  tr('update'),
+                  t('update'),
                   style: TextStyle(color: cs.onPrimaryContainer),
                 ),
               ],
@@ -396,7 +397,7 @@ class AppListTile extends StatelessWidget {
           customSemanticsActions: <CustomSemanticsAction, VoidCallback>{
             if (canInstall || canUpdate)
               CustomSemanticsAction(
-                label: canUpdate ? tr('update') : tr('install'),
+                label: canUpdate ? t('update') : t('install'),
               ): () {
                 if (!appsProvider.areDownloadsRunning()) {
                   appsProvider.downloadAndInstallLatestApps([
@@ -404,7 +405,7 @@ class AppListTile extends StatelessWidget {
                   ], appNavigatorKey.currentContext);
                 }
               },
-            CustomSemanticsAction(label: tr('remove')): () {
+            CustomSemanticsAction(label: t('remove')): () {
               appsProvider.removeAppsWithModal(context, [_app]);
             },
           },
@@ -550,7 +551,7 @@ class DownloadProgressTrailing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final installing = progress < 0;
-    final label = installing ? tr('installing') : '${progress.toInt()}%';
+    final label = installing ? t('installing') : '${progress.toInt()}%';
     final sizeLabel = installing
         ? null
         : formatDownloadSize(receivedBytes, totalBytes);
@@ -961,13 +962,13 @@ class _VersionLabel extends StatelessWidget {
     if (installed != null && installed != latest) {
       return '$installed → $latest';
     }
-    return installed ?? tr('notInstalled');
+    return installed ?? t('notInstalled');
   }
 
   String changesLabel(App app, bool hasChangeLogFn) {
     return app.releaseDate == null
         ? hasChangeLogFn
-              ? tr('changes')
+              ? t('changes')
               : ''
         : DateFormat('yyyy-MM-dd').format(app.releaseDate!.toLocal());
   }

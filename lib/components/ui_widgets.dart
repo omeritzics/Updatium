@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:updatium/services/slang_converter.dart';
 import 'package:updatium/theme.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -15,7 +16,7 @@ Future<void> copyToClipboard(BuildContext context, String text) async {
   if (context.mounted) {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text(tr('copiedToClipboard'))));
+    ).showSnackBar(SnackBar(content: Text(t('copiedToClipboard'))));
   }
 }
 
@@ -35,12 +36,12 @@ Future<bool> showConfirmDialog(
       actions: [
         TextButton(
           onPressed: () => Navigator.of(ctx).pop(false),
-          child: Text(cancelText ?? tr('no')),
+          child: Text(cancelText ?? t('no')),
         ),
         FilledButton(
           autofocus: autofocusConfirm,
           onPressed: () => Navigator.of(ctx).pop(true),
-          child: Text(confirmText ?? tr('yes')),
+          child: Text(confirmText ?? t('yes')),
         ),
       ],
     ),
@@ -73,7 +74,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
               Clipboard.setData(ClipboardData(text: e.toString()));
               ScaffoldMessenger.of(
                 context,
-              ).showSnackBar(SnackBar(content: Text(tr('copiedToClipboard'))));
+              ).showSnackBar(SnackBar(content: Text(t('copiedToClipboard'))));
             },
             child: Text(e.toString()),
           ),
@@ -83,7 +84,7 @@ void showMessage(dynamic e, BuildContext context, {bool isError = false}) {
               onPressed: () {
                 Navigator.of(context).pop(null);
               },
-              child: Text(tr('ok')),
+              child: Text(t('ok')),
             ),
           ],
         );
@@ -254,7 +255,7 @@ class DownloadCancelButton extends StatelessWidget {
       icon: const Icon(Icons.close),
       iconSize: 20,
       visualDensity: VisualDensity.compact,
-      tooltip: tr('cancel'),
+      tooltip: t('cancel'),
       onPressed: () {
         context.read<SettingsProvider>().lightImpact();
         onPressed();
@@ -406,7 +407,7 @@ Future<void> showHelpDialog(
         TextButton(
           autofocus: context.read<SettingsProvider>().isTV,
           onPressed: () => Navigator.of(ctx).pop(),
-          child: Text(tr('ok')),
+          child: Text(t('ok')),
         ),
       ],
     ),
@@ -536,7 +537,7 @@ class ToggleTile extends StatelessWidget {
           if (helpWidgets.isNotEmpty)
             IconButton(
               icon: const Icon(Icons.help_outline),
-              tooltip: tr('about'),
+              tooltip: t('about'),
               onPressed: () =>
                   showHelpDialog(context, title: label, content: helpWidgets),
             ),

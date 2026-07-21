@@ -277,8 +277,8 @@ class _AppPageState extends State<AppPage> {
   Future<void> showMarkUpdatedDialog(BuildContext context) async {
     final confirmed = await showConfirmDialog(
       context,
-      title: tr('alreadyUpToDateQuestion'),
-      confirmText: tr('yesMarkUpdated'),
+      title: t('alreadyUpToDateQuestion'),
+      confirmText: t('yesMarkUpdated'),
       autofocusConfirm: settingsProvider.isTV,
     );
     if (!confirmed) return;
@@ -326,7 +326,7 @@ class _AppPageState extends State<AppPage> {
                   pinned: true,
                   automaticallyImplyLeading: false,
                   title: Text(
-                    tr('additionalOptsFor', args: [app?.name ?? tr('app')]),
+                    t('additionalOptsFor', args: [app?.name ?? t('app')]),
                   ),
                   Expanded(
                     child: Column(
@@ -452,7 +452,7 @@ class _AppPageState extends State<AppPage> {
           )..['trackOnly'] = true,
         );
         if (context.mounted) {
-          showMessage(tr('appsFromSourceAreTrackOnly'), context);
+          showMessage(t('appsFromSourceAreTrackOnly'), context);
         }
       }
       final versionDetectionEnabled =
@@ -505,8 +505,8 @@ class _AppPageState extends State<AppPage> {
     try {
       final trackOnly = app?.app.settings.getBool('trackOnly') == true;
       final successMessage = app?.app.installedVersion == null
-          ? tr('installed')
-          : tr('appsUpdated');
+          ? t('installed')
+          : t('appsUpdated');
       final np = Provider.of<NotificationsProvider>(context, listen: false);
       settingsProvider.heavyImpact();
       final res = await appsProvider.downloadAndInstallLatestApps([
@@ -582,7 +582,7 @@ class _AppPageState extends State<AppPage> {
             children: [
               const Icon(Icons.error_outline, size: 48),
               const SizedBox(height: 16),
-              Text(tr('webviewLoadError')),
+              Text(t('webviewLoadError')),
               Text(
                 _webViewError!,
                 textAlign: TextAlign.center,
@@ -596,7 +596,7 @@ class _AppPageState extends State<AppPage> {
                     webViewLoaded = false;
                   });
                 },
-                child: Text(tr('retry')),
+                child: Text(t('retry')),
               ),
             ],
           ),
@@ -647,10 +647,10 @@ class _AppPageState extends State<AppPage> {
         children: [
           Text(
             installed == null
-                ? (!trackOnly ? tr('install') : tr('markInstalled'))
+                ? (!trackOnly ? t('install') : t('markInstalled'))
                 : !trackOnly
-                ? tr('update')
-                : tr('markUpdated'),
+                ? t('update')
+                : t('markUpdated'),
           ),
           if (_probedDownloadSize != null)
             Text(
@@ -686,7 +686,7 @@ class _AppPageState extends State<AppPage> {
                     handleAdditionalOptionChanges(values, context, app);
                   }
                 },
-          tooltip: tr('additionalOptions'),
+          tooltip: t('additionalOptions'),
           icon: const Icon(Icons.edit),
         ),
       if (app != null && app.installedInfo != null)
@@ -695,7 +695,7 @@ class _AppPageState extends State<AppPage> {
             openAppSettings(app);
           },
           icon: const Icon(Icons.settings),
-          tooltip: tr('settings'),
+          tooltip: t('settings'),
         ),
       if (app != null && showAppWebpageFinal)
         IconButton(
@@ -711,7 +711,7 @@ class _AppPageState extends State<AppPage> {
             );
           },
           icon: const Icon(Icons.more_horiz),
-          tooltip: tr('more'),
+          tooltip: t('more'),
         ),
       if (app?.app.installedVersion != null &&
           app?.app.installedVersion != app?.app.latestVersion &&
@@ -721,7 +721,7 @@ class _AppPageState extends State<AppPage> {
           onPressed: app?.downloadProgress != null || updating
               ? null
               : () => showMarkUpdatedDialog(context),
-          tooltip: tr('markUpdated'),
+          tooltip: t('markUpdated'),
           icon: const Icon(Icons.done),
         ),
       if ((!isVersionDetectionStandard || trackOnly) &&
@@ -734,7 +734,7 @@ class _AppPageState extends State<AppPage> {
                   resetInstallStatus(app);
                 },
           icon: const Icon(Icons.restore_rounded),
-          tooltip: tr('resetInstallStatus'),
+          tooltip: t('resetInstallStatus'),
         ),
       IconButton(
         onPressed: app == null || app.downloadProgress != null || updating
@@ -746,7 +746,7 @@ class _AppPageState extends State<AppPage> {
                   }
                 });
               },
-        tooltip: tr('remove'),
+        tooltip: t('remove'),
         icon: const Icon(Icons.delete_outline),
       ),
     ];
@@ -829,8 +829,8 @@ class _AppPageState extends State<AppPage> {
                 isLast: false,
                 child: _repoRenameInfoRow(
                   Icons.info_outline_rounded,
-                  tr('repoRenamed'),
-                  tr('repoRenamedExplanation'),
+                  t('repoRenamed'),
+                  t('repoRenamedExplanation'),
                 ),
               ),
               ConnectedCard(
@@ -838,7 +838,7 @@ class _AppPageState extends State<AppPage> {
                 isLast: false,
                 child: _repoRenameInfoRow(
                   Icons.link_rounded,
-                  tr('newUrl'),
+                  t('newUrl'),
                   pendingUrl,
                 ),
               ),
@@ -852,7 +852,7 @@ class _AppPageState extends State<AppPage> {
                       child: OutlinedButton(
                         onPressed: () =>
                             appsProvider.updatePendingRepoRename(appId, null),
-                        child: Text(tr('dismiss')),
+                        child: Text(t('dismiss')),
                       ),
                     ),
                     Expanded(
@@ -864,7 +864,7 @@ class _AppPageState extends State<AppPage> {
                           );
                           if (mounted) unawaited(getUpdate(context));
                         },
-                        child: Text(tr('updateUrl')),
+                        child: Text(t('updateUrl')),
                       ),
                     ),
                   ],
@@ -908,14 +908,14 @@ class _AppPageState extends State<AppPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    app?.name ?? tr('app'),
+                    app?.name ?? t('app'),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    tr('byX', args: [app?.author ?? tr('unknown')]),
+                    t('byX', args: [app?.author ?? t('unknown')]),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
@@ -942,19 +942,19 @@ class _AppPageState extends State<AppPage> {
         true,
         false,
         children: [
-          if (trackOnly) _detailNote(tr('xIsTrackOnly', args: [tr('app')])),
+          if (trackOnly) _detailNote(t('xIsTrackOnly', args: [t('app')])),
           if (pseudo)
             _detailNote(
               realVersion != null
-                  ? '${tr('pseudoVersionInUse')} (OS installed $realVersion)'
-                  : tr('pseudoVersionInUse'),
+                  ? '${t('pseudoVersionInUse')} (OS installed $realVersion)'
+                  : t('pseudoVersionInUse'),
             ),
           () {
             String l = appInstalledVersionText(app?.app);
             final upToDate =
                 app?.app.installedVersion == app?.app.latestVersion;
             if (!upToDate) {
-              l += '\n${app?.app.latestVersion} ${tr('latest')}';
+              l += '\n${app?.app.latestVersion} ${t('latest')}';
             }
             return Text(
               l,
@@ -973,7 +973,7 @@ class _AppPageState extends State<AppPage> {
                 borderRadius: BorderRadius.circular(4),
                 child: Text(
                   app?.app.releaseDate == null
-                      ? tr('changes')
+                      ? t('changes')
                       : app!.app.releaseDate!
                             .toLocal()
                             .toString()
@@ -1007,7 +1007,7 @@ class _AppPageState extends State<AppPage> {
                         .toString()
                         .split('.')
                         .first ??
-                    tr('never'),
+                    t('never'),
               ],
             ),
             style: tt.bodyMedium,
@@ -1081,7 +1081,7 @@ class _AppPageState extends State<AppPage> {
         certs || hasAssets ? false : true,
         children: [
           Tooltip(
-            message: tr('copyToClipboard'),
+            message: t('copyToClipboard'),
             child: GestureDetector(
               onLongPress: () {
                 copyToClipboard(context, app?.app.url ?? '');
@@ -1113,14 +1113,14 @@ class _AppPageState extends State<AppPage> {
           children: [
             Text(
               '${plural('certificateHash', a.certificateHashes.length)}'
-              '${a.hasMultipleSigners ? " (${tr('multipleSigners')})" : ""}',
+              '${a.hasMultipleSigners ? " (${t('multipleSigners')})" : ""}',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             ...a.certificateHashes.map(
               (h) => Tooltip(
-                message: tr('copyToClipboard'),
+                message: t('copyToClipboard'),
                 child: GestureDetector(
                   onLongPress: () {
                     copyToClipboard(context, h);
@@ -1220,7 +1220,7 @@ class _AppPageState extends State<AppPage> {
                             'percentProgress',
                             args: [app.downloadProgress!.toInt().toString()],
                           )
-                        : tr('installing'),
+                        : t('installing'),
                     child: LinearProgressIndicator(
                       value: app.downloadProgress! >= 0
                           ? app.downloadProgress! / 100
@@ -1635,15 +1635,15 @@ class _AppPageState extends State<AppPage> {
             row = row.map((e) {
               var item = e.clone();
               if (app.app.additionalSettings[item.key] != null) {
-                item.defaultValue = app.app.additionalSettings[item.key];
+                item.value = app.app.additionalSettings[item.key];
               } else if (item.key == 'appAuthor') {
-                item.defaultValue = app.app.author;
+                item.value = app.app.author;
               } else if (item.key == 'appId') {
-                item.defaultValue = app.app.id;
+                item.value = app.app.id;
               } else if (item.key == 'appName') {
-                item.defaultValue = app.app.name;
+                item.value = app.app.name;
               } else if (item.key == 'appSourceURL') {
-                item.defaultValue = app.app.url;
+                item.value = app.app.url;
               }
               return item;
             }).toList();
@@ -1677,7 +1677,7 @@ class _AppPageState extends State<AppPage> {
                           GeneratedFormSwitch(
                             'pinned',
                             label: 'pinned'.t(),
-                            defaultValue: app.app.pinned,
+                            value: app.app.pinned,
                           ),
                         ],
                       ],

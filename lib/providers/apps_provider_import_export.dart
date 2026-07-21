@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 
 import 'package:updatium/custom_errors.dart';
 
@@ -88,12 +88,12 @@ extension AppsProviderImportExport on AppsProvider {
       final result = await saf.createFile(
         exportDir,
         displayName:
-            '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
+            '${t('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}${isAuto ? '-auto' : ''}.json',
         mimeType: 'application/json',
         bytes: Uint8List.fromList(utf8.encode(encoder.convert(finalExport))),
       );
       if (result == null) {
-        throw UpdatiumError(tr('unexpectedError'));
+        throw UpdatiumError(t('unexpectedError'));
       }
       returnPath = exportDir.pathSegments
           .join('/')
@@ -108,7 +108,7 @@ extension AppsProviderImportExport on AppsProvider {
     try {
       decodedJSON = jsonDecode(appsJSON);
     } catch (e) {
-      throw UpdatiumError('${tr('failedToImport')}: ${e.toString()}');
+      throw UpdatiumError('${t('failedToImport')}: ${e.toString()}');
     }
     final hasSchemaVersion =
         decodedJSON is Map && decodedJSON.containsKey('schemaVersion');
@@ -126,7 +126,7 @@ extension AppsProviderImportExport on AppsProvider {
                 .toList();
       }
     } catch (e) {
-      throw UpdatiumError('${tr('failedToImport')}: ${e.toString()}');
+      throw UpdatiumError('${t('failedToImport')}: ${e.toString()}');
     }
     await waitForAppsToLoad();
     for (var i = 0; i < importedApps.length; i++) {
@@ -175,7 +175,7 @@ extension AppsProviderImportExport on AppsProvider {
 const int currentExportSchemaVersion = 2;
 const String kPackageVersion = String.fromEnvironment(
   'APP_VERSION',
-  defaultValue: '0.0.0',
+  value: '0.0.0',
 );
 
 class ExportSchema {

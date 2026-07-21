@@ -108,7 +108,7 @@ class UpdateNotification extends UpdatiumNotification {
   UpdateNotification(List<App> updates, {int? id})
     : super(
         id ?? updateNotificationId,
-        tr('updatesAvailable'),
+        t('updatesAvailable'),
         _buildUpdateMessage(
           updates,
           emptyKey: 'noNewUpdates',
@@ -126,7 +126,7 @@ class TrackOnlyUpdateNotification extends UpdatiumNotification {
   TrackOnlyUpdateNotification(List<App> updates, {int? id})
     : super(
         id ?? trackOnlyUpdateNotificationId,
-        tr('trackOnlyUpdatesAvailable'),
+        t('trackOnlyUpdatesAvailable'),
         _buildUpdateMessage(
           updates,
           emptyKey: 'noNewUpdates',
@@ -134,8 +134,8 @@ class TrackOnlyUpdateNotification extends UpdatiumNotification {
           pluralKey: 'xAndNMoreUpdatesAvailable',
         ),
         'UPDATES_AVAILABLE',
-        tr('updatesAvailableNotifChannel'),
-        tr('updatesAvailableNotifDescription'),
+        t('updatesAvailableNotifChannel'),
+        t('updatesAvailableNotifDescription'),
         Importance.max,
       );
 }
@@ -144,7 +144,7 @@ class SilentUpdateNotification extends UpdatiumNotification {
   SilentUpdateNotification(List<App> updates, bool succeeded, {int? id})
     : super(
         id ?? 3,
-        succeeded ? tr('appsUpdated') : tr('appsNotUpdated'),
+        succeeded ? t('appsUpdated') : t('appsNotUpdated'),
         _buildUpdateMessage(
           updates,
           singleKey: succeeded ? 'xWasUpdatedToY' : 'xWasNotUpdatedToY',
@@ -164,7 +164,7 @@ class SilentUpdateAttemptNotification extends UpdatiumNotification {
   SilentUpdateAttemptNotification(List<App> updates, {int? id})
     : super(
         id ?? 8,
-        tr('appsPossiblyUpdated'),
+        t('appsPossiblyUpdated'),
         _buildUpdateMessage(
           updates,
           singleKey: 'xWasPossiblyUpdatedToY',
@@ -205,7 +205,7 @@ class AppsRemovedNotification extends UpdatiumNotification {
       ) {
     final buffer = StringBuffer();
     for (var r in namedReasons) {
-      buffer.writeln(tr('xWasRemovedDueToErrorY', args: [r[0], r[1]]));
+      buffer.writeln(t('xWasRemovedDueToErrorY', args: [r[0], r[1]]));
     }
     message = buffer.toString().trim();
   }
@@ -221,11 +221,11 @@ class DownloadNotification extends UpdatiumNotification {
     int? totalBytes,
   }) : super(
          _baseId + (appName.hashCode.abs() % downloadNotificationIdRange),
-         tr('downloadingX', args: [appName]),
+         t('downloadingX', args: [appName]),
          formatDownloadSize(receivedBytes, totalBytes) ?? '',
          'APP_DOWNLOADING',
-         tr('downloadingXNotifChannel', args: [tr('app')]),
-         tr('downloadNotifDescription'),
+         t('downloadingXNotifChannel', args: [t('app')]),
+         t('downloadNotifDescription'),
          Importance.low,
          onlyAlertOnce: true,
          progPercent: progPercent,
@@ -233,7 +233,7 @@ class DownloadNotification extends UpdatiumNotification {
              ? [
                  AndroidNotificationAction(
                    '$cancelDownloadActionPrefix$appId',
-                   tr('cancel'),
+                   t('cancel'),
                    showsUserInterface: false,
                    cancelNotification: true,
                  ),
@@ -246,7 +246,7 @@ class DownloadedNotification extends UpdatiumNotification {
   DownloadedNotification(String fileName, String downloadUrl, String filePath)
     : super(
         downloadUrl.hashCode.abs(),
-        tr('downloadedX', args: [fileName]),
+        t('downloadedX', args: [fileName]),
         '',
         'FILE_DOWNLOADED',
         t('downloadedXNotifChannel', args: ['app'.t()]),
@@ -259,11 +259,11 @@ class DownloadedNotification extends UpdatiumNotification {
 UpdatiumNotification get completeInstallationNotification =>
     UpdatiumNotification(
       1,
-      tr('completeAppInstallation'),
-      tr('updatiumMustBeOpenToInstallApps'),
+      t('completeAppInstallation'),
+      t('updatiumMustBeOpenToInstallApps'),
       'COMPLETE_INSTALL',
-      tr('completeAppInstallationNotifChannel'),
-      tr('completeAppInstallationNotifDescription'),
+      t('completeAppInstallationNotifChannel'),
+      t('completeAppInstallationNotifDescription'),
       Importance.max,
     );
 

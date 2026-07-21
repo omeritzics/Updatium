@@ -55,7 +55,7 @@ List<MapEntry<Locale, String>> supportedLocales = const [
   MapEntry(
     Locale('en', 'EO'),
     'Esperanto',
-  ), // https://github.com/aissat/easy_localization/issues/220#issuecomment-846035493
+  ), // https://github.com/aissat/simple_localization/issues/220#issuecomment-846035493
   MapEntry(Locale('id'), 'Bahasa Indonesia'),
   MapEntry(Locale('ko'), '한국어'),
   MapEntry(Locale('ca'), 'Català'),
@@ -82,7 +82,7 @@ bool isFdroidBuild = false;
 final appNavigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> loadTranslations() async {
-  // See easy_localization/issues/210
+  // See simple_localization/issues/210
   await SimpleLocalizationController.initEasyLocation();
   var s = SettingsProvider();
   try {

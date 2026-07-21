@@ -6,7 +6,7 @@ import 'package:updatium/providers/source_provider.dart';
 
 class Tencent extends AppSource {
   @override
-  String get name => tr('tencentAppStore');
+  String get name => t('tencentAppStore');
 
   Tencent() {
     name = 'tencentAppStore'.t();
@@ -72,7 +72,7 @@ class Tencent extends AppSource {
         if (version == null || version.isEmpty) {
           throw NoVersionError();
         }
-        final String appName = json['appName']?.toString() ?? tr('app');
+        final String appName = json['appName']?.toString() ?? t('app');
         final String author = json['author']?.toString() ?? name;
         final apkName =
             Uri.parse(apkUrl).queryParameters['fsname'] ??

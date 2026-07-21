@@ -6,7 +6,7 @@ import 'package:updatium/providers/source_provider.dart' as source_provider;
 
 class HuaweiAppGallery extends AppSource {
   @override
-  String get name => tr('huaweiAppGallery');
+  String get name => t('huaweiAppGallery');
 
   HuaweiAppGallery() {
     name = 'huaweiappgallery'.t();

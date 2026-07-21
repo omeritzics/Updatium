@@ -14,7 +14,7 @@ abstract class GeneratedFormItem {
   late String key;
   late String label;
   late List<Widget> belowWidgets;
-  late dynamic defaultValue;
+  late dynamic value;
   List<dynamic> additionalValidators;
   dynamic ensureType(dynamic val);
   GeneratedFormItem clone();
@@ -23,7 +23,7 @@ abstract class GeneratedFormItem {
     this.key, {
     this.label = 'Input',
     this.belowWidgets = const [],
-    this.defaultValue,
+    this.value,
     this.additionalValidators = const [],
   });
 }
@@ -40,7 +40,7 @@ class GeneratedFormTextField extends GeneratedFormItem {
     super.key, {
     super.label,
     super.belowWidgets,
-    String super.defaultValue = '',
+    String super.value = '',
     List<String? Function(String? value)> super.additionalValidators = const [],
     this.required = true,
     this.max = 1,
@@ -61,7 +61,7 @@ class GeneratedFormTextField extends GeneratedFormItem {
       key,
       label: label,
       belowWidgets: belowWidgets,
-      defaultValue: defaultValue,
+      value: value,
       additionalValidators: List.from(additionalValidators),
       required: required,
       max: max,
@@ -83,7 +83,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
     this.opts, {
     super.label,
     super.belowWidgets,
-    String super.defaultValue = '',
+    String super.value = '',
     this.disabledOptKeys,
     this.required = true,
     this.max = 1000,
@@ -102,7 +102,7 @@ class GeneratedFormDropdown extends GeneratedFormItem {
       opts?.map((e) => MapEntry(e.key, e.value)).toList(),
       label: label,
       belowWidgets: belowWidgets,
-      defaultValue: defaultValue,
+      value: value,
       disabledOptKeys: disabledOptKeys != null
           ? List.from(disabledOptKeys!)
           : null,
@@ -120,7 +120,7 @@ class GeneratedFormSwitch extends GeneratedFormItem {
     super.key, {
     super.label,
     super.belowWidgets,
-    bool super.defaultValue = false,
+    bool super.value = false,
     bool disabled = false,
     List<String? Function(bool value)> super.additionalValidators = const [],
   });
@@ -136,7 +136,7 @@ class GeneratedFormSwitch extends GeneratedFormItem {
       key,
       label: label,
       belowWidgets: belowWidgets,
-      defaultValue: defaultValue,
+      value: value,
       disabled: false,
       additionalValidators: List.from(additionalValidators),
     );
@@ -153,7 +153,7 @@ class GeneratedFormTagInput extends GeneratedFormItem {
     super.key, {
     super.label,
     super.belowWidgets,
-    Map<String, MapEntry<int, bool>> super.defaultValue = const {},
+    Map<String, MapEntry<int, bool>> super.value = const {},
     List<String? Function(Map<String, MapEntry<int, bool>> value)>
         super.additionalValidators =
         const [],
@@ -175,7 +175,7 @@ class GeneratedFormTagInput extends GeneratedFormItem {
       key,
       label: label,
       belowWidgets: belowWidgets,
-      defaultValue: defaultValue,
+      value: value,
       additionalValidators: List.from(additionalValidators),
       deleteConfirmationMessage: deleteConfirmationMessage,
       singleSelect: singleSelect,
@@ -225,7 +225,7 @@ class GeneratedFormSubForm extends GeneratedFormItem {
     this.items, {
     super.label,
     super.belowWidgets,
-    super.defaultValue = const [],
+    super.value = const [],
   });
 
   @override
@@ -240,7 +240,7 @@ class GeneratedFormSubForm extends GeneratedFormItem {
       cloneFormItems(items),
       label: label,
       belowWidgets: belowWidgets,
-      defaultValue: defaultValue,
+      value: value,
     );
   }
 }
@@ -399,9 +399,9 @@ class _GeneratedFormState extends State<GeneratedForm> {
       for (var e in row) {
         if (e is GeneratedFormSubForm) {
           var subformValues = <Map<String, dynamic>>[];
-          var defaults = getDefaultValuesFromFormItems(e.items);
-          if (e.defaultValue != null && e.defaultValue is List) {
-            for (var v in (e.defaultValue as List)) {
+          var defaults = getValuesFromFormItems(e.items);
+          if (e.value != null && e.value is List) {
+            for (var v in (e.value as List)) {
               if (v is Map<String, dynamic>) {
                 var fullDefaults = Map<String, dynamic>.from(defaults);
                 fullDefaults.addAll(v);
@@ -411,9 +411,9 @@ class _GeneratedFormState extends State<GeneratedForm> {
           }
           values[e.key] = subformValues;
         } else {
-          values[e.key] = e.defaultValue;
+          values[e.key] = e.value;
           if (e is GeneratedFormTextField) {
-            _controllers[e.key] = TextEditingController(text: e.defaultValue);
+            _controllers[e.key] = TextEditingController(text: e.value);
             _formKeys[e.key] = GlobalKey<FormFieldState>();
           }
         }
@@ -558,8 +558,8 @@ class _GeneratedFormState extends State<GeneratedForm> {
         } else if (formItem is GeneratedFormSubForm) {
           values[formItem.key] = [];
           for (Map<String, dynamic> v
-              in ((formItem.defaultValue ?? []) as List<dynamic>)) {
-            var fullDefaults = getDefaultValuesFromFormItems(formItem.items);
+              in ((formItem.value ?? []) as List<dynamic>)) {
+            var fullDefaults = getValuesFromFormItems(formItem.items);
             for (var element in v.entries) {
               fullDefaults[element.key] = element.value;
             }
@@ -663,72 +663,71 @@ class _GeneratedFormState extends State<GeneratedForm> {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   ...() sync* {
-                    var tagEntries =
-                        values[fieldKey] as Map<String, MapEntry<int, bool>>?;
-                    if (tagEntries != null) {
-                      var sorted = tagEntries.entries.toList()
-                        ..sort((a, b) => a.key
-                            .toLowerCase()
-                            .compareTo(b.key.toLowerCase()));
-                      yield* sorted;
-                    }
-                  }().map((e2) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 4,
-                              ),
-                              child: ChoiceChip(
-                                label: Text(e2.key),
-                                backgroundColor: Color(
-                                  e2.value.key,
-                                ).withAlpha(50),
-                                selectedColor: Color(e2.value.key),
-                                visualDensity: VisualDensity.compact,
-                                selected: e2.value.value,
-                                onSelected: (value) {
-                                  setState(() {
-                                    (values[fieldKey]
-                                        as Map<String, MapEntry<int, bool>>)[e2
-                                        .key] = MapEntry(
-                                      (values[fieldKey]
-                                              as Map<
-                                                String,
-                                                MapEntry<int, bool>
-                                              >)[e2.key]!
-                                          .key,
-                                      value,
-                                    );
-                                    if (item.singleSelect && value == true) {
-                                      for (var key
-                                          in (values[fieldKey]
-                                                  as Map<
-                                                    String,
-                                                    MapEntry<int, bool>
-                                                  >)
-                                              .keys) {
-                                        if (key != e2.key) {
-                                          (values[fieldKey]
-                                              as Map<
-                                                String,
-                                                MapEntry<int, bool>
-                                              >)[key] = MapEntry(
-                                            (values[fieldKey]
-                                                    as Map<
-                                                      String,
-                                                      MapEntry<int, bool>
-                                                    >)[key]!
-                                                .key,
-                                            false,
-                                          );
-                                        }
-                                      }
-                                    }
-                                    someValueChanged();
-                                  });
-                                },
+                        var tagEntries =
+                            values[fieldKey]
+                                as Map<String, MapEntry<int, bool>>?;
+                        if (tagEntries != null) {
+                          var sorted = tagEntries.entries.toList()
+                            ..sort(
+                              (a, b) => a.key.toLowerCase().compareTo(
+                                b.key.toLowerCase(),
                               ),
                             );
-                          }) ??
+                          yield* sorted;
+                        }
+                      }().map((e2) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: ChoiceChip(
+                            label: Text(e2.key),
+                            backgroundColor: Color(e2.value.key).withAlpha(50),
+                            selectedColor: Color(e2.value.key),
+                            visualDensity: VisualDensity.compact,
+                            selected: e2.value.value,
+                            onSelected: (value) {
+                              setState(() {
+                                (values[fieldKey]
+                                    as Map<String, MapEntry<int, bool>>)[e2
+                                    .key] = MapEntry(
+                                  (values[fieldKey]
+                                          as Map<
+                                            String,
+                                            MapEntry<int, bool>
+                                          >)[e2.key]!
+                                      .key,
+                                  value,
+                                );
+                                if (item.singleSelect && value == true) {
+                                  for (var key
+                                      in (values[fieldKey]
+                                              as Map<
+                                                String,
+                                                MapEntry<int, bool>
+                                              >)
+                                          .keys) {
+                                    if (key != e2.key) {
+                                      (values[fieldKey]
+                                          as Map<
+                                            String,
+                                            MapEntry<int, bool>
+                                          >)[key] = MapEntry(
+                                        (values[fieldKey]
+                                                as Map<
+                                                  String,
+                                                  MapEntry<int, bool>
+                                                >)[key]!
+                                            .key,
+                                        false,
+                                      );
+                                    }
+                                  }
+                                }
+                                someValueChanged();
+                              });
+                            },
+                          ),
+                        );
+                      }) ??
                       [const SizedBox.shrink()],
                   (values[fieldKey] as Map<String, MapEntry<int, bool>>?)
                               ?.values
@@ -864,7 +863,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                     items: cloneFormItems(item.items)
                         .map(
                           (x) => x.map((y) {
-                            y.defaultValue = values[fieldKey]?[i]?[y.key];
+                            y.value = values[fieldKey]?[i]?[y.key];
                             y.key = '${y.key.toString()},$internalFormKey';
                             return y;
                           }).toList(),
@@ -917,7 +916,7 @@ class _GeneratedFormState extends State<GeneratedForm> {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         values[fieldKey].add(
-                          getDefaultValuesFromFormItems(item.items),
+                          getValuesFromFormItems(item.items),
                         );
                         forceUpdateKeyCount++;
                         someValueChanged();

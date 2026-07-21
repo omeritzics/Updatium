@@ -12,7 +12,7 @@ class FDroidRepo extends AppSource {
   bool _appIdFoundInUrl = false;
 
   @override
-  String get name => tr('fdroidThirdPartyRepo');
+  String get name => t('fdroidThirdPartyRepo');
 
   FDroidRepo() {
     name = 'fdroidThirdPartyRepo'.t();
@@ -29,22 +29,22 @@ class FDroidRepo extends AppSource {
     [
       GeneratedFormTextField(
         'appIdOrName',
-        label: tr('appIdOrName'),
-        hint: tr('reposHaveMultipleApps'),
+        label: t('appIdOrName'),
+        hint: t('reposHaveMultipleApps'),
         required: !_appIdFoundInUrl,
       ),
     ],
     [
       GeneratedFormSwitch(
         'pickHighestVersionCode',
-        label: tr('pickHighestVersionCode'),
+        label: t('pickHighestVersionCode'),
         value: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'trySelectingSuggestedVersionCode',
-        label: tr('trySelectingSuggestedVersionCode'),
+        label: t('trySelectingSuggestedVersionCode'),
         value: true,
       ),
     ],
@@ -215,7 +215,7 @@ class FDroidRepo extends AppSource {
         }).toList();
       }
       if (foundApps.isEmpty) {
-        throw UpdatiumError(tr('appWithIdOrNameNotFound'));
+        throw UpdatiumError(t('appWithIdOrNameNotFound'));
       }
       var authorName = body.querySelector('repo')?.attributes['name'] ?? name;
       String appId = foundApps[0].attributes['id']!;

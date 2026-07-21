@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/slang_converter.dart';
 import 'package:html/parser.dart';
@@ -254,7 +255,7 @@ class HTML extends AppSource {
   ];
 
   List<List<GeneratedFormItem>> get _commonFormItems => [
-    [GeneratedFormSwitch('filterByLinkText', label: tr('filterByLinkText'))],
+    [GeneratedFormSwitch('filterByLinkText', label: t('filterByLinkText'))],
     [
       GeneratedFormSwitch(
         'matchLinksOutsideATags',
@@ -284,7 +285,7 @@ class HTML extends AppSource {
     [
       GeneratedFormSwitch(
         'autoLinkFilterByArch',
-        label: tr('autoLinkFilterByArch'),
+        label: t('autoLinkFilterByArch'),
         value: false,
       ),
     ],
@@ -302,7 +303,7 @@ class HTML extends AppSource {
       GeneratedFormSubForm('intermediateLink', [
         ..._intermediateFormItems,
         ..._commonFormItems,
-      ], label: tr('intermediateLink')),
+      ], label: t('intermediateLink')),
     ],
     _finalStepFormitems[0],
     ..._commonFormItems,
@@ -314,7 +315,7 @@ class HTML extends AppSource {
           [
             GeneratedFormTextField(
               'requestHeader',
-              label: tr('requestHeader'),
+              label: t('requestHeader'),
               required: false,
               additionalValidators: [
                 (value) {
@@ -324,7 +325,7 @@ class HTML extends AppSource {
                           .where((e) => e.isNotEmpty)
                           .length <
                       2) {
-                    return tr('invalidInput');
+                    return t('invalidInput');
                   }
                   return null;
                 },
@@ -332,7 +333,7 @@ class HTML extends AppSource {
             ),
           ],
         ],
-        label: tr('requestHeader'),
+        label: t('requestHeader'),
         value: [
           {
             'requestHeader':
@@ -345,11 +346,11 @@ class HTML extends AppSource {
       GeneratedFormDropdown(
         'defaultPseudoVersioningMethod',
         [
-          MapEntry('partialAPKHash', tr('partialAPKHash')),
-          MapEntry('APKLinkHash', tr('APKLinkHash')),
+          MapEntry('partialAPKHash', t('partialAPKHash')),
+          MapEntry('APKLinkHash', t('APKLinkHash')),
           const MapEntry('ETag', 'ETag'),
         ],
-        label: tr('defaultPseudoVersioningMethod'),
+        label: t('defaultPseudoVersioningMethod'),
         value: 'partialAPKHash',
       ),
     ],
@@ -496,7 +497,7 @@ class HTML extends AppSource {
               : uri.origin;
           return MapEntry('${e.hashCode}-$fileName', e);
         }).toList(),
-        AppNames(uri.host, tr('app')),
+        AppNames(uri.host, t('app')),
       );
     } catch (e) {
       rethrowOrWrapError(e);

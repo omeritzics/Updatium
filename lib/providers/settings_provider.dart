@@ -321,7 +321,7 @@ class SettingsProvider with ChangeNotifier {
     while (!(await Permission.requestInstallPackages.isGranted)) {
       unawaited(
         Fluttertoast.showToast(
-          msg: tr('pleaseAllowInstallPerm'),
+          msg: t('pleaseAllowInstallPerm'),
           toastLength: Toast.LENGTH_LONG,
         ),
       );
@@ -684,7 +684,7 @@ class SettingsProvider with ChangeNotifier {
             level: LogLevel.error,
           ),
         );
-        throw UpdatiumError(tr('noFilePickerAvailable'));
+        throw UpdatiumError(t('noFilePickerAvailable'));
       }
     }
     if (currentOneWayDataSyncDir?.path != newOneWayDataSyncDir?.path) {

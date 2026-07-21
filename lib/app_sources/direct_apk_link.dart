@@ -1,8 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:updatium/app_sources/html.dart';
 import 'package:updatium/components/generated_form_model.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 /// Tracks an APK at a direct URL (e.g. `https://example.com/app.apk`).
 /// Delegates version detection and downloading to [HTML] with pseudo-versioning
@@ -11,7 +11,7 @@ class DirectAPKLink extends AppSource {
   final HTML html = HTML();
 
   @override
-  String get name => tr('directAPKLink');
+  String get name => t('directAPKLink');
 
   DirectAPKLink() {
     versionDetectionDisallowed = true;
@@ -36,10 +36,10 @@ class DirectAPKLink extends AppSource {
       GeneratedFormDropdown(
         'defaultPseudoVersioningMethod',
         [
-          MapEntry('partialAPKHash', tr('partialAPKHash')),
+          MapEntry('partialAPKHash', t('partialAPKHash')),
           const MapEntry('ETag', 'ETag'),
         ],
-        label: tr('defaultPseudoVersioningMethod'),
+        label: t('defaultPseudoVersioningMethod'),
         value: 'partialAPKHash',
       ),
     ],
@@ -77,7 +77,7 @@ class DirectAPKLink extends AppSource {
     Map<String, dynamic> additionalSettings,
   ) async {
     try {
-      final additionalSettingsNew = getDefaultValuesFromFormItems(
+      final additionalSettingsNew = getValuesFromFormItems(
         html.combinedAppSpecificSettingFormItems,
       );
       for (var s in additionalSettings.keys) {

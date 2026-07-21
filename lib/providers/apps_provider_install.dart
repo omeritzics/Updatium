@@ -6,7 +6,7 @@ import 'package:android_intent_plus/flag.dart';
 import 'package:android_package_manager/android_package_manager.dart';
 import 'package:archive/archive.dart' as archive;
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_archive/flutter_archive.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
@@ -93,7 +93,7 @@ extension AppsProviderInstall on AppsProvider {
     final actualPackageName = newInfo.packageName;
     if (app.id != actualPackageName) {
       if (actualPackageName == null) {
-        throw UpdatiumError(tr('couldNotGetIdFromApk'))..url = app.url;
+        throw UpdatiumError(t('couldNotGetIdFromApk'))..url = app.url;
       }
       if (apps[app.id] != null && !isTempIdBool && !app.allowIdChange) {
         throw IDChangedError(actualPackageName)..url = app.url;
@@ -310,7 +310,7 @@ extension AppsProviderInstall on AppsProvider {
         if (apkDir != null && apkDir.existsSync()) {
           apkDir.deleteSync(recursive: true);
         }
-        throw UpdatiumError(tr('couldNotGetIdFromApk'))..url = app.url;
+        throw UpdatiumError(t('couldNotGetIdFromApk'))..url = app.url;
       }
       final (renamedFile, resolvedApp) = await handleAPKIDChange(
         app,
@@ -591,7 +591,7 @@ extension AppsProviderInstall on AppsProvider {
           ),
         );
       }
-      throw UpdatiumError(tr('badDownload'))..url = apps[file.appId]?.app.url;
+      throw UpdatiumError(t('badDownload'))..url = apps[file.appId]?.app.url;
     }
     final PackageInfo? appInfo = await getInstalledInfo(
       apps[file.appId]!.app.id,
@@ -684,7 +684,7 @@ extension AppsProviderInstall on AppsProvider {
     );
     unawaited(
       Fluttertoast.showToast(
-        msg: tr('appVerifierInstructionToast'),
+        msg: t('appVerifierInstructionToast'),
         toastLength: Toast.LENGTH_LONG,
       ),
     );
@@ -843,7 +843,7 @@ extension AppsProviderInstall on AppsProvider {
     final List<String> trackOnlyAppsToUpdate = [];
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw UpdatiumError(tr('appNotFound'));
+        throw UpdatiumError(t('appNotFound'));
       }
       MapEntry<String, String>? apkUrl;
       final trackOnly = apps[id]!.app.settings.getBool('trackOnly');
@@ -991,7 +991,7 @@ extension AppsProviderInstall on AppsProvider {
     final List<MapEntry<MapEntry<String, String>, App>> filesToDownload = [];
     for (var id in appIds) {
       if (apps[id] == null) {
-        throw UpdatiumError(tr('appNotFound'));
+        throw UpdatiumError(t('appNotFound'));
       }
       MapEntry<String, String>? fileUrl;
       final refreshBeforeDownload = apps[id]!.needsRefreshBeforeDownload;
@@ -1259,7 +1259,7 @@ extension AppsProviderInstall on AppsProvider {
       } else if (downloadedArtifact is DownloadedDir) {
         downloadedDir = downloadedArtifact;
       } else {
-        throw UpdatiumError(tr('downloadFailed'))..url = apps[id]?.app.url;
+        throw UpdatiumError(t('downloadFailed'))..url = apps[id]?.app.url;
       }
       id = downloadedFile?.appId ?? downloadedDir?.appId ?? id;
       // Bridge download-to-install gap so the Dismissible stays disabled.

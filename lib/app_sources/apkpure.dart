@@ -3,9 +3,11 @@ import 'dart:convert';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:simple_localization/simple_localization.dart';
+import 'package:updatium/components/generated_form.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 extension Unique<E, Id> on List<E> {
   List<E> unique([Id Function(E element)? id, bool inplace = true]) {
@@ -34,14 +36,14 @@ class APKPure extends AppSource {
     [
       GeneratedFormSwitch(
         'stayOneVersionBehind',
-        label: tr('stayOneVersionBehind'),
+        label: t('stayOneVersionBehind'),
         value: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'useFirstApkOfVersion',
-        label: tr('useFirstApkOfVersion'),
+        label: t('useFirstApkOfVersion'),
         value: true,
       ),
     ],
@@ -125,7 +127,7 @@ class APKPure extends AppSource {
       throw NoVersionError();
     }
     final String author = v['developer']?.toString() ?? name;
-    final String appName = v['title']?.toString() ?? tr('app');
+    final String appName = v['title']?.toString() ?? t('app');
     final DateTime? releaseDate = v['update_date'] != null
         ? DateTime.tryParse(v['update_date'].toString())
         : null;

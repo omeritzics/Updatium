@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_indicator_m3e/loading_indicator_m3e.dart';
 import 'package:m3e_buttons/m3e_buttons.dart';
 import 'package:confetti/confetti.dart';
 import 'package:updatium/components/generated_form.dart';
+import 'package:updatium/components/generated_form_model.dart' hide GeneratedFormTextField, GeneratedFormSwitch;
+import 'package:updatium/components/ui_widgets.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/main.dart';
 import 'package:updatium/pages/app.dart';
@@ -111,7 +115,7 @@ class AddAppPageState extends State<AddAppPage> {
           pickedSource = source;
           pickedSource?.runOnAddAppInputChange(userInput);
           var additionalSettings = source != null
-              ? getDefaultValuesFromFormItems(
+              ? getValuesFromFormItems(
                   source.combinedAppSpecificSettingFormItems,
                 )
               : {};
@@ -158,7 +162,7 @@ class AddAppPageState extends State<AddAppPage> {
               GeneratedFormTextField(
                 'appSourceURL',
                 label: 'appSourceURL'.t(),
-                defaultValue: userInput,
+                value: userInput,
                 additionalValidators: [
                   (value) {
                     try {
@@ -218,7 +222,7 @@ class AddAppPageState extends State<AddAppPage> {
                 'searchSomeSources',
                 label: 'searchSomeSourcesLabel'.t(),
                 required: false,
-                defaultValue: searchQuery,
+                value: searchQuery,
               ),
             ],
           ],
@@ -461,7 +465,7 @@ class AddAppPageState extends State<AddAppPage> {
                                                         'url',
                                                         1,
                                                       ).substring(2),
-                                                defaultValue: e.hosts.isNotEmpty
+                                                value: e.hosts.isNotEmpty
                                                     ? e.hosts[0]
                                                     : '',
                                                 required: true,
@@ -696,7 +700,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
           overrideSource: pickedSourceOverride,
         );
         additionalSettings = pickedSource != null
-            ? getDefaultValuesFromFormItems(
+            ? getValuesFromFormItems(
                 pickedSource!.combinedAppSpecificSettingFormItems,
               )
             : {};
@@ -963,16 +967,16 @@ Widget getAdditionalOptsCol() => Column(
                 var item = e.clone();
                 if (prefilledApp != null) {
                   if (prefilledApp!.additionalSettings[item.key] != null) {
-                    item.defaultValue =
+                    item.value =
                         prefilledApp!.additionalSettings[item.key];
-                  } else if (item.key == 'appAuthor') {
-                    item.defaultValue = prefilledApp!.author;
+                  } else if (item.key == 'author') {
+                    item.value = prefilledApp!.author;
                   } else if (item.key == 'appId') {
-                    item.defaultValue = prefilledApp!.id;
+                    item.value = prefilledApp!.id;
                   } else if (item.key == 'appName') {
-                    item.defaultValue = prefilledApp!.name;
+                    item.value = prefilledApp!.name;
                   } else if (item.key == 'appSourceURL') {
-                    item.defaultValue = prefilledApp!.url;
+                    item.value = prefilledApp!.url;
                   }
                 }
                 return item;

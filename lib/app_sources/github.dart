@@ -30,7 +30,7 @@ class GitHub extends AppSource {
   List<GeneratedFormItem> get sourceConfigSettingFormItems => [
     GeneratedFormTextField(
       'github-creds',
-      label: tr('githubPATLabel'),
+      label: t('githubPATLabel'),
       password: true,
       required: false,
       helpUrl:
@@ -38,7 +38,7 @@ class GitHub extends AppSource {
     ),
     GeneratedFormTextField(
       'GHReqPrefix',
-      label: tr('GHReqPrefix'),
+      label: t('GHReqPrefix'),
       hint: 'gh-proxy.org',
       required: false,
       additionalValidators: [
@@ -51,7 +51,7 @@ class GitHub extends AppSource {
               Uri.parse('https://$value/api.github.com');
             }
           } catch (e) {
-            return tr('invalidInput');
+            return t('invalidInput');
           }
           return null;
         },
@@ -60,7 +60,7 @@ class GitHub extends AppSource {
     ),
     GeneratedFormSwitch(
       'checkRepoRename',
-      label: tr('repoRenamedCheck'),
+      label: t('repoRenamedCheck'),
       value: false,
     ),
   ];
@@ -71,7 +71,7 @@ class GitHub extends AppSource {
     [
       GeneratedFormSwitch(
         'includePrereleases',
-        label: tr('includePrereleases'),
+        label: t('includePrereleases'),
         value: false,
       ),
     ],
@@ -79,7 +79,7 @@ class GitHub extends AppSource {
     [
       GeneratedFormTextField(
         'filterReleaseTitlesByRegEx',
-        label: tr('filterReleaseTitlesByRegEx'),
+        label: t('filterReleaseTitlesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -91,7 +91,7 @@ class GitHub extends AppSource {
     [
       GeneratedFormTextField(
         'filterReleaseNotesByRegEx',
-        label: tr('filterReleaseNotesByRegEx'),
+        label: t('filterReleaseNotesByRegEx'),
         required: false,
         additionalValidators: [
           (value) {
@@ -100,35 +100,35 @@ class GitHub extends AppSource {
         ],
       ),
     ],
-    [GeneratedFormSwitch('verifyLatestTag', label: tr('verifyLatestTag'))],
+    [GeneratedFormSwitch('verifyLatestTag', label: t('verifyLatestTag'))],
     [
       GeneratedFormDropdown(
         'sortMethodChoice',
         [
-          MapEntry('date', tr('releaseDate')),
-          MapEntry('smartname', tr('smartname')),
-          MapEntry('none', tr('none')),
+          MapEntry('date', t('releaseDate')),
+          MapEntry('smartname', t('smartname')),
+          MapEntry('none', t('none')),
           MapEntry(
             'smartname-datefallback',
-            '${tr('smartname')} x ${tr('releaseDate')}',
+            '${t('smartname')} x ${t('releaseDate')}',
           ),
-          MapEntry('name', tr('name')),
+          MapEntry('name', t('name')),
         ],
-        label: tr('sortMethod'),
+        label: t('sortMethod'),
         value: 'date',
       ),
     ],
     [
       GeneratedFormSwitch(
         'useLatestAssetDateAsReleaseDate',
-        label: tr('useLatestAssetDateAsReleaseDate'),
+        label: t('useLatestAssetDateAsReleaseDate'),
         value: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'releaseTitleAsVersion',
-        label: tr('releaseTitleAsVersion'),
+        label: t('releaseTitleAsVersion'),
         value: false,
       ),
     ],
@@ -138,14 +138,14 @@ class GitHub extends AppSource {
   List<GeneratedFormItem> get searchQuerySettingFormItems => [
     GeneratedFormTextField(
       'minStarCount',
-      label: tr('minStarCount'),
+      label: t('minStarCount'),
       value: '0',
       additionalValidators: [
         (value) {
           try {
             int.parse(value ?? '0');
           } catch (e) {
-            return tr('invalidInput');
+            return t('invalidInput');
           }
           return null;
         },

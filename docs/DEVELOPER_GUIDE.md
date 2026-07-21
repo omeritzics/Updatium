@@ -18,7 +18,7 @@ should follow when working in this codebase.
 | UI | Flutter, **Material 3 "Expressive"** (`useMaterial3: true`) |
 | State management | `provider` (`ChangeNotifier`) |
 | Persistence | One JSON file per app on disk + `SharedPreferences` for settings + `flutter_secure_storage` for credentials + `sqflite` for logs |
-| Localization | `easy_localization` (`assets/translations/*.json`, key-based `tr()` / `plural()`) |
+| Localization | `simple_localization` (`assets/translations/*.json`, key-based `tr()` / `plural()`) |
 | Background work | `workmanager` (periodic background tasks, Android-only) |
 | Installation | Installer abstraction (`StockInstaller` / `ShizukuInstaller` / `ExternalInstaller`) backed by `android_package_installer`, `shizuku_apk_installer`, `android_intent_plus` |
 

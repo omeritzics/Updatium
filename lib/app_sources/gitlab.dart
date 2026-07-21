@@ -28,7 +28,7 @@ class GitLab extends AppSource {
   List<GeneratedFormItem> get sourceConfigSettingFormItems => [
     GeneratedFormTextField(
       'gitlab-creds',
-      label: tr('gitlabPATLabel'),
+      label: t('gitlabPATLabel'),
       password: true,
       required: false,
       helpUrl:

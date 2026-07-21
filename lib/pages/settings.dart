@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:equations/equations.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
@@ -333,7 +333,7 @@ class _SettingsPageState extends State<SettingsPage> {
               const MapEntry('releaseDate', 'releaseDate'),
             ].map((e) => MapEntry(e.key, t(e.value))).toList(),
             label: 'appSortBy'.t(),
-            defaultValue: settingsProvider.sortColumn.name,
+            value: settingsProvider.sortColumn.name,
             required: true,
           ),
         ],
@@ -357,7 +357,7 @@ class _SettingsPageState extends State<SettingsPage> {
               const MapEntry('descending', 'descending'),
             ].map((e) => MapEntry(e.key, t(e.value))).toList(),
             label: 'appSortOrder'.t(),
-            defaultValue: settingsProvider.sortOrder.name,
+            value: settingsProvider.sortOrder.name,
             required: true,
           ),
         ],
@@ -383,7 +383,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ].map((e) => MapEntry(e.key, t(e.value))).toList(),
             label: 'language'.t(),
-            defaultValue: settingsProvider.forcedLocale?.toString() ?? '',
+            value: settingsProvider.forcedLocale?.toString() ?? '',
             required: true,
           ),
         ],
@@ -994,7 +994,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         .map((e) => MapEntry(e.key, t(e.value)))
                                         .toList(),
                                     label: 'dnsServiceProvider'.t(),
-                                    defaultValue: settingsProvider
+                                    value: settingsProvider
                                         .dnsServiceProvider
                                         .name,
                                     required: true,
@@ -1074,7 +1074,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         .map((e) => MapEntry(e.key, t(e.value)))
                                         .toList(),
                                     label: 'theme'.t(),
-                                    defaultValue: settingsProvider.theme.name,
+                                    value: settingsProvider.theme.name,
                                     required: true,
                                   ),
                                 ],

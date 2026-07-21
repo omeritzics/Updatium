@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io' show SocketException;
 import 'dart:ui' show Locale;
+import 'dart:path';
 
 import 'package:android_package_installer/android_package_installer.dart';
 import 'package:flutter/material.dart';
@@ -244,7 +245,7 @@ String list2FriendlyString(List<String> list) {
                   (e.key == list.length - 1
                       ? ''
                       : e.key == list.length - 2
-                      ? '${isUsingEnglish ? ',' : ''} ${tr('and')} '
+                      ? '${isUsingEnglish ? ',' : ''} ${t('and')} '
                       : ', '),
             )
             .join('');

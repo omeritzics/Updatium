@@ -10,7 +10,7 @@ import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:http/http.dart' as http;
 import 'package:updatium/app_sources/apkcombo.dart';
 import 'package:updatium/app_sources/apkmirror.dart';
@@ -40,6 +40,7 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/app_sources/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 class AppNames {
   String author;
@@ -235,7 +236,7 @@ class App {
         installedVersion: json['installedVersion'] == null
             ? null
             : json['installedVersion'] as String,
-        latestVersion: (json['latestVersion'] ?? tr('unknown')) as String,
+        latestVersion: (json['latestVersion'] ?? t('unknown')) as String,
         apkUrls: assumed2DlistToStringMapList(
           jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
         ),
@@ -559,14 +560,14 @@ abstract class AppSource {
   static List<GeneratedFormItem> get fallbackToOlderReleasesFormItem => [
     GeneratedFormSwitch(
       'fallbackToOlderReleases',
-      label: tr('fallbackToOlderReleases'),
+      label: t('fallbackToOlderReleases'),
       value: true,
     ),
   ];
 
   /// Some additional data may be needed for Apps regardless of Source
   List<List<GeneratedFormItem>> get _commonAppSettingFormItems => [
-    [GeneratedFormSwitch('trackOnly', label: tr('trackOnly'))],
+    [GeneratedFormSwitch('trackOnly', label: t('trackOnly'))],
     [
       GeneratedFormTextField(
         'appId',
@@ -604,24 +605,18 @@ abstract class AppSource {
       ),
     ],
     [GeneratedFormTextField('about', label: 'about'.t(), required: false)],
-    [
-      GeneratedFormSwitch(
-        'trackOnly',
-        label: 'trackOnly'.t(),
-        defaultValue: false,
-      ),
-    ],
+    [GeneratedFormSwitch('trackOnly', label: 'trackOnly'.t(), value: false)],
     [
       GeneratedFormSwitch(
         'versionDetection',
-        label: tr('versionDetectionExplanation'),
+        label: t('versionDetectionExplanation'),
         value: true,
       ),
     ],
     [
       GeneratedFormSwitch(
         'useVersionCodeAsOSVersion',
-        label: tr('useVersionCodeAsOSVersion'),
+        label: t('useVersionCodeAsOSVersion'),
         value: false,
       ),
     ],
@@ -629,7 +624,7 @@ abstract class AppSource {
       GeneratedFormSwitch(
         'autoApkFilterByArch',
         label: 'autoApkFilterByArch'.t(),
-        defaultValue: true,
+        value: true,
       ),
     ],
     [
@@ -643,28 +638,28 @@ abstract class AppSource {
     [
       GeneratedFormSwitch(
         'invertAPKFilter',
-        label: '${tr('invertRegEx')} (${tr('filterAPKsByRegEx')})',
+        label: '${t('invertRegEx')} (${t('filterAPKsByRegEx')})',
         value: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'autoApkFilterByArch',
-        label: tr('autoApkFilterByArch'),
+        label: t('autoApkFilterByArch'),
         value: true,
       ),
     ],
     [
       GeneratedFormSwitch(
         'shizukuPretendToBeGooglePlay',
-        label: tr('shizukuPretendToBeGooglePlay'),
+        label: t('shizukuPretendToBeGooglePlay'),
         value: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'allowInsecure',
-        label: tr('allowInsecure'),
+        label: t('allowInsecure'),
         value: false,
       ),
     ],
@@ -672,49 +667,49 @@ abstract class AppSource {
       GeneratedFormSwitch(
         'skipUpdateNotifications',
         label: 'skipUpdateNotifications'.t(),
-        defaultValue: false,
+        value: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'refreshBeforeDownload',
         label: 'refreshBeforeDownload'.t(),
-        defaultValue: false,
+        value: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'fallbackToOlderReleases',
         label: 'fallbackToOlderReleases'.t(),
-        defaultValue: true,
+        value: true,
       ),
     ],
     [
       GeneratedFormSwitch(
         'trySelectingSuggestedVersionCode',
         label: 'trySelectingSuggestedVersionCode'.t(),
-        defaultValue: true,
+        value: true,
       ),
     ],
     [
       GeneratedFormSwitch(
         'includePrereleases',
         label: 'includePrereleases'.t(),
-        defaultValue: false,
+        value: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'stayOneVersionBehind',
         label: 'stayOneVersionBehind'.t(),
-        defaultValue: false,
+        value: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'useFirstApkOfVersion',
         label: 'useFirstApkOfVersion'.t(),
-        defaultValue: false,
+        value: false,
       ),
     ],
     [GeneratedFormSwitch('verifyLatestTag', label: 'verifyLatestTag'.t())],
@@ -732,21 +727,21 @@ abstract class AppSource {
           MapEntry('name', 'name'.t()),
         ],
         label: 'sortMethod'.t(),
-        defaultValue: 'date',
+        value: 'date',
       ),
     ],
     [
       GeneratedFormSwitch(
         'useLatestAssetDateAsReleaseDate',
         label: 'useLatestAssetDateAsReleaseDate'.t(),
-        defaultValue: false,
+        value: false,
       ),
     ],
     [
       GeneratedFormSwitch(
         'releaseTitleAsVersion',
         label: 'releaseTitleAsVersion'.t(),
-        defaultValue: false,
+        value: false,
       ),
     ],
     [
@@ -810,7 +805,7 @@ abstract class AppSource {
       agnosticItems.insert(versionDetectionIdx + 1, [
         GeneratedFormSwitch(
           'releaseDateAsVersion',
-          label: '${tr('releaseDateAsVersion')} (${tr('pseudoVersion')})',
+          label: '${t('releaseDateAsVersion')} (${t('pseudoVersion')})',
           value: false,
         ),
       ]);
@@ -831,7 +826,7 @@ abstract class AppSource {
         [
           GeneratedFormSwitch(
             'includeZips',
-            label: tr('includeZips'),
+            label: t('includeZips'),
             value: false,
           ),
         ],
@@ -855,7 +850,7 @@ abstract class AppSource {
         [
           GeneratedFormSwitch(
             'includeTarballs',
-            label: tr('includeTarballs'),
+            label: t('includeTarballs'),
             value: false,
           ),
         ],
@@ -1352,14 +1347,14 @@ class SourceProvider {
         batch.map((url) async {
           try {
             if (alreadyAddedUrls.contains(url)) {
-              throw UpdatiumError(tr('appAlreadyAdded'));
+              throw UpdatiumError(t('appAlreadyAdded'));
             }
             final source = sourceOverride ?? getSource(url);
             return await getApp(
               source,
               url,
               sourceIsOverriden: sourceOverride != null,
-              getDefaultValuesFromFormItems(
+              getValuesFromFormItems(
                 source.combinedAppSpecificSettingFormItems,
               ),
             );
@@ -1394,12 +1389,12 @@ class TypedSettings {
 
   const TypedSettings(Map<String, dynamic> raw) : _raw = raw;
 
-  bool getBool(String key, {bool defaultValue = false}) {
+  bool getBool(String key, {bool value = false}) {
     final val = _raw[key];
-    if (val == null) return defaultValue;
+    if (val == null) return value;
     if (val is bool) return val;
     if (val is String) return val == 'true';
-    return defaultValue;
+    return value;
   }
 
   int? getIntOrNull(String key) {
@@ -1416,8 +1411,8 @@ class TypedSettings {
     return val.toString();
   }
 
-  String getString(String key, {String defaultValue = ''}) =>
-      getStringOrNull(key) ?? defaultValue;
+  String getString(String key, {String value = ''}) =>
+      getStringOrNull(key) ?? value;
 
   @override
   String toString() => _raw.toString();
@@ -1495,7 +1490,7 @@ class HttpService {
       return MapEntry(currentUrl, MapEntry(httpClient, response));
     }
     httpClient?.close();
-    throw UpdatiumError(tr('tooManyRedirects'));
+    throw UpdatiumError(t('tooManyRedirects'));
   }
 
   Future<http.Response> httpClientResponseStreamToFinalResponse(
@@ -1537,7 +1532,7 @@ class HttpService {
     return UpdatiumError(
       (res.reasonPhrase != null && res.reasonPhrase!.isNotEmpty)
           ? res.reasonPhrase!
-          : tr('errorWithHttpStatusCode', args: [res.statusCode.toString()]),
+          : t('errorWithHttpStatusCode', args: [res.statusCode.toString()]),
       code: 'HTTP_ERROR',
     );
   }
@@ -1601,7 +1596,7 @@ class VersionService {
     try {
       RegExp(value);
     } catch (e) {
-      return tr('invalidRegEx');
+      return t('invalidRegEx');
     }
     return null;
   }
@@ -1776,7 +1771,7 @@ Map<String, dynamic> _migrateAppToHTML(
   Map<String, dynamic>? overrides,
 }) {
   json['url'] = newUrl;
-  final replacement = getDefaultValuesFromFormItems(
+  final replacement = getValuesFromFormItems(
     HTML().combinedAppSpecificSettingFormItems,
   );
   for (var s in replacement.keys) {
@@ -2013,9 +2008,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     overrideSource: json['overrideSource'],
   );
   final formItems = source.flatCombinedFormItemsReadOnly;
-  Map<String, dynamic> additionalSettings = getDefaultValuesFromFormItems([
-    formItems,
-  ]);
+  Map<String, dynamic> additionalSettings = getValuesFromFormItems([formItems]);
   Map<String, dynamic> originalAdditionalSettings = {};
   if (json['additionalSettings'] != null) {
     originalAdditionalSettings = Map<String, dynamic>.from(

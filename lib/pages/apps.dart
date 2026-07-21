@@ -349,7 +349,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               .then((value) {
                 if (value.isNotEmpty) {
                   if (context.mounted) {
-                    showMessage(tr('appsUpdated'), context);
+                    showMessage(t('appsUpdated'), context);
                     final np = context.read<NotificationsProvider>();
                     np.cancel(updateNotificationId);
                     np.cancel(
@@ -378,12 +378,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         return GeneratedFormModal(
           tileMode: true,
           initValid: true,
-          title: tr('filterApps'),
+          title: t('filterApps'),
           items: [
             [
               GeneratedFormTextField(
                 'appName',
-                label: tr('appName'),
+                label: t('appName'),
                 required: false,
                 value: vals['appName'],
               ),
@@ -391,7 +391,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             [
               GeneratedFormTextField(
                 'author',
-                label: tr('author'),
+                label: t('author'),
                 required: false,
                 value: vals['author'],
               ),
@@ -399,7 +399,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             [
               GeneratedFormTextField(
                 'appId',
-                label: tr('appId'),
+                label: t('appId'),
                 required: false,
                 value: vals['appId'],
               ),
@@ -407,24 +407,24 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             [
               GeneratedFormSwitch(
                 'upToDateApps',
-                label: tr('upToDateApps'),
+                label: t('upToDateApps'),
                 value: vals['upToDateApps'],
               ),
             ],
             [
               GeneratedFormSwitch(
                 'nonInstalledApps',
-                label: tr('nonInstalledApps'),
+                label: t('nonInstalledApps'),
                 value: vals['nonInstalledApps'],
               ),
             ],
             [
               GeneratedFormDropdown(
                 'sourceFilter',
-                label: tr('appSource'),
+                label: t('appSource'),
                 value: filter.sourceFilter,
                 [
-                  MapEntry('', tr('none')),
+                  MapEntry('', t('none')),
                   ...ctx.read<SourceProvider>().sources.map(
                     (e) => MapEntry(e.sourceIdentifier, e.name),
                   ),
@@ -504,10 +504,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 context: context,
                 builder: (BuildContext ctx) {
                   return GeneratedFormModal(
-                    title: tr('categorize'),
+                    title: t('categorize'),
                     items: const [],
                     initValid: true,
-                    message: tr('selectedCategorizeWarning'),
+                    message: t('selectedCategorizeWarning'),
                   );
                 },
               ) !=
@@ -522,10 +522,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext ctx) {
               return GeneratedFormModal(
-                title: tr('categorize'),
+                title: t('categorize'),
                 items: const [],
                 initValid: true,
-                singleNullReturnButton: tr('continue'),
+                singleNullReturnButton: t('continue'),
                 additionalWidgets: [
                   CategorySelector(
                     selected: !showPrompt ? (preselected ?? {}) : {},
@@ -567,7 +567,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           args: [selectedAppIds.length.toString()],
         ),
         content: Text(
-          tr('onlyWorksWithNonVersionDetectApps'),
+          t('onlyWorksWithNonVersionDetectApps'),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontStyle: FontStyle.italic,
@@ -664,7 +664,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               children: [
                 optionTile(
                   icon: Icons.delete_outline,
-                  label: tr('remove'),
+                  label: t('remove'),
                   onTap: hasSelection
                       ? () {
                           appsProvider.removeAppsWithModal(
@@ -676,20 +676,20 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ),
                 optionTile(
                   icon: Icons.category_outlined,
-                  label: tr('categorize'),
+                  label: t('categorize'),
                   onTap: hasSelection
                       ? launchCategorizeDialogCallback(context, selectedApps)
                       : null,
                 ),
                 optionTile(
                   icon: isPinned ? Icons.push_pin : Icons.push_pin_outlined,
-                  label: isPinned ? tr('unpinFromTop') : tr('pinToTop'),
+                  label: isPinned ? t('unpinFromTop') : t('pinToTop'),
                   onTap: () => pinSelectedApps(selectedApps),
                 ),
                 if (hasObtainActions && !appsProvider.areDownloadsRunning())
                   optionTile(
                     icon: Icons.download_rounded,
-                    label: tr('installUpdateSelectedApps'),
+                    label: t('installUpdateSelectedApps'),
                     onTap: () {
                       settingsProvider.heavyImpact();
                       _showObtainDialog(
@@ -702,26 +702,26 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   ),
                 optionTile(
                   icon: Icons.share_outlined,
-                  label: tr('shareSelectedAppURLs'),
+                  label: t('shareSelectedAppURLs'),
                   onTap: () => shareAppURLs(selectedApps),
                 ),
                 optionTile(
                   icon: Icons.link_outlined,
-                  label: tr('shareAppConfigLinks'),
+                  label: t('shareAppConfigLinks'),
                   onTap: !hasSelection
                       ? null
                       : () => shareConfigLinks(selectedApps),
                 ),
                 optionTile(
                   icon: Icons.file_download_outlined,
-                  label: '${tr('share')} - ${tr('updatiumExport')}',
+                  label: '${t('share')} - ${t('updatiumExport')}',
                   onTap: !hasSelection ? null : () => shareExport(selectedApps),
                 ),
                 optionTile(
                   icon: Icons.download_outlined,
                   label: tr(
                     'downloadX',
-                    args: [lowerCaseIfEnglish(tr('releaseAsset'))],
+                    args: [lowerCaseIfEnglish(t('releaseAsset'))],
                   ),
                   onTap: () {
                     appsProvider
@@ -737,7 +737,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ),
                 optionTile(
                   icon: Icons.done_all,
-                  label: tr('markSelectedAppsUpdated'),
+                  label: t('markSelectedAppsUpdated'),
                   onTap: appsProvider.areDownloadsRunning()
                       ? null
                       : () => showMassMarkDialog(context, selectedApps),
@@ -758,7 +758,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     final urls = buf.toString().trimRight();
     unawaited(
       SharePlus.instance.share(
-        ShareParams(text: urls, subject: 'Updatium - ${tr('appsString')}'),
+        ShareParams(text: urls, subject: 'Updatium - ${t('appsString')}'),
       ),
     );
   }
@@ -774,7 +774,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       SharePlus.instance.share(
         ShareParams(
           text: buf.toString(),
-          subject: 'Updatium - ${tr('appsString')}',
+          subject: 'Updatium - ${t('appsString')}',
         ),
       ),
     );
@@ -789,7 +789,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       ),
     );
     final String fn =
-        '${tr('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
+        '${t('updatiumExportHyphenatedLowercase')}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
     final XFile f = XFile.fromData(
       Uint8List.fromList(utf8.encode(exportJSON)),
       mimeType: 'application/json',
@@ -882,8 +882,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
     final appIndices = grouped[group] ?? [];
     final expanded = !collapsedGroups.contains(group);
     final title = groupBy == GroupByMode.source.name
-        ? (group ?? tr('noSource'))
-        : capitalizeFirst(group ?? tr('noCategory'));
+        ? (group ?? t('noSource'))
+        : capitalizeFirst(group ?? t('noCategory'));
     return AppListGroupSection(
       title: title,
       expanded: expanded,
@@ -994,12 +994,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       _getSelectAllButton(context, listedApps),
       if (!isFilterOff)
         IconButton(
-          tooltip: '${tr('filter')} - ${tr('remove')}',
+          tooltip: '${t('filter')} - ${t('remove')}',
           onPressed: () => clearSearchAndFilter(),
           icon: const Icon(Icons.filter_alt_off_outlined),
         ),
       IconButton(
-        tooltip: tr('filterApps'),
+        tooltip: t('filterApps'),
         onPressed: () => showFilterDialog(context),
         icon: const Icon(Icons.filter_list_rounded),
       ),
@@ -1012,11 +1012,11 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 controller: searchController,
                 onChanged: onSearchChanged,
                 trailing: trailing,
-                hintText: tr('search'),
+                hintText: t('search'),
               )
             : SearchBar(
                 controller: searchController,
-                hintText: tr('search'),
+                hintText: t('search'),
                 padding: const WidgetStatePropertyAll(
                   EdgeInsets.symmetric(horizontal: 16),
                 ),
@@ -1076,8 +1076,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         Expanded(
                           child: Text(
                             selectedAppIds.isEmpty
-                                ? tr('installUpdateApps')
-                                : tr('installUpdateSelectedApps'),
+                                ? t('installUpdateApps')
+                                : t('installUpdateSelectedApps'),
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
                                   color: cs.onPrimaryContainer,
@@ -1088,7 +1088,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         const SizedBox(width: 12),
                         FilledButton(
                           onPressed: onObtain,
-                          child: Text(tr('update')),
+                          child: Text(t('update')),
                         ),
                       ],
                     ),
@@ -1132,8 +1132,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 ? Icons.apps_outlined
                 : Icons.search_off_rounded,
             message: appsProvider.apps.isEmpty
-                ? tr('noApps')
-                : tr('noAppsForFilter'),
+                ? t('noApps')
+                : t('noAppsForFilter'),
           ),
         ),
     ];
@@ -1924,7 +1924,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         ).toLowerCase(),
                       ],
                     ),
-                    defaultValue: true,
+                    value: true,
                   ),
                 );
               }
@@ -1941,7 +1941,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         ).toLowerCase(),
                       ],
                     ),
-                    defaultValue: existingUpdateIdsAllOrSelected.isEmpty,
+                    value: existingUpdateIdsAllOrSelected.isEmpty,
                   ),
                 );
               }
@@ -1955,7 +1955,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         'apps'.plural(trackOnlyUpdateIdsAllOrSelected.length),
                       ],
                     ),
-                    defaultValue:
+                    value:
                         existingUpdateIdsAllOrSelected.isEmpty &&
                         newInstallIdsAllOrSelected.isEmpty,
                   ),
@@ -2007,7 +2007,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               ).then((values) async {
                 if (values != null) {
                   if (values.isEmpty) {
-                    values = getDefaultValuesFromFormItems([formItems]);
+                    values = getValuesFromFormItems([formItems]);
                   }
                   bool shouldInstallUpdates = values['updates'] == true;
                   bool shouldInstallNew = values['installs'] == true;
@@ -2280,7 +2280,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         'appName',
                         label: 'appName'.t(),
                         required: false,
-                        defaultValue: localValues['appName'],
+                        value: localValues['appName'],
                       ),
                     ],
                     [
@@ -2288,7 +2288,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         'appAuthor',
                         label: 'appAuthor'.t(),
                         required: false,
-                        defaultValue: localValues['appAuthor'],
+                        value: localValues['appAuthor'],
                       ),
                     ],
                     [
@@ -2296,7 +2296,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         'appId',
                         label: 'appId'.t(),
                         required: false,
-                        defaultValue: localValues['appId'],
+                        value: localValues['appId'],
                       ),
                     ],
                     [
@@ -2304,28 +2304,28 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         'description',
                         label: 'about'.t(),
                         required: false,
-                        defaultValue: localValues['description'],
+                        value: localValues['description'],
                       ),
                     ],
                     [
                       GeneratedFormSwitch(
                         'upToDateApps',
                         label: 'upToDateApps'.t(),
-                        defaultValue: localValues['upToDateApps'],
+                        value: localValues['upToDateApps'],
                       ),
                     ],
                     [
                       GeneratedFormSwitch(
                         'nonInstalledApps',
                         label: 'nonInstalledApps'.t(),
-                        defaultValue: localValues['nonInstalledApps'],
+                        value: localValues['nonInstalledApps'],
                       ),
                     ],
                     [
                       GeneratedFormDropdown(
                         'sourceFilter',
                         label: 'appSource'.t(),
-                        defaultValue: localValues['sourceFilter'],
+                        value: localValues['sourceFilter'],
                         [
                           MapEntry('', 'none'.t()),
                           ...sourceProvider.sources.map(
@@ -3018,7 +3018,7 @@ class _BulkUpdateDialogState extends State<_BulkUpdateDialog> {
         children: [
           if (aim.author.isNotEmpty)
             Text(
-              tr('byX', args: [aim.author]),
+              t('byX', args: [aim.author]),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 12, color: cs.onSurfaceVariant),
@@ -3042,7 +3042,7 @@ class _BulkUpdateDialogState extends State<_BulkUpdateDialog> {
     return AlertDialog(
       scrollable: true,
       title: Text(
-        tr('changeX', args: [plural('apps', widget.totalApps).toLowerCase()]),
+        t('changeX', args: [plural('apps', widget.totalApps).toLowerCase()]),
       ),
       content: SizedBox(
         width: double.maxFinite,
@@ -3062,18 +3062,18 @@ class _BulkUpdateDialogState extends State<_BulkUpdateDialog> {
                   onPressed: _toggleAll,
                   child: Text(
                     allSelected
-                        ? tr('deselectX', args: [widget.totalApps.toString()])
-                        : tr('selectAll'),
+                        ? t('deselectX', args: [widget.totalApps.toString()])
+                        : t('selectAll'),
                   ),
                 ),
               ],
             ),
-            _sectionHeader(tr('updates'), widget.existingUpdateIds, cs),
+            _sectionHeader(t('updates'), widget.existingUpdateIds, cs),
             ...widget.existingUpdateIds.map((id) => _appCheckRow(id, cs)),
-            _sectionHeader(tr('nonInstalledApps'), widget.newInstallIds, cs),
+            _sectionHeader(t('nonInstalledApps'), widget.newInstallIds, cs),
             ...widget.newInstallIds.map((id) => _appCheckRow(id, cs)),
             if (widget.trackOnlyUpdateIds.isNotEmpty) ...[
-              _sectionHeader(tr('trackOnly'), widget.trackOnlyUpdateIds, cs),
+              _sectionHeader(t('trackOnly'), widget.trackOnlyUpdateIds, cs),
               ...widget.trackOnlyUpdateIds.map((id) => _appCheckRow(id, cs)),
             ],
           ],
@@ -3085,7 +3085,7 @@ class _BulkUpdateDialogState extends State<_BulkUpdateDialog> {
           onPressed: () {
             Navigator.of(context).pop(null);
           },
-          child: Text(tr('cancel')),
+          child: Text(t('cancel')),
         ),
         FilledButton(
           onPressed: selectedIds.isEmpty
@@ -3094,7 +3094,7 @@ class _BulkUpdateDialogState extends State<_BulkUpdateDialog> {
                   context.read<SettingsProvider>().selectionClick();
                   Navigator.of(context).pop(selectedIds);
                 },
-          child: Text(tr('continue')),
+          child: Text(t('continue')),
         ),
       ],
     );

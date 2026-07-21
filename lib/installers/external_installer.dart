@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_intent_plus/flag.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/installers/installer.dart';
-import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/external_install_bridge.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 const String _apkMime = 'application/vnd.android.package-archive';
 const String _bundleMime = 'application/zip';
@@ -59,7 +58,7 @@ class ExternalInstaller extends Installer {
   @override
   Future<void> ensurePermission() async {
     if (settingsProvider.externalInstallerPackage == null) {
-      throw UpdatiumError(tr('externalInstallerRequired'));
+      throw UpdatiumError(t('externalInstallerRequired'));
     }
   }
 
@@ -71,7 +70,7 @@ class ExternalInstaller extends Installer {
   }) async {
     final targetPackage = settingsProvider.externalInstallerPackage;
     if (targetPackage == null || apkFilePaths.isEmpty) {
-      throw UpdatiumError(tr('externalInstallerRequired'));
+      throw UpdatiumError(t('externalInstallerRequired'));
     }
 
     final baseline = await captureInstallBaseline(appId);
@@ -80,7 +79,7 @@ class ExternalInstaller extends Installer {
       final contentUri = await ExternalInstallerBridge.instance
           .contentUriForFile(filePath);
       if (contentUri == null) {
-        throw UpdatiumError(tr('badDownload'));
+        throw UpdatiumError(t('badDownload'));
       }
 
       final intent = AndroidIntent(

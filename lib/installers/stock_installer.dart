@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:android_package_installer/android_package_installer.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/installers/installer.dart';
 import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
 import 'package:updatium/providers/source_provider.dart';
+import 'package:updatium/services/slang_converter.dart';
 
 const int _androidApiLevelS = 31;
 
@@ -94,7 +95,7 @@ class StockInstaller extends Installer {
   @override
   Future<void> ensurePermission() async {
     if (!(await settingsProvider.getInstallPermission(enforce: false))) {
-      throw UpdatiumError(tr('cancelled'));
+      throw UpdatiumError(t('cancelled'));
     }
   }
 

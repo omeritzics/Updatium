@@ -10,7 +10,7 @@ class VivoAppStore extends AppSource {
       'https://h5coml.vivo.com.cn/h5coml/appdetail_h5/browser_v2/index.html?appId=';
 
   @override
-  String get name => tr('vivoAppStore');
+  String get name => t('vivoAppStore');
 
   VivoAppStore() {
     name = 'vivoAppStore'.t();
@@ -77,7 +77,7 @@ class VivoAppStore extends AppSource {
       if (apkUrl == null) {
         throw NoAPKError();
       }
-      final appName = json['title_zh']?.toString() ?? tr('app');
+      final appName = json['title_zh']?.toString() ?? t('app');
       final packageName = json['package_name']?.toString() ?? '';
       final versionCode = json['version_code']?.toString() ?? '';
       final developer = json['developer']?.toString() ?? name;

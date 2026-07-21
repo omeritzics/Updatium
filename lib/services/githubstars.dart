@@ -21,10 +21,10 @@ class GitHubStars implements MassAppUrlSource {
   @override
 <<<<<<<< HEAD:lib/app_sources/githubstars.dart
   String @override
-  String get name => tr('githubStarredRepos');
+  String get name => t('githubStarredRepos');
 
   @override
-  List<String> get requiredArgs => [tr('uname')];
+  List<String> get requiredArgs => [t('uname')];
 
   final GitHub _gh = GitHub();
 

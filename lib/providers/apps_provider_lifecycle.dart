@@ -5,7 +5,7 @@ import 'dart:typed_data';
 
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:android_package_manager/android_package_manager.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:simple_localization/simple_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:updatium/custom_errors.dart';
 import 'package:updatium/providers/logs_provider.dart';
@@ -490,14 +490,14 @@ extension AppsProviderLifecycle on AppsProvider {
                   [
                     GeneratedFormSwitch(
                       'rmAppEntry',
-                      label: tr('removeFromUpdatium'),
+                      label: t('removeFromUpdatium'),
                       value: true,
                     ),
                   ],
                   [
                     GeneratedFormSwitch(
                       'uninstallApp',
-                      label: tr('uninstallFromDevice'),
+                      label: t('uninstallFromDevice'),
                     ),
                   ],
                 ],
