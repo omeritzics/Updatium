@@ -164,7 +164,7 @@ Null Function()? getChangeLogFn(BuildContext context, App app) {
   }
   if (changeLog == null && changesUrl == null) return null;
   return () {
-    var appSource = SourceProvider().getSource(
+    final appSource = SourceProvider().getSource(
       app.url,
       overrideSource: app.overrideSource,
     );
@@ -1141,8 +1141,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var appsProvider = context.watch<AppsProvider>();
-    var settingsProvider = context.watch<SettingsProvider>();
+    final appsProvider = context.watch<AppsProvider>();
+    final settingsProvider = context.watch<SettingsProvider>();
     var listedApps = appsProvider.getAppValues().toList();
 
     refresh() {
@@ -1213,15 +1213,15 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       if (filter.nameFilter.isNotEmpty ||
           filter.authorFilter.isNotEmpty ||
           filter.descriptionFilter.isNotEmpty) {
-        List<String> nameTokens = filter.nameFilter
+        final List<String> nameTokens = filter.nameFilter
             .split(' ')
             .where((element) => element.trim().isNotEmpty)
             .toList();
-        List<String> authorTokens = filter.authorFilter
+        final List<String> authorTokens = filter.authorFilter
             .split(' ')
             .where((element) => element.trim().isNotEmpty)
             .toList();
-        List<String> descriptionTokens = filter.descriptionFilter
+        final List<String> descriptionTokens = filter.descriptionFilter
             .split(' ')
             .where((element) => element.trim().isNotEmpty)
             .toList();
@@ -1237,7 +1237,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           }
         }
         for (var t in descriptionTokens) {
-          String? appDescription = app.app.additionalSettings['about']
+          final String? appDescription = app.app.additionalSettings['about']
               ?.toString();
           if (appDescription == null ||
               !appDescription.toLowerCase().contains(t.toLowerCase())) {
@@ -1309,7 +1309,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       listedApps = listedApps.reversed.toList();
     }
 
-    var existingUpdates = appsProvider.findExistingUpdates(installedOnly: true);
+    final existingUpdates = appsProvider.findExistingUpdates(installedOnly: true);
 
     var existingUpdateIdsAllOrSelected = existingUpdates
         .where(
@@ -1347,7 +1347,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         .toList();
 
     List<String?> getListedCategories() {
-      var temp = listedApps.map(
+      final temp = listedApps.map(
         (e) =>
             e.app.categories?.isNotEmpty == true ? e.app.categories! : [null],
       );
@@ -1358,7 +1358,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           : [];
     }
 
-    var listedCategories = getListedCategories();
+    final listedCategories = getListedCategories();
     listedCategories.sort((a, b) {
       return a != null && b != null
           ? a.toLowerCase().compareTo(b.toLowerCase())
@@ -1367,12 +1367,12 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           : -1;
     });
 
-    Set<App> selectedApps = listedApps
+    final Set<App> selectedApps = listedApps
         .map((e) => e.app)
         .where((a) => selectedAppIds.contains(a.id))
         .toSet();
 
-    getLoadingWidgets() {
+    List<Widget> getLoadingWidgets() {
       return [
         if (listedApps.isEmpty)
           SliverFillRemaining(
@@ -1461,7 +1461,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       ];
     }
 
-    getAppIcon(int appIndex) {
+    GestureDetector getAppIcon(int appIndex) {
       return GestureDetector(
         onTap: () {
           Navigator.push(
@@ -1819,16 +1819,16 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       );
     }
 
-    getSingleAppHorizTile(int index) {
+    Widget getSingleAppHorizTile(int index) {
       return buildListTile(index);
     }
 
-    getSingleAppGridTile(int index) {
+    Widget getSingleAppGridTile(int index) {
       return buildGridTile(index);
     }
 
-    getCategoryGridTile(int index) {
-      var filteredEntries = listedApps
+    SingleChildRenderObjectWidget getCategoryGridTile(int index) {
+      final filteredEntries = listedApps
           .asMap()
           .entries
           .where(
@@ -1910,7 +1910,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           ? () {}
           : () {
               settingsProvider.heavyImpact();
-              List<GeneratedFormItem> formItems = [];
+              final List<GeneratedFormItem> formItems = [];
               if (existingUpdateIdsAllOrSelected.isNotEmpty) {
                 formItems.add(
                   GeneratedFormSwitch(
@@ -1965,7 +1965,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 context: context,
                 builder: (BuildContext ctx) {
                   Map<String, dynamic> localValues = {};
-                  var totalApps =
+                  final totalApps =
                       existingUpdateIdsAllOrSelected.length +
                       newInstallIdsAllOrSelected.length +
                       trackOnlyUpdateIdsAllOrSelected.length;
@@ -2009,10 +2009,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   if (values.isEmpty) {
                     values = getValuesFromFormItems([formItems]);
                   }
-                  bool shouldInstallUpdates = values['updates'] == true;
-                  bool shouldInstallNew = values['installs'] == true;
-                  bool shouldMarkTrackOnlies = values['trackonlies'] == true;
-                  List<String> toInstall = [];
+                  final bool shouldInstallUpdates = values['updates'] == true;
+                  final bool shouldInstallNew = values['installs'] == true;
+                  final bool shouldMarkTrackOnlies = values['trackonlies'] == true;
+                  final List<String> toInstall = [];
                   if (shouldInstallUpdates) {
                     toInstall.addAll(existingUpdateIdsAllOrSelected);
                   }
@@ -2045,13 +2045,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             };
     }
 
-    launchCategorizeDialog() {
+    Future<Null> Function() launchCategorizeDialog() {
       return () async {
         try {
           Set<String>? preselected;
           var showPrompt = false;
           for (var element in selectedApps) {
-            var currentCats = element.categories?.toSet() ?? <String>{};
+            final currentCats = element.categories?.toSet() ?? <String>{};
             if (preselected == null) {
               preselected = currentCats;
             } else {
@@ -2144,7 +2144,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       };
     }
 
-    showMassMarkDialog() {
+    Future<dynamic> showMassMarkDialog() {
       return showDialog(
         context: context,
         builder: (BuildContext ctx) {
@@ -2203,7 +2203,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       });
     }
 
-    showMoreOptionsDialog() {
+    Future<dynamic> showMoreOptionsDialog() {
       return showDialog(
         context: context,
         builder: (BuildContext ctx) {
@@ -2235,7 +2235,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                         : 'pinToTop'.t(),
                     child: TextButton(
                       onPressed: () {
-                        var allPinned = selectedApps.every(
+                        final allPinned = selectedApps.every(
                           (element) => element.pinned,
                         );
                         appsProvider.saveApps(
@@ -2262,8 +2262,8 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       );
     }
 
-    showFilterDialog() async {
-      var values = await showDialog<Map<String, dynamic>?>(
+    Future<void> showFilterDialog() async {
+      final values = await showDialog<Map<String, dynamic>?>(
         context: context,
         builder: (BuildContext ctx) {
           Map<String, dynamic> localValues = filter.toFormValuesMap();
@@ -2398,7 +2398,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               BuildContext context,
               int index,
             ) {
-              var filteredEntries = listedApps
+              final filteredEntries = listedApps
                   .asMap()
                   .entries
                   .where(
@@ -2416,7 +2416,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 return const SizedBox.shrink();
               }
 
-              var tiles = filteredEntries
+              final tiles = filteredEntries
                   .map((e) => getSingleAppHorizTile(e.key))
                   .toList();
 
@@ -2530,7 +2530,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     actions: [
                       Consumer<AppsProvider>(
                         builder: (context, appsProvider, child) {
-                          var isFilterOff = filter.isIdenticalTo(
+                          final isFilterOff = filter.isIdenticalTo(
                             neutralFilter,
                             settingsProvider,
                           );
@@ -2651,16 +2651,16 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                             '${'share'.t()} - ${'updatiumExport'.t()}',
                         tooltip: '${'share'.t()} - ${'updatiumExport'.t()}',
                         onPressed: () {
-                          var encoder = const JsonEncoder.withIndent("    ");
-                          var exportJSON = encoder.convert(
+                          const encoder = JsonEncoder.withIndent('    ');
+                          final exportJSON = encoder.convert(
                             appsProvider.generateExportJSON(
                               appIds: selectedApps.map((e) => e.id).toList(),
                               overrideExportSettings: 0,
                             ),
                           );
-                          String fn =
+                          final String fn =
                               '${'updatiumExportHyphenatedLowercase'.t()}-${DateTime.now().toIso8601String().replaceAll(':', '-')}-count-${selectedApps.length}';
-                          XFile f = XFile.fromData(
+                          final XFile f = XFile.fromData(
                             Uint8List.fromList(utf8.encode(exportJSON)),
                             mimeType: 'application/json',
                             name: fn,
