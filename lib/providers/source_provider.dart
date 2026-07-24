@@ -583,17 +583,15 @@ String preStandardizeUrl(String url) {
   if (uri == null) {
     return url;
   }
-  
+
   // Clean up duplicate/empty slashes in the path segment only, leaving query parameters/fragment intact
   var pathSegments = uri.pathSegments.where((s) => s.isNotEmpty).toList();
   var trailingSlash =
       ((uri.path.endsWith('/') || (uri.path.isEmpty && url.endsWith('/'))) &&
       uri.queryParameters.isEmpty);
-  
-  var cleanedUri = uri.replace(
-    pathSegments: pathSegments,
-  );
-  
+
+  var cleanedUri = uri.replace(pathSegments: pathSegments);
+
   var result = cleanedUri.toString();
   if (trailingSlash && !result.endsWith('/')) {
     result = '$result/';
@@ -1366,7 +1364,7 @@ String? replaceMatchGroupsInString(RegExpMatch match, String matchGroupString) {
     final backslash = m.group(1);
     final groupIndexStr = m.group(2)!;
     final groupIndex = int.parse(groupIndexStr);
-    
+
     if (backslash != null) {
       // Escaped, e.g., \$1 -> return $1
       return '\$$groupIndexStr';
@@ -1708,7 +1706,8 @@ class SourceProvider {
         .getAppValues()
         .map((e) => e.app.url)
         .toList();
-    final urlsToCheck = List<String>.from(alreadyAddedUrls)..addAll(existingUrls);
+    final urlsToCheck = List<String>.from(alreadyAddedUrls)
+      ..addAll(existingUrls);
     for (var url in urls) {
       try {
         if (urlsToCheck.contains(url)) {
