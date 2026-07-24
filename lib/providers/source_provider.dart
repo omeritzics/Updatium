@@ -258,9 +258,6 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
       apkUrls = getApkUrlsFromUrls(List<String>.from(apkUrlJson));
     } catch (e) {
       apkUrls = assumed2DlistToStringMapList(List<dynamic>.from(apkUrlJson));
-      apkUrls = List<dynamic>.from(
-        apkUrlJson,
-      ).map((e) => MapEntry(e[0] as String, e[1] as String)).toList();
     }
     json['apkUrls'] = jsonEncode(stringMapListTo2DList(apkUrls));
   }
@@ -322,7 +319,8 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
         json['name'] == 'Signal' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        additionalSettings['versionExtractionRegEx'] == '' &&
+        (additionalSettings['versionExtractionRegEx'] == null ||
+            additionalSettings['versionExtractionRegEx'] == '') &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://updates.signal.org/android/latest.json';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -339,7 +337,8 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
         json['name'] == 'WhatsApp' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        additionalSettings['versionExtractionRegEx'] == '' &&
+        (additionalSettings['versionExtractionRegEx'] == null ||
+            additionalSettings['versionExtractionRegEx'] == '') &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://whatsapp.com/android';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -355,7 +354,8 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
         json['name'] == 'VLC' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        additionalSettings['versionExtractionRegEx'] == '' &&
+        (additionalSettings['versionExtractionRegEx'] == null ||
+            additionalSettings['versionExtractionRegEx'] == '') &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://www.videolan.org/vlc/download-android.html';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -569,7 +569,7 @@ class App {
   };
 }
 
-// Ensure the input is starts with HTTPS and has no WWW
+// Ensure the input starts with HTTPS and has no WWW
 String preStandardizeUrl(String url) {
   var firstDotIndex = url.indexOf('.');
   if (!(firstDotIndex >= 0 && firstDotIndex != url.length - 1)) {
@@ -580,19 +580,25 @@ String preStandardizeUrl(String url) {
     url = 'https://$url';
   }
   var uri = Uri.tryParse(url);
+  if (uri == null) {
+    return url;
+  }
+  
+  // Clean up duplicate/empty slashes in the path segment only, leaving query parameters/fragment intact
+  var pathSegments = uri.pathSegments.where((s) => s.isNotEmpty).toList();
   var trailingSlash =
-      ((uri?.path.endsWith('/') ?? false) ||
-          ((uri?.path.isEmpty ?? false) && url.endsWith('/'))) &&
-      (uri?.queryParameters.isEmpty ?? false);
-
-  url =
-      url
-          .split('/')
-          .where((e) => e.isNotEmpty)
-          .join('/')
-          .replaceFirst(':/', '://') +
-      (trailingSlash ? '/' : '');
-  return url;
+      ((uri.path.endsWith('/') || (uri.path.isEmpty && url.endsWith('/'))) &&
+      uri.queryParameters.isEmpty);
+  
+  var cleanedUri = uri.replace(
+    pathSegments: pathSegments,
+  );
+  
+  var result = cleanedUri.toString();
+  if (trailingSlash && !result.endsWith('/')) {
+    result = '$result/';
+  }
+  return result;
 }
 
 String noAPKFound = 'noAPKFound'.t();
@@ -818,7 +824,6 @@ abstract class AppSource {
   }) async {
     var sp = SettingsProvider();
     await sp.initializeSettings();
-    getSourceConfigValues(additionalSettings, sp);
     var additionalSettingsPlusSourceConfig = {
       ...additionalSettings,
       ...(await getSourceConfigValues(additionalSettings, sp)),
@@ -1350,32 +1355,29 @@ bool isTempId(App app) {
 }
 
 String? replaceMatchGroupsInString(RegExpMatch match, String matchGroupString) {
-  if (RegExp('^\\d+\$').hasMatch(matchGroupString)) {
+  if (RegExp(r'^\d+$').hasMatch(matchGroupString)) {
     matchGroupString = '\$$matchGroupString';
   }
-  // Regular expression to match numbers in the input string
-  final numberRegex = RegExp(r'\$\d+');
-  // Extract all numbers from the input string
-  final numbers = numberRegex.allMatches(matchGroupString);
-  if (numbers.isEmpty) {
-    // If no numbers found, return the original string
+  final pattern = RegExp(r'(\\)?\$(\d+)');
+  if (!pattern.hasMatch(matchGroupString)) {
     return null;
   }
-  // Replace numbers with corresponding match groups
-  var outputString = matchGroupString;
-  for (final numberMatch in numbers) {
-    final number = numberMatch.group(0)!;
-    final matchGroup = match.group(int.parse(number.substring(1))) ?? '';
-    // Check if the number is preceded by a single backslash
-    final isEscaped = outputString.contains('\\$number');
-    // Replace the number with the corresponding match group
-    if (!isEscaped) {
-      outputString = outputString.replaceAll(number, matchGroup);
+  return matchGroupString.replaceAllMapped(pattern, (m) {
+    final backslash = m.group(1);
+    final groupIndexStr = m.group(2)!;
+    final groupIndex = int.parse(groupIndexStr);
+    
+    if (backslash != null) {
+      // Escaped, e.g., \$1 -> return $1
+      return '\$$groupIndexStr';
     } else {
-      outputString = outputString.replaceAll('\\$number', number);
+      // Not escaped, replace with match group if in range
+      if (groupIndex <= match.groupCount) {
+        return match.group(groupIndex) ?? '';
+      }
+      return '';
     }
-  }
-  return outputString;
+  });
 }
 
 String? extractVersion(
@@ -1598,8 +1600,9 @@ class SourceProvider {
     var mergedAdditionalSettings = Map<String, dynamic>.from(
       additionalSettings,
     );
+    SettingsProvider? sp;
     if (mergedAdditionalSettings['includePrereleases'] == null) {
-      var sp = SettingsProvider();
+      sp = SettingsProvider();
       await sp.initializeSettings();
       mergedAdditionalSettings['includePrereleases'] =
           sp.includePrereleasesByDefault;
@@ -1638,8 +1641,10 @@ class SourceProvider {
     if (additionalSettings['autoApkFilterByArch'] == true) {
       apk.apkUrls = await filterApksByArch(apk.apkUrls);
     }
-    var sp = SettingsProvider();
-    await sp.initializeSettings();
+    if (sp == null) {
+      sp = SettingsProvider();
+      await sp.initializeSettings();
+    }
     if (sp.preferApkOverXapk) {
       apk.apkUrls = preferApkOverXapk(apk.apkUrls);
     }
@@ -1703,10 +1708,10 @@ class SourceProvider {
         .getAppValues()
         .map((e) => e.app.url)
         .toList();
-    alreadyAddedUrls.addAll(existingUrls);
+    final urlsToCheck = List<String>.from(alreadyAddedUrls)..addAll(existingUrls);
     for (var url in urls) {
       try {
-        if (alreadyAddedUrls.contains(url)) {
+        if (urlsToCheck.contains(url)) {
           throw UpdatiumError('appAlreadyAdded'.t());
         }
         var source = sourceOverride ?? getSource(url);
