@@ -442,10 +442,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   else
                     Icon(
                       Icons.widgets,
-                      size: 80,
+                      size: 84,
                       color: preserveTransparency(
                         Theme.of(context).colorScheme.primary,
-                        0.55,
+                        0.50,
                       ),
                     ),
                   gap24,
@@ -1562,18 +1562,13 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 slivers: <Widget>[
                   SliverAppBar.medium(
                     pinned: true,
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('appsString'.t()),
-                        TabBar(
-                          controller: _tabController,
-                          tabs: [
-                            Tab(text: 'all'.t()),
-                            Tab(text: 'installed'.t()),
-                            Tab(text: 'notInstalledApps'.t()),
-                          ],
-                        ),
+                    title: Text('appsString'.t()),
+                    bottom: TabBar(
+                      controller: _tabController,
+                      tabs: [
+                        Tab(text: 'all'.t()),
+                        Tab(text: 'installed'.t()),
+                        Tab(text: 'notInstalledApps'.t()),
                       ],
                     ),
                     actions: [
