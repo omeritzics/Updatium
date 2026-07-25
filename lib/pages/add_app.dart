@@ -581,7 +581,7 @@ class AddAppPageState extends State<AddAppPage> {
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar.large(
+          SliverAppBar.medium(
             pinned: true,
             title: Text('addApp'.t()),
             bottom:
@@ -1007,7 +1007,7 @@ class AddAppConfirmationPageState extends State<AddAppConfirmationPage> {
             body: CustomScrollView(
               shrinkWrap: true,
               slivers: <Widget>[
-                SliverAppBar.large(
+                SliverAppBar.medium(
                   pinned: true,
                   title: Text('addApp'.t()),
                   actions: [

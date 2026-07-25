@@ -1563,7 +1563,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 physics: const AlwaysScrollableScrollPhysics(),
                 controller: scrollController,
                 slivers: <Widget>[
-                  SliverAppBar.large(
+                  SliverAppBar.medium(
                     pinned: true,
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

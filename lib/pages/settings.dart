@@ -535,7 +535,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: CustomScrollView(
         controller: scrollController,
         slivers: <Widget>[
-          SliverAppBar.large(
+          SliverAppBar.medium(
             pinned: true,
             automaticallyImplyLeading: false,
             title: Text('settings'.t()),

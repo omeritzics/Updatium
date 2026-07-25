@@ -860,7 +860,7 @@ class _UpdatiumState extends State<Updatium> {
               appBarTheme: AppBarTheme(
                 titleTextStyle: TextStyle(
                   color: scheme.onSurface,
-                  fontSize: 22,
+                  fontSize: 24,
                   fontWeight: FontWeight.w600,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
@@ -874,8 +874,8 @@ class _UpdatiumState extends State<Updatium> {
               // Expressive List Tiles
               listTileTheme: ListTileThemeData(
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 8,
+                  horizontal: 16,
+                  vertical: 4,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -994,10 +994,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Material Design 3 2024 Expressive Centered Slider Theme - preserve M3 Expressive transparency
               sliderTheme: SliderThemeData(
-                trackHeight: 8,
-                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 14),
-                overlayShape: const RoundSliderOverlayShape(overlayRadius: 28),
-                valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+                year2023: false,
                 valueIndicatorTextStyle: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -1009,11 +1006,6 @@ class _UpdatiumState extends State<Updatium> {
                   ],
                 ).copyWith(color: scheme.onPrimary),
                 showValueIndicator: ShowValueIndicator.onDrag,
-                activeTrackColor: scheme.primary,
-                inactiveTrackColor: scheme.surfaceContainerHighest,
-                thumbColor: scheme.primary,
-                overlayColor: scheme.primary.withValues(alpha: 0.2),
-                valueIndicatorColor: scheme.primary,
               ),
 
               // Dialog Theme for AMOLED black theme compatibility
