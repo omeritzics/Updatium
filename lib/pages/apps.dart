@@ -433,64 +433,61 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
         if (listedApps.isEmpty)
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (appsProvider.loadingApps && appsProvider.apps.isEmpty)
-                      const LoadingIndicatorM3E()
-                    else
-                      Icon(
-                        Icons.widgets,
-                        size: 80,
-                        color: preserveTransparency(
-                          Theme.of(context).colorScheme.primary,
-                          0.55,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (appsProvider.loadingApps && appsProvider.apps.isEmpty)
+                    const LoadingIndicatorM3E()
+                  else
+                    Icon(
+                      Icons.widgets,
+                      size: 80,
+                      color: preserveTransparency(
+                        Theme.of(context).colorScheme.primary,
+                        0.55,
+                      ),
+                    ),
+                  gap24,
+                  if (appsProvider.loadingApps && appsProvider.apps.isEmpty)
+                    Text(
+                      'pleaseWait'.t(),
+                      style: Theme.of(context).textTheme.headlineMedium,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  else
+                    Text(
+                      appsProvider.apps.isEmpty
+                          ? 'noApps'.t()
+                          : 'noAppsForFilter'.t(),
+                      style: Theme.of(context).textTheme.headlineMedium,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(
+                        () {
+                          final subtext = 'noAppsSubtext'.t();
+                          // Hide subtext if translation key is not found (returns the key itself)
+                          return subtext == 'noAppsSubtext' ? '' : subtext;
+                        }(),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: preserveTransparency(
+                            Theme.of(context).colorScheme.onSurface,
+                            0.7,
+                          ),
                         ),
-                      ),
-                    gap24,
-                    if (appsProvider.loadingApps && appsProvider.apps.isEmpty)
-                      Text(
-                        'pleaseWait'.t(),
-                        style: Theme.of(context).textTheme.headlineMedium,
                         textAlign: TextAlign.center,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    else
-                      Text(
-                        appsProvider.apps.isEmpty
-                            ? 'noApps'.t()
-                            : 'noAppsForFilter'.t(),
-                        style: Theme.of(context).textTheme.headlineMedium,
-                        textAlign: TextAlign.center,
-                        maxLines: 3,
+                        maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    if (appsProvider.apps.isEmpty && !appsProvider.loadingApps)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: Text(
-                          () {
-                            final subtext = 'noAppsSubtext'.t();
-                            // Hide subtext if translation key is not found (returns the key itself)
-                            return subtext == 'noAppsSubtext' ? '' : subtext;
-                          }(),
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(
-                                color: preserveTransparency(
-                                  Theme.of(context).colorScheme.onSurface,
-                                  0.7,
-                                ),
-                              ),
-                          textAlign: TextAlign.center,
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                  ],
-                ),
+                    ),
+                ],
               ),
             ),
           ),
@@ -633,7 +630,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       final isSelected = selectedAppIds.contains(app.id);
 
       return Card(
-        margin: const EdgeInsets.symmetric(vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         color: isSelected
             ? Theme.of(
                 context,
@@ -769,7 +766,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       final isSelected = selectedAppIds.contains(app.id);
 
       return Card(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Semantics(
           button: true,
           label: app.pinned
@@ -904,7 +901,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       // Grid view when 'Group by category' is enabled
 
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: ExpansionTile(
           key: ValueKey(
             'category_grid_${listedCategories[index] ?? "null"}_$index',
@@ -1474,7 +1471,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
 
               // List view when 'Group by category' is enabled
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 child: ExpansionTile(
                   key: ValueKey(
                     'category_${listedCategories[index] ?? "null"}_$index',
@@ -1539,7 +1536,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               int index,
             ) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 child: getSingleAppHorizTile(index),
               );
             }, childCount: listedApps.length),

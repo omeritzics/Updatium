@@ -966,7 +966,8 @@ class _UpdatiumState extends State<Updatium> {
                 unselectedItemColor: scheme.onSurfaceVariant,
                 selectedLabelStyle: TextStyle(
                   fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
+                  color: scheme.onSecondary,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'GoogleSans',
