@@ -861,8 +861,13 @@ abstract class AppSource {
       streamedResponseUrlWithResponseAndClient.value.value,
     );
 
-    // Handle 304 Not Modified - return cached response
-    if (response.statusCode == 304 && cachedETag != null) {
+    // Handle 304 Not Modified - return cached response, or transparently
+    // retry without the conditional header if our cache no longer has it
+    // (expired/evicted/app restarted). Falling through with the raw 304
+    // hands callers an empty body, which breaks JSON/HTML parsing and
+    // APK-ID extraction downstream ("Could not get ID from APK", RangeError
+    // on empty lists, etc.) until the user manually refreshes.
+    if (response.statusCode == 304) {
       var cachedResponse = _etagCache.getCachedResponse(
         url,
         additionalSettings,
@@ -870,7 +875,23 @@ abstract class AppSource {
       if (cachedResponse != null) {
         return cachedResponse;
       }
-      // If cache miss despite 304, continue with normal handling
+
+      var retryHeaders = Map<String, String>.from(requestHeaders);
+      retryHeaders.remove('If-None-Match');
+      var retryStreamed = await sourceRequestStreamResponse(
+        method,
+        url,
+        retryHeaders,
+        additionalSettingsPlusSourceConfig,
+        followRedirects: followRedirects,
+        postBody: postBody,
+      );
+      response = await httpClientResponseStreamToFinalResponse(
+        retryStreamed.value.key,
+        method,
+        retryStreamed.key.toString(),
+        retryStreamed.value.value,
+      );
     }
 
     // Cache successful GET responses with ETag
