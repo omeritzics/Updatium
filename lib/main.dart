@@ -735,6 +735,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Modern progress indicator
               progressIndicatorTheme: ProgressIndicatorThemeData(
+                // ignore: deprecated_member_use
                 year2023: false,
               ),
 
@@ -944,6 +945,7 @@ class _UpdatiumState extends State<Updatium> {
 
               // Material Design 3 2024 Expressive Centered Slider Theme - preserve M3 Expressive transparency
               sliderTheme: SliderThemeData(
+                // ignore: deprecated_member_use
                 year2023: false,
                 valueIndicatorTextStyle: TextStyle(
                   fontSize: 14,

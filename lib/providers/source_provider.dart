@@ -1049,7 +1049,7 @@ abstract class AppSource {
       GeneratedFormSwitch(
         'refreshBeforeDownload',
         label: 'refreshBeforeDownload'.t(),
-        defaultValue: false,
+        defaultValue: true,
       ),
     ],
     [
