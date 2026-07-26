@@ -914,13 +914,13 @@ class _UpdatiumState extends State<Updatium> {
 
               // Expressive Bottom Navigation Bar
               bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                backgroundColor: scheme.surface,
-                selectedItemColor: scheme.onSecondaryContainer,
-                unselectedItemColor: scheme.onSurfaceVariant,
+                // backgroundColor: scheme.surface,
+                // selectedItemColor: scheme.onSecondaryContainer,
+                // unselectedItemColor: scheme.onSurfaceVariant,
                 selectedLabelStyle: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: scheme.onSecondary,
+                  color: scheme.onSecondaryContainer,
                   fontFamily: getPrimaryFontForLocale(context.locale),
                   fontFamilyFallback: const [
                     'GoogleSans',
@@ -938,9 +938,6 @@ class _UpdatiumState extends State<Updatium> {
                     'NotoSansArabic',
                   ],
                 ),
-                type: BottomNavigationBarType.fixed,
-                elevation: isDark ? 3 : 8,
-                landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
               ),
 
               // Material Design 3 2024 Expressive Centered Slider Theme - preserve M3 Expressive transparency
