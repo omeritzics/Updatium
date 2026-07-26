@@ -103,3 +103,23 @@ void initForegroundService([int intervalMinutes = 15]) {
     _isForegroundServiceInitialized = true;
   }
 }
+
+Future<void> applyBackgroundUpdateSettings({
+  required int updateInterval,
+  required bool useFGService,
+  required Future<ServiceRequestResult?> Function(bool) startForegroundServiceFn,
+  required Future<ServiceRequestResult?> Function() stopForegroundServiceFn,
+}) async {
+  if (updateInterval == 0) {
+    await stopForegroundServiceFn();
+    await BackgroundFetch.stop();
+  } else {
+    if (useFGService) {
+      await BackgroundFetch.stop();
+      await startForegroundServiceFn(false);
+    } else {
+      await stopForegroundServiceFn();
+      await BackgroundFetch.start();
+    }
+  }
+}

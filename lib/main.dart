@@ -181,6 +181,8 @@ class Updatium extends StatefulWidget {
 class _UpdatiumState extends State<Updatium> {
   var existingUpdateInterval = -1;
   SettingsProvider? _settingsProvider;
+  int? _lastAppliedInterval;
+  bool? _lastAppliedUseFGService;
 
   @override
   void initState() {
@@ -311,16 +313,25 @@ class _UpdatiumState extends State<Updatium> {
     NotificationsProvider notifs = context.read<NotificationsProvider>();
 
     // Toggle between Foreground Service and Background Fetch
-    if (settingsProvider.updateInterval == 0) {
-      stopForegroundService();
-      BackgroundFetch.stop();
-    } else {
-      if (settingsProvider.useFGService) {
-        BackgroundFetch.stop();
-        startForegroundService(false);
-      } else {
+    // Only re-apply when the relevant settings actually change, not on
+    // every rebuild - otherwise BackgroundFetch keeps getting stopped
+    // and restarted, which can prevent it from ever firing.
+    if (_lastAppliedInterval != settingsProvider.updateInterval ||
+        _lastAppliedUseFGService != settingsProvider.useFGService) {
+      _lastAppliedInterval = settingsProvider.updateInterval;
+      _lastAppliedUseFGService = settingsProvider.useFGService;
+
+      if (settingsProvider.updateInterval == 0) {
         stopForegroundService();
-        BackgroundFetch.start();
+        BackgroundFetch.stop();
+      } else {
+        if (settingsProvider.useFGService) {
+          BackgroundFetch.stop();
+          startForegroundService(false);
+        } else {
+          stopForegroundService();
+          BackgroundFetch.start();
+        }
       }
     }
 
