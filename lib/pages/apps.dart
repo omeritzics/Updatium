@@ -935,20 +935,44 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           ),
           tilePadding: const EdgeInsets.symmetric(horizontal: 8),
           children: [
-            Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              runSpacing: 8,
-              children: filteredEntries.map((entry) {
-                final appIndex = entry.key;
-                if (appIndex >= 0 && appIndex < listedApps.length) {
-                  return SizedBox(
-                    width: 120,
-                    height: 200,
-                    child: getSingleAppGridTile(appIndex),
-                  );
-                }
-                return const SizedBox.shrink();
-              }).toList(),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                const tileWidth = 120.0;
+                const spacing = 8.0;
+                final count = filteredEntries.length;
+                final tilesPerRow = count == 0
+                    ? 1
+                    : ((constraints.maxWidth + spacing) /
+                            (tileWidth + spacing))
+                        .floor()
+                        .clamp(1, count);
+                final remainder = count % tilesPerRow;
+                final phantomCount = remainder == 0
+                    ? 0
+                    : tilesPerRow - remainder;
+
+                return Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  runSpacing: 8,
+                  children: [
+                    ...filteredEntries.map((entry) {
+                      final appIndex = entry.key;
+                      if (appIndex >= 0 && appIndex < listedApps.length) {
+                        return SizedBox(
+                          width: tileWidth,
+                          height: 200,
+                          child: getSingleAppGridTile(appIndex),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    }),
+                    ...List.generate(
+                      phantomCount,
+                      (_) => const SizedBox(width: tileWidth, height: 0),
+                    ),
+                  ],
+                );
+              },
             ),
           ],
         ),
@@ -1508,17 +1532,41 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           return SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Wrap(
-                alignment: WrapAlignment.spaceBetween,
-                runSpacing: 8,
-                children: listedApps.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  return SizedBox(
-                    width: 120,
-                    height: 200,
-                    child: getSingleAppGridTile(index),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  const tileWidth = 120.0;
+                  const spacing = 8.0;
+                  final count = listedApps.length;
+                  final tilesPerRow = count == 0
+                      ? 1
+                      : ((constraints.maxWidth + spacing) /
+                              (tileWidth + spacing))
+                          .floor()
+                          .clamp(1, count);
+                  final remainder = count % tilesPerRow;
+                  final phantomCount = remainder == 0
+                      ? 0
+                      : tilesPerRow - remainder;
+
+                  return Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    runSpacing: 8,
+                    children: [
+                      ...listedApps.asMap().entries.map((entry) {
+                        final index = entry.key;
+                        return SizedBox(
+                          width: tileWidth,
+                          height: 200,
+                          child: getSingleAppGridTile(index),
+                        );
+                      }),
+                      ...List.generate(
+                        phantomCount,
+                        (_) => const SizedBox(width: tileWidth, height: 0),
+                      ),
+                    ],
                   );
-                }).toList(),
+                },
               ),
             ),
           );
