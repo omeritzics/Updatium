@@ -733,6 +733,11 @@ class _UpdatiumState extends State<Updatium> {
                 ),
               ),
 
+              // Modern progress indicator
+              progressIndicatorTheme: ProgressIndicatorThemeData(
+                year2023: false,
+              ),
+
               // Material 3 Menu Theme
               dropdownMenuTheme: DropdownMenuThemeData(
                 menuStyle: MenuStyle(
