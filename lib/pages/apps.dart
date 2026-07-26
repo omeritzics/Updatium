@@ -1545,7 +1545,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           ExpressiveRefreshIndicator(
             key: _refreshIndicatorKey,
             onRefresh: refresh,
-            
+
             child: Scrollbar(
               interactive: true,
               controller: scrollController,
