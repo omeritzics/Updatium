@@ -348,6 +348,15 @@ class _AppPageState extends State<AppPage> {
 
     bool installedVersionIsEstimate = isVersionPseudo(app.app);
 
+    CategorySelector(
+      alignment: WrapAlignment.start,
+      preselected: app.app.categories?.toSet() ?? {},
+      onSelected: (categories) {
+        app.app.categories = categories;
+        appsProvider.saveApps([app.app]);
+      },
+    );
+    gap8;
     getInfoColumn() {
       String versionLines = '';
       bool installed = app.app.installedVersion != null;
@@ -468,14 +477,6 @@ class _AppPageState extends State<AppPage> {
             ),
 
           gap24,
-          CategorySelector(
-            alignment: WrapAlignment.start,
-            preselected: app.app.categories?.toSet() ?? {},
-            onSelected: (categories) {
-              app.app.categories = categories;
-              appsProvider.saveApps([app.app]);
-            },
-          ),
           if (app.app.additionalSettings['about'] is String &&
               app.app.additionalSettings['about'].isNotEmpty)
             Column(
