@@ -990,9 +990,6 @@ class _UpdatiumState extends State<Updatium> {
                 landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
               ),
 
-              // Material Design 3 2024 Progress Indicators
-              progressIndicatorTheme: const ProgressIndicatorThemeData(),
-
               // Material Design 3 2024 Expressive Centered Slider Theme - preserve M3 Expressive transparency
               sliderTheme: SliderThemeData(
                 year2023: false,

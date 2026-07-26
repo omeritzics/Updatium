@@ -13,7 +13,7 @@ with your English skills, that's completely fine. You are free to use tools to b
 to follow these simple rules:
 
 - You are **allowed** to write in your native language.
-- You are also **allowed** to use Google translate to write titles, descriptions and comments.
+- You are also **allowed** to use Google translate to write titles, descriptions and Discussions comments.
 - You are **allowed** to use LLMs for writing titles and/or issue descriptions.
 - However, please **do not** use AI for replying to comments related to bugs or new features. AI is good for translation and
   writing, but when it comes to technical details, I need to discuss them with the *human* to properly understand what needs to

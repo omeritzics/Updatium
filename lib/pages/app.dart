@@ -816,7 +816,7 @@ class _AppPageState extends State<AppPage> {
               },
               child: CustomScrollView(
                 slivers: [
-                  SliverAppBar.medium(
+                  SliverAppBar.large(
                     pinned: true,
                     leading: IconButton(
                       icon: const Icon(Icons.arrow_back),
