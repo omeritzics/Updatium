@@ -267,7 +267,6 @@
     "category": "Categoria",
     "noCategory": "No hi ha la categoria",
     "noCategories": "No hi ha les categories",
-    "categoryDeleteQuestion": "Suprimeixo les categories?",
     "categoryDeleteWarning": "Totes les aplicacions de les categories suprimides es marcaran com a no categoritzades.",
     "addCategory": "Afegeix una categoria",
     "label": "Nom",

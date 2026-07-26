@@ -267,7 +267,6 @@
     "category": "类别",
     "noCategory": "无类别",
     "noCategories": "无类别",
-    "categoryDeleteQuestion": "是否删除选中的类别？",
     "categoryDeleteWarning": "被删除类别下的应用将恢复为未分类状态。",
     "addCategory": "添加类别",
     "label": "标签",

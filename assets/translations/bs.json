@@ -267,7 +267,6 @@
     "category": "Kategorija",
     "noCategory": "Nema kategorije",
     "noCategories": "Nema kategorija",
-    "categoryDeleteQuestion": "Želite li izbrisati kategorije?",
     "categoryDeleteWarning": "Sve aplikacije u izbrisanim kategorijama će biti postavljene kao nekategorisane.",
     "addCategory": "Dodaj kategoriju",
     "label": "Oznaka",

@@ -86,7 +86,6 @@
     "removeSelectedApps": "أزل التطبيقات المحددة",
     "appRemoved": {
         "one": "Removed one app",
-        "two": "Removed {} apps",
         "other": "Removed {} apps"
     },
     "updateX": "حدِّث {}",
@@ -268,7 +267,6 @@
     "category": "تصنيف",
     "noCategory": "بدون تصنيف",
     "noCategories": "لا توجد تصنيفات",
-    "categoryDeleteQuestion": "حذف التصنيفات؟",
     "categoryDeleteWarning": "سيتم تعيين جميع التطبيقات في التصنيفات المحذوفة كغير مصنفة.",
     "addCategory": "أضف تصنيف",
     "label": "تسمية",
@@ -423,82 +421,66 @@
     "multipleSigners": "موقّعون متعدّدون",
     "removeAppQuestion": {
         "one": "إزالة التطبيق؟",
-        "two": "إزالة التطبيقين؟",
         "other": "إزالة التطبيقات؟"
     },
     "tooManyRequestsTryAgainInMinutes": {
         "one": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {} دقيقة",
-        "two": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {} دقيقتين",
         "other": "طلبات كثيرة جدًا (حُدد المعدل) - حاول مرة أخرى بعد {} دقائق"
     },
     "bgUpdateGotErrorRetryInMinutes": {
         "one": "واجه التحقق من التحديثات في الخلفية {error}، سيتم جدولة محاولة أخرى بعد {} دقيقة",
-        "two": "واجه التحقق من التحديثات في الخلفية {error}، سيتم جدولة محاولة أخرى بعد {} دقيقتين",
         "other": "واجه التحقق من التحديثات في الخلفية {error}، سيتم جدولة محاولة أخرى بعد {} دقائق"
     },
     "bgCheckFoundUpdatesWillNotifyIfNeeded": {
         "one": "وجد التحقق من التحديثات في الخلفية {} تحديث - سيتم إخطار المستخدم إذا لزم الأمر",
-        "two": "وجد التحقق من التحديثات في الخلفية {} تحديثين - سيتم إخطار المستخدم إذا لزم الأمر",
         "other": "وجد التحقق من التحديثات في الخلفية {} تحديثات - سيتم إخطار المستخدم إذا لزم الأمر"
     },
     "apps": {
         "one": "{} تطبيق",
-        "two": "تطبيقان",
         "other": "{} تطبيقات"
     },
     "url": {
         "one": "{} رابط",
-        "two": "رابطان",
         "other": "{} روابط"
     },
     "minute": {
         "one": "{} دقيقة",
-        "two": "دقيقتان",
         "other": "{} دقائق"
     },
     "hour": {
         "one": "{} ساعة",
-        "two": "ساعتان",
         "other": "{} ساعات"
     },
     "day": {
         "one": "{} يوم",
-        "two": "يومان",
         "other": "{} أيام"
     },
     "clearedNLogsBeforeXAfterY": {
         "one": "مُسح {n} سجل (قبل = {before}, بعد = {after})",
-        "two": "مُسح {n} سجلان (قبل = {before}, بعد = {after})",
         "other": "مُسح {n} سجلات (قبل = {before}, بعد = {after})"
     },
     "xAndNMoreUpdatesAvailable": {
         "one": "{app} وتطبيق واحد آخر لديه تحديثات.",
-        "two": "{app} وتطبيقان آخران لديهما تحديثات.",
         "other": "{app} و{} تطبيقات أخرى لديها تحديثات."
     },
     "xAndNMoreUpdatesInstalled": {
         "one": "{app} وتطبيق واحد آخر حُدث.",
-        "two": "{app} وتطبيقان آخران حُدثا.",
         "other": "{app} و{} تطبيقات أخرى حُدثت."
     },
     "xAndNMoreUpdatesFailed": {
         "one": "فشل تحديث {app} وتطبيق واحد آخر.",
-        "two": "فشل تحديث {app} وتطبيقان آخران.",
         "other": "فشل تحديث {app} و{} تطبيقات أخرى."
     },
     "xAndNMoreUpdatesPossiblyInstalled": {
         "one": "{app} وتطبيق واحد آخر قد حُدث.",
-        "two": "{app} وتطبيقان آخران قد حُدثا.",
         "other": "{app} و{} تطبيقات أخرى قد حُدثت."
     },
     "apk": {
         "one": "{} APK",
-        "two": "APKان",
         "other": "{} APKs"
     },
     "certificateHash": {
         "one": "بصمة الشهادة",
-        "two": "بصمتا الشهادة",
         "other": "بصمات الشهادة"
     },
     "securityDisclaimerTitle": "إخلاء مسؤولية الأمان والقانوني",

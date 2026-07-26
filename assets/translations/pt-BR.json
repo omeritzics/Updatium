@@ -267,7 +267,6 @@
     "category": "Categoria",
     "noCategory": "Nenhuma categoria",
     "noCategories": "Nenhuma categoria",
-    "categoryDeleteQuestion": "Excluir categorias?",
     "categoryDeleteWarning": "Todos os apps em categorias excluídas ficarão sem categoria.",
     "addCategory": "Adicionar categoria",
     "label": "Rótulo",

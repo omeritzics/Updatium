@@ -267,7 +267,6 @@
     "category": "Category",
     "noCategory": "No category",
     "noCategories": "No categories",
-    "categoryDeleteQuestion": "Delete categories?",
     "categoryDeleteWarning": "All apps in deleted categories will be set to uncategorized.",
     "addCategory": "Add category",
     "label": "Label",
