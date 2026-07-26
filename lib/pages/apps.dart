@@ -1364,13 +1364,6 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                       ),
                     ],
                     [
-                      GeneratedFormSwitch(
-                        'nonInstalledApps',
-                        label: 'nonInstalledApps'.t(),
-                        defaultValue: localValues['nonInstalledApps'],
-                      ),
-                    ],
-                    [
                       GeneratedFormDropdown(
                         'sourceFilter',
                         label: 'appSource'.t(),
@@ -1552,7 +1545,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           ExpressiveRefreshIndicator(
             key: _refreshIndicatorKey,
             onRefresh: refresh,
-
+            
             child: Scrollbar(
               interactive: true,
               controller: scrollController,

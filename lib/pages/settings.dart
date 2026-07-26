@@ -560,9 +560,6 @@ class _SettingsPageState extends State<SettingsPage> {
                           onExpansionChanged: (bool expanded) {
                             settingsProvider.updatesSectionExpanded = expanded;
                           },
-                          tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                          ),
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
                             //intervalDropdown,
@@ -1015,16 +1012,12 @@ class _SettingsPageState extends State<SettingsPage> {
                           onExpansionChanged: (bool expanded) {
                             settingsProvider.appViewSectionExpanded = expanded;
                           },
-                          tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                          ),
                           childrenPadding: const EdgeInsets.all(8),
                           children: [...sourceSpecificFields],
                         ),
                         gap24,
                         ExpansionTile(
                           leading: Icon(Icons.palette_rounded),
-
                           title: Text(
                             'appearance'.t(),
                             style: Theme.of(context).textTheme.titleMedium
@@ -1036,9 +1029,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             settingsProvider.appearanceSectionExpanded =
                                 expanded;
                           },
-                          tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                          ),
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
                             gap16,
@@ -1182,9 +1172,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             settingsProvider.categoriesSectionExpanded =
                                 expanded;
                           },
-                          tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                          ),
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
                             Row(
@@ -1196,6 +1183,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 Expanded(child: orderDropdown),
                               ],
                             ),
+
                             SwitchListTile(
                               title: Text('pinUpdates'.t()),
                               value: settingsProvider.pinUpdates,
@@ -1233,9 +1221,6 @@ class _SettingsPageState extends State<SettingsPage> {
                           onExpansionChanged: (bool expanded) {
                             // Optional: save expansion state in settingsProvider if desired
                           },
-                          tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                          ),
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
                             gap16,
@@ -1262,9 +1247,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             settingsProvider.categoriesSectionExpanded =
                                 expanded;
                           },
-                          tilePadding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                          ),
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
                             gap16,
