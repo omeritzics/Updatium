@@ -1076,9 +1076,3 @@ class _UpdatiumState extends State<Updatium> {
     );
   }
 }
-
-
-
-
-
-
