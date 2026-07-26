@@ -219,61 +219,6 @@ class _UpdatiumState extends State<Updatium> {
     }
   }
 
-  void initForegroundService() {
-    // Initialize foreground service if not already initialized
-    // ignore: invalid_use_of_visible_for_testing_member
-    if (!FlutterForegroundTask.isInitialized) {
-      FlutterForegroundTask.init(
-        androidNotificationOptions: AndroidNotificationOptions(
-          channelId: 'bg_update',
-          channelName: t('foregroundService'),
-          channelDescription: t('foregroundService'),
-          onlyAlertOnce: true,
-        ),
-        iosNotificationOptions: const IOSNotificationOptions(
-          showNotification: false,
-          playSound: false,
-        ),
-        foregroundTaskOptions: ForegroundTaskOptions(
-          eventAction: ForegroundTaskEventAction.repeat(900000),
-          autoRunOnBoot: true,
-          autoRunOnMyPackageReplaced: true,
-          allowWakeLock: true,
-          allowWifiLock: true,
-        ),
-      );
-    }
-  }
-
-  Future<ServiceRequestResult?> startForegroundService(bool restart) async {
-    initForegroundService();
-    if (await FlutterForegroundTask.isRunningService) {
-      if (restart) {
-        return FlutterForegroundTask.restartService();
-      }
-    } else {
-      return FlutterForegroundTask.startService(
-        serviceTypes: [ForegroundServiceTypes.specialUse],
-        serviceId: 666,
-        notificationTitle: t('foregroundService'),
-        notificationText: t('fgServiceNotice'),
-        notificationIcon: NotificationIcon(
-          metaDataName:
-              'io.github.omeritzics.updatium.service.NOTIFICATION_ICON',
-        ),
-        callback: startCallback,
-      );
-    }
-    return null;
-  }
-
-  Future<ServiceRequestResult?> stopForegroundService() async {
-    if (await FlutterForegroundTask.isRunningService) {
-      return await FlutterForegroundTask.stopService();
-    }
-    return null;
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -321,18 +266,10 @@ class _UpdatiumState extends State<Updatium> {
       _lastAppliedInterval = settingsProvider.updateInterval;
       _lastAppliedUseFGService = settingsProvider.useFGService;
 
-      if (settingsProvider.updateInterval == 0) {
-        stopForegroundService();
-        BackgroundFetch.stop();
-      } else {
-        if (settingsProvider.useFGService) {
-          BackgroundFetch.stop();
-          startForegroundService(false);
-        } else {
-          stopForegroundService();
-          BackgroundFetch.start();
-        }
-      }
+      applyBackgroundUpdateSettings(
+        updateInterval: settingsProvider.updateInterval,
+        useFGService: settingsProvider.useFGService,
+      );
     }
 
     if (settingsProvider.prefs == null) {
