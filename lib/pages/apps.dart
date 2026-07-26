@@ -942,10 +942,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                 final count = filteredEntries.length;
                 final tilesPerRow = count == 0
                     ? 1
-                    : ((constraints.maxWidth + spacing) /
-                            (tileWidth + spacing))
-                        .floor()
-                        .clamp(1, count);
+                    : ((constraints.maxWidth + spacing) / (tileWidth + spacing))
+                          .floor()
+                          .clamp(1, count);
                 final remainder = count % tilesPerRow;
                 final phantomCount = remainder == 0
                     ? 0
@@ -1540,9 +1539,9 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                   final tilesPerRow = count == 0
                       ? 1
                       : ((constraints.maxWidth + spacing) /
-                              (tileWidth + spacing))
-                          .floor()
-                          .clamp(1, count);
+                                (tileWidth + spacing))
+                            .floor()
+                            .clamp(1, count);
                   final remainder = count % tilesPerRow;
                   final phantomCount = remainder == 0
                       ? 0
