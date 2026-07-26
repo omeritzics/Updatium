@@ -795,7 +795,6 @@ abstract class AppSource {
     // APK-ID extraction downstream ("Could not get ID from APK", RangeError
     // on empty lists, etc.) until the user manually refreshes.
     if (response.statusCode == 304) {
-
       var retryHeaders = Map<String, String>.from(requestHeaders);
       retryHeaders.remove('If-None-Match');
       var retryStreamed = await sourceRequestStreamResponse(
