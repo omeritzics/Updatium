@@ -33,15 +33,6 @@ class FreeDroidWarnService {
     }
   }
 
-  static Future<bool> _saveWarningVersion() async {
-    try {
-      final result = await _channel.invokeMethod<bool>('saveWarningVersion');
-      return result ?? false;
-    } catch (e) {
-      return false;
-    }
-  }
-
   /// Public entry point to trigger the warning dialog sequence.
   static Future<void> showWarningDialog(BuildContext context) async {
     final shouldShow = await _shouldShowWarning();
@@ -51,41 +42,6 @@ class FreeDroidWarnService {
     if (strings.isEmpty || !context.mounted) return;
 
     // Helper to abstract external url launching logic cleanly
-    Future<void> launchExternalUrl(String urlString) async {
-      final uri = Uri.parse(urlString);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      }
-    }
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        content: Text(strings['message'] ?? ''),
-        actions: [
-          TextButton(
-            onPressed: () => launchExternalUrl('https://keepandroidopen.org'),
-            child: Text(strings['moreInfo'] ?? 'Details'),
-          ),
-          TextButton(
-            onPressed: () => launchExternalUrl(
-              'https://github.com/woheller69/FreeDroidWarn?tab=readme-ov-file#solutions',
-            ),
-            child: Text(strings['solution'] ?? 'Solution'),
-          ),
-          TextButton(
-            onPressed: () async {
-              await _saveWarningVersion();
-              if (context.mounted) {
-                Navigator.of(context).pop();
-              }
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
   }
 }
 
