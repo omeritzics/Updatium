@@ -937,7 +937,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           children: [
             LayoutBuilder(
               builder: (context, constraints) {
-                const tileWidth = 120.0;
+                const tileWidth = 128.0;
                 const spacing = 8.0;
                 final count = filteredEntries.length;
                 final tilesPerRow = count == 0
@@ -1533,7 +1533,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  const tileWidth = 120.0;
+                  const tileWidth = 128.0;
                   const spacing = 8.0;
                   final count = listedApps.length;
                   final tilesPerRow = count == 0
