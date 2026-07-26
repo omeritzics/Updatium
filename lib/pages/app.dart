@@ -348,15 +348,6 @@ class _AppPageState extends State<AppPage> {
 
     bool installedVersionIsEstimate = isVersionPseudo(app.app);
 
-    CategorySelector(
-      alignment: WrapAlignment.start,
-      preselected: app.app.categories?.toSet() ?? {},
-      onSelected: (categories) {
-        app.app.categories = categories;
-        appsProvider.saveApps([app.app]);
-      },
-    );
-    gap8;
     getInfoColumn() {
       String versionLines = '';
       bool installed = app.app.installedVersion != null;
@@ -595,6 +586,15 @@ class _AppPageState extends State<AppPage> {
           style: Theme.of(context).textTheme.labelSmall,
         ),
         getInfoColumn(),
+        gap24,
+        CategorySelector(
+          alignment: WrapAlignment.start,
+          preselected: app.app.categories?.toSet() ?? {},
+          onSelected: (categories) {
+            app.app.categories = categories;
+            appsProvider.saveApps([app.app]);
+          },
+        ),
         // Extra bottom padding to clear the docked toolbar
         const SizedBox(height: 96),
       ],

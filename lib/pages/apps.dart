@@ -630,7 +630,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       final isSelected = selectedAppIds.contains(app.id);
 
       return Card(
-        margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
         color: isSelected
             ? Theme.of(
                 context,
@@ -766,7 +766,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
       final isSelected = selectedAppIds.contains(app.id);
 
       return Card(
-        margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
         child: Semantics(
           button: true,
           label: app.pinned
@@ -936,7 +936,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
           tilePadding: const EdgeInsets.symmetric(horizontal: 8),
           children: [
             Wrap(
-              spacing: 8,
+              alignment: WrapAlignment.spaceBetween,
               runSpacing: 8,
               children: filteredEntries.map((entry) {
                 final appIndex = entry.key;
@@ -1509,7 +1509,7 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Wrap(
-                spacing: 8,
+                alignment: WrapAlignment.spaceBetween,
                 runSpacing: 8,
                 children: listedApps.asMap().entries.map((entry) {
                   final index = entry.key;
