@@ -1697,11 +1697,12 @@ class AppsProvider with ChangeNotifier {
     // If the App has more than one APK, the user should pick one (if context provided).
     // Clamp the stored preferredApkIndex to the current list length to prevent a
     // RangeError when a new release has fewer APK variants than the previous one.
-    final _safeApkIndex = urlsToSelectFrom.isEmpty
+    final safeApkIndex = urlsToSelectFrom.isEmpty
         ? 0
         : app.preferredApkIndex.clamp(0, urlsToSelectFrom.length - 1);
-    MapEntry<String, String>? appFileUrl =
-        urlsToSelectFrom.isEmpty ? null : urlsToSelectFrom[_safeApkIndex];
+    MapEntry<String, String>? appFileUrl = urlsToSelectFrom.isEmpty
+        ? null
+        : urlsToSelectFrom[safeApkIndex];
     // When picking any asset, use the APK filter regex to pre-select the best matching
     // asset by default, without hiding other assets from the user.
     if (pickAnyAsset &&
