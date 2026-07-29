@@ -563,107 +563,15 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
+                            if (showIntervalLabel)
+                              SizedBox(
+                                child: Text(
+                                  "${'bgUpdateCheckInterval'.t()}: $updateIntervalLabel",
+                                ),
+                              ),
                             M3ECardColumn(
                               children: [
-                                //intervalDropdown,
-                                gap16,
-                                if (showIntervalLabel)
-                                  SizedBox(
-                                    child: Text(
-                                      "${'bgUpdateCheckInterval'.t()}: $updateIntervalLabel",
-                                    ),
-                                  )
-                                else
-                                  gap16,
                                 intervalSlider,
-                                FutureBuilder(
-                                  builder: (ctx, val) {
-                                    return (settingsProvider.updateInterval >
-                                                0) &&
-                                            (((val.data?.version.sdkInt ?? 0) >=
-                                                    30) ||
-                                                settingsProvider.useShizuku)
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SwitchListTile(
-                                                title: Text(
-                                                  t(
-                                                    'foregroundServiceExplanation',
-                                                  ),
-                                                ),
-                                                value: settingsProvider
-                                                    .useFGService,
-                                                onChanged: (value) {
-                                                  settingsProvider
-                                                          .useFGService =
-                                                      value;
-                                                },
-                                              ),
-
-                                              SwitchListTile(
-                                                title: Text(
-                                                  'enableBackgroundUpdates'.t(),
-                                                ),
-                                                subtitle: Text(
-                                                  '${t('backgroundUpdateLimitsExplanation')} ${t('backgroundUpdateReqsExplanation')}',
-                                                  style: Theme.of(
-                                                    context,
-                                                  ).textTheme.labelSmall,
-                                                ),
-                                                value: settingsProvider
-                                                    .enableBackgroundUpdates,
-                                                onChanged: (value) {
-                                                  settingsProvider
-                                                          .enableBackgroundUpdates =
-                                                      value;
-                                                },
-                                              ),
-
-                                              gap8,
-                                              if (settingsProvider
-                                                  .enableBackgroundUpdates)
-                                                Column(
-                                                  children: [
-                                                    SwitchListTile(
-                                                      title: Text(
-                                                        t(
-                                                          'bgUpdatesOnWiFiOnly',
-                                                        ),
-                                                      ),
-                                                      value: settingsProvider
-                                                          .bgUpdatesOnWiFiOnly,
-                                                      onChanged: (value) {
-                                                        settingsProvider
-                                                                .bgUpdatesOnWiFiOnly =
-                                                            value;
-                                                      },
-                                                    ),
-
-                                                    SwitchListTile(
-                                                      title: Text(
-                                                        t(
-                                                          'bgUpdatesWhileChargingOnly',
-                                                        ),
-                                                      ),
-                                                      value: settingsProvider
-                                                          .bgUpdatesWhileChargingOnly,
-                                                      onChanged: (value) {
-                                                        settingsProvider
-                                                                .bgUpdatesWhileChargingOnly =
-                                                            value;
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                            ],
-                                          )
-                                        : const SizedBox.shrink();
-                                  },
-                                  future: DeviceInfoPlugin().androidInfo,
-                                ),
-                                gap16,
                                 if (!settingsProvider.safeMode)
                                   SwitchListTile(
                                     title: Text('safeMode'.t()),
@@ -719,7 +627,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                       ),
                                     ],
                                   ),
-                                gap16,
                                 if (settingsProvider.safeMode)
                                   Row(
                                     mainAxisAlignment:
@@ -979,7 +886,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                         }
                                       : null,
                                 ),
-                                gap8,
                                 GeneratedForm(
                                   items: [
                                     [
@@ -1035,6 +941,88 @@ class _SettingsPageState extends State<SettingsPage> {
                                   },
                                 ),
                               ],
+                            ),
+                            FutureBuilder(
+                              builder: (ctx, val) {
+                                return (settingsProvider.updateInterval >
+                                            0) &&
+                                        (((val.data?.version.sdkInt ?? 0) >=
+                                                30) ||
+                                            settingsProvider.useShizuku)
+                                    ? M3ECardColumn(
+                                        children: [
+                                          SwitchListTile(
+                                            title: Text(
+                                              t(
+                                                'foregroundServiceExplanation',
+                                              ),
+                                            ),
+                                            value: settingsProvider
+                                                .useFGService,
+                                            onChanged: (value) {
+                                              settingsProvider
+                                                      .useFGService =
+                                                  value;
+                                            },
+                                          ),
+
+                                          SwitchListTile(
+                                            title: Text(
+                                              'enableBackgroundUpdates'.t(),
+                                            ),
+                                            subtitle: Text(
+                                              '${t('backgroundUpdateLimitsExplanation')} ${t('backgroundUpdateReqsExplanation')}',
+                                              style: Theme.of(
+                                                context,
+                                              ).textTheme.labelSmall,
+                                            ),
+                                            value: settingsProvider
+                                                .enableBackgroundUpdates,
+                                            onChanged: (value) {
+                                              settingsProvider
+                                                      .enableBackgroundUpdates =
+                                                  value;
+                                            },
+                                          ),
+
+                                          if (settingsProvider
+                                              .enableBackgroundUpdates)
+                                            SwitchListTile(
+                                              title: Text(
+                                                t(
+                                                  'bgUpdatesOnWiFiOnly',
+                                                ),
+                                              ),
+                                              value: settingsProvider
+                                                  .bgUpdatesOnWiFiOnly,
+                                              onChanged: (value) {
+                                                settingsProvider
+                                                        .bgUpdatesOnWiFiOnly =
+                                                    value;
+                                              },
+                                            ),
+
+                                          if (settingsProvider
+                                              .enableBackgroundUpdates)
+                                            SwitchListTile(
+                                              title: Text(
+                                                t(
+                                                  'bgUpdatesWhileChargingOnly',
+                                                ),
+                                              ),
+                                              value: settingsProvider
+                                                  .bgUpdatesWhileChargingOnly,
+                                              onChanged: (value) {
+                                                settingsProvider
+                                                        .bgUpdatesWhileChargingOnly =
+                                                    value;
+                                              },
+                                            ),
+                                        ],
+                                      )
+                                    : const SizedBox.shrink();
+                              },
+                              future: DeviceInfoPlugin().androidInfo,
                             ),
                           ],
                         ),
@@ -1108,11 +1096,6 @@ class _SettingsPageState extends State<SettingsPage> {
                                     }
                                   },
                                 ),
-                                gap8,
-                                if (settingsProvider.theme ==
-                                    ThemeSettings.system)
-                                  followSystemThemeExplanation,
-                                gap16,
                                 if (settingsProvider.theme !=
                                     ThemeSettings.light)
                                   SwitchListTile(
@@ -1123,49 +1106,10 @@ class _SettingsPageState extends State<SettingsPage> {
                                     },
                                   ),
 
-                                gap8,
                                 useMaterialThemeSwitch,
-                                gap16,
                                 if (!settingsProvider.useMaterialYou)
                                   colorPicker,
-                                gap16,
                                 localeDropdown,
-                                FutureBuilder(
-                                  builder: (ctx, val) {
-                                    return (val.data?.version.sdkInt ?? 0) >= 36
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              gap8,
-
-                                              SwitchListTile(
-                                                title: Text(
-                                                  'useSystemFont'.t(),
-                                                ),
-                                                value: settingsProvider
-                                                    .useSystemFont,
-                                                onChanged: (useSystemFont) {
-                                                  if (useSystemFont) {
-                                                    NativeFeatures.loadSystemFont()
-                                                        .then((val) {
-                                                          settingsProvider
-                                                                  .useSystemFont =
-                                                              true;
-                                                        });
-                                                  } else {
-                                                    settingsProvider
-                                                            .useSystemFont =
-                                                        false;
-                                                  }
-                                                },
-                                              ),
-                                            ],
-                                          )
-                                        : const SizedBox.shrink();
-                                  },
-                                  future: DeviceInfoPlugin().androidInfo,
-                                ),
                                 SwitchListTile(
                                   title: Text('dontShowTrackOnlyWarnings'.t()),
                                   value: settingsProvider.hideTrackOnlyWarning,
@@ -1195,7 +1139,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
 
                                 SwitchListTile(
-                                  title: Text('disablePageTransitions'.t()),
+                                  title: Text('reversePageTransitions'.t()),
                                   value:
                                       settingsProvider.reversePageTransitions,
                                   onChanged:
@@ -1217,6 +1161,42 @@ class _SettingsPageState extends State<SettingsPage> {
                                   },
                                 ),
                               ],
+                            ),
+                            gap8,
+                            if (settingsProvider.theme ==
+                                ThemeSettings.system)
+                              followSystemThemeExplanation,
+                            FutureBuilder(
+                              builder: (ctx, val) {
+                                return (val.data?.version.sdkInt ?? 0) >= 36
+                                    ? M3ECardColumn(
+                                        children: [
+                                          SwitchListTile(
+                                            title: Text(
+                                              'useSystemFont'.t(),
+                                            ),
+                                            value: settingsProvider
+                                                .useSystemFont,
+                                            onChanged: (useSystemFont) {
+                                              if (useSystemFont) {
+                                                NativeFeatures.loadSystemFont()
+                                                    .then((val) {
+                                                      settingsProvider
+                                                              .useSystemFont =
+                                                          true;
+                                                    });
+                                              } else {
+                                                settingsProvider
+                                                        .useSystemFont =
+                                                    false;
+                                              }
+                                            },
+                                          ),
+                                        ],
+                                      )
+                                    : const SizedBox.shrink();
+                              },
+                              future: DeviceInfoPlugin().androidInfo,
                             ),
                           ],
                         ),
