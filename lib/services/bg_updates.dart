@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
@@ -24,16 +25,39 @@ void startCallback() {
 
 class MyTaskHandler extends TaskHandler {
   static const String incrementCountCommand = 'incrementCount';
+  static Future<void>? _inFlight;
 
   @override
   Future<void> onStart(DateTime timestamp, TaskStarter starter) async {
     debugPrint('onStart(starter: ${starter.name})');
-    bgUpdateCheck('bg_check', null);
+    if (_inFlight == null) {
+      try {
+        _inFlight = bgUpdateCheck('bg_check', null);
+        await _inFlight;
+      } finally {
+        _inFlight = null;
+      }
+    } else {
+      debugPrint('BG update check already in progress, skipping...');
+    }
   }
 
   @override
   void onRepeatEvent(DateTime timestamp) {
-    bgUpdateCheck('bg_check', null);
+    if (_inFlight == null) {
+      unawaited(_runWithGuard());
+    } else {
+      debugPrint('BG update check already in progress, skipping...');
+    }
+  }
+
+  Future<void> _runWithGuard() async {
+    try {
+      _inFlight = bgUpdateCheck('bg_check', null);
+      await _inFlight;
+    } finally {
+      _inFlight = null;
+    }
   }
 
   @override
@@ -49,9 +73,9 @@ Future<ServiceRequestResult?> startForegroundService(
   bool restart, [
   int? intervalMinutes,
 ]) async {
-  initForegroundService(intervalMinutes ?? 15);
+  bool needsRestart = initForegroundService(intervalMinutes ?? 15);
   if (await FlutterForegroundTask.isRunningService) {
-    if (restart) {
+    if (restart || needsRestart) {
       return FlutterForegroundTask.restartService();
     }
   } else {
@@ -86,7 +110,7 @@ Future<void> applyBackgroundUpdateSettings({
   } else {
     if (useFGService) {
       await BackgroundFetch.stop();
-      await startForegroundService(false);
+      await startForegroundService(false, updateInterval);
     } else {
       await stopForegroundService();
       await BackgroundFetch.start();
@@ -94,11 +118,11 @@ Future<void> applyBackgroundUpdateSettings({
   }
 }
 
-bool _isForegroundServiceInitialized = false;
+int? _lastInitializedInterval;
 
-void initForegroundService([int intervalMinutes = 15]) {
-  // Initialize foreground service if not already initialized
-  if (!_isForegroundServiceInitialized) {
+bool initForegroundService(int intervalMinutes) {
+  // Re-initialize if interval changed or not yet initialized
+  if (_lastInitializedInterval != intervalMinutes) {
     FlutterForegroundTask.init(
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'bg_update',
@@ -118,6 +142,8 @@ void initForegroundService([int intervalMinutes = 15]) {
         allowWifiLock: false,
       ),
     );
-    _isForegroundServiceInitialized = true;
+    _lastInitializedInterval = intervalMinutes;
+    return true;
   }
+  return false;
 }
