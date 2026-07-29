@@ -694,6 +694,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.5"
+  m3e_card_list:
+    dependency: "direct main"
+    description:
+      name: m3e_card_list
+      sha256: d4aba0123cccda40ac80789befa8d355e1dc16aa7dcee910157690b0546d78d6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   m3e_design:
     dependency: transitive
     description:
