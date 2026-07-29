@@ -745,6 +745,10 @@ class AppsProvider with ChangeNotifier {
       if (app.apkUrls.isEmpty) throw NoAPKError();
       if (app.preferredApkIndex >= app.apkUrls.length) {
         app.preferredApkIndex = app.apkUrls.length - 1;
+        // Sync clamped index back to the shared in-memory map so that parallel
+        // download coroutines and any refreshBeforeDownload path see the same
+        // value rather than a stale, out-of-bounds index.
+        apps[app.id]?.app.preferredApkIndex = app.preferredApkIndex;
       }
       if (app.preferredApkIndex < 0) app.preferredApkIndex = 0;
       AppSource source = SourceProvider().getSource(
@@ -1678,11 +1682,14 @@ class AppsProvider with ChangeNotifier {
     if (pickAnyAsset) {
       urlsToSelectFrom = [...urlsToSelectFrom, ...app.otherAssetUrls];
     }
-    // If the App has more than one APK, the user should pick one (if context provided)
+    // If the App has more than one APK, the user should pick one (if context provided).
+    // Clamp the stored preferredApkIndex to the current list length to prevent a
+    // RangeError when a new release has fewer APK variants than the previous one.
+    final _safeApkIndex = urlsToSelectFrom.isEmpty
+        ? 0
+        : app.preferredApkIndex.clamp(0, urlsToSelectFrom.length - 1);
     MapEntry<String, String>? appFileUrl =
-        urlsToSelectFrom[app.preferredApkIndex >= 0
-            ? app.preferredApkIndex
-            : 0];
+        urlsToSelectFrom.isEmpty ? null : urlsToSelectFrom[_safeApkIndex];
     // When picking any asset, use the APK filter regex to pre-select the best matching
     // asset by default, without hiding other assets from the user.
     if (pickAnyAsset &&
@@ -2720,9 +2727,14 @@ class AppsProvider with ChangeNotifier {
       currentApp.additionalSettings,
       currentApp: currentApp,
     );
-    if (currentApp.preferredApkIndex < newApp.apkUrls.length) {
-      newApp.preferredApkIndex = currentApp.preferredApkIndex;
-    }
+    // Clamp the preserved user preference to the new list length.
+    // When a new release has fewer APK variants than the previous one the old
+    // index would be out of bounds; .clamp() handles both shrinkage and the
+    // empty-list edge-case in one shot.
+    newApp.preferredApkIndex = currentApp.preferredApkIndex.clamp(
+      0,
+      newApp.apkUrls.isEmpty ? 0 : newApp.apkUrls.length - 1,
+    );
     await saveApps([newApp]);
     return newApp.latestVersion != currentApp.latestVersion ? newApp : null;
   }

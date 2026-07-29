@@ -197,6 +197,13 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
       apkUrls = assumed2DlistToStringMapList(List<dynamic>.from(apkUrlJson));
     }
     json['apkUrls'] = jsonEncode(stringMapListTo2DList(apkUrls));
+    // Clamp the stored index against the actual new URL count.
+    // A user whose persisted JSON was created when the source had more APK
+    // variants would otherwise load an out-of-bounds preferredApkIndex.
+    if (apkUrls.isNotEmpty && preferredApkIndex >= apkUrls.length) {
+      preferredApkIndex = apkUrls.length - 1;
+      json['preferredApkIndex'] = preferredApkIndex;
+    }
   }
   // Arch based APK filter option should be disabled if it previously did not exist
   if (additionalSettings['autoApkFilterByArch'] == null) {
