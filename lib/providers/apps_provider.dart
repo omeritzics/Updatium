@@ -1588,6 +1588,13 @@ class AppsProvider with ChangeNotifier {
         throw UpdatiumError('badDownload'.t());
       }
     }
+    // Guard against the app being absent from the in-memory map.
+    // This can happen when handleAPKIDChange resolves a temp/placeholder ID to
+    // the real package name but the original entry was never in `apps` (e.g. the
+    // add flow added the app after the download started), causing a null-bang crash.
+    if (apps[file.appId] == null) {
+      throw UpdatiumError('appNotFound'.t());
+    }
     PackageInfo? appInfo = await getInstalledInfo(apps[file.appId]!.app.id);
     logs.add(
       'Installing "${newInfo.packageName}" version "${newInfo.versionName}" versionCode "${newInfo.versionCode}"${appInfo != null ? ' (from existing version "${appInfo.versionName}" versionCode "${appInfo.versionCode}")' : ''}',
@@ -1632,7 +1639,12 @@ class AppsProvider with ChangeNotifier {
   }
 
   Future<String> getStorageRootPath() async {
-    return '/${(await getAppStorageDir()).uri.pathSegments.sublist(0, 3).join('/')}';
+    // sublist(0, 3) throws RangeError when the storage path has fewer than 3
+    // segments (emulators, restricted profiles, some OEM configurations).
+    // Use min(3, length) so we never request more elements than exist.
+    final segments = (await getAppStorageDir()).uri.pathSegments;
+    final take = segments.length < 3 ? segments.length : 3;
+    return '/${segments.sublist(0, take).join('/')}';
   }
 
   Future<void> moveObbFile(File file, String appId) async {

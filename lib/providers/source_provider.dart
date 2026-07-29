@@ -451,6 +451,19 @@ class App {
         'Error running JSON compat modifiers: ${e.toString()}: ${originalJSON.toString()}',
       );
     }
+    // Parse apkUrls first so we can safely clamp the index against the real
+    // list length. When appJSONCompatibilityModifiers throws (above) we fall
+    // back to originalJSON whose preferredApkIndex may be -1 (field absent) or
+    // a value that exceeds the current URL count — both cause RangeError on the
+    // very first list access before any of the runtime guards can fire.
+    final List<MapEntry<String, String>> parsedApkUrls =
+        assumed2DlistToStringMapList(
+          jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
+        );
+    final int rawIndex = (json['preferredApkIndex'] ?? -1) as int;
+    final int safeIndex = parsedApkUrls.isEmpty
+        ? 0
+        : rawIndex.clamp(0, parsedApkUrls.length - 1);
     return App(
       json['id']?.toString() ?? '',
       json['url']?.toString() ?? '',
@@ -458,10 +471,8 @@ class App {
       json['name']?.toString() ?? '',
       json['installedVersion']?.toString(),
       (json['latestVersion'] ?? 'unknown'.t()).toString(),
-      assumed2DlistToStringMapList(
-        jsonDecode((json['apkUrls'] ?? '[["placeholder", "placeholder"]]')),
-      ),
-      (json['preferredApkIndex'] ?? -1) as int,
+      parsedApkUrls,
+      safeIndex,
       jsonDecode(json['additionalSettings'] ?? '{}') as Map<String, dynamic>,
       json['lastUpdateCheck'] == null
           ? null
