@@ -43,7 +43,6 @@ import 'package:updatium/custom_errors.dart';
 import 'package:updatium/services/githubstars.dart';
 import 'package:updatium/providers/logs_provider.dart';
 import 'package:updatium/providers/settings_provider.dart';
-import 'package:updatium/providers/apps_provider.dart';
 import 'package:updatium/services/slang_converter.dart';
 
 class AppNames {
@@ -1639,20 +1638,17 @@ class SourceProvider {
     List<App> apps = [];
     Map<String, dynamic> errors = {};
 
-    // Get existing apps to check for duplicates
-    final appsProvider = AppsProvider();
-    final existingUrls = appsProvider
-        .getAppValues()
-        .map((e) => e.app.url)
-        .toList();
-    final urlsToCheck = List<String>.from(alreadyAddedUrls)
-      ..addAll(existingUrls);
     for (var url in urls) {
       try {
-        if (urlsToCheck.contains(url)) {
+        var source = sourceOverride ?? getSource(url);
+        // Standardize before comparing - alreadyAddedUrls already contains
+        // standardized URLs (from e.app.url), so comparing a raw/unstandardized
+        // input URL against them would never (reliably) match, and could
+        // also allow real duplicates through.
+        var standardizedUrl = source.standardizeUrl(url);
+        if (alreadyAddedUrls.contains(standardizedUrl)) {
           throw UpdatiumError('appAlreadyAdded'.t());
         }
-        var source = sourceOverride ?? getSource(url);
         apps.add(
           await getApp(
             source,

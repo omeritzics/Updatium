@@ -3079,8 +3079,13 @@ class AppsProvider with ChangeNotifier {
     List<App> pps = results[0];
     Map<String, dynamic> errorsMap = results[1];
     for (var app in pps) {
-      if (apps.containsKey(app.id)) {
-        errorsMap.addAll({app.id: 'appAlreadyAdded'.t()});
+      // Dedupe by URL, not by id: newly-fetched apps that haven't resolved a
+      // real package ID yet carry a temp ID (a hash of standardUrl +
+      // additionalSettings) which can collide between two unrelated apps,
+      // incorrectly flagging the second one as already added.
+      var alreadyExists = apps.values.any((e) => e.app.url == app.url);
+      if (alreadyExists) {
+        errorsMap.addAll({app.url: 'appAlreadyAdded'.t()});
       } else {
         await saveApps([app], onlyIfExists: false);
       }
