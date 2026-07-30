@@ -4,8 +4,8 @@
     "noVersionFound": "Ei suutnud tuvastada väljaande versiooni",
     "urlMatchesNoSource": "URL ei vasta tuntud allikale",
     "cantInstallOlderVersion": "Ei saa installida äpi vanemat versiooni",
-    "showOlderVersionWarning": "Show older version warning",
-    "showBatteryOptimizationPrompt": "Show battery optimization prompt",
+    "showOlderVersionWarning": "Vanema versiooni puhul näita hoiatust",
+    "showBatteryOptimizationPrompt": "Näita akukasutuse optimeerimise teadet",
     "tactileFeedbackEnabled": "Enable tactile feedback",
     "includePrereleasesByDefault": "Include pre-releases by default",
     "appIdMismatch": "Allalaaditud paketi ID ei vasta olemasolevale äpi ID-le",
@@ -13,7 +13,7 @@
     "repoRenamed": "Repository moved",
     "repoRenamedExplanation": "This repository was moved. Updating the URL keeps future updates working.",
     "updateUrl": "Update URL",
-    "dismiss": "Dismiss",
+    "dismiss": "Loobu",
     "functionNotImplemented": "See klass pole seda funktsiooni implementeerinud",
     "placeholder": "Kohatäide",
     "someErrors": "Tekkis mõned vead",
@@ -551,5 +551,9 @@
     "GHReqPrefix": "GitHub request prefix",
     "checkRepoRename": "Check GitHub repo renames",
     "misc": "Miscellaneous",
-    "showConfetti": "Show confetti effect when adding open-source apps"
+    "showConfetti": "Show confetti effect when adding open-source apps",
+    "categoryDeleteQuestion": {
+        "one": "Kas kustutad kategooria?",
+        "other": "Kas kustutad kategooriad?"
+    }
 }
