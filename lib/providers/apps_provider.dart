@@ -634,7 +634,7 @@ class AppsProvider with ChangeNotifier {
 
   Iterable<AppInMemory> getAppValues() => apps.values;
 
-  AppsProvider({bool isBg = false}) {
+  AppsProvider({isBg = false}) {
     // Subscribe to changes in the app foreground status
     foregroundStream = FGBGEvents.instance.stream.asBroadcastStream();
     foregroundSubscription = foregroundStream?.listen((event) async {
@@ -1674,12 +1674,7 @@ class AppsProvider with ChangeNotifier {
   }
 
   Future<String> getStorageRootPath() async {
-    // sublist(0, 3) throws RangeError when the storage path has fewer than 3
-    // segments (emulators, restricted profiles, some OEM configurations).
-    // Use min(3, length) so we never request more elements than exist.
-    final segments = (await getAppStorageDir()).uri.pathSegments;
-    final take = segments.length < 3 ? segments.length : 3;
-    return '/${segments.sublist(0, take).join('/')}';
+    return '/${(await getAppStorageDir()).uri.pathSegments.sublist(0, 3).join('/')}';
   }
 
   Future<void> moveObbFile(File file, String appId) async {
@@ -1729,29 +1724,11 @@ class AppsProvider with ChangeNotifier {
     if (pickAnyAsset) {
       urlsToSelectFrom = [...urlsToSelectFrom, ...app.otherAssetUrls];
     }
-    // If the App has more than one APK, the user should pick one (if context provided).
-    // Clamp the stored preferredApkIndex to the current list length to prevent a
-    // RangeError when a new release has fewer APK variants than the previous one.
-    final safeApkIndex = urlsToSelectFrom.isEmpty
-        ? 0
-        : app.preferredApkIndex.clamp(0, urlsToSelectFrom.length - 1);
-    MapEntry<String, String>? appFileUrl = urlsToSelectFrom.isEmpty
-        ? null
-        : urlsToSelectFrom[safeApkIndex];
-    // When picking any asset, use the APK filter regex to pre-select the best matching
-    // asset by default, without hiding other assets from the user.
-    if (pickAnyAsset &&
-        app.additionalSettings['apkFilterRegEx'] is String &&
-        (app.additionalSettings['apkFilterRegEx'] as String).isNotEmpty) {
-      var matching = filterApks(
-        urlsToSelectFrom,
-        app.additionalSettings['apkFilterRegEx'],
-        app.additionalSettings['invertAPKFilter'] == true,
-      );
-      if (matching.isNotEmpty) {
-        appFileUrl = matching.first;
-      }
-    }
+    // If the App has more than one APK, the user should pick one (if context provided)
+    MapEntry<String, String>? appFileUrl =
+        urlsToSelectFrom[app.preferredApkIndex >= 0
+            ? app.preferredApkIndex
+            : 0];
     // get device supported architecture
     List<String> archs = (await DeviceInfoPlugin().androidInfo).supportedAbis;
 
@@ -3109,7 +3086,8 @@ class AppsProvider with ChangeNotifier {
     List<App> pps = results[0];
     Map<String, dynamic> errorsMap = results[1];
     for (var app in pps) {
-      if (apps.containsKey(app.id)) {
+      var alreadyExists = apps.values.any((e) => e.app.url == app.url);
+      if (alreadyExists) {
         errorsMap.addAll({app.id: t('appAlreadyAdded')});
       } else {
         await saveApps([app], onlyIfExists: false);

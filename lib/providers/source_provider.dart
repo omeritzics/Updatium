@@ -258,8 +258,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
         json['name'] == 'Signal' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://updates.signal.org/android/latest.json';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -276,8 +275,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
         json['name'] == 'WhatsApp' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://whatsapp.com/android';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
@@ -293,8 +291,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
         json['name'] == 'VLC' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
-        (additionalSettings['versionExtractionRegEx'] == null ||
-            additionalSettings['versionExtractionRegEx'] == '') &&
+        additionalSettings['versionExtractionRegEx'] == '' &&
         json['lastUpdateCheck'] != null) {
       json['url'] = 'https://www.videolan.org/vlc/download-android.html';
       var replacementAdditionalSettings = getDefaultValuesFromFormItems(
