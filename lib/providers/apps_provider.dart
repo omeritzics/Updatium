@@ -40,6 +40,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:docman/docman.dart';
 import 'package:shizuku_apk_installer/shizuku_apk_installer.dart';
 import 'package:updatium/services/slang_converter.dart';
+import 'package:path/path.dart' as path;
 
 final pm = AndroidPackageManager();
 final packageInfoFlags = PackageInfoFlags({PMFlag.getSigningCertificates});
@@ -1222,13 +1223,47 @@ class AppsProvider with ChangeNotifier {
     if (!destDir.existsSync()) {
       destDir.createSync(recursive: true);
     }
+    // Resolve the canonical destination path once, to check every entry against.
+    final destCanonical = path.canonicalize(destDir.absolute.path);
     for (final file in tarArchive.files) {
-      if (file.isFile) {
-        final outPath = '${destDir.path}/${file.name}';
-        final outFile = File(outPath);
-        outFile.createSync(recursive: true);
-        outFile.writeAsBytesSync(file.content as List<int>);
+      // Reject symlinks/hardlinks outright - never follow or materialize them,
+      // since a link target is an independent traversal vector on top of the
+      // entry name itself.
+      if (file.isSymbolicLink) {
+        logs.add(
+          'Rejected tarball entry (symlink, not supported): ${file.name}',
+        );
+        continue;
       }
+      if (!file.isFile) {
+        continue;
+      }
+
+      // Reject absolute paths and drive-letter paths outright - a legitimate
+      // archive entry should always be relative.
+      if (path.isAbsolute(file.name) ||
+          RegExp(r'^[A-Za-z]:').hasMatch(file.name)) {
+        logs.add('Rejected tarball entry (absolute/drive path): ${file.name}');
+        continue;
+      }
+
+      // Join and normalize, then re-verify the resolved path is still inside
+      // destDir. normalize() alone only collapses '..' segments syntactically;
+      // it does not guarantee the result stays within destDir, so the
+      // isWithin check (against the canonicalized paths) is the real guard.
+      final joinedPath = path.join(destDir.path, file.name);
+      final outCanonical = path.canonicalize(path.normalize(joinedPath));
+      if (!path.isWithin(destCanonical, outCanonical) &&
+          outCanonical != destCanonical) {
+        logs.add(
+          'Rejected tarball entry (path traversal attempt): ${file.name}',
+        );
+        continue;
+      }
+
+      final outFile = File(outCanonical);
+      await outFile.create(recursive: true);
+      await outFile.writeAsBytes(file.content as List<int>);
     }
   }
 
