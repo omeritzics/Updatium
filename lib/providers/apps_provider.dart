@@ -2775,14 +2775,9 @@ class AppsProvider with ChangeNotifier {
       currentApp.additionalSettings,
       currentApp: currentApp,
     );
-    // Clamp the preserved user preference to the new list length.
-    // When a new release has fewer APK variants than the previous one the old
-    // index would be out of bounds; .clamp() handles both shrinkage and the
-    // empty-list edge-case in one shot.
-    newApp.preferredApkIndex = currentApp.preferredApkIndex.clamp(
-      0,
-      newApp.apkUrls.isEmpty ? 0 : newApp.apkUrls.length - 1,
-    );
+    if (currentApp.preferredApkIndex < newApp.apkUrls.length) {
+      newApp.preferredApkIndex = currentApp.preferredApkIndex;
+    }
     await saveApps([newApp]);
     return newApp.latestVersion != currentApp.latestVersion ? newApp : null;
   }
@@ -3114,13 +3109,8 @@ class AppsProvider with ChangeNotifier {
     List<App> pps = results[0];
     Map<String, dynamic> errorsMap = results[1];
     for (var app in pps) {
-      // Dedupe by URL, not by id: newly-fetched apps that haven't resolved a
-      // real package ID yet carry a temp ID (a hash of standardUrl +
-      // additionalSettings) which can collide between two unrelated apps,
-      // incorrectly flagging the second one as already added.
-      var alreadyExists = apps.values.any((e) => e.app.url == app.url);
-      if (alreadyExists) {
-        errorsMap.addAll({app.url: 'appAlreadyAdded'.t()});
+      if (apps.containsKey(app.id)) {
+        errorsMap.addAll({app.id: t('appAlreadyAdded')});
       } else {
         await saveApps([app], onlyIfExists: false);
       }
