@@ -486,12 +486,16 @@ class _SettingsPageState extends State<SettingsPage> {
                     settingsProvider.getSettingBool(formItem.key) ?? false;
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
-                  child: SwitchListTile(
-                    title: Text(formItem.label),
-                    value: currentValue,
-                    onChanged: (value) {
-                      settingsProvider.setSettingBool(formItem.key, value);
-                    },
+                  child: M3ECardColumn(
+                    children: [
+                      SwitchListTile(
+                        title: Text(formItem.label),
+                        value: currentValue,
+                        onChanged: (value) {
+                          settingsProvider.setSettingBool(formItem.key, value);
+                        },
+                      ),
+                    ],
                   ),
                 );
               } else {
@@ -563,14 +567,14 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
-                            if (showIntervalLabel)
-                              SizedBox(
-                                child: Text(
-                                  "${'bgUpdateCheckInterval'.t()}: $updateIntervalLabel",
-                                ),
-                              ),
                             M3ECardColumn(
                               children: [
+                                if (showIntervalLabel)
+                                  SizedBox(
+                                    child: Text(
+                                      "${'bgUpdateCheckInterval'.t()}: $updateIntervalLabel",
+                                    ),
+                                  ),
                                 intervalSlider,
                                 if (!settingsProvider.safeMode)
                                   SwitchListTile(
@@ -944,8 +948,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             FutureBuilder(
                               builder: (ctx, val) {
-                                return (settingsProvider.updateInterval >
-                                            0) &&
+                                return (settingsProvider.updateInterval > 0) &&
                                         (((val.data?.version.sdkInt ?? 0) >=
                                                 30) ||
                                             settingsProvider.useShizuku)
@@ -953,15 +956,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                         children: [
                                           SwitchListTile(
                                             title: Text(
-                                              t(
-                                                'foregroundServiceExplanation',
-                                              ),
+                                              t('foregroundServiceExplanation'),
                                             ),
-                                            value: settingsProvider
-                                                .useFGService,
+                                            value:
+                                                settingsProvider.useFGService,
                                             onChanged: (value) {
-                                              settingsProvider
-                                                      .useFGService =
+                                              settingsProvider.useFGService =
                                                   value;
                                             },
                                           ),
@@ -989,9 +989,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               .enableBackgroundUpdates)
                                             SwitchListTile(
                                               title: Text(
-                                                t(
-                                                  'bgUpdatesOnWiFiOnly',
-                                                ),
+                                                t('bgUpdatesOnWiFiOnly'),
                                               ),
                                               value: settingsProvider
                                                   .bgUpdatesOnWiFiOnly,
@@ -1006,9 +1004,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                               .enableBackgroundUpdates)
                                             SwitchListTile(
                                               title: Text(
-                                                t(
-                                                  'bgUpdatesWhileChargingOnly',
-                                                ),
+                                                t('bgUpdatesWhileChargingOnly'),
                                               ),
                                               value: settingsProvider
                                                   .bgUpdatesWhileChargingOnly,
@@ -1163,8 +1159,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               ],
                             ),
                             gap8,
-                            if (settingsProvider.theme ==
-                                ThemeSettings.system)
+                            if (settingsProvider.theme == ThemeSettings.system)
                               followSystemThemeExplanation,
                             FutureBuilder(
                               builder: (ctx, val) {
@@ -1172,11 +1167,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                     ? M3ECardColumn(
                                         children: [
                                           SwitchListTile(
-                                            title: Text(
-                                              'useSystemFont'.t(),
-                                            ),
-                                            value: settingsProvider
-                                                .useSystemFont,
+                                            title: Text('useSystemFont'.t()),
+                                            value:
+                                                settingsProvider.useSystemFont,
                                             onChanged: (useSystemFont) {
                                               if (useSystemFont) {
                                                 NativeFeatures.loadSystemFont()
@@ -1186,8 +1179,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                                           true;
                                                     });
                                               } else {
-                                                settingsProvider
-                                                        .useSystemFont =
+                                                settingsProvider.useSystemFont =
                                                     false;
                                               }
                                             },
@@ -1301,9 +1293,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                           childrenPadding: const EdgeInsets.all(8),
                           children: [
+                            gap16,
                             M3ECardColumn(
                               children: [
-                                gap16,
                                 CategoryTagEditor(showLabelWhenNotEmpty: false),
                               ],
                             ),
