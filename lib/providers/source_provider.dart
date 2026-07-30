@@ -258,7 +258,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // Signal apps from before it was removed should be converted to HTML (#1928)
     if (json['url'] == 'https://signal.org' &&
         json['id'] == 'org.thoughtcrime.securesms' &&
-        json['appAuthor'] == 'Signal' &&
+        json['author'] == 'Signal' &&
         json['name'] == 'Signal' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
@@ -276,7 +276,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // WhatsApp from before it was removed should be converted to HTML (#1943)
     if (json['url'] == 'https://whatsapp.com' &&
         json['id'] == 'com.whatsapp' &&
-        json['appAuthor'] == 'Meta' &&
+        json['author'] == 'Meta' &&
         json['name'] == 'WhatsApp' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
@@ -293,7 +293,7 @@ Map<String, dynamic> appJSONCompatibilityModifiers(Map<String, dynamic> json) {
     // VLC from before it was removed should be converted to HTML (#1943)
     if (json['url'] == 'https://videolan.org' &&
         json['id'] == 'org.videolan.vlc' &&
-        json['appAuthor'] == 'VideoLAN' &&
+        json['author'] == 'VideoLAN' &&
         json['name'] == 'VLC' &&
         json['overrideSource'] == null &&
         additionalSettings['trackOnly'] == false &&
@@ -409,8 +409,8 @@ class App {
   }
 
   String? get overrideAuthor =>
-      additionalSettings['appAuthor']?.toString().trim().isNotEmpty == true
-      ? additionalSettings['appAuthor']
+      additionalSettings['author']?.toString().trim().isNotEmpty == true
+      ? additionalSettings['author']
       : null;
 
   String get finalAuthor {
@@ -466,7 +466,7 @@ class App {
     return App(
       json['id']?.toString() ?? '',
       json['url']?.toString() ?? '',
-      json['appAuthor']?.toString() ?? '',
+      json['author']?.toString() ?? '',
       json['name']?.toString() ?? '',
       json['installedVersion']?.toString(),
       (json['latestVersion'] ?? 'unknown'.t()).toString(),
@@ -502,7 +502,7 @@ class App {
   Map<String, dynamic> toJson() => {
     'id': id,
     'url': url,
-    'appAuthor': author,
+    'author': author,
     'name': name,
     'installedVersion': installedVersion,
     'latestVersion': latestVersion,
@@ -876,13 +876,7 @@ abstract class AppSource {
       ),
     ],
     [GeneratedFormTextField('appName', label: 'appName'.t(), required: false)],
-    [
-      GeneratedFormTextField(
-        'appAuthor',
-        label: 'appAuthor'.t(),
-        required: false,
-      ),
-    ],
+    [GeneratedFormTextField('author', label: 'author'.t(), required: false)],
     [
       GeneratedFormTextField(
         'appSourceURL',

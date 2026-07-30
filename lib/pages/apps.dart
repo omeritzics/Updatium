@@ -1357,10 +1357,10 @@ class AppsPageState extends State<AppsPage> with TickerProviderStateMixin {
                     ],
                     [
                       GeneratedFormTextField(
-                        'appAuthor',
-                        label: 'appAuthor'.t(),
+                        'author',
+                        label: 'author'.t(),
                         required: false,
-                        defaultValue: localValues['appAuthor'],
+                        defaultValue: localValues['author'],
                       ),
                     ],
                     [
@@ -1944,7 +1944,7 @@ class AppsFilter {
   Map<String, dynamic> toFormValuesMap() {
     return {
       'appName': nameFilter,
-      'appAuthor': authorFilter,
+      'author': authorFilter,
       'appId': idFilter,
       'description': descriptionFilter,
       'upToDateApps': includeUptodate,
@@ -1956,7 +1956,7 @@ class AppsFilter {
 
   void setFormValuesFromMap(Map<String, dynamic> values) {
     nameFilter = values['appName']!;
-    authorFilter = values['appAuthor']!;
+    authorFilter = values['author']!;
     idFilter = values['appId']!;
     descriptionFilter = values['description']!;
     includeUptodate = values['upToDateApps'];

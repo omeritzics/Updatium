@@ -113,7 +113,7 @@
     "filter": "Szűrő",
     "filterApps": "Alkalmazások szűrése",
     "filterDays": "Filter days",
-    "appAuthor": "Szerző",
+    "author": "Szerző",
     "appName": "Név",
     "upToDateApps": "Naprakész alkalmazások",
     "nonInstalledApps": "Nem telepített alkalmazások",
