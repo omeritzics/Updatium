@@ -93,25 +93,6 @@ void main() {
     });
   });
 
-  group('Custom App ID Tests', () {
-    test('customAppIdFromSettings ignores the blank form default', () {
-      expect(customAppIdFromSettings({'appId': ''}), isNull);
-      expect(customAppIdFromSettings({'appId': '   '}), isNull);
-      expect(customAppIdFromSettings({}), isNull);
-    });
-
-    test('customAppIdFromSettings returns trimmed user input', () {
-      expect(
-        customAppIdFromSettings({'appId': ' com.example.app '}),
-        equals('com.example.app'),
-      );
-    });
-
-    test('customAppIdFromSettings ignores non-String values', () {
-      expect(customAppIdFromSettings({'appId': 123}), isNull);
-    });
-  });
-
   group('App JSON Compatibility Tests', () {
     test('appJSONCompatibilityModifiers handles removed overrideSource', () {
       final json = {

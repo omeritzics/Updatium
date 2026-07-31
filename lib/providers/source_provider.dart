@@ -1296,18 +1296,6 @@ String? intValidator(String? value, {bool positive = false}) {
   return null;
 }
 
-/// The user-provided app ID, or null when it was left blank.
-/// The 'appId' form field defaults to an empty string, which must not be
-/// mistaken for a real ID.
-String? customAppIdFromSettings(Map<String, dynamic> additionalSettings) {
-  var appId = additionalSettings['appId'];
-  if (appId is! String) {
-    return null;
-  }
-  var trimmed = appId.trim();
-  return trimmed.isEmpty ? null : trimmed;
-}
-
 bool isTempId(App app) {
   // return app.id == generateTempID(app.url, app.additionalSettings);
   return RegExp('^[0-9]+\$').hasMatch(app.id);
@@ -1611,7 +1599,12 @@ class SourceProvider {
     name = name.isNotEmpty ? name : apk.names.name;
     App finalApp = App(
       currentApp?.id ??
-          customAppIdFromSettings(additionalSettings) ??
+          // The 'appId' form field defaults to an empty string, which must not
+          // be mistaken for a user-provided ID
+          ((additionalSettings['appId'] is String &&
+                  (additionalSettings['appId'] as String).trim().isNotEmpty)
+              ? (additionalSettings['appId'] as String).trim()
+              : null) ??
           (!trackOnly &&
                   (!source.appIdInferIsOptional ||
                       (source.appIdInferIsOptional && inferAppIdIfOptional))
